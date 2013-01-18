@@ -1,83 +1,125 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 2/2] fix clang -Wtautological-compare with unsigned enum
-Date: Fri, 18 Jan 2013 10:52:25 -0800
-Message-ID: <CA+55aFzTy0x6X_dK54RO13s+zG9ynWG_8Ei=ZwT8a5B4=LQ94A@mail.gmail.com>
-References: <20130116182449.GA4881@sigill.intra.peff.net> <1358376443-7404-1-git-send-email-apelisse@gmail.com>
- <1358376443-7404-2-git-send-email-apelisse@gmail.com> <CALWbr2wk+78zxGKCo-hCOwMuMOzdGspYvMu7PA6o0OYM3Y3m4A@mail.gmail.com>
- <20130117110008.GD4574@serenity.lan> <CA+55aFxYSX2iYPSafKdCDSfWSMfQxP3R3Hqh8GuiiR6EbWfk3w@mail.gmail.com>
- <CABURp0pj35j7+W_0gYNud2uuEoahugOMBW9ezTgPZ7YvgnBz8w@mail.gmail.com>
+From: "Lang, David" <David.Lang@uhn.ca>
+Subject: RE: Question re. git remote repository
+Date: Fri, 18 Jan 2013 18:33:22 +0000
+Message-ID: <201301181833.r0IIXNe7021768@smtpb01.one-mail.on.ca>
+References: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
+ <20130116220615.48c159546bccfa5b9cd9028e@domain007.com>
+ <20130116182156.GB4426@sigill.intra.peff.net>
+ <20130116233744.7d0775eaec98ce154a9de180@domain007.com>
+ <0630A778-9AC8-4023-889C-4FC58ABAB683@gmail.com>
+ <alpine.DEB.2.02.1301161459060.21503@nftneq.ynat.uz>,<201301172153.r0HLrU4F019815@smtpb02.one-mail.on.ca>
+ <1BBEF94B6B46E54980290D150A6F2EDD46B7AAE2@BN1PRD0612MB635.namprd06.prod.outlook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: John Keeping <john@keeping.me.uk>,
-	Antoine Pelisse <apelisse@gmail.com>, Max Horn <max@quendi.de>,
-	git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 19:53:08 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "'Matt Seitz'" <mseitz@mhseitz.onmicrosoft.com>,
+	David Lang <david@lang.hm>
+X-From: git-owner@vger.kernel.org Fri Jan 18 19:53:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwH3r-0000WW-KR
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 19:53:07 +0100
+	id 1TwH3z-0000gU-CT
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 19:53:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752744Ab3ARSwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2013 13:52:46 -0500
-Received: from mail-vc0-f170.google.com ([209.85.220.170]:55578 "EHLO
-	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751905Ab3ARSwq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2013 13:52:46 -0500
-Received: by mail-vc0-f170.google.com with SMTP id fl11so3948936vcb.15
-        for <git@vger.kernel.org>; Fri, 18 Jan 2013 10:52:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=BiYY7kfZp/YDf4EPuLv5Zgblcvip7R9p9UNtTYaCObw=;
-        b=kvz9pLrssjLXtG9Lh27+WPzPBoXt4qk48WxuMnYcAg3cwxZpyoZH2JHYnLugjCxZjl
-         fJVP4lof5O//16082gbgzrW0vLIdtvHcHRcDt7GPS2LSQfxBOlaQ51BOCfET40g25kRB
-         sGV0104DHqgKirRgEU5fJdiKXjL5I1tJDjXXJ0vYGcYcO3HTpUyjFp/PwwASZeVWnvej
-         yKFtdDJQ5vMCU1hyKovvGc5Gp7v2vS+pQocupOr+ResuNlSPhD4yoHhXW7kKR/Du0wrg
-         v7Hs5lrq6Ry4tmua8NPfH173o/dSLPt45ASZi/711UclXUBSOPc/VXv6QdwDXCleJwGw
-         Ik3g==
-X-Received: by 10.52.96.3 with SMTP id do3mr4036130vdb.100.1358535165273; Fri,
- 18 Jan 2013 10:52:45 -0800 (PST)
-Received: by 10.220.249.199 with HTTP; Fri, 18 Jan 2013 10:52:25 -0800 (PST)
-In-Reply-To: <CABURp0pj35j7+W_0gYNud2uuEoahugOMBW9ezTgPZ7YvgnBz8w@mail.gmail.com>
-X-Google-Sender-Auth: YmmvvOlqy9qdzJlTcBculdghrnY
+	id S1753083Ab3ARSwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2013 13:52:49 -0500
+Received: from gwfb01.gwf.one-mail.on.ca ([142.46.227.146]:33125 "EHLO
+	gwfa01.gwf.one-mail.on.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751905Ab3ARSws convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2013 13:52:48 -0500
+X-Greylist: delayed 1155 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Jan 2013 13:52:48 EST
+Received: from gwb01.gw.one-mail.on.ca (gw01.local.one.mail [10.250.13.132])
+	by sshone0bgf01.int.ssha.ca (Switch-3.3.3/Switch-3.3.3) with ESMTP id r0IIYXjV005475
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Fri, 18 Jan 2013 13:34:33 -0500
+Received: from smtpb01.one-mail.on.ca (tlsb.tls.one-mail.on.ca [10.250.26.61])
+	by gwb01.gw.one-mail.on.ca (gwb01) with ESMTP id r0IIXPDM031215
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Fri, 18 Jan 2013 13:33:25 -0500
+Received: from uhnsmtp004.uhn.on.ca (uhnsmtp004.uhn.on.ca [199.212.7.89])
+	(authenticated bits=0)
+	by smtpb01.one-mail.on.ca (smtpb01) with ESMTP id r0IIXNe7021768
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=OK)
+	for <git@vger.kernel.org>; Fri, 18 Jan 2013 13:33:24 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AqAEAH6U+VAKPg5D/2dsb2JhbAAqGr5Oc4IeAQEBAwE6JRoFBwQCAQgOAwQBAQsUCQcyFAkIAgQBDQUIDId/Eiy8N40Xg0FhA5cokiKBZz0
+Thread-Topic: Question re. git remote repository
+Thread-Index: AQHN9BQsnE5PXSeuRLaLkaBQ75QiNZhMmGQAgAAVLgCAADhAAIAAAHSAgAEp7QCAAHgWMYAA33kg
+In-Reply-To: <1BBEF94B6B46E54980290D150A6F2EDD46B7AAE2@BN1PRD0612MB635.namprd06.prod.outlook.com>
+Accept-Language: en-CA, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.2.19.202]
+x-tm-as-product-ver: SMEX-10.2.0.2087-7.000.1014-19566.001
+x-tm-as-result: No--47.727300-8.000000-31
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+X-CT-Refid: str=0001.0A020202.50F99575.0040:SCFSTAT15037076,ss=1,fgs=0
+X-Spam-Score: 0.00%
+X-Spam-Analysis: v=1.1 cv=9F42CGUj3zhKouQQFImvTLPh38UMJkhp8E0yNdeEst0= c=1 sm=1 a=q7aWwITXUpIA:10 a=IcfhDb_qSfAA:10 a=kj9zAlcOel0A:10 a=05+XHyEUMwofaMpFvQLczg==:17 a=ZDDKZPdRAAAA:8 a=VwQbUJbxAAAA:8 a=TSbVqHtbAAAA:8 a=zrjFa6EUWqUANKRuxn0A:9 a=CjuIK1q_8ugA:10 a=MfSQODttUenw8UTy:21 a=y_zZZaVohn2XQbV7:21 a=05+XHyEUMwofaMpFvQLczg==:117%
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213923>
 
-On Fri, Jan 18, 2013 at 9:15 AM, Phil Hord <phil.hord@gmail.com> wrote:
->
-> Yes, I can tell by the wording of the error message that you are right
-> and clang has a problem.  But the git code it complained about does
-> have a real problem, because the result of "signed int a = ULONG_MAX"
-> is implementation-defined.
+Hi Matt and David,
 
-Only theoretically.
+Your responses have been very helpful for this newbie...thanks very much! I have a good sense now of the difference btw a CVCS and a DVCS. Here are two more questions...
 
-Git won't work on machines that don't have 8-bit bytes anyway, so
-worrying about the theoretical crazy architectures that aren't two's
-complement etc isn't something I'd care about.
+1. I now get the sense that there's quite a few options in regards to the way that any one group implements their "origin"/"master"/<fill in your favourite name> repository. But ultimately, there shouldn't be a question of "if" you have a master repository but "where" you have the master repository, correct? Or in other words, it doesn't seem like you'd want to designate any one developer's local repository as also being the master repository, right? My sense is that would defeat the purpose of the DVCS.
 
-There's a whole class of "technically implementation-defined" issues
-in C that simply aren't worth caring for. Yes, the standard is written
-so that it works on machines that aren't byte-addressable, or EBCDIC
-or have things like 18-bit words and 36-bit longwords. Or 16-bit "int"
-for microcontrollers etc.
+2. Assuming I'm right about question #1, our first hurdle is where to host the master repository. Could you provide any suggestions for a setup based on our VERY simple department model? I work for a small IT department with a grand total of TWO developers (who sit five feet apart from one another)! The reason we're looking at a VCS is because I was hired a few months ago and the dept never needed one before now. We realize that git will be overkill for what we need but frankly anything will be overkill for what we need, and since git seems to be so well regarded in the community (and free) it looks like a good choice.
 
-That doesn't make those "implementation-defined" issues worth worrying
-about these days. A compiler writer could in theory make up some
-idiotic rules that are still "valid by the C standard" even on modern
-machines, but such a compiler should simply not be used, and the
-compiler writer in question should be called out for being an ass-hat.
+So the question is, how would either of you recommend we set up our master repository? We definitely want to keep everything "in house" so off-site hosting isn't something we'd consider. We have access to many servers on our company's network, some of which we have full rights to, so there's no issue in regards to storage space. I suppose another idea would be to have the master simply reside on one of the two developers local machines, so one of us would have both a local rep and the master rep and the other of us would have just a local rep. This would simplify the model. What do you think? Or is it best to always have the master hosted on a machine with no other local reps?
 
-Paper standards are only worth so much. And that "so much" really
-isn't very much.
+David
 
-                Linus
+-----Original Message-----
+From: Matt Seitz [mailto:mseitz@mhseitz.onmicrosoft.com] 
+Sent: Friday, January 18, 2013 12:52 AM
+To: Lang, David; David Lang
+Cc: Konstantin Khomoutov; Jeff King; git@vger.kernel.org; Stephen Smith
+Subject: RE: Question re. git remote repository
+
+From: git-owner@vger.kernel.org [git-owner@vger.kernel.org] on behalf of Lang, David [David.Lang@uhn.ca]
+
+> I thought the idea was that each developer installed git locally on 
+> their machines
+
+Yes.
+
+> and (as needed) committed their changes to the master repository which 
+> resides externally to any of the local machines, such as on a network 
+> server
+
+Yes, but committing their changes to the master repository is a two step process:
+
+1.  Each developer first commits their changes to their personal repository using the "git commit" command.
+2.  Each developer pushes their changes from their personal repository to the master repository with the "git push" command
+
+> (and which I'm assuming has git installed locally as well).
+
+Maybe.
+
+If the machine with the master repository has git installed locally, then each developer can push their changes to the master repository using either the git protocol or the ssh protocol.
+
+If the machine with the master repository does not have git installed locally, then each developer can push their changes to the master repository using NFS or CIFS/SMB.  The git documentation refers to this method as the "file protocol".
+
+The other David Lang (david@lang.hm) believes that using "git push" using NFS or CIFS/SMB may not be safe and reliable.  Based on the following article by the creator of git, I believe using "git push" over NFS or CIFS/SMB is safe and reliable:
+
+http://permalink.gmane.org/gmane.comp.version-control.git/122670
+
+The GitFaq wiki also says that using "git push" over NFS or CIFS/SMB is safe and reliable:
+
+https://git.wiki.kernel.org/index.php/GitFaq#What_can_I_use_to_set_up_a_public_repository.3F
+
+This e-mail may contain confidential and/or privileged information for the sole use of the intended recipient. 
+Any review or distribution by anyone other than the person for whom it was originally intended is strictly prohibited. 
+If you have received this e-mail in error, please contact the sender and delete all copies. 
+Opinions, conclusions or other information contained in this e-mail may not be that of the organization.
