@@ -1,93 +1,72 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: What's cooking in git.git (Jan 2013, #07; Thu, 17)
-Date: Fri, 18 Jan 2013 16:08:57 +0100
-Message-ID: <50F96589.4010408@alum.mit.edu>
-References: <7vsj5zs5y2.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Unable to convert a subversion repo to git
+Date: Fri, 18 Jan 2013 17:48:03 +0100
+Message-ID: <50F97CC3.2000906@drmicha.warpmail.net>
+References: <CAO2=c4nr8PsbHmyKptWewQMmpqWP=YasKZSnCuB9CCkExpSF8A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 16:09:26 2013
+Cc: git <git@vger.kernel.org>
+To: Timothy Kretschmer <timothykretschmer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 17:48:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwDZM-0005U1-Pm
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 16:09:25 +0100
+	id 1TwF7D-0006J8-41
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 17:48:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751052Ab3ARPJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2013 10:09:03 -0500
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:54727 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750898Ab3ARPJC (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Jan 2013 10:09:02 -0500
-X-AuditID: 12074413-b7f786d0000008bb-29-50f9658d95b8
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 5F.21.02235.D8569F05; Fri, 18 Jan 2013 10:09:01 -0500 (EST)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0IF8xDO004912
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 18 Jan 2013 10:09:00 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <7vsj5zs5y2.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsUixO6iqNub+jPA4MgrXouuK91MFg29V5gd
-	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE7Y1FrB0vBAp6K003dbA2Mk7m6GDk5JARMJI4t
-	WcAEYYtJXLi3nq2LkYtDSOAyo8TjFY2sEM5xJolTM9uAqjg4eAW0Jba/lQFpYBFQlZjacB2s
-	mU1AV2JRTzOYLSoQJtH7+hwjiM0rIChxcuYTFhBbREBNYmLbIRaQMcwC4hL9/8DCwgL2EtuP
-	djKD2EICphKPmz+zgticAmYSq6bsZwOxmQV0JN71PWCGsOWBLpjDPIFRYBaSDbOQlM1CUraA
-	kXkVo1xiTmmubm5iZk5xarJucXJiXl5qka65Xm5miV5qSukmRkiQCu9g3HVS7hCjAAejEg8v
-	t/qPACHWxLLiytxDjJIcTEqivEVJPwOE+JLyUyozEosz4otKc1KLDzFKcDArifA+kQLK8aYk
-	VlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeINSgBoFi1LTUyvSMnNKENJM
-	HJwgw7mkRIpT81JSixJLSzLiQXEaXwyMVJAUD9BeFZB23uKCxFygKETrKUZjjhk/2p8zcmz/
-	DSSFWPLy81KlxHk5QEoFQEozSvPgFsHS0ytGcaC/hXlvJANV8QBTG9y8V0CrmIBWiVz8DrKq
-	JBEhJdXAODN/QtvKK7cWXfjtZnSsT/176eQy63Y12dJ69d6T/5e+ij1vuGGD1J69gg9yD2Uv
-	SD7LIcj1NOctk6njx4e5EyQZH3zdsDxKekGB9oaczJWnU2QEPRwfzZz1fCXXy2+e 
+	id S1751542Ab3ARQsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2013 11:48:05 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:35140 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751052Ab3ARQsE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Jan 2013 11:48:04 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 241D020EFA;
+	Fri, 18 Jan 2013 11:48:03 -0500 (EST)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute3.internal (MEProxy); Fri, 18 Jan 2013 11:48:03 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=BOCBcSnes0Lr9h3JFmNHFy
+	nONFs=; b=kQxjJjdOnYfLqfnk4JgjtR+xpdKaPrVBGvR9ZpCm3sZGrgDuEAD685
+	f4FtaKqJ6pWbej9/yaqYYpcyMyCFUfuIEYO4bXA+lp2xLG/qbzrd0jKb3kuxWpqs
+	myGqs3TlSnWVDlo5ynWNBQ3ag+ijhPFKbWyYBOMzdByufZvqztqY4=
+X-Sasl-enc: LGXkkX7w7VzC4NIdEOBoAnv2qB2t252IzClFwmDDMM0C 1358527682
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 353C4482554;
+	Fri, 18 Jan 2013 11:48:02 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <CAO2=c4nr8PsbHmyKptWewQMmpqWP=YasKZSnCuB9CCkExpSF8A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213915>
 
-On 01/18/2013 01:14 AM, Junio C Hamano wrote:
-> [...]
-> * mh/imap-send-shrinkage (2013-01-15) 14 commits
->  - imap-send.c: simplify logic in lf_to_crlf()
->  - imap-send.c: fold struct store into struct imap_store
->  - imap-send.c: remove unused field imap_store::uidvalidity
->  - imap-send.c: use struct imap_store instead of struct store
->  - imap-send.c: remove unused field imap_store::trashnc
->  - imap-send.c: remove namespace fields from struct imap
->  - imap-send.c: remove struct imap argument to parse_imap_list_l()
->  - imap-send.c: inline parse_imap_list() in parse_list()
->  - imap-send.c: remove some unused fields from struct store
->  - imap-send.c: remove struct message
->  - imap-send.c: remove struct store_conf
->  - iamp-send.c: remove unused struct imap_store_conf
->  - imap-send.c: remove struct msg_data
->  - imap-send.c: remove msg_data::flags, which was always zero
+Timothy Kretschmer venit, vidit, dixit 16.01.2013 15:06:
+> I am seeing the following output while converting a subversion repo to git.
 > 
->  Remove a lot of unused code from "git imap-send".
+>  >Found possible branch point: <repo-url>/trunk =>
+> <repo-url>/branches/CMT_PHASE3, 18441
+>> fatal: Not a valid object name refs/remotes/BlueSimViewer 5.0 20110316 Branch
+>> cat-file commit refs/remotes/BlueSimViewer 5.0 20110316 Branch: command returned error: 128
 > 
->  With a further comment fixup in patch #6, this seems ready for
->  'next'.
->  Expecting a reroll.
+> The command I am running to convert the repo is
+> 
+>> git svn clone <repo-url> -A authors-transform.txt --stdlayout bluebox-git > svnlist
+> 
+> I am running git version 1.8.1.1 on an Ubuntu 12.10 server. I am happy
+> to provide any other information that would be helpful.
+> 
+> I appreciate any assistance you can provide in this matter,
+>   -Tim
 
-I'm confused.  It seems like you are referring to the comment
-improvement suggested by Jonathan Nieder [1] that you have already
-incorporated [2] into mh/imap-send-shrinkage.  If you think there is
-something that needs rerolling, please explain.
+git-svn should cope with funky branch names. What is the exact name of
+the "CMT..." and "BlueSimViewer..." branches? Are you using a case
+challenged file system or just some standard linux fs?
 
-Thanks,
 Michael
-
-[1] http://permalink.gmane.org/gmane.comp.version-control.git/213672
-[2] http://permalink.gmane.org/gmane.comp.version-control.git/213681
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
