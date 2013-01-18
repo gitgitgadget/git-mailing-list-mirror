@@ -1,99 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] CodingGuidelines: add Python code guidelines
-Date: Fri, 18 Jan 2013 14:26:06 -0800
-Message-ID: <7vwqvap1q9.fsf@alter.siamese.dyndns.org>
-References: <20130118180639.GD31172@serenity.lan>
- <7vvcauqpn4.fsf@alter.siamese.dyndns.org>
- <20130118193501.GE31172@serenity.lan>
- <7vip6uqlvl.fsf@alter.siamese.dyndns.org>
- <20130118220552.GF31172@serenity.lan>
+Subject: Re: t9902 fails
+Date: Fri, 18 Jan 2013 14:37:18 -0800
+Message-ID: <7vpq12p17l.fsf@alter.siamese.dyndns.org>
+References: <1358256924-31578-1-git-send-email-pclouds@gmail.com>
+ <7v8v7qsagd.fsf@alter.siamese.dyndns.org>
+ <7vmww6qmck.fsf@alter.siamese.dyndns.org>
+ <201301182323.55378.avila.jn@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Pete Wyckoff <pw@padd.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Jan 18 23:26:32 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gersha?= =?utf-8?Q?usen?= 
+	<tboegi@web.de>, Jeff King <peff@peff.net>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: =?utf-8?Q?Jean-No=C3=ABl_AVILA?= <avila.jn@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 23:37:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwKOM-00029h-Uu
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 23:26:31 +0100
+	id 1TwKZL-0006YD-NF
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 23:37:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381Ab3ARW0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2013 17:26:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57852 "EHLO
+	id S1755253Ab3ARWhZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jan 2013 17:37:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35013 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751881Ab3ARW0J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2013 17:26:09 -0500
+	id S1754964Ab3ARWhW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Jan 2013 17:37:22 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CFBBB691;
-	Fri, 18 Jan 2013 17:26:08 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFDE3A163;
+	Fri, 18 Jan 2013 17:37:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sRHtjWICFQp3+7h2rYjeu7t6dew=; b=PxlMVm
-	qnq3lp/XkrTeRdQnmaNsiJ2+SpjUQsDZ9FmNlvHXFV1d5SenJkU8S0mECjBclOh6
-	HAru8xNv/eM3DgKCfevXC0CZFiqF4tSs4e+PQKKojez15lGsNIdTgHVWipmd1Fh/
-	UVlC/yHY/G/uUmG3Yzwdomw0R9Tsexc6p8fMs=
+	:content-type:content-transfer-encoding; s=sasl; bh=xtUfRHn529fe
+	6tpMqESq3UTrYVE=; b=vNVsS0WyUzjUlev3Aj2Uwi7f5Bpqrb5ABB6QLNnPX7kU
+	FJEz4eonYek+RdCyteyPmCtwnkonIk0ZYj1NWqsTxiYbJZjWgyWsZfkWClpu1boa
+	5d8JXZbSQtyppBmeWkw7bbIMa0KD/KUVL4+jDRhj4Oi+gyY11pC1J78JZuDKGkU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EUpfoQIfrCb/uV6WychqSQRRww1L/x9m
-	VMIWQsnNKZpSrxuk518oPDPFBEWsDu2cj6CVlMsac0kqg9lFM5QG9o187AqtwIFt
-	9ccoBXAqSjzLJQPjO+E9XG5Si1ySH65Nn+WtgzNo2tITNwGujfCVB3iMNgF/Q7wF
-	Bl3OAQF/+kE=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kXBu/a
+	8qbn+MFBAY7QdlA4zqwDRjVMg3Gdv/4OX9vSEbbqpRPbQCdvGZ94r8LDBJhyLNjd
+	wd5f6Lcp8u072o8gH2LyrkeKDKHxaTYyLsV+6e0u6z2sSjsK+UMiJ8GdkTkSf6Bv
+	x0vVw0XHMkj4NwfJKL0iRFQ+JlGHi8Pp5nu9c=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41C97B690;
-	Fri, 18 Jan 2013 17:26:08 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D20BDA161;
+	Fri, 18 Jan 2013 17:37:21 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1183B682; Fri, 18 Jan 2013
- 17:26:07 -0500 (EST)
-In-Reply-To: <20130118220552.GF31172@serenity.lan> (John Keeping's message of
- "Fri, 18 Jan 2013 22:05:52 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4675AA159; Fri, 18 Jan 2013
+ 17:37:20 -0500 (EST)
+In-Reply-To: <201301182323.55378.avila.jn@gmail.com> (=?utf-8?Q?=22Jean-No?=
+ =?utf-8?Q?=C3=ABl?= AVILA"'s message of "Fri, 18 Jan 2013 23:23:55 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0DC92BE0-61BE-11E2-9A4A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9EABFDB2-61BF-11E2-AA7A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213945>
 
-John Keeping <john@keeping.me.uk> writes:
+"Jean-No=C3=ABl AVILA" <avila.jn@gmail.com> writes:
 
-> On Fri, Jan 18, 2013 at 12:25:34PM -0800, Junio C Hamano wrote:
->> John Keeping <john@keeping.me.uk> writes:
->>> As more people have started trying to support Python 3 in the wild, it
->>> has become clear that it is often easier to have a single codebase that
->>> works with both Python 2 and Python 3, and not use 2to3.
->>>
->>> It is for this reason that the Unicode literal prefix was reintroduced.
->> 
->> Yes, and from that perspective, placing floor on earlier 3.x makes
->> tons of sense, no?
->> 
->> These early versions may not be unstable in the "this does not
->> behave as specified in the language specification for 3.x" sense,
->> but for the purpose of running scripts meant to be executable by
->> both 2.x and 3.x series, the early 3.x versions are not as good as
->> later versions where Python folks started making deliberate effort
->> to support them.
+> Le vendredi 18 janvier 2013 21:15:23, Junio C Hamano a =C3=A9crit :
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> > How about doing something like this and set that variable in the
+>> > test instead?  If STD_ONLY is not set, you will get everything, bu=
+t
+>> > when STD_ONLY is set, we will stop reading from "help -a" when it
+>> > starts listing additional stuff.
 >
-> As far as I'm aware (and having reviewed the release notes for 3.1, 3.2
-> and 3.3 as well as the planned features for 3.4), Unicode literals are
-> the only feature to have been added that was intended to make it easier
-> to support Python 2 and 3 in the same codebase.
+> I tried both of your propositions but none made test 10 of t9902 pass=
+=2E
 
-So there may be some other incompatibility lurking that we may run
-into later?
+Do you have a leftover git-check-ignore or something from a previous
+build that is *not* known to "git" you just built?
 
-> Given that no code currently on pu uses Unicode literals, I don't see a
-> reason to specify a minimum version of Python 3 since we're already
-> restricting ourselves to features in 2.6.
-
-OK, at least that reasoning need to be kept somewhere, either in the
-documentation of in the log message.
-
-Thanks.
+Neither will help in such a case.  The test pretty much runs with
+GIT_EXEC_PATH set to the build area, and we do want to be able to
+test what we have in the build area before we decide to install
+them, so that is nothing new.
