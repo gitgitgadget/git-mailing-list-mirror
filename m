@@ -1,124 +1,96 @@
-From: Matt Seitz <mseitz@mhseitz.onmicrosoft.com>
-Subject: RE: Question re. git remote repository
-Date: Fri, 18 Jan 2013 21:56:31 +0000
-Message-ID: <1BBEF94B6B46E54980290D150A6F2EDD46B7D7D0@BN1PRD0612MB635.namprd06.prod.outlook.com>
-References: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
- <20130116220615.48c159546bccfa5b9cd9028e@domain007.com>
- <20130116182156.GB4426@sigill.intra.peff.net>
- <20130116233744.7d0775eaec98ce154a9de180@domain007.com>
- <0630A778-9AC8-4023-889C-4FC58ABAB683@gmail.com>
- <alpine.DEB.2.02.1301161459060.21503@nftneq.ynat.uz>,<201301172153.r0HLrU4F019815@smtpb02.one-mail.on.ca>
- <1BBEF94B6B46E54980290D150A6F2EDD46B7AAE2@BN1PRD0612MB635.namprd06.prod.outlook.com>
- <201301181833.r0IIXNe7021768@smtpb01.one-mail.on.ca>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [RFC/PATCH] CodingGuidelines: add Python code guidelines
+Date: Fri, 18 Jan 2013 22:05:52 +0000
+Message-ID: <20130118220552.GF31172@serenity.lan>
+References: <20130118180639.GD31172@serenity.lan>
+ <7vvcauqpn4.fsf@alter.siamese.dyndns.org>
+ <20130118193501.GE31172@serenity.lan>
+ <7vip6uqlvl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Lang, David" <David.Lang@uhn.ca>, David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Fri Jan 18 22:57:15 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Pete Wyckoff <pw@padd.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 23:06:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwJw1-0003yI-Dj
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 22:57:13 +0100
+	id 1TwK4y-00051S-Kh
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 23:06:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755112Ab3ARV4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2013 16:56:51 -0500
-Received: from co1ehsobe001.messaging.microsoft.com ([216.32.180.184]:4962
-	"EHLO co1outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751881Ab3ARV4j convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2013 16:56:39 -0500
-Received: from mail192-co1-R.bigfish.com (10.243.78.201) by
- CO1EHSOBE035.bigfish.com (10.243.66.100) with Microsoft SMTP Server id
- 14.1.225.23; Fri, 18 Jan 2013 21:56:39 +0000
-Received: from mail192-co1 (localhost [127.0.0.1])	by
- mail192-co1-R.bigfish.com (Postfix) with ESMTP id 07279C605FB;	Fri, 18 Jan
- 2013 21:56:39 +0000 (UTC)
-X-Forefront-Antispam-Report: CIP:132.245.2.53;KIP:(null);UIP:(null);IPV:NLI;H:BN1PRD0612HT002.namprd06.prod.outlook.com;RD:none;EFVD:NLI
-X-SpamScore: 5
-X-BigFish: VS5(zz542I1432Izz1ee6h1de0h1202h1e76h1d1ah1d2ah1957ozz8275dhz31h87h2a8h668h839h944hd25h1220h1288h12a5h12a9h12bdh137ah13b6h13eah1441h1504h1537h153bh15d0h162dh1631h1758h1155h)
-Received-SPF: softfail (mail192-co1: transitioning domain of mhseitz.onmicrosoft.com does not designate 132.245.2.53 as permitted sender) client-ip=132.245.2.53; envelope-from=mseitz@mhseitz.onmicrosoft.com; helo=BN1PRD0612HT002.namprd06.prod.outlook.com ;.outlook.com ;
-X-FB-DOMAIN-IP-MATCH: fail
-Received: from mail192-co1 (localhost.localdomain [127.0.0.1]) by mail192-co1
- (MessageSwitch) id 1358546196793859_5287; Fri, 18 Jan 2013 21:56:36 +0000
- (UTC)
-Received: from CO1EHSMHS002.bigfish.com (unknown [10.243.78.219])	by
- mail192-co1.bigfish.com (Postfix) with ESMTP id BED9DA4006E;	Fri, 18 Jan 2013
- 21:56:36 +0000 (UTC)
-Received: from BN1PRD0612HT002.namprd06.prod.outlook.com (132.245.2.53) by
- CO1EHSMHS002.bigfish.com (10.243.66.12) with Microsoft SMTP Server (TLS) id
- 14.1.225.23; Fri, 18 Jan 2013 21:56:36 +0000
-Received: from BN1PRD0612MB635.namprd06.prod.outlook.com ([169.254.8.51]) by
- BN1PRD0612HT002.namprd06.prod.outlook.com ([10.255.195.35]) with mapi id
- 14.16.0257.004; Fri, 18 Jan 2013 21:56:31 +0000
-Thread-Topic: Question re. git remote repository
-Thread-Index: AQHN9BQsiS9Wz5z5QQCdt+r50PLYHphMmGQAgAAVLgCAADhAAIAAAHSAgAEp7QCAAHgWMYAA5CUAgAAsvnA=
-In-Reply-To: <201301181833.r0IIXNe7021768@smtpb01.one-mail.on.ca>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [69.228.170.69]
-X-OriginatorOrg: mhseitz.onmicrosoft.com
+	id S1754318Ab3ARWGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2013 17:06:07 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:33943 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753963Ab3ARWGG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2013 17:06:06 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 9DE7E866050;
+	Fri, 18 Jan 2013 22:06:05 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id g6My2i+TMAFb; Fri, 18 Jan 2013 22:06:04 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id 1D5A486600B;
+	Fri, 18 Jan 2013 22:06:03 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id D2350161E4FB;
+	Fri, 18 Jan 2013 22:06:03 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eGv+HAnuw-z2; Fri, 18 Jan 2013 22:06:03 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id D0CC0161E3E9;
+	Fri, 18 Jan 2013 22:05:54 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vip6uqlvl.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213942>
 
-
-
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+On Fri, Jan 18, 2013 at 12:25:34PM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+>> As more people have started trying to support Python 3 in the wild, it
+>> has become clear that it is often easier to have a single codebase that
+>> works with both Python 2 and Python 3, and not use 2to3.
+>>
+>> It is for this reason that the Unicode literal prefix was reintroduced.
 > 
-> But ultimately, there shouldn't be a question of "if" you
-> have a master repository but "where" you have the master repository, correct?
-> Or in other words, it doesn't seem like you'd want to designate any one
-> developer's local repository as also being the master repository, right? 
+> Yes, and from that perspective, placing floor on earlier 3.x makes
+> tons of sense, no?
+> 
+> These early versions may not be unstable in the "this does not
+> behave as specified in the language specification for 3.x" sense,
+> but for the purpose of running scripts meant to be executable by
+> both 2.x and 3.x series, the early 3.x versions are not as good as
+> later versions where Python folks started making deliberate effort
+> to support them.
 
-You have two options:
+As far as I'm aware (and having reviewed the release notes for 3.1, 3.2
+and 3.3 as well as the planned features for 3.4), Unicode literals are
+the only feature to have been added that was intended to make it easier
+to support Python 2 and 3 in the same codebase.
 
-1.  Central model:  
-a. each developer has their own private repository
-b. each developer uses "git commit" to commit changes into their own private repository
-c. in addition, you also have a shared master repository
-d. each developer uses "git push" to push their changes from their private repository to the shared master repository
-e. each developer uses "git pull" to pull other developers' changes from the shared master repository
+Given that no code currently on pu uses Unicode literals, I don't see a
+reason to specify a minimum version of Python 3 since we're already
+restricting ourselves to features in 2.6.
 
-2.  Peer-to-peer model:
-a. each developer has their own private repository
-b. each developer uses "git commit" to commit changes into their own private repository
-c. each developer uses "git pull" to pull other developers' changes from other developers' private repositories
 
-You can even mix these models.  Say you have a 5 member team, and 2 members are working on a feature together.  The 2 people working on the feature may use "git pull" to pull changes from each other's private repositories.  Then, when the feature is ready, one of them can use "git push" to push the final version from their private repository into the team's shared repository.
-
-What you don't want to do is this:
-
-Single repository, multiple developers:  just one repository, and every developer uses "git commit" to commit their changes into the same repository.
-
-> My sense is that would defeat the purpose of the DVCS.
-
-Not at all.  The purpose of the DVCS is to allow each developer to have their own private repository where they can commit changes, while still allowing people to share changes from one repository to another.  That's true whether you use the central model or the peer-to-peer model.  
-
-The traditional VCS has just one repository, and everyone has to commit their changes into that one central repository.
-
-> We have access to many servers on our
-> company's network, some of which we have full rights to, so there's no issue in
-> regards to storage space.
-
-That will work fine.
-
-> I suppose another idea would be to have the master
-> simply reside on one of the two developers local machines, so one of us would
-> have both a local rep and the master rep and the other of us would have just a
-> local rep. 
-
-That will also work.  You could even omit the master rep. and just have each developer have a local repository.  Each developer could then commit changes to their own local repository, and pull the other developer's changes from the other developer's local repository (the peer-to-peer model mentioned above).
-
-> Or is it best to
-> always have the master hosted on a machine with no other local reps?
-
-There's no requirement to have the master hosted on a machine with no other local reps.  The only issue is that the machine with the master rep. must be turned on for the other developers to push changes from their private repositories to the master repository.  Having the master repository on a 24x7 server ensures it is always available to all developers.  It also gives you another backup copy of your code, in case the developer's machine's storage fails or gets corrupted.
+John
