@@ -1,93 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2013, #07; Thu, 17)
-Date: Fri, 18 Jan 2013 08:58:43 -0800
-Message-ID: <7v4niesa0s.fsf@alter.siamese.dyndns.org>
-References: <7vsj5zs5y2.fsf@alter.siamese.dyndns.org>
- <50F96589.4010408@alum.mit.edu>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH 2/2] fix clang -Wtautological-compare with unsigned enum
+Date: Fri, 18 Jan 2013 12:15:05 -0500
+Message-ID: <CABURp0pj35j7+W_0gYNud2uuEoahugOMBW9ezTgPZ7YvgnBz8w@mail.gmail.com>
+References: <20130116182449.GA4881@sigill.intra.peff.net> <1358376443-7404-1-git-send-email-apelisse@gmail.com>
+ <1358376443-7404-2-git-send-email-apelisse@gmail.com> <CALWbr2wk+78zxGKCo-hCOwMuMOzdGspYvMu7PA6o0OYM3Y3m4A@mail.gmail.com>
+ <20130117110008.GD4574@serenity.lan> <CA+55aFxYSX2iYPSafKdCDSfWSMfQxP3R3Hqh8GuiiR6EbWfk3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jan 18 17:59:09 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: John Keeping <john@keeping.me.uk>,
+	Antoine Pelisse <apelisse@gmail.com>, Max Horn <max@quendi.de>,
+	git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jan 18 18:15:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwFHX-00026f-Ue
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 17:59:08 +0100
+	id 1TwFXf-0004Wk-TZ
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 18:15:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751487Ab3ARQ6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2013 11:58:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56953 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751209Ab3ARQ6q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2013 11:58:46 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D761FBEC1;
-	Fri, 18 Jan 2013 11:58:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CkIxKtsPqBqiEHyXsC3zDpCFoak=; b=lFtpkF
-	I8Rlj7RlYSRFr9mHtsu/J7H67p2oXMCEAnGru13/T+1ZMEmGf7k5/4B8uVfnRHKM
-	/hlrwk6u4RkXAjZNYTzyPp30fBOIODBtju3JYDJFh7LP2t5Ad30UUw7xSoRsbfBF
-	hJ6k7j/87lKuKwmeTwchRQoUCO0RfV+p3CFLM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Pa/vwR3xCVgJ6SqdWPhbvk0DYTmiPyxt
-	wOts2phDz14V8qn1QUQ43KN0TziYe9lp0aKH6H5TWzwG53DsCL3OKBoyZUwii35i
-	M615Zr+VTPD3Of8ItZeT/FkQuO7wBUjoWADGPj65nCNRobZYBM0Ub5AECQ7e6c89
-	QvGLG3nlN6E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC7E6BEBF;
-	Fri, 18 Jan 2013 11:58:45 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32972BEBB; Fri, 18 Jan 2013
- 11:58:45 -0500 (EST)
-In-Reply-To: <50F96589.4010408@alum.mit.edu> (Michael Haggerty's message of
- "Fri, 18 Jan 2013 16:08:57 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 51EC00BE-6190-11E2-952E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751654Ab3ARRP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2013 12:15:27 -0500
+Received: from mail-vc0-f181.google.com ([209.85.220.181]:39352 "EHLO
+	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751555Ab3ARRP0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2013 12:15:26 -0500
+Received: by mail-vc0-f181.google.com with SMTP id d16so1606945vcd.12
+        for <git@vger.kernel.org>; Fri, 18 Jan 2013 09:15:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=/Rri/zTpVIHAYv48NuGnc0tNlN9YG7Tj62jLeohjsDQ=;
+        b=ku5sk8XE4Q5U8kN65JYCcI0Xq1ersUpes/yWuW7XZtnSxzOl6iX10S9eDImZ9unOeJ
+         i2obNF9nYjjht1srbGRFhe0hPXm42pPwpH9N+x+yEjymC16ba9QixbeSVzvzQz29zBa5
+         4cREcapMFpnWy99Bc8jGsgKD7kFleEuqAFv4MQVmRgNBWm5eRR3ROzL2K/3hzYqz6+eK
+         KaUe6ejh+777LKCFBe/JWBTpI0ZoeM3sIaRb6olGYE2xSM7PfojkhAy9lQAozM6LQwMT
+         fcCdnqmmuV3Gl5/QdTyHP/MCCwbTlfCoAn9XIj4fUY8h0f20E2OIGMBl4Uv/fY8XQXoP
+         fZiQ==
+X-Received: by 10.52.71.174 with SMTP id w14mr9050629vdu.122.1358529325871;
+ Fri, 18 Jan 2013 09:15:25 -0800 (PST)
+Received: by 10.58.241.203 with HTTP; Fri, 18 Jan 2013 09:15:05 -0800 (PST)
+In-Reply-To: <CA+55aFxYSX2iYPSafKdCDSfWSMfQxP3R3Hqh8GuiiR6EbWfk3w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213918>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
-
-> On 01/18/2013 01:14 AM, Junio C Hamano wrote:
->> [...]
->> * mh/imap-send-shrinkage (2013-01-15) 14 commits
->>  - imap-send.c: simplify logic in lf_to_crlf()
->>  - imap-send.c: fold struct store into struct imap_store
->>  - imap-send.c: remove unused field imap_store::uidvalidity
->>  - imap-send.c: use struct imap_store instead of struct store
->>  - imap-send.c: remove unused field imap_store::trashnc
->>  - imap-send.c: remove namespace fields from struct imap
->>  - imap-send.c: remove struct imap argument to parse_imap_list_l()
->>  - imap-send.c: inline parse_imap_list() in parse_list()
->>  - imap-send.c: remove some unused fields from struct store
->>  - imap-send.c: remove struct message
->>  - imap-send.c: remove struct store_conf
->>  - iamp-send.c: remove unused struct imap_store_conf
->>  - imap-send.c: remove struct msg_data
->>  - imap-send.c: remove msg_data::flags, which was always zero
->> 
->>  Remove a lot of unused code from "git imap-send".
->> 
->>  With a further comment fixup in patch #6, this seems ready for
->>  'next'.
->>  Expecting a reroll.
+On Thu, Jan 17, 2013 at 11:44 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> On Thu, Jan 17, 2013 at 3:00 AM, John Keeping <john@keeping.me.uk> wrote:
+>>
+>> There's also a warning that triggers with clang 3.2 but not clang trunk, which
+>> I think is a legitimate warning - perhaps someone who understands integer type
+>> promotion better than me can explain why the code is OK (patch->score is
+>> declared as 'int'):
+>>
+>> builtin/apply.c:1044:47: warning: comparison of constant 18446744073709551615
+>>     with expression of type 'int' is always false
+>>     [-Wtautological-constant-out-of-range-compare]
+>>         if ((patch->score = strtoul(line, NULL, 10)) == ULONG_MAX)
+>>             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~
 >
-> I'm confused.  It seems like you are referring to the comment
-> improvement suggested by Jonathan Nieder...
+> The warning seems to be very very wrong, and implies that clang has
+> some nasty bug in it.
+>
+> Since patch->score is 'int', and UNLONG_MAX is 'unsigned long', the
+> conversion rules for the comparison is that the int result from the
+> assignment is cast to unsigned long. And if you cast (int)-1 to
+> unsigned long, you *do* get ULONG_MAX. That's true regardless of
+> whether "long" has the same number of bits as "int" or is bigger. The
+> implicit cast will be done as a sign-extension (unsigned long is not
+> signed, but the source type of 'int' *is* signed, and that is what
+> determines the sign extension on casting).
+>
+> So the "is always false" is pure and utter crap. clang is wrong, and
+> it is wrong in a way that implies that it actually generates incorrect
+> code. It may well be worth making a clang bug report about this.
+>
+> That said, clang is certainly understandably confused. The code
+> depends on subtle conversion rules and bit patterns, and is clearly
+> very confusingly written.
+>
+> So it would probably be good to rewrite it as
+>
+>     unsigned long val = strtoul(line, NULL, 10);
+>     if (val == ULONG_MAX) ..
+>     patch->score = val;
+>
+> instead. At which point you might as well make the comparison be ">=
+> INT_MAX" instead, since anything bigger than that is going to be
+> bogus.
+>
+> So the git code is probably worth cleaning up, but for git it would be
+> a cleanup. For clang, this implies a major bug and bad code
+> generation.
 
-It was an indication that I just forgot our previous exchange in
-which I said "the remaining issues are so minor I can squash these
-in".  Sorry about that.
 
-Will merge to 'next'.
+Yes, I can tell by the wording of the error message that you are right
+and clang has a problem.  But the git code it complained about does
+have a real problem, because the result of "signed int a = ULONG_MAX"
+is implementation-defined.  It cannot be guaranteed or expected that
+patch->score will ever be assigned -1 there, and so the comparison may
+always be false.  I guess the warning is correct, but only
+accidentally.  :-)
 
-Thanks.
+Your rewrite is more sane and corrects the problem, I think.
+
+Phil
