@@ -1,70 +1,115 @@
-From: Durham Goode <durham@fb.com>
-Subject: bug: git-svn seg fault during 'git svn fetch' due to perl < 5.10
-Date: Fri, 18 Jan 2013 04:14:12 +0000
-Message-ID: <2B10A89294DA6740AC6155F56842F9CE05234E6C@PRN-MBX01-2.TheFacebook.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 0/8] push: update remote tags only with force
+Date: Thu, 17 Jan 2013 20:36:17 -0800
+Message-ID: <7vfw1zrttq.fsf@alter.siamese.dyndns.org>
+References: <1354239700-3325-1-git-send-email-chris@rorvick.com>
+ <DBF53EC2-A669-4B77-B88E-BFCDF43C862E@quendi.de>
+ <7vsj61xez2.fsf@alter.siamese.dyndns.org>
+ <7vobgpxeel.fsf@alter.siamese.dyndns.org>
+ <CAEUsAPb0Zg0x78e+12NqXA4PRBkOUO89KTgxtwxujS1KOx9NYg@mail.gmail.com>
+ <7vehhkuwg5.fsf@alter.siamese.dyndns.org>
+ <CAEUsAPYAL6TD_nzu-YumRK_b-kFy7mNz1VivmSxGeuFYVxVL4g@mail.gmail.com>
+ <20130118010638.GA29453@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 18 05:14:34 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Rorvick <chris@rorvick.com>, Max Horn <max@quendi.de>,
+	git@vger.kernel.org, Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Philip Oakley <philipoakley@iee.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kacper Kornet <draenog@pld-linux.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 18 05:36:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tw3Ld-0001RW-N4
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 05:14:34 +0100
+	id 1Tw3h4-0000De-2h
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 05:36:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755214Ab3AREOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2013 23:14:10 -0500
-Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:42247 "EHLO
-	mx0b-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754008Ab3AREOJ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2013 23:14:09 -0500
-Received: from pps.filterd (m0004077 [127.0.0.1])
-	by mx0b-00082601.pphosted.com (8.14.5/8.14.5) with SMTP id r0I4CitL028720
-	for <git@vger.kernel.org>; Thu, 17 Jan 2013 20:14:08 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : subject : date
- : message-id : content-type : content-id : content-transfer-encoding :
- mime-version; s=facebook; bh=1lPPuiYnQk62LPQDN1+rSy7+42obV0I3aYuwtjIIq9k=;
- b=m6WzKUby2qdlKt1SIRNF8ye2Ppr75FP9kGz1xsGJ2dycBG4JVQ+NpTa0qdYS6Ike6V1N
- O2+Tk1QGKLhEEnE/RHCsUHzNzIQ/QledmseJLmVKcVT/7kIiV3NJ1OkQRH5kMDSmh/8n
- oPQWtrh9BUY1dMCa8ebmY6B+e7HV+1dFqUk= 
-Received: from mail.thefacebook.com (prn1-cmdf-dc01-fw1-nat.corp.tfbnw.net [173.252.71.129] (may be forged))
-	by mx0b-00082601.pphosted.com with ESMTP id 19xkmrss69-1
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=OK)
-	for <git@vger.kernel.org>; Thu, 17 Jan 2013 20:14:08 -0800
-Received: from PRN-MBX01-2.TheFacebook.com ([169.254.4.9]) by
- PRN-CHUB04.TheFacebook.com ([fe80::7ded:c10e:ef04:80d8%12]) with mapi id
- 14.02.0318.004; Thu, 17 Jan 2013 20:14:07 -0800
-Thread-Topic: git-svn seg fault during 'git svn fetch' due to perl < 5.10
-Thread-Index: AQHN9TJFY3SfoIMBzkGfKUbhPVXaLg==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.16.4]
-Content-ID: <1D47B281C9E90E409410E3723EAB6784@fb.com>
-X-Proofpoint-Spam-Reason: safe
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.9.8327,1.0.431,0.0.0000
- definitions=2013-01-18_02:2013-01-17,2013-01-18,1970-01-01 signatures=0
+	id S1754142Ab3AREgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2013 23:36:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55622 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753846Ab3AREgU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2013 23:36:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 647D7A9DE;
+	Thu, 17 Jan 2013 23:36:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=cgG9s+Hg/sJdxusZ3W8ygkv+e1Q=; b=ilOnyPGHg2VI/y4TK4Dz
+	LIfmCpL29pl4TrDXVeu+UekLbrCbudOCANxHedzBR8psOmEZ47wOdduSPLX0Fqu/
+	XK/NezYHBq712VW5EenFYpu8mlKn5fMs2RKIUddQOMvYurdrfd/oMk/WtuLygFnr
+	VkCAUtvEvs6sEQ/lKCEscyo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=qTzRt8N7MIhpFNt+h/0NK0uKyvzBzmrbfG+dQ/5dqZBWwH
+	V5U6HSjTxu7HwAE8981xiIf2SnrIKS9lkR2A72SFcDpOILAqLl3koKzXzlYzwA7W
+	LjNibwq550p+lUm+hiEITmllWldMXrL3yE2PPzDDw+KdPXdv82viOtoiuYYNE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58411A9DC;
+	Thu, 17 Jan 2013 23:36:19 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BCB06A9DB; Thu, 17 Jan 2013
+ 23:36:18 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9A331884-6128-11E2-8FBE-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213901>
 
-In git 1.8.1, when we do 'git svn fetch' on a large repo, we're seeing a
-seg fault.  It's caused by git-svn trying to parse a large yaml file
-(introduced in 
-https://github.com/git/git/commit/68f532f4ba888f277637a94b4a49136054df0540
-) which encounters a perl regex stack overflow bug that was present in
-perl < 5.10 (https://bugzilla.redhat.com/show_bug.cgi?id=192400).
+Jeff King <peff@peff.net> writes:
 
-We'll find a work around, but it'd be nice if there was a config setting
-to let us choose not to use the yaml format.
+> However, if instead of the rule being "blobs on the remote side
+> cannot be replaced", if it becomes "the old value on the remote
+> side must be referenced by what we replace it with", that _is_
+> something we can calculate reliably on the sending side.  And that
+> is logically an extension of the fast-forward rule,...
 
-Let me know if there's a better place to report this.
+It may be an extension of the fast-forward, but only in the graph
+reachability sense.  I can buy that it is mathmatically consistent
+with the mode that has proven to be useful for commits at the branch
+tips, which we know why "fast-forward" rule is an appropriate
+default for.  You haven't shown if that mathmatical consistency is
+useful for non-commit case.
 
--Durham
+
+The primary reason "fast-forward" is a good default for branches is
+not that "we do not want to lose objects to gc" (you have reflog for
+that).  The reason is non fast-forward is a sign of unintended
+rewind, and later will cause duplicated history with merge
+conflicts.
+
+That comes from the way objects pointed by refs/heads aka branches
+are used.  It is not just "commit" (as object type), but how these
+objects are used.  Think why we decided it was a good idea to do one
+thing in the topic that introduced the regression under discussion:
+"Even if the new commit is a descendant of the old commit, we do not
+want to fast-forward a ref if it is under refs/tags/".  Type of object
+may be one factor, but how it is used is more important factor in
+deciding what kind of policy is appropriate.
+
+If users have workflows that want to have a ref hierarchy that point
+at a blob, there will not be any update to such a ref that will
+satisfy your definition of "extended" fast-forward requirement, and
+that requirement came solely from mathematical purity (i.e. graph
+reachability), not from any workflow consideration.  That is very
+disturbing to me.
+
+A workflow that employes such a "blob at a ref" may perfectly be
+happy with replacing the blob as last-one-wins basis. I do not think
+the client side should enforce a policy to forbid such a push.
+
+I personally think the current client side that insists that updates
+to any ref has to have the current object and must fast-forward and
+requires --force otherwise was a mistake (this predates the change
+by Chris).  The receiving end does not implement such an arbitrary
+restriction outside refs/heads/, and does so only for refs/heads/
+only when deny-non-fast-forwards is set.
