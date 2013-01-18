@@ -1,121 +1,147 @@
-From: Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>
-Subject: Re: GIT get corrupted on lustre
-Date: Fri, 18 Jan 2013 12:50:11 -0500
-Message-ID: <50F98B53.9080109@giref.ulaval.ca>
-References: <50D861EE.6020105@giref.ulaval.ca> <50D870A0.90205@interlinx.bc.ca> <50EC453A.2060306@giref.ulaval.ca> <50EDDF12.3080800@giref.ulaval.ca> <50F7F793.80507@giref.ulaval.ca> <CAGK7Mr4R=OwfWt4Kat75C8YDi3iLTavMLxeoLxkf1-gKhxrucg@mail.gmail.com> <50F8273E.5050803@giref.ulaval.ca> <871B6C10EBEFE342A772D1159D1320853A042AD7@umechphj.easf.csd.disa.mil> <50F829A9.7090606@calculquebec.ca> <871B6C10EBEFE342A772D1159D1320853A044B42@umechphj.easf.csd.disa.mil>
+From: John Keeping <john@keeping.me.uk>
+Subject: [RFC/PATCH] CodingGuidelines: add Python code guidelines
+Date: Fri, 18 Jan 2013 18:06:39 +0000
+Message-ID: <20130118180639.GD31172@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Maxime Boissonneault <maxime.boissonneault@calculquebec.ca>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?S=E9bastien_?= =?ISO-8859-1?Q?Boisvert?= 
-	<sebastien.boisvert@calculquebec.ca>
-To: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
-X-From: git-owner@vger.kernel.org Fri Jan 18 18:50:49 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Eric S. Raymond" <esr@thyrsus.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Pete Wyckoff <pw@padd.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 18 19:07:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwG5P-0003ZG-Go
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 18:50:39 +0100
+	id 1TwGLS-0005hb-7J
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 19:07:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751815Ab3ARRuS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jan 2013 12:50:18 -0500
-Received: from serveur.giref.ulaval.ca ([132.203.7.102]:52684 "EHLO
-	mailhost.giref.ulaval.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751507Ab3ARRuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2013 12:50:17 -0500
+	id S1751849Ab3ARSGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2013 13:06:53 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:46978 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751507Ab3ARSGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2013 13:06:52 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id 3867410192C;
-	Fri, 18 Jan 2013 12:50:12 -0500 (EST)
-X-Virus-Scanned: amavisd-new at giref.ulaval.ca
-Received: from mailhost.giref.ulaval.ca ([127.0.0.1])
-	by localhost (mailhost.giref.ulaval.ca [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 07wSvtmIxND3; Fri, 18 Jan 2013 12:50:11 -0500 (EST)
-Received: from [132.203.7.22] (melkor.giref.ulaval.ca [132.203.7.22])
-	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id 3B27C10111C;
-	Fri, 18 Jan 2013 12:50:11 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130105 Thunderbird/17.0.2
-In-Reply-To: <871B6C10EBEFE342A772D1159D1320853A044B42@umechphj.easf.csd.disa.mil>
+	by coyote.aluminati.org (Postfix) with ESMTP id 3EE9E19808A;
+	Fri, 18 Jan 2013 18:06:52 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4vvtUF8NULvw; Fri, 18 Jan 2013 18:06:51 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 742D0198078;
+	Fri, 18 Jan 2013 18:06:51 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 5F68A161E59E;
+	Fri, 18 Jan 2013 18:06:51 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id FzBhHeODHczY; Fri, 18 Jan 2013 18:06:51 +0000 (GMT)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 25437161E3A8;
+	Fri, 18 Jan 2013 18:06:41 +0000 (GMT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213920>
 
-Good idea!
+These are kept short by simply deferring to PEP-8.  Most of the Python
+code in Git is already very close to this style (some things in contrib/
+are not).
 
-I did a strace and here is the output with the error:
+Rationale for version suggestions:
 
-http://www.giref.ulaval.ca/~ericc/strace_git_error.txt
+ - Amongst the noise in [2], there isn't any disagreement about using
+   2.6 as a base (see also [3]).
 
-Hope it will be insightful!
+ - The Git INSTALL document currently says:
 
-Eric
+      Python version 2.6 or later is needed to use the git-p4
+      interface to Perforce.
 
+ - Restricting ourselves to 2.6+ makes aiming for Python 3 compatibility
+   significantly easier [4].
 
-On 01/17/2013 12:17 PM, Pyeron, Jason J CTR (US) wrote:
-> Sorry, I am in cygwin mode, and I had crossed wires in my head. s/Pro=
-cessMon/strace/
->
->> -----Original Message-----
->> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] O=
-n
->> Behalf Of Maxime Boissonneault
->> Sent: Thursday, January 17, 2013 11:41 AM
->> To: Pyeron, Jason J CTR (US)
->> Cc: Eric Chamberland; Philippe Vaucher; git@vger.kernel.org; S=E9bas=
-tien
->> Boisvert
->> Subject: Re: GIT get corrupted on lustre
->>
->> I don't know of any lustre filesystem that is used on Windows. Barel=
-y
->> anybody uses Windows in the HPC industry.
->> This is a Linux cluster.
->>
->> Maxime Boissonneault
->>
->> Le 2013-01-17 11:40, Pyeron, Jason J CTR (US) a =E9crit :
->>>> -----Original Message-----
->>>> From: Eric Chamberland
->>>> Sent: Thursday, January 17, 2013 11:31 AM
->>>>
->>>> On 01/17/2013 09:23 AM, Philippe Vaucher wrote:
->>>>>> Anyone has a new idea?
->>>>> Did you try Jeff King's code to confirm his idea?
->>>>>
->>>>> Philippe
->>>>>
->>>> Yes I did, but it was running without any problem....
->>>>
->>>> I find that my test case is "simple" (fresh git clone then "git gc=
-"
->> in
->>>> a
->>>> crontab), I bet anyone who has access to a Lustre filesystem can
->>>> reproduce the problem...  The problem is to have such a filesystem
->> to
->>>> do
->>>> the tests....
->>> Stabbing in the dark, but can you log the details with ProcessMon?
->>>
->>> http://technet.microsoft.com/en-us/sysinternals/bb896645
->>>
->>>> But I am available to do it...
->>> -Jason
->>
->>
->> --
->> ---------------------------------
->> Maxime Boissonneault
->> Analyste de calcul - Calcul Qu=E9bec, Universit=E9 Laval
->> Ph. D. en physique
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+ - Following Pete's comment [5] I tested Python 2.6.0 and it does
+   support bytes literals, as suggested by [4] but contradicted by [6].
+
+ - Advocating Python 3 support in all scripts is currently unrealistic
+   because:
+
+     - 'p4 -G' provides output in a format that is very hard to use with
+       Python 3 (and its documentation claims Python 3 is unsupported).
+
+     - Mercurial does not support Python 3.
+
+     - Bazaar does not support Python 3.
+
+ - But we should try to make new scripts compatible with Python 3
+   because all new Python development is happening on version 3 and the
+   Python community will eventually stop supporting Python 2 [7].
+
+I chose to recommend `from __future__ import unicode_literals` since it
+provides the widest range of compatibility (2.6+ and 3.0+) while
+allowing us to be explicit about bytes vs. Unicode.  The alternative
+would be to advocate using the 'u' prefix on Unicode strings but this
+isn't available in versions 3.0 - 3.2 (it is reintroduced in version 3.3
+as a no-op in order to make it easier to write scripts targeting a wide
+range of Python versions without needing to use 2to3 [1]).  In reality I
+doubt we will ever need to worry about this since ASCII strings will
+just work in both Python 2 and Python 3.
+
+[1] http://www.python.org/dev/peps/pep-0414/
+[2] http://thread.gmane.org/gmane.comp.version-control.git/210329
+[3] http://article.gmane.org/gmane.comp.version-control.git/210429
+[4] http://docs.python.org/3.3/howto/pyporting.html#try-to-support-python-2-6-and-newer-only
+[5] http://article.gmane.org/gmane.comp.version-control.git/213830
+[6] http://docs.python.org/2.6/reference/lexical_analysis.html#literals
+[7] http://www.python.org/dev/peps/pep-0404/
+---
+ Documentation/CodingGuidelines | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 69f7e9b..baf3b41 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -179,6 +179,22 @@ For C programs:
+  - Use Git's gettext wrappers to make the user interface
+    translatable. See "Marking strings for translation" in po/README.
+ 
++For Python scripts:
++
++ - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
++
++ - As a minimum, we aim to be compatible with Python 2.6 and 2.7.
++
++ - Where required libraries do not restrict us to Python 2, we try to
++   also be compatible with Python 3.  In this case we use
++   `from __future__ import unicode_literals` if we need to differentiate
++   Unicode string literals, rather than prefixing Unicode strings with
++   'u' since the latter is not supported in Python versions 3.0 - 3.2.
++
++ - We use the 'b' prefix for bytes literals.  Note that even though
++   the Python documentation for version 2.6 does not mention this
++   prefix it is supported since version 2.6.0.
++
+ Writing Documentation:
+ 
+  Every user-visible change should be reflected in the documentation.
+-- 
+1.8.1
