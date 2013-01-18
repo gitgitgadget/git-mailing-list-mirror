@@ -1,122 +1,109 @@
-From: Dennis Putnam <dap1@bellsouth.net>
-Subject: Re: merge vs. rebase question
-Date: Fri, 18 Jan 2013 13:59:50 -0500
-Message-ID: <50F99BA6.5010204@bellsouth.net>
-References: <50F8073F.90304@bellsouth.net> <CABURp0rTNh4Xe4h6RwvDgQaBKJFq-ami-wO+X0mR5hiubaF7mw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] CodingGuidelines: add Python code guidelines
+Date: Fri, 18 Jan 2013 11:04:15 -0800
+Message-ID: <7vvcauqpn4.fsf@alter.siamese.dyndns.org>
+References: <20130118180639.GD31172@serenity.lan>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="----enig2MDUJHCMUFCHMRERJDNFO"
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 18 20:00:12 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Pete Wyckoff <pw@padd.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri Jan 18 20:04:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwHAh-0008H4-Tz
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 20:00:12 +0100
+	id 1TwHF1-0004th-8b
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 20:04:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752211Ab3ARS7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2013 13:59:51 -0500
-Received: from nm9.access.bullet.mail.sp2.yahoo.com ([98.139.44.136]:48699
-	"EHLO nm9.access.bullet.mail.sp2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751574Ab3ARS7u (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Jan 2013 13:59:50 -0500
-Received: from [98.139.44.96] by nm9.access.bullet.mail.sp2.yahoo.com with NNFMP; 18 Jan 2013 18:59:50 -0000
-Received: from [67.195.15.62] by tm1.access.bullet.mail.sp2.yahoo.com with NNFMP; 18 Jan 2013 18:59:50 -0000
-Received: from [127.0.0.1] by smtp103.sbc.mail.gq1.yahoo.com with NNFMP; 18 Jan 2013 18:59:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bellsouth.net; s=s1024; t=1358535590; bh=JKDLN1ypKx16C5cVnfX9DyTPiZ0XV/b9mDamHfdZMaE=; h=X-Yahoo-Newman-Id:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:Received:Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:References:In-Reply-To:X-Enigmail-Version:Content-Type; b=w3mdPuj8Zpn7kbb6gjQjpHePmQJ5/JuRylgSCH8Nzz9ey8KuBFf80XV+KSDxs4HxJYZT5KWq0UBosgkVvcl6gHxHBWULAM4dlMafq4QHa4UX1x07BU/+rF5JStCM3BpjuGMo3iut+QArlHX3w7FTey53r3SC/90J19pDp/cnG7c=
-X-Yahoo-Newman-Id: 380728.35234.bm@smtp103.sbc.mail.gq1.yahoo.com
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: HDFnl5oVM1lj3w_OdaiMrBWMvjlrVSyF93IrOsgkcfW1.yV
- lWKRUGi3ByfaicP7M5eZbnH6NI4sZCOdRRd81kWI0lF64.oWMO3XGk65yXii
- _rUy.zkbZTUCzqnLhq3rO792NP_sm5u3r8ovyelF525oaujAStuaEV73F3Vf
- qjZVVWZ48A5FwjZJZt09WfIAUGPKCj9ocaupa1yTxOAh3s1LhJDUsfgUaBd6
- GGpYPjLcdJFA1onq1UHj1vRBwmQ0I8jyFcxxFAANwaRAVsD8ZZN2_e_6zQFW
- uBGzS06bROqrNMlGT8DAubNQ_C1KURlqF.aZG0LBxHN9S.uIG7jlWZgnREnv
- 4qhBR2BAuMXrn58kOH1odGlcpZ_PzYKbI9tKRFN2pF9D_KgYShP6_3v_sg4l
- gUIzCduBJZPKLFpyS6i0TY8V7vW7IJT4SNh605ApJTohCStOB2gEA_8s-
-X-Yahoo-SMTP: vUK3UKuswBCE01YQVYEZ1wHCa.HPSVCYhektzgdifA--
-Received: from [192.168.0.100] (dap1@74.176.153.107 with plain)
-        by smtp103.sbc.mail.gq1.yahoo.com with SMTP; 18 Jan 2013 10:59:50 -0800 PST
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <CABURp0rTNh4Xe4h6RwvDgQaBKJFq-ami-wO+X0mR5hiubaF7mw@mail.gmail.com>
-X-Enigmail-Version: 1.5
+	id S1753957Ab3ARTES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2013 14:04:18 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38169 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752459Ab3ARTES (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2013 14:04:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3755AABC2;
+	Fri, 18 Jan 2013 14:04:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fl75y7HXPxgljx3tYTfqBzw1wSI=; b=Pif4jS
+	zJ8h4L2NSQ0CAP9X7fYIqh+iSLSt0JO0IzxayY7tz/Iagqmu2TudVRQmg+Qtcnqt
+	GxVi0djMbv7Kg27ZT9shurLw/8vpw5V6++8ps08l+P1A98zvKWyuVINj6eEsnPKg
+	fst9WXuHSpC2xWd9S92DVWO0M7AFbRoXXMDsg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f2Rm1opa+bi2WJ0r01U2zFeTJevCbrg9
+	4z+8HTK4pBYcdNfvAvHqy+8XbL2uR/F1AjwETQVnpvYqbCDex4vbIXbZJTXukLbt
+	+/iAAWSCsMFxk76ftIkIiCK2++8q5TsRPW04LGab678wtTGBCzW/Tpx/8gEEEs83
+	LNMFVmMmkyE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 285A3ABC0;
+	Fri, 18 Jan 2013 14:04:17 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A851BABBF; Fri, 18 Jan 2013
+ 14:04:16 -0500 (EST)
+In-Reply-To: <20130118180639.GD31172@serenity.lan> (John Keeping's message of
+ "Fri, 18 Jan 2013 18:06:39 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DB0BCDBE-61A1-11E2-811C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213926>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
-------enig2MDUJHCMUFCHMRERJDNFO
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+John Keeping <john@keeping.me.uk> writes:
 
-Thanks for the reply. I'm afraid this question has become moot. I can no
-longer reproduce the problem as it is now working as expected. I did
-find an incorrect ownership on one of the 'objects' sub-directories but
-I would think that should have given me an error. Perhaps I used root at
-the wrong time to do something and that changed the ownership. In any
-case there is not much I can do at this point since the problem no
-longer exists.
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index 69f7e9b..baf3b41 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -179,6 +179,22 @@ For C programs:
+>   - Use Git's gettext wrappers to make the user interface
+>     translatable. See "Marking strings for translation" in po/README.
+>  
+> +For Python scripts:
+> +
+> + - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
+> +
+> + - As a minimum, we aim to be compatible with Python 2.6 and 2.7.
+> +
+> + - Where required libraries do not restrict us to Python 2, we try to
+> +   also be compatible with Python 3.  In this case we use
+> +   `from __future__ import unicode_literals` if we need to differentiate
+> +   Unicode string literals, rather than prefixing Unicode strings with
+> +   'u' since the latter is not supported in Python versions 3.0 - 3.2.
 
-On 1/18/2013 1:38 PM, Phil Hord wrote:
-> On Thu, Jan 17, 2013 at 9:14 AM, Dennis Putnam <dap1@bellsouth.net> wro=
-te:
->> As a git noob I am having trouble understanding when to use which
->> commands. I have a repository (bare) on my Linux server. I also create=
-d
->> a build directory as a local repository. In my build script I do a 'gi=
-t
->> pull' to make sure the build directory is up to date. No changes are
->> made to my source so this repository never does an 'add' or 'commit'.
->> When I run my script with 'pull', the output indicates that changes we=
-re
->> found and seems to have pulled them into the local directory. However,=
+"In this case"?  In what case?  This document will stay effective
+long after you settle one particular backward incompatibility Python
+3 introduced, namely, the unicode literal issues.  It is just one
+"example".
 
->> when I look at the resulting source, none of the expected changes show=
+That example somehow tells me that early versions of Python 3.x
+series may be too buggy and not worth worrying about, and we may
+want to set a floor for Python 3.x series, too, with something
+like:
 
->> up. I then tried a 'fetch' and 'rebase'. That worked but I don't
->> understand why. I thought 'pull' did a 'fetch' and a 'merge' so I don'=
-t
->> understand why a 'fetch' and 'rebase' worked but 'fetch' and 'merge' d=
-id
->> not. Unless my understanding of what 'pull' does is wrong. In my case,=
+    - The code should be compatible with 2.6 and newer versions of
+      Python 2.x series; 2.5 and older are not supported anymore.
 
->> what should I be using in my script to assure that the build directory=
+    - The code should also be comptabile with 3.2 and newer versions
+      of Python 3.x series; 3.1 and older are not mature enough and
+      have too many problems to write scripts that work on it and
+      solid 2.x at the same time.
 
->> is current?
-> If your build directory never has any source changes or new commits,
-> then pull is the right thing to do.  You might want to use 'git pull
-> --ff-only' to guarantee that your build directory is not creating
-> merges unexpectedly.
->
-> You did not provide enough information to help figure out why your
-> pull is failing to achieve the results you expect.  I suggest you
-> perform the pull manually in your build directory.  If it fails, git
-> should tell you why.  If it reports success but actually fails, you
-> can post a detailed explanation of the problem here so someone can
-> suggest the cause.
->
-> Phil
->
+I am not actively advocating to disqualify early 3.x; I am just
+suggesting that doing so may be a viable escape hatch for us that
+does not harm real users.  If you and others who know Python better
+think there isn't any problem that makes it too cumbersome to
+support both late 2.x and 3.0/3.1, there is no reason to set the
+floor at 3.2.
 
-
-
-------enig2MDUJHCMUFCHMRERJDNFO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iEYEARECAAYFAlD5m6cACgkQ/fiWYqZ2tVRJ8QCfdpa0C3Wx5Y5gRrLNsHTUG2qS
-JN4AnRF4vYNfHBmcST9c5K1LC8RVtK7s
-=SZqD
------END PGP SIGNATURE-----
-
-------enig2MDUJHCMUFCHMRERJDNFO--
+I just have this feeling that we might be better off treating them
+as 0.x releases of a new software called Python3, that happens to be
+similar to the Python we know.
