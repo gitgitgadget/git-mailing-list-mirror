@@ -1,145 +1,163 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [RFC/PATCH] CodingGuidelines: add Python code guidelines
-Date: Fri, 18 Jan 2013 19:35:01 +0000
-Message-ID: <20130118193501.GE31172@serenity.lan>
-References: <20130118180639.GD31172@serenity.lan>
- <7vvcauqpn4.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t9902 fails
+Date: Fri, 18 Jan 2013 12:15:23 -0800
+Message-ID: <7vmww6qmck.fsf@alter.siamese.dyndns.org>
+References: <1358256924-31578-1-git-send-email-pclouds@gmail.com>
+ <20130115232400.GA16147@sigill.intra.peff.net> <50F64597.2070100@web.de>
+ <201301172347.50157.avila.jn@gmail.com> <20130118000454.GI13449@google.com>
+ <7v8v7qsagd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Pete Wyckoff <pw@padd.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 20:35:41 2013
+Cc: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <avila.jn@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 21:15:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwHj1-0007Ct-ON
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 20:35:40 +0100
+	id 1TwILt-0001Ia-28
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 21:15:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753288Ab3ARTfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2013 14:35:17 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:42627 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751574Ab3ARTfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2013 14:35:16 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 07E1022F0A;
-	Fri, 18 Jan 2013 19:35:15 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GXTG4jYBxCDy; Fri, 18 Jan 2013 19:35:14 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id 604AB22F4E;
-	Fri, 18 Jan 2013 19:35:13 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 272D3161E577;
-	Fri, 18 Jan 2013 19:35:13 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id urMRaZUrfbNj; Fri, 18 Jan 2013 19:35:13 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 862A7161E575;
-	Fri, 18 Jan 2013 19:35:03 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7vvcauqpn4.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751885Ab3ARUP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2013 15:15:28 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62627 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751335Ab3ARUP1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2013 15:15:27 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CC72C52E;
+	Fri, 18 Jan 2013 15:15:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CvSJXGJgBUbpZjmSwk2Thvq18hE=; b=c0f1Fc
+	P9N74YHw+AbRFPRcatkx4W1cnGQsdvUtRqoUIoclLLSN2+A3Q2wnhQ5aeDz+XbLN
+	VNSGhOnY/rylnl1zJaMEhDIcszDJRhddKZ/g1n6e0NgzTY+GL3h/3H/v4vRNYEI/
+	jgymbNqa0jbdt1DqnUNOk5mANxfv7nDWP/YTg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GhHTxnTAog00cUXem+NOWyw5bpFT6K1L
+	XOz+PyMuLCcdG2Sm4GTlBUhfU09ITLESn1gKhIZ2fv7Al4HvEEn6EObsF2iuHbka
+	ZOvVMbEpYoCeC76ALF8OqQ+70b1zYfy+9i2FJ2ePaBM46mpH95p39WkqKcIGXOL+
+	2E2A6q5jepw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 10A90C52D;
+	Fri, 18 Jan 2013 15:15:26 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6826AC52B; Fri, 18 Jan 2013
+ 15:15:25 -0500 (EST)
+In-Reply-To: <7v8v7qsagd.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 18 Jan 2013 08:49:22 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CB69FBB0-61AB-11E2-9C9B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213932>
 
-On Fri, Jan 18, 2013 at 11:04:15AM -0800, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
->> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
->> index 69f7e9b..baf3b41 100644
->> --- a/Documentation/CodingGuidelines
->> +++ b/Documentation/CodingGuidelines
->> @@ -179,6 +179,22 @@ For C programs:
->>   - Use Git's gettext wrappers to make the user interface
->>     translatable. See "Marking strings for translation" in po/README.
->>  
->> +For Python scripts:
->> +
->> + - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
->> +
->> + - As a minimum, we aim to be compatible with Python 2.6 and 2.7.
->> +
->> + - Where required libraries do not restrict us to Python 2, we try to
->> +   also be compatible with Python 3.  In this case we use
->> +   `from __future__ import unicode_literals` if we need to differentiate
->> +   Unicode string literals, rather than prefixing Unicode strings with
->> +   'u' since the latter is not supported in Python versions 3.0 - 3.2.
-> 
-> "In this case"?  In what case?  This document will stay effective
-> long after you settle one particular backward incompatibility Python
-> 3 introduced, namely, the unicode literal issues.  It is just one
-> "example".
+Junio C Hamano <gitster@pobox.com> writes:
 
-I meant "in the case where you are supporting Python 3" but I suspect it
-would be better to move the unicode_literals sentence to a new bullet.
-Or maybe we should just remove it - I haven't seen a case in the current
-Git source where we need Unicode literals.
+> How about doing something like this and set that variable in the
+> test instead?  If STD_ONLY is not set, you will get everything, but
+> when STD_ONLY is set, we will stop reading from "help -a" when it
+> starts listing additional stuff.
+>
+>  contrib/completion/git-completion.bash | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index a4c48e1..415a078 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -534,7 +534,8 @@ __git_complete_strategy ()
+>  __git_list_all_commands ()
+>  {
+>  	local i IFS=" "$'\n'
+> -	for i in $(git help -a|egrep '^  [a-zA-Z0-9]')
+> +	for i in $(LANG=C LC_ALL=C git help -a |
+> +		   sed -n ${GIT_HELP_STD_ONLY+-e /^git.*elsewhere/q} -e '/^  [a-zA-Z0-9]/p')
+>  	do
+>  		case $i in
+>  		*--*)             : helper pattern;;
 
-> That example somehow tells me that early versions of Python 3.x
-> series may be too buggy and not worth worrying about, and we may
-> want to set a floor for Python 3.x series, too, with something
-> like:
-[snip]
-> I am not actively advocating to disqualify early 3.x; I am just
-> suggesting that doing so may be a viable escape hatch for us that
-> does not harm real users.  If you and others who know Python better
-> think there isn't any problem that makes it too cumbersome to
-> support both late 2.x and 3.0/3.1, there is no reason to set the
-> floor at 3.2.
-> 
-> I just have this feeling that we might be better off treating them
-> as 0.x releases of a new software called Python3, that happens to be
-> similar to the Python we know.
+Alternatively, we could do this and replace everything inside $()
+with "git help --standard", but that requires the completion script
+update to go in sync with the core update, which is a downside.
 
-I originally thought about putting a floor of 3.3 (which is where
-Unicode literals were reintroduced) but that was only released in
-September and as far as I'm aware Unicode literals are the only reason
-to have a restriction on Python 3 versions, given that we support Python
-2.6 - standard library features should be equivalent.
+ builtin/help.c | 21 +++++++++++++++++----
+ help.c         |  3 +++
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
-I don't think Python 3.0 is any less stable than any other 3.x release,
-it's just that it was the first release which attempted a clean break
-from backwards compatibility.  From the point of view of features
-supported, Python 2.6 and 3.0 should be roughly equivalent - they were
-released together with the intent that 2.6 should make it possible to
-write code that ports to 3.0 easily, using 2to3.
-
-As more people have started trying to support Python 3 in the wild, it
-has become clear that it is often easier to have a single codebase that
-works with both Python 2 and Python 3, and not use 2to3.
-
-It is for this reason that the Unicode literal prefix was reintroduced.
-From the specification reintroducing it [1]:
-
-   Complaint: Python 3 shouldn't be made worse just to support porting
-   from Python 2
-
-   This is indeed one of the key design principles of Python 3. However,
-   one of the key design principles of Python as a whole is that
-   "practicality beats purity".
-
-
-[1] http://www.python.org/dev/peps/pep-0414/#complaint-python-3-shouldn-t-be-made-worse-just-to-support-porting-from-python-2
-
-
-John
+diff --git a/builtin/help.c b/builtin/help.c
+index bd86253..e6b9b5f 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -36,11 +36,16 @@ enum help_format {
+ 
+ static const char *html_path;
+ 
+-static int show_all = 0;
++#define HELP_ALL 1
++#define HELP_STANDARD 2
++static int show_what;
+ static unsigned int colopts;
+ static enum help_format help_format = HELP_FORMAT_NONE;
+ static struct option builtin_help_options[] = {
+-	OPT_BOOLEAN('a', "all", &show_all, N_("print all available commands")),
++	OPT_SET_INT('a', "all", &show_what, N_("print all available commands"),
++		    HELP_ALL),
++	OPT_SET_INT(0, "standard", &show_what, N_("list subcommands that comes with git"),
++		    HELP_STANDARD),
+ 	OPT_SET_INT('m', "man", &help_format, N_("show man page"), HELP_FORMAT_MAN),
+ 	OPT_SET_INT('w', "web", &help_format, N_("show manual in web browser"),
+ 			HELP_FORMAT_WEB),
+@@ -436,19 +441,27 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	int nongit;
+ 	const char *alias;
+ 	enum help_format parsed_help_format;
+-	load_command_list("git-", &main_cmds, &other_cmds);
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_help_options,
+ 			builtin_help_usage, 0);
+ 	parsed_help_format = help_format;
+ 
+-	if (show_all) {
++	load_command_list("git-", &main_cmds,
++			  show_what == HELP_STANDARD ? NULL : &other_cmds);
++
++	if (show_what == HELP_ALL) {
+ 		git_config(git_help_config, NULL);
+ 		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
+ 		list_commands(colopts, &main_cmds, &other_cmds);
+ 		printf("%s\n", _(git_more_info_string));
+ 		return 0;
+ 	}
++	if (show_what == HELP_STANDARD) {
++		int i;
++		for (i = 0; i < main_cmds.cnt; i++)
++			printf("%s\n", main_cmds.names[i]->name);
++		return 0;
++	}
+ 
+ 	if (!argv[0]) {
+ 		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
+diff --git a/help.c b/help.c
+index 2a42ec6..3e6b04c 100644
+--- a/help.c
++++ b/help.c
+@@ -182,6 +182,9 @@ void load_command_list(const char *prefix,
+ 		uniq(main_cmds);
+ 	}
+ 
++	if (!other_cmds)
++		return;
++
+ 	if (env_path) {
+ 		char *paths, *path, *colon;
+ 		path = paths = xstrdup(env_path);
