@@ -1,83 +1,97 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 4/8] git_remote_helpers: use 2to3 if building with
- Python 3
-Date: Fri, 18 Jan 2013 10:32:41 +0000
-Message-ID: <20130118103241.GM4574@serenity.lan>
-References: <cover.1358018078.git.john@keeping.me.uk>
- <cover.1358448207.git.john@keeping.me.uk>
- <bcef80fb913ca829bd2d08284e364ebd55b7297e.1358448207.git.john@keeping.me.uk>
- <CAGdFq_gew1-YmeUh=brWREHSYQvaV7vRBmEo0KFzi-ViqzOnaw@mail.gmail.com>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: Re: [DOCBUG] git subtree synopsis needs updating
+Date: Fri, 18 Jan 2013 15:37:34 +0100
+Organization: Bertin Technologies
+Message-ID: <20130118153734.54640b2d@chalon.bertin.fr>
+References: <20121019152158.4297707b@chalon.bertin.fr>
+ <877gnx39aa.fsf@waller.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Git List <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 11:33:16 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git list <git@vger.kernel.org>
+To: greened@obbligato.org
+X-From: git-owner@vger.kernel.org Fri Jan 18 15:37:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tw9G6-00084n-FM
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 11:33:14 +0100
+	id 1TwD4u-0002MK-GS
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jan 2013 15:37:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751234Ab3ARKcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2013 05:32:54 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:53130 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751111Ab3ARKcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2013 05:32:53 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 62E6B198027;
-	Fri, 18 Jan 2013 10:32:52 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rfHmwQEwqfki; Fri, 18 Jan 2013 10:32:51 +0000 (GMT)
-Received: from aardwolf.aluminati.org (aardwolf.aluminati.org [10.0.7.189])
-	by coyote.aluminati.org (Postfix) with ESMTP id 98153198032;
-	Fri, 18 Jan 2013 10:32:51 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by aardwolf.aluminati.org (Postfix) with ESMTP id 6C8E8330E46;
-	Fri, 18 Jan 2013 10:32:51 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from aardwolf.aluminati.org ([127.0.0.1])
-	by localhost (aardwolf.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id W7gl91tOQT8L; Fri, 18 Jan 2013 10:32:51 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by aardwolf.aluminati.org (Postfix) with ESMTPSA id C1AA8330E44;
-	Fri, 18 Jan 2013 10:32:43 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CAGdFq_gew1-YmeUh=brWREHSYQvaV7vRBmEo0KFzi-ViqzOnaw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755836Ab3AROhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2013 09:37:35 -0500
+Received: from cabourg.bertin.fr ([195.68.26.10]:65296 "EHLO cabourg.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751487Ab3AROhe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2013 09:37:34 -0500
+Received: from cabourg.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id 19D32A1008
+	for <git@vger.kernel.org>; Fri, 18 Jan 2013 15:37:33 +0100 (CET)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by cabourg.bertin.fr (Postfix) with ESMTP id EED38A1005
+	for <git@vger.kernel.org>; Fri, 18 Jan 2013 15:37:32 +0100 (CET)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0MGT004M6SMK4410@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Fri, 18 Jan 2013 15:37:32 +0100 (CET)
+In-reply-to: <877gnx39aa.fsf@waller.obbligato.org>
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8220-7.0.0.1014-19564.007
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213912>
 
-On Thu, Jan 17, 2013 at 09:15:08PM -0800, Sverre Rabbelier wrote:
-> On Thu, Jan 17, 2013 at 10:53 AM, John Keeping <john@keeping.me.uk> wrote:
-> > [1] http://wiki.python.org/moin/PortingPythonToPy3k
+On Mon, 31 Dec 2012 20:51:41 -0600
+greened@obbligato.org wrote:
+
+> Yann Dirson <dirson@bertin.fr> writes:
 > 
-> This link seems dead.
+> > As the examples in git-subtree.txt show, the synopsis in the same file should
+> > surely get a patch along the lines of:
+> >
+> > -'git subtree' add   -P <prefix> <commit>
+> > +'git subtree' add   -P <prefix> <repository> <commit>
+> >
+> > Failure to specify the repository (by just specifying a local commit) fails with
+> > the cryptic:
+> >
+> >  warning: read-tree: emptying the index with no arguments is deprecated; use --empty
+> >  fatal: just how do you expect me to merge 0 trees?
+> 
+> Specifying a local branch works fine, though, as does a raw commit
+> hash.  What do you mean by "local commit?"
 
-Looks like the Python wiki is down [1].
+With no <repository> arg documented, my understanding was that I should first 
+"git remote add" and fetch the repo in which the branch to be added as subtree
+lived.  This when running "git subtree add", the commit was indeed existing
+locally.
 
-I'll replace it with [2] since the content is similar and it should be
-easier to find a mirror of the Python documentation than of the wiki.
+> > As a sidenote it someone wants to do some maintainance, using "." as repository when
+> > the branch to subtree-add is already locally available does not work well either
+> > (fails with "could not find ref myremote/myhead").
+> 
+> Seems to work for me.  Can you give me the command you're using when you
+> see the problem?
 
-[1] http://pyfound.blogspot.co.uk/2013/01/wikipythonorg-compromised.html
-[2] http://docs.python.org/3.3/howto/pyporting.html#during-installation
+Hm, can't remember exactly how I reached that.  But when experimenting to
+reproduce:
 
+$ contrib/subtree/git-subtree.sh add -P foo . origin/maint
+git fetch . origin/maint
+From .
+ * remote-tracking branch origin/maint -> FETCH_HEAD
+Added dir 'foo'
 
-John
+=> OK
+
+$ contrib/subtree/git-subtree.sh add -P fooo . origin/maint^0
+git fetch . origin/maint^0
+fatal: Invalid refspec 'origin/maint^0'
+
+=> a commit is advertised, but in fact it seems to require a refspec
+
+-- 
+Yann Dirson - Bertin Technologies
