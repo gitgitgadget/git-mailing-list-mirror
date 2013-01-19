@@ -1,74 +1,77 @@
-From: Eric James Michael Ritz <lobbyjones@gmail.com>
-Subject: Re: [RFC] git rm -u
-Date: Sat, 19 Jan 2013 17:01:01 -0500
-Message-ID: <50FB179D.7010006@gmail.com>
-References: <50FB1196.2090309@gmail.com> <20130119214921.GE4009@elie.Belkin>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/2] GIT, Git, git
+Date: Sat, 19 Jan 2013 14:31:05 -0800
+Message-ID: <20130119223105.GG4009@elie.Belkin>
+References: <732444561.1327663.1358589465467.JavaMail.ngmail@webmail24.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Tomas Carnecky <tomas.carnecky@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 19 23:08:55 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Sat Jan 19 23:31:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Twgao-0004Pc-S2
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 23:08:51 +0100
+	id 1Twgwm-0002CH-UX
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 23:31:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932Ab3ASWIa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2013 17:08:30 -0500
-Received: from mail-ye0-f176.google.com ([209.85.213.176]:61301 "EHLO
-	mail-ye0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751799Ab3ASWI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2013 17:08:29 -0500
-Received: by mail-ye0-f176.google.com with SMTP id m1so733607yen.7
-        for <git@vger.kernel.org>; Sat, 19 Jan 2013 14:08:28 -0800 (PST)
+	id S1752001Ab3ASWbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2013 17:31:12 -0500
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:53481 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751932Ab3ASWbL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2013 17:31:11 -0500
+Received: by mail-pa0-f44.google.com with SMTP id hz11so2728220pad.31
+        for <git@vger.kernel.org>; Sat, 19 Jan 2013 14:31:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=AP2cQygHoLlirajcUiilvhiUFtsB4EGhgpbDhjkUuUg=;
-        b=TL1yFWyMU92FrebbSnG47oWi81KwiAPP0CRrG9rS9e9XbbkwV+toio3vq86Zcoy4ab
-         /5kd1soNmzaRyQ67UkCvGGNnBcpa3rrZ5bQVXITEPTqk1qmpANeXUygsuAg+n/Ez1foQ
-         Zjdlc+dEqSxqWJ1VUhxo7skQ9DisXLGnGsVtmgxPijTHehkzxJxKmIrBFPmFTf0KTt6w
-         woqzg5sMYitDl7Vj9vho+yJk9G6gw/MJ9wirSYJm9Eu9u9R4qBddQ3j+Cgo+xppJ4vcS
-         Yaztk2xUWnvZmcC8ggQtwDmfgFQHQLksfbkmad7qHInMoJ7SFMhXwjVLVA2pkNaxk7TT
-         ks7g==
-X-Received: by 10.236.147.204 with SMTP id t52mr15868119yhj.9.1358632862498;
-        Sat, 19 Jan 2013 14:01:02 -0800 (PST)
-Received: from [192.168.1.102] (97-81-212-183.dhcp.hckr.nc.charter.com. [97.81.212.183])
-        by mx.google.com with ESMTPS id s30sm8665976yhl.21.2013.01.19.14.01.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 19 Jan 2013 14:01:01 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <20130119214921.GE4009@elie.Belkin>
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=ScbWhi+aTSB9uEp27X5GmYtG8KoXg/o1eejQ/BXtlD4=;
+        b=WUk54etjAlmVzuT71TpwCxbXsNckm+eOvX7GhT7ka0F1u5IIY3DB1DcYW6rx6sQFwo
+         TAsmalcofh0gtrRVn8ZBBl3PLuHmT456Y0SiJl3ZrNjV2KnBN5LrtcKE/V0UESkOiWPl
+         hBy0f/eto1MPTHjNppHuXc9SN3D1+m9TLef4PlTXJIhTvf8aUG5tR68inU4d0FZ4pRlu
+         XaXkmS07vnevc7avge4aXcq4ck1mp7woKQhRaQMVAQH33oKbTivMOxKEfgfbfkb+b1Mk
+         zR1lmyzeu0qN3FDmbt2NHb22nGXYzDZStBU/h/cv4RUAFWxQRynELPZmGeCtDGG9XeOg
+         UIaA==
+X-Received: by 10.68.132.10 with SMTP id oq10mr17966054pbb.18.1358634670947;
+        Sat, 19 Jan 2013 14:31:10 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id a9sm6097981pav.24.2013.01.19.14.31.08
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 19 Jan 2013 14:31:09 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <732444561.1327663.1358589465467.JavaMail.ngmail@webmail24.arcor-online.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213995>
 
-On 01/19/2013 04:49 PM, Jonathan Nieder wrote:
- > Eric James Michael Ritz wrote:
- >
- >> When I came to my senses and realized that does not work I began to
- >> wonder if `git rm -u` should exist.  If any deleted, tracked files
- >> are not part of the index to commit then `git rm -u` would add that
- >> change to the index.
- >
- > I like it.  If you have time to write such a patch, I'll be happy to
- > read it.
+Hi Thomas,
 
-Thank you for the offer Jonathan.  I must go ahead and apologize for
-my rusty ability with C; I haven=E2=80=99t needed to use the language i=
-n
-years.  But I will familiarize myself with the Git source and try to
-put a patch (or series of patches) together over the next week or two.
+Thomas Ackermann wrote:
 
---
-ejmr
-=E5=8D=97=E7=84=A1=E5=A6=99=E6=B3=95=E8=93=AE=E8=8F=AF=E7=B6=93
+> Git changed its 'official' system name from 'GIT' to 'Git' in v1.6.5.3
+> (as can be seen in the corresponding release note where 'GIT' was 
+> changed to 'Git' in the header line).
+>
+> Alas the documention uses 'GIT', 'Git' or even 'git' to refer to the
+> Git system. So change every occurrence of 'GIT" and 'git' to 'Git'
+> whenever Git as a system is referred to (but don't do this change
+> in the release notes because they constitute a history orthogonal
+> to the history versioned by Git).
+
+I don't have any opinion about the subject at hand, except that making
+a consistent convention and documenting it somewhere to avoid future
+churn sounds like a fine idea.
+
+Instead, I'm writing for a procedural nitpick ;-): please move the
+above rationale to one of the commit messages, so it gets recorded
+somewhere that future readers can easily find it.
+
+Hope that helps,
+Jonathan
