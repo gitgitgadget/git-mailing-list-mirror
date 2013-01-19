@@ -1,72 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] am: invoke perl's strftime in C locale
-Date: Sat, 19 Jan 2013 08:39:41 -0800
-Message-ID: <20130119163940.GA12307@sigill.intra.peff.net>
-References: <20130114205933.GA25947@altlinux.org>
- <20130115155953.GB21815@sigill.intra.peff.net>
- <CALWbr2w+q5=Z8__g+J_s2NtTMgziHrntFqsi8vCJyvfO2qi81A@mail.gmail.com>
- <20130115165058.GA29301@sigill.intra.peff.net>
- <20130115174015.GA7471@altlinux.org>
- <20130115190517.GB7963@altlinux.org>
- <7vehhiqlcx.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 0/2] Hiding some refs in ls-remote
+Date: Sat, 19 Jan 2013 08:50:42 -0800
+Message-ID: <20130119165042.GB12307@sigill.intra.peff.net>
+References: <1358555826-11883-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: "Dmitry V. Levin" <ldv@altlinux.org>,
-	Antoine Pelisse <apelisse@gmail.com>, git@vger.kernel.org
+Cc: git@vger.kernel.org, spearce@spearce.org, mfick@codeaurora.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 19 17:40:10 2013
+X-From: git-owner@vger.kernel.org Sat Jan 19 17:51:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwbSh-0007mt-VA
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 17:40:08 +0100
+	id 1TwbdN-0002nQ-Ty
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 17:51:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751939Ab3ASQjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2013 11:39:47 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:38108 "EHLO
+	id S1751903Ab3ASQus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2013 11:50:48 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:38118 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751807Ab3ASQjq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2013 11:39:46 -0500
-Received: (qmail 4718 invoked by uid 107); 19 Jan 2013 16:41:04 -0000
+	id S1751719Ab3ASQus (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2013 11:50:48 -0500
+Received: (qmail 5038 invoked by uid 107); 19 Jan 2013 16:52:06 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (12.144.179.211)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 19 Jan 2013 11:41:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 19 Jan 2013 08:39:41 -0800
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 19 Jan 2013 11:52:06 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 19 Jan 2013 08:50:42 -0800
 Content-Disposition: inline
-In-Reply-To: <7vehhiqlcx.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1358555826-11883-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213983>
 
-On Fri, Jan 18, 2013 at 12:36:46PM -0800, Junio C Hamano wrote:
+On Fri, Jan 18, 2013 at 04:37:04PM -0800, Junio C Hamano wrote:
 
-> > diff --git a/git-am.sh b/git-am.sh
-> > index c682d34..8677d8c 100755
-> > --- a/git-am.sh
-> > +++ b/git-am.sh
-> > @@ -334,7 +334,8 @@ split_patches () {
-> >  			# Since we cannot guarantee that the commit message is in
-> >  			# git-friendly format, we put no Subject: line and just consume
-> >  			# all of the message as the body
-> > -			perl -M'POSIX qw(strftime)' -ne 'BEGIN { $subject = 0 }
-> > +			perl -M'POSIX qw(strftime :locale_h)' -ne '
-> > +				BEGIN { setlocale(LC_TIME, "C"); $subject = 0 }
+> This is an early preview of reducing the network cost while talking
+> with a repository with tons of refs, most of which are of use by
+> very narrow audiences (e.g. refs under Gerrit's refs/changes/ are
+> useful only for people who are interested in the changes under
+> review).  As long as these narrow audiences have a way to learn the
+> names of refs or objects pointed at by the refs out-of-band, it is
+> not necessary to advertise these refs.
 > 
-> I still haven't convinced myself that this is an improvement over
-> the simple "LC_ALL=C LANG=C perl ..." approach.
+> On the server end, you tell upload-pack that some refs do not have
+> to be advertised with the uploadPack.hiderefs multi-valued
+> configuration variable:
+> 
+> 	[uploadPack]
+> 		hiderefs = refs/changes
 
-Yeah, I was the one who brought it up, but I think I was probably being
-too nit-picky. It almost certainly doesn't matter, and the alternatives
-are just as likely to cause problems.
+Would you want to do the same thing on receive-pack? It could benefit
+from the same reduction in network cost (although it tends to be invoked
+less frequently than upload-pack).
 
-> I am tempted to use the previous one that puts the whole process
-> under LC_ALL=C instead, unless I hear a "we already depend on that
-> elsewhere, look at $that_code".
+At GitHub, we have a similar patch (we even call it hiderefs), but we do
+it only for receive-pack. In our case, it is not about network traffic,
+but rather that we provide a set of read-only refs in the refs/pull
+hierarchy. These are generated upstream by the creation of pull
+requests, and we reject any updates to them via the git protocol using a
+pre-receive hook.
 
-I'm fine with that.
+However, if a client without these refs uses "git push --mirror", it
+will attempt to delete them (which will fail). Meaning that a mirror
+push will always report failure, because it will always fail to push the
+refs/pull deletions.
+
+I don't know much about Gerrit's inner workings. Are refs/changes also
+read-only?
 
 -Peff
