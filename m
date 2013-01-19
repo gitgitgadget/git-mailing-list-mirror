@@ -1,70 +1,111 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: tar-tree.c dereferencing pointer to incomplete type
-Date: Sat, 19 Jan 2013 20:37:04 +0700
-Message-ID: <CACsJy8DfOYRmF6FqTLCAYgXGpECX-VhpXGK5CfcmVvKXQ+DpuA@mail.gmail.com>
-References: <CAPy7p-45-E-vWcjBTXSLpjoQLic54JdAoKqB3jz4RA6GzAkw8w@mail.gmail.com>
+From: "=?utf-8?q?Jean-No=C3=ABl?= AVILA" <avila.jn@gmail.com>
+Subject: Re: Re* t9902 fails
+Date: Sat, 19 Jan 2013 14:43:32 +0100
+Message-ID: <201301191443.32661.avila.jn@gmail.com>
+References: <1358256924-31578-1-git-send-email-pclouds@gmail.com> <50FA316E.8060807@web.de> <7vwqv9obie.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: Text/Plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?55m944GE54aK?= <ShiroiKuma@shiroikuma.org>
-X-From: git-owner@vger.kernel.org Sat Jan 19 14:38:03 2013
+Cc: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	=?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 19 14:44:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwYcO-0007Zd-BT
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 14:37:56 +0100
+	id 1TwYiL-0006g7-Bj
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 14:44:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751265Ab3ASNhf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2013 08:37:35 -0500
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:35595 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751157Ab3ASNhf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Jan 2013 08:37:35 -0500
-Received: by mail-ob0-f179.google.com with SMTP id x4so4582049obh.38
-        for <git@vger.kernel.org>; Sat, 19 Jan 2013 05:37:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=xWuV7Hord+odITuqIu13N5w7EbGmYD7+n+PGZ7ICqno=;
-        b=u3d3jkgICOIaB52Cx3O8zrCWV1QX0W+sKajPwXM1BZJixwJQ3YmGZRl5bZD4/t/fjh
-         ZFduWiOh9cAKNVXwAhTA55xfpFMXMqphAOCnwn58oCeuW9H9HkTGH/6cbHvyDxWHD0hE
-         14Kli2DhIm/C817gmMMudtpcNDuvX5n28Vvv9F5xwsR/MNbTb9BfmMgbxLG89bsK0LWJ
-         8KkzmFq5MQBhUXYS7zcAMruWFqExeYN8od19hK5gRmvictg2izjN8O2hX7PoHnf93ZmY
-         D1M+vZWKKaHeW/SIRGcbQMeXtwPll8cfTvhumRajj27KR3gRdSk4YFwXz1RuF3mzZeKf
-         3eKg==
-X-Received: by 10.60.3.1 with SMTP id 1mr9500509oey.138.1358602654516; Sat, 19
- Jan 2013 05:37:34 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Sat, 19 Jan 2013 05:37:04 -0800 (PST)
-In-Reply-To: <CAPy7p-45-E-vWcjBTXSLpjoQLic54JdAoKqB3jz4RA6GzAkw8w@mail.gmail.com>
+	id S1751360Ab3ASNno convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2013 08:43:44 -0500
+Received: from smtp2-g21.free.fr ([212.27.42.2]:58645 "EHLO smtp2-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751157Ab3ASNno convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Jan 2013 08:43:44 -0500
+Received: from cayenne.localnet (unknown [82.239.31.145])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id F358F4B013A;
+	Sat, 19 Jan 2013 14:43:35 +0100 (CET)
+User-Agent: KMail/1.13.7 (Linux/3.8.0-rc4jna; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <7vwqv9obie.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213977>
 
-On Sat, Jan 19, 2013 at 8:31 PM, =E7=99=BD=E3=81=84=E7=86=8A <ShiroiKum=
-a@shiroikuma.org> wrote:
-> Hello:
->
-> I'm building v 1.8.1.1 on Android. The build chokes on the builtins
-> phase on tar-tree.c with:
->
->     CC builtin/tar-tree.o
-> builtin/tar-tree.c: In function 'cmd_get_tar_commit_id':
-> builtin/tar-tree.c:93:12: error: dereferencing pointer to incomplete =
-type
-> make: *** [builtin/tar-tree.o] Error 1
->
-> The line that's causing this in tar-tree.c is:
->
-> if (header->typeflag[0] !=3D 'g')
+Le samedi 19 janvier 2013 08:52:25, Junio C Hamano a =C3=A9crit :
+>  (2) instead of being inclusive, collecting all executable in
+>      GIT_EXEC_PATH that happens to be named "git-", add a mode to
+>      "git help" that lists those that we know to be standard
+>      commands that the users may want to complete from the command
+>      line.
 
-There is another tar.h somewhere in your system? Stopping the
-compilation after proprocessing should show if it includes the correct
-tar.h.
+Am I wrong when I say that "git help -a" already provides the differenc=
+e=20
+between core git commands and other commands available through path?
+
+If we use this, then we can instruct git-completion that we are in test=
+ mode=20
+and that it should not provide additional completions.
+
+---
+ contrib/completion/git-completion.bash | 13 +++++++++++--
+ t/t9902-completion.sh                  |  2 +-
+ 2 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-
+completion.bash
+index 14dd5e7..dc0ea5b 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -23,6 +23,8 @@
+ #    3) Consider changing your PS1 to also show the current branch,
+ #       see git-prompt.sh for details.
+=20
++__testing_git=3D$1
++
+ case "$COMP_WORDBREAKS" in
+ *:*) : great ;;
+ *)   COMP_WORDBREAKS=3D"$COMP_WORDBREAKS:"
+@@ -533,8 +535,15 @@ __git_complete_strategy ()
+=20
+ __git_list_all_commands ()
+ {
+-	local i IFS=3D" "$'\n'
+-	for i in $(git help -a|egrep '^  [a-zA-Z0-9]')
++	local i cmdlist IFS=3D" "$'\n'
++
++	if [ "x$__testing_git" !=3D "xTEST" ]; then
++		cmdlist=3D$(git help -a|egrep '^  [a-zA-Z0-9]')
++	else
++		cmdlist=3D$(git help -a| egrep -m 1 -B1000 PATH | egrep '^  [a-zA-Z0=
+-9]')
++	fi
++
++	for i in $cmdlist
+ 	do
+ 		case $i in
+ 		*--*)             : helper pattern;;
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 3cd53f8..51463b2 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -13,7 +13,7 @@ complete ()
+ 	return 0
+ }
+=20
+-. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
++. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" TEST
+=20
+ # We don't need this function to actually join words or do anything sp=
+ecial.
+ # Also, it's cleaner to avoid touching bash's internal completion vari=
+ables.
 --=20
-Duy
+1.8.1.1.271.g02f55e6
