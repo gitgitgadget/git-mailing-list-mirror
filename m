@@ -1,66 +1,83 @@
-From: =?UTF-8?B?55m944GE54aK?= <ShiroiKuma@ShiroiKuma.org>
-Subject: Re: tar-tree.c dereferencing pointer to incomplete type
-Date: Sat, 19 Jan 2013 17:37:41 +0300
-Message-ID: <CAPy7p-5vZKzznSny97BZMWHxHPJupO3in7tvjyFOTxBYzw5D4Q@mail.gmail.com>
-References: <CAPy7p-45-E-vWcjBTXSLpjoQLic54JdAoKqB3jz4RA6GzAkw8w@mail.gmail.com>
-	<CACsJy8DfOYRmF6FqTLCAYgXGpECX-VhpXGK5CfcmVvKXQ+DpuA@mail.gmail.com>
-	<CAPy7p-7V6y4hfLrYYi_3zGkzGTw2BeF5wh3zPYzumrp+Pbqr+Q@mail.gmail.com>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: [PATCH 1/2] Change old system name 'GIT' to 'Git'
+Date: Sat, 19 Jan 2013 16:01:16 +0100 (CET)
+Message-ID: <310504838.1116553.1358607676116.JavaMail.ngmail@webmail10.arcor-online.net>
+References: <CAJDDKr5_AWFF6MR2Kwt5FzA0vaSE-wx8xFO3xcRnKZ168hXBrg@mail.gmail.com> <732444561.1327663.1358589465467.JavaMail.ngmail@webmail24.arcor-online.net>
+	<379071741.1327695.1358589560822.JavaMail.ngmail@webmail24.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 19 15:38:09 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: davvid@gmail.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Sat Jan 19 16:01:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwZYe-00041N-Pn
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 15:38:09 +0100
+	id 1TwZvQ-0002pZ-Ew
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 16:01:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751250Ab3ASOhm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2013 09:37:42 -0500
-Received: from mail-qa0-f50.google.com ([209.85.216.50]:63159 "EHLO
-	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751198Ab3ASOhl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Jan 2013 09:37:41 -0500
-Received: by mail-qa0-f50.google.com with SMTP id cr7so3709520qab.2
-        for <git@vger.kernel.org>; Sat, 19 Jan 2013 06:37:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=o81Oc3Pq4fiWKcmQJSEdfJGG0XQJAgsA4B43VL/f57g=;
-        b=Xy3eU/ddmYTxTjeLko0d/8OSXmabtGodGugfCFjVQfR7tBB+f9KGHvUfqplVNLntHW
-         S3cDu/BvLkPwezOQkqH86mpCyt2xYxV4YzK7S9kzVJhc0ODOZlt8Jf0b+92Bt3ePoH8o
-         Wumg8NGTE0Huzxj70AX+CiCl/mT+FVFJzay4OVu4it2v+Jfo8OQEQOy1EZE/TcBjDwWk
-         zbcOozeQxvGGQCa2Ih9IxYxg/bASbjKGHxya2Tv1RIsYjdo+z/Xb51b4x6e8R5viii/2
-         hDIYhCDeFSegmaz/cQOIaYrO2FHf8N52fZc903QsjaXsYaHOvlBRu+E70Iwxvqryp+Z8
-         Zi1w==
-X-Received: by 10.224.70.205 with SMTP id e13mr13332453qaj.77.1358606261047;
- Sat, 19 Jan 2013 06:37:41 -0800 (PST)
-Received: by 10.229.130.163 with HTTP; Sat, 19 Jan 2013 06:37:41 -0800 (PST)
-In-Reply-To: <CAPy7p-7V6y4hfLrYYi_3zGkzGTw2BeF5wh3zPYzumrp+Pbqr+Q@mail.gmail.com>
-X-Google-Sender-Auth: WYTQ4UI8AiRdr6xeeCo-eQ0K8FM
+	id S1751317Ab3ASPBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2013 10:01:18 -0500
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:43629 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751120Ab3ASPBR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Jan 2013 10:01:17 -0500
+Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
+	by mx.arcor.de (Postfix) with ESMTP id 26C005A907;
+	Sat, 19 Jan 2013 16:01:16 +0100 (CET)
+Received: from mail-in-15.arcor-online.net (mail-in-15.arcor-online.net [151.189.21.55])
+	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id 215867FE52C;
+	Sat, 19 Jan 2013 16:01:16 +0100 (CET)
+Received: from webmail10.arcor-online.net (webmail10.arcor-online.net [151.189.8.93])
+	by mail-in-15.arcor-online.net (Postfix) with ESMTP id 1914B1AB51F;
+	Sat, 19 Jan 2013 16:01:16 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-15.arcor-online.net 1914B1AB51F
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1358607676; bh=Ob7GVDMZSMtSMtJHCpEPcEM4FoOiXdGF8APyP8akSGY=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=OlkvFB5a0gz1AB+3V5UrkDp2l83pKI9PbAuMlN3i4qZpeOYD1QF6H9KWrU7ncZTXz
+	 l9S7VHyaShXMXqXs4dlpfi8I7VgF6J4ilIEdQAxmiM2y+PKWenkfm5Tc40Ad+YcZj9
+	 /CLdR8AE7Ae/yGkSMyKKrRu7b2gE4bAacLmmSQog=
+Received: from [188.105.103.171] by webmail10.arcor-online.net (151.189.8.93) with HTTP (Arcor Webmail); Sat, 19 Jan 2013 16:01:15 +0100 (CET)
+In-Reply-To: <CAJDDKr5_AWFF6MR2Kwt5FzA0vaSE-wx8xFO3xcRnKZ168hXBrg@mail.gmail.com>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 188.105.103.171
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213981>
 
-On Sat, Jan 19, 2013 at 6:26 PM, =E7=99=BD=E3=81=84=E7=86=8A <ShiroiKum=
-a@shiroikuma.org> wrote:
-> Thank you, this must've been it, as it was finding tar.h from glibc.
+ 
+> 
+> What about GITweb?
+> 
+You are right; I missed that because I grepped only for 'GIT' as a whole word.
+'gitweb' and 'GITweb' should be changed to 'Gitweb'.
+
+> 
+> IMO some of these look nicer when everything is lowercase.
+> e.g. "standard git committer ident format".
+> 
+IMHO what seems nicer here is the spelling we are all accustomed to.
+The whole point of my patch is to use 'Git' consistently when 
+we are talking about the system and not the individual command.
+
+> 
+> $ git grep 'git repositor' | wc -l
+> 226
+> 
+> These changes touch, for example, git-clone.txt to make it
+> say: "Make a 'bare' Git repository".  Why not lowercase?
 >
-> Moved it and compiles fine. In fact I moved it back now, so it should
-> be finding it again and it still builds fine, no trace of the prior
-> error. I'm dumbfounded! But at least it compiles...
+When you also apply my second patch you only get 17 occurences of "git repository" 
+which I missed to change to 'Git repository' ...
 
-OK, figured it out. It was indeed the wrong tar.h, the one that was
-making it bomb was the kernel headers tar.h from the Android source.
-That explains it quite well.
+Thanks for looking into this!
 
-All's good now. Thank you :@)
---=20
-=E7=99=BD=E3=81=84=E7=86=8A
+
+---
+Thomas
