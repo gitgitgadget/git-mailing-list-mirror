@@ -1,84 +1,97 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] INSTALL: git-p4 doesn't support Python 3
-Date: Sat, 19 Jan 2013 12:01:58 +0000
-Message-ID: <20130119120158.GH31172@serenity.lan>
+From: =?UTF-8?B?55m944GE54aK?= <ShiroiKuma@ShiroiKuma.org>
+Subject: tar-tree.c dereferencing pointer to incomplete type
+Date: Sat, 19 Jan 2013 16:31:38 +0300
+Message-ID: <CAPy7p-45-E-vWcjBTXSLpjoQLic54JdAoKqB3jz4RA6GzAkw8w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pete Wyckoff <pw@padd.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 19 13:02:34 2013
+X-From: git-owner@vger.kernel.org Sat Jan 19 14:32:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwX82-0000ex-Ih
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 13:02:30 +0100
+	id 1TwYWf-00005T-E3
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 14:32:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751946Ab3ASMCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2013 07:02:08 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:53697 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751909Ab3ASMCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2013 07:02:07 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 5E92A22CAA;
-	Sat, 19 Jan 2013 12:02:05 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TCQMMgfJsGN1; Sat, 19 Jan 2013 12:02:04 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id B731722B46;
-	Sat, 19 Jan 2013 12:02:03 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 70F4C161E547;
-	Sat, 19 Jan 2013 12:02:03 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4o-j4CI50Rfu; Sat, 19 Jan 2013 12:02:03 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 6BAC8161E276;
-	Sat, 19 Jan 2013 12:01:59 +0000 (GMT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751341Ab3ASNbk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2013 08:31:40 -0500
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:32997 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751157Ab3ASNbj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Jan 2013 08:31:39 -0500
+Received: by mail-qc0-f176.google.com with SMTP id n41so2937855qco.21
+        for <git@vger.kernel.org>; Sat, 19 Jan 2013 05:31:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:date:x-google-sender-auth:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        bh=DVlqaCPe1qX+SCSjfhq5nugrywd7KZmnh+rlQzXn8Xk=;
+        b=VeicrmS/m3CjQLg+BDzQbFK7dkVa+ZnTLymuvYZqI24x5acke32mtPd9Ypnrzu4Il2
+         jMM22i1ZDT6gkfgAuuZ4qstpjkSz/G7OYzhC/h1fINa1NsLIzBehcmN8mzWEOBdXOU9w
+         ZcRxmnt7fd1zl6v2WI7ufSq0Vb42S7FJ37YehcYe0XQj86i+UXgL71bHSiEmp9LRGmtw
+         Kuuv/ee6A2fe5jHAjlsWZLLGOAujVjyeIWuFcnhpZIV89CDxT7PzWtTx4ncAZ12bCec0
+         ppvhZDWfQt+2QWk9PdGRBhspdpQugocfswVrCvtl2YWYzG8mdeMIOMF4CYCKN4CvyqM6
+         b6nQ==
+X-Received: by 10.224.76.208 with SMTP id d16mr13181083qak.46.1358602298984;
+ Sat, 19 Jan 2013 05:31:38 -0800 (PST)
+Received: by 10.229.130.163 with HTTP; Sat, 19 Jan 2013 05:31:38 -0800 (PST)
+X-Google-Sender-Auth: GHH4cQqXy1eBowJCfPNTDS8szDU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213975>
 
-git-p4 supports Python 2.6 and later versions of Python 2.  Since Pyhton
-2.8 will never exist [1], it is most concise to just list the supported
-versions.
+Hello:
 
-[1] http://www.python.org/dev/peps/pep-0404/
+I'm building v 1.8.1.1 on Android. The build chokes on the builtins
+phase on tar-tree.c with:
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- INSTALL | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+    CC builtin/tar-tree.o
+builtin/tar-tree.c: In function 'cmd_get_tar_commit_id':
+builtin/tar-tree.c:93:12: error: dereferencing pointer to incomplete ty=
+pe
+make: *** [builtin/tar-tree.o] Error 1
 
-diff --git a/INSTALL b/INSTALL
-index 28f34bd..c456d1c 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -131,7 +131,7 @@ Issues of note:
- 	  use English. Under autoconf the configure script will do this
- 	  automatically if it can't find libintl on the system.
- 
--	- Python version 2.6 or later is needed to use the git-p4
-+	- Python version 2.6 or 2.7 is needed to use the git-p4
- 	  interface to Perforce.
- 
-  - Some platform specific issues are dealt with Makefile rules,
--- 
-1.8.1
+The line that's causing this in tar-tree.c is:
+
+if (header->typeflag[0] !=3D 'g')
+
+from
+
+int cmd_get_tar_commit_id(int argc, const char **argv, const char *pref=
+ix)
+{
+	char buffer[HEADERSIZE];
+	struct ustar_header *header =3D (struct ustar_header *)buffer;
+	char *content =3D buffer + RECORDSIZE;
+	ssize_t n;
+
+	if (argc !=3D 1)
+		usage(builtin_get_tar_commit_id_usage);
+
+	n =3D read_in_full(0, buffer, HEADERSIZE);
+	if (n < HEADERSIZE)
+		die("git get-tar-commit-id: read error");
+	if (header->typeflag[0] !=3D 'g')
+		return 1;
+	if (memcmp(content, "52 comment=3D", 11))
+		return 1;
+
+	n =3D write_in_full(1, content + 11, 41);
+	if (n < 41)
+		die_errno("git get-tar-commit-id: write error");
+
+	return 0;
+}
+
+But why?
+
+What's messed up with my setup.
+
+I can compile no probs on other machines. I'm trying to get my head
+round this, but don't see the problem?
+--=20
+=E7=99=BD=E3=81=84=E7=86=8A
