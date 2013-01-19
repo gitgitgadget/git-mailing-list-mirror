@@ -1,78 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: tar-tree.c dereferencing pointer to incomplete type
-Date: Sat, 19 Jan 2013 13:28:51 -0800
-Message-ID: <20130119212851.GA4009@elie.Belkin>
-References: <CAPy7p-45-E-vWcjBTXSLpjoQLic54JdAoKqB3jz4RA6GzAkw8w@mail.gmail.com>
- <CACsJy8DfOYRmF6FqTLCAYgXGpECX-VhpXGK5CfcmVvKXQ+DpuA@mail.gmail.com>
- <CAPy7p-7V6y4hfLrYYi_3zGkzGTw2BeF5wh3zPYzumrp+Pbqr+Q@mail.gmail.com>
- <CAPy7p-5vZKzznSny97BZMWHxHPJupO3in7tvjyFOTxBYzw5D4Q@mail.gmail.com>
+From: Eric James Michael Ritz <lobbyjones@gmail.com>
+Subject: [RFC] git rm -u
+Date: Sat, 19 Jan 2013 16:35:18 -0500
+Message-ID: <50FB1196.2090309@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?55m944GE54aK?= <ShiroiKuma@ShiroiKuma.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 19 22:29:24 2013
+X-From: git-owner@vger.kernel.org Sat Jan 19 22:41:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Twfyd-0001Eo-LF
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 22:29:23 +0100
+	id 1TwgA4-0004Zg-Ru
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jan 2013 22:41:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751128Ab3ASV3B convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2013 16:29:01 -0500
-Received: from mail-da0-f53.google.com ([209.85.210.53]:43052 "EHLO
-	mail-da0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751389Ab3ASV3A convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Jan 2013 16:29:00 -0500
-Received: by mail-da0-f53.google.com with SMTP id x6so2126833dac.40
-        for <git@vger.kernel.org>; Sat, 19 Jan 2013 13:29:00 -0800 (PST)
+	id S1751677Ab3ASVkv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2013 16:40:51 -0500
+Received: from mail-yh0-f52.google.com ([209.85.213.52]:48931 "EHLO
+	mail-yh0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751389Ab3ASVkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2013 16:40:51 -0500
+Received: by mail-yh0-f52.google.com with SMTP id 24so22910yhr.11
+        for <git@vger.kernel.org>; Sat, 19 Jan 2013 13:40:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=V+WH/zzTO06z3mVvHBurpBvaTiHzrkPUcOCCQwtrTbA=;
-        b=eHeMuTHJBq/7fZOyN502Vlolp13QXv+OXIvAhgYlRrHI/2FC/HjN4ZWQjJ5H2xSQFu
-         J0brkFZW5Chu4wj6OwEeE9dHOIkCYZNFxKSsBW3Ze1MlN49oH5Yd4TZyPPpXFLIq49gv
-         TDQ9HIAR/ihXTYVmnrQKkkRuVKllXcWUVnkFkdqVuYsncSiT4DPm1NlLWke3dxu1qCzi
-         UdzQbyvPxXvGLxfWuhS7w5/Zi6edVVR36nntZzOi82cN91K8JB4UBm4ULb5cy6Je5WLI
-         m9JcbDsWmPZBYAp3JPQ3sBu9EDOxE+03SKRn0pNBdfFUjl8sIIGs8Va7zF4f6VKuT9n8
-         vPXw==
-X-Received: by 10.68.136.73 with SMTP id py9mr17576975pbb.43.1358630940112;
-        Sat, 19 Jan 2013 13:29:00 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id hs2sm5578396pbc.22.2013.01.19.13.28.57
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 19 Jan 2013 13:28:58 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAPy7p-5vZKzznSny97BZMWHxHPJupO3in7tvjyFOTxBYzw5D4Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=3HJPrm22S6m682VY/Xf6H7DkQgH9yBiTZ+AJpZsBwMU=;
+        b=hn7aFBzbuAJLMaBMVYDdebPk1Y6q4F1fBrCsne+vbn7PhgXHq0fy3eLhPe9eNq2Dwe
+         H02gRg+ev61h7PObvMtpOnllJCejXtT6wh2uqxJFrLZALTxBiAvlhuK4swxc3huUrB7Z
+         tjDbgJXT6/ZwvdoPIgFOozh4AWX8QxOOaFVC8VidjhW1XHYDsIwhVYrWvQwyxqDyLYWY
+         kk+A5/9yfcJtdrzxNe906+ExRntv5ehIOo3+i2VnrRi/IHzEFHQpjgMCA7xt+Zu4tSaJ
+         jZEIrfwV608Dnlw1FAFRjLUd+jptRe5mcKT6lFFw7iuIIu3eK1kwoRmiaY2XpcSrNB01
+         rqQw==
+X-Received: by 10.236.103.70 with SMTP id e46mr15790340yhg.12.1358631319861;
+        Sat, 19 Jan 2013 13:35:19 -0800 (PST)
+Received: from [192.168.1.102] (97-81-212-183.dhcp.hckr.nc.charter.com. [97.81.212.183])
+        by mx.google.com with ESMTPS id i26sm8631899yhc.10.2013.01.19.13.35.18
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 19 Jan 2013 13:35:18 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/213988>
 
-=E7=99=BD=E3=81=84=E7=86=8A wrote:
-> On Sat, Jan 19, 2013 at 6:26 PM, =E7=99=BD=E3=81=84=E7=86=8A <ShiroiK=
-uma@shiroikuma.org> wrote:
+Hello everyone,
 
->> Moved it and compiles fine. In fact I moved it back now, so it shoul=
-d
->> be finding it again and it still builds fine, no trace of the prior
->> error. I'm dumbfounded! But at least it compiles...
->
-> OK, figured it out. It was indeed the wrong tar.h, the one that was
-> making it bomb was the kernel headers tar.h from the Android source.
-> That explains it quite well.
+I am thinking about implementing a feature but I would appreciate any
+feedback before I begin, because more experienced Git developers and
+users may see some major problem that I do not.
 
-Hm.  Is there anything to do to make our headers specified with -I
-take precedence over unrelated system headers when processing
-'#include "foo.h"' directives?
+Earlier today I deleted a file from a repository.  I deleted it
+normally, not by using `git rm`.  So when I looked at `git status` on
+my terminal it told me about the file no longer being there.  In my
+sleepy state of mind I ran `git rm -u` without thinking about.  I did
+this because I have a habit of using `git add -u`.  I know `git rm`
+does not support that option, but I tried it anyways without thinking
+about it.
 
-Thanks,
-Jonathan
+When I came to my senses and realized that does not work I began to
+wonder if `git rm -u` should exist.  If any deleted, tracked files are
+not part of the index to commit then `git rm -u` would add that change
+to the index.  This would save users the effort of having to type out
+`git rm <filename>`, and could be useful when a user is deleting
+multiple files.
+
+Does this sound like a reasonable, useful feature to Git?  Or is there
+already a way to accomplish this which I have missed out of ignorance?
+Any thoughts and feedback would be greatly appreciated.
+
+--
+ejmr
+=E5=8D=97=E7=84=A1=E5=A6=99=E6=B3=95=E8=93=AE=E8=8F=AF=E7=B6=93
