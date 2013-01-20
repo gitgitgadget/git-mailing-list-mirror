@@ -1,81 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Hiding some refs in ls-remote
-Date: Sun, 20 Jan 2013 14:08:32 -0800
-Message-ID: <7vip6rjyn3.fsf@alter.siamese.dyndns.org>
-References: <1358555826-11883-1-git-send-email-gitster@pobox.com>
- <20130119165042.GB12307@sigill.intra.peff.net>
- <7vpq0zn2za.fsf@alter.siamese.dyndns.org>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [RFC] git rm -u
+Date: Sun, 20 Jan 2013 14:17:09 -0800
+Message-ID: <CANiSa6gTOFkDA_Cuu3BrHDNE17z8qukB7h9OMvP8OVjy2ej04Q@mail.gmail.com>
+References: <50FB1196.2090309@gmail.com>
+	<20130119214921.GE4009@elie.Belkin>
+	<vpq622s9jk1.fsf@grenoble-inp.fr>
+	<7v622rn1bh.fsf@alter.siamese.dyndns.org>
+	<7vobgjk0iw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, spearce@spearce.org, mfick@codeaurora.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 20 23:08:58 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	git <git@vger.kernel.org>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 20 23:23:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx34T-0002qn-89
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 23:08:57 +0100
+	id 1Tx3Ii-0006Be-Te
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 23:23:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546Ab3ATWIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 17:08:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50669 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752498Ab3ATWIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 17:08:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C299BA3C;
-	Sun, 20 Jan 2013 17:08:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0pJF5uVRMdEDCcs3evhxV9M5Swo=; b=YLb8XS
-	Pe2vnq4wiYTOqu+b1ytw4L8cGM5MNPjRH/uNjRtxQzfT3xp+0UI2DUlr9tFD3WuP
-	KFTigdj5zhtFvZpnZhSuXsxCy4v0r1qcVDA6Y7VaYJDVq7r3+FkY9+vMhsxOiRZc
-	WtOny2tSLN/2k8A5rUej6lFo3P3S4Otozq9Is=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J2tCEHThdlxiP7Ic2epv9qn9ScTH+aVc
-	yXwdQlOfA/MEQ6IORaePRfnxt+vLh0+RtDQsLo1/LXjafnasRHMNk5JEmZhPX5RY
-	WBBOETwSbKlTHYXJzTgKvtBA6Xoqw40vwq4wm8lJyHEoi0ID/eaE13NK1SHa1MLA
-	ktCd7YxPY+4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F867BA3B;
-	Sun, 20 Jan 2013 17:08:35 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B326CBA3A; Sun, 20 Jan 2013
- 17:08:34 -0500 (EST)
-In-Reply-To: <7vpq0zn2za.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 20 Jan 2013 10:06:33 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EEF85222-634D-11E2-9E7A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752561Ab3ATWXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 17:23:18 -0500
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:62486 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752515Ab3ATWXR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 17:23:17 -0500
+Received: by mail-wi0-f182.google.com with SMTP id hn14so4440717wib.15
+        for <git@vger.kernel.org>; Sun, 20 Jan 2013 14:23:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=pW86ux/JW70waxZmTS/+CMsAXRp8bGWkRT3ZOg7Csbc=;
+        b=cgDpzgyZ8uGqWxUTOOv0lg9QpbuovZGb0+CpUFU7LjcfJP0L0nKtfYonJ3yCrw1zFg
+         ZVQxEa15QEhAVH1j6Lrf/zA0E6rFMlyws8qBaCSCteVvT231evVmkvI2vRi7zl6RqsXx
+         IntakM74IhW4s7HQhm5aM4KbfpYQU/mJupzSV4cNZY9JwJBgEmSQ2WmQf2C80CLk0qKc
+         QswWRxhfsJbBZLGgeKKNNzV4xGs6ZNVg3cd373rHcrl06n4tqlE2wiQmT00K7CiOnemW
+         UQRJ9vWCjX1fgEXD4ac40yJM7ayMHJq/Sno0nOMUDicZvLBczL8EQ7VBDEnaSyzlKW4X
+         Corw==
+X-Received: by 10.180.84.131 with SMTP id z3mr12339986wiy.25.1358720229995;
+ Sun, 20 Jan 2013 14:17:09 -0800 (PST)
+Received: by 10.180.85.8 with HTTP; Sun, 20 Jan 2013 14:17:09 -0800 (PST)
+In-Reply-To: <7vobgjk0iw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214056>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Jeff King <peff@peff.net> writes:
+On Sun, Jan 20, 2013 at 1:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->>> 	[uploadPack]
->>> 		hiderefs = refs/changes
+>> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 >>
->> Would you want to do the same thing on receive-pack? It could benefit
->> from the same reduction in network cost (although it tends to be invoked
->> less frequently than upload-pack).
-> ...
-> As I said, I view this primarily as solving the cluttering issue.
-> The use of hiderefs to hide these refs that point at objects I do
-> not consider belong to my repository from the pushers equally makes
-> sense as such, I think.
+>>> "git add -u" is one of the only exceptions (with "git grep"). I consider
+>>> this as a bug, and think this should be changed. This has been discussed
+>>> several times here, but no one took the time to actually do the change
+>
+>  - As we have the "from the root" magic pathspec these days,
+>    requiring "git add -u :/" when the user really means to add
+>    everything is no longer too much of a burden, but if we suddenly
+>    changed "git add -u" to mean "git add -u .", that is too much of
+>    a change in the semantics.
 
-Now that raises one question.  Should this be transfer.hiderefs that
-governs both upload-pack and receive-pack?  I tend to think the
-answer is yes.
-
-It may even make sense to have "git push" honor it, excluding them
-from "git push --mirror" (or "git push --all" if some of the
-branches are hidden); I haven't thought things through, though.
+And I think someone (Jeff?) pointed out that that last part is even
+more true for "git clean", which also currently works on the current
+directory if not told otherwise.
