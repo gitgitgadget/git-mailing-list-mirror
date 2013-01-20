@@ -1,87 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC] git rm -u
-Date: Sun, 20 Jan 2013 12:32:14 +0100
-Message-ID: <vpq622s9jk1.fsf@grenoble-inp.fr>
-References: <50FB1196.2090309@gmail.com> <20130119214921.GE4009@elie.Belkin>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Aw: [PATCH 0/2] GIT, Git, git
+Date: Sun, 20 Jan 2013 12:56:37 +0100
+Message-ID: <87d2x0xe2y.fsf@pctrast.inf.ethz.ch>
+References: <304952858.714413.1358671123163.JavaMail.ngmail@webmail06.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Eric James Michael Ritz <lobbyjones@gmail.com>,
-	git@vger.kernel.org, Tomas Carnecky <tomas.carnecky@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 20 12:32:39 2013
+Cc: <git@vger.kernel.org>
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Sun Jan 20 12:57:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Twt8h-0003NU-0v
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 12:32:39 +0100
+	id 1TwtWJ-0000tl-CU
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 12:57:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887Ab3ATLcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 06:32:18 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:45734 "EHLO shiva.imag.fr"
+	id S1751915Ab3ATL4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 06:56:42 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:27778 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751809Ab3ATLcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 06:32:17 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r0KBWD3g001890
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 20 Jan 2013 12:32:13 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Twt8I-0004g1-OR; Sun, 20 Jan 2013 12:32:14 +0100
-In-Reply-To: <20130119214921.GE4009@elie.Belkin> (Jonathan Nieder's message of
-	"Sat, 19 Jan 2013 13:49:22 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 20 Jan 2013 12:32:13 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r0KBWD3g001890
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1359286334.74339@Z5msNIem+ylZIIPP4S0drg
+	id S1751867Ab3ATL4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 06:56:41 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 20 Jan
+ 2013 12:56:37 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (46.126.8.85) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 20 Jan
+ 2013 12:56:37 +0100
+In-Reply-To: <304952858.714413.1358671123163.JavaMail.ngmail@webmail06.arcor-online.net>
+	(Thomas Ackermann's message of "Sun, 20 Jan 2013 09:38:43 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214008>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Thomas Ackermann <th.acker@arcor.de> writes:
 
-> Eric James Michael Ritz wrote:
+>> Git changed its 'official' system name from 'GIT' to 'Git' in v1.6.5.3
+>> (as can be seen in the corresponding release note where 'GIT' was 
+>> changed to 'Git' in the header line).
+>> 
+>> Alas the documention uses 'GIT', 'Git' or even 'git' to refer to the
+>> Git system. So change every occurrence of 'GIT" and 'git' to 'Git'
+>> whenever Git as a system is referred to (but don't do this change
+>> in the release notes because they constitute a history orthogonal
+>> to the history versioned by Git).
+>> 
+>> [PATCH 1/2] Change old system name 'GIT' to 'Git'
+>> [PATCH 2/2] Change 'git' to 'Git' whenever the whole system is referred to
+>> 
 >
->> When I came to my senses and realized that does not work I began to
->> wonder if `git rm -u` should exist.  If any deleted, tracked files are
->> not part of the index to commit then `git rm -u` would add that change
->> to the index.
->
-> I like it.  If you have time to write such a patch, I'll be happy to
-> read it.
+> My second patch somehow got lost in the mailing system (I suspect
+> due to its size of >300kB). I will wait for some more comments
+> and then do a reroll thereby splitting the second patch in smaller
+> parts ...
 
-I can leave with "git add -u", but a "git rm -u" that would only look at
-deletions, and not stage existing files changes would make sense.
+For such big patches it also helps if you push them somewhere public,
+and post the URL and branch name, so that interested parties can still
+have a look.
 
-One thing to be careful about is what to do when the command is called
-from a subdirectory. In general, Git commands use this convention:
+But yes, vger.kernel.org silently discards all mail above 100KB, see
 
-* git foo   => tree-wide command
-* git foo . => restrict to current directory
+  http://vger.kernel.org/majordomo-info.html
 
-"git add -u" is one of the only exceptions (with "git grep"). I consider
-this as a bug, and think this should be changed. This has been discussed
-several times here, but no one took the time to actually do the change
-(changing is easy, but having a correct migration plan wrt backward
-compatibility is not).
-
-Implementing "git rm -u" as a tree-wide command would create a
-discrepancy with "git add -u". Implementing it as a "current directory"
-command would make the migration harder if we eventually try to change
-"git add -u". Perhaps "git rm -u" should be forbidden from a
-subdirectory (with an error message pointing to "git rm -u :/" and "git
-rm -u ."), waiting for a possible "git add -u" change.
+in the last section.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thomas Rast
+trast@{inf,student}.ethz.ch
