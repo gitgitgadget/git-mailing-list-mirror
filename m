@@ -1,104 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git interactive rebase 'consume' command
-Date: Sun, 20 Jan 2013 12:23:41 -0800
-Message-ID: <7v8v7nli2a.fsf@alter.siamese.dyndns.org>
-References: <kdgtir$apt$1@ger.gmane.org>
- <7vk3r7llod.fsf@alter.siamese.dyndns.org> <kdhfk6$von$1@ger.gmane.org>
+Subject: Re: [PATCH v2] Make git selectively and conditionally ignore certain
+ stat fields
+Date: Sun, 20 Jan 2013 12:30:21 -0800
+Message-ID: <7v4niblhr6.fsf@alter.siamese.dyndns.org>
+References: <7va9sa6f0h.fsf@alter.siamese.dyndns.org>
+ <1999787368.3950248.1358711511739.JavaMail.root@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Kelly <steveire@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 20 21:24:09 2013
+Cc: git@vger.kernel.org, j sixt <j.sixt@viscovery.net>,
+	Shawn Pearce <spearce@spearce.org>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sun Jan 20 21:30:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx1Qz-0001N0-Dy
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 21:24:05 +0100
+	id 1Tx1XV-00034q-3z
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 21:30:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467Ab3ATUXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 15:23:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59650 "EHLO
+	id S1752477Ab3ATUa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 15:30:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33303 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752416Ab3ATUXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 15:23:44 -0500
+	id S1752452Ab3ATUaZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 15:30:25 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7612B218;
-	Sun, 20 Jan 2013 15:23:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABB00B821;
+	Sun, 20 Jan 2013 15:30:24 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CNWgTNcloipiuiFZj22Zxpvwlzg=; b=aCgZwF
-	sm4BE+kUlCkQa7u1Vf440etnCqNAtbBPRAhBnmLjisgu8TDWELy75XfE8s3Bpg+m
-	uL2QQTrrGr11HWH9vsGt04NRtbKQXwtDMipN0FQjZHWLN0gigRmX0JK9E3h/ge9/
-	Eeq/H08RFJoqxGDe2XiohobDVIgAVhKMeTBZo=
+	:content-type; s=sasl; bh=tu72z24aNMVqUfaRHt5YGB59lH8=; b=T2fBhm
+	xYQo2hDCSRFLFhFw1481wEPYD5V3zWUuIsoE4VmRJ6STpdt5KOIq/zDLj1Rdw1jx
+	NWEbhp5Hi6o3DRDP5ymRlLeUykd0J4axWV6dhYT1DnsppFQum+ncXvqFkuVMX/mj
+	eNcJZR7VLcqQD+9fmjwxHOMwdavNG1A8HV57Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=khtKvtEAvW6GmnpvUgb9wA4JVHky64Pp
-	pKfy84KPlID7saBk+AYSPfRxftEM0qd8hywB0JgJDRSHpkwfWmfNLta2e0J+kIVY
-	4LrAL+7fWujCfqR3oIvg53YIDte/s+oSFDBzeguCp7+Cw2Z0iYxlhvKH+6Dz6O9S
-	O8aBl4co554=
+	:content-type; q=dns; s=sasl; b=euPcz/xBTs1t8xU2ABQEYuJlAxZgUaxs
+	O6kq4YgxhNeh66iVT9Lr3OG7wO+nMDhiPDUR1+uf8cMdGkZhUFxu43PtEgrerZh/
+	HIkUKAnqvnAovLazle+J13PFxgjKwct1VQnv5dIg1qyFwrW6VUaUIrMSRSbY5aVZ
+	VR61S3mXAWQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBA5FB215;
-	Sun, 20 Jan 2013 15:23:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EC96B81E;
+	Sun, 20 Jan 2013 15:30:24 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4562CB212; Sun, 20 Jan 2013
- 15:23:43 -0500 (EST)
-In-Reply-To: <kdhfk6$von$1@ger.gmane.org> (Stephen Kelly's message of "Sun,
- 20 Jan 2013 20:13:12 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F3763B816; Sun, 20 Jan 2013
+ 15:30:22 -0500 (EST)
+In-Reply-To: <1999787368.3950248.1358711511739.JavaMail.root@dewire.com>
+ (Robin Rosenberg's message of "Sun, 20 Jan 2013 20:51:51 +0100 (CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 48F9375A-633F-11E2-ABDB-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 37D15ECA-6340-11E2-ADC6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214047>
 
-Stephen Kelly <steveire@gmail.com> writes:
+Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 
-> Junio C Hamano wrote:
->> Sorry, but I do not understand what you are trying to solve.
+> ----- Ursprungligt meddelande -----
+>
+>> That configurability is a slipperly slope to drag us into giving
+>> users
+>> more complexity that does not help them very much, I suspect.
 >> 
->> How can 1313a5e, which fixes misakes made in c2f62a3, come before
->> that commit in the first place?
+>> Earlier somebody mentioned "size and mtime is often enough", so I
+>> think a single option core.looseStatInfo (substitute "loose" with
+>> short, minimum or whatever adjective that is more appropriate---I am
+>> not good at picking phrases, it sounds to me a way to more loosely
+>> define stat info cleanliness than we usually do) that makes us
+>> ignore all fields (regardless of their zero-ness) other than those
+>> two fields might not be a bad way to go.
 >
-> One scenario is something like this:
+> Would something like this be good?
 >
->  Start with a clean HEAD (always a good idea :) )
->  hack hack hack
->  make multiple commits
->  realize that a hunk you committed in an early patch belongs in a later one.
->  use git rebase -i to fix it.
+> core.statinfo = 
+> default = all fields
+> minimal = whole seconds of mtime and size
+> medium = seconds, nanos of mtime and size
+> nonzero = all non-zero fields
 >
-> Is that more clear?
+> -- robin
 
-Not really.
+If you mean to exclude ctime and other fields we already exclude as
+useless from your "all", that may make sense, but do we really need
+that much "flexibility", or do "more choices" just confuse users? I
+have this suspicion that it may be the latter.
 
-If you think that the author timestamp is the time the author
-finished working on the commit, shouldn't the squashed result get
-the timestamp when you finished squashing, not the timestamp of
-either of the commits that were squashed?  Unlike "fixup" and
-"reword", the change you are making is very different from any of
-the original constituent commmits, and you finished working on that
-change when you squashed these commits into one.  Propagating the
-timestamp from the later ones sounds equally wrong for that purpose.
-
-In any case, the intent of the author timestamp is to record the
-time the author _started_ working on the change and came up with an
-initial, possibly a partial, draft.  It does not record the time
-when the commit was finalized.  "git commit --amend" preserves the
-original timestamp, doesn't it?
-
-In your example:
-
->  pick 07bc3c9 Good commit.
->  pick 1313a5e Commit to fixup into c2f62a3.
->  pick c2f62a3 Another commit.
-
-you can view 1313a5e as a "preparatory clean-up for the real change
-in c2f62a3", which could be a separate commit in the final history.
-If you choose to squash them together into one, the time you
-recorded 1313a5e was when you started working on the combined
-change, so it does not sound so wrong to take that author timestamp
-for the result.
+Wouldn't a single boolean that lets users choose between your
+"minimal" and "default" be sufficient?
