@@ -1,72 +1,104 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: Re: [PATCH 1/2] Change old system name 'GIT' to 'Git'
-Date: Sun, 20 Jan 2013 21:16:50 +0100 (CET)
-Message-ID: <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git interactive rebase 'consume' command
+Date: Sun, 20 Jan 2013 12:23:41 -0800
+Message-ID: <7v8v7nli2a.fsf@alter.siamese.dyndns.org>
+References: <kdgtir$apt$1@ger.gmane.org>
+ <7vk3r7llod.fsf@alter.siamese.dyndns.org> <kdhfk6$von$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: th.acker@arcor.de, git@vger.kernel.org
-To: gitster@pobox.com, davvid@gmail.com
-X-From: git-owner@vger.kernel.org Sun Jan 20 21:17:39 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stephen Kelly <steveire@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 20 21:24:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx1Kh-00084Z-45
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 21:17:35 +0100
+	id 1Tx1Qz-0001N0-Dy
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 21:24:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752463Ab3ATUQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 15:16:52 -0500
-Received: from mail-in-13.arcor-online.net ([151.189.21.53]:47072 "EHLO
-	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752404Ab3ATUQw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Jan 2013 15:16:52 -0500
-Received: from mail-in-16-z2.arcor-online.net (mail-in-16-z2.arcor-online.net [151.189.8.33])
-	by mx.arcor.de (Postfix) with ESMTP id 95023212658;
-	Sun, 20 Jan 2013 21:16:50 +0100 (CET)
-Received: from mail-in-14.arcor-online.net (mail-in-14.arcor-online.net [151.189.21.54])
-	by mail-in-16-z2.arcor-online.net (Postfix) with ESMTP id 893DC3FE9CB;
-	Sun, 20 Jan 2013 21:16:50 +0100 (CET)
-Received: from webmail12.arcor-online.net (webmail12.arcor-online.net [151.189.8.64])
-	by mail-in-14.arcor-online.net (Postfix) with ESMTP id 80C5E9BCEB;
-	Sun, 20 Jan 2013 21:16:50 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-14.arcor-online.net 80C5E9BCEB
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1358713010; bh=Ryp5o3cG74BsPA1DALGlgpmO0GMyrlhdYXCUEl9YsgI=;
-	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=Z1xBtJIIRIMoVRtaBCBJvGuRWKi3t06NYikb1Eq/yIU9mj6QBxg34Xd+Ry82CYoSl
-	 0dQtr+iQMGZTbAPU8uowoo0tJ+0mpxhz8E9HX56u3QfToNzONgEOxUwTx32eZ3p58u
-	 PYlh2znP2zb3OYWPzVWqj+NRjXy1IQbjh+vc4o9E=
-Received: from [94.217.21.22] by webmail12.arcor-online.net (151.189.8.64) with HTTP (Arcor Webmail); Sun, 20 Jan 2013 21:16:50 +0100 (CET)
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 94.217.21.22
+	id S1752467Ab3ATUXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 15:23:45 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59650 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752416Ab3ATUXo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 15:23:44 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7612B218;
+	Sun, 20 Jan 2013 15:23:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CNWgTNcloipiuiFZj22Zxpvwlzg=; b=aCgZwF
+	sm4BE+kUlCkQa7u1Vf440etnCqNAtbBPRAhBnmLjisgu8TDWELy75XfE8s3Bpg+m
+	uL2QQTrrGr11HWH9vsGt04NRtbKQXwtDMipN0FQjZHWLN0gigRmX0JK9E3h/ge9/
+	Eeq/H08RFJoqxGDe2XiohobDVIgAVhKMeTBZo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=khtKvtEAvW6GmnpvUgb9wA4JVHky64Pp
+	pKfy84KPlID7saBk+AYSPfRxftEM0qd8hywB0JgJDRSHpkwfWmfNLta2e0J+kIVY
+	4LrAL+7fWujCfqR3oIvg53YIDte/s+oSFDBzeguCp7+Cw2Z0iYxlhvKH+6Dz6O9S
+	O8aBl4co554=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBA5FB215;
+	Sun, 20 Jan 2013 15:23:43 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4562CB212; Sun, 20 Jan 2013
+ 15:23:43 -0500 (EST)
+In-Reply-To: <kdhfk6$von$1@ger.gmane.org> (Stephen Kelly's message of "Sun,
+ 20 Jan 2013 20:13:12 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 48F9375A-633F-11E2-ABDB-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214046>
 
-> 
-> If I were to decide today to change the spellings, with an explicit
-> purpose of making things more consistent across documentation, it
-> may make sense to use even a simpler rule that is less error-prone
-> for people who write new sentences that has to have the word.  How
-> about treating it just like any other ordinary word?  That is, we
-> say "git" (without double-quotes, of course), unless it comes at the
-> beginning of a sentence?
-> 
+Stephen Kelly <steveire@gmail.com> writes:
 
-The widely used books on Git by Scott Chacon or Jon Loeliger (and
-many others) are using 'Git' instead of 'git' when talking about the 
-whole system. So IMHO it would not be wise to change our internal 
-documentation from using 'GIT'/'Git' to using 'git'. The internal 
-documentation should be a natural continuation of these books 
-by content and style.
+> Junio C Hamano wrote:
+>> Sorry, but I do not understand what you are trying to solve.
+>> 
+>> How can 1313a5e, which fixes misakes made in c2f62a3, come before
+>> that commit in the first place?
+>
+> One scenario is something like this:
+>
+>  Start with a clean HEAD (always a good idea :) )
+>  hack hack hack
+>  make multiple commits
+>  realize that a hunk you committed in an early patch belongs in a later one.
+>  use git rebase -i to fix it.
+>
+> Is that more clear?
 
-- Just my thoughts.
+Not really.
 
+If you think that the author timestamp is the time the author
+finished working on the commit, shouldn't the squashed result get
+the timestamp when you finished squashing, not the timestamp of
+either of the commits that were squashed?  Unlike "fixup" and
+"reword", the change you are making is very different from any of
+the original constituent commmits, and you finished working on that
+change when you squashed these commits into one.  Propagating the
+timestamp from the later ones sounds equally wrong for that purpose.
 
----
-Thomas
+In any case, the intent of the author timestamp is to record the
+time the author _started_ working on the change and came up with an
+initial, possibly a partial, draft.  It does not record the time
+when the commit was finalized.  "git commit --amend" preserves the
+original timestamp, doesn't it?
+
+In your example:
+
+>  pick 07bc3c9 Good commit.
+>  pick 1313a5e Commit to fixup into c2f62a3.
+>  pick c2f62a3 Another commit.
+
+you can view 1313a5e as a "preparatory clean-up for the real change
+in c2f62a3", which could be a separate commit in the final history.
+If you choose to squash them together into one, the time you
+recorded 1313a5e was when you started working on the combined
+change, so it does not sound so wrong to take that author timestamp
+for the result.
