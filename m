@@ -1,73 +1,61 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [RFC] git rm -u
-Date: Sun, 20 Jan 2013 14:17:09 -0800
-Message-ID: <CANiSa6gTOFkDA_Cuu3BrHDNE17z8qukB7h9OMvP8OVjy2ej04Q@mail.gmail.com>
-References: <50FB1196.2090309@gmail.com>
-	<20130119214921.GE4009@elie.Belkin>
-	<vpq622s9jk1.fsf@grenoble-inp.fr>
-	<7v622rn1bh.fsf@alter.siamese.dyndns.org>
-	<7vobgjk0iw.fsf@alter.siamese.dyndns.org>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: git-cvsimport-3 and incremental imports
+Date: Sun, 20 Jan 2013 18:20:08 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20130120232008.GA25001@thyrsus.com>
+References: <20130120200922.GC7498@serenity.lan>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Eric James Michael Ritz <lobbyjones@gmail.com>,
-	git <git@vger.kernel.org>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 20 23:23:44 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Jan 21 00:21:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx3Ii-0006Be-Te
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 23:23:41 +0100
+	id 1Tx4CF-0003xD-Cn
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 00:21:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752561Ab3ATWXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 17:23:18 -0500
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:62486 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752515Ab3ATWXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 17:23:17 -0500
-Received: by mail-wi0-f182.google.com with SMTP id hn14so4440717wib.15
-        for <git@vger.kernel.org>; Sun, 20 Jan 2013 14:23:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=pW86ux/JW70waxZmTS/+CMsAXRp8bGWkRT3ZOg7Csbc=;
-        b=cgDpzgyZ8uGqWxUTOOv0lg9QpbuovZGb0+CpUFU7LjcfJP0L0nKtfYonJ3yCrw1zFg
-         ZVQxEa15QEhAVH1j6Lrf/zA0E6rFMlyws8qBaCSCteVvT231evVmkvI2vRi7zl6RqsXx
-         IntakM74IhW4s7HQhm5aM4KbfpYQU/mJupzSV4cNZY9JwJBgEmSQ2WmQf2C80CLk0qKc
-         QswWRxhfsJbBZLGgeKKNNzV4xGs6ZNVg3cd373rHcrl06n4tqlE2wiQmT00K7CiOnemW
-         UQRJ9vWCjX1fgEXD4ac40yJM7ayMHJq/Sno0nOMUDicZvLBczL8EQ7VBDEnaSyzlKW4X
-         Corw==
-X-Received: by 10.180.84.131 with SMTP id z3mr12339986wiy.25.1358720229995;
- Sun, 20 Jan 2013 14:17:09 -0800 (PST)
-Received: by 10.180.85.8 with HTTP; Sun, 20 Jan 2013 14:17:09 -0800 (PST)
-In-Reply-To: <7vobgjk0iw.fsf@alter.siamese.dyndns.org>
+	id S1752250Ab3ATXUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 18:20:42 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:60945
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752039Ab3ATXUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 18:20:42 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 8ADCE4064C; Sun, 20 Jan 2013 18:20:08 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20130120200922.GC7498@serenity.lan>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214057>
 
-On Sun, Jan 20, 2013 at 1:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->>
->>> "git add -u" is one of the only exceptions (with "git grep"). I consider
->>> this as a bug, and think this should be changed. This has been discussed
->>> several times here, but no one took the time to actually do the change
->
->  - As we have the "from the root" magic pathspec these days,
->    requiring "git add -u :/" when the user really means to add
->    everything is no longer too much of a burden, but if we suddenly
->    changed "git add -u" to mean "git add -u .", that is too much of
->    a change in the semantics.
+John Keeping <john@keeping.me.uk>:
+> I don't think there is any way to solve this without giving cvsps more
+> information, probably the last commit time for all git branches, but
+> perhaps I'm missing a fast-import feature that can help solve this
+> problem.
 
-And I think someone (Jeff?) pointed out that that last part is even
-more true for "git clean", which also currently works on the current
-directory if not told otherwise.
+Yes, you are.  The magic incantation is
+
+    from refs/heads/<branch>^0
+
+I've just pushed a cvsps-3.9 with an -i option that generates these at
+each branch root.  Combine it with -d and you get incremental
+fast-export.
+
+You get to integrate this.  I think the transition strategy Junio
+has chosen is seriously mistaken, leading to unnecessary grief for users
+who will be fooled into thinking it's OK to still use cvsps-2.x. Because
+I do not wish to encourage or endorse this mistake and am tired of arguing
+against stubborn determination to do the wrong thing, I am not going to 
+sink more effort into the git project's end of the CVS-lifting problem.
+There are too many better uses for my time.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
