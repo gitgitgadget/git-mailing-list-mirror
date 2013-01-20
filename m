@@ -1,78 +1,75 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH v2] INSTALL: git-p4 doesn't support Python 3
-Date: Sun, 20 Jan 2013 13:03:10 -0800
-Message-ID: <CA+sFfMfCi-cvgRXE7KnPAsQpMWFR8eMiG0wQ0vL+p+U=R2R2qw@mail.gmail.com>
-References: <20130120110620.GJ31172@serenity.lan>
-	<7vwqv7lm6b.fsf@alter.siamese.dyndns.org>
-	<20130120192831.GB7498@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] Allow Git::get_tz_offset to properly handle DST
+ boundary times
+Date: Sun, 20 Jan 2013 13:03:54 -0800
+Message-ID: <7vzk03k1mt.fsf@alter.siamese.dyndns.org>
+References: <1358291405-10173-1-git-send-email-bdwalton@gmail.com>
+ <1358291405-10173-3-git-send-email-bdwalton@gmail.com>
+ <7vy5frtymt.fsf@alter.siamese.dyndns.org>
+ <CAP30j14Og7YLaZj0dbpAhUHFfuy0Y=bEn_3EqGzxR5PRA7vQXA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Pete Wyckoff <pw@padd.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Jan 20 22:03:33 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Raymond <esr@thyrsus.com>, git <git@vger.kernel.org>
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 20 22:04:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx23B-0003G7-9T
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 22:03:33 +0100
+	id 1Tx23t-0003Pw-V4
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 22:04:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752479Ab3ATVDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 16:03:12 -0500
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:45124 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752474Ab3ATVDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 16:03:11 -0500
-Received: by mail-vc0-f171.google.com with SMTP id fk10so3730397vcb.30
-        for <git@vger.kernel.org>; Sun, 20 Jan 2013 13:03:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Hiky2qRNKED/E5y0as4Igu4DmCO5aFgn947rGjQyNEY=;
-        b=Fsi+pwX/hGSUnPLzcknJZUs6dHQj7VEg9zzbMX0u7IbDqtMdhAQ6xR0Lbsa69qJOu6
-         Q9wQQQtrxsgt+FbfGgzenIs0k/TnDQSVIlrdzaobFGnNDMESaeCKUGdNz1Xv6OT3m5Kw
-         NlT2DsgCDADyHnVMqS/9fC/nSgt9BIbBDwQNfIDQ7/edZxYez53IVbdJMamAe9+n4S6W
-         WkUAhCyHzpzzDSq1VTjasZTpY91fKg80K6aL6fVtKjm2QCvHBb05B2niZIZmxFJRgA16
-         QQDjGFFoEm48TqMpJMUd+3PN/CtwpWXgVNMTN6mH71fu2mjwtlaJuppUUK80D8Ccg1jy
-         gr7g==
-X-Received: by 10.220.151.72 with SMTP id b8mr17113757vcw.38.1358715791076;
- Sun, 20 Jan 2013 13:03:11 -0800 (PST)
-Received: by 10.58.216.1 with HTTP; Sun, 20 Jan 2013 13:03:10 -0800 (PST)
-In-Reply-To: <20130120192831.GB7498@serenity.lan>
+	id S1752491Ab3ATVD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 16:03:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60478 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752474Ab3ATVD4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 16:03:56 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 269E0A202;
+	Sun, 20 Jan 2013 16:03:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oOfkI6aR8t+ZoBYql5gXJMLzdBg=; b=nbMk7w
+	qFfPsqwJd7xRbu4N1JFv0a5lSBDrzIDiyjrM6Xwh5FiPJ0ZfDv6hv8NR8duREt2i
+	56yD/toLEngY9tSuUfT36hDvjwdbA0VDoWZvaZjHpvdmhhWXVOtdl73u8gi+2FdP
+	EaOeU5tkrYfx1cZVqL9UYayFrqBYrIPMNUi6I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bOBrme9lirVqVG5/XUlz/9DQQmPVlo6l
+	qtezL+HhZIH3hB2HVyHwJEmSWoJvG51KaG7yD9cZ6oYg0t3pjSmr7fKPlIvW+fpf
+	WZ4c9RQwJWDB9zTTQMyHvz0QFAx1U7h3BIV2XkBgPMwGJQ76oBVdMcngyY0qaWGB
+	TVpJVEWVbAc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19EDAA201;
+	Sun, 20 Jan 2013 16:03:56 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 81BA6A1FA; Sun, 20 Jan 2013
+ 16:03:55 -0500 (EST)
+In-Reply-To: <CAP30j14Og7YLaZj0dbpAhUHFfuy0Y=bEn_3EqGzxR5PRA7vQXA@mail.gmail.com> (Ben
+ Walton's message of "Sun, 20 Jan 2013 20:06:13 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E6C8F646-6344-11E2-91F7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214049>
 
-On Sun, Jan 20, 2013 at 11:28 AM, John Keeping <john@keeping.me.uk> wrote:
-> On Sun, Jan 20, 2013 at 10:54:52AM -0800, Junio C Hamano wrote:
->> John Keeping <john@keeping.me.uk> writes:
->>
->>> git-p4 supports Python 2.6 and later versions of Python 2.  Since Python
->>> 2.8 will never exist [1], it is most concise to just list the supported
->>> versions.
->>
->> Thanks; Eric's patch recently updated git-p4.py to require 2.4 I
->> think. Shouldn't it also be updated?
+Ben Walton <bdwalton@gmail.com> writes:
 
-Actually, the script does not support python 2.4 in its current state
-since it uses subprocess.check_call which was introduced in python
-2.5.
+> also avoids the oddball 1/2 hour DST shift.  I can re-roll the series
+> with your code (and credit for it) or you can apply you change on top
+> of my series...whichever is easiest for you.
 
-But, this can be trivially worked around.  I made the changes in my
-own tree on Friday and planned to submit them after using it myself
-for a few days.
+Please reroll, as I do not have patience either to set up a test
+case and verify the end result is correct, or to come up with a test
+case for it.  For this particular case, I think the identification
+of the issue weighs more than the implementation for fix it, so
+please retain the authorship for the fix; mentioning "taking the
+implementation idea from Junio" in the log message is the right
+amount of credit due to me.
 
-Personally, I prefer to continue to provide the ability to compile and
-install a fully working git on platforms in common use without pulling
-in additional dependencies.  At least while it's fairly easy to do so.
- So, in my opinion, git-p4 should be patched to support python 2.4 and
-the comment in INSTALL should be updated.  But, this opinion should be
-taken with the appropriate grain of salt since I'm not really a
-contributor to any of the python infrastructure.
-
--Brandon
+Thanks.
