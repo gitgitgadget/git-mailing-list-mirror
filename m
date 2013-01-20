@@ -1,84 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Aw: Re: [PATCH 1/2] Change old system name 'GIT' to 'Git'
-Date: Sun, 20 Jan 2013 13:08:33 -0800
-Message-ID: <7vvcark1f2.fsf@alter.siamese.dyndns.org>
-References: <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
+From: Chris Rorvick <chris@rorvick.com>
+Subject: Re: [PATCH 0/3] fixup remaining cvsimport tests
+Date: Sun, 20 Jan 2013 15:17:53 -0600
+Message-ID: <CAEUsAPbDTUXhz2BoDOwKCjcLS6BQA=jZ6DME4ZDfTDXRL=ZMqA@mail.gmail.com>
+References: <1357878439-27500-1-git-send-email-chris@rorvick.com>
+	<20130120125838.GK31172@serenity.lan>
+	<CAEUsAPZKd+mw2iK7nd6rTtB8N+B99ud19FkuSx0HVitNxrxxZA@mail.gmail.com>
+	<20130120152857.GM31172@serenity.lan>
+	<7vsj5vlm1d.fsf@alter.siamese.dyndns.org>
+	<20130120192412.GA7498@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: davvid@gmail.com, git@vger.kernel.org
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Sun Jan 20 22:09:01 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Jan 20 22:18:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx28P-0004fw-OH
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 22:08:58 +0100
+	id 1Tx2HQ-00072C-R1
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 22:18:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486Ab3ATVIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 16:08:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65383 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752476Ab3ATVIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 16:08:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB1D8A733;
-	Sun, 20 Jan 2013 16:08:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fftrDv1zfE7LeP/ZZ76ulnxMbec=; b=bvurmA
-	e39SBdkuf/xl9XXRLdO8lIlgAwu/+7jlPlTqFyatSSEgmn6D2bba3no3zZFMbrFe
-	i2QsRdJaVWWyODY3swOFI4nsUJRVT6Vjoww0lkm9HuJQi3Jgj7qKeoPcFaP9pFNA
-	X6rrX1soSli0vgsi7noTSxPfKueyWmg+ggJUw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QHupb9vYuK7ut/RjL7SkbuPzrFv6gMLw
-	cci7d8FluETC0rxdEOJGjo6ylC/y/y7xNnGzzgRG5/WGjB+mI99T3o5S+dVUd8+y
-	QaQgrmC9DOv/s/nSxCw7nT4tNKN3PywwBa5bEdqWSPrzG8uzGYgsqjAMPngEIDyP
-	wNcA9Mp1uX8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7E7EA732;
-	Sun, 20 Jan 2013 16:08:35 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CBD3A730; Sun, 20 Jan 2013
- 16:08:35 -0500 (EST)
-In-Reply-To: <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
- (Thomas Ackermann's message of "Sun, 20 Jan 2013 21:16:50 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8DA0994C-6345-11E2-873C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752583Ab3ATVR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 16:17:56 -0500
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:64748 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752514Ab3ATVRz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 16:17:55 -0500
+Received: by mail-lb0-f175.google.com with SMTP id n3so3577982lbo.6
+        for <git@vger.kernel.org>; Sun, 20 Jan 2013 13:17:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=b6qkCOqC0fMq9YAvcEYyA3jLSn/WTZgCzT48j/wZ4dU=;
+        b=vMCoN4jsastKbs562KkoUzYoC7Ae4ujeBVPqhxCqk/0q7X6XqBnL7SAjJlhZB/L/yv
+         uBEy4OnTjF5oFJLndGT5bIcrtEg72Apk0CPv94EouCSHa1CC+GtiilQMuYX22Op3dLtO
+         w0VXZBUKsfr7pDYHeBoxz0CyYMGuICmOlKbIQ3KoG1yySdX2u1m2ABRKeixadiCfgws8
+         G/sb/y4NH6NypC5lANxUGukHQBUKhORmJ2pyqbLnooY7r6hzMCR4XUIufQYx5ZPtfPPA
+         mK2qH/Uph8Zq3mhGfpcBl6+keYLS+1zDh29bCM4+qnjwcKiH2JMo/Cf7/VKDtr9eUYi4
+         F0cg==
+X-Received: by 10.152.144.103 with SMTP id sl7mr15154325lab.23.1358716673669;
+ Sun, 20 Jan 2013 13:17:53 -0800 (PST)
+Received: by 10.114.2.97 with HTTP; Sun, 20 Jan 2013 13:17:53 -0800 (PST)
+In-Reply-To: <20130120192412.GA7498@serenity.lan>
+X-Google-Sender-Auth: lM_TkKOTuAgsdKXVMpZtvmClfCU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214051>
 
-Thomas Ackermann <th.acker@arcor.de> writes:
-
->> If I were to decide today to change the spellings, with an explicit
->> purpose of making things more consistent across documentation, it
->> may make sense to use even a simpler rule that is less error-prone
->> for people who write new sentences that has to have the word.  How
->> about treating it just like any other ordinary word?  That is, we
->> say "git" (without double-quotes, of course), unless it comes at the
->> beginning of a sentence?
->> 
+On Sun, Jan 20, 2013 at 1:24 PM, John Keeping <john@keeping.me.uk> wrote:
+> On Sun, Jan 20, 2013 at 10:57:50AM -0800, Junio C Hamano wrote:
+>> This is not a noise, though.
+>>
+>> Chris, how would we want to proceed?  I'd prefer at some point to
+>> see cvsimport-3 to be in sync when the one patched and tested in
+>> Eric's repository is proven enough.  Will Eric be the gatekeeper, or
+>> will you be sending patches this way as well?
 >
-> The widely used books on Git by Scott Chacon or Jon Loeliger (and
-> many others) are using 'Git' instead of 'git' when talking about the 
-> whole system. So IMHO it would not be wise to change our internal 
-> documentation from using 'GIT'/'Git' to using 'git'. The internal 
-> documentation should be a natural continuation of these books 
-> by content and style.
+> In this case the patch was to the C portion of cvsps, not the Python
+> cvs-import, so not relevant for this particular case.
 
-That argument is going the other way around (we _are_ the
-authoritative source).
+Oh, I think I misunderstood the question.  The only time I passed a
+patch specifically for git-cvsimport.py directly to Eric was before
+the his patch was in Junio's repository.  Unless I'm mistaken, only
+the second patch Eric sent was actually imported.  Subsequent to this
+I would have submitted any patches for git-cvsimport.py directly to
+the git list.  I just didn't have any--cvsps had several problems that
+needed to be worked out before it made sense to look at the importer.
 
-But I am OK with "Git" as a proper noun (which always begins with
-capital letter), using "git" only when it is something the user
-would type.  Just come up with a simple-to-explain rule so that
-people will have no doubt which one to use in their new text and
-stick to it.
+In other words, I don't think Eric should be a gatekeeper of this code.
 
-Thanks.
+Chris
