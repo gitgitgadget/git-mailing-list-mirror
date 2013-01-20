@@ -1,97 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: How to setup bash completion for alias of git command
-Date: Sun, 20 Jan 2013 03:14:24 -0800
-Message-ID: <20130120111424.GG16339@elie.Belkin>
-References: <CACSwcnQu8Rx83mcGYR6NGzEhoreNR6DfiK876LF7pa9PGm30JA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Aw: Re: [PATCH 1/2] Change old system name 'GIT' to 'Git'
+Date: Sun, 20 Jan 2013 12:24:09 +0100
+Message-ID: <vpqhamc9jxi.fsf@grenoble-inp.fr>
+References: <CAJDDKr5_AWFF6MR2Kwt5FzA0vaSE-wx8xFO3xcRnKZ168hXBrg@mail.gmail.com>
+	<732444561.1327663.1358589465467.JavaMail.ngmail@webmail24.arcor-online.net>
+	<379071741.1327695.1358589560822.JavaMail.ngmail@webmail24.arcor-online.net>
+	<310504838.1116553.1358607676116.JavaMail.ngmail@webmail10.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git mailing list <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Manlio Perillo <manlio.perillo@gmail.com>,
-	Marc Khouzam <marc.khouzam@gmail.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 20 12:14:58 2013
+Content-Type: text/plain
+Cc: davvid@gmail.com, git@vger.kernel.org
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Sun Jan 20 12:24:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwsrU-0007T0-R4
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 12:14:53 +0100
+	id 1Twt0y-0001Wz-6J
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 12:24:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751693Ab3ATLOb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 06:14:31 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:56185 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751358Ab3ATLOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 06:14:30 -0500
-Received: by mail-pa0-f49.google.com with SMTP id bi1so2862089pad.22
-        for <git@vger.kernel.org>; Sun, 20 Jan 2013 03:14:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=AT4ncwJd1jUDLgTRVRbav4tlF1+a9JzRwo+xw6cRWk0=;
-        b=jxF2dOIq4e6muDGwVhPbT4CfDDPb3A9YcVbiNth8Vgek/6z61ptgVjUZj2Pb9yX51h
-         4kGWBQ70VCbrUTj13m/GWfFCkfU2hWdNwHLKG7tElMFph+8DVUhb7ZmnClsb4b7PyGKT
-         sIoUr6/fiTy0TYmzFWenCA9Sv7Ow6HOzcoYK8wINVBGbQZn1YXF6L13NjqQTIcsOeeTJ
-         5w0tZFLgCxWHaiPNvjvd1b84Vn6jNQ6yI5D6UJ/F/6yLrhIjV4syvP6STsdpL7UpGLSg
-         4myA79ra4q1va6gz5R0xlQMD2OQldhfcp7QuYsBIY5RroHcuIklV8uUDXOiGuZcT2mG9
-         3qvA==
-X-Received: by 10.66.72.198 with SMTP id f6mr38945002pav.42.1358680470299;
-        Sun, 20 Jan 2013 03:14:30 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id qr8sm6605321pbc.64.2013.01.20.03.14.28
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 20 Jan 2013 03:14:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CACSwcnQu8Rx83mcGYR6NGzEhoreNR6DfiK876LF7pa9PGm30JA@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1751781Ab3ATLYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 06:24:19 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:40477 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751661Ab3ATLYS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 06:24:18 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r0KBO9fk001128
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 20 Jan 2013 12:24:09 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Twt0U-0004c5-6i; Sun, 20 Jan 2013 12:24:10 +0100
+In-Reply-To: <310504838.1116553.1358607676116.JavaMail.ngmail@webmail10.arcor-online.net>
+	(Thomas Ackermann's message of "Sat, 19 Jan 2013 16:01:16 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 20 Jan 2013 12:24:09 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r0KBO9fk001128
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1359285853.97092@PPagkXe8c4wS0OvuhqiZWA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214005>
 
-Hi Ping,
+Thomas Ackermann <th.acker@arcor.de> writes:
 
-Ping Yin wrote:
+> The whole point of my patch is to use 'Git' consistently when 
+> we are talking about the system and not the individual command.
 
-> Following setup works for me  in ubuntu (10.04,11.04) for a long time
->
-> alias gtlg='git log'
-> complete -o default -o nospace -F _git_log gtlg
->
-> However, in debian (testing, wheezy), it doesn't work
->
-> $ gtlg or<TAB>
-> gtlg or-bash: [: 1: unary operator expected
-> -bash: [: 1: unary operator expected
+I like the idea. "git" should obviously remain lower-case when talking
+about the command, but deserves a capital when talking about the
+software independantly of whether it's called from command-line. Just
+like I type "firefox" in a shell to launch a program called "Firefox"
+(or even "Mozilla Firefox").
 
-Yes, I can reproduce this.  "git bisect" tells me it was introduced
-by v1.7.6-rc0~65^2~4 (completion: remove unnecessary
-_get_comp_words_by_ref() invocations, 2011-04-28).  Since then, Felipe
-has done work to make reusing subcommand completion easy again, so you
-can do
-
-	__git_complete gtlg _git_log
-
-One complication: on some systems, including Ubuntu 13.04, git's bash
-completion script is installed to
-
-	/usr/share/bash-completion/completions/git
-
-and sourced on the fly when completing commands starting with "git"
-instead of right away from /etc/bash_completion.  On these systems,
-the "__git_complete" function would not be usable right away from
-your .bashrc file.  I think we should fix this, for example by moving
-the function to a separate
-
-	$(git --exec-path)/git-bashrc-functions
-
-library.
-
-Thanks for reporting,
-Jonathan
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
