@@ -1,82 +1,75 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 0/3] fixup remaining cvsimport tests
-Date: Sun, 20 Jan 2013 15:28:57 +0000
-Message-ID: <20130120152857.GM31172@serenity.lan>
-References: <1357878439-27500-1-git-send-email-chris@rorvick.com>
- <20130120125838.GK31172@serenity.lan>
- <CAEUsAPZKd+mw2iK7nd6rTtB8N+B99ud19FkuSx0HVitNxrxxZA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] am: invoke perl's strftime in C locale
+Date: Sun, 20 Jan 2013 09:47:22 -0800
+Message-ID: <7vvcarn3v9.fsf@alter.siamese.dyndns.org>
+References: <20130114205933.GA25947@altlinux.org>
+ <20130115155953.GB21815@sigill.intra.peff.net>
+ <CALWbr2w+q5=Z8__g+J_s2NtTMgziHrntFqsi8vCJyvfO2qi81A@mail.gmail.com>
+ <20130115165058.GA29301@sigill.intra.peff.net>
+ <20130115174015.GA7471@altlinux.org> <20130115190517.GB7963@altlinux.org>
+ <7vehhiqlcx.fsf@alter.siamese.dyndns.org>
+ <20130119202853.GD1652@altlinux.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Chris Rorvick <chris@rorvick.com>
-X-From: git-owner@vger.kernel.org Sun Jan 20 16:29:31 2013
+Cc: Jeff King <peff@peff.net>, Antoine Pelisse <apelisse@gmail.com>,
+	git@vger.kernel.org
+To: "Dmitry V. Levin" <ldv@altlinux.org>
+X-From: git-owner@vger.kernel.org Sun Jan 20 18:47:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Twwpt-0001cQ-Lu
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 16:29:29 +0100
+	id 1Twyzi-0004zZ-SY
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 18:47:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338Ab3ATP3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 10:29:08 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:44832 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752329Ab3ATP3H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 10:29:07 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id A9152CDA58B;
-	Sun, 20 Jan 2013 15:29:05 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LcQlvK1JtAI5; Sun, 20 Jan 2013 15:29:04 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id E254ECDA5C6;
-	Sun, 20 Jan 2013 15:29:03 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id DBEDA161E509;
-	Sun, 20 Jan 2013 15:29:03 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WcC5Uv-UbzFI; Sun, 20 Jan 2013 15:29:03 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 94311161E480;
-	Sun, 20 Jan 2013 15:29:00 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CAEUsAPZKd+mw2iK7nd6rTtB8N+B99ud19FkuSx0HVitNxrxxZA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752437Ab3ATRr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 12:47:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41052 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752380Ab3ATRrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 12:47:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CAA7B59F;
+	Sun, 20 Jan 2013 12:47:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wlAQJ2P8S/Dz1LUMCY22Sm86LDw=; b=IemBdD
+	rW9Nwcy7CpMqNtBXv52KoffAa27lhWILsRCE4rZZvVCM12CVsRR/ISEEOZ/kzoDe
+	VRk+fACmsMVFt//eXnk5qKARAoRUgKypCwFJUp5rKFFSmLrxWFzZNKeoQbKrQaqe
+	6k2CUiNkZAlYIX/OHc9p3TMPTjRneTEK33nXQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J3UgzQwSiCFPdzG0MPWjeJ1SVKE3E0lA
+	y0AVc/lrvrMCH1sfv6t0Nso1stMijLrpAdzv7ktfwVMeYz1qRgTLYVt3otgCm/0e
+	77uJtS60Sxd8sOrnY1oV4hYuf4t+sQmniqqgXjCE9LH8ZrVWiFS+lplqtl9rF8sB
+	AfaJFzvwVJg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40DA0B59E;
+	Sun, 20 Jan 2013 12:47:24 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9D52B59C; Sun, 20 Jan 2013
+ 12:47:23 -0500 (EST)
+In-Reply-To: <20130119202853.GD1652@altlinux.org> (Dmitry V. Levin's message
+ of "Sun, 20 Jan 2013 00:28:53 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7261AA98-6329-11E2-A341-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214024>
 
-On Sun, Jan 20, 2013 at 09:22:03AM -0600, Chris Rorvick wrote:
-> On Sun, Jan 20, 2013 at 6:58 AM, John Keeping <john@keeping.me.uk> wrote:
->> On Thu, Jan 10, 2013 at 10:27:16PM -0600, Chris Rorvick wrote:
->>> These patchs apply on top of of Eric Raymond's cvsimport patch.  7 of 15
->>> tests in t9600 fail, one of which is fixed w/ a cvsps patch I've sent
->>> to Eric (fixes revision map.)
->>
->> Did you post the fix for the revision map publicly anywhere?
-> 
-> It's in Eric's repo and included in version 3.8:
-> 
-> https://gitorious.org/cvsps/cvsps/commit/abe81e1775a8959291f629029513d1b7160bbde6
+"Dmitry V. Levin" <ldv@altlinux.org> writes:
 
-Thanks.  For some reason I thought the fix would be to
-git-cvsimport-3.py.  Obviously I should have read more carefully.
+> Personally I prefer 2nd edition that is simpler and does the right thing
+> (not that LC_ALL=C is necessary and sufficient, you neither need to add
+> things like LANG=C nor can relax it to LC_TIME=C).
 
-Sorry for the noise.
+I guess everybody involved is in agreement, then.
 
-
-John
+Just FYI, "LC_ALL=C LANG=C" comes from the inertia dating back when
+not everybody understood LC_*; I do not personally know of a system
+that will be helped by the extra LANG=C these days, but I know it
+will not hurt anybody, so...
