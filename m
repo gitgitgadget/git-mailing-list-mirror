@@ -1,99 +1,90 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: Re: [PATCH 1/2] Change old system name 'GIT' to 'Git'
-Date: Sun, 20 Jan 2013 19:53:03 +0100
-Message-ID: <kdheeh$ntf$1@ger.gmane.org>
-References: <732444561.1327663.1358589465467.JavaMail.ngmail@webmail24.arcor-online.net> <379071741.1327695.1358589560822.JavaMail.ngmail@webmail24.arcor-online.net> <CAJDDKr5_AWFF6MR2Kwt5FzA0vaSE-wx8xFO3xcRnKZ168hXBrg@mail.gmail.com> <7vehhfn1r0.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] INSTALL: git-p4 doesn't support Python 3
+Date: Sun, 20 Jan 2013 10:54:52 -0800
+Message-ID: <7vwqv7lm6b.fsf@alter.siamese.dyndns.org>
+References: <20130120110620.GJ31172@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 20 19:53:49 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Jan 20 19:55:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx01a-0004U0-F6
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 19:53:46 +0100
+	id 1Tx032-0004uX-WA
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 19:55:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752286Ab3ATSxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 13:53:25 -0500
-Received: from plane.gmane.org ([80.91.229.3]:40037 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752271Ab3ATSxY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 13:53:24 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Tx01S-0004RH-NM
-	for git@vger.kernel.org; Sun, 20 Jan 2013 19:53:38 +0100
-Received: from dsdf-4db5faaa.pool.mediaways.net ([77.181.250.170])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 20 Jan 2013 19:53:38 +0100
-Received: from jojo by dsdf-4db5faaa.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 20 Jan 2013 19:53:38 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsdf-4db5faaa.pool.mediaways.net
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752291Ab3ATSy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 13:54:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53344 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752262Ab3ATSyz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 13:54:55 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECFF1A433;
+	Sun, 20 Jan 2013 13:54:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LhFBho/HUM9dTNUpkO1lKMPoDoU=; b=h+c3l4
+	oVOTwRyWXY93ZQNyADvMXvoTIMtSJYWuq7nG7EADtD2U6rL0Y3riCr3pNUoCX/9p
+	p5KYUvaLtae9dw61C1VsuRj6sTkCCxipSIWOJxI/xwDoTqwh5EPriQ0oCJFdfo/P
+	zSU2XmzSIFh5zSQR62fqnHU4gkNUMaP+cPlRU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wHEHJk06A8YcyJUoNOUxoH23gPtkuFr2
+	xykSLihV+yy/SZjIpHRvrK0XNH/OiiudT94P8juDJ6tQ+v0fRA/piHiYH3UdkaW4
+	l5yrjtkZnHRQxe6QHwRaXN3vj28FnqfikPzi/vtI3nyzY54BTy1XWa2uQkLI9nf3
+	kwSC6GO69mw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1673A432;
+	Sun, 20 Jan 2013 13:54:54 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 47FDFA431; Sun, 20 Jan 2013
+ 13:54:54 -0500 (EST)
+In-Reply-To: <20130120110620.GJ31172@serenity.lan> (John Keeping's message of
+ "Sun, 20 Jan 2013 11:06:20 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E0A5F10E-6332-11E2-8DC6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214032>
 
-Junio C Hamano wrote:
-> David Aguilar <davvid@gmail.com> writes:
->
->> On Sat, Jan 19, 2013 at 1:59 AM, Thomas Ackermann
->> <th.acker@arcor.de> wrote:
->>> @@ -55,7 +55,7 @@ History Viewers
->>>
->>>     - *gitweb* (shipped with git-core)
->>>
->>> -   GITweb provides full-fledged web interface for GIT repositories.
->>> +   GITweb provides full-fledged web interface for Git repositories.
->>
->> What about GITweb?
->>
->>> diff --git a/Documentation/git-update-ref.txt
->>> b/Documentation/git-update-ref.txt index d377a35..0df13ff 100644
->>> --- a/Documentation/git-update-ref.txt
->>> +++ b/Documentation/git-update-ref.txt
->>> @@ -73,7 +73,7 @@ in ref value.  Log lines are formatted as:
->>>  Where "oldsha1" is the 40 character hexadecimal value previously
->>>  stored in <ref>, "newsha1" is the 40 character hexadecimal value of
->>>  <newvalue> and "committer" is the committer's name, email address
->>> -and date in the standard GIT committer ident format.
->>> +and date in the standard Git committer ident format.
->>
->> IMO some of these look nicer when everything is lowercase.
->> e.g. "standard git committer ident format".
->
-> I do not think we ever intended to change the *name* of the
-> software.
->
-> In the early days, we wrote GIT in places where, if we were doing a
-> fancier typography, we would have used drop-caps for the latter two
-> (i.e. it is "Git" spelled in a font whose lower case alphabets have
-> the same shape as upper case ones but are smaller).  So there were
-> only "git" vs "Git".
->
-> If I were to decide today to change the spellings, with an explicit
-> purpose of making things more consistent across documentation, it
-> may make sense to use even a simpler rule that is less error-prone
-> for people who write new sentences that has to have the word.  How
-> about treating it just like any other ordinary word?  That is, we
-> say "git" (without double-quotes, of course), unless it comes at the
-> beginning of a sentence?
+John Keeping <john@keeping.me.uk> writes:
 
-Because then it could get confused with "git", the command? That would be 
-lower case even at the beginning of a sentence, wouldn't it?
+> git-p4 supports Python 2.6 and later versions of Python 2.  Since Python
+> 2.8 will never exist [1], it is most concise to just list the supported
+> versions.
 
-Bye, Jojo 
+Thanks; Eric's patch recently updated git-p4.py to require 2.4 I
+think. Shouldn't it also be updated?
+
+>
+> [1] http://www.python.org/dev/peps/pep-0404/
+>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> Acked-by: Pete Wyckoff <pw@padd.com>
+> ---
+> Since v1:
+>  - Fixed a typo in the commit message.
+>
+>  INSTALL | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/INSTALL b/INSTALL
+> index 28f34bd..c456d1c 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -131,7 +131,7 @@ Issues of note:
+>  	  use English. Under autoconf the configure script will do this
+>  	  automatically if it can't find libintl on the system.
+>  
+> -	- Python version 2.6 or later is needed to use the git-p4
+> +	- Python version 2.6 or 2.7 is needed to use the git-p4
+>  	  interface to Perforce.
+>  
+>   - Some platform specific issues are dealt with Makefile rules,
