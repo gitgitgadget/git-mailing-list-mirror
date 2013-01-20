@@ -1,89 +1,106 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: git-cvsimport-3 and incremental imports
-Date: Sun, 20 Jan 2013 20:09:22 +0000
-Message-ID: <20130120200922.GC7498@serenity.lan>
+From: Chris Rorvick <chris@rorvick.com>
+Subject: Re: [PATCH 0/3] fixup remaining cvsimport tests
+Date: Sun, 20 Jan 2013 14:17:02 -0600
+Message-ID: <CAEUsAPaw8EUcZFbODDj9Z-=3Ppd1CC=jvYDvuyntFkX_3V0ynQ@mail.gmail.com>
+References: <1357878439-27500-1-git-send-email-chris@rorvick.com>
+	<20130120125838.GK31172@serenity.lan>
+	<CAEUsAPZKd+mw2iK7nd6rTtB8N+B99ud19FkuSx0HVitNxrxxZA@mail.gmail.com>
+	<20130120152857.GM31172@serenity.lan>
+	<7vsj5vlm1d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Eric S. Raymond" <esr@thyrsus.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 20 21:09:57 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 20 21:17:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx1DH-00062I-Kp
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 21:09:55 +0100
+	id 1Tx1Kh-00084Z-J4
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 21:17:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462Ab3ATUJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 15:09:30 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:60074 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752404Ab3ATUJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 15:09:29 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 1322E866002;
-	Sun, 20 Jan 2013 20:09:29 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3wsSVQa-IJ+6; Sun, 20 Jan 2013 20:09:28 +0000 (GMT)
-Received: from aardwolf.aluminati.org (aardwolf.aluminati.org [10.0.7.189])
-	by jackal.aluminati.org (Postfix) with ESMTP id 408C0866008;
-	Sun, 20 Jan 2013 20:09:27 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by aardwolf.aluminati.org (Postfix) with ESMTP id D1AFC276DFF;
-	Sun, 20 Jan 2013 20:09:27 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from aardwolf.aluminati.org ([127.0.0.1])
-	by localhost (aardwolf.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id a3VuyDpg-uH3; Sun, 20 Jan 2013 20:09:27 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by aardwolf.aluminati.org (Postfix) with ESMTPSA id D2FDE276DFD;
-	Sun, 20 Jan 2013 20:09:24 +0000 (GMT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752468Ab3ATURF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 15:17:05 -0500
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:61402 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752404Ab3ATURE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 15:17:04 -0500
+Received: by mail-lb0-f177.google.com with SMTP id gm6so1755085lbb.22
+        for <git@vger.kernel.org>; Sun, 20 Jan 2013 12:17:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=/TvL+xMzcnCbUNNjR2X/OCnmEhk6ueSgc30bu5pP40Y=;
+        b=E/S6CD/NmaSUP9pJHAsPpy7gL/iDL9+NY/xecVJCGVIrxn4oBJ2L8qdw2bvS9syXgy
+         LgS6W9xV8oULp9rm9SEVJ85Vp+5KSrYJiKLv4rV5twL2URKhECzPgxSDKBFzJ+ddy2W+
+         zgG8kSn51pNVFSoXEPTrg18s5JRcGk2xPflNea8yc4ewnEczcenZkUzrT5zozXXjYq9s
+         KBO5ulkyBVWrQBX/AYSgmvYhjz6I0Jwsx/OfpC002dWYy35bs3CbYU5FSDGcsStb5DBe
+         O7EWj01/XxjI+3YRlbL3Yj3wpvebsmXf0EMbr4zloyjT2KTeWL+6PjtG24yRldyZ8/tq
+         AekA==
+X-Received: by 10.152.108.172 with SMTP id hl12mr15124074lab.32.1358713022474;
+ Sun, 20 Jan 2013 12:17:02 -0800 (PST)
+Received: by 10.114.2.97 with HTTP; Sun, 20 Jan 2013 12:17:02 -0800 (PST)
+In-Reply-To: <7vsj5vlm1d.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: GPx0MDujoSAV_ejdxI3CPLY82MM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214044>
 
-I've now spent some time looking at git-cvsimport-3.py from
-jc/cvsimport-upgrade and made some progress in making it pass more of
-the Git test suite (my work in progress is at [1]).
+On Sun, Jan 20, 2013 at 12:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> John Keeping <john@keeping.me.uk> writes:
+>
+>> On Sun, Jan 20, 2013 at 09:22:03AM -0600, Chris Rorvick wrote:
+>>> On Sun, Jan 20, 2013 at 6:58 AM, John Keeping <john@keeping.me.uk> wrote:
+>>>> On Thu, Jan 10, 2013 at 10:27:16PM -0600, Chris Rorvick wrote:
+>>>>> These patchs apply on top of of Eric Raymond's cvsimport patch.  7 of 15
+>>>>> tests in t9600 fail, one of which is fixed w/ a cvsps patch I've sent
+>>>>> to Eric (fixes revision map.)
+>>>>
+>>>> Did you post the fix for the revision map publicly anywhere?
+>>>
+>>> It's in Eric's repo and included in version 3.8:
+>>>
+>>> https://gitorious.org/cvsps/cvsps/commit/abe81e1775a8959291f629029513d1b7160bbde6
+>>
+>> Thanks.  For some reason I thought the fix would be to
+>> git-cvsimport-3.py.  Obviously I should have read more carefully.
+>>
+>> Sorry for the noise.
+>
+> This is not a noise, though.
+>
+> Chris, how would we want to proceed?  I'd prefer at some point to
+> see cvsimport-3 to be in sync when the one patched and tested in
+> Eric's repository is proven enough.  Will Eric be the gatekeeper, or
+> will you be sending patches this way as well?
 
-However, I think there is a fundamental problem with the way it handles
-incremental imports and I'm hoping someone with more git-fast-import
-experience can point me in the right direction.
+I probably won't be sending any more patches on this.  My hope was to
+get cvsimport-3 (w/ cvsps as the engine) in a state such that one
+could transition from the previous version seamlessly.  But the break
+in t9605 has convinced me this is not worth the effort--even in this
+trivial case cvsps is broken.  The fuzzing logic aggregates commits
+into patch sets that have timestamps within a specified window and
+otherwise matching attributes.  This aggregation causes file-level
+commit timestamps to be lost and we are left with a single timestamp
+for the patch set: the minimum for all contained CVS commits.  When
+all commits have been processed, the patch sets are ordered
+chronologically and printed.
 
-Currently, cvsps-3 never writes a "from ..." line in the first commit it
-outputs for a branch, even when the output is restricted by date (i.e. a
-continuation of a previously imported branch), which results in failure
-to update branches since git-fast-import is run without "--force".  If I
-make a simple modification so that it does this, it can end up
-outputting an empty commit (a duplicate of the current tip commit on the
-branch).
+The problem is that is that a CVS commit is rolled into a patch set
+regardless of whether the patch set's timestamp falls within the
+adjacent CVS file-level commits.  Even worse, since the patch set
+timestamp changes as subsequent commits are added (i.e., it's always
+picking the earliest) it is potentially indeterminate at the time a
+commit is added.  The result is that file revisions can be reordered
+in resulting Git import (see t9605.)  I spent some time last week
+trying to solve this but I coudln't think of anything that wasn't a
+substantial re-work of the code.
 
-Given that the start date for the import is currently just read from
-HEAD there is probably scope for this being worse on other branches if
-they have more recent commits than the current branch.
+I have never used cvs2git, but I suspect Eric's efforts in making it a
+potential backend for cvsimport are a better use of time.
 
-I don't think there is any way to solve this without giving cvsps more
-information, probably the last commit time for all git branches, but
-perhaps I'm missing a fast-import feature that can help solve this
-problem.
-
-
-[1] https://github.com/johnkeeping/git/tree/cvsimport-3
-
-
-John
+Chris
