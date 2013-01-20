@@ -1,75 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] am: invoke perl's strftime in C locale
-Date: Sun, 20 Jan 2013 09:47:22 -0800
-Message-ID: <7vvcarn3v9.fsf@alter.siamese.dyndns.org>
-References: <20130114205933.GA25947@altlinux.org>
- <20130115155953.GB21815@sigill.intra.peff.net>
- <CALWbr2w+q5=Z8__g+J_s2NtTMgziHrntFqsi8vCJyvfO2qi81A@mail.gmail.com>
- <20130115165058.GA29301@sigill.intra.peff.net>
- <20130115174015.GA7471@altlinux.org> <20130115190517.GB7963@altlinux.org>
- <7vehhiqlcx.fsf@alter.siamese.dyndns.org>
- <20130119202853.GD1652@altlinux.org>
+Subject: Re: [PATCH 0/2] Hiding some refs in ls-remote
+Date: Sun, 20 Jan 2013 10:06:33 -0800
+Message-ID: <7vpq0zn2za.fsf@alter.siamese.dyndns.org>
+References: <1358555826-11883-1-git-send-email-gitster@pobox.com>
+ <20130119165042.GB12307@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Antoine Pelisse <apelisse@gmail.com>,
-	git@vger.kernel.org
-To: "Dmitry V. Levin" <ldv@altlinux.org>
-X-From: git-owner@vger.kernel.org Sun Jan 20 18:47:48 2013
+Cc: git@vger.kernel.org, spearce@spearce.org, mfick@codeaurora.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 20 19:07:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Twyzi-0004zZ-SY
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 18:47:47 +0100
+	id 1TwzIJ-0001Hc-6J
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 19:06:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752437Ab3ATRr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 12:47:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41052 "EHLO
+	id S1752450Ab3ATSGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 13:06:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58714 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752380Ab3ATRrZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 12:47:25 -0500
+	id S1752413Ab3ATSGg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 13:06:36 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CAA7B59F;
-	Sun, 20 Jan 2013 12:47:24 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E018A91B;
+	Sun, 20 Jan 2013 13:06:36 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wlAQJ2P8S/Dz1LUMCY22Sm86LDw=; b=IemBdD
-	rW9Nwcy7CpMqNtBXv52KoffAa27lhWILsRCE4rZZvVCM12CVsRR/ISEEOZ/kzoDe
-	VRk+fACmsMVFt//eXnk5qKARAoRUgKypCwFJUp5rKFFSmLrxWFzZNKeoQbKrQaqe
-	6k2CUiNkZAlYIX/OHc9p3TMPTjRneTEK33nXQ=
+	:content-type; s=sasl; bh=4CUKPmhDqUqtBI+ZJvLySZhpkFs=; b=eR2ojw
+	bxPM/DRcVZ7PP8W0KwQOxU1DHWpI4AlUsOyAAGNpWbzfWQohoIiUS85aFjVfYUrw
+	7TXGP4tU1CBCz4XDwfMdP3cNO2H14Z5994w87ojZGyy2t0tkyVt/vf7ASnFtql/v
+	1nGtq/xJ6mCJHZrD+9hHrYy1S4jTH/vAHApfo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J3UgzQwSiCFPdzG0MPWjeJ1SVKE3E0lA
-	y0AVc/lrvrMCH1sfv6t0Nso1stMijLrpAdzv7ktfwVMeYz1qRgTLYVt3otgCm/0e
-	77uJtS60Sxd8sOrnY1oV4hYuf4t+sQmniqqgXjCE9LH8ZrVWiFS+lplqtl9rF8sB
-	AfaJFzvwVJg=
+	:content-type; q=dns; s=sasl; b=sPp2XK7MEztwHavp+THY1HdtJ0tWmCik
+	RmP/gbEKt91vnexvevIJ7hLwZ/KT6VcCVnqdYtc9uZUUhfjR69wXq13hAjvrw2N4
+	Fn44szMmS2ZZEX/1nBWIZIgKt3zyeUXHLG5j36/TrkgWMmBBoyqjcDgx71bPW8BI
+	xPe5TEdTS50=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40DA0B59E;
-	Sun, 20 Jan 2013 12:47:24 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 10D93A91A;
+	Sun, 20 Jan 2013 13:06:36 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9D52B59C; Sun, 20 Jan 2013
- 12:47:23 -0500 (EST)
-In-Reply-To: <20130119202853.GD1652@altlinux.org> (Dmitry V. Levin's message
- of "Sun, 20 Jan 2013 00:28:53 +0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94E4BA909; Sun, 20 Jan 2013
+ 13:06:34 -0500 (EST)
+In-Reply-To: <20130119165042.GB12307@sigill.intra.peff.net> (Jeff King's
+ message of "Sat, 19 Jan 2013 08:50:42 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7261AA98-6329-11E2-A341-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 204D4A5C-632C-11E2-ABA9-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214025>
 
-"Dmitry V. Levin" <ldv@altlinux.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Personally I prefer 2nd edition that is simpler and does the right thing
-> (not that LC_ALL=C is necessary and sufficient, you neither need to add
-> things like LANG=C nor can relax it to LC_TIME=C).
+>> 	[uploadPack]
+>> 		hiderefs = refs/changes
+>
+> Would you want to do the same thing on receive-pack? It could benefit
+> from the same reduction in network cost (although it tends to be invoked
+> less frequently than upload-pack).
 
-I guess everybody involved is in agreement, then.
+Do *I* want to do?  Not when there already is a patch exists; I'd
+rather take existing and tested patch ;-)
 
-Just FYI, "LC_ALL=C LANG=C" comes from the inertia dating back when
-not everybody understood LC_*; I do not personally know of a system
-that will be helped by the extra LANG=C these days, but I know it
-will not hurt anybody, so...
+As I said, I view this primarily as solving the cluttering issue.
+The use of hiderefs to hide these refs that point at objects I do
+not consider belong to my repository from the pushers equally makes
+sense as such, I think.
