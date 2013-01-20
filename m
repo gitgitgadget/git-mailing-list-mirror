@@ -1,72 +1,133 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] INSTALL: git-p4 doesn't support Python 3
-Date: Sun, 20 Jan 2013 10:59:21 +0000
-Message-ID: <20130120105921.GI31172@serenity.lan>
-References: <20130119120158.GH31172@serenity.lan>
- <CAJDDKr6VD0vnL8x4bgJWLQZNQKR4vQrvJaL5_tdF_9znAW2XAA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Sun, 20 Jan 2013 03:06:18 -0800
+Message-ID: <20130120110618.GF16339@elie.Belkin>
+References: <50E9F7C2.1000603@gmail.com>
+ <FBDECCA565D94DF9838DD81FE2E2543A@black>
+ <7v1udxladc.fsf@alter.siamese.dyndns.org>
+ <50EB8EB5.6080204@gmail.com>
+ <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com>
+ <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com>
+ <50F303D8.20709@gmail.com>
+ <50F5A435.5090408@ramsay1.demon.co.uk>
+ <20130120101007.GD16339@elie.Belkin>
+ <50FBCB95.6020201@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 20 11:59:53 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Jason Pyeron <jpyeron@pdinc.us>,
+	git@vger.kernel.org, Stephen & Linda Smith <ischis2@cox.net>,
+	Eric Blake <eblake@redhat.com>, msysGit <msysgit@googlegroups.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: msysgit+bncBD6LRKOE4AIRBMM756DQKGQET44IFAI@googlegroups.com Sun Jan 20 12:06:47 2013
+Return-path: <msysgit+bncBD6LRKOE4AIRBMM756DQKGQET44IFAI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-vc0-f190.google.com ([209.85.220.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Twscy-0003xi-B3
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 11:59:52 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751635Ab3ATK7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 05:59:30 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:60169 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751404Ab3ATK7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 05:59:30 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 3C6DC606538;
-	Sun, 20 Jan 2013 10:59:29 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -11
-X-Spam-Level: 
-X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qZxydYkDxX2i; Sun, 20 Jan 2013 10:59:28 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 8AD786064F2;
-	Sun, 20 Jan 2013 10:59:28 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 6C2C3161E560;
-	Sun, 20 Jan 2013 10:59:28 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eZqQbNBKUMS1; Sun, 20 Jan 2013 10:59:28 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 08A14161E54F;
-	Sun, 20 Jan 2013 10:59:23 +0000 (GMT)
+	(envelope-from <msysgit+bncBD6LRKOE4AIRBMM756DQKGQET44IFAI@googlegroups.com>)
+	id 1Twsjc-0005YX-9J
+	for gcvm-msysgit@m.gmane.org; Sun, 20 Jan 2013 12:06:44 +0100
+Received: by mail-vc0-f190.google.com with SMTP id fw7sf859442vcb.7
+        for <gcvm-msysgit@m.gmane.org>; Sun, 20 Jan 2013 03:06:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-received:x-beenthere:x-received:x-received:received-spf
+         :x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:in-reply-to:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition
+         :content-transfer-encoding;
+        bh=HQIivOl/Lxu9MKObXx01lHDDYFmqg7m/24TPoEKbvms=;
+        b=DNuNXgs2w/fRcci0xHlk2I9/PKESkusFGGraBBRY8i/3se7rCtCcUOgShEa52ApZMO
+         yN5rqOSxHnucn6oqoQ3n+ryWLWFTLzcYGFYCeFHRk+w572rSu2BW7JDhnxjhc/JdGT0J
+         8bnJyIEYzY0jd3CYdfTVbSKpKCvqhKu9XvzpxkEGIuyn3QdFY0kwVZFkf/fT/aIvRz/K
+         vP8MwXMtyHtDtx5t3BAuvKXqaPx5WtbDScs+w2hIEeFw7SJj8SiN 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:x-beenthere:x-received:x-received:received-spf
+         :x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:in-reply-to:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition
+         :content-transfer-encoding;
+        bh=HQIivOl/Lxu9MKObXx01lHDDYFmqg7m/24TPoEKbvms=;
+        b=vgEj9Ts1EyMFi9Y2j7X9lz3bith28QbuHL+6l9vdko36M6jFWvR7RCK+C/+JWhqyb9
+         HtJQg9OwV9hkFRoVTJrnNBzUe4UihrTaM7E+wZXFQayeBOHCMIadSQKe9KzYuwrNDG+u
+         MQQyFvwiC7r7nva2aWkEOzoGlb61xe+HBiIPQnqZu8nfmZmAnD0oLbaRxIDSinBxbVVO
+         18Ad5V+RsCC3jTRdfTo3BMeiQ8HxmKmxIP/mEoptYmgaPd+tGvKcDbAQjuI 
+X-Received: by 10.50.45.226 with SMTP id q2mr2086827igm.0.1358679986634;
+        Sun, 20 Jan 2013 03:06:26 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.213.2 with SMTP id no2ls1595602igc.15.gmail; Sun, 20 Jan
+ 2013 03:06:25 -0800 (PST)
+X-Received: by 10.66.86.138 with SMTP id p10mr1762514paz.14.1358679985013;
+        Sun, 20 Jan 2013 03:06:25 -0800 (PST)
+X-Received: by 10.66.86.138 with SMTP id p10mr1762513paz.14.1358679985004;
+        Sun, 20 Jan 2013 03:06:25 -0800 (PST)
+Received: from mail-pa0-f42.google.com (mail-pa0-f42.google.com [209.85.220.42])
+        by gmr-mx.google.com with ESMTPS id n8si1937331paz.2.2013.01.20.03.06.24
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 20 Jan 2013 03:06:25 -0800 (PST)
+Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 209.85.220.42 as permitted sender) client-ip=209.85.220.42;
+Received: by mail-pa0-f42.google.com with SMTP id rl6so2894120pac.1
+        for <msysgit@googlegroups.com>; Sun, 20 Jan 2013 03:06:24 -0800 (PST)
+X-Received: by 10.68.197.9 with SMTP id iq9mr21104720pbc.130.1358679984924;
+        Sun, 20 Jan 2013 03:06:24 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id qr8sm6595810pbc.64.2013.01.20.03.06.22
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 20 Jan 2013 03:06:23 -0800 (PST)
+In-Reply-To: <50FBCB95.6020201@web.de>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+X-Original-Sender: jrnieder@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of jrnieder@gmail.com designates 209.85.220.42 as
+ permitted sender) smtp.mail=jrnieder@gmail.com;       dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-In-Reply-To: <CAJDDKr6VD0vnL8x4bgJWLQZNQKR4vQrvJaL5_tdF_9znAW2XAA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214002>
 
-On Sat, Jan 19, 2013 at 05:31:35PM -0800, David Aguilar wrote:
-> On Sat, Jan 19, 2013 at 4:01 AM, John Keeping <john@keeping.me.uk> wrote:
->>  Since Pyhton
->> 2.8 will never exist [1]
-> 
-> Tiny typo: Python misspelled as Pyhton
+Torsten B=F6gershausen wrote:
 
-Thanks.  v2 on its way.
+> I wonder, if if we can go one step further:
+>
+> Replace
+> #ifdef WIN32 /* Both MinGW and MSVC */
+[...]
+> with
+> #if defined(_MSC_VER)
 
+I thought Git for Windows was built using mingw, which doesn't define
+_MSC_VER?
 
-John
+Puzzled,
+Jonathan
+
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
