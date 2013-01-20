@@ -1,30 +1,30 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v3 1/8] git_remote_helpers: Allow building with Python 3
-Date: Sun, 20 Jan 2013 13:15:31 +0000
-Message-ID: <72abc4652432c35ebb81404b41c2149d0400347a.1358686905.git.john@keeping.me.uk>
+Subject: [PATCH v3 2/8] git_remote_helpers: fix input when running under Python 3
+Date: Sun, 20 Jan 2013 13:15:32 +0000
+Message-ID: <7cd489e5b1b2578b1509232196cd6b21fd684843.1358686905.git.john@keeping.me.uk>
 References: <cover.1358686905.git.john@keeping.me.uk>
 Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 20 14:16:31 2013
+X-From: git-owner@vger.kernel.org Sun Jan 20 14:16:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwulB-00031Y-Ua
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 14:16:30 +0100
+	id 1TwulL-00033l-Qk
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 14:16:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751978Ab3ATNQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 08:16:08 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:52899 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751809Ab3ATNQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 08:16:07 -0500
+	id S1752002Ab3ATNQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 08:16:19 -0500
+Received: from hyena.aluminati.org ([64.22.123.221]:40093 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751809Ab3ATNQS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 08:16:18 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 50AF9CDA58B;
-	Sun, 20 Jan 2013 13:16:06 +0000 (GMT)
-X-Quarantine-ID: <Gnnu+lwgJ1Qj>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+	by hyena.aluminati.org (Postfix) with ESMTP id 2FA6A22F76;
+	Sun, 20 Jan 2013 13:16:18 +0000 (GMT)
+X-Quarantine-ID: <8TvKUp8IA838>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
 X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
 X-Spam-Flag: NO
 X-Spam-Score: -12.9
@@ -32,26 +32,26 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
 	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
 	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Gnnu+lwgJ1Qj; Sun, 20 Jan 2013 13:16:05 +0000 (GMT)
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8TvKUp8IA838; Sun, 20 Jan 2013 13:16:13 +0000 (GMT)
 Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id 86990CDA5BF;
-	Sun, 20 Jan 2013 13:16:05 +0000 (GMT)
+	by hyena.aluminati.org (Postfix) with ESMTP id 927B922F0B;
+	Sun, 20 Jan 2013 13:16:13 +0000 (GMT)
 Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 7D227161E509;
-	Sun, 20 Jan 2013 13:16:05 +0000 (GMT)
-X-Quarantine-ID: <F8DjUTDJFMPk>
+	by pichi.aluminati.org (Postfix) with ESMTP id 79F35161E509;
+	Sun, 20 Jan 2013 13:16:13 +0000 (GMT)
+X-Quarantine-ID: <7nkOvkGXFQ7P>
 X-Virus-Scanned: Debian amavisd-new at aluminati.org
 X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
 Received: from pichi.aluminati.org ([127.0.0.1])
 	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id F8DjUTDJFMPk; Sun, 20 Jan 2013 13:16:05 +0000 (GMT)
+	with ESMTP id 7nkOvkGXFQ7P; Sun, 20 Jan 2013 13:16:13 +0000 (GMT)
 Received: from river.lan (tg1.aluminati.org [10.0.16.53])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id AFD2F161E480;
-	Sun, 20 Jan 2013 13:15:58 +0000 (GMT)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 3AA62161E480;
+	Sun, 20 Jan 2013 13:16:05 +0000 (GMT)
 X-Mailer: git-send-email 1.8.1
 In-Reply-To: <cover.1358686905.git.john@keeping.me.uk>
 In-Reply-To: <cover.1358686905.git.john@keeping.me.uk>
@@ -60,30 +60,51 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214012>
 
-Change inline Python to call "print" as a function not a statement.
+Although 2to3 will fix most issues in Python 2 code to make it run under
+Python 3, it does not handle the new strict separation between byte
+strings and unicode strings.  There is one instance in
+git_remote_helpers where we are caught by this, which is when reading
+refs from "git for-each-ref".
 
-This is harmless because Python 2 will see the parentheses as redundant
-grouping but they are necessary to run this code with Python 3.
+Fix this by operating on the returned string as a byte string rather
+than a unicode string.  As this method is currently only used internally
+by the class this does not affect code anywhere else.
+
+Note that we cannot use byte strings in the source as the 'b' prefix is
+not supported before Python 2.7 so in order to maintain compatibility
+with the maximum range of Python versions we use an explicit call to
+encode().
 
 Signed-off-by: John Keeping <john@keeping.me.uk>
 ---
- git_remote_helpers/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git_remote_helpers/git/importer.py | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
-index 74b05dc..f65f064 100644
---- a/git_remote_helpers/Makefile
-+++ b/git_remote_helpers/Makefile
-@@ -23,7 +23,7 @@ endif
+diff --git a/git_remote_helpers/git/importer.py b/git_remote_helpers/git/importer.py
+index e28cc8f..d3f90e1 100644
+--- a/git_remote_helpers/git/importer.py
++++ b/git_remote_helpers/git/importer.py
+@@ -18,13 +18,16 @@ class GitImporter(object):
  
- PYLIBDIR=$(shell $(PYTHON_PATH) -c \
- 	 "import sys; \
--	 print 'lib/python%i.%i/site-packages' % sys.version_info[:2]")
-+	 print('lib/python%i.%i/site-packages' % sys.version_info[:2])")
+     def get_refs(self, gitdir):
+         """Returns a dictionary with refs.
++
++        Note that the keys in the returned dictionary are byte strings as
++        read from git.
+         """
+         args = ["git", "--git-dir=" + gitdir, "for-each-ref", "refs/heads"]
+-        lines = check_output(args).strip().split('\n')
++        lines = check_output(args).strip().split('\n'.encode('ascii'))
+         refs = {}
+         for line in lines:
+-            value, name = line.split(' ')
+-            name = name.strip('commit\t')
++            value, name = line.split(' '.encode('ascii'))
++            name = name.strip('commit\t'.encode('ascii'))
+             refs[name] = value
+         return refs
  
- all: $(pysetupfile)
- 	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build
 -- 
 1.8.1.353.gc992d5a.dirty
