@@ -1,7 +1,7 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v3 3/8] git_remote_helpers: Force rebuild if python version changes
-Date: Sun, 20 Jan 2013 13:15:33 +0000
-Message-ID: <9a8644116bebf81cc15c0e63056bb2054dd17ebc.1358686905.git.john@keeping.me.uk>
+Subject: [PATCH v3 4/8] git_remote_helpers: Use 2to3 if building with Python 3
+Date: Sun, 20 Jan 2013 13:15:34 +0000
+Message-ID: <821f662a13db72ef96a9026133e8cb763c0a9be2.1358686905.git.john@keeping.me.uk>
 References: <cover.1358686905.git.john@keeping.me.uk>
 Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
@@ -11,20 +11,20 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TwulR-000368-2T
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 14:16:45 +0100
+	id 1TwulV-00036d-PG
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jan 2013 14:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752030Ab3ATNQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 08:16:22 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:51782 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751809Ab3ATNQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 08:16:21 -0500
+	id S1752040Ab3ATNQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 08:16:29 -0500
+Received: from hyena.aluminati.org ([64.22.123.221]:40163 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751809Ab3ATNQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 08:16:28 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id BF2846064D3;
-	Sun, 20 Jan 2013 13:16:20 +0000 (GMT)
-X-Quarantine-ID: <DLSeNBGtAT3j>
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+	by hyena.aluminati.org (Postfix) with ESMTP id 636C72149C;
+	Sun, 20 Jan 2013 13:16:28 +0000 (GMT)
+X-Quarantine-ID: <x5RMl0fU8isH>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
 X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
 X-Spam-Flag: NO
 X-Spam-Score: -12.9
@@ -32,26 +32,26 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
 	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
 	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DLSeNBGtAT3j; Sun, 20 Jan 2013 13:16:20 +0000 (GMT)
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id x5RMl0fU8isH; Sun, 20 Jan 2013 13:16:27 +0000 (GMT)
 Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 542126064D2;
-	Sun, 20 Jan 2013 13:16:20 +0000 (GMT)
+	by hyena.aluminati.org (Postfix) with ESMTP id 7E7BF22F53;
+	Sun, 20 Jan 2013 13:16:27 +0000 (GMT)
 Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 4B3C8161E509;
-	Sun, 20 Jan 2013 13:16:20 +0000 (GMT)
-X-Quarantine-ID: <IPUvb-duOv0W>
+	by pichi.aluminati.org (Postfix) with ESMTP id 72E19161E480;
+	Sun, 20 Jan 2013 13:16:27 +0000 (GMT)
+X-Quarantine-ID: <LLXfSajRXXaY>
 X-Virus-Scanned: Debian amavisd-new at aluminati.org
 X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
 Received: from pichi.aluminati.org ([127.0.0.1])
 	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IPUvb-duOv0W; Sun, 20 Jan 2013 13:16:20 +0000 (GMT)
+	with ESMTP id LLXfSajRXXaY; Sun, 20 Jan 2013 13:16:27 +0000 (GMT)
 Received: from river.lan (tg1.aluminati.org [10.0.16.53])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 45891161E480;
-	Sun, 20 Jan 2013 13:16:13 +0000 (GMT)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 271D5161E509;
+	Sun, 20 Jan 2013 13:16:20 +0000 (GMT)
 X-Mailer: git-send-email 1.8.1
 In-Reply-To: <cover.1358686905.git.john@keeping.me.uk>
 In-Reply-To: <cover.1358686905.git.john@keeping.me.uk>
@@ -60,45 +60,54 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214014>
 
-When different version of python are used to build via distutils, the
-behaviour can change.  Detect changes in version and pass --force in
-this case.
+Using the approach detailed in the Python documentation[1], run 2to3 on
+the code as part of the build if building with Python 3.
+
+The code itself requires no changes to convert cleanly.
+
+[1] http://docs.python.org/3.3/howto/pyporting.html#during-installation
 
 Signed-off-by: John Keeping <john@keeping.me.uk>
+Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
- git_remote_helpers/.gitignore | 1 +
- git_remote_helpers/Makefile   | 8 +++++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/git_remote_helpers/.gitignore b/git_remote_helpers/.gitignore
-index 2247d5f..06c664f 100644
---- a/git_remote_helpers/.gitignore
-+++ b/git_remote_helpers/.gitignore
-@@ -1,2 +1,3 @@
-+/GIT-PYTHON_VERSION
- /build
- /dist
-diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
-index f65f064..91f458f 100644
---- a/git_remote_helpers/Makefile
-+++ b/git_remote_helpers/Makefile
-@@ -25,8 +25,14 @@ PYLIBDIR=$(shell $(PYTHON_PATH) -c \
- 	 "import sys; \
- 	 print('lib/python%i.%i/site-packages' % sys.version_info[:2])")
+On Fri, 18 Jan 2013 23:52:16 -0800, Sverre Rabbelier wrote:
+> Assuming you tried this out on both 2.x and 3.x:
+>
+> Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
+
+I ran the test suite with Python 2.7.3 and 3.2.3.
+
+ git_remote_helpers/setup.py | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/git_remote_helpers/setup.py b/git_remote_helpers/setup.py
+index 4d434b6..6de41de 100644
+--- a/git_remote_helpers/setup.py
++++ b/git_remote_helpers/setup.py
+@@ -4,6 +4,15 @@
  
-+py_version=$(shell $(PYTHON_PATH) -c \
-+	'import sys; print("%i.%i" % sys.version_info[:2])')
+ from distutils.core import setup
+ 
++# If building under Python3 we need to run 2to3 on the code, do this by
++# trying to import distutils' 2to3 builder, which is only available in
++# Python3.
++try:
++    from distutils.command.build_py import build_py_2to3 as build_py
++except ImportError:
++    # 2.x
++    from distutils.command.build_py import build_py
 +
- all: $(pysetupfile)
--	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build
-+	$(QUIET)test "$$(cat GIT-PYTHON_VERSION 2>/dev/null)" = "$(py_version)" || \
-+	flags=--force; \
-+	$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build $$flags
-+	$(QUIET)echo "$(py_version)" >GIT-PYTHON_VERSION
- 
- install: $(pysetupfile)
- 	$(PYTHON_PATH) $(pysetupfile) install --prefix $(DESTDIR_SQ)$(prefix)
+ setup(
+     name = 'git_remote_helpers',
+     version = '0.1.0',
+@@ -14,4 +23,5 @@ setup(
+     url = 'http://www.git-scm.com/',
+     package_dir = {'git_remote_helpers': ''},
+     packages = ['git_remote_helpers', 'git_remote_helpers.git'],
++    cmdclass = {'build_py': build_py},
+ )
 -- 
 1.8.1.353.gc992d5a.dirty
