@@ -1,82 +1,72 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PULL] Module fixes, and a virtio block fix.
-Date: Sun, 20 Jan 2013 17:45:33 -0800
-Message-ID: <CA+55aFy1nW859yaGP17epRX8A+TaJ8APvb0-Ww1zw91dCAOhoQ@mail.gmail.com>
-References: <87zk03wg7r.fsf@rustcorp.com.au> <CA+55aFwzdcv0LXovZobha=EH=L6DapJt+ODP0nq=TWWAqCxLYQ@mail.gmail.com>
- <87fw1vwcao.fsf@rustcorp.com.au>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 0/2] Hiding some refs in ls-remote
+Date: Mon, 21 Jan 2013 08:46:22 +0700
+Message-ID: <CACsJy8AunW_qWEimNhdgzw9xzgs4T+uBZm8o51Kfur0e9pv+HA@mail.gmail.com>
+References: <1358555826-11883-1-git-send-email-gitster@pobox.com>
+ <CACsJy8C4qx0P621imj5B+HdoJkow0_jaGLVDRvdCDw3YRnK98g@mail.gmail.com> <7v38xxnfv3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: LKML <linux-kernel@vger.kernel.org>,
-	Alexander Graf <agraf@suse.de>,
-	Prarit Bhargava <prarit@redhat.com>,
-	Sasha Levin <sasha.levin@oracle.com>
-To: Rusty Russell <rusty@rustcorp.com.au>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: linux-kernel-owner@vger.kernel.org Mon Jan 21 02:46:22 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, spearce@spearce.org, mfick@codeaurora.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 02:47:15 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Tx6Sr-0002Lg-52
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 21 Jan 2013 02:46:21 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Tx6Ti-0002XY-Uf
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 02:47:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626Ab3AUBpz (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 20 Jan 2013 20:45:55 -0500
-Received: from mail-vc0-f176.google.com ([209.85.220.176]:55925 "EHLO
-	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752493Ab3AUBpy (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 20 Jan 2013 20:45:54 -0500
-Received: by mail-vc0-f176.google.com with SMTP id fy27so849349vcb.21
-        for <multiple recipients>; Sun, 20 Jan 2013 17:45:53 -0800 (PST)
+	id S1752556Ab3AUBqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 20:46:54 -0500
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:36727 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752543Ab3AUBqx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 20:46:53 -0500
+Received: by mail-oa0-f48.google.com with SMTP id h2so5576609oag.35
+        for <git@vger.kernel.org>; Sun, 20 Jan 2013 17:46:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=AccBNCboFEr1aQO1WG8JbGtyUc1ihALXDwCt2eCTM5w=;
-        b=xz7gSXJa10ilP8P2Yag//IU9bD3H+9jBVncOEQ+rLM8SiVIMypoygKkXmwtbl18ukJ
-         Ab9gvrMtCH4lzKo8n2TDkdJnMSF2gvaZEM6NYRGE0CjDuil2mVdx85McVGM0DCyRH/Fu
-         Vw8PnbTlR2njnwJa2dk7WtfssDtF5riZIbNRQfNLS6j5cuUYSIedc1yx+4pZHJhJja9J
-         dRpAsELiKd/Jzh8wfDA/E0nOZs0p6Fcp6uZpzx/q287m1Q2XQX7Xe1UmthgE53Zt/56F
-         mBusUh6TgkpslaAjjyVHPXKHbQRy9d0cMYkzzxz0z1/iYB1bc/GQdYkXtR2nMULsl8La
-         XcYg==
-X-Received: by 10.52.240.228 with SMTP id wd4mr2738289vdc.102.1358732753132;
- Sun, 20 Jan 2013 17:45:53 -0800 (PST)
-Received: by 10.220.249.199 with HTTP; Sun, 20 Jan 2013 17:45:33 -0800 (PST)
-In-Reply-To: <87fw1vwcao.fsf@rustcorp.com.au>
-X-Google-Sender-Auth: -A1zmeG7ioQAwkgxJZYs89ETsME
-Sender: linux-kernel-owner@vger.kernel.org
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=Sow4fJOgiNyedJvBI/fobWO8Q/IFFyi4jafnP+nsrzo=;
+        b=GfG0UaTYPNr4a43XtC51BGTPh4s2b35DqoTNPMwwemxL3SApby/BQVzq+plT5yC3t7
+         q+uAgMcARFkH5onVP2HMxFfDwuKZ5DzTgzvlu1e3xitRXXm+t+XY5+kUr/pz9SnE3R4m
+         yH62Mj1c8sD1bBGLWF+Wanhql2Lp/N/h8wP9Km6J88tRfhkROdZ+or/e9yL6EWfUPfDh
+         NIEktJUXCMPV+WySP1gAqXyuzyYCOrefa/X6gDYhRt8KzJo+z/uysvoRtuYpXfQj/p5y
+         T5z3Bvl9w6XP7t5oKSfdG+5pNXyjUaR4M7leBrI23ZE0+tGFLK2ThAKXst7o/2rzayoD
+         j8wQ==
+X-Received: by 10.182.159.33 with SMTP id wz1mr12835893obb.57.1358732813082;
+ Sun, 20 Jan 2013 17:46:53 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Sun, 20 Jan 2013 17:46:22 -0800 (PST)
+In-Reply-To: <7v38xxnfv3.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214069>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214070>
 
-On Sun, Jan 20, 2013 at 5:32 PM, Rusty Russell <rusty@rustcorp.com.au> wrote:
+On Sun, Jan 20, 2013 at 2:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> Due to the delay on git.kernel.org, git request-pull fails.  It *looks*
-> like it succeeds, except the warning, but (as we learned last time I
-> screwed up), it doesn't put the branchname because it can't know.
+>> Should the client side learn how to list hidden refs too? I'm thinking
+>> of an extreme case where upload-pack advertises nothing (or maybe just
+>> refs/heads/master) and it's up to the client to ask for the ref
+>> selection it's interested in. upload-pack may need more updates to do
+>> that, I think.
+>
+> What you are talking about is a different goal.
+>
+> Look at this as a mechanism for the repository owner to control the
+> clutter in what is shown to the intended audience of what s/he
+> publishes in the repository.  Network bandwidth reduction of
+> advertisement is a side effect of clutter reduction, and not
+> necessarily the primary goal.
 
-I think this should be fixed in modern git versions.
-
-And it sure as hell knows the proper tag name, since you *gave* it the
-name and it used it for generating the actual contents. The fact that
-some versions then screw that up and re-write the tag-name to
-something randomly matching that isn't a tag was just a bug.
-
-> For want of a better solution, I'll now resort to sending pull requests
-> with the anti-social gitolite URL in it, like so:
-
-That's even worse, fwiw. It means that the pull request address makes
-no sense to anybody who doesn't have a kernel.org address, and then
-I'm forced to just edit things by hand instead to not pollute the
-kernel changelog history with crap.
-
-Junio, didn't "git request-pull" get fixed so that it *warns* about
-missing tagnames/branches, but never actually corrupts the pull
-request? Or did it just get "fixed" to be a hard error instead of
-corrupting things? Because this is annoying.
-
-                Linus
+Probably stupid question: does gitnamespaces.txt attempt to achieve
+the same? The document says smart http supports passing namespace,
+nothing about git protocol so I guess we need some extension in
+upload-pack (or git-daemon) for specifying namespace over git
+protocol.
+-- 
+Duy
