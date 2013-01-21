@@ -1,75 +1,90 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: GIT get corrupted on lustre
-Date: Mon, 21 Jan 2013 17:20:56 +0100
-Message-ID: <8738xuo6c7.fsf@pctrast.inf.ethz.ch>
-References: <50D861EE.6020105@giref.ulaval.ca>
-	<50D870A0.90205@interlinx.bc.ca> <50EC453A.2060306@giref.ulaval.ca>
-	<50EDDF12.3080800@giref.ulaval.ca> <50F7F793.80507@giref.ulaval.ca>
-	<CAGK7Mr4R=OwfWt4Kat75C8YDi3iLTavMLxeoLxkf1-gKhxrucg@mail.gmail.com>
-	<50F8273E.5050803@giref.ulaval.ca>
-	<871B6C10EBEFE342A772D1159D1320853A042AD7@umechphj.easf.csd.disa.mil>
-	<50F829A9.7090606@calculquebec.ca>
-	<871B6C10EBEFE342A772D1159D1320853A044B42@umechphj.easf.csd.disa.mil>
-	<50F98B53.9080109@giref.ulaval.ca>
-	<CABPQNSbJr4dR9mq+kCwGe-RKb9PA7q=SKzbFW+=md_PLzZh=nQ@mail.gmail.com>
-	<87a9s2o6ri.fsf@pctrast.inf.ethz.ch>
-	<50FD696B.5000205@calculquebec.ca>
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH v2] git-for-each-ref.txt: 'raw' is a supported date format
+Date: Mon, 21 Jan 2013 16:22:06 +0000
+Message-ID: <20130121162206.GG7498@serenity.lan>
+References: <d3a288a67867d7a60c9217a78bda42301392c3da.1358776352.git.john@keeping.me.uk>
+ <50FD66AC.1080201@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	"git@vger.kernel.org" <git@vger.kernel.org>, <kusmabite@gmail.com>,
-	Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>,
-	"Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	=?utf-8?Q?S=C3=A9bastien?= Boisvert 
-	<sebastien.boisvert@calculquebec.ca>
-To: Maxime Boissonneault <maxime.boissonneault@calculquebec.ca>
-X-From: git-owner@vger.kernel.org Mon Jan 21 17:21:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 21 17:22:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxK7x-0000eu-0l
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 17:21:41 +0100
+	id 1TxK8t-0001Bn-3t
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 17:22:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755278Ab3AUQVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 11:21:00 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:19077 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753854Ab3AUQU7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 11:20:59 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 21 Jan
- 2013 17:20:56 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.208.154) by
- CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Mon, 21 Jan 2013 17:20:56 +0100
-In-Reply-To: <50FD696B.5000205@calculquebec.ca> (Maxime Boissonneault's
-	message of "Mon, 21 Jan 2013 11:14:35 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.208.154]
+	id S1755585Ab3AUQWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 11:22:18 -0500
+Received: from hyena.aluminati.org ([64.22.123.221]:42613 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753097Ab3AUQWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2013 11:22:17 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id E76761FC46;
+	Mon, 21 Jan 2013 16:22:16 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zIcv8+0D8SzR; Mon, 21 Jan 2013 16:22:16 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by hyena.aluminati.org (Postfix) with ESMTP id C6BB722F79;
+	Mon, 21 Jan 2013 16:22:13 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 95453161E575;
+	Mon, 21 Jan 2013 16:22:13 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id QcBIaVgfQZj0; Mon, 21 Jan 2013 16:22:13 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id B499D161E4FB;
+	Mon, 21 Jan 2013 16:22:08 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <50FD66AC.1080201@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214128>
 
-Maxime Boissonneault <maxime.boissonneault@calculquebec.ca> writes:
+Commit 7dff9b3 (Support 'raw' date format) added a raw date format.
+Update the git-for-each-ref documentation to include this.
 
-> Hi Thomas,
-> Can you tell me what is the version of the lustre servers and the
-> lustre clients ?
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+On Mon, Jan 21, 2013 at 05:02:52PM +0100, Michael Haggerty wrote:
+> Shouldn't "raw" be preceded with a colon like the other format specifiers?
 
-$ uname -a
-Linux brutus4.ethz.ch 2.6.32-279.14.1.el6.x86_64 #1 SMP Tue Nov 6 23:43:09 UTC 2012 x86_64 x86_64 x86_64 GNU/Linux
-$ cat /proc/fs/lustre/version
-lustre: 2.3.0
-kernel: patchless_client
-build:  2.3.0-RC6--PRISTINE-2.6.32-279.14.1.el6.x86_64
+Yes it should.  Thanks.
 
-I have no idea what the servers are running, I only have client access.
+ Documentation/git-for-each-ref.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index db55a4e..d3e1df7 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -117,7 +117,7 @@ returns an empty string instead.
+ 
+ As a special case for the date-type fields, you may specify a format for
+ the date by adding one of `:default`, `:relative`, `:short`, `:local`,
+-`:iso8601` or `:rfc2822` to the end of the fieldname; e.g.
++`:iso8601`, `:rfc2822` or `:raw` to the end of the fieldname; e.g.
+ `%(taggerdate:relative)`.
+ 
+ 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.8.1.353.gc992d5a.dirty
