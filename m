@@ -1,96 +1,95 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: [PATCH v2 0/6] GIT, Git, git
-Date: Mon, 21 Jan 2013 19:51:47 +0100 (CET)
-Message-ID: <1119403422.632150.1358794307467.JavaMail.ngmail@webmail20.arcor-online.net>
-References: <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net> <7vvcark1f2.fsf@alter.siamese.dyndns.org> <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
+From: "Brian J. Murrell" <brian@interlinx.bc.ca>
+Subject: Re: GIT get corrupted on lustre
+Date: Mon, 21 Jan 2013 13:54:23 -0500
+Message-ID: <kdk2ss$498$1@ger.gmane.org>
+References: <50D861EE.6020105@giref.ulaval.ca> <50D870A0.90205@interlinx.bc.ca> <50EC453A.2060306@giref.ulaval.ca> <50EDDF12.3080800@giref.ulaval.ca> <50F7F793.80507@giref.ulaval.ca> <CAGK7Mr4R=OwfWt4Kat75C8YDi3iLTavMLxeoLxkf1-gKhxrucg@mail.gmail.com> <50F8273E.5050803@giref.ulaval.ca> <871B6C10EBEFE342A772D1159D1320853A042AD7@umechphj.easf.csd.disa.mil> <50F829A9.7090606@calculquebec.ca> <871B6C10EBEFE342A772D1159D1320853A044B42@umechphj.easf.csd.disa.mil> <50F98B53.9080109@giref.ulaval.ca> <CABPQNSbJr4dR9mq+kCwGe-RKb9PA7q=SKzbFW+=md_PLzZh=nQ@mail.gmail.com> <87a9s2o6ri.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: davvid@gmail.com, git@vger.kernel.org
-To: gitster@pobox.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Mon Jan 21 19:52:12 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="----enig2UFLEIDWEFCRWVWBTFOBA"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 21 19:55:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxMTb-0007qY-2h
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 19:52:11 +0100
+	id 1TxMWH-0000qA-3c
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 19:54:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752850Ab3AUSvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 13:51:49 -0500
-Received: from mail-in-06.arcor-online.net ([151.189.21.46]:38592 "EHLO
-	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752782Ab3AUSvt (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2013 13:51:49 -0500
-Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
-	by mx.arcor.de (Postfix) with ESMTP id 8B5DE10BBD5;
-	Mon, 21 Jan 2013 19:51:47 +0100 (CET)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 885ED7DAB88;
-	Mon, 21 Jan 2013 19:51:47 +0100 (CET)
-Received: from webmail20.arcor-online.net (webmail20.arcor-online.net [151.189.8.201])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 7A40821262F;
-	Mon, 21 Jan 2013 19:51:47 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-13.arcor-online.net 7A40821262F
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1358794307; bh=SCXLn8mc32oxqzSa+/HvpYIB5Ui7KAotvyaVnuoeZq0=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=MEBgg7iGzo5VTx0Gmtpry5qqRx08EvPenEYonbXAmVUGbvDyeUuab9zERXtq9YDtw
-	 ibh3ngJIBdgPYOzCSjoUIxJOytZ97xSQgZ6df5cYUudvhcfflcCuW4xJsOwWpSXFXR
-	 wpDp9QqFg0BfbtH2SxRsSMRtKhvOIR/t4SEXW8Mo=
-Received: from [188.105.98.86] by webmail20.arcor-online.net (151.189.8.201) with HTTP (Arcor Webmail); Mon, 21 Jan 2013 19:51:47 +0100 (CET)
-In-Reply-To: <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 188.105.98.86
+	id S1755655Ab3AUSyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 13:54:35 -0500
+Received: from plane.gmane.org ([80.91.229.3]:41724 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752755Ab3AUSye (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2013 13:54:34 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TxMW9-0000kR-H4
+	for git@vger.kernel.org; Mon, 21 Jan 2013 19:54:49 +0100
+Received: from d67-193-232-12.home3.cgocable.net ([67.193.232.12])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Jan 2013 19:54:49 +0100
+Received: from brian by d67-193-232-12.home3.cgocable.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Jan 2013 19:54:49 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: d67-193-232-12.home3.cgocable.net
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+In-Reply-To: <87a9s2o6ri.fsf@pctrast.inf.ethz.ch>
+X-Enigmail-Version: 1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214139>
 
- 
-Please ignore these series ... there are still problems with the size of the patches :-|
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+------enig2UFLEIDWEFCRWVWBTFOBA
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
------ Original Nachricht ----
-Von:     Thomas Ackermann <th.acker@arcor.de>
-An:      gitster@pobox.com, th.acker@arcor.de
-Datum:   21.01.2013 19:36
-Betreff: [PATCH v2 0/6] GIT, Git, git
+On 13-01-21 11:11 AM, Thomas Rast wrote:
+>=20
+> What's odd is that while I cannot reproduce the original problem, there=
 
-> Git changed its 'official' system name from 'GIT' to 'Git' in v1.6.5.3
-> (as can be seen in the corresponding release note where 'GIT' was 
-> changed to 'Git' in the header line).
-> 
-> Alas the documention uses 'GIT', 'Git' or even 'git' to refer to the
-> Git system. So change every occurrence of 'GIT" and 'git' in the 
-> documention  to 'Git' whenever Git as a system is referred to 
-> (but don't do this change in the release notes because they 
-> constitute a history orthogonal to the history versioned by Git).
-> 
-> There is also one occurence of 'GITweb' which is changed to 'Gitweb' but
-> changing 'gitweb' to 'Gitweb' (or 'GitWeb'?) should be part of another
-> patch.
-> 
-> The "'git' to 'Git'" patch has to be divided in four parts to stay within
-> the mail size limit of 100kB.
-> 
-> [PATCH v2 1/6] Change old system name 'GIT' to 'Git'
-> [PATCH v2 2/6] Change 'git' to 'Git' whenever the whole system is referred
-> to #1
-> [PATCH v2 3/6] Change 'git' to 'Git' whenever the whole system is referred
-> to #2
-> [PATCH v2 4/6] Change 'git' to 'Git' whenever the whole system is referred
-> to #3
-> [PATCH v2 5/6] Change 'git' to 'Git' whenever the whole system is referred
-> to #4
-> [PATCH v2 6/6] Add rule for when to use 'git' and when to use 'Git'
-> 
-> 
-> ---
-> Thomas
-> 
+> seems to be another issue/bug with utime():
 
----
-Thomas
+I wonder if this is related to http://jira.whamcloud.com/browse/LU-305.
+ That was reported as fixed in Lustre 2.0.0 and 2.1.0 but I thought I
+saw it on 2.1.1 and added a comment to the above ticket about that.
+
+> In the absence of it, wouldn't we in theory have to write a simple
+> loop-on-EINTR wrapper for *all* syscalls?
+
+IIUC, that's what SA_RESTART is all about.
+
+> Of course there's the added problem that when open(O_CREAT|O_EXCL) fail=
+s
+> with EINTR, it's hard to tell whether a file that may now exist is
+> indeed yours or some other process's.
+
+Or whether it's in a "half created" state such as I hypothesize in
+http://jira.whamcloud.com/browse/LU-2276.
+
+b.
+
+
+
+------enig2UFLEIDWEFCRWVWBTFOBA
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iEYEARECAAYFAlD9jt8ACgkQl3EQlGLyuXClSACfYuyrxqb9W1W1Vhl93xo/EvQr
+J8QAnjlI/fYD8PQoATNITvuQIRLSgeGC
+=DYdv
+-----END PGP SIGNATURE-----
+
+------enig2UFLEIDWEFCRWVWBTFOBA--
