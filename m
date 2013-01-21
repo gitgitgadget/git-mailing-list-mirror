@@ -1,93 +1,106 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: GIT get corrupted on lustre
-Date: Mon, 21 Jan 2013 20:29:07 +0100
-Message-ID: <87r4lejpx8.fsf@pctrast.inf.ethz.ch>
-References: <50D861EE.6020105@giref.ulaval.ca>
-	<50D870A0.90205@interlinx.bc.ca> <50EC453A.2060306@giref.ulaval.ca>
-	<50EDDF12.3080800@giref.ulaval.ca> <50F7F793.80507@giref.ulaval.ca>
-	<CAGK7Mr4R=OwfWt4Kat75C8YDi3iLTavMLxeoLxkf1-gKhxrucg@mail.gmail.com>
-	<50F8273E.5050803@giref.ulaval.ca>
-	<871B6C10EBEFE342A772D1159D1320853A042AD7@umechphj.easf.csd.disa.mil>
-	<50F829A9.7090606@calculquebec.ca>
-	<871B6C10EBEFE342A772D1159D1320853A044B42@umechphj.easf.csd.disa.mil>
-	<50F98B53.9080109@giref.ulaval.ca>
-	<CABPQNSbJr4dR9mq+kCwGe-RKb9PA7q=SKzbFW+=md_PLzZh=nQ@mail.gmail.com>
-	<87a9s2o6ri.fsf@pctrast.inf.ethz.ch> <kdk2ss$498$1@ger.gmane.org>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: [RFC/PATCH] add: warn when -u or -A is used without filepattern
+Date: Mon, 21 Jan 2013 20:34:35 +0100
+Message-ID: <CAA01CsqwuR+HTUWA+iqSamOcR0WBhwK0kfn5+80L95TZn-SRng@mail.gmail.com>
+References: <7v1udfn0tm.fsf@alter.siamese.dyndns.org>
+	<1358769611-3625-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vwqv6fiz7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, <kusmabite@gmail.com>,
-	Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>,
-	"Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>,
-	Maxime Boissonneault <maxime.boissonneault@calculquebec.ca>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	=?utf-8?Q?S=C3=A9bastien?= Boisvert 
-	<sebastien.boisvert@calculquebec.ca>
-To: "Brian J. Murrell" <brian@interlinx.bc.ca>
-X-From: git-owner@vger.kernel.org Mon Jan 21 20:29:33 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 20:34:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxN3k-0001YN-Oy
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 20:29:33 +0100
+	id 1TxN91-0004I7-9r
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 20:34:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756447Ab3AUT3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 14:29:11 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:50978 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756182Ab3AUT3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 14:29:09 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 21 Jan
- 2013 20:29:05 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.208.154) by
- CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Mon, 21 Jan 2013 20:29:07 +0100
-In-Reply-To: <kdk2ss$498$1@ger.gmane.org> (Brian J. Murrell's message of "Mon,
-	21 Jan 2013 13:54:23 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.208.154]
+	id S1756150Ab3AUTeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 14:34:37 -0500
+Received: from mail-qa0-f54.google.com ([209.85.216.54]:58305 "EHLO
+	mail-qa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753131Ab3AUTeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2013 14:34:36 -0500
+Received: by mail-qa0-f54.google.com with SMTP id p6so3181864qad.13
+        for <git@vger.kernel.org>; Mon, 21 Jan 2013 11:34:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=AIGGWRhkEI21O7rFhEAP6Vb1LnHWfOX3bKuP+dI4380=;
+        b=WadxAyq2cTD66SHUBCj6mGWVoPVwzNLCmy3v96MeaOqBfb1VbJ98jl28+osqexGhMJ
+         vj5gfAY/6SINm2Bn1aGdm1DYP157HXtg8H0flcAUZJ50F3Q7uSSfzAdCMrHLvrlGgdv4
+         x90vCgK/Kzsbec9RdE43iIeqC465pkFoWfuiUjHCs06g5gQ1BwsQCcFykE6HnJpKDVx7
+         oSdmlOJvw1J552VvGqOP6NtxHwk4SPd7Bb4NOsIzTXdKOeM8KjLIRB1bVS974BZNwPAi
+         FaBeBx7I42IkYZGejwYkhe5drmdEY42Rl5805HQTTuxUjrBkRVstISBXyoXTftbenpeD
+         RfPg==
+X-Received: by 10.49.105.73 with SMTP id gk9mr23895990qeb.40.1358796875730;
+ Mon, 21 Jan 2013 11:34:35 -0800 (PST)
+Received: by 10.49.84.133 with HTTP; Mon, 21 Jan 2013 11:34:35 -0800 (PST)
+In-Reply-To: <7vwqv6fiz7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214155>
 
-Please don't drop the Cc list!
-
-"Brian J. Murrell" <brian@interlinx.bc.ca> writes:
-
->> What's odd is that while I cannot reproduce the original problem, there
->> seems to be another issue/bug with utime():
+On Mon, Jan 21, 2013 at 8:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 >
-> I wonder if this is related to http://jira.whamcloud.com/browse/LU-305.
->  That was reported as fixed in Lustre 2.0.0 and 2.1.0 but I thought I
-> saw it on 2.1.1 and added a comment to the above ticket about that.
-
-Aha, that's a very interesting bug report.  My observations support
-yours: I managed to get EINTR during utime().
-
->> In the absence of it, wouldn't we in theory have to write a simple
->> loop-on-EINTR wrapper for *all* syscalls?
+>> Most git commands that can be used with our without a filepattern are
+>> tree-wide by default, the filepattern being used to restrict their scope.
+>> A few exceptions are: 'git grep', 'git clean', 'git add -u' and 'git add -A'.
+>>
+>> The inconsistancy of 'git add -u' and 'git add -A' are particularly
+>> problematic since other 'git add' subcommands (namely 'git add -p' and
+>> 'git add -e') are tree-wide by default.
+>>
+>> Flipping the default now is unacceptable, so this patch starts training
+>> users to type explicitely 'git add -u|-A :/' or 'git add -u|-A .', to prepare
+>> for the next steps:
+>>
+>> * forbid 'git add -u|-A' without filepattern (like 'git add' without
+>>   option)
+>>
+>> * much later, maybe, re-allow 'git add -u|-A' without filepattern, with a
+>>   tree-wide scope.
+>>
 >
-> IIUC, that's what SA_RESTART is all about.
+> I have to wonder if "git add -p" and "git add -e" are the ones that
+> are broken, and the migration suggested here is going in the wrong
+> direction, though.  After all "add -p" and "add -e" are interactive
+> by their nature, so it is a _lot_ easier to change their default
+> behaviour in the name of "usability fix", "consistency fix", or
+> whatever.  Wouldn't we achieve the same consistency across modes of
+> "add" if we made them relative to the current directory?
 
-Yes, but there's precious little clear language on when SA_RESTART is
-supposed to act.  In all cases?
+Consistency is one issue. +1 for having consistent behavior. But even
+if all "git add" modes work consistently on current subdirectory, they
+will be inconsistent with other git command, for example "git status"
+or "git diff". I think it'd be better to have all git command work the
+same (is that possible? is there a list of all commands which work on
+current dir vs those working on whole tree?). I believe changing all
+commands to work on current subdir is not an option.
 
-The wording on
+Another issue is usability. Can we definitely say which is better: add
+all changes from current subdir, or add all changes from whole tree? I
+don't know. At the moment I think whole tree is better. That's usually
+what I want. If I want to add only some changes, I first list the
+status or run diff, and then explicitly say what to add. OTOH "add" is
+kind of dangerous command - adding content to index is not reversible
+(i.e. if there already is a previous version in index with changes,
+"add" will overwrite it). But at the same time, another "dangerous"
+command, "git add -a" works on whole tree. I use it frequently and
+never had any problem with it.
 
-  http://www.delorie.com/gnu/docs/glibc/libc_485.html
-  http://www.delorie.com/gnu/docs/glibc/libc_498.html
+So, from me +1 on making all commands work on whole tree.
 
-leads me to believe that SA_RESTART is actually used on the glibc side
-of things, so that any glibc syscall wrapper not specifically equipped
-with the restarting behavior would return EINTR unmodified.  This might
-explain why utime() doesn't restart like it should (assuming we work on
-the theory that POSIX doesn't allow an EINTR from utime() to begin
-with).
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+--
+Piotr Krukowiecki
