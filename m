@@ -1,7 +1,7 @@
 From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
 Subject: [PATCH] mergetools: Add tortoisegitmerge helper
-Date: Mon, 21 Jan 2013 09:24:23 +0100
-Message-ID: <50FCFB37.2060708@tu-clausthal.de>
+Date: Mon, 21 Jan 2013 09:26:35 +0100
+Message-ID: <50FCFBBB.2080305@tu-clausthal.de>
 References: <50FBD4AD.2060208@tu-clausthal.de> <7v4nibjrg0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -10,46 +10,46 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Sebastian Schuberth <sschuberth@gmail.com>, davvid@gmail.com,
 	Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 21 09:24:50 2013
+X-From: git-owner@vger.kernel.org Mon Jan 21 09:27:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxCgS-00053l-Ak
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 09:24:48 +0100
+	id 1TxCio-0005tX-PU
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 09:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661Ab3AUIY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 03:24:27 -0500
-Received: from mailrelay1.rz.tu-clausthal.de ([139.174.2.42]:47896 "EHLO
-	mailrelay1.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750757Ab3AUIY0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2013 03:24:26 -0500
-Received: from hades.rz.tu-clausthal.de (mailrelay1.rz.tu-clausthal.de [139.174.2.42])
-	by mailrelay1.rz.tu-clausthal.de (Postfix) with ESMTP id 4299D42E313;
-	Mon, 21 Jan 2013 09:24:24 +0100 (CET)
-Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 13C32422055;
-	Mon, 21 Jan 2013 09:24:24 +0100 (CET)
+	id S1752132Ab3AUI0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 03:26:38 -0500
+Received: from mailrelay2.rz.tu-clausthal.de ([139.174.2.43]:10431 "EHLO
+	mailrelay2.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751781Ab3AUI0h (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2013 03:26:37 -0500
+Received: from poseidon.rz.tu-clausthal.de (poseidon.rz.tu-clausthal.de [139.174.2.21])
+	by mailrelay2.rz.tu-clausthal.de (Postfix) with ESMTP id F3EC5289CE3;
+	Mon, 21 Jan 2013 09:26:35 +0100 (CET)
+Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id D888A2733F8;
+	Mon, 21 Jan 2013 09:26:35 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
 	message-id:date:from:mime-version:to:cc:subject:references
 	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=RYML43dzFnBS/MAMoVZw1L5NTOo=; b=0D4GwUdQjqxlzDi/uUJ7uJaG4zNz
-	9ODsYuOL6yAwkTd4YILf4Jca9Z0rItQQBJoIOMQb6B6cQIBsAYJs2BuZ8dOkPnmV
-	ajO57/hHmBFQx5ik3I/9Bd4497XaY9u+hEyt4JTKvNnrAhoGNtxHOM8mMhHpn/dj
-	VpVS2tFtxoKwEdU=
+	 bh=mjYCyyOyp+Go1UtQuNmZpokJVi0=; b=eag+Ekj0cGjyb1+Bziitc7r5QWSO
+	rfLncH+z1YptdllbyN0GspPOAvpSCRtj1Efp4Q2+4RrIU8TSok5qORpMKOfbrKmR
+	Mjxme9hLUxzJ0NWTGZTypgKgD2QFaG5/NHAHtTnhmqCEsk/A+5ieAykCGrxN9+sg
+	/uspm+iDyWW3vw0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
 	message-id:date:from:mime-version:to:cc:subject:references
 	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=B0qgeIgcz0vVRv0edbfkurutqDT61X6mn/7a16czAXGrMY7LJyCqf/F
-	I5E9kX3U5IB/pU+/lnVhQ2Q2AZOxvCYGFQAL35qvgnT4XZKU+dJYH1WywVAgCrLv
-	3YYMkCEHM4vqgjKsjp0iRY6N/slUEmwJHIannmnssqFN7Q/p8Rqk=
+	dkim1; b=e1DGrOrf3iQNFMHs83T7+C6s0RN3KJKnBByVbymItPvU2DQOHINprnn
+	skD9vxmsT3kUG5ZBdSuB7qCiSV1RRqub2RI/ySVrLUnSmX00gs5d0VOhKeydh841
+	Ty3sMid7beJdds2WnVaQfuqQqZPQCsnWEaJsT/WSQUo6Pv+t9gy0=
 Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 73F7442204F;
-	Mon, 21 Jan 2013 09:24:23 +0100 (CET)
+	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 86EE22733DA;
+	Mon, 21 Jan 2013 09:26:35 +0100 (CET)
 Received: from [139.174.101.48] (account sstri@tu-clausthal.de [139.174.101.48] verified)
   by tu-clausthal.de (CommuniGate Pro SMTP 5.4.8)
-  with ESMTPSA id 43120756; Mon, 21 Jan 2013 09:24:23 +0100
+  with ESMTPSA id 43120838; Mon, 21 Jan 2013 09:26:35 +0100
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
 In-Reply-To: <7v4nibjrg0.fsf@alter.siamese.dyndns.org>
 X-Enigmail-Version: 1.5
@@ -60,7 +60,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214092>
 
 - The TortoiseGit team renamed TortoiseMerge.exe to TortoiseGitMerge.exe
   (starting with 1.8.0) in order to make clear that this one has special
@@ -172,8 +172,8 @@ index 0000000..5b802a7
 +	then
 +		touch "$BACKUP"
 +		"$merge_tool_path" \
-+			-base="$BASE" -mine="$LOCAL" \
-+			-theirs="$REMOTE" -merged="$MERGED"
++			-base "$BASE" -mine "$LOCAL" \
++			-theirs "$REMOTE" -merged "$MERGED"
 +		check_unchanged
 +	else
 +		echo "TortoiseGitMerge cannot be used without a base" 1>&2
