@@ -1,80 +1,80 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [PATCH v3 08/31] parse_pathspec: add PATHSPEC_EMPTY_MATCH_ALL
-Date: Mon, 21 Jan 2013 15:12:56 -0800
-Message-ID: <CANiSa6gfTxOWzMg7V19PntDBhU4kW6qpa+K2XjnWgzNRXDKRSw@mail.gmail.com>
-References: <1358080539-17436-1-git-send-email-pclouds@gmail.com>
-	<1358080539-17436-9-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] unpack-trees: do not abort when overwriting an
+ existing file with the same content
+Date: Mon, 21 Jan 2013 18:15:15 -0500
+Message-ID: <20130121231515.GD17156@sigill.intra.peff.net>
+References: <1358594648-26851-1-git-send-email-pclouds@gmail.com>
+ <1358768433-26096-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 00:13:20 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 00:15:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxQYJ-0007pK-QH
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 00:13:20 +0100
+	id 1TxQab-0000py-RW
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 00:15:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752948Ab3AUXM6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jan 2013 18:12:58 -0500
-Received: from mail-we0-f169.google.com ([74.125.82.169]:55593 "EHLO
-	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752305Ab3AUXM6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2013 18:12:58 -0500
-Received: by mail-we0-f169.google.com with SMTP id t11so1644381wey.14
-        for <git@vger.kernel.org>; Mon, 21 Jan 2013 15:12:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=jGrTrbMOVYzX5DCZ+hJmsg7kZ0k8kQZZ+bE6bjNHXQk=;
-        b=b5amOlwtYniJU0MbwoIbCQmMBQGK1lKLfSey8rq97/Z/ipjUKS8KED4MZ9vZkw9lRO
-         OnkrbKGEaSoGnGkMDUMMk8QulZYLCS/G+t6dHXl0/uPRrJS5psQRjqx4VWL+mvnv9hq4
-         2Cj/TtbRXwcQ37MaWy7XcDW/XUSC82VGioFJ+w3f8xn0IPr31NzHfyFMcqOKKMt2oDlk
-         /NhDIk7FTqLYcDsDLzMUQ1lxeNZn2xehoE+zmEoENsfy/fLH1dxYIwFTXmcNzdnoPSGv
-         yMLWURvGPEgIf+FkBrD/LFpkxDgRBc1A9LgKpy0NJIxAz0igiWwma0sep4LqD3sOMSNa
-         n6sw==
-X-Received: by 10.180.85.103 with SMTP id g7mr18046158wiz.29.1358809976681;
- Mon, 21 Jan 2013 15:12:56 -0800 (PST)
-Received: by 10.180.85.8 with HTTP; Mon, 21 Jan 2013 15:12:56 -0800 (PST)
-In-Reply-To: <1358080539-17436-9-git-send-email-pclouds@gmail.com>
+	id S1752240Ab3AUXPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 18:15:18 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41804 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751620Ab3AUXPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2013 18:15:17 -0500
+Received: (qmail 20546 invoked by uid 107); 21 Jan 2013 23:16:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Jan 2013 18:16:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Jan 2013 18:15:15 -0500
+Content-Disposition: inline
+In-Reply-To: <1358768433-26096-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214173>
 
-Hi,
+On Mon, Jan 21, 2013 at 06:40:33PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-I was tempted to ask this before, and the recent thread regarding "add
--u/A" [1] convinced me to.
+> +	/*
+> +	 * If it has the same content that we are going to overwrite,
+> +	 * there's no point in complaining. We still overwrite it in
+> +	 * the end though.
+> +	 */
+> +	if (ce &&
+> +	    S_ISREG(st->st_mode) && S_ISREG(ce->ce_mode) &&
+> +	    (!trust_executable_bit ||
+> +	     (0100 & (ce->ce_mode ^ st->st_mode)) == 0) &&
+> +	    st->st_size < SAME_CONTENT_SIZE_LIMIT &&
+> +	    sha1_object_info(ce->sha1, &ce_size) == OBJ_BLOB &&
+> +	    ce_size == st->st_size) {
+> +		void *buffer = NULL;
+> +		unsigned long size;
+> +		enum object_type type;
+> +		struct strbuf sb = STRBUF_INIT;
+> +		int matched =
+> +			strbuf_read_file(&sb, ce->name, ce_size) == ce_size &&
+> +			(buffer = read_sha1_file(ce->sha1, &type, &size)) != NULL &&
+> +			type == OBJ_BLOB &&
+> +			size == ce_size &&
+> +			!memcmp(buffer, sb.buf, size);
+> +		free(buffer);
+> +		strbuf_release(&sb);
+> +		if (matched)
+> +			return 0;
+> +	}
 
-On Sun, Jan 13, 2013 at 4:35 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> We have two ways of dealing with empty pathspec:
->
-> 1. limit it to current prefix
-> 2. match the entire working directory
->
-> Some commands go with #1, some with #2. get_pathspec() and
-> parse_pathspec() only supports #1. Make it support #2 too via
-> PATHSPEC_EMPTY_MATCH_ALL flag.
+Can you elaborate on when this code is triggered?
 
-If #2 is indeed the direction we want to go, then maybe we should make
-that the default behavior from parse_pathspec()? I.e. rename the flag
-"PATHSPEC_EMPTY_MATCH_PREFIX" (or something). Makes sense?
+In the general case, shouldn't we already know the sha1 of what's on
+disk in the index, and be able to just compare the hashes? And if we
+don't, because the entry is start-dirty, should we be updating it
+(possibly earlier, so we do not even get into the "need to write" code
+path) instead of doing this ad-hoc byte comparison?
 
-Btw, Matthieu was asking where we use #1. If you do invert the name
-and meaning of the flag, then the answer to that question should be
-(mostly?) obvious from a re-roll of your series (i.e. all the places
-where PATHSPEC_EMPTY_MATCH_PREFIX is used).
+Confused...
 
-Martin
-
- [1] http://thread.gmane.org/gmane.comp.version-control.git/213988/focu=
-s=3D214113
+-Peff
