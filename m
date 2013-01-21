@@ -1,75 +1,74 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: How to setup bash completion for alias of git command
-Date: Mon, 21 Jan 2013 11:55:27 +0800
-Message-ID: <CACSwcnQu0qgKPhDXeDTFTZgh7FBVmaTCTkoJmEsCTUtaM9HU6g@mail.gmail.com>
-References: <CACSwcnQu8Rx83mcGYR6NGzEhoreNR6DfiK876LF7pa9PGm30JA@mail.gmail.com>
-	<20130120111424.GG16339@elie.Belkin>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [msysGit] Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Mon, 21 Jan 2013 06:20:23 +0100
+Message-ID: <50FCD017.6060607@web.de>
+References: <50E9F7C2.1000603@gmail.com> <FBDECCA565D94DF9838DD81FE2E2543A@black> <7v1udxladc.fsf@alter.siamese.dyndns.org> <50EB8EB5.6080204@gmail.com> <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com> <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com> <50F303D8.20709@gmail.com> <50F5A435.5090408@ramsay1.demon.co.uk> <20130120101007.GD16339@elie.Belkin> <50FBCB95.6020201@web.de> <20130120110618.GF16339@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git mailing list <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Manlio Perillo <manlio.perillo@gmail.com>,
-	Marc Khouzam <marc.khouzam@gmail.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+	Stephen & Linda Smith <ischis2@cox.net>,
+	Eric Blake <eblake@redhat.com>,
+	msysGit <msysgit@googlegroups.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 04:55:57 2013
+X-From: git-owner@vger.kernel.org Mon Jan 21 06:20:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx8UG-0000u5-OD
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 04:55:57 +0100
+	id 1Tx9oO-0003Nn-Eb
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 06:20:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752687Ab3AUDz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 22:55:28 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:50065 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752649Ab3AUDz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 22:55:27 -0500
-Received: by mail-ie0-f178.google.com with SMTP id c12so8978580ieb.23
-        for <git@vger.kernel.org>; Sun, 20 Jan 2013 19:55:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=GD2dYnNPl69X5YnQxipEi5oEuVoH5cEBXMQ5YTMcwzE=;
-        b=DeGkxkkaQ99K0m1Rwszx250s0csHFq8uQsWCFRa7vnRaOukeVM3mMMURgUaLt8p8BA
-         htrGHwYJE2kzZ08uYtMOka2JcCBA9KRliF72rI5tfIruxoIssqZJ+0q3s8aJeDZ5pmpo
-         tfVMNsTsKn2KVsyL/BxbH1BdiVhG78eEHxHg9hqlEqJPgv6fqGFTbfmanz3kSNBG5fyH
-         0rpUnm2YUxZteQ+koOgjaXc3V4s69vXpH9z3+q2UrAuskdw2SO8jlcl4qjQAfjBrKF0k
-         05Ij+PtiVKrnwxjaiKArsyLWMi0r1ucJUj3hV2S34doRKoNfNGplShoAluE5pYO8mVZS
-         Y3Pg==
-X-Received: by 10.50.195.135 with SMTP id ie7mr7927035igc.8.1358740527301;
- Sun, 20 Jan 2013 19:55:27 -0800 (PST)
-Received: by 10.231.156.200 with HTTP; Sun, 20 Jan 2013 19:55:27 -0800 (PST)
-In-Reply-To: <20130120111424.GG16339@elie.Belkin>
+	id S1750757Ab3AUFU1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jan 2013 00:20:27 -0500
+Received: from mout.web.de ([212.227.17.11]:64805 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750699Ab3AUFU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2013 00:20:27 -0500
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb102)
+ with ESMTPA (Nemesis) id 0Lu4q2-1SwqYY1M2Q-011Lmc; Mon, 21 Jan 2013 06:20:25
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <20130120110618.GF16339@elie.Belkin>
+X-Provags-ID: V02:K0:15XF1aVDVi5XgFYkkevgv7ykU7eSqoya5EYUFs3B/+O
+ whrMF39yxJ2dymH7gFjwactEvYYB1cnGaR07wgA3TBDQImW3MQ
+ G15U4oiMfRYGzbbnbFRbUD8/5nMUg+9UvyitSBxObxlyA23PKQ
+ jh3DBH633QLqPVXSG04u87ObTNtxrbt/g+11XzPsFK+df/9J3d
+ LUzO6RcfGvxLUnOImOMjA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214080>
 
-On Sun, Jan 20, 2013 at 7:14 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi Ping,
->
-> Ping Yin wrote:
+On 20.01.13 12:06, Jonathan Nieder wrote:
+> Torsten B=F6gershausen wrote:
+>=20
+>> I wonder, if if we can go one step further:
 >>
->> However, in debian (testing, wheezy), it doesn't work
->>
->> $ gtlg or<TAB>
->> gtlg or-bash: [: 1: unary operator expected
->> -bash: [: 1: unary operator expected
->
-> Yes, I can reproduce this.  "git bisect" tells me it was introduced
-> by v1.7.6-rc0~65^2~4 (completion: remove unnecessary
-> _get_comp_words_by_ref() invocations, 2011-04-28).  Since then, Felipe
-> has done work to make reusing subcommand completion easy again, so you
-> can do
->
->         __git_complete gtlg _git_log
->
+>> Replace
+>> #ifdef WIN32 /* Both MinGW and MSVC */
+> [...]
+>> with
+>> #if defined(_MSC_VER)
+>=20
+> I thought Git for Windows was built using mingw, which doesn't define
+> _MSC_VER?
+>=20
+> Puzzled,
+> Jonathan
+>=20
+Yes,
+After removing these lines in the git-compat-util.h of msysgit
+v1.8.1 it still compiled.
+So I start to speculate if the comment is still valid for mingw,
+or if that was true in the old days and not now any more.
 
-Thanks very much. by following your advice, it works now.
-
-Ping Yin
+More investigation is needed, sorry for confusion.
+/Torsten
