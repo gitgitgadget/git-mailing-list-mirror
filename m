@@ -1,69 +1,131 @@
-From: Barry Wardell <barry.wardell@gmail.com>
-Subject: [PATCH v3 0/2] Make git-svn work with gitdir links
-Date: Mon, 21 Jan 2013 01:22:00 +0000
-Message-ID: <1358731322-44600-1-git-send-email-barry.wardell@gmail.com>
-References: <20120308005103.GA27398@dcvr.yhbt.net>
-Cc: Barry Wardell <barry.wardell@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 21 02:28:22 2013
+From: Chris Rorvick <chris@rorvick.com>
+Subject: Re: [PATCH 0/3] fixup remaining cvsimport tests
+Date: Sun, 20 Jan 2013 19:34:46 -0600
+Message-ID: <CAEUsAPYdpsbhCZfp-1w91ZiyqgEa=8TNf2MJihMViqVZmW3sRw@mail.gmail.com>
+References: <1357878439-27500-1-git-send-email-chris@rorvick.com>
+	<20130120125838.GK31172@serenity.lan>
+	<CAEUsAPZKd+mw2iK7nd6rTtB8N+B99ud19FkuSx0HVitNxrxxZA@mail.gmail.com>
+	<20130120152857.GM31172@serenity.lan>
+	<7vsj5vlm1d.fsf@alter.siamese.dyndns.org>
+	<CAEUsAPaw8EUcZFbODDj9Z-=3Ppd1CC=jvYDvuyntFkX_3V0ynQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Raymond <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 02:35:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx6BI-0006DN-IB
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 02:28:12 +0100
+	id 1Tx6I1-0008R4-Oe
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 02:35:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677Ab3AUB1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 20:27:50 -0500
-Received: from mail-wg0-f48.google.com ([74.125.82.48]:39996 "EHLO
-	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752581Ab3AUB1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 20:27:50 -0500
-Received: by mail-wg0-f48.google.com with SMTP id 16so97245wgi.27
-        for <git@vger.kernel.org>; Sun, 20 Jan 2013 17:27:49 -0800 (PST)
+	id S1752584Ab3AUBet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 20:34:49 -0500
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:61016 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752534Ab3AUBes (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 20:34:48 -0500
+Received: by mail-lb0-f177.google.com with SMTP id go11so78214lbb.22
+        for <git@vger.kernel.org>; Sun, 20 Jan 2013 17:34:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=rc5qIjbWgBlY1zxgGSrq3MXKTUrEOzi9UluPsPDjJYc=;
-        b=YolIIZ7j1x9IF3Vi2g/UZDVRn6Ct12InSin0Tc5WsKHIWyf/RrUsqIAhE8FXLrybXH
-         ZdeQTqSP4o9apK4nJPpGNTgaZoJNKHn/HKmADIOqM9H5UMQgTLRlCXroP2Uux9ANPWqY
-         9M2n08s9FXTybuybMSPleFVILrHLKKmIaxrVOQj3g0LUDswTdhh7iyNdP/gqLU2C+Ncy
-         T2aWLcuaCw7DEjTzN2cbbsqSYDT6vYRpAKhSlqyqUA4F0S7LOVMZsSSZr1pT72b2vNLa
-         T93b9BA1449qSy1Xrw5B5BSOwh10a+QCcK/B9oGn9DNY73oy329FTnvdZmku/6662baP
-         VQMQ==
-X-Received: by 10.180.95.135 with SMTP id dk7mr12785451wib.29.1358731325484;
-        Sun, 20 Jan 2013 17:22:05 -0800 (PST)
-Received: from localhost.localdomain (87-198-121-119.ptr.magnet.ie. [87.198.121.119])
-        by mx.google.com with ESMTPS id hu8sm14717231wib.6.2013.01.20.17.22.03
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 20 Jan 2013 17:22:03 -0800 (PST)
-X-Mailer: git-send-email 1.8.0
-In-Reply-To: <20120308005103.GA27398@dcvr.yhbt.net>
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=lwC7ByY+WVsqmFvkqkc/uQ5O9p460MrVgMS/R+xjmQ4=;
+        b=KF/Bom8DTYnYD9qh11hNow9/pxE0O2GqYvu2i74W0A/N11C5Ox3bA3HnUMDaDSzwVz
+         j/zP88h9RkGINwfrdEqmVhfProZFkpcZt0qtY0e7ReoEeWxIb3KlFb5g0sCSlfdsAVvj
+         JF6iYFRKG1vPLpZfhM2o8pbVMJldQwxXz/A+wS9o3+cFEsqNmUxfKKwb+q1vsshQli0y
+         +KwbV+MpdtY6RA6oMOUU2dja1HD7ibdGdwRdB2aOiDYLdQ5AsZddEkYaOmJFAnC4H/vJ
+         H5H+o6FETBvtbtJGEzxHlAOzcD1FwuLlpRLhVgXpRlchgI7pJ6Lp8JVJLTvDVW9ReoFy
+         17fg==
+X-Received: by 10.152.144.103 with SMTP id sl7mr15593330lab.23.1358732086465;
+ Sun, 20 Jan 2013 17:34:46 -0800 (PST)
+Received: by 10.114.2.97 with HTTP; Sun, 20 Jan 2013 17:34:46 -0800 (PST)
+In-Reply-To: <CAEUsAPaw8EUcZFbODDj9Z-=3Ppd1CC=jvYDvuyntFkX_3V0ynQ@mail.gmail.com>
+X-Google-Sender-Auth: e9xgW5ZSTq2w2x058kWE1F5t80M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214067>
 
-These patches fix a bug which prevented git-svn from working with repositories
-which use gitdir links.
+On Sun, Jan 20, 2013 at 2:17 PM, Chris Rorvick <chris@rorvick.com> wrote:
+> On Sun, Jan 20, 2013 at 12:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> John Keeping <john@keeping.me.uk> writes:
+>>
+>>> On Sun, Jan 20, 2013 at 09:22:03AM -0600, Chris Rorvick wrote:
+>>>> On Sun, Jan 20, 2013 at 6:58 AM, John Keeping <john@keeping.me.uk> wrote:
+>>>>> On Thu, Jan 10, 2013 at 10:27:16PM -0600, Chris Rorvick wrote:
+>>>>>> These patchs apply on top of of Eric Raymond's cvsimport patch.  7 of 15
+>>>>>> tests in t9600 fail, one of which is fixed w/ a cvsps patch I've sent
+>>>>>> to Eric (fixes revision map.)
+>>>>>
+>>>>> Did you post the fix for the revision map publicly anywhere?
+>>>>
+>>>> It's in Eric's repo and included in version 3.8:
+>>>>
+>>>> https://gitorious.org/cvsps/cvsps/commit/abe81e1775a8959291f629029513d1b7160bbde6
+>>>
+>>> Thanks.  For some reason I thought the fix would be to
+>>> git-cvsimport-3.py.  Obviously I should have read more carefully.
+>>>
+>>> Sorry for the noise.
+>>
+>> This is not a noise, though.
+>>
+>> Chris, how would we want to proceed?  I'd prefer at some point to
+>> see cvsimport-3 to be in sync when the one patched and tested in
+>> Eric's repository is proven enough.  Will Eric be the gatekeeper, or
+>> will you be sending patches this way as well?
+>
+> I probably won't be sending any more patches on this.  My hope was to
+> get cvsimport-3 (w/ cvsps as the engine) in a state such that one
+> could transition from the previous version seamlessly.  But the break
+> in t9605 has convinced me this is not worth the effort--even in this
+> trivial case cvsps is broken.  The fuzzing logic aggregates commits
+> into patch sets that have timestamps within a specified window and
+> otherwise matching attributes.  This aggregation causes file-level
+> commit timestamps to be lost and we are left with a single timestamp
+> for the patch set: the minimum for all contained CVS commits.  When
+> all commits have been processed, the patch sets are ordered
+> chronologically and printed.
+>
+> The problem is that is that a CVS commit is rolled into a patch set
+> regardless of whether the patch set's timestamp falls within the
+> adjacent CVS file-level commits.  Even worse, since the patch set
+> timestamp changes as subsequent commits are added (i.e., it's always
+> picking the earliest) it is potentially indeterminate at the time a
+> commit is added.  The result is that file revisions can be reordered
+> in resulting Git import (see t9605.)  I spent some time last week
+> trying to solve this but I coudln't think of anything that wasn't a
+> substantial re-work of the code.
+>
+> I have never used cvs2git, but I suspect Eric's efforts in making it a
+> potential backend for cvsimport are a better use of time.
+>
+> Chris
 
-Changes since v2:
- - Rebased onto latest master.
- - Added test case which verifies that the problem has been fixed.
- - Fixed problems with git svn (init|clone|multi-init).
- - All git-svn test cases now pass (except two in t9101 which also failed
-   before these patches).
+Hi Eric,
 
-Barry Wardell (2):
-  git-svn: Add test for git-svn repositories with a gitdir link
-  git-svn: Simplify calculation of GIT_DIR
+I noticed you were taken off this thread.  As I mention above, I
+looked into the bug tested in the t9605 patch Junio applied on top of
+your cvsimport patch.  The test was actually written for master to
+test the Perl/cvsps2 import, but with minor modification you can
+verify the problem still exists in the 3.x versions of cvsps.
 
- git-svn.perl             | 36 +++++++++++++-----------------------
- t/t9100-git-svn-basic.sh |  8 ++++++++
- 2 files changed, 21 insertions(+), 23 deletions(-)
+I think the email above explains the problem pretty well.  It's not
+clear to me what all the nastiness is that you've resolved with cvsps
+since taking over; I've been mostly concerned with importing an almost
+branchless repository which I thought avoided the types of problems
+you were addressing.  But this bug can actually cause Git's main
+import branch to become inconsistent with CVS HEAD and you don't have
+to do anything too weird to get hit by it.
 
--- 
-1.8.0
+Fixing this seemed like it would require splitting the processing out
+into a couple phases and would be a fair amount of work, but maybe I'm
+just not looking at the problem right.
+
+Chris
