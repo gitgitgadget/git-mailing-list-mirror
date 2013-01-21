@@ -1,95 +1,91 @@
-From: "Brian J. Murrell" <brian@interlinx.bc.ca>
-Subject: Re: GIT get corrupted on lustre
-Date: Mon, 21 Jan 2013 13:54:23 -0500
-Message-ID: <kdk2ss$498$1@ger.gmane.org>
-References: <50D861EE.6020105@giref.ulaval.ca> <50D870A0.90205@interlinx.bc.ca> <50EC453A.2060306@giref.ulaval.ca> <50EDDF12.3080800@giref.ulaval.ca> <50F7F793.80507@giref.ulaval.ca> <CAGK7Mr4R=OwfWt4Kat75C8YDi3iLTavMLxeoLxkf1-gKhxrucg@mail.gmail.com> <50F8273E.5050803@giref.ulaval.ca> <871B6C10EBEFE342A772D1159D1320853A042AD7@umechphj.easf.csd.disa.mil> <50F829A9.7090606@calculquebec.ca> <871B6C10EBEFE342A772D1159D1320853A044B42@umechphj.easf.csd.disa.mil> <50F98B53.9080109@giref.ulaval.ca> <CABPQNSbJr4dR9mq+kCwGe-RKb9PA7q=SKzbFW+=md_PLzZh=nQ@mail.gmail.com> <87a9s2o6ri.fsf@pctrast.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] git rm -u
+Date: Mon, 21 Jan 2013 11:01:19 -0800
+Message-ID: <7v1udegy2o.fsf@alter.siamese.dyndns.org>
+References: <50FB1196.2090309@gmail.com> <20130119214921.GE4009@elie.Belkin>
+ <vpq622s9jk1.fsf@grenoble-inp.fr> <7v1udfn0tm.fsf@alter.siamese.dyndns.org>
+ <CAA01Csrv26WrrJDAo-1cr+rW6rYFGQZpYgtafEh=Wgtzswdv_g@mail.gmail.com>
+ <7v622qhouc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="----enig2UFLEIDWEFCRWVWBTFOBA"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 21 19:55:01 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 20:01:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxMWH-0000qA-3c
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 19:54:57 +0100
+	id 1TxMct-0004Ic-N3
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 20:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755655Ab3AUSyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 13:54:35 -0500
-Received: from plane.gmane.org ([80.91.229.3]:41724 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752755Ab3AUSye (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 13:54:34 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TxMW9-0000kR-H4
-	for git@vger.kernel.org; Mon, 21 Jan 2013 19:54:49 +0100
-Received: from d67-193-232-12.home3.cgocable.net ([67.193.232.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Jan 2013 19:54:49 +0100
-Received: from brian by d67-193-232-12.home3.cgocable.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Jan 2013 19:54:49 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: d67-193-232-12.home3.cgocable.net
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <87a9s2o6ri.fsf@pctrast.inf.ethz.ch>
-X-Enigmail-Version: 1.5
+	id S1755279Ab3AUTB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 14:01:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43994 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751422Ab3AUTBZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2013 14:01:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A4A4A18D;
+	Mon, 21 Jan 2013 14:01:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ABA/CkHUPyEE2H5tndfq0aF4TTk=; b=YsJ63p
+	ab9RmfY6gDYyZumYawUDu5rckYqelteaDtpensTuphFZC67qLOBkKHuR/xk+4CDp
+	6EZdLGVpBzI+tMpD92wV7LbtziiW0bwn+Xd4oB8aAXJL3eso/3EqLMqDEcTIu6Hq
+	x7VTUfvCJ65uWnBD2Klj++AWTysT7VFHtaKYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qgZusEYRepOvCl1dvXIPZvwYfD0gmUnv
+	wpmL7s0EI8qeNAGFpt7yBhHVZ2zi5kjx6wDMUdErk8biAsfyRNiPOT3biOERUtX4
+	wT7aY2rk4hAonKoa/bxMc19j1mgsMoLIuIv1Lgw0FUcuTSww9qxG0qiQGn+zvHpB
+	/1rFKmKB2+g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DC3FA18C;
+	Mon, 21 Jan 2013 14:01:21 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 097FFA188; Mon, 21 Jan 2013
+ 14:01:20 -0500 (EST)
+In-Reply-To: <7v622qhouc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 21 Jan 2013 01:23:07 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F1997948-63FC-11E2-911D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214140>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
-------enig2UFLEIDWEFCRWVWBTFOBA
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 13-01-21 11:11 AM, Thomas Rast wrote:
->=20
-> What's odd is that while I cannot reproduce the original problem, there=
+> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+>
+>> Do you mean "git add" will be disallowed without "." or ":/" argument?
+>> Or will this change in future and "git add" without argument will me
+>> "whole tree", same as ":/" ?
+>
+> No.  This is only about "git add -u<RETURN>", not any other forms of
+> "git add ...with or without other args...".
 
-> seems to be another issue/bug with utime():
+This part is still correct, but all the remainder of the message I
+am responding to is a total garbage, written from faulty memory
+without fact check.  Sorry about noise.
 
-I wonder if this is related to http://jira.whamcloud.com/browse/LU-305.
- That was reported as fixed in Lustre 2.0.0 and 2.1.0 but I thought I
-saw it on 2.1.1 and added a comment to the above ticket about that.
+> "git add -u<RETURN>" historically meant,...
 
-> In the absence of it, wouldn't we in theory have to write a simple
-> loop-on-EINTR wrapper for *all* syscalls?
+The very original "git add -u<RETURN>" done at v1.5.2-rc0~17^2
+(git-add -u: match the index with working tree., 2007-04-20) did
+update the index with every change under the root of the working
+tree, no matter where you were.
 
-IIUC, that's what SA_RESTART is all about.
-
-> Of course there's the added problem that when open(O_CREAT|O_EXCL) fail=
-s
-> with EINTR, it's hard to tell whether a file that may now exist is
-> indeed yours or some other process's.
-
-Or whether it's in a "half created" state such as I hypothesize in
-http://jira.whamcloud.com/browse/LU-2276.
-
-b.
-
-
-
-------enig2UFLEIDWEFCRWVWBTFOBA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iEYEARECAAYFAlD9jt8ACgkQl3EQlGLyuXClSACfYuyrxqb9W1W1Vhl93xo/EvQr
-J8QAnjlI/fYD8PQoATNITvuQIRLSgeGC
-=DYdv
------END PGP SIGNATURE-----
-
-------enig2UFLEIDWEFCRWVWBTFOBA--
+But v1.5.2.5~1 (git-add -u paths... now works from subdirectory,
+2007-08-16) changed the semantics to limit the operation to the
+working tree.  The log message seems to suggest that this was a
+deliberate semantics change post release (i.e. the "tree-wide" was a
+bug); I do not recall if there was a discussion and concensus when
+this change was made, though.
