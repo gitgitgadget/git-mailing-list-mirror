@@ -1,107 +1,79 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: [RFC] git rm -u
-Date: Mon, 21 Jan 2013 20:10:14 +0100
-Message-ID: <CAA01Csp3S17+RyD15mRwfzbY2TTf27m14dpS7CkL5KSg6cWStg@mail.gmail.com>
-References: <50FB1196.2090309@gmail.com>
-	<20130119214921.GE4009@elie.Belkin>
-	<vpq622s9jk1.fsf@grenoble-inp.fr>
-	<7v1udfn0tm.fsf@alter.siamese.dyndns.org>
-	<CAA01Csrv26WrrJDAo-1cr+rW6rYFGQZpYgtafEh=Wgtzswdv_g@mail.gmail.com>
-	<7v622qhouc.fsf@alter.siamese.dyndns.org>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH v3 0/6] GIT, Git, git
+Date: Mon, 21 Jan 2013 20:12:20 +0100 (CET)
+Message-ID: <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
+References: <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net> <7vvcark1f2.fsf@alter.siamese.dyndns.org> <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Eric James Michael Ritz <lobbyjones@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 20:10:42 2013
+Content-Transfer-Encoding: 7bit
+Cc: davvid@gmail.com, git@vger.kernel.org
+To: gitster@pobox.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Mon Jan 21 20:12:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxMlU-0000E4-BC
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 20:10:40 +0100
+	id 1TxMnU-0001OC-OD
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 20:12:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704Ab3AUTKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 14:10:16 -0500
-Received: from mail-qc0-f170.google.com ([209.85.216.170]:46129 "EHLO
-	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752326Ab3AUTKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 14:10:15 -0500
-Received: by mail-qc0-f170.google.com with SMTP id d42so2631625qca.1
-        for <git@vger.kernel.org>; Mon, 21 Jan 2013 11:10:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Ij5A60deKHZnPavM8dF+IWr7diskfWbEd1LgWI3Gj9Q=;
-        b=E3DCuJb21UbA5y5ad5RP7pVxYSvMrxJqDz/PEBh0tv5yEZYe64bTpn75FEWBkzTm8B
-         GiUsbh8Lyh+uGO3W3dt5EJ0fskd5JlrBlkAmEB6Q2SMR3bqp3GbeQFFYKmzuxhlxgHZZ
-         vMWrHe87e9ssrqRCrKlu9Oc08pXDn49jlkaRAIbWZKGX0aexrrXRKE9Mgl1RbhwrG2FL
-         uDviLx1teZwGrpKUSi/nVG+9t29uem1JeJYlDyr/xyj50RyffDHObXZ8Svj9iVrAn8/A
-         pSM6doJ71UnG6F9fr2FCWUqMXDehu/5sNxbtAPP50uyO9PZijajaDHNN4JIE8r/npWKC
-         sxgw==
-X-Received: by 10.49.130.167 with SMTP id of7mr23642171qeb.22.1358795414312;
- Mon, 21 Jan 2013 11:10:14 -0800 (PST)
-Received: by 10.49.84.133 with HTTP; Mon, 21 Jan 2013 11:10:14 -0800 (PST)
-In-Reply-To: <7v622qhouc.fsf@alter.siamese.dyndns.org>
+	id S1752763Ab3AUTMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 14:12:23 -0500
+Received: from mail-in-11.arcor-online.net ([151.189.21.51]:45345 "EHLO
+	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752326Ab3AUTMX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2013 14:12:23 -0500
+Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
+	by mx.arcor.de (Postfix) with ESMTP id E943A35A380;
+	Mon, 21 Jan 2013 20:12:20 +0100 (CET)
+Received: from mail-in-17.arcor-online.net (mail-in-17.arcor-online.net [151.189.21.57])
+	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id E9173116003;
+	Mon, 21 Jan 2013 20:12:20 +0100 (CET)
+Received: from webmail20.arcor-online.net (webmail20.arcor-online.net [151.189.8.201])
+	by mail-in-17.arcor-online.net (Postfix) with ESMTP id E28B8CBC60;
+	Mon, 21 Jan 2013 20:12:20 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-17.arcor-online.net E28B8CBC60
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1358795540; bh=W/bgsre7sCjcrXPguWezrS8ZDl5ypPK8ubus036LGD0=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=Na2dZYx11VK2xcDsy4t7NCfgkwl9l+oumZFUT8BIlv3tjaxECKAltVPxmgV+RPnd7
+	 Hc8eZ7sA0TeukQ4mSEiq+Ce1DDfTjoZJh5FY2vXcdOob1pLq3C1EH1Q9S8s2TvDoL8
+	 rIz3sBJm5Ist7Kv0cYrlMcSAgs9+arH5JrtkkKuY=
+Received: from [188.105.98.86] by webmail20.arcor-online.net (151.189.8.201) with HTTP (Arcor Webmail); Mon, 21 Jan 2013 20:12:20 +0100 (CET)
+In-Reply-To: <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 188.105.98.86
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214144>
 
-On Mon, Jan 21, 2013 at 10:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> No.  This is only about "git add -u<RETURN>", not any other forms of
-> "git add ...with or without other args...".
->
-> "git add -u<RETURN>" historically meant, and it still means, to
-> "update the index with every change in the working tree", even when
-> you are in a subdirectory.
-
-But it *currently* limits itself to a subdirectory - does not work on
-whole tree:
-
-piotr@PIOTR-X73 ~/dv/test/dir1 (master)
-$ git status
-# On branch master
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#       modified:   dir2/file2.txt
-#       modified:   file1.txt
-#       modified:   ../file.txt
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-
-piotr@PIOTR-X73 ~/dv/test/dir1 (master)
-$ git add -u
-
-piotr@PIOTR-X73 ~/dv/test/dir1 (master)
-$ git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       modified:   dir2/file2.txt
-#       modified:   file1.txt
-#
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#       modified:   ../file.txt
-#
-
-piotr@PIOTR-X73 ~/dv/test/dir1 (master)
-$ git --version
-git version 1.8.0.msysgit.0
+Git changed its 'official' system name from 'GIT' to 'Git' in v1.6.5.3
+(as can be seen in the corresponding release note where 'GIT' was 
+changed to 'Git' in the header line).
+ 
+Alas the documention uses 'GIT', 'Git' or even 'git' to refer to the
+Git system. So change every occurrence of 'GIT" and 'git' in the 
+documention  to 'Git' whenever Git as a system is referred to 
+(but don't do this change in the release notes because they 
+constitute a history orthogonal to the history versioned by Git).
+ 
+There is also one occurence of 'GITweb' which is changed to 'Gitweb' but
+changing 'gitweb' to 'Gitweb' (or 'GitWeb'?) should be part of another
+patch.
+ 
+The "'git' to 'Git'" patch has to be divided in four parts to stay within
+the mail size limit of 100kB (sorry for the noise with v2 of this series).
+ 
+[PATCH v3 1/6] Change old system name 'GIT' to 'Git'
+[PATCH v3 2/6] Change 'git' to 'Git' whenever the whole system is referred to #1
+[PATCH v3 3/6] Change 'git' to 'Git' whenever the whole system is referred to #2
+[PATCH v3 4/6] Change 'git' to 'Git' whenever the whole system is referred to #3
+[PATCH v3 5/6] Change 'git' to 'Git' whenever the whole system is referred to #4
+[PATCH v3 6/6] Add rule for when to use 'git' and when to use 'Git'
 
 
-
---
-Piotr Krukowiecki
+---
+Thomas
