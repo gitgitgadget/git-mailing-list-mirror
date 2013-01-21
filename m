@@ -1,78 +1,71 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [RFC/PATCH] add: warn when -u or -A is used without filepattern
-Date: Mon, 21 Jan 2013 16:00:23 +0100 (CET)
-Message-ID: <1217961884.4232967.1358780423428.JavaMail.root@dewire.com>
-References: <1358769611-3625-1-git-send-email-Matthieu.Moy@imag.fr>
+Date: Mon, 21 Jan 2013 16:16:12 +0100
+Message-ID: <vpqy5fmva6b.fsf@grenoble-inp.fr>
+References: <1217961884.4232967.1358780423428.JavaMail.root@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Eric James Michael Ritz <lobbyjones@gmail.com>,
 	Tomas Carnecky <tomas.carnecky@gmail.com>, git@vger.kernel.org,
 	gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Jan 21 16:00:49 2013
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 16:16:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxIrf-0008NN-Di
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 16:00:47 +0100
+	id 1TxJ75-00083O-PW
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 16:16:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755620Ab3AUPAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 10:00:25 -0500
-Received: from zimbra.dewire.com ([83.140.172.131]:38210 "EHLO
-	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753503Ab3AUPAZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 10:00:25 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id C389A826E3;
-	Mon, 21 Jan 2013 16:00:23 +0100 (CET)
-X-Virus-Scanned: amavisd-new at dewire.se
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QS-ieiDZ4DI8; Mon, 21 Jan 2013 16:00:23 +0100 (CET)
-Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
-	by zimbra.dewire.com (Postfix) with ESMTP id 7B3E982608;
-	Mon, 21 Jan 2013 16:00:23 +0100 (CET)
-In-Reply-To: <1358769611-3625-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Originating-IP: [213.67.12.15]
-X-Mailer: Zimbra 7.2.0_GA_2681 (ZimbraWebClient - FF3.0 (Mac)/7.2.0_GA_2681)
+	id S1753780Ab3AUPQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 10:16:22 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:37741 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753037Ab3AUPQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2013 10:16:21 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r0LFGBLP006798
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 21 Jan 2013 16:16:13 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TxJ6b-0000Sr-40; Mon, 21 Jan 2013 16:16:13 +0100
+In-Reply-To: <1217961884.4232967.1358780423428.JavaMail.root@dewire.com>
+	(Robin Rosenberg's message of "Mon, 21 Jan 2013 16:00:23 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 21 Jan 2013 16:16:14 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r0LFGBLP006798
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1359386174.60132@ISRXCXA4B3VNhpJEviPc8g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214123>
 
+Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 
+> git add -u without filepattern is, I believe very common, so no noisy
+> output there please.
 
------ Ursprungligt meddelande -----
-> Most git commands that can be used with our without a filepattern are
-> tree-wide by default, the filepattern being used to restrict their
-> scope.
-> A few exceptions are: 'git grep', 'git clean', 'git add -u' and 'git
-> add -A'.
-> 
-> The inconsistancy of 'git add -u' and 'git add -A' are particularly
-> problematic since other 'git add' subcommands (namely 'git add -p'
-> and
-> 'git add -e') are tree-wide by default.
-> 
-> Flipping the default now is unacceptable, so this patch starts
-> training
-> users to type explicitely 'git add -u|-A :/' or 'git add -u|-A .', to
-> prepare
-> for the next steps:
-> 
-> * forbid 'git add -u|-A' without filepattern (like 'git add' without
->   option)
+What are you exactly suggesting? That we keep the inconsistant semantics
+of "git add -u" or "git add -A"? Or another migration plan?
 
-git add -u without filepattern is, I believe very common, so no noisy
-output there please.
+> git diff
+> #looks good
+> git add -u
 
-git diff
-#looks good
-git add -u
+That's indeed the kind of mistake I'd like to avoid. In your example,
+"git diff" is tree-wide, and "git add -u" is limited to ., so in general
+"git add -u" won't stage the same thing as "git diff" just showed.
 
--- robin
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
