@@ -1,92 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/2] Make git-svn work with gitdir links
-Date: Sun, 20 Jan 2013 17:50:25 -0800
-Message-ID: <7vwqv7i9su.fsf@alter.siamese.dyndns.org>
-References: <20120308005103.GA27398@dcvr.yhbt.net>
- <1358731322-44600-1-git-send-email-barry.wardell@gmail.com>
+Subject: Re: [PULL] Module fixes, and a virtio block fix.
+Date: Sun, 20 Jan 2013 18:00:24 -0800
+Message-ID: <7vpq0zi9c7.fsf@alter.siamese.dyndns.org>
+References: <87zk03wg7r.fsf@rustcorp.com.au>
+ <CA+55aFwzdcv0LXovZobha=EH=L6DapJt+ODP0nq=TWWAqCxLYQ@mail.gmail.com>
+ <87fw1vwcao.fsf@rustcorp.com.au>
+ <CA+55aFy1nW859yaGP17epRX8A+TaJ8APvb0-Ww1zw91dCAOhoQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-To: Barry Wardell <barry.wardell@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 02:50:51 2013
+Cc: Rusty Russell <rusty@rustcorp.com.au>,
+	Git Mailing List <git@vger.kernel.org>,
+	LKML <linux-kernel@vger.kernel.org>,
+	Alexander Graf <agraf@suse.de>,
+	Prarit Bhargava <prarit@redhat.com>,
+	Sasha Levin <sasha.levin@oracle.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 03:00:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx6XC-0003Kg-5R
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 02:50:50 +0100
+	id 1Tx6gw-0005ZX-KS
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 03:00:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752615Ab3AUBu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2013 20:50:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60923 "EHLO
+	id S1752670Ab3AUCA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 21:00:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37730 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752528Ab3AUBu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2013 20:50:28 -0500
+	id S1752559Ab3AUCA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 21:00:26 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A4CEB795;
-	Sun, 20 Jan 2013 20:50:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4ACD6A1BF;
+	Sun, 20 Jan 2013 21:00:26 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RECOTCyvrM/C8cWmGysbargOTD8=; b=wvIhYP
-	cj9MgegTZZrLDZyMV6oZGqBwLU+nZ3wZFrRzf9fwO+R1hXfEQYdG3x7rOkqwbZOZ
-	exH9mF2t2wEIfe9yTFXQi7E8HCBORBd6QDg6/SpF9FVEcU3H9kh+4MywgmLKKi9N
-	20WH0jYec+K/2kaF8uMVqIIVgZIwASJ5T6i84=
+	:content-type; s=sasl; bh=aH3BdYh9P7NVLZPaDn6wgDKHF8Q=; b=pamm3Y
+	OOIsBxYgG8sgdGpgzCR7KpYlk6XxfeBfOCW2QcYFK8+xJQYjJWfsjdYYX/Yt8/3t
+	eyKrk0MaXUfyYPa73J8dXKC1OZknw1cgUefjMv9StUdM4Lejw77zl4CSE++AuOKQ
+	gzbMNy4hVJ87K7AFUyz2DAEp+YiST9MBIVFk0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kcOg6Wk+3Rt5/EJLWbM8KJVOoVLesmY/
-	z+PfXvJObdmbeGTo0qe7IpQl24VT6o11Zw3TYklQ0mrGQFv2i8kbXAIpxwJIE8x1
-	Dea/Vtl5rw94r1LTtLSLZIUOVRhwdef+i+r5OFiA4tjJ8ljCfN+hwx/lzvS8um40
-	mY7DSyplfI4=
+	:content-type; q=dns; s=sasl; b=d7d07JPT5CRg03kpKG26sl3mcy/5Wgwo
+	3vzpfMa4UylPqjb6quSMPiMc8OJ3rzTaROyD2eP4i/Cxi9YCjdTWCsiNPaGNdAoC
+	59HArCSvSee9tT0GTL+bMgPCWfpWCA9KnznEvaKs1GhXzf6nK9p6N8sQLIONHSoM
+	rqMJ5qjci6k=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E8C0B794;
-	Sun, 20 Jan 2013 20:50:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E616A1BE;
+	Sun, 20 Jan 2013 21:00:26 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E20F4B793; Sun, 20 Jan 2013
- 20:50:26 -0500 (EST)
-In-Reply-To: <1358731322-44600-1-git-send-email-barry.wardell@gmail.com>
- (Barry Wardell's message of "Mon, 21 Jan 2013 01:22:00 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9434A1B9; Sun, 20 Jan 2013
+ 21:00:25 -0500 (EST)
+In-Reply-To: <CA+55aFy1nW859yaGP17epRX8A+TaJ8APvb0-Ww1zw91dCAOhoQ@mail.gmail.com> (Linus
+ Torvalds's message of "Sun, 20 Jan 2013 17:45:33 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EDA7AC82-636C-11E2-8969-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 529AEDCE-636E-11E2-8C23-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214073>
 
-Barry Wardell <barry.wardell@gmail.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> These patches fix a bug which prevented git-svn from working with repositories
-> which use gitdir links.
+> On Sun, Jan 20, 2013 at 5:32 PM, Rusty Russell <rusty@rustcorp.com.au> wrote:
+>>
+>> Due to the delay on git.kernel.org, git request-pull fails.  It *looks*
+>> like it succeeds, except the warning, but (as we learned last time I
+>> screwed up), it doesn't put the branchname because it can't know.
 >
-> Changes since v2:
->  - Rebased onto latest master.
->  - Added test case which verifies that the problem has been fixed.
->  - Fixed problems with git svn (init|clone|multi-init).
->  - All git-svn test cases now pass (except two in t9101 which also failed
->    before these patches).
->
-> Barry Wardell (2):
->   git-svn: Add test for git-svn repositories with a gitdir link
->   git-svn: Simplify calculation of GIT_DIR
+> I think this should be fixed in modern git versions.
+> ...
+> Junio, didn't "git request-pull" get fixed so that it *warns* about
+> missing tagnames/branches, but never actually corrupts the pull
+> request? Or did it just get "fixed" to be a hard error instead of
+> corrupting things? Because this is annoying.
 
-Thanks for your persistence ;-) As this is a pretty old topic, I'll
-give two URLs for people who are interested to view the previous
-threads:
+What you mean by "corrupt" is not clear to me, but the last change
+to the script is from 6 months ago to solve a related (perhaps the
+same?) problem, which should be in v1.7.11.2 and later:
 
-    http://thread.gmane.org/gmane.comp.version-control.git/192133
-    http://thread.gmane.org/gmane.comp.version-control.git/192127
+    request-pull: really favor a matching tag
 
-You would want to mark it as test_expect_failure in the first patch
-and then flip it to text_expect_success in the second patch where
-you fix the breakage?  Otherwise, after applying the first patch,
-the testsuite will break needlessly.
+    After tagging the tip of "dev" branch with a "for-linus" tag and
+    pushing both out, running
 
-I've Cc'ed Eric Wong (git-svn maintainer) and CMN who helped in the
-previous round.  If the only issue is the above success/failure one,
-I think Eric can tweak the patches while applying them (I didn't
-look at the changes carefully myself, by the way).
+        $ git request-pull $url $last_release dev
 
-Thanks.
+    would produce an output asking the 'dev' branch of $url to be
+    pulled, because that is what the user asked the message to say.
+
+    We already detect this situation locally and include the
+    contents of the tag in the output; if the $url has that tag,
+    favor that tag (i.e. "for-linus") in the generated message over
+    the branch name the user gave us (i.e. "dev") from the command
+    line, to make the output look more consistent.
