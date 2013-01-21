@@ -1,102 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PULL] Module fixes, and a virtio block fix.
-Date: Sun, 20 Jan 2013 19:15:54 -0800
-Message-ID: <CA+55aFwNiKaWPTWuxvyud2jkpZgO8z0DGaof7icBDM1ycAFb_A@mail.gmail.com>
-References: <87zk03wg7r.fsf@rustcorp.com.au> <CA+55aFwzdcv0LXovZobha=EH=L6DapJt+ODP0nq=TWWAqCxLYQ@mail.gmail.com>
- <87fw1vwcao.fsf@rustcorp.com.au> <CA+55aFy1nW859yaGP17epRX8A+TaJ8APvb0-Ww1zw91dCAOhoQ@mail.gmail.com>
- <871udfw8e0.fsf@rustcorp.com.au>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: How to setup bash completion for alias of git command
+Date: Mon, 21 Jan 2013 11:55:27 +0800
+Message-ID: <CACSwcnQu0qgKPhDXeDTFTZgh7FBVmaTCTkoJmEsCTUtaM9HU6g@mail.gmail.com>
+References: <CACSwcnQu8Rx83mcGYR6NGzEhoreNR6DfiK876LF7pa9PGm30JA@mail.gmail.com>
+	<20130120111424.GG16339@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	LKML <linux-kernel@vger.kernel.org>,
-	Alexander Graf <agraf@suse.de>,
-	Prarit Bhargava <prarit@redhat.com>,
-	Sasha Levin <sasha.levin@oracle.com>
-To: Rusty Russell <rusty@rustcorp.com.au>
-X-From: linux-kernel-owner@vger.kernel.org Mon Jan 21 04:16:57 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git mailing list <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Manlio Perillo <manlio.perillo@gmail.com>,
+	Marc Khouzam <marc.khouzam@gmail.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 04:55:57 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Tx7sS-0007Q9-Kl
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 21 Jan 2013 04:16:52 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Tx8UG-0000u5-OD
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 04:55:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752711Ab3AUDQT (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 20 Jan 2013 22:16:19 -0500
-Received: from mail-vb0-f52.google.com ([209.85.212.52]:38875 "EHLO
-	mail-vb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752629Ab3AUDQP convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 20 Jan 2013 22:16:15 -0500
-Received: by mail-vb0-f52.google.com with SMTP id fa15so2328369vbb.25
-        for <multiple recipients>; Sun, 20 Jan 2013 19:16:14 -0800 (PST)
+	id S1752687Ab3AUDz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 22:55:28 -0500
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:50065 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752649Ab3AUDz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 22:55:27 -0500
+Received: by mail-ie0-f178.google.com with SMTP id c12so8978580ieb.23
+        for <git@vger.kernel.org>; Sun, 20 Jan 2013 19:55:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NhzBln8EUgAUXL1DHWqk0ObvwsZmWvMS+EsEN9Ke8R8=;
-        b=whoe7qTS2TAtqJ1ZoPHSHdQPBGUFP9xIM6lBGLcHNrdDAV4cpUHIUVJ0exhNgYZIxw
-         8Esbtq1JnssL0/bZ8B803/bGA3XWmmf/x3nyblYwzlqMf5JrDAfu6Ls+MT3ZlW203y8w
-         9RRY6YiWt+vUo5VA5s0KZs+AaNYD3Frwd8d8TptDz/heTrTd6hD/Ad6TALm0G73CZoyi
-         4rfiku9ntuTONnXM9SYfM3StMG8JNFbmhH2uC1RaLKE6CGR31f4oFPg59NVuyUpy/z7P
-         vLMDbme1D526uWhygbQFuyMCqOG98CU2LHIbZ3v93Lk10exYxj8zL/rXpNbMzWCEl/MU
-         4YGA==
-X-Received: by 10.220.247.204 with SMTP id md12mr18012451vcb.27.1358738174765;
- Sun, 20 Jan 2013 19:16:14 -0800 (PST)
-Received: by 10.220.249.199 with HTTP; Sun, 20 Jan 2013 19:15:54 -0800 (PST)
-In-Reply-To: <871udfw8e0.fsf@rustcorp.com.au>
-X-Google-Sender-Auth: 6eaoo40IZnGoePxJcsLCkz6u51I
-Sender: linux-kernel-owner@vger.kernel.org
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=GD2dYnNPl69X5YnQxipEi5oEuVoH5cEBXMQ5YTMcwzE=;
+        b=DeGkxkkaQ99K0m1Rwszx250s0csHFq8uQsWCFRa7vnRaOukeVM3mMMURgUaLt8p8BA
+         htrGHwYJE2kzZ08uYtMOka2JcCBA9KRliF72rI5tfIruxoIssqZJ+0q3s8aJeDZ5pmpo
+         tfVMNsTsKn2KVsyL/BxbH1BdiVhG78eEHxHg9hqlEqJPgv6fqGFTbfmanz3kSNBG5fyH
+         0rpUnm2YUxZteQ+koOgjaXc3V4s69vXpH9z3+q2UrAuskdw2SO8jlcl4qjQAfjBrKF0k
+         05Ij+PtiVKrnwxjaiKArsyLWMi0r1ucJUj3hV2S34doRKoNfNGplShoAluE5pYO8mVZS
+         Y3Pg==
+X-Received: by 10.50.195.135 with SMTP id ie7mr7927035igc.8.1358740527301;
+ Sun, 20 Jan 2013 19:55:27 -0800 (PST)
+Received: by 10.231.156.200 with HTTP; Sun, 20 Jan 2013 19:55:27 -0800 (PST)
+In-Reply-To: <20130120111424.GG16339@elie.Belkin>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214078>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214079>
 
-On Sun, Jan 20, 2013 at 6:57 PM, Rusty Russell <rusty@rustcorp.com.au> wrote:
+On Sun, Jan 20, 2013 at 7:14 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi Ping,
 >
-> I'm confused.  The default argument is HEAD: what does it know about tag
-> names?
-
-Ugh. I actually thought that if you give it the tag name directly (as
-the "end") it will use that.
-
-But no. It figures it out with "git describe --exact" internally.
-Regardless, if your HEAD is actually tagged, it *will* have the
-tag-name in git-request-pull.
-
-And it will have it based on your *local* repo, so the fact that it
-hasn't been mirrored out yet doesn't really matter. git request-pull
-knows that tag name regardless of mirroring issues.
-
-> The bug is that if it can't find that commit at the remote end, it
-> still generates a valid-looking request (with a warning at the end),
-> where it guesses you're talking about the master branch.
-
-It really shouldn't do that any more, but you seem to have the older
-version with the bug.
-
-At  least one of the annoying problems was fixed in the 1.7.11 series,
-you have 1.7.10.
-
-The nice thing about git is that it is *really* easy to upgrade. Just
-fetch the sources, do "make; make install" all as a normal user, and
-you do not need to worry about package management or distro issues or
-any crap like that. It installs into your $(HOME)/bin, and as long as
-your PATH has that first, you'll get it. I've long suggested that as
-the workaround for distros having old versions (some more so than
-others).
-
-> Since I use a wrapper script now for your pull requests I can use sed to
-> unscrew it:
+> Ping Yin wrote:
+>>
+>> However, in debian (testing, wheezy), it doesn't work
+>>
+>> $ gtlg or<TAB>
+>> gtlg or-bash: [: 1: unary operator expected
+>> -bash: [: 1: unary operator expected
 >
-> [alias]
->         for-linus = !check-commits && TAGNAME=`git symbolic-ref HEAD | cut -d/ -f3`-for-linus && git tag -f -u D1ADB8F1 $TAGNAME HEAD && git push korg tag $TAGNAME && git request-pull master korg | sed s,gitolite@ra.kernel.org:/pub,git://git.kernel.org/pub, && git log --stat --reverse master..$TAGNAME | emails-from-log | grep -v 'rusty@rustcorp' | grep -v 'stable@kernel.org' | sed 's/^/Cc: /'
+> Yes, I can reproduce this.  "git bisect" tells me it was introduced
+> by v1.7.6-rc0~65^2~4 (completion: remove unnecessary
+> _get_comp_words_by_ref() invocations, 2011-04-28).  Since then, Felipe
+> has done work to make reusing subcommand completion easy again, so you
+> can do
+>
+>         __git_complete gtlg _git_log
+>
 
-Heh. Ok. That will at least hide the breakage. But I suspect you could
-fix it by just updating git.
+Thanks very much. by following your advice, it works now.
 
-             Linus
+Ping Yin
