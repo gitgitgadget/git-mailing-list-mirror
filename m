@@ -1,67 +1,79 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [RFC/PATCH] add: warn when -u or -A is used without filepattern
-Date: Mon, 21 Jan 2013 21:29:46 +0100 (CET)
-Message-ID: <2025469478.4311560.1358800186770.JavaMail.root@dewire.com>
-References: <vpqy5fmva6b.fsf@grenoble-inp.fr>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v3 0/2] Make git-svn work with gitdir links
+Date: Mon, 21 Jan 2013 21:45:53 -0000
+Organization: OPDS
+Message-ID: <2931F4CC43E4406DBB878482C2F0E4F4@PhilipOakley>
+References: <20120308005103.GA27398@dcvr.yhbt.net> <1358731322-44600-1-git-send-email-barry.wardell@gmail.com> <7vwqv7i9su.fsf@alter.siamese.dyndns.org> <kdjip9$4j7$1@ger.gmane.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=response
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Eric James Michael Ritz <lobbyjones@gmail.com>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jan 21 21:30:14 2013
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Barry Wardell" <barry.wardell@gmail.com>,
+	"\"Joachim Schmitz\"" <jojo@schmitz-digital.de>
+To: "Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 22:46:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxO0R-0002HF-AX
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 21:30:11 +0100
+	id 1TxPCG-0003Yk-FM
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 22:46:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756610Ab3AUU3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 15:29:49 -0500
-Received: from zimbra.dewire.com ([83.140.172.131]:49316 "EHLO
-	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752771Ab3AUU3s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 15:29:48 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id 22B7E826E1;
-	Mon, 21 Jan 2013 21:29:47 +0100 (CET)
-X-Virus-Scanned: amavisd-new at dewire.se
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id asOfI07SL+Se; Mon, 21 Jan 2013 21:29:46 +0100 (CET)
-Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
-	by zimbra.dewire.com (Postfix) with ESMTP id CCE6A8262E;
-	Mon, 21 Jan 2013 21:29:46 +0100 (CET)
-In-Reply-To: <vpqy5fmva6b.fsf@grenoble-inp.fr>
-X-Originating-IP: [213.67.12.15]
-X-Mailer: Zimbra 7.2.0_GA_2681 (ZimbraWebClient - FF3.0 (Mac)/7.2.0_GA_2681)
+	id S1751633Ab3AUVpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 16:45:50 -0500
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:58324 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751813Ab3AUVps (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2013 16:45:48 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgIFAE+u/VBcHIm8/2dsb2JhbABEjAKyKxdzghkFAQEEAQgBAS4eAQEhCwIDBQIBAxUBAgklFAEECBIGBxcGEwgCAQIDAYd2AwkKCLMhDYhijAmET2EDiCyFUYY5gnKKG4USgnU
+X-IronPort-AV: E=Sophos;i="4.84,508,1355097600"; 
+   d="scan'208";a="416574947"
+Received: from host-92-28-137-188.as13285.net (HELO PhilipOakley) ([92.28.137.188])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 21 Jan 2013 21:45:46 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214164>
 
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Sent: Monday, January 21, 2013 2:19 PM
+> Junio C Hamano wrote:
+>> Barry Wardell <barry.wardell@gmail.com> writes:
+[...]
+>> Thanks for your persistence ;-) As this is a pretty old topic, I'll
+>> give two URLs for people who are interested to view the previous
+>> threads:
+>>
+>>    http://thread.gmane.org/gmane.comp.version-control.git/192133
+>>    http://thread.gmane.org/gmane.comp.version-control.git/192127
+>>
+>> You would want to mark it as test_expect_failure in the first patch
+>> and then flip it to text_expect_success in the second patch where
+>> you fix the breakage?  Otherwise, after applying the first patch,
+>> the testsuite will break needlessly.
+>
+> I'd just apply them the other way round, 1st fix the problem, 2nd add 
+> a test for it
 
+Isn't it a case of, 1st demonstrate the problem with a test, and then 
+2nd  fix the problem.
 
------ Ursprungligt meddelande -----
+Those less principled could could simply "fix" a non-existent problem 
+merely to get themselves into the change log, or worse, even if one may 
+fix-test under the hood.
 
-> > git diff
-> > #looks good
-> > git add -u
-> 
-> That's indeed the kind of mistake I'd like to avoid. In your example,
-> "git diff" is tree-wide, and "git add -u" is limited to ., so in
-> general
-> "git add -u" won't stage the same thing as "git diff" just showed.
+>
+> Bye, Jojo
 
-Good point. I rarely cd to anything but the top of the tree, but that
-might be just me. OTOH, git diff after -u would remind me. It would bad if -u 
-was tree wide and diff wasn't, but fortunately that's not the case.
-
-The -A is a bit worse since it adds all the crap files lying around.
-
--- robin
+Philip 
