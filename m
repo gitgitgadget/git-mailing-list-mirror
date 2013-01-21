@@ -1,76 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-cvsimport-3 and incremental imports
-Date: Sun, 20 Jan 2013 23:35:19 -0800
-Message-ID: <7va9s3gf9k.fsf@alter.siamese.dyndns.org>
-References: <20130120200922.GC7498@serenity.lan>
- <20130120232008.GA25001@thyrsus.com> <20130120234205.GC3474@elie.Belkin>
- <20130121010643.GA25437@thyrsus.com>
- <7vr4lfgfkm.fsf@alter.siamese.dyndns.org>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: [RFC] git rm -u
+Date: Mon, 21 Jan 2013 09:09:42 +0100
+Message-ID: <CAA01Csrv26WrrJDAo-1cr+rW6rYFGQZpYgtafEh=Wgtzswdv_g@mail.gmail.com>
+References: <50FB1196.2090309@gmail.com>
+	<20130119214921.GE4009@elie.Belkin>
+	<vpq622s9jk1.fsf@grenoble-inp.fr>
+	<7v1udfn0tm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	John Keeping <john@keeping.me.uk>, git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Mon Jan 21 08:35:44 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 09:10:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxBux-0004Iy-W6
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 08:35:44 +0100
+	id 1TxCSD-0007vk-Cv
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 09:10:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751556Ab3AUHfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 02:35:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64412 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751247Ab3AUHfW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 02:35:22 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E60B7960F;
-	Mon, 21 Jan 2013 02:35:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ksdJiIMBnCRxDht51Bfam6qGyAw=; b=mEdYTz
-	dNnoQ+iG5tNEs+s3D+ViVaOtqnge2k7V3m3wkN3jnvVpWgjTSKXeE6MXdf9FM388
-	gZCE8/JoRGnIdF2b76Mifal4HlCZHD2Xy1qApceCFvGGdVlVn8PtpwWLYN2hgyFe
-	rblBM+2Pt/s/aHenNQGz9E8U3dtyLD7Xie6NQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N3omazkFLWSKdyTh1yWyfUO/B+Efkd88
-	TLXY2PM4bnA1AliDorK80ma92GrtW9e8UH790D8Ku4jP1pMGB4ZP5H0yALOj3rV7
-	MbfXrwJj9WVbCaX6FY20/ro6m+RgytUQ579HvW295gVY6fr0YCakIKK5I5yjynVv
-	Rcusx3WmsRY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4887960C;
-	Mon, 21 Jan 2013 02:35:21 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 68DE89607; Mon, 21 Jan 2013
- 02:35:21 -0500 (EST)
-In-Reply-To: <7vr4lfgfkm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 20 Jan 2013 23:28:41 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1C8AC892-639D-11E2-9D56-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751178Ab3AUIJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 03:09:44 -0500
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:57396 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750803Ab3AUIJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2013 03:09:43 -0500
+Received: by mail-qa0-f47.google.com with SMTP id a19so6553781qad.6
+        for <git@vger.kernel.org>; Mon, 21 Jan 2013 00:09:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=pi4X6+30z+/SzLcPVHwR+ycJdIECrKQs7ufrd8h7EjY=;
+        b=gEHLhfWSQJmo3Rv7LB/EkK+C8rvvpJCvqdHO3xmcDh0OIEthwIscTvwR0neGlF81Tq
+         NhfOOgVnzm3cbMQqoxOtDfmf68ylRzmKEwTdPPFX6yV6azfLGBUKOCb4aAY4WpVwjfLK
+         DmImL4zuvJ8W/g3yMoRbitHehtLpNB2fh+/MJxEe540ZYoUp2RnUbRpStAZc/0iQz2oL
+         AKIt6CJ2FDJrfnzGycmGANS82F5w7UhFrOomkrvz7/7Sw6se4VBiHFa2Yngx3aGAKAAr
+         dbLTUZ26E5euhmy/I5Mzvh706SABzkoYVtwnuFqU/8+K6978dPcgYccBAAzpJ1f2BmYh
+         AJzQ==
+X-Received: by 10.49.131.67 with SMTP id ok3mr21215817qeb.42.1358755783063;
+ Mon, 21 Jan 2013 00:09:43 -0800 (PST)
+Received: by 10.49.84.133 with HTTP; Mon, 21 Jan 2013 00:09:42 -0800 (PST)
+In-Reply-To: <7v1udfn0tm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214090>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, Jan 20, 2013 at 7:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> Implementing "git rm -u" as a tree-wide command would create a
+>> discrepancy with "git add -u". Implementing it as a "current directory"
+>> command would make the migration harder if we eventually try to change
+>> "git add -u". Perhaps "git rm -u" should be forbidden from a
+>> subdirectory (with an error message pointing to "git rm -u :/" and "git
+>> rm -u ."), waiting for a possible "git add -u" change.
+>
+> Yeah, that sounds sensible.  Start with a "'git rm -u' is forbidden
+> without arguments", give advise to use either "." or ":/".  And stop
+> there.
+>
+> The first step of "git add -u" migration plan would be to warn when
+> no argument is given and update all the existing index entries, and
+> give the same advise to use either "." or ":/".  Keep this for three
+> cycles: 3 * (8 to 10 weeks per cycle) = 27 weeks ~ 1/2 year.
+>
+> The second step would be to forbid "git add -u", and keep the
+> advise.  That will make it in-line with "git rm -u".
 
-> If you want to abandon cvsps2 users, that is perfectly fine by me.
-> As long as cvsps3 and cvsimport-3 combo works, Git before this
-> series will have a _working_ cvsimport as far as I am concerned.
+Do you mean "git add" will be disallowed without "." or ":/" argument?
+Or will this change in future and "git add" without argument will me
+"whole tree", same as ":/" ?
 
-The above obviously is "Git _after_ this series".
-
-Git before this series that only has cvsps2 support may be broken
-and Git after this series, when used with cvsps2, may be broken, but
-is broken the same way as before, so it is not a net loss.
-
-The users of distros that are slow to update cvsps can still use
-cvsimport-3 with cvsps3 that is manually installed, and the users of
-distros that ship cvsps3 will use cvsimport-3 and they can migrate
-away from cvsps2's breakage.
+--
+Piotr Krukowiecki
