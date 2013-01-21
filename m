@@ -1,103 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] Hiding some refs in ls-remote
-Date: Mon, 21 Jan 2013 18:03:39 -0500
-Message-ID: <20130121230339.GC17156@sigill.intra.peff.net>
-References: <1358555826-11883-1-git-send-email-gitster@pobox.com>
- <20130119165042.GB12307@sigill.intra.peff.net>
- <7vpq0zn2za.fsf@alter.siamese.dyndns.org>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [PATCH v3 08/31] parse_pathspec: add PATHSPEC_EMPTY_MATCH_ALL
+Date: Mon, 21 Jan 2013 15:12:56 -0800
+Message-ID: <CANiSa6gfTxOWzMg7V19PntDBhU4kW6qpa+K2XjnWgzNRXDKRSw@mail.gmail.com>
+References: <1358080539-17436-1-git-send-email-pclouds@gmail.com>
+	<1358080539-17436-9-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, spearce@spearce.org, mfick@codeaurora.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 00:04:25 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 00:13:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxQPb-0001t1-Dm
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 00:04:19 +0100
+	id 1TxQYJ-0007pK-QH
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 00:13:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753763Ab3AUXDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 18:03:42 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41791 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752554Ab3AUXDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 18:03:41 -0500
-Received: (qmail 20413 invoked by uid 107); 21 Jan 2013 23:05:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Jan 2013 18:05:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Jan 2013 18:03:39 -0500
-Content-Disposition: inline
-In-Reply-To: <7vpq0zn2za.fsf@alter.siamese.dyndns.org>
+	id S1752948Ab3AUXM6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jan 2013 18:12:58 -0500
+Received: from mail-we0-f169.google.com ([74.125.82.169]:55593 "EHLO
+	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752305Ab3AUXM6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2013 18:12:58 -0500
+Received: by mail-we0-f169.google.com with SMTP id t11so1644381wey.14
+        for <git@vger.kernel.org>; Mon, 21 Jan 2013 15:12:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=jGrTrbMOVYzX5DCZ+hJmsg7kZ0k8kQZZ+bE6bjNHXQk=;
+        b=b5amOlwtYniJU0MbwoIbCQmMBQGK1lKLfSey8rq97/Z/ipjUKS8KED4MZ9vZkw9lRO
+         OnkrbKGEaSoGnGkMDUMMk8QulZYLCS/G+t6dHXl0/uPRrJS5psQRjqx4VWL+mvnv9hq4
+         2Cj/TtbRXwcQ37MaWy7XcDW/XUSC82VGioFJ+w3f8xn0IPr31NzHfyFMcqOKKMt2oDlk
+         /NhDIk7FTqLYcDsDLzMUQ1lxeNZn2xehoE+zmEoENsfy/fLH1dxYIwFTXmcNzdnoPSGv
+         yMLWURvGPEgIf+FkBrD/LFpkxDgRBc1A9LgKpy0NJIxAz0igiWwma0sep4LqD3sOMSNa
+         n6sw==
+X-Received: by 10.180.85.103 with SMTP id g7mr18046158wiz.29.1358809976681;
+ Mon, 21 Jan 2013 15:12:56 -0800 (PST)
+Received: by 10.180.85.8 with HTTP; Mon, 21 Jan 2013 15:12:56 -0800 (PST)
+In-Reply-To: <1358080539-17436-9-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214172>
 
-On Sun, Jan 20, 2013 at 10:06:33AM -0800, Junio C Hamano wrote:
+Hi,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> 	[uploadPack]
-> >> 		hiderefs = refs/changes
-> >
-> > Would you want to do the same thing on receive-pack? It could benefit
-> > from the same reduction in network cost (although it tends to be invoked
-> > less frequently than upload-pack).
-> 
-> Do *I* want to do?  Not when there already is a patch exists; I'd
-> rather take existing and tested patch ;-)
+I was tempted to ask this before, and the recent thread regarding "add
+-u/A" [1] convinced me to.
 
-The patch we have is below, but I do not think you want it, as it is
-missing several things:
+On Sun, Jan 13, 2013 at 4:35 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> We have two ways of dealing with empty pathspec:
+>
+> 1. limit it to current prefix
+> 2. match the entire working directory
+>
+> Some commands go with #1, some with #2. get_pathspec() and
+> parse_pathspec() only supports #1. Make it support #2 too via
+> PATHSPEC_EMPTY_MATCH_ALL flag.
 
-  - docs and tests
+If #2 is indeed the direction we want to go, then maybe we should make
+that the default behavior from parse_pathspec()? I.e. rename the flag
+"PATHSPEC_EMPTY_MATCH_PREFIX" (or something). Makes sense?
 
-  - handling multiple values
+Btw, Matthieu was asking where we use #1. If you do invert the name
+and meaning of the flag, then the answer to that question should be
+(mostly?) obvious from a re-roll of your series (i.e. all the places
+where PATHSPEC_EMPTY_MATCH_PREFIX is used).
 
-  - anything but raw prefix matching (you even have to put in the "/"
-    yourself).
+Martin
 
-It was not my patch originally, and I never bothered to clean and
-upstream it because I didn't think it was something anybody else would
-be interested in. I'm happy to do so, but if you are working in the area
-anyway, it would make sense to be part of your series.
-
--Peff
-
----
-diff --git b/builtin/receive-pack.c a/builtin/receive-pack.c
-index 0afb8b2..b22670c 100644
---- b/builtin/receive-pack.c
-+++ a/builtin/receive-pack.c
-@@ -39,6 +39,7 @@ static void *head_name_to_free;
- static int auto_gc = 1;
- static const char *head_name;
- static void *head_name_to_free;
-+static const char *hide_refs;
- static int sent_capabilities;
- 
- static enum deny_action parse_deny_action(const char *var, const char *value)
-@@ -113,11 +114,19 @@ static void show_ref(const char *path, const unsigned char *sha1)
- 		return 0;
- 	}
- 
-+	if (strcmp(var, "receive.hiderefs") == 0) {
-+		git_config_string(&hide_refs, var, value);
-+		return 0;
-+	}
-+
- 	return git_default_config(var, value, cb);
- }
- 
- static void show_ref(const char *path, const unsigned char *sha1)
- {
-+	if (hide_refs && strncmp(path, hide_refs, strlen(hide_refs)) == 0)
-+		return 0;
-+
- 	if (sent_capabilities)
- 		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
- 	else
+ [1] http://thread.gmane.org/gmane.comp.version-control.git/213988/focu=
+s=3D214113
