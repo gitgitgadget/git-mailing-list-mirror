@@ -1,82 +1,184 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: [RFC] git rm -u
-Date: Mon, 21 Jan 2013 09:09:42 +0100
-Message-ID: <CAA01Csrv26WrrJDAo-1cr+rW6rYFGQZpYgtafEh=Wgtzswdv_g@mail.gmail.com>
-References: <50FB1196.2090309@gmail.com>
-	<20130119214921.GE4009@elie.Belkin>
-	<vpq622s9jk1.fsf@grenoble-inp.fr>
-	<7v1udfn0tm.fsf@alter.siamese.dyndns.org>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: [PATCH] mergetools: Add tortoisegitmerge helper
+Date: Mon, 21 Jan 2013 09:24:23 +0100
+Message-ID: <50FCFB37.2060708@tu-clausthal.de>
+References: <50FBD4AD.2060208@tu-clausthal.de> <7v4nibjrg0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Eric James Michael Ritz <lobbyjones@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 09:10:06 2013
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>, davvid@gmail.com,
+	Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 21 09:24:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxCSD-0007vk-Cv
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 09:10:05 +0100
+	id 1TxCgS-00053l-Ak
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 09:24:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178Ab3AUIJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 03:09:44 -0500
-Received: from mail-qa0-f47.google.com ([209.85.216.47]:57396 "EHLO
-	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750803Ab3AUIJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 03:09:43 -0500
-Received: by mail-qa0-f47.google.com with SMTP id a19so6553781qad.6
-        for <git@vger.kernel.org>; Mon, 21 Jan 2013 00:09:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=pi4X6+30z+/SzLcPVHwR+ycJdIECrKQs7ufrd8h7EjY=;
-        b=gEHLhfWSQJmo3Rv7LB/EkK+C8rvvpJCvqdHO3xmcDh0OIEthwIscTvwR0neGlF81Tq
-         NhfOOgVnzm3cbMQqoxOtDfmf68ylRzmKEwTdPPFX6yV6azfLGBUKOCb4aAY4WpVwjfLK
-         DmImL4zuvJ8W/g3yMoRbitHehtLpNB2fh+/MJxEe540ZYoUp2RnUbRpStAZc/0iQz2oL
-         AKIt6CJ2FDJrfnzGycmGANS82F5w7UhFrOomkrvz7/7Sw6se4VBiHFa2Yngx3aGAKAAr
-         dbLTUZ26E5euhmy/I5Mzvh706SABzkoYVtwnuFqU/8+K6978dPcgYccBAAzpJ1f2BmYh
-         AJzQ==
-X-Received: by 10.49.131.67 with SMTP id ok3mr21215817qeb.42.1358755783063;
- Mon, 21 Jan 2013 00:09:43 -0800 (PST)
-Received: by 10.49.84.133 with HTTP; Mon, 21 Jan 2013 00:09:42 -0800 (PST)
-In-Reply-To: <7v1udfn0tm.fsf@alter.siamese.dyndns.org>
+	id S1751661Ab3AUIY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 03:24:27 -0500
+Received: from mailrelay1.rz.tu-clausthal.de ([139.174.2.42]:47896 "EHLO
+	mailrelay1.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750757Ab3AUIY0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2013 03:24:26 -0500
+Received: from hades.rz.tu-clausthal.de (mailrelay1.rz.tu-clausthal.de [139.174.2.42])
+	by mailrelay1.rz.tu-clausthal.de (Postfix) with ESMTP id 4299D42E313;
+	Mon, 21 Jan 2013 09:24:24 +0100 (CET)
+Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 13C32422055;
+	Mon, 21 Jan 2013 09:24:24 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=RYML43dzFnBS/MAMoVZw1L5NTOo=; b=0D4GwUdQjqxlzDi/uUJ7uJaG4zNz
+	9ODsYuOL6yAwkTd4YILf4Jca9Z0rItQQBJoIOMQb6B6cQIBsAYJs2BuZ8dOkPnmV
+	ajO57/hHmBFQx5ik3I/9Bd4497XaY9u+hEyt4JTKvNnrAhoGNtxHOM8mMhHpn/dj
+	VpVS2tFtxoKwEdU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=B0qgeIgcz0vVRv0edbfkurutqDT61X6mn/7a16czAXGrMY7LJyCqf/F
+	I5E9kX3U5IB/pU+/lnVhQ2Q2AZOxvCYGFQAL35qvgnT4XZKU+dJYH1WywVAgCrLv
+	3YYMkCEHM4vqgjKsjp0iRY6N/slUEmwJHIannmnssqFN7Q/p8Rqk=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 73F7442204F;
+	Mon, 21 Jan 2013 09:24:23 +0100 (CET)
+Received: from [139.174.101.48] (account sstri@tu-clausthal.de [139.174.101.48] verified)
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.8)
+  with ESMTPSA id 43120756; Mon, 21 Jan 2013 09:24:23 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <7v4nibjrg0.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+X-Spam-Level: (11%, '
+ __FRAUD_WEBMAIL! 0, MULTIPLE_RCPTS 0.1, RCVD_FROM_IP_DATE 0.1, HTML_00_01 0.05, HTML_00_10 0.05, BODY_SIZE_4000_4999 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, DKIM_SIGNATURE 0, DOMAINKEY_SIG 0, __ANY_URI 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __FRAUD_BODY_WEBMAIL 0, __HAS_FROM 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __MOZILLA_USER_AGENT 0, __MULTIPLE_RCPTS_CC_X2 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __TO_NO_NAME 0, __URI_NO_PATH 0, __URI_NO_WWW 0, __URI_NS , __USER_AGENT 0')
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214091>
 
-On Sun, Jan 20, 2013 at 7:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Implementing "git rm -u" as a tree-wide command would create a
->> discrepancy with "git add -u". Implementing it as a "current directory"
->> command would make the migration harder if we eventually try to change
->> "git add -u". Perhaps "git rm -u" should be forbidden from a
->> subdirectory (with an error message pointing to "git rm -u :/" and "git
->> rm -u ."), waiting for a possible "git add -u" change.
->
-> Yeah, that sounds sensible.  Start with a "'git rm -u' is forbidden
-> without arguments", give advise to use either "." or ":/".  And stop
-> there.
->
-> The first step of "git add -u" migration plan would be to warn when
-> no argument is given and update all the existing index entries, and
-> give the same advise to use either "." or ":/".  Keep this for three
-> cycles: 3 * (8 to 10 weeks per cycle) = 27 weeks ~ 1/2 year.
->
-> The second step would be to forbid "git add -u", and keep the
-> advise.  That will make it in-line with "git rm -u".
+- The TortoiseGit team renamed TortoiseMerge.exe to TortoiseGitMerge.exe
+  (starting with 1.8.0) in order to make clear that this one has special
+  support for git and prevent confusion with the TortoiseSVN TortoiseMerge
+  version.
+- The tortoisemerge mergetool does not work with filenames which have
+  a space in it. Fixing this required changes in git and also in
+  TortoiseGitMerge; see https://github.com/msysgit/msysgit/issues/57.
 
-Do you mean "git add" will be disallowed without "." or ":/" argument?
-Or will this change in future and "git add" without argument will me
-"whole tree", same as ":/" ?
+The new tortoisegitmerge helper was added so that people can still use
+TortoiseMerge from TortoiseSVN (and older TortoiseGit versions).
 
---
-Piotr Krukowiecki
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
+Idea-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ Documentation/diff-config.txt          |  4 ++--
+ Documentation/git-mergetool.txt        |  4 ++--
+ Documentation/merge-config.txt         |  6 +++---
+ contrib/completion/git-completion.bash |  2 +-
+ git-mergetool--lib.sh                  |  2 +-
+ mergetools/tortoisegitmerge            | 17 +++++++++++++++++
+ 6 files changed, 26 insertions(+), 9 deletions(-)
+ create mode 100644 mergetools/tortoisegitmerge
+
+diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+index 4314ad0..13cbe5b 100644
+--- a/Documentation/diff-config.txt
++++ b/Documentation/diff-config.txt
+@@ -151,7 +151,7 @@ diff.<driver>.cachetextconv::
+ diff.tool::
+ 	The diff tool to be used by linkgit:git-difftool[1].  This
+ 	option overrides `merge.tool`, and has the same valid built-in
+-	values as `merge.tool` minus "tortoisemerge" and plus
+-	"kompare".  Any other value is treated as a custom diff tool,
++	values as `merge.tool` minus "tortoisemerge"/"tortoisegitmerge" and
++	plus "kompare".  Any other value is treated as a custom diff tool,
+ 	and there must be a corresponding `difftool.<tool>.cmd`
+ 	option.
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index 6b563c5..a80cccd 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -28,8 +28,8 @@ OPTIONS
+ --tool=<tool>::
+ 	Use the merge resolution program specified by <tool>.
+ 	Valid values include emerge, gvimdiff, kdiff3,
+-	meld, vimdiff, and tortoisemerge. Run `git mergetool --tool-help`
+-	for the list of valid <tool> settings.
++	meld, vimdiff, tortoisegitmerge, and tortoisemerge. Run
++	`git mergetool --tool-help` for the list of valid <tool> settings.
+ +
+ If a merge resolution program is not specified, 'git mergetool'
+ will use the configuration variable `merge.tool`.  If the
+diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
+index 9bb4956..a047646 100644
+--- a/Documentation/merge-config.txt
++++ b/Documentation/merge-config.txt
+@@ -55,9 +55,9 @@ merge.tool::
+ 	Controls which merge resolution program is used by
+ 	linkgit:git-mergetool[1].  Valid built-in values are: "araxis",
+ 	"bc3", "diffuse", "ecmerge", "emerge", "gvimdiff", "kdiff3", "meld",
+-	"opendiff", "p4merge", "tkdiff", "tortoisemerge", "vimdiff"
+-	and "xxdiff".  Any other value is treated is custom merge tool
+-	and there must be a corresponding mergetool.<tool>.cmd option.
++	"opendiff", "p4merge", "tkdiff", "tortoisegitmerge", "tortoisemerge",
++	"vimdiff" and "xxdiff".  Any other value is treated is custom merge
++	tool and there must be a corresponding mergetool.<tool>.cmd option.
+ 
+ merge.verbosity::
+ 	Controls the amount of output shown by the recursive merge
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 14dd5e7..1557d54 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1345,7 +1345,7 @@ _git_mergetool ()
+ {
+ 	case "$cur" in
+ 	--tool=*)
+-		__gitcomp "$__git_mergetools_common tortoisemerge" "" "${cur##--tool=}"
++		__gitcomp "$__git_mergetools_common tortoisegitmerge tortoisemerge" "" "${cur##--tool=}"
+ 		return
+ 		;;
+ 	--*)
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index f013a03..47183ef 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -150,7 +150,7 @@ run_merge_cmd () {
+ list_merge_tool_candidates () {
+ 	if merge_mode
+ 	then
+-		tools="tortoisemerge"
++		tools="tortoisegitmerge tortoisemerge"
+ 	else
+ 		tools="kompare"
+ 	fi
+diff --git a/mergetools/tortoisegitmerge b/mergetools/tortoisegitmerge
+new file mode 100644
+index 0000000..5b802a7
+--- /dev/null
++++ b/mergetools/tortoisegitmerge
+@@ -0,0 +1,17 @@
++can_diff () {
++	return 1
++}
++
++merge_cmd () {
++	if $base_present
++	then
++		touch "$BACKUP"
++		"$merge_tool_path" \
++			-base="$BASE" -mine="$LOCAL" \
++			-theirs="$REMOTE" -merged="$MERGED"
++		check_unchanged
++	else
++		echo "TortoiseGitMerge cannot be used without a base" 1>&2
++		return 1
++	fi
++}
+-- 
+1.8.0.msysgit.0
