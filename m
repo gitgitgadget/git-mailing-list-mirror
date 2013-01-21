@@ -1,76 +1,82 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] unpack-trees: do not abort when overwriting an existing
- file with the same content
-Date: Mon, 21 Jan 2013 08:35:44 +0700
-Message-ID: <CACsJy8C-vRVsC5uj8xqucwMBZ2TEtwSF-58xM2oTSp6RtNAWMg@mail.gmail.com>
-References: <1358594648-26851-1-git-send-email-pclouds@gmail.com> <7va9s3n1my.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PULL] Module fixes, and a virtio block fix.
+Date: Sun, 20 Jan 2013 17:45:33 -0800
+Message-ID: <CA+55aFy1nW859yaGP17epRX8A+TaJ8APvb0-Ww1zw91dCAOhoQ@mail.gmail.com>
+References: <87zk03wg7r.fsf@rustcorp.com.au> <CA+55aFwzdcv0LXovZobha=EH=L6DapJt+ODP0nq=TWWAqCxLYQ@mail.gmail.com>
+ <87fw1vwcao.fsf@rustcorp.com.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 02:36:36 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: LKML <linux-kernel@vger.kernel.org>,
+	Alexander Graf <agraf@suse.de>,
+	Prarit Bhargava <prarit@redhat.com>,
+	Sasha Levin <sasha.levin@oracle.com>
+To: Rusty Russell <rusty@rustcorp.com.au>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: linux-kernel-owner@vger.kernel.org Mon Jan 21 02:46:22 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tx6JQ-0000IP-Hc
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 02:36:36 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Tx6Sr-0002Lg-52
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 21 Jan 2013 02:46:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600Ab3AUBgQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jan 2013 20:36:16 -0500
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:45014 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752534Ab3AUBgP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Jan 2013 20:36:15 -0500
-Received: by mail-ob0-f180.google.com with SMTP id wd20so5509285obb.11
-        for <git@vger.kernel.org>; Sun, 20 Jan 2013 17:36:15 -0800 (PST)
+	id S1752626Ab3AUBpz (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 20 Jan 2013 20:45:55 -0500
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:55925 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752493Ab3AUBpy (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 20 Jan 2013 20:45:54 -0500
+Received: by mail-vc0-f176.google.com with SMTP id fy27so849349vcb.21
+        for <multiple recipients>; Sun, 20 Jan 2013 17:45:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=KfDenAcDSQlIzs9dixseYeLo+6zCNvTAMuhffAzJVVw=;
-        b=zRDTWPaQg4/tB86KWwI65RRy+9txHuRPc/87paciaT3aINvFz6YeRqA8mvSot2ljnh
-         PeqWJtgEQd4tOXf4XrsMxc+IeISaTLTvBYsaJKok9HfuchRXXigLr4DO1j8taaMGjcUn
-         y5SXDfEcRWxtibxVGeJL/OG//QPT9sFigmyaCloyjbYmU3F885MDLzA+qPIN0+IOZk6z
-         GJaFT5WHWdsWtukSC6DCKHGuKCsv5XhLEHFf5qOMbUudRPUid88LIbKODJ2WMHr8W6+u
-         zwg8q/drLRnkRWF5TcNQ2HgtkmnY8q8Sqow24VQTRPlEHqtbsyLtvv1Cm04azlwjuN56
-         d0UQ==
-X-Received: by 10.182.0.19 with SMTP id 19mr12859246oba.15.1358732174566; Sun,
- 20 Jan 2013 17:36:14 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Sun, 20 Jan 2013 17:35:44 -0800 (PST)
-In-Reply-To: <7va9s3n1my.fsf@alter.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
+        h=x-received:mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=AccBNCboFEr1aQO1WG8JbGtyUc1ihALXDwCt2eCTM5w=;
+        b=xz7gSXJa10ilP8P2Yag//IU9bD3H+9jBVncOEQ+rLM8SiVIMypoygKkXmwtbl18ukJ
+         Ab9gvrMtCH4lzKo8n2TDkdJnMSF2gvaZEM6NYRGE0CjDuil2mVdx85McVGM0DCyRH/Fu
+         Vw8PnbTlR2njnwJa2dk7WtfssDtF5riZIbNRQfNLS6j5cuUYSIedc1yx+4pZHJhJja9J
+         dRpAsELiKd/Jzh8wfDA/E0nOZs0p6Fcp6uZpzx/q287m1Q2XQX7Xe1UmthgE53Zt/56F
+         mBusUh6TgkpslaAjjyVHPXKHbQRy9d0cMYkzzxz0z1/iYB1bc/GQdYkXtR2nMULsl8La
+         XcYg==
+X-Received: by 10.52.240.228 with SMTP id wd4mr2738289vdc.102.1358732753132;
+ Sun, 20 Jan 2013 17:45:53 -0800 (PST)
+Received: by 10.220.249.199 with HTTP; Sun, 20 Jan 2013 17:45:33 -0800 (PST)
+In-Reply-To: <87fw1vwcao.fsf@rustcorp.com.au>
+X-Google-Sender-Auth: -A1zmeG7ioQAwkgxJZYs89ETsME
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214068>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214069>
 
-On Mon, Jan 21, 2013 at 1:35 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+On Sun, Jan 20, 2013 at 5:32 PM, Rusty Russell <rusty@rustcorp.com.au> wrote:
 >
->> +     /*
->> +      * If it has the same content that we are going to write down,
->
-> write down???
+> Due to the delay on git.kernel.org, git request-pull fails.  It *looks*
+> like it succeeds, except the warning, but (as we learned last time I
+> screwed up), it doesn't put the branchname because it can't know.
 
-hmm.. "overwrite" then.
+I think this should be fixed in modern git versions.
 
->> +      * there's no point in complaining. We still overwrite it in t=
-he
->> +      * end though. Permission is not checked so it may be lost.
->> +      */
->
-> That is a regression, isn't it?  Is it too cumbersome to avoid
-> losing the permission bits by stopping in that case?
+And it sure as hell knows the proper tag name, since you *gave* it the
+name and it used it for generating the actual contents. The fact that
+some versions then screw that up and re-write the tag-name to
+something randomly matching that isn't a tag was just a bug.
 
-I'm not sure how to deal with this case. (Lack of) Executable bit can
-be easily restored (unlike file content) if we give the user the list
-of changed files. On the other hand, not everybody runs git with a
-huge scrollback buffer and warnings can be lost. I guess abort is a
-safe choice.
---=20
-Duy
+> For want of a better solution, I'll now resort to sending pull requests
+> with the anti-social gitolite URL in it, like so:
+
+That's even worse, fwiw. It means that the pull request address makes
+no sense to anybody who doesn't have a kernel.org address, and then
+I'm forced to just edit things by hand instead to not pollute the
+kernel changelog history with crap.
+
+Junio, didn't "git request-pull" get fixed so that it *warns* about
+missing tagnames/branches, but never actually corrupts the pull
+request? Or did it just get "fixed" to be a hard error instead of
+corrupting things? Because this is annoying.
+
+                Linus
