@@ -1,85 +1,110 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PULL] Module fixes, and a virtio block fix.
-Date: Sun, 20 Jan 2013 18:14:06 -0800
-Message-ID: <CA+55aFw=8w8Eao3iA5F5-jFaO0MtcH+jivTD8SkDtMfrhQgWHg@mail.gmail.com>
-References: <87zk03wg7r.fsf@rustcorp.com.au> <CA+55aFwzdcv0LXovZobha=EH=L6DapJt+ODP0nq=TWWAqCxLYQ@mail.gmail.com>
- <87fw1vwcao.fsf@rustcorp.com.au> <CA+55aFy1nW859yaGP17epRX8A+TaJ8APvb0-Ww1zw91dCAOhoQ@mail.gmail.com>
- <7vpq0zi9c7.fsf@alter.siamese.dyndns.org>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: [PATCH 0/3] fixup remaining cvsimport tests
+Date: Sun, 20 Jan 2013 21:43:14 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20130121024314.GA27799@thyrsus.com>
+References: <1357878439-27500-1-git-send-email-chris@rorvick.com>
+ <20130120125838.GK31172@serenity.lan>
+ <CAEUsAPZKd+mw2iK7nd6rTtB8N+B99ud19FkuSx0HVitNxrxxZA@mail.gmail.com>
+ <20130120152857.GM31172@serenity.lan>
+ <7vsj5vlm1d.fsf@alter.siamese.dyndns.org>
+ <CAEUsAPaw8EUcZFbODDj9Z-=3Ppd1CC=jvYDvuyntFkX_3V0ynQ@mail.gmail.com>
+ <CAEUsAPYdpsbhCZfp-1w91ZiyqgEa=8TNf2MJihMViqVZmW3sRw@mail.gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Rusty Russell <rusty@rustcorp.com.au>,
-	Git Mailing List <git@vger.kernel.org>,
-	LKML <linux-kernel@vger.kernel.org>,
-	Alexander Graf <agraf@suse.de>,
-	Prarit Bhargava <prarit@redhat.com>,
-	Sasha Levin <sasha.levin@oracle.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Mon Jan 21 03:14:56 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Chris Rorvick <chris@rorvick.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 03:44:12 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Tx6uT-0000Al-FI
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 21 Jan 2013 03:14:53 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Tx7Ml-0006rx-Dg
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 03:44:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752667Ab3AUCO3 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 20 Jan 2013 21:14:29 -0500
-Received: from mail-vb0-f49.google.com ([209.85.212.49]:35049 "EHLO
-	mail-vb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752528Ab3AUCO2 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 20 Jan 2013 21:14:28 -0500
-Received: by mail-vb0-f49.google.com with SMTP id s24so3785196vbi.8
-        for <multiple recipients>; Sun, 20 Jan 2013 18:14:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=HMl2MBvAtR0Qee10mR8J7BILyH9site25OJb12bRHc4=;
-        b=boFdAqR+qbWIgNrAgb1RCRAOoZfY4sWqSpMnrF2ZG9io8Oq/xONhBzasYJgin+JWAe
-         /zuFu6+UFDP9oCc1mKxhNKy0+72A/OC9TJgcMJ/LLCb1+jxG1dBTx4VxgMdoCIvoehM6
-         9a/LiZ2JHDgLcrHng/S4KFzCHF3VTCtqYJ3zXuF5cUG9z/9k0cnJ3Sv5lMZUHYfydafI
-         djW40aGsgBz1XJDP2v1KLIj08Fa6M4TTm0XKzOILPjezHpwYmhmV+krcOD0JR23qhqFI
-         ujadP6/HB1seRoWAWOKhPNEy/CQP3saSNzm5Ujh7mNjXGqIJYWIPnVgQ8Rb433ppgDeu
-         nL4w==
-X-Received: by 10.220.39.69 with SMTP id f5mr13029288vce.45.1358734466918;
- Sun, 20 Jan 2013 18:14:26 -0800 (PST)
-Received: by 10.220.249.199 with HTTP; Sun, 20 Jan 2013 18:14:06 -0800 (PST)
-In-Reply-To: <7vpq0zi9c7.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: 6hPNTy2zwUlgyimM7RjN0tnRnqA
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1752550Ab3AUCnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2013 21:43:45 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:34046
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752493Ab3AUCnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2013 21:43:45 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id B7E3144121; Sun, 20 Jan 2013 21:43:14 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CAEUsAPYdpsbhCZfp-1w91ZiyqgEa=8TNf2MJihMViqVZmW3sRw@mail.gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214075>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214076>
 
-On Sun, Jan 20, 2013 at 6:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> What you mean by "corrupt" is not clear to me
+> > I probably won't be sending any more patches on this.  My hope was to
+> > get cvsimport-3 (w/ cvsps as the engine) in a state such that one
+> > could transition from the previous version seamlessly.  But the break
+> > in t9605 has convinced me this is not worth the effort--even in this
+> > trivial case cvsps is broken.  The fuzzing logic aggregates commits
+> > into patch sets that have timestamps within a specified window and
+> > otherwise matching attributes.  This aggregation causes file-level
+> > commit timestamps to be lost and we are left with a single timestamp
+> > for the patch set: the minimum for all contained CVS commits.  When
+> > all commits have been processed, the patch sets are ordered
+> > chronologically and printed.
+> >
+> > The problem is that is that a CVS commit is rolled into a patch set
+> > regardless of whether the patch set's timestamp falls within the
+> > adjacent CVS file-level commits.  Even worse, since the patch set
+> > timestamp changes as subsequent commits are added (i.e., it's always
+> > picking the earliest) it is potentially indeterminate at the time a
+> > commit is added.  The result is that file revisions can be reordered
+> > in resulting Git import (see t9605.)  I spent some time last week
+> > trying to solve this but I coudln't think of anything that wasn't a
+> > substantial re-work of the code.
 
-Some versions would just silently change the actual name you were using.
+I've lost who was who in the comment thread, but I think it is rather likely
+that the above diagnosis is correct in every respect.
 
-So if you said "for-linus", it might change it to "linus", just
-because that branch happened to have the same SHA1 commit ID.
+I won't know for certain until I finish the test suite and apply it to
+all three tools (cvsps, cvs2git, cvs-fast-export) but what I've seen
+of their code indicates that cvsps has the weakest changeset analysis of
+the three, even after my fixes.
 
-That's not right.
+> > I have never used cvs2git, but I suspect Eric's efforts in making it a
+> > potential backend for cvsimport are a better use of time.
 
-Other versions would replace the "for-linus" with "**missing-branch**"
-because "for-linus" hadn't mirrored out yet.
+Agreed.  I didn't add multiengine support to csvsimport at random or
+just because Heiko Vogt was bugging me about parsecvs.  I was
+half-expecting cvsps to manifest a showstopper like this - hoping it
+wouldn't, but hedging against the possibility by making alternate
+engines easy to plug into git-cvsimport seemed like a *really good
+idea* from the beginning of my work on it.  Sometimes being that kind
+of right really sucks.
 
-That's not right either.
+While I am going to have a try at modifying cvsps to make Chris's
+t9605 case work, I'm going to strictly limit the amount of time I
+spend on that effort since (as you imply) it is fairly likely this
+would be throwing good money after bad.
 
-Basically, if "git request-pull" is given a branch/tag name, that is
-the only valid output (although going from branch->tag *might* be
-acceptable). The whole "verify that it actually exists on the remote
-side" must never *ever* actually change the message itself, it should
-just cause a warning outside of the message.
+> Fixing this seemed like it would require splitting the processing out
+> into a couple phases and would be a fair amount of work, but maybe I'm
+> just not looking at the problem right.
 
-I can't say from the commit message whether that's the thing that
-fixed it or not, but at least some people stopped sending me broken
-pull requests after updating to git. I'm just not sure which of the
-two different failure cases they happened to have (Rusty seems to have
-hit both)
+Actually I think you've called it *exactly* right.  The job has to be 
+done in multiple clique-spitting phases - that's why cvs2git has 7 passes
+(though a few of those, perhaps as many as 3, are artifactual).
 
-            Linus
+This is why the next step in my current work plan for CVS-related stuff will
+be unbundling my test suite from the cvsps tree and running it to see if
+cvs-fast-export dominates cvsps.  
+
+I'm expecting that it will, in which case my plan will be to salvage
+the CVS client code out of cvsps (*that* part is quite good - fast,
+clean, effective) gluing it to the better analysis stage in
+cvs-fast-export, and then shooting cvsps through the head and burying
+it behind the barn.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
