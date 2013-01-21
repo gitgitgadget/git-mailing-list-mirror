@@ -1,63 +1,78 @@
-From: Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>
-Subject: Re: GIT get corrupted on lustre
-Date: Mon, 21 Jan 2013 13:28:30 -0500
-Message-ID: <50FD88CE.5030508@giref.ulaval.ca>
-References: <50D861EE.6020105@giref.ulaval.ca> <50D870A0.90205@interlinx.bc.ca> <50EC453A.2060306@giref.ulaval.ca> <50EDDF12.3080800@giref.ulaval.ca> <50F7F793.80507@giref.ulaval.ca> <CAGK7Mr4R=OwfWt4Kat75C8YDi3iLTavMLxeoLxkf1-gKhxrucg@mail.gmail.com> <50F8273E.5050803@giref.ulaval.ca> <871B6C10EBEFE342A772D1159D1320853A042AD7@umechphj.easf.csd.disa.mil> <50F829A9.7090606@calculquebec.ca> <871B6C10EBEFE342A772D1159D1320853A044B42@umechphj.easf.csd.disa.mil> <50F98B53.9080109@giref.ulaval.ca> <CABPQNSbJr4dR9mq+kCwGe-RKb9PA7q=SKzbFW+=md_PLzZh=nQ@mail.gmail.com> <50FD75BE.1030504@giref.ulaval.ca>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH v2 0/6] GIT, Git, git
+Date: Mon, 21 Jan 2013 19:36:15 +0100 (CET)
+Message-ID: <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
+References: <7vvcark1f2.fsf@alter.siamese.dyndns.org> <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>,
-	Maxime Boissonneault <maxime.boissonneault@calculquebec.ca>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?S=E9bastien_Boisvert?= 
-	<sebastien.boisvert@calculquebec.ca>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Mon Jan 21 19:29:03 2013
+Cc: davvid@gmail.com, git@vger.kernel.org
+To: gitster@pobox.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Mon Jan 21 19:36:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxM75-0004cD-RW
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 19:28:56 +0100
+	id 1TxMEY-0008Vz-MQ
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 19:36:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755429Ab3AUS2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 13:28:32 -0500
-Received: from serveur.giref.ulaval.ca ([132.203.7.102]:57401 "EHLO
-	mailhost.giref.ulaval.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752592Ab3AUS2b (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 13:28:31 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id 113ED10202D;
-	Mon, 21 Jan 2013 13:28:31 -0500 (EST)
-X-Virus-Scanned: amavisd-new at giref.ulaval.ca
-Received: from mailhost.giref.ulaval.ca ([127.0.0.1])
-	by localhost (mailhost.giref.ulaval.ca [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fYjJH0hNTE4v; Mon, 21 Jan 2013 13:28:30 -0500 (EST)
-Received: from [132.203.7.22] (melkor.giref.ulaval.ca [132.203.7.22])
-	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id 7F8A5101961;
-	Mon, 21 Jan 2013 13:28:30 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130105 Thunderbird/17.0.2
-In-Reply-To: <50FD75BE.1030504@giref.ulaval.ca>
+	id S1752211Ab3AUSgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 13:36:17 -0500
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:41949 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751134Ab3AUSgQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2013 13:36:16 -0500
+Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
+	by mx.arcor.de (Postfix) with ESMTP id 3942ED7E9C;
+	Mon, 21 Jan 2013 19:36:15 +0100 (CET)
+Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
+	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 3551B6F2AF3;
+	Mon, 21 Jan 2013 19:36:15 +0100 (CET)
+Received: from webmail20.arcor-online.net (webmail20.arcor-online.net [151.189.8.201])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 2B2CA212321;
+	Mon, 21 Jan 2013 19:36:15 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-13.arcor-online.net 2B2CA212321
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1358793375; bh=amy+opnmxFqc3u3VFAOPqkXmAbtNbVXmhEmVTASrUfQ=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=jMLXwUtE4Kw/9GdI6+yui7i8pBHCMPybS8Vk64rvjnKwCXM/CeAZBtDSio4YIXAkY
+	 Kif4f0aXJ/WSC+oGgui3TFclPIrBUclIl8GhBIrzbs9J6zlwQWtZvjz5PkQ+koEj80
+	 DnV7R5AsDNCrQJP+wiLyZoaDd77XqRkeZWbDiMPo=
+Received: from [188.105.98.86] by webmail20.arcor-online.net (151.189.8.201) with HTTP (Arcor Webmail); Mon, 21 Jan 2013 19:36:14 +0100 (CET)
+In-Reply-To: <7vvcark1f2.fsf@alter.siamese.dyndns.org>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 188.105.98.86
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214135>
 
-On 01/21/2013 12:07 PM, Eric Chamberland wrote:
-> Hi,
->
-> It just happened again.  Now I have the "strace -f" output gzipped here:
->
-> http://www.giref.ulaval.ca/~ericc/strace-f_git_error.txt.gz
->
+Git changed its 'official' system name from 'GIT' to 'Git' in v1.6.5.3
+(as can be seen in the corresponding release note where 'GIT' was 
+changed to 'Git' in the header line).
 
-I added the "strace -f" output when non error occurs...
+Alas the documention uses 'GIT', 'Git' or even 'git' to refer to the
+Git system. So change every occurrence of 'GIT" and 'git' in the 
+documention  to 'Git' whenever Git as a system is referred to 
+(but don't do this change in the release notes because they 
+constitute a history orthogonal to the history versioned by Git).
 
-http://www.giref.ulaval.ca/~ericc/strace-f_git_no_error.txt.gz
+There is also one occurence of 'GITweb' which is changed to 'Gitweb' but
+changing 'gitweb' to 'Gitweb' (or 'GitWeb'?) should be part of another patch.
 
-a "kdiff3" can show the differences just before the error...
+The "'git' to 'Git'" patch has to be divided in four parts to stay within
+the mail size limit of 100kB.
 
-Eric
+[PATCH v2 1/6] Change old system name 'GIT' to 'Git'
+[PATCH v2 2/6] Change 'git' to 'Git' whenever the whole system is referred to #1
+[PATCH v2 3/6] Change 'git' to 'Git' whenever the whole system is referred to #2
+[PATCH v2 4/6] Change 'git' to 'Git' whenever the whole system is referred to #3
+[PATCH v2 5/6] Change 'git' to 'Git' whenever the whole system is referred to #4
+[PATCH v2 6/6] Add rule for when to use 'git' and when to use 'Git'
+
+
+---
+Thomas
