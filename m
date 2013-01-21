@@ -1,169 +1,160 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: git-cvsimport-3 and incremental imports
-Date: Mon, 21 Jan 2013 12:00:10 +0000
-Message-ID: <20130121120010.GE7498@serenity.lan>
-References: <20130120200922.GC7498@serenity.lan>
- <20130120232008.GA25001@thyrsus.com>
- <20130121093658.GD7498@serenity.lan>
- <20130121112853.GA31693@thyrsus.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Eric S. Raymond" <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 13:00:44 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [RFC/PATCH] add: warn when -u or -A is used without filepattern
+Date: Mon, 21 Jan 2013 13:00:11 +0100
+Message-ID: <1358769611-3625-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <7v1udfn0tm.fsf@alter.siamese.dyndns.org>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jan 21 13:00:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxG3Q-00088Q-55
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 13:00:44 +0100
+	id 1TxG3X-0008BR-I1
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jan 2013 13:00:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752793Ab3AUMAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 07:00:20 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:49427 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752440Ab3AUMAS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 07:00:18 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id AC303CDA5EC;
-	Mon, 21 Jan 2013 12:00:17 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YbEhdn5-fgN5; Mon, 21 Jan 2013 12:00:17 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id B75A7CDA603;
-	Mon, 21 Jan 2013 12:00:16 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 95762161E575;
-	Mon, 21 Jan 2013 12:00:16 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id E3LhWcRwTz1X; Mon, 21 Jan 2013 12:00:16 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 3610B161E574;
-	Mon, 21 Jan 2013 12:00:12 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <20130121112853.GA31693@thyrsus.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752838Ab3AUMA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 07:00:28 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:52361 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752440Ab3AUMA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2013 07:00:26 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r0LC0ISO032002
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 21 Jan 2013 13:00:19 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1TxG31-0004ce-VH; Mon, 21 Jan 2013 13:00:19 +0100
+Received: from moy by anie with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1TxG31-0000xE-Qw; Mon, 21 Jan 2013 13:00:19 +0100
+X-Mailer: git-send-email 1.8.0.319.g8abfee4
+In-Reply-To: <7v1udfn0tm.fsf@alter.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 21 Jan 2013 13:00:19 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r0LC0ISO032002
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1359374421.0361@C4kGQcAvGcSPGo0EqdKX8g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214113>
 
-On Mon, Jan 21, 2013 at 06:28:53AM -0500, Eric S. Raymond wrote:
-> John Keeping <john@keeping.me.uk>:
->> But this is nothing more than a sticking plaster that happens to do
->> enough in this particular case
-> 
-> I'm beginning to think that's the best outcome we ever get in this
-> problem domain...
+Most git commands that can be used with our without a filepattern are
+tree-wide by default, the filepattern being used to restrict their scope.
+A few exceptions are: 'git grep', 'git clean', 'git add -u' and 'git add -A'.
 
-I don't think we can ever get a perfect outcome, but it should be
-possible to do a little bit better without too much effort.
+The inconsistancy of 'git add -u' and 'git add -A' are particularly
+problematic since other 'git add' subcommands (namely 'git add -p' and
+'git add -e') are tree-wide by default.
 
->>                    - if the Git repository happened to be on
->> a different branch, the start date would be wrong and too many or too
->> few commits could be output.  Git doesn't detect that they commits are
->> identical to some that we already have because we're explicitly telling
->> it to make a new commit with the specified parent.
-> 
-> Then I don't understand the actual failure case.  Either that or you
-> don't understand the effect of -i. Have you actually experimented with
-> it?  The reason I suspect you don't understand the feature is that it
-> shouldn't make any difference to the way -i works which repository branch is
-> active at the time of the second import.
-> 
-> Here is how I model what is going on:
-> 
-> 1. We make commits to multiple branches of a CVS repo up to some given time T.
-> 
-> 2. We import it, ending up with a collection of git branches all of which 
->    have tip commits dated T or earlier. And *every* commit dated T or earlier
->    gets copied over.
->
-> 3. We make more commits to the same set of branches in CVS.
-> 
-> 4. We now run cvsps -d T on the repo. This generates an incremental
->    fast-import stream describing all CVS commits *newer* than T (see
->    the cvsps manual page).
+Flipping the default now is unacceptable, so this patch starts training
+users to type explicitely 'git add -u|-A :/' or 'git add -u|-A .', to prepare
+for the next steps:
 
-This is the problem step.  There are two scenarios that have problems:
+* forbid 'git add -u|-A' without filepattern (like 'git add' without
+  option)
 
-1. If I create a new development branch in my Git repository and commit
-   something to it then git-cvsimport-3 will pass a time to cvsps that
-   is newer than the actual time of the last import, so T is wrong.
+* much later, maybe, re-allow 'git add -u|-A' without filepattern, with a
+  tree-wide scope.
 
-   It may be possible to fix this case purely in git-cvsimport-3.
+A nice side effect of this patch is that it makes the :/ special
+filepattern easier to discover for users.
 
-2. If the branch I have checked out is not the newest CVS branch, then
-   git-cvsimport-3 will pass a value of T that is before the time of the
-   last import.  This case is more subtle but it results in unwanted
-   duplicate commits since git-fast-import will just do what it's told
-   and create the new commits.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Junio C Hamano <gitster@pobox.com> writes:
 
-   So if we have the following commits:
+> The first step of "git add -u" migration plan would be to warn when
+> no argument is given and update all the existing index entries, and
+> give the same advise to use either "." or ":/".  Keep this for three
+> cycles: 3 * (8 to 10 weeks per cycle) = 27 weeks ~ 1/2 year.
 
-     commit1 at time 1
-     commit2 at time 2
-     commit3 at time 3
+The first step should look like this patch. The message remains vague
+about the next steps ("change in a future Git version", no mention of
+the exact change nor of the exact version in which it will happen),
+but I'm fine with refining it (perhaps this could be a 2.0 change,
+like the change to push.default?).
 
-   and I call "cvsps -d 2 -i" I end up with the series:
+ Documentation/git-add.txt |  7 ++++---
+ builtin/add.c             | 30 +++++++++++++++++++++++++++++-
+ 2 files changed, 33 insertions(+), 4 deletions(-)
 
-     commit1 at time 1
-     commit2 at time 2
-     commit3 at time 3
-     commit2 at time 2 - effectively reverting the previous commit
-     commit3 at time 3 - a duplicate
-     ... and potentially genuinely new commits
-
-   This is demonstrated by running the Git test t9650.
-
-I also disagree that cvsps outputs commits *newer* than T since it will
-also output commits *at* T, which is what I changed with the patch in my
-previous message.  This fixes the duplicate commit2 in the series above,
-but not the duplicate commit3.
-
-> 5. That stream should consist of a set of disconnected branches, each
->    (because of -i) beginning with a root commit containing "from
->    refs/heads/foo^0" which says to parent the commit on the tip of
->    branch foo, whatever that happens to be.  (I don't have to guess
->    about this, I tested the feature before shipping.)
-> 
-> 6. Now, when git fast-import interprets that stream in the context of
->    the repository produced in step 2, for each branch in the
->    incremental dump the branch root commit is parented on the tip
->    commit of the same branch in the repo.
->  
-> At step 6, it shouldn't matter at all which branch is active, because
-> where an incremental branch root gets attached has nothing to do with
-> which branch is active. 
-> 
-> It is sufficient to avoid duplicate commits that cvsps -d 0 -d T and
-> cvsps -d T run on the same CVS repo operate on *disjoint sets* of CVS
-> file commits.  I can see this technique possibly getting confused if T
-> falls in the middle of a changeset where the CVS timestamps for the
-> file commits are out of order.  But that's the same case that will
-> fail if we're importing at file-commit granularity, so there's no new
-> bug here.
-> 
-> Can you explain at what step my logic is incorrect?
-
-Your logic is correct - for cvsps - the problem is where T comes from.
-
-Perhaps it is simplest to just save a CVS_LAST_IMPORT_TIME file in
-$GIT_DIR and not worry about it any more.
-
-
-John
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index fd9e36b..5333559 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -107,9 +107,10 @@ apply to the index. See EDITING PATCHES below.
+ 	from the index if the corresponding files in the working tree
+ 	have been removed.
+ +
+-If no <filepattern> is given, default to "."; in other words,
+-update all tracked files in the current directory and its
+-subdirectories.
++If no <filepattern> is given, the current version of Git defaults to
++"."; in other words, update all tracked files in the current directory
++and its subdirectories. This default will change in a future version
++of Git, hence the form without <filepattern> should not be used.
+ 
+ -A::
+ --all::
+diff --git a/builtin/add.c b/builtin/add.c
+index e664100..e6eb829 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -373,6 +373,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	int add_new_files;
+ 	int require_pathspec;
+ 	char *seen = NULL;
++	const char *option_with_implicit_dot = NULL;
+ 
+ 	git_config(add_config, NULL);
+ 
+@@ -392,7 +393,34 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		die(_("-A and -u are mutually incompatible"));
+ 	if (!show_only && ignore_missing)
+ 		die(_("Option --ignore-missing can only be used together with --dry-run"));
+-	if ((addremove || take_worktree_changes) && !argc) {
++	if (addremove)
++		option_with_implicit_dot = "--all";
++	if (take_worktree_changes)
++		option_with_implicit_dot = "--update";
++	if (option_with_implicit_dot && !argc) {
++		/*
++		 * To be consistant with "git add -p" and most Git
++		 * commands, we should default to being tree-wide, but
++		 * this is not the original behavior and can't be
++		 * changed until users trained themselves not to type
++		 * "git add -u" or "git add -A". For now, we warn and
++		 * keep the old behavior. Later, this warning can be
++		 * turned into a die(...), and eventually we may
++		 * reallow the command with a new behavior.
++		 */
++		warning(_("The behavior of 'git add %s' with no path argument will change in a future\n"
++			  "Git version and shouldn't be used anymore.  To add content for the whole tree, run:\n"
++			  "\n"
++			  "  git add %s :/\n"
++			  "\n"
++			  "To restrict the command to the current directory, run:\n"
++			  "\n"
++			  "  git add %s .\n"
++			  "\n"
++			  "With the current Git version, the command is restricted to the current directory."),
++			option_with_implicit_dot,
++			option_with_implicit_dot,
++			option_with_implicit_dot);
+ 		static const char *here[2] = { ".", NULL };
+ 		argc = 1;
+ 		argv = here;
+-- 
+1.8.0.319.g8abfee4
