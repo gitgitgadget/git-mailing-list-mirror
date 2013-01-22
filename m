@@ -1,75 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] add: warn when -u or -A is used without filepattern
-Date: Mon, 21 Jan 2013 17:51:44 -0800
-Message-ID: <7vsj5uc7db.fsf@alter.siamese.dyndns.org>
-References: <7v1udfn0tm.fsf@alter.siamese.dyndns.org>
- <1358769611-3625-1-git-send-email-Matthieu.Moy@imag.fr>
- <CACsJy8B1=3gMfGUf3kyea9TyZmr1J7dbM1_+huMNrep24hwuiQ@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2] unpack-trees: do not abort when overwriting an
+ existing file with the same content
+Date: Tue, 22 Jan 2013 08:55:01 +0700
+Message-ID: <CACsJy8CwkKyCLefrghVbq74FmeP7bPZAML-P=9s5PoPuNyT2Yg@mail.gmail.com>
+References: <1358594648-26851-1-git-send-email-pclouds@gmail.com>
+ <1358768433-26096-1-git-send-email-pclouds@gmail.com> <20130121231515.GD17156@sigill.intra.peff.net>
+ <CACsJy8AFKXYkHbUf4aqBpCg+v06oFsvHq_zxQFE4BOCzTDAqtg@mail.gmail.com> <7vwqv6c7oe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Eric James Michael Ritz <lobbyjones@gmail.com>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 02:52:10 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 02:55:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxT21-0004dk-0P
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 02:52:09 +0100
+	id 1TxT5d-0006rw-G5
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 02:55:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753116Ab3AVBvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2013 20:51:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36040 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752365Ab3AVBvr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2013 20:51:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EBD9CC119;
-	Mon, 21 Jan 2013 20:51:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dmGkPsbUVz4xdKjh9ppVjw/Pvfk=; b=x8DqCa
-	YSVQ6+jfE9HfNyt4UPDMoNsqHtJAyl86RV6LV/fFPCIouk+J3VqmUJBzBA9NgArk
-	dQponGp253i8K81feUyGv9D0gkS8J1hs1ionweI8PsBbcQKnLCO/yd+vZhblBCV4
-	q9cJG3yUqsZljpsEUt1iBIJhUlpgAQ/i+0rWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s6nWBg6sj1qbfEvFFAmBilxUfGgqHrsj
-	ZfXoHI5z4OsiGFuTlkXw3XzpxUwG9vXNKW57OkclHMdSsiQ4XO/oYHxFqdQ0Ywzs
-	EmUUo//1uj1P20rwodSbSCYYGKZfFcftVgElIsb0Zd7IPt8nWHxIxaPSdQMkFrfv
-	cKRvvkcnZe0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E0C5FC118;
-	Mon, 21 Jan 2013 20:51:46 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D903C117; Mon, 21 Jan 2013
- 20:51:46 -0500 (EST)
-In-Reply-To: <CACsJy8B1=3gMfGUf3kyea9TyZmr1J7dbM1_+huMNrep24hwuiQ@mail.gmail.com> (Duy
- Nguyen's message of "Tue, 22 Jan 2013 08:10:34 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 47707464-6436-11E2-A93B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752228Ab3AVBzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2013 20:55:32 -0500
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:57324 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751693Ab3AVBzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2013 20:55:31 -0500
+Received: by mail-ob0-f173.google.com with SMTP id xn12so6424240obc.4
+        for <git@vger.kernel.org>; Mon, 21 Jan 2013 17:55:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=f9NbP8hFmJKQFPttPfFS6hmJ82KmfqJApyF2tKtwgyE=;
+        b=VKEEk8pPL0NgVXWKjxhTnFJDeZJTOI2151wigjfRmFJKWZEMZkXnPGue5ApjfiS+/n
+         SiQvYcPLRNeaZJNAcLE0TLgGTpeHVUyy+Cvk4DM8RHQWxhLUI0B/P4XOErsSphKiYID2
+         /4Q+Wb9ioWyEyBW8MgID8sVWXQKZJzpT16yJ4sPUgdvlJ4poLolv0Lw1i804ry693KFB
+         2TM86DivrbM7w9ORbSqfDFGSqLFhD7+FRoaSUqfnYxk3Z2keppvtA0P3AeVBEaGrimk2
+         XWDnC5/9EzCvjgZ3gUIFkhqA7umzD2+XclDIqTV6W9+rZswQENqnTdqVoDnk559pItiw
+         wUVQ==
+X-Received: by 10.60.29.66 with SMTP id i2mr15528477oeh.2.1358819731131; Mon,
+ 21 Jan 2013 17:55:31 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Mon, 21 Jan 2013 17:55:01 -0800 (PST)
+In-Reply-To: <7vwqv6c7oe.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214187>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Tue, Jan 22, 2013 at 8:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> On Tue, Jan 22, 2013 at 6:15 AM, Jeff King <peff@peff.net> wrote:
+>>> Can you elaborate on when this code is triggered?
+>>>
+>>> In the general case, shouldn't we already know the sha1 of what's on
+>>> disk in the index, and be able to just compare the hashes? And if we
+>>> don't, because the entry is start-dirty, should we be updating it
+>>> (possibly earlier, so we do not even get into the "need to write" code
+>>> path) instead of doing this ad-hoc byte comparison?
+>
+> If the index knows what is in the working tree, I think I agree.
+>
+>>> Confused...
+>>
+>> git reset HEAD~10
+>> # blah that was a mistake, undo it
+>> git checkout HEAD@{1}
+>>
+>> I hit it a few times, probably not with the exact recipe above though.
+>
+> I've seen myself doing "git reset HEAD~10" by mistake (I wanted "--hard"),
+> but the recovery is to do "git reset --hard @{1}" and then come back
+> with "git reset --hard HEAD~10", so it hasn't been a real problem
+> for me.
 
-> What about 'grep' and 'clean'? I think at least 'clean' should go
-> tree-wide default too. I don't mind grep go the same way either but I
-> think people voiced preference in current behavior..
-
-I think the major argument for "git grep" to be the way it is is
-because people expect it to be extension of running "grep -r" in the
-same directory ("git grep" excludes untracked ones so you do not
-have to suffer from --exclude=.git and such unpleasantries).
-
-Shouldn't "git clean" be an extension of running "rm -r" in the same
-directory ("git clean" does not lose tracked ones but otherwise it
-is a recursive removal)?
+Except when you already make some changes elsewhere and you don't want --hard.
+-- 
+Duy
