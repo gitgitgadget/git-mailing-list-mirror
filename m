@@ -1,63 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 05/10] sequencer.c: always separate "(cherry picked
- from" from commit body
-Date: Tue, 22 Jan 2013 00:32:16 -0800
-Message-ID: <20130122083216.GF6085@elie.Belkin>
-References: <1358757627-16682-1-git-send-email-drafnel@gmail.com>
- <1358757627-16682-6-git-send-email-drafnel@gmail.com>
+From: greened@obbligato.org
+Subject: Re: [PATCH 3/7] contrib/subtree: Add --unannotate
+Date: Tue, 22 Jan 2013 02:37:42 -0600
+Message-ID: <87liblfwa1.fsf@waller.obbligato.org>
+References: <1357646997-28675-1-git-send-email-greened@obbligato.org>
+	<1357646997-28675-4-git-send-email-greened@obbligato.org>
+	<7vehhvecoy.fsf@alter.siamese.dyndns.org>
+	<87vcaxq0ez.fsf@waller.obbligato.org>
+	<87y5ftojoj.fsf@waller.obbligato.org>
+	<7vy5ftzr3s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org,
-	Brandon Casey <bcasey@nvidia.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 09:32:45 2013
+Cc: git@vger.kernel.org, James Nylen <jnylen@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 09:38:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxZHg-0006Uo-PZ
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 09:32:45 +0100
+	id 1TxZNX-0000rB-PS
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 09:38:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753957Ab3AVIcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 03:32:22 -0500
-Received: from mail-da0-f44.google.com ([209.85.210.44]:44775 "EHLO
-	mail-da0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754064Ab3AVIcV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 03:32:21 -0500
-Received: by mail-da0-f44.google.com with SMTP id z20so3134333dae.17
-        for <git@vger.kernel.org>; Tue, 22 Jan 2013 00:32:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=O/Z+17J1ZoQRC0edB3J3xWirYANkRSX9KgbFnqNwygo=;
-        b=PuUDiiEc8ZUh5M+ALiM5aIaMGDIqrdHmJ63H0TpT2ROiBr3cucBQ27b1QOjQNCOpdB
-         JAlXK/Iop/+6e2CxE9lOiKRiTslveTVos360581kU1ZMfqjNIzXrdFmnWk9FbKecdcYU
-         LPpZ3qkZqgpCOZdZ0xnTsE02NLVqhdIDJD6rDTywPaeMhBVsCgGpCELvwq9rqBJqaPqG
-         GZG17kq90kPOrxTm1CSMmvmOUr0ZrewqXZtj/tLvobgtP0hhpScQr5lJkOidrh6hW6uT
-         VbXE2I4moSTwvr9hOqE6rSRr0DzgvY0AkfMrjLGr8NOREpeNY9tMBemf1/+tLRi0/RNC
-         XRpQ==
-X-Received: by 10.68.236.2 with SMTP id uq2mr36842015pbc.55.1358843541459;
-        Tue, 22 Jan 2013 00:32:21 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id bi8sm10990408pab.15.2013.01.22.00.32.19
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 22 Jan 2013 00:32:20 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1358757627-16682-6-git-send-email-drafnel@gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1752548Ab3AVIi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 03:38:26 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:37822 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752263Ab3AVIiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 03:38:25 -0500
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <greened@obbligato.org>)
+	id 1TxZNA-0002ZE-SM; Tue, 22 Jan 2013 02:38:25 -0600
+In-Reply-To: <7vy5ftzr3s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 15 Jan 2013 20:31:03 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  Junio C Hamano <gitster@pobox.com> writes: > greened@obbligato.org
+    writes: > >> greened@obbligato.org writes: >> >>>> I think this paragraph
+    inherits existing breakage from the beginning >>>> of time, but I do not
+   think the above will format the second and >>>> subsequent paragraphs correctly.
+    >>> >>> Ok, I'll take a look. >> >> I don't know what "correctly" is but
+   it is at least formatted in a >> similar manner to the other options. > >
+   That is what "inherits existing breakage" means ;-) [...] 
+ Content analysis details: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214219>
 
-Brandon Casey wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Start treating the "(cherry picked from" line added by cherry-pick -x
-> the same way that the s-o-b lines are treated.  Namely, separate them
-> from the main commit message body with an empty line.
+> greened@obbligato.org writes:
+>
+>> greened@obbligato.org writes:
+>>
+>>>> I think this paragraph inherits existing breakage from the beginning
+>>>> of time, but I do not think the above will format the second and
+>>>> subsequent paragraphs correctly.
+>>>
+>>> Ok, I'll take a look.
+>>
+>> I don't know what "correctly" is but it is at least formatted in a
+>> similar manner to the other options.
+>
+> That is what "inherits existing breakage" means ;-)
 
-Heh, you read my mind.
+Ah.
+
+> The first paragraph is typeset as body text, while the rest are
+> typeset in monospaced font, no?
+>
+> It should be more like this, I think:
+>
+>         --option::
+>                 First paragraph
+>         +
+>         Second paragraph
+>         +
+>         And third paragraph
+
+Ok.
+
+                          -David
