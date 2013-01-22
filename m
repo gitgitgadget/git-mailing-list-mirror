@@ -1,80 +1,77 @@
-From: Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>
-Subject: Re: GIT get corrupted on lustre
-Date: Tue, 22 Jan 2013 17:46:08 -0500
-Message-ID: <50FF16B0.8010206@giref.ulaval.ca>
-References: <50D861EE.6020105@giref.ulaval.ca> <50D870A0.90205@interlinx.bc.ca> <50EC453A.2060306@giref.ulaval.ca> <50EDDF12.3080800@giref.ulaval.ca> <50F7F793.80507@giref.ulaval.ca> <CAGK7Mr4R=OwfWt4Kat75C8YDi3iLTavMLxeoLxkf1-gKhxrucg@mail.gmail.com> <50F8273E.5050803@giref.ulaval.ca> <871B6C10EBEFE342A772D1159D1320853A042AD7@umechphj.easf.csd.disa.mil> <50F829A9.7090606@calculquebec.ca> <871B6C10EBEFE342A772D1159D1320853A044B42@umechphj.easf.csd.disa.mil> <50F98B53.9080109@giref.ulaval.ca> <CABPQNSbJr4dR9mq+kCwGe-RKb9PA7q=SKzbFW+=md_PLzZh=nQ@mail.gmail.com> <87a9s2o6ri.fsf@pctrast.inf.ethz.ch> <kdk2ss$498$1@ger.gmane.org> <87r4lejpx8.fsf@pctrast.inf.ethz.ch> <50FF051D.5090804@giref.ulaval.ca> <878v7keuh3.fsf@pctrast.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 01/10] wildmatch: fix "**" special case
+Date: Tue, 22 Jan 2013 14:51:59 -0800
+Message-ID: <7v1udcn84w.fsf@alter.siamese.dyndns.org>
+References: <1357008251-10014-1-git-send-email-pclouds@gmail.com>
+ <1357008251-10014-2-git-send-email-pclouds@gmail.com>
+ <7vr4lcnbn5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Brian J. Murrell" <brian@interlinx.bc.ca>, git@vger.kernel.org,
-	kusmabite@gmail.com,
-	"Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>,
-	Maxime Boissonneault <maxime.boissonneault@calculquebec.ca>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	=?ISO-8859-1?Q?S=E9bastien_Boisvert?= 
-	<sebastien.boisvert@calculquebec.ca>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jan 22 23:46:33 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 23:52:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Txmbw-0002aL-Hp
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 23:46:32 +0100
+	id 1Txmhe-0005qx-88
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 23:52:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753371Ab3AVWqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 17:46:12 -0500
-Received: from serveur.giref.ulaval.ca ([132.203.7.102]:47794 "EHLO
-	mailhost.giref.ulaval.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752719Ab3AVWqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 17:46:11 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id 3278F101951;
-	Tue, 22 Jan 2013 17:46:10 -0500 (EST)
-X-Virus-Scanned: amavisd-new at giref.ulaval.ca
-Received: from mailhost.giref.ulaval.ca ([127.0.0.1])
-	by localhost (mailhost.giref.ulaval.ca [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jOXiyAB-y7tM; Tue, 22 Jan 2013 17:46:08 -0500 (EST)
-Received: from [132.203.7.22] (melkor.giref.ulaval.ca [132.203.7.22])
-	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id ABBFD1019BC;
-	Tue, 22 Jan 2013 17:46:08 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130105 Thunderbird/17.0.2
-In-Reply-To: <878v7keuh3.fsf@pctrast.inf.ethz.ch>
+	id S1753627Ab3AVWwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 17:52:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35923 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752888Ab3AVWwC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 17:52:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A096BA16;
+	Tue, 22 Jan 2013 17:52:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=z6BDWf8ZSEBc3tSflFINbCPshNM=; b=BbSz79
+	WX3VJEmesjo5/QrKxbfvEAOVg6WSHBVZcWPAODumWemi0ntfY2beCX0FbZ9PlB60
+	yuux/vPD5VV+xyQJneDfRa/3MWNH2NEM3kFX7tyBHxBCZNkp6prTtYOKo2oxZv+v
+	ZtzM5AN0NZbMA09EkxGmpHSI9ix4eYgw5sKcQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gxFVZEVHGmPN3iJgaZXUSikXjdowGRWB
+	nXtWNPcRovJpWcYV5vUh0MFZ4NQybXK4Dyaz1SCSxmNrddzB7fCX+fRgUBhMUOVa
+	VoZ0WZ1rAqiAjs6uRpJmLtk5ChFTJe7cmUgvL5qIXoHr7kACWujkTpNTOrr96BI9
+	0UtxJ98SEwo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26E23BA15;
+	Tue, 22 Jan 2013 17:52:02 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96152BA14; Tue, 22 Jan 2013
+ 17:52:01 -0500 (EST)
+In-Reply-To: <7vr4lcnbn5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 22 Jan 2013 13:36:14 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 559E1D74-64E6-11E2-A32D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214260>
 
-On 01/22/2013 05:14 PM, Thomas Rast wrote:
-> Eric Chamberland <Eric.Chamberland@giref.ulaval.ca> writes:
->
->> So, hum, do we have some sort of conclusion?
->>
->> Shall it be a fix for git to get around that lustre "behavior"?
->>
->> If something can be done in git it would be great: it is a *lot*
->> easier to change git than the lustre filesystem software for a cluster
->> in running in production mode... (words from cluster team) :-/
->
-> I thought you already established that simply disabling the progress
-> display is a sufficient workaround?  If that doesn't help, you can try
-> patching out all use of SIGALRM within git.
->
+Junio C Hamano <gitster@pobox.com> writes:
 
-I tried that solution after Brian told me to try it, but it didn't 
-solved the problem for me! :-(
+> We obviously do not want to set FNM_PATHNAME when we are not
+> substituting fnmatch() with wildmatch(), but I wonder if it may make
+> sense to unconditionally use WM_PATHNAME semantics when we build the
+> system with USE_WILDMATCH and calling wildmatch() in this codepath.
+> Users can always use "*/**/*" in place of "*" in their patterns
+> where they want to ignore directory boundaries.
 
-> Other than that I agree with Junio, from what we've seen so far, Lustre
-> returns EINTR on all sorts of calls that simply aren't allowed to do so.
->
+Another possibility, which _might_ make more practical sense, is to
+update dowild() so that any pattern that has (^|/)**(/|$) in it
+implicitly turns the WM_PATHNAME flag on.  There is no reason for
+the user to feed it a double-asterisk unless it is an attempt to
+defeat some directory boundaries, so we already know that the user
+expects WM_PATHNAME behaviour at that point.  Otherwise, the user
+would have simply said '*' instead, wouldn't he?
 
-Ok, so now the "good" move would be to have all this reported to lustre 
-development team?  Brian, have you seen anything new from what you have 
-already reported?  I have to admit that I am not a fs expert...
-
-And I also agree with Junio point of view: The problem may impact 
-mission critical applications....
-
-Eric
+I said "_might_" because it sounds a bit too magical to my taste.
+I dunno.
