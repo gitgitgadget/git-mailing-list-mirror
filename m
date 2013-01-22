@@ -1,82 +1,90 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH v2 02/10] t/test-lib-functions.sh: allow to specify the
- tag name to test_commit
-Date: Tue, 22 Jan 2013 01:43:05 -0800
-Message-ID: <CA+sFfMeZ0VoySUtpYFZcjSxGQithhKUHarOr3TuioyjaYddsXg@mail.gmail.com>
-References: <1358757627-16682-1-git-send-email-drafnel@gmail.com>
-	<1358757627-16682-3-git-send-email-drafnel@gmail.com>
-	<20130122080216.GC6085@elie.Belkin>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: [PATCH v3 1/6] Change old system name 'GIT' to 'Git'
+Date: Tue, 22 Jan 2013 10:44:26 +0100 (CET)
+Message-ID: <1543684041.1817103.1358847866882.JavaMail.ngmail@webmail19.arcor-online.net>
+References: <7vfw1udpav.fsf@alter.siamese.dyndns.org> <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
+ <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
+ <7vvcark1f2.fsf@alter.siamese.dyndns.org>
+ <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
+ <1335904329.632749.1358795780375.JavaMail.ngmail@webmail20.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org,
-	Brandon Casey <bcasey@nvidia.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 10:43:31 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: davvid@gmail.com, git@vger.kernel.org
+To: gitster@pobox.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Tue Jan 22 10:44:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxaOA-0007Yv-5o
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 10:43:30 +0100
+	id 1TxaPU-0008EZ-2c
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 10:44:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752157Ab3AVJnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 04:43:07 -0500
-Received: from mail-vb0-f45.google.com ([209.85.212.45]:63026 "EHLO
-	mail-vb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751718Ab3AVJnG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 04:43:06 -0500
-Received: by mail-vb0-f45.google.com with SMTP id p1so3216291vbi.32
-        for <git@vger.kernel.org>; Tue, 22 Jan 2013 01:43:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=Ao5iJYAfyKT0uXzo3RB/J/f+HRfMT33aBB1+mxuZF1M=;
-        b=sya/ulfhxYILqRKqZ75aXETyQjlh5i6ggqD3GrJtpCY3HM031p25pfenMDbbHWtGtI
-         Bj8wEc7Rd3pMjP4jdFdYW3tFIHY1F70iQisjaXqP2exYLNFB7IWn4ivJQYknOs07rztF
-         EnVzqaDjf1wXS55KyABULxjBIi2fRYTPkdYEp2138kpHxWX1E02kpKNMGd7qs8AuUXqJ
-         vbQpVLTXO9qFYYDcbHWkjHHV/vdr5kAokS0IY44zHegzVqj11WvyRXxosAFbKoR4LSJd
-         /P2lL9Frym6HzLuqsKZSiURMJDi7bjscx2klrfAwfjss0PucDhnuSoY54DBa582wLj2D
-         jKsg==
-X-Received: by 10.52.27.174 with SMTP id u14mr19741115vdg.107.1358847785152;
- Tue, 22 Jan 2013 01:43:05 -0800 (PST)
-Received: by 10.58.216.1 with HTTP; Tue, 22 Jan 2013 01:43:05 -0800 (PST)
-In-Reply-To: <20130122080216.GC6085@elie.Belkin>
+	id S1752308Ab3AVJo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 04:44:29 -0500
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:37717 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752181Ab3AVJo2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2013 04:44:28 -0500
+Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
+	by mx.arcor.de (Postfix) with ESMTP id F04F3D839F;
+	Tue, 22 Jan 2013 10:44:26 +0100 (CET)
+Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
+	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id E420F1F6007;
+	Tue, 22 Jan 2013 10:44:26 +0100 (CET)
+Received: from webmail19.arcor-online.net (webmail19.arcor-online.net [151.189.8.77])
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id DFE422D680E;
+	Tue, 22 Jan 2013 10:44:26 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-10.arcor-online.net DFE422D680E
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1358847866; bh=TXuPJlCZDCMjqJySvj2FHb/68lrXrC6PFooB6JvALpM=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=QgeTYbh9UCOlnkHySnykk9DFwVT7RZJfF0ujJo3TNLbjpw2XcoOrexo+7l5ktJSja
+	 lz5nKAi7xFc1dDn7+RQIF91JZkd93QxPoI+kAQW5oHzzOCbr6zxmT3ZDdUjp9NGgtb
+	 nWtanzFVo6TRNg47sJm3HplD0pMsPDYN+2ZKbN/8=
+Received: from [194.138.39.60] by webmail19.arcor-online.net (151.189.8.77) with HTTP (Arcor Webmail); Tue, 22 Jan 2013 10:44:26 +0100 (CET)
+In-Reply-To: <7vfw1udpav.fsf@alter.siamese.dyndns.org>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 194.138.39.60
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214226>
 
-On Tue, Jan 22, 2013 at 12:02 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Brandon Casey wrote:
+> 
+> I think it misses "GIT - the stupid content tracker" in README, but
+> probably it is OK (it is not an end-user facing documentation).
+> 
+I only checked ./Documentation; but this should be changed also.
 
->> --- a/t/test-lib-functions.sh
->> +++ b/t/test-lib-functions.sh
->> @@ -135,12 +135,13 @@ test_pause () {
->>       fi
->>  }
->>
->> -# Call test_commit with the arguments "<message> [<file> [<contents>]]"
->> +# Call test_commit with the arguments "<message> [<file> [<contents> [<tag>]]]"
->>  #
->>  # This will commit a file with the given contents and the given commit
->> -# message.  It will also add a tag with <message> as name.
->> +# message.  It will also add a tag with <message> as name unless <tag> is
->> +# given.
->>  #
->> -# Both <file> and <contents> default to <message>.
->> +# <file>, <contents>, and <tag> all default to <message>.
+> I noticed that these two places still use poor-man's small caps
+> after this patch.
+> 
+Thanks.
+
+>  * Documentation/SubmittingPatches:
+>  that are being emailed around. Although core GIT is a lot
 >
-> Simpler:
+I will change this.
+ 
+>  * Documentation/git-credential.txt:
+>  TYPICAL USE OF GIT CREDENTIAL
 >
->  # This will commit a file with the given contents and the given commit
->  # message and tag the resulting commit with the given tag name.
->  #
->  # <file>, <contents>, and <tag> all default to <message>.
+This is to be debated because here all caps is used as "poor man's bold face"
+and it would look odd if we write 'TYPICAL USE OF Git CREDENTIAL'?
+ 
+> 
+> Not commenting on other 5 patches in the series yet, but if they
+> interact with other topics in flight, they may have to be separated
+> out. We'll see.
+> 
+Perhaps it would be best to separate this into 2 series:
+[1/6]+[6/6] and [2/6]-[5/6]?
 
-Yes, a nice improvement.
 
-Thanks,
--Brandon
+
+---
+Thomas
