@@ -1,91 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 02/10] t/test-lib-functions.sh: allow to specify the
- tag name to test_commit
-Date: Tue, 22 Jan 2013 00:02:16 -0800
-Message-ID: <20130122080216.GC6085@elie.Belkin>
-References: <1358757627-16682-1-git-send-email-drafnel@gmail.com>
- <1358757627-16682-3-git-send-email-drafnel@gmail.com>
+From: =?UTF-8?B?SmVhbi1Ob8OrbCBBdmlsYQ==?= <avila.jn@gmail.com>
+Subject: Re: [RFC] Instruct git-completion.bash that we are in test mode
+Date: Tue, 22 Jan 2013 09:04:04 +0100
+Message-ID: <50FE47F4.20104@gmail.com>
+References: <201301212330.10824.jn.avila@free.fr> <7v7gn6f6ya.fsf@alter.siamese.dyndns.org> <20130122003954.GA23297@sigill.intra.peff.net> <7vham9dej2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org,
-	Brandon Casey <bcasey@nvidia.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 09:02:45 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?B?SmVhbi1Ob8OrbCBBVklMQQ==?= <jn.avila@free.fr>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 09:04:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxYof-00019K-1w
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 09:02:45 +0100
+	id 1TxYqN-0001vn-H7
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 09:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753454Ab3AVICX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 03:02:23 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:42019 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752346Ab3AVICW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 03:02:22 -0500
-Received: by mail-pa0-f49.google.com with SMTP id bi1so3880958pad.22
-        for <git@vger.kernel.org>; Tue, 22 Jan 2013 00:02:21 -0800 (PST)
+	id S1753888Ab3AVIEK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jan 2013 03:04:10 -0500
+Received: from mail-bk0-f53.google.com ([209.85.214.53]:51061 "EHLO
+	mail-bk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752525Ab3AVIEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 03:04:08 -0500
+Received: by mail-bk0-f53.google.com with SMTP id je9so950714bkc.12
+        for <git@vger.kernel.org>; Tue, 22 Jan 2013 00:04:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=YaBJhr24XLGGXs9XDyHdYsSA9xh7u1m3FKS05Zg+DGM=;
-        b=hO1mfOA+YJb5PbHiquSXFCUIALrVGlN7m+O9c7I4DGVQLA/cp0+B4pRROonEQe3OWh
-         kKCyirHatO06ZRkii1Jn6p0cAKmFZLLBK/DvpM5zbgGXn6lXNd8kh+Divnexr/nQKJIT
-         TPzOrkEVoxOKcUYL3nxkrQK4qZQFSLXueeCYaLqEAhcdJpeXwRy02xpaBeXPCr46wbhR
-         cJMLJCy5iXDVZLyhkTYkpSxdDPVlKa1KYa88vZ93AMZU6zuhSVq9qOOw4McLeMBx5oho
-         iBM5kfswpx265WsVdpnw26qUsWsqeKsJevHyYZvIX9Cb0dUrLtxDAjh+lvQKFMsa8g09
-         DKxA==
-X-Received: by 10.68.252.69 with SMTP id zq5mr37089035pbc.104.1358841741924;
-        Tue, 22 Jan 2013 00:02:21 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id ov4sm10287625pbb.45.2013.01.22.00.02.19
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 22 Jan 2013 00:02:20 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1358757627-16682-3-git-send-email-drafnel@gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=KiVtMOkXNIE0cGfMqR3DYJU//4SxVFgU3aYzw41DvZQ=;
+        b=yBNKTIxMgXhDFwaJcv5wfq8qvn1Jn+HFMW2+PAfihmokBa8GeTlZc2IH3AKpYd5hE9
+         v7AmmxewYneH/ILRqBcdqjpAMYmo8zk5D9DKO7jk6w31oKsaFVKI88zdJU2xNWDg46D3
+         yaf3MU4yRIO7spk6QgSnJsE3TGCkey7ErqUiwd4/AGl5w6SBfKTmrD5+0DzaLyhZlJ6Q
+         9rGBc04KVpkFVgr2afoEX11iZ+/vztwj5YMGoIEeERFy26U7xpPv3aLf2lET3FhwgKZL
+         26oM279iEgzj0at5IVzQ7Pl/ktiQ+N0OpZx3kWHCrKY2R8c/6hCfsQ6xSas4JVQv+SXH
+         Z4Xw==
+X-Received: by 10.204.147.145 with SMTP id l17mr1344672bkv.100.1358841847364;
+        Tue, 22 Jan 2013 00:04:07 -0800 (PST)
+Received: from [192.168.1.48] ([178.21.183.81])
+        by mx.google.com with ESMTPS id f24sm10101015bkv.7.2013.01.22.00.04.05
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 22 Jan 2013 00:04:06 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+In-Reply-To: <7vham9dej2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214213>
 
-Brandon Casey wrote:
+Le 22/01/2013 05:31, Junio C Hamano a =C3=A9crit :
+> Jeff King <peff@peff.net>  writes:
+ >
+ >> I really hate to suggest this, but should it be more like:
+ >>
+ >> if test -z "$FAKE_COMMAND_LIST"; then __git_cmdlist() { git help -a
+ >> | egrep '^ [a-zA-Z0-9]' } else __git_cmdlist() { printf '%s'
+ >> "$FAKE_COMMAND_LIST" } fi
+ >>
+ >> That gives us a nice predictable starting point for actually
+ >> testing the completion code. The downside is that it doesn't let
+ >> us test that we remain compatible with the output of "help -a".
+ >
+ > Yeah, I think this is simpler and more to the point for the test in
+ > t9902. If we really want to test something that is the same as, or
+ > at least any closer than this approach (or my "help --standard"), to
+ > what the real users use, the test has to become inherently flaky, so
+ > I think we should go for the simplicity of this patch shows.
 
-> The <message> part of test_commit() may not be appropriate for a tag name.
-> So let's allow test_commit to accept a fourth argument to specify the tag
-> name.
-
-Yes!
-
-[...]
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -135,12 +135,13 @@ test_pause () {
->  	fi
->  }
->  
-> -# Call test_commit with the arguments "<message> [<file> [<contents>]]"
-> +# Call test_commit with the arguments "<message> [<file> [<contents> [<tag>]]]"
->  #
->  # This will commit a file with the given contents and the given commit
-> -# message.  It will also add a tag with <message> as name.
-> +# message.  It will also add a tag with <message> as name unless <tag> is
-> +# given.
->  #
-> -# Both <file> and <contents> default to <message>.
-> +# <file>, <contents>, and <tag> all default to <message>.
-
-Simpler:
-
- # This will commit a file with the given contents and the given commit
- # message and tag the resulting commit with the given tag name.
- #
- # <file>, <contents>, and <tag> all default to <message>.
-
-With or without that change,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Instead of imposing the list of command, we could use the command
+list argument to filter the ouput of git help -a. This would ensure tha=
+t the
+completions we want to test are still present in the installation while
+still restricting them to the test case.
