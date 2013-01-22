@@ -1,77 +1,169 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] add: warn when -u or -A is used without filepattern
-Date: Tue, 22 Jan 2013 08:39:36 +0100
-Message-ID: <vpq1uddoedj.fsf@grenoble-inp.fr>
-References: <7v1udfn0tm.fsf@alter.siamese.dyndns.org>
-	<1358769611-3625-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20130121222248.GA3586@elie.Belkin>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Eric James Michael Ritz <lobbyjones@gmail.com>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 08:40:14 2013
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH v3] Enable minimal stat checking
+Date: Tue, 22 Jan 2013 08:49:22 +0100
+Message-ID: <1358840962-12316-1-git-send-email-robin.rosenberg@dewire.com>
+References: <7v4niblhr6.fsf@alter.siamese.dyndns.org>
+Cc: j sixt <j.sixt@viscovery.net>, Shawn Pearce <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 08:50:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxYSs-0007Eg-93
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 08:40:14 +0100
+	id 1TxYcS-0003fu-UQ
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 08:50:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754357Ab3AVHjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 02:39:43 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:56837 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752622Ab3AVHjm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 02:39:42 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r0M7daUC020327
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 22 Jan 2013 08:39:36 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TxYSG-0003AX-S6; Tue, 22 Jan 2013 08:39:36 +0100
-In-Reply-To: <20130121222248.GA3586@elie.Belkin> (Jonathan Nieder's message of
-	"Mon, 21 Jan 2013 14:22:49 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 22 Jan 2013 08:39:36 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r0M7daUC020327
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1359445176.71945@iIb/RIyw/Aj1PN428MnBog
+	id S1754983Ab3AVHtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 02:49:49 -0500
+Received: from smtp-gw21.han.skanova.net ([81.236.55.21]:49349 "EHLO
+	smtp-gw21.han.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754661Ab3AVHts (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 02:49:48 -0500
+Received: from localhost.localdomain (213.67.12.15) by smtp-gw21.han.skanova.net (8.5.133)
+        id 506A33EC028464AB; Tue, 22 Jan 2013 08:49:45 +0100
+X-Mailer: git-send-email 1.8.1.337.g6672977.dirty
+In-Reply-To: <7v4niblhr6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214208>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Specifically the fields uid, gid, ctime, ino and dev are set to zero
+by JGit. Other implementations, eg. Git in cygwin are allegedly also
+somewhat incompatible with Git For Windows and on *nix platforms
+the resolution of the timestamps may differ.
 
-> Would it be possible to make this conditional on cwd not being at the
-> toplevel (the case where "git add -u :/" and "git add -u ." have
-> different behavior)?  E.g.,
->
-> 		static const char *here[2] = { ".", NULL };
-> 		if (prefix)
-> 			warning(...);
+Any stat checking by git will then need to check content, which may
+be very slow, particularly on Windows. Since mtime and size
+is typically enough we should allow the user to tell git to avoid
+checking these fields if they are set to zero in the index.
 
-I thought about this too, after writting the patch. Actually, I still I
-it makes sense to warn even from the toplevel, since the point is to
-teach people to stop using pathless "git add -u" for a while, so I'd say
-it's easier to teach this in every condition. OTOH, the next step
-(forbidding pathless "git add -u") can still allow it from the toplevel
-to minimize the pain.
+This change introduces a core.checkstat config option where the
+the user can select to check all fields (default), or just size
+and the whole second part of mtime (minimal).
 
-But I'm starting to be convinced ;-).
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ Documentation/config.txt |  6 ++++++
+ cache.h                  |  1 +
+ config.c                 |  8 ++++++++
+ environment.c            |  1 +
+ read-cache.c             | 28 ++++++++++++++++------------
+ 5 files changed, 32 insertions(+), 12 deletions(-)
 
-Any other thought on the question?
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index d5809e0..47c213d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -235,6 +235,12 @@ core.trustctime::
+ 	crawlers and some backup systems).
+ 	See linkgit:git-update-index[1]. True by default.
+ 
++core.checkstat::
++	Determines which stat fields to match between the index
++	and work tree. The user can set this to 'default' or
++	'minimal'. Default (or explicitly 'default'), is to check
++	all fields, including the sub-second part of mtime and ctime.
++
+ core.quotepath::
+ 	The commands that output paths (e.g. 'ls-files',
+ 	'diff'), when not given the `-z` option, will quote
+diff --git a/cache.h b/cache.h
+index c257953..ab20c4d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -536,6 +536,7 @@ extern int delete_ref(const char *, const unsigned char *sha1, int delopt);
+ /* Environment bits from configuration mechanism */
+ extern int trust_executable_bit;
+ extern int trust_ctime;
++extern int check_stat;
+ extern int quote_path_fully;
+ extern int has_symlinks;
+ extern int minimum_abbrev, default_abbrev;
+diff --git a/config.c b/config.c
+index 7b444b6..2b58c75 100644
+--- a/config.c
++++ b/config.c
+@@ -566,6 +566,14 @@ static int git_default_core_config(const char *var, const char *value)
+ 		trust_ctime = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "core.statinfo")) {
++		if (!strcasecmp(value, "default"))
++			check_stat = 1;
++		else if (!strcasecmp(value, "minimal"))
++			check_stat = 0;
++		else
++			die_bad_config(var);
++	}
+ 
+ 	if (!strcmp(var, "core.quotepath")) {
+ 		quote_path_fully = git_config_bool(var, value);
+diff --git a/environment.c b/environment.c
+index 85edd7f..e828b37 100644
+--- a/environment.c
++++ b/environment.c
+@@ -13,6 +13,7 @@
+ 
+ int trust_executable_bit = 1;
+ int trust_ctime = 1;
++int check_stat = 1;
+ int has_symlinks = 1;
+ int minimum_abbrev = 4, default_abbrev = 7;
+ int ignore_case;
+diff --git a/read-cache.c b/read-cache.c
+index fda78bc..23db681 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -197,21 +197,25 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
+ 	}
+ 	if (ce->ce_mtime.sec != (unsigned int)st->st_mtime)
+ 		changed |= MTIME_CHANGED;
+-	if (trust_ctime && ce->ce_ctime.sec != (unsigned int)st->st_ctime)
+-		changed |= CTIME_CHANGED;
++	if (trust_ctime ? check_stat : trust_ctime/*false*/)
++		if (ce->ce_ctime.sec != (unsigned int)st->st_ctime)
++			changed |= CTIME_CHANGED;
+ 
+ #ifdef USE_NSEC
+-	if (ce->ce_mtime.nsec != ST_MTIME_NSEC(*st))
++	if (check_stat && ce->ce_mtime.nsec != ST_MTIME_NSEC(*st))
+ 		changed |= MTIME_CHANGED;
+-	if (trust_ctime && ce->ce_ctime.nsec != ST_CTIME_NSEC(*st))
+-		changed |= CTIME_CHANGED;
++	if (trust_ctime ? check_stat : trust_ctime/*false*/)
++		if (ce->ce_ctime.nsec != ST_CTIME_NSEC(*st))
++			changed |= CTIME_CHANGED;
+ #endif
+ 
+-	if (ce->ce_uid != (unsigned int) st->st_uid ||
+-	    ce->ce_gid != (unsigned int) st->st_gid)
+-		changed |= OWNER_CHANGED;
+-	if (ce->ce_ino != (unsigned int) st->st_ino)
+-		changed |= INODE_CHANGED;
++	if (check_stat) {
++		if (ce->ce_uid != (unsigned int) st->st_uid ||
++			ce->ce_gid != (unsigned int) st->st_gid)
++			changed |= OWNER_CHANGED;
++		if (ce->ce_ino != (unsigned int) st->st_ino)
++			changed |= INODE_CHANGED;
++	}
+ 
+ #ifdef USE_STDEV
+ 	/*
+@@ -219,8 +223,8 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
+ 	 * clients will have different views of what "device"
+ 	 * the filesystem is on
+ 	 */
+-	if (ce->ce_dev != (unsigned int) st->st_dev)
+-		changed |= INODE_CHANGED;
++	if (check_stat && ce->ce_dev != (unsigned int) st->st_dev)
++			changed |= INODE_CHANGED;
+ #endif
+ 
+ 	if (ce->ce_size != (unsigned int) st->st_size)
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.8.1.337.g6672977.dirty
