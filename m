@@ -1,73 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] push: further reduce "struct ref" and simplify the
- logic
-Date: Mon, 21 Jan 2013 22:21:10 -0800
-Message-ID: <7v622pd9gp.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH 0/3] Finishing touches to "push" advises
+Date: Mon, 21 Jan 2013 22:30:27 -0800
+Message-ID: <1358836230-9197-1-git-send-email-gitster@pobox.com>
 References: <20130121234002.GE17156@sigill.intra.peff.net>
- <1358834027-32039-1-git-send-email-gitster@pobox.com>
- <1358834027-32039-4-git-send-email-gitster@pobox.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
 Cc: Jeff King <peff@peff.net>, Chris Rorvick <chris@rorvick.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 22 07:21:35 2013
+X-From: git-owner@vger.kernel.org Tue Jan 22 07:30:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxXEl-0006dz-8U
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 07:21:35 +0100
+	id 1TxXNo-00026J-JV
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 07:30:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752801Ab3AVGVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 01:21:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36242 "EHLO
+	id S1751003Ab3AVGae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 01:30:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40641 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752467Ab3AVGVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 01:21:13 -0500
+	id S1750889Ab3AVGad (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 01:30:33 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7C7F647A;
-	Tue, 22 Jan 2013 01:21:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3DDE68EA;
+	Tue, 22 Jan 2013 01:30:32 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iyTp0BJnHAhAgZoVfLDqSsNDL1k=; b=WB8pv/
-	0y/rLpN2PEEzAUiSAfr8cHjsjCg1t29F2AurPw/t/qo122JnW/NqL+RjRft4fzaL
-	a8pgWe+qva5yZgHSdLs+io+ZleXMq3DwmIj9L13s4VGizBXXfIfwfypsBIymaX+C
-	7kbN+FjnOy/uNt/A2EktIXBQUnCxpO8r0Xhzg=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Cxk+
+	RDBI3ab/AsXmkYr32CPHVy8=; b=qlJhHeXJO+pUstBgOEaBAs+mFKXUrjErvv02
+	zNP5CI5AXuNt8k0DkL3vqW5RA4pUxh8l7AIAwIfZMHAHhwuBFrUPloYqmsZ6Zly4
+	4PNdwp7JtRoVdZxBZJ8eYB4zePAdTkAl0RdVVoc4iVieCQT/3wRHsMrA/ja0/t8Y
+	pOXC87g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hvLkw3QgnFK7oyKtS9upTj0pgzFKipj3
-	X8Jx8NW+NkHrMqwPOtANxgJLfhJ9iec252NNGhWlKp7KdsrWOq/3a2kmsxIOYl/E
-	XDHbYccahSeLmQfaksnuuMI9zqaeYj0XvMQ1Nmsc6F4c0V9/4qmmmSQTLk6/30Qq
-	ZV0LvgwfCRo=
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	ZBgOa+LYdL7VTNEaGt4FbYRgVZAj4Px+kzSj9mdsqPvKMEQRfbJIiXnYioB+0yqP
+	GZXgJ/aWR7Sct/6nQz437q86jVpXT81+MWGqZy6JAWIopD7lReQKZWnOI14V9xYs
+	sJ2KUmsEAiKXFxB8LXqwKK7rZLnkOUfE5S0SYjpsVn8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD2DA6479;
-	Tue, 22 Jan 2013 01:21:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A91C868E8;
+	Tue, 22 Jan 2013 01:30:32 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4863E646E; Tue, 22 Jan 2013
- 01:21:12 -0500 (EST)
-In-Reply-To: <1358834027-32039-4-git-send-email-gitster@pobox.com> (Junio C.
- Hamano's message of "Mon, 21 Jan 2013 21:53:47 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EB10365C-645B-11E2-9CAF-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A38B68E0; Tue, 22 Jan 2013
+ 01:30:31 -0500 (EST)
+X-Mailer: git-send-email 1.8.1.1.498.gfdee8be
+In-Reply-To: <20130121234002.GE17156@sigill.intra.peff.net>
+X-Pobox-Relay-ID: 38B28AB2-645D-11E2-AAA6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214201>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This builds on Chris Rorvick's earlier effort to forbid unforced
+updates to refs/tags/ hierarchy and giving sensible error and advise
+messages for that case (we are not rejecting such a push due to fast
+forwardness, and suggesting to fetch and integrate before pushing
+again does not make sense).
 
-> The "update" field in "struct ref" is only used in a very narrow
-> scope in a single function.  Remove it.
->
-> Also simplify the code that rejects an attempted push by first
-> checking if the proposed update is forced (in which case we do not
-> need any check on our end).
+The series applies on top of 256b9d7 (push: fix "refs/tags/
+hierarchy cannot be updated without --force", 2013-01-16).
 
-Actually, the latter is a bad idea; it changes the semantics and
-mark a push that was done with an unnecessary --force option.
+The main change is in the second patch.  When we
 
-I'm rerolling these three patches (the "update" removal will also be
-moved to the preparatory clean-up patch).
+ * do not have the object at the tip of the remote;
+ * the object at the tip of the remote is not a commit; or
+ * the object we are pushing is not a commit,
+
+there is no point suggesting to fetch, integrate and push again.
+
+If we do not have the current object at the tip of the remote, we
+should tell the user to fetch first and evaluate the situation
+before deciding what to do next.
+
+Otherwise, if the current object is not a commit, or if we are
+trying to push an object that is not a commit, then the user does
+not have to fetch first (we already have the object), but it still
+does not make sense to suggest to integrate and re-push.  Just tell
+them that such a push requires a force in such a case.
+
+Junio C Hamano (3):
+  push: further clean up fields of "struct ref"
+  push: introduce REJECT_FETCH_FIRST and REJECT_NEEDS_FORCE
+  push: further simplify the logic to assign rejection status
+
+ advice.c            |  4 ++++
+ advice.h            |  2 ++
+ builtin/push.c      | 25 +++++++++++++++++++++++++
+ builtin/send-pack.c | 10 ++++++++++
+ cache.h             |  6 +++---
+ remote.c            | 42 +++++++++++++++++++-----------------------
+ send-pack.c         |  2 ++
+ transport-helper.c  | 10 ++++++++++
+ transport.c         | 14 +++++++++++++-
+ transport.h         |  2 ++
+ 10 files changed, 90 insertions(+), 27 deletions(-)
+
+-- 
+1.8.1.1.498.gfdee8be
