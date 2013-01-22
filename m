@@ -1,80 +1,58 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [msysGit] Re: Version 1.8.1 does not compile on Cygwin 1.7.14
-Date: Tue, 22 Jan 2013 18:38:49 +0000
-Message-ID: <50FEDCB9.6090708@ramsay1.demon.co.uk>
-References: <50E9F7C2.1000603@gmail.com> <FBDECCA565D94DF9838DD81FE2E2543A@black> <7v1udxladc.fsf@alter.siamese.dyndns.org> <50EB8EB5.6080204@gmail.com> <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com> <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com> <50F303D8.20709@gmail.com> <50F5A435.5090408@ramsay1.demon.co.uk> <20130120101007.GD16339@elie.Belkin> <50FBCB95.6020201@web.de> <20130120110618.GF16339@elie.Belkin> <50FCD017.6060607@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: Replace merge-file.h with merge-blobs.h in
+ LIB_H
+Date: Tue, 22 Jan 2013 10:48:53 -0800
+Message-ID: <7vwqv58356.fsf@alter.siamese.dyndns.org>
+References: <50FEC2B3.3010000@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-	Stephen & Linda Smith <ischis2@cox.net>,
-	Eric Blake <eblake@redhat.com>,
-	msysGit <msysgit@googlegroups.com>
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Jan 22 19:41:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Jan 22 19:49:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxinE-00009r-Ir
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 19:41:56 +0100
+	id 1TxiuN-0007iP-Lt
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 19:49:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754703Ab3AVSlc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jan 2013 13:41:32 -0500
-Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:47200 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753478Ab3AVSlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 13:41:31 -0500
-Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id DDE41A0C087;
-	Tue, 22 Jan 2013 18:41:30 +0000 (GMT)
-Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 21290A0C081;	Tue, 22 Jan 2013 18:41:30 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;	Tue, 22 Jan 2013 18:41:27 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <50FCD017.6060607@web.de>
-X-MDF-HostID: 9
+	id S1755542Ab3AVSs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 13:48:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41027 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755160Ab3AVSs5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 13:48:57 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37B58C46D;
+	Tue, 22 Jan 2013 13:48:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=v4w9jX
+	sgiCMOfGiWm6yOS70J/XhF5h0HsRfP2qKSNzfKIbf/KkvRx/sw20zTGGpxKLSBXN
+	lHt2IOYG5HALIN7dEaRuWEv6K01TfjJmFK8jOewECgCiIjmNXp33A9wnb6N63nrO
+	iXoDHtXAu7ql4yxhJ6qvvbnMwTgUTcYVrARYY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aXAB93VsmSdQQBp/9xUfj2L6109/MnMI
+	yVOg7HCPCaGv+bU/Rb+5IQOSg3GAuRALz3BRptwV2MqVy0KgZ5rKcZf6LTS26P02
+	brDaQLvsUDpSh7vVnuYojREtDzslAFHnH4YGN6UOMeumzMSXE2A7l8UUkJXr62zB
+	nXDoGAg5QEE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B8FEC46C;
+	Tue, 22 Jan 2013 13:48:56 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F47DC467; Tue, 22 Jan 2013
+ 13:48:55 -0500 (EST)
+In-Reply-To: <50FEC2B3.3010000@ramsay1.demon.co.uk> (Ramsay Jones's message
+ of "Tue, 22 Jan 2013 16:47:47 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5FB500BA-64C4-11E2-9589-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214246>
 
-Torsten B=F6gershausen wrote:
-> On 20.01.13 12:06, Jonathan Nieder wrote:
->> Torsten B=F6gershausen wrote:
->>
->>> I wonder, if if we can go one step further:
->>>
->>> Replace
->>> #ifdef WIN32 /* Both MinGW and MSVC */
->> [...]
->>> with
->>> #if defined(_MSC_VER)
->>
->> I thought Git for Windows was built using mingw, which doesn't defin=
-e
->> _MSC_VER?
->>
->> Puzzled,
->> Jonathan
->>
-> Yes,
-> After removing these lines in the git-compat-util.h of msysgit
-> v1.8.1 it still compiled.
-> So I start to speculate if the comment is still valid for mingw,
-> or if that was true in the old days and not now any more.
->=20
-> More investigation is needed, sorry for confusion.
-
-Yes, I compiled the last patch on MinGW before I sent it to the list.
-I didn't bother with MSVC, since that build is already broken.
-I have a patch which fixed the MSVC build, but it already needs to
-be updated, since current master fails to build on MSVC.
-
-ATB,
-Ramsay Jones
+Thanks.
