@@ -1,58 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: Replace merge-file.h with merge-blobs.h in
- LIB_H
-Date: Tue, 22 Jan 2013 10:48:53 -0800
-Message-ID: <7vwqv58356.fsf@alter.siamese.dyndns.org>
-References: <50FEC2B3.3010000@ramsay1.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: Build broken for contrib/remote-helpers...
+Date: Tue, 22 Jan 2013 14:41:35 -0500
+Message-ID: <20130122194135.GA23521@sigill.intra.peff.net>
+References: <CAEBDL5U+Yrny-YgN1fZj1T+XTJRVaiFvMixT13Zzb2DhhYgQsA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Jan 22 19:49:30 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	git <git@vger.kernel.org>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Tue Jan 22 20:42:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxiuN-0007iP-Lt
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 19:49:20 +0100
+	id 1TxjjM-0001rN-IN
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 20:42:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755542Ab3AVSs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 13:48:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41027 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755160Ab3AVSs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 13:48:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37B58C46D;
-	Tue, 22 Jan 2013 13:48:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=v4w9jX
-	sgiCMOfGiWm6yOS70J/XhF5h0HsRfP2qKSNzfKIbf/KkvRx/sw20zTGGpxKLSBXN
-	lHt2IOYG5HALIN7dEaRuWEv6K01TfjJmFK8jOewECgCiIjmNXp33A9wnb6N63nrO
-	iXoDHtXAu7ql4yxhJ6qvvbnMwTgUTcYVrARYY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aXAB93VsmSdQQBp/9xUfj2L6109/MnMI
-	yVOg7HCPCaGv+bU/Rb+5IQOSg3GAuRALz3BRptwV2MqVy0KgZ5rKcZf6LTS26P02
-	brDaQLvsUDpSh7vVnuYojREtDzslAFHnH4YGN6UOMeumzMSXE2A7l8UUkJXr62zB
-	nXDoGAg5QEE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B8FEC46C;
-	Tue, 22 Jan 2013 13:48:56 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F47DC467; Tue, 22 Jan 2013
- 13:48:55 -0500 (EST)
-In-Reply-To: <50FEC2B3.3010000@ramsay1.demon.co.uk> (Ramsay Jones's message
- of "Tue, 22 Jan 2013 16:47:47 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5FB500BA-64C4-11E2-9589-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754199Ab3AVTlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 14:41:39 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44000 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752442Ab3AVTli (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 14:41:38 -0500
+Received: (qmail 28064 invoked by uid 107); 22 Jan 2013 19:42:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 Jan 2013 14:42:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jan 2013 14:41:35 -0500
+Content-Disposition: inline
+In-Reply-To: <CAEBDL5U+Yrny-YgN1fZj1T+XTJRVaiFvMixT13Zzb2DhhYgQsA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214247>
 
-Thanks.
+On Tue, Jan 22, 2013 at 12:49:31AM -0500, John Szakmeister wrote:
+
+> I tried running make in contrib/remote-helpers and it died with:
+> 
+>     :: make
+>     make -e -C ../../t test
+>     rm -f -r test-results
+>     duplicate test numbers: /Users/jszakmeister/sources/git
+>     make[1]: *** [test-lint-duplicates] Error 1
+>     make: *** [test] Error 2
+> 
+> The path shown is not quite correct.  I have the sources extracted to
+> /Users/jszakmeister/sources/git-1.8.1.1.  It appears that the Makefile
+> in contrib/remote-helpers is exporting T, which is causing the
+> duplicate test detection to fail.
+
+It has to set T, because that is how t/Makefile knows what the set of
+tests is. The problem is that test-lint-duplicates does not understand
+absolute pathnames, as its regex is too simplistic:
+
+  sed 's/-.*//' | sort | uniq -d
+
+So it finds whatever is before the first "-", which would be the test
+number in "t0000-basic.sh" or similar, and then looks for duplicates.
+
+We can make the regex more strict to handle full paths, like:
+
+  perl -lne 'print $1 if m{(?:^|/)(t\d{4})-}'
+
+but that still would not help, as the tests in remote-helpers do not
+follow the tXXXX convention. So I think even running
+test-lint-duplicates on them is nonsensical.
+
+Maybe something like this would be more appropriate, though it kills off
+all test-lint checks, not just test-lint-duplicates:
+
+diff --git a/contrib/remote-helpers/Makefile b/contrib/remote-helpers/Makefile
+index 9a76575..9c18ed8 100644
+--- a/contrib/remote-helpers/Makefile
++++ b/contrib/remote-helpers/Makefile
+@@ -3,6 +3,7 @@ export PATH := $(CURDIR):$(PATH)
+ export T := $(addprefix $(CURDIR)/,$(TESTS))
+ export MAKE := $(MAKE) -e
+ export PATH := $(CURDIR):$(PATH)
++export TEST_LINT :=
+ 
+ test:
+ 	$(MAKE) -C ../../t $@
