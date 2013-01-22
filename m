@@ -1,130 +1,105 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: [PATCH] all: new command used for multi-repo operations
-Date: Wed, 23 Jan 2013 00:35:12 +0100
-Message-ID: <CAFXTnz62H24G9Zp5EgG47MyNdDz0KddX2n34G_1-RV_yP-ELkA@mail.gmail.com>
-References: <1358889019-4554-1-git-send-email-hjemli@gmail.com>
-	<7vmww0nahd.fsf@alter.siamese.dyndns.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: What's cooking in git.git (Jan 2013, #08; Tue, 22)
+Date: Tue, 22 Jan 2013 23:45:54 +0000
+Message-ID: <20130122234554.GI7498@serenity.lan>
+References: <7va9s0n8gv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 00:35:40 2013
+X-From: git-owner@vger.kernel.org Wed Jan 23 00:46:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxnNS-00048H-5L
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 00:35:38 +0100
+	id 1TxnY1-0001eO-Az
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 00:46:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754517Ab3AVXfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 18:35:16 -0500
-Received: from mail-bk0-f52.google.com ([209.85.214.52]:39953 "EHLO
-	mail-bk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751013Ab3AVXfO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 18:35:14 -0500
-Received: by mail-bk0-f52.google.com with SMTP id y7so1286907bkt.39
-        for <git@vger.kernel.org>; Tue, 22 Jan 2013 15:35:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=mYD8xbG+3uWGjoyztkMxN4otjCjjM387rJwbJvGspmE=;
-        b=IDmSiFeu+OfCe6vFWTcGuM79wlfyJw/fbtec92vwVeMVe5OJbfgXRorgz/MiWmctXe
-         hS/EVmXsZG4OaBhQp7BkhKuMYNwDZ/4dIyh2VjcW5kahrB9SdrknC2e2pAzicI2mZW8i
-         Ojij11AnHESOdvleAfFY+vl49c71scVecNrwRdv9NxlkE4SFs0lUAk7mB3BQuvHmozSt
-         iI2CWkIl6H1TDrnbHnzVPzfqBc6PNN275oas1NRR+5I+RxAioKNNlwGxBBsLX1wn1STF
-         0AZWkF8ySnJK4l63UqUNoPyFg9e4URUtnd6tmybpItuEV8eeuju4W/YSKfAowfID++4R
-         sPuw==
-X-Received: by 10.205.129.17 with SMTP id hg17mr6292588bkc.41.1358897713206;
- Tue, 22 Jan 2013 15:35:13 -0800 (PST)
-Received: by 10.205.83.199 with HTTP; Tue, 22 Jan 2013 15:35:12 -0800 (PST)
-In-Reply-To: <7vmww0nahd.fsf@alter.siamese.dyndns.org>
+	id S1754967Ab3AVXqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 18:46:12 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:55884 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754646Ab3AVXqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 18:46:11 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 72E25CDA5BF;
+	Tue, 22 Jan 2013 23:46:10 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 13b9oU0+mANO; Tue, 22 Jan 2013 23:46:10 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id E77EACDA5B8;
+	Tue, 22 Jan 2013 23:46:09 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id D726D161E5D5;
+	Tue, 22 Jan 2013 23:46:08 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id c3JEZiugY6ZH; Tue, 22 Jan 2013 23:46:08 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 5D98A161E5BB;
+	Tue, 22 Jan 2013 23:45:58 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7va9s0n8gv.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214262>
 
-On Tue, Jan 22, 2013 at 11:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Lars Hjemli <hjemli@gmail.com> writes:
->
->> +static struct option builtin_all_options[] = {
->> +     OPT_BOOLEAN('c', "clean", &only_clean, N_("only show clean repositories")),
->> +     OPT_BOOLEAN('d', "dirty", &only_dirty, N_("only show dirty repositories")),
->> +     OPT_END(),
->> +};
->
-> Shouldn't this be more like OPT_SET_INT() on a same variable that is
-> initialized to "all"?  Alternatively you could validate the input
-> and die when both are given.
+On Tue, Jan 22, 2013 at 02:44:48PM -0800, Junio C Hamano wrote:
+> * jc/cvsimport-upgrade (2013-01-14) 8 commits
+>  - t9600: adjust for new cvsimport
+>  - t9600: further prepare for sharing
+>  - cvsimport-3: add a sample test
+>  - cvsimport: make tests reusable for cvsimport-3
+>  - cvsimport: start adding cvsps 3.x support
+>  - cvsimport: introduce a version-switch wrapper
+>  - cvsimport: allow setting a custom cvsps (2.x) program name
+>  - Makefile: add description on PERL/PYTHON_PATH
+> 
+>  The most important part of this series is the addition of the new
+>  cvsimport by Eric Raymond that works with cvsps 3.x.  Given some
+>  distros have inertia to be conservative, Git with cvsimport that
+>  does not work with both 3.x will block adoption of cvsps 3.x by
+>  them, and shipping Git with cvsimport that does not work with cvsps
+>  2.x will block such a version of Git, so we'll do the proven "both
+>  old and new are available, but we aim to deprecate and remove the
+>  old one in due time" strategy that we used successfully in the
+>  past.
+> 
+>  Will merge to 'next'.
 
-OPT_SET_INT() seems appropriate, will fix.
+Would you mind holding off on this?  As it stands there are a couple of
+issues with the cvsimport-3 script including:
 
->
->> +int cmd_all(int argc, const char **argv, const char *prefix)
->> +{
->> +     struct strbuf path = STRBUF_INIT;
->> +
->> +     if (!getcwd(root, sizeof(root)))
->> +             return 1;
->> +
->> +     argc = parse_options(argc, argv, prefix, builtin_all_options,
->> +                          builtin_all_usage, PARSE_OPT_STOP_AT_NON_OPTION);
->> +
->> +     unsetenv(GIT_DIR_ENVIRONMENT);
->> +     unsetenv(GIT_WORK_TREE_ENVIRONMENT);
->
-> Don't you need to clear other variables whose uses are closely tied
-> to a single repository, like GIT_INDEX_FILE, etc.?
->
-> I suspect that explicitly exporting GIT_DIR and GIT_WORK_TREE (and
-> nothing else) in handle_repo() to the location you discovered before
-> you run the per-repository command via run_command_v_opt(), might be
-> a better alternative.  The user could be sharing objects in all
-> repositories by permanently setting GIT_OBJECT_DIRECTORY to a single
-> place.
->
+    * It doesn't read any configuration from "git config" as
+      git-cvsimport-2 does.
 
-This sounds like a nice plan, I'll test it and send an updated patch.
+    * Incremental import is copmletely broken - it needs to pass "-i" to
+      cvsps-3 and even then timestamp handling is completely broken.
+
+I have fixes for these that are nearly ready, but to fully fix the
+incremental import issue I'll need to persuade ESR to take a patch which
+lets us feed cvsps-3 a mapping from branch names to last commit times.
+
+I suspect people are already used to the ways in which cvsimport-2 is
+broken so I think we should take a bit more time to get this right with
+cvsimport-3, especially since the people most likely to be using this
+will be those regularly updating from a CVS repository with incremental
+updates.
 
 
->> diff --git a/command-list.txt b/command-list.txt
->> index 7e8cfec..f955895 100644
->> --- a/command-list.txt
->> +++ b/command-list.txt
->> @@ -1,6 +1,7 @@
->>  # List of known git commands.
->>  # command name                               category [deprecated] [common]
->>  git-add                                 mainporcelain common
->> +git-all                                 mainporcelain
->>  git-am                                  mainporcelain
->>  git-annotate                            ancillaryinterrogators
->>  git-apply                               plumbingmanipulators
->
-> I am not very interested in this topic in the first place, but this
-> does not (at least not yet) sound like a main Porcelain to me.
-
-There doesn't seem to be a better category, but I'm open for suggestions.
-
->
-> "all" may be a word other people may want to use to call collections
-> of things other than "Git repositories", and that use may turn out
-> to be more useful in general.  A name that makes it clear that this
-> is about "repositories", i.e. along the lines of "git for-each-repo"
-> or something, would be a better name that does not squat on such a
-> short and sweet name.
->
-
-In principle I agree with your reasoning on this, but in practice I
-fail to see what other kind of things `git all` could naturally refer
-to. Also, having a short and sweet way to perform the tasks
-implemented by this patch was my main motivation for writing it [1],
-hence `git for-each-repo` isn't as compelling (too much typing).
-There's always aliases, but I'd prefer it if future git supported `git
-all` by default.
-
--- 
-larsh
-
-[1] Originally as a shell script, used at $WORK for ~2 years
+John
