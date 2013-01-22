@@ -1,169 +1,154 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH v3] Enable minimal stat checking
-Date: Tue, 22 Jan 2013 08:49:22 +0100
-Message-ID: <1358840962-12316-1-git-send-email-robin.rosenberg@dewire.com>
-References: <7v4niblhr6.fsf@alter.siamese.dyndns.org>
-Cc: j sixt <j.sixt@viscovery.net>, Shawn Pearce <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 08:50:09 2013
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 01/10] sequencer.c: remove broken support for rfc2822
+ continuation in footer
+Date: Mon, 21 Jan 2013 23:54:13 -0800
+Message-ID: <20130122075413.GB6085@elie.Belkin>
+References: <1358757627-16682-1-git-send-email-drafnel@gmail.com>
+ <1358757627-16682-2-git-send-email-drafnel@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org,
+	Brandon Casey <bcasey@nvidia.com>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 08:54:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxYcS-0003fu-UQ
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 08:50:09 +0100
+	id 1TxYgq-0005w5-8O
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 08:54:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754983Ab3AVHtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 02:49:49 -0500
-Received: from smtp-gw21.han.skanova.net ([81.236.55.21]:49349 "EHLO
-	smtp-gw21.han.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754661Ab3AVHts (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 02:49:48 -0500
-Received: from localhost.localdomain (213.67.12.15) by smtp-gw21.han.skanova.net (8.5.133)
-        id 506A33EC028464AB; Tue, 22 Jan 2013 08:49:45 +0100
-X-Mailer: git-send-email 1.8.1.337.g6672977.dirty
-In-Reply-To: <7v4niblhr6.fsf@alter.siamese.dyndns.org>
+	id S1754026Ab3AVHyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 02:54:20 -0500
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:50271 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751867Ab3AVHyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 02:54:19 -0500
+Received: by mail-pb0-f53.google.com with SMTP id un1so3163563pbc.12
+        for <git@vger.kernel.org>; Mon, 21 Jan 2013 23:54:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=mlE9HfbIm1MnoANdwUSN8/qpvpO4l/S77QikuCcZ0Ec=;
+        b=a83Vrfe06ybA1y8JEFpi3Hn7reVb2rquwG7c0nIouJqO+KaxD3+Nvn8Q6Skkg0k0rm
+         ETMh+lYmfNCLAYX2oy71dupvUCIKWQ/bnoNA/oWalTRCtIeXC6o8VIDWBNmhhIMRQuEJ
+         QZkBN291CAGePXuEbQkFhq7KHiIW5fKxm2wuTSis+UUjDWIl9DyM4xKvzk0k2pdbbT6t
+         27Nuj1AKgL+pIDZIoZaxNok2FL7ucYIJ2tmPF4COQDfdfyH0jmheLq8Yv7vEE8NRqXWv
+         h/TrQorzPef4At0IFjpBiSUCHvKoNlcyiOksa2HU0knWt0KYGwsv6S426r/PHlRtD5TA
+         p7kQ==
+X-Received: by 10.66.76.198 with SMTP id m6mr54061342paw.32.1358841258840;
+        Mon, 21 Jan 2013 23:54:18 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id qt3sm10278195pbb.32.2013.01.21.23.54.16
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 21 Jan 2013 23:54:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1358757627-16682-2-git-send-email-drafnel@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214211>
 
-Specifically the fields uid, gid, ctime, ino and dev are set to zero
-by JGit. Other implementations, eg. Git in cygwin are allegedly also
-somewhat incompatible with Git For Windows and on *nix platforms
-the resolution of the timestamps may differ.
+Hi,
 
-Any stat checking by git will then need to check content, which may
-be very slow, particularly on Windows. Since mtime and size
-is typically enough we should allow the user to tell git to avoid
-checking these fields if they are set to zero in the index.
+Brandon Casey wrote:
 
-This change introduces a core.checkstat config option where the
-the user can select to check all fields (default), or just size
-and the whole second part of mtime (minimal).
+> --- a/sequencer.c
+> +++ b/sequencer.c
+[...]
+> @@ -1042,13 +1041,8 @@ static int ends_rfc2822_footer(struct strbuf *sb, int ignore_footer)
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- Documentation/config.txt |  6 ++++++
- cache.h                  |  1 +
- config.c                 |  8 ++++++++
- environment.c            |  1 +
- read-cache.c             | 28 ++++++++++++++++------------
- 5 files changed, 32 insertions(+), 12 deletions(-)
+Git is checking if (sb->buf) ends with a "Signed-off-by:" style
+line.  If it doesn't, it will need to add an extra blank line
+before adding a new sign-off.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index d5809e0..47c213d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -235,6 +235,12 @@ core.trustctime::
- 	crawlers and some backup systems).
- 	See linkgit:git-update-index[1]. True by default.
- 
-+core.checkstat::
-+	Determines which stat fields to match between the index
-+	and work tree. The user can set this to 'default' or
-+	'minimal'. Default (or explicitly 'default'), is to check
-+	all fields, including the sub-second part of mtime and ctime.
-+
- core.quotepath::
- 	The commands that output paths (e.g. 'ls-files',
- 	'diff'), when not given the `-z` option, will quote
-diff --git a/cache.h b/cache.h
-index c257953..ab20c4d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -536,6 +536,7 @@ extern int delete_ref(const char *, const unsigned char *sha1, int delopt);
- /* Environment bits from configuration mechanism */
- extern int trust_executable_bit;
- extern int trust_ctime;
-+extern int check_stat;
- extern int quote_path_fully;
- extern int has_symlinks;
- extern int minimum_abbrev, default_abbrev;
-diff --git a/config.c b/config.c
-index 7b444b6..2b58c75 100644
---- a/config.c
-+++ b/config.c
-@@ -566,6 +566,14 @@ static int git_default_core_config(const char *var, const char *value)
- 		trust_ctime = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "core.statinfo")) {
-+		if (!strcasecmp(value, "default"))
-+			check_stat = 1;
-+		else if (!strcasecmp(value, "minimal"))
-+			check_stat = 0;
-+		else
-+			die_bad_config(var);
-+	}
- 
- 	if (!strcmp(var, "core.quotepath")) {
- 		quote_path_fully = git_config_bool(var, value);
-diff --git a/environment.c b/environment.c
-index 85edd7f..e828b37 100644
---- a/environment.c
-+++ b/environment.c
-@@ -13,6 +13,7 @@
- 
- int trust_executable_bit = 1;
- int trust_ctime = 1;
-+int check_stat = 1;
- int has_symlinks = 1;
- int minimum_abbrev = 4, default_abbrev = 7;
- int ignore_case;
-diff --git a/read-cache.c b/read-cache.c
-index fda78bc..23db681 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -197,21 +197,25 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
- 	}
- 	if (ce->ce_mtime.sec != (unsigned int)st->st_mtime)
- 		changed |= MTIME_CHANGED;
--	if (trust_ctime && ce->ce_ctime.sec != (unsigned int)st->st_ctime)
--		changed |= CTIME_CHANGED;
-+	if (trust_ctime ? check_stat : trust_ctime/*false*/)
-+		if (ce->ce_ctime.sec != (unsigned int)st->st_ctime)
-+			changed |= CTIME_CHANGED;
- 
- #ifdef USE_NSEC
--	if (ce->ce_mtime.nsec != ST_MTIME_NSEC(*st))
-+	if (check_stat && ce->ce_mtime.nsec != ST_MTIME_NSEC(*st))
- 		changed |= MTIME_CHANGED;
--	if (trust_ctime && ce->ce_ctime.nsec != ST_CTIME_NSEC(*st))
--		changed |= CTIME_CHANGED;
-+	if (trust_ctime ? check_stat : trust_ctime/*false*/)
-+		if (ce->ce_ctime.nsec != ST_CTIME_NSEC(*st))
-+			changed |= CTIME_CHANGED;
- #endif
- 
--	if (ce->ce_uid != (unsigned int) st->st_uid ||
--	    ce->ce_gid != (unsigned int) st->st_gid)
--		changed |= OWNER_CHANGED;
--	if (ce->ce_ino != (unsigned int) st->st_ino)
--		changed |= INODE_CHANGED;
-+	if (check_stat) {
-+		if (ce->ce_uid != (unsigned int) st->st_uid ||
-+			ce->ce_gid != (unsigned int) st->st_gid)
-+			changed |= OWNER_CHANGED;
-+		if (ce->ce_ino != (unsigned int) st->st_ino)
-+			changed |= INODE_CHANGED;
-+	}
- 
- #ifdef USE_STDEV
- 	/*
-@@ -219,8 +223,8 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
- 	 * clients will have different views of what "device"
- 	 * the filesystem is on
- 	 */
--	if (ce->ce_dev != (unsigned int) st->st_dev)
--		changed |= INODE_CHANGED;
-+	if (check_stat && ce->ce_dev != (unsigned int) st->st_dev)
-+			changed |= INODE_CHANGED;
- #endif
- 
- 	if (ce->ce_size != (unsigned int) st->st_size)
--- 
-1.8.1.337.g6672977.dirty
+First (snipped), it seeks back two newlines from the end and then
+forward to the next non-newline character, so (buf + i) is at the
+start of the last line of (the interesting part of) sb.  Now:
+
+> 	for (; i < len; i = k) {
+> 		for (k = i; k < len && buf[k] != '\n'; k++)
+>  			; /* do nothing */
+>  		k++;
+
+(buf + k) points to the end of this line.
+
+> -		if ((buf[k] == ' ' || buf[k] == '\t') && !first)
+> -			continue;
+
+This is always the first line examined, so this "continue" never
+triggers.
+
+> -
+> -		first = 0;
+> -
+>  		for (j = 0; i + j < len; j++) {
+
+If the line matches /^[[:alnum:]-]*:/, it passes and git moves on to
+the (nonexistent) next line.  Otherwise, it fails.
+
+Do I understand correctly?  If so, this patch should be a no-op, which
+is good, I guess.
+
+But in that case, couldn't this function be made much simpler?  As far
+as I can tell, all the function needs to do is the following:
+
+	1. Find the last line.
+	2. Check if it is blank or matches /^[[:alnum:]-]*:/
+	3. There is no step 3.  That's it.
+
+In other words, something like:
+
+	const char *eol, *p;
+
+	/* End of line */
+	eol = memrchr(sb->buf, '\n', sb->len - ignore_footer);
+	if (!eol)
+		eol = sb->buf;
+
+	/* Start of line */
+	p = memrchr(sb->buf, '\n', eol - sb->buf);
+	if (p)
+		p++;
+	else
+		p = sb->buf;
+
+	if (p == eol)	/* Blank line? */
+		return 1;
+
+	/* "Signed-off-by"-style field */
+	while ((isalnum(*p) || *p == '-') && p < eol)
+		p++;
+	return *p == ':';
+
+where memrchr is defined roughly as follows[1]:
+
+	#ifdef __GLIBC_PREREQ
+	#if __GLIBC_PREREQ(2, 2)
+	#define HAVE_MEMRCHR
+	#endif
+	#endif
+
+	#ifndef HAVE_MEMRCHR
+	#define memrchr gitmemrchr
+	static inline void *gitmemrchr(const void *s, int c, size_t n)
+	{
+		const unsigned char *p = s;
+		p += n;
+		while (p != s)
+			if (*--p == (unsigned char) c)
+				return p;
+		return NULL;
+	}
+	#endif
+
+Does that look right?
+
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/159081/focus=159121
