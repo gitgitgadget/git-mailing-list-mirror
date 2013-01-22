@@ -1,117 +1,112 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3] Enable minimal stat checking
-Date: Tue, 22 Jan 2013 09:25:15 +0100
-Message-ID: <50FE4CEB.5040200@viscovery.net>
-References: <7v4niblhr6.fsf@alter.siamese.dyndns.org> <1358840962-12316-1-git-send-email-robin.rosenberg@dewire.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 04/10] sequencer.c: recognize "(cherry picked from
+ ..." as part of s-o-b footer
+Date: Tue, 22 Jan 2013 00:27:01 -0800
+Message-ID: <20130122082701.GE6085@elie.Belkin>
+References: <1358757627-16682-1-git-send-email-drafnel@gmail.com>
+ <1358757627-16682-5-git-send-email-drafnel@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 09:25:48 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org,
+	Brandon Casey <bcasey@nvidia.com>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 09:27:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxZAx-0003Gx-T3
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 09:25:48 +0100
+	id 1TxZCc-00041o-Fw
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 09:27:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753415Ab3AVIZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 03:25:26 -0500
-Received: from so.liwest.at ([212.33.55.24]:13368 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753170Ab3AVIZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 03:25:25 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1TxZAS-00078B-Av; Tue, 22 Jan 2013 09:25:16 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id D9B9F1660F;
-	Tue, 22 Jan 2013 09:25:15 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <1358840962-12316-1-git-send-email-robin.rosenberg@dewire.com>
-X-Enigmail-Version: 1.5
-X-Spam-Score: -1.0 (-)
+	id S1752481Ab3AVI1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 03:27:08 -0500
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:48528 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752074Ab3AVI1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 03:27:07 -0500
+Received: by mail-pa0-f51.google.com with SMTP id fb11so3932873pad.10
+        for <git@vger.kernel.org>; Tue, 22 Jan 2013 00:27:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=/ni8Riuoa/z1L26vUiRiARzeXtLlojQDCEv3R5Bzckg=;
+        b=sEfKmPuUAGIbyfdi47vbx7Kfx48A/u/ctueXi7DuMX9Km99wCXm1agOD7jjY2ZLS+n
+         Lz8ZbtMEG+ELunV0bvVb+oTBlyuE1bJyzXaC8Snw6D3BnuKTp9boxuKsuJFuqlyClblZ
+         9iaS9FVid0g1ND8sxnPWPiXlxa2tbCe+8sDfUJO5jrri8mf24HRPZFkJx5y5s8gB6/ED
+         WBR4k9mkUqqHvM00PZmYbHO6qoKZ3IulTa6aAWR8DaWBi4ii+id0Scmsz8um0u0BM9DL
+         PwNUdpapTNoRiwBvNnLU1UtfntLbOzzHdzws2a9XFrft+8n3sg+4ZWoA0fz/rNOUqJ1v
+         rj3w==
+X-Received: by 10.66.77.201 with SMTP id u9mr54129460paw.80.1358843226917;
+        Tue, 22 Jan 2013 00:27:06 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id ni8sm10318868pbc.70.2013.01.22.00.27.04
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 22 Jan 2013 00:27:05 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1358757627-16682-5-git-send-email-drafnel@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214217>
 
-Am 1/22/2013 8:49, schrieb Robin Rosenberg:
-> Specifically the fields uid, gid, ctime, ino and dev are set to zero
-> by JGit. Other implementations, eg. Git in cygwin are allegedly also
-> somewhat incompatible with Git For Windows and on *nix platforms
-> the resolution of the timestamps may differ.
-> 
-> Any stat checking by git will then need to check content, which may
-> be very slow, particularly on Windows. Since mtime and size
-> is typically enough we should allow the user to tell git to avoid
-> checking these fields if they are set to zero in the index.
+Brandon Casey wrote:
 
-Isn't this paragraph about slowness in the commit message misleading, as
-what the patch does has no influence on the speed of stat checking? Am I
-missing something?
+> Let's detect "(cherry picked from...)" as part of the footer so that we
+> will produce this:
+>
+>    Signed-off-by: A U Thor <author@example.com>
+>    (cherry picked from da39a3ee5e6b4b0d3255bfef95601890afd80709)
+>    Signed-off-by: C O Mmitter <committer@example.com>
+>
+> instead of this:
+>
+>    Signed-off-by: A U Thor <author@example.com>
+>    (cherry picked from da39a3ee5e6b4b0d3255bfef95601890afd80709)
+>
+>    Signed-off-by: C O Mmitter <committer@example.com>
 
-> This change introduces a core.checkstat config option where the
-> the user can select to check all fields (default), or just size
-> and the whole second part of mtime (minimal).
+Yes, looks sane.
 
-> +core.checkstat::
-> +	Determines which stat fields to match between the index
-> +	and work tree. The user can set this to 'default' or
-> +	'minimal'. Default (or explicitly 'default'), is to check
-> +	all fields, including the sub-second part of mtime and ctime.
+A downside is that this produces an arguably worse result when using
+"-x -s" for a commit that does not already have a sign-off.  Before,
+we had:
 
-I think this needs some more clarification, less 1337 speak, as well as a
-hint when to set the option.
+	test: do something great
 
-	Determines which file attributes are checked to detect whether
-	a file has been modified. Set this option to 'minimal', when...,
-	which checks only the file size and whole-seconds of the last
-	modification time. Otherwise, leave unset or set to the value
-	'default'.
+	Do something fantastic in a clean and elegant way that
+	only takes two lines of explanation.
+	(cherry picked from da39a3ee5e6b4b0d3255bfef95601890afd80709)
 
-By starting with the hint when to set to 'minimal' in this way allows us
-to omit a specification what the 'default' is.
+	Signed-off-by: C H Errypicker <cherry-picker@example.com>
 
-> diff --git a/read-cache.c b/read-cache.c
-> index fda78bc..23db681 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -197,21 +197,25 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
->  	}
->  	if (ce->ce_mtime.sec != (unsigned int)st->st_mtime)
->  		changed |= MTIME_CHANGED;
-> -	if (trust_ctime && ce->ce_ctime.sec != (unsigned int)st->st_ctime)
-> -		changed |= CTIME_CHANGED;
-> +	if (trust_ctime ? check_stat : trust_ctime/*false*/)
-> +		if (ce->ce_ctime.sec != (unsigned int)st->st_ctime)
-> +			changed |= CTIME_CHANGED;
+Afterwards, we will have:
 
-It took me a while to understand why you write /*false*/ there. Isn't the
-the condition merely this:
+	test: do something great
 
-	if (trust_ctime && check_stat &&
-	    ce->ce_ctime.sec != (unsigned int)st->st_ctime)
-		changed |= CTIME_CHANGED;
+	Do something fantastic in a clean and elegant way that
+	only takes two lines of explanation.
+	(cherry picked from da39a3ee5e6b4b0d3255bfef95601890afd80709)
+	Signed-off-by: C H Errypicker <cherry-picker@example.com>
 
->  
->  #ifdef USE_NSEC
-> -	if (ce->ce_mtime.nsec != ST_MTIME_NSEC(*st))
-> +	if (check_stat && ce->ce_mtime.nsec != ST_MTIME_NSEC(*st))
->  		changed |= MTIME_CHANGED;
-> -	if (trust_ctime && ce->ce_ctime.nsec != ST_CTIME_NSEC(*st))
-> -		changed |= CTIME_CHANGED;
-> +	if (trust_ctime ? check_stat : trust_ctime/*false*/)
-> +		if (ce->ce_ctime.nsec != ST_CTIME_NSEC(*st))
-> +			changed |= CTIME_CHANGED;
+An ideal result would be completely different:
 
-Same here.
+	test: do something great
 
->  #endif
+	commit da39a3ee5e6b4b0d3255bfef95601890afd80709 upstream.
 
--- Hannes
+	Do something fantastic in a clean and elegant way that
+	only takes two lines of explanation.
+
+	Signed-off-by: C H Errypicker <cherry-picker@example.com>
+
+In other words, the -x output format that puts the commit id at the
+end with odd spacing seems to be of questionable taste anyway.  But
+given the constraint of leaving that alone, cramming together the
+sign-off like this seems like the best we can do, so for what it's
+worth,
+Acked-by: Jonathan Nieder <jrnieder@gmail.com>
