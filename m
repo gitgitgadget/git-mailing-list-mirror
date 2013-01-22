@@ -1,77 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Finishing touches to "push" advises
-Date: Mon, 21 Jan 2013 23:26:30 -0800
-Message-ID: <7vwqv5brvd.fsf@alter.siamese.dyndns.org>
-References: <20130121234002.GE17156@sigill.intra.peff.net>
- <1358836230-9197-1-git-send-email-gitster@pobox.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] add: warn when -u or -A is used without filepattern
+Date: Tue, 22 Jan 2013 08:39:36 +0100
+Message-ID: <vpq1uddoedj.fsf@grenoble-inp.fr>
+References: <7v1udfn0tm.fsf@alter.siamese.dyndns.org>
+	<1358769611-3625-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20130121222248.GA3586@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Chris Rorvick <chris@rorvick.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 22 08:27:04 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 08:40:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxYG2-0001Og-UI
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 08:26:59 +0100
+	id 1TxYSs-0007Eg-93
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 08:40:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752426Ab3AVH0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 02:26:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36340 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751003Ab3AVH0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 02:26:37 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2671E883C;
-	Tue, 22 Jan 2013 02:26:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KyPn/S2aLFQFXN+R4TJNu3kOJ1A=; b=KxzELF
-	OzFJfeTupG3FzuFVvHtVh6xwYbDQN7TkOt6zAJ9dPpl4ez6iz1SQVcw6gv3uvO7H
-	P5Q9V2X3yP72vfcvA37EgOKJ+zCG4BZUFSq/lK3DDccweO5VqMvAO+fDN8BTZOh/
-	shQd9wj+bS1/usbxfSzyclUggJAMh9udNeYfo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wgh+qBsxYiksqXCOeNJj0oQj9erKRR+f
-	jLe2SbN6tD+i6xa+THzcDwNU9hCdZsOMyUhzddpyzLqtuiJkyprqY0K247JjuRlM
-	rUjLxX3N8gGNUywqsSAjoCO0J7bwi8LMLwHl3WxmEjuQ9rzsiQyKGcUC7xy+0kiw
-	+NfSdVS8EVE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CAEF883B;
-	Tue, 22 Jan 2013 02:26:32 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9789883A; Tue, 22 Jan 2013
- 02:26:31 -0500 (EST)
-In-Reply-To: <1358836230-9197-1-git-send-email-gitster@pobox.com> (Junio C.
- Hamano's message of "Mon, 21 Jan 2013 22:30:27 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0B34D6E6-6465-11E2-83C9-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754357Ab3AVHjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 02:39:43 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:56837 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752622Ab3AVHjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 02:39:42 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r0M7daUC020327
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 22 Jan 2013 08:39:36 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TxYSG-0003AX-S6; Tue, 22 Jan 2013 08:39:36 +0100
+In-Reply-To: <20130121222248.GA3586@elie.Belkin> (Jonathan Nieder's message of
+	"Mon, 21 Jan 2013 14:22:49 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 22 Jan 2013 08:39:36 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r0M7daUC020327
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1359445176.71945@iIb/RIyw/Aj1PN428MnBog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214207>
 
-As far as I am concerned, I am pretty much done with this topic, at
-least for now.  Of course if there are bugreports I'll try to help
-resolving them, but I do not expect myself adding new object-type
-based policy decision to this codepath.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-The call the updated call makes to ref_newer() no longer feeds
-certain combinations to the function, because the NULL-ness of the
-old and commit-ness of both are checked before making a call.
+> Would it be possible to make this conditional on cwd not being at the
+> toplevel (the case where "git add -u :/" and "git add -u ." have
+> different behavior)?  E.g.,
+>
+> 		static const char *here[2] = { ".", NULL };
+> 		if (prefix)
+> 			warning(...);
 
-I notice that builtin/remote.c has another callsite for ref_newer().
-Although I didn't look at the code, I think it is trying to see if
-the branch can be pushed as a fast-forward to the remote (or the
-remote tip moved since you started building on top of it).
+I thought about this too, after writting the patch. Actually, I still I
+it makes sense to warn even from the toplevel, since the point is to
+teach people to stop using pathless "git add -u" for a while, so I'd say
+it's easier to teach this in every condition. OTOH, the next step
+(forbidding pathless "git add -u") can still allow it from the toplevel
+to minimize the pain.
 
-It probably makes sense to refactor the logic that is run per-ref in
-the loop in the set_ref_status_for_push() function into a new helper
-function, inline ref_newer() there, and have the remaining callers
-of ref_newer() to use that new helper function, which knows the new
-rules such as "refs/tags/ cannot be replaced with anything without
-force".
+But I'm starting to be convinced ;-).
+
+Any other thought on the question?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
