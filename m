@@ -1,83 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Brandon Casey <drafnel@gmail.com>
 Subject: Re: [PATCH v2 01/10] sequencer.c: remove broken support for rfc2822
  continuation in footer
-Date: Tue, 22 Jan 2013 02:21:47 -0800
-Message-ID: <20130122102147.GD8908@elie.Belkin>
+Date: Tue, 22 Jan 2013 03:08:40 -0800
+Message-ID: <CA+sFfMeB_PEgoykPj-RX6zZ-hOD1106aO_KwkWF7BBiJvG-1AA@mail.gmail.com>
 References: <1358757627-16682-1-git-send-email-drafnel@gmail.com>
- <1358757627-16682-2-git-send-email-drafnel@gmail.com>
- <20130122075413.GB6085@elie.Belkin>
- <CA+sFfMfERgGbf58LjOfAhhO_-YLu+yo+L-vYMuAuOUaP90yvgA@mail.gmail.com>
- <20130122101208.GC8908@elie.Belkin>
+	<1358757627-16682-2-git-send-email-drafnel@gmail.com>
+	<20130122075413.GB6085@elie.Belkin>
+	<CA+sFfMfERgGbf58LjOfAhhO_-YLu+yo+L-vYMuAuOUaP90yvgA@mail.gmail.com>
+	<20130122094720.GA8908@elie.Belkin>
+	<20130122094916.GB8908@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org,
 	Brandon Casey <bcasey@nvidia.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 11:22:16 2013
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 12:09:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Txazg-0003PQ-GV
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 11:22:16 +0100
+	id 1Txbix-0005Ex-HS
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 12:09:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753531Ab3AVKVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 05:21:54 -0500
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:64630 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753451Ab3AVKVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 05:21:53 -0500
-Received: by mail-pa0-f50.google.com with SMTP id hz10so3971204pad.37
-        for <git@vger.kernel.org>; Tue, 22 Jan 2013 02:21:53 -0800 (PST)
+	id S1752607Ab3AVLIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 06:08:42 -0500
+Received: from mail-vb0-f51.google.com ([209.85.212.51]:64132 "EHLO
+	mail-vb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751531Ab3AVLIl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 06:08:41 -0500
+Received: by mail-vb0-f51.google.com with SMTP id fq11so5310205vbb.24
+        for <git@vger.kernel.org>; Tue, 22 Jan 2013 03:08:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=/g3Ypjx3SRnNrXULBmWOec6T7m8y0yK7GNvGkMrRBCo=;
-        b=QopEitjXsFPovWlTaNTVrbMJC9Jr0tQWX0npzpy1b0kpfkpMHLQNExgkV6xPkglZ+c
-         MFnyurFSAI0USgvU8z/FcmdKlCU6cysZcffUBPKfMxPtY5QUUKEfAW6sw/7bFsOsD+vR
-         xoSOSinnxhTch943hxx1padzm6fQGxUHhMcvuNQufyv1Ehfj9nJ3mWDiXwQtTTOVzE8Q
-         9HVF9kuUP9qdtA/RuxlkuI8KdFlinPmRpMsJ2cnDgAdXdYB7Veh+TnkZ9kg4XuDuD21x
-         h2JefDILtYqTF2IdDiFvU9D/dGV0mMCGfWy8KasnouWFz2tvamHC8OeoLGwzIsMq+/7e
-         DUmg==
-X-Received: by 10.66.84.232 with SMTP id c8mr55177503paz.8.1358850113328;
-        Tue, 22 Jan 2013 02:21:53 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id qt3sm10499021pbb.32.2013.01.22.02.21.50
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 22 Jan 2013 02:21:52 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20130122101208.GC8908@elie.Belkin>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=p6BADpUD6YxHGKL6Ne5VLuswapBcjNiT0UJXl332mIo=;
+        b=BaH3tOPcv2oyEIeKBoMrStaINmwFAkj3FztiFn+USjJB/zxrdRNxXhHMpdHzcW6PGV
+         R9hvxl2IF7KScWu1ITqE1eRC4z5uhitpk1xPNqWC68QfN/ZE11mVxsbLuGrL6ayEwiJb
+         ex6LMxXtl4irC4bslN/uO6FO+EaVkV8J3j6RMQfLGGi543czqLL1J3RmAi2gEguy34KL
+         NIMafaQnfmmQ/Gm9ebk1FzcoRqax/B00ivRj1lbZsOLoauqzJYiFWhkeggXoHGNt1unN
+         2CYJ+zw+5DYOpRdGyPFmOZe3Ea77D9yloSJrBXVCyXJMNJGRAxiU+poodbr+TIJZ657T
+         tmZA==
+X-Received: by 10.220.151.9 with SMTP id a9mr2383594vcw.7.1358852920188; Tue,
+ 22 Jan 2013 03:08:40 -0800 (PST)
+Received: by 10.58.216.1 with HTTP; Tue, 22 Jan 2013 03:08:40 -0800 (PST)
+In-Reply-To: <20130122094916.GB8908@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214231>
 
-Jonathan Nieder wrote:
+On Tue, Jan 22, 2013 at 1:49 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Jonathan Nieder wrote:
+>
+>> Here is the loop in master:
+>>
+>>       int hit = 0;
+>> [...]
+>>
+>>       for (i = len - 1; i > 0; i--) {
+>>               if (hit && buf[i] == '\n')
+>>                       break;
+>>               hit = (buf[i] == '\n');
+>>       }
+>>
+>> I don't see any adjacency check.
+>
+> Of course that's because I can't read. :)  Checking again.
 
-> 	line) instead of buf[i] is a whitespace character.  So for example, it
-> 	confuses the following for a well-formed RFC2822 footer:
+Blame the code, not your eyes.  The use of the term 'hit' is what
+makes this loop confusing.  It gives the impression that 'hit' gets
+set once, after the first newline is /hit/.
 
-Luckily it doesn't, since the final continuation line is not followed
-by whitespace.  I should have said:
+It would be much easier to read if it was written like this:
 
-	"... is a whitespace character.  The result is that any
-	footer with a continuation line is not accepted, since the last
-	continuation line neither starts with an RFC2822 field name nor is
-	followed by a continuation line.
+   int last_char_was_nl = 0;
+   for (i = len - 1; i > 0; i--) {
+           this_char_is_nl = (buf[i] == '\n');
+           if (last_char_was_nl && this_char_is_nl)
+                   break;
+           last_char_was_nl = this_char_is_nl;
+   }
 
-	That this has remained broken for so long is good evidence that nobody
-	actually needed multiline fields.  Rip out the broken continuation
-	support.
+I'll slide this in when I resubmit this series with your suggestions.
 
-	No functional change intended."
-
-I have no excuse, since you explained this all out loud to me a couple of
-months ago. :)  Sorry for the nonsense.
-
-Thanks,
-Jonathan
+-Brandon
