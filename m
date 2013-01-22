@@ -1,91 +1,78 @@
-From: greened@obbligato.org
-Subject: Re: [PATCH 3/7] contrib/subtree: Add --unannotate
-Date: Tue, 22 Jan 2013 02:37:42 -0600
-Message-ID: <87liblfwa1.fsf@waller.obbligato.org>
-References: <1357646997-28675-1-git-send-email-greened@obbligato.org>
-	<1357646997-28675-4-git-send-email-greened@obbligato.org>
-	<7vehhvecoy.fsf@alter.siamese.dyndns.org>
-	<87vcaxq0ez.fsf@waller.obbligato.org>
-	<87y5ftojoj.fsf@waller.obbligato.org>
-	<7vy5ftzr3s.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 06/10] sequencer.c: teach append_signoff how to detect
+ duplicate s-o-b
+Date: Tue, 22 Jan 2013 00:38:25 -0800
+Message-ID: <20130122083825.GG6085@elie.Belkin>
+References: <1358757627-16682-1-git-send-email-drafnel@gmail.com>
+ <1358757627-16682-7-git-send-email-drafnel@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, James Nylen <jnylen@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 09:38:51 2013
+Cc: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org,
+	Brandon Casey <bcasey@nvidia.com>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 09:38:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxZNX-0000rB-PS
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 09:38:48 +0100
+	id 1TxZNd-0000uW-V8
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jan 2013 09:38:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752548Ab3AVIi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 03:38:26 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:37822 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752263Ab3AVIiZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 03:38:25 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <greened@obbligato.org>)
-	id 1TxZNA-0002ZE-SM; Tue, 22 Jan 2013 02:38:25 -0600
-In-Reply-To: <7vy5ftzr3s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 15 Jan 2013 20:31:03 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Junio C Hamano <gitster@pobox.com> writes: > greened@obbligato.org
-    writes: > >> greened@obbligato.org writes: >> >>>> I think this paragraph
-    inherits existing breakage from the beginning >>>> of time, but I do not
-   think the above will format the second and >>>> subsequent paragraphs correctly.
-    >>> >>> Ok, I'll take a look. >> >> I don't know what "correctly" is but
-   it is at least formatted in a >> similar manner to the other options. > >
-   That is what "inherits existing breakage" means ;-) [...] 
- Content analysis details: 
+	id S1753288Ab3AVIic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 03:38:32 -0500
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:38030 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752160Ab3AVIib (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 03:38:31 -0500
+Received: by mail-pb0-f44.google.com with SMTP id uo1so3830698pbc.31
+        for <git@vger.kernel.org>; Tue, 22 Jan 2013 00:38:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=tf4OaAtiusLeR5H2Zgw9YVzHkyOGgQxJURnw7PwwJ0k=;
+        b=Dly3R+1wOQaLXgU6+x5U7mcMxiG5ynemqHSADUd30tV4pjq1BvJmKZgOw83tN3mx95
+         WBK2OwVWR/xT1A/YZBiwuOT2JoxvG/yxvNQJeEy88XiTFEqz3ZEvSk5CzCb0z9kROzTH
+         Dp5dMF9NJdAF+zIyQgG3Ll3Vt9JGyW/CALQjO8uadz/JLY+ry5hY0lKRgQ56iZESZaT+
+         pYYwSudOuvWdvS8CTvtkXVTJ26RW/ju53FCojm7i/Li96R8jzdEH2CT1I0Oc1UaJNflC
+         WY8mtHmhpMVLrwsjQVTRDV6fLSelMBlfAi0CrB5Z+vOxtMYqxaHzSW/ZNPLPw5Sk3QUE
+         4JIw==
+X-Received: by 10.66.52.79 with SMTP id r15mr54391997pao.46.1358843910853;
+        Tue, 22 Jan 2013 00:38:30 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id a4sm10994287pax.25.2013.01.22.00.38.28
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 22 Jan 2013 00:38:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1358757627-16682-7-git-send-email-drafnel@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214220>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Brandon Casey wrote:
 
-> greened@obbligato.org writes:
+> Teach append_signoff how to detect a duplicate s-o-b in the commit footer.
+> This is in preparation to unify the append_signoff implementations in
+> log-tree.c and sequencer.c.
+[...]
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1082,9 +1101,10 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+>  	return pick_commits(todo_list, opts);
+>  }
 >
->> greened@obbligato.org writes:
->>
->>>> I think this paragraph inherits existing breakage from the beginning
->>>> of time, but I do not think the above will format the second and
->>>> subsequent paragraphs correctly.
->>>
->>> Ok, I'll take a look.
->>
->> I don't know what "correctly" is but it is at least formatted in a
->> similar manner to the other options.
->
-> That is what "inherits existing breakage" means ;-)
+> -void append_signoff(struct strbuf *msgbuf, int ignore_footer)
+> +void append_signoff(struct strbuf *msgbuf, int ignore_footer, int no_dup_sob)
 
-Ah.
+Isn't the behavior of passing '1' here just a bug in "format-patch -s"?
 
-> The first paragraph is typeset as body text, while the rest are
-> typeset in monospaced font, no?
->
-> It should be more like this, I think:
->
->         --option::
->                 First paragraph
->         +
->         Second paragraph
->         +
->         And third paragraph
+Style: callers will be easier to read if the function takes a flag
+word with named bits, as in:
 
-Ok.
-
-                          -David
+	#define APPEND_SIGNOFF_DEDUP (1 << 0)
+	void append_signoff(..., int ignore_footer, unsigned flag)
