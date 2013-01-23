@@ -1,48 +1,63 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: Bug in latest gitk - can't click lines connecting commits
-Date: Wed, 23 Jan 2013 22:48:06 +1100
-Message-ID: <20130123114806.GA21124@iris.ozlabs.ibm.com>
-References: <20130101172156.GA22450@gmail.com>
- <1kw18d3.5sftkl125qdz4M%stefan@haller-berlin.de>
- <20130101232220.GD20724@iris.ozlabs.ibm.com>
- <7v622p9lfs.fsf@alter.siamese.dyndns.org>
+From: "Stefan Schulze" <algroth@gmx.de>
+Subject: Moving commits from one branch to another
+Date: Wed, 23 Jan 2013 13:04:03 +0100
+Message-ID: <000a01cdf961$bcf773d0$36e65b70$@de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 12:48:58 2013
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 23 13:04:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Txyp4-0004w7-TR
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 12:48:55 +0100
+	id 1Txz4A-0006AD-1E
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 13:04:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755040Ab3AWLsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 06:48:17 -0500
-Received: from ozlabs.org ([203.10.76.45]:41510 "EHLO ozlabs.org"
+	id S1754939Ab3AWMEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 07:04:07 -0500
+Received: from mout.gmx.net ([212.227.15.19]:51393 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754730Ab3AWLsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 06:48:16 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 1ECD02C00FE; Wed, 23 Jan 2013 22:48:15 +1100 (EST)
-Content-Disposition: inline
-In-Reply-To: <7v622p9lfs.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754549Ab3AWMEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 07:04:06 -0500
+Received: from mailout-de.gmx.net ([10.1.76.10]) by mrigmx.server.lan
+ (mrigmx001) with ESMTP (Nemesis) id 0M5aK6-1T0N9o0Ddo-00xZPz for
+ <git@vger.kernel.org>; Wed, 23 Jan 2013 13:04:04 +0100
+Received: (qmail invoked by alias); 23 Jan 2013 12:04:03 -0000
+Received: from unknown (EHLO AINBSP0006) [62.154.226.26]
+  by mail.gmx.net (mp010) with SMTP; 23 Jan 2013 13:04:03 +0100
+X-Authenticated: #2258612
+X-Provags-ID: V01U2FsdGVkX19J0jgkbt9JrpN2LRFffxQ+FXnPqdUrK2yDb/3kX3
+	/L9c3z8ZkjupJt
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: Ac35YbyFI4XOvY9eTru8m0JZhL7aCw==
+Content-Language: de
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214313>
 
-On Tue, Jan 22, 2013 at 09:28:23AM -0800, Junio C Hamano wrote:
-> 
-> I notice that I have a handful of commits that I haven't pulled from
-> your repository, and the last commit on your 'master' is about 20
-> days old.  Is it safe for me to pull these now?
+Hi,
 
-Yes, please pull them now.
+my team uses a central git-repo since >1500 commits and now we have to sync
+(only one-way is necessary for now) our repository every three weeks with an
+external svn-repo.
+I created the new base-directory (incl. trunk/tags/branches) in svn and
+added it to my local repo using git svn init && git fetch.
+Now I have two branches in my local repository (master and "svnbranch") and
+cherry-picked the very first commit from master to svnbranch (it was
+probably not necessary), tagged this commit as "publishedToSvn". Now I want
+to add all commits publishedToSvn..master onto svnbranch. I didn't managed
+to succeed using git-rebase (probably because of the missing common
+commits?) and using git grafts / filter-branch modifies my already published
+master.
 
-Regards,
-Paul.
+Is there any way to move/copy commits from one branch to another without a
+common base-commit and without a forced push of master?
+
+Thanks in advance,
+  Stefan Schulze
