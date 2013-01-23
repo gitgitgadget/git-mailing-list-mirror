@@ -1,85 +1,67 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Moving commits from one branch to another
-Date: Wed, 23 Jan 2013 12:12:03 +0000
-Message-ID: <20130123121203.GM7498@serenity.lan>
-References: <000a01cdf961$bcf773d0$36e65b70$@de>
+From: Chris Rorvick <chris@rorvick.com>
+Subject: Re: What's cooking in git.git (Jan 2013, #08; Tue, 22)
+Date: Wed, 23 Jan 2013 07:26:24 -0600
+Message-ID: <CAEUsAPaUy5ug0_HPjWDTSnAG0kURhP-1-9nOu9_Tpn5nEv6N_Q@mail.gmail.com>
+References: <7va9s0n8gv.fsf@alter.siamese.dyndns.org>
+	<20130122234554.GI7498@serenity.lan>
+	<7vobgglpv4.fsf@alter.siamese.dyndns.org>
+	<20130123092858.GJ7498@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefan Schulze <algroth@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 23 13:12:46 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Eric S. Raymond" <esr@thyrsus.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jan 23 14:26:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxzC8-0002rZ-Km
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 13:12:44 +0100
+	id 1Ty0Lo-0000FX-Dl
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 14:26:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755628Ab3AWMMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 07:12:14 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:43338 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755602Ab3AWMMK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 07:12:10 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 46F38CDA5C6;
-	Wed, 23 Jan 2013 12:12:10 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sQhpb4fAgySq; Wed, 23 Jan 2013 12:12:09 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id 47570CDA598;
-	Wed, 23 Jan 2013 12:12:09 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 39934161E583;
-	Wed, 23 Jan 2013 12:12:09 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id E0zbC6PeBR2Q; Wed, 23 Jan 2013 12:12:09 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 2F55E161E34E;
-	Wed, 23 Jan 2013 12:12:05 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <000a01cdf961$bcf773d0$36e65b70$@de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753118Ab3AWN01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 08:26:27 -0500
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:46826 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752463Ab3AWN00 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 08:26:26 -0500
+Received: by mail-lb0-f181.google.com with SMTP id gm6so2148143lbb.26
+        for <git@vger.kernel.org>; Wed, 23 Jan 2013 05:26:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=tk9q11l53tSOcPw029IYLryJGxdjUA25d8mhCIZ6F3E=;
+        b=JNETxCd77SRx+Tqudnei73X6bEsnnXHeoGkwG/Fkt6qCdQJYBka0ZAFRfShQE351Sn
+         KWNcyaP9In8sqwRKJIO0J1fXShoyp1r7lhvp4ENdGQB0qpel9KqskTfqSViuH9mCZtlj
+         P3akODaedpOfSxd20+FzglIQ2oWpE7C7ebnfmY9BcUlqqxp5S/Md0cf6p77Tq3EexIkd
+         fsdkpo+/laDqkc0cyko43UjH5ZM6p3fU5ejCI3JJmPiKqlQbXq+BonUPdf2afmumRe9I
+         jsvwxD3MgipVIjyDdAcPF5bYUwcVd9Hv1e3E0g66uDW9RfnMSOZDcazMCcZG9qeALvYx
+         3jNA==
+X-Received: by 10.152.144.103 with SMTP id sl7mr1352157lab.23.1358947584861;
+ Wed, 23 Jan 2013 05:26:24 -0800 (PST)
+Received: by 10.114.2.97 with HTTP; Wed, 23 Jan 2013 05:26:24 -0800 (PST)
+In-Reply-To: <20130123092858.GJ7498@serenity.lan>
+X-Google-Sender-Auth: 4NRLfdvP9zx1LQiQIJsKtMxZvH8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214316>
 
-On Wed, Jan 23, 2013 at 01:04:03PM +0100, Stefan Schulze wrote:
-> my team uses a central git-repo since >1500 commits and now we have to sync
-> (only one-way is necessary for now) our repository every three weeks with an
-> external svn-repo.
-> I created the new base-directory (incl. trunk/tags/branches) in svn and
-> added it to my local repo using git svn init && git fetch.
-> Now I have two branches in my local repository (master and "svnbranch") and
-> cherry-picked the very first commit from master to svnbranch (it was
-> probably not necessary), tagged this commit as "publishedToSvn". Now I want
-> to add all commits publishedToSvn..master onto svnbranch. I didn't managed
-> to succeed using git-rebase (probably because of the missing common
-> commits?) and using git grafts / filter-branch modifies my already published
-> master.
-> 
-> Is there any way to move/copy commits from one branch to another without a
-> common base-commit and without a forced push of master?
+On Wed, Jan 23, 2013 at 3:28 AM, John Keeping <john@keeping.me.uk> wrote:
+> In my opinion the incremental import support really is substantially
+> worse in cvsimport-3 than cvsimport-2.  cvsimport-2 looks at the output
+> of git-for-each-ref to calculate the dates from which to continue each
+> branch.  cvsps cannot be told this information and so the cvsimport-3
+> script just takes the date of the last commit on the current branch.
 
-Did you try "git rebase" with "--onto"?  You probably want something
-like this:
+Do you really need a timestamp per branch, though?  If you have
+branches A and B, and B has a commit timestamp 5 minutes after A, you
+can infer that nothing happened on A for those five minutes, right?
+So maybe a single timestamp is sufficient, it just may not be picking
+the right one.  Instead cvsimport-3 should compute the latest
+timestamp across all import branches.
 
-    git rebase --onto svnbranch publishedToSvn master
-
-
-John
+Chris
