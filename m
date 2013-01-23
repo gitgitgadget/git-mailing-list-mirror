@@ -1,104 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] all: new command used for multi-repo operations
-Date: Tue, 22 Jan 2013 22:52:52 -0800
-Message-ID: <7vtxq8ie63.fsf@alter.siamese.dyndns.org>
-References: <1358889019-4554-1-git-send-email-hjemli@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/3] push: introduce REJECT_FETCH_FIRST and
+ REJECT_NEEDS_FORCE
+Date: Wed, 23 Jan 2013 01:56:40 -0500
+Message-ID: <20130123065640.GB10306@sigill.intra.peff.net>
+References: <20130121234002.GE17156@sigill.intra.peff.net>
+ <1358836230-9197-1-git-send-email-gitster@pobox.com>
+ <1358836230-9197-3-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 07:53:22 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Chris Rorvick <chris@rorvick.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 23 07:57:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxuCz-0004ju-AF
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 07:53:17 +0100
+	id 1TxuGf-0006eO-2T
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 07:57:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752980Ab3AWGw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 01:52:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34797 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750856Ab3AWGwz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 01:52:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2D5BBD27;
-	Wed, 23 Jan 2013 01:52:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=39Um1+ZNisMGgdy1soUPpTm0Zd0=; b=Fg2eh0
-	ikXiRX0rFO6M+L2P3/3RnINjyUf68ZNVztkKe0pOoo8zs/8kh9c8whmKUt8gH4ZM
-	X0EQ1xu6zcfQS8NoTNJKUWOpafhI0iIhYIK5yMCdYnQH4A4PBHEKYsNjf2RQiGjm
-	YDKWVzqG5JqBjvvdMSRKr9EkjqwL0YdQWovAM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KJ0N++Vn0Zj31hZu1ykGm1AlEOVPN9+/
-	bCUZHhew/aBLi6HEqCGdTR5NhAD9sQdQBdHkuhxhllnJVPGHxp9V70FZRpO4CZAp
-	wB9Ef1gg9+xB3H+jINjxWZrErLK5qcYuzQ8vwDHFFlbrM17hIKjF2HliLbaT0Zcx
-	N4yWu70tzlE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B872EBD26;
-	Wed, 23 Jan 2013 01:52:54 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1F54DBD24; Wed, 23 Jan 2013
- 01:52:54 -0500 (EST)
-In-Reply-To: <1358889019-4554-1-git-send-email-hjemli@gmail.com> (Lars
- Hjemli's message of "Tue, 22 Jan 2013 22:10:19 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 830E5722-6529-11E2-9B75-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753045Ab3AWG4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 01:56:44 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44658 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750856Ab3AWG4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 01:56:43 -0500
+Received: (qmail 1646 invoked by uid 107); 23 Jan 2013 06:58:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Jan 2013 01:58:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Jan 2013 01:56:40 -0500
+Content-Disposition: inline
+In-Reply-To: <1358836230-9197-3-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214293>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+On Mon, Jan 21, 2013 at 10:30:29PM -0800, Junio C Hamano wrote:
 
-> +static struct option builtin_all_options[] = {
-> +	OPT_BOOLEAN('c', "clean", &only_clean, N_("only show clean repositories")),
-> +	OPT_BOOLEAN('d', "dirty", &only_dirty, N_("only show dirty repositories")),
-> +	OPT_END(),
-> +};
+> When we push to update an existing ref, if:
+> 
+>  * we do not have the object at the tip of the remote; or
+>  * the object at the tip of the remote is not a commit; or
+>  * the object we are pushing is not a commit,
+> 
+> there is no point suggesting to fetch, integrate and push again.
+> 
+> If we do not have the current object at the tip of the remote, we
+> should tell the user to fetch first and evaluate the situation
+> before deciding what to do next.
 
-If you were to go in the OPT_SET_INT route, that would give users
-the usual "last one wins" semantics, e.g.
+Should we? I know that it is more correct to do so, because we do not
+even know for sure that the remote object is a commit, and fetching
+_might_ lead to us saying "hey, this is not something that can be
+fast-forwarded".
 
-	$ git for-each-repo --clean --dirty
+But by far the common case will be that it _is_ a commit, and the right
+thing is going to be to pull. Adding in the extra steps makes the
+workflow longer and more complicated, and most of the time doesn't
+matter. For example, imagine that Alice is working on "master", and when
+she goes to push, she finds that Bob has already pushed his work. With
+the current code, she sees:
 
-will look for only dirty repositories.  For completeness, we would
-probably want "all" to defeat either of them, i.e.
+  $ git push
+  To ...
+   ! [rejected]        HEAD -> master (non-fast-forward)
+  error: failed to push some refs to '...'
+  hint: Updates were rejected because the tip of your current branch is behind
+  hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+  hint: before pushing again.
 
-	$ git for-each-repo --clean --all
+and she presumably pulls, and all is well with the follow-up push.
 
-> +static int walk(struct strbuf *path, int argc, const char **argv)
-> +{
-> +	DIR *dir;
-> +	struct dirent *ent;
-> +	size_t len;
-> +
-> +	dir = opendir(path->buf);
-> +	if (!dir)
-> +		return errno;
-> +	strbuf_addstr(path, "/");
-> +	len = path->len;
-> +	while ((ent = readdir(dir))) {
-> +		if (!strcmp(ent->d_name, ".") || !strcmp(ent->d_name, ".."))
-> +			continue;
-> +		if (!strcmp(ent->d_name, ".git")) {
+With your patch, she sees:
 
-This only looks for the top of working tree.  Have you considered if
-this "iterate over directories and list git repositories in them"
-may be useful for collection of bare repositories, and if it is, how
-to go about implementing the discovery process?
+  $ git push
+  To ...
+   ! [rejected]        HEAD -> master (fetch first)
+  error: failed to push some refs to '...'
+  hint: Updates were rejected; you need to fetch the destination reference
+  hint: to decide what to do.
 
-> +		if (ent->d_type != DT_DIR)
-> +			continue;
+  $ git fetch
+  ...
 
-I think this is wrong.
+  $ git push
+  To ...
+   ! [rejected]        HEAD -> master (non-fast-forward)
+  error: failed to push some refs to '...'
+  hint: Updates were rejected because the tip of your current branch is behind
+  hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+  hint: before pushing again.
+  hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
-On platforms that need a NO_D_TYPE_IN_DIRENT build, your compilation
-may fail here (you would need to lstat() it yourself).  See how
-dir.c does this without ugly #ifdef's in the code, especially around
-the use of get_dtype() and DTYPE() macro.
+which is technically more correct (it's possible that in the second
+step, she would find that Bob pushed a tree or something). But in the
+common case that it is a commit, we've needlessly added two extra steps
+(a fetch and another failed push), both of which involve network access
+(so they are slow, and may involve Alice having to type her credentials).
+
+Is the extra hassle in the common case worth it for the off chance that
+we might give a more accurate message? Should the "fetch first" message
+be some hybrid that covers both cases accurately, but still points the
+user towards "git pull" (which will fail anyway if the remote ref is not
+a commit)?
+
+-Peff
