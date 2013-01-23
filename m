@@ -1,94 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Ignore gitk-wish buildproduct
-Date: Wed, 23 Jan 2013 11:58:57 -0800
-Message-ID: <7vip6nhdry.fsf@alter.siamese.dyndns.org>
-References: <1358967340-3642-1-git-send-email-hjemli@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>, Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Jan 23 20:59:27 2013
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH v3 0/2] Add git-for-each-repo
+Date: Wed, 23 Jan 2013 20:59:38 +0100
+Message-ID: <1358971180-10652-1-git-send-email-hjemli@gmail.com>
+Cc: Lars Hjemli <hjemli@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 23 21:00:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ty6Tm-000558-Dr
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 20:59:26 +0100
+	id 1Ty6UT-0005ZQ-7l
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 21:00:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751718Ab3AWT7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 14:59:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59404 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751273Ab3AWT7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 14:59:04 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9018DC29B;
-	Wed, 23 Jan 2013 14:59:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vOXkoy5H3k33DgEwfGkpksG+jcI=; b=yD53YE
-	/m34d5e+4P4pLMY8k7XOHJurc9FZ40B7KpL6WLebkidr2BhYNYqBdDruNTmNmCMt
-	6uMc0gB5IQzYNT5d3+Jx9nkD6CDluu8D6rXRk2nXHYiXs+aCe39owWgSTlPbFcnD
-	FyQWRqlOcnTh9low0AUfyGObbzzxUa/nkDlWw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f3DcecPVM73cB0lkLX1TNPT4K03/c9Yz
-	iXHoWKUp65OC5Uq5NQ/gayqGLo85BaVEh/K4T7VHG1UXVhIWo9tJttz76QvCaRIZ
-	XwiN4e8G8rsLKaslm6mXudtNyQ51pu1X11mI2AK732tYKs7rDKmSExzNPD9Pjf+U
-	412JL1Z0DyA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 804E9C29A;
-	Wed, 23 Jan 2013 14:59:00 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E78C5C298; Wed, 23 Jan 2013
- 14:58:59 -0500 (EST)
-In-Reply-To: <1358967340-3642-1-git-send-email-hjemli@gmail.com> (Lars
- Hjemli's message of "Wed, 23 Jan 2013 19:55:40 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 54137E16-6597-11E2-8BE7-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751789Ab3AWT7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 14:59:49 -0500
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:38363 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751028Ab3AWT7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 14:59:48 -0500
+Received: by mail-lb0-f169.google.com with SMTP id m4so5264853lbo.0
+        for <git@vger.kernel.org>; Wed, 23 Jan 2013 11:59:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=xCHQGvtV0/PKiLHZutDGRJ//dtoTzHxzAgL0O9hkuAU=;
+        b=yD3iWpdb4wOdOzlQOzvUS0ZZlx/0FyXoZdmgtUPGX1dOTJvsIxjE8256r9X8iYcHRh
+         890cEMQptiO7UzYGXAuhRi69ZOXLM24vo4I/sqcMVDdyg7WhOV3v2NWX5GQh/KGKaMH0
+         YEdxpengvEMaaT4EAJ3yOCpTUFCf96LU+g97sC4Evnh0PGqSK3uYGtBlvP2AXYnYZwk/
+         x/lrt8UJYVe1AIGgG9UditB57pdLVkdIGw6/JeCMt8KFfudLH6NotnBMiwLvZPM0IJVn
+         +e0Ah/1WjH5kSEBvwKC1/pLcQQQX2fvJeBKjP8aKXdZsbPodp2oE/UFveY1v7CPZ5dPX
+         aydA==
+X-Received: by 10.152.122.133 with SMTP id ls5mr2558363lab.9.1358971186526;
+        Wed, 23 Jan 2013 11:59:46 -0800 (PST)
+Received: from slacko.getinternet.no (cm-84.212.47.55.getinternet.no. [84.212.47.55])
+        by mx.google.com with ESMTPS id hc20sm8804885lab.11.2013.01.23.11.59.45
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 23 Jan 2013 11:59:45 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.1.350.g3346805
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214351>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+Lars Hjemli (2):
+  for-each-repo: new command used for multi-repo operations
+  git: rewrite `git -a` to become a git-for-each-repo command
 
-> After running `make` on latest master, gitk-git/gitk-wish shows up as
-> untracked. This fixes it.
->
-> Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+ .gitignore                          |   1 +
+ Documentation/git-for-each-repo.txt |  62 +++++++++++++++++++
+ Makefile                            |   1 +
+ builtin.h                           |   1 +
+ builtin/for-each-repo.c             | 119 ++++++++++++++++++++++++++++++++++++
+ git.c                               |  37 +++++++++++
+ t/t6400-for-each-repo.sh            |  54 ++++++++++++++++
+ 7 files changed, 275 insertions(+)
+ create mode 100644 Documentation/git-for-each-repo.txt
+ create mode 100644 builtin/for-each-repo.c
+ create mode 100755 t/t6400-for-each-repo.sh
 
-The removal was very much deliberate [*1*]; Christian was going to
-send a corresponding updates to gitk maintainer [*2*, *3*] but I
-guess we haven't sync'ed up yet.
-
-Paul, I'll resend another copy of [*3*] to you as a follow-up;
-please apply, thanks.
-
-
-[References]
-
-*1* http://thread.gmane.org/gmane.comp.version-control.git/211773
-*2* http://thread.gmane.org/gmane.comp.version-control.git/211641/focus=211751
-*3* http://thread.gmane.org/gmane.comp.version-control.git/213067
-
->
-> ---
->  .gitignore | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/.gitignore b/.gitignore
-> index aa258a6..63d4904 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -171,6 +171,7 @@
->  /git-whatchanged
->  /git-write-tree
->  /git-core-*/?*
-> +/gitk-git/gitk-wish
->  /gitweb/GITWEB-BUILD-OPTIONS
->  /gitweb/gitweb.cgi
->  /gitweb/static/gitweb.js
+-- 
+1.8.1.1.350.g3346805
