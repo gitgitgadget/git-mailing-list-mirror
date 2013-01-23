@@ -1,368 +1,258 @@
-From: Jonathon Mah <jmah@me.com>
-Subject: [PATCH] parse_object: clear "parsed" when freeing buffers
-Date: Wed, 23 Jan 2013 13:25:04 -0800
-Message-ID: <8988071A-1DF3-463E-8AF9-AE4EA200D786@me.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 23 22:25:37 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Bug in EOL conversion?
+Date: Wed, 23 Jan 2013 21:55:13 -0000
+Organization: OPDS
+Message-ID: <063ABD39C46D492391698E400A7D1FA9@PhilipOakley>
+References: <CANrZfmGXtKcB+i_xhNJELftRc1pC2TJKKhOieHm=5Qkni9OKrA@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=ISO-8859-1; reply-type=original
+Cc: "Git MsysGit" <msysgit@googlegroups.com>
+To: "Stefan Norgren" <stefan.norgren@gmail.com>,
+	<git@vger.kernel.org>
+X-From: msysgit+bncBDSOTWHYX4PBBQNYQGEAKGQEE44HWXA@googlegroups.com Wed Jan 23 22:55:33 2013
+Return-path: <msysgit+bncBDSOTWHYX4PBBQNYQGEAKGQEE44HWXA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f186.google.com ([209.85.217.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ty7p9-0004Fb-KL
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 22:25:36 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751513Ab3AWVZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 16:25:14 -0500
-Received: from ipmail07.adl2.internode.on.net ([150.101.137.131]:57968 "EHLO
-	ipmail07.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751167Ab3AWVZM convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 16:25:12 -0500
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBQNYQGEAKGQEE44HWXA@googlegroups.com>)
+	id 1Ty8I8-0002GG-NM
+	for gcvm-msysgit@m.gmane.org; Wed, 23 Jan 2013 22:55:32 +0100
+Received: by mail-lb0-f186.google.com with SMTP id n8sf3081664lbj.13
+        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Jan 2013 13:55:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-received:x-beenthere:x-received:x-received:received-spf
+         :x-ironport-anti-spam-filtered:x-ironport-anti-spam-result
+         :x-ironport-av:message-id:reply-to:from:to:cc:references:subject
+         :date:organization:mime-version:x-priority:x-msmail-priority
+         :x-mailer:x-mimeole:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=YtxyvpeiU7/Pzu3uZlzzostThgGdWpwwl2cVEpqIC5E=;
+        b=vvQ3F9TJAGJ5jVPpmX+yNrbMQLcqgY13AObKsZ5AlUEQiwZ5/GvDGSI3bwFzFsPkn6
+         Ht3TmFwWzt2wk/jr+HysTDP//T+E5NI6ZIZEcL7zcczpQv8uCCr5nDlqgFYniY1jT0jw
+         im8HXMDB7+ShPfw0glywiF1/dcpnCqyNmmaP7po0duWzMWq6Bf+TvYVSMt 
+X-Received: by 10.180.90.140 with SMTP id bw12mr875038wib.6.1358978115266;
+        Wed, 23 Jan 2013 13:55:15 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.94.97 with SMTP id db1ls245419wib.0.canary; Wed, 23 Jan
+ 2013 13:55:13 -0800 (PST)
+X-Received: by 10.180.74.74 with SMTP id r10mr1016090wiv.3.1358978113678;
+        Wed, 23 Jan 2013 13:55:13 -0800 (PST)
+X-Received: by 10.180.74.74 with SMTP id r10mr1016089wiv.3.1358978113658;
+        Wed, 23 Jan 2013 13:55:13 -0800 (PST)
+Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
+        by gmr-mx.google.com with ESMTP id co7si1579142wib.1.2013.01.23.13.55.13;
+        Wed, 23 Jan 2013 13:55:13 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhUTACRUAFFHynyrPGdsb2JhbAANN75WAwEBAQE4gwATgWMtiCaqDpNpjHuDV2EDiGGOR4gxihKBTg
-Received: from c-71-202-124-171.hsd1.ca.comcast.net (HELO [192.168.120.21]) ([71.202.124.171])
-  by ipmail07.adl2.internode.on.net with ESMTP; 24 Jan 2013 07:55:07 +1030
-X-Mailer: Apple Mail (2.1499)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214366>
+X-IronPort-Anti-Spam-Result: AgMFAP1aAFFcHIm8/2dsb2JhbABEjAKyPRdzghkFAQEEAQgBAS4RBQgBARwFBQYBAQMFAgEDEQMBAQEKJRQBBAgQAgYHCQEFCAYBBwsIAgECAwEMBIdnAwkKCLQaDYlVjAR3g1dhA4gshVGGOYJyihuFEoJ1gWYJFy8
+X-IronPort-AV: E=Sophos;i="4.84,523,1355097600"; 
+   d="scan'208";a="416376268"
+Received: from host-92-28-137-188.as13285.net (HELO PhilipOakley) ([92.28.137.188])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 23 Jan 2013 21:55:12 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Original-Sender: philipoakley@iee.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
+ (google.com: domain of transitioning philipoakley@iee.org does not designate
+ 62.24.128.238 as permitted sender) smtp.mail=philipoakley@iee.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214367>
 
-Add a new function "free_object_buffer", which marks the object as
-un-parsed and frees the buffer. Only trees and commits have buffers;
-other types are not affected. If the tree or commit buffer is already
-NULL, the "parsed" flag is still cleared so callers can control the free
-themselves (index-pack.c uses this).
+The msysgit list msysgit@googlegroups.com may be a better place for 
+this.
 
-Several areas of code would free buffers for object structs that
-contained them ("struct tree" and "struct commit"), but without clearing
-the "parsed" flag. parse_object would clear the flag for "struct tree",
-but commits would remain in an invalid state (marked as parsed but with
-a NULL buffer). Because the objects are uniqued (ccdc6037fee), the
-invalid objects stay around and can lead to bad behavior.
+It is likely that you have a windows specific EOL conversion set within 
+the wider config's (i.e.  --system, --global). You may have 
+core.safecrlf set which does a round trip test so tests the conversion 
+both ways.
 
-In particular, running pickaxe on all refs in a repository with a cached
-textconv could segfault. If the textconv cache ref was evaluated first
-by cmd_log_walk, a subsequent notes_cache_match_validity call would
-dereference NULL.
+The normal canonical line ending choice is LF in the repo.
 
-Signed-off-by: Jonathon Mah <me@JonathonMah.com>
----
+I don't have a W7 install to compare against.
 
-I found an old email where Jeff noted that this would be bad (yet the buffer manipulation remained).
-<http://permalink.gmane.org/gmane.comp.version-control.git/188000>
+Philip
 
- builtin/fsck.c                   | 17 ++---------------
- builtin/index-pack.c             |  3 +++
- builtin/log.c                    |  9 +++------
- builtin/reflog.c                 |  3 +--
- builtin/rev-list.c               |  3 +--
- http-push.c                      |  3 +--
- list-objects.c                   |  3 +--
- object.c                         | 25 +++++++++++++++++++++++--
- object.h                         |  3 +++
- reachable.c                      |  3 +--
- revision.c                       |  3 +--
- t/t4042-diff-textconv-caching.sh | 11 +++++++++++
- upload-pack.c                    |  3 +--
- walker.c                         |  5 +----
- 14 files changed, 53 insertions(+), 41 deletions(-)
+----- Original Message ----- 
+From: "Stefan Norgren" <stefan.norgren@gmail.com>
+To: <git@vger.kernel.org>
+Sent: Wednesday, January 23, 2013 2:44 AM
+Subject: Bug in EOL conversion?
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index bb9a2cd..82b3612 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -133,10 +133,7 @@ static int traverse_one_object(struct object *obj)
- 			return 1; /* error already displayed */
- 	}
- 	result = fsck_walk(obj, mark_object, obj);
--	if (tree) {
--		free(tree->buffer);
--		tree->buffer = NULL;
--	}
-+	free_object_buffer(obj);
- 	return result;
- }
- 
-@@ -303,26 +300,16 @@ static int fsck_obj(struct object *obj)
- 	if (fsck_object(obj, check_strict, fsck_error_func))
- 		return -1;
- 
--	if (obj->type == OBJ_TREE) {
--		struct tree *item = (struct tree *) obj;
--
--		free(item->buffer);
--		item->buffer = NULL;
--	}
-+	free_object_buffer(obj);
- 
- 	if (obj->type == OBJ_COMMIT) {
- 		struct commit *commit = (struct commit *) obj;
--
--		free(commit->buffer);
--		commit->buffer = NULL;
--
- 		if (!commit->parents && show_root)
- 			printf("root %s\n", sha1_to_hex(commit->object.sha1));
- 	}
- 
- 	if (obj->type == OBJ_TAG) {
- 		struct tag *tag = (struct tag *) obj;
--
- 		if (show_tags && tag->tagged) {
- 			printf("tagged %s %s", typename(tag->tagged->type), sha1_to_hex(tag->tagged->sha1));
- 			printf(" (%s) in %s\n", tag->tag, sha1_to_hex(tag->object.sha1));
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 43d364b..0eb39ae 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -750,13 +750,16 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 			if (fsck_walk(obj, mark_link, NULL))
- 				die(_("Not all child objects of %s are reachable"), sha1_to_hex(obj->sha1));
- 
-+			/* set buffer to NULL so it isn't freed */
- 			if (obj->type == OBJ_TREE) {
- 				struct tree *item = (struct tree *) obj;
- 				item->buffer = NULL;
-+				free_object_buffer(obj);
- 			}
- 			if (obj->type == OBJ_COMMIT) {
- 				struct commit *commit = (struct commit *) obj;
- 				commit->buffer = NULL;
-+				free_object_buffer(obj);
- 			}
- 			obj->flags |= FLAG_CHECKED;
- 		}
-diff --git a/builtin/log.c b/builtin/log.c
-index e7b7db1..433b874 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -305,11 +305,9 @@ static int cmd_log_walk(struct rev_info *rev)
- 			 * but we didn't actually show the commit.
- 			 */
- 			rev->max_count++;
--		if (!rev->reflog_info) {
-+		if (!rev->reflog_info)
- 			/* we allow cycles in reflog ancestry */
--			free(commit->buffer);
--			commit->buffer = NULL;
--		}
-+			free_object_buffer(&commit->object);
- 		free_commit_list(commit->parents);
- 		commit->parents = NULL;
- 		if (saved_nrl < rev->diffopt.needed_rename_limit)
-@@ -1399,8 +1397,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		    reopen_stdout(numbered_files ? NULL : commit, NULL, &rev, quiet))
- 			die(_("Failed to create output files"));
- 		shown = log_tree_commit(&rev, commit);
--		free(commit->buffer);
--		commit->buffer = NULL;
-+		free_object_buffer(&commit->object);
- 
- 		/* We put one extra blank line between formatted
- 		 * patches and this flag is used by log-tree code
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index b3c9e27..c9a660f 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -94,8 +94,7 @@ static int tree_is_complete(const unsigned char *sha1)
- 			complete = 0;
- 		}
- 	}
--	free(tree->buffer);
--	tree->buffer = NULL;
-+	free_object_buffer(tree->buffer);
- 
- 	if (complete)
- 		tree->object.flags |= SEEN;
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 67701be..6855892 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -170,8 +170,7 @@ static void finish_commit(struct commit *commit, void *data)
- 		free_commit_list(commit->parents);
- 		commit->parents = NULL;
- 	}
--	free(commit->buffer);
--	commit->buffer = NULL;
-+	free_object_buffer(&commit->object);
- }
- 
- static void finish_object(struct object *obj,
-diff --git a/http-push.c b/http-push.c
-index 8701c12..042a410 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1347,8 +1347,7 @@ static struct object_list **process_tree(struct tree *tree,
- 			break;
- 		}
- 
--	free(tree->buffer);
--	tree->buffer = NULL;
-+	free_object_buffer(obj);
- 	return p;
- }
- 
-diff --git a/list-objects.c b/list-objects.c
-index 3dd4a96..fb4b531 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -123,8 +123,7 @@ static void process_tree(struct rev_info *revs,
- 				     cb_data);
- 	}
- 	strbuf_setlen(base, baselen);
--	free(tree->buffer);
--	tree->buffer = NULL;
-+	free_object_buffer(obj);
- }
- 
- static void mark_edge_parents_uninteresting(struct commit *commit,
-diff --git a/object.c b/object.c
-index 4af3451..8e161f8 100644
---- a/object.c
-+++ b/object.c
-@@ -149,8 +149,6 @@ struct object *parse_object_buffer(const unsigned char *sha1, enum object_type t
- 		struct tree *tree = lookup_tree(sha1);
- 		if (tree) {
- 			obj = &tree->object;
--			if (!tree->buffer)
--				tree->object.parsed = 0;
- 			if (!tree->object.parsed) {
- 				if (parse_tree_buffer(tree, buffer, size))
- 					return NULL;
-@@ -225,6 +223,29 @@ struct object *parse_object(const unsigned char *sha1)
- 	return NULL;
- }
- 
-+void free_object_buffer(struct object *item)
-+{
-+	if (!item)
-+		return;
-+
-+	if (item->type == OBJ_TREE) {
-+		struct tree *tree = (struct tree *)item;
-+		tree->object.parsed = 0;
-+		tree->size = 0;
-+		if (tree->buffer) {
-+			free(tree->buffer);
-+			tree->buffer = NULL;
-+		}
-+	} else if (item->type == OBJ_COMMIT) {
-+		struct commit *commit = (struct commit *)item;
-+		commit->object.parsed = 0;
-+		if (commit->buffer) {
-+			free(commit->buffer);
-+			commit->buffer = NULL;
-+		}
-+	}
-+}
-+
- struct object_list *object_list_insert(struct object *item,
- 				       struct object_list **list_p)
- {
-diff --git a/object.h b/object.h
-index 6a97b6b..cbc730c 100644
---- a/object.h
-+++ b/object.h
-@@ -63,6 +63,9 @@ struct object *parse_object(const unsigned char *sha1);
-  */
- struct object *parse_object_buffer(const unsigned char *sha1, enum object_type type, unsigned long size, void *buffer, int *eaten_p);
- 
-+/** If the object's type has a buffer, it's freed and marked as un-parsed. */
-+void free_object_buffer(struct object *item);
-+
- /** Returns the object, with potentially excess memory allocated. **/
- struct object *lookup_unknown_object(const unsigned  char *sha1);
- 
-diff --git a/reachable.c b/reachable.c
-index bf79706..c29d3e0 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -80,8 +80,7 @@ static void process_tree(struct tree *tree,
- 		else
- 			process_blob(lookup_blob(entry.sha1), p, &me, entry.path, cp);
- 	}
--	free(tree->buffer);
--	tree->buffer = NULL;
-+	free_object_buffer(obj);
- }
- 
- static void process_tag(struct tag *tag, struct object_array *p,
-diff --git a/revision.c b/revision.c
-index 95d21e6..43c5eec 100644
---- a/revision.c
-+++ b/revision.c
-@@ -133,8 +133,7 @@ void mark_tree_uninteresting(struct tree *tree)
- 	 * We don't care about the tree any more
- 	 * after it has been marked uninteresting.
- 	 */
--	free(tree->buffer);
--	tree->buffer = NULL;
-+	free_object_buffer(obj);
- }
- 
- void mark_parents_uninteresting(struct commit *commit)
-diff --git a/t/t4042-diff-textconv-caching.sh b/t/t4042-diff-textconv-caching.sh
-index 91f8198..d7e26ca 100755
---- a/t/t4042-diff-textconv-caching.sh
-+++ b/t/t4042-diff-textconv-caching.sh
-@@ -106,4 +106,15 @@ test_expect_success 'switching diff driver produces correct results' '
- 	test_cmp expect actual
- '
- 
-+cat >expect <<EOF
-+./helper other (refs/notes/textconv/magic)
-+one
-+EOF
-+# add empty commit on master to make bug more reproducible
-+test_expect_success 'pickaxe with cached textconv' '
-+	git commit --allow-empty -m another &&
-+	git log -S other --pretty=tformat:%s%d --all >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/upload-pack.c b/upload-pack.c
-index 6142421..1feacbc 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -81,8 +81,7 @@ static void show_commit(struct commit *commit, void *data)
- 		die("broken output pipe");
- 	fputc('\n', pack_pipe);
- 	fflush(pack_pipe);
--	free(commit->buffer);
--	commit->buffer = NULL;
-+	free_object_buffer(&commit->object);
- }
- 
- static void show_object(struct object *obj,
-diff --git a/walker.c b/walker.c
-index be389dc..bae4876 100644
---- a/walker.c
-+++ b/walker.c
-@@ -56,10 +56,7 @@ static int process_tree(struct walker *walker, struct tree *tree)
- 		if (!obj || process(walker, obj))
- 			return -1;
- 	}
--	free(tree->buffer);
--	tree->buffer = NULL;
--	tree->size = 0;
--	tree->object.parsed = 0;
-+	free_object_buffer(&tree->object);
- 	return 0;
- }
- 
+
+> Hi,
+>
+> The EOL conversion does not behave as indicated by output message from
+> add and commit. Here is my test case executed on Windows 7 64 bit.
+>
+>
+> $ git --version
+> git version 1.8.0.msysgit.0
+> $ which git
+> /cygdrive/c/Program Files (x86)/Git/cmd/git
+> $ git config --list
+> core.symlinks=false
+> core.autocrlf=true
+> color.diff=auto
+> color.status=auto
+> color.branch=auto
+> color.interactive=true
+> pack.packsizelimit=2g
+> help.format=html
+> http.sslcainfo=/bin/curl-ca-bundle.crt
+> sendemail.smtpserver=/bin/msmtp.exe
+> diff.astextplain.textconv=astextplain
+> rebase.autosquash=true
+> user.name=Stefan
+> user.email=stefan@---.com
+> core.repositoryformatversion=0
+> core.filemode=false
+> core.bare=false
+> core.logallrefupdates=true
+> core.symlinks=false
+> core.ignorecase=true
+> core.hidedotfiles=dotGitOnly
+>
+> -- Note core.autocrlf=true.
+> -- Created withcrlf.txt with one character and one CRLF line feed.
+> File size 3 bytes.
+> -- Created withlf.txt with one character and one LF line feed. File
+> size 2 bytes.
+> -- Now let's init repository.
+>
+> $ git init
+> Initialized empty Git repository in D:/Dev/workspaces/gittest/.git/
+> $ ls -la
+> total 10
+> d---------+ 1 Stefan None 0 Jan 23 02:12 .
+> d---------+ 1 Stefan None 0 Jan 23 02:10 ..
+> d---------+ 1 Stefan None 0 Jan 23 02:13 .git
+> ----------+ 1 Stefan None 3 Jan 23 01:55 withcrlf.txt
+> ----------+ 1 Stefan None 2 Jan 23 01:55 withlf.txt
+>
+> -- Note no .gitattributes file that will affect EOL conversion.
+>
+> $ ls -la .git/info/
+> total 5
+> d---------+ 1 Stefan None   0 Jan 23 02:12 .
+> d---------+ 1 Stefan None   0 Jan 23 02:13 ..
+> ----------+ 1 Stefan None 240 Jan 23 02:12 exclude
+>
+> -- Note no attribute file in .git/info/ that will affect EOL 
+> conversion.
+>
+> $ git add *
+> warning: LF will be replaced by CRLF in withlf.txt.
+> The file will have its original line endings in your working 
+> directory.
+> $ git commit -m 'Testing EOL'
+> [master (root-commit) 9a0b2f5] Testing EOL
+> 2 files changed, 2 insertions(+)
+> create mode 100644 withcrlf.txt
+> create mode 100644 withlf.txt
+> warning: LF will be replaced by CRLF in withlf.txt.
+> The file will have its original line endings in your working 
+> directory.
+> $ ls -la
+> total 10
+> d---------+ 1 Stefan None 0 Jan 23 02:12 .
+> d---------+ 1 Stefan None 0 Jan 23 02:10 ..
+> d---------+ 1 Stefan None 0 Jan 23 02:22 .git
+> ----------+ 1 Stefan None 3 Jan 23 01:55 withcrlf.txt
+> ----------+ 1 Stefan None 2 Jan 23 01:55 withlf.txt
+>
+> -- So no changes (see file size) to files in working directory. This
+> is expected and according to output warning from add and commit.
+>
+> -- Now lets look in the repository
+>
+> $ git ls-tree -l HEAD withcrlf.txt
+> 100644 blob d00491fd7e5bb6fa28c517a0bb32b8b506539d4d       2 
+> withcrlf.txt
+> $ git ls-tree -l HEAD withlf.txt
+> 100644 blob d00491fd7e5bb6fa28c517a0bb32b8b506539d4d       2 
+> withlf.txt
+>
+> -- Note that size of withlf.txt is 2 in repository indicating that LF
+> was not replaced by CRLF in withlf.txt as indicated in output from add
+> and commit. Also note that size of withcrlf.txt is also 2 in
+> repository so it looks like CRLF was replaced by LF in withcrlf.txt.
+> To verify I will delete the files from working directory, turn off EOL
+> conversion, checkout files and look at file endings in the working
+> directory.
+>
+> $ rm with*
+> $ ls -la
+> total 8
+> d---------+ 1 Stefan None 0 Jan 23 02:31 .
+> d---------+ 1 Stefan None 0 Jan 23 02:10 ..
+> d---------+ 1 Stefan None 0 Jan 23 02:22 .git
+> $ git status
+> # On branch master
+> # Changes not staged for commit:
+> #   (use "git add/rm <file>..." to update what will be committed)
+> #   (use "git checkout -- <file>..." to discard changes in working 
+> directory)
+> #
+> #       deleted:    withcrlf.txt
+> #       deleted:    withlf.txt
+> #
+> no changes added to commit (use "git add" and/or "git commit -a")
+> $ git config --global core.autocrlf false
+> $ git config --global core.autocrlf
+> false
+> $ git checkout -- with*
+> $ ls -la
+> total 10
+> d---------+ 1 Stefan None 0 Jan 23 02:38 .
+> d---------+ 1 Stefan None 0 Jan 23 02:10 ..
+> d---------+ 1 Stefan None 0 Jan 23 02:38 .git
+> ----------+ 1 Stefan None 2 Jan 23 02:38 withcrlf.txt
+> ----------+ 1 Stefan None 2 Jan 23 02:38 withlf.txt
+>
+> -- Both files in working directory files now have LF line endings
+> confirming that files in repository have LF file endings. Either the
+> output message of add and commit is wrong or the behavior of the EOL
+> conversion is wrong... or... have I missed something...?
+>
+>   /Stefan
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
+> -----
+> No virus found in this message.
+> Checked by AVG - www.avg.com
+> Version: 2013.0.2890 / Virus Database: 2639/6050 - Release Date: 
+> 01/22/13
+> 
+
 -- 
-1.8.1.1
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-
-
-
-
-Jonathon Mah
-me@JonathonMah.com
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
