@@ -1,93 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2013, #08; Tue, 22)
-Date: Wed, 23 Jan 2013 09:13:27 -0800
-Message-ID: <7vsj5rhlfs.fsf@alter.siamese.dyndns.org>
-References: <7va9s0n8gv.fsf@alter.siamese.dyndns.org>
- <20130122234554.GI7498@serenity.lan>
- <7vobgglpv4.fsf@alter.siamese.dyndns.org>
- <20130123092858.GJ7498@serenity.lan>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: GIT get corrupted on lustre
+Date: Wed, 23 Jan 2013 09:23:16 -0800
+Message-ID: <20130123172316.GA3238@elie.Belkin>
+References: <CABPQNSbJr4dR9mq+kCwGe-RKb9PA7q=SKzbFW+=md_PLzZh=nQ@mail.gmail.com>
+ <87a9s2o6ri.fsf@pctrast.inf.ethz.ch>
+ <kdk2ss$498$1@ger.gmane.org>
+ <87r4lejpx8.fsf@pctrast.inf.ethz.ch>
+ <50FF051D.5090804@giref.ulaval.ca>
+ <878v7keuh3.fsf@pctrast.inf.ethz.ch>
+ <CABPQNSad1EKbmt3Gjs+uB9fud4YBqmk++5GMqF2s047Lcc8GwQ@mail.gmail.com>
+ <87d2wvc3v0.fsf@pctrast.inf.ethz.ch>
+ <CABPQNSb89h28O_a3uVoVrNisZqPcHHVFm8nP7GdFGCb=PVdcsQ@mail.gmail.com>
+ <871udbc3af.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
-	Chris Rorvick <chris@rorvick.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Jan 23 18:13:53 2013
+Cc: kusmabite@gmail.com, Thomas Rast <trast@student.ethz.ch>,
+	Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>,
+	"Brian J. Murrell" <brian@interlinx.bc.ca>, git@vger.kernel.org,
+	"Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>,
+	Maxime Boissonneault <maxime.boissonneault@calculquebec.ca>,
+	Philippe Vaucher <philippe.vaucher@gmail.com>,
+	=?utf-8?Q?S=C3=A9bastien?= Boisvert 
+	<sebastien.boisvert@calculquebec.ca>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Jan 23 18:24:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ty3tY-0004Tf-Uy
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 18:13:53 +0100
+	id 1Ty43M-00030w-Il
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 18:24:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756437Ab3AWRNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 12:13:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38593 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754740Ab3AWRN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 12:13:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4347CB4FD;
-	Wed, 23 Jan 2013 12:13:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=adPJHOgmXI9bsBd+Frff8wxstMk=; b=m0EvVN
-	Qu1miioJb0dA3BcQJa+HZK3KmA09rAp6fYThXoeE3IqC5CZNKukoiVeJXL8sGtjJ
-	VfWfuWMV3mt8TrkLCJNRV9+hRSifmZtLXRamN0s073zZtJUXv1aNa3C/JqW0dmqk
-	Rg2mVngaC5Zf7bgMAMppQ6CrmE9wGrNvM5s1w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DZNJBZPNICzUlAiGdc18FCAdCthV6IXm
-	2/OX7sFc94AdYkC8wLQCHvKzEhEDW45AyOc7yih3IBk48JfSKxCPSEZuU70TGDZZ
-	RmlBDoJuRQL5FfbITx6d/UCr/So5ie/u0xhglzBYf/bmG3jGKpcBJC2n+eORNdbi
-	0xuPGBLFlZM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36813B4FC;
-	Wed, 23 Jan 2013 12:13:29 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 90BCAB4F7; Wed, 23 Jan 2013
- 12:13:28 -0500 (EST)
-In-Reply-To: <20130123092858.GJ7498@serenity.lan> (John Keeping's message of
- "Wed, 23 Jan 2013 09:28:58 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3486D028-6580-11E2-9CA8-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756658Ab3AWRXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 12:23:32 -0500
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:63882 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755735Ab3AWRXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 12:23:30 -0500
+Received: by mail-pb0-f45.google.com with SMTP id mc8so4799693pbc.18
+        for <git@vger.kernel.org>; Wed, 23 Jan 2013 09:23:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Ny7wFh3BXPoRL5mn7fgz5BMN905OI8CG6te64RbK6to=;
+        b=qfJwdHqedwm+GEkI+jO68WaWAdYkaUNQWIIULxTHnyC4HJE5VhPiLNtyIUQ8CeCYcU
+         oWr6wGhgEIZsibMtubjmejBKZCmqSTz2ZvDgIqiZhaLeAsRyudJ3MgXDc0Zyd+b1jO2v
+         vwxupSV3Wi8+VuSk4HVH7J2/TnQOLhtS2udQGZaoLVusZZ96zlj9B1r6LJ1aqH4HBwAq
+         P9yOjGfEUwhRTITqNREuWuMDnyg5Y2wbTkaVCtNLIZtz96W1mNNiPs+9G3xev5Rfmqq6
+         qY6i+8OmaP4ri0i35BimqEbzv2WM5DnfTnvs4vCUoLAAXnOqhSuYbXCQQh0fbMpRk+OV
+         ITnQ==
+X-Received: by 10.68.130.225 with SMTP id oh1mr5284335pbb.147.1358961809610;
+        Wed, 23 Jan 2013 09:23:29 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id tq4sm13140102pbc.50.2013.01.23.09.23.26
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 23 Jan 2013 09:23:28 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <871udbc3af.fsf@pctrast.inf.ethz.ch>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214338>
 
-John Keeping <john@keeping.me.uk> writes:
+Thomas Rast wrote:
 
-> My preference would be for something like this, possibly with an
-> expanded examples section showing how to pipe the output of cvsps-3 or
-> cvs2git into git-fast-import:
+> Taken together this should mean that the bug is in fact simply that the
+> calls do not *restart*.  They are (like you say) allowed to return EINTR
+> despite not being specified to, *but* SA_RESTART should restart it.
 >
-> -- >8 --
->
-> diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-> index 9d5353e..20b846e 100644
-> --- a/Documentation/git-cvsimport.txt
-> +++ b/Documentation/git-cvsimport.txt
-> @@ -18,6 +18,11 @@ SYNOPSIS
->  
->  DESCRIPTION
->  -----------
-> +*WARNING:* `git cvsimport` uses cvsps version 2, which is considered
-> +deprecated; it does not work with cvsps version 3 and later.  If you are
-> +performing a one-shot import of a CVS repository consider using cvsps-3,
-> +cvs2git or parsecvs directly.
-> +
->  Imports a CVS repository into git. It will either create a new
->  repository, or incrementally import into an existing one.
->  
-> -- 8< --
+> Now, does that make it a lustre bug or a glibc bug? :-)
 
-OK, that is certainly a lot simpler to explain.
-
-Is it "it does not work yet with cvsps3", or "it will not ever work
-with cvsps3"?  The impression I am getting is that it is the latter.
-
-Also, should we have a suggestion to people who are *not* performing
-a one-shot import, i.e. doing incremental or bidirectional?
+The kernel takes care of SA_RESTART, if I remember correctly.  (See
+arch/x86/kernel/signal.c::handle_signal() case -ERESTARTSYS.)
