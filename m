@@ -1,92 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] parse_object: clear "parsed" when freeing buffers
-Date: Wed, 23 Jan 2013 14:19:05 -0800
-Message-ID: <7vsj5rfspy.fsf@alter.siamese.dyndns.org>
-References: <8988071A-1DF3-463E-8AF9-AE4EA200D786@me.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Re: Bug in EOL conversion?
+Date: Wed, 23 Jan 2013 23:36:56 +0100
+Message-ID: <CABPQNSaqFjvW6Kudc2uN3YWvrZuimN7MDWUeyjyG9vSZHD=C8g@mail.gmail.com>
+References: <CANrZfmGXtKcB+i_xhNJELftRc1pC2TJKKhOieHm=5Qkni9OKrA@mail.gmail.com>
+ <063ABD39C46D492391698E400A7D1FA9@PhilipOakley>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jonathon Mah <jmah@me.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 23:19:34 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Stefan Norgren <stefan.norgren@gmail.com>, git@vger.kernel.org, 
+	Git MsysGit <msysgit@googlegroups.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: msysgit+bncBDR53PPJ7YHRBMWMQGEAKGQEE7TTO5A@googlegroups.com Wed Jan 23 23:38:00 2013
+Return-path: <msysgit+bncBDR53PPJ7YHRBMWMQGEAKGQEE7TTO5A@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-oa0-f61.google.com ([209.85.219.61])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ty8fL-00047z-Gi
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 23:19:31 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751388Ab3AWWTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 17:19:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56031 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750899Ab3AWWTI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 17:19:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99417B108;
-	Wed, 23 Jan 2013 17:19:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xg9aXNiF5fymksDWBiGqMQnSglo=; b=C/gUFM
-	r4InIIG6FXcMMTbwRPRI7iGIk4FZBJpA79YdJbhK+ReOWB5MawtCAeZSrfnuhmse
-	q9B8WFktQ/3CNLsECxf4eqVGsEBPvSgmg7eBVsLfggYS/+h4/3gDTlUQHKWJFn6f
-	KFaw/EmMD9jiXX7xIomXqZlk9ZM2dDnSu1pFs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jcu24EMiO86fmQOqb9xvOyzwTs9pxw82
-	epeM8HBN6xFgJmSUi01YOkSu0H8/1zp/xN19dh2D+zVEgs/XCXVC0AYMFP6g8beW
-	xktYGO/J5f8pWnqpJySCakgzuc5rAPfW/m+WFiH2JCxQjX9D6+1YI2fS2wNNGjzV
-	znenJB/QM/I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DAEDB107;
-	Wed, 23 Jan 2013 17:19:07 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E20B0B104; Wed, 23 Jan 2013
- 17:19:06 -0500 (EST)
-In-Reply-To: <8988071A-1DF3-463E-8AF9-AE4EA200D786@me.com> (Jonathon Mah's
- message of "Wed, 23 Jan 2013 13:25:04 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E7065EE2-65AA-11E2-B64A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214372>
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBMWMQGEAKGQEE7TTO5A@googlegroups.com>)
+	id 1Ty8xB-0007o7-Um
+	for gcvm-msysgit@m.gmane.org; Wed, 23 Jan 2013 23:37:58 +0100
+Received: by mail-oa0-f61.google.com with SMTP id o6sf4992454oag.26
+        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Jan 2013 14:37:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-received:x-beenthere:x-received:x-received:received-spf
+         :x-received:mime-version:reply-to:in-reply-to:references:from:date
+         :message-id:subject:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=zngxGk9ss2IHliKRrZ6k7MWLn9ge7elRbhS0LOMH374=;
+        b=mVMzqQUTVnElzk5G7ifGZvr+6zgGU9vlR6n4jVbCY8PKlKGQ6uILJ0HXD+lfaq1lME
+         LYJ0j556S8piz64tk99m1CAu0IxyEiKmyf5d9Qw+SMLUq12nzF/C7Pm1H/WE4MWvWjJ5
+         y8dN7X/VNjWDVnIxxKfTS1IhwZ4jMMUJ5C4J66qBoTEys2536U6UZ0ceRREg5ECPhveO
+         s4PL9F9jCwhripyMlZUPuqC3QhF4jKEN65NlLe9MP+gnoMle6k5ecOugbep+Z91iTcSk
+         SHsAnDU/ZS76b6SU4x1oR4ncwvrkjCYU 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:x-beenthere:x-received:x-received:received-spf
+         :x-received:mime-version:reply-to:in-reply-to:references:from:date
+         :message-id:subject:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=zngxGk9ss2IHliKRrZ6k7MWLn9ge7elRbhS0LOMH374=;
+        b=KxZA8afdYME+9qJLg1WVPy3MvqW6UXDYp6Qh2Db1RaYhSvrhFYh3BfScTVMoeUQgHU
+         LGwAjEjC535fTaH/BpGtXu89XuzOY9aEf5Q+qwKCH7aUseKr81t8gqitxvLnZdtqNXwB
+         FTu2/5Fk6RPqXPJ7eZ0Kqv2Ds3Mgg22L3OawkKqJeT9F9kS636p/GIJWgOcarSjMz43k
+         C6HF2ZIO8O1PHplLdg3wstjUeBuZUeY79/RD4q07rxRUMZ6KVrafgYMTGCK4YSSP10qZ
+         rkquD4y0FAyXEb3pa1Sb3L3okvVNMV6gTSX5Sna 
+X-Received: by 10.50.158.227 with SMTP id wx3mr24155igb.2.1358980659980;
+        Wed, 23 Jan 2013 14:37:39 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.46.232 with SMTP id y8ls410623igm.41.canary; Wed, 23 Jan
+ 2013 14:37:38 -0800 (PST)
+X-Received: by 10.50.189.169 with SMTP id gj9mr38823igc.2.1358980658095;
+        Wed, 23 Jan 2013 14:37:38 -0800 (PST)
+X-Received: by 10.50.189.169 with SMTP id gj9mr38822igc.2.1358980658080;
+        Wed, 23 Jan 2013 14:37:38 -0800 (PST)
+Received: from mail-ie0-f170.google.com (mail-ie0-f170.google.com [209.85.223.170])
+        by gmr-mx.google.com with ESMTPS id d5si2076218iga.1.2013.01.23.14.37.38
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 23 Jan 2013 14:37:38 -0800 (PST)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.223.170 as permitted sender) client-ip=209.85.223.170;
+Received: by mail-ie0-f170.google.com with SMTP id k10so14663387iea.15
+        for <msysgit@googlegroups.com>; Wed, 23 Jan 2013 14:37:38 -0800 (PST)
+X-Received: by 10.50.184.232 with SMTP id ex8mr9173igc.30.1358980658020; Wed,
+ 23 Jan 2013 14:37:38 -0800 (PST)
+Received: by 10.64.9.112 with HTTP; Wed, 23 Jan 2013 14:36:56 -0800 (PST)
+In-Reply-To: <063ABD39C46D492391698E400A7D1FA9@PhilipOakley>
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of kusmabite@gmail.com designates 209.85.223.170 as
+ permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214374>
 
-Jonathon Mah <jmah@me.com> writes:
-
-> Add a new function "free_object_buffer", which marks the object as
-> un-parsed and frees the buffer. Only trees and commits have buffers;
-> other types are not affected. If the tree or commit buffer is already
-> NULL, the "parsed" flag is still cleared so callers can control the free
-> themselves (index-pack.c uses this).
+On Wed, Jan 23, 2013 at 10:55 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> The msysgit list msysgit@googlegroups.com may be a better place for this.
 >
-> Several areas of code would free buffers for object structs that
-> contained them ("struct tree" and "struct commit"), but without clearing
-> the "parsed" flag. parse_object would clear the flag for "struct tree",
-> but commits would remain in an invalid state (marked as parsed but with
-> a NULL buffer). Because the objects are uniqued (ccdc6037fee), the
-> invalid objects stay around and can lead to bad behavior.
->
-> In particular, running pickaxe on all refs in a repository with a cached
-> textconv could segfault. If the textconv cache ref was evaluated first
-> by cmd_log_walk, a subsequent notes_cache_match_validity call would
-> dereference NULL.
+> It is likely that you have a windows specific EOL conversion set within the
+> wider config's (i.e.  --system, --global). You may have core.safecrlf set
+> which does a round trip test so tests the conversion both ways.
 
-Conceptually this is a right thing to do, but it is unclear why this
-conversion is safe in the existing code.
+The default for core.safecrlf is "warn", so one does not need a
+setting to get that warning.
 
-A codepath that used to free() and assign NULL to a buffer without
-resetting .parsed would have assumed that it can find out the parsed
-properties of the object (e.g. .parents) without re-parsing the
-object, and much more importantly, the modifications made by that
-codepath will not be clobbered by later call to parse_object().
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-IIRC, revision traversal machinery rewrites commit->parents but
-discards buffer when it knows that the log message is not needed
-(save_commit_buffer controls this behaviour).  I do not offhand know
-if there are other instances of existing code that depend on the
-current behaviour, but have you audited all the codepaths that are
-affected by this patch and codepaths that work on objects this patch
-unmarks their .parsed field will not have such a problem?
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
