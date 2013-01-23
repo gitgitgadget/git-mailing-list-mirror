@@ -1,69 +1,118 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v2] all: new command used for multi-repo operations
-Date: Wed, 23 Jan 2013 21:17:06 +0100
-Message-ID: <51004542.8010708@web.de>
-References: <1358928767-16283-1-git-send-email-hjemli@gmail.com> <CACsJy8DskoCi9Lg+HW0JeQBe4HX-bMXNHUgfrsg+DoqBN9-ntQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Question re. git remote repository
+Date: Wed, 23 Jan 2013 12:24:43 -0800
+Message-ID: <7va9rzhcl0.fsf@alter.siamese.dyndns.org>
+References: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
+ <20130116220615.48c159546bccfa5b9cd9028e@domain007.com>
+ <20130116182156.GB4426@sigill.intra.peff.net>
+ <20130116233744.7d0775eaec98ce154a9de180@domain007.com>
+ <0630A778-9AC8-4023-889C-4FC58ABAB683@gmail.com>
+ <alpine.DEB.2.02.1301161459060.21503@nftneq.ynat.uz>
+ <201301172153.r0HLrU4F019815@smtpb02.one-mail.on.ca>
+ <1BBEF94B6B46E54980290D150A6F2EDD46B7AAE2@BN1PRD0612MB635.namprd06.prod.outlook.com> <201301181833.r0IIXNe7021768@smtpb01.one-mail.on.ca> <1BBEF94B6B46E54980290D150A6F2EDD46B7D7D0@BN1PRD0612MB635.namprd06.prod.outlook.com> <201301231941.r0NJf3oa001238@smtpb01.one-mail.on.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 21:17:34 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "'Matt Seitz'" <mseitz@mhseitz.onmicrosoft.com>,
+	David Lang <david@lang.hm>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Lang\, David" <David.Lang@uhn.ca>
+X-From: git-owner@vger.kernel.org Wed Jan 23 21:25:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ty6lK-0008Us-AE
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 21:17:34 +0100
+	id 1Ty6sd-0004vD-SI
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 21:25:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752299Ab3AWURN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 15:17:13 -0500
-Received: from mout.web.de ([212.227.17.12]:55783 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752169Ab3AWURM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 15:17:12 -0500
-Received: from [192.168.178.41] ([91.3.166.4]) by smtp.web.de (mrweb001) with
- ESMTPA (Nemesis) id 0LmcRH-1UYGms2Ikd-00a2uM; Wed, 23 Jan 2013 21:17:09 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <CACsJy8DskoCi9Lg+HW0JeQBe4HX-bMXNHUgfrsg+DoqBN9-ntQ@mail.gmail.com>
-X-Enigmail-Version: 1.5
-X-Provags-ID: V02:K0:tNQltmDT+LnWhCZm1MIl59VZDvElgX24hA7UkU2ZKqR
- TeuohyOJKvgnWVilR1mDoxRDizOm8KD/ZbMK/J/OEYN+IJkG78
- cXUv0XLPnhrfpWzrDLGO4bzC6jghWnofOm/8TbNzaqQ/1vM8im
- DUmtSon/LylWTRCYwaANb/hEp/nTO9/GlewoLDMQyXdmWSIWIO
- KncR+ZcJBL3n5aqzzBL1Q==
+	id S1752008Ab3AWUYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 15:24:47 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45827 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751388Ab3AWUYq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 15:24:46 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7972FCF20;
+	Wed, 23 Jan 2013 15:24:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zWmiX2IUJbFFytGxye0pV8cX0Fo=; b=MuO4kP
+	IhHcx9L8k7Z54zfgcZ7MuVT0T2IjUFt02FrUfjBCJXWAfAJT3vHiVpd2Us4p/rIh
+	vsEtxmJYa9qzwBGJwFy1+ZayJ6UBaDhOB3ICks5zH+fyEmS35ArtkXVpSJulKQU4
+	9SekZfjiIwTC9RBphhOLBR4J/G5REN6ocOrlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WSLmZ3qIHxsq5KzWGZo1du2bZ4XP3/zy
+	ypDVhwwJdpcQ2N5eS+lCqvDJY4jWqobrvYvJtGt+6iV3KcIw/fXcFUiRYBP8Tpxk
+	0iPpAiPn9zw3PYIlajVvnSRAnh4RoVSehnAAzyDBe6X325FpC2wCq9nURQcp0dOO
+	Svm2T40kdSA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 627D7CF1F;
+	Wed, 23 Jan 2013 15:24:45 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7FE7CF1E; Wed, 23 Jan 2013
+ 15:24:44 -0500 (EST)
+In-Reply-To: <201301231941.r0NJf3oa001238@smtpb01.one-mail.on.ca> (David
+ Lang's message of "Wed, 23 Jan 2013 19:40:50 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: ECDA197C-659A-11E2-9A87-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214358>
 
-Am 23.01.2013 09:55, schrieb Duy Nguyen:
-> On Wed, Jan 23, 2013 at 3:12 PM, Lars Hjemli <hjemli@gmail.com> wrote:
->> +NAME
->> +----
->> +git-all - Execute a git command in multiple repositories
-> 
-> I agree with Junio "git-all" is too generic.
+"Lang, David" <David.Lang@uhn.ca> writes:
 
-+1
+> Thanks Matt and Dave and everyone else for your feedback on this.
 
->> +static int get_repo_state()
->> +{
->> +       const char *diffidx[] = {"diff", "--quiet", "--cached", NULL};
->> +       const char *diffwd[] = {"diff", "--quiet", NULL};
->> +
->> +       if (run_command_v_opt(diffidx, RUN_GIT_CMD) != 0)
->> +               return DIRTY;
->> +       if (run_command_v_opt(diffwd, RUN_GIT_CMD) != 0)
->> +               return DIRTY;
->> +       return CLEAN;
->> +}
-> 
-> Perhaps we could add the subrepo's object data to the in-memory object
-> database of git-all, then do the diff without launching new commands?
+[administrivia: please wrap your lines to reasonable length]
 
-You could do that for the "--cached" case, but not for the plain diff.
-But I think forking a "git status --porcelain -uno" and testing if it
-produced any output should do the trick with a single fork.
+> 1. Download and install git for Windows on the 2 networked developer's
+> PC's and the 1 networked server.
+>
+> 2. On the server...
+> 	A) Initialize the Visual Studio folder for a particular
+> project as a git repository using 'git init'
+> 	b) Using the git rep just created (above), create a bare
+> repository on the server to act as the remote/master repository using
+> git clone --bare'
+
+optionally:
+
+	C) remove the original directory (A)
+
+        D) make a non-bare clone on the server with "git clone", if
+    	   you would like to have a single build environment on the
+    	   server box.
+
+        E) Use "git pull" from the bare repository you created in
+    	   step (2.B) to update the repository you created in step
+    	   (2.D) as necessary in order to build the latest in this
+    	   repository.
+
+> 3. On each of the PC's...
+> 	A) Clone the remote repository from the network server using
+> git clone' (this will automatically create 'origin' as a remote source
+> on the PC's)
+
+	B) Each developer works in his repository; use either "git
+           pull" or "git pull --rebase" to sync up with the tip of
+           the master repository as necessary;
+
+	C) When a developer's work reaches a point where it is good
+           enough to update the master repository, use "git push" to
+           update the bare repository you created on the server in
+           step (2.B).  This may need to trigger step (2.E).
+
+> Couple of questions...
+> ...
+> 4. The original Visual Studio project folder essentially remains
+> untouched, correct? The 'git init' and 'git clone' commands just make
+> copies and references of whatever data is in the VS project folder,
+> right?
+
+These operations make copies and after making copies they do not
+ever refer to the original, so you can take a back-up of the
+original and remove it (i.e. optional step (c)).
