@@ -1,65 +1,83 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] all: new command used for multi-repo operations
-Date: Wed, 23 Jan 2013 17:15:16 +0700
-Message-ID: <CACsJy8BHZ--n6HeuGt3xk13vwE9ec=dQYhiF_FpdKF47yo=Gmw@mail.gmail.com>
-References: <1358928767-16283-1-git-send-email-hjemli@gmail.com>
- <CACsJy8DskoCi9Lg+HW0JeQBe4HX-bMXNHUgfrsg+DoqBN9-ntQ@mail.gmail.com> <CAFXTnz6mU999DBQG9mPKyjtit4e4WF=bUf_E8XwGR8d5sUPO0w@mail.gmail.com>
+From: Hans-Juergen Euler <waas.nett@gmail.com>
+Subject: git-svn problems with white-space in tag names
+Date: Wed, 23 Jan 2013 11:23:42 +0100
+Message-ID: <CAK3CF+4GPKBfAmgsHYnf_6nCCOCe-1d31cGsWp4jkKC28cZr0g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 11:16:10 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 23 11:24:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxxNJ-0008Kc-TK
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 11:16:10 +0100
+	id 1TxxV0-0004X1-Rb
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 11:24:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754830Ab3AWKPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 05:15:48 -0500
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:42932 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754723Ab3AWKPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 05:15:47 -0500
-Received: by mail-ob0-f176.google.com with SMTP id un3so7912740obb.7
-        for <git@vger.kernel.org>; Wed, 23 Jan 2013 02:15:46 -0800 (PST)
+	id S1754728Ab3AWKXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 05:23:45 -0500
+Received: from mail-wg0-f53.google.com ([74.125.82.53]:46651 "EHLO
+	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754655Ab3AWKXo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 05:23:44 -0500
+Received: by mail-wg0-f53.google.com with SMTP id fn15so1357036wgb.20
+        for <git@vger.kernel.org>; Wed, 23 Jan 2013 02:23:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=WzZM6xqtWtCDJfOukpsEmDvc4UkUNGbgR/7R959x5Jg=;
-        b=k0DnbHKkdiOqLOX6WNkuFBU8AdNqfAU20mXndWm27dxt1KYR2lzgSYEcY7zBcYV14c
-         P3pLdiLmnGCuvWpib0AO5EoxzH/MW2h+pPmrX/yCAf50w+oX+/9BitEcMbAFm7Nqo2H6
-         07i7I121mPOwW2V8JXhmnKqrxWKeS5CnHztxOst/S9Reo/fpKL/K7PdBvWUgoeEPvo/B
-         tONHFo5jyh4JJmoIYuwq82oP0wvXNkemUa19tbj1veeJsKI8VlBpSW2Y57W0DB6St6wj
-         G99RK5/aR4LTNL5Yl7MvGkq0wLbPldueHhUT2/f6t9J82Oquio+SM/pClb/9ZKejfh8s
-         45ug==
-X-Received: by 10.182.0.19 with SMTP id 19mr575181oba.15.1358936146437; Wed,
- 23 Jan 2013 02:15:46 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Wed, 23 Jan 2013 02:15:16 -0800 (PST)
-In-Reply-To: <CAFXTnz6mU999DBQG9mPKyjtit4e4WF=bUf_E8XwGR8d5sUPO0w@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=iHIeJe0mx6F1LBTDuzeTk6bIZHVFWJKHJJIl97kKsrI=;
+        b=RDZwWGDqE5P72JsZKhuD/5j/dz5SY2EjorAcqKb0azlTkpToU8dQbpkEuI5Lq2zQhs
+         ip6BrYXL4nDKDGP1x9k/0bJ/EtaHmuGwCYZc0iZD2jbJkGzRv4wFhtCBb2/FswBNIuH/
+         LThGYuqTEkseJAMPPQHrUpl/9XkeLUjBJnTwCHVS0lSVy14hu4Upaq5vP48kTY9GuU/e
+         vBFruio7CHX3XSlssyIE5ofN2w7y1fxoNt9IUmpp8KKMRdpDqfIqU8zl7Sz5O1XjuaiB
+         UEUJP6zqAJlxFNJDhiEIpCj08psaR0I3olmm+twly0qaZX12JctLxWbzpvC1YGfYBO73
+         GSHQ==
+X-Received: by 10.180.84.131 with SMTP id z3mr26242933wiy.25.1358936622811;
+ Wed, 23 Jan 2013 02:23:42 -0800 (PST)
+Received: by 10.194.221.232 with HTTP; Wed, 23 Jan 2013 02:23:42 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214308>
 
-On Wed, Jan 23, 2013 at 4:24 PM, Lars Hjemli <hjemli@gmail.com> wrote:
-> On Wed, Jan 23, 2013 at 9:55 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> Perhaps we could add the subrepo's object data to the in-memory object
->> database of git-all, then do the diff without launching new commands?
->
-> The `git all` command is regularly invoked outside of git repos, so
-> I'm not sure if this would work.
+I have discussed already the problem a bit more in this thread
+groups.google.com/d/topic/git-users/kfMFZ3uEFsM/discussion
 
-We could initialize an empty object database in memory. But my
-suggestion is probably off topic. I thought this was about a a git
-repository with a collection of submodules. If there are no
-connections between repos, perhaps git-all fits better as a subcommand
-of git-repo:
+-----Operating system (specifically which version)
+windows 7 64 bit
 
-http://source.android.com/source/version-control.html
--- 
-Duy
+------Git version (git --version)
+Git version 1.8.0 for windows obviously.
+git bash and git gui installed and using
+
+------Git configuration (system, home, repository)
+hmm guess is covered with git bash and git gui. Using the standard config stuff
+
+using subversion
+TortoiseSVN 1.7.11
+Subversion 1.7.8
+Was typically always up-to-date (within 2 months or so) with previous versions
+
+using an external subversion provider for storing the information
+externally. guess the version there is older but do not know
+
+
+I have tried to convert some of my external subversion data bases with
+git-svn clone
+
+I have encountered a problem with one of my subversion repos. I have
+obviously introduced about 2 years ago a problem with an additional
+white space at the end of tag name.
+
+So there is an entry "tags/blabla "
+
+in the subversion repos. The sequential handling of the svn repos with
+git-svn gets stuck there. I could not find a way around this. My guess
+is that the white-space was introduced by accident on windows by
+Tortoise-SVN.
+Unfortunately this occurs at revision 90 something and I have almost
+1000 revisions stored.
+
+Let me know if you need more details.Thanks.
