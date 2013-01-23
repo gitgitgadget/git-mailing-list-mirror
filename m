@@ -1,151 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/6] Change 'git' to 'Git' whenever the whole system
- is referred to #2
-Date: Tue, 22 Jan 2013 18:48:50 -0800
-Message-ID: <7vmww0k419.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v3 4/6] Change 'git' to 'Git' whenever the whole system
+ is referred to #3
+Date: Tue, 22 Jan 2013 18:49:48 -0800
+Message-ID: <7vfw1sk3zn.fsf@alter.siamese.dyndns.org>
 References: <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
  <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
  <7vvcark1f2.fsf@alter.siamese.dyndns.org>
  <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
- <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
- <7va9s0lnxn.fsf@alter.siamese.dyndns.org>
+ <1667947659.632844.1358796098848.JavaMail.ngmail@webmail20.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: davvid@gmail.com, git@vger.kernel.org
 To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Wed Jan 23 03:49:16 2013
+X-From: git-owner@vger.kernel.org Wed Jan 23 03:50:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxqOp-0004My-J5
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 03:49:16 +0100
+	id 1TxqPl-0004qc-9q
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 03:50:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752614Ab3AWCsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 21:48:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53506 "EHLO
+	id S1752645Ab3AWCtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 21:49:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54169 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752346Ab3AWCsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 21:48:53 -0500
+	id S1752346Ab3AWCtv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 21:49:51 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A712B2C3;
-	Tue, 22 Jan 2013 21:48:53 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2ECD3B331;
+	Tue, 22 Jan 2013 21:49:51 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KeNRqT8UYBUz/NFAmLa1xSBYNtM=; b=wlxtIW
-	rTMxWxgh49WFsksJE+d6jyfUMJy7lRROEoSMT+iIXZywoFmuRE/MWRW0uBYUSTYC
-	BPDGj/ZvhoYgum7PS3YXoEYglQv0WAnjVgzTCzJuqR7ZUxMmHjv3lsTTui+KUCuy
-	iYTSn4EfNIuZjW4HCfHZogeoHpu2jeDAkCdos=
+	:content-type; s=sasl; bh=Mproh1Y5IaQOEerfE1Ng1YJ7Suk=; b=Vj0S2L
+	x+8vsgzfY0hAcHTiUw2bDIOCuOJceokrMQAUWkg+uYGp0S1/bM2AcOahda4EGj06
+	3Uw+HFjPPKHlPxsjtt5DVEVMWGaEXt5JpiGAiFiH3KBvi26RYoqDXiml0nUnBNXH
+	bi60I7xv7RMyAAlMffV0LizXp2WxzxCuA7Q/Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fMcRjV99IgK6v3cSZ7sOIy2xJBMZFKWS
-	IvaXyGiADAxSMvExeQ1w38PjnLkysEVt3eyjK9RYviQEgMzxQG/SuQSsbHHjODqI
-	ji64w4Sf42naBN5JetkkKqpItPrQOhBhjQdFq/NVhJbXTPFOCzGzQqqDAs0iMvyM
-	HemQYXgS/pE=
+	:content-type; q=dns; s=sasl; b=YP8lI/eFWjo8kyUW1NHTgVGFybtvReH8
+	VWgjnsFTbVcqXEIj/LBdFoGuqse1bW3oSl2kBMqis6YfZOUg2XAnuvXPWfZIpi5W
+	6JJjzAcgCoCzxd8C45BI5CC2BkP6L44OmTqTX0ECow0vrt9kSkjFRDuZ8VMP48j4
+	ESSzl527TQg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FB62B2C2;
-	Tue, 22 Jan 2013 21:48:53 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21924B330;
+	Tue, 22 Jan 2013 21:49:51 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8FE32B2C0; Tue, 22 Jan 2013
- 21:48:52 -0500 (EST)
-In-Reply-To: <7va9s0lnxn.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 22 Jan 2013 16:53:40 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75DCBB32E; Tue, 22 Jan 2013
+ 21:49:50 -0500 (EST)
+In-Reply-To: <1667947659.632844.1358796098848.JavaMail.ngmail@webmail20.arcor-online.net>
+ (Thomas Ackermann's message of "Mon, 21 Jan 2013 20:21:38 +0100 (CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6C04D12C-6507-11E2-B253-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8E86A1C6-6507-11E2-A716-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214274>
 
-Junio C Hamano <gitster@pobox.com> writes:
+ Documentation/gitcore-tutorial.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> As before, I'll locally create a fixup commit based on the above.
->
-> After I am done with these patches, somebody (not Thomas or I, as
-> our eyes are too used to staring at git and Git to notice mistakes)
-> has to run "git grep -C3 -e '\<Git\>' Documentation/" and eyeball
-> the output to spot mistakes that should have been "git" but was
-> converted to "Git", as I am mostly concentrating on finding "git"
-> that should have been converted in Thomas's series.
-
- Documentation/config.txt             | 4 ++--
- Documentation/git-remote-helpers.txt | 2 +-
- Documentation/git-verify-pack.txt    | 2 +-
- Documentation/gitattributes.txt      | 4 ++--
- 4 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5a831ad2..3652ee0 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2,7 +2,7 @@ CONFIGURATION FILE
- ------------------
+diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
+index 5d957c2..59c1c17 100644
+--- a/Documentation/gitcore-tutorial.txt
++++ b/Documentation/gitcore-tutorial.txt
+@@ -1068,7 +1068,7 @@ and requires you to have a log-in privilege over `ssh` to the
+ remote machine.  It finds out the set of objects the other side
+ lacks by exchanging the head commits both ends have and
+ transfers (close to) minimum set of objects.  It is by far the
+-most efficient way to exchange git objects between repositories.
++most efficient way to exchange Git objects between repositories.
  
- The Git configuration file contains a number of variables that affect
--the git command's behavior. The `.git/config` file in each repository
-+the Git commands' behavior. The `.git/config` file in each repository
- is used to store the configuration for that repository, and
- `$HOME/.gitconfig` is used to store a per-user configuration as
- fallback values for the `.git/config` file. The file `/etc/gitconfig`
-@@ -999,7 +999,7 @@ fetch.fsckObjects::
- 	is used instead.
+ Local directory::
+ 	`/path/to/repo.git/`
+@@ -1077,7 +1077,7 @@ This transport is the same as SSH transport but uses 'sh' to run
+ both ends on the local machine instead of running other end on
+ the remote machine via 'ssh'.
  
- fetch.unpackLimit::
--	If the number of objects fetched over the git native
-+	If the number of objects fetched over the Git native
- 	transfer is below this
- 	limit, then the objects will be unpacked into loose object
- 	files. However if the number of received objects equals or
-diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-index e18c3b0..e36fdcb 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -39,7 +39,7 @@ INVOCATION
- ----------
- 
- Remote helper programs are invoked with one or (optionally) two
--arguments. The first argument specifies a remote repository as in git;
-+arguments. The first argument specifies a remote repository as in Git;
- it is either the name of a configured remote or a URL. The second
- argument specifies a URL; it is usually of the form
- '<transport>://<address>', but any arbitrary string is possible.
-diff --git a/Documentation/git-verify-pack.txt b/Documentation/git-verify-pack.txt
-index d4ae05b..0eb9ffb 100644
---- a/Documentation/git-verify-pack.txt
-+++ b/Documentation/git-verify-pack.txt
-@@ -3,7 +3,7 @@ git-verify-pack(1)
- 
- NAME
- ----
--git-verify-pack - Validate packed git archive files
-+git-verify-pack - Validate packed Git archive files
- 
- 
- SYNOPSIS
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index b9c0eec..b322a26 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -449,7 +449,7 @@ String::
- 	specify one or more options, as described in the following
- 	section. The options for the diff driver "foo" are defined
- 	by the configuration variables in the "diff.foo" section of the
--	git config file.
-+	Git config file.
- 
- 
- Defining an external diff driver
-@@ -675,7 +675,7 @@ attribute in the `.gitattributes` file:
- *.ps -diff
- ------------------------
- 
--This will cause git to generate `Binary files differ` (or a binary
-+This will cause Git to generate `Binary files differ` (or a binary
- patch, if binary patches are enabled) instead of a regular diff.
- 
- However, one may also want to specify other diff driver attributes. For
+-git Native::
++Git Native::
+ 	`git://remote.machine/path/to/repo.git/`
+ +
+ This transport was designed for anonymous downloading.  Like SSH
 -- 
 1.8.1.1.507.g1754052
