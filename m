@@ -1,96 +1,85 @@
-From: Barry Wardell <barry.wardell@gmail.com>
-Subject: Re: [PATCH v3 0/2] Make git-svn work with gitdir links
-Date: Wed, 23 Jan 2013 12:08:37 +0000
-Message-ID: <CAHrK+Z8kc_O1CE4Le=XpiXWJ2Fadh906nbfgf0rqmvL0e6=P6A@mail.gmail.com>
-References: <20120308005103.GA27398@dcvr.yhbt.net> <1358731322-44600-1-git-send-email-barry.wardell@gmail.com>
- <20130123023235.GA24135@dcvr.yhbt.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Moving commits from one branch to another
+Date: Wed, 23 Jan 2013 12:12:03 +0000
+Message-ID: <20130123121203.GM7498@serenity.lan>
+References: <000a01cdf961$bcf773d0$36e65b70$@de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 23 13:09:25 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stefan Schulze <algroth@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 23 13:12:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Txz8u-0000k1-MS
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 13:09:25 +0100
+	id 1TxzC8-0002rZ-Km
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 13:12:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755370Ab3AWMJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 07:09:00 -0500
-Received: from mail-la0-f49.google.com ([209.85.215.49]:46802 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755098Ab3AWMJA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 07:09:00 -0500
-Received: by mail-la0-f49.google.com with SMTP id fs13so2354323lab.8
-        for <git@vger.kernel.org>; Wed, 23 Jan 2013 04:08:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:content-type;
-        bh=wuKzpRl3He3Ni9m9bUSip9DVMMyh5JILvky5nO/3l4E=;
-        b=uaZXSxGLq3SksrbLeZFxIGfzYiE8ubRp49SNiiO+94AFfRyrc3YrdaHJuKwTafeH9t
-         kcvwcU/gmvA0K9KoN9WCtrjSoTcn5/zeR2x2GCTiJAJyTi5c8gym2zXc82hmf5PcrMw5
-         82XXoUkACInyy9njv99UNvzEJhjUyp1sAoBoKjIAxExlM2YwGFKBSFQNgLBaGbuD9u2p
-         STgSmwxhgZs8Lcs1ghTTMAzsWRuF+Vj/d/s5D1ZLaCOUDjGdxgfPpuT+/uqUS9iCJGo+
-         rjsKFeOJbI8vRg0GFuOT0bfiO2iUlzNyzDtaKTZKxWVRiAAeqgTC6cln9yH14WDa0Q6R
-         i8wQ==
-X-Received: by 10.112.40.228 with SMTP id a4mr649158lbl.26.1358942938212; Wed,
- 23 Jan 2013 04:08:58 -0800 (PST)
-Received: by 10.112.104.34 with HTTP; Wed, 23 Jan 2013 04:08:37 -0800 (PST)
-In-Reply-To: <20130123023235.GA24135@dcvr.yhbt.net>
+	id S1755628Ab3AWMMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 07:12:14 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:43338 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755602Ab3AWMMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 07:12:10 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 46F38CDA5C6;
+	Wed, 23 Jan 2013 12:12:10 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id sQhpb4fAgySq; Wed, 23 Jan 2013 12:12:09 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id 47570CDA598;
+	Wed, 23 Jan 2013 12:12:09 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 39934161E583;
+	Wed, 23 Jan 2013 12:12:09 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id E0zbC6PeBR2Q; Wed, 23 Jan 2013 12:12:09 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 2F55E161E34E;
+	Wed, 23 Jan 2013 12:12:05 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <000a01cdf961$bcf773d0$36e65b70$@de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214315>
 
-On Wed, Jan 23, 2013 at 2:32 AM, Eric Wong <normalperson@yhbt.net> wrote:
->
-> Barry Wardell <barry.wardell@gmail.com> wrote:
-> > These patches fix a bug which prevented git-svn from working with repositories
-> > which use gitdir links.
-> >
-> > Changes since v2:
-> >  - Rebased onto latest master.
-> >  - Added test case which verifies that the problem has been fixed.
-> >  - Fixed problems with git svn (init|clone|multi-init).
-> >  - All git-svn test cases now pass (except two in t9101 which also failed
-> >    before these patches).
->
-> t9101 did not fail for me before your patches.  However I have a
-> patch on top of your 2/2 which should fix things.
->
-> `git rev-parse --show-cdup` outputs nothing if GIT_DIR is set,
-> so I unset GIT_DIR temporarily.
->
-> I'm not sure why --show-cdup behaves like this, though..
->
-> Does squashing this on top of your changes fix all your failures?
-> I plan on squashing both your changes together with the below:
->
-> diff --git a/git-svn.perl b/git-svn.perl
-> index c232798..e5bd292 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -332,11 +332,13 @@ if ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
->                 $ENV{GIT_DIR} = command_oneline([qw/rev-parse --git-dir/]);
->         } "Unable to find .git directory\n";
->         my $cdup = undef;
-> +       my $git_dir = delete $ENV{GIT_DIR};
->         git_cmd_try {
->                 $cdup = command_oneline(qw/rev-parse --show-cdup/);
->                 chomp $cdup if ($cdup);
->                 $cdup = "." unless ($cdup && length $cdup);
-> -       } "Already at toplevel, but $ENV{GIT_DIR} not found\n";
-> +       } "Already at toplevel, but $git_dir not found\n";
-> +       $ENV{GIT_DIR} = $git_dir;
->         chdir $cdup or die "Unable to chdir up to '$cdup'\n";
->         $_repository = Git->repository(Repository => $ENV{GIT_DIR});
->  }
+On Wed, Jan 23, 2013 at 01:04:03PM +0100, Stefan Schulze wrote:
+> my team uses a central git-repo since >1500 commits and now we have to sync
+> (only one-way is necessary for now) our repository every three weeks with an
+> external svn-repo.
+> I created the new base-directory (incl. trunk/tags/branches) in svn and
+> added it to my local repo using git svn init && git fetch.
+> Now I have two branches in my local repository (master and "svnbranch") and
+> cherry-picked the very first commit from master to svnbranch (it was
+> probably not necessary), tagged this commit as "publishedToSvn". Now I want
+> to add all commits publishedToSvn..master onto svnbranch. I didn't managed
+> to succeed using git-rebase (probably because of the missing common
+> commits?) and using git grafts / filter-branch modifies my already published
+> master.
+> 
+> Is there any way to move/copy commits from one branch to another without a
+> common base-commit and without a forced push of master?
+
+Did you try "git rebase" with "--onto"?  You probably want something
+like this:
+
+    git rebase --onto svnbranch publishedToSvn master
 
 
-Yes, I can confirm that applying this patch on top of mine makes all
-git-svn tests pass again. I have also re-run the tests without my
-patch applied and found that they do all indeed pass, so I apologize
-for my previous incorrect comment.
+John
