@@ -1,124 +1,83 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: git-svn does not like format=4
-Date: Wed, 23 Jan 2013 12:00:48 +0100
-Message-ID: <CABPQNSY6PuifndPf2w1N3+gKDTNNgeRovKrX4dRyL3eFVCwnFw@mail.gmail.com>
-References: <CAK3CF+5uD92pdEaoq4e1fwi_YxkM3ddzAUqYKO1rW5BY9rPdCA@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 0/3] fixup remaining cvsimport tests
+Date: Wed, 23 Jan 2013 11:03:12 +0000
+Message-ID: <20130123110312.GK7498@serenity.lan>
+References: <1357878439-27500-1-git-send-email-chris@rorvick.com>
+ <20130120125838.GK31172@serenity.lan>
+ <CAEUsAPZKd+mw2iK7nd6rTtB8N+B99ud19FkuSx0HVitNxrxxZA@mail.gmail.com>
+ <20130120152857.GM31172@serenity.lan>
+ <7vsj5vlm1d.fsf@alter.siamese.dyndns.org>
+ <CAEUsAPaw8EUcZFbODDj9Z-=3Ppd1CC=jvYDvuyntFkX_3V0ynQ@mail.gmail.com>
+ <50FFB35C.7070809@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Hans-Juergen Euler <waas.nett@gmail.com>
-X-From: msysgit+bncBDR53PPJ7YHRBCEG76DQKGQEHICXNGQ@googlegroups.com Wed Jan 23 12:01:48 2013
-Return-path: <msysgit+bncBDR53PPJ7YHRBCEG76DQKGQEHICXNGQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vb0-f57.google.com ([209.85.212.57])
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Rorvick <chris@rorvick.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jan 23 12:03:53 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBCEG76DQKGQEHICXNGQ@googlegroups.com>)
-	id 1Txy5T-00011v-PJ
-	for gcvm-msysgit@m.gmane.org; Wed, 23 Jan 2013 12:01:48 +0100
-Received: by mail-vb0-f57.google.com with SMTP id ez10sf3051645vbb.12
-        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Jan 2013 03:01:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:x-received:received-spf
-         :x-received:mime-version:reply-to:in-reply-to:references:from:date
-         :message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=bospfHABYSkInM2kLIb2qyDHDzGdFsPzsEkGXxvTvIw=;
-        b=pWQ13wRwgXlTSEehgaosybEDQQSki/+DLTwOTOrHy5hmt4wl5qn7gisjZkwZZXgf1z
-         penvAfBa0E3m+N6tid4jE5fGIBQrcOe/fNG3OSosp0Dp0pLzjWaZ2ZGd7vEgZszBY7wF
-         Tzhxd4mrfi3jLl47v0TzRKYo34UmGw6rJ4CKwcNnqxP5jW5jb9//U68XmMvpj5C+aAkW
-         cEaLHKAro0DtvSWc3m/lRoXdrQpz26JGsjE0WCotuo272IkmGwV+iBk81fv1G2XWSEJJ
-         16uVyH94qojrl0gh3XFhRiPGqlbu0lPb 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:x-beenthere:x-received:x-received:received-spf
-         :x-received:mime-version:reply-to:in-reply-to:references:from:date
-         :message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=bospfHABYSkInM2kLIb2qyDHDzGdFsPzsEkGXxvTvIw=;
-        b=Wq3l8VxoW3CCjUCcBrwsFMvRoGMdlHcLMzeanyIMxllI4y61aIkJUYlvT+3jyTeZVg
-         8QvAmPAqaKG+/yOsdAdQcWC+IjkHhPzSOZAM5uqBr3E6KwD0Y3CB2HMkR2meqTl6tGFY
-         swb3ju/DIg8b8C3ALvz083Vh49ZnL0fP/0qZybWaWQF0AwQc5K0KBXhplNNTdbyoRz89
-         c3qJnk8hSv7UCkN9VU0lp2le2pzugTmNGr/8j8hsQo+vZlEhnfwA7ZJWzrYykOWDeA2N
-         r/mVNCg51Uy4waZ3QmsB9HZYxZfGDS2KRTVRJQq 
-X-Received: by 10.50.13.130 with SMTP id h2mr203561igc.16.1358938889652;
-        Wed, 23 Jan 2013 03:01:29 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.53.173 with SMTP id c13ls3991502igp.38.gmail; Wed, 23 Jan
- 2013 03:01:28 -0800 (PST)
-X-Received: by 10.43.91.5 with SMTP id bk5mr812410icc.12.1358938888734;
-        Wed, 23 Jan 2013 03:01:28 -0800 (PST)
-X-Received: by 10.43.91.5 with SMTP id bk5mr812409icc.12.1358938888725;
-        Wed, 23 Jan 2013 03:01:28 -0800 (PST)
-Received: from mail-ia0-x234.google.com (mail-ia0-x234.google.com [2607:f8b0:4001:c02::234])
-        by gmr-mx.google.com with ESMTPS id c8si1852092igp.0.2013.01.23.03.01.28
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Jan 2013 03:01:28 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c02::234 as permitted sender) client-ip=2607:f8b0:4001:c02::234;
-Received: by mail-ia0-f180.google.com with SMTP id f27so3873776iae.25
-        for <msysgit@googlegroups.com>; Wed, 23 Jan 2013 03:01:28 -0800 (PST)
-X-Received: by 10.50.197.135 with SMTP id iu7mr677343igc.85.1358938888601;
- Wed, 23 Jan 2013 03:01:28 -0800 (PST)
-Received: by 10.64.9.112 with HTTP; Wed, 23 Jan 2013 03:00:48 -0800 (PST)
-In-Reply-To: <CAK3CF+5uD92pdEaoq4e1fwi_YxkM3ddzAUqYKO1rW5BY9rPdCA@mail.gmail.com>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c02::234
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214310>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Txy7O-0002Mu-MI
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 12:03:46 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754800Ab3AWLDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 06:03:25 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:43965 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754597Ab3AWLDY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 06:03:24 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 44B84606590;
+	Wed, 23 Jan 2013 11:03:23 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4PVFziHabSFl; Wed, 23 Jan 2013 11:03:23 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 01F3A606562;
+	Wed, 23 Jan 2013 11:03:22 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id E45AF161E4E3;
+	Wed, 23 Jan 2013 11:03:21 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6lVWqjqjJgkQ; Wed, 23 Jan 2013 11:03:21 +0000 (GMT)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 88F60161E34E;
+	Wed, 23 Jan 2013 11:03:15 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <50FFB35C.7070809@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214311>
 
-On Wed, Jan 23, 2013 at 11:43 AM, Hans-Juergen Euler
-<waas.nett@gmail.com> wrote:
-> it's part of a sequence of problems you can find on
-> groups.google.com/d/topic/git-users/kfMFZ3uEFsM/discussion
->
-> windows 7 64 bit
-> Git version 1.8.0
-> git bash and git gui installed and using
->
-> using subversion
-> TortoiseSVN 1.7.11
-> Subversion 1.7.8
-> Was typically always up-to-date (within 2 months or so) with previous versions
->
-> using an external subversion provider for storing the information
-> externally. guess the version there is older but do not know
->
-> I have dumped the content of an external subversion repos and created
-> a local repos with aforementioned version.
-> when cloning the subversion repos with "git-svn clone" I received this
-> error message:
->  Expected FS format '2'; found format '4' at
-> /usr/lib/perl5/site_perl/Git/SVN.pm line 148
+On Wed, Jan 23, 2013 at 10:54:36AM +0100, Michael Haggerty wrote:
+> On 01/20/2013 09:17 PM, Chris Rorvick wrote:
+>> I have never used cvs2git, but I suspect Eric's efforts in making it a
+>> potential backend for cvsimport are a better use of time.
 
-This isn't a problem with Git itself, but with Git for Windows not
-having an up-to-date build of libsvn.
+Is it possible to perform an incremental import with cvs2git?  This
+seems to be the one use case where the old cvsimport script (with cvsps
+2.x) still performs the best.
 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+I suppose that just re-running the full import will do the right thing
+since the commits in Git should be identical, but would it be possible
+to do better given the right information about a previous run?
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+John
