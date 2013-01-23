@@ -1,69 +1,80 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH] Ignore gitk-wish buildproduct
-Date: Wed, 23 Jan 2013 19:55:40 +0100
-Message-ID: <1358967340-3642-1-git-send-email-hjemli@gmail.com>
-Cc: Lars Hjemli <hjemli@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 23 19:56:20 2013
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v3 2/8] git_remote_helpers: fix input when running under
+ Python 3
+Date: Wed, 23 Jan 2013 11:20:39 -0800
+Message-ID: <CAGdFq_jp3BrS0zgDpmiXGduwu_m4E2CCL+X32P-7T=z9Qk-wuQ@mail.gmail.com>
+References: <cover.1358686905.git.john@keeping.me.uk> <7cd489e5b1b2578b1509232196cd6b21fd684843.1358686905.git.john@keeping.me.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jan 23 20:21:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ty5Ue-00039Y-St
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 19:56:17 +0100
+	id 1Ty5tG-0005gF-Fo
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 20:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751729Ab3AWSzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 13:55:51 -0500
-Received: from mail-la0-f41.google.com ([209.85.215.41]:42533 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751273Ab3AWSzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 13:55:49 -0500
-Received: by mail-la0-f41.google.com with SMTP id fo12so3685699lab.28
-        for <git@vger.kernel.org>; Wed, 23 Jan 2013 10:55:47 -0800 (PST)
+	id S1751650Ab3AWTVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 14:21:21 -0500
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:44881 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751028Ab3AWTVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 14:21:20 -0500
+Received: by mail-qc0-f176.google.com with SMTP id n41so5181080qco.7
+        for <git@vger.kernel.org>; Wed, 23 Jan 2013 11:21:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=HerUdqI5KHsWU9owWuYCBSF848t1xeiAvPtLceSadIg=;
-        b=VhD5oxUs3SsVLkfby4X1jKKT+avQ3gUGDAoqYpnWuIFIN9rVq6VCVrJcoH1+ICzWQv
-         JLEz9HjCuX0mORHsz85CcoNAD4wfrb7mxTINRyb/EdlEg/Y4VyIF1Y6Al50r/Zd/f2DI
-         yCOu9uctQjpImXH9iXrBQJTjt5sDQldF/qwNhkcTsVJqzRxp6E+E1qeTHpUZIwUEbsSz
-         K0BLfETdc9rf3hqq6M4um7OUSwC6XEfgB4M56UgvUX5ZHlvKFyrAtohq74TG+w2At5lG
-         +J8Hc6FZkCTS/koGxDw+VcwUUh+5P5yjaze+M5O6r5FPSkYSrp9vgnMU34Oi5aSHNZen
-         Sy+g==
-X-Received: by 10.112.83.133 with SMTP id q5mr1150393lby.40.1358967347820;
-        Wed, 23 Jan 2013 10:55:47 -0800 (PST)
-Received: from slacko.getinternet.no (cm-84.212.47.55.getinternet.no. [84.212.47.55])
-        by mx.google.com with ESMTPS id ft8sm8758858lab.9.2013.01.23.10.55.46
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Jan 2013 10:55:47 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1.296.g725455c
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=LdMJIAqkrrNAntn03GirLVz0y+/JuWliWJLW67FDQAw=;
+        b=afafSoAyjjRDgdspzfXFXdCinKRyCWDcud37eXauLu7vpk4B9uytXgOCmuKj7VOqwV
+         3TfkI4LQqaqTvmGDaSEFs0ZINPnCQMGVZUHNVhWtqG+q+QWoCoZF+RZm49h91nCYY2zv
+         +8gDAnzf+BAn4Nwkk8I/x9KalckinHHwrT4urwt7m21CKygCKVjDiCKMxpQoGtWZYjIY
+         BxzzPw0z7x+SuPBnYMLtlDKPsoqyMhPuJNbnp/rYrllifKxCDBPQTxBNUT0oQGLcfzJp
+         KuUxpA1gtQ7T0pDMdoEWV1NX1CS11AHzi7BHY4a9Yvxb3YxSJ9toH3RPa0WiYQvynwua
+         adBA==
+X-Received: by 10.49.130.167 with SMTP id of7mr3056816qeb.22.1358968879467;
+ Wed, 23 Jan 2013 11:21:19 -0800 (PST)
+Received: by 10.49.51.227 with HTTP; Wed, 23 Jan 2013 11:20:39 -0800 (PST)
+In-Reply-To: <7cd489e5b1b2578b1509232196cd6b21fd684843.1358686905.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214346>
 
-After running `make` on latest master, gitk-git/gitk-wish shows up as
-untracked. This fixes it.
+On Sun, Jan 20, 2013 at 5:15 AM, John Keeping <john@keeping.me.uk> wrote:
+> Although 2to3 will fix most issues in Python 2 code to make it run under
+> Python 3, it does not handle the new strict separation between byte
+> strings and unicode strings.  There is one instance in
+> git_remote_helpers where we are caught by this, which is when reading
+> refs from "git for-each-ref".
+>
+> Fix this by operating on the returned string as a byte string rather
+> than a unicode string.  As this method is currently only used internally
+> by the class this does not affect code anywhere else.
+>
+> Note that we cannot use byte strings in the source as the 'b' prefix is
+> not supported before Python 2.7 so in order to maintain compatibility
+> with the maximum range of Python versions we use an explicit call to
+> encode().
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+The three patches that deal with .encode() stuff (2, 7, 8) make me a
+bit uncomfortable, as they add some significant complexity to our
+python code. Is this the recommended way to deal with this (similar to
+the other patch where you linked to the python wiki explaining)?
 
----
- .gitignore | 1 +
- 1 file changed, 1 insertion(+)
+As one datapoint, it seems that it's actually Python 2.6 that
+introduces the b prefix.
 
-diff --git a/.gitignore b/.gitignore
-index aa258a6..63d4904 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -171,6 +171,7 @@
- /git-whatchanged
- /git-write-tree
- /git-core-*/?*
-+/gitk-git/gitk-wish
- /gitweb/GITWEB-BUILD-OPTIONS
- /gitweb/gitweb.cgi
- /gitweb/static/gitweb.js
--- 
-1.8.1.1.296.g725455c
+http://www.python.org/dev/peps/pep-3112/
+
+When did we last revisit what minimal python version we are ok with requiring?
+
+--
+Cheers,
+
+Sverre Rabbelier
