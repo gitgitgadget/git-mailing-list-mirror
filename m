@@ -1,119 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] all: new command used for multi-repo operations
-Date: Wed, 23 Jan 2013 08:52:43 -0800
-Message-ID: <7v622nj0ys.fsf@alter.siamese.dyndns.org>
-References: <1358928767-16283-1-git-send-email-hjemli@gmail.com>
+Subject: Re: [PATCH/RFC] Revoke write access to refs and odb after importing
+ another repo's odb
+Date: Wed, 23 Jan 2013 09:01:06 -0800
+Message-ID: <7v1udbj0kt.fsf@alter.siamese.dyndns.org>
+References: <1358948067-2792-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 17:53:14 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 23 18:01:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ty3ZU-0007FM-Bl
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 17:53:08 +0100
+	id 1Ty3hb-0004Ys-Lb
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 18:01:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755483Ab3AWQwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 11:52:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57618 "EHLO
+	id S1756580Ab3AWRBL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jan 2013 12:01:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62850 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753105Ab3AWQwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 11:52:45 -0500
+	id S1756275Ab3AWRBJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2013 12:01:09 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52BBCCB7E;
-	Wed, 23 Jan 2013 11:52:45 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3FF0CE90;
+	Wed, 23 Jan 2013 12:01:08 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HaLqZvvqyM9RPKZr38riS2/EbWI=; b=EElmYI
-	vDkV9ZKlsp+czn+BjoaPyOCWcUIg/Mr6uusGbUJS+NemZh9ED2ylTB5DrgmiW9Wk
-	BjWVD7ItykhP4QPQpFBS5zQNBR54RDeFnZn08aShjre3W8fFT9iLMOfJJG3ACb/f
-	+MDAIZAYHwlWtlDfGq+mgfMo0PBzB+0wQiirE=
+	:content-type:content-transfer-encoding; s=sasl; bh=jyM5MPHMWBHu
+	5t5j9JoCJRP5OeA=; b=utsTd9CaQ9Y4hsHg3fIqrtckgX9v++CalaONFyHRgDVx
+	VXNZyLWDepT4t3JbBMWaM8drOBwp8rN4IyBPzRamgP8ZUmqA4P+LD3P155dqnYay
+	Vv6qkP+VroUuyO+Rv7q+UUDrCBXyGt9DCbZVsvhSyPW0YZorOlO2+tzwVtVFbHw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GehM1n8iHu77InoxANp/DVvOecnGFV3m
-	mIF5kSq7utHyBD1HaTTEZSiBK1ULxYG9wlFaqRmPGsOpD+Qtrp2bnRdG8Ujn+bra
-	BfP1Wnhyaxce/FRmSaZ/X3CBWsg6plsSU1mVaB0NbcLyCxtHNcUcOf4XuYisntf3
-	RfeVNrJKJng=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cPoq/5
+	JYfYPSxO5oPSo0TGzgUNEwqSQm2ehW4IpHu2BtJHQXcECvQ2yktj/kH5kTSkX/dk
+	P7ngzbltBgxSrh/W+likETfLA5UOoBfrQdWI47FFlH6mhdOA5dNs+i3wyzB5l6Fl
+	2CqG87iDrV4hEKtNaPK6QL/lrhMY9bm5cf8Qg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43C53CB7D;
-	Wed, 23 Jan 2013 11:52:45 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6F8FCE8E;
+	Wed, 23 Jan 2013 12:01:08 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF035CB7B; Wed, 23 Jan 2013
- 11:52:44 -0500 (EST)
-In-Reply-To: <1358928767-16283-1-git-send-email-hjemli@gmail.com> (Lars
- Hjemli's message of "Wed, 23 Jan 2013 09:12:47 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12168CE88; Wed, 23 Jan 2013
+ 12:01:07 -0500 (EST)
+In-Reply-To: <1358948067-2792-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 23 Jan
+ 2013 20:34:27 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4F1E7916-657D-11E2-A146-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7B24AE9E-657E-11E2-B262-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214335>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> +static int walk(struct strbuf *path, int argc, const char **argv)
-> +{
-> +	DIR *dir;
-> +	struct dirent *ent;
-> +	struct stat st;
-> +	size_t len;
-> +
-> +	dir = opendir(path->buf);
-> +	if (!dir)
-> +		return errno;
-> +	strbuf_addstr(path, "/");
-> +	len = path->len;
-> +	while ((ent = readdir(dir))) {
-> +		if (!strcmp(ent->d_name, ".") || !strcmp(ent->d_name, ".."))
-> +			continue;
-> +		if (!strcmp(ent->d_name, ".git")) {
-> +			strbuf_addstr(path, ent->d_name);
-> +			setenv(GIT_DIR_ENVIRONMENT, path->buf, 1);
-> +			strbuf_setlen(path, len - 1);
-> +			setenv(GIT_WORK_TREE_ENVIRONMENT, path->buf, 1);
-> +			handle_repo(path->buf, argv);
-> +			strbuf_addstr(path, "/");
-> +			continue;
-> +		}
-> +		strbuf_setlen(path, len);
-> +		strbuf_addstr(path, ent->d_name);
-> +		switch (DTYPE(ent)) {
-> +		case DT_UNKNOWN:
-> +			/* Use stat() instead of lstat(), since we want to
-> +			 * know if we can follow this path into another
-> +			 * directory - it's  not important if it's actually
-> +			 * a symlink which gets us there.
-> +			 */
+> add_submodule_odb() can be used to import objects from another
+> repository temporarily. After this point we don't know which objects
+> are ours, which are external. If we create an object that refers to a=
+n
+> external object, next time git runs, it may find a hole in the object
+> graph because the external repository may not be imported. The same
+> goes for pointing a ref to an external SHA-1.
+>
+> To protect ourselves, once add_submodule_odb() is used:
+>
+>  - trees, tags and commits cannot be created
+>  - refs cannot be updated
+>
+> In certain cases that submodule code knows that it's safe to write, i=
+t
+> can turn the readonly flag off.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  I think this is a good safety check.
 
-This is wrong if you are on a platform that does have d_type, no?
-It may say it is a symbolic link, and until you stat you wouldn't
-know if it may lead to a directory.  You can add "case DT_LNK:" that
-behaves the same as DT_UNKNOWN, I think.
+Two step implementation to bring "read-only" support into a testable
+shape and then flip that bit in add_submdule_odb() would be a
+sensible approach.
 
-> +			if (stat(path->buf, &st) || !S_ISDIR(st.st_mode))
-> +				break;
-> +			/* fallthrough */
-> +		case DT_DIR:
-> +			walk(path, argc, argv);
-> +			break;
-> +		}
-> +		strbuf_setlen(path, len);
-> +	}
-
-But I still do not think this loop is correct.  In a repository that
-has a working tree, you would learn that directory $D has $D/.git in
-it, feed $D to handle_repo(), and then descend into $D/.git/objects/,
-$D/.git/refs, and other random directories to see if you can find
-other repositories.  That is just not right.
-
-If this check were doing something like "The directory $D is worth
-handing to handle_repo() if it has all of the following: objects/,
-refs/ and HEAD that either points inside refs/ or 40-hex.", then it
-would make a lot more sense to me, including the part that goes on
-to check sibling directories.  As a bonus side effect, it will give
-you a support for bare repositories for free.
+I however have this suspicion that this will become a losing battle
+and we would be better off getting rid of add_submodule_odb();
+instead operations that work across repositories will be done as a
+subprocess, which will get us back closer to one of the original
+design goals of submodule support to have a clear separation between
+the superproject and its submodules.
