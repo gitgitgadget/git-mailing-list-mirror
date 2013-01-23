@@ -1,118 +1,140 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Question re. git remote repository
-Date: Wed, 23 Jan 2013 12:24:43 -0800
-Message-ID: <7va9rzhcl0.fsf@alter.siamese.dyndns.org>
-References: <201301161749.r0GHnGV6007806@smtpb02.one-mail.on.ca>
- <20130116220615.48c159546bccfa5b9cd9028e@domain007.com>
- <20130116182156.GB4426@sigill.intra.peff.net>
- <20130116233744.7d0775eaec98ce154a9de180@domain007.com>
- <0630A778-9AC8-4023-889C-4FC58ABAB683@gmail.com>
- <alpine.DEB.2.02.1301161459060.21503@nftneq.ynat.uz>
- <201301172153.r0HLrU4F019815@smtpb02.one-mail.on.ca>
- <1BBEF94B6B46E54980290D150A6F2EDD46B7AAE2@BN1PRD0612MB635.namprd06.prod.outlook.com> <201301181833.r0IIXNe7021768@smtpb01.one-mail.on.ca> <1BBEF94B6B46E54980290D150A6F2EDD46B7D7D0@BN1PRD0612MB635.namprd06.prod.outlook.com> <201301231941.r0NJf3oa001238@smtpb01.one-mail.on.ca>
+Subject: Re: [PATCH v3 2/8] git_remote_helpers: fix input when running under
+ Python 3
+Date: Wed, 23 Jan 2013 12:36:49 -0800
+Message-ID: <7v622nhc0u.fsf@alter.siamese.dyndns.org>
+References: <cover.1358686905.git.john@keeping.me.uk>
+ <7cd489e5b1b2578b1509232196cd6b21fd684843.1358686905.git.john@keeping.me.uk>
+ <CAGdFq_jp3BrS0zgDpmiXGduwu_m4E2CCL+X32P-7T=z9Qk-wuQ@mail.gmail.com>
+ <20130123194757.GQ7498@serenity.lan>
+ <CAGdFq_jZDUxg7oTL7Z4v5ezYFPfJ8kZR6iHpESw6WnoDCeAy8w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "'Matt Seitz'" <mseitz@mhseitz.onmicrosoft.com>,
-	David Lang <david@lang.hm>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: "Lang\, David" <David.Lang@uhn.ca>
-X-From: git-owner@vger.kernel.org Wed Jan 23 21:25:17 2013
+Cc: Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+	John Keeping <john@keeping.me.uk>,
+	Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 23 21:37:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ty6sd-0004vD-SI
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 21:25:08 +0100
+	id 1Ty74h-0004fT-8c
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 21:37:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752008Ab3AWUYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 15:24:47 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45827 "EHLO
+	id S1752422Ab3AWUhC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 15:37:02 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53676 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751388Ab3AWUYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 15:24:46 -0500
+	id S1752532Ab3AWUgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 15:36:54 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7972FCF20;
-	Wed, 23 Jan 2013 15:24:45 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8729B4A3;
+	Wed, 23 Jan 2013 15:36:53 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zWmiX2IUJbFFytGxye0pV8cX0Fo=; b=MuO4kP
-	IhHcx9L8k7Z54zfgcZ7MuVT0T2IjUFt02FrUfjBCJXWAfAJT3vHiVpd2Us4p/rIh
-	vsEtxmJYa9qzwBGJwFy1+ZayJ6UBaDhOB3ICks5zH+fyEmS35ArtkXVpSJulKQU4
-	9SekZfjiIwTC9RBphhOLBR4J/G5REN6ocOrlI=
+	:content-type; s=sasl; bh=hV59TQgcEw8583eQ/qsyFwVi4Z4=; b=XQ46Ee
+	Sc/Sg8TxUwFbgkhZ7i30TmLR68dba1QRuKzW4bCK0OJovF2rkiqdiLeMlHeNwXdX
+	ZKXYRHnCgOXJFIUCgyfqYzJHU38MX14lnTwigevu1CPOTKOCQ46us00PqxxJ3rW4
+	ZcWvDvrKUAVdcs0qtn8nwdnw57oDeGu/sfHRc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WSLmZ3qIHxsq5KzWGZo1du2bZ4XP3/zy
-	ypDVhwwJdpcQ2N5eS+lCqvDJY4jWqobrvYvJtGt+6iV3KcIw/fXcFUiRYBP8Tpxk
-	0iPpAiPn9zw3PYIlajVvnSRAnh4RoVSehnAAzyDBe6X325FpC2wCq9nURQcp0dOO
-	Svm2T40kdSA=
+	:content-type; q=dns; s=sasl; b=StDsLebHv6dVEnGTHIKKDY9KELlttkZH
+	3X0m/dN09rV04TAo4d0H+YPIP0R0n9U+JFAZsgezJmDSiqdPQAJoutcC0ZskFpx4
+	IMPDaYGV6E0dQ4CpEBv/Q9Aqp2t9tgO3EAhnWIjB5MDwyCQucPEkr1w2sshIJw8b
+	TRPDSlM/xgo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 627D7CF1F;
-	Wed, 23 Jan 2013 15:24:45 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDEDCB4A2;
+	Wed, 23 Jan 2013 15:36:53 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7FE7CF1E; Wed, 23 Jan 2013
- 15:24:44 -0500 (EST)
-In-Reply-To: <201301231941.r0NJf3oa001238@smtpb01.one-mail.on.ca> (David
- Lang's message of "Wed, 23 Jan 2013 19:40:50 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1B83EB4A0; Wed, 23 Jan 2013
+ 15:36:53 -0500 (EST)
+In-Reply-To: <CAGdFq_jZDUxg7oTL7Z4v5ezYFPfJ8kZR6iHpESw6WnoDCeAy8w@mail.gmail.com> (Sverre
+ Rabbelier's message of "Wed, 23 Jan 2013 12:14:46 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ECDA197C-659A-11E2-9A87-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9EFCDF94-659C-11E2-A95B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214359>
 
-"Lang, David" <David.Lang@uhn.ca> writes:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> Thanks Matt and Dave and everyone else for your feedback on this.
-
-[administrivia: please wrap your lines to reasonable length]
-
-> 1. Download and install git for Windows on the 2 networked developer's
-> PC's and the 1 networked server.
+> On Wed, Jan 23, 2013 at 11:47 AM, John Keeping <john@keeping.me.uk> wrote:
+>>> When did we last revisit what minimal python version we are ok with requiring?
+>>
+>> I was wondering if people would weigh in discussing that in response to
+>> [1] but no one has commented on that part of it.  As another datapoint,
+>> Brandon Casey was suggesting patching git-p4.py to support Python 2.4
+>> [2].
+>>
+>> [1] http://article.gmane.org/gmane.comp.version-control.git/213920
+>> [2] http://article.gmane.org/gmane.comp.version-control.git/214048
 >
-> 2. On the server...
-> 	A) Initialize the Visual Studio folder for a particular
-> project as a git repository using 'git init'
-> 	b) Using the git rep just created (above), create a bare
-> repository on the server to act as the remote/master repository using
-> git clone --bare'
+> I for one would be happy to kill off support for anything older than
+> 2.6 (which had it's latest release on October 1st, 2008).
+>
+> Junio, how have we decided in the past which version of x to support?
 
-optionally:
+I do not think there was any conclusion.  $gmane/212215 claiming 2.4
+support matters for RHEL 5.x users was the last on the topic as far
+as I can tell, so it boils down to another question: do users on
+RHEL 5.x matter?
 
-	C) remove the original directory (A)
+I can read from $gmane/212215 that users of the said platform can
+safely keep using Python 2.4 under their vendor support contract
+until 2017.  But let's focus on what do these users expect of their
+system and software they run on it a bit.
 
-        D) make a non-bare clone on the server with "git clone", if
-    	   you would like to have a single build environment on the
-    	   server box.
+When they want to run a piece software that is not shipped with
+RHEL, either by writing their own or by importing from elsewhere,
+that needs 2.6 features, what are their options?
 
-        E) Use "git pull" from the bare repository you created in
-    	   step (2.B) to update the repository you created in step
-    	   (2.D) as necessary in order to build the latest in this
-    	   repository.
+ (a) The platform vendor optionally supplies 2.6 with or without
+     support;
 
-> 3. On each of the PC's...
-> 	A) Clone the remote repository from the network server using
-> git clone' (this will automatically create 'origin' as a remote source
-> on the PC's)
+ (b) The users can and do install 2.6 as /usr/local/bin/python2.6,
+     which may even be community-supported, but the vendor does not
+     support it; or
 
-	B) Each developer works in his repository; use either "git
-           pull" or "git pull --rebase" to sync up with the tip of
-           the master repository as necessary;
+ (c) The vendor terminates the support contract for users who choose
+     to go (b).
 
-	C) When a developer's work reaches a point where it is good
-           enough to update the master repository, use "git push" to
-           update the bare repository you created on the server in
-           step (2.B).  This may need to trigger step (2.E).
+I think we can safely discard (c); if that is the case, the users on
+the said platform will not choose to update Git either, so it does
+not matter where the future versions of Git sets the lower bound of
+Python version at.
 
-> Couple of questions...
-> ...
-> 4. The original Visual Studio project folder essentially remains
-> untouched, correct? The 'git init' and 'git clone' commands just make
-> copies and references of whatever data is in the VS project folder,
-> right?
+If we are not talking about the situation (c), then the users can
+choose to use 2.6, and more importantly, Python being a popular
+software, I would imagine that there are reputable sources of
+prepackaged RPMs for them to do so without going too much hassle of
+configuring, compiling and installing.
 
-These operations make copies and after making copies they do not
-ever refer to the original, so you can take a back-up of the
-original and remove it (i.e. optional step (c)).
+Now how does the decision we make today for releases of Git that
+haven't yet happened will affect these users?  As these versions of
+newer Git were not shipped with RHEL 5.x, and also I am assuming
+that Git is a more niche product than Python is, I would imagine
+that it is very unlikely that the vendor gives it the users as an
+optional package.  The users will have to do the same thing to be
+able to use such versions of Git as whatever they do in order to use
+Python 2.6.
+
+Given that, what the vendor originally shipped and officially
+supports does not affect the choices we would make today for newer
+versions of Git.  The users in a shop where additional third-party
+software in /usr/local/bin is strictly forbidden, they are stuck
+with the version of Git that the vendor shipped anyway, because they
+won't be able to install an updated Git in /usr/local/bin, either.
+
+That is, unless installing 2.6 as /usr/local/bin/python2.6 (or if
+you are really paranoid, /usr/local/only-for-git/bin/python2.6 where
+nobody's $PATH points at) is impossible.
+
+So personally I do not think dropping 2.4 is a huge problem for
+future versions of Git, but I'd like to hear from those working in
+IT support for large and slow-moving organizations (aka RHEL 5
+customers).
