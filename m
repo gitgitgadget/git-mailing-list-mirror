@@ -1,188 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/6] Change 'git' to 'Git' whenever the whole system
- is referred to #2
-Date: Tue, 22 Jan 2013 16:53:40 -0800
-Message-ID: <7va9s0lnxn.fsf@alter.siamese.dyndns.org>
-References: <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
- <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
- <7vvcark1f2.fsf@alter.siamese.dyndns.org>
- <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
- <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 01/10] wildmatch: fix "**" special case
+Date: Wed, 23 Jan 2013 08:04:50 +0700
+Message-ID: <CACsJy8DiVy7tcG_t2JENKoPSFWV24Tneh4q=upPPJML4VESMag@mail.gmail.com>
+References: <1357008251-10014-1-git-send-email-pclouds@gmail.com>
+ <1357008251-10014-2-git-send-email-pclouds@gmail.com> <7vr4lcnbn5.fsf@alter.siamese.dyndns.org>
+ <7v1udcn84w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: davvid@gmail.com, git@vger.kernel.org
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Wed Jan 23 01:54:13 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 23 02:05:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TxobR-0004VY-EJ
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 01:54:09 +0100
+	id 1Txomd-00020c-0r
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 02:05:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486Ab3AWAxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 19:53:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48658 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752111Ab3AWAxn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 19:53:43 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56426B103;
-	Tue, 22 Jan 2013 19:53:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p7bVt8uyhwEBaImJckB88S89kYM=; b=aZ9fwE
-	8QYoLrUhkD9sBpWUwyCbvTfeRnkKnbm1BKxO+e+M7QSZc6jVrv5Dt+NBo5lJYOms
-	EuuVeksgqeK9OpKe+minTiSg1dEMQRdGwpEqwjId18TlGuUqUMKfCsVYY5jzsqaq
-	IbxaBfSSX0JUNftDK41RmgMkRvEP8ZPuYZJy4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r1K4RNFNgzbCzyeDZvQM43H7e7LD02Dm
-	7Vkb/N7E9n9UX3Sp1ymVUUxvvW0btNkwENHJ2CTI0Ii/9ZjcFptAH9BgcwaL1UQY
-	ACFoXnATnIJaW71fro/vCelVQLJzt63b9TVaDs3MrGy3ARIorX7/2LN4USE7XTkD
-	Q+kHgMe2cuM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A773B101;
-	Tue, 22 Jan 2013 19:53:42 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84E1DB100; Tue, 22 Jan 2013
- 19:53:41 -0500 (EST)
-In-Reply-To: <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
- (Thomas Ackermann's message of "Mon, 21 Jan 2013 20:19:40 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 54B711C0-64F7-11E2-B6C5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752154Ab3AWBFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 20:05:22 -0500
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:39642 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751861Ab3AWBFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 20:05:21 -0500
+Received: by mail-oa0-f48.google.com with SMTP id h2so7782898oag.7
+        for <git@vger.kernel.org>; Tue, 22 Jan 2013 17:05:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=51ilElIqRKXzn6oT3nHKg1bNoQnhxAQ2hV505AmO2gc=;
+        b=t2EUQlJDEgsM8wk0rqznjA+sGQYBKgYKdH5WoVAg05yos+wO/aF/zPRjJ7UNiIalHa
+         BT8Mp7N0ZikpKcpCBbvfyIuQlbOwiDkB2OXKpoaR/W2tEwtickkKftRnogA1gg+JmzGf
+         B2Dk9pqhrm+RlL862kwC900O9T8KuNVIrZ8VEtThcDU3Gf1Pf70ANMSRpzD3lh+108m0
+         loU7mlwe3iVxDicA1oIGWhfXxdS2MGcetM1cLJVsUbLlMb2iGH1/R9GmFw80la8ZRf9O
+         M6+wjBgaevxUOwrBevZu+x22MmZHFQXOZL/qCRsjOGDG87QxeZaWc2kMlQKcYMvPggez
+         k5Vg==
+X-Received: by 10.182.131.3 with SMTP id oi3mr18252564obb.84.1358903120744;
+ Tue, 22 Jan 2013 17:05:20 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Tue, 22 Jan 2013 17:04:50 -0800 (PST)
+In-Reply-To: <7v1udcn84w.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214269>
 
-Thomas Ackermann <th.acker@arcor.de> writes:
+On Wed, Jan 23, 2013 at 5:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> We obviously do not want to set FNM_PATHNAME when we are not
+>> substituting fnmatch() with wildmatch(), but I wonder if it may make
+>> sense to unconditionally use WM_PATHNAME semantics when we build the
+>> system with USE_WILDMATCH and calling wildmatch() in this codepath.
+>> Users can always use "*/**/*" in place of "*" in their patterns
+>> where they want to ignore directory boundaries.
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index b87f744..5a831ad2 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1,14 +1,14 @@
->  CONFIGURATION FILE
->  ------------------
->  
-> -The git configuration file contains a number of variables that affect
-> +The Git configuration file contains a number of variables that affect
->  the git command's behavior. The `.git/config` file in each repository
+If we do that, we need to do the same in tree_entry_interesting(). In
+other words, pathspec learns the new glob syntax. It's fine for an
+experimental flag like USE_WILDMATCH. But after fnmatch is replaced by
+wildmatch unconditionally (thus USE_WILDMATCH becomes obsolete), then
+what? Should people who expects new syntax with USE_WILDMATCH continue
+to have new syntax? How does a user know which syntax may be used in
+his friend's "git" binary?
 
-I am torn on this one, in the sense that there are configuration
-variables that changes the behaviour of 'git' wrapper itself, but
-this explanation is talking more about all the 161 subcommands (no,
-I am just kidding and didn't count) in the Git suite in general, so
-I think s/git/Git/ is probably more appropriate.
+On a related subject, I've been meaning to write a mail about the
+other use of patterns in git (e.g. in git-branch, git-tag,
+git-apply...) but never got around to. Some use without FNM_PATHNAME,
+some do and the document does not go into details about the
+differences. We might want to unify the syntax there too. It'll
+probably break backward compatibility so we can do the same when we
+switch pathspec syntax.
 
-> @@ -1039,7 +1039,7 @@ format.subjectprefix::
->  
->  format.signature::
->  	The default for format-patch is to output a signature containing
-> -	the git version number. Use this variable to change that default.
-> +	the Git version number. Use this variable to change that default.
->  	Set this variable to the empty string ("") to suppress
->  	signature generation.
+> Another possibility, which _might_ make more practical sense, is to
+> update dowild() so that any pattern that has (^|/)**(/|$) in it
+> implicitly turns the WM_PATHNAME flag on.  There is no reason for
+> the user to feed it a double-asterisk unless it is an attempt to
+> defeat some directory boundaries,
 
-Before this hunk, fetch.unpackLimit has this:
+They may also put "**" by mistake (or realize they just put "**" but
+too lazy to remove one asterisk).
 
-	If the number of objects fetched over the git native
-	transfer is below...
+> so we already know that the user
+> expects WM_PATHNAME behaviour at that point.  Otherwise, the user
+> would have simply said '*' instead, wouldn't he?
 
-s/git/Git/ is needed, I think.
+The only problem I see is, without the version string, there's no way
+to know if "**" is supported. Old git versions will happily take "**"
+and interpret as "*". When you advise someone to use "**" you might
+need to add "check if you have this version of git". This problem does
+not exist with pathspec magic like :(glob)
 
-
-> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-> index 6d696e0..e18c3b0 100644
-> --- a/Documentation/git-remote-helpers.txt
-> +++ b/Documentation/git-remote-helpers.txt
-> @@ -45,9 +45,9 @@ argument specifies a URL; it is usually of the form
->  '<transport>://<address>', but any arbitrary string is possible.
->  The 'GIT_DIR' environment variable is set up for the remote helper
->  and can be used to determine where to store additional data or from
-> -which directory to invoke auxiliary git commands.
-> +which directory to invoke auxiliary Git commands.
-
-The paragraph begins with this:
-
- Remote helper programs are invoked with one or (optionally) two
- arguments. The first argument specifies a remote repository as in git;
-
-s/git/Git/ is needed, I think.
-
-
-> diff --git a/Documentation/git-verify-pack.txt b/Documentation/git-verify-pack.txt
-> index cd23076..d4ae05b 100644
-> --- a/Documentation/git-verify-pack.txt
-> +++ b/Documentation/git-verify-pack.txt
-> @@ -14,7 +14,7 @@ SYNOPSIS
->  
->  DESCRIPTION
->  -----------
-> -Reads given idx file for packed git archive created with the
-> +Reads given idx file for packed Git archive created with the
->  'git pack-objects' command and verifies idx file and the
->  corresponding pack file.
-
-The NAME section lists it as "Validate packed git archive files",
-which wants a s/git/Git/, I think.
-
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> index 2698f63..b9c0eec 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -417,11 +417,11 @@ Generating diff text
->  `diff`
->  ^^^^^^
->  
-> -The attribute `diff` affects how 'git' generates diffs for particular
-> -files. It can tell git whether to generate a textual patch for the path
-> +The attribute `diff` affects how Git generates diffs for particular
-> +files. It can tell Git whether to generate a textual patch for the path
->  or to treat the path as a binary file.  It can also affect what line is
-> -shown on the hunk header `@@ -k,l +n,m @@` line, tell git to use an
-> -external command to generate the diff, or ask git to convert binary
-> +shown on the hunk header `@@ -k,l +n,m @@` line, tell Git to use an
-> +external command to generate the diff, or ask Git to convert binary
->  files to a text format before generating the diff.
->  
->  Set::
-
-After this hunk, the description of "String" type says this:
-
-	... are defined by the configuration variables in the
-        "diff.foo" section of the git config file.
-
-s/git/Git/ is needed, I think.
-
-
-> @@ -650,7 +650,7 @@ advantages to choosing this method:
->     odt2txt).
->  
->  2. Git diff features. By performing only the transformation step
-> -   yourself, you can still utilize many of git's diff features,
-> +   yourself, you can still utilize many of Git's diff features,
->     including colorization, word-diff, and combined diffs for merges.
->  
->  3. Caching. Textconv caching can speed up repeated diffs, such as those
-
-After this hunk, in "Marking file as binary" section, you have
-
-	This will cause git to generate `Binary files differ`...
-
-s/git/Git/ is needed, I think.
-
-As before, I'll locally create a fixup commit based on the above.
-
-After I am done with these patches, somebody (not Thomas or I, as
-our eyes are too used to staring at git and Git to notice mistakes)
-has to run "git grep -C3 -e '\<Git\>' Documentation/" and eyeball
-the output to spot mistakes that should have been "git" but was
-converted to "Git", as I am mostly concentrating on finding "git"
-that should have been converted in Thomas's series.
-
-Thanks.
+> I said "_might_" because it sounds a bit too magical to my taste.
+> I dunno.
+-- 
+Duy
