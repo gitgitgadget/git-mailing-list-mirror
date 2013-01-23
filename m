@@ -1,258 +1,110 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Bug in EOL conversion?
-Date: Wed, 23 Jan 2013 21:55:13 -0000
-Organization: OPDS
-Message-ID: <063ABD39C46D492391698E400A7D1FA9@PhilipOakley>
-References: <CANrZfmGXtKcB+i_xhNJELftRc1pC2TJKKhOieHm=5Qkni9OKrA@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=ISO-8859-1; reply-type=original
-Cc: "Git MsysGit" <msysgit@googlegroups.com>
-To: "Stefan Norgren" <stefan.norgren@gmail.com>,
-	<git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBQNYQGEAKGQEE44HWXA@googlegroups.com Wed Jan 23 22:55:33 2013
-Return-path: <msysgit+bncBDSOTWHYX4PBBQNYQGEAKGQEE44HWXA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f186.google.com ([209.85.217.186])
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4 0/3] Finishing touches to "push" advises
+Date: Wed, 23 Jan 2013 13:55:27 -0800
+Message-ID: <1358978130-12216-1-git-send-email-gitster@pobox.com>
+References: <20130121234002.GE17156@sigill.intra.peff.net>
+Cc: Jeff King <peff@peff.net>, Chris Rorvick <chris@rorvick.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 23 22:55:58 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBBQNYQGEAKGQEE44HWXA@googlegroups.com>)
-	id 1Ty8I8-0002GG-NM
-	for gcvm-msysgit@m.gmane.org; Wed, 23 Jan 2013 22:55:32 +0100
-Received: by mail-lb0-f186.google.com with SMTP id n8sf3081664lbj.13
-        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Jan 2013 13:55:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:x-received:received-spf
-         :x-ironport-anti-spam-filtered:x-ironport-anti-spam-result
-         :x-ironport-av:message-id:reply-to:from:to:cc:references:subject
-         :date:organization:mime-version:x-priority:x-msmail-priority
-         :x-mailer:x-mimeole:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=YtxyvpeiU7/Pzu3uZlzzostThgGdWpwwl2cVEpqIC5E=;
-        b=vvQ3F9TJAGJ5jVPpmX+yNrbMQLcqgY13AObKsZ5AlUEQiwZ5/GvDGSI3bwFzFsPkn6
-         Ht3TmFwWzt2wk/jr+HysTDP//T+E5NI6ZIZEcL7zcczpQv8uCCr5nDlqgFYniY1jT0jw
-         im8HXMDB7+ShPfw0glywiF1/dcpnCqyNmmaP7po0duWzMWq6Bf+TvYVSMt 
-X-Received: by 10.180.90.140 with SMTP id bw12mr875038wib.6.1358978115266;
-        Wed, 23 Jan 2013 13:55:15 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.94.97 with SMTP id db1ls245419wib.0.canary; Wed, 23 Jan
- 2013 13:55:13 -0800 (PST)
-X-Received: by 10.180.74.74 with SMTP id r10mr1016090wiv.3.1358978113678;
-        Wed, 23 Jan 2013 13:55:13 -0800 (PST)
-X-Received: by 10.180.74.74 with SMTP id r10mr1016089wiv.3.1358978113658;
-        Wed, 23 Jan 2013 13:55:13 -0800 (PST)
-Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
-        by gmr-mx.google.com with ESMTP id co7si1579142wib.1.2013.01.23.13.55.13;
-        Wed, 23 Jan 2013 13:55:13 -0800 (PST)
-Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgMFAP1aAFFcHIm8/2dsb2JhbABEjAKyPRdzghkFAQEEAQgBAS4RBQgBARwFBQYBAQMFAgEDEQMBAQEKJRQBBAgQAgYHCQEFCAYBBwsIAgECAwEMBIdnAwkKCLQaDYlVjAR3g1dhA4gshVGGOYJyihuFEoJ1gWYJFy8
-X-IronPort-AV: E=Sophos;i="4.84,523,1355097600"; 
-   d="scan'208";a="416376268"
-Received: from host-92-28-137-188.as13285.net (HELO PhilipOakley) ([92.28.137.188])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 23 Jan 2013 21:55:12 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Original-Sender: philipoakley@iee.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
- (google.com: domain of transitioning philipoakley@iee.org does not designate
- 62.24.128.238 as permitted sender) smtp.mail=philipoakley@iee.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214367>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Ty8IV-0002g4-2V
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 22:55:55 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752033Ab3AWVze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 16:55:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42276 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751143Ab3AWVzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 16:55:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F986B7CD;
+	Wed, 23 Jan 2013 16:55:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=ug+F
+	+usXlA0YA0fhqeoNWWGtY40=; b=EQaGEvu8+xYXJovWSUcRezuf10rLaNbr33QR
+	YINqClszwvhXajI1hgdod01OwdmwHJ4XnN+FnIffWes91p3nsSy0UPkS5drkciEk
+	XIqvXc29fdfyZbuOWq1/iWbUciXircjBAsPyR8QOT6M3IlmpbuBqLlgVqqxI1o6G
+	0zg6NxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	JcfO7/f+2oJ6QjNSxl+4up8e5LZhjTia1Q1R4apE6T9besnG5CS26zXZ7uENgqja
+	QLWJPHNOicBycCVrwp+G85rQAq8eJql/OElVsYW8t1AWqDnVBjYL6wWjvGVICY/c
+	CS8Czbo3ArrvddJMU7SITI+tYACaMw4OQnhMXEo3qYo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65326B7CC;
+	Wed, 23 Jan 2013 16:55:32 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E6A24B7CA; Wed, 23 Jan 2013
+ 16:55:31 -0500 (EST)
+X-Mailer: git-send-email 1.8.1.1.517.g0318d2b
+In-Reply-To: <20130121234002.GE17156@sigill.intra.peff.net>
+X-Pobox-Relay-ID: 9BA14744-65A7-11E2-99F8-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214368>
 
-The msysgit list msysgit@googlegroups.com may be a better place for 
-this.
+This builds on Chris Rorvick's earlier effort to forbid unforced
+updates to refs/tags/ hierarchy and giving sensible error and advise
+messages for that case (we are not rejecting such a push due to fast
+forwardness, and suggesting to fetch and integrate before pushing
+again does not make sense).
 
-It is likely that you have a windows specific EOL conversion set within 
-the wider config's (i.e.  --system, --global). You may have 
-core.safecrlf set which does a round trip test so tests the conversion 
-both ways.
+The series applies on top of 256b9d7 (push: fix "refs/tags/
+hierarchy cannot be updated without --force", 2013-01-16).
 
-The normal canonical line ending choice is LF in the repo.
+This fourth round swaps the order of clean-up patches and now the
+bottom two are clean-up patches.  The main change is in the third
+one.
 
-I don't have a W7 install to compare against.
+When the object at the tip of the remote is not a committish, or the
+object we are pushing is not a committish, the existing code already
+rejects such a push on the client end, but we used the same error
+and advice messages as the ones used when rejecting a push that does
+not fast-forward, i.e. pull from there and integrate before pushing
+again.  Introduce a new rejection reason NEEDS_FORCE and explain why
+the push was rejected, stressing the fact that --force is required
+when non committish objects are involved, so that the user can (1)
+notice a possibly mistyped source object name or destination ref
+name, when the user is trying to push an ordinary commit, or (2)
+learn that "--force" is an appropriate thing to use when the user is
+sure that s/he wants to push a non-committish (which is unusual).
 
-Philip
+Unlike the third round, we do not say "fetch first, inspect the
+situation to decide what to do", when we do not have the object
+sitting at the tip of the remote.  Most likely, it is a commit
+somebody who has been working on the same branch pushed that we
+haven't fetched yet, so suggesting to pull is often sufficient and
+appropriate, and in a more uncommon case in which the unknown object
+is not a committish, the suggested pull will fail without making
+permanent damage anywhere.  Next atttempt to push without changing
+anything (e.g. "reset --hard") will then trigger the NEEDS_FORCE
+"Your push involves non-commit objects" case.
 
------ Original Message ----- 
-From: "Stefan Norgren" <stefan.norgren@gmail.com>
-To: <git@vger.kernel.org>
-Sent: Wednesday, January 23, 2013 2:44 AM
-Subject: Bug in EOL conversion?
 
+Junio C Hamano (3):
+  push: further clean up fields of "struct ref"
+  push: further simplify the logic to assign rejection reason
+  push: introduce REJECT_FETCH_FIRST and REJECT_NEEDS_FORCE
 
-> Hi,
->
-> The EOL conversion does not behave as indicated by output message from
-> add and commit. Here is my test case executed on Windows 7 64 bit.
->
->
-> $ git --version
-> git version 1.8.0.msysgit.0
-> $ which git
-> /cygdrive/c/Program Files (x86)/Git/cmd/git
-> $ git config --list
-> core.symlinks=false
-> core.autocrlf=true
-> color.diff=auto
-> color.status=auto
-> color.branch=auto
-> color.interactive=true
-> pack.packsizelimit=2g
-> help.format=html
-> http.sslcainfo=/bin/curl-ca-bundle.crt
-> sendemail.smtpserver=/bin/msmtp.exe
-> diff.astextplain.textconv=astextplain
-> rebase.autosquash=true
-> user.name=Stefan
-> user.email=stefan@---.com
-> core.repositoryformatversion=0
-> core.filemode=false
-> core.bare=false
-> core.logallrefupdates=true
-> core.symlinks=false
-> core.ignorecase=true
-> core.hidedotfiles=dotGitOnly
->
-> -- Note core.autocrlf=true.
-> -- Created withcrlf.txt with one character and one CRLF line feed.
-> File size 3 bytes.
-> -- Created withlf.txt with one character and one LF line feed. File
-> size 2 bytes.
-> -- Now let's init repository.
->
-> $ git init
-> Initialized empty Git repository in D:/Dev/workspaces/gittest/.git/
-> $ ls -la
-> total 10
-> d---------+ 1 Stefan None 0 Jan 23 02:12 .
-> d---------+ 1 Stefan None 0 Jan 23 02:10 ..
-> d---------+ 1 Stefan None 0 Jan 23 02:13 .git
-> ----------+ 1 Stefan None 3 Jan 23 01:55 withcrlf.txt
-> ----------+ 1 Stefan None 2 Jan 23 01:55 withlf.txt
->
-> -- Note no .gitattributes file that will affect EOL conversion.
->
-> $ ls -la .git/info/
-> total 5
-> d---------+ 1 Stefan None   0 Jan 23 02:12 .
-> d---------+ 1 Stefan None   0 Jan 23 02:13 ..
-> ----------+ 1 Stefan None 240 Jan 23 02:12 exclude
->
-> -- Note no attribute file in .git/info/ that will affect EOL 
-> conversion.
->
-> $ git add *
-> warning: LF will be replaced by CRLF in withlf.txt.
-> The file will have its original line endings in your working 
-> directory.
-> $ git commit -m 'Testing EOL'
-> [master (root-commit) 9a0b2f5] Testing EOL
-> 2 files changed, 2 insertions(+)
-> create mode 100644 withcrlf.txt
-> create mode 100644 withlf.txt
-> warning: LF will be replaced by CRLF in withlf.txt.
-> The file will have its original line endings in your working 
-> directory.
-> $ ls -la
-> total 10
-> d---------+ 1 Stefan None 0 Jan 23 02:12 .
-> d---------+ 1 Stefan None 0 Jan 23 02:10 ..
-> d---------+ 1 Stefan None 0 Jan 23 02:22 .git
-> ----------+ 1 Stefan None 3 Jan 23 01:55 withcrlf.txt
-> ----------+ 1 Stefan None 2 Jan 23 01:55 withlf.txt
->
-> -- So no changes (see file size) to files in working directory. This
-> is expected and according to output warning from add and commit.
->
-> -- Now lets look in the repository
->
-> $ git ls-tree -l HEAD withcrlf.txt
-> 100644 blob d00491fd7e5bb6fa28c517a0bb32b8b506539d4d       2 
-> withcrlf.txt
-> $ git ls-tree -l HEAD withlf.txt
-> 100644 blob d00491fd7e5bb6fa28c517a0bb32b8b506539d4d       2 
-> withlf.txt
->
-> -- Note that size of withlf.txt is 2 in repository indicating that LF
-> was not replaced by CRLF in withlf.txt as indicated in output from add
-> and commit. Also note that size of withcrlf.txt is also 2 in
-> repository so it looks like CRLF was replaced by LF in withcrlf.txt.
-> To verify I will delete the files from working directory, turn off EOL
-> conversion, checkout files and look at file endings in the working
-> directory.
->
-> $ rm with*
-> $ ls -la
-> total 8
-> d---------+ 1 Stefan None 0 Jan 23 02:31 .
-> d---------+ 1 Stefan None 0 Jan 23 02:10 ..
-> d---------+ 1 Stefan None 0 Jan 23 02:22 .git
-> $ git status
-> # On branch master
-> # Changes not staged for commit:
-> #   (use "git add/rm <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working 
-> directory)
-> #
-> #       deleted:    withcrlf.txt
-> #       deleted:    withlf.txt
-> #
-> no changes added to commit (use "git add" and/or "git commit -a")
-> $ git config --global core.autocrlf false
-> $ git config --global core.autocrlf
-> false
-> $ git checkout -- with*
-> $ ls -la
-> total 10
-> d---------+ 1 Stefan None 0 Jan 23 02:38 .
-> d---------+ 1 Stefan None 0 Jan 23 02:10 ..
-> d---------+ 1 Stefan None 0 Jan 23 02:38 .git
-> ----------+ 1 Stefan None 2 Jan 23 02:38 withcrlf.txt
-> ----------+ 1 Stefan None 2 Jan 23 02:38 withlf.txt
->
-> -- Both files in working directory files now have LF line endings
-> confirming that files in repository have LF file endings. Either the
-> output message of add and commit is wrong or the behavior of the EOL
-> conversion is wrong... or... have I missed something...?
->
->   /Stefan
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
-> -----
-> No virus found in this message.
-> Checked by AVG - www.avg.com
-> Version: 2013.0.2890 / Virus Database: 2639/6050 - Release Date: 
-> 01/22/13
-> 
+ Documentation/config.txt | 12 +++++++++++-
+ advice.c                 |  4 ++++
+ advice.h                 |  2 ++
+ builtin/push.c           | 29 +++++++++++++++++++++++++++++
+ builtin/send-pack.c      | 10 ++++++++++
+ cache.h                  |  6 +++---
+ remote.c                 | 42 +++++++++++++++++++-----------------------
+ send-pack.c              |  2 ++
+ transport-helper.c       | 10 ++++++++++
+ transport.c              | 14 +++++++++++++-
+ transport.h              |  2 ++
+ 11 files changed, 105 insertions(+), 28 deletions(-)
 
 -- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+1.8.1.1.517.g0318d2b
