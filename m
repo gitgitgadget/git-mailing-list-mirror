@@ -1,108 +1,142 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: GIT get corrupted on lustre
-Date: Wed, 23 Jan 2013 16:54:44 +0100
-Message-ID: <CABPQNSaNmuXEn6hNd_xH01oCoykBs_y85=0bigmDBDH3Aazj2g@mail.gmail.com>
-References: <50D861EE.6020105@giref.ulaval.ca> <50D870A0.90205@interlinx.bc.ca>
- <50EC453A.2060306@giref.ulaval.ca> <50EDDF12.3080800@giref.ulaval.ca>
- <50F7F793.80507@giref.ulaval.ca> <CAGK7Mr4R=OwfWt4Kat75C8YDi3iLTavMLxeoLxkf1-gKhxrucg@mail.gmail.com>
- <50F8273E.5050803@giref.ulaval.ca> <871B6C10EBEFE342A772D1159D1320853A042AD7@umechphj.easf.csd.disa.mil>
- <50F829A9.7090606@calculquebec.ca> <871B6C10EBEFE342A772D1159D1320853A044B42@umechphj.easf.csd.disa.mil>
- <50F98B53.9080109@giref.ulaval.ca> <CABPQNSbJr4dR9mq+kCwGe-RKb9PA7q=SKzbFW+=md_PLzZh=nQ@mail.gmail.com>
- <87a9s2o6ri.fsf@pctrast.inf.ethz.ch> <kdk2ss$498$1@ger.gmane.org>
- <87r4lejpx8.fsf@pctrast.inf.ethz.ch> <50FF051D.5090804@giref.ulaval.ca>
- <878v7keuh3.fsf@pctrast.inf.ethz.ch> <CABPQNSad1EKbmt3Gjs+uB9fud4YBqmk++5GMqF2s047Lcc8GwQ@mail.gmail.com>
- <87d2wvc3v0.fsf@pctrast.inf.ethz.ch> <CABPQNSb89h28O_a3uVoVrNisZqPcHHVFm8nP7GdFGCb=PVdcsQ@mail.gmail.com>
- <871udbc3af.fsf@pctrast.inf.ethz.ch>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] push: introduce REJECT_FETCH_FIRST and
+ REJECT_NEEDS_FORCE
+Date: Wed, 23 Jan 2013 08:28:49 -0800
+Message-ID: <7vip6nj22m.fsf@alter.siamese.dyndns.org>
+References: <20130121234002.GE17156@sigill.intra.peff.net>
+ <1358836230-9197-1-git-send-email-gitster@pobox.com>
+ <1358836230-9197-3-git-send-email-gitster@pobox.com>
+ <20130123065640.GB10306@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>,
-	"Brian J. Murrell" <brian@interlinx.bc.ca>, git@vger.kernel.org,
-	"Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>,
-	Maxime Boissonneault <maxime.boissonneault@calculquebec.ca>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	=?ISO-8859-1?Q?S=E9bastien_Boisvert?= 
-	<sebastien.boisvert@calculquebec.ca>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jan 23 16:55:50 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Chris Rorvick <chris@rorvick.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 23 17:29:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ty2fy-0000eq-Uh
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 16:55:47 +0100
+	id 1Ty3CN-0007WG-8U
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 17:29:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754584Ab3AWPzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 10:55:25 -0500
-Received: from mail-ia0-f169.google.com ([209.85.210.169]:43800 "EHLO
-	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753105Ab3AWPzY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 10:55:24 -0500
-Received: by mail-ia0-f169.google.com with SMTP id j5so4197402iaf.0
-        for <git@vger.kernel.org>; Wed, 23 Jan 2013 07:55:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:reply-to:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=h28RMOtt0aWWAf0gS2lVR3zIc5rMxRqb2KEIOBfkR+k=;
-        b=dZeeLL24d2DQ6vwuzAVOq/AujA2IV+RQwdSiarrV0MsMY2ATdGO0BRyAnSOjm4ThwC
-         1z1maK+Xezwi07vtxuGxmYNaToikrOfZxjurivpTQVqdy9HQTU75nCHRtkSz5g73up4Z
-         QUnORsExUCW7djOhqqBoUon8f6oSycJwz+v8kd/NvQ3WJ3E4ebaE86G2aIDza6oJ/BYt
-         QXfV6MdvmDTzjChimggJLjd4LlRmlIwNmPSsy0pGWmUQ4/hc+RFHGoY6fmsblqSpE4sM
-         Q16meAxC9nXWTAOp5RQ1PTr40iW0Zw3l6SJGngHAEa0KQCgC7/izKT084enKn0kj0NCZ
-         /BtQ==
-X-Received: by 10.50.197.161 with SMTP id iv1mr15548372igc.53.1358956524256;
- Wed, 23 Jan 2013 07:55:24 -0800 (PST)
-Received: by 10.64.9.112 with HTTP; Wed, 23 Jan 2013 07:54:44 -0800 (PST)
-In-Reply-To: <871udbc3af.fsf@pctrast.inf.ethz.ch>
+	id S1756546Ab3AWQ2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 11:28:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40785 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756492Ab3AWQ2x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 11:28:53 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A67FC187;
+	Wed, 23 Jan 2013 11:28:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HjMTr9JCN5EBYKl5ElYwRSjxhXI=; b=sSb8B0
+	hRG/zodR7WJBdc4zKc2QmPddP5UauusQNOn227iyts+9s/UoBC4vKGkXx4Hb0zje
+	f7gcdOw4RJb2Tg/SPLk+sbYso8Qzg4xi8ZhEgqjYyliPVIGQfsGEnMNZZPEeK73U
+	P9A26pU+kAd5se7GDT1I/xVOCtI+rShahQP1M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IIweTPQ4ofvj0Vlf4BhqahPoNiGFc8pb
+	w/IZlbrZQ8HxIsGt65Zkzr5oOIb7/SnYbpfbTYKA5pdIPKJ3vrRCSbS+I97Fztj0
+	bY0aXaC4nzpQvQiP4WNQ3s5EacZZgMjavp0E7KeCkWxdJ2uvj9ztMpdKm+KpowUc
+	+VDAozQ7pcg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00211C186;
+	Wed, 23 Jan 2013 11:28:51 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2D626C185; Wed, 23 Jan 2013
+ 11:28:51 -0500 (EST)
+In-Reply-To: <20130123065640.GB10306@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 23 Jan 2013 01:56:40 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F8AAE98C-6579-11E2-A2E1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214332>
 
-On Wed, Jan 23, 2013 at 4:44 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->
->> On Wed, Jan 23, 2013 at 4:32 PM, Thomas Rast <trast@student.ethz.ch> wrote:
->>> Erik Faye-Lund <kusmabite@gmail.com> writes:
->>>
->>>> POSIX allows error codes
->>>> to be generated other than those defined. From
->>>> http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_03.html:
->>>>
->>>> "Implementations may support additional errors not included in this
->>>> list, *may generate errors included in this list under circumstances
->>>> other than those described here*, or may contain extensions or
->>>> limitations that prevent some errors from occurring."
->>>
->>> That same page says, however:
->>>
->>>   For functions under the Threads option for which [EINTR] is not listed
->>>   as a possible error condition in this volume of IEEE Std 1003.1-2001,
->>>   an implementation shall not return an error code of [EINTR].
->>
->> Yes, but surely that's for pthreads functions, no? utime is not one of
->> those functions...
->
-> Ah, my bad.  In fact in
->
->   http://pubs.opengroup.org/onlinepubs/9699919799/xrat/V4_xsh_chap02.html
->
-> there is a paragraph "Signal Effects on Other Functions", which says
->
-> <snip>
->
-> Taken together this should mean that the bug is in fact simply that the
-> calls do not *restart*.  They are (like you say) allowed to return EINTR
-> despite not being specified to, *but* SA_RESTART should restart it.
->
+Jeff King <peff@peff.net> writes:
 
-Right, thanks for clearing that up.
+> On Mon, Jan 21, 2013 at 10:30:29PM -0800, Junio C Hamano wrote:
+>
+>> When we push to update an existing ref, if:
+>> 
+>>  * we do not have the object at the tip of the remote; or
+>>  * the object at the tip of the remote is not a commit; or
+>>  * the object we are pushing is not a commit,
+>> 
+>> there is no point suggesting to fetch, integrate and push again.
+>> 
+>> If we do not have the current object at the tip of the remote, we
+>> should tell the user to fetch first and evaluate the situation
+>> before deciding what to do next.
+>
+> Should we? I know that it is more correct to do so, because we do not
+> even know for sure that the remote object is a commit, and fetching
+> _might_ lead to us saying "hey, this is not something that can be
+> fast-forwarded".
+>
+> But by far the common case will be that it _is_ a commit, and the right
+> thing is going to be to pull....
+> Is the extra hassle in the common case worth it for the off chance that
+> we might give a more accurate message? Should the "fetch first" message
+> be some hybrid that covers both cases accurately, but still points the
+> user towards "git pull" (which will fail anyway if the remote ref is not
+> a commit)?
 
-> Now, does that make it a lustre bug or a glibc bug? :-)
+I was actually much less happy with "needs force" than this one, as
+you have to assume too many things for the message to be a useful
+and a safe advise: the user has actually examined the situation and
+forcing the push is the right thing to do.  Both old and new objects
+exist, so the user _could_ have done so, but did he really check
+them, thought about the situation and made the right decision?
+Perhaps the attempted push had a typo in the object name it wanted
+to update the other end with, and the right thing to do is not to
+force but to fix the refspec instead?  "You need --force to perform
+this push" was a very counter-productive advice in this case, but I
+didn't think of a better wording.
 
-That's kind of uninteresting, the important bit is that it is indeed a
-bug (outside of Git).
+The "fetch first and inspect" was an attempt to reduce the risk of
+that "needs force" message that could encourage brainless forced
+pushes.  Perhaps if we reword "needs force" to something less risky,
+we do not have to be so explicit in "You have to fetch first and
+examine".
+
+How about doing this?
+
+For "needs force" cases, we say this instead:
+
+ hint: you cannot update a ref that points at a non-commit object, or
+ hint: update a ref to point at a non-commit object, without --force.
+
+Being explicit about "non-commit" twice will catch user's eyes and
+cause him to double check that it is not a mistyped LHS of the push
+refspec (if he is sending a non-commit) or mistyped RHS (if the ref
+is pointing at a non-commit).  If he _is_ trying to push a blob out,
+the advice makes it clear what to do next: he does want to force it.
+
+If we did that, then we could loosen the "You should fetch first"
+case to say something like this:
+
+ hint: you do not have the object at the tip of the remote ref;
+ hint: perhaps you want to pull from there first?
+
+This explicitly denies one of Chris's wish "we shouldn't suggest to
+merge something that we may not be able to", but in the "You should
+fetch first" case, we cannot fundamentally know if we can merge
+until we fetch.  I agree with you that the most common case is that
+the unknown object is a commit, and that suggesting to pull is a
+good compromise.
+
+Note that you _could_ split the "needs force" case into two, namely,
+"cannot replace a non-commit" and "cannot push a non-commit".  You
+could even further split them into combinations (e.g. an attempt to
+replace an annotated tag with a commit and an attempt to replace a
+tree with a commit may be different situations), but I think the
+advices we can give to these cases would end up being the same, so I
+tend to think it is not worth it.  That is what I meant by "I do not
+expect me doing the type-based policy myself" in the concluding
+message of the series.
