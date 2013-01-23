@@ -1,78 +1,77 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v3 0/2] Make git-svn work with gitdir links
-Date: Wed, 23 Jan 2013 02:32:35 +0000
-Message-ID: <20130123023235.GA24135@dcvr.yhbt.net>
-References: <20120308005103.GA27398@dcvr.yhbt.net>
- <1358731322-44600-1-git-send-email-barry.wardell@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/6] Change 'git' to 'Git' whenever the whole system
+ is referred to #1
+Date: Tue, 22 Jan 2013 18:32:39 -0800
+Message-ID: <7vr4lck4s8.fsf@alter.siamese.dyndns.org>
+References: <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
+ <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
+ <7vvcark1f2.fsf@alter.siamese.dyndns.org>
+ <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
+ <1430594044.632790.1358795873467.JavaMail.ngmail@webmail20.arcor-online.net>
+ <7vsj5slqz1.fsf@alter.siamese.dyndns.org>
+ <7vfw1slpig.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Barry Wardell <barry.wardell@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 03:32:58 2013
+Cc: davvid@gmail.com, git@vger.kernel.org
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Wed Jan 23 03:33:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Txq94-0004Wi-1f
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 03:32:58 +0100
+	id 1Txq9A-0004b0-Ci
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jan 2013 03:33:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752008Ab3AWCch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2013 21:32:37 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:52909 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751819Ab3AWCcg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2013 21:32:36 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 026111F6E1;
-	Wed, 23 Jan 2013 02:32:36 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1358731322-44600-1-git-send-email-barry.wardell@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752240Ab3AWCcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2013 21:32:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43181 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751819Ab3AWCcl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2013 21:32:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53459BB41;
+	Tue, 22 Jan 2013 21:32:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ARxGEbIXXiXiR7wMz0nbVk+fuYc=; b=o3O6xK
+	91i6vt+kGav6MaRd/osDqY5wAiQnSYY3Kv1nY+444aSfrgTvYc7QaoGce97GWZ+Q
+	mmkULAoyZZRxnakLz0fCgKAYHZph89oBCNW6gYyKiFge+8W+AExbcbp/IG4AEdaF
+	fZBF3fli7n3PX+qK/L+J0Uy19NAG3BKB8a5AU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lDO1zhjcR+u/XATMz9TxOfR1hMQuowA0
+	SVhiNTRlDv3mAler+ErIbdGd4hhSS5WtXfIxSefcjl5IA0y0IpQi17Q5PUl7Zvwc
+	GXO2prYPcXLCR0BU1C+6GYLfw6g7gBsQDvs6E1629eyBxNzh8S69xkw1GMh81Hpa
+	tio0rfy5a1c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4620CBB3F;
+	Tue, 22 Jan 2013 21:32:41 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A4D71BB3A; Tue, 22 Jan 2013
+ 21:32:40 -0500 (EST)
+In-Reply-To: <7vfw1slpig.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 22 Jan 2013 16:19:35 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 28B697CC-6505-11E2-A059-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214272>
 
-Barry Wardell <barry.wardell@gmail.com> wrote:
-> These patches fix a bug which prevented git-svn from working with repositories
-> which use gitdir links.
-> 
-> Changes since v2:
->  - Rebased onto latest master.
->  - Added test case which verifies that the problem has been fixed.
->  - Fixed problems with git svn (init|clone|multi-init).
->  - All git-svn test cases now pass (except two in t9101 which also failed
->    before these patches).
+In Documentation/git-rev-parse.txt, there is this bit:
 
-t9101 did not fail for me before your patches.  However I have a
-patch on top of your 2/2 which should fix things.
+ --resolve-git-dir <path>::
+        Check if <path> is a valid git-dir or a git-file pointing to
+        a valid git-dir. If <path> is a valid git-dir the resolved path to
+        git-dir will be printed.
 
-`git rev-parse --show-cdup` outputs nothing if GIT_DIR is set,
-so I unset GIT_DIR temporarily.
-
-I'm not sure why --show-cdup behaves like this, though..
-
-Does squashing this on top of your changes fix all your failures?
-I plan on squashing both your changes together with the below:
-
-diff --git a/git-svn.perl b/git-svn.perl
-index c232798..e5bd292 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -332,11 +332,13 @@ if ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
- 		$ENV{GIT_DIR} = command_oneline([qw/rev-parse --git-dir/]);
- 	} "Unable to find .git directory\n";
- 	my $cdup = undef;
-+	my $git_dir = delete $ENV{GIT_DIR};
- 	git_cmd_try {
- 		$cdup = command_oneline(qw/rev-parse --show-cdup/);
- 		chomp $cdup if ($cdup);
- 		$cdup = "." unless ($cdup && length $cdup);
--	} "Already at toplevel, but $ENV{GIT_DIR} not found\n";
-+	} "Already at toplevel, but $git_dir not found\n";
-+	$ENV{GIT_DIR} = $git_dir;
- 	chdir $cdup or die "Unable to chdir up to '$cdup'\n";
- 	$_repository = Git->repository(Repository => $ENV{GIT_DIR});
- }
+I think the author invented the word "git-dir" to mean what we
+ordinarily call $GIT_DIR (i.e. the directory that contains the
+repository data), and used "git-file" to mean what the code and
+error messages call "gitfile".  I think it is better to leave these
+in lowercase, but we would need them in the glossary, probably after
+rewriting the latter to "gitfile".  The former may want to be
+rewritten to "gitdir" or even "$GIT_DIR".
