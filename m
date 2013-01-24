@@ -1,200 +1,87 @@
-From: =?UTF-8?q?S=C3=A9bastien=20Boisvert?= 
-	<sebastien.boisvert@calculquebec.ca>
-Subject: [PATCH] don't use timers if NO_SETITIMER is set
-Date: Wed, 23 Jan 2013 20:38:18 -0500
-Message-ID: <1358991498-14371-1-git-send-email-sebastien.boisvert@calculquebec.ca>
+From: Ivan D Vasin <nisavid@gmail.com>
+Subject: =?UTF-8?B?UmU6IGF1dG8gcGFja2luZyB3aXRoIHNpbXVsdGFuZW91cyBwdXNoZXM6ICJlcnJvcjogQw==?=
+	=?UTF-8?B?b3VsZCBub3Qgc3RhdCAnb2JqZWN0cy9b4oCmXS9b4oCmXSci?=
+Date: Wed, 23 Jan 2013 20:39:50 -0500
+Message-ID: <CADcu=0jiEEOkWZXshLdMmOBYJt=SzHfJ39r_qo8GzjdY6BTRaA@mail.gmail.com>
+References: <CADcu=0jCkNr6J_-iiKp00aSXHPf=+QV6oFvFHUZ_uc02JTaCbQ@mail.gmail.com>
+ <7vbocffmpn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?S=C3=A9bastien=20Boisvert?= 
-	<sebastien.boisvert@calculquebec.ca>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 24 02:39:45 2013
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 24 02:45:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyBn2-0003AD-Kk
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 02:39:40 +0100
+	id 1TyBt0-0006iK-KI
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 02:45:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752758Ab3AXBjU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jan 2013 20:39:20 -0500
-Received: from ironport2-out.teksavvy.com ([206.248.154.182]:46219 "EHLO
-	ironport2-out.teksavvy.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752531Ab3AXBjS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2013 20:39:18 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AtoGAG6Zu09FpcD8/2dsb2JhbABEgXuDMq5kgQiCPw8BIx4FNQImAjs3iA6nDoQ6jkGBJo4KgRQDiEKVd4ZSgwc
-X-IronPort-AV: E=Sophos;i="4.75,637,1330923600"; 
-   d="scan'208";a="213429102"
-Received: from 69-165-192-252.cable.teksavvy.com (HELO localhost.localdomain) ([69.165.192.252])
-  by ironport2-out.teksavvy.com with ESMTP; 23 Jan 2013 20:39:17 -0500
-X-Mailer: git-send-email 1.7.11.7
+	id S1752918Ab3AXBpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 20:45:30 -0500
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:58635 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752892Ab3AXBp3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 20:45:29 -0500
+Received: by mail-ob0-f181.google.com with SMTP id wc18so3685373obb.26
+        for <git@vger.kernel.org>; Wed, 23 Jan 2013 17:45:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=trxgx1Yrs8YJmYjHdAZdxpJo/1fcF5SQfij3BCpZ1Ns=;
+        b=CrJPjhz+3u6/ksyw+rrxX0bIe7NkorCiLhVPWRl108nHlDdBUNkL8RHjecO0H/Pmb5
+         3X0EmbcbzObeB6Qx87fNwLVO8w4V7NYtS2XfKQuoT22T8ODmIMNf+cxAOi0GGKF+H9px
+         9jtliMkcwWLrzZT4VMpW3U4n5uz9RJas/4VnSNfI4K9sGayP/IdX3m1vxxmFqJ52FG+N
+         4bl9Y8bMcceppEA+Jst6Hd3tdQRsG8SuWwWIKeoe9unq4kJeswsn7WcofuzChi7eCwac
+         zDfsAqjOhb6ceOpFj8tpqcXNsmz4ZPZoArLV5wDSQgOKRF/v/4IklK2696hPj7PBUqSr
+         iGyQ==
+X-Received: by 10.182.154.4 with SMTP id vk4mr163461obb.70.1358991928487; Wed,
+ 23 Jan 2013 17:45:28 -0800 (PST)
+Received: by 10.114.63.44 with HTTP; Wed, 23 Jan 2013 17:39:50 -0800 (PST)
+In-Reply-To: <7vbocffmpn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214387>
 
-With NO_SETITIMER, the user experience on legacy Lustre is fixed,
-but there is no early progress.
+On Wed, Jan 23, 2013 at 7:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ivan D Vasin <nisavid@gmail.com> writes:
+>
+>> my suggestion is that an auto pack should lock the repository,
+>> preventing at least other auto packs (and perhaps other operations)
+>> ...
+>>
+>> ``git fsck`` is successful on both of our repos and on the bare repo
+>> to which we pushed.
+>
+> Successful after you pushed, or before you pushed, or both?
 
-The patch has no effect on the resulting git executable if NO_SETITIMER=
- is
-not set (the default). So by default this patch has no effect at all, w=
-hich
-is good.
+both
 
-git tests:
+>
+> I suspect both.
+>
+> I do not think such a lock is necessary for correctness of the
+> operation, but running two auto packing sumultaneously is wasteful,
+> so it would help performance.  But that would produce a larger
+> problem.  What if your modified auto-packer takes a lock and then
+> dies without relinquishing the lock?  The repository will never be
+> repacked after such an event forever?
 
-$ make clean
-$ make NO_SETITIMER=3DYesPlease
-$ make test NO_SETITIMER=3DYesPlease &> make-test.log
+perhaps the lock could contain the PID of the auto pack process.  if
+that PID has gone away, the lock is ignored and replaced with a new
+one.
 
-$ grep "^not ok" make-test.log |grep -v "# TODO known breakage"|wc -l
-0
-$ grep "^ok" make-test.log |wc -l
-9531
-$ grep "^not ok" make-test.log |wc -l
-65
+that's what comes to my mind.  of course, there could be other ways to
+handle this that i'm not thinking of.
 
-No timers with NO_SETITIMER:
-
-$ objdump -d ./git|grep setitimer|wc -l
-0
-$ objdump -d ./git|grep alarm|wc -l
-0
-
-Timers without NO_SETITIMER:
-
-$ objdump -d /software/apps/git/1.8.1/bin/git|grep setitimer|wc -l
-5
-$ objdump -d /software/apps/git/1.8.1/bin/git|grep alarm|wc -l
-0
-
-Signed-off-by: S=C3=A9bastien Boisvert <sebastien.boisvert@calculquebec=
-=2Eca>
----
- builtin/log.c |    7 +++++++
- daemon.c      |    6 ++++++
- progress.c    |    8 ++++++++
- upload-pack.c |    2 ++
- 4 files changed, 23 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 8f0b2e8..f8321c7 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -198,7 +198,9 @@ static void show_early_header(struct rev_info *rev,=
- const char *stage, int nr)
- 	printf(_("Final output: %d %s\n"), nr, stage);
- }
-=20
-+#ifndef NO_SETITIMER
- static struct itimerval early_output_timer;
-+#endif
-=20
- static void log_show_early(struct rev_info *revs, struct commit_list *=
-list)
- {
-@@ -240,9 +242,12 @@ static void log_show_early(struct rev_info *revs, =
-struct commit_list *list)
- 	 * trigger every second even if we're blocked on a
- 	 * reader!
- 	 */
-+
-+	#ifndef NO_SETITIMER
- 	early_output_timer.it_value.tv_sec =3D 0;
- 	early_output_timer.it_value.tv_usec =3D 500000;
- 	setitimer(ITIMER_REAL, &early_output_timer, NULL);
-+	#endif
- }
-=20
- static void early_output(int signal)
-@@ -274,9 +279,11 @@ static void setup_early_output(struct rev_info *re=
-v)
- 	 *
- 	 * This is a one-time-only trigger.
- 	 */
-+	#ifndef NO_SETITIMER
- 	early_output_timer.it_value.tv_sec =3D 0;
- 	early_output_timer.it_value.tv_usec =3D 100000;
- 	setitimer(ITIMER_REAL, &early_output_timer, NULL);
-+	#endif
- }
-=20
- static void finish_early_output(struct rev_info *rev)
-diff --git a/daemon.c b/daemon.c
-index 4602b46..eb82c19 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -611,9 +611,15 @@ static int execute(void)
- 	if (addr)
- 		loginfo("Connection from %s:%s", addr, port);
-=20
-+	#ifndef NO_SETITIMER
- 	alarm(init_timeout ? init_timeout : timeout);
-+	#endif
-+
- 	pktlen =3D packet_read_line(0, line, sizeof(line));
-+
-+	#ifndef NO_SETITIMER
- 	alarm(0);
-+	#endif
-=20
- 	len =3D strlen(line);
- 	if (pktlen !=3D len)
-diff --git a/progress.c b/progress.c
-index 3971f49..b84ccc7 100644
---- a/progress.c
-+++ b/progress.c
-@@ -45,7 +45,10 @@ static void progress_interval(int signum)
- static void set_progress_signal(void)
- {
- 	struct sigaction sa;
-+
-+	#ifndef NO_SETITIMER
- 	struct itimerval v;
-+	#endif
-=20
- 	progress_update =3D 0;
-=20
-@@ -55,16 +58,21 @@ static void set_progress_signal(void)
- 	sa.sa_flags =3D SA_RESTART;
- 	sigaction(SIGALRM, &sa, NULL);
-=20
-+	#ifndef NO_SETITIMER
- 	v.it_interval.tv_sec =3D 1;
- 	v.it_interval.tv_usec =3D 0;
- 	v.it_value =3D v.it_interval;
- 	setitimer(ITIMER_REAL, &v, NULL);
-+	#endif
- }
-=20
- static void clear_progress_signal(void)
- {
-+	#ifndef NO_SETITIMER
- 	struct itimerval v =3D {{0,},};
- 	setitimer(ITIMER_REAL, &v, NULL);
-+	#endif
-+
- 	signal(SIGALRM, SIG_IGN);
- 	progress_update =3D 0;
- }
-diff --git a/upload-pack.c b/upload-pack.c
-index 95d8313..e0b8b32 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -47,7 +47,9 @@ static int stateless_rpc;
-=20
- static void reset_timeout(void)
- {
-+	#ifndef NO_SETITIMER
- 	alarm(timeout);
-+	#endif
- }
-=20
- static int strip(char *line, int len)
---=20
-1.7.4.1
+in any case, the error messages, though spurious, are alarming to the
+uninformed user.  it looks like Git is saying that there is actual
+data loss, where in fact there is none.  if Git doesn't prevent these
+messages from appearing (via locking behavior or otherwise), then it
+should at least annotate them with a message that describes their
+possibly spurious nature and perhaps instructs the user to verify
+everything with ``git fsck``.
