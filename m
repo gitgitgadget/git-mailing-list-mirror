@@ -1,115 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetools: Add tortoisegitmerge helper
-Date: Thu, 24 Jan 2013 14:15:58 -0800
-Message-ID: <7vpq0u8bxd.fsf@alter.siamese.dyndns.org>
-References: <50FBD4AD.2060208@tu-clausthal.de>
- <7v4nibjrg0.fsf@alter.siamese.dyndns.org> <50FCFBBB.2080305@tu-clausthal.de>
- <7vfw1qbbr4.fsf@alter.siamese.dyndns.org> <5101B0A5.1020308@tu-clausthal.de>
+Subject: Re: [PATCH] t9902: Instruct git-completion.bash about a test mode
+Date: Thu, 24 Jan 2013 14:29:33 -0800
+Message-ID: <7vlibi8baq.fsf@alter.siamese.dyndns.org>
+References: <201301242220.09067.jn.avila@free.fr>
+ <7vtxq68day.fsf@alter.siamese.dyndns.org>
+ <201301242304.16078.jn.avila@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>,
-	davvid@gmail.com, Jeff King <peff@peff.net>
-To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-X-From: git-owner@vger.kernel.org Thu Jan 24 23:16:27 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: =?utf-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+X-From: git-owner@vger.kernel.org Thu Jan 24 23:30:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyV5v-00058F-Ac
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 23:16:27 +0100
+	id 1TyVJ1-0005KQ-E1
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 23:29:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845Ab3AXWQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2013 17:16:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39851 "EHLO
+	id S1755686Ab3AXW3i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2013 17:29:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54689 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755756Ab3AXWQC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2013 17:16:02 -0500
+	id S1755119Ab3AXW3g convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jan 2013 17:29:36 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 879C5BADD;
-	Thu, 24 Jan 2013 17:16:01 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C18BEC867;
+	Thu, 24 Jan 2013 17:29:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HV69Z5n0/P+Uz2bi9/p3ccoEdDE=; b=r0woC6
-	RJJyJ4kykR+wLCclNMNlIBNfcpil5ValMK3IWRbccCUVP1jXr2/0kAv/R4opzT3h
-	JXoxu+5IzdRIYemto4GoalbWXEPRwm9sIDC+yJzhBR8yUXg9aF+t3mIMCnABGFcd
-	2241YEZTsjjDO+H1q3wDPetJP3oYaLNCMDjMA=
+	:content-type:content-transfer-encoding; s=sasl; bh=F0C9coqDcLHb
+	2tG+SIBmG/fsnug=; b=db5C1bt+HryTZBOdku/XktMfbZVUM/eU0iIhwxRGA1VR
+	UArAiVMaYepThLZ8zjRmQdPuZj0AoSLzsur5iLmowLsyoR7lmuh0ykjALA5GoOKT
+	eXWq5jlYRG4CEzeOzDcFGU3abxX6rhqEOqZbRQcT+TOxqyuifqrXZGCrwxzRSnY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZukJPI4ZLBgPa0BzeI5aoCLHV10j8sw0
-	k4bhw37/9GL88V1a3KFi2KIToEM9NVfygGx35tHH9QzG+nDpY+0rq4kWYC4V0xX2
-	KAQjGvjenf/Dv2x4b8mw86hr9D3kTdlIrb+E6M5rwnSVQ6ntnPROeHl5Bj60DE8c
-	BixRnecLtqg=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EFBh9G
+	D72GqDmP5pezI9LEn7etdJWjRzEN2w9gRVBRtpp+Rzrv0YCQTWL8mxRFOOIGHzMo
+	83x1IxpR/P2gdRVABRH51nQ1UGoHTa0XW2TtAbf6YoXmL9y9WH2uYY969Fhqu4MV
+	MsMZTSqtc+2gX0qWWvV6IK9v3D1m7Sf6NrQWA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41698BADC;
-	Thu, 24 Jan 2013 17:16:01 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B100BC866;
+	Thu, 24 Jan 2013 17:29:35 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3EBC4BAD4; Thu, 24 Jan 2013
- 17:16:00 -0500 (EST)
-In-Reply-To: <5101B0A5.1020308@tu-clausthal.de> (Sven Strickroth's message of
- "Thu, 24 Jan 2013 23:07:33 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14A95C85F; Thu, 24 Jan 2013
+ 17:29:34 -0500 (EST)
+In-Reply-To: <201301242304.16078.jn.avila@free.fr> (=?utf-8?Q?=22Jean-No?=
+ =?utf-8?Q?=C3=ABl?= AVILA"'s message of "Thu, 24 Jan 2013 23:04:15 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A22CCDBE-6673-11E2-A8E9-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 87D9C488-6675-11E2-AB84-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214466>
 
-Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
+"Jean-No=C3=ABl AVILA" <jn.avila@free.fr> writes:
 
-> Am 24.01.2013 20:51 schrieb Junio C Hamano:
->> Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
->> 
->>> - The TortoiseGit team renamed TortoiseMerge.exe to TortoiseGitMerge.exe
->>>   (starting with 1.8.0) in order to make clear that this one has special
->>>   support for git and prevent confusion with the TortoiseSVN TortoiseMerge
->>>   version.
->> 
->> Wouldn't it make more sense in such a situation if your users can
->> keep using the old "tortoisemerge" configured in their configuration
->> and when the renamed one is found the mergetool automatically used
->> it, rather than the way your patch is done?
->
-> That was also my first idea, however, TortoiseMerge uses parameters as
-> follows: '-base:"$BASE"'. TortoiseGitMerge uses values separated by
-> space from keys: '-base "$BASE"'. So both are incompatible (the first
-> approach has problems with spaces in filenames, the TortoiseGitMerge
-> approach fixes this).
+> My rational was to be sure to put the environment variable out of the=
+=20
+> way once the script has been sourced. I can make two alternative=20
+> definitions of __git_list_all_commands () depending on the presence o=
+f=20
+> $AUTHORIZED_CMD_LIST if you are worried about performance.
 
-OK.  Please unconfuse future readers of "git log" by saying why such
-a unification does not work in the proposed log message.
+Actually, it does not matter, as once __git_list_all_commands is
+run, its result is kept in a variable.
 
->>> diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
->>> index 4314ad0..13cbe5b 100644
->>> --- a/Documentation/diff-config.txt
->>> +++ b/Documentation/diff-config.txt
->>> @@ -151,7 +151,7 @@ diff.<driver>.cachetextconv::
->>>  diff.tool::
->>>  	The diff tool to be used by linkgit:git-difftool[1].  This
->>>  	option overrides `merge.tool`, and has the same valid built-in
->>> -	values as `merge.tool` minus "tortoisemerge" and plus
->>> -	"kompare".  Any other value is treated as a custom diff tool,
->>> +	values as `merge.tool` minus "tortoisemerge"/"tortoisegitmerge" and
->>> +	plus "kompare".  Any other value is treated as a custom diff tool,
->>>  	and there must be a corresponding `difftool.<tool>.cmd`
->>>  	option.
->> 
->> So in short, two tortoises and kompare are only valid as mergetool
->> but cannot be used as difftool?  No, I am reading it wrong.
->> merge.tool can be used for both, kompare can be used as difftool,
->> and two tortoises can only be used as mergetool.
->> 
->> This paragraph needs to be rewritten to unconfuse readers.  The
->> original is barely intelligible, and it becomes unreadable as the
->> set of tools subtracted by "minus" and added by "plus" grows.
->
-> But I think this should not be part of this patch.
+So Peff's
 
-I agree that it can be done (and it is better to be done) as a
-preparatory step.  The current text is barely readable, but with
-this patch there will be two "minus", and the result becomes
-unreadable at that point.
+  if test -z "$FAKE_COMMAND_LIST"; then
+          __git_cmdlist() {
+                  git help -a | egrep '^  [a-zA-Z0-9]'
+          }
+  else
+          __git_cmdlist() {
+                  printf '%s' "$FAKE_COMMAND_LIST"
+          }
+  fi
 
-It also could be done as a follow-up documentation readability fix.
+would be just as simple if not simpler, does the same thing, and is
+sufficient, I think.
+
+The t9902 test is only interested in making sure that the completion
+works, and we do not want "git help -a" that omits a subcommand from
+its output that is not built in your particular environment to get
+in the way, which will not be an issue with this approach.
