@@ -1,63 +1,74 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 1/3] push: further clean up fields of "struct ref"
-Date: Thu, 24 Jan 2013 17:22:12 -0500
-Message-ID: <CAPig+cQL81tSWLz=QOOD-_2yws12jYLayQ8wvUaHXrURPBEFTw@mail.gmail.com>
-References: <20130121234002.GE17156@sigill.intra.peff.net>
-	<1358978130-12216-1-git-send-email-gitster@pobox.com>
-	<1358978130-12216-2-git-send-email-gitster@pobox.com>
+From: "=?utf-8?q?Jean-No=C3=ABl?= AVILA" <jn.avila@free.fr>
+Subject: Re: [PATCH] t9902: Instruct git-completion.bash about a test mode
+Date: Thu, 24 Jan 2013 23:56:23 +0100
+Message-ID: <201301242356.23512.jn.avila@free.fr>
+References: <201301242220.09067.jn.avila@free.fr> <201301242304.16078.jn.avila@free.fr> <7vlibi8baq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Chris Rorvick <chris@rorvick.com>
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 24 23:30:30 2013
+X-From: git-owner@vger.kernel.org Thu Jan 24 23:56:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyVJQ-0005cy-CA
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 23:30:24 +0100
+	id 1TyVj1-0004o2-M8
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 23:56:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755991Ab3AXWaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2013 17:30:00 -0500
-Received: from mail-ve0-f175.google.com ([209.85.128.175]:54234 "EHLO
-	mail-ve0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755720Ab3AXW36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2013 17:29:58 -0500
-X-Greylist: delayed 465 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jan 2013 17:29:58 EST
-Received: by mail-ve0-f175.google.com with SMTP id db12so1764940veb.6
-        for <git@vger.kernel.org>; Thu, 24 Jan 2013 14:29:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=wGZHkzkyDex9nkheL7jKugwHQu9xstaLFyL0gyjRhFE=;
-        b=wogzbg3kgixefrFEL4Ldwv/FQU7PFUf0PyErfV9tUzo3D8MgQUYIdtE44pgOfglHYY
-         4d9TOBKhSvBTm31atvzoO9FsJU+QqACqyyNTkLhWCFkJ8l3X+hE6MSztCzyu/ejvwAeY
-         iohwVv8IgUEsrJ1LqLwmdO+a4q2TeVQrBTcvCJBthcHyrwRKsAnsbgS8QVp9n1ylc6I3
-         LIoW4DkMLYKT3/5EQllQUeTRd12i/+deBuengWo56i3KV1T15Wx/xBOFKYn0Wlog1tX0
-         HT4uZgN748XqgIbjAo0oWJicX8ls6NFU9LQNWiohyyNOl/lgQzgxQUzThP1RgUYPguwN
-         dyRw==
-X-Received: by 10.52.67.133 with SMTP id n5mr3317604vdt.24.1359066133021; Thu,
- 24 Jan 2013 14:22:13 -0800 (PST)
-Received: by 10.58.75.15 with HTTP; Thu, 24 Jan 2013 14:22:12 -0800 (PST)
-In-Reply-To: <1358978130-12216-2-git-send-email-gitster@pobox.com>
-X-Google-Sender-Auth: lJOwkpf2DBaodNPUHycrf16rAHo
+	id S1756557Ab3AXW4a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2013 17:56:30 -0500
+Received: from smtp2-g21.free.fr ([212.27.42.2]:42478 "EHLO smtp2-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756448Ab3AXW43 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jan 2013 17:56:29 -0500
+Received: from cayenne.localnet (unknown [82.239.31.145])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 2061A4B00CA;
+	Thu, 24 Jan 2013 23:56:21 +0100 (CET)
+User-Agent: KMail/1.13.7 (Linux/3.8.0-rc4jna; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <7vlibi8baq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214468>
 
-On Wed, Jan 23, 2013 at 4:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> The "nonfastforward" and "update" fields are only used while
-> deciding what value to assign to the "status" locally in a single
-> function.  Remove them from the "struct ref".
->
-> The "requires_force" field is not used to decide if the proposed
-> update requires a --force option to succeed, or to record such a
-> decision made elsewhere.  It is used by status reporting code that
-> the particular update was "forced".  Rename it to "forced_udpate",
+Le jeudi 24 janvier 2013 23:29:33, Junio C Hamano a =C3=A9crit :
+> "Jean-No=C3=ABl AVILA" <jn.avila@free.fr> writes:
+>=20
+> > My rational was to be sure to put the environment variable out of t=
+he=20
+> > way once the script has been sourced. I can make two alternative=20
+> > definitions of __git_list_all_commands () depending on the presence=
+ of=20
+> > $AUTHORIZED_CMD_LIST if you are worried about performance.
+>=20
+> Actually, it does not matter, as once __git_list_all_commands is
+> run, its result is kept in a variable.
+>=20
+> So Peff's
+>=20
+>   if test -z "$FAKE_COMMAND_LIST"; then
+>           __git_cmdlist() {
+>                   git help -a | egrep '^  [a-zA-Z0-9]'
+>           }
+>   else
+>           __git_cmdlist() {
+>                   printf '%s' "$FAKE_COMMAND_LIST"
+>           }
+>   fi
+>=20
+> would be just as simple if not simpler, does the same thing, and is
+> sufficient, I think.
+>=20
+> The t9902 test is only interested in making sure that the completion
+> works, and we do not want "git help -a" that omits a subcommand from
+> its output that is not built in your particular environment to get
+> in the way, which will not be an issue with this approach.
+>=20
 
-s/udpate/update/
+
+Ah. I totally missed the point. I though that the requested change was
+to intersect the list needed for the test with the one provided by the=20
+standard completion.
