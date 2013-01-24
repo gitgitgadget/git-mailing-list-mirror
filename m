@@ -1,8 +1,9 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/7] sha1_file: keep track of where an SHA-1 object comes from
-Date: Thu, 24 Jan 2013 15:42:14 +0700
-Message-ID: <1359016940-18849-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 2/7] sha1_file: separate alt object db from own repos and submodules's
+Date: Thu, 24 Jan 2013 15:42:15 +0700
+Message-ID: <1359016940-18849-2-git-send-email-pclouds@gmail.com>
+References: <1359016940-18849-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -11,370 +12,240 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 24 09:43:15 2013
+X-From: git-owner@vger.kernel.org Thu Jan 24 09:43:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyIOq-0002fK-Io
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 09:43:09 +0100
+	id 1TyIOy-0002jC-8B
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 09:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751489Ab3AXIms convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2013 03:42:48 -0500
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:40461 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750717Ab3AXImq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2013 03:42:46 -0500
-Received: by mail-pb0-f46.google.com with SMTP id wy7so5283972pbc.33
-        for <git@vger.kernel.org>; Thu, 24 Jan 2013 00:42:46 -0800 (PST)
+	id S1751767Ab3AXImy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2013 03:42:54 -0500
+Received: from mail-da0-f47.google.com ([209.85.210.47]:65173 "EHLO
+	mail-da0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751540Ab3AXImx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2013 03:42:53 -0500
+Received: by mail-da0-f47.google.com with SMTP id s35so4147128dak.34
+        for <git@vger.kernel.org>; Thu, 24 Jan 2013 00:42:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=sVkTBBffGz5+Gc3g8DBOK923tNltvbgw73UI5pRMAmo=;
-        b=wdIv3hL10lZToVIdbXT0dRNhqhlS/O/vVDVKkLdm3LhPuK+gxBH9V7c7H7QD8ljQdx
-         pJ7ZPiH+wxaMTZrwGG5zIAAPyfj2KLcGSQC3GlEQFZ76VxV+9x9oHAI4V3N3pHGSMKvf
-         +CFniUpXmV2NumU93dpNaW7RfTSUNmgoHOlbU2jrJXyd5MMm1Tcbqgb5I+UXZdeX8AlT
-         OcsJ91kY1OW3MpJiEjyYqff4O79C33+x10eidZMzxEtppe0N66nx5FqGQMujc6iPXUSz
-         TD7Ya5Mdj/BiMIJq50rQCx5HwZSylJf9/2JXNu5yp0JH+CcOZ9oiGFPMpDS3QUoQoNhs
-         C1WQ==
-X-Received: by 10.68.222.196 with SMTP id qo4mr2720098pbc.140.1359016966120;
-        Thu, 24 Jan 2013 00:42:46 -0800 (PST)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=jCkYM98lWW3NPjbLTLUIjVQVoI6FUg2dw1eaMpqivo4=;
+        b=OTP8aAPIb9Ta5EouqtUw6L7WFswiNL+jCJyiupUoxoox8wlSM2Q5htQyxblXM+f21M
+         2Cwm7/O1d+mQt8V1T/iq682I91jee89OCsXg5nr1NeQ61ShlPH+Oea8lohoqgf14EaIS
+         /KvI+HVZlA90/HMHLSQvHwRYnaZrtGPVtfahK0PfDfnF02lHf/UESGnjtcQ0Rm8UCnK+
+         w0fRg0Xl3C/ULCCuZglxtyouhZEhzIzqvuIB8gB+M+35Yihq3H4/v59SJommOiZVZdCo
+         B5R3ZOP2k7ABmHL79Qn6Mmae+Nms4nFI7eQTf/eoDoES3DFODBCfcdzQZk7Qm/Pbx3tl
+         Zj/g==
+X-Received: by 10.68.228.2 with SMTP id se2mr2861275pbc.93.1359016973193;
+        Thu, 24 Jan 2013 00:42:53 -0800 (PST)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id rv8sm14489742pbc.27.2013.01.24.00.42.41
+        by mx.google.com with ESMTPS id i5sm15300351pax.13.2013.01.24.00.42.49
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 24 Jan 2013 00:42:44 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 24 Jan 2013 15:42:20 +0700
+        Thu, 24 Jan 2013 00:42:52 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 24 Jan 2013 15:42:28 +0700
 X-Mailer: git-send-email 1.8.0.rc3.18.g0d9b108
+In-Reply-To: <1359016940-18849-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214413>
 
-We currently know if an object is loose or packed. We do not know if
-it's from the repo's object database, or via alternates
-mechanism. With this patch, sha1_object_info_extended() can tell if an
-object comes from alternates source (and which one).
+A submodule's object database may be imported to in-core object pool
+for a quick peek without paying the price of running a separate git
+command. These databases are marked in for stricter checks later to
+avoid accidentially refering to a submodule's SHA-1 from main repo
+(except in gitlinks).
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- How about this way instead: we keep track of where objects come from
- so we can verify object source when we create or update something
- that contains SHA-1.
+ cache.h       |  4 +++-
+ environment.c |  2 ++
+ sha1_file.c   | 38 +++++++++++++++++++++++++++++---------
+ submodule.c   |  2 +-
+ 4 files changed, 35 insertions(+), 11 deletions(-)
 
- 1/7 and 2/7 prepare for tracking object source. The rest verifies
- that new commits, trees, tags, indexes, refs or reflogs do not refer
- to an external source.
-
- This adds some cost when add_submodule_odb() is used. I did not
- measure, but I guess the added cost is much smaller compared to
- forking, especially on Windows. No breakages detected by the test
- suite, which is really good (or my code is really broken).
-
- builtin/index-pack.c |  2 +-
- cache.h              |  4 +++-
- fast-import.c        |  2 +-
- sha1_file.c          | 66 ++++++++++++++++++++++++++++++++++++--------=
---------
- 4 files changed, 51 insertions(+), 23 deletions(-)
-
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 43d364b..a7de3f8 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1393,7 +1393,7 @@ static void read_v2_anomalous_offsets(struct pack=
-ed_git *p,
-=20
- static void read_idx_option(struct pack_idx_option *opts, const char *=
-pack_name)
- {
--	struct packed_git *p =3D add_packed_git(pack_name, strlen(pack_name),=
- 1);
-+	struct packed_git *p =3D add_packed_git(pack_name, strlen(pack_name),=
- 1, NULL);
-=20
- 	if (!p)
- 		die(_("Cannot open existing pack file '%s'"), pack_name);
 diff --git a/cache.h b/cache.h
-index c257953..92854ab 100644
+index 92854ab..b8d5826 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -978,6 +978,7 @@ struct pack_window {
- extern struct packed_git {
- 	struct packed_git *next;
- 	struct pack_window *windows;
-+	struct alternate_object_database *alt;
- 	off_t pack_size;
- 	const void *index_data;
- 	size_t index_size;
-@@ -1066,7 +1067,7 @@ extern void close_pack_windows(struct packed_git =
-*);
- extern void unuse_pack(struct pack_window **);
- extern void free_pack_by_name(const char *);
- extern void clear_delta_base_cache(void);
--extern struct packed_git *add_packed_git(const char *, int, int);
-+extern struct packed_git *add_packed_git(const char *, int, int, struc=
-t alternate_object_database *);
- extern const unsigned char *nth_packed_object_sha1(struct packed_git *=
-, uint32_t);
- extern off_t nth_packed_object_offset(const struct packed_git *, uint3=
-2_t);
- extern off_t find_pack_entry_one(const unsigned char *, struct packed_=
-git *);
-@@ -1102,6 +1103,7 @@ struct object_info {
- 			unsigned int is_delta;
- 		} packed;
- 	} u;
-+	struct alternate_object_database *alt;
- };
- extern int sha1_object_info_extended(const unsigned char *, struct obj=
-ect_info *);
+@@ -561,6 +561,7 @@ extern int fsync_object_files;
+ extern int core_preload_index;
+ extern int core_apply_sparse_checkout;
+ extern int precomposed_unicode;
++extern int object_database_contaminated;
 =20
-diff --git a/fast-import.c b/fast-import.c
-index c2a814e..4bf732e 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -964,7 +964,7 @@ static void end_packfile(void)
- 		idx_name =3D keep_pack(create_index());
+ enum branch_track {
+ 	BRANCH_TRACK_UNSPECIFIED =3D -1,
+@@ -957,11 +958,12 @@ extern void remove_scheduled_dirs(void);
 =20
- 		/* Register the packfile with core git's machinery. */
--		new_p =3D add_packed_git(idx_name, strlen(idx_name), 1);
-+		new_p =3D add_packed_git(idx_name, strlen(idx_name), 1, NULL);
- 		if (!new_p)
- 			die("core git rejected index %s", idx_name);
- 		all_packs[pack_id] =3D new_p;
+ extern struct alternate_object_database {
+ 	struct alternate_object_database *next;
++	int external;
+ 	char *name;
+ 	char base[FLEX_ARRAY]; /* more */
+ } *alt_odb_list;
+ extern void prepare_alt_odb(void);
+-extern void read_info_alternates(const char * relative_base, int depth=
+);
++extern void read_external_info_alternates(const char * relative_base, =
+int depth);
+ extern void add_to_alternates_file(const char *reference);
+ typedef int alt_odb_fn(struct alternate_object_database *, void *);
+ extern void foreach_alt_odb(alt_odb_fn, void*);
+diff --git a/environment.c b/environment.c
+index 85edd7f..3c90d95 100644
+--- a/environment.c
++++ b/environment.c
+@@ -65,6 +65,8 @@ unsigned long pack_size_limit_cfg;
+ /* Parallel index stat data preload? */
+ int core_preload_index =3D 0;
+=20
++int object_database_contaminated;
++
+ /* This is set by setup_git_dir_gently() and/or git_default_config() *=
+/
+ char *git_work_tree_cfg;
+ static char *work_tree;
 diff --git a/sha1_file.c b/sha1_file.c
-index 40b2329..afc7355 100644
+index afc7355..af71122 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -933,7 +933,8 @@ static void try_to_free_pack_memory(size_t size)
- 	release_pack_memory(size, -1);
- }
+@@ -58,6 +58,9 @@ static struct cached_object empty_tree =3D {
 =20
--struct packed_git *add_packed_git(const char *path, int path_len, int =
-local)
-+struct packed_git *add_packed_git(const char *path, int path_len, int =
-local,
-+				  struct alternate_object_database *alt)
+ static struct packed_git *last_found_pack;
+=20
++static void read_info_alternates(const char * relative_base,
++				 int depth, int external);
++
+ static struct cached_object *find_cached_object(const unsigned char *s=
+ha1)
  {
- 	static int have_set_try_to_free_routine;
- 	struct stat st;
-@@ -973,6 +974,7 @@ struct packed_git *add_packed_git(const char *path,=
- int path_len, int local)
- 	p->mtime =3D st.st_mtime;
- 	if (path_len < 40 || get_sha1_hex(path + path_len - 40, p->sha1))
- 		hashclr(p->sha1);
-+	p->alt =3D alt;
- 	return p;
- }
-=20
-@@ -1000,7 +1002,8 @@ void install_packed_git(struct packed_git *pack)
- 	packed_git =3D pack;
- }
-=20
--static void prepare_packed_git_one(char *objdir, int local)
-+static void prepare_packed_git_one(char *objdir, int local,
-+				   struct alternate_object_database *alt)
+ 	int i;
+@@ -247,7 +250,10 @@ static int git_open_noatime(const char *name);
+  * SHA1, an extra slash for the first level indirection, and the
+  * terminating NUL.
+  */
+-static int link_alt_odb_entry(const char *entry, const char *relative_=
+base, int depth)
++static int link_alt_odb_entry(const char *entry,
++			      const char *relative_base,
++			      int depth,
++			      int external)
  {
- 	/* Ensure that this buffer is large enough so that we can
- 	   append "/pack/" without clobbering the stack even if
-@@ -1041,7 +1044,7 @@ static void prepare_packed_git_one(char *objdir, =
-int local)
- 		/* See if it really is a valid .idx file with corresponding
- 		 * .pack file that we can map.
- 		 */
--		p =3D add_packed_git(path, len + namelen, local);
-+		p =3D add_packed_git(path, len + namelen, local, alt);
- 		if (!p)
- 			continue;
- 		install_packed_git(p);
-@@ -1110,11 +1113,11 @@ void prepare_packed_git(void)
+ 	const char *objdir =3D get_object_directory();
+ 	struct alternate_object_database *ent;
+@@ -277,6 +283,7 @@ static int link_alt_odb_entry(const char *entry, co=
+nst char *relative_base, int
+ 	memcpy(ent->base, pathbuf.buf, pfxlen);
+ 	strbuf_release(&pathbuf);
 =20
- 	if (prepare_packed_git_run_once)
- 		return;
--	prepare_packed_git_one(get_object_directory(), 1);
-+	prepare_packed_git_one(get_object_directory(), 1, NULL);
- 	prepare_alt_odb();
- 	for (alt =3D alt_odb_list; alt; alt =3D alt->next) {
- 		alt->name[-1] =3D 0;
--		prepare_packed_git_one(alt->base, 0);
-+		prepare_packed_git_one(alt->base, 0, alt);
- 		alt->name[-1] =3D '/';
++	ent->external =3D external;
+ 	ent->name =3D ent->base + pfxlen + 1;
+ 	ent->base[pfxlen + 3] =3D '/';
+ 	ent->base[pfxlen] =3D ent->base[entlen-1] =3D 0;
+@@ -310,15 +317,19 @@ static int link_alt_odb_entry(const char *entry, =
+const char *relative_base, int
+ 	ent->next =3D NULL;
+=20
+ 	/* recursively add alternates */
+-	read_info_alternates(ent->base, depth + 1);
++	read_info_alternates(ent->base, depth + 1, 0);
+=20
+ 	ent->base[pfxlen] =3D '/';
+=20
++	if (external)
++		object_database_contaminated =3D 1;
++
+ 	return 0;
+ }
+=20
+ static void link_alt_odb_entries(const char *alt, int len, int sep,
+-				 const char *relative_base, int depth)
++				 const char *relative_base,
++				 int depth, int external)
+ {
+ 	struct string_list entries =3D STRING_LIST_INIT_NODUP;
+ 	char *alt_copy;
+@@ -340,14 +351,16 @@ static void link_alt_odb_entries(const char *alt,=
+ int len, int sep,
+ 			error("%s: ignoring relative alternate object store %s",
+ 					relative_base, entry);
+ 		} else {
+-			link_alt_odb_entry(entry, relative_base, depth);
++			link_alt_odb_entry(entry, relative_base,
++					   depth, external);
+ 		}
  	}
- 	rearrange_packed_git();
-@@ -1215,15 +1218,19 @@ static int git_open_noatime(const char *name)
- 	}
+ 	string_list_clear(&entries, 0);
+ 	free(alt_copy);
  }
 =20
--static int open_sha1_file(const unsigned char *sha1)
-+static int open_sha1_file(const unsigned char *sha1,
-+			  struct alternate_object_database **p_alt)
+-void read_info_alternates(const char * relative_base, int depth)
++static void read_info_alternates(const char * relative_base,
++				 int depth, int external)
  {
- 	int fd;
- 	char *name =3D sha1_file_name(sha1);
- 	struct alternate_object_database *alt;
+ 	char *map;
+ 	size_t mapsz;
+@@ -371,11 +384,18 @@ void read_info_alternates(const char * relative_b=
+ase, int depth)
+ 	map =3D xmmap(NULL, mapsz, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
 =20
- 	fd =3D git_open_noatime(name);
--	if (fd >=3D 0)
-+	if (fd >=3D 0) {
-+		if (p_alt)
-+			*p_alt =3D NULL;
- 		return fd;
-+	}
+-	link_alt_odb_entries(map, mapsz, '\n', relative_base, depth);
++	link_alt_odb_entries(map, mapsz, '\n', relative_base,
++			     depth, external);
 =20
- 	prepare_alt_odb();
- 	errno =3D ENOENT;
-@@ -1231,18 +1238,23 @@ static int open_sha1_file(const unsigned char *=
-sha1)
- 		name =3D alt->name;
- 		fill_sha1_path(name, sha1);
- 		fd =3D git_open_noatime(alt->base);
--		if (fd >=3D 0)
-+		if (fd >=3D 0) {
-+			if (p_alt)
-+				*p_alt =3D alt;
- 			return fd;
-+		}
- 	}
- 	return -1;
+ 	munmap(map, mapsz);
  }
 =20
--void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
-+static void *map_sha1_file_extended(const unsigned char *sha1,
-+				    unsigned long *size,
-+				    struct alternate_object_database **p_alt)
- {
- 	void *map;
- 	int fd;
-=20
--	fd =3D open_sha1_file(sha1);
-+	fd =3D open_sha1_file(sha1, p_alt);
- 	map =3D NULL;
- 	if (fd >=3D 0) {
- 		struct stat st;
-@@ -1261,6 +1273,11 @@ void *map_sha1_file(const unsigned char *sha1, u=
-nsigned long *size)
- 	return map;
- }
-=20
-+void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
++void read_external_info_alternates(const char *relative_base,
++				   int depth)
 +{
-+	return map_sha1_file_extended(sha1, size, NULL);
++	read_info_alternates(relative_base, depth, 1);
 +}
 +
- /*
-  * There used to be a second loose object header format which
-  * was meant to mimic the in-pack format, allowing for direct
-@@ -2096,7 +2113,9 @@ static int fill_pack_entry(const unsigned char *s=
-ha1,
- 	return 1;
+ void add_to_alternates_file(const char *reference)
+ {
+ 	struct lock_file *lock =3D xcalloc(1, sizeof(struct lock_file));
+@@ -385,7 +405,7 @@ void add_to_alternates_file(const char *reference)
+ 	if (commit_lock_file(lock))
+ 		die("could not close alternates file");
+ 	if (alt_odb_tail)
+-		link_alt_odb_entries(alt, strlen(alt), '\n', NULL, 0);
++		link_alt_odb_entries(alt, strlen(alt), '\n', NULL, 0, 0);
  }
 =20
--static int find_pack_entry(const unsigned char *sha1, struct pack_entr=
-y *e)
-+static int find_pack_entry(const unsigned char *sha1,
-+			   struct pack_entry *e,
-+			   struct alternate_object_database **p_alt)
- {
- 	struct packed_git *p;
+ void foreach_alt_odb(alt_odb_fn fn, void *cb)
+@@ -409,9 +429,9 @@ void prepare_alt_odb(void)
+ 	if (!alt) alt =3D "";
 =20
-@@ -2104,14 +2123,19 @@ static int find_pack_entry(const unsigned char =
-*sha1, struct pack_entry *e)
- 	if (!packed_git)
- 		return 0;
+ 	alt_odb_tail =3D &alt_odb_list;
+-	link_alt_odb_entries(alt, strlen(alt), PATH_SEP, NULL, 0);
++	link_alt_odb_entries(alt, strlen(alt), PATH_SEP, NULL, 0, 0);
 =20
--	if (last_found_pack && fill_pack_entry(sha1, e, last_found_pack))
-+	if (last_found_pack && fill_pack_entry(sha1, e, last_found_pack)) {
-+		if (p_alt)
-+			*p_alt =3D last_found_pack->alt;
- 		return 1;
-+	}
-=20
- 	for (p =3D packed_git; p; p =3D p->next) {
- 		if (p =3D=3D last_found_pack || !fill_pack_entry(sha1, e, p))
- 			continue;
-=20
- 		last_found_pack =3D p;
-+		if (p_alt)
-+			*p_alt =3D p->alt;
- 		return 1;
- 	}
- 	return 0;
-@@ -2130,7 +2154,9 @@ struct packed_git *find_sha1_pack(const unsigned =
-char *sha1,
-=20
+-	read_info_alternates(get_object_directory(), 0);
++	read_info_alternates(get_object_directory(), 0, 0);
  }
 =20
--static int sha1_loose_object_info(const unsigned char *sha1, unsigned =
-long *sizep)
-+static int sha1_loose_object_info(const unsigned char *sha1,
-+				  unsigned long *sizep,
-+				  struct alternate_object_database **p_alt)
- {
- 	int status;
- 	unsigned long mapsize, size;
-@@ -2138,7 +2164,7 @@ static int sha1_loose_object_info(const unsigned =
-char *sha1, unsigned long *size
- 	git_zstream stream;
- 	char hdr[32];
+ static int has_loose_object_local(const unsigned char *sha1)
+diff --git a/submodule.c b/submodule.c
+index 2f55436..8e4e2ec 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -65,7 +65,7 @@ static int add_submodule_odb(const char *path)
+ 	alt_odb_list =3D alt_odb;
 =20
--	map =3D map_sha1_file(sha1, &mapsize);
-+	map =3D map_sha1_file_extended(sha1, &mapsize, p_alt);
- 	if (!map)
- 		return error("unable to find %s", sha1_to_hex(sha1));
- 	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
-@@ -2168,9 +2194,9 @@ int sha1_object_info_extended(const unsigned char=
- *sha1, struct object_info *oi)
- 		return co->type;
- 	}
-=20
--	if (!find_pack_entry(sha1, &e)) {
-+	if (!find_pack_entry(sha1, &e, &oi->alt)) {
- 		/* Most likely it's a loose object. */
--		status =3D sha1_loose_object_info(sha1, oi->sizep);
-+		status =3D sha1_loose_object_info(sha1, oi->sizep, &oi->alt);
- 		if (status >=3D 0) {
- 			oi->whence =3D OI_LOOSE;
- 			return status;
-@@ -2178,7 +2204,7 @@ int sha1_object_info_extended(const unsigned char=
- *sha1, struct object_info *oi)
-=20
- 		/* Not a loose object; someone else may have just packed it. */
- 		reprepare_packed_git();
--		if (!find_pack_entry(sha1, &e))
-+		if (!find_pack_entry(sha1, &e, &oi->alt))
- 			return status;
- 	}
-=20
-@@ -2213,7 +2239,7 @@ static void *read_packed_sha1(const unsigned char=
- *sha1,
- 	struct pack_entry e;
- 	void *data;
-=20
--	if (!find_pack_entry(sha1, &e))
-+	if (!find_pack_entry(sha1, &e, NULL))
- 		return NULL;
- 	data =3D cache_or_unpack_entry(e.p, e.offset, size, type, 1);
- 	if (!data) {
-@@ -2618,14 +2644,14 @@ int has_pack_index(const unsigned char *sha1)
- int has_sha1_pack(const unsigned char *sha1)
- {
- 	struct pack_entry e;
--	return find_pack_entry(sha1, &e);
-+	return find_pack_entry(sha1, &e, NULL);
- }
-=20
- int has_sha1_file(const unsigned char *sha1)
- {
- 	struct pack_entry e;
-=20
--	if (find_pack_entry(sha1, &e))
-+	if (find_pack_entry(sha1, &e, NULL))
- 		return 1;
- 	return has_loose_object(sha1);
- }
+ 	/* add possible alternates from the submodule */
+-	read_info_alternates(objects_directory.buf, 0);
++	read_external_info_alternates(objects_directory.buf, 0);
+ 	prepare_alt_odb();
+ done:
+ 	strbuf_release(&objects_directory);
 --=20
 1.8.0.rc3.18.g0d9b108
