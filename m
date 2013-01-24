@@ -1,69 +1,80 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 01/10] wildmatch: fix "**" special case
-Date: Thu, 24 Jan 2013 12:51:40 +0700
-Message-ID: <CACsJy8CtV-ngy4iGm3Vn3bu9XwpSrZ_AeWpPxTC2TY_qXv=Cxw@mail.gmail.com>
-References: <1357008251-10014-1-git-send-email-pclouds@gmail.com>
- <1357008251-10014-2-git-send-email-pclouds@gmail.com> <7vr4lcnbn5.fsf@alter.siamese.dyndns.org>
- <7v1udcn84w.fsf@alter.siamese.dyndns.org> <CACsJy8DiVy7tcG_t2JENKoPSFWV24Tneh4q=upPPJML4VESMag@mail.gmail.com>
- <7vwqv3dw2n.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH/RFC] Revoke write access to refs and odb after importing
+ another repo's odb
+Date: Thu, 24 Jan 2013 12:58:16 +0700
+Message-ID: <CACsJy8B-mCBFF0YUCU5BRCRhHJjZDfQY9+9ETBrJzLOe=19NXA@mail.gmail.com>
+References: <1358948067-2792-1-git-send-email-pclouds@gmail.com>
+ <7v1udbj0kt.fsf@alter.siamese.dyndns.org> <51004A37.6040301@web.de> <7vwqv3fw2b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
+	Heiko Voigt <hvoigt@hvoigt.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 24 06:52:33 2013
+X-From: git-owner@vger.kernel.org Thu Jan 24 06:59:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyFjl-00050B-2c
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 06:52:33 +0100
+	id 1TyFq8-0000Mf-Kw
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 06:59:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945Ab3AXFwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2013 00:52:13 -0500
-Received: from mail-oa0-f48.google.com ([209.85.219.48]:40574 "EHLO
-	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750822Ab3AXFwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2013 00:52:11 -0500
-Received: by mail-oa0-f48.google.com with SMTP id h2so9211816oag.7
-        for <git@vger.kernel.org>; Wed, 23 Jan 2013 21:52:10 -0800 (PST)
+	id S1751787Ab3AXF6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2013 00:58:48 -0500
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:39758 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750996Ab3AXF6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2013 00:58:47 -0500
+Received: by mail-ob0-f176.google.com with SMTP id v19so173200obq.35
+        for <git@vger.kernel.org>; Wed, 23 Jan 2013 21:58:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=UaMBbpCtpNamLlGIzzLA8gUM5pJUnFw1pLrtoKQcLds=;
-        b=Bs4/Ln6H5MAb3BA+9aoD+OhCqjqmPFp9CVCqvjXc/TfMUy5XSzAp/TT2u7U6iVLnRS
-         51Fbbw1FVlew168kqbp/RQ+L6dqy3yNa+31DPU587LHS8geHlG0XUJkyKzGhXKtE4XF+
-         mLm3AIQBd+u5QNRkk5l7oGp+UEKnvbhTgji0dfJLnRzudoUY7YxoAmNiBe3NJbgqxGjZ
-         TTF5rs6QNy/kOMoPhrlrxfcQIIIGLGM9obonlg1dOOQ+xBqu6O0X9adWfdJId8k0tCbc
-         lB3B0jTkOBcsERwuZXSYrV3RRTKVYKG8zjofCG0MKRKnH2Aiqkga2I0VDiAaxROZfpdK
-         gwcA==
-X-Received: by 10.60.32.44 with SMTP id f12mr596778oei.61.1359006730667; Wed,
- 23 Jan 2013 21:52:10 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Wed, 23 Jan 2013 21:51:40 -0800 (PST)
-In-Reply-To: <7vwqv3dw2n.fsf@alter.siamese.dyndns.org>
+        bh=KJl/3H1osYXjYucNoALfzfbtzKoVb28rK57i8vIxjlM=;
+        b=Jq9JeZ3IRqQv7wTu9s86czxpibdBoSiCaQ0GLqc72EB8ytykTQWPTesHIKBScgLL+Z
+         erl17WOMlby2elF0BcGq1CjrwMbXdIIQB38IbrBMNtuyvzGl2QodeZ67KXRIeGM7q451
+         OvGiMKbLKRz1cXNrP9IOuxTOPQw7Rjq9fHj1m0NLWRgdC8xThaD9kw80bdMO6OXMTK+B
+         sMuzt66Qk1Ob52/f5ej9At3Uviml/IrkjbOrxGrH+HNmhx1S7YFQqh7OehL8v6PCs8RS
+         JnzmA/Hcgz6m7kDEVYKXL8pmCPYgdi7pZ8jXEEdN5vxq+3JdtirUgKTj2heQDaS1KNyl
+         /nrA==
+X-Received: by 10.60.8.134 with SMTP id r6mr589822oea.53.1359007126543; Wed,
+ 23 Jan 2013 21:58:46 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Wed, 23 Jan 2013 21:58:16 -0800 (PST)
+In-Reply-To: <7vwqv3fw2b.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214395>
 
-On Thu, Jan 24, 2013 at 11:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> The only problem I see is, without the version string, there's no way
->> to know if "**" is supported. Old git versions will happily take "**"
->> and interpret as "*". When you advise someone to use "**" you might
->> need to add "check if you have this version of git". This problem does
->> not exist with pathspec magic like :(glob)
+On Thu, Jan 24, 2013 at 4:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
 >
-> OK, so what do we want to do when we do the real "USE_WILDMATCH"
-> that is not the current experimental curiosity?  Use ":(wild)" or
-> something?
+>> This is a false positive. The merge algorithm picked a fast-forward
+>> in a submodule as a proper merge result and records that in a
+>> gitlink. But as Duy pointed out this could be easily fixed by
+>> turning the readonly flag off in that case.
+>
+> I see that as "easily circumvented and not an effective protection",
+> though.
+>
+> In theory, adding a gitlink to the index, removing a gitlink to the
+> index and modifying an existing gitlink in the index to another
+> gitlink in the index and writing the resulting in-core index out to
+> the on-disk index should be allowed, even after objects from the
+> submodule object database have contaminated our in-core object pool,
+> as long as you do not run cache_tree_update().  I am not sure if that
+> single loophole would be sufficient, though.
 
-I don't think we need to support two different sets of wildcards in
-the long run. I'm thinking of adding ":(glob)" with WM_PATHNAME.
-Pathspec without :(glob) still uses the current wildcards (i.e. no
-FNM_PATHNAME). At some point, like 2.0, we either switch the behavior
-of patterns-without-:(glob) to WM_PATHNAME, or just disable wildcards
-when :(glob) is not present.
+The problem is we don't know which entries are updated in index. We
+don't keep track of them. And I think in the unpack-trees case, we
+scape the whole index then copy over, making it look like the whole
+index is updated (even with the same content). One way to check this
+is verify the source of all non-gitlink entries in index before
+writing to disk (only when readonly flag is on, of course).
+sha1_object_info_extended() should help (or be extended to do the
+job). Hmm.. if we do this, we could also verify if new sha-1 objects
+do not refer to an external source, if so allow them to be created.
 -- 
 Duy
