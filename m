@@ -1,82 +1,104 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: [PATCH] mergetools: Add tortoisegitmerge helper
-Date: Thu, 24 Jan 2013 12:19:29 +0100
-Message-ID: <510118C1.9080704@tu-clausthal.de>
-References: <50FBD4AD.2060208@tu-clausthal.de> <7v4nibjrg0.fsf@alter.siamese.dyndns.org> <50FCFBBB.2080305@tu-clausthal.de>
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: segmentation fault (nullpointer) with git log --submodule -p
+Date: Thu, 24 Jan 2013 13:11:33 +0100
+Message-ID: <510124F5.9090505@atlas-elektronik.com>
+References: <20130123143816.GA579@krypton.darkbyte.org> <20130123200222.GB19832@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>, davvid@gmail.com,
-	Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 24 12:20:05 2013
+Cc: Armin <netzverweigerer@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 24 13:20:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyKqb-0001Cy-Us
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 12:19:58 +0100
+	id 1TyLnI-0005kz-CM
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 13:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753780Ab3AXLTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2013 06:19:36 -0500
-Received: from mailrelay1.rz.tu-clausthal.de ([139.174.2.42]:53548 "EHLO
-	mailrelay1.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752916Ab3AXLT3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Jan 2013 06:19:29 -0500
-Received: from hades.rz.tu-clausthal.de (mailrelay1.rz.tu-clausthal.de [139.174.2.42])
-	by mailrelay1.rz.tu-clausthal.de (Postfix) with ESMTP id 2BC7142E27A;
-	Thu, 24 Jan 2013 12:19:27 +0100 (CET)
-Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 03A04422069;
-	Thu, 24 Jan 2013 12:19:27 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=bWPb58YVl6SgdGMvUSKksJkYQ4g=; b=st7+rKuWtb/SUTWAW3R7lp3sdiK2
-	G+sk2lBKGPfEvurI0eMINB4WHpZE1Ncez1sYWHDY3owFLQ18n8rXH/iGnwMTXoDK
-	4RY95iImR9sbGaXTjQAtIOdTwKhEXCTb1PD9UmjcFYPXyy22NWs3azVqPDYVa4fN
-	0dxpf+OyyTAi3eQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=aoEHYXCOCCZNY8hQ3pjSsLoTgxJNGwVO+Pd/spIc4SZgAQpG5Kn3Jh2
-	Ru2ps/oYzi4y4klT5iRPFfkIphbTd6ICYykbdvZbR9iJUNK9RyZ5omvlcAb62mVj
-	8nSvEGREbZYGF7tYtOUc1CAHwSjfzKzDWLnhibxE2nijJTwdnFWk=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id AADDC422060;
-	Thu, 24 Jan 2013 12:19:26 +0100 (CET)
-Received: from [139.174.242.80] (account sstri@tu-clausthal.de [139.174.242.80] verified)
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.8)
-  with ESMTPSA id 43294654; Thu, 24 Jan 2013 12:19:26 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <50FCFBBB.2080305@tu-clausthal.de>
-X-Enigmail-Version: 1.5
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
-X-Spam-Level: (8%, '
- MULTIPLE_RCPTS 0.1, HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, BODY_SIZE_700_799 0, DKIM_SIGNATURE 0, DOMAINKEY_SIG 0, __ANY_URI 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_FROM 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __MOZILLA_USER_AGENT 0, __MULTIPLE_RCPTS_CC_X2 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __TO_NO_NAME 0, __URI_NO_MAILTO 0, __URI_NO_PATH 0, __URI_NO_WWW 0, __URI_NS , __USER_AGENT 0')
+	id S1753356Ab3AXMUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2013 07:20:08 -0500
+Received: from mail96.atlas.de ([194.156.172.86]:29625 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753775Ab3AXMUE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2013 07:20:04 -0500
+X-Greylist: delayed 511 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jan 2013 07:20:04 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id E73B710121;
+	Thu, 24 Jan 2013 13:11:31 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mail96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
+	with ESMTP id 38nH5smljK3v; Thu, 24 Jan 2013 13:11:28 +0100 (CET)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Thu, 24 Jan 2013 13:11:27 +0100 (CET)
+Received: from [10.200.54.97] (as112671.atlas.de [10.200.54.97])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id D9DFE27169;
+	Thu, 24 Jan 2013 13:11:27 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <20130123200222.GB19832@sigill.intra.peff.net>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214428>
 
-Am 21.01.2013 09:26 schrieb Sven Strickroth:
-> - The TortoiseGit team renamed TortoiseMerge.exe to TortoiseGitMerge.exe
->   (starting with 1.8.0) in order to make clear that this one has special
->   support for git and prevent confusion with the TortoiseSVN TortoiseMerge
->   version.
-> - The tortoisemerge mergetool does not work with filenames which have
->   a space in it. Fixing this required changes in git and also in
->   TortoiseGitMerge; see https://github.com/msysgit/msysgit/issues/57.
+Am 23.01.2013 21:02, schrieb Jeff King:
+> On Wed, Jan 23, 2013 at 03:38:16PM +0100, Armin wrote:
 > 
-> The new tortoisegitmerge helper was added so that people can still use
-> TortoiseMerge from TortoiseSVN (and older TortoiseGit versions).
+>> Hello dear git people.
+>>
+>> I experience a reproducible segmentation fault on one of my
+>> repositories when doing a "git log --submodule -p", tested with newest
+>> version on Arch Linux (git version 1.8.1.1) and built fresh (git
+>> version 1.8.1.1.347.g9591fcc), tried on 2 seperate systems:
+>>
+>>
+>> Program terminated with signal 11, Segmentation fault.
+>> #0  0x00000000004b51e5 in parse_commit_header (context=0x7ffff69b6980) at pretty.c:752
+>> 752     for (i = 0; msg[i]; i++) {
+>> [...]
+>> (gdb) l
+>> 747 static void parse_commit_header(struct format_commit_context *context)
+>> 748 {
+>> 749     const char *msg = context->message;
+>> 750     int i;
+>> 751 
+>> 752     for (i = 0; msg[i]; i++) {
+>> 753         int eol;
+>> 754         for (eol = i; msg[eol] && msg[eol] != '\n'; eol++)
+>> 755             ; /* do nothing */
+>> 756 
+>> (gdb) p msg
+>> $7 = <optimized out>
+>> (gdb) p context->message
+>> $8 = 0x0
+> 
+> Yeah, that should definitely not be NULL. I can't reproduce here with a
+> few simple examples, though.
+> 
+> Does it fail with older versions of git? If so, can you bisect?
 
-Any comments for this patch?
+I did. My bisection told me this is the suspect:
 
+ccdc603 (parse_object: try internal cache before reading object db)
+
+My git-fu is not good enough to analyze that...
+
+> Is it possible for you to make your repo available?
+
+Unfortunately not. It crashes with one particular repos (using submodules)
+that I can't make available but not with another which is available
+at https://github.com/snaewe/super.git
+
+HTH
+
+Stefan
 -- 
-Best regards,
- Sven Strickroth
- PGP key id F5A9D4C4 @ any key-server
+----------------------------------------------------------------
+/dev/random says: There must be more to life than compile-and-go.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
