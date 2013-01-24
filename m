@@ -1,104 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/2] Make git-svn work with gitdir links
-Date: Wed, 23 Jan 2013 21:29:01 -0800
-Message-ID: <7vehhbdu8y.fsf@alter.siamese.dyndns.org>
-References: <20120308005103.GA27398@dcvr.yhbt.net>
- <1358731322-44600-1-git-send-email-barry.wardell@gmail.com>
- <20130123023235.GA24135@dcvr.yhbt.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 01/10] wildmatch: fix "**" special case
+Date: Thu, 24 Jan 2013 12:51:40 +0700
+Message-ID: <CACsJy8CtV-ngy4iGm3Vn3bu9XwpSrZ_AeWpPxTC2TY_qXv=Cxw@mail.gmail.com>
+References: <1357008251-10014-1-git-send-email-pclouds@gmail.com>
+ <1357008251-10014-2-git-send-email-pclouds@gmail.com> <7vr4lcnbn5.fsf@alter.siamese.dyndns.org>
+ <7v1udcn84w.fsf@alter.siamese.dyndns.org> <CACsJy8DiVy7tcG_t2JENKoPSFWV24Tneh4q=upPPJML4VESMag@mail.gmail.com>
+ <7vwqv3dw2n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Barry Wardell <barry.wardell@gmail.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Jan 24 06:29:38 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 24 06:52:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyFNT-0008T6-G3
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 06:29:31 +0100
+	id 1TyFjl-00050B-2c
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 06:52:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751540Ab3AXF3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2013 00:29:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54055 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751320Ab3AXF3F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2013 00:29:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55386CE1C;
-	Thu, 24 Jan 2013 00:29:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pAEZcs+soB+zljE5ShyFK2M+7DM=; b=KdbBS/
-	Z/gFiYl8BdhH+snyLue45CeTwZ69QJimMVWHCrMsJI3s9aVS5PfKVjTGSGguz9ph
-	A+PDyee+I8zW0oJ2oblM7Z/SFZPua+9caqrcRcQGbeC+TTNLxmcL3eCDt8ZB12OT
-	Swv3ThNDm36it9aijkhOWxaz9e2UFD9ipll3M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H4JjWKxPEaqXSa0Ka839FimYA6PrErHS
-	PMNYPYWfPHOv+WLtjl9oDdX+K5O7zsNeJ3qn3KdEDazzz/sh36iphQYWldwXt+ph
-	wSD8ysFhPa0wkLJTJMxh61YF3fDUBR/figpiQSZpEmRZ1kbXWCwRP/L09T1xtJCQ
-	V1zeodt2CUw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A486CE1B;
-	Thu, 24 Jan 2013 00:29:04 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94C3ECE19; Thu, 24 Jan 2013
- 00:29:03 -0500 (EST)
-In-Reply-To: <20130123023235.GA24135@dcvr.yhbt.net> (Eric Wong's message of
- "Wed, 23 Jan 2013 02:32:35 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F70BE794-65E6-11E2-AAD1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750945Ab3AXFwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2013 00:52:13 -0500
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:40574 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822Ab3AXFwL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2013 00:52:11 -0500
+Received: by mail-oa0-f48.google.com with SMTP id h2so9211816oag.7
+        for <git@vger.kernel.org>; Wed, 23 Jan 2013 21:52:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=UaMBbpCtpNamLlGIzzLA8gUM5pJUnFw1pLrtoKQcLds=;
+        b=Bs4/Ln6H5MAb3BA+9aoD+OhCqjqmPFp9CVCqvjXc/TfMUy5XSzAp/TT2u7U6iVLnRS
+         51Fbbw1FVlew168kqbp/RQ+L6dqy3yNa+31DPU587LHS8geHlG0XUJkyKzGhXKtE4XF+
+         mLm3AIQBd+u5QNRkk5l7oGp+UEKnvbhTgji0dfJLnRzudoUY7YxoAmNiBe3NJbgqxGjZ
+         TTF5rs6QNy/kOMoPhrlrxfcQIIIGLGM9obonlg1dOOQ+xBqu6O0X9adWfdJId8k0tCbc
+         lB3B0jTkOBcsERwuZXSYrV3RRTKVYKG8zjofCG0MKRKnH2Aiqkga2I0VDiAaxROZfpdK
+         gwcA==
+X-Received: by 10.60.32.44 with SMTP id f12mr596778oei.61.1359006730667; Wed,
+ 23 Jan 2013 21:52:10 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Wed, 23 Jan 2013 21:51:40 -0800 (PST)
+In-Reply-To: <7vwqv3dw2n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214394>
 
-Eric Wong <normalperson@yhbt.net> writes:
+On Thu, Jan 24, 2013 at 11:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> The only problem I see is, without the version string, there's no way
+>> to know if "**" is supported. Old git versions will happily take "**"
+>> and interpret as "*". When you advise someone to use "**" you might
+>> need to add "check if you have this version of git". This problem does
+>> not exist with pathspec magic like :(glob)
+>
+> OK, so what do we want to do when we do the real "USE_WILDMATCH"
+> that is not the current experimental curiosity?  Use ":(wild)" or
+> something?
 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index c232798..e5bd292 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -332,11 +332,13 @@ if ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
->  		$ENV{GIT_DIR} = command_oneline([qw/rev-parse --git-dir/]);
->  	} "Unable to find .git directory\n";
->  	my $cdup = undef;
-> +	my $git_dir = delete $ENV{GIT_DIR};
->  	git_cmd_try {
->  		$cdup = command_oneline(qw/rev-parse --show-cdup/);
->  		chomp $cdup if ($cdup);
->  		$cdup = "." unless ($cdup && length $cdup);
-> -	} "Already at toplevel, but $ENV{GIT_DIR} not found\n";
-> +	} "Already at toplevel, but $git_dir not found\n";
-> +	$ENV{GIT_DIR} = $git_dir;
->  	chdir $cdup or die "Unable to chdir up to '$cdup'\n";
->  	$_repository = Git->repository(Repository => $ENV{GIT_DIR});
->  }
-
-This does not look quite right, though.
-
-Can't the user have his own $GIT_DIR when this command is invoked?
-The first command_oneline() runs rev-parse with that environment and
-get the user specified value of GIT_DIR in $ENV{GIT_DIR}, but by
-doing a "delete" before running --show-cdup, you are not honoring
-that GIT_DIR (and GIT_WORK_TREE if exists) the user gave you.  You
-already used that GIT_DIR when you asked rev-parse --git-dir to find
-what the GIT_DIR value should be, so you would be operating with
-values of $git_dir and $cdup that you discovered in an inconsistent
-way, no?
-
-Shouldn't it be more like this instead?
-
-	my ($git_dir, $cdup) = undef;
-        try {
-		$git_dir = command_oneline(qw(rev-parse --git-dir));
-	} "Unable to ...";
-        try {
-		$cdup = command_oneline(qw(rev-parse --show-cdup));
-		... tweak $cdup ...
-	} "Unable to ...";
-	if (defined $git_dir) { $ENV{GIT_DIR} = $git_dir; }
-	chdir $cdup;
+I don't think we need to support two different sets of wildcards in
+the long run. I'm thinking of adding ":(glob)" with WM_PATHNAME.
+Pathspec without :(glob) still uses the current wildcards (i.e. no
+FNM_PATHNAME). At some point, like 2.0, we either switch the behavior
+of patterns-without-:(glob) to WM_PATHNAME, or just disable wildcards
+when :(glob) is not present.
+-- 
+Duy
