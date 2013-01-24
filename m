@@ -1,156 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t9902: protect test from stray build artifacts
-Date: Thu, 24 Jan 2013 15:07:42 -0800
-Message-ID: <7vehha89j5.fsf_-_@alter.siamese.dyndns.org>
-References: <201301212330.10824.jn.avila@free.fr>
- <7v7gn6f6ya.fsf@alter.siamese.dyndns.org>
- <20130122003954.GA23297@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [regression] Re: [PATCHv2 10/15] drop length limitations on
+ gecos-derived names and emails
+Date: Thu, 24 Jan 2013 15:21:46 -0800
+Message-ID: <20130124232146.GA17458@google.com>
+References: <20120521230917.GA474@sigill.intra.peff.net>
+ <20120521231017.GJ10981@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-	git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org,
+	Mihai Rusu <dizzy@google.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 25 00:08:11 2013
+X-From: git-owner@vger.kernel.org Fri Jan 25 00:22:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyVtw-00036f-Ia
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 00:08:08 +0100
+	id 1TyW7n-0003G9-Mf
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 00:22:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756268Ab3AXXHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2013 18:07:47 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50401 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755899Ab3AXXHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2013 18:07:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E56E6C066;
-	Thu, 24 Jan 2013 18:07:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9I7deZAu6UWVE+/Pc8YpZIWsNuk=; b=i4JMgk
-	lWxB37phPrX9usb8V1+1n5TXZJ7SdSIEX/jzaF+vfkmScYAjivRx2NEtJDFYCIo6
-	M5Tqezd7tjq7TWRI9YD7KfON6rZEEl2/uTLuX2gSDmxYFuIH3lumOdK91BTD16HM
-	0l9vajTmqEryEmpoPsoGMuzYPSyaoqGnzje2U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Udz1yhgs3i34BH65Bqp8ihfehKkavif/
-	Z0aEiVzqH9U04u52WEXFzwcPGT6v3n0O28mQ2xsLrQpRQG10Z9xghScbh2BInbkN
-	mxK9kn+kEBzZyUkP2C8spw2dA5WX92wONzY6KKIiEt70GhPtNAVIvXSbkNDy5/41
-	Efvyjm6FAwM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9371C065;
-	Thu, 24 Jan 2013 18:07:44 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14E7DC061; Thu, 24 Jan 2013
- 18:07:43 -0500 (EST)
-In-Reply-To: <20130122003954.GA23297@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 21 Jan 2013 19:39:55 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DC336AAC-667A-11E2-A85B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756658Ab3AXXV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2013 18:21:58 -0500
+Received: from mail-da0-f53.google.com ([209.85.210.53]:56606 "EHLO
+	mail-da0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754818Ab3AXXVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2013 18:21:54 -0500
+Received: by mail-da0-f53.google.com with SMTP id x6so4473320dac.12
+        for <git@vger.kernel.org>; Thu, 24 Jan 2013 15:21:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=+kDI6n5jpTdmBg4yIqI71qfCFsaP2SMKrIR5pdZQBLg=;
+        b=i/n/en/lvgydJEzLEUPUDeySH5X7B6b6gYD6/kfXefdVczWgOPLFclr11crwrHyIU5
+         GzM2aJd8ytTps9ajW8Xl/DBPC8YH3TgvGauIwr10waw+UlpsDf+xnntleHbN5FAAoQUq
+         wtTjObKc63QQt07a1VPNI+7ojD9SPXsiiBT6auUxr87SR8DCFJ4fUfc/V1Q4/Pgn8nEB
+         fBIEbGR8xFs58fpxrFJmMMu75pbC74I8sNnPPcoH2yz5wS/Bh9k5u3DWF07lgwuXj2dS
+         bl4vYw48CEVcM3i60I7/aNpk7a8/imt+GrEhWEchiFd/iRmpBHv9qyJ6xuwmzX/Ywc1H
+         ZDJQ==
+X-Received: by 10.68.202.65 with SMTP id kg1mr9471809pbc.28.1359069714218;
+        Thu, 24 Jan 2013 15:21:54 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id oc8sm14483729pbb.39.2013.01.24.15.21.51
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 24 Jan 2013 15:21:52 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20120521231017.GJ10981@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214470>
 
-When you have random build artifacts in your build directory, left
-behind by running "make" while on another branch, the "git help -a"
-command run by __git_list_all_commands in the completion script that
-is being tested does not have a way to know that they are not part
-of the subcommands this build will ship.  Such extra subcommands may
-come from the user's $PATH.  They will interfere with the tests that
-expect a certain prefix to uniquely expand to a known completion.
+Hi Jeff,
 
-Instrument the completion script and give it a way for us to tell
-what (subset of) subcommands we are going to ship.
+Jeff King wrote:
 
-Also add a test to "git --help <prefix><TAB>" expansion.  It needs
-to show not just commands but some selected documentation pages.
+> When we pull the user's name from the GECOS field of the
+> passwd file (or generate an email address based on their
+> username and hostname), we put the result into a
+> static buffer.
+[...]
+> The conversion is mostly mechanical: replace string copies
+> with strbuf equivalents, and access the strbuf.buf directly.
+> There are a few exceptions:
 
-Based on an idea by Jeff King.
+This broke /etc/mailname handling.  Before:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/completion/git-completion.bash | 11 ++++++++++-
- t/t9902-completion.sh                  | 25 ++++++++++++++++++++++++-
- 2 files changed, 34 insertions(+), 2 deletions(-)
+	$ git var GIT_COMMITTER_IDENT
+	Jonathan Nieder <jrn@mailname.example.com> 1359069165 -0800
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index a4c48e1..6139b50 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -531,10 +531,19 @@ __git_complete_strategy ()
- 	return 1
- }
- 
-+__git_commands () {
-+	if test -n "${GIT_TESTING_COMMAND_COMPLETION:-}"
-+	then
-+		printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
-+	else
-+		git help -a|egrep '^  [a-zA-Z0-9]'
-+	fi
-+}
-+
- __git_list_all_commands ()
+After:
+
+	$ git var GIT_COMMITTER_IDENT
+	Jonathan Nieder <mailname.example.com> 1359069192 -0800
+
+The cause:
+
+[...]
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -19,42 +18,27 @@ int user_ident_explicitly_given;
+[...]
+> -static int add_mailname_host(char *buf, size_t len)
+> +static int add_mailname_host(struct strbuf *buf)
+>  {
+>  	FILE *mailname;
+>  
+> @@ -65,7 +49,7 @@ static int add_mailname_host(char *buf, size_t len)
+>  				strerror(errno));
+>  		return -1;
+>  	}
+> -	if (!fgets(buf, len, mailname)) {
+> +	if (strbuf_getline(buf, mailname, '\n') == EOF) {
+
+This clears the strbuf.
+
+How about something like this as a quick fix?
+
+Reported-by: Mihai Rusu <dizzy@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+
+diff --git a/ident.c b/ident.c
+index 73a06a1..cabd73f 100644
+--- a/ident.c
++++ b/ident.c
+@@ -41,6 +41,7 @@ static void copy_gecos(const struct passwd *w, struct strbuf *name)
+ static int add_mailname_host(struct strbuf *buf)
  {
- 	local i IFS=" "$'\n'
--	for i in $(git help -a|egrep '^  [a-zA-Z0-9]')
-+	for i in $(__git_commands)
- 	do
- 		case $i in
- 		*--*)             : helper pattern;;
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 3cd53f8..adc1372 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -13,6 +13,25 @@ complete ()
- 	return 0
+ 	FILE *mailname;
++	struct strbuf mailnamebuf = STRBUF_INIT;
+ 
+ 	mailname = fopen("/etc/mailname", "r");
+ 	if (!mailname) {
+@@ -49,14 +50,17 @@ static int add_mailname_host(struct strbuf *buf)
+ 				strerror(errno));
+ 		return -1;
+ 	}
+-	if (strbuf_getline(buf, mailname, '\n') == EOF) {
++	if (strbuf_getline(&mailnamebuf, mailname, '\n') == EOF) {
+ 		if (ferror(mailname))
+ 			warning("cannot read /etc/mailname: %s",
+ 				strerror(errno));
++		strbuf_release(&mailnamebuf);
+ 		fclose(mailname);
+ 		return -1;
+ 	}
+ 	/* success! */
++	strbuf_addbuf(buf, &mailnamebuf);
++	strbuf_release(&mailnamebuf);
+ 	fclose(mailname);
+ 	return 0;
  }
- 
-+# Be careful when updating this list:
-+#
-+# (1) The build tree may have build artifact from different branch, or
-+#     the user's $PATH may have a random executable that may begin
-+#     with "git-check" that are not part of the subcommands this build
-+#     will ship, e.g.  "check-ignore".  The tests for completion for
-+#     subcommand names tests how "check" is expanded; we limit the
-+#     possible candidates to "checkout" and "check-attr" to make sure
-+#     "check-attr", which is known by the filter function as a
-+#     subcommand to be thrown out, while excluding other random files
-+#     that happen to begin with "check" to avoid letting them get in
-+#     the way.
-+#
-+# (2) A test makes sure that common subcommands are included in the
-+#     completion for "git <TAB>", and a plumbing is excluded.  "add",
-+#     "filter-branch" and "ls-files" are listed for this.
-+
-+GIT_TESTING_COMMAND_COMPLETION='add checkout check-attr filter-branch ls-files'
-+
- . "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
- 
- # We don't need this function to actually join words or do anything special.
-@@ -196,7 +215,6 @@ test_expect_success 'general options plus command' '
- 	test_completion "git --paginate check" "checkout " &&
- 	test_completion "git --git-dir=foo check" "checkout " &&
- 	test_completion "git --bare check" "checkout " &&
--	test_completion "git --help des" "describe " &&
- 	test_completion "git --exec-path=foo check" "checkout " &&
- 	test_completion "git --html-path check" "checkout " &&
- 	test_completion "git --no-pager check" "checkout " &&
-@@ -207,6 +225,11 @@ test_expect_success 'general options plus command' '
- 	test_completion "git --no-replace-objects check" "checkout "
- '
- 
-+test_expect_success 'git --help completion' '
-+	test_completion "git --help ad" "add " &&
-+	test_completion "git --help core" "core-tutorial "
-+'
-+
- test_expect_success 'setup for ref completion' '
- 	echo content >file1 &&
- 	echo more >file2 &&
