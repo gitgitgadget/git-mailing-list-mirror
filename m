@@ -1,99 +1,105 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] git-cvsimport.txt: cvsps-2 is deprecated
-Date: Thu, 24 Jan 2013 19:18:45 +0000
-Message-ID: <20130124191845.GS7498@serenity.lan>
-References: <7va9s0n8gv.fsf@alter.siamese.dyndns.org>
- <20130122234554.GI7498@serenity.lan>
- <7vobgglpv4.fsf@alter.siamese.dyndns.org>
- <20130123092858.GJ7498@serenity.lan>
- <7vsj5rhlfs.fsf@alter.siamese.dyndns.org>
- <20130123211237.GR7498@serenity.lan>
- <7vip6ndveb.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mergetools: Add tortoisegitmerge helper
+Date: Thu, 24 Jan 2013 11:51:27 -0800
+Message-ID: <7vfw1qbbr4.fsf@alter.siamese.dyndns.org>
+References: <50FBD4AD.2060208@tu-clausthal.de>
+ <7v4nibjrg0.fsf@alter.siamese.dyndns.org> <50FCFBBB.2080305@tu-clausthal.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>,
-	Chris Rorvick <chris@rorvick.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 24 20:29:39 2013
+Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>,
+	davvid@gmail.com, Jeff King <peff@peff.net>
+To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+X-From: git-owner@vger.kernel.org Thu Jan 24 20:51:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TySUQ-0006Yf-50
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 20:29:34 +0100
+	id 1TySq1-0004TX-7R
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 20:51:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755295Ab3AXT3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2013 14:29:11 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:42472 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753511Ab3AXT3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2013 14:29:09 -0500
-X-Greylist: delayed 614 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jan 2013 14:29:09 EST
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id C227B23096;
-	Thu, 24 Jan 2013 19:18:54 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tqx2akcUD8fE; Thu, 24 Jan 2013 19:18:53 +0000 (GMT)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 0C01A22F2A;
-	Thu, 24 Jan 2013 19:18:47 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7vip6ndveb.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755536Ab3AXTvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2013 14:51:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40307 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755144Ab3AXTva (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2013 14:51:30 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A35CBCF04;
+	Thu, 24 Jan 2013 14:51:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wSx2qpU/2A2GhpHDoX+YuSLGlYw=; b=UVd0eN
+	zS+wq+chveth3vxVh9+SSmM29qUiWHchSEFOYzCrkUvkNoXXQQxmlmOQ09gX/jur
+	2b/8QrKdzSEn34Ku8XhtL3pheOaDfKEP9uRzU3yYUjvUiTiikjtgCu8bYNnYyk1l
+	KeTIh6WDIP1pEiMmqr7uNS7UeS1Igi4tWoSSc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DiBe6o6Um8Oz8vG9n+je4xKjBgDGqFXI
+	swJ1+kCYk/UXG6Xu+c9TdoM2SPQzTzaJbiny5fr91zJ4C6to/pkBteGtzHvZQ/Lw
+	yRNCMsdrCf4uj6NtXtMH8IFataJyhTBJIMlZCKEcy2Jqi5iE6/zvJkceMD78/vtY
+	kKuClkk1a5U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96E21CF03;
+	Thu, 24 Jan 2013 14:51:29 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EBB3ECF01; Thu, 24 Jan 2013
+ 14:51:28 -0500 (EST)
+In-Reply-To: <50FCFBBB.2080305@tu-clausthal.de> (Sven Strickroth's message of
+ "Mon, 21 Jan 2013 09:26:35 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 71AEB684-665F-11E2-84C6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214443>
 
-git-cvsimport relies on version 2 of cvsps and does not work with the
-new version 3.  Since cvsps 3.x does not currently work as well as
-version 2 for incremental import, document this fact.
+Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
 
-Specifically, there is no way to make new git-cvsimport that supports
-cvsps 3.x and have a seamless transition for existing users since cvsps
-3.x needs a time from which to continue importing and git-cvsimport does
-not save the time of the last import or import into a specific namespace
-so there is no safe way to calculate the time of the last import.
+> - The TortoiseGit team renamed TortoiseMerge.exe to TortoiseGitMerge.exe
+>   (starting with 1.8.0) in order to make clear that this one has special
+>   support for git and prevent confusion with the TortoiseSVN TortoiseMerge
+>   version.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-On Wed, Jan 23, 2013 at 09:04:12PM -0800, Junio C Hamano wrote:
-> Care to roll a proper patch with a log message?  I'll discard the
-> topic for now and replace it with your documentation update.
+Wouldn't it make more sense in such a situation if your users can
+keep using the old "tortoisemerge" configured in their configuration
+and when the renamed one is found the mergetool automatically used
+it, rather than the way your patch is done?  It seems that you are
+forcing all the users to reconfigure or retrain their fingers.  Is
+that the best we can do?  Is it too cumbersome to autodetect the
+presense of tortoisegitmerge and redirect a request for tortoisemerge
+to it, perhaps using translate_merge_tool_path (cf. mergetools/bc3)?
 
-Here it is.
+Assuming that people that have both variants will always want
+mergetool to use tortoisegitmerge, that is.  If there are some
+features missing from or extra bugs in tortoisegitmerge that makes
+some people favor tortoisemerge, then giving two choices like your
+patch does may make more sense.  I only know the difference between
+the two from your four-line description above, but it does not look
+like it is the case.
 
- Documentation/git-cvsimport.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+> diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+> index 4314ad0..13cbe5b 100644
+> --- a/Documentation/diff-config.txt
+> +++ b/Documentation/diff-config.txt
+> @@ -151,7 +151,7 @@ diff.<driver>.cachetextconv::
+>  diff.tool::
+>  	The diff tool to be used by linkgit:git-difftool[1].  This
+>  	option overrides `merge.tool`, and has the same valid built-in
+> -	values as `merge.tool` minus "tortoisemerge" and plus
+> -	"kompare".  Any other value is treated as a custom diff tool,
+> +	values as `merge.tool` minus "tortoisemerge"/"tortoisegitmerge" and
+> +	plus "kompare".  Any other value is treated as a custom diff tool,
+>  	and there must be a corresponding `difftool.<tool>.cmd`
+>  	option.
 
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index 9d5353e..f059ea9 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -18,6 +18,12 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
-+*WARNING:* `git cvsimport` uses cvsps version 2, which is considered
-+deprecated; it does not work with cvsps version 3 and later.  If you are
-+performing a one-shot import of a CVS repository consider using
-+link:http://cvs2svn.tigris.org/cvs2git.html[cvs2git] or
-+link:https://github.com/BartMassey/parsecvs[parsecvs].
-+
- Imports a CVS repository into git. It will either create a new
- repository, or incrementally import into an existing one.
- 
--- 
-1.8.1
+So in short, two tortoises and kompare are only valid as mergetool
+but cannot be used as difftool?  No, I am reading it wrong.
+merge.tool can be used for both, kompare can be used as difftool,
+and two tortoises can only be used as mergetool.
+
+This paragraph needs to be rewritten to unconfuse readers.  The
+original is barely intelligible, and it becomes unreadable as the
+set of tools subtracted by "minus" and added by "plus" grows.
