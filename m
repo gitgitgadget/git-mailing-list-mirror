@@ -1,80 +1,64 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: cleanup sprintf usage for uppercasing hex
-Date: Thu, 24 Jan 2013 01:28:10 +0000
-Message-ID: <20130124012810.GA8096@dcvr.yhbt.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC] Revoke write access to refs and odb after importing
+ another repo's odb
+Date: Thu, 24 Jan 2013 08:30:29 +0700
+Message-ID: <CACsJy8A1EVJbUsqyqNueEvhvd61VHfuiPL3VXBuAPs2FUw=_dg@mail.gmail.com>
+References: <1358948067-2792-1-git-send-email-pclouds@gmail.com> <7v1udbj0kt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 24 02:28:34 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 24 02:31:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyBcH-0004sp-E3
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 02:28:33 +0100
+	id 1TyBfM-0006pB-1P
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 02:31:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752531Ab3AXB2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 20:28:12 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:60833 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752241Ab3AXB2K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 20:28:10 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D50044C001;
-	Thu, 24 Jan 2013 01:28:10 +0000 (UTC)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752952Ab3AXBbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 20:31:06 -0500
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:43557 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753499Ab3AXBbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 20:31:01 -0500
+Received: by mail-ob0-f170.google.com with SMTP id wp18so9137849obc.29
+        for <git@vger.kernel.org>; Wed, 23 Jan 2013 17:31:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=12otmjNOSINpNRzsFrcg09D3d2ZKDQ0t/SDjUSC5s3U=;
+        b=YGNpB6SeInBi8l0uP5u8WiTlAmnM4e6l6nm7hh7kWaFuwjiOWPrWMy9lNUC/MLjDga
+         EOuX/kZeHQdebdpTUKoyS9Q8lvK+AOqJUcegJ7AMCs6rn6jp9tljoW014O/9CRfAAuec
+         hvLc20GYw7cFql9E8JyjZaa4CXpvuRJFcpKnT7soK7TH98TfCl/Ny/UTdrToosVMIPOZ
+         cS3YyrNsf+n5PbOIzxGbzi9N67oOJ+Y2fCzeGA3lZBRbJfFmTu+mD2AxvyRR2zdtOqzr
+         g1lr6O2pgMDP0ULB7BtEV7tZF3u2vStzXf8hr/MHKgTlNUVDMKyY7CrYcbqWFsCf5gU1
+         7m1w==
+X-Received: by 10.182.188.69 with SMTP id fy5mr139001obc.74.1358991060844;
+ Wed, 23 Jan 2013 17:31:00 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Wed, 23 Jan 2013 17:30:29 -0800 (PST)
+In-Reply-To: <7v1udbj0kt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214383>
 
-We do not need to call uc() separately for sprintf("%x")
-as sprintf("%X") is available.
+On Thu, Jan 24, 2013 at 12:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I however have this suspicion that this will become a losing battle
+> and we would be better off getting rid of add_submodule_odb();
+> instead operations that work across repositories will be done as a
+> subprocess, which will get us back closer to one of the original
+> design goals of submodule support to have a clear separation between
+> the superproject and its submodules.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- perl/Git/SVN.pm        | 4 ++--
- perl/Git/SVN/Editor.pm | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 59215fa..490e330 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -490,7 +490,7 @@ sub refname {
- 	#
- 	# Additionally, % must be escaped because it is used for escaping
- 	# and we want our escaped refname to be reversible
--	$refname =~ s{([ \%~\^:\?\*\[\t])}{uc sprintf('%%%02x',ord($1))}eg;
-+	$refname =~ s{([ \%~\^:\?\*\[\t])}{sprintf('%%%02X',ord($1))}eg;
- 
- 	# no slash-separated component can begin with a dot .
- 	# /.* becomes /%2E*
-@@ -2377,7 +2377,7 @@ sub map_path {
- 
- sub uri_encode {
- 	my ($f) = @_;
--	$f =~ s#([^a-zA-Z0-9\*!\:_\./\-])#uc sprintf("%%%02x",ord($1))#eg;
-+	$f =~ s#([^a-zA-Z0-9\*!\:_\./\-])#sprintf("%%%02X",ord($1))#eg;
- 	$f
- }
- 
-diff --git a/perl/Git/SVN/Editor.pm b/perl/Git/SVN/Editor.pm
-index 3db1521..fa0d3c6 100644
---- a/perl/Git/SVN/Editor.pm
-+++ b/perl/Git/SVN/Editor.pm
-@@ -146,7 +146,7 @@ sub url_path {
- 	my ($self, $path) = @_;
- 	if ($self->{url} =~ m#^https?://#) {
- 		# characters are taken from subversion/libsvn_subr/path.c
--		$path =~ s#([^~a-zA-Z0-9_./!$&'()*+,-])#uc sprintf("%%%02x",ord($1))#eg;
-+		$path =~ s#([^~a-zA-Z0-9_./!$&'()*+,-])#sprintf("%%%02X",ord($1))#eg;
- 	}
- 	$self->{url} . '/' . $self->repo_path($path);
- }
+It does not have to be subprocess. Thomas Rast did some work on
+support multithread access to object db by basically replicating all
+datastructure per thread. If that work is complete, we have something
+like "odb container" that could be used to access objects from another
+repository and it won't contaminate the original odb. The same thing
+can be done for ref and index access.
 -- 
-Eric Wong
+Duy
