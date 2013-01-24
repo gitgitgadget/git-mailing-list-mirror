@@ -1,64 +1,64 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH/RFC] Revoke write access to refs and odb after importing
- another repo's odb
-Date: Thu, 24 Jan 2013 08:30:29 +0700
-Message-ID: <CACsJy8A1EVJbUsqyqNueEvhvd61VHfuiPL3VXBuAPs2FUw=_dg@mail.gmail.com>
-References: <1358948067-2792-1-git-send-email-pclouds@gmail.com> <7v1udbj0kt.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PULL] git-svn updates for master
+Date: Thu, 24 Jan 2013 01:32:54 +0000
+Message-ID: <20130124013254.GB8096@dcvr.yhbt.net>
+References: <20130124012810.GA8096@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Barry Wardell <barry.wardell@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 24 02:31:47 2013
+X-From: git-owner@vger.kernel.org Thu Jan 24 02:33:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyBfM-0006pB-1P
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 02:31:44 +0100
+	id 1TyBgq-0007pS-0R
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 02:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752952Ab3AXBbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2013 20:31:06 -0500
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:43557 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753499Ab3AXBbB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2013 20:31:01 -0500
-Received: by mail-ob0-f170.google.com with SMTP id wp18so9137849obc.29
-        for <git@vger.kernel.org>; Wed, 23 Jan 2013 17:31:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=12otmjNOSINpNRzsFrcg09D3d2ZKDQ0t/SDjUSC5s3U=;
-        b=YGNpB6SeInBi8l0uP5u8WiTlAmnM4e6l6nm7hh7kWaFuwjiOWPrWMy9lNUC/MLjDga
-         EOuX/kZeHQdebdpTUKoyS9Q8lvK+AOqJUcegJ7AMCs6rn6jp9tljoW014O/9CRfAAuec
-         hvLc20GYw7cFql9E8JyjZaa4CXpvuRJFcpKnT7soK7TH98TfCl/Ny/UTdrToosVMIPOZ
-         cS3YyrNsf+n5PbOIzxGbzi9N67oOJ+Y2fCzeGA3lZBRbJfFmTu+mD2AxvyRR2zdtOqzr
-         g1lr6O2pgMDP0ULB7BtEV7tZF3u2vStzXf8hr/MHKgTlNUVDMKyY7CrYcbqWFsCf5gU1
-         7m1w==
-X-Received: by 10.182.188.69 with SMTP id fy5mr139001obc.74.1358991060844;
- Wed, 23 Jan 2013 17:31:00 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Wed, 23 Jan 2013 17:30:29 -0800 (PST)
-In-Reply-To: <7v1udbj0kt.fsf@alter.siamese.dyndns.org>
+	id S1752901Ab3AXBcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2013 20:32:55 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:60875 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752732Ab3AXBcy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2013 20:32:54 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF5644C001;
+	Thu, 24 Jan 2013 01:32:54 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20130124012810.GA8096@dcvr.yhbt.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214384>
 
-On Thu, Jan 24, 2013 at 12:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I however have this suspicion that this will become a losing battle
-> and we would be better off getting rid of add_submodule_odb();
-> instead operations that work across repositories will be done as a
-> subprocess, which will get us back closer to one of the original
-> design goals of submodule support to have a clear separation between
-> the superproject and its submodules.
+The following changes since commit ec3ae6ec46ed48383ae40643990f169b65a563cc:
 
-It does not have to be subprocess. Thomas Rast did some work on
-support multithread access to object db by basically replicating all
-datastructure per thread. If that work is complete, we have something
-like "odb container" that could be used to access objects from another
-repository and it won't contaminate the original odb. The same thing
-can be done for ref and index access.
+  Merge git://ozlabs.org/~paulus/gitk (2013-01-23 08:35:03 -0800)
+
+are available in the git repository at:
+
+
+  git://bogomips.org/git-svn master
+
+for you to fetch changes up to 812ed405ac961093b7eb916246d5f288630edfb2:
+
+  git-svn: cleanup sprintf usage for uppercasing hex (2013-01-24 01:30:04 +0000)
+
+----------------------------------------------------------------
+Barry Wardell (1):
+      git-svn: Simplify calculation of GIT_DIR
+
+Eric Wong (1):
+      git-svn: cleanup sprintf usage for uppercasing hex
+
+ git-svn.perl             | 38 +++++++++++++++-----------------------
+ perl/Git/SVN.pm          |  4 ++--
+ perl/Git/SVN/Editor.pm   |  2 +-
+ t/t9100-git-svn-basic.sh |  8 ++++++++
+ 4 files changed, 26 insertions(+), 26 deletions(-)
+
 -- 
-Duy
+Eric Wong
