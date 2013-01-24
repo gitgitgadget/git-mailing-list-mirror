@@ -1,104 +1,87 @@
-From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: segmentation fault (nullpointer) with git log --submodule -p
-Date: Thu, 24 Jan 2013 13:11:33 +0100
-Message-ID: <510124F5.9090505@atlas-elektronik.com>
+Date: Thu, 24 Jan 2013 20:40:47 +0700
+Message-ID: <CACsJy8B9O=A26_=sv1JEYdtazsWa4khZkqpTgFSSTs_RGGPZqQ@mail.gmail.com>
 References: <20130123143816.GA579@krypton.darkbyte.org> <20130123200222.GB19832@sigill.intra.peff.net>
+ <510124F5.9090505@atlas-elektronik.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Armin <netzverweigerer@gmail.com>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Armin <netzverweigerer@gmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 24 13:20:38 2013
+To: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+X-From: git-owner@vger.kernel.org Thu Jan 24 14:41:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyLnI-0005kz-CM
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 13:20:36 +0100
+	id 1TyN3l-00087p-R1
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 14:41:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753356Ab3AXMUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2013 07:20:08 -0500
-Received: from mail96.atlas.de ([194.156.172.86]:29625 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753775Ab3AXMUE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2013 07:20:04 -0500
-X-Greylist: delayed 511 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jan 2013 07:20:04 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id E73B710121;
-	Thu, 24 Jan 2013 13:11:31 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mail96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
-	with ESMTP id 38nH5smljK3v; Thu, 24 Jan 2013 13:11:28 +0100 (CET)
-Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Thu, 24 Jan 2013 13:11:27 +0100 (CET)
-Received: from [10.200.54.97] (as112671.atlas.de [10.200.54.97])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id D9DFE27169;
-	Thu, 24 Jan 2013 13:11:27 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <20130123200222.GB19832@sigill.intra.peff.net>
-X-Enigmail-Version: 1.4.6
+	id S1753286Ab3AXNlU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2013 08:41:20 -0500
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:33870 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753136Ab3AXNlT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jan 2013 08:41:19 -0500
+Received: by mail-oa0-f53.google.com with SMTP id l20so1880287oag.12
+        for <git@vger.kernel.org>; Thu, 24 Jan 2013 05:41:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=/kMHAGx9Bp15I04TS3JTaIxts4kVHGfMYRLZ8LZ13dw=;
+        b=uaKISUSM51SIXO1kbkPIVEWteCYi8G2et8pi1/LogydKApHe0yhc/HIWSkRDv2Grxo
+         hSdZ+rfoSmxLgfq5dksVzfn5WTYrBm6ldwUpIKXHI63rX8s5g1DhUZh4ic8twLfTpVaE
+         fFkbGDQpJ2rm1I1cHu44+RiOFyWjfjNqL7JBE91/ishJVzgPvd/cMsBQL+CKJocQP5Q/
+         fIw+z7vRoA9ZzPTpCJyvm39AgHTl6u5a+a4Ft4MFDPAtJ0joTeQlIYA4hmGsDG6MzxZj
+         dnUxi8vYAcuXvKEzJHB/4+53/twm6zI235uIy8/7DoRzv9OndUGYPnqWzbqOgjNQkuE8
+         qa2g==
+X-Received: by 10.60.29.66 with SMTP id i2mr1505809oeh.2.1359034877629; Thu,
+ 24 Jan 2013 05:41:17 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Thu, 24 Jan 2013 05:40:47 -0800 (PST)
+In-Reply-To: <510124F5.9090505@atlas-elektronik.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214429>
 
-Am 23.01.2013 21:02, schrieb Jeff King:
-> On Wed, Jan 23, 2013 at 03:38:16PM +0100, Armin wrote:
-> 
->> Hello dear git people.
->>
->> I experience a reproducible segmentation fault on one of my
->> repositories when doing a "git log --submodule -p", tested with newest
->> version on Arch Linux (git version 1.8.1.1) and built fresh (git
->> version 1.8.1.1.347.g9591fcc), tried on 2 seperate systems:
->>
->>
->> Program terminated with signal 11, Segmentation fault.
->> #0  0x00000000004b51e5 in parse_commit_header (context=0x7ffff69b6980) at pretty.c:752
->> 752     for (i = 0; msg[i]; i++) {
->> [...]
->> (gdb) l
->> 747 static void parse_commit_header(struct format_commit_context *context)
->> 748 {
->> 749     const char *msg = context->message;
->> 750     int i;
->> 751 
->> 752     for (i = 0; msg[i]; i++) {
->> 753         int eol;
->> 754         for (eol = i; msg[eol] && msg[eol] != '\n'; eol++)
->> 755             ; /* do nothing */
->> 756 
->> (gdb) p msg
->> $7 = <optimized out>
->> (gdb) p context->message
->> $8 = 0x0
-> 
-> Yeah, that should definitely not be NULL. I can't reproduce here with a
-> few simple examples, though.
-> 
-> Does it fail with older versions of git? If so, can you bisect?
+On Thu, Jan 24, 2013 at 7:11 PM, Stefan N=C3=A4we
+<stefan.naewe@atlas-elektronik.com> wrote:
+>> Does it fail with older versions of git? If so, can you bisect?
+>
+> I did. My bisection told me this is the suspect:
+>
+> ccdc603 (parse_object: try internal cache before reading object db)
 
-I did. My bisection told me this is the suspect:
+diff --git a/object.c b/object.c
+index d8d09f9..6b06297 100644
+--- a/object.c
++++ b/object.c
+@@ -191,10 +191,15 @@ struct object *parse_object(const unsigned char *=
+sha1)
+        enum object_type type;
+        int eaten;
+        const unsigned char *repl =3D lookup_replace_object(sha1);
+-       void *buffer =3D read_sha1_file(sha1, &type, &size);
++       void *buffer;
++       struct object *obj;
++
++       obj =3D lookup_object(sha1);
++       if (obj && obj->parsed)
++               return obj;
 
-ccdc603 (parse_object: try internal cache before reading object db)
+Any chance obj->parsed is 1 but ((struct commit*)obj)->buffer is NULL?
+What if you change that "if" to
 
-My git-fu is not good enough to analyze that...
+if (obj && obj->parsed && (obj->type !=3D OBJ_COMMIT || ((struct commit
+*)obj)->buffer))
 
-> Is it possible for you to make your repo available?
+??
 
-Unfortunately not. It crashes with one particular repos (using submodules)
-that I can't make available but not with another which is available
-at https://github.com/snaewe/super.git
-
-HTH
-
-Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: There must be more to life than compile-and-go.
-python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
+Also you did not encode commits in any specific encoding, nor set
+i18n.logOutputEncoding?
+--=20
+Duy
