@@ -1,112 +1,134 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: [PATCH 3/3] mergetool--lib: Add TortoiseMerge as a tool
-Date: Thu, 24 Jan 2013 11:16:08 +0400
-Message-ID: <1359011768-7665-3-git-send-email-Alex.Crezoff@gmail.com>
-References: <1359011768-7665-1-git-send-email-Alex.Crezoff@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] upload-pack: avoid parsing objects during ref
+ advertisement
+Date: Thu, 24 Jan 2013 02:50:08 -0500
+Message-ID: <20130124075008.GA3249@sigill.intra.peff.net>
+References: <7vipkpn87d.fsf@alter.siamese.dyndns.org>
+ <20120106191740.GA12903@sigill.intra.peff.net>
+ <7vehhiozkb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Alexey Shumkin <Alex.Crezoff@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 24 08:17:45 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, git-dev@github.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 24 08:50:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyH4C-0002ze-LX
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 08:17:44 +0100
+	id 1TyHZy-0005K8-2A
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jan 2013 08:50:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752426Ab3AXHRY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2013 02:17:24 -0500
-Received: from mail-la0-f54.google.com ([209.85.215.54]:41507 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751776Ab3AXHRW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2013 02:17:22 -0500
-Received: by mail-la0-f54.google.com with SMTP id gw10so8982596lab.27
-        for <git@vger.kernel.org>; Wed, 23 Jan 2013 23:17:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=+FvFIqHp5TrEjkSlOCei7Q3K3daxWn+K69PrBAq4kwE=;
-        b=KLfj9o3wUs7FWlhIorSwsY6OZ0rPjQOkYlwDDKS6lh1tk0KnaC0F73//FrfC/n9W10
-         LV2cZ+QSnTRHzp70FgWu6BekeDWhaSEpDMlFk67Vm2v939Q7IPzAC+3iNSPE3NB3cSlF
-         cw2zT3rRMeLosOYd+on1UkFkwcjA3F64YeRaDL7gVI3M2OZfiuca9dqWj3JVfUyR/WPL
-         OnOL/m6sUJRXcnEniDQycLspLN2FBp6HEPmEfZhiwkJXbffKG45K75tvySHLkISrlAQM
-         ciSzXkGFAinUYh3E+bFltKKNQbXva9bWXTUHH9z1lwD17yKcnOweBLQvJspUDw+iQl6g
-         KIng==
-X-Received: by 10.152.104.199 with SMTP id gg7mr876178lab.14.1359011841460;
-        Wed, 23 Jan 2013 23:17:21 -0800 (PST)
-Received: from ds212plus (ppp91-77-44-105.pppoe.mtu-net.ru. [91.77.44.105])
-        by mx.google.com with ESMTPS id q4sm9194510lbj.15.2013.01.23.23.17.19
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Jan 2013 23:17:20 -0800 (PST)
-Received: from localhost (localhost [127.0.0.1])
-	by ds212plus (Postfix) with ESMTP id B761B60002;
-	Thu, 24 Jan 2013 11:17:46 +0400 (MSK)
-X-Mailer: git-send-email 1.8.1.1.10.g9255f3f
-In-Reply-To: <1359011768-7665-1-git-send-email-Alex.Crezoff@gmail.com>
+	id S1751777Ab3AXHuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2013 02:50:13 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48056 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751242Ab3AXHuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2013 02:50:11 -0500
+Received: (qmail 14158 invoked by uid 107); 24 Jan 2013 07:51:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Jan 2013 02:51:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Jan 2013 02:50:08 -0500
+Content-Disposition: inline
+In-Reply-To: <7vehhiozkb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214410>
 
-Also added Russian translation of the added error message
-"%s cannot be used without a base"
+On Fri, Jan 18, 2013 at 03:12:52PM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Alexey Shumkin <Alex.Crezoff@gmail.com>
----
- git-gui/lib/mergetool.tcl | 10 ++++++++++
- git-gui/po/ru.po          |  4 ++++
- 2 files changed, 14 insertions(+)
+> Jeff King <peff@peff.net> writes:
+> 
+> > When we advertise a ref, the first thing we do is parse the
+> > pointed-to object. This gives us two things:
+> >
+> >   1. a "struct object" we can use to store flags
+> >
+> >   2. the type of the object, so we know whether we need to
+> >      dereference it as a tag
+> >
+> > Instead, we can just use lookup_unknown_object to get an
+> > object struct, and then fill in just the type field using
+> > sha1_object_info (which, in the case of packed files, can
+> > find the information without actually inflating the object
+> > data).
+> >
+> > This can save time if you have a large number of refs, and
+> > the client isn't actually going to request those refs (e.g.,
+> > because most of them are already up-to-date).
+> 
+> This is an old news, but do you recall why this patch did not update
+> the code in mark_our_ref() that gets "struct object *o" from parse_object()
+> the same way and mark them with OUR_REF flag?
+> 
+> I was wondering about code consolidation like this.
 
-diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
-index 837ce17..d978770 100644
---- a/git-gui/lib/mergetool.tcl
-+++ b/git-gui/lib/mergetool.tcl
-@@ -257,6 +257,16 @@ proc merge_resolve_tool2 {} {
- 			set cmdline [list "$merge_tool_path" -o "$MERGED" "$LOCAL" "$REMOTE=
-"]
- 		}
- 	}
-+	tortoisemerge {
-+		if {$base_stage ne {}} {
-+			set cmdline [list "$merge_tool_path" \
-+				-base:$BASE -mine:$LOCAL \
-+				-theirs:$REMOTE -merged:$MERGED]
-+		} else {
-+			error_popup [mc "%s cannot be used without a base" "TortoiseMerge"]
-+			return
-+		}
-+	}
- 	vimdiff {
- 		error_popup [mc "Not a GUI merge tool: '%s'" $tool]
- 		return
-diff --git a/git-gui/po/ru.po b/git-gui/po/ru.po
-index ca4343b..e9ef810 100644
---- a/git-gui/po/ru.po
-+++ b/git-gui/po/ru.po
-@@ -1948,6 +1948,10 @@ msgstr "=D0=9A=D0=BE=D0=BD=D1=84=D0=BB=D0=B8=D0=BA=
-=D1=82=D1=83=D1=8E=D1=89=D0=B8=D0=B9 =D1=84=D0=B0=D0=B9=D0=BB =D0=BD=D0=
-=B5 =D1=81=D1=83=D1=89=D0=B5=D1=81=D1=82=D0=B2=D1=83=D0=B5=D1=82"
- msgid "Not a GUI merge tool: '%s'"
- msgstr "'%s' =D0=BD=D0=B5 =D1=8F=D0=B2=D0=BB=D1=8F=D0=B5=D1=82=D1=81=D1=
-=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=BE=D0=B9 =D1=81=
-=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F"
-=20
-+#: lib/mergetool.tcl:280
-+msgid "%s cannot be used without a base"
-+msgstr "%s =D0=BD=D0=B5 =D0=BC=D0=BE=D0=B6=D0=B5=D1=82 =D0=B8=D1=81=D0=
-=BF=D0=BE=D0=BB=D1=8C=D0=B7=D0=BE=D0=B2=D0=B0=D1=82=D1=8C=D1=81=D1=8F =D0=
-=B1=D0=B5=D0=B7 =D0=B1=D0=B0=D0=B7=D0=BE=D0=B2=D0=BE=D0=B9 =D0=B2=D0=B5=
-=D1=80=D1=81=D0=B8=D0=B8"
-+
- #: lib/mergetool.tcl:268
- #, tcl-format
- msgid "Unsupported merge tool '%s'"
---=20
-1.8.1.1.10.g9255f3f
+It was just because I did my measuring on raw upload-pack, so I didn't
+notice that mark_our_ref was doing the same potentially slow thing. We
+only call mark_our_ref during the second half of the stateless-rpc
+conversation, and I did not measure that (and it would be a pain to do
+so in isolation).
+
+But it should be able to get the exact same speedups that we get from
+send_ref. It probably matters less in the long run, because the
+advertising phase is going to be called more frequently (e.g., for every
+no-op fetch), and once we are calling mark_our_ref, we are presumably
+about to do do actual packing work. However, there's no reason not to
+get what speed we can there, too.
+
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 95d8313..609cd6c 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -722,15 +722,18 @@ static void receive_needs(void)
+>  	free(shallows.objects);
+>  }
+>  
+> +static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data);
+> +
+>  static int send_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+>  {
+>  	static const char *capabilities = "multi_ack thin-pack side-band"
+>  		" side-band-64k ofs-delta shallow no-progress"
+>  		" include-tag multi_ack_detailed";
+> -	struct object *o = lookup_unknown_object(sha1);
+>  	const char *refname_nons = strip_namespace(refname);
+>  	unsigned char peeled[20];
+>  
+> +	mark_our_ref(refname, sha1, flag, cb_data);
+> +
+>  	if (capabilities)
+>  		packet_write(1, "%s %s%c%s%s agent=%s\n",
+>  			     sha1_to_hex(sha1), refname_nons,
+> @@ -740,10 +743,6 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+>  	else
+>  		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
+>  	capabilities = NULL;
+> -	if (!(o->flags & OUR_REF)) {
+> -		o->flags |= OUR_REF;
+> -		nr_our_refs++;
+> -	}
+>  	if (!peel_ref(refname, peeled))
+>  		packet_write(1, "%s %s^{}\n", sha1_to_hex(peeled), refname_nons);
+>  	return 0;
+
+Right, I think this is a nice cleanup.
+
+> @@ -751,7 +750,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+>  
+>  static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+>  {
+> -	struct object *o = parse_object(sha1);
+> +	struct object *o = parse_object(sha1); /* lookup-unknown??? */
+>  	if (!o)
+>  		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
+>  	if (!(o->flags & OUR_REF)) {
+
+And yeah, this should use lookup_unknown_object to extend the
+optimization to mark_our_ref (and avoid removing it for the
+ref-advertisement case, of course).
+
+-Peff
