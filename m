@@ -1,119 +1,85 @@
-From: Shumkin Alexey <alex.crezoff@gmail.com>
-Subject: Re: [PATCH] git-web--browser: avoid errors in terminal when running
- Firefox on Windows
-Date: Sat, 26 Jan 2013 02:52:50 +0400
-Message-ID: <CAEFUfsH9Xdd4R-uHZGYH4jXvv_z2SzRmtaZwj0_o0d4A9ynPBg@mail.gmail.com>
-References: <20111111202636.GA20515@sigill.intra.peff.net>
-	<3eeabf4989f7f1b4593e89e4c6bcfa8710a7b793.1359125053.git.Alex.Crezoff@gmail.com>
-	<20130125220617.GA23626@sigill.intra.peff.net>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Fri, 25 Jan 2013 18:58:59 -0500
+Message-ID: <51031C43.5030307@gmail.com>
+References: <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9F7C2.1000603@gmail.com> <FBDECCA565D94DF9838DD81FE2E2543A@black> <7v1udxladc.fsf@alter.siamese.dyndns.org> <50EB8EB5.6080204@gmail.com> <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com> <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com> <50F303D8.20709@gmail.com> <50F5A435.5090408@ramsay1.demon.co.uk> <20130120101007.GD16339@elie.Belkin> <50FEDB08.6030901@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 25 23:53:17 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Stephen & Linda Smith <ischis2@cox.net>,
+	Eric Blake <eblake@redhat.com>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sat Jan 26 00:59:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tys94-0000Y0-8v
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 23:53:14 +0100
+	id 1TytBP-00028K-N6
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Jan 2013 00:59:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753445Ab3AYWwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 17:52:53 -0500
-Received: from mail-oa0-f52.google.com ([209.85.219.52]:39307 "EHLO
-	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751783Ab3AYWwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 17:52:51 -0500
-Received: by mail-oa0-f52.google.com with SMTP id k14so298812oag.11
-        for <git@vger.kernel.org>; Fri, 25 Jan 2013 14:52:51 -0800 (PST)
+	id S1754094Ab3AYX7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 18:59:22 -0500
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:51568 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753408Ab3AYX7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 18:59:21 -0500
+Received: by mail-qa0-f47.google.com with SMTP id j8so41023qah.13
+        for <git@vger.kernel.org>; Fri, 25 Jan 2013 15:59:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=pWZRkimgkyzkxtfhEhA3B3cHGkhT8jeiIDLzHghF5f0=;
-        b=i9flRQGo8tAriCHm6TgLiRusnZDCxeMApmEERS/xHyhJ27AEDOFN2unih50dw3BZ28
-         qhVVNIOsKtY1SOxmi7Tfw6Uk8e0KRrS+YKc790lDmvntIlN6hpKBgTxtscTvwilu+6pc
-         70JR/XWrpxeGt9/7XwaL1me3BGflp5l1EDu9h0RXEgZYBx94TzFOv+lg7TH9+U7omea/
-         lxSWqGpuRP1vKSpJKrLJ41ZMNJ2TyPEgCZQ7U7GCc3F1+oiD6/NXMMX5JarcYBPPshSP
-         j+MrWRAEBo/6X1imzFSQ0ohg5QoD97V84EO/h2GEjQJL/ByPoCKdgW9MZ1qFDbeQ19nz
-         FywQ==
-X-Received: by 10.182.23.101 with SMTP id l5mr254865obf.16.1359154371126; Fri,
- 25 Jan 2013 14:52:51 -0800 (PST)
-Received: by 10.76.121.71 with HTTP; Fri, 25 Jan 2013 14:52:50 -0800 (PST)
-In-Reply-To: <20130125220617.GA23626@sigill.intra.peff.net>
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=+9NlpCVxY6yhopeaJzQqOE/RCk6Bo6gJ0TkVn1XNrqI=;
+        b=a4mGXqCStk+0Yp3Qt9WqIk2yg6rgcNo4seGW7oyyh7xYust9PwfoAzc7icTbn2rL8H
+         teWFAKxoOg/U2WlOEPVR/7mR+JyQIfJMp0zBxEE2JrjJV07syBc8sV9RovlIx36vr1yP
+         HXsW90DzZWNc9y/N79co5+5q/8Yv66yIJJ6xhwdpI674LPKC6MAmiYIpg5d8/URu08Sz
+         IkwQeA02uP1+A4BjNUSipiwZpK+fRnIwd+KkwxxD66bUeDXv18NvOktiXEiREvX1VUlC
+         1pgUkb3DTn6tNad5M/OMEj/uo1JHD/6i4nmJ+txPbRBFElZTcaJkOB3nBJuTNrRQDPm/
+         4GnA==
+X-Received: by 10.49.48.43 with SMTP id i11mr9194459qen.3.1359158360329;
+        Fri, 25 Jan 2013 15:59:20 -0800 (PST)
+Received: from mark-laptop.lan (pool-173-79-109-151.washdc.fios.verizon.net. [173.79.109.151])
+        by mx.google.com with ESMTPS id i9sm1387495qei.10.2013.01.25.15.59.03
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 25 Jan 2013 15:59:04 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <50FEDB08.6030901@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214596>
 
-2013/1/26 Jeff King <peff@peff.net>:
-> On Fri, Jan 25, 2013 at 06:44:13PM +0400, Alexey Shumkin wrote:
+On 01/22/2013 01:31 PM, Ramsay Jones wrote:
+> include order. ;-) As I have mentioned here before, the claim that 
+> "WIN32 is not defined on cygwin" is simply nonsense - it depends on 
+> if/when certain header files are included. For example, *as soon as* 
+> you include <windows.h> (and, I suspect, many other win32 headers) 
+> then "defined(WIN32)" is true. Note that commit 380a4d92 ("Update 
+> cygwin.c for new mingw-64 win32 api headers", 11-11-2012) swaps the 
+> include order for the win32.h and git-compat-util.h header files. [I 
+> don't know the details, Mark didn't elaborate, but it is clearly an 
+> include order problem on cygwin 1.7.x :-D ] This causes compilation 
+> errors on cygwin 1.5.x, exactly because win32.h includes <windows.h>, 
+> which defines WIN32, which then leads to git-compat-util.h including 
+> <winsock2.h>.
+>>   #if defined(WIN32) && defined(__CYGWIN__)
+>>   # undef WIN32
+>>   #endif
 >
->>  test_web_browse () {
->> -     # browser=$1 url=$2
->> +     # browser=$1 url=$2 sleep_timeout=$3
->> +     sleep_timeout="$3"
->>       git web--browse --browser="$1" "$2" >actual &&
->> +     # if $3 is set
->> +     # as far as Firefox is run in background (it is run with &)
->> +     # we trying to avoid race condition
->> +     # by waiting for "$sleep_timeout" seconds of timeout for
->> 'fake_browser_ran' file appearance
->> +     (test -z "$sleep_timeout" || (
->> +         for timeout in $(seq 1 $sleep_timeout); do
->> +                     test -f fake_browser_ran && break
->> +                     sleep 1
->> +             done
->> +             test $timeout -ne $sleep_timeout
->> +             )
->> +     ) &&
->>       tr -d '\015' <actual >text &&
->
-> Gross, but I don't really see another way to handle the asynchronous
-> nature of spawning background browsers.
->
-> Two things, though:
->
->   1. Should test_web_browse just delete fake_browser_ran for us? Then
->      later tests do not have to remember to do so.
-Yep, you're right
->
->   2. Seeing fake_browser_ran appeared, we know that the script has
->      started.  But there is still a race condition in which it may not
->      have written anything to "actual" yet.
-Definitely right
->
-> In this implementation:
->
->> +     cat >"fake browser" <<-\EOF &&
->> +     #!/bin/sh
->> +
->> +     : > fake_browser_ran
->> +     if test "$1" = "-version"; then
->> +             echo Fake Firefox browser version 1.2.3
->> +     else
->> +             # Firefox (in contrast to w3m) is run in background (with
->> &)
->> +             # so redirect output to "actual"
->> +             echo fake: "$@" > actual
->> +     fi
->> +     EOF
->
-> There is a period where fake_browser_ran exists, but nothing is in
-> actual. You can solve it by setting fake_browser_ran at the end rather
-> than the beginning.
->
-> Or you can drop fake_browser_ran entirely, and just atomically move
-> actual into place, like:
->
->   echo "fake: $*" >actual.tmp
->   mv actual.tmp actual
->
-> and then tes-t_web_browse can just spin waiting for "actual" to appear.
-Not exactly, because, as I see, "actual" file is a result of redirection of
-> git web--browse --browser="$1" "$2" >actual &&
-command
->
-> -Peff
+Cygwin and Windows should be treated as completely separate platforms: 
+if __CYGWIN__ is defined, do one thing, if not, go ahead and check 
+WIN32, but the WIN32 macro should never be tested once we know the 
+platform is CYGWIN - these really are different platforms (if you are 
+unsure of this, consider that Cygwin includes a cross-compiler to target 
+native Win32 as the Cygwin maintainers recognized the platforms are 
+different).
+
+Mark
