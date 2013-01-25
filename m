@@ -1,135 +1,121 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Re: [PATCH v4 3/4] pretty: Add failing tests: user format ignores
- i18n.logOutputEncoding setting
-Date: Fri, 25 Jan 2013 13:01:52 +0400
-Message-ID: <20130125130152.63f7c14f@ashu.dyn1.rarus.ru>
-References: <cover.1359018188.git.Alex.Crezoff@gmail.com>
-	<6de583a2d281b1614c69d5e7b6f5c4495488f6a3.1359018188.git.Alex.Crezoff@gmail.com>
-	<7vip6m9tvj.fsf@alter.siamese.dyndns.org>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: [PATCH] mergetools: Enhance tortoisemerge to work with
+Date: Fri, 25 Jan 2013 10:06:10 +0100
+Message-ID: <51024B02.9020400@tu-clausthal.de>
+References: <50FBD4AD.2060208@tu-clausthal.de> <7v4nibjrg0.fsf@alter.siamese.dyndns.org> <50FCFBBB.2080305@tu-clausthal.de> <7vfw1qbbr4.fsf@alter.siamese.dyndns.org> <5101B0A5.1020308@tu-clausthal.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 10:02:22 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>, davvid@gmail.com,
+	Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 25 10:06:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyfAx-0007fb-RL
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 10:02:20 +0100
+	id 1TyfEx-0000tN-TA
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 10:06:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753300Ab3AYJB5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2013 04:01:57 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:37618 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751519Ab3AYJB4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Jan 2013 04:01:56 -0500
-Received: by mail-lb0-f181.google.com with SMTP id gm6so301497lbb.26
-        for <git@vger.kernel.org>; Fri, 25 Jan 2013 01:01:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:in-reply-to
-         :references:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=dlUf+PE2rQiGQHYiFhCNSiofRBnA3xgZmH7Bmy8brAk=;
-        b=yhz51t6DCz6gq+whxIK3tENcpak7rWMwkCF85Kz485OpwAh3icxIRYy8Te2t56VQZa
-         H+JuxMxKazF+doM91nDKAyd+G0zrQCrLS8vvQAMdVpLiStkOrBerWUbPCLdbak1frcjz
-         fDQwFWZDlhKamO3TAUEmFu/AT/6tRc8UCq5+Tzlo+L1gPgLFYrn+DhbuSIZkUIcoQszS
-         3aLIKvQs8Dqzsbln99+f1YaYySE0H+qRo47oAl4rxPEgJGgdZR4Mh5FncSUopSxoPvcj
-         d42JnTGtFRh7W95ZU2Ltztcfm3he5E1FvRXpwG1EoQVc0z+QzAoh3SZtN746MzmxwlXe
-         X6fg==
-X-Received: by 10.152.104.36 with SMTP id gb4mr4526406lab.13.1359104514735;
-        Fri, 25 Jan 2013 01:01:54 -0800 (PST)
-Received: from ashu.dyn1.rarus.ru ([85.21.218.130])
-        by mx.google.com with ESMTPS id gt13sm157047lab.14.2013.01.25.01.01.54
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Fri, 25 Jan 2013 01:01:54 -0800 (PST)
-In-Reply-To: <7vip6m9tvj.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.9.0 (GTK+ 2.24.13; x86_64-redhat-linux-gnu)
+	id S1754851Ab3AYJGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 04:06:06 -0500
+Received: from mailrelay2.rz.tu-clausthal.de ([139.174.2.43]:54701 "EHLO
+	mailrelay2.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754596Ab3AYJGC (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jan 2013 04:06:02 -0500
+Received: from poseidon.rz.tu-clausthal.de (poseidon.rz.tu-clausthal.de [139.174.2.21])
+	by mailrelay2.rz.tu-clausthal.de (Postfix) with ESMTP id 35FAE289CFC;
+	Fri, 25 Jan 2013 10:06:00 +0100 (CET)
+Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 1B5AB295500;
+	Fri, 25 Jan 2013 10:06:00 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=iuYFJzdsbwULpxjjSshiitCT78k=; b=3LdYj7fQksWvUeIhtyde0gm2fTea
+	0YkGXOW8tlAq3c5sZWh0TYg4cltMFuXZjwHqyMTvezGdrpqBKB7KV/iFe9aG2PvZ
+	xBOaNcwUv8srZXImNAi5wninU01bTPrBIYfqyq7lVHbuzTaDU0DaQapMHpllqhWz
+	1DthJvOJlv4LTwg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=G0SwPy/rbPnFe/9xdqqSFn8sTmf2cuWhYiqZXAGZS811e5qo26zpMpI
+	UFoAPv1y2TQcQbdYQsET7vekrqD6Ud+d9+apdPjTYRHP7p0PEv3on0iWW0T37Ag9
+	5VURzklHng5YZat+WVXu5mcy8nmwoLxnFXm+XCINyjdApxFcu6Ig=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 5E94E272FC9;
+	Fri, 25 Jan 2013 10:05:59 +0100 (CET)
+Received: from [139.174.101.48] (account sstri@tu-clausthal.de [139.174.101.48] verified)
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.8)
+  with ESMTPSA id 43343251; Fri, 25 Jan 2013 10:05:59 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <5101B0A5.1020308@tu-clausthal.de>
+X-Enigmail-Version: 1.5
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+X-Spam-Level: (10%, '
+ __FRAUD_WEBMAIL! 0, MULTIPLE_RCPTS 0.1, HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1800_1899 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, DKIM_SIGNATURE 0, DOMAINKEY_SIG 0, __ANY_URI 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __FRAUD_BODY_WEBMAIL 0, __HAS_FROM 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __MOZILLA_USER_AGENT 0, __MULTIPLE_RCPTS_CC_X2 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __TO_NO_NAME 0, __URI_NO_PATH 0, __URI_NO_WWW 0, __URI_NS , __USER_AGENT 0')
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214520>
 
-> Alexey Shumkin <alex.crezoff@gmail.com> writes:
->=20
-> > diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.s=
-h
-> > index c248509..4db43a4 100755
-> > --- a/t/t6006-rev-list-format.sh
-> > +++ b/t/t6006-rev-list-format.sh
-> > ...
-> > @@ -112,12 +133,12 @@ commit $head2
-> >  commit $head1
-> >  EOF
-> > =20
-> > -test_format raw-body %B <<'EOF'
-> > -commit 131a310eb913d107dd3c09a65d1651175898735d
-> > -changed foo
-> > +test_format failure raw-body %B <<EOF
-> > +commit $head2
-> > +$changed
-> > =20
-> > -commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
-> > -added foo
-> > +commit $head1
-> > +$added
-> > =20
-> >  EOF
->=20
-> It may have been easier to follow if you did this "Don't hardcode"
-> as a separate preparatory patch, like your first two patches.
-Yep, I missed that in my bunch of rebasing ;)
+TortoiseGitMerge and filenames with spaces
 
->=20
-> > @@ -135,16 +156,16 @@ commit $head1
-> >  foo
-> >  EOF
-> > =20
-> > -cat >commit-msg <<'EOF'
-> > +iconv -f utf-8 -t cp1251 > commit-msg <<EOF
-> >  Test printing of complex bodies
-> > =20
-> >  This commit message is much longer than the others,
-> > -and it will be encoded in iso8859-1. We should therefore
-> > -include an iso8859 character: =C2=A1bueno!
-> > +and it will be encoded in cp1251. We should therefore
-> > +include an cp1251 character: =D1=82=D0=B0=D0=BA =D0=B2=D0=BE=D1=82=
-!
-> >  EOF
-> > =20
-> >  test_expect_success 'setup complex body' '
-> > -	git config i18n.commitencoding iso8859-1 &&
-> > +	git config i18n.commitencoding cp1251 &&
->=20
-> What is going on here?
->=20
-> Is this an example that shows that i18n.commitencoding works
-> correctly with iso8859-1 but not with cp1251?
-It show only that I speak and write Russian not Spanish ))
-I'll revert back these changes.
+- The TortoiseGit team renamed TortoiseMerge.exe to TortoiseGitMerge.exe
+  (starting with 1.8.0) in order to make clear that this one has special
+  support for git, (uses spaces as cli parameter key-value separators)
+  and prevent confusion with the TortoiseSVN TortoiseMerge version.
+- The tortoisemerge mergetool does not work with filenames which have
+  a space in it. Fixing this required changes in git and also in
+  TortoiseGitMerge; see https://github.com/msysgit/msysgit/issues/57.
 
->=20
-> > diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-> > index cf492f4..699c824 100755
-> > --- a/t/t7102-reset.sh
-> > +++ b/t/t7102-reset.sh
-> > ...
-> > @@ -192,7 +214,7 @@ test_expect_success \
-> >  	'changing files and redo the last commit should succeed' '
-> >  	echo "3rd line 2nd file" >>secondfile &&
-> >  	git commit -a -C ORIG_HEAD &&
-> > -	check_changes 3d3b7be011a58ca0c179ae45d94e6c83c0b0cd0d &&
-> > +	check_changes f06f78b8dd468c722952b77569dd0db212442c25 &&
-> >  	test "$(git rev-parse ORIG_HEAD)" =3D \
-> >  			$head5
-> >  '
->=20
-> This and remaining hunks to this script shows that it would be
-> helped by the same love you gave to other scripts with your first
-> two patches before you add the "non-unicode" tests, no?
-Sorry, I haven't got you :-[ (it seems, my English is not good enough)
-Do you mean "avoid hardcoded SHA-1"?
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
+Reported-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ mergetools/tortoisemerge | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/mergetools/tortoisemerge b/mergetools/tortoisemerge
+index ed7db49..9890737 100644
+--- a/mergetools/tortoisemerge
++++ b/mergetools/tortoisemerge
+@@ -6,12 +6,28 @@ merge_cmd () {
+ 	if $base_present
+ 	then
+ 		touch "$BACKUP"
+-		"$merge_tool_path" \
+-			-base:"$BASE" -mine:"$LOCAL" \
+-			-theirs:"$REMOTE" -merged:"$MERGED"
++		if test "$merge_tool_path" == "tortoisegitmerge"
++		then
++			"$merge_tool_path" \
++				-base "$BASE" -mine "$LOCAL" \
++				-theirs "$REMOTE" -merged "$MERGED"
++		else 
++			"$merge_tool_path" \
++				-base:"$BASE" -mine:"$LOCAL" \
++				-theirs:"$REMOTE" -merged:"$MERGED"
++		fi
+ 		check_unchanged
+ 	else
+-		echo "TortoiseMerge cannot be used without a base" 1>&2
++		echo "$merge_tool_path cannot be used without a base" 1>&2
+ 		return 1
+ 	fi
+ }
++
++translate_merge_tool_path() {
++	if type tortoisegitmerge >/dev/null 2>/dev/null
++	then
++		echo tortoisegitmerge
++	else
++		echo tortoisemerge
++	fi
++}
+-- 
+Best regards,
+ Sven Strickroth
+ PGP key id F5A9D4C4 @ any key-server
