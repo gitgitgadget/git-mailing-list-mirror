@@ -1,137 +1,77 @@
-From: =?UTF-8?B?0JDQvdC00YDQtdC5INCR0LDRgNCw0L3QvtCy?= 
-	<andrej.andb@gmail.com>
-Subject: Separately repository access in GitWeb
-Date: Fri, 25 Jan 2013 15:10:43 +0700
-Message-ID: <CAJjU7bS-rRr-UuEA_xcqtTY4+tWKshL+Rvey85n70KacSnTorQ@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] branch: reject -D/-d without branch name
+Date: Fri, 25 Jan 2013 15:26:56 +0700
+Message-ID: <1359102416-1240-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 25 09:11:09 2013
+X-From: git-owner@vger.kernel.org Fri Jan 25 09:27:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyeNO-0001KO-PA
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 09:11:07 +0100
+	id 1TyedZ-0001JY-JR
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 09:27:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751275Ab3AYIKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 03:10:46 -0500
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:58680 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751197Ab3AYIKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 03:10:45 -0500
-Received: by mail-oa0-f53.google.com with SMTP id l20so82578oag.40
-        for <git@vger.kernel.org>; Fri, 25 Jan 2013 00:10:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=andrej-andb.ru; s=google;
-        h=mime-version:x-received:sender:x-originating-ip:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=CFuxo2Durxjq43THh8X3C1HeGNvweoiZmizCUJXOocE=;
-        b=PpqhBqnujN+NnEF38tlK0qEJcD18WhIT4cwxjPKiZ0KRo1Xn0Mx++MDMubDluBbB+7
-         TbLmGvt2bSIivM8bsoBQc79pfFxnThIKOvtSVhqYvt2dowihas1mrBByG0Tn+MQnvFQP
-         btIn9MXsv5+FDY8KCidWdq/r+jgU1cwJwDWfQ=
+	id S1752049Ab3AYI12 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2013 03:27:28 -0500
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:40800 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751519Ab3AYI11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 03:27:27 -0500
+Received: by mail-pb0-f43.google.com with SMTP id jt11so81739pbb.16
+        for <git@vger.kernel.org>; Fri, 25 Jan 2013 00:27:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:x-originating-ip:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=CFuxo2Durxjq43THh8X3C1HeGNvweoiZmizCUJXOocE=;
-        b=r/6+Wyymu2yIW87W+DnxgSGrZ8ZY9lCeQdu14Q4JG0KkrUXOoyZSlnTbIFa+zBixn9
-         AHyJIXgVtFcKAWWB1N+9sVPm7vpdfBWhcftejnqwViNY49nLtq/Sd6U2q32b2HuvatXI
-         xkLp2qxraXzzKnt4cLyYx31cFQzvFBHXxBcLoeaUlI9ePI1h1bukJ9qF4plX7V2+QbY2
-         id4WnmmSk9oqdu4TZmaWwJaqGTrXqdC/ZV/swjybWU+s/dlYfU8GUuAk5rMl3HFPBj7w
-         N0A4xXrX2kt5siI7bZMWXKdTaXyUxtzOHRrS83q/LY/jKzrixr71uxRdt3SiD9wapuQb
-         7d5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:sender:x-originating-ip:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :x-gm-message-state;
-        bh=CFuxo2Durxjq43THh8X3C1HeGNvweoiZmizCUJXOocE=;
-        b=EoKzemqKDUTG34n7pGEKvFp3GEojLkhtF/L/NW+XsPoIamyTsqpCPPH6j9wzmdTr7H
-         huM76PRRSe6BeilYFy1A6ucEsGt6R/z8kYeYaISuk7FzmcgVHJYpm+GRgzsNGJUMqBn7
-         TDwte08DmfAV/tQ/bHrykNSrayR3tY9sZnHP70HSM2UlkgcHy22+PrtWng5rMPpBGysi
-         Pc9aESXelfCyQehCaQeFj/OChuu/tDhtCfa0fVSBIzywd0qMfw63WgsLmehAddXGsiBl
-         B/wCKyN9uHo55Hcrvui9bEer8axULM+i3yvX9ssAkIrL9SYHZUyDVzhIExs0BJHtli34
-         HBRQ==
-X-Received: by 10.60.3.193 with SMTP id e1mr3964802oee.39.1359101444023; Fri,
- 25 Jan 2013 00:10:44 -0800 (PST)
-Received: by 10.76.9.35 with HTTP; Fri, 25 Jan 2013 00:10:43 -0800 (PST)
-X-Originating-IP: [90.188.9.189]
-X-Google-Sender-Auth: Sie-Wc7FAAPoH839T4zVuc7AjlA
-X-Gm-Message-State: ALoCoQk5MNA4TgwYMXdb0vZB9FmlNOSJGp+tAbP9rhiMbgfA5Eh/2HXT245kccx/R5U5tTp0Q/sl
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=ecZREswaZpZJfsla7yS/5oWdnTV7yBv2svB6TxIceEM=;
+        b=LJNVQo1BB1umdRqBQRkGcR62qbKFeQX+8dotCwjTpjoVeq5I5QsjQR5oxyKeraVQjA
+         K2MU3G6QT27w24oD0ypwsLe5xHNWiuVf+HJZc3pv1f6i3UiNQH1YV0oSzevTWsDK3JYl
+         7O8qHAXy5EXKmcaM0hsA3HoU/BoVfOhb1ZNlwqC6J/chgT6zkZes37/DFM2MJe8iuVAK
+         DmWobAXojzirUieVO0tdl3465lvwD2Dzu7cgnlMEN+Lwf1jqmj0gqWlsPUj+UiEXXBnF
+         BcAXoz/dUnURUWX+BScB/buCPWU/L6/E0stS0raX1Ik0iTCduppEOa40Eoa2o5z9oKtH
+         YziQ==
+X-Received: by 10.68.83.68 with SMTP id o4mr12617083pby.25.1359102447196;
+        Fri, 25 Jan 2013 00:27:27 -0800 (PST)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id qh4sm274044pbb.9.2013.01.25.00.27.23
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 25 Jan 2013 00:27:26 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 25 Jan 2013 15:27:02 +0700
+X-Mailer: git-send-email 1.8.1.1.380.g782aa97
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214513>
 
-good day.
 
-I`m trying make separately repository access in GitWeb by NGINX
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/branch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-separation of access based on URL strings, namely, the presence of the
-query strings:
-'?p=repo.git'
-with a regular expression:
-"^.*p=(.*?)(\.git|;|&|=|\s).*$"
-
-I am wondering how much it is correct to protect against unauthorized access.
-
-Thanks in advance :)
-
-complete example of a configuration file:
-
-server {
-        listen 80;
-
-root /home/git/gitweb;
-
-        access_log /var/log/nginx/gitweb.access_log main;
-        error_log /var/log/nginx/gitweb.error_log info;
-
-        index gitweb.cgi;
-gzip off;
-
-    location ~* \.(jpg|txt|jpeg|gif|png|ico|css|zip|js|swf)$ {
-access_log        off;
-        expires 1d;
-    }
-
-    location = / {
-set $htpasswd "opened@";
-if ($args ~* "^.*p=(.*?)(\.git|;|&|=|\s).*$") {
-set $htpasswd /home/git/.gitolite/conf/$1_htpasswd;
-        }
-        if (-f $htpasswd) {
-                rewrite ^.*$  /closed last;
-        }
-
-rewrite ^.*$ /guest last;
-    }
-
-    location = /closed {
-internal;
-access_log /var/log/nginx/gitweb-closed.access_log main;
-auth_basic "Unauthorized";
-        auth_basic_user_file $htpasswd;
-        include fastcgi_params;
-        fastcgi_param  SCRIPT_NAME gitweb.cgi;
-        fastcgi_param SCRIPT_FILENAME /home/git/gitweb/gitweb.cgi;
-        fastcgi_pass unix:/var/run/fcgiwrap.socket;
-    }
-
-    location = /guest {
-internal;
-access_log /var/log/nginx/gitweb-guest.access_log main;
-        include fastcgi_params;
-fastcgi_param  SCRIPT_NAME gitweb.cgi;
-fastcgi_param SCRIPT_FILENAME /home/git/gitweb/gitweb.cgi;
-        fastcgi_pass unix:/var/run/fcgiwrap.socket;
-    }
-
-    location  / {
-        rewrite (.*) / permanent;
-    }
-
-}
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 873f624..1d3e842 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -837,7 +837,7 @@ int cmd_branch(int argc, const char **argv, const c=
+har *prefix)
+ 		colopts =3D 0;
+ 	}
+=20
+-	if (delete)
++	if (delete && argc)
+ 		return delete_branches(argc, argv, delete > 1, kinds, quiet);
+ 	else if (list) {
+ 		int ret =3D print_ref_list(kinds, detached, verbose, abbrev,
+--=20
+1.8.1.1.380.g782aa97
