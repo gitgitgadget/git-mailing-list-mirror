@@ -1,167 +1,117 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 2/2] git-p4.py: support Python 2.4
-Date: Fri, 25 Jan 2013 12:44:01 -0800
-Message-ID: <1359146641-27810-3-git-send-email-drafnel@gmail.com>
-References: <1359146641-27810-1-git-send-email-drafnel@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 7/7] mergetool--lib: Improve show_tool_help() output
+Date: Fri, 25 Jan 2013 20:46:19 +0000
+Message-ID: <20130125204619.GC7498@serenity.lan>
+References: <1359107034-14606-1-git-send-email-davvid@gmail.com>
+ <1359107034-14606-8-git-send-email-davvid@gmail.com>
+ <20130125195446.GA7498@serenity.lan>
+ <20130125200807.GB7498@serenity.lan>
+ <7vpq0t2f2t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <pw@padd.com>, <esr@thyrsus.com>, <john@keeping.me.uk>,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <bcasey@nvidia.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 25 21:44:48 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 25 21:46:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tyq8h-0006Cl-Mv
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 21:44:44 +0100
+	id 1TyqAk-00077r-Fv
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 21:46:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752455Ab3AYUoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 15:44:23 -0500
-Received: from hqemgate03.nvidia.com ([216.228.121.140]:8960 "EHLO
-	hqemgate03.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752131Ab3AYUoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 15:44:20 -0500
-Received: from hqnvupgp06.nvidia.com (Not Verified[216.228.121.13]) by hqemgate03.nvidia.com
-	id <B5102efa50000>; Fri, 25 Jan 2013 12:48:37 -0800
-Received: from hqemhub01.nvidia.com ([172.17.108.22])
-  by hqnvupgp06.nvidia.com (PGP Universal service);
-  Fri, 25 Jan 2013 12:42:39 -0800
-X-PGP-Universal: processed;
-	by hqnvupgp06.nvidia.com on Fri, 25 Jan 2013 12:42:39 -0800
-Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub01.nvidia.com
- (172.20.150.30) with Microsoft SMTP Server id 8.3.297.1; Fri, 25 Jan 2013
- 12:44:18 -0800
-X-Mailer: git-send-email 1.8.1.1.297.gad3d74e
-In-Reply-To: <1359146641-27810-1-git-send-email-drafnel@gmail.com>
+	id S1751919Ab3AYUqa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 15:46:30 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:55519 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056Ab3AYUq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 15:46:28 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id CD2E7CDA5B0;
+	Fri, 25 Jan 2013 20:46:27 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id n5zeVV8q2luj; Fri, 25 Jan 2013 20:46:26 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 2BE7CCDA640;
+	Fri, 25 Jan 2013 20:46:21 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vpq0t2f2t.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214581>
 
-Python 2.4 lacks the following features:
+On Fri, Jan 25, 2013 at 12:16:42PM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > Actually, can we just change all of the above part of the loop to:
+> >
+> > 	test "$tool" = defaults && continue
+> >
+> > 	merge_tool_path=$(
+> > 		setup_tool "$tool" >/dev/null 2>&1 &&
+> > 		translate_merge_tool_path "$tool"
+> > 	) || continue
+> 
+> Meaning "setup_tool ought to know which mode we are in and should
+> fail if we are in merge mode and it does not support merging"?  That
+> line of reasoning makes tons of sense to me, compared to this script
+> implementing that logic for these scriptlets.
 
-   subprocess.check_call
-   struct.pack_into
+Yes, that's part of what setup_tool does.  It actually calls "exit" if
+the "mode? && can_mode" test fails, which is why we need to call it in
+the subshell.
 
-Take a cue from 460d1026 and provide an implementation of the
-CalledProcessError exception.  Then replace the calls to
-subproccess.check_call with calls to subprocess.call that check the return
-status and raise a CalledProcessError exception if necessary.
+I think this would get even better if we add a preparatory patch like
+this, so we can just call setup_tool and then set merge_tool_path:
 
-The struct.pack_into in t/9802 can be converted into a single struct.pack
-call which is available in Python 2.4.
+-- >8 --
 
-Signed-off-by: Brandon Casey <bcasey@nvidia.com>
----
- INSTALL                    |  2 +-
- git-p4.py                  | 27 ++++++++++++++++++++++++---
- t/t9802-git-p4-filetype.sh | 11 ++++++-----
- 3 files changed, 31 insertions(+), 9 deletions(-)
-
-diff --git a/INSTALL b/INSTALL
-index fc723b3..b96e16d 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -131,7 +131,7 @@ Issues of note:
- 	  use English. Under autoconf the configure script will do this
- 	  automatically if it can't find libintl on the system.
- 
--	- Python version 2.5 or later is needed to use the git-p4
-+	- Python version 2.4 or later is needed to use the git-p4
- 	  interface to Perforce.
- 
-  - Some platform specific issues are dealt with Makefile rules,
-diff --git a/git-p4.py b/git-p4.py
-index 4f95d7a..faec09d 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -18,6 +18,21 @@ import optparse, os, marshal, subprocess, shelve
- import tempfile, getopt, os.path, time, platform
- import re, shutil
- 
-+try:
-+    from subprocess import CalledProcessError
-+except ImportError:
-+    # from python2.7:subprocess.py
-+    # Exception classes used by this module.
-+    class CalledProcessError(Exception):
-+        """This exception is raised when a process run by check_call() returns
-+        a non-zero exit status.  The exit status will be stored in the
-+        returncode attribute."""
-+        def __init__(self, returncode, cmd):
-+            self.returncode = returncode
-+            self.cmd = cmd
-+        def __str__(self):
-+            return "Command '%s' returned non-zero exit status %d" % (self.cmd, self.returncode)
-+
- verbose = False
- 
- # Only labels/tags matching this will be imported/exported
-@@ -158,13 +173,17 @@ def system(cmd):
-     expand = isinstance(cmd,basestring)
-     if verbose:
-         sys.stderr.write("executing %s\n" % str(cmd))
--    subprocess.check_call(cmd, shell=expand)
-+    retcode = subprocess.call(cmd, shell=expand)
-+    if retcode:
-+        raise CalledProcessError(retcode, cmd)
- 
- def p4_system(cmd):
-     """Specifically invoke p4 as the system command. """
-     real_cmd = p4_build_cmd(cmd)
-     expand = isinstance(real_cmd, basestring)
--    subprocess.check_call(real_cmd, shell=expand)
-+    retcode = subprocess.call(real_cmd, shell=expand)
-+    if retcode:
-+        raise CalledProcessError(retcode, real_cmd)
- 
- def p4_integrate(src, dest):
-     p4_system(["integrate", "-Dt", wildcard_encode(src), wildcard_encode(dest)])
-@@ -3174,7 +3193,9 @@ class P4Clone(P4Sync):
-         init_cmd = [ "git", "init" ]
-         if self.cloneBare:
-             init_cmd.append("--bare")
--        subprocess.check_call(init_cmd)
-+        retcode = subprocess.call(init_cmd)
-+        if retcode:
-+            raise CalledProcessError(retcode, init_cmd)
- 
-         if not P4Sync.run(self, depotPaths):
-             return False
-diff --git a/t/t9802-git-p4-filetype.sh b/t/t9802-git-p4-filetype.sh
-index 21924df..be299dc 100755
---- a/t/t9802-git-p4-filetype.sh
-+++ b/t/t9802-git-p4-filetype.sh
-@@ -105,12 +105,13 @@ build_gendouble() {
- 	cat >gendouble.py <<-\EOF
- 	import sys
- 	import struct
--	import array
- 
--	s = array.array("c", '\0' * 26)
--	struct.pack_into(">L", s,  0, 0x00051607)  # AppleDouble
--	struct.pack_into(">L", s,  4, 0x00020000)  # version 2
--	s.tofile(sys.stdout)
-+	s = struct.pack(">LL18s",
-+			0x00051607,  # AppleDouble
-+			0x00020000,  # version 2
-+			""           # pad to 26 bytes
-+	)
-+	sys.stdout.write(s);
- 	EOF
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 888ae3e..4644cbf 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -67,11 +67,11 @@ setup_tool () {
+ 	if merge_mode && ! can_merge
+ 	then
+ 		echo "error: '$tool' can not be used to resolve merges" >&2
+-		exit 1
++		return 1
+ 	elif diff_mode && ! can_diff
+ 	then
+ 		echo "error: '$tool' can only be used to resolve merges" >&2
+-		exit 1
++		return 1
+ 	fi
+ 	return 0
  }
+@@ -100,7 +100,7 @@ run_merge_tool () {
+ 	status=0
  
--- 
-1.8.1.1.297.gad3d74e
+ 	# Bring tool-specific functions into scope
+-	setup_tool "$1"
++	setup_tool "$1" || return
+ 
+ 	if merge_mode
+ 	then
+
+-- 8< --
+ 
+> How/when does translate_merge_tool_path fail?
+
+It doesn't - the "|| continue" is to catch errors from setup_tool.
 
 
------------------------------------------------------------------------------------
-This email message is for the sole use of the intended recipient(s) and may contain
-confidential information.  Any unauthorized review, use, disclosure or distribution
-is prohibited.  If you are not the intended recipient, please contact the sender by
-reply email and destroy all copies of the original message.
------------------------------------------------------------------------------------
+John
