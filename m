@@ -1,95 +1,90 @@
-From: Carsten Fuchs <carsten.fuchs@cafu.de>
-Subject: git merge error question: The following untracked working tree files
- would be overwritten by merge
-Date: Fri, 25 Jan 2013 11:37:50 +0100
-Message-ID: <5102607E.2070106@cafu.de>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 6/7] mergetools: Fix difftool/mergetool --tool-help
+ listing for vim
+Date: Fri, 25 Jan 2013 10:38:45 +0000
+Message-ID: <20130125103845.GX7498@serenity.lan>
+References: <1359107034-14606-1-git-send-email-davvid@gmail.com>
+ <1359107034-14606-7-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 25 11:38:16 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 25 11:39:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tygfn-0006RQ-8g
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 11:38:15 +0100
+	id 1Tyggm-00071m-N8
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 11:39:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755618Ab3AYKhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 05:37:54 -0500
-Received: from moutng.kundenserver.de ([212.227.126.171]:63373 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754333Ab3AYKhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 05:37:53 -0500
-Received: from [192.168.1.73] (p5B0C6F48.dip.t-dialin.net [91.12.111.72])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0MPbr3-1U3Ncs1SF7-005Tsa; Fri, 25 Jan 2013 11:37:51 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-X-Provags-ID: V02:K0:Q06Ms+wOSqH1GOzLzpmPFUrKB6SYmjWe186vRcSclRT
- ApJhie/AXGsCp3oWROeqi1uP75RK/NtH2p34xcLBIPhgWuaxCm
- j3zTIo9gS0zZfpCzWARwgXBdjVl+J434Uy2IGB1e0uSI5ZAxyz
- XoDMW8FtJH0K5PXRjK7UKkiRnaviHRd2GqlOsycwVQUaRNh4Be
- H6BEAhP/t795hotOPZZ2YeVrBh0cFbBAgJF2sirt/452QHqahG
- CFZfhhwqlKvrQo8CR+Na/d+79s/WM0389ewMvC5IFW7ZUgpmKJ
- ehnAMqaYX59lD1SlSHTOBN/LsnntWoRt59v045XLtYHAg3XCLG
- A9lgHdIypAETRcXLnzII=
+	id S1756457Ab3AYKiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 05:38:55 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:57639 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756444Ab3AYKix (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 05:38:53 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id CC93ECDA620;
+	Fri, 25 Jan 2013 10:38:52 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id V7ynCqtxjDzY; Fri, 25 Jan 2013 10:38:52 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id 37E46CDA625;
+	Fri, 25 Jan 2013 10:38:52 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 2B22E161E5A0;
+	Fri, 25 Jan 2013 10:38:52 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id PyKJbJoSynN1; Fri, 25 Jan 2013 10:38:52 +0000 (GMT)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 6DB35161E590;
+	Fri, 25 Jan 2013 10:38:46 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <1359107034-14606-7-git-send-email-davvid@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214541>
 
-Hi all,
+On Fri, Jan 25, 2013 at 01:43:53AM -0800, David Aguilar wrote:
+> "git difftool --tool-help" and "git mergetool --tool-help" incorreclty
+> list "vim" as being an unavailable tool.  This is because they attempt
+> to find a tool named according to the mergetool scriptlet instead of the Git-
+> recognized tool name.
 
-in my repo, I'm doing this:
+Actually, after my patches both git-difftool and git-mergetool get this
+right since list_merge_tool_candidates lists vimdiff and gvimdiff.
 
- > $ git status
- > # On branch master
- > # Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
- > #
- > # Untracked files:
- > #   (use "git add <file>..." to include in what will be committed)
- > #
- > #       obsolete/
- > nothing added to commit but untracked files present (use "git add" to track)
- >
- > $ git merge origin/master --ff-only
- > Updating f419d57..2da6052
- > error: The following untracked working tree files would be overwritten by merge:
- >         obsolete/e107/Readme.txt
- >         obsolete/e107/article.php
- >         obsolete/e107/backend.php
- >         [...]
+> vimdiff, vimdiff2, gvimdiff, and gvimdiff2 are all provided by the "vim"
+> scriptlet.  This required git-mergetool--lib to special-case it when
+> setting up the tool.
+> 
+> Remove the exception for "vim" and allow the scriptlets to be found
+> naturally by using symlinks to a single "vimdiff" scriptlet.
+
+I wonder if it would be better to make these single-line scripts instead
+of symlinks:
+
+    . "$MERGE_TOOLS_DIR"/vimdiff
+
+where we make git-mergetool--lib.sh export:
+
+    MERGE_TOOLS_DIR=$(git --exec-path)/mergetools
 
 
-That is, the local repository has the untracked directory "obsolete", which was added 
-upstream as well, and now I try to reconcile.
-
-I seem to understand the problem stated in the error message, and the solution seems to 
-be simple as well: renaming the obsolete/ directory is enough.
-
-But why does Git find a problem here at all?
-
-Compare with what Subversion did in an analogous case: When I ran "svn update" and the 
-update brought new files for which there already was an untracked copy in the working 
-directory, Subversion:
-     - started to consider the file as tracked,
-     - but left the file in the working-copy alone.
-
-As a result, a subsequent "svn status" might
-     a) no longer show the file at all, if the foreign copy in the working directory 
-happened to be the same as the one brought by the "svn update", or
-     b) flag the file as modified, if different from the one that "svn update" would 
-have created in its place.
-
-So my real question is, why does Git not do something analogous?
-(Afaics, update the HEAD, update the Index, but leave the working-copy edition alone?)
-
-I searched for this beforehand, and most advice involves either stashing, or with "git 
-reset --hard" the loss of the untracked files.
-
-Sorry if this is a stupid question -- I still consider myself a Git learner.
-
-Best regards,
-Carsten
+John
