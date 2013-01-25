@@ -1,79 +1,99 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 6/7] mergetools: Fix difftool/mergetool --tool-help
- listing for vim
-Date: Fri, 25 Jan 2013 02:40:24 -0800
-Message-ID: <CAJDDKr5ZsqO+PFoUabsZObgvG8jUBfTKL1HmVsn77ZhzsRZk-Q@mail.gmail.com>
-References: <1359107034-14606-1-git-send-email-davvid@gmail.com>
-	<1359107034-14606-7-git-send-email-davvid@gmail.com>
-	<20130125103845.GX7498@serenity.lan>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 4/4] git-difftool: use git-mergetool--lib for
+ "--tool-help"
+Date: Fri, 25 Jan 2013 10:47:22 +0000
+Message-ID: <20130125104722.GY7498@serenity.lan>
+References: <cover.1359057056.git.john@keeping.me.uk>
+ <b791e866c02b0c118f08bde1d7ca6c41d6239989.1359057056.git.john@keeping.me.uk>
+ <CAJDDKr4ZpQr029FW0v8LzwvhXZYmvAONbbZNuOq_E=Q1UzufvA@mail.gmail.com>
+ <20130125091918.GV7498@serenity.lan>
+ <CAJDDKr5Xd4-e6VO-iO=EmwOcg0RimJHyO4ey-dFk6aENt+qZBQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Jan 25 11:40:51 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 25 11:47:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TygiF-0007nI-C4
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 11:40:47 +0100
+	id 1Tygp4-0002Rr-JO
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 11:47:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755084Ab3AYKk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 05:40:26 -0500
-Received: from mail-ee0-f51.google.com ([74.125.83.51]:44948 "EHLO
-	mail-ee0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753536Ab3AYKkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 05:40:25 -0500
-Received: by mail-ee0-f51.google.com with SMTP id d17so111305eek.10
-        for <git@vger.kernel.org>; Fri, 25 Jan 2013 02:40:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=lK5151IM0+QS8X1fmgIFdFy0K+jYb9JEqRPtr0zok+U=;
-        b=uGhPkfdAFqQr+No3yAxThpM/KuQErF+0qHo3OEuqhJ9Q/IofoTufyINmGBjtrFIpjC
-         q8BgWLtVYSrr8Esh6U4no5v/K21whpwcVha7zInCpjNtOr0CsluejZptQTkAlVtU0en2
-         w4Ln6itDu8xpnK+ndUhB8H6233K3GzEHXGc5+RfjcVh0UFgJ9bIFZCC7bf8G37ZDaLvd
-         xAxIrUqv7yxkEfmSpvH/h3GBmrwhMQwpKw5YCziBCO6yDc5Ph9hbcDYL0ahm523aHHc0
-         HNcbWcgPiMRPFiY4E5YyqcV6tweF7u2mPye6nSrVU/vFN6qz8/RRs/cwPQb24WHP752Z
-         ElSQ==
-X-Received: by 10.14.205.198 with SMTP id j46mr16889708eeo.27.1359110424055;
- Fri, 25 Jan 2013 02:40:24 -0800 (PST)
-Received: by 10.14.125.135 with HTTP; Fri, 25 Jan 2013 02:40:23 -0800 (PST)
-In-Reply-To: <20130125103845.GX7498@serenity.lan>
+	id S1756403Ab3AYKr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 05:47:29 -0500
+Received: from hyena.aluminati.org ([64.22.123.221]:41239 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756161Ab3AYKr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 05:47:28 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 0FD442324E;
+	Fri, 25 Jan 2013 10:47:28 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id QGG7Gq5BomIC; Fri, 25 Jan 2013 10:47:27 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by hyena.aluminati.org (Postfix) with ESMTP id 96CCC2321B;
+	Fri, 25 Jan 2013 10:47:27 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 88DB8161E5A6;
+	Fri, 25 Jan 2013 10:47:27 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wgy-cdtA+3Xp; Fri, 25 Jan 2013 10:47:27 +0000 (GMT)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 943B5161E569;
+	Fri, 25 Jan 2013 10:47:24 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <CAJDDKr5Xd4-e6VO-iO=EmwOcg0RimJHyO4ey-dFk6aENt+qZBQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214543>
 
-On Fri, Jan 25, 2013 at 2:38 AM, John Keeping <john@keeping.me.uk> wrote:
-> On Fri, Jan 25, 2013 at 01:43:53AM -0800, David Aguilar wrote:
->> "git difftool --tool-help" and "git mergetool --tool-help" incorreclty
->> list "vim" as being an unavailable tool.  This is because they attempt
->> to find a tool named according to the mergetool scriptlet instead of the Git-
->> recognized tool name.
->
-> Actually, after my patches both git-difftool and git-mergetool get this
-> right since list_merge_tool_candidates lists vimdiff and gvimdiff.
->
->> vimdiff, vimdiff2, gvimdiff, and gvimdiff2 are all provided by the "vim"
->> scriptlet.  This required git-mergetool--lib to special-case it when
->> setting up the tool.
->>
->> Remove the exception for "vim" and allow the scriptlets to be found
->> naturally by using symlinks to a single "vimdiff" scriptlet.
->
-> I wonder if it would be better to make these single-line scripts instead
-> of symlinks:
->
->     . "$MERGE_TOOLS_DIR"/vimdiff
->
-> where we make git-mergetool--lib.sh export:
->
->     MERGE_TOOLS_DIR=$(git --exec-path)/mergetools
+On Fri, Jan 25, 2013 at 01:55:03AM -0800, David Aguilar wrote:
+> list_merge_tool_candidates() has a bunch of other special cases
+> for $EDITOR, $DISPLAY, $GNOME-something and such so I think
+> we should keep using it only for the guess_merge_tool() path.
+> 
+> I honestly want to remove list_merge_tool_candidates every
+> time I read it, but I recognize that it does serve a purpose
+> for users who have not configured anything.
 
-That sounds like the way to go.
--- 
-David
+Actually, I'm not sure it does.  I asked one of my colleagues whether
+he used git-mergetool the other day and he said no because he couldn't
+understand the OS X FileMerge tool and was happier to edit things
+manually in vim.  I don't think he'd realised that he could configure a
+different mergetool.
+
+Perhaps we're trying to be too clever by guessing what the user wants
+and should instead exit with a message saying:
+
+   You have not configured a merge tool to use.  Please select one of
+   the following tools and configure it using:
+
+        git config merge.tool <tool>
+
+    These tools are availalble on your system:
+        ...
+
+    These tools are supported but unavailable:
+        ...
+
+This may be too much of a regression for current users though.
+
+
+John
