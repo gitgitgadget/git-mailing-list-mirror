@@ -1,83 +1,201 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Re: [PATCH v4 1/4] t6006 (rev-list-format): don't hardcode SHA-1 in
- expected outputs
-Date: Fri, 25 Jan 2013 19:27:08 +0400
-Message-ID: <20130125192708.291e62bc@ashu.dyn1.rarus.ru>
-References: <cover.1359018188.git.Alex.Crezoff@gmail.com>
-	<cee3610fde1626c2854eb5b821529ab22a06e4bf.1359018188.git.Alex.Crezoff@gmail.com>
-	<7v38xqba04.fsf@alter.siamese.dyndns.org>
-	<20130125150620.3b9dc9c3@ashu.dyn1.rarus.ru>
-	<7vmwvx5m4o.fsf@alter.siamese.dyndns.org>
+From: Alexey Shumkin <Alex.Crezoff@gmail.com>
+Subject: [PATCH] send-email: Honor multi-part email messages
+Date: Fri, 25 Jan 2013 19:28:54 +0400
+Message-ID: <4de442db9fd0896f78166e6038b6ea35ed5ab266.1359126360.git.Alex.Crezoff@gmail.com>
+References: <cover.1359126360.git.Alex.Crezoff@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 16:27:42 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alexey Shumkin <Alex.Crezoff@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Krzysztof Mazur <krzysiek@podlesie.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 25 16:29:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TylBn-0002aL-HQ
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 16:27:35 +0100
+	id 1TylDx-0003vc-RJ
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 16:29:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755410Ab3AYP1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 10:27:15 -0500
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:51410 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754553Ab3AYP1N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 10:27:13 -0500
-Received: by mail-lb0-f177.google.com with SMTP id go11so905384lbb.22
-        for <git@vger.kernel.org>; Fri, 25 Jan 2013 07:27:12 -0800 (PST)
+	id S1757375Ab3AYP3N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2013 10:29:13 -0500
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:40148 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754935Ab3AYP3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 10:29:09 -0500
+Received: by mail-lb0-f170.google.com with SMTP id ge1so930241lbb.29
+        for <git@vger.kernel.org>; Fri, 25 Jan 2013 07:29:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rarus.ru; s=google;
+        h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=5aZ7S1l6od+YDjqLzGo30uqYmtfNtkQsYdy3L1smpDs=;
+        b=TVRmD8seNcKvYD9I5e8aMP395R2njKGL+ojMP8v7jQrfwks4SKnapJvWIRXXN2N7az
+         DnOB44HWMYs7Fwi7vzyKTzQku7D0+MlwDA6YNKdg8bGfaoXtjBdn9QsPIzca00i9S0Fi
+         Txf5oc1l4jiO2ggbu4VKj/3zHxBLYBMcXzaPY=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:in-reply-to
-         :references:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=qyVmpKPTJNiN2W6PdnRj1Oajs9o8O1K3hIwhJrbILZk=;
-        b=Zcsc/l4gVnk7GjDUt5lUAkeo+O36WRuPdOiJmK7D1sHqPTNujNwrUcowk4SnfwmCW5
-         fW0Aa+8mEGjb+m375MhAAVroMYfSq+ixpgsLbLsvvIwEhLadlmxzt+ibf44hdWtG/od8
-         ZUM3lMGzvXDqj0I5V4A+CLVtnulEmQ5tn1x2NRJmVQc3+8jxrIWEw0B1ojVCIDaExH0N
-         aOs1DFPr4Hb/B3XbNqf4kOVWhShiFguHeaBybYycKd2/EwvpQQjhqj6InZLrKCuIWJn4
-         cJff8b7HIUBmlDQFD7Kgy9jdmscWH7NAqKGt5533vB9MuutrYPSPPuHdqeFswOWUz0jp
-         WgNw==
-X-Received: by 10.152.104.199 with SMTP id gg7mr5472595lab.14.1359127632324;
-        Fri, 25 Jan 2013 07:27:12 -0800 (PST)
-Received: from ashu.dyn1.rarus.ru ([85.21.218.130])
-        by mx.google.com with ESMTPS id ml1sm640229lab.15.2013.01.25.07.27.11
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Fri, 25 Jan 2013 07:27:12 -0800 (PST)
-In-Reply-To: <7vmwvx5m4o.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.9.0 (GTK+ 2.24.13; x86_64-redhat-linux-gnu)
+        h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=5aZ7S1l6od+YDjqLzGo30uqYmtfNtkQsYdy3L1smpDs=;
+        b=BR7NAFndjqoYyxGPj0PRLOpt19JPmlpxeCbg1Ewe1MwjcB34LjCbORc1KyMfNRiwGE
+         1j2U+YWQFiHRFaU+H8ERwrQBPF3AO52CxCg4bpqy+5gkbghPiUK5D/68xVPqXieeJbTU
+         eH+OldVkGwNmHyfMxAwZQMRUQxXlbfU3kM3nyuJSbm1epmcruL5CCIb+0+2TupKdB+zP
+         aGi5D14RGr+KgV789LJc8yAGbsX6A+C+lLZ9ZvRsKMUzTybKnvzYgE5Mc4vFYJcKsrzD
+         xKtWa7yBadObWPZnuiHNUmx7f3QDdw8jL1pCMBh5Mqbwt3JWy6OZzVaFE1f7RhtnXypz
+         2R1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding:x-gm-message-state;
+        bh=5aZ7S1l6od+YDjqLzGo30uqYmtfNtkQsYdy3L1smpDs=;
+        b=h//Wg36tUjim3sYNXflIGmWD8CeZgTwD7LHSNzklMlNhdGei/JrRB0mc6s6VZ76YxC
+         B+kQAFShfKuvLm3Oolq24wckJnecpCuS86KCow21FdMG9Y8QIKcW7oNPBF09RE1xbzuH
+         bcqWoPq0iEVF5KDfkC856F1PorfXcxN1CIf1Tc77ao9UP0yX6uh5+1WjoEOM41+i6enQ
+         7yksMwBvEiZzsTLMEOoPjG5xsuWHec2xkuBR7mdu16/g1z6GofKQWZ6IrH60voB25MPA
+         txIasQD77lltlByZJDekMh9enCqeqf2+TK7qULx4CXC8ZmWpcyFHopFP7xVHkbE0l0A2
+         rc3A==
+X-Received: by 10.112.25.70 with SMTP id a6mr2321937lbg.117.1359127747020;
+        Fri, 25 Jan 2013 07:29:07 -0800 (PST)
+Received: from localhost ([85.21.218.130])
+        by mx.google.com with ESMTPS id j9sm702170lbd.13.2013.01.25.07.29.05
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 25 Jan 2013 07:29:06 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.1.10.g9255f3f
+In-Reply-To: <cover.1359126360.git.Alex.Crezoff@gmail.com>
+In-Reply-To: <cover.1359126360.git.Alex.Crezoff@gmail.com>
+References: <cover.1359126360.git.Alex.Crezoff@gmail.com>
+X-Gm-Message-State: ALoCoQkRcy3bhheSClt2W+CMKVmkH4qaG/CnKs9CdWYLjBloOz2GBQfVA83OyNl8evx+09l2ij6K
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214558>
 
-> Alexey Shumkin <alex.crezoff@gmail.com> writes:
-> 
-> >> Why do we want "whatever_7" variables and use "cut -c1-7" to
-> >> produce them?  Is "7" something we care deeply about?
-> >> 
-> >> I think what we care a lot more than "7" that happens to be the
-> >> current default value is to make sure that, if we ever update the
-> >> default abbreviation length to a larger value, the abbreviation
-> >> shown with --format=%h is consistent with the abbreviation that is
-> >> given by rev-parse --short.
-> >> 
-> >>     head1_short=$(git rev-parse --short $head1)
-> >> 
-> >> perhaps?
-> >> ...
-> >> Likewise.
-> >> 
-> >> > +	tree2_7=$(echo $tree2 | cut -c1-7)
-> >> 
-> >> Likewise.
-> > but is there "git something" to return abbreviated tree hash except
-> > "pretty formats" that is implicitly tested here?
-> 
-> Does "git rev-parse --short $tree2" count?
-Oops! Yep!
+"git format-patch --attach/--inline" generates multi-part messages.
+Every part of such messages can contain non-ASCII characters with its o=
+wn
+"Content-Type" and "Content-Transfer-Encoding" headers.
+But git-send-mail script interprets a patch-file as one-part message
+and does not recognize multi-part messages.
+So already quoted printable email subject may be encoded as quoted prin=
+table
+again. Due to this bug email subject looks corrupted in email clients.
+
+Signed-off-by: Alexey Shumkin <Alex.Crezoff@gmail.com>
+---
+ git-send-email.perl   |  5 ++++
+ t/t9001-send-email.sh | 66 +++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 2 files changed, 71 insertions(+)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 94c7f76..d49befe 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1499,12 +1499,17 @@ sub file_has_nonascii {
+=20
+ sub body_or_subject_has_nonascii {
+ 	my $fn =3D shift;
++	my $multipart =3D 0;
+ 	open(my $fh, '<', $fn)
+ 		or die "unable to open $fn: $!\n";
+ 	while (my $line =3D <$fh>) {
+ 		last if $line =3D~ /^$/;
++		if ($line =3D~ /^Content-Type:\s*multipart\/mixed.*$/) {
++			$multipart =3D 1;
++		}
+ 		return 1 if $line =3D~ /^Subject.*[^[:ascii:]]/;
+ 	}
++	return 0 if $multipart;
+ 	while (my $line =3D <$fh>) {
+ 		return 1 if $line =3D~ /[^[:ascii:]]/;
+ 	}
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 97d6f4c..c7ed370 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1323,4 +1323,70 @@ test_expect_success $PREREQ 'sendemail.aliasfile=
+=3D~/.mailrc' '
+ 	grep "^!someone@example\.org!$" commandline1
+ '
+=20
++test_expect_success $PREREQ 'setup multi-part message' '
++cat >multi-part-email-using-8bit <<EOF
++From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
++Message-Id: <bogus-message-id@example.com>
++From: author@example.com
++Date: Sat, 12 Jun 2010 15:53:58 +0200
++Subject: [PATCH] =3D?UTF-8?q?=3DD0=3D94=3DD0=3DBE=3DD0=3DB1=3DD0=3DB0=3D=
+D0=3DB2=3DD0=3DBB=3DD0=3DB5=3DD0=3DBD=3D20?=3D
++ =3D?UTF-8?q?=3DD1=3D84=3DD0=3DB0=3DD0=3DB9=3DD0=3DBB?=3D
++MIME-Version: 1.0
++Content-Type: multipart/mixed; boundary=3D"------------123"
++
++This is a multi-part message in MIME format.
++--------------1.7.6.3.4.gf71f
++Content-Type: text/plain; charset=3DUTF-8; format=3Dfixed
++Content-Transfer-Encoding: 8bit
++
++This is a message created with "git format-patch --attach=3D123"
++---
++ master   |    1 +
++ =D1=84=D0=B0=D0=B9=D0=BB |    1 +
++ 2 files changed, 2 insertions(+), 0 deletions(-)
++ create mode 100644 master
++ create mode 100644 =D1=84=D0=B0=D0=B9=D0=BB
++
++
++--------------123
++Content-Type: text/x-patch; name=3D"0001-.patch"
++Content-Transfer-Encoding: 8bit
++Content-Disposition: attachment; filename=3D"0001-.patch"
++
++diff --git a/master b/master
++new file mode 100644
++index 0000000..1f7391f
++--- /dev/null
+++++ b/master
++@@ -0,0 +1 @@
+++master
++diff --git a/=D1=84=D0=B0=D0=B9=D0=BB b/=D1=84=D0=B0=D0=B9=D0=BB
++new file mode 100644
++index 0000000..44e5cfe
++--- /dev/null
+++++ b/=D1=84=D0=B0=D0=B9=D0=BB
++@@ -0,0 +1 @@
+++=D1=81=D0=BE=D0=B4=D0=B5=D1=80=D0=B6=D0=B8=D0=BC=D0=BE=D0=B5 =D1=84=D0=
+=B0=D0=B9=D0=BB=D0=B0
++
++--------------123--
++EOF
++'
++
++test_expect_success $PREREQ 'setup expect' '
++cat >expected <<EOF
++Subject: [PATCH] =3D?UTF-8?q?=3DD0=3D94=3DD0=3DBE=3DD0=3DB1=3DD0=3DB0=3D=
+D0=3DB2=3DD0=3DBB=3DD0=3DB5=3DD0=3DBD=3D20?=3D =3D?UTF-8?q?=3DD1=3D84=3D=
+D0=3DB0=3DD0=3DB9=3DD0=3DBB?=3D
++EOF
++'
++
++test_expect_success $PREREQ '--attach/--inline also treats subject' '
++	clean_fake_sendmail &&
++	echo bogus |
++	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
+\
++			--smtp-server=3D"$(pwd)/fake.sendmail" \
++			--8bit-encoding=3DUTF-8 \
++			multi-part-email-using-8bit >stdout &&
++	grep "Subject" msgtxt1 >actual &&
++	test_cmp expected actual
++'
++
+ test_done
+--=20
+1.8.1.1.10.g9255f3f
