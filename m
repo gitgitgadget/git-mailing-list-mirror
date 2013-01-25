@@ -1,87 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: John Keeping <john@keeping.me.uk>
 Subject: Re: [PATCH 7/7] mergetool--lib: Improve show_tool_help() output
-Date: Fri, 25 Jan 2013 13:47:59 -0800
-Message-ID: <7vbocd2auo.fsf@alter.siamese.dyndns.org>
+Date: Fri, 25 Jan 2013 22:02:22 +0000
+Message-ID: <20130125220222.GE7498@serenity.lan>
 References: <1359107034-14606-1-git-send-email-davvid@gmail.com>
  <1359107034-14606-8-git-send-email-davvid@gmail.com>
- <20130125195446.GA7498@serenity.lan> <20130125200807.GB7498@serenity.lan>
+ <20130125195446.GA7498@serenity.lan>
+ <20130125200807.GB7498@serenity.lan>
  <7vpq0t2f2t.fsf@alter.siamese.dyndns.org>
  <20130125204619.GC7498@serenity.lan>
  <7vlibh2d8a.fsf@alter.siamese.dyndns.org>
  <20130125211601.GD7498@serenity.lan>
+ <7vbocd2auo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Jan 25 22:48:33 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 25 23:03:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tyr8O-0007X4-7h
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 22:48:28 +0100
+	id 1TyrNF-0005Y6-Jp
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 23:03:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190Ab3AYVsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 16:48:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47337 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750887Ab3AYVsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 16:48:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6015B6B3;
-	Fri, 25 Jan 2013 16:48:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3ioHnvCnSgrblZdN7gx5iv9Ic8U=; b=XHMf9u
-	ztnGUOsAO1nqhrgdcNdx3FA/3t55/43nXciUtezgvA2s7wYGxXw0pX2vj9gXjazr
-	Ov5/7+9LkHD9OFlYnpYv6t88WPnBZzEJa6mDVWLzTUrMKMOVqbO9q0hBEfmb1YUd
-	QHd6w9Z/VCKj9gckb1S4j5x1aKrhEso66X03U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xT7OvTboawB/J30evyUgyIblgDVh4nBQ
-	u4e6UKF7DhfTeb+4l1fO330uwF9fGi0FULKeI82xWb38GAzw7igiS4eKej6UuzpT
-	BjfJbD/ykuCdqS5XC/2Xg+5uj1zLo7/ZsO4iXSaj8HsTmmoVJqXnCzJF3LNby/GG
-	+vQLURPSjgg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E7F0B6B1;
-	Fri, 25 Jan 2013 16:48:02 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50368B6AE; Fri, 25 Jan 2013
- 16:48:01 -0500 (EST)
-In-Reply-To: <20130125211601.GD7498@serenity.lan> (John Keeping's message of
- "Fri, 25 Jan 2013 21:16:01 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E3DE7508-6738-11E2-AAC0-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753686Ab3AYWCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 17:02:32 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:40533 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753485Ab3AYWCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 17:02:30 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 6F811CDA510;
+	Fri, 25 Jan 2013 22:02:29 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qmYji92tEbRC; Fri, 25 Jan 2013 22:02:29 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id B9D42CDA5CD;
+	Fri, 25 Jan 2013 22:02:24 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vbocd2auo.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214586>
 
-John Keeping <john@keeping.me.uk> writes:
+On Fri, Jan 25, 2013 at 01:47:59PM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> > With the patch above, the block of code at the top becomes:
+> >
+> >  	test "$tool" = defaults && continue
+> >
+> >  	setup_tool "$tool" 2>/dev/null || continue
+> >  	merge_tool_path=$(translate_merge_tool_path "$tool")
+> >
+> > which IMHO is pretty readable.
+> 
+> Of course it is.  The current callers of setup_tool may need some
+> adjustments, but that should be fairly trivial, I hope.
 
->> > It doesn't - the "|| continue" is to catch errors from setup_tool.
->> 
->> Ugh.
->
-> Is that targeted at my suggestion at the top of this email or calling
-> exit in setup_tool?
+There are only two and one of them already seems like it doesn't want
+the command to cause the script to exit.
 
-At the fact that you had to go a convoluted route because you cannot
-just run setup_tool in subshell and do translate_merge_tool_path
-after that, because the latter needs to look at the shell variable
-the former sets.
+David, can you incorporate the following two patches when you re-roll?
+Your original 7/7 with the change above will want to build on 8/7.
 
-> With the patch above, the block of code at the top becomes:
->
->  	test "$tool" = defaults && continue
->
->  	setup_tool "$tool" 2>/dev/null || continue
->  	merge_tool_path=$(translate_merge_tool_path "$tool")
->
-> which IMHO is pretty readable.
 
-Of course it is.  The current callers of setup_tool may need some
-adjustments, but that should be fairly trivial, I hope.
+John
