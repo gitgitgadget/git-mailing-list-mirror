@@ -1,132 +1,102 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] mergetools: Add tortoisegitmerge helper
-Date: Fri, 25 Jan 2013 09:48:23 +0000
-Message-ID: <20130125094823.GW7498@serenity.lan>
-References: <50FBD4AD.2060208@tu-clausthal.de>
- <7v4nibjrg0.fsf@alter.siamese.dyndns.org>
- <50FCFBBB.2080305@tu-clausthal.de>
- <7vfw1qbbr4.fsf@alter.siamese.dyndns.org>
- <5101B0A5.1020308@tu-clausthal.de>
- <7vpq0u8bxd.fsf@alter.siamese.dyndns.org>
- <CAJDDKr5O70tTfwuipWcYVJL6gM3bUyQh-22yVO89xn8OFsQOpw@mail.gmail.com>
- <7vvcal683y.fsf@alter.siamese.dyndns.org>
- <CAJDDKr4oerSq16rYt2iKNtQNK79L+jOiKROhEW_yiBPKjkVhuQ@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 4/4] git-difftool: use git-mergetool--lib for "--tool-help"
+Date: Fri, 25 Jan 2013 01:55:03 -0800
+Message-ID: <CAJDDKr5Xd4-e6VO-iO=EmwOcg0RimJHyO4ey-dFk6aENt+qZBQ@mail.gmail.com>
+References: <cover.1359057056.git.john@keeping.me.uk>
+	<b791e866c02b0c118f08bde1d7ca6c41d6239989.1359057056.git.john@keeping.me.uk>
+	<CAJDDKr4ZpQr029FW0v8LzwvhXZYmvAONbbZNuOq_E=Q1UzufvA@mail.gmail.com>
+	<20130125091918.GV7498@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sven Strickroth <sven.strickroth@tu-clausthal.de>,
-	git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>,
-	Jeff King <peff@peff.net>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 10:49:59 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri Jan 25 10:55:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tyfv4-0001og-70
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 10:49:58 +0100
+	id 1Tyg0Q-0004Ly-98
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 10:55:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755351Ab3AYJte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 04:49:34 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:58587 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755851Ab3AYJsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 04:48:37 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 004F8866004;
-	Fri, 25 Jan 2013 09:48:36 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yUFkS0wU8QQs; Fri, 25 Jan 2013 09:48:35 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id 5B4B5CDA60A;
-	Fri, 25 Jan 2013 09:48:35 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 28DF2161E5A8;
-	Fri, 25 Jan 2013 09:48:35 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id neWwqiuCltUo; Fri, 25 Jan 2013 09:48:35 +0000 (GMT)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 1CDB8161E279;
-	Fri, 25 Jan 2013 09:48:25 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CAJDDKr4oerSq16rYt2iKNtQNK79L+jOiKROhEW_yiBPKjkVhuQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755006Ab3AYJzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 04:55:08 -0500
+Received: from mail-ee0-f43.google.com ([74.125.83.43]:47404 "EHLO
+	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753944Ab3AYJzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 04:55:06 -0500
+Received: by mail-ee0-f43.google.com with SMTP id c50so96378eek.2
+        for <git@vger.kernel.org>; Fri, 25 Jan 2013 01:55:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=M+b972UK5TGPH/DdOBJ31in1Ln4QhI/FlOz91DeSyLQ=;
+        b=M0npzb+Yev3bHlJRR7ik1UFNaa44iVjoAeza3oe0obfzaLkt8FC9sbdiHR/oJb0dc3
+         bDuewiihbXtni28EI7TvK7CjFMK3tOswB3L2GwUk0OAU9RQt4A2H0ktxP5ynPGMnw0qC
+         wxd7Wl6iA1f5UePn30O13Hh2wJVF6K5O5rYy7Vrc9A2v0pNa9dPJqGQ7S0gVN87MkhBt
+         vhdDJ5yoo8MBL20n551FYnIogMxMvE4cUX42ASmVtbk1Un4ClxxVe5dqBWgG184+EB3t
+         r8OV2weyRDsn3IcLwIgjC4qSbqmP5G1PopHHP4mBQsvKolTKGnGE41X8utJq6VEqtWI7
+         nivg==
+X-Received: by 10.14.184.134 with SMTP id s6mr16242066eem.43.1359107703719;
+ Fri, 25 Jan 2013 01:55:03 -0800 (PST)
+Received: by 10.14.125.135 with HTTP; Fri, 25 Jan 2013 01:55:03 -0800 (PST)
+In-Reply-To: <20130125091918.GV7498@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214535>
 
-On Thu, Jan 24, 2013 at 11:54:25PM -0800, David Aguilar wrote:
-> On Thu, Jan 24, 2013 at 11:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Is there a way for me to programatically tell what merge.tool and
-> > diff.tool could be enabled for a particular source checkout of Git
-> > regardless of what platform am I on (that is, even though I won't
-> > touch Windows, I want to see 'tortoise' appear in the output of such
-> > a procedure)?  We could generate a small text file from the Makefile
-> > in Documentation and include it when building the manual pages if
-> > such a procedure is available.
-> 
-> That's a good idea.
-> Here's one way... (typed into gmail, so probably broken)
+On Fri, Jan 25, 2013 at 1:19 AM, John Keeping <john@keeping.me.uk> wrote:
+> On Thu, Jan 24, 2013 at 09:29:58PM -0800, David Aguilar wrote:
+>> On Thu, Jan 24, 2013 at 11:55 AM, John Keeping <john@keeping.me.uk> wrote:
+>> > The "--tool-help" option to git-difftool currently displays incorrect
+>> > output since it uses the names of the files in
+>> > "$GIT_EXEC_PATH/mergetools/" rather than the list of command names in
+>> > git-mergetool--lib.
+>> >
+>> > Fix this by simply delegating the "--tool-help" argument to the
+>> > show_tool_help function in git-mergetool--lib.
+>>
+>> Very nice.
+>>
+>> One thought I had was that the unified show_tool_help should
+>> probably check TOOL_MODE=diff and skip over the
+>> !can_diff entries.
+>>
+>> The current output of "git difftool --tool-help" before your
+>> patches has the problem that it will list tools such as
+>> "tortoisemerge" as "valid but not available" because it
+>> does not differentiate between missing and !can_diff.
 >
-> LF='
-> '
-> mergetools=
-> difftools=
-> scriptlets="$(git --exec-path)"/mergetools
-> 
-> for script in "$scriptlets"/*
-> do
->     tool="$(basename "$script")"
->     if test "$tool" = "defaults"
->     then
->         continue
->     fi
->     . "$scriptlets"/defaults
->     can_diff && difftools="$difftools$tool$LF"
->     can_merge && mergetools="$mergetools$tool$LF"
-> done
+> list_merge_tool_candidates does this for us, so it should Just Work
+> since we use that to generate the list of tools that we loop over.
 
-I don't think this will work since the names of the valid tools are not
-necessarily the same as the names of the scriptlets - this is the exact
-issue that prompted my patches to git-difftool yesterday.
+Yup, kind of.  I looked more closely and found a lot of
+special-cases around vim which I've eliminated in the series
+I just sent (which includes your patches as its base).
 
-The best option I can see given what's currently available is something
-like this:
+list_merge_tool_candidates() has a bunch of other special cases
+for $EDITOR, $DISPLAY, $GNOME-something and such so I think
+we should keep using it only for the guess_merge_tool() path.
 
--- >8 --
+I honestly want to remove list_merge_tool_candidates every
+time I read it, but I recognize that it does serve a purpose
+for users who have not configured anything.
 
-sed -n -e '/^list_merge_tool_candidates/,/^}/ {
-        /tools=/ {
-                s/.*tools=//
-                s/"//g
-                s/\$tools//
-                s/ /\n/g
-                p
-        }
-}' git-mergetool--lib.sh |sort |uniq |while read -r tool
-do
-	test -z "$tool" && continue
-	( . git-mergetool--lib && setup_tool $tool
-        	# Use can_diff and can_merge here.
-	)
-done
+In order to be useful for the documentation I think the
+code could be refactored a tiny bit more beyond what I've
+sent so far.  The gathering of available tools can be split
+off from the reporting, and then show_tool_help() can use
+the gatherer.  With what I sent, though, there's at least
+a 1:1 correspondance between the name of the scriptlets
+and the names accepted by --tool=<tool>, which is the first
+step towards doing that.
 
--- 8< --
+I have to check out for now but I'll keep poking at this
+when the weekend rolls around.
 
-
-John
+cheers,
+-- 
+David
