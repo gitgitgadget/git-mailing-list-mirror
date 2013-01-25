@@ -1,77 +1,81 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: =?UTF-8?q?=5BPATCH=5D=20Update=20renamed=20file=20merge-file=2Eh=20in=20Makefile?=
-Date: Fri, 25 Jan 2013 11:06:28 +0800
-Message-ID: <1359083188-31866-1-git-send-email-worldhello.net@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/7] sha1_file: keep track of where an SHA-1 object comes
+ from
+Date: Thu, 24 Jan 2013 19:58:03 -0800
+Message-ID: <7v4ni59ano.fsf@alter.siamese.dyndns.org>
+References: <1359016940-18849-1-git-send-email-pclouds@gmail.com>
+ <7va9rycw4t.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Ag6v7wUnupRwGid26AUzgZ=WbdA5F-MpjUv5ktaj5Asg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 04:07:16 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 25 04:58:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyZdJ-0003nF-Pc
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 04:07:14 +0100
+	id 1TyaR1-0002ZE-Br
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 04:58:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754380Ab3AYDGw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2013 22:06:52 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:42600 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753406Ab3AYDGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2013 22:06:51 -0500
-Received: by mail-pa0-f49.google.com with SMTP id bi1so5883301pad.8
-        for <git@vger.kernel.org>; Thu, 24 Jan 2013 19:06:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=hJ46s0x2auUVuobt3SYQJCw0dVSdD1I7ssbrd/7WB28=;
-        b=lHlkJR9sqDh6FwRn9gGCswm77DSLx78mEu0JaWz5Mu8AhB5AX36yt1jdRjCUiNAtQY
-         Wx2AFypJxqA+yo16VlGUp1LONqvs5FKNqHu1oxhYcjYibY71+Xpt9jWM9qGqVAdbTBbh
-         JfNfiuaPGRnn/jagBADjo6mb6ywmJf3gMt0QxlzcCmn9ZagnJvGXocpp4rGO3+pj8rB1
-         VYNHpR78LMfARqhqw7wYXlLsQi6dHFpX51wTy+2YYPZ1wpyeY42fc+w/Ks3T7a9MPCPw
-         XCqnWHVINmJSnQzr9UKOPetoV4TQZBksocZ/7cmCvqMsU5LcH+zN3bcRqbdQO10foQep
-         p83Q==
-X-Received: by 10.66.86.71 with SMTP id n7mr9932969paz.77.1359083211312;
-        Thu, 24 Jan 2013 19:06:51 -0800 (PST)
-Received: from localhost.localdomain ([124.207.10.6])
-        by mx.google.com with ESMTPS id oc8sm14807044pbb.39.2013.01.24.19.06.46
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 24 Jan 2013 19:06:49 -0800 (PST)
-X-Mailer: git-send-email 1.8.0-rc0
+	id S1755560Ab3AYD6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2013 22:58:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56111 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755540Ab3AYD6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2013 22:58:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5347EC351;
+	Thu, 24 Jan 2013 22:58:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mHQLXbFXP1nMf6aerDBEzLopJJI=; b=WX3kNB
+	IIEVsSvUEq1KAk02ysQQXUwngV8626TSQtyYx7UrzWEqiwrp0P8Je4mN1SFtmXeX
+	MlWSgewkpculaiTp/k3kadhWWzI2EJdEVPNhMSCPWVZ+9EGuwweFSuCw+eQUXZj7
+	+HyaiGXTp1ExvP3Q+Mo6T2p653MOH8hW84w1Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BQ97SQjXfl8xzvjVPI4e1IXm9WFNg6o5
+	ei1wnDm2uUuL4h89VmVCrUMFYLAHMhVQigvpl7wtTmd0Pt+UGqqcmLLFiv1EfNKd
+	OGIwH1mFRpk64bXq+hKUcY58PgakDrB5IKxiSMhcUIgigyf8pInJkh2xU6qEwyLt
+	DXaq3u2oDbE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48A24C34F;
+	Thu, 24 Jan 2013 22:58:05 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1132C34E; Thu, 24 Jan 2013
+ 22:58:04 -0500 (EST)
+In-Reply-To: <CACsJy8Ag6v7wUnupRwGid26AUzgZ=WbdA5F-MpjUv5ktaj5Asg@mail.gmail.com> (Duy
+ Nguyen's message of "Fri, 25 Jan 2013 08:38:38 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6BCA0284-66A3-11E2-A376-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214483>
 
-Commit v1.8.1-rc0-3-gfa2364e renamed merge-file.h to merge-blobs.h, but
-forgot to update the reference of merge-file.h in Makefile. This would
-break the build of "po/git.pot", which depends on $(LOCALIZED_C), then
-fallback to the missing file "merge-file.h".
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- Makefile |    2 +-
- 1 =E4=B8=AA=E6=96=87=E4=BB=B6=E8=A2=AB=E4=BF=AE=E6=94=B9=EF=BC=8C=E6=8F=
-=92=E5=85=A5 1 =E8=A1=8C(+)=EF=BC=8C=E5=88=A0=E9=99=A4 1 =E8=A1=8C(-)
+> On Fri, Jan 25, 2013 at 12:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>  How about this way instead: we keep track of where objects come from
+>>>  so we can verify object source when we create or update something
+>>>  that contains SHA-1.
+>>
+>> The overall approach taken by this series may be worth considering, but
+>> I do not think the check implemented here is correct.
+>>
+>> An object may be found in an alternate odb but we may also have our
+>> own copy of the same object.  You need to prove that a suspicious
+>> object is visible to us *ONLY* through add_submodule_odb().
+>
+> The way alt odbs are linked (new odbs area always at the end), if we
+> have the same copy, their copy will never be read (we check out alt
+> odbs from head to tail). So those duplicate suspicious objects are
+> actually invisible to us.
 
-diff --git a/Makefile b/Makefile
-index 1b30d7b..a786d4c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -649,7 +649,7 @@ LIB_H +=3D list-objects.h
- LIB_H +=3D ll-merge.h
- LIB_H +=3D log-tree.h
- LIB_H +=3D mailmap.h
--LIB_H +=3D merge-file.h
-+LIB_H +=3D merge-blobs.h
- LIB_H +=3D merge-recursive.h
- LIB_H +=3D mergesort.h
- LIB_H +=3D notes-cache.h
---=20
-1.8.1.1
+The way I read find_pack_entry() is that our heuristics to start
+our search by looking at the pack in which we found an object the
+last time will invalidate your assumption above.  Am I mistaken?
