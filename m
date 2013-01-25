@@ -1,39 +1,39 @@
 From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
 Subject: [RFC] test-lint-duplicates: check numbering in contrib/remote-helpers
-Date: Fri, 25 Jan 2013 23:34:24 +0100
-Message-ID: <201301252334.25283.tboegi@web.de>
+Date: Fri, 25 Jan 2013 23:35:48 +0100
+Message-ID: <201301252335.48634.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: tboegi@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 25 23:36:22 2013
+X-From: git-owner@vger.kernel.org Fri Jan 25 23:36:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tyrsj-0002JC-SX
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 23:36:22 +0100
+	id 1Tyrsv-0002O2-0q
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 23:36:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753770Ab3AYWf6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2013 17:35:58 -0500
-Received: from mout.web.de ([212.227.17.11]:53026 "EHLO mout.web.de"
+	id S1753858Ab3AYWgI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2013 17:36:08 -0500
+Received: from mout.web.de ([212.227.15.3]:49688 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753652Ab3AYWf4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Jan 2013 17:35:56 -0500
+	id S1753649Ab3AYWgG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jan 2013 17:36:06 -0500
 Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0LvB2o-1Uy9k30c5K-00zknp; Fri, 25 Jan 2013 23:35:53 +0100
-X-Provags-ID: V02:K0:0qX7zDA+da2CQSr5gMVyoqJMYEXyIM4U0UbwkdPfyko
- xub327DBfhDjcRybpV6SgkhpdJgH37jDmpk+luvj8a3AF5u68X
- H6BBvHrz4PaY/e+tsrHzpmyA66GfvN+Dm6JZo0z9gG4KCQ2L4O
- mHdQBv4n3zK7Fr3aSa9jZ/gUGj2zkz+JhreL+D7u301VxQwlSO
- sbVO9M12sti97mFTwvG5Q==
+ ESMTPA (Nemesis) id 0MaJc8-1UIj752tdA-00KPQx; Fri, 25 Jan 2013 23:36:04 +0100
+X-Provags-ID: V02:K0:BgH3olsKs++RscL+CzYyvGtvDuOipLgS4f2V28Qr3u+
+ wFW/xLKhiY+7nG9yY9FULHFZmGA1aMpOk2/Ib/2OCPzaXWN22x
+ nd5syf26lP786YPf8EfbbrOQ12LAJc3ksUv/Nc6fUDlMYcLmtJ
+ Pz0fWAjjNNB7FLobAKIi+8wyIU6EJPwuUkWjd4XRHEtR0YRNoE
+ VLQwoe120787LmHdUv39g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214594>
 
 Running make inside contrib/remote-helpers failes in "test-lint-duplica=
 tes"
