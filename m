@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 2/3] branch: give a more helpful message on redundant arguments
-Date: Fri, 25 Jan 2013 19:50:24 +0700
-Message-ID: <1359118225-14356-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 3/3] branch: mark more strings for translation
+Date: Fri, 25 Jan 2013 19:50:25 +0700
+Message-ID: <1359118225-14356-3-git-send-email-pclouds@gmail.com>
 References: <1359102416-1240-1-git-send-email-pclouds@gmail.com>
  <1359118225-14356-1-git-send-email-pclouds@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -10,103 +10,97 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 25 13:50:35 2013
+X-From: git-owner@vger.kernel.org Fri Jan 25 13:50:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tyijr-00034Z-24
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 13:50:35 +0100
+	id 1Tyik4-0003Dg-Kf
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 13:50:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756607Ab3AYMuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 07:50:13 -0500
-Received: from mail-da0-f52.google.com ([209.85.210.52]:62650 "EHLO
-	mail-da0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755388Ab3AYMuL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 07:50:11 -0500
-Received: by mail-da0-f52.google.com with SMTP id f10so159879dak.25
-        for <git@vger.kernel.org>; Fri, 25 Jan 2013 04:50:10 -0800 (PST)
+	id S1757258Ab3AYMu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 07:50:26 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:61394 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756744Ab3AYMuW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 07:50:22 -0500
+Received: by mail-pa0-f50.google.com with SMTP id hz10so244975pad.37
+        for <git@vger.kernel.org>; Fri, 25 Jan 2013 04:50:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=ErD+Y/8iJT7YaOwTwCSAxDydd1Q86Z8rIXrf0P/g4Ts=;
-        b=hb5gsir9mBrMRRq0E8EODdo5rvZxdXwUih+IyL1hKoXnpLtSDXo6a/hGPkXsMvvk94
-         rOqXcB5UwFdGPGhQo7/1ZZjHjwLDZpcALtZqjjfBUv1bhPKJ285GifGK/LYwjn35h4cT
-         eO4PWPrBeu9h3Jp+w78lbBZwlz64xT1kLUwgjFS2Fpkz958Vm6pk4lw+VYvsYgxoYI/M
-         bC1r0dsF5QYoGmsiL8kSAx1r8f9roUcw9UqOgfs9qD8goucp/vxV4Rz8j3XRPvBfog6J
-         6GNzroy1/qyTCl/t19EYHFQ5xBH4Dvhq+f2HZIc0uWlbInmjkf/YF/3TFvU0D7j87zg/
-         3lPw==
-X-Received: by 10.66.79.97 with SMTP id i1mr13196084pax.47.1359118210738;
-        Fri, 25 Jan 2013 04:50:10 -0800 (PST)
+        bh=/C1/MHnzMFYA1KbUARm/950twH4qw5p5huOyIDqyjlI=;
+        b=Oh7rCYI/W2qooxTYJ8fWOA2KsQrxRYbEfaIKo4VK4kqIplyuagl4D2k1GKqb6/f5NU
+         SY6ObCk0R/GYQ+EYgDptpwEcpwpxfnGuNwCmo6RBvveL04dCQskrZMoX5ec50mE+Ju0X
+         GEctZPDWvkSVVwPGD+cl7b55Kq4dA8liekf4JAWQUlofVplwnnTUXsz1F5fvK4h8lWLD
+         gya0HcNq6nFH2kyrIF+ByX+xyQNdMGx48QDJK/wlVNqErCUAhSGL2wXlSCF7NEhBlpLb
+         JAaz/5c9Jc2rEXVw3jvbwOio562ZE6tGheaXh9aGyP8wlWgtd9aoUIx/3OaARdhMXkMC
+         VY1A==
+X-Received: by 10.68.137.131 with SMTP id qi3mr13847484pbb.114.1359118222382;
+        Fri, 25 Jan 2013 04:50:22 -0800 (PST)
 Received: from lanh ([115.74.36.51])
-        by mx.google.com with ESMTPS id im5sm627702pbc.55.2013.01.25.04.50.07
+        by mx.google.com with ESMTPS id oi3sm644060pbb.1.2013.01.25.04.50.18
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 25 Jan 2013 04:50:09 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 25 Jan 2013 19:50:38 +0700
+        Fri, 25 Jan 2013 04:50:21 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Fri, 25 Jan 2013 19:50:45 +0700
 X-Mailer: git-send-email 1.8.0.rc2.23.g1fb49df
 In-Reply-To: <1359118225-14356-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214549>
 
-While at there, do not stop user from editing a branch description
-when the unrelated HEAD is detached.
 ---
- builtin/branch.c  | 12 ++++++------
- t/t3200-branch.sh |  4 ++--
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ builtin/branch.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 50fcacc..ca61c5b 100644
+index ca61c5b..597b578 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -852,14 +852,14 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		const char *branch_name;
- 		struct strbuf branch_ref = STRBUF_INIT;
+@@ -466,7 +466,7 @@ static void add_verbose_info(struct strbuf *out, struct ref_item *item,
+ 			     int verbose, int abbrev)
+ {
+ 	struct strbuf subject = STRBUF_INIT, stat = STRBUF_INIT;
+-	const char *sub = " **** invalid ref ****";
++	const char *sub = _(" **** invalid ref ****");
+ 	struct commit *commit = item->commit;
  
--		if (detached)
--			die("Cannot give description to detached HEAD");
--		if (!argc)
-+		if (!argc) {
-+			if (detached)
-+				die("Cannot give description to detached HEAD");
+ 	if (commit && !parse_commit(commit)) {
+@@ -590,7 +590,7 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 		struct commit *filter;
+ 		filter = lookup_commit_reference_gently(merge_filter_ref, 0);
+ 		if (!filter)
+-			die("object '%s' does not point to a commit",
++			die(_("object '%s' does not point to a commit"),
+ 			    sha1_to_hex(merge_filter_ref));
+ 
+ 		filter->object.flags |= UNINTERESTING;
+@@ -854,7 +854,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 
+ 		if (!argc) {
+ 			if (detached)
+-				die("Cannot give description to detached HEAD");
++				die(_("Cannot give description to detached HEAD"));
  			branch_name = head;
--		else if (argc == 1)
-+		} else if (argc == 1)
+ 		} else if (argc == 1)
  			branch_name = argv[0];
- 		else
--			usage_with_options(builtin_branch_usage, options);
-+			die(_("cannot edit description of more than one branch"));
+@@ -866,10 +866,11 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			strbuf_release(&branch_ref);
  
- 		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
- 		if (!ref_exists(branch_ref.buf)) {
-@@ -881,7 +881,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		else if (argc == 2)
- 			rename_branch(argv[0], argv[1], rename > 1);
- 		else
--			usage_with_options(builtin_branch_usage, options);
-+			die(_("too many branches for a rename operation"));
- 	} else if (new_upstream) {
- 		struct branch *branch = branch_get(argv[0]);
+ 			if (!argc)
+-				return error("No commit on branch '%s' yet.",
++				return error(_("No commit on branch '%s' yet."),
+ 					     branch_name);
+ 			else
+-				return error("No such branch '%s'.", branch_name);
++				return error(_("No branch named '%s'."),
++					     branch_name);
+ 		}
+ 		strbuf_release(&branch_ref);
  
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 80e6be3..f3e0e4a 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -73,8 +73,8 @@ test_expect_success \
- 
- test_expect_success \
-     'git branch -m dumps usage' \
--       'test_expect_code 129 git branch -m 2>err &&
--	test_i18ngrep "[Uu]sage: git branch" err'
-+       'test_expect_code 128 git branch -m 2>err &&
-+	test_i18ngrep "too many branches for a rename operation" err'
- 
- test_expect_success \
-     'git branch -m m m/m should work' \
 -- 
 1.8.0.rc2.23.g1fb49df
