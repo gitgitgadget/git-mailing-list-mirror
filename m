@@ -1,151 +1,120 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 6/7] read-cache: refuse to create index referring to
- external objects
-Date: Fri, 25 Jan 2013 09:00:16 +0700
-Message-ID: <CACsJy8C3tLOHCK4Qc--W630do0M=xLKSMoYUxxv2_GDaUXaRww@mail.gmail.com>
-References: <1359016940-18849-1-git-send-email-pclouds@gmail.com>
- <1359016940-18849-6-git-send-email-pclouds@gmail.com> <7vpq0ubdec.fsf@alter.siamese.dyndns.org>
+Subject: Re: segmentation fault (nullpointer) with git log --submodule -p
+Date: Fri, 25 Jan 2013 09:05:45 +0700
+Message-ID: <CACsJy8AS3cgF3LXzkXh3JyBpv7xY=Lf4T=sXK1EELU-j+VkUhQ@mail.gmail.com>
+References: <20130123143816.GA579@krypton.darkbyte.org> <20130123200222.GB19832@sigill.intra.peff.net>
+ <510124F5.9090505@atlas-elektronik.com> <CACsJy8B9O=A26_=sv1JEYdtazsWa4khZkqpTgFSSTs_RGGPZqQ@mail.gmail.com>
+ <51013FDD.5030004@atlas-elektronik.com> <CACsJy8CEofqi9S8-SDx_O+Ko0i56aRZ4KEJrVnbFum6zzsJrJg@mail.gmail.com>
+ <20130124232721.GA16036@sigill.intra.peff.net> <7va9ry87a0.fsf@alter.siamese.dyndns.org>
+ <20130125005528.GA27325@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 03:01:10 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>,
+	Armin <netzverweigerer@gmail.com>, Jonathon Mah <jmah@me.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 25 03:06:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyYbM-0008IY-NC
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 03:01:09 +0100
+	id 1TyYgg-0002nf-09
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 03:06:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755051Ab3AYCAs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2013 21:00:48 -0500
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:37419 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754740Ab3AYCAq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Jan 2013 21:00:46 -0500
-Received: by mail-ob0-f179.google.com with SMTP id un3so524064obb.10
-        for <git@vger.kernel.org>; Thu, 24 Jan 2013 18:00:46 -0800 (PST)
+	id S1755243Ab3AYCGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2013 21:06:17 -0500
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:49173 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755331Ab3AYCGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2013 21:06:15 -0500
+Received: by mail-ob0-f180.google.com with SMTP id ef5so416783obb.39
+        for <git@vger.kernel.org>; Thu, 24 Jan 2013 18:06:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=OUUEj3EO219OTAT1zG/be5EAGl0GRJnydTCS4Q80zo0=;
-        b=XnaE/8SyBk4+L0KrDxAfkiMks7RfPzRQyY1KtqwM/iLv6SmTd2B4Sidp9of1YGfxCe
-         DOm6VS5SE6oJQFdk+ftYuzasF3jgYiBQYYlqfTkYFZOLW0Hx9/HSxUxcFBusGOVCuqkm
-         xPmA9hE+3CqmSMLzWjd1Y+GzvK50sLN41/tA2btYgmLBL1+dhOz42dTRF096koWxCtQQ
-         TIJ/+YWHbqqbmawiaUxPxG3jyDwb9CAR/3uRs1hGF4Zk1btm0qE8+BYG1P+pW3zlk9G/
-         S3BwhbxQpICqhfCCOoNj5S2gGV8knjmGafI5JgWsUhBZ+87yVUT0up5veXJqtyuWs23f
-         hDfg==
-X-Received: by 10.182.188.69 with SMTP id fy5mr3214130obc.74.1359079246074;
- Thu, 24 Jan 2013 18:00:46 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Thu, 24 Jan 2013 18:00:16 -0800 (PST)
-In-Reply-To: <7vpq0ubdec.fsf@alter.siamese.dyndns.org>
+         :subject:to:cc:content-type;
+        bh=tupd2RVxj3bHMJKmsMCfrmudxRao/CnKUTgy2KAv5LY=;
+        b=wh4/RM5FAemqxQQKcWL8zHbdVNQ0TSvHxBl82pUKLNcB58ByKGuP12YIz4sCweZvUp
+         +GgAsXDfEUr2ti6eY/bIW3QLRFdHmNxFopxLagVQlXp+EqTlgu8dDf9GtD0JC37wZ7Dg
+         SdW6D6LPJ/UAGpLnak2ISCxt8nZ9ucUXBhcrMJy7JJKHz6y3XpGvvoRlM4z8ZQsKTv0E
+         zTl/PsT/pvUE4QDuQ7HQQvEMS/uomiP1/pELXwHqWHAAkzYnM+NKTnTfIrsFsWQ4owSg
+         GCW79+MRFqWrM1p3uvvKqpL3wfTn3xydLbBAZDIku6jYvRIXRRuE7lQe4sD0xuv8tYdH
+         +7Pw==
+X-Received: by 10.182.2.132 with SMTP id 4mr3304276obu.42.1359079575236; Thu,
+ 24 Jan 2013 18:06:15 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Thu, 24 Jan 2013 18:05:45 -0800 (PST)
+In-Reply-To: <20130125005528.GA27325@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214480>
 
-On Fri, Jan 25, 2013 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+On Fri, Jan 25, 2013 at 7:55 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Jan 24, 2013 at 03:56:23PM -0800, Junio C Hamano wrote:
 >
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->>  read-cache.c | 20 ++++++++++++++++++++
->>  1 file changed, 20 insertions(+)
+>> Jeff King <peff@peff.net> writes:
 >>
->> diff --git a/read-cache.c b/read-cache.c
->> index fda78bc..4579215 100644
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -1720,6 +1720,26 @@ static int ce_write_entry(git_SHA_CTX *c, int=
- fd, struct cache_entry *ce,
->>                             ce->name + common, ce_namelen(ce) - comm=
-on);
->>       }
+>> > ... (e.g., how should "log" know that a submodule diff might later want
+>> > to see the same entry? Should we optimistically free and then make it
+>> > easier for the later user to reliably ensure the buffer is primed? Or
+>> > should we err on the side of keeping it in place?).
 >>
->> +     if (object_database_contaminated) {
->> +             struct object_info oi;
->> +             switch (ce->ce_mode) {
->> +             case S_IFGITLINK:
->> +                     break;
->> +             case S_IFDIR:
->> +                     if (sha1_object_info_extended(ce->sha1, &oi) !=
-=3D OBJ_TREE ||
+>> My knee-jerk reaction is that we should consider that commit->buffer
+>> belongs to the revision traversal machinery.  Any other uses bolted
+>> on later can borrow it if buffer still exists (I do not think pretty
+>> code rewrites the buffer contents in place in any way), or they can
+>> ask read_sha1_file() to read it themselves and free when they are
+>> done.
 >
-> This case should never happen.  Do we store any tree object in the
-> index in the first place?
-
-No it was copy/paste mistake (from cache-tree.c, before I deleted it
-and added check_sha1_file_for_external_source in 3/7)
-
->> +                         (oi.alt && oi.alt->external))
->> +                             die("cannot create index referring to =
-an external tree %s",
->> +                                 sha1_to_hex(ce->sha1));
->> +                     break;
->> +             default:
->> +                     if (sha1_object_info_extended(ce->sha1, &oi) !=
-=3D OBJ_BLOB ||
->> +                                 (oi.alt && oi.alt->external))
->> +                             die("cannot create index referring to =
-an external blob %s",
->> +                                 sha1_to_hex(ce->sha1));
->> +                     break;
->> +             }
->> +     }
->> +
->>       result =3D ce_write(c, fd, ondisk, size);
->>       free(ondisk);
->>       return result;
+> Yeah, that is probably the sanest way forward. It at least leaves
+> ownership in one place, and everybody else is an opportunistic consumer.
+> We do need to annotate each user site though with something like the
+> "ensure" function I mentioned.
 >
-> I think the check you want to add is to the cache-tree code; before
-> writing the new index out, if you suspect you might have called
-> cache_tree_update() before, invalidate any hierarchy that is
-> recorded to produce a tree object that refers to an object that is
-> only available through external object store.
+> If they are not owners, then the better pattern is probably something
+> like:
 
-cache-tree is covered by check_sha1_file_for_external_source() when it
-actually writes a tree (dry-run mode goes through unchecked). Even
-when cache-tree is not involved, I do not want the index to point to
-an non-existing SHA-1 ("git diff --cached" may fail next time, for
-example).
+You probably should rename "buffer" (to _buffer or something) and let
+the compiler catches all the places commit->buffer illegally used.
 
-> As to the logic to check if a object is something that we should
-> refuse to create a new dependent, I think you should not butcher
-> sha1_object_info_extended(), and instead add a new call that checks
-> if a given SHA-1 yields an object if you ignore alternate object
-> databases that are marked as "external", whose signature may
-> resemble:
 >
->         int has_sha1_file_proper(const unsigned char *sha1);
+>   /*
+>    * Get the commit buffer, either opportunistically using
+>    * the cached version attached to the commit object, or loading it
+>    * from disk if necessary.
+>    */
+>   const char *use_commit_buffer(struct commit *c)
+>   {
+>           enum object_type type;
+>           unsigned long size;
 >
-> or something.
-
-Agreed.
-
-> This is a tangent, but in addition, you may want to add an even
-> narrower variant that checks the same but ignoring _all_ alternate
-> object databases, "external" or not:
+>           if (c->buffer)
+>                   return c->buffer;
+>           /*
+>            * XXX check type == OBJ_COMMIT?
+>            * XXX die() on NULL as a convenience to callers?
+>            */
+>           return read_sha1_file(c->object.sha1, &type, &size);
+>   }
 >
->         int has_sha1_file_local(const unsigned char *sha1);
+>   void unuse_commit_buffer(const char *buf, struct commit *c)
+>   {
+>           /*
+>            * If we used the cached copy attached to the commit,
+>            * we don't want to free it; it's not our responsibility.
+>            */
+>           if (buf == c->buffer)
+>                   return;
 >
-> That may be useful if we want to later make the alternate safer to
-> use; instead of letting the codepath to create an object ask
-> has_sha1_file() to see if it already exists and refrain from writing
-> a new copy, we switch to ask has_sha1_file_locally() and even if an
-> alternate object database we borrow from has it, we keep our own
-> copy in our repository.
+>           free((char *)buf);
+>   }
 >
-> Not tested beyond syntax, but rebasing something like this patch on
-> top of your "mark external sources" change may take us closer to
-> that.
-
-Thanks, will incorporate in the reroll.
---=20
+> I suspect that putting a use/unuse pair inside format_commit_message
+> would handle most cases.
+>
+> -Peff
+-- 
 Duy
