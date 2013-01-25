@@ -1,98 +1,88 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] Update renamed file merge-file.h in Makefile
-Date: Fri, 25 Jan 2013 12:59:42 +0800
-Message-ID: <CANYiYbHWE+88DbSoA2EgcZjCh+9YTcHGQhumSUkx_ovXY6FSDQ@mail.gmail.com>
-References: <1359083188-31866-1-git-send-email-worldhello.net@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 0/3] Finishing touches to "push" advises
+Date: Thu, 24 Jan 2013 21:04:33 -0800
+Message-ID: <7va9rx7t0e.fsf@alter.siamese.dyndns.org>
+References: <20130121234002.GE17156@sigill.intra.peff.net>
+ <1358978130-12216-1-git-send-email-gitster@pobox.com>
+ <CAEUsAPYAikZUTf9OE=PoGBYot6Udnw9XTYDs6Ug7h=PWbCYM1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=GB2312
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 25 06:00:05 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Chris Rorvick <chris@rorvick.com>
+X-From: git-owner@vger.kernel.org Fri Jan 25 06:04:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TybOW-0003Em-W1
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 06:00:05 +0100
+	id 1TybTG-00068U-J6
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 06:04:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754792Ab3AYE7o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2013 23:59:44 -0500
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:48307 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754324Ab3AYE7n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Jan 2013 23:59:43 -0500
-Received: by mail-wi0-f172.google.com with SMTP id o1so1087177wic.17
-        for <git@vger.kernel.org>; Thu, 24 Jan 2013 20:59:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=y6Gk/pngfKD4dOn2idlkaa+MhcsxX7a0JeKQ88DvWGA=;
-        b=M1Tsn3Sf8SdSD1MKKuihDEVnqUrnDJFGqsNI4+pChioPDp1efURmZuJztXDQwi6TC0
-         C3NE7iAC6jvCFfDgIsTLrwrZ6/QGj0psgZjziJwfSfGifTyL5oNeyf4Dq9d3xYeuPjLW
-         KSTywOtltefk6pxsEzQJs4T7CnSpsnnlJN8ElWR7pIrl8rpd95qqIqAYnwZBO+7JHN4K
-         iqLhpeQwjexNP8VLE26KtdJvJuAlXbgRjfTkIqj6g0A7jFaO+QQLNBtb9872RoMQuaqS
-         mZHEgGCWGT3sJJS27XLOJqsjuosfWhS8bjRF8s/L+d0z8EQ0wYeIGE44hd9v/muurfPP
-         rSJw==
-X-Received: by 10.194.238.226 with SMTP id vn2mr6666164wjc.23.1359089982109;
- Thu, 24 Jan 2013 20:59:42 -0800 (PST)
-Received: by 10.216.106.65 with HTTP; Thu, 24 Jan 2013 20:59:42 -0800 (PST)
-In-Reply-To: <1359083188-31866-1-git-send-email-worldhello.net@gmail.com>
+	id S1750835Ab3AYFEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 00:04:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43891 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750781Ab3AYFEg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 00:04:36 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3501ACDF7;
+	Fri, 25 Jan 2013 00:04:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WlOd6fhC8PiLOSRDvvkzAKYf3Bg=; b=PcN36Z
+	qNYByCj7IBbJ1FkhwwQ6kNnVmKYZoeXdRRgeVyfqS/y+tKq2BRNIsA7UnOrIMVYT
+	zWQVtC4/GYdRXzNiyZbHdSSdrDy0lX2UrYHBIsHdC9gRh6vWooCyk96ECYKAnwWO
+	f1eHFIvz355PgnDA9tRjP+igtxTtLcAwwIOKM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pzYQkifnj59fal+saPXZDTyc+C9aMk5Y
+	8NbetnSZYSQWWjCPf+c7yVDfVzSQgULDtMfbx7WrU1RBvjXI4w2HBv4D1IKKbBA9
+	7LxWSxJVdBeuV1ZsmsksbhTLEBMn/R3ey8ciqAPak5RpT/rtfUjObeSsb4w9K9GC
+	odRxF9jUsZI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 29B40CDF6;
+	Fri, 25 Jan 2013 00:04:36 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 721F4CDF3; Fri, 25 Jan 2013
+ 00:04:35 -0500 (EST)
+In-Reply-To: <CAEUsAPYAikZUTf9OE=PoGBYot6Udnw9XTYDs6Ug7h=PWbCYM1Q@mail.gmail.com> (Chris
+ Rorvick's message of "Thu, 24 Jan 2013 22:31:43 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B661123E-66AC-11E2-A4FA-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214497>
 
-Oops,  I find it is already fixed in commit
-a60521bc6099ce89d05ef2160d2e3c30a106fda7.
+Chris Rorvick <chris@rorvick.com> writes:
 
-commit a60521bc6099ce89d05ef2160d2e3c30a106fda7
-Author: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Date:   Tue Jan 22 16:47:47 2013 +0000
+> Had I written the the "already exists" advice in the context of these
+> additional statuses I would have said "the destination *tag* reference
+> already exists", or maybe even just "the destination *tag* already
+> exists".
 
-    Makefile: Replace merge-file.h with merge-blobs.h in LIB_H
+Yeah, now we do not use "already exists" for anything other than
+refs/tags/, right?  Your rewording sounds like the right thing to
+make it even clearer.
 
-    Commit fa2364ec ("Which merge_file() function do you mean?", 06-12-=
-2012)
-    renamed the files merge-file.[ch] to merge-blobs.[ch], but forgot t=
-o
-    rename the header file in the definition of the LIB_H macro.
+Thanks for bringing it up.  
 
-    Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Would it be sufficient to do this?  I think "the tag already exists
+in the remote" is already clear that we are talking about the
+destination.
 
-(kick back to the list)
-
-2013/1/25 Jiang Xin <worldhello.net@gmail.com>:
-> Commit v1.8.1-rc0-3-gfa2364e renamed merge-file.h to merge-blobs.h, b=
-ut
-> forgot to update the reference of merge-file.h in Makefile. This woul=
-d
-> break the build of "po/git.pot", which depends on $(LOCALIZED_C), the=
-n
-> fallback to the missing file "merge-file.h".
->
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> ---
->  Makefile |    2 +-
->  1 =B8=F6=CE=C4=BC=FE=B1=BB=D0=DE=B8=C4=A3=AC=B2=E5=C8=EB 1 =D0=D0(+)=
-=A3=AC=C9=BE=B3=FD 1 =D0=D0(-)
->
-> diff --git a/Makefile b/Makefile
-> index 1b30d7b..a786d4c 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -649,7 +649,7 @@ LIB_H +=3D list-objects.h
->  LIB_H +=3D ll-merge.h
->  LIB_H +=3D log-tree.h
->  LIB_H +=3D mailmap.h
-> -LIB_H +=3D merge-file.h
-> +LIB_H +=3D merge-blobs.h
->  LIB_H +=3D merge-recursive.h
->  LIB_H +=3D mergesort.h
->  LIB_H +=3D notes-cache.h
-> --
-> 1.8.1.1
->
+diff --git a/builtin/push.c b/builtin/push.c
+index a2b3fbe..78789be 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -228,7 +228,7 @@ static const char message_advice_ref_fetch_first[] =
+ 	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
+ 
+ static const char message_advice_ref_already_exists[] =
+-	N_("Updates were rejected because the destination reference already exists\n"
++	N_("Updates were rejected because the tag already exists\n"
+ 	   "in the remote.");
+ 
+ static const char message_advice_ref_needs_force[] =
