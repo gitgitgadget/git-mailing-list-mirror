@@ -1,99 +1,174 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 4/4] git-difftool: use git-mergetool--lib for
- "--tool-help"
-Date: Fri, 25 Jan 2013 10:47:22 +0000
-Message-ID: <20130125104722.GY7498@serenity.lan>
-References: <cover.1359057056.git.john@keeping.me.uk>
- <b791e866c02b0c118f08bde1d7ca6c41d6239989.1359057056.git.john@keeping.me.uk>
- <CAJDDKr4ZpQr029FW0v8LzwvhXZYmvAONbbZNuOq_E=Q1UzufvA@mail.gmail.com>
- <20130125091918.GV7498@serenity.lan>
- <CAJDDKr5Xd4-e6VO-iO=EmwOcg0RimJHyO4ey-dFk6aENt+qZBQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 11:47:52 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2] add: warn when -u or -A is used without filepattern
+Date: Fri, 25 Jan 2013 11:49:38 +0100
+Message-ID: <1359110978-20054-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpq1uddoedj.fsf@grenoble-inp.fr>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jan 25 11:50:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tygp4-0002Rr-JO
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 11:47:50 +0100
+	id 1TygrQ-0003Wx-Ii
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 11:50:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756403Ab3AYKr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 05:47:29 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:41239 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756161Ab3AYKr2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 05:47:28 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 0FD442324E;
-	Fri, 25 Jan 2013 10:47:28 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QGG7Gq5BomIC; Fri, 25 Jan 2013 10:47:27 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id 96CCC2321B;
-	Fri, 25 Jan 2013 10:47:27 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 88DB8161E5A6;
-	Fri, 25 Jan 2013 10:47:27 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wgy-cdtA+3Xp; Fri, 25 Jan 2013 10:47:27 +0000 (GMT)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 943B5161E569;
-	Fri, 25 Jan 2013 10:47:24 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CAJDDKr5Xd4-e6VO-iO=EmwOcg0RimJHyO4ey-dFk6aENt+qZBQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755677Ab3AYKty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 05:49:54 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:49282 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754333Ab3AYKtw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 05:49:52 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r0PAne2i014996
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 25 Jan 2013 11:49:40 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Tygqr-0006zm-Jl; Fri, 25 Jan 2013 11:49:41 +0100
+Received: from moy by anie with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Tygqr-0005E8-FD; Fri, 25 Jan 2013 11:49:41 +0100
+X-Mailer: git-send-email 1.8.0.1.527.gd366564.dirty
+In-Reply-To: <vpq1uddoedj.fsf@grenoble-inp.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 25 Jan 2013 11:49:41 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r0PAne2i014996
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1359715784.38053@rGYlqmZTPb4WF3/WLAeh6g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214544>
 
-On Fri, Jan 25, 2013 at 01:55:03AM -0800, David Aguilar wrote:
-> list_merge_tool_candidates() has a bunch of other special cases
-> for $EDITOR, $DISPLAY, $GNOME-something and such so I think
-> we should keep using it only for the guess_merge_tool() path.
-> 
-> I honestly want to remove list_merge_tool_candidates every
-> time I read it, but I recognize that it does serve a purpose
-> for users who have not configured anything.
+Most git commands that can be used with our without a filepattern are
+tree-wide by default, the filepattern being used to restrict their scope.
+A few exceptions are: 'git grep', 'git clean', 'git add -u' and 'git add -A'.
 
-Actually, I'm not sure it does.  I asked one of my colleagues whether
-he used git-mergetool the other day and he said no because he couldn't
-understand the OS X FileMerge tool and was happier to edit things
-manually in vim.  I don't think he'd realised that he could configure a
-different mergetool.
+The inconsistancy of 'git add -u' and 'git add -A' are particularly
+problematic since other 'git add' subcommands (namely 'git add -p' and
+'git add -e') are tree-wide by default.
 
-Perhaps we're trying to be too clever by guessing what the user wants
-and should instead exit with a message saying:
+Flipping the default now is unacceptable, so this patch starts training
+users to type explicitely 'git add -u|-A :/' or 'git add -u|-A .', to prepare
+for the next steps:
 
-   You have not configured a merge tool to use.  Please select one of
-   the following tools and configure it using:
+* forbid 'git add -u|-A' without filepattern (like 'git add' without
+  option)
 
-        git config merge.tool <tool>
+* much later, maybe, re-allow 'git add -u|-A' without filepattern, with a
+  tree-wide scope.
 
-    These tools are availalble on your system:
-        ...
+A nice side effect of this patch is that it makes the :/ special
+filepattern easier to discover for users.
 
-    These tools are supported but unavailable:
-        ...
+When the command is called from the root of the tree, there is no
+ambiguity and no need to change the behavior, hence no need to warn.
 
-This may be too much of a regression for current users though.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Changes since v1:
 
+* Do not warn from the root of the tree.
 
-John
+* Say explicitely "Git 2.0" to announce the change.
+
+(plus fix a C99 style issue)
+
+ Documentation/git-add.txt |  7 ++++---
+ builtin/add.c             | 36 +++++++++++++++++++++++++++++++++++-
+ 2 files changed, 39 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index fd9e36b..5333559 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -107,9 +107,10 @@ apply to the index. See EDITING PATCHES below.
+ 	from the index if the corresponding files in the working tree
+ 	have been removed.
+ +
+-If no <filepattern> is given, default to "."; in other words,
+-update all tracked files in the current directory and its
+-subdirectories.
++If no <filepattern> is given, the current version of Git defaults to
++"."; in other words, update all tracked files in the current directory
++and its subdirectories. This default will change in a future version
++of Git, hence the form without <filepattern> should not be used.
+ 
+ -A::
+ --all::
+diff --git a/builtin/add.c b/builtin/add.c
+index e664100..8252d19 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -363,6 +363,33 @@ static int add_files(struct dir_struct *dir, int flags)
+ 	return exit_status;
+ }
+ 
++static void warn_pathless_add(const char *option_name) {
++	/*
++	 * To be consistant with "git add -p" and most Git
++	 * commands, we should default to being tree-wide, but
++	 * this is not the original behavior and can't be
++	 * changed until users trained themselves not to type
++	 * "git add -u" or "git add -A". For now, we warn and
++	 * keep the old behavior. Later, this warning can be
++	 * turned into a die(...), and eventually we may
++	 * reallow the command with a new behavior.
++	 */
++	warning(_("The behavior of 'git add %s' with no path argument from a subdirectory of the\n"
++		  "tree will change in Git 2.0 and shouldn't be used anymore.\n"
++		  "To add content for the whole tree, run:\n"
++		  "\n"
++		  "  git add %s :/\n"
++		  "\n"
++		  "To restrict the command to the current directory, run:\n"
++		  "\n"
++		  "  git add %s .\n"
++		  "\n"
++		  "With the current Git version, the command is restricted to the current directory."),
++		option_name,
++		option_name,
++		option_name);
++}
++
+ int cmd_add(int argc, const char **argv, const char *prefix)
+ {
+ 	int exit_status = 0;
+@@ -373,6 +400,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	int add_new_files;
+ 	int require_pathspec;
+ 	char *seen = NULL;
++	const char *option_with_implicit_dot = NULL;
+ 
+ 	git_config(add_config, NULL);
+ 
+@@ -392,8 +420,14 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		die(_("-A and -u are mutually incompatible"));
+ 	if (!show_only && ignore_missing)
+ 		die(_("Option --ignore-missing can only be used together with --dry-run"));
+-	if ((addremove || take_worktree_changes) && !argc) {
++	if (addremove)
++		option_with_implicit_dot = "--all";
++	if (take_worktree_changes)
++		option_with_implicit_dot = "--update";
++	if (option_with_implicit_dot && !argc) {
+ 		static const char *here[2] = { ".", NULL };
++		if (prefix)
++			warn_pathless_add(option_with_implicit_dot);
+ 		argc = 1;
+ 		argv = here;
+ 	}
+-- 
+1.8.0.1.527.gd366564.dirty
