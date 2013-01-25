@@ -1,121 +1,137 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] mergetools: Add tortoisegitmerge helper
-Date: Thu, 24 Jan 2013 23:54:25 -0800
-Message-ID: <CAJDDKr4oerSq16rYt2iKNtQNK79L+jOiKROhEW_yiBPKjkVhuQ@mail.gmail.com>
-References: <50FBD4AD.2060208@tu-clausthal.de>
-	<7v4nibjrg0.fsf@alter.siamese.dyndns.org>
-	<50FCFBBB.2080305@tu-clausthal.de>
-	<7vfw1qbbr4.fsf@alter.siamese.dyndns.org>
-	<5101B0A5.1020308@tu-clausthal.de>
-	<7vpq0u8bxd.fsf@alter.siamese.dyndns.org>
-	<CAJDDKr5O70tTfwuipWcYVJL6gM3bUyQh-22yVO89xn8OFsQOpw@mail.gmail.com>
-	<7vvcal683y.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?0JDQvdC00YDQtdC5INCR0LDRgNCw0L3QvtCy?= 
+	<andrej.andb@gmail.com>
+Subject: Separately repository access in GitWeb
+Date: Fri, 25 Jan 2013 15:10:43 +0700
+Message-ID: <CAJjU7bS-rRr-UuEA_xcqtTY4+tWKshL+Rvey85n70KacSnTorQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
-	git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 08:54:50 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 25 09:11:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tye7c-0002NK-UK
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 08:54:49 +0100
+	id 1TyeNO-0001KO-PA
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 09:11:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751431Ab3AYHy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 02:54:28 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:50111 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751197Ab3AYHy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 02:54:27 -0500
-Received: by mail-ee0-f46.google.com with SMTP id e49so42423eek.5
-        for <git@vger.kernel.org>; Thu, 24 Jan 2013 23:54:26 -0800 (PST)
+	id S1751275Ab3AYIKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 03:10:46 -0500
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:58680 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751197Ab3AYIKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 03:10:45 -0500
+Received: by mail-oa0-f53.google.com with SMTP id l20so82578oag.40
+        for <git@vger.kernel.org>; Fri, 25 Jan 2013 00:10:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=andrej-andb.ru; s=google;
+        h=mime-version:x-received:sender:x-originating-ip:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=CFuxo2Durxjq43THh8X3C1HeGNvweoiZmizCUJXOocE=;
+        b=PpqhBqnujN+NnEF38tlK0qEJcD18WhIT4cwxjPKiZ0KRo1Xn0Mx++MDMubDluBbB+7
+         TbLmGvt2bSIivM8bsoBQc79pfFxnThIKOvtSVhqYvt2dowihas1mrBByG0Tn+MQnvFQP
+         btIn9MXsv5+FDY8KCidWdq/r+jgU1cwJwDWfQ=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=ln9+GliCqz998iF+2XiG8R2reTkOWMu+AmGQDQpqgkQ=;
-        b=okbhOX+/J0nIkLCP9LM4Jbe124Iv2k903EJqUp7VYuuOJKP/xkZlu7FvuKlJBcWM6C
-         U1G/sGxytzKZwoLAXHPJg2Yh4KF8hzV6upsTvDFlRqODFoNlyZBBwf0ozQPKeSpygy0U
-         XWAlZMqSdOkwFOs0K6IVcSUhG2TQWjUXef8H9MovoTFq90tWqC15a7NPm7LOPPCslbBh
-         JY9aAIS0mGcRPPunxekYPPtw05+Kz0gXpWiecblusQ39v6G+2H9fIUfP6BSPA2qXKIZj
-         5ZnoN/cIuSJfYkgue6NXXVEma2jqwgMroioZTts/tZkHkbS4SYSSn98iVefaWHKw0Vcl
-         vlrQ==
-X-Received: by 10.14.205.198 with SMTP id j46mr15485852eeo.27.1359100465906;
- Thu, 24 Jan 2013 23:54:25 -0800 (PST)
-Received: by 10.14.125.135 with HTTP; Thu, 24 Jan 2013 23:54:25 -0800 (PST)
-In-Reply-To: <7vvcal683y.fsf@alter.siamese.dyndns.org>
+        h=mime-version:x-received:sender:x-originating-ip:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=CFuxo2Durxjq43THh8X3C1HeGNvweoiZmizCUJXOocE=;
+        b=r/6+Wyymu2yIW87W+DnxgSGrZ8ZY9lCeQdu14Q4JG0KkrUXOoyZSlnTbIFa+zBixn9
+         AHyJIXgVtFcKAWWB1N+9sVPm7vpdfBWhcftejnqwViNY49nLtq/Sd6U2q32b2HuvatXI
+         xkLp2qxraXzzKnt4cLyYx31cFQzvFBHXxBcLoeaUlI9ePI1h1bukJ9qF4plX7V2+QbY2
+         id4WnmmSk9oqdu4TZmaWwJaqGTrXqdC/ZV/swjybWU+s/dlYfU8GUuAk5rMl3HFPBj7w
+         N0A4xXrX2kt5siI7bZMWXKdTaXyUxtzOHRrS83q/LY/jKzrixr71uxRdt3SiD9wapuQb
+         7d5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:sender:x-originating-ip:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :x-gm-message-state;
+        bh=CFuxo2Durxjq43THh8X3C1HeGNvweoiZmizCUJXOocE=;
+        b=EoKzemqKDUTG34n7pGEKvFp3GEojLkhtF/L/NW+XsPoIamyTsqpCPPH6j9wzmdTr7H
+         huM76PRRSe6BeilYFy1A6ucEsGt6R/z8kYeYaISuk7FzmcgVHJYpm+GRgzsNGJUMqBn7
+         TDwte08DmfAV/tQ/bHrykNSrayR3tY9sZnHP70HSM2UlkgcHy22+PrtWng5rMPpBGysi
+         Pc9aESXelfCyQehCaQeFj/OChuu/tDhtCfa0fVSBIzywd0qMfw63WgsLmehAddXGsiBl
+         B/wCKyN9uHo55Hcrvui9bEer8axULM+i3yvX9ssAkIrL9SYHZUyDVzhIExs0BJHtli34
+         HBRQ==
+X-Received: by 10.60.3.193 with SMTP id e1mr3964802oee.39.1359101444023; Fri,
+ 25 Jan 2013 00:10:44 -0800 (PST)
+Received: by 10.76.9.35 with HTTP; Fri, 25 Jan 2013 00:10:43 -0800 (PST)
+X-Originating-IP: [90.188.9.189]
+X-Google-Sender-Auth: Sie-Wc7FAAPoH839T4zVuc7AjlA
+X-Gm-Message-State: ALoCoQk5MNA4TgwYMXdb0vZB9FmlNOSJGp+tAbP9rhiMbgfA5Eh/2HXT245kccx/R5U5tTp0Q/sl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214512>
 
-On Thu, Jan 24, 2013 at 11:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> David Aguilar <davvid@gmail.com> writes:
->>>>> This paragraph needs to be rewritten to unconfuse readers.  The
->>>>> original is barely intelligible, and it becomes unreadable as the
->>>>> set of tools subtracted by "minus" and added by "plus" grows.
->>>>
->>>> But I think this should not be part of this patch.
->>>
->>> I agree that it can be done (and it is better to be done) as a
->>> preparatory step.  The current text is barely readable, but with
->>> this patch there will be two "minus", and the result becomes
->>> unreadable at that point.
->>>
->>> It also could be done as a follow-up documentation readability fix.
->>
->> Another thought would be to minimize this section as much
->> as possible and point users to "git difftool --tool-help".
->
-> We had a similar discussion here:
->
->   http://thread.gmane.org/gmane.comp.version-control.git/201913/focus=201976
->
-> and Documentation/git-{diff,merge}tool.txt have stayed quiet since
-> then.
->
-> But Documentation/merge-config.txt tries to list everything that _could_
-> be enabled, and I do not necessarily think having one single
-> location that lists everything is such a bad idea.
->
-> Is there a way for me to programatically tell what merge.tool and
-> diff.tool could be enabled for a particular source checkout of Git
-> regardless of what platform am I on (that is, even though I won't
-> touch Windows, I want to see 'tortoise' appear in the output of such
-> a procedure)?  We could generate a small text file from the Makefile
-> in Documentation and include it when building the manual pages if
-> such a procedure is available.
+good day.
 
-That's a good idea.
-Here's one way... (typed into gmail, so probably broken)
+I`m trying make separately repository access in GitWeb by NGINX
 
-LF='
-'
-mergetools=
-difftools=
-scriptlets="$(git --exec-path)"/mergetools
+separation of access based on URL strings, namely, the presence of the
+query strings:
+'?p=repo.git'
+with a regular expression:
+"^.*p=(.*?)(\.git|;|&|=|\s).*$"
 
-for script in "$scriptlets"/*
-do
-    tool="$(basename "$script")"
-    if test "$tool" = "defaults"
-    then
-        continue
-    fi
-    . "$scriptlets"/defaults
-    can_diff && difftools="$difftools$tool$LF"
-    can_merge && mergetools="$mergetools$tool$LF"
-done
+I am wondering how much it is correct to protect against unauthorized access.
 
-I can follow up with a Documentation patch along these lines.
-I'm would imagine it would be hooked up similarly to how the
-command lists are constructed.
+Thanks in advance :)
 
-This should allow the tortoisemerge improvements to happen independently.
--- 
-David
+complete example of a configuration file:
+
+server {
+        listen 80;
+
+root /home/git/gitweb;
+
+        access_log /var/log/nginx/gitweb.access_log main;
+        error_log /var/log/nginx/gitweb.error_log info;
+
+        index gitweb.cgi;
+gzip off;
+
+    location ~* \.(jpg|txt|jpeg|gif|png|ico|css|zip|js|swf)$ {
+access_log        off;
+        expires 1d;
+    }
+
+    location = / {
+set $htpasswd "opened@";
+if ($args ~* "^.*p=(.*?)(\.git|;|&|=|\s).*$") {
+set $htpasswd /home/git/.gitolite/conf/$1_htpasswd;
+        }
+        if (-f $htpasswd) {
+                rewrite ^.*$  /closed last;
+        }
+
+rewrite ^.*$ /guest last;
+    }
+
+    location = /closed {
+internal;
+access_log /var/log/nginx/gitweb-closed.access_log main;
+auth_basic "Unauthorized";
+        auth_basic_user_file $htpasswd;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_NAME gitweb.cgi;
+        fastcgi_param SCRIPT_FILENAME /home/git/gitweb/gitweb.cgi;
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+    }
+
+    location = /guest {
+internal;
+access_log /var/log/nginx/gitweb-guest.access_log main;
+        include fastcgi_params;
+fastcgi_param  SCRIPT_NAME gitweb.cgi;
+fastcgi_param SCRIPT_FILENAME /home/git/gitweb/gitweb.cgi;
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+    }
+
+    location  / {
+        rewrite (.*) / permanent;
+    }
+
+}
