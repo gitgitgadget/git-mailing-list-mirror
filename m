@@ -1,81 +1,83 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 4/4] git-difftool: use git-mergetool--lib for
- "--tool-help"
-Date: Fri, 25 Jan 2013 09:19:18 +0000
-Message-ID: <20130125091918.GV7498@serenity.lan>
-References: <cover.1359057056.git.john@keeping.me.uk>
- <b791e866c02b0c118f08bde1d7ca6c41d6239989.1359057056.git.john@keeping.me.uk>
- <CAJDDKr4ZpQr029FW0v8LzwvhXZYmvAONbbZNuOq_E=Q1UzufvA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 10:29:36 2013
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH 3/7] git-mergetool: don't hardcode 'mergetool' in show_tool_help
+Date: Fri, 25 Jan 2013 01:43:50 -0800
+Message-ID: <1359107034-14606-4-git-send-email-davvid@gmail.com>
+References: <1359107034-14606-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 25 10:44:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TyfbI-0001lO-Vw
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 10:29:33 +0100
+	id 1Tyfpx-00082T-A1
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jan 2013 10:44:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753189Ab3AYJ3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 04:29:11 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:47300 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752860Ab3AYJ3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 04:29:09 -0500
-X-Greylist: delayed 585 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 Jan 2013 04:29:09 EST
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 1EBC022FE9;
-	Fri, 25 Jan 2013 09:19:24 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fbmLwhv-Jarr; Fri, 25 Jan 2013 09:19:23 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 5ED6A231C1;
-	Fri, 25 Jan 2013 09:19:19 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CAJDDKr4ZpQr029FW0v8LzwvhXZYmvAONbbZNuOq_E=Q1UzufvA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756066Ab3AYJoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 04:44:12 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:42765 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753414Ab3AYJoJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 04:44:09 -0500
+Received: by mail-ie0-f172.google.com with SMTP id c13so27074ieb.31
+        for <git@vger.kernel.org>; Fri, 25 Jan 2013 01:44:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=E5Pjz2xp0eSIo5oPGj8SjBZbxGKkZkQXD8xaCDmQqz8=;
+        b=feH6P1PaTiClG7ZFIRTEtZ1w78xCyOPbBTVjS0Jo/jKGATUOY80sTAmXe4rK8Ssxf4
+         FflAkBEsmne+Nhp3p9TYQPMGy1iysjZeXywl1WS9TbGeXEp7BFQ7ANYaG+W7B6tyqbXD
+         AH7uge8/NPuFCM6s7P5PyZtEaH6P49a2OoBICdY6dD6W3wxaGCQ2jyym6/4ttohU+bk1
+         O58jhMyKfBiMkpfQRoiFPfJCnj3uAbjetBUMRZAK8Jywd2ZTiWsunmlu5MYsJ+CYvy6z
+         g5Np5FcmjoQgsXzCLMenqKwKwMbmpXFKHxicDwkLtvaeQkumKJRfYifaOEmEijupGGG3
+         gPIA==
+X-Received: by 10.50.183.227 with SMTP id ep3mr3505014igc.107.1359107048994;
+        Fri, 25 Jan 2013 01:44:08 -0800 (PST)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPS id gs6sm314611igc.11.2013.01.25.01.44.07
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 25 Jan 2013 01:44:08 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.1.367.g22b1720.dirty
+In-Reply-To: <1359107034-14606-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214526>
 
-On Thu, Jan 24, 2013 at 09:29:58PM -0800, David Aguilar wrote:
-> On Thu, Jan 24, 2013 at 11:55 AM, John Keeping <john@keeping.me.uk> wrote:
-> > The "--tool-help" option to git-difftool currently displays incorrect
-> > output since it uses the names of the files in
-> > "$GIT_EXEC_PATH/mergetools/" rather than the list of command names in
-> > git-mergetool--lib.
-> >
-> > Fix this by simply delegating the "--tool-help" argument to the
-> > show_tool_help function in git-mergetool--lib.
-> 
-> Very nice.
-> 
-> One thought I had was that the unified show_tool_help should
-> probably check TOOL_MODE=diff and skip over the
-> !can_diff entries.
-> 
-> The current output of "git difftool --tool-help" before your
-> patches has the problem that it will list tools such as
-> "tortoisemerge" as "valid but not available" because it
-> does not differentiate between missing and !can_diff.
+From: John Keeping <john@keeping.me.uk>
 
-list_merge_tool_candidates does this for us, so it should Just Work
-since we use that to generate the list of tools that we loop over.
+When using show_tool_help from git-difftool we will want it to print
+"git difftool" not "git mergetool" so use "git ${TOOL_MODE}tool".
 
+Signed-off-by: John Keeping <john@keeping.me.uk>
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ git-mergetool--lib.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-John
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 1748315..4c1e129 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -188,12 +188,14 @@ show_tool_help () {
+ 			unavailable="$unavailable$i$LF"
+ 		fi
+ 	done
++
++	cmd_name=${TOOL_MODE}tool
+ 	if test -n "$available"
+ 	then
+-		echo "'git mergetool --tool=<tool>' may be set to one of the following:"
++		echo "'git $cmd_name --tool=<tool>' may be set to one of the following:"
+ 		echo "$available" | sort | sed -e 's/^/	/'
+ 	else
+-		echo "No suitable tool for 'git mergetool --tool=<tool>' found."
++		echo "No suitable tool for 'git $cmd_name --tool=<tool>' found."
+ 	fi
+ 	if test -n "$unavailable"
+ 	then
+-- 
+1.8.1.1.367.g22b1720.dirty
