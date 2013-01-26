@@ -1,154 +1,84 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH 1/2 v3] mergetool--lib: don't call "exit" in setup_tool
-Date: Sat, 26 Jan 2013 13:50:23 +0000
-Message-ID: <20130126135023.GJ7498@serenity.lan>
-References: <20130125200807.GB7498@serenity.lan>
- <7vpq0t2f2t.fsf@alter.siamese.dyndns.org>
- <20130125204619.GC7498@serenity.lan>
- <7vlibh2d8a.fsf@alter.siamese.dyndns.org>
- <20130125211601.GD7498@serenity.lan>
- <7vbocd2auo.fsf@alter.siamese.dyndns.org>
- <20130125220222.GE7498@serenity.lan>
- <20130125220359.GF7498@serenity.lan>
- <7vip6k23mk.fsf@alter.siamese.dyndns.org>
- <20130126121721.GI7498@serenity.lan>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH/RFC] mingw: rename WIN32 cpp macro to NATIVE_WINDOWS
+Date: Sat, 26 Jan 2013 09:11:36 -0500
+Message-ID: <5103E418.7090104@gmail.com>
+References: <50EB8EB5.6080204@gmail.com> <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com> <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com> <50F303D8.20709@gmail.com> <50F5A435.5090408@ramsay1.demon.co.uk> <20130120101007.GD16339@elie.Belkin> <50FEDB08.6030901@ramsay1.demon.co.uk> <51031C43.5030307@gmail.com> <7v38xo3irh.fsf@alter.siamese.dyndns.org> <51032481.4030707@redhat.com> <20130126010359.GH3341@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 26 14:59:36 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Eric Blake <eblake@redhat.com>, Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Stephen & Linda Smith <ischis2@cox.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 26 15:12:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tz6I8-0004Yu-NV
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Jan 2013 14:59:33 +0100
+	id 1Tz6UJ-0000t1-As
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Jan 2013 15:12:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294Ab3AZN7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2013 08:59:11 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:47448 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751019Ab3AZN7J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2013 08:59:09 -0500
-X-Greylist: delayed 518 seconds by postgrey-1.27 at vger.kernel.org; Sat, 26 Jan 2013 08:59:09 EST
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 31603230C0;
-	Sat, 26 Jan 2013 13:50:31 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gNBbcH87r1ik; Sat, 26 Jan 2013 13:50:30 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id 1F30E22F18;
-	Sat, 26 Jan 2013 13:50:30 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 0D9CC161E20D;
-	Sat, 26 Jan 2013 13:50:30 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id FcZwGVZAnwHp; Sat, 26 Jan 2013 13:50:29 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id A5871161E3A4;
-	Sat, 26 Jan 2013 13:50:25 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <20130126121721.GI7498@serenity.lan>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752165Ab3AZOLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2013 09:11:42 -0500
+Received: from mail-qa0-f49.google.com ([209.85.216.49]:58836 "EHLO
+	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751739Ab3AZOLk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2013 09:11:40 -0500
+Received: by mail-qa0-f49.google.com with SMTP id o13so12334qaj.8
+        for <git@vger.kernel.org>; Sat, 26 Jan 2013 06:11:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=umJ6B4pjzKM7mP5Kt4gwNBRY0i9RcHkgesno/HKZ4aQ=;
+        b=TCz4C8R6ak6DNZD5f7m8DHgNKRQvdikqqYbcLFHcXP0Q335xya1NsFo/04cAJBL2gF
+         tBJq+vv5VTH0osfJvGuhBBrsPHxKnHNOyPzuPSuzUwpvaWWWrtU/pV1Td0TW4zgPsAU5
+         nsXcVi8EgVej44i35f0vd43vVBX0CGvfmQ1QrUEhgDcWQSia5qVRcmiYVZmCmhDJjbGV
+         Iy2MtCNNNG4F7o1bNuUhazIoZ13lWXS/en1/f8wt4gx5p8rd89XLV4/VP5KPuwcNzNez
+         uZancYAmHwIvHstg+rBnGRzYuVN5RZP2X3NcHTpxK4lc+Ftb8LE+P1zFaBK45SRZoavi
+         dqow==
+X-Received: by 10.224.53.7 with SMTP id k7mr9355345qag.96.1359209499698;
+        Sat, 26 Jan 2013 06:11:39 -0800 (PST)
+Received: from mark-laptop.lan (pool-173-79-109-151.washdc.fios.verizon.net. [173.79.109.151])
+        by mx.google.com with ESMTPS id r4sm222845qaa.2.2013.01.26.06.11.37
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 26 Jan 2013 06:11:38 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <20130126010359.GH3341@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214625>
 
-This will make it easier to use setup_tool in places where we expect
-that the selected tool will not support the current mode.
+On 01/25/2013 08:03 PM, Jonathan Nieder wrote:
+> diff --git a/abspath.c b/abspath.c
+> index 40cdc462..c7d5458e 100644
+> --- a/abspath.c
+> +++ b/abspath.c
+> @@ -216,7 +216,7 @@ const char *absolute_path(const char *path)
+>   const char *prefix_filename(const char *pfx, int pfx_len, const char *arg)
+>   {
+>   	static char path[PATH_MAX];
+> -#ifndef WIN32
+> +#ifndef WINDOWS_NATIVE
+>   	if (!pfx_len || is_absolute_path(arg))
+>   		return arg;
+>   	memcpy(path, pfx, pfx_len);
+> diff --git a/compat/terminal.c b/compat/terminal.c
+> index 9b5e3d1b..136e4a74 100644
 
-We need to introduce a new return code for setup_tool to differentiate
-between the case of "the selected tool is invalid" and "the selected
-tool is not a built-in" since we must call setup_tool when a custom
-'merge.<tool>.path' is configured for a built-in tool but avoid failing
-when the configured tool is not a built-in.
+Maybe WINDOWS_NATIVE should be defined in config.mak.uname?
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-> On Fri, Jan 25, 2013 at 04:24:03PM -0800, Junio C Hamano wrote:
-> > Applying this one on top of 1/7 thru 5/7 and 7/7 seems to break
-> > t7610 rather badly.
-> 
-> Sorry about that.  The 'setup_tool' function should really be called
-> 'setup_builtin_tool' - it isn't necessary when a custom mergetool is
-> configured and will return 1 when called with an argument that isn't a
-> builtin tool from $GIT_EXEC_PATH/mergetools.
-> 
-> The change is the second hunk below which now wraps the call to
-> setup_tool in an if block as well as adding the "|| return".
+Otherwise, I tested the patch and it does build / run on Cygwin, but I 
+cannot run a test suite until next week. I am concerned about subtle 
+changes due to the  various WIN32 tests that were not guarded by 
+__CYGWIN__ before, haven't stared at the code enough to see if there 
+could be an issue.
 
-Now that I've run the entire test suite, that still wasn't correct since
-it did not correctly handle the case where the user overrides the path
-for one of the built-in mergetools.
-
- git-mergetool--lib.sh | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
-
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 4c1e129..dd4f088 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -58,7 +58,11 @@ setup_tool () {
- 	. "$mergetools/defaults"
- 	if ! test -f "$mergetools/$tool"
- 	then
--		return 1
-+		# Use a special return code for this case since we want to
-+		# source "defaults" even when an explicit tool path is
-+		# configured since the user can use that to override the
-+		# default path in the scriptlet.
-+		return 2
- 	fi
- 
- 	# Load the redefined functions
-@@ -67,11 +71,11 @@ setup_tool () {
- 	if merge_mode && ! can_merge
- 	then
- 		echo "error: '$tool' can not be used to resolve merges" >&2
--		exit 1
-+		return 1
- 	elif diff_mode && ! can_diff
- 	then
- 		echo "error: '$tool' can only be used to resolve merges" >&2
--		exit 1
-+		return 1
- 	fi
- 	return 0
- }
-@@ -101,6 +105,19 @@ run_merge_tool () {
- 
- 	# Bring tool-specific functions into scope
- 	setup_tool "$1"
-+	exitcode=$?
-+	case $exitcode in
-+	0)
-+		:
-+		;;
-+	2)
-+		# The configured tool is not a built-in tool.
-+		test -n "$merge_tool_path" || return 1
-+		;;
-+	*)
-+		return $exitcode
-+		;;
-+	esac
- 
- 	if merge_mode
- 	then
--- 
-1.8.1
+Mark
