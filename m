@@ -1,111 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 8/7] mergetool--lib: don't call "exit" in setup_tool
-Date: Fri, 25 Jan 2013 16:24:03 -0800
-Message-ID: <7vip6k23mk.fsf@alter.siamese.dyndns.org>
-References: <1359107034-14606-1-git-send-email-davvid@gmail.com>
- <1359107034-14606-8-git-send-email-davvid@gmail.com>
- <20130125195446.GA7498@serenity.lan> <20130125200807.GB7498@serenity.lan>
- <7vpq0t2f2t.fsf@alter.siamese.dyndns.org>
- <20130125204619.GC7498@serenity.lan>
- <7vlibh2d8a.fsf@alter.siamese.dyndns.org>
- <20130125211601.GD7498@serenity.lan>
- <7vbocd2auo.fsf@alter.siamese.dyndns.org>
- <20130125220222.GE7498@serenity.lan> <20130125220359.GF7498@serenity.lan>
+From: Eric Blake <eblake@redhat.com>
+Subject: Re: Version 1.8.1 does not compile on Cygwin 1.7.14
+Date: Fri, 25 Jan 2013 17:34:09 -0700
+Organization: Red Hat, Inc.
+Message-ID: <51032481.4030707@redhat.com>
+References: <20130106120917.GC22081@elie.Belkin> <7vfw2enl2l.fsf@alter.siamese.dyndns.org> <50E9F7C2.1000603@gmail.com> <FBDECCA565D94DF9838DD81FE2E2543A@black> <7v1udxladc.fsf@alter.siamese.dyndns.org> <50EB8EB5.6080204@gmail.com> <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com> <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com> <50F303D8.20709@gmail.com> <50F5A435.5090408@ramsay1.demon.co.uk> <20130120101007.GD16339@elie.Belkin> <50FEDB08.6030901@ramsay1.demon.co.uk> <51031C43.5030307@gmail.com> <7v38xo3irh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sat Jan 26 01:24:29 2013
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="----enig2GUBVISJRERUBGHNQTAVL"
+Cc: Mark Levedahl <mlevedahl@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Stephen & Linda Smith <ischis2@cox.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 26 01:34:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TytZN-0003CP-4u
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Jan 2013 01:24:29 +0100
+	id 1TytjJ-0006rg-F3
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Jan 2013 01:34:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754896Ab3AZAYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2013 19:24:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46049 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754319Ab3AZAYF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2013 19:24:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B529C43B;
-	Fri, 25 Jan 2013 19:24:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=hdOsEfSdbAYGwomek//XUAVCU+M=; b=rfN0Ar9li/fNuyBA6LDb
-	BQ9bBmR+R4QZNtXks/zRHgwm5dAlfPRwI21slj4TbkgcYb/Pm5DwO5/XSgkPfOu7
-	wu/i2/K8DUM6WnYkVyPYn8Sgw9jnf8LN+rFdjwjEaKXAty1PwPTCt2uL5/NDn9Jf
-	h82DKLiEcHh1+vrdGxner0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=OZCa1aYtz6JMKtfHqsfYmTb3eOv7DOxGl2ttLO68e9yWMY
-	DthCXNi9ngN9NwssPUsyYGmWSmsMPzp5+q9/e+NGvC/1CuWn/nFqq0Ykjdun2aab
-	ayuC+3s0UBSEX8UisZO8xeAMPtX6AwuNWOXnxKTaWJNjQ33qbTWjPTG9cbTMk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F222C43A;
-	Fri, 25 Jan 2013 19:24:05 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 85B3EC438; Fri, 25 Jan 2013
- 19:24:04 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B0C82C20-674E-11E2-9E00-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754765Ab3AZAeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2013 19:34:23 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:12148 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754356Ab3AZAeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2013 19:34:22 -0500
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r0Q0YBce032496
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Fri, 25 Jan 2013 19:34:12 -0500
+Received: from [10.3.113.27] (ovpn-113-27.phx2.redhat.com [10.3.113.27])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id r0Q0YAcY005484;
+	Fri, 25 Jan 2013 19:34:10 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <7v38xo3irh.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5.0
+OpenPGP: url=http://people.redhat.com/eblake/eblake.gpg
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214600>
 
-Applying this one on top of 1/7 thru 5/7 and 7/7 seems to break
-t7610 rather badly.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+------enig2GUBVISJRERUBGHNQTAVL
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
---- >8 ------ >8 ------ >8 ------ >8 ------ >8 ------ >8 ---
-...
-ok 1 - setup
+On 01/25/2013 05:11 PM, Junio C Hamano wrote:
+> Mark Levedahl <mlevedahl@gmail.com> writes:
+>=20
+>> Cygwin and Windows should be treated as completely separate platforms:=
 
-expecting success:
-    git checkout -b test1 branch1 &&
-    git submodule update -N &&
-    test_must_fail git merge master >/dev/null 2>&1 &&
-    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-    ( yes "" | git mergetool file1 file1 ) &&
-    ( yes "" | git mergetool file2 "spaced name" >/dev/null 2>&1 ) &&
-    ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-    ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-    ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-    ( yes "l" | git mergetool submod >/dev/null 2>&1 ) &&
-    test "$(cat file1)" = "master updated" &&
-    test "$(cat file2)" = "master new" &&
-    test "$(cat subdir/file3)" = "master new sub" &&
-    test "$(cat submod/bar)" = "branch1 submodule" &&
-    git commit -m "branch1 resolved with mergetool"
+>> if __CYGWIN__ is defined, do one thing, if not, go ahead and check
+>> WIN32, but the WIN32 macro should never be tested once we know the
+>> platform is CYGWIN - these really are different platforms (if you are
+>> unsure of this, consider that Cygwin includes a cross-compiler to
+>> target native Win32 as the Cygwin maintainers recognized the platforms=
 
-M       submod
-Switched to a new branch 'test1'
-Submodule path 'submod': checked out '39c7f044ed2e6a9cebd5266529badd181c8762b5'
-not ok - 2 custom mergetool
-#
-#           git checkout -b test1 branch1 &&
-#           git submodule update -N &&
-#           test_must_fail git merge master >/dev/null 2>&1 &&
-#           ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-#           ( yes "" | git mergetool file1 file1 ) &&
-#           ( yes "" | git mergetool file2 "spaced name" >/dev/null 2>&1 ) &&
-#           ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-#           ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-#           ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-#           ( yes "l" | git mergetool submod >/dev/null 2>&1 ) &&
-#           test "$(cat file1)" = "master updated" &&
-#           test "$(cat file2)" = "master new" &&
-#           test "$(cat subdir/file3)" = "master new sub" &&
-#           test "$(cat submod/bar)" = "branch1 submodule" &&
-#           git commit -m "branch1 resolved with mergetool"
-#
---- 8< ------ 8< ------ 8< ------ 8< ------ 8< ------ 8< ---
+>> are different).
+>=20
+> Not disagreeing with your conclusion (they should be treated as
+> different), why does it define WIN32 in the first place?
+>=20
+> Perhaps we would want
+>=20
+> 	#ifdef __CYGWIN__
+>         #undef WIN32
+>         #endif
 
-Due to ">dev/null 2>&1", all of the error clues are hidden, and I
-didn't dig further to see which one was failing (this is why tests
-shouldn't do these in general).
+Wouldn't work.  Cygwin gcc does NOT define WIN32; rather, the inclusion
+of a Windows system header (generally discouraged, but sometimes a
+necessary evil) might cause WIN32 to be defined for all subsequent header=
+s.
+
+Which is why other projects, like gnulib, have
+
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+
+all over the place.
+
+--=20
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
+
+
+------enig2GUBVISJRERUBGHNQTAVL
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+Comment: Public key at http://people.redhat.com/eblake/eblake.gpg
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBCAAGBQJRAySBAAoJEKeha0olJ0NqlyYIAITPpBEDvL9ahmRdl5kJYaqK
+MxlGuF881giVUeroWUf3V1n6aK7NSD0bTfHC/6UC7CK34y4UG4R02djtUFG6nAKQ
+KzFNLlg01q3qyhaxrzz989FMV3BFS27wDhIsGnmvmopnwrp4sf9xPQpXbUTbfX/2
+WZ7JwQnmcyj7Sjw+6A/t/6VEkJeceXqNRcVsPxBB5hNQlFv3KK+JncmLVDY12lSH
+nxsmx4OxGG1JpOld+ZSotX5fzVhcG4E0ukTiAYfWEwyEWL7EPQb6JCDZwsOlgTV3
+jCKV0lzAA+tT2HCNpnnAT3S+vOxkYMTdVj9DLDx7Z82DHmllQgTwU6qxEKD/tD8=
+=4whb
+-----END PGP SIGNATURE-----
+
+------enig2GUBVISJRERUBGHNQTAVL--
