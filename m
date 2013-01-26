@@ -1,81 +1,56 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH 1/2] git-p4.py: support Python 2.5
-Date: Sat, 26 Jan 2013 10:19:37 -0800
-Message-ID: <CA+sFfMfxQUqe-Nqp-2CjZ0ShLuwOYqPUCOQMrGASUmhEhxNMNg@mail.gmail.com>
-References: <1359146641-27810-1-git-send-email-drafnel@gmail.com>
-	<1359146641-27810-2-git-send-email-drafnel@gmail.com>
-	<20130126124510.GA31052@padd.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, esr@thyrsus.com, john@keeping.me.uk,
-	Brandon Casey <bcasey@nvidia.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sat Jan 26 19:20:06 2013
+From: Craig Christensen <cwcraigo@gmail.com>
+Subject: Port 22
+Date: Sat, 26 Jan 2013 11:56:48 -0700
+Message-ID: <55B0A474-AD5B-44B5-91E7-FA5253FA5682@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 26 19:57:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzAMH-0001Lb-2a
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Jan 2013 19:20:05 +0100
+	id 1TzAwA-0000Qg-AA
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Jan 2013 19:57:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753379Ab3AZSTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2013 13:19:39 -0500
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:33145 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752343Ab3AZSTi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2013 13:19:38 -0500
-Received: by mail-wi0-f177.google.com with SMTP id hm2so430827wib.4
-        for <git@vger.kernel.org>; Sat, 26 Jan 2013 10:19:37 -0800 (PST)
+	id S1753451Ab3AZS4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2013 13:56:49 -0500
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:65036 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753234Ab3AZS4s convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Jan 2013 13:56:48 -0500
+Received: by mail-pb0-f43.google.com with SMTP id jt11so766445pbb.2
+        for <git@vger.kernel.org>; Sat, 26 Jan 2013 10:56:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=6wlbGnacqpcCXsrxVZjfEym3YPnsWohNvqWXXLaEfak=;
-        b=o0DPX1AnKxBqnPkIVDmIFHEr1c7dSTveLWBNhawGVPOtWKvAoRClmdxiJvoTtgmnxQ
-         mbgXq/oW49W3iAd9NhZBOqcBP2pqboS8mjK9DuZci3B15xglB7vyd5WfZY+d262GsOtu
-         g6yeYd8ttWysxRYP5Epv9skh53la9OI9/bHUXMd+d87ozCaXnSKmkYLHQ38+lvQvxrTq
-         ns9TXdUgiiZtINJV3VPN63umc+UVkMrkPFIv8kIcjxI3hrof6rGkQmN+IhL2FbqX0rHW
-         dOZyLYHcVlGw8WtdIFNdZarsgR57xJrKPZ0SIAWFneRNik0m2EPM6Q6bvgrE+eXUq/wK
-         t5Ug==
-X-Received: by 10.194.242.69 with SMTP id wo5mr14227112wjc.10.1359224377180;
- Sat, 26 Jan 2013 10:19:37 -0800 (PST)
-Received: by 10.194.143.18 with HTTP; Sat, 26 Jan 2013 10:19:37 -0800 (PST)
-In-Reply-To: <20130126124510.GA31052@padd.com>
+        h=x-received:from:content-type:content-transfer-encoding:subject:date
+         :message-id:to:mime-version:x-mailer;
+        bh=A/UtfmaR6AcUX3CxGGgEU2iYGGPARebrNFyAFYtNcyQ=;
+        b=FbdUrLL8zxHpKPpP0P5nG178jjHB7vjA6RPoy97mGZ9pQOEdGOkfb1l1wDRAyovb6n
+         lOROD62Yt9mjf/QP9dTylGIZBz0E4SQS0QnhfqH6lxtIwhl7HZUFrJJYeL+mEuhBAQet
+         tl9yvDtoSFiKy25g9pVnCxh5GXyEqmYJELRF1jnv5O2OXNDhtT/zeziS7cNzI+62yIyB
+         LFyekrMRBoeuVUGuwEip0Kp45CLN4kbW7eRGBIZ+X4vdaIByMVhhDDvl2/fctfZvf9iv
+         a9x7tH2/7BWJqqmFUKTTDd+WPDBzYAobI1Lkt4uOohSjwNYujUXwWLEMZbOoodC1nD0b
+         ws4w==
+X-Received: by 10.66.78.168 with SMTP id c8mr23527371pax.16.1359226607956;
+        Sat, 26 Jan 2013 10:56:47 -0800 (PST)
+Received: from [10.18.149.57] ([157.201.118.66])
+        by mx.google.com with ESMTPS id a4sm3282944paw.21.2013.01.26.10.56.46
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 26 Jan 2013 10:56:47 -0800 (PST)
+X-Mailer: Apple Mail (2.1283)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214631>
 
-On Sat, Jan 26, 2013 at 4:45 AM, Pete Wyckoff <pw@padd.com> wrote:
-> drafnel@gmail.com wrote on Fri, 25 Jan 2013 12:44 -0800:
->> Python 2.5 and older do not accept None as the first argument to
->> translate() and complain with:
->>
->>    TypeError: expected a character buffer object
->>
->> Satisfy this older python by calling maketrans() to generate an empty
->> translation table and supplying that to translate().
->>
->> This allows git-p4 to be used with Python 2.5.
->
-> This was a lot easier than I imagined!
->
->>  def wildcard_present(path):
->> -    return path.translate(None, "*#@%") != path
->> +    from string import maketrans
->> +    return path.translate(maketrans("",""), "*#@%") != path
->
-> translate() was a bit too subtle already.  Could you try
-> something like this instead?
->
->     m = re.search("[*#@%]", path)
->     return m is not None
->
-> I think that'll work everywhere and not force people to look
-> up how translate and maketrans work.
+I am currently a student at Brigham Young University - Idaho and we are use Pagoda Box and Git for our Mobile Apps class.  However, the school's network has blocked incoming trafic on port 22.  I have been searching through all the tutorials and documents provided by Pagoda Box and Git but have not been able to find a solution to solve this problem.  We can use sftp but we then have to manually deploy the latest using the admin panel.  Can you help provide a simple solution?
 
-Yes that's simpler and works fine.
+Thanks,
 
--Brandon
+Craig W Christensen
+cwcraigo@gmail.com
+chr07035@byui.edu
