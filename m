@@ -1,51 +1,48 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 2/2] mergetools: Simplify how we handle "vim" and "defaults"
-Date: Sat, 26 Jan 2013 16:40:07 -0800
-Message-ID: <1359247207-71819-2-git-send-email-davvid@gmail.com>
-References: <1359247207-71819-1-git-send-email-davvid@gmail.com>
+Subject: [PATCH v3 2/2] mergetools: Simplify how we handle "vim" and "defaults"
+Date: Sat, 26 Jan 2013 16:46:12 -0800
+Message-ID: <1359247573-75825-1-git-send-email-davvid@gmail.com>
 Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 27 01:40:53 2013
+X-From: git-owner@vger.kernel.org Sun Jan 27 01:46:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzGIl-0004gQ-Rj
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 01:40:52 +0100
+	id 1TzGON-0006Ni-Ie
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 01:46:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755285Ab3A0Ak1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2013 19:40:27 -0500
-Received: from mail-ia0-f172.google.com ([209.85.210.172]:56062 "EHLO
-	mail-ia0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754976Ab3A0Ak0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2013 19:40:26 -0500
-Received: by mail-ia0-f172.google.com with SMTP id u8so2604768iag.31
-        for <git@vger.kernel.org>; Sat, 26 Jan 2013 16:40:25 -0800 (PST)
+	id S1755336Ab3A0AqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2013 19:46:19 -0500
+Received: from mail-ia0-f169.google.com ([209.85.210.169]:65295 "EHLO
+	mail-ia0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754866Ab3A0AqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2013 19:46:17 -0500
+Received: by mail-ia0-f169.google.com with SMTP id j5so2612280iaf.28
+        for <git@vger.kernel.org>; Sat, 26 Jan 2013 16:46:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=PjNq3BuDWUd49E5SUQqBO0kSPHAO97VrzQ1Fa88od7w=;
-        b=v0QckBywbELbsAL8v00BIrIoVzv00G/4MGI8M5LT2H4wJK/4jsSUQ3wo74PnZt4r+O
-         Trk/xgHUZ9h2pHsWa5HzCb1hZAqYc6qQxcyI/e7WT5Dg9W23oOJIKIdpowkX0KPGQnRY
-         dizCTFHSZUb80CisVpFaLJ0YKU6k4ASDpvV8RkkGH38EHgZwqWIFPiFuvA7V08PoKEef
-         9E4KGUKyrmR0ObmLU9wF/LhB9LGYyOGCNl61Ulkha4zN/0W4Loo1Qc9cEEzQcZz5R4Eh
-         NQM+EzBNbVJU4NvE7XRy7+Pma0+8WLLWydU+zP9zhD+iolDNbEt2muvoJV0eXzhka53J
-         ByYw==
-X-Received: by 10.50.191.164 with SMTP id gz4mr2093542igc.24.1359247225552;
-        Sat, 26 Jan 2013 16:40:25 -0800 (PST)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=yE0Lr6aBDmiJXziei+aRLj8USV9OTGfnXIom8OM3ADk=;
+        b=LgL8HS9pnBASKYAZ9dl2yzLnaSpRC+ogHWJh+NDhntDzPjqkQJqADlbBbc4n18Ibwc
+         1MFJGYCFzZcdYQ7dX1vMlUTNTqDE/wR5HQ0sZxfKnGzr+ndfgv/PeeEqxUFk5jpuYebS
+         Eg1EX7978MD25LENdF8E7Iq7tlvElQlBglOOkZ8JaudVJ86oJHT91XQFYU8YSs4mPLfv
+         0dQ5ovHVnmJqlKzyRrk59tkptbRhK/5TP6SYG0KKSaa2xdxSSo6QDVn+EnupIAQNJDdf
+         j3mamYrxpJlCB3aXrdNv/s31qlruDeQohXxv7A8v8I0MMbFIPHov8RQS2KySkHAo9TuO
+         puCw==
+X-Received: by 10.50.40.131 with SMTP id x3mr2044934igk.10.1359247577311;
+        Sat, 26 Jan 2013 16:46:17 -0800 (PST)
 Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id c3sm2781564igj.1.2013.01.26.16.40.22
+        by mx.google.com with ESMTPS id s3sm2870267igb.14.2013.01.26.16.46.14
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 26 Jan 2013 16:40:24 -0800 (PST)
-X-Mailer: git-send-email 1.8.0.8.g9bc9422
-In-Reply-To: <1359247207-71819-1-git-send-email-davvid@gmail.com>
+        Sat, 26 Jan 2013 16:46:16 -0800 (PST)
+X-Mailer: git-send-email 1.8.0.8.gd6b90fb.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214647>
 
 Remove the exceptions for "vim" and "defaults" in the mergetool library
 so that every filename in mergetools/ matches 1:1 with the name of a
@@ -55,7 +52,8 @@ Make common functions available in $MERGE_TOOLS_DIR/include/.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
-This diffstat is much nicer now thanks to John's setup_tool rework in 1/1.
+v2 used "include" instead of "mergetools/include"
+in the Makefile.  Please ignore it.
 
  Makefile                                     |  6 +++-
  git-mergetool--lib.sh                        | 41 ++++++++--------------------
@@ -72,7 +70,7 @@ This diffstat is much nicer now thanks to John's setup_tool rework in 1/1.
  create mode 100644 mergetools/vimdiff2
 
 diff --git a/Makefile b/Makefile
-index f69979e..0f89032 100644
+index f69979e..26f217f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2724,7 +2724,11 @@ install: all
@@ -80,7 +78,7 @@ index f69979e..0f89032 100644
  	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
 -	$(INSTALL) -m 644 mergetools/* '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
-+	$(INSTALL) -m 644 $(filter-out include,$(wildcard mergetools/*)) \
++	$(INSTALL) -m 644 $(filter-out mergetools/include,$(wildcard mergetools/*)) \
 +		'$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
 +	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)/include'
 +	$(INSTALL) -m 644 mergetools/include/* \
@@ -193,4 +191,4 @@ index 0000000..04a5bb0
 @@ -0,0 +1 @@
 +. "$MERGE_TOOLS_DIR/vimdiff"
 -- 
-1.8.0.8.g9bc9422
+1.8.0.8.gd6b90fb.dirty
