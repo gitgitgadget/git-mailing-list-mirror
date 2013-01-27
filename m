@@ -1,88 +1,91 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] git-remote-testpy: fix patch hashing on Python 3
-Date: Sun, 27 Jan 2013 20:21:06 +0000
-Message-ID: <20130127202106.GU7498@serenity.lan>
-References: <cover.1358686905.git.john@keeping.me.uk>
- <611a44568bdc969bcfa3d7d870560855e00baf1e.1358686905.git.john@keeping.me.uk>
- <20130126175158.GK7498@serenity.lan>
- <7vwquzzkiw.fsf@alter.siamese.dyndns.org>
- <5104B0B5.1030501@alum.mit.edu>
- <20130127141329.GN7498@serenity.lan>
- <20130127145056.GP7498@serenity.lan>
- <7vzjzuv224.fsf@alter.siamese.dyndns.org>
- <20130127200401.GT7498@serenity.lan>
- <7vr4l6v11z.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tests: turn on test-lint-shell-syntax by default
+Date: Sun, 27 Jan 2013 12:25:26 -0800
+Message-ID: <7vip6iv0eh.fsf@alter.siamese.dyndns.org>
+References: <201301120650.46479.tboegi@web.de>
+ <7vvcb37xfe.fsf@alter.siamese.dyndns.org> <50F28BB5.9080607@web.de>
+ <20130113173207.GC5973@elie.Belkin> <7v4nikiu81.fsf@alter.siamese.dyndns.org>
+ <50F5B83E.9060800@web.de> <7vk3re2ncb.fsf@alter.siamese.dyndns.org>
+ <51037E5F.8090506@web.de> <20130127093121.GA4228@elie.Belkin>
+ <5105280A.80002@web.de> <7v4ni2y1fm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 27 21:21:41 2013
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	kraai@ftbfs.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Jan 27 21:25:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzYjR-0000n9-MJ
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 21:21:38 +0100
+	id 1TzYnX-00024y-MO
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 21:25:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756036Ab3A0UVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2013 15:21:16 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:47489 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755932Ab3A0UVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2013 15:21:15 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id B1EB46064DD;
-	Sun, 27 Jan 2013 20:21:14 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -11
-X-Spam-Level: 
-X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ODnAHlzLkJJs; Sun, 27 Jan 2013 20:21:14 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 50F0E6064D7;
-	Sun, 27 Jan 2013 20:21:14 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 43212161E54F;
-	Sun, 27 Jan 2013 20:21:14 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XFExDI3TD8MV; Sun, 27 Jan 2013 20:21:14 +0000 (GMT)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 53FE4161E02E;
-	Sun, 27 Jan 2013 20:21:07 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7vr4l6v11z.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756052Ab3A0UZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2013 15:25:31 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48631 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755845Ab3A0UZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2013 15:25:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D353DCDAA;
+	Sun, 27 Jan 2013 15:25:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hzO8lP7FFPXlULve9NH+22Q96ro=; b=QET94v
+	778UxUNrneTJR5bXfeouu1nLhO0K4JcZEwar3IkM/3AzbTPU9FPPR0OWODQEptSG
+	3DCKzqv97I3USN5EUjPEiP5DjP5rjNm9goj+3zOQ2XUCCMtm4It+OLp+CijESHFM
+	iNYKefJpXSZMW497lwD7otLFurqVE4Iqabt9o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tiiz2ew9rnorVBeK5Vj1eXMsBNHjiFNz
+	mpr2DVSEZQrldQSVw6vdrbD4B5FC6qLCZK1WK4eubhxMoovZmUUKCQ2A7m49IzZI
+	Fk6wUNItvQgFTRtx4e/HSZxMJmuk9coFGYY/AqKrZoIDeivacdOZNoBecOR76ujF
+	w701XhrprNw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7F36CDA6;
+	Sun, 27 Jan 2013 15:25:28 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E437CDA3; Sun, 27 Jan 2013
+ 15:25:28 -0500 (EST)
+In-Reply-To: <7v4ni2y1fm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 27 Jan 2013 09:34:53 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B064CF8C-68BF-11E2-9F1D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214728>
 
-On Sun, Jan 27, 2013 at 12:11:20PM -0800, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> >> Thanks; will queue and wait for an Ack from Michael.
-> >> 
-> >> Does the helper function need to be named with leading underscore,
-> >> though?
-> >
-> > ...  Since this is a script
-> > not a library module I don't feel strongly about it in this case.
-> 
-> That is exactly why I asked.
+Junio C Hamano <gitster@pobox.com> writes:
 
-So I think the answer is "habit, but I probably shouldn't have put it
-in in this case".
+> If we did not care about incurring runtime performance cost, we
+> could arrange:
+> ...
+> Then you can wrap commands whose use we want to limit, perhaps like
+> this, in the test framework:
+> ...
+> 	sed () {
+> ...
+> 		done
+> 		if test -z "$must_abort"
+> 			sed "$@"
+> 		fi
+> 	}
 
+Of course, aside from missing "then", this needs to use the
+real "sed", so this has to be
 
-John
+	if test -z "$must_abort"
+        then
+		command sed "$@"
+	fi
+
+or something like that.
+
+An approach along this line may reduce both the false negatives and
+false positives down to an acceptable level, but I doubt the result
+would be efficient enough for us to tolerate the runtime penalty.
