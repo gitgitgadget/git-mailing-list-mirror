@@ -1,82 +1,164 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] lazily load commit->buffer
-Date: Sat, 26 Jan 2013 21:32:07 -0800
-Message-ID: <7vtxq3xkbs.fsf@alter.siamese.dyndns.org>
-References: <51013FDD.5030004@atlas-elektronik.com>
- <CACsJy8CEofqi9S8-SDx_O+Ko0i56aRZ4KEJrVnbFum6zzsJrJg@mail.gmail.com>
- <20130124232721.GA16036@sigill.intra.peff.net>
- <7va9ry87a0.fsf@alter.siamese.dyndns.org>
- <7vzjzx7w01.fsf@alter.siamese.dyndns.org>
- <20130125055331.GC26524@elie.Belkin>
- <FE6CC927-1915-4486-BBB8-4C109F7B5295@me.com>
- <7vip6l5l71.fsf@alter.siamese.dyndns.org>
- <20130126094026.GA9646@sigill.intra.peff.net>
- <7v8v7f1vqa.fsf@alter.siamese.dyndns.org>
- <20130126221400.GA13827@sigill.intra.peff.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] mergetools: Simplify how we handle "vim" and "defaults"
+Date: Sat, 26 Jan 2013 21:35:02 -0800
+Message-ID: <CAJDDKr692zbg+PiFWx1y81yn=s2e=C0pFhsup4z0uTRNOTMPwg@mail.gmail.com>
+References: <1359183058-51835-1-git-send-email-davvid@gmail.com>
+	<20130126121202.GH7498@serenity.lan>
+	<7v8v7fz0ii.fsf@alter.siamese.dyndns.org>
+	<CAJDDKr5cCbNi5q5_Ds-yohXR56ZfVs7YBTgJP3THjRx1=EgG9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathon Mah <jmah@me.com>, Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>,
-	Armin <netzverweigerer@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 27 06:32:32 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 27 06:35:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzKr2-0008Ct-3o
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 06:32:32 +0100
+	id 1TzKtr-0000di-01
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 06:35:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751695Ab3A0FcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2013 00:32:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58920 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751575Ab3A0FcJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2013 00:32:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 356FF8D20;
-	Sun, 27 Jan 2013 00:32:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qEuE62FHj1C6fn2vHu8aGh3msec=; b=LSPzZu
-	HcYDxXcWc7T6Kt31MeBDvR3aToqoCk1ayPSth/TsSeiShmD3n7do/3kD6xVJcmdo
-	nSkjlmmABhWeRvaPyPnFI0dxM/qV+O7Sxj7y2Bhv54f0y2EEnk+GRwqg5xHcImj/
-	zmb5pbIdCApCi1R49RnD/0H60fJWzTcjPYb6I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gSb1ROreYoTBa90SQTVZPCvqht8BbVmY
-	+RGxcrdW0sH3OC6EDli27IoNwJD7YAplcN/tHcbV9/6cZSAwN3wCOrxe8ERlLQYC
-	bqwmRIi4MpNT4QyTn7hhyogAxyYhB+OXMF9OLFh6BvOIiljv8JxATZjhfjAY1S5R
-	5BYa417FARs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 291028D1F;
-	Sun, 27 Jan 2013 00:32:09 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A0C848D1B; Sun, 27 Jan 2013
- 00:32:08 -0500 (EST)
-In-Reply-To: <20130126221400.GA13827@sigill.intra.peff.net> (Jeff King's
- message of "Sat, 26 Jan 2013 17:14:01 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E4A25B2A-6842-11E2-8A92-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752424Ab3A0FfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2013 00:35:06 -0500
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:33150 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751845Ab3A0FfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2013 00:35:04 -0500
+Received: by mail-wg0-f46.google.com with SMTP id fg15so1026016wgb.25
+        for <git@vger.kernel.org>; Sat, 26 Jan 2013 21:35:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=yC6PVv8IAj1X/kTbYYZaTLHHFi5FxqjSSKioUu45Fb4=;
+        b=wrlWZE1PO9DQLsXHK/Rjvm/+XISZnSsRtc1TS8//TIh7xIhK6hCluX0LnW1pZi8wg6
+         PWU8kdahTYfDzZKyCGaOytPXV/Hn8XdRlCkvZv8JjyMGOoDEwazPy3WnzpjcgBUgaZYS
+         k7n0ror5ZzlbxQ5W4GUaf1CxwDuRPhXt4uN4zVByA9ek+j3qa3VV1GCTgyaz8FjXJiN1
+         Whe/O4xdgj7IxVoVZDezWHJe1NssX+tC6IhHt8QrPX9u+tfbJPKhItTKqgfuegRDYiMv
+         J49cjoSoer03nc3y32Z1gszhirj8XRvmlr8I/6SnB4TQ2ciPaS/951dcC0UkNDYTS1+j
+         kkpQ==
+X-Received: by 10.180.20.138 with SMTP id n10mr4384660wie.0.1359264902224;
+ Sat, 26 Jan 2013 21:35:02 -0800 (PST)
+Received: by 10.194.24.231 with HTTP; Sat, 26 Jan 2013 21:35:02 -0800 (PST)
+In-Reply-To: <CAJDDKr5cCbNi5q5_Ds-yohXR56ZfVs7YBTgJP3THjRx1=EgG9w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214681>
 
-Jeff King <peff@peff.net> writes:
-
-> My HEAD has about 400/3000 non-unique commits, which matches your
-> numbers percentage-wise. Dropping the lines above (and always freeing)
-> takes my best-of-five for "git log -g" from 0.085s to 0.080s. Which is
-> well within the noise.  Doing "git log -g Makefile" ended up at 0.183s
-> both before and after.
+On Sat, Jan 26, 2013 at 9:07 PM, David Aguilar <davvid@gmail.com> wrote:
+> On Sat, Jan 26, 2013 at 8:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> John Keeping <john@keeping.me.uk> writes:
+>>
+>>> I'm not sure creating an 'include' directory actually buys us much over
+>>> declaring that 'vimdiff' is the real script and the others just source
+>>> it.
+>>
+>> Is 'include' really used for such a purpose?  It only houses defaults.sh
+>> as far as I can see.
+>>
+>> As that defaults.sh file is used only to define trivially empty
+>> shell functions, I wonder if it is better to get rid of it, and
+>> define these functions in line in git-mergetool--lib.sh.  Such a
+>> change would like the attached on top of the entire series.
 >
-> ... I'd be in favor of
-> dropping the lines just to decrease complexity of the code.
+> I think that's much better.
 
-I think we are in agreement, then.
+Would you like me to put this together into a proper patch?
+
+You can also squash it in (along with a removal of the
+last line of the commit message) if you prefer.
+
+
+>>  Makefile                       |  6 +-----
+>>  git-mergetool--lib.sh          | 24 ++++++++++++++++++++++--
+>>  mergetools/include/defaults.sh | 22 ----------------------
+>>  3 files changed, 23 insertions(+), 29 deletions(-)
+>>
+>> diff --git a/Makefile b/Makefile
+>> index 26f217f..f69979e 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -2724,11 +2724,7 @@ install: all
+>>         $(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
+>>         $(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
+>>         $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
+>> -       $(INSTALL) -m 644 $(filter-out mergetools/include,$(wildcard mergetools/*)) \
+>> -               '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
+>> -       $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)/include'
+>> -       $(INSTALL) -m 644 mergetools/include/* \
+>> -               '$(DESTDIR_SQ)$(mergetools_instdir_SQ)/include'
+>> +       $(INSTALL) -m 644 mergetools/* '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
+>>  ifndef NO_GETTEXT
+>>         $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(localedir_SQ)'
+>>         (cd po/build/locale && $(TAR) cf - .) | \
+>> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+>> index 7ea7510..1d0fb12 100644
+>> --- a/git-mergetool--lib.sh
+>> +++ b/git-mergetool--lib.sh
+>> @@ -57,8 +57,28 @@ setup_tool () {
+>>                 return 2
+>>         fi
+>>
+>> -       # Load the default functions
+>> -       . "$MERGE_TOOLS_DIR/include/defaults.sh"
+>> +       # Fallback definitions, to be overriden by tools.
+>> +       can_merge () {
+>> +               return 0
+>> +       }
+>> +
+>> +       can_diff () {
+>> +               return 0
+>> +       }
+>> +
+>> +       diff_cmd () {
+>> +               status=1
+>> +               return $status
+>> +       }
+>> +
+>> +       merge_cmd () {
+>> +               status=1
+>> +               return $status
+>> +       }
+>> +
+>> +       translate_merge_tool_path () {
+>> +               echo "$1"
+>> +       }
+>>
+>>         # Load the redefined functions
+>>         . "$MERGE_TOOLS_DIR/$tool"
+>> diff --git a/mergetools/include/defaults.sh b/mergetools/include/defaults.sh
+>> deleted file mode 100644
+>> index 21e63ec..0000000
+>> --- a/mergetools/include/defaults.sh
+>> +++ /dev/null
+>> @@ -1,22 +0,0 @@
+>> -# Redefined by builtin tools
+>> -can_merge () {
+>> -       return 0
+>> -}
+>> -
+>> -can_diff () {
+>> -       return 0
+>> -}
+>> -
+>> -diff_cmd () {
+>> -       status=1
+>> -       return $status
+>> -}
+>> -
+>> -merge_cmd () {
+>> -       status=1
+>> -       return $status
+>> -}
+>> -
+>> -translate_merge_tool_path () {
+>> -       echo "$1"
+>> -}
+
+
+
+-- 
+David
