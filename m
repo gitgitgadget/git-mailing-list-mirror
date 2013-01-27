@@ -1,180 +1,95 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] tests: turn on test-lint-shell-syntax by default
-Date: Sun, 27 Jan 2013 14:13:46 +0100
-Message-ID: <5105280A.80002@web.de>
-References: <201301120650.46479.tboegi@web.de> <7vvcb37xfe.fsf@alter.siamese.dyndns.org> <50F28BB5.9080607@web.de> <20130113173207.GC5973@elie.Belkin> <7v4nikiu81.fsf@alter.siamese.dyndns.org> <50F5B83E.9060800@web.de> <7vk3re2ncb.fsf@alter.siamese.dyndns.org> <51037E5F.8090506@web.de> <20130127093121.GA4228@elie.Belkin>
+From: Hans-Juergen Euler <waas.nett@gmail.com>
+Subject: Re: git-svn problems with white-space in tag names
+Date: Sun, 27 Jan 2013 15:12:27 +0100
+Message-ID: <CAK3CF+46a2LsrZ0ef5Bc2XfwCVv1LVk6YbMasa6e5kx-Dp3JTg@mail.gmail.com>
+References: <CAK3CF+4GPKBfAmgsHYnf_6nCCOCe-1d31cGsWp4jkKC28cZr0g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	kraai@ftbfs.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 27 14:14:35 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 27 15:12:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzS47-0004Pk-KQ
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 14:14:31 +0100
+	id 1TzSyZ-0006lx-M7
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 15:12:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756720Ab3A0NOJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jan 2013 08:14:09 -0500
-Received: from mout.web.de ([212.227.15.4]:59387 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756712Ab3A0NOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2013 08:14:08 -0500
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0Lr2VT-1UdTyL23ZT-00edYQ; Sun, 27 Jan 2013 14:13:47
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <20130127093121.GA4228@elie.Belkin>
-X-Provags-ID: V02:K0:y7oDUM5079PvmjCtjcL2iKNx7/SEbkw/ZtxXFuIWu0L
- qHcVhIo4HW4HVDet9FD/IrBg50mZ9zHlMvj2DZpjOI/vg3ayUk
- /d50+smtZNsB+qGUqb5udOnHGtx5kPVG7mnzNm5xlkWGSM1VEP
- kZeGsRuAHuaV61aFnYV8uY0uTWb4dl1Id9b81f4Mpcv8Ct1xiR
- WhS9VsaIcjP02nOjdbDig==
+	id S1755184Ab3A0OMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2013 09:12:31 -0500
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:44873 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754938Ab3A0OM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2013 09:12:29 -0500
+Received: by mail-wi0-f169.google.com with SMTP id hq12so805543wib.2
+        for <git@vger.kernel.org>; Sun, 27 Jan 2013 06:12:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:content-type;
+        bh=LVtuaZ3+ixaF8Rgy4rbUmYreXVzNyAkUz0wqRZWBDmI=;
+        b=i+MFr0zKQbb15Hsu0d5wtbfwu3F/Yw3SGPdzO4Ztz7aHIyrX8/aPy4EKo7ePxvE3O/
+         nr928kdNQP3QQjbDOgKsB8kmr6Xscnworly4KuNMkR1T8A5Q9UiCoBMI0k7JRYwwvbCV
+         biMMGSeeo6LLqtyhJxNjdlmS2WZTStCBVbhZtYgp+C/DDM3CDMXDSbjkfmz13vzLAPls
+         cPgHyeWzcAU0KD4CnMLDdLfTplva91Hb1l+N40l+FXVx1OcC/78MbiFtdjEgCyo3N+iB
+         9j2Ca1EwWT7j76izrztPEKuvd1zuo0PttQpKwS+v5B9d0W4vxUQTc1BjM2CYI8DzdwCP
+         e7cg==
+X-Received: by 10.180.78.66 with SMTP id z2mr5340906wiw.23.1359295948007; Sun,
+ 27 Jan 2013 06:12:28 -0800 (PST)
+Received: by 10.194.221.232 with HTTP; Sun, 27 Jan 2013 06:12:27 -0800 (PST)
+In-Reply-To: <CAK3CF+4GPKBfAmgsHYnf_6nCCOCe-1d31cGsWp4jkKC28cZr0g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214699>
 
-On 27.01.13 10:31, Jonathan Nieder wrote:
-> Hi,
->=20
-> Torsten B=C3=B6gershausen wrote:
->> On 15.01.13 21:38, Junio C Hamano wrote:
->>> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->>>> What do we think about something like this for fishing for which:
-> [...]
->>>> +which () {
->>>> +       echo >&2 "which is not portable (please use type)"
->>>> +       exit 1
->>>> +}
-> [...]
->>> 	if (
->>> 		which frotz &&
->>>                 test $(frobonitz --version" -le 2.0
->>> 	   )
->=20
-> With the above definition of "which", the only sign of a mistake woul=
-d
-> be some extra output to stderr (which is quelled when running tests i=
-n
-> the normal way).  The "exit" is caught by the subshell and just makes
-> the "if" condition false.
->=20
-> That's not so terrible --- it could still dissuade new test authors
-> from using "which".  The downside I'd worry about is that it provides
-> a false sense of security despite not catching problems like
->=20
-> 	write_script x <<-EOF &&
-> 		# Use "foo" if possible.  Otherwise use "bar".
-> 		if which foo && test $(foo --version) -le 2.0
-> 		then
-> 			...
-> 		...
-> 	EOF
-> 	./x
->=20
-> That's not a great tradeoff relative to the impact of the problem
-> being solved.
->=20
-> Don't get me wrong.  I really do want to see more static or dynamic
-> analysis of git's shell scripts in the future.  I fear that for the
-> tradeoffs to make sense, though, the analysis needs to be more
-> sophisticated:
->=20
->  * A very common error in test scripts is leaving out the "&&"
->    connecting adjacent statements, which causes early errors
->    in a test assertion to be missed and tests to pass by mistake.
->    Unfortunately the grammar of the dialect of shell used in tests is
->    not regular enough to make this easily detectable using regexps.
->=20
->  * Another common mistake is using "cd" without entering a subshell.
->    Detecting this requires counting nested parentheses and noticing
->    when a parenthesis is quoted.
->=20
->  * Another common mistake is relying on the semantics of variable
->    assignments in front of function calls.  Detecting this requires
->    recognizing which commands are function calls.
->=20
-> In the end the analysis that works best would probably involve a
-> full-fledged shell script parser.  Something like "sparse", except fo=
-r
-> shell command language.
->=20
-> Sorry I don't have more practical advice in the short term.
->=20
-> My two cents,
-> Jonathan
+This seems to be a problem of the windows version. At least with its
+complete severity. Installed git on Ubuntu in a virtual machine was
+able to clone the subversion repos past the tag with the white-space
+at the end. I am not sure but apparently this tag has not been
+converted.
 
-Jonathan,
-thanks for the review.
+The git repos I could copy from Ubuntu to windows. So far no problems
+seen in this copy on windows.
 
-My ambition is to get the check-non-portable-shell.pl into a shape
-that we can enable it by default.
-
-This may be with or without checking for "which".
-As a first step we will hopefully see less breakage for e.g. Mac OS
-caused by "echo -n" or "sed -i" usage.
-
-On the longer run, we may be able to have something more advanced.
-
-Back to the which:
-
-Writing a t0009-no-which.sh like this:
---------------------
-#!/bin/sh
-test_description=3D'Test the which'
-
-=2E ./test-lib.sh
-
-which () {
-       echo >&2 "which is not portable (please use type)"
-       exit 1
-}
-
-test_expect_success 'which is not portable' '
-	if  which frotz
-	then
-		say "frotz does not exist"
-	else
-		say "frotz does exist"
-	fi
-
-'
-test_done
---------------
-and running "make test" gives the following, at least in my system:
-
-[snip]
-
-*** t0009-no-which.sh ***
-=46ATAL: Unexpected exit with code 1
-make[2]: *** [t0009-no-which.sh] Error 1
-make[1]: *** [test] Error 2
-make: *** [test] Error 2
-
------------------------
-running inside t/
-=2E/t0009-no-which.sh --verbose
-
-Initialized empty Git repository in /Users/tb/projects/git/tb/t/trash d=
-irectory.t0009-no-which/.git/
-expecting success:=20
-        if  which frotz
-        then
-                say "frotz does not exist"
-        else
-                say "frotz does exist"
-        fi
-
-
-which is not portable (please use type)
-=46ATAL: Unexpected exit with code 1
-
-/Torsten
+2013/1/23 Hans-Juergen Euler <waas.nett@gmail.com>:
+> I have discussed already the problem a bit more in this thread
+> groups.google.com/d/topic/git-users/kfMFZ3uEFsM/discussion
+>
+> -----Operating system (specifically which version)
+> windows 7 64 bit
+>
+> ------Git version (git --version)
+> Git version 1.8.0 for windows obviously.
+> git bash and git gui installed and using
+>
+> ------Git configuration (system, home, repository)
+> hmm guess is covered with git bash and git gui. Using the standard config stuff
+>
+> using subversion
+> TortoiseSVN 1.7.11
+> Subversion 1.7.8
+> Was typically always up-to-date (within 2 months or so) with previous versions
+>
+> using an external subversion provider for storing the information
+> externally. guess the version there is older but do not know
+>
+>
+> I have tried to convert some of my external subversion data bases with
+> git-svn clone
+>
+> I have encountered a problem with one of my subversion repos. I have
+> obviously introduced about 2 years ago a problem with an additional
+> white space at the end of tag name.
+>
+> So there is an entry "tags/blabla "
+>
+> in the subversion repos. The sequential handling of the svn repos with
+> git-svn gets stuck there. I could not find a way around this. My guess
+> is that the white-space was introduced by accident on windows by
+> Tortoise-SVN.
+> Unfortunately this occurs at revision 90 something and I have almost
+> 1000 revisions stored.
+>
+> Let me know if you need more details.Thanks.
