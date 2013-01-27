@@ -1,74 +1,63 @@
-From: David Aguilar <davvid@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/4] mergetool--lib: Simplify command expressions
-Date: Sun, 27 Jan 2013 14:18:15 -0800
-Message-ID: <CAJDDKr61wS1ruPYDW4+exWBWveyS0Dp7Gmu5gWRh_99-frc_7Q@mail.gmail.com>
+Date: Sun, 27 Jan 2013 14:21:06 -0800
+Message-ID: <7v1ud6uv1p.fsf@alter.siamese.dyndns.org>
 References: <1359321886-80523-1-git-send-email-davvid@gmail.com>
-	<1359321886-80523-2-git-send-email-davvid@gmail.com>
-	<5105A56E.4010002@kdbg.org>
+ <1359321886-80523-2-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	John Keeping <john@keeping.me.uk>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Jan 27 23:18:43 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 27 23:21:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzaYh-0005mD-K2
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 23:18:39 +0100
+	id 1TzabU-0006wA-0B
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 23:21:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756677Ab3A0WSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2013 17:18:18 -0500
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:45510 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756615Ab3A0WSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2013 17:18:17 -0500
-Received: by mail-wi0-f169.google.com with SMTP id hq12so998100wib.2
-        for <git@vger.kernel.org>; Sun, 27 Jan 2013 14:18:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=aKllxextEwGBqPmq6+QRIVSFXx7SJ5GVKlP1xkGN2nM=;
-        b=nQLLK6SdvJ/vjRsTr7UnHYHB/WrTJ+VeWbZ96VyUFlcH21sCkQyDXTktGxGnEhNLJO
-         SXPBijipLKuLwXKff8gkFe/3BW93iLfq4lCPzaCX5S8mM0SJR0z7gDa6Z3cRmAj9NKaT
-         VGLmVaL3ok0s+NT4Vjn9XQqmt8B82pR0030CuVpOaCu0UkIDOjUBJNOEB2T47saJaR0E
-         acSemef6sp9RQDPDhgUkmbp3adjLBZBHU3emedGlpfp3XfhuzaRpqBelHg0a4kEeX4Ys
-         EJbf1qxC80+g6332RcDaxp0X6olbPtXkdsYQKyUbrupgDmzhCplcCYoaPlF+KFbmZ4BW
-         7Q0w==
-X-Received: by 10.180.73.212 with SMTP id n20mr4354199wiv.11.1359325095650;
- Sun, 27 Jan 2013 14:18:15 -0800 (PST)
-Received: by 10.194.24.231 with HTTP; Sun, 27 Jan 2013 14:18:15 -0800 (PST)
-In-Reply-To: <5105A56E.4010002@kdbg.org>
+	id S1756763Ab3A0WVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2013 17:21:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47573 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756615Ab3A0WVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2013 17:21:09 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C993C6A7;
+	Sun, 27 Jan 2013 17:21:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z1mxy3eoTM/b2kyiH6cg0/70zdY=; b=vWq7oB
+	EuIWsKzvpoNepcj3QFzdZYCBp789xUckBFmyySqc16Cc1YyW787cW2VjLCP02AvP
+	4QEvbRXkCRLEVct2ig48EqOO57RdQskDK23tYLuejWH6xJ5Ein/vr8y7eGHPpq2k
+	VhLFS6rHn2cwUYcONA2LjNZlZoCwx+7AxdJ5s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VDD2uDI0DT2XpouRF2UG7js5KJmAkSuH
+	MFA4Re/yUwOq6euqXnSfLOjCU/y6+miAOMEHoX31xLGQX8dCBu1pmtt+sXCNO0ns
+	rCxEszShZjgIH3KIcPGxEHG1gizB5GYU2KmtaHS+BUgidTE8qBC2x3sy1t/V8rk9
+	4QWX+EhYDCw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71013C6A6;
+	Sun, 27 Jan 2013 17:21:08 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0BC99C6A1; Sun, 27 Jan 2013
+ 17:21:07 -0500 (EST)
+In-Reply-To: <1359321886-80523-2-git-send-email-davvid@gmail.com> (David
+ Aguilar's message of "Sun, 27 Jan 2013 13:24:43 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D8DF3B9A-68CF-11E2-9CC9-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214740>
 
-On Sun, Jan 27, 2013 at 2:08 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 27.01.2013 22:24, schrieb David Aguilar:
->> Use $(command "$arg") instead of "$(command "$arg")" as the latter is
->> harder to read.
->
-> If at all, you should restrict yourself to simplify only variable
-> assignments. Because this case:
->
->> -     if test -z "$(get_merge_tool_cmd "$merge_tool")" &&
->> +     if test -z $(get_merge_tool_cmd "$merge_tool") &&
->
-> cannot work as intended: If the output of $() is empty, then without the
-> outer quotes this becomes
->
->   test -z
->
-> without an operand for -z, which is a syntax error (of the test command).
+David Aguilar <davvid@gmail.com> writes:
 
-Definitely.  I learned this the hard way when the tests broke on me while
-working it ;-)  My patch rewrites things to always use var=$(command)
-expressions with separate test "$var" evaluating them.
-Thanks for the tip,
--- 
-David
+> Use $(command "$arg") instead of "$(command "$arg")" as the latter is
+> harder to read.
+
+Did you miss my comment that this is about RHS of an assignment?
