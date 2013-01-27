@@ -1,130 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: mergetool: include custom tools in '--tool-help'
-Date: Sun, 27 Jan 2013 10:03:19 -0800
-Message-ID: <7vobgawljs.fsf@alter.siamese.dyndns.org>
-References: <20130127163442.GQ7498@serenity.lan>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [git-multimail] License unknown (#1)
+Date: Sun, 27 Jan 2013 19:52:58 +0100
+Message-ID: <5105778A.1040401@alum.mit.edu>
+References: <mhagger/git-multimail/issues/1@github.com> <mhagger/git-multimail/issues/1/12754195@github.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Jan 27 19:03:51 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: mhagger/git-multimail 
+	<reply+i-10159725-60cb2c338c594bd09d77fe2f8d628aa55114a3f6-119718@reply.github.com>,
+	Michiel Holtkamp <notifications@github.com>
+To: git discussion list <git@vger.kernel.org>,
+	Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 27 20:00:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzWa4-0007WU-Cb
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 19:03:48 +0100
+	id 1TzXSw-0001Rt-Dg
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 20:00:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754297Ab3A0SDX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2013 13:03:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65056 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754265Ab3A0SDW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2013 13:03:22 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 805D7C998;
-	Sun, 27 Jan 2013 13:03:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bEQ0Tvv9+iEsroqttPTHuNAvM6o=; b=fqWIvQ
-	JLsw/yA6E0nhZnRc9PW7pgN5rLAY4NmXxX6LwqlZ8vHri3QxHR76SLKGyR8zDsWl
-	axXAwSF7pA6a3H+69D5/vW1Fv4guttdx4zOR7XpM2nMer1L0HaTIeypINwyZ8cui
-	PYWeRfI9i2ZKIv5qbxul5OxEL4uuWz1HdechE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x4wyr0O7Va2eEoMOLqCgwOx/vpnDn/uQ
-	PaDyMLj72M+i8447hMQjXl7CfjCDcJnHY8BGOHHYzCG5I2j4iJ4I1P9PfbixAEIS
-	sGIUCgjHEBY3iYQUhnwETnARK3h71Jqr1P3z1GarZZgJHadwx8VxFDpoCAQORu2g
-	zRZoHc/i8NI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 749AEC997;
-	Sun, 27 Jan 2013 13:03:21 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9792C993; Sun, 27 Jan 2013
- 13:03:20 -0500 (EST)
-In-Reply-To: <20130127163442.GQ7498@serenity.lan> (John Keeping's message of
- "Sun, 27 Jan 2013 16:34:42 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D5A69A1E-68AB-11E2-8600-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754679Ab3A0TAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2013 14:00:09 -0500
+Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:46573 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754634Ab3A0TAH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Jan 2013 14:00:07 -0500
+X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 Jan 2013 14:00:06 EST
+X-AuditID: 12074414-b7f9b6d0000008b3-9e-5105778ec37f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id E0.A0.02227.E8775015; Sun, 27 Jan 2013 13:53:02 -0500 (EST)
+Received: from [192.168.69.140] (p57A25FD5.dip.t-dialin.net [87.162.95.213])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0RIqxUg028124
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 27 Jan 2013 13:53:00 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+In-Reply-To: <mhagger/git-multimail/issues/1/12754195@github.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrJKsWRmVeSWpSXmKPExsUixO6iqNtXzhpoMOeRsMXxp9dZLLqudDNZ
+	dC4qtpiwaBmjA4vHwlnPWTx2zrrL7tE4dyGrx+dNcgEsUdw2SYklZcGZ6Xn6dgncGS0Hogpe
+	81Q8mt/H3MC4kauLkZNDQsBE4sTtw4wQtpjEhXvr2boYuTiEBC4zSux8+4kdwjnDJHHvwlRW
+	kCpeAW2JD52HWEBsFgFVifcHprGB2GwCuhKLepqZQGxRgTCJ3tfnGCHqBSVOznwCVi8iECPx
+	b9VEsA3MAosZJd6/2wNUxMEhLGAo0XpKG8QUEsiReHK0FqScU8BR4s2SO+wgYWYBdYn184RA
+	wswC8hLb385hnsAoMAvJglkIVbOQVC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuhl5tZ
+	opeaUrqJERLIIjsYj5yUO8QowMGoxMMbnMkSKMSaWFZcmXuIUZKDSUmU914+a6AQX1J+SmVG
+	YnFGfFFpTmrxIUYJDmYlEd75lUDlvCmJlVWpRfkwKWkOFiVx3m+L1f2EBNITS1KzU1MLUotg
+	sjIcHEoSvL5lQEMFi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLiQTEaXwyMUpAUD9Be
+	ZpB23uKCxFygKETrKUZjjhk/2p8zcmz/DSSFWPLy81KlxHlNQEoFQEozSvPgFsFS2CtGcaC/
+	hXntQKp4gOkPbt4roFVMQKuye5lBVpUkIqSkGhhrJF30Hh/jlPF1kb2wtWH+iw+SvOEWPU7c
+	JywXspxNmlzEbHA8YMuOxMMzQ2QuOtcV9vl72+81cK9Nu/0h++jm/c7Kxmd5Qxr/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214714>
 
-John Keeping <john@keeping.me.uk> writes:
+I have a question about the license of contrib/hooks/post-commit-email.
+ I had assumed that since it is in the git project, which is GPLv2, and
+since it contains no contrary information, it would by implication also
+fall under GPLv2.  But the file itself contains no explicit license
+information, and it is not clear to me that the "signed-off-by" line
+implies a particular license, either.  (The signed-off-by *does* seem to
+imply that the source code is under some kind of open source license,
+but not which one.)
 
-> 'git mergetool --tool-help' only lists builtin tools, not those that the
-> user has configured via a 'mergetool.<tool>.cmd' config value.  Fix this
-> by inspecting the tools configured in this way and adding them to the
-> available and unavailable lists before displaying them.
+If somebody can explain what license the code is under and how they come
+to that conclusion, I would be very grateful.
 
-Although I am not a mergetool user, I would imagine that it would
-make sense to show it as available.
+And if Andy Parkins (the original author) is listening, please indicate
+whether you had any intent *other* than GPLv2.
 
-Just like "git help -a" lists subcommands in a way that can be easy
-to tell which ones are the standard ones and which ones are user
-customizations, this may want to give a similar distinction, though.
-I dunno.
+For anybody who is interested, the file was first committed in
+4557e0de5b and has been modified by several authors since then.
 
->
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
-> After the recent changes to mergetool, do we want to do something like
-> this as well, so that 'git mergetool --tool-help' will display any tools
-> configured by the user/system administrator?
->
-> This is on top of jk/mergetool.
->
->  git-mergetool--lib.sh | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
->
-> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> index 1d0fb12..f9a617c 100644
-> --- a/git-mergetool--lib.sh
-> +++ b/git-mergetool--lib.sh
-> @@ -206,6 +206,29 @@ list_merge_tool_candidates () {
->  	esac
->  }
->  
-> +# Adds tools from git-config to the available and unavailable lists.
-> +# The tools are found in "$1.<tool>.cmd".
-> +add_config_tools() {
-> +	section=$1
-> +
-> +	eval $(git config --get-regexp $section'\..*\.cmd' |
-> +		while read -r key value
-> +		do
-> +			tool=${key#mergetool.}
-> +			tool=${tool%.cmd}
-> +
-> +			tool=$(echo "$tool" |sed -e 's/'\''/'\''\\'\'\''/g')
-> +
-> +			cmd=$(eval -- "set -- $value"; echo "$1")
-> +			if type "$cmd" >/dev/null 2>&1
-> +			then
-> +				echo "available=\"\${available}\"'$tool'\"\$LF\""
-> +			else
-> +				echo "unavailable=\"\${unavailable}\"'$tool'\"\$LF\""
-> +			fi
-> +		done)
-> +}
-> +
->  show_tool_help () {
->  	unavailable= available= LF='
->  '
-> @@ -223,6 +246,12 @@ show_tool_help () {
->  		fi
->  	done
->  
-> +	add_config_tools mergetool
-> +	if diff_mode
-> +	then
-> +		add_config_tools difftool
-> +	fi
-> +
->  	cmd_name=${TOOL_MODE}tool
->  	if test -n "$available"
->  	then
+Given the pretty clear open-sourciness of the script, I don't think this
+has to be made into a big issue.  But it would be nice to state the
+license explicitly for future users' information.
+
+Thanks,
+Michael
+
+On 01/27/2013 02:38 PM, Michiel Holtkamp wrote:
+> Actually, I'm not sure that it is GPLv2 for the original script. The
+> COPYING file in the main project declares the project as GPLv2, but it
+> also says that people contributing should make their preferences (for
+> licensing) known. Maybe we can assume it's GPLv2, (as the original
+> writer might have assumed it was GPLv2), but it's not explicitly stated
+> so I'm not sure (IANAL).
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
