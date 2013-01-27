@@ -1,157 +1,90 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] mergetools: Simplify how we handle "vim" and "defaults"
-Date: Sat, 26 Jan 2013 21:07:49 -0800
-Message-ID: <CAJDDKr5cCbNi5q5_Ds-yohXR56ZfVs7YBTgJP3THjRx1=EgG9w@mail.gmail.com>
-References: <1359183058-51835-1-git-send-email-davvid@gmail.com>
-	<20130126121202.GH7498@serenity.lan>
-	<7v8v7fz0ii.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 6/8] git-remote-testpy: hash bytes explicitly
+Date: Sat, 26 Jan 2013 21:30:00 -0800
+Message-ID: <7vy5ffxkfb.fsf@alter.siamese.dyndns.org>
+References: <cover.1358686905.git.john@keeping.me.uk>
+ <611a44568bdc969bcfa3d7d870560855e00baf1e.1358686905.git.john@keeping.me.uk>
+ <20130126175158.GK7498@serenity.lan>
+ <7vwquzzkiw.fsf@alter.siamese.dyndns.org> <5104B0B5.1030501@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 27 06:08:56 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Jan 27 06:30:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzKU7-000142-DO
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 06:08:51 +0100
+	id 1TzKpH-0007e0-79
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 06:30:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750731Ab3A0FHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2013 00:07:52 -0500
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:54076 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750733Ab3A0FHv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2013 00:07:51 -0500
-Received: by mail-wi0-f173.google.com with SMTP id hn17so586517wib.12
-        for <git@vger.kernel.org>; Sat, 26 Jan 2013 21:07:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=6ERYlfPvf0QbsCY1TPh9dY2qRPdqxOusVeLFRAmOvI8=;
-        b=FLZvMUDFcGrg2fS9Jkm6cZ7tW3KiyISYARunbmL/42ekrs7Ay48j1ykUP3JvOTq0PT
-         iwjdWvKHLVIFoKwIqoPm0yK/32KpdxK0MSrlEFhp4wfPVHAghXizA7IicWAwqtzgbvEw
-         lYbGzVyPtrwcYEAetgBREuOSTzOdovxPAU6HaCRsA10Co9KE6yrknPE093lkap9ZkenD
-         YrrZCSKXuHR3kBs4mlVTdMxfseppD5X4Unwlk4HWZPt/mZ/FT7MUhDuf9NH3V24yOSHD
-         kagCJnEjsLblRdE95qYIHxhrEZOvf3i6/7NX2XH/r3739E7EfFQ+rjDsRJrKl4/S4Eul
-         a0MQ==
-X-Received: by 10.194.58.175 with SMTP id s15mr15396314wjq.31.1359263269428;
- Sat, 26 Jan 2013 21:07:49 -0800 (PST)
-Received: by 10.194.24.231 with HTTP; Sat, 26 Jan 2013 21:07:49 -0800 (PST)
-In-Reply-To: <7v8v7fz0ii.fsf@alter.siamese.dyndns.org>
+	id S1751413Ab3A0FaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2013 00:30:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57829 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750765Ab3A0FaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2013 00:30:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 989078C3F;
+	Sun, 27 Jan 2013 00:30:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fcXac2WlkVJPa7p8305RiswCAa4=; b=r51WZy
+	BdFCBU14R0xNDafxZ2M+MoHN+r7Yx34SSMvIqvHC3+/LCy8/5P0/fy4VR3aUje8c
+	EzDMJxX2CMaJXvVw3v5jQW82V1BdmyEFx5ICbpLc+85Rv0Oag/fMIt7J9lZbKI7n
+	UIjTxrE8u0043Kjrcwl0GZhc8x8evbpHgPo6s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u5kpDPob5kD4axhpCzstZDUO/BV3d9T5
+	pd1azZ54Yyc+qlhbNsnllNZaxUzakoqBevsmjNtFqYpOqKIkoz080+PGJifjdRuf
+	RbHPcqPLarI3NWO6O6hUKIZqDe6MgYBMVv9KScq0M17umzAlxVqNl7irGYEqYIkI
+	O+TaXKKWFiw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CA1E8C3C;
+	Sun, 27 Jan 2013 00:30:04 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4882E8C3A; Sun, 27 Jan 2013
+ 00:30:03 -0500 (EST)
+In-Reply-To: <5104B0B5.1030501@alum.mit.edu> (Michael Haggerty's message of
+ "Sun, 27 Jan 2013 05:44:37 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 99FA1A04-6842-11E2-8235-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214678>
 
-On Sat, Jan 26, 2013 at 8:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> John Keeping <john@keeping.me.uk> writes:
->
->> I'm not sure creating an 'include' directory actually buys us much over
->> declaring that 'vimdiff' is the real script and the others just source
->> it.
->
-> Is 'include' really used for such a purpose?  It only houses defaults.sh
-> as far as I can see.
->
-> As that defaults.sh file is used only to define trivially empty
-> shell functions, I wonder if it is better to get rid of it, and
-> define these functions in line in git-mergetool--lib.sh.  Such a
-> change would like the attached on top of the entire series.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-I think that's much better.
+> This will still fail under Python 2.x if repo.path is a byte string that
+> contains non-ASCII characters.  And it will fail under Python 3.1 and
+> later if repo.path contains characters using the surrogateescape
+> encoding option [1],...
+> Here you don't really need byte-for-byte correctness; it would be enough
+> to get *some* byte string that is unique for a given input ...
 
+Yeek.
 
->  Makefile                       |  6 +-----
->  git-mergetool--lib.sh          | 24 ++++++++++++++++++++++--
->  mergetools/include/defaults.sh | 22 ----------------------
->  3 files changed, 23 insertions(+), 29 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 26f217f..f69979e 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2724,11 +2724,7 @@ install: all
->         $(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
->         $(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
->         $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
-> -       $(INSTALL) -m 644 $(filter-out mergetools/include,$(wildcard mergetools/*)) \
-> -               '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
-> -       $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)/include'
-> -       $(INSTALL) -m 644 mergetools/include/* \
-> -               '$(DESTDIR_SQ)$(mergetools_instdir_SQ)/include'
-> +       $(INSTALL) -m 644 mergetools/* '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
->  ifndef NO_GETTEXT
->         $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(localedir_SQ)'
->         (cd po/build/locale && $(TAR) cf - .) | \
-> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> index 7ea7510..1d0fb12 100644
-> --- a/git-mergetool--lib.sh
-> +++ b/git-mergetool--lib.sh
-> @@ -57,8 +57,28 @@ setup_tool () {
->                 return 2
->         fi
->
-> -       # Load the default functions
-> -       . "$MERGE_TOOLS_DIR/include/defaults.sh"
-> +       # Fallback definitions, to be overriden by tools.
-> +       can_merge () {
-> +               return 0
-> +       }
-> +
-> +       can_diff () {
-> +               return 0
-> +       }
-> +
-> +       diff_cmd () {
-> +               status=1
-> +               return $status
-> +       }
-> +
-> +       merge_cmd () {
-> +               status=1
-> +               return $status
-> +       }
-> +
-> +       translate_merge_tool_path () {
-> +               echo "$1"
-> +       }
->
->         # Load the redefined functions
->         . "$MERGE_TOOLS_DIR/$tool"
-> diff --git a/mergetools/include/defaults.sh b/mergetools/include/defaults.sh
-> deleted file mode 100644
-> index 21e63ec..0000000
-> --- a/mergetools/include/defaults.sh
-> +++ /dev/null
-> @@ -1,22 +0,0 @@
-> -# Redefined by builtin tools
-> -can_merge () {
-> -       return 0
-> -}
-> -
-> -can_diff () {
-> -       return 0
-> -}
-> -
-> -diff_cmd () {
-> -       status=1
-> -       return $status
-> -}
-> -
-> -merge_cmd () {
-> -       status=1
-> -       return $status
-> -}
-> -
-> -translate_merge_tool_path () {
-> -       echo "$1"
-> -}
+As we do not care about the actual value at all, how about doing
+something like this instead?
 
+ git-remote-testgit.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
--- 
-David
+diff --git a/git-remote-testgit.py b/git-remote-testgit.py
+index 5f3ebd2..705750d 100644
+--- a/git-remote-testgit.py
++++ b/git-remote-testgit.py
+@@ -40,7 +40,7 @@ def get_repo(alias, url):
+     repo.get_head()
+ 
+     hasher = _digest()
+-    hasher.update(repo.path)
++    hasher.update(".".join([str(ord(c)) for c in repo.path]))
+     repo.hash = hasher.hexdigest()
+ 
+     repo.get_base_path = lambda base: os.path.join(
