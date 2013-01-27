@@ -1,94 +1,102 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v3 2/2] mergetools: Simplify how we handle "vim" and "defaults"
-Date: Sat, 26 Jan 2013 19:56:45 -0800
-Message-ID: <CAJDDKr7E1NkMV0_G+6oY9O3iCS9OCEzR1HYssKpwh77swDUcig@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/2] mergetools: Simplify how we handle "vim" and
+ "defaults"
+Date: Sat, 26 Jan 2013 20:25:38 -0800
+Message-ID: <7vd2wrz1z1.fsf@alter.siamese.dyndns.org>
 References: <1359247573-75825-1-git-send-email-davvid@gmail.com>
-	<7vobgbz58a.fsf@alter.siamese.dyndns.org>
+ <7vobgbz58a.fsf@alter.siamese.dyndns.org>
+ <CAJDDKr7E1NkMV0_G+6oY9O3iCS9OCEzR1HYssKpwh77swDUcig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 27 04:57:23 2013
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 27 05:37:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzJMt-0008QH-CN
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 04:57:19 +0100
+	id 1TzJzS-00088P-Sn
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 05:37:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755574Ab3A0D4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2013 22:56:48 -0500
-Received: from mail-ee0-f41.google.com ([74.125.83.41]:59933 "EHLO
-	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752937Ab3A0D4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2013 22:56:47 -0500
-Received: by mail-ee0-f41.google.com with SMTP id c13so774806eek.14
-        for <git@vger.kernel.org>; Sat, 26 Jan 2013 19:56:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=8jHhMZKaeDIhH4cSAT130lXnjiOtjYvJR4DpFW8ijmU=;
-        b=oPW7WWbmSFrN55fpWZ5Z0udFGPFCRfrFpZEwHnGj9e7wWL/L0YlUbt+QBidtg6NTDe
-         Ot3er/rHj9TZO4msIZh4WaDKd8XQydFAr0+6IQ4YBNS20LycdA6W5cHkj70I2cSJ0La0
-         UYqUQyUqruZ7/3Fcny/FAqtMiJ0x8EKNOi9aGhLW6qqddnYVko8CiNxtXLs6CGuyAehj
-         oR2rf/dYW3W4SCRLcjopeuPOS3PCdpfFCd/KoO4lkI3RjeOy98kW05E9dgl7ZH+tdU8A
-         wBN7ob7awH8Bsm67HHLujdV7PSGey/z5P57xw+F/uRZQyXQLWgYya/MHZXHcCkq11DD0
-         GTfg==
-X-Received: by 10.14.219.72 with SMTP id l48mr36704026eep.37.1359259005833;
- Sat, 26 Jan 2013 19:56:45 -0800 (PST)
-Received: by 10.14.125.135 with HTTP; Sat, 26 Jan 2013 19:56:45 -0800 (PST)
-In-Reply-To: <7vobgbz58a.fsf@alter.siamese.dyndns.org>
+	id S1754740Ab3A0EZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2013 23:25:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56400 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752574Ab3A0EZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2013 23:25:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF018CD6C;
+	Sat, 26 Jan 2013 23:25:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=m8elPYY6M1RslaLInfRhZ6EBWQk=; b=pq3bXD
+	RysbN+Rau+3FQFTOcFzghQzOdPAhJip5jDxr06JC6etw6nMYhO4TWS06J4JII+9l
+	yjMnjA2EmPE4KPo+3t6fcuwU1r5imkOFU2b3BCYpJu70WZ20tRAHGcJr5qbOXG/y
+	GxW7fjHC10EDdMoP7cD8LlHsubQTGCQel1BxU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ef9ZLOYSwr3jHIhAEWyKG392WyZfsZfa
+	svQl6/33ZA7BfGXmDRg0woRvAwImCfmWLSFdfdRixYvM+8kXsSSwowZOzQ94VmgA
+	aTJ5AgoaOIyFV/fmbajrftI+SDbWWBlorBMhRDAww0fkHHuau12mcmBCwsnGM3Cz
+	0sc82nKgaYg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4430CD6B;
+	Sat, 26 Jan 2013 23:25:40 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2EA98CD67; Sat, 26 Jan 2013
+ 23:25:40 -0500 (EST)
+In-Reply-To: <CAJDDKr7E1NkMV0_G+6oY9O3iCS9OCEzR1HYssKpwh77swDUcig@mail.gmail.com> (David
+ Aguilar's message of "Sat, 26 Jan 2013 19:56:45 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9B458ED8-6839-11E2-9916-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214674>
 
-On Sat, Jan 26, 2013 at 7:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> David Aguilar <davvid@gmail.com> writes:
->
->> @@ -44,19 +46,9 @@ valid_tool () {
->>  }
->>
->>  setup_tool () {
->> -     case "$1" in
->> -     vim*|gvim*)
->> -             tool=vim
->> -             ;;
->> -     *)
->> -             tool="$1"
->> -             ;;
->> -     esac
->
-> This part was an eyesore every time I looked at mergetools scripts.
-> Good riddance.
->
-> Is there still other special case like this, or was this the last
-> one?
->
-> Thanks, both of you, for working on this.
+David Aguilar <davvid@gmail.com> writes:
 
-I believe that was the last special case. :-)  It should be easier
-to auto-generate a list of tools for use in the documentation now.
-That'll be the the next topic I look into.
+> I have a question. John mentioned that we can replace the use of
+> "$(..)" with $(..) in shell.
 
-I have a question. John mentioned that we can replace the use of
-"$(..)" with $(..) in shell.
+I think it isn't so much about $(...) but more about quoting the RHS
+of assignment.
 
-I have a trivial style patches to replace "$(..)" with $(..)
-sitting uncommitted in my tree for mergetool--lib.
+Consider these:
 
-Grepping the rest of the tree shows that there are many
-occurrences of the "$(..)" idiom in the shell code.
+	var="$another_var"
+	var="$(command)"
+	var="$one_var$two_var"
+	var="$another_var$(command)"
 
-Is this a general rule that should be in CodingStyle,
-or is it better left as-is?  Are there cases where DQ should
-be used around $(..)?  My understanding is "no", but I don't
-know whether that is correct.
+all of which _can_ be done without dq around the RHS, because the
+result of variable substitution and command substitution will not be
+subject to further word splitting.
 
-Doing the documentation stuff is more important IMO so I probably
-shouldn't let myself get too distracted by it, though I am curious.
--- 
-David
+I however find it easier to read with dq around the latter two, i.e.
+substitution and then concatenation of the result of substitution.
+The extra dq makes the intent of the author clearer, especially
+while reviewing a script written by other people whose understanding
+of the syntax I am not sure about ;-).  Between var=$another and
+var="$another", the latter is slightly preferrable for the same
+reason.
+
+One questionable case is:
+
+	var=$(command "with quoted parameter")
+
+It makes it a bit harder to scan if there is an extra set of dq
+around RHS, i.e.
+
+	var="$(command "with quoted parameter")"
+
+That case is easier to read without dq around it, or you could cheat
+by doing this:
+
+	var="$(command 'with quoted parameter')"
+
+In any case, as long as the result is correct, I do not have very
+strong preference either way.
