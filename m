@@ -1,102 +1,216 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] mergetools: Simplify how we handle "vim" and
- "defaults"
-Date: Sat, 26 Jan 2013 20:25:38 -0800
-Message-ID: <7vd2wrz1z1.fsf@alter.siamese.dyndns.org>
-References: <1359247573-75825-1-git-send-email-davvid@gmail.com>
- <7vobgbz58a.fsf@alter.siamese.dyndns.org>
- <CAJDDKr7E1NkMV0_G+6oY9O3iCS9OCEzR1HYssKpwh77swDUcig@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 6/8] git-remote-testpy: hash bytes explicitly
+Date: Sun, 27 Jan 2013 05:44:37 +0100
+Message-ID: <5104B0B5.1030501@alum.mit.edu>
+References: <cover.1358686905.git.john@keeping.me.uk> <611a44568bdc969bcfa3d7d870560855e00baf1e.1358686905.git.john@keeping.me.uk> <20130126175158.GK7498@serenity.lan> <7vwquzzkiw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 27 05:37:15 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 27 05:56:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzJzS-00088P-Sn
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 05:37:11 +0100
+	id 1TzKII-0005sz-AP
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 05:56:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754740Ab3A0EZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2013 23:25:42 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56400 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752574Ab3A0EZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2013 23:25:41 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF018CD6C;
-	Sat, 26 Jan 2013 23:25:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=m8elPYY6M1RslaLInfRhZ6EBWQk=; b=pq3bXD
-	RysbN+Rau+3FQFTOcFzghQzOdPAhJip5jDxr06JC6etw6nMYhO4TWS06J4JII+9l
-	yjMnjA2EmPE4KPo+3t6fcuwU1r5imkOFU2b3BCYpJu70WZ20tRAHGcJr5qbOXG/y
-	GxW7fjHC10EDdMoP7cD8LlHsubQTGCQel1BxU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ef9ZLOYSwr3jHIhAEWyKG392WyZfsZfa
-	svQl6/33ZA7BfGXmDRg0woRvAwImCfmWLSFdfdRixYvM+8kXsSSwowZOzQ94VmgA
-	aTJ5AgoaOIyFV/fmbajrftI+SDbWWBlorBMhRDAww0fkHHuau12mcmBCwsnGM3Cz
-	0sc82nKgaYg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4430CD6B;
-	Sat, 26 Jan 2013 23:25:40 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2EA98CD67; Sat, 26 Jan 2013
- 23:25:40 -0500 (EST)
-In-Reply-To: <CAJDDKr7E1NkMV0_G+6oY9O3iCS9OCEzR1HYssKpwh77swDUcig@mail.gmail.com> (David
- Aguilar's message of "Sat, 26 Jan 2013 19:56:45 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9B458ED8-6839-11E2-9916-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755480Ab3A0Eon convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Jan 2013 23:44:43 -0500
+Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:46034 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754727Ab3A0Eom (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Jan 2013 23:44:42 -0500
+X-AuditID: 12074411-b7fa36d0000008cc-55-5104b0b90480
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 75.6E.02252.9B0B4015; Sat, 26 Jan 2013 23:44:41 -0500 (EST)
+Received: from [192.168.69.140] (p57A25FD5.dip.t-dialin.net [87.162.95.213])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0R4ibu2032724
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 26 Jan 2013 23:44:39 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+In-Reply-To: <7vwquzzkiw.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsUixO6iqLtzA0ugwd4D3BZdV7qZLBp6rzBb
+	3Di/i9Vi/o2zjA4sHjtn3WX3OPvoAbPHxUvKHp83yQWwRHHbJCWWlAVnpufp2yVwZxxeGFVw
+	TKvi5aO0BsbXil2MnBwSAiYSl1f+ZoewxSQu3FvP1sXIxSEkcJlRYsLM5cwQzhkmib1vtjOC
+	VPEKaEtsb+ljA7FZBFQl1rT0MoHYbAK6Eot6msFsUYEwid7X56DqBSVOznzCAmKLCKhJTGw7
+	BGYzC+RI3O/4DTZHWMBF4lRLCxPEsouMEvObzoMN4hQwk9j0o4MRokFH4l3fA2YIW16ieets
+	5gmMArOQ7JiFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3RN9XIzS/RSU0o3MULC
+	WXAH44yTcocYBTgYlXh4gzNZAoVYE8uKK3MPMUpyMCmJ8s5YDxTiS8pPqcxILM6ILyrNSS0+
+	xCjBwawkwju/EijHm5JYWZValA+TkuZgURLn5Vui7ickkJ5YkpqdmlqQWgSTleHgUJLgTQYZ
+	KliUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K1PhiYKyCpHiA9kpuANlbXJCYCxSF
+	aD3FqMux/Xf7c0Yhlrz8vFQpcd6tIDsEQIoySvPgVsCS1ytGcaCPhXlbQap4gIkPbtIroCVM
+	QEuye5lBlpQkIqSkGhg3C945anmC9dr1VO+ZaSy/DoW/y897y7+hfvrfrmd8CRObTlapLZDf
+	Mi3CVcA9f62ow/FdDSwFR2KD9ER3Ce05q7+HV9Kq89ya/MoNq4/VdXklzOvx/eOR 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214675>
 
-David Aguilar <davvid@gmail.com> writes:
+On 01/26/2013 10:44 PM, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+>=20
+>> Junio, can you replace the queued 0846b0c (git-remote-testpy: hash b=
+ytes
+>> explicitly) with this?
+>>
+>> I hadn't realised that the "hex" encoding we chose before is a "byte=
+s to
+>> bytes" encoding so it just fails with an error on Python 3 in the sa=
+me
+>> way as the original code.
+>>
+>> Since we want to convert a Unicode string to bytes I think UTF-8 rea=
+lly
+>> is the best option here.
+>=20
+> Ahh.  I think it is already in "next", so this needs to be turned
+> into an incremental to flip 'hex' to 'utf-8', with the justification
+> being these five lines above.
+>=20
+> Thanks for catching.
+>=20
+>>
+>>  git-remote-testpy.py | 8 ++++----
+>>  1 file changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/git-remote-testpy.py b/git-remote-testpy.py
+>> index d94a66a..f8dc196 100644
+>> --- a/git-remote-testpy.py
+>> +++ b/git-remote-testpy.py
+>> @@ -31,9 +31,9 @@ from git_remote_helpers.git.exporter import GitExp=
+orter
+>>  from git_remote_helpers.git.importer import GitImporter
+>>  from git_remote_helpers.git.non_local import NonLocalGit
+>> =20
+>> -if sys.hexversion < 0x01050200:
+>> -    # os.makedirs() is the limiter
+>> -    sys.stderr.write("git-remote-testgit: requires Python 1.5.2 or =
+later.\n")
+>> +if sys.hexversion < 0x02000000:
+>> +    # string.encode() is the limiter
+>> +    sys.stderr.write("git-remote-testgit: requires Python 2.0 or la=
+ter.\n")
+>>      sys.exit(1)
+>> =20
+>>  def get_repo(alias, url):
+>> @@ -45,7 +45,7 @@ def get_repo(alias, url):
+>>      repo.get_head()
+>> =20
+>>      hasher =3D _digest()
+>> -    hasher.update(repo.path)
+>> +    hasher.update(repo.path.encode('utf-8'))
+>>      repo.hash =3D hasher.hexdigest()
+>> =20
+>>      repo.get_base_path =3D lambda base: os.path.join(
 
-> I have a question. John mentioned that we can replace the use of
-> "$(..)" with $(..) in shell.
+This will still fail under Python 2.x if repo.path is a byte string tha=
+t
+contains non-ASCII characters.  And it will fail under Python 3.1 and
+later if repo.path contains characters using the surrogateescape
+encoding option [1], as it will if the original command-line argument
+contained bytes that cannot be decoded into Unicode using the user's
+default encoding:
 
-I think it isn't so much about $(...) but more about quoting the RHS
-of assignment.
+    $ python3 --version
+    Python 3.2.3
+    $ python3 -c "
+    import sys
+    print(repr(sys.argv[1]))
+    print(repr(sys.argv[1].encode('utf-8')))
+    " $(echo fran=E7ais|iconv -t latin1)
+    'fran\udce7ais'
+    Traceback (most recent call last):
+      File "<string>", line 4, in <module>
+    UnicodeEncodeError: 'utf-8' codec can't encode character '\udce7' i=
+n
+position 4: surrogates not allowed
 
-Consider these:
+I'm not sure what happens in Python 3.0.
 
-	var="$another_var"
-	var="$(command)"
-	var="$one_var$two_var"
-	var="$another_var$(command)"
+I think the "modern" way to handle this situation in Python 3.1+ is via
+PEP 383's surrogateescape encoding option [1]:
 
-all of which _can_ be done without dq around the RHS, because the
-result of variable substitution and command substitution will not be
-subject to further word splitting.
+    repo.path.encode('utf-8', 'surrogateescape')
 
-I however find it easier to read with dq around the latter two, i.e.
-substitution and then concatenation of the result of substitution.
-The extra dq makes the intent of the author clearer, especially
-while reviewing a script written by other people whose understanding
-of the syntax I am not sure about ;-).  Between var=$another and
-var="$another", the latter is slightly preferrable for the same
-reason.
+Basically, byte strings that come from the OS are automatically decoded
+into Unicode strings using
 
-One questionable case is:
+    s =3D b.decode(sys.getfilesystemencoding(), 'surrogateescape')
 
-	var=$(command "with quoted parameter")
+If the string needs to be passed back to the filesystem as a byte strin=
+g
+it is via
 
-It makes it a bit harder to scan if there is an extra set of dq
-around RHS, i.e.
+    b =3D s.encode(sys.getfilesystemencoding(), 'surrogateescape')
 
-	var="$(command "with quoted parameter")"
+My understanding is that the surrogateescape mechanism guarantees that
+the round-trip bytestring -> string -> bytestring gives back the
+original byte string, which is what you want for things like filenames.
+ But a Unicode string that contains surrogate escape characters *cannot=
+*
+be encoded without the 'surrogateescape' option.
 
-That case is easier to read without dq around it, or you could cheat
-by doing this:
+'surrogateescape' is not supported in Python 3.0, but I think it would
+be quite acceptable only to support Python 3.x for x >=3D 1.
 
-	var="$(command 'with quoted parameter')"
+But 'surrogateescape' doesn't seem to be supported at all in Python 2.x
+(I tested 2.7.3 and it's not there).
 
-In any case, as long as the result is correct, I do not have very
-strong preference either way.
+Here you don't really need byte-for-byte correctness; it would be enoug=
+h
+to get *some* byte string that is unique for a given input (ideally,
+consistent with ASCII or UTF-8 for backwards compatibility).  So you
+could use
+
+    b =3D s.encode('utf-8', 'backslashreplace')
+
+Unfortunately, this doesn't work under Python 2.x:
+
+    $ python2 -c "
+    import sys
+    print(repr(sys.argv[1]))
+    print(repr(sys.argv[1].encode('utf-8', 'backslashreplace')))
+    " $(echo fran=E7ais|iconv -t latin1)
+    'fran\xe7ais'
+    Traceback (most recent call last):
+      File "<string>", line 4, in <module>
+    UnicodeDecodeError: 'ascii' codec can't decode byte 0xe7 in positio=
+n
+4: ordinal not in range(128)
+
+Apparently when you call bytestring.encode(), Python first tries to
+decode the string to Unicode using the 'ascii' encoding.
+
+So to handle all of the cases across Python versions as closely as
+possible to the old 2.x code, it might be necessary to make the code
+explicitly depend on the Python version number, like:
+
+    hasher =3D _digest()
+    if sys.hexversion < 0x03000000:
+        pathbytes =3D repo.path
+    elif sys.hexversion < 0x03010000:
+        # If support for Python 3.0.x is desired (note: result can
+        # be different in this case than under 2.x or 3.1+):
+        pathbytes =3D repo.path.encode(sys.getfilesystemencoding(),
+'backslashreplace')
+    else
+        pathbytes =3D repo.path.encode(sys.getfilesystemencoding(),
+'surrogateescape')
+    hasher.update(pathbytes)
+    repo.hash =3D hasher.hexdigest()
+
+Michael
+
+[1] http://www.python.org/dev/peps/pep-0383/
+
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
