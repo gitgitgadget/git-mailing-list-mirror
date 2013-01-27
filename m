@@ -1,128 +1,104 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] tests: turn on test-lint-shell-syntax by default
-Date: Sun, 27 Jan 2013 01:31:21 -0800
-Message-ID: <20130127093121.GA4228@elie.Belkin>
-References: <201301120650.46479.tboegi@web.de>
- <7vvcb37xfe.fsf@alter.siamese.dyndns.org>
- <50F28BB5.9080607@web.de>
- <20130113173207.GC5973@elie.Belkin>
- <7v4nikiu81.fsf@alter.siamese.dyndns.org>
- <50F5B83E.9060800@web.de>
- <7vk3re2ncb.fsf@alter.siamese.dyndns.org>
- <51037E5F.8090506@web.de>
+Subject: Re: [PATCH 2/2] fetch-pack: avoid repeatedly re-scanning pack
+ directory
+Date: Sun, 27 Jan 2013 02:27:53 -0800
+Message-ID: <20130127102753.GB4228@elie.Belkin>
+References: <20130126224011.GA20675@sigill.intra.peff.net>
+ <20130126224043.GB20849@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	kraai@ftbfs.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Jan 27 10:31:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 27 11:28:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzOai-0006PL-CU
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 10:31:56 +0100
+	id 1TzPTL-0000Y4-QC
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jan 2013 11:28:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756323Ab3A0Jbe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jan 2013 04:31:34 -0500
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:47980 "EHLO
+	id S1756392Ab3A0K2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2013 05:28:00 -0500
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:54587 "EHLO
 	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756300Ab3A0Jba convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Jan 2013 04:31:30 -0500
-Received: by mail-pb0-f45.google.com with SMTP id rq13so943648pbb.32
-        for <git@vger.kernel.org>; Sun, 27 Jan 2013 01:31:29 -0800 (PST)
+	with ESMTP id S1756362Ab3A0K16 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2013 05:27:58 -0500
+Received: by mail-pb0-f45.google.com with SMTP id rq13so953855pbb.32
+        for <git@vger.kernel.org>; Sun, 27 Jan 2013 02:27:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=LVVR1T1SfER9Rx9rBheQbtVmemDDvmabknRtz9PrU68=;
-        b=E1SV4R5Cy1w44kI4CNHaps3TS6QySA6TvX00uI4xap15v6HP7Rzsb4MBKAu58kaWgP
-         G52qyM3UY4WeFvh4LVjISfvL77SCQ4Svu0YlZXTHaTHY++VPjJMFMXaOyPDFtvOv1Q3L
-         OW2assPp4K+RsMwNCcqkyQkqtLpcUIFzFWkiR6XZc3P2SqJ7GqddfenxQhn4wAgAro9d
-         sARu7mBx1buuYPDwhRRUImUN14144tyjI656nAVxPQJEyDfKFqDEpPteCKOGVfVfv4ic
-         D8BnCY6w/YDUeKNE6oYPqJQRaFKPNwNjSM9lENmOexILL69YAp1vjZLy+yoOCs5RvC82
-         hHRQ==
-X-Received: by 10.68.203.198 with SMTP id ks6mr28341214pbc.35.1359279089508;
-        Sun, 27 Jan 2013 01:31:29 -0800 (PST)
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Uyx3sJl8vDqCFVun+harlLJMOMCA4juGChnRfsoDtv4=;
+        b=sG4kbmnyVPyVYIy6ZtbRpnSrx+I815iFXDc8SL5cQaGlTewMP+ynd+D1Se+5CWMn3m
+         CqvS+F49eP2HGew8IMLEgrW+baDqJ992TbRs6mCiL5TovVhn0aLrb+RfjN9yFJ+XinHW
+         4QnKA9m8nFpNQPpvsuEwvMuaqN4DeJBL+sWc06QdbR8ggUa8ofFomGQOxgjEBRNomhtZ
+         5UPI/lHXsYtNEekwFsOOgvHgLKoYwYrbV/f14DtRt8Xyh3Tgg0mw/Jko7KJJxCfT8RHH
+         zDjoE+gCtmXUjtvkta1a+AZYJ5PidKHRBnrJ/9WgYB9S2Z//HhFHliwmTTFgtg5o7rxb
+         rMKg==
+X-Received: by 10.66.83.6 with SMTP id m6mr27384408pay.52.1359282478363;
+        Sun, 27 Jan 2013 02:27:58 -0800 (PST)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id sy1sm4090054pbc.66.2013.01.27.01.31.27
+        by mx.google.com with ESMTPS id qo10sm4160878pbc.58.2013.01.27.02.27.55
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 27 Jan 2013 01:31:28 -0800 (PST)
+        Sun, 27 Jan 2013 02:27:57 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <51037E5F.8090506@web.de>
+In-Reply-To: <20130126224043.GB20849@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214690>
 
 Hi,
 
-Torsten B=C3=B6gershausen wrote:
-> On 15.01.13 21:38, Junio C Hamano wrote:
->> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Jeff King wrote:
 
->>> What do we think about something like this for fishing for which:
-[...]
->>> +which () {
->>> +       echo >&2 "which is not portable (please use type)"
->>> +       exit 1
->>> +}
-[...]
->> 	if (
->> 		which frotz &&
->>                 test $(frobonitz --version" -le 2.0
->> 	   )
+> When we look up a sha1 object for reading, we first check
+> packfiles, and then loose objects. If we still haven't found
+> it, we re-scan the list of packfiles in `objects/pack`. This
+> final step ensures that we can co-exist with a simultaneous
+> repack process which creates a new pack and then prunes the
+> old object.
 
-With the above definition of "which", the only sign of a mistake would
-be some extra output to stderr (which is quelled when running tests in
-the normal way).  The "exit" is caught by the subshell and just makes
-the "if" condition false.
+I like the context above and what follows it, but I think you forgot
+to mention what the patch actually does. :)
 
-That's not so terrible --- it could still dissuade new test authors
-from using "which".  The downside I'd worry about is that it provides
-a false sense of security despite not catching problems like
+I guess it is:
 
-	write_script x <<-EOF &&
-		# Use "foo" if possible.  Otherwise use "bar".
-		if which foo && test $(foo --version) -le 2.0
-		then
-			...
-		...
-	EOF
-	./x
+	However, in the first scan over refs in fetch-pack.c::everything_local,
+	this double-check of packfiles is not necessary since we are only
+	trying to get a rough estimate of the last time we fetched from this
+	remote repository in order to find good candidate common commits ---
+	a missed object would only result in a slightly slower fetch.
 
-That's not a great tradeoff relative to the impact of the problem
-being solved.
+	Avoid that slow second scan in the common case by guarding the object
+	lookup with has_sha1_file().
 
-Don't get me wrong.  I really do want to see more static or dynamic
-analysis of git's shell scripts in the future.  I fear that for the
-tradeoffs to make sense, though, the analysis needs to be more
-sophisticated:
+Sounds like it would not affect most fetches except by making them
+a lot faster in the many-refs case, so for what it's worth I like it.
 
- * A very common error in test scripts is leaving out the "&&"
-   connecting adjacent statements, which causes early errors
-   in a test assertion to be missed and tests to pass by mistake.
-   Unfortunately the grammar of the dialect of shell used in tests is
-   not regular enough to make this easily detectable using regexps.
+I had not read this codepath before.  I'm left with a few questions:
 
- * Another common mistake is using "cd" without entering a subshell.
-   Detecting this requires counting nested parentheses and noticing
-   when a parenthesis is quoted.
+ * Why is 49bb805e ("Do not ask for objects known to be complete",
+   2005-10-19) trying to do?  Are we hurting that in any way?
 
- * Another common mistake is relying on the semantics of variable
-   assignments in front of function calls.  Detecting this requires
-   recognizing which commands are function calls.
+   For the sake of an example, suppose in my stalled project I
+   maintain 20 topic branches against an unmoving mainline I do not
+   advertise and you regularly fetch from me.  The cutoff is the
+   *newest* commit date of any of my topic branches you already have.
+   By declaring you have that topic branch you avoid a complicated
+   negotiation to discover that we both have the mainline.  Is that
+   the goal?
 
-In the end the analysis that works best would probably involve a
-full-fledged shell script parser.  Something like "sparse", except for
-shell command language.
+ * Is has_sha1_file() generally succeptible to the race against repack
+   you mentioned?  How is that normally dealt with?
 
-Sorry I don't have more practical advice in the short term.
+ * Can a slow operation get confused if an object is incorporated into
+   a pack and then expelled again by two repacks in sequence?
 
-My two cents,
+Thanks,
 Jonathan
