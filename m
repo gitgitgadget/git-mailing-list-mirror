@@ -1,97 +1,91 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: [feature request] git add completion should exclude staged content
-Date: Mon, 28 Jan 2013 15:02:35 +0100
-Message-ID: <510684FB.80104@gmail.com>
-References: <20130126172137.GB5852@mobster.11n_AP_Router> <7vip6iteod.fsf@alter.siamese.dyndns.org> <5106444F.2040007@gmail.com> <51067487.9050505@drmicha.warpmail.net>
+Date: Mon, 28 Jan 2013 17:22:38 +0100
+Message-ID: <5106A5CE.3000800@drmicha.warpmail.net>
+References: <20130126172137.GB5852@mobster.11n_AP_Router> <7vip6iteod.fsf@alter.siamese.dyndns.org> <5106444F.2040007@gmail.com> <51067487.9050505@drmicha.warpmail.net> <510684FB.80104@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
 	wookietreiber <kizkizzbangbang@googlemail.com>,
 	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Jan 28 15:03:10 2013
+To: Manlio Perillo <manlio.perillo@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 17:23:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzpIj-0002c4-Dm
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 15:03:09 +0100
+	id 1TzrU5-0000YO-Eb
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 17:23:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756709Ab3A1OCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 09:02:48 -0500
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:35107 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755991Ab3A1OCq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 09:02:46 -0500
-Received: by mail-wi0-f171.google.com with SMTP id hn14so1432390wib.16
-        for <git@vger.kernel.org>; Mon, 28 Jan 2013 06:02:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=NukcmRaa7RqSSD/HGVwjw9Q96uS9P81lQTFmk+bmyl0=;
-        b=duHesvvgdlYCj/Rj5atFdcBPvuffHUuZhRsw/Tr0W/MHdAiD24UJ2qC0fUwbtj43vV
-         cHcbqie/6FFVekciEANcJutFgV3oYKmcxhfYpTKse50X8GKb+mB5tk2OvQR9tutlYJkM
-         lPK71y/R3Xlpmy4nU+NZhABD7yAYsdzItIiA/8jyOkgfnJJRbF9eXKsgVpuYukiZRq+X
-         eCpv2HHaNwud+rmn+ouwzXegS63i5w5dNwv8qnYRueYX4ruXtfZwqyODZfy2lLTyELmh
-         D9Ea8j9HUbOFyWRFukFxZuSPPbyXu2U2zWhjpnQAjVXQYgW/wNv8wpNCVV3o4TUmiGgL
-         kHHA==
-X-Received: by 10.194.90.238 with SMTP id bz14mr21600755wjb.9.1359381765394;
-        Mon, 28 Jan 2013 06:02:45 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.195.28])
-        by mx.google.com with ESMTPS id hu8sm12242593wib.6.2013.01.28.06.02.40
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Jan 2013 06:02:44 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <51067487.9050505@drmicha.warpmail.net>
-X-Enigmail-Version: 1.0.1
+	id S1753085Ab3A1QWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 11:22:40 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:50825 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753147Ab3A1QWj (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jan 2013 11:22:39 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 10BF420637;
+	Mon, 28 Jan 2013 11:22:38 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute3.internal (MEProxy); Mon, 28 Jan 2013 11:22:38 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=CUFmUl7oTs/szQV+5J7di+
+	N4FPI=; b=oq8mCh+0zouf45pJQ/Fus3HTnj1uSfrJFvZb75/atU02UlKaOE+lfl
+	bu3p6wd7LX+YFM0LDKdwnxGrmI5g28hcBqu9LBOZ7jz86yYvC6BO3UEhEV4NIyqf
+	0IhAKIQfoaVMfAU/s+T0CSslPKQDSIyufnXgzOMMDPEzbtllS/z/w=
+X-Sasl-enc: TvWuNkzLKxl1bOkLFLqrcU5IaB38n4PSJiJK98TmBxyG 1359390157
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 4ADF38E08BC;
+	Mon, 28 Jan 2013 11:22:37 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <510684FB.80104@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214837>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-Il 28/01/2013 13:52, Michael J Gruber ha scritto:
-> Manlio Perillo venit, vidit, dixit 28.01.2013 10:26:
->> Il 28/01/2013 00:00, Junio C Hamano ha scritto:
->>> wookietreiber <kizkizzbangbang@googlemail.com> writes:
->>
->>>> I have a feature request for `git add` auto completion:
->>>>
-> [...]
->> For the OP: the last patch can be found in the mailing list archive,
->> with the subject:
->> 	[PATCH v5] git-completion.bash: add support for path completion
->> and date:
->> 	Fri, 11 Jan 2013 19:48:43 +0100
->>
->> Can you please test it?
->>
+Manlio Perillo venit, vidit, dixit 28.01.2013 15:02:
+> Il 28/01/2013 13:52, Michael J Gruber ha scritto:
+>> Manlio Perillo venit, vidit, dixit 28.01.2013 10:26:
+>>> Il 28/01/2013 00:00, Junio C Hamano ha scritto:
+>>>> wookietreiber <kizkizzbangbang@googlemail.com> writes:
+>>>
+>>>>> I have a feature request for `git add` auto completion:
+>>>>>
+>> [...]
+>>> For the OP: the last patch can be found in the mailing list archive,
+>>> with the subject:
+>>> 	[PATCH v5] git-completion.bash: add support for path completion
+>>> and date:
+>>> 	Fri, 11 Jan 2013 19:48:43 +0100
+>>>
+>>> Can you please test it?
+>>>
 > 
-> I haven't looked at the patch, but in the example above, untracked
-> files) could be added as well (unless you use -u), so maybe the scope
-> should depend on the option? If the new completion code kept me from
-> adding untracked files easily it wouldn't be an improvement.
+>> I haven't looked at the patch, but in the example above, untracked
+>> files) could be added as well (unless you use -u), so maybe the scope
+>> should depend on the option? If the new completion code kept me from
+>> adding untracked files easily it wouldn't be an improvement.
 > 
+> 
+> The patch will suggest (for git add command), all the files that are
+> candidate to be added to the index file.
+> 
+> Please, test it and report any behaviour you think is incorrect.
 
-The patch will suggest (for git add command), all the files that are
-candidate to be added to the index file.
+OK, that seems to work and to be quite helpful.
 
-Please, test it and report any behaviour you think is incorrect.
+Minor nit: "git add -u" could use the same fileset as "git commit". But
+I don't know whether completion can act upon the presence of options.
+Currently, it also includes untracked files (just like without -u) but
+omits unmodified and ignored ones, which is already quite an improvement.
 
+I won't be able to review the completion code but may contribute a few
+lines to t/t9902-completion.sh, possibly.
 
-Regards   Manlio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlEGhPsACgkQscQJ24LbaUTYOwCdFagTRkHzUHoFwy3U+Vz6tAzE
-tVIAnj8fAbyGrlNUoUgI4ZshwOtlEH8v
-=jy8R
------END PGP SIGNATURE-----
+Michael
