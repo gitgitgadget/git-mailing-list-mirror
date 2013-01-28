@@ -1,71 +1,84 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH/RFC] mingw: rename WIN32 cpp macro to NATIVE_WINDOWS
-Date: Mon, 28 Jan 2013 18:29:22 +0000
-Message-ID: <5106C382.20009@ramsay1.demon.co.uk>
-References: <50EB8EB5.6080204@gmail.com> <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com> <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com> <50F303D8.20709@gmail.com> <50F5A435.5090408@ramsay1.demon.co.uk> <20130120101007.GD16339@elie.Belkin> <50FEDB08.6030901@ramsay1.demon.co.uk> <51031C43.5030307@gmail.com> <7v38xo3irh.fsf@alter.siamese.dyndns.org> <51032481.4030707@redhat.com> <20130126010359.GH3341@elie.Belkin>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] add: warn when -u or -A is used without filepattern
+Date: Mon, 28 Jan 2013 10:31:30 -0800
+Message-ID: <7vzjztw459.fsf@alter.siamese.dyndns.org>
+References: <vpqobg966cv.fsf@grenoble-inp.fr>
+ <1359364593-10933-1-git-send-email-Matthieu.Moy@imag.fr>
+ <51067353.2090006@drmicha.warpmail.net>
+ <7v4ni1xjuc.fsf@alter.siamese.dyndns.org> <vpq8v7dw4f5.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eric Blake <eblake@redhat.com>, Junio C Hamano <gitster@pobox.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Stephen & Linda Smith <ischis2@cox.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 19:31:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jan 28 19:31:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TztTv-0002sr-6u
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 19:30:59 +0100
+	id 1TztUp-0003FF-0z
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 19:31:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750977Ab3A1Sai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 13:30:38 -0500
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:52211 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750938Ab3A1Sag (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 13:30:36 -0500
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 618D76F832C;
-	Mon, 28 Jan 2013 18:30:34 +0000 (GMT)
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 93B6A6F812A;	Mon, 28 Jan 2013 18:30:33 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;	Mon, 28 Jan 2013 18:30:31 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <20130126010359.GH3341@elie.Belkin>
-X-MDF-HostID: 3
+	id S1751079Ab3A1Sbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 13:31:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35454 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750938Ab3A1Sbc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 13:31:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2051AC9CA;
+	Mon, 28 Jan 2013 13:31:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kke7R61QSQ496RrZA3fb+u7JcX8=; b=I0NQVD
+	LHzMIVaj/xY9LkcGZRC8jBBn9Aq6cNdaF9HMcMDFdmCqXQm5yIJHZnimXJmnuz0Y
+	0hVTTym5nRNFq/57r7xwnoMWuTRtK/33wubrtY0yiG5eWOLiBDkfq/RL7nowLdM7
+	Zrv1C0rKa8abVNa0VzCcj7GWonZxFBEMX4ec0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eOMQziQG0h5Dh+1cJ0JM2aL5SPypDelX
+	xLqlfy1rOTU2+eGUt1rsLoCNI0adjEbmggbxD66PhC97Ey6zOTsIokqUvEDlv2TW
+	zy1YlG95Yq5uibcyquLcblY9e0IGbDjKOyHW9dMVs/yag2NvVizzNNbQpvWdadK+
+	J3LqDdg1L4U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1427DC9C9;
+	Mon, 28 Jan 2013 13:31:32 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93D7FC9C6; Mon, 28 Jan 2013
+ 13:31:31 -0500 (EST)
+In-Reply-To: <vpq8v7dw4f5.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+ "Mon, 28 Jan 2013 19:25:34 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EFE79A2C-6978-11E2-A2B2-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214850>
 
-Jonathan Nieder wrote:
-> Throughout git, it is assumed that the WIN32 preprocessor symbol is
-> defined on native Windows setups (mingw and msvc) and not on Cygwin.
-> On Cygwin, most of the time git can pretend this is just another Unix
-> machine, and Windows-specific magic is generally counterproductive.
-> 
-> Unfortunately Cygwin *does* define the WIN32 symbol in some headers.
-> Best to rely on a new git-specific symbol NATIVE_WINDOWS instead,
-> defined as follows:
-> 
-> 	#if defined(WIN32) && !defined(__CYGWIN__)
-> 	# define NATIVE_WINDOWS
-> 	#endif
-> 
-> After this change, it should be possible to drop the
-> CYGWIN_V15_WIN32API setting without any negative effect.
-> 
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-If we go with this approach, could we prefix the symbol name with GIT_
-in order to reduce the global namespace pollution?
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> I think "add -u && commit" vs "commit -a" you brought up is a good
+>> thing to mention, so let's do this.
+>
+> I'm OK with your proposal. Let me know if you want me to resend.
 
-eg GIT_NATIVE_WINDOWS, or GIT_NATIVE_WIN32 or just GIT_WIN32.
-(Yeah, I'm not good at choosing names!)
+Thanks for a quick response.  As you may have guessed, I am sending
+these after running "commit --amend", so ...
 
-ATB,
-Ramsay Jones
+>>     The inconsistency of 'git add -u' and 'git add -A' are particularly
+>
+> Nitpick: this should be "inconsistencies" (or "is particularly").
+
+... it is much easier for me to fix these locally instead of getting
+a reroll.
+
+Will amend with s/are particularly/is particularly/; thanks.
