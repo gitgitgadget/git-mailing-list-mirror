@@ -1,135 +1,95 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 3/4] mergetool--lib: Add functions for finding
- available tools
-Date: Mon, 28 Jan 2013 19:37:00 +0000
-Message-ID: <20130128193700.GB7498@serenity.lan>
-References: <1359334346-5879-1-git-send-email-davvid@gmail.com>
- <1359334346-5879-2-git-send-email-davvid@gmail.com>
- <1359334346-5879-3-git-send-email-davvid@gmail.com>
- <1359334346-5879-4-git-send-email-davvid@gmail.com>
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: Re: [PATCH v4 1/2] for-each-repo: new command used for multi-repo operations
+Date: Mon, 28 Jan 2013 20:42:16 +0100
+Message-ID: <CAFXTnz4x1K1cwYKWUJK1ExCjGti8vaW_endoJg20wTYUf4C5NQ@mail.gmail.com>
+References: <1359290777-5483-1-git-send-email-hjemli@gmail.com>
+	<1359290777-5483-2-git-send-email-hjemli@gmail.com>
+	<7vk3qywiqf.fsf@alter.siamese.dyndns.org>
+	<CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com>
+	<20130128081006.GA2434@elie.Belkin>
+	<7vham1xktx.fsf@alter.siamese.dyndns.org>
+	<CAFXTnz6xBMo42jWdqahYX-bnTBucVmQpFPN29X8tGRd7L=g2wQ@mail.gmail.com>
+	<7vr4l5w385.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 20:37:35 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 20:42:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzuWJ-0004ID-Iq
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 20:37:31 +0100
+	id 1TzubI-0006CD-2q
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 20:42:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752551Ab3A1ThK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 14:37:10 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:42822 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573Ab3A1ThI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 14:37:08 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 4FB9F22F7B;
-	Mon, 28 Jan 2013 19:37:08 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id htWccrPzbOS8; Mon, 28 Jan 2013 19:37:07 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id BFE201FC46;
-	Mon, 28 Jan 2013 19:37:07 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id B6587161E34E;
-	Mon, 28 Jan 2013 19:37:07 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cOMosSQUu6Hr; Mon, 28 Jan 2013 19:37:07 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 4E1E2161E3A4;
-	Mon, 28 Jan 2013 19:37:02 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <1359334346-5879-4-git-send-email-davvid@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751757Ab3A1TmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 14:42:19 -0500
+Received: from mail-bk0-f45.google.com ([209.85.214.45]:33038 "EHLO
+	mail-bk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751060Ab3A1TmR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 14:42:17 -0500
+Received: by mail-bk0-f45.google.com with SMTP id i18so1590936bkv.18
+        for <git@vger.kernel.org>; Mon, 28 Jan 2013 11:42:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=rKZiMjmliV6yjO99J42c8i3vhVNQbJHnM3kd+cPP4SA=;
+        b=NA+5lQh+G/fkoHAq4PjBnuubiZz3ftGs7CzNi++s++Y2dSf7GVTbTRMcPgriLV+xYC
+         ORYRSdUofJZscJCqHcBJe1sSMxZX5vwvQiTX75ROJDbR2VDNcQ85672cGL9vxI2I6l3z
+         k3vq2xuBUulNa+9+ZSQjBNpw0wL1tAB/HeEcpJccaY3yhWuqG8prys/UKvldxo4E9Fr7
+         kBtOS1NsQMd432NnPCP/98z7LD1xj0eF4UfvMZF33T8mFKLLYtGo8bSWnlXnFTEYUZEi
+         R3csKvjIvo9TxT7BiuEzjz/BXQa8jlCjp2gvhO0bCPl0bV54XydcvqTPUBh/lPGnRd6s
+         K1RA==
+X-Received: by 10.204.145.195 with SMTP id e3mr1087889bkv.27.1359402136380;
+ Mon, 28 Jan 2013 11:42:16 -0800 (PST)
+Received: by 10.205.83.199 with HTTP; Mon, 28 Jan 2013 11:42:16 -0800 (PST)
+In-Reply-To: <7vr4l5w385.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214860>
 
-On Sun, Jan 27, 2013 at 04:52:25PM -0800, David Aguilar wrote:
-> Refactor show_tool_help() so that the tool-finding logic is broken out
-> into a separate show_tool_names() function.
-> 
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
-> filter_tools renamed to show_tool_names() and simplfied
-> to use ls -1.  show_tool_names() now has a preamble as discussed.
-> 
->  git-mergetool--lib.sh | 68 +++++++++++++++++++++++++++++----------------------
->  1 file changed, 39 insertions(+), 29 deletions(-)
-> 
-> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> index db3eb58..fe068f6 100644
-> --- a/git-mergetool--lib.sh
-> +++ b/git-mergetool--lib.sh
-> @@ -2,6 +2,35 @@
->  # git-mergetool--lib is a library for common merge tool functions
->  MERGE_TOOLS_DIR=$(git --exec-path)/mergetools
->  
-> +mode_ok () {
-> +	diff_mode && can_diff ||
-> +	merge_mode && can_merge
-> +}
-> +
-> +is_available () {
-> +	merge_tool_path=$(translate_merge_tool_path "$1") &&
-> +	type "$merge_tool_path" >/dev/null 2>&1
-> +}
-> +
+On Mon, Jan 28, 2013 at 7:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Lars Hjemli <hjemli@gmail.com> writes:
+>
+>>> Come to think of it, is there a reason why "for-each-repo" should
+>>> not be an extention to "submodule foreach"?  We can view this as
+>>> visiting repositories that _could_ be registered as a submodule, in
+>>> addition to iterating over the registered submodules, no?
+>>
+>> Yes, but I see some possible problems with that approach:
+>> -'git for-each-repo' does not need to be started from within a git worktree
+>
+> True, but "git submodule foreach --untracked" can be told that it is
+> OK not (yet) to be in any superproject, no?
 
-Can we move show_tool_names() to be above show_tool_help()?  It's a
-very minor nit but I prefer having related functionality grouped
-together.
+Yes.
 
-> +show_tool_names () {
-> +	condition=${1:-true} per_line_prefix=${2:-} preamble=${3:-}
+>
+>> -'git for-each-repo' and 'git submodule foreach' have different
+>> semantics for --dirty and --clean
+>
+> That could be a problem.  Is there a good reason why they should use
+> different definitions of dirtyness?
 
-Would this be better with one value on each line?  Also perhaps
-per_line_prefix -> line_prefix.
+I suspected that 'submodule foreach --dirty' might want to compare the
+HEAD sha1 in the submodule against the one recorded in the
+superproject (similar to what 'git submodule status' does), but such a
+check could be triggered by a different flag (e.g. --behind/--ahead or
+something similar).
 
-> +
-> +	( cd "$MERGE_TOOLS_DIR" && ls -1 * ) |
-> +	while read toolname
-> +	do
-> +		if setup_tool "$toolname" 2>/dev/null &&
-> +			(eval "$condition" "$toolname")
-> +		then
-> +			if test -n "$preamble"
-> +			then
-> +				echo "$preamble"
-> +				preamble=
-> +			fi
-> +			printf "%s%s\n" "$per_line_prefix" "$tool"
+>> -'git for-each-repo' is in C because my 'git-all' shell script was
+>> horribly slow on large directory trees (especially on windows)
+>
+> Your for-each-repo could be a good basis to build a new builtin
+> "submodule--foreach" that is a pure helper hidden from the end users
+> that does both; cmd_foreach() in git-submodule.sh can simply delegate
+> to it.
 
-This needs to be:
+Ok, I'll rework my patches in this direction. Thanks.
 
-    printf "$per_line_prefix%s\n" "$tool"
-
-since $per_line_prefix is usually '\t\t' which isn't expanded if we
-format it with %s - an alternative would be to change the value passed
-in to '$TAB$TAB' with literal tabs.
-
-> +		fi
-> +	done
-> +}
-> +
->  diff_mode() {
->  	test "$TOOL_MODE" = diff
->  }
+--
+larsh
