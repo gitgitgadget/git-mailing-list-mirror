@@ -1,101 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 09/11] t4014: more tests about appending s-o-b lines
-Date: Sun, 27 Jan 2013 21:42:58 -0800
-Message-ID: <7vboc9zwv1.fsf@alter.siamese.dyndns.org>
-References: <1359335515-13818-1-git-send-email-drafnel@gmail.com>
- <1359335515-13818-10-git-send-email-drafnel@gmail.com>
- <20130128033146.GM8206@elie.Belkin>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 6/7] read-cache: refuse to create index referring to
+ external objects
+Date: Mon, 28 Jan 2013 12:48:26 +0700
+Message-ID: <CACsJy8BJZgyEn1n2GWgAVSGhSkVUO-P=GXwR02OcDf0ziTTRaA@mail.gmail.com>
+References: <1359016940-18849-1-git-send-email-pclouds@gmail.com>
+ <1359016940-18849-6-git-send-email-pclouds@gmail.com> <7vpq0ubdec.fsf@alter.siamese.dyndns.org>
+ <CACsJy8C3tLOHCK4Qc--W630do0M=xLKSMoYUxxv2_GDaUXaRww@mail.gmail.com> <7vpq0t3x60.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
-	pclouds@gmail.com, Brandon Casey <bcasey@nvidia.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 06:43:30 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 06:49:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzhV7-0004cw-C7
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 06:43:25 +0100
+	id 1Tzhaq-0006DE-4P
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 06:49:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386Ab3A1FnD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 00:43:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46509 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751114Ab3A1FnB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 00:43:01 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C6526BD4;
-	Mon, 28 Jan 2013 00:43:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SSfPjV7lLMYVAB2ymP4UmC+7pEY=; b=c9ahiO
-	CB3XYdj6bdT+zMfACYw0i5q7i45xrH00KlGZHCqns+jRDY/8YftpbMQdZdk597GL
-	t1b1DdLxzcZVm94K9Z6J4s98sLA6vwsVPcaZdI90gi3XyIrEbFxN7S4+RoUjiXvm
-	WnE4KP6EM9VojhqYyrnzySK7zMWpaG6FV6shA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Q3uySatDhfTYpYlXekP76elrKvEtRzCf
-	QFa92sM4kb125i541FHn6juGiZ5V3xBWRa2YDR9ucaE30bq2pgD+a88Uf8AZ47MA
-	1MEMhCr+vy877IHBzvFRhPPp+x/The+c1590c2FQIJNGsAk3QeTVhqpfXDrlBzgk
-	7CxTGe1PisE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 112206BD3;
-	Mon, 28 Jan 2013 00:43:01 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B88D6BBE; Mon, 28 Jan 2013
- 00:43:00 -0500 (EST)
-In-Reply-To: <20130128033146.GM8206@elie.Belkin> (Jonathan Nieder's message
- of "Sun, 27 Jan 2013 19:31:46 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 939158D2-690D-11E2-AB65-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751694Ab3A1Fs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 00:48:59 -0500
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:46290 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751614Ab3A1Fs5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 00:48:57 -0500
+Received: by mail-oa0-f47.google.com with SMTP id h1so2386296oag.20
+        for <git@vger.kernel.org>; Sun, 27 Jan 2013 21:48:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=mW7g7iRSBCeP2l7vpr+RUBv+djRvKjmswIGgC0YeboU=;
+        b=Vvgotb3zG046cWDH5aVBiaQznT2U/f8eZi4Xn52dISquQ8qX9WuxoF9UvUe7p+LJH2
+         hbcAjsg4aa0nadOG57OVj6DZY/Bkl3kovKMRygvr1IsRI2aHF1YkgyCxXPolXBXy+E0G
+         JJSdBY5XLJmyAOeCZosiywvYKnX4b+mJNO0z+H1uydASvSnwo7aB7OkiVexN2COMSd3U
+         7Z+VoTWIt6UINtJzZOmxboxOa1WoQiICWL3DOtxicHqKWAR4MnY/YxSWkUrXZoIOuMsB
+         wQpEeQ1FSVa7nn3RjuPTzs6ENYUcj4KNbG+n6J30U5Zin+MZpjDVJ4udTsNg7UFqapSU
+         dRWQ==
+X-Received: by 10.182.159.5 with SMTP id wy5mr10322671obb.31.1359352137104;
+ Sun, 27 Jan 2013 21:48:57 -0800 (PST)
+Received: by 10.182.153.69 with HTTP; Sun, 27 Jan 2013 21:48:26 -0800 (PST)
+In-Reply-To: <7vpq0t3x60.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214805>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Sat, Jan 26, 2013 at 2:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> This is not a tangent, but if you want to go this "forbid making our
+> repository depend on objects we do not have but we know about after
+> we peek submodule odb" route [*1*], write_sha1_file() needs to be
+> told about has_sha1_file_proper().  We may "git add" a new blob in
+> the superproject, the blob may not yet exist in *our* repository,
+> but may happen to already exist in the submodue odb.  In such a
+> case, write_sha1_file() has to write that blob in our repository,
+> without the existing has_sha1_file() check bypassing it.  Otherwise
+> our attempt to create a tree that contains that blob will fail,
+> saying that the blob only seems to exist to us via submodule odb but
+> not in our repository.
 
-> Brandon Casey wrote:
->
-> [...]
->> --- a/t/t4014-format-patch.sh
->> +++ b/t/t4014-format-patch.sh
->> @@ -1021,4 +1021,246 @@ test_expect_success 'cover letter using branch description (6)' '
->>  	grep hello actual >/dev/null
->>  '
->>  
->> +append_signoff()
->> +{
->> +	C=`git commit-tree HEAD^^{tree} -p HEAD` &&
->> +	git format-patch --stdout --signoff ${C}^..${C} |
->> +		tee append_signoff.patch |
->> +		sed -n "1,/^---$/p" |
->> +		grep -n -E "^Subject|Sign|^$"
->> +}
->
-> Is "grep -n" portable?  I didn't find any uses of it elsewhere in the
-> testsuite.
-
-Yes, "-n" is in POSIX.  Even though we use it ourselves, "git grep"
-supports it, too.
-
-Any Emacs user would scream if their platform "grep" does not
-support it, as it will make M-x grep (or grep-find) useless.
-
-> Style: checking exit status from format-patch, avoiding sed|grep pipeline:
->
-> 	C=$(git commit-tree HEAD^ -p HEAD) &&
-> 	git format-patch --stdout --signoff $C^..$C >append_signoff.patch &&
-> 	awk '
-> 		/^---$/ { exit; }
-> 		/^Subject/ || /^Sign/ || /^$/ { print NR ":" $0 }
-> 	' <append_signoff.patch >actual
-
-Yeah, awk/perl would be fine, too, and it is good that you pointed
-out that the original was losing the exit status from format-patch.
-
-Thanks.
+Another thing needs to be done for this to work. The current reading
+order is packs first, loose objects next. If we create a local loose
+duplicate of an alternate packed object, our local version will never
+be read. Regardless the submodule odb issue, I think we should prefer
+reading local loose objects over alternate packed ones.
+-- 
+Duy
