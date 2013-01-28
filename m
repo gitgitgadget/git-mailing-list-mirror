@@ -1,107 +1,85 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v4 1/2] for-each-repo: new command used for multi-repo
- operations
-Date: Mon, 28 Jan 2013 21:12:39 +0100
-Message-ID: <5106DBB7.70007@web.de>
-References: <1359290777-5483-1-git-send-email-hjemli@gmail.com> <1359290777-5483-2-git-send-email-hjemli@gmail.com> <7vk3qywiqf.fsf@alter.siamese.dyndns.org> <CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com> <20130128081006.GA2434@elie.Belkin> <7vham1xktx.fsf@alter.siamese.dyndns.org> <CAFXTnz6xBMo42jWdqahYX-bnTBucVmQpFPN29X8tGRd7L=g2wQ@mail.gmail.com> <7vr4l5w385.fsf@alter.siamese.dyndns.org>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [feature request] git add completion should exclude staged content
+Date: Mon, 28 Jan 2013 21:16:07 +0100
+Message-ID: <5106DC87.7090607@gmail.com>
+References: <20130126172137.GB5852@mobster.11n_AP_Router> <7vip6iteod.fsf@alter.siamese.dyndns.org> <5106444F.2040007@gmail.com> <51067487.9050505@drmicha.warpmail.net> <510684FB.80104@gmail.com> <5106A5CE.3000800@drmicha.warpmail.net> <7vd2wpxki1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Heiko Voigt <hvoigt@hvoigt.net>
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	wookietreiber <kizkizzbangbang@googlemail.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 21:15:30 2013
+X-From: git-owner@vger.kernel.org Mon Jan 28 21:16:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tzv72-0003HS-LE
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 21:15:28 +0100
+	id 1Tzv8I-0003lr-MO
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 21:16:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753307Ab3A1UPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 15:15:07 -0500
-Received: from mout.web.de ([212.227.17.12]:58874 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751872Ab3A1UPF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 15:15:05 -0500
-Received: from [192.168.178.41] ([79.193.83.234]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0MGRI8-1UD8TC2CfY-00DNS2; Mon, 28 Jan 2013 21:12:43
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <7vr4l5w385.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5
-X-Provags-ID: V02:K0:M96khW7NsYuviZMP6BQyiBkXIM5P8t3DYiEEIkyPUXb
- 0M5cNjzYauhHAiOu11RIPDCiOKD9K54PNiT2NE2pCUnjA3MNOT
- eBfe4p1c4b3xCDdncs7/Q7um0xy/mFh9H9YD5+/xq6d8vlR9jg
- 24KnJXWZssZeF1ancXKqE0VK7ZHfDkC39Y3ZzHvxbmlSQYMwqE
- S6fieQAcz63XoXj6/9X5w==
+	id S1753759Ab3A1UQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 15:16:18 -0500
+Received: from mail-we0-f181.google.com ([74.125.82.181]:54561 "EHLO
+	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753717Ab3A1UQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 15:16:16 -0500
+Received: by mail-we0-f181.google.com with SMTP id t44so1760817wey.12
+        for <git@vger.kernel.org>; Mon, 28 Jan 2013 12:16:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=+ucGw51jNqth1wsN7UVVViNHgs+/ly1/9UK+biHBauo=;
+        b=iGTd4NlYaidkPgTq56k0KAJmYP+kLUobrENKUjdDO6hUf0mYKkYeiswDrrEWEzYK5Q
+         9KQ1Dqt6xdYPPyAQTHrGX7GFjGyhlK/VkDDJHgFy6URaHZxFizzepSkZVNP/akFsRBaj
+         kQZF5Rg2VfO+SZQMReyx71+7OU/ps3sZaGSauZs6ovmt9N791ByUChsUdo7il5KgOj6O
+         o5/Y6/pUxYW9wrwz0F9CpJwOMbZ4lFAYN0fuUudMBmTtE+Xcp99AyRfNYGnJZhb3oJ1E
+         xYIoqcf19msyhrFAqlitFH/O93MH6H9UFEWj11KwnxQA3Wq0/hU5RifzD1IdZvYJxFUZ
+         3lxA==
+X-Received: by 10.180.81.39 with SMTP id w7mr12027876wix.15.1359404174994;
+        Mon, 28 Jan 2013 12:16:14 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.195.28])
+        by mx.google.com with ESMTPS id eo10sm15173681wib.9.2013.01.28.12.16.12
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 28 Jan 2013 12:16:14 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <7vd2wpxki1.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214863>
 
-Am 28.01.2013 19:51, schrieb Junio C Hamano:
-> Lars Hjemli <hjemli@gmail.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Il 28/01/2013 18:52, Junio C Hamano ha scritto:
+> [...]
 > 
->>> Come to think of it, is there a reason why "for-each-repo" should
->>> not be an extention to "submodule foreach"?  We can view this as
->>> visiting repositories that _could_ be registered as a submodule, in
->>> addition to iterating over the registered submodules, no?
->>
->> Yes, but I see some possible problems with that approach:
->> -'git for-each-repo' does not need to be started from within a git worktree
-> 
-> True, but "git submodule foreach --untracked" can be told that it is
-> OK not (yet) to be in any superproject, no?
+> Thanks both for commenting.  I'll find time to read it over again
+> and perhaps we can merge it to 'next' and advertise it in the next
+> issue of "What's cooking" report to ask for wider testing to move it
+> forward.
 
-Hmm, I'm not sure how that would work as it looks for gitlinks
-in the index which point to work tree paths.
+Thanks.
 
->> -'git for-each-repo' and 'git submodule foreach' have different
->> semantics for --dirty and --clean
+I will try to update the patch, with your latest suggestions (avoid
+tricky POSIX shell syntax, and CDPATH issue - if I remember correctly),
+and with an update for the t/t9902-completion.sh test (that I completely
+missed).
 
-I'm confused, what semantics of --dirty and --clean does current
-'git submodule foreach' have? I can't find any sign of it in the
-current code ... did I miss something while skimming through this
-thread? Or are you talking about status and diff here?
 
-> That could be a problem.  Is there a good reason why they should use
-> different definitions of dirtyness?
 
-I don't see any (except of course for comparing a gitlink with the
-HEAD of the submodule, which is an additional condition that only
-applies to submodules). But I think the current for-each-repo
-proposal doesn't allow to traverse repos which contain untracked
-content (and it would be nice if the user could somehow combine
-that with the current --dirty flag to have both in one go).
+Regards  Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
->> -'git for-each-repo' is in C because my 'git-all' shell script was
->> horribly slow on large directory trees (especially on windows)
-> 
-> Your for-each-repo could be a good basis to build a new builtin
-> "submodule--foreach" that is a pure helper hidden from the end users
-> that does both; cmd_foreach() in git-submodule.sh can simply delegate
-> to it.
-
-I like that approach, because the operations are very similar from
-the user's point of view. But please remember that internally they
-would work differently, as submodule foreach walks the index and
-only descends into those submodules that are populated (and contain
-a .git directory or file) while for-each-repo scans the whole work
-tree, which makes it a more expensive operation.
-
->> All of these problems are probably solvable, but it would require
->> quite some reworking of git-submodule.sh
-> 
-> Of course some work is needed, but we do not have to convert all the
-> cmd_foo in git-submodule.sh in one step.  For the purpose of
-> unifying for-each-repo and submodule foreach to deliver the
-> functionality sooner to the end users, we can go the route to add
-> only the submodule--foreach builtin, out of which we will get
-> reusable implementation of module_list and other helper functions we
-> can leverage later to do other cmd_foo functions.
-
-I really like that idea!
+iEYEARECAAYFAlEG3IcACgkQscQJ24LbaUTR/wCfSC/kHxseKAQ9rnK2ba/WwND1
+cmsAn2CuHpRs2VjippTwkT5O3ul9cQKb
+=5Way
+-----END PGP SIGNATURE-----
