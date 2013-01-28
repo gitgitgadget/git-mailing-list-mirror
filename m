@@ -1,83 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 1/2] for-each-repo: new command used for multi-repo
- operations
-Date: Mon, 28 Jan 2013 10:35:00 -0800
-Message-ID: <7vvcahw3zf.fsf@alter.siamese.dyndns.org>
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: Re: [PATCH v4 1/2] for-each-repo: new command used for multi-repo operations
+Date: Mon, 28 Jan 2013 19:35:21 +0100
+Message-ID: <CAFXTnz6xBMo42jWdqahYX-bnTBucVmQpFPN29X8tGRd7L=g2wQ@mail.gmail.com>
 References: <1359290777-5483-1-git-send-email-hjemli@gmail.com>
- <1359290777-5483-2-git-send-email-hjemli@gmail.com>
- <7vk3qywiqf.fsf@alter.siamese.dyndns.org>
- <CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com>
- <20130128081006.GA2434@elie.Belkin>
- <CAFXTnz6zN0izx8S23JFww5niVD6x-r2e7TSthqZnempUrvAEWw@mail.gmail.com>
+	<1359290777-5483-2-git-send-email-hjemli@gmail.com>
+	<7vk3qywiqf.fsf@alter.siamese.dyndns.org>
+	<CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com>
+	<20130128081006.GA2434@elie.Belkin>
+	<7vham1xktx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 19:35:28 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 19:35:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TztYE-0004qB-BH
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 19:35:26 +0100
+	id 1TztYW-0004wt-NS
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 19:35:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751467Ab3A1SfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 13:35:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38275 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750938Ab3A1SfC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 13:35:02 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A188CC92;
-	Mon, 28 Jan 2013 13:35:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1Yx8kShqUGKXgLm3O4Lb0Mebf9Q=; b=FXms+y
-	zLE0T2ZD3w7N+Batmi7ak2pQVJDI4ne7GZKZNdE/FlCcDHHYUhLMHafsmx0fLz7i
-	uu5r55Z6K7VPsseV7eHY+B8KZ/4SXrk/oB+WYabErPToIj2mMw9rfNOFXHfF/wmR
-	yozEZRGbwGTX9AIua9KJaunQxCUmEqxsvnkg4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f7mLTCU4POLlyTM2+BNM6aVpxIeLeHxj
-	SeUzgLGFD7NV7wzxouTxeg+91rV0kog0xxZEORUtRGb42QMQrSq0owZLqB8vQN1I
-	wZbUwQkTrbYwKwYPDEVRjiwpUxnedxNwUKEg/TPcXyuh9dt/aKeRN7Moea+lzil1
-	T1bSkWuL0k0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D66DCC91;
-	Mon, 28 Jan 2013 13:35:02 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CBBD2CC8C; Mon, 28 Jan 2013
- 13:35:01 -0500 (EST)
-In-Reply-To: <CAFXTnz6zN0izx8S23JFww5niVD6x-r2e7TSthqZnempUrvAEWw@mail.gmail.com> (Lars
- Hjemli's message of "Mon, 28 Jan 2013 18:11:06 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6D311418-6979-11E2-BA6B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751564Ab3A1SfY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 13:35:24 -0500
+Received: from mail-bk0-f41.google.com ([209.85.214.41]:47345 "EHLO
+	mail-bk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750938Ab3A1SfW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 13:35:22 -0500
+Received: by mail-bk0-f41.google.com with SMTP id q16so1426412bkw.0
+        for <git@vger.kernel.org>; Mon, 28 Jan 2013 10:35:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=xVr4KG548CIVR1TWTytDOSNd/CJgG8GTuGqDGjQQcnE=;
+        b=EmasR3bCTwCVYH84QbyLDujJ2xaA6kk32VQklBf6XLpdSKejqZY6bJ07qP5Bp4Bgyn
+         KlKpor+mES8Mjelvfy21XJdGhZaXcUM+WqSa0dkfKbgVzUwGOKf8+ogD2nADfSQJ884J
+         pcNddVGF7wRuKBIJcA2S+9AoxNEX5NiKD5AYc9BJ6dfbhBzACfrp5Un8KQEslfPcboTC
+         IE8476E2bbH/1DE1USKX9M0FN6ew8qj2DDT4TpTRprB1YPCmI2eonZQUGndcdkBGQYuE
+         mzG8SM3lyAwsrR00NCT7H3JfpRYqX5EydfJLBvdh8WJzgeOE9LnV5oKu40gBUObLMhMp
+         a4fw==
+X-Received: by 10.204.4.215 with SMTP id 23mr3387953bks.110.1359398121355;
+ Mon, 28 Jan 2013 10:35:21 -0800 (PST)
+Received: by 10.205.83.199 with HTTP; Mon, 28 Jan 2013 10:35:21 -0800 (PST)
+In-Reply-To: <7vham1xktx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214855>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+On Mon, Jan 28, 2013 at 6:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> As to the pathspec limiting to affect the loop itself, not the
+> argument given to the command that is run, I don't think it is
+> absolutely needed; I am perfectly fine with declaring that
+> for-each-repo goes to repositories in all subdirectories without
+> limit, especially if doing so will make the UI issues we have to
+> deal with simpler.
 
-> On Mon, Jan 28, 2013 at 9:10 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> ...
->> So if I ran the world, then having commands
->>
->>         git -a diff
->>
->> and
->>
->>         git for-each-repo git diff
->>
->> do the same thing would be fine.  Of course I don't run the world. ;-)
+Good (since the relative path of each repo will be exported to the
+child process, that process can perform path limiting when needed).
+
+
+> As to the "option to the command, not to the subcommand, -a option",
+> I have been assuming that it was a joke patch, but if "git -a grep"
+> turns out to be really useful, "submodule foreach" that iterates
+> over the submodules may also want to have such a short and sweet
+> mechanism.  Between "for-each-repo" and "submodule foreach", I do
+> not yet have a strong opinion on which one deserves it more.
 >
-> This would make me very happy. Junio?
+> Come to think of it, is there a reason why "for-each-repo" should
+> not be an extention to "submodule foreach"?  We can view this as
+> visiting repositories that _could_ be registered as a submodule, in
+> addition to iterating over the registered submodules, no?
 
-Ahh, our mails crossed (rather, I responded to the other message I
-saw before I saw this one).  I am not completely sold on "git -a"
-yet, but another worry I have is which one between "submodule
-foreach" and "for-each-repo" should use "git -a", if we decide that
-it is useful to the users to add it.
+Yes, but I see some possible problems with that approach:
+-'git for-each-repo' does not need to be started from within a git worktree
+-'git for-each-repo' and 'git submodule foreach' have different
+semantics for --dirty and --clean
+-'git for-each-repo' is in C because my 'git-all' shell script was
+horribly slow on large directory trees (especially on windows)
+
+All of these problems are probably solvable, but it would require
+quite some reworking of git-submodule.sh
+
+-- 
+larsh
