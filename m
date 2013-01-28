@@ -1,133 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4 1/2] for-each-repo: new command used for multi-repo
- operations
-Date: Mon, 28 Jan 2013 00:10:06 -0800
-Message-ID: <20130128081006.GA2434@elie.Belkin>
-References: <1359290777-5483-1-git-send-email-hjemli@gmail.com>
- <1359290777-5483-2-git-send-email-hjemli@gmail.com>
- <7vk3qywiqf.fsf@alter.siamese.dyndns.org>
- <CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v2 0/4] Auto-generate mergetool lists
+Date: Mon, 28 Jan 2013 08:20:32 -0000
+Organization: OPDS
+Message-ID: <5F78436DB1994B6DA686EC1BFA96B54E@PhilipOakley>
+References: <1359334346-5879-1-git-send-email-davvid@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 09:10:44 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, "John Keeping" <john@keeping.me.uk>
+To: "David Aguilar" <davvid@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 09:21:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tzjnc-00079d-6E
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 09:10:40 +0100
+	id 1Tzjxa-00025C-8j
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 09:20:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108Ab3A1IKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 03:10:18 -0500
-Received: from mail-da0-f42.google.com ([209.85.210.42]:63244 "EHLO
-	mail-da0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753823Ab3A1IKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 03:10:16 -0500
-Received: by mail-da0-f42.google.com with SMTP id z17so1137692dal.1
-        for <git@vger.kernel.org>; Mon, 28 Jan 2013 00:10:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=eIUqTQ+3OElhoImFfLCpDGDfdkbnSa/wFVQHHG5Ty8k=;
-        b=vuZ49T0UOp4xjNGxUoD/ofhTHtJ4HFF19/aOTANizFmgE4qr+kDGRFxUMr8HaOyD1A
-         c1oZhxBAzp/UoUBZBSIxcX7+COVGHylcZVNzpNjtvuxyL/hmVa9QyMD9HEh9CSSxVKai
-         hM8261nAYCYf3T5WZJ3+B0GSmko7B7in0B5SvSnP02kwZaOjKfWRecLiJhNHZPRCYDLZ
-         TVH/I8cuYbPGxv0hDyugRMfFrKtTQalVhpyym3lBYYFjo4ehe5Jadc2fBTZc+RhtgzXR
-         tLEgPpRMxbs1hIrAyNQJ4DIPnFO1fMheSL+0CJ377JL+gPUSImsw0aFxB1XAYb5R5ZFa
-         cXcw==
-X-Received: by 10.68.241.232 with SMTP id wl8mr35259950pbc.144.1359360615807;
-        Mon, 28 Jan 2013 00:10:15 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id ai8sm5880842pbd.14.2013.01.28.00.10.13
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Jan 2013 00:10:14 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1753971Ab3A1IUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 03:20:31 -0500
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:41719 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753823Ab3A1IUa (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jan 2013 03:20:30 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AhcKAB40BlFcHKXV/2dsb2JhbABFjAOxWQN/F3OCGQUBAQQBCAEBLhEFCAEBIQsCAwUCAQMOBgEBCyUUAQQIEAIGBwkBDQYBBwsIAgECAwEMBIdeAwkKCLUgDYlVjBCBH4MVYQOILIVShjmCcooahRKCdw
+X-IronPort-AV: E=Sophos;i="4.84,550,1355097600"; 
+   d="scan'208";a="564098408"
+Received: from host-92-28-165-213.as13285.net (HELO PhilipOakley) ([92.28.165.213])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 28 Jan 2013 08:20:27 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214819>
 
-Hi,
+From: "David Aguilar" <davvid@gmail.com>
+Sent: Monday, January 28, 2013 12:52 AM
+> This is round two of this series.
+> I think this touched on everything brought up in the code review.
+> 4/4 could use a review as I'm not completely familiar with the
+> makefile dependencies, though it seems to work correctly.
 
-Lars Hjemli wrote:
+Does this 4/4 have any effect on the Msysgit / Git for Windows 
+documentation which simply refers [IIRC] to HTML documenation made by 
+Junio?
 
-> [1] The 'git -a' rewrite patch shows how I think about this command -
-> it's just an option to the 'git' command, modifying the way any
-> subcommand is invoked (btw: I don't expect that patch to be applied
-> since 'git-all' was deemed to generic, so I'll just carry the patch in
-> my own tree).
+That is, how easy is it to create a 'default' set of docs, rather than 
+personalised documenation. Or have I misunderstood how it is working?
 
-As one data point, 'git all' also seems too generic to me but 'git -a'
-doesn't.  Intuition can be weird.
-
-So if I ran the world, then having commands
-
-	git -a diff
-
-and
-
-	git for-each-repo git diff
-
-do the same thing would be fine.  Of course I don't run the world. ;-)
-
-[...]
->> One more thing that nobody brought up during the previous reviews is
->> if we want to support subset of repositories by allowing the
->> standard pathspec match mechanism.  For example,
->>
->>         git for-each-repo -d git diff --name-only -- foo/ bar/b\*z
->>
->> might be a way to ask "please find repositories match the given
->> pathspecs (i.e. foo/ bar/b\*z) and run the command in the ones that
->> are dirty".  We would need to think about how to mark the end of the
->> command though---we could borrow \; from find(1), even though find
->> is not the best example of the UI design.
-
-In most non-git commands, "--" represents an end-of-options marker,
-allowing arbitrary options afterward without having to worry about
-escaping minus signs.  So in that spirit, if this weren't a git
-command, I'd expect to be able to do
-
-	for-each-repo -- git diff -- '*.c'
-
-and have the second '--' passed verbatim to "git diff".
-
-Unfortunately in git (imitating commands like "grep", I suppose), "--"
-means "paths start here".  That means that with the git convention,
-there is only one place to pass paths to a given command.
-
-Tracing backwards: it would be really nice to be able to do
-
-	git for-each-repo git grep -e foo -- '*.c'
-
-or
-
-	git -a grep -e foo -- '*.c'
-
-For this practical reason, it seems that paths listed after the '--'
-should go to the command being run.  On the other hand, if I wanted to
-limit my for-each-repo run to repositories in two subdirectories of
-the cwd, I'd be tempted to try
-
-	git for-each-repo git grep -e foo -- src/ doc/
-
-And if I wanted to limit to different file types in the repositories
-under each directory, it would be tempting to use
-
-	git for-each-repo git grep -e foo -- 'src/*.c' 'doc/*.txt'
-
-Is there a convention that would be usable today that is roughly
-forward-compatible with that?  (To throw an example out, requiring
-that each pathspec passed to for-each-repo either starts with '*' or
-contains no wildcards.)
-
-Thanks,
-Jonathan
+>
+> David Aguilar (4):
+>  mergetool--lib: Simplify command expressions
+>  mergetool--lib: Improve the help text in guess_merge_tool()
+>  mergetool--lib: Add functions for finding available tools
+>  doc: Generate a list of valid merge tools
+>
+> Documentation/.gitignore       |   1 +
+> Documentation/Makefile         |  22 +++++++-
+> Documentation/diff-config.txt  |  13 ++---
+> Documentation/merge-config.txt |  12 ++---
+> git-mergetool--lib.sh          | 116 
+> ++++++++++++++++++++++-------------------
+> 5 files changed, 96 insertions(+), 68 deletions(-)
+>
+> -- 
+> 1.8.0.13.g3ff16bb
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
+> -----
+> No virus found in this message.
+> Checked by AVG - www.avg.com
+> Version: 2013.0.2890 / Virus Database: 2639/6061 - Release Date: 
+> 01/27/13
+> 
