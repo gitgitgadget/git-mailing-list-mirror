@@ -1,184 +1,87 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 4/4] doc: Generate a list of valid merge tools
-Date: Sun, 27 Jan 2013 16:52:26 -0800
-Message-ID: <1359334346-5879-5-git-send-email-davvid@gmail.com>
-References: <1359334346-5879-1-git-send-email-davvid@gmail.com>
- <1359334346-5879-2-git-send-email-davvid@gmail.com>
- <1359334346-5879-3-git-send-email-davvid@gmail.com>
- <1359334346-5879-4-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 01:53:12 2013
+From: Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH v3 00/11] unify appending of sob
+Date: Sun, 27 Jan 2013 17:11:44 -0800
+Message-ID: <1359335515-13818-1-git-send-email-drafnel@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: jrnieder@gmail.com, pclouds@gmail.com, gitster@pobox.com,
+	Brandon Casey <drafnel@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 28 02:12:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzcyG-00013K-BZ
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 01:53:12 +0100
+	id 1TzdGy-0006JW-SI
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 02:12:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756849Ab3A1Awp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2013 19:52:45 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:49113 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754963Ab3A1Awj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2013 19:52:39 -0500
-Received: by mail-ie0-f178.google.com with SMTP id c13so386698ieb.37
-        for <git@vger.kernel.org>; Sun, 27 Jan 2013 16:52:38 -0800 (PST)
+	id S1756973Ab3A1BMJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jan 2013 20:12:09 -0500
+Received: from mail-da0-f54.google.com ([209.85.210.54]:57820 "EHLO
+	mail-da0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756900Ab3A1BMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2013 20:12:08 -0500
+Received: by mail-da0-f54.google.com with SMTP id n2so990966dad.41
+        for <git@vger.kernel.org>; Sun, 27 Jan 2013 17:12:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=ow30pWLhfvAq1qRQDELwzJhG3vqJ0jGd4cX5O+O2IKU=;
-        b=RpWCohB7hM/qkzJetbjal9UIQfLlkJvYqdYPyqka26Fp5sTgF3HF0PaYPhQch50VTx
-         C3dkcqWGaI/Iy4XREGFJakSKRiiXyxHOGx7fS79nZot4TE6Yd/KbV2LiNNefdzQCyyHA
-         jjpJfHemBIwht0auz7mRiutb6or02CkhANjjPOzK7ajZXB9APEfxjbYDDliUQSOjF7sK
-         0HKl7NP1Vt/uITo8wjrnFlxOoBv6VBg3BXNIt5cSI/9KbTqjRtGzmkhCb2tnNWWVSVCm
-         hjYxJdX/zPI6/4mmZMZ82zlg/GbKYXoKM/mXpNumr/RTW3Bwq5eXtJCWw5ur7WXSdpe+
-         CSmA==
-X-Received: by 10.50.196.162 with SMTP id in2mr3843190igc.76.1359334358217;
-        Sun, 27 Jan 2013 16:52:38 -0800 (PST)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id ke8sm1868421igc.17.2013.01.27.16.52.36
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 27 Jan 2013 16:52:37 -0800 (PST)
-X-Mailer: git-send-email 1.8.0.13.g3ff16bb
-In-Reply-To: <1359334346-5879-4-git-send-email-davvid@gmail.com>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=PAEOgFFe7SsKzplQHwUQ/7AW9GSMvx8zMuQipF2MHBM=;
+        b=ZQ50jP00q6VhqjHXPbUvCoECVzv4jGscpEmZdNxFCnvpkik4YYBB6gDkTpaTjGHHkK
+         dvlp5xq5wDTl2iE6c+sjXkR9tefmIzjd3q2lIuHfRYQGgoXWlU6tc9X+KZfSBThw4F6K
+         nmNJSbOGciNwCMIeB7TtDYfz1sObQsCqgekAM+QgnAM75n3bS1kMNKIU9nYqbNi0CyE/
+         n2iz/LWeaSBJrIU/F8ZQWPIf2Ovt9tIkz3A7Zis53tzWeX0Szt4CbAVVbOcqhunC3V+T
+         NrdXfcJEf/aL4QIFJo361dl/JPdJWX1t1NE7EgoxapZX+7BXJCB3cYjZd5924QvpH1aq
+         DZlA==
+X-Received: by 10.68.254.195 with SMTP id ak3mr33425414pbd.37.1359335527779;
+        Sun, 27 Jan 2013 17:12:07 -0800 (PST)
+Received: from charliebrown.sbx10663.mountca.wayport.net (ip-64-134-226-147.public.wayport.net. [64.134.226.147])
+        by mx.google.com with ESMTPS id x2sm5619521paw.8.2013.01.27.17.12.05
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 27 Jan 2013 17:12:06 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.1.252.gdb33759
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214764>
 
-Use the show_tool_names() function to build lists of all
-the built-in tools supported by difftool and mergetool.
-This frees us from needing to update the documentation
-whenever a new tool is added.
+Round 3.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-Adjusted to use show_tool_names() and reworked the makefile dependencies.
-I could use another set of eyes on the Makefile..
+-Brandon
 
- Documentation/.gitignore       |  1 +
- Documentation/Makefile         | 22 ++++++++++++++++++++--
- Documentation/diff-config.txt  | 13 +++++++------
- Documentation/merge-config.txt | 12 ++++++------
- git-mergetool--lib.sh          |  3 ++-
- 5 files changed, 36 insertions(+), 15 deletions(-)
+Brandon Casey (9):
+  sequencer.c: rework search for start of footer to improve clarity
+  commit, cherry-pick -s: remove broken support for multiline rfc2822
+    fields
+  t/test-lib-functions.sh: allow to specify the tag name to test_commit
+  t/t3511: add some tests of 'cherry-pick -s' functionality
+  sequencer.c: recognize "(cherry picked from ..." as part of s-o-b
+    footer
+  sequencer.c: always separate "(cherry picked from" from commit body
+  sequencer.c: teach append_signoff how to detect duplicate s-o-b
+  sequencer.c: teach append_signoff to avoid adding a duplicate newline
+  Unify appending signoff in format-patch, commit and sequencer
 
-diff --git a/Documentation/.gitignore b/Documentation/.gitignore
-index d62aebd..2c8b2d6 100644
---- a/Documentation/.gitignore
-+++ b/Documentation/.gitignore
-@@ -9,4 +9,5 @@ gitman.info
- howto-index.txt
- doc.dep
- cmds-*.txt
-+mergetools-*.txt
- manpage-base-url.xsl
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 267dfe1..834ec25 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -202,7 +202,11 @@ install-html: html
- #
- # Determine "include::" file references in asciidoc files.
- #
--doc.dep : $(wildcard *.txt) build-docdep.perl
-+docdep_prereqs = \
-+	mergetools-list.made $(mergetools_txt) \
-+	cmd-list.made $(cmds_txt)
-+
-+doc.dep : $(docdep_prereqs) $(wildcard *.txt) build-docdep.perl
- 	$(QUIET_GEN)$(RM) $@+ $@ && \
- 	$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
- 	mv $@+ $@
-@@ -226,13 +230,27 @@ cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
- 	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(QUIET_STDERR) && \
- 	date >$@
- 
-+mergetools_txt = mergetools-diff.txt mergetools-merge.txt
-+
-+$(mergetools_txt): mergetools-list.made
-+
-+mergetools-list.made: ../git-mergetool--lib.sh $(wildcard ../mergetools/*)
-+	$(QUIET_GEN)$(RM) $@ && \
-+	$(SHELL_PATH) -c 'MERGE_TOOLS_DIR=../mergetools && \
-+		. ../git-mergetool--lib.sh && \
-+		show_tool_names can_diff "* "' > mergetools-diff.txt && \
-+	$(SHELL_PATH) -c 'MERGE_TOOLS_DIR=../mergetools && \
-+		. ../git-mergetool--lib.sh && \
-+		show_tool_names can_merge "* "' > mergetools-merge.txt && \
-+	date > $@
-+
- clean:
- 	$(RM) *.xml *.xml+ *.html *.html+ *.1 *.5 *.7
- 	$(RM) *.texi *.texi+ *.texi++ git.info gitman.info
- 	$(RM) *.pdf
- 	$(RM) howto-index.txt howto/*.html doc.dep
- 	$(RM) technical/api-*.html technical/api-index.txt
--	$(RM) $(cmds_txt) *.made
-+	$(RM) $(cmds_txt) $(mergetools_txt) *.made
- 	$(RM) manpage-base-url.xsl
- 
- $(MAN_HTML): %.html : %.txt
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index 67a90a8..7c968d1 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -132,9 +132,10 @@ diff.<driver>.cachetextconv::
- 	conversion outputs.  See linkgit:gitattributes[5] for details.
- 
- diff.tool::
--	The diff tool to be used by linkgit:git-difftool[1].  This
--	option overrides `merge.tool`, and has the same valid built-in
--	values as `merge.tool` minus "tortoisemerge" and plus
--	"kompare".  Any other value is treated as a custom diff tool,
--	and there must be a corresponding `difftool.<tool>.cmd`
--	option.
-+	Controls which diff tool is used by linkgit:git-difftool[1].
-+	This variable overrides the value configured in `merge.tool`.
-+	The list below shows the valid built-in values.
-+	Any other value is treated as a custom diff tool and requires
-+	that a corresponding difftool.<tool>.cmd variable is defined.
-+
-+include::mergetools-diff.txt[]
-diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-index 861bd6f..5f40e71 100644
---- a/Documentation/merge-config.txt
-+++ b/Documentation/merge-config.txt
-@@ -52,12 +52,12 @@ merge.stat::
- 	at the end of the merge.  True by default.
- 
- merge.tool::
--	Controls which merge resolution program is used by
--	linkgit:git-mergetool[1].  Valid built-in values are: "araxis",
--	"bc3", "diffuse", "ecmerge", "emerge", "gvimdiff", "kdiff3", "meld",
--	"opendiff", "p4merge", "tkdiff", "tortoisemerge", "vimdiff"
--	and "xxdiff".  Any other value is treated is custom merge tool
--	and there must be a corresponding mergetool.<tool>.cmd option.
-+	Controls which merge tool is used by linkgit:git-mergetool[1].
-+	The list below shows the valid built-in values.
-+	Any other value is treated as a custom merge tool and requires
-+	that a corresponding mergetool.<tool>.cmd variable is defined.
-+
-+include::mergetools-merge.txt[]
- 
- merge.verbosity::
- 	Controls the amount of output shown by the recursive merge
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index fe068f6..f665bee 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -1,6 +1,7 @@
- #!/bin/sh
- # git-mergetool--lib is a library for common merge tool functions
--MERGE_TOOLS_DIR=$(git --exec-path)/mergetools
-+
-+: ${MERGE_TOOLS_DIR=$(git --exec-path)/mergetools}
- 
- mode_ok () {
- 	diff_mode && can_diff ||
--- 
-1.8.0.13.g3ff16bb
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+  t4014: more tests about appending s-o-b lines
+  format-patch: update append_signoff prototype
+
+ builtin/commit.c         |   2 +-
+ builtin/log.c            |  13 +--
+ log-tree.c               |  92 ++---------------
+ revision.h               |   2 +-
+ sequencer.c              | 150 ++++++++++++++++++---------
+ sequencer.h              |   4 +-
+ t/t3511-cherry-pick-x.sh | 219 +++++++++++++++++++++++++++++++++++++++
+ t/t4014-format-patch.sh  | 263 +++++++++++++++++++++++++++++++++++++++=
+++++++++
+ t/test-lib-functions.sh  |   8 +-
+ 9 files changed, 600 insertions(+), 153 deletions(-)
+ create mode 100755 t/t3511-cherry-pick-x.sh
+
+--=20
+1.8.1.1.450.g0327af3
