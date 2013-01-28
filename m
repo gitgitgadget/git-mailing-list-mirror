@@ -1,70 +1,75 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 6/7] read-cache: refuse to create index referring to
- external objects
-Date: Mon, 28 Jan 2013 12:48:26 +0700
-Message-ID: <CACsJy8BJZgyEn1n2GWgAVSGhSkVUO-P=GXwR02OcDf0ziTTRaA@mail.gmail.com>
-References: <1359016940-18849-1-git-send-email-pclouds@gmail.com>
- <1359016940-18849-6-git-send-email-pclouds@gmail.com> <7vpq0ubdec.fsf@alter.siamese.dyndns.org>
- <CACsJy8C3tLOHCK4Qc--W630do0M=xLKSMoYUxxv2_GDaUXaRww@mail.gmail.com> <7vpq0t3x60.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 00/11] unify appending of sob
+Date: Sun, 27 Jan 2013 21:49:16 -0800
+Message-ID: <7v7gmxzwkj.fsf@alter.siamese.dyndns.org>
+References: <1359335515-13818-1-git-send-email-drafnel@gmail.com>
+ <20130128034831.GQ8206@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 06:49:20 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
+	pclouds@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 06:49:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tzhaq-0006DE-4P
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 06:49:20 +0100
+	id 1TzhbA-0006KO-Qh
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 06:49:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751694Ab3A1Fs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 00:48:59 -0500
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:46290 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751614Ab3A1Fs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 00:48:57 -0500
-Received: by mail-oa0-f47.google.com with SMTP id h1so2386296oag.20
-        for <git@vger.kernel.org>; Sun, 27 Jan 2013 21:48:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=mW7g7iRSBCeP2l7vpr+RUBv+djRvKjmswIGgC0YeboU=;
-        b=Vvgotb3zG046cWDH5aVBiaQznT2U/f8eZi4Xn52dISquQ8qX9WuxoF9UvUe7p+LJH2
-         hbcAjsg4aa0nadOG57OVj6DZY/Bkl3kovKMRygvr1IsRI2aHF1YkgyCxXPolXBXy+E0G
-         JJSdBY5XLJmyAOeCZosiywvYKnX4b+mJNO0z+H1uydASvSnwo7aB7OkiVexN2COMSd3U
-         7Z+VoTWIt6UINtJzZOmxboxOa1WoQiICWL3DOtxicHqKWAR4MnY/YxSWkUrXZoIOuMsB
-         wQpEeQ1FSVa7nn3RjuPTzs6ENYUcj4KNbG+n6J30U5Zin+MZpjDVJ4udTsNg7UFqapSU
-         dRWQ==
-X-Received: by 10.182.159.5 with SMTP id wy5mr10322671obb.31.1359352137104;
- Sun, 27 Jan 2013 21:48:57 -0800 (PST)
-Received: by 10.182.153.69 with HTTP; Sun, 27 Jan 2013 21:48:26 -0800 (PST)
-In-Reply-To: <7vpq0t3x60.fsf@alter.siamese.dyndns.org>
+	id S1751728Ab3A1FtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 00:49:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51485 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751451Ab3A1FtS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 00:49:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E66571BD;
+	Mon, 28 Jan 2013 00:49:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=waLucC1olgYfEjqysaxXGPXJ24U=; b=MLvZ7u
+	RDOXQB6lRzBX3ki+JwWqyXVOtrrHk6+RYucBiuQYEulH5EWnFfSLBlW6lgvs8EsN
+	YnVsLclZhsOw6kY7e7pS+b0iATay4QfbY0brxUsy8GYanPpBkcQJL+9V8NPIs4ze
+	9ySbP+HEX4eMyZ/61Dv8ZElTKePMxBB2I5FeU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mzf6pBeDd/Q8GFKPzvZH3NtiMOUOqPiO
+	3o+83vk/ZnMiCkgBAMLiGRCQnlgNUHKiksROZRO2g2vpr/NKKAKqtAFA+5LE954l
+	nosmZEmkBC13UoTTgnwVoGQ51LfuId4UjmObrUjMztRjl+AyKUZXMK+nYdPM2hgF
+	ZaVK2UeoUEs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F32B71BC;
+	Mon, 28 Jan 2013 00:49:18 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C748871B9; Mon, 28 Jan 2013
+ 00:49:17 -0500 (EST)
+In-Reply-To: <20130128034831.GQ8206@elie.Belkin> (Jonathan Nieder's message
+ of "Sun, 27 Jan 2013 19:48:31 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 746C2530-690E-11E2-950C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214806>
 
-On Sat, Jan 26, 2013 at 2:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> This is not a tangent, but if you want to go this "forbid making our
-> repository depend on objects we do not have but we know about after
-> we peek submodule odb" route [*1*], write_sha1_file() needs to be
-> told about has_sha1_file_proper().  We may "git add" a new blob in
-> the superproject, the blob may not yet exist in *our* repository,
-> but may happen to already exist in the submodue odb.  In such a
-> case, write_sha1_file() has to write that blob in our repository,
-> without the existing has_sha1_file() check bypassing it.  Otherwise
-> our attempt to create a tree that contains that blob will fail,
-> saying that the blob only seems to exist to us via submodule odb but
-> not in our repository.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Another thing needs to be done for this to work. The current reading
-order is packs first, loose objects next. If we create a local loose
-duplicate of an alternate packed object, our local version will never
-be read. Regardless the submodule odb issue, I think we should prefer
-reading local loose objects over alternate packed ones.
--- 
-Duy
+> Brandon Casey wrote:
+>
+>> Round 3.
+>
+> Thanks for a pleasant read.  My only remaining observations are
+> cosmetic, except for a portability question in Duy's test script, a
+> small behavior change when the commit message ends with an
+> RFC2822-style header with no trailing newline and the possibility of
+> tightening the pattern in sequencer.c to match the strictness of
+> format-patch (which could easily wait for a later patch).
+>
+> Jonathan
+
+Thanks for a quick review.  I agree that this series is getting very
+close with your help.
