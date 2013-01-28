@@ -1,12 +1,13 @@
 From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH v3 10/11] format-patch: update append_signoff prototype
-Date: Sun, 27 Jan 2013 17:11:54 -0800
-Message-ID: <1359335515-13818-11-git-send-email-drafnel@gmail.com>
+Subject: [PATCH v3 11/11] Unify appending signoff in format-patch, commit and sequencer
+Date: Sun, 27 Jan 2013 17:11:55 -0800
+Message-ID: <1359335515-13818-12-git-send-email-drafnel@gmail.com>
 References: <1359335515-13818-1-git-send-email-drafnel@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: jrnieder@gmail.com, pclouds@gmail.com, gitster@pobox.com,
+	Brandon Casey <drafnel@gmail.com>,
 	Brandon Casey <bcasey@nvidia.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Mon Jan 28 02:13:06 2013
@@ -15,178 +16,244 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzdHV-0006Wl-LW
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 02:13:05 +0100
+	id 1TzdHW-0006Wl-4I
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 02:13:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757150Ab3A1BMl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jan 2013 20:12:41 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:40573 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757139Ab3A1BMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2013 20:12:34 -0500
-Received: by mail-pa0-f49.google.com with SMTP id bi1so1190649pad.8
-        for <git@vger.kernel.org>; Sun, 27 Jan 2013 17:12:34 -0800 (PST)
+	id S1757155Ab3A1BMo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jan 2013 20:12:44 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:58904 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757118Ab3A1BMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2013 20:12:36 -0500
+Received: by mail-pa0-f45.google.com with SMTP id bg2so1194742pad.32
+        for <git@vger.kernel.org>; Sun, 27 Jan 2013 17:12:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=Xr/HkG5e3AdrBmqvUSwMKPXWxqE7aoDmQG/AsRNjWtw=;
-        b=G655mgxzt7Of6yFIYfoWjs8s6ewwF/8vPweXO0spIECU6CN2VRWQLi5MxSPkePQCVQ
-         ZIp8ztR5pTevmEBTqbUCkkpGAcovnE4HRrcWdyuroiVGsMi/89eUOm9FSRiLSU4r2ecB
-         3LtCRvv/DGUyQeObDF/Saf5le9RaZgWJRIICJ/OcGSfdusX52otWvBC9EGfLOG7jDFIf
-         eCrgDZMfN0T9c6m50LDPrjMDdIiDK7dMJ44DRsnbT4HgP8i/Gt51xk/8cfHoiW3r6wGf
-         5pE+yyR8H4I5ccj5V33JXDIxtYctn2MIofzUU1SIpBYRLp4Gij1J4jg0z9jXf4QKNnmO
-         x8yQ==
-X-Received: by 10.66.82.200 with SMTP id k8mr32072948pay.56.1359335553963;
-        Sun, 27 Jan 2013 17:12:33 -0800 (PST)
+        bh=D9AQaWJlsucSg9ZvAynmhPbUxP7crfGIClU0nQ8ilxs=;
+        b=TuFp9Y5xACnvkBV2xQ45GLG+YUlvNE/q71fAEvvS7Ww276GqiI8fo0JUW+frbSpN8c
+         wpf5ZPB1NC4Fx/Cz4Vpm7eztsDbrE67fVz9VEd1N1FVC21vY61kusZS/qXouX9OrFMrk
+         mwW+nZ6YNgWm5bzNa6t/PYDWxiKV8JoQ+iPeNT6vHoP4uDM8i/ODJ/dxeSRReUX2AiGy
+         Y+BUzJvPMfcm3SEm6strx6IXNg1VJVCOqUDBy0SxMUL9ivFaVIPl1kqVK99g958b5ZPD
+         r9MUGj5bHHNC4njKlFF+mOWqjA7QtkU+mPVueTDueDF77GzZ6vE5U2CYU094EVIWDsy7
+         I8gQ==
+X-Received: by 10.66.86.101 with SMTP id o5mr32084011paz.15.1359335556036;
+        Sun, 27 Jan 2013 17:12:36 -0800 (PST)
 Received: from charliebrown.sbx10663.mountca.wayport.net (ip-64-134-226-147.public.wayport.net. [64.134.226.147])
-        by mx.google.com with ESMTPS id x2sm5619521paw.8.2013.01.27.17.12.31
+        by mx.google.com with ESMTPS id x2sm5619521paw.8.2013.01.27.17.12.34
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 27 Jan 2013 17:12:32 -0800 (PST)
+        Sun, 27 Jan 2013 17:12:35 -0800 (PST)
 X-Mailer: git-send-email 1.8.1.1.252.gdb33759
 In-Reply-To: <1359335515-13818-1-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214775>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+There are two implementations of append_signoff in log-tree.c and
+sequencer.c, which do more or less the same thing.  Unify on top of the
+sequencer.c implementation.
 
-This is a preparation step for merging with append_signoff from
-sequencer.c
+Add a test in t4014 to demonstrate support for non-s-o-b elements in th=
+e
+commit footer provided by sequence.c:append_sob.  Mark tests fixed as
+appropriate.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+[Commit message mostly stolen from Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
+c Duy's original
+ unification patch]
+
 Signed-off-by: Brandon Casey <bcasey@nvidia.com>
 ---
- builtin/log.c | 13 +------------
- log-tree.c    | 17 +++++++++++++----
- revision.h    |  2 +-
- 3 files changed, 15 insertions(+), 17 deletions(-)
+ log-tree.c              | 91 +----------------------------------------=
+--------
+ t/t4014-format-patch.sh | 31 ++++++++++++++---
+ 2 files changed, 27 insertions(+), 95 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 8f0b2e8..59de484 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1086,7 +1086,6 @@ int cmd_format_patch(int argc, const char **argv,=
- const char *prefix)
- 	struct commit *origin =3D NULL, *head =3D NULL;
- 	const char *in_reply_to =3D NULL;
- 	struct patch_ids ids;
--	char *add_signoff =3D NULL;
- 	struct strbuf buf =3D STRBUF_INIT;
- 	int use_patch_format =3D 0;
- 	int quiet =3D 0;
-@@ -1193,16 +1192,6 @@ int cmd_format_patch(int argc, const char **argv=
-, const char *prefix)
- 		rev.subject_prefix =3D strbuf_detach(&sprefix, NULL);
- 	}
-=20
--	if (do_signoff) {
--		const char *committer;
--		const char *endpos;
--		committer =3D git_committer_info(IDENT_STRICT);
--		endpos =3D strchr(committer, '>');
--		if (!endpos)
--			die(_("bogus committer info %s"), committer);
--		add_signoff =3D xmemdupz(committer, endpos - committer + 1);
--	}
--
- 	for (i =3D 0; i < extra_hdr.nr; i++) {
- 		strbuf_addstr(&buf, extra_hdr.items[i].string);
- 		strbuf_addch(&buf, '\n');
-@@ -1393,7 +1382,7 @@ int cmd_format_patch(int argc, const char **argv,=
- const char *prefix)
- 		total++;
- 		start_number--;
- 	}
--	rev.add_signoff =3D add_signoff;
-+	rev.add_signoff =3D do_signoff;
- 	while (0 <=3D --nr) {
- 		int shown;
- 		commit =3D list[nr];
 diff --git a/log-tree.c b/log-tree.c
-index 5dc45c4..ac1cd68 100644
+index ac1cd68..c9d9a37 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -10,6 +10,8 @@
+@@ -9,8 +9,7 @@
+ #include "string-list.h"
  #include "color.h"
  #include "gpg-interface.h"
+-
+-#define APPEND_SIGNOFF_DEDUP (1u <<0)
++#include "sequencer.h"
 =20
-+#define APPEND_SIGNOFF_DEDUP (1u <<0)
-+
  struct decoration name_decoration =3D { "object names" };
 =20
- enum decoration_type {
-@@ -253,9 +255,12 @@ static int detect_any_signoff(char *letter, int si=
-ze)
- 	return seen_head && seen_name;
+@@ -208,94 +207,6 @@ void show_decorations(struct rev_info *opt, struct=
+ commit *commit)
+ 	putchar(')');
  }
 =20
--static void append_signoff(struct strbuf *sb, const char *signoff)
-+static void append_signoff(struct strbuf *sb, int ignore_footer, unsig=
+-/*
+- * Search for "^[-A-Za-z]+: [^@]+@" pattern. It usually matches
+- * Signed-off-by: and Acked-by: lines.
+- */
+-static int detect_any_signoff(char *letter, int size)
+-{
+-	char *cp;
+-	int seen_colon =3D 0;
+-	int seen_at =3D 0;
+-	int seen_name =3D 0;
+-	int seen_head =3D 0;
+-
+-	cp =3D letter + size;
+-	while (letter <=3D --cp && *cp =3D=3D '\n')
+-		continue;
+-
+-	while (letter <=3D cp) {
+-		char ch =3D *cp--;
+-		if (ch =3D=3D '\n')
+-			break;
+-
+-		if (!seen_at) {
+-			if (ch =3D=3D '@')
+-				seen_at =3D 1;
+-			continue;
+-		}
+-		if (!seen_colon) {
+-			if (ch =3D=3D '@')
+-				return 0;
+-			else if (ch =3D=3D ':')
+-				seen_colon =3D 1;
+-			else
+-				seen_name =3D 1;
+-			continue;
+-		}
+-		if (('A' <=3D ch && ch <=3D 'Z') ||
+-		    ('a' <=3D ch && ch <=3D 'z') ||
+-		    ch =3D=3D '-') {
+-			seen_head =3D 1;
+-			continue;
+-		}
+-		/* no empty last line doesn't match */
+-		return 0;
+-	}
+-	return seen_head && seen_name;
+-}
+-
+-static void append_signoff(struct strbuf *sb, int ignore_footer, unsig=
 ned flag)
- {
-+	unsigned no_dup_sob =3D flag & APPEND_SIGNOFF_DEDUP;
- 	static const char signed_off_by[] =3D "Signed-off-by: ";
-+	char *signoff =3D xstrdup(fmt_name(getenv("GIT_COMMITTER_NAME"),
-+					       getenv("GIT_COMMITTER_EMAIL")));
- 	size_t signoff_len =3D strlen(signoff);
- 	int has_signoff =3D 0;
- 	char *cp;
-@@ -275,6 +280,7 @@ static void append_signoff(struct strbuf *sb, const=
- char *signoff)
- 		if (!isspace(cp[signoff_len]))
- 			continue;
- 		/* we already have him */
-+		free(signoff);
- 		return;
- 	}
-=20
-@@ -287,6 +293,7 @@ static void append_signoff(struct strbuf *sb, const=
- char *signoff)
- 	strbuf_addstr(sb, signed_off_by);
- 	strbuf_add(sb, signoff, signoff_len);
- 	strbuf_addch(sb, '\n');
-+	free(signoff);
- }
-=20
+-{
+-	unsigned no_dup_sob =3D flag & APPEND_SIGNOFF_DEDUP;
+-	static const char signed_off_by[] =3D "Signed-off-by: ";
+-	char *signoff =3D xstrdup(fmt_name(getenv("GIT_COMMITTER_NAME"),
+-					       getenv("GIT_COMMITTER_EMAIL")));
+-	size_t signoff_len =3D strlen(signoff);
+-	int has_signoff =3D 0;
+-	char *cp;
+-
+-	cp =3D sb->buf;
+-
+-	/* First see if we already have the sign-off by the signer */
+-	while ((cp =3D strstr(cp, signed_off_by))) {
+-
+-		has_signoff =3D 1;
+-
+-		cp +=3D strlen(signed_off_by);
+-		if (cp + signoff_len >=3D sb->buf + sb->len)
+-			break;
+-		if (strncmp(cp, signoff, signoff_len))
+-			continue;
+-		if (!isspace(cp[signoff_len]))
+-			continue;
+-		/* we already have him */
+-		free(signoff);
+-		return;
+-	}
+-
+-	if (!has_signoff)
+-		has_signoff =3D detect_any_signoff(sb->buf, sb->len);
+-
+-	if (!has_signoff)
+-		strbuf_addch(sb, '\n');
+-
+-	strbuf_addstr(sb, signed_off_by);
+-	strbuf_add(sb, signoff, signoff_len);
+-	strbuf_addch(sb, '\n');
+-	free(signoff);
+-}
+-
  static unsigned int digits_in_number(unsigned int number)
-@@ -672,8 +679,10 @@ void show_log(struct rev_info *opt)
- 	/*
- 	 * And then the pretty-printed message itself
- 	 */
--	if (ctx.need_8bit_cte >=3D 0)
--		ctx.need_8bit_cte =3D has_non_ascii(opt->add_signoff);
-+	if (ctx.need_8bit_cte >=3D 0 && opt->add_signoff)
-+		ctx.need_8bit_cte =3D
-+			has_non_ascii(fmt_name(getenv("GIT_COMMITTER_NAME"),
-+					       getenv("GIT_COMMITTER_EMAIL")));
- 	ctx.date_mode =3D opt->date_mode;
- 	ctx.date_mode_explicit =3D opt->date_mode_explicit;
- 	ctx.abbrev =3D opt->diffopt.abbrev;
-@@ -686,7 +695,7 @@ void show_log(struct rev_info *opt)
- 	pretty_print_commit(&ctx, commit, &msgbuf);
+ {
+ 	unsigned int i =3D 10, result =3D 1;
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 3868cef..d0ec097 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1104,7 +1104,28 @@ EOF
+ 	test_cmp expected actual
+ '
 =20
- 	if (opt->add_signoff)
--		append_signoff(&msgbuf, opt->add_signoff);
-+		append_signoff(&msgbuf, 0, APPEND_SIGNOFF_DEDUP);
+-test_expect_failure 'signoff: some random signoff-alike' '
++test_expect_success 'signoff: misc conforming footer elements' '
++	append_signoff <<\EOF >actual &&
++subject
++
++body
++
++Signed-off-by: my@house
++(cherry picked from commit da39a3ee5e6b4b0d3255bfef95601890afd80709)
++Tested-by: Some One <someone@example.com>
++Bug: 1234
++EOF
++	cat >expected <<\EOF &&
++4:Subject: [PATCH] subject
++8:
++10:
++11:Signed-off-by: my@house
++15:Signed-off-by: C O Mitter <committer@example.com>
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'signoff: some random signoff-alike' '
+ 	append_signoff <<\EOF >actual &&
+ subject
 =20
- 	if ((ctx.fmt !=3D CMIT_FMT_USERFORMAT) &&
- 	    ctx.notes_message && *ctx.notes_message) {
-diff --git a/revision.h b/revision.h
-index 5da09ee..01bd2b7 100644
---- a/revision.h
-+++ b/revision.h
-@@ -138,7 +138,7 @@ struct rev_info {
- 	int		reroll_count;
- 	char		*message_id;
- 	struct string_list *ref_message_ids;
--	const char	*add_signoff;
-+	int		add_signoff;
- 	const char	*extra_headers;
- 	const char	*log_reencode;
- 	const char	*subject_prefix;
+@@ -1120,7 +1141,7 @@ EOF
+ 	test_cmp expected actual
+ '
+=20
+-test_expect_failure 'signoff: not really a signoff' '
++test_expect_success 'signoff: not really a signoff' '
+ 	append_signoff <<\EOF >actual &&
+ subject
+=20
+@@ -1136,7 +1157,7 @@ EOF
+ 	test_cmp expected actual
+ '
+=20
+-test_expect_failure 'signoff: not really a signoff (2)' '
++test_expect_success 'signoff: not really a signoff (2)' '
+ 	append_signoff <<\EOF >actual &&
+ subject
+=20
+@@ -1153,7 +1174,7 @@ EOF
+ 	test_cmp expected actual
+ '
+=20
+-test_expect_failure 'signoff: valid S-o-b paragraph in the middle' '
++test_expect_success 'signoff: valid S-o-b paragraph in the middle' '
+ 	append_signoff <<\EOF >actual &&
+ subject
+=20
+@@ -1221,7 +1242,7 @@ EOF
+ 	test_cmp expected actual
+ '
+=20
+-test_expect_failure 'signoff: detect garbage in non-conforming footer'=
+ '
++test_expect_success 'signoff: detect garbage in non-conforming footer'=
+ '
+ 	append_signoff <<\EOF >actual &&
+ subject
+=20
 --=20
 1.8.1.1.450.g0327af3
