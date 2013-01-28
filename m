@@ -1,96 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] remove protocol from gravatar and picon links for clear
- if Gitweb is being called through a secure server
-Date: Mon, 28 Jan 2013 12:58:34 -0800
-Message-ID: <20130128205834.GC7759@google.com>
-References: <1359400490-16449-1-git-send-email-admin@andrej-andb.ru>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug: file named - on git commit
+Date: Mon, 28 Jan 2013 13:01:29 -0800
+Message-ID: <7vobg9uimu.fsf@alter.siamese.dyndns.org>
+References: <51065540.1090007@renemoser.net>
+ <87txq11sbk.fsf@pctrast.inf.ethz.ch> <20130128204140.GA7759@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Andrej Andb <admin@andrej-andb.ru>
-X-From: git-owner@vger.kernel.org Mon Jan 28 21:59:01 2013
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Rene Moser <mail@renemoser.net>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 22:01:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzvnB-0003K7-62
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 21:59:01 +0100
+	id 1Tzvpy-0004eP-G7
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 22:01:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229Ab3A1U6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 15:58:40 -0500
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:54821 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753314Ab3A1U6j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 15:58:39 -0500
-Received: by mail-pb0-f43.google.com with SMTP id jt11so1708869pbb.30
-        for <git@vger.kernel.org>; Mon, 28 Jan 2013 12:58:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=uQKNHyjRYBe5XBMbPhueHxhqRM1e3gU0I0vUiaKDjio=;
-        b=zy2IYRe3ag8gIQUk+W3vpS9VcWhJOFusaaYU9kK9XFvS9V/wODf+LZLg1P1EfNPi/l
-         YMsFxczDrZaNZC+7OpawbTQlkWmL3OCV9Xqsu5bJVLoesZpUJSxFeLAi2ZrXkjpi9z0W
-         553ZDbkf2tQGh7BgZLriBhzSt2Iw/Cj3u8Af8NevHpBOgOXFIGnCdA024hyVw0z5zeuH
-         6Ukpay/6Y7Pwl6hsIcOm2pHLejRv5P2TjML8KU1LXuh2mqps1Ei+xJd/CjJyoraGNPMK
-         uAWyeUwy1lEtMuKFgfNv8jaB6aljvQ5qrvK9iHygpKuerJ/g9zd3boIA3MQ0xKlYuoY0
-         gcVA==
-X-Received: by 10.68.130.195 with SMTP id og3mr40970040pbb.10.1359406718678;
-        Mon, 28 Jan 2013 12:58:38 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id bj9sm7389606pab.22.2013.01.28.12.58.36
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 28 Jan 2013 12:58:37 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1359400490-16449-1-git-send-email-admin@andrej-andb.ru>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753721Ab3A1VBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 16:01:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48812 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751650Ab3A1VBc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 16:01:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D034EB11A;
+	Mon, 28 Jan 2013 16:01:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mSdAFxvH2iEc4dFJ4m8AZYNsVd4=; b=k3pt8i
+	dyZTdmlDFZz1eMq26lXdevWYBK3VVvEdOoxJ2LjUXAcjdnah+J4//EfNNUXwyw4k
+	UL03jSHBRYNcNUy/B3mjY3flsLfVZkzAA/XDv7f23RXoL59H/SAq8WJre7hsnHSv
+	3wn3/+Mxz5HTF2SszjnvJNpILQIi5V3UVgKFo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f/+/C7WHv0ASBTds55wa4oBXA5uu+fii
+	YpN7I4BXzR3oUlOqHxlYnZzU4N1BqoAjBS8E6Fo2aVv4t7wXHcNxmnsoqFkpzI5k
+	6BGAe+Jp+79lwOOFph3BAbIveSmh3x6dAujqlrZePEbGIXgLPm1bNutObJquF6he
+	U67qteTGTBM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2845B119;
+	Mon, 28 Jan 2013 16:01:31 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 228AAB114; Mon, 28 Jan 2013
+ 16:01:31 -0500 (EST)
+In-Reply-To: <20130128204140.GA7759@google.com> (Jonathan Nieder's message of
+ "Mon, 28 Jan 2013 12:41:40 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E4070692-698D-11E2-9514-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214873>
 
-(cc-ing some area experts)
-Hi Andrej,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Andrej Andb wrote:
+> Thomas Rast wrote:
+>> Rene Moser <mail@renemoser.net> writes:
+>
+>>> Found a little issue in git version 1.7.9.5 if a file named "-", causing
+>>> "git commit" to read from stdin.
+>>>
+>>> (So you must hit ctrl-d or ctrl-c to finish the commit.)
+> [...]
+>> This was fixed by Junio around 4682d85 (diff-index.c: "git diff" has no
+>> need to read blob from the standard input, 2012-06-27), which is
+>> included starting with v1.7.12 and the v1.7.11.3 maint release.  Please
+>> upgrade.
+>
+> Should upgrade-averse folks stuck on 1.7.10.y (like Debian 7.0, which
+> is currently in the release candidate stage) take this fix?  Do you
+> happen to know of any other fixes such people would want?
 
-> [Subject: remove protocol from gravatar and picon links for clear if
-> Gitweb is being called through a secure server]
+There are files with four dotted decimal numbers in their names in
+the Documentation/RelNotes/ directory to help distro maintainers
+like you to figure it want.
 
-Sounds good to me.  May we have your signoff?  (See
-Documentation/SubmittingPatches for what this means.)
+This is a tangent, but even with a project like git that is managed
+with a good use of topic branch workflow, we may want to have a way
+to reliably identify the tip of an ancient fix like this.  People
+may be able to bisect down to 4682d85, and in this particular case,
+I happen to know that there wasn't any side-effect breakage
+introduced by that commit, but there needs to be an easy way (it
+can be expensive to compute) to make sure there is no follow-up fix
+to that particular commit.
 
-Thanks,
-Jonathan
-(patch left unsnipped for reference)
-
-> ---
->  gitweb/gitweb.perl | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index c6bafe6..1309196 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2068,7 +2068,7 @@ sub picon_url {
->  	if (!$avatar_cache{$email}) {
->  		my ($user, $domain) = split('@', $email);
->  		$avatar_cache{$email} =
-> -			"http://www.cs.indiana.edu/cgi-pub/kinzler/piconsearch.cgi/" .
-> +			"//www.cs.indiana.edu/cgi-pub/kinzler/piconsearch.cgi/" .
->  			"$domain/$user/" .
->  			"users+domains+unknown/up/single";
->  	}
-> @@ -2083,7 +2083,7 @@ sub gravatar_url {
->  	my $email = lc shift;
->  	my $size = shift;
->  	$avatar_cache{$email} ||=
-> -		"http://www.gravatar.com/avatar/" .
-> +		"//www.gravatar.com/avatar/" .
->  			Digest::MD5::md5_hex($email) . "?s=";
->  	return $avatar_cache{$email} . $size;
->  }
+I can read "git rev-list --parents | grep -C3 $(git rev-parse 4682d85)"
+and then figure out what the children commits of that fix are, of
+course, but I suspect most people will view it as primitive ;-)
