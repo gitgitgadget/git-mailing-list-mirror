@@ -1,182 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v3] add: warn when -u or -A is used without filepattern
-Date: Mon, 28 Jan 2013 10:16:33 +0100
-Message-ID: <1359364593-10933-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqobg966cv.fsf@grenoble-inp.fr>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Eric James Michael Ritz <lobbyjones@gmail.com>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jan 28 10:17:36 2013
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Port 22
+Date: Mon, 28 Jan 2013 10:20:22 +0100
+Message-ID: <510642D6.1000108@drmicha.warpmail.net>
+References: <55B0A474-AD5B-44B5-91E7-FA5253FA5682@gmail.com> <CAO54GHBFo94Pes1cJ9MVvVJGD5ZMK4yMv9+_shtT8iPP-DVtsg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Craig Christensen <cwcraigo@gmail.com>, git <git@vger.kernel.org>
+To: Kevin <ikke@ikke.info>
+X-From: git-owner@vger.kernel.org Mon Jan 28 10:20:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzkqM-0004SW-Am
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 10:17:34 +0100
+	id 1TzktQ-0005fr-DY
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 10:20:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754180Ab3A1JRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 04:17:04 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:48886 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754128Ab3A1JRC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 04:17:02 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r0S9Gs5o028049
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 28 Jan 2013 10:16:54 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Tzkpj-0008A2-7s; Mon, 28 Jan 2013 10:16:55 +0100
-Received: from moy by anie with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Tzkpj-0002r9-3e; Mon, 28 Jan 2013 10:16:55 +0100
-X-Mailer: git-send-email 1.8.1.1.440.g1d329bd.dirty
-In-Reply-To: <vpqobg966cv.fsf@grenoble-inp.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 28 Jan 2013 10:16:54 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r0S9Gs5o028049
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1359969416.49913@nukbYUG/nNTO/7pEOoa5Sg
+	id S1753763Ab3A1JUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 04:20:24 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:32976 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753068Ab3A1JUW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jan 2013 04:20:22 -0500
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id AA722209E2;
+	Mon, 28 Jan 2013 04:20:21 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute5.internal (MEProxy); Mon, 28 Jan 2013 04:20:21 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=1y8XGJeo8QtX1te8/WDOJU
+	PPjfU=; b=O5vfB4H9TL+KozerpHH+aLRuS3WOr8JcJgjYcXbip0W9vOiHwG9qEc
+	g8ljuU6bIMYEY98v+da37VRZE9JVEYYTiQKyTZUJApboeSP5RCFr8III1DCu7oyX
+	MgvZpxQArkSSZ9JgmqF8gOraB3K/6vFeqxVRw9r2sVApu3iONfmlw=
+X-Sasl-enc: iDEKMLUUlocEYWXkn5dmu9uQEpzdQGUzso7rTaKH7n3p 1359364821
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 0656D8E08B5;
+	Mon, 28 Jan 2013 04:20:20 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <CAO54GHBFo94Pes1cJ9MVvVJGD5ZMK4yMv9+_shtT8iPP-DVtsg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214823>
 
-Most git commands that can be used with our without a filepattern are
-tree-wide by default, the filepattern being used to restrict their scope.
-A few exceptions are: 'git grep', 'git clean', 'git add -u' and 'git add -A'.
+Kevin venit, vidit, dixit 28.01.2013 09:06:
+> This is not really a git problem, but more of an ssh problem.
+> 
+> Are you in the position to change the port where the SSH daemon
+> listens on? Then you could use a different port which isn't blocked
+> (443 perhaps?).
+> 
+> On Sat, Jan 26, 2013 at 7:56 PM, Craig Christensen <cwcraigo@gmail.com> wrote:
+>> I am currently a student at Brigham Young University - Idaho and we are use Pagoda Box and Git for our Mobile Apps class.  However, the school's network has blocked incoming trafic on port 22.  I have been searching through all the tutorials and documents provided by Pagoda Box and Git but have not been able to find a solution to solve this problem.  We can use sftp but we then have to manually deploy the latest using the admin panel.  Can you help provide a simple solution?
 
-The inconsistency of 'git add -u' and 'git add -A' are particularly
-problematic since other 'git add' subcommands (namely 'git add -p' and
-'git add -e') are tree-wide by default.
+So how is your setup:
 
-Flipping the default now is unacceptable, so this patch starts training
-users to type explicitely 'git add -u|-A :/' or 'git add -u|-A .', to prepare
-for the next steps:
+- Pagoda Box instance at BYU
+- sftp uploads allowed, but not ssh
+- drive Git on the box using the admin interface
 
-* forbid 'git add -u|-A' without filepattern (like 'git add' without
-  option)
+Or do you use a Pagoda server? Do you have read access to the git repo
+on the box?
 
-* much later, maybe, re-allow 'git add -u|-A' without filepattern, with a
-  tree-wide scope.
+ssh allows to restrict commands to only a subset, such as ssh only. If
+the port were blocked for incoming traffic you wouldn't be able to use
+(ssh at all thus) sftp either.
 
-A nice side effect of this patch is that it makes the :/ special
-filepattern easier to discover for users.
-
-When the command is called from the root of the tree, there is no
-ambiguity and no need to change the behavior, hence no need to warn.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Changes since v2:
-
-* Typo consistant -> consistent
-
-* Mention both short and long option names (Thanks Junio). I went for
-  a two-lines display which I find a bit nicer to read than Junio's
-  version, but I'm fine with both.
-
- Documentation/git-add.txt |  7 ++++---
- builtin/add.c             | 44 +++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 47 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index fd9e36b..5333559 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -107,9 +107,10 @@ apply to the index. See EDITING PATCHES below.
- 	from the index if the corresponding files in the working tree
- 	have been removed.
- +
--If no <filepattern> is given, default to "."; in other words,
--update all tracked files in the current directory and its
--subdirectories.
-+If no <filepattern> is given, the current version of Git defaults to
-+"."; in other words, update all tracked files in the current directory
-+and its subdirectories. This default will change in a future version
-+of Git, hence the form without <filepattern> should not be used.
- 
- -A::
- --all::
-diff --git a/builtin/add.c b/builtin/add.c
-index 7cb6cca..7738025 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -321,6 +321,35 @@ static int add_files(struct dir_struct *dir, int flags)
- 	return exit_status;
- }
- 
-+static void warn_pathless_add(const char *option_name, const char *short_name) {
-+	/*
-+	 * To be consistent with "git add -p" and most Git
-+	 * commands, we should default to being tree-wide, but
-+	 * this is not the original behavior and can't be
-+	 * changed until users trained themselves not to type
-+	 * "git add -u" or "git add -A". For now, we warn and
-+	 * keep the old behavior. Later, this warning can be
-+	 * turned into a die(...), and eventually we may
-+	 * reallow the command with a new behavior.
-+	 */
-+	warning(_("The behavior of 'git add %s (or %s)' with no path argument from a\n"
-+		  "subdirectory of the tree will change in Git 2.0 and should not be used anymore.\n"
-+		  "To add content for the whole tree, run:\n"
-+		  "\n"
-+		  "  git add %s :/\n"
-+		  "  (or git add %s :/)\n"
-+		  "\n"
-+		  "To restrict the command to the current directory, run:\n"
-+		  "\n"
-+		  "  git add %s .\n"
-+		  "  (or git add %s .)\n"
-+		  "\n"
-+		  "With the current Git version, the command is restricted to the current directory."),
-+		option_name, short_name,
-+		option_name, short_name,
-+		option_name, short_name);
-+}
-+
- int cmd_add(int argc, const char **argv, const char *prefix)
- {
- 	int exit_status = 0;
-@@ -331,6 +360,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	int add_new_files;
- 	int require_pathspec;
- 	char *seen = NULL;
-+	const char *option_with_implicit_dot = NULL;
-+	const char *short_option_with_implicit_dot = NULL;
- 
- 	git_config(add_config, NULL);
- 
-@@ -350,8 +381,19 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		die(_("-A and -u are mutually incompatible"));
- 	if (!show_only && ignore_missing)
- 		die(_("Option --ignore-missing can only be used together with --dry-run"));
--	if ((addremove || take_worktree_changes) && !argc) {
-+	if (addremove) {
-+		option_with_implicit_dot = "--all";
-+		short_option_with_implicit_dot = "-A";
-+	}
-+	if (take_worktree_changes) {
-+		option_with_implicit_dot = "--update";
-+		short_option_with_implicit_dot = "-u";
-+	}
-+	if (option_with_implicit_dot && !argc) {
- 		static const char *here[2] = { ".", NULL };
-+		if (prefix)
-+			warn_pathless_add(option_with_implicit_dot,
-+					  short_option_with_implicit_dot);
- 		argc = 1;
- 		argv = here;
- 	}
--- 
-1.8.1.1.440.g1d329bd.dirty
+Michael
