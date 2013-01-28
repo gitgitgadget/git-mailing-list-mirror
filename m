@@ -1,78 +1,88 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: [PATCH v4 1/2] for-each-repo: new command used for multi-repo operations
-Date: Mon, 28 Jan 2013 18:11:06 +0100
-Message-ID: <CAFXTnz6zN0izx8S23JFww5niVD6x-r2e7TSthqZnempUrvAEWw@mail.gmail.com>
-References: <1359290777-5483-1-git-send-email-hjemli@gmail.com>
-	<1359290777-5483-2-git-send-email-hjemli@gmail.com>
-	<7vk3qywiqf.fsf@alter.siamese.dyndns.org>
-	<CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com>
-	<20130128081006.GA2434@elie.Belkin>
+From: Gene Czarcinski <gene@czarc.net>
+Subject: Bug, feature, or pilot error: format-patch
+Date: Mon, 28 Jan 2013 12:03:56 -0500
+Message-ID: <5106AF7C.1010502@czarc.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 18:11:35 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 28 18:12:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzsF4-0004UN-4l
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 18:11:34 +0100
+	id 1TzsGK-0005CD-7U
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 18:12:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756882Ab3A1RLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 12:11:10 -0500
-Received: from mail-bk0-f43.google.com ([209.85.214.43]:33374 "EHLO
-	mail-bk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756631Ab3A1RLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 12:11:08 -0500
-Received: by mail-bk0-f43.google.com with SMTP id jm19so996319bkc.16
-        for <git@vger.kernel.org>; Mon, 28 Jan 2013 09:11:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=L5S5+JjEC58YAQW6o9zGRRtTCrs8fG6WX0RvuP6C7FE=;
-        b=UU/f79FcCtAjJ4xFFPxuloOF5XlcSMx6G4l3WZ+ZxypFjQriZIww0a7gr0mb72UkKo
-         FyKVUrhoiTk7kf5W6e+7Ce8f7YWcJhzjk9s3XXoHstTLCiAHjIT4/aKNRzSsY6vxfQ1p
-         ovWMRDMY7Lk1+JChfZduH9j9qz7CtDvR2drd6mjjfdYrGkyFy10twswxBLutNqfJAoQZ
-         K/4Ynb8hr+mRAOASL/XGlIEJ50H81mBgS4dWnBEfouL9QL6wl2uUKCvjdJL45jfKlDVb
-         p3pRZ5/8uYOWku6L9NARjjSaj6BOsnn1NJRTXFeh7hSkY9rvzXytwbhAvO+IPsxSwEh7
-         JFaQ==
-X-Received: by 10.204.4.215 with SMTP id 23mr3319801bks.110.1359393066945;
- Mon, 28 Jan 2013 09:11:06 -0800 (PST)
-Received: by 10.205.83.199 with HTTP; Mon, 28 Jan 2013 09:11:06 -0800 (PST)
-In-Reply-To: <20130128081006.GA2434@elie.Belkin>
+	id S1756936Ab3A1RMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 12:12:31 -0500
+Received: from eastrmfepi204.cox.net ([68.230.241.208]:45032 "EHLO
+	eastrmfepi204.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755900Ab3A1RMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 12:12:30 -0500
+X-Greylist: delayed 512 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jan 2013 12:12:29 EST
+Received: from eastrmimpo110 ([68.230.241.223]) by eastrmfepo102.cox.net
+          (InterMail vM.8.01.04.00 201-2260-137-20101110) with ESMTP
+          id <20130128170357.WSPI7113.eastrmfepo102.cox.net@eastrmimpo110>
+          for <git@vger.kernel.org>; Mon, 28 Jan 2013 12:03:57 -0500
+Received: from [192.168.18.148] ([68.100.144.189])
+	by eastrmimpo110 with cox
+	id tV3w1k00H45PsQc01V3wMG; Mon, 28 Jan 2013 12:03:57 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020204.5106AF7D.002D,ss=1,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.0 cv=Ybc/Fntf c=1 sm=1
+ a=xiXiwr23JuvKlkj6ngz4TA==:17 a=IUyNvTVCZWAA:10 a=j1HrP9d4hxIA:10
+ a=103jMkqsgCkA:10 a=8nJEP1OIZ-IA:10 a=BIJj-m-0AAAA:8 a=6y9iLSimWqUA:10
+ a=6tQWiZNZeTwwd-J4LrUA:9 a=wPNLvfGTeEIA:10 a=xiXiwr23JuvKlkj6ngz4TA==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (CRAM-MD5)
+ smtp.auth=gczarcinski@cox.net
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214840>
 
-On Mon, Jan 28, 2013 at 9:10 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> Lars Hjemli wrote:
->
->> [1] The 'git -a' rewrite patch shows how I think about this command -
->> it's just an option to the 'git' command, modifying the way any
->> subcommand is invoked (btw: I don't expect that patch to be applied
->> since 'git-all' was deemed to generic, so I'll just carry the patch in
->> my own tree).
->
-> As one data point, 'git all' also seems too generic to me but 'git -a'
-> doesn't.  Intuition can be weird.
->
-> So if I ran the world, then having commands
->
->         git -a diff
->
-> and
->
->         git for-each-repo git diff
->
-> do the same thing would be fine.  Of course I don't run the world. ;-)
+I am not on the mailing list so please CC me.  I am running git 1.8.1 on 
+Fedora 18.
 
-This would make me very happy. Junio?
+I aam having what appears to be a problem.  Here is the sequence which 
+generally describes what I did and what happened:
 
---
-larsh
+     git  checkout  -b  test1  master
+     git  am  0001-simple-1.patch
+     git  checkout  -b  test2  master
+     git  am  0001-simple-2.patch        ### this is known to conflict 
+with 0001-simple-1.patch
+     git  checkout  test1
+     git  merge  test2
+[here git-merge detects a conflict]
+     git  mergetool                               ###to resolve the conflict
+[conflict resolved]
+     git  commit  -a -s
+     git  log
+[shows two commits -- one for simple-2 and one for the merge]
+     git  format-patch  master..HEAD
+[two patch files created: 0001-simple-1.patch and 0002-simple-2.patch]
+[0002-simple-2.patch and 0001-simple-2.patch are exactly equal and do 
+not reflect the resolved conflict]
+
+If you do git-diff between <commit-patch-1> and HEAD, you get something 
+different that you got from format-patch.
+
+1. Bug ... format-patch is broken
+
+2. Feature ... that is the way it works
+
+3. Pilot error ... ??
+
+I can create a good version of patch-2 manually but should I have to?
+
+Color me foolish but I assumed I could do git-format-patch in one branch 
+and then use git-am to recreate that branch elsewhere.
+
+Gene
