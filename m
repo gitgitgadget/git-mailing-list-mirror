@@ -1,10 +1,9 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 3/4] mergetool--lib: Add functions for finding available tools
-Date: Sun, 27 Jan 2013 16:52:25 -0800
-Message-ID: <1359334346-5879-4-git-send-email-davvid@gmail.com>
+Subject: [PATCH v2 2/4] mergetool--lib: Improve the help text in guess_merge_tool()
+Date: Sun, 27 Jan 2013 16:52:24 -0800
+Message-ID: <1359334346-5879-3-git-send-email-davvid@gmail.com>
 References: <1359334346-5879-1-git-send-email-davvid@gmail.com>
  <1359334346-5879-2-git-send-email-davvid@gmail.com>
- <1359334346-5879-3-git-send-email-davvid@gmail.com>
 Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>
 To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Mon Jan 28 01:53:12 2013
@@ -13,156 +12,71 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzcyF-00013K-Sp
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 01:53:12 +0100
+	id 1TzcyF-00013K-Db
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 01:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756828Ab3A1Awl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2013 19:52:41 -0500
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:46224 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756740Ab3A1Awg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2013 19:52:36 -0500
-Received: by mail-ie0-f177.google.com with SMTP id 16so450829iea.22
-        for <git@vger.kernel.org>; Sun, 27 Jan 2013 16:52:36 -0800 (PST)
+	id S1756776Ab3A1Awk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2013 19:52:40 -0500
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:49869 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756731Ab3A1Awe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2013 19:52:34 -0500
+Received: by mail-ie0-f175.google.com with SMTP id c12so148609ieb.6
+        for <git@vger.kernel.org>; Sun, 27 Jan 2013 16:52:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=UkwISxvov/DW8t1yC/lVabqE0kIN7K4rel581m/JDlI=;
-        b=HA67iSdo1ltEOjAAld6pEesrTS8nuf1NGxH3Ist91sGb1TGpOdQCO/FJ2mqiqV8KXM
-         XJrzRtXNoZglUfYPlQYyb9aj1mL5tUYzmqXKgTjV+6HQaX4fC1GIbaA29jEhwB48n+T/
-         tcvqkpkqNkII9ezYb4kCJEEYD0Xarhj6gxDPAXzHdtP/mLYSthRRYdeSI+u7ZwAtLpcQ
-         Vsw2A3lYJVzr1W9uqZkDCgA1hbWMHrFyqRH2+P6rBo8ZNEtSa1bqB1gj92LI8pjQGIwy
-         UG8DGXJ1NuiRRo+1wxy51rrlM42YIiLuqxw8OXysKtHbiAYFTx0pbyDhuTbbrqrfoyG/
-         QloA==
-X-Received: by 10.50.190.134 with SMTP id gq6mr3829363igc.104.1359334356348;
-        Sun, 27 Jan 2013 16:52:36 -0800 (PST)
+        bh=BMY4DSMwWxCd9ME1NvESrB6A2qznjGJDdYdF1JbHh6o=;
+        b=l87XgOxQvEoqRAHTndDkuzN2GHMxe67+Yp+fcETIx1WsOLKU3nvP/GJ03FQ8yDW13A
+         iwv78QPTS78gv6muiaueih9qBLEeSp0j+46hWfDFJ7jsZfWzvMiTS/1Er0sfxRSvRqpu
+         tXZJjy3T+M2F4A/By7/eBXW0aX2BZVKJieNp1RsqTzpHuQEMjv4ESoYc5MfNe2kQWvwA
+         tOZ3JzmO5znvjVu0mL6XNjxmLpu/ORjYAqO+fBGnZtnxfiYVFPko+3VPXgXKMOFR37qy
+         2F+Y219YhufYxlG0GoLLB7lB672E3VLt+1qb/2zewpUrvOL1JF1O9AvxnQH71qNsQiIJ
+         OiGA==
+X-Received: by 10.50.170.36 with SMTP id aj4mr3895294igc.92.1359334354373;
+        Sun, 27 Jan 2013 16:52:34 -0800 (PST)
 Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id ke8sm1868421igc.17.2013.01.27.16.52.34
+        by mx.google.com with ESMTPS id ke8sm1868421igc.17.2013.01.27.16.52.32
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 27 Jan 2013 16:52:35 -0800 (PST)
+        Sun, 27 Jan 2013 16:52:33 -0800 (PST)
 X-Mailer: git-send-email 1.8.0.13.g3ff16bb
-In-Reply-To: <1359334346-5879-3-git-send-email-davvid@gmail.com>
+In-Reply-To: <1359334346-5879-2-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214761>
 
-Refactor show_tool_help() so that the tool-finding logic is broken out
-into a separate show_tool_names() function.
+This code path is only activated when the user does not have a valid
+configured tool.  Add a message to guide new users towards configuring a
+default tool.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
-filter_tools renamed to show_tool_names() and simplfied
-to use ls -1.  show_tool_names() now has a preamble as discussed.
+This now uses a cat << here-doc.
 
- git-mergetool--lib.sh | 68 +++++++++++++++++++++++++++++----------------------
- 1 file changed, 39 insertions(+), 29 deletions(-)
+ git-mergetool--lib.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index db3eb58..fe068f6 100644
+index 9a5aae9..db3eb58 100644
 --- a/git-mergetool--lib.sh
 +++ b/git-mergetool--lib.sh
-@@ -2,6 +2,35 @@
- # git-mergetool--lib is a library for common merge tool functions
- MERGE_TOOLS_DIR=$(git --exec-path)/mergetools
+@@ -240,8 +240,13 @@ show_tool_help () {
  
-+mode_ok () {
-+	diff_mode && can_diff ||
-+	merge_mode && can_merge
-+}
-+
-+is_available () {
-+	merge_tool_path=$(translate_merge_tool_path "$1") &&
-+	type "$merge_tool_path" >/dev/null 2>&1
-+}
-+
-+show_tool_names () {
-+	condition=${1:-true} per_line_prefix=${2:-} preamble=${3:-}
-+
-+	( cd "$MERGE_TOOLS_DIR" && ls -1 * ) |
-+	while read toolname
-+	do
-+		if setup_tool "$toolname" 2>/dev/null &&
-+			(eval "$condition" "$toolname")
-+		then
-+			if test -n "$preamble"
-+			then
-+				echo "$preamble"
-+				preamble=
-+			fi
-+			printf "%s%s\n" "$per_line_prefix" "$tool"
-+		fi
-+	done
-+}
-+
- diff_mode() {
- 	test "$TOOL_MODE" = diff
- }
-@@ -199,35 +228,21 @@ list_merge_tool_candidates () {
- }
+ guess_merge_tool () {
+ 	list_merge_tool_candidates
+-	echo >&2 "merge tool candidates: $tools"
++	cat >&2 <<-EOF
  
- show_tool_help () {
--	unavailable= available= LF='
--'
--	for i in "$MERGE_TOOLS_DIR"/*
--	do
--		tool=$(basename "$i")
--		setup_tool "$tool" 2>/dev/null || continue
--
--		merge_tool_path=$(translate_merge_tool_path "$tool")
--		if type "$merge_tool_path" >/dev/null 2>&1
--		then
--			available="$available$tool$LF"
--		else
--			unavailable="$unavailable$tool$LF"
--		fi
--	done
--
--	cmd_name=${TOOL_MODE}tool
-+	tool_opt="'git ${TOOL_MODE}tool --tool-<tool>'"
-+	available=$(show_tool_names 'mode_ok && is_available' '\t\t' \
-+		"$tool_opt may be set to one of the following:")
-+	unavailable=$(show_tool_names 'mode_ok && ! is_available' '\t\t' \
-+		"The following tools are valid, but not currently available:")
- 	if test -n "$available"
- 	then
--		echo "'git $cmd_name --tool=<tool>' may be set to one of the following:"
--		echo "$available" | sort | sed -e 's/^/	/'
-+		echo "$available"
- 	else
- 		echo "No suitable tool for 'git $cmd_name --tool=<tool>' found."
- 	fi
- 	if test -n "$unavailable"
- 	then
- 		echo
--		echo 'The following tools are valid, but not currently available:'
--		echo "$unavailable" | sort | sed -e 's/^/	/'
-+		echo "$unavailable"
- 	fi
- 	if test -n "$unavailable$available"
- 	then
-@@ -248,17 +263,12 @@ See 'git ${TOOL_MODE}tool --tool-help' or 'git help config' for more details.
- $tools
- EOF
++This message is displayed because '$TOOL_MODE.tool' is not configured.
++See 'git ${TOOL_MODE}tool --tool-help' or 'git help config' for more details.
++'git ${TOOL_MODE}tool' will now attempt to use one of the following tools:
++$tools
++EOF
  	# Loop over each candidate and stop when a valid merge tool is found.
--	for i in $tools
-+	for tool in $tools
+ 	for i in $tools
  	do
--		merge_tool_path=$(translate_merge_tool_path "$i")
--		if type "$merge_tool_path" >/dev/null 2>&1
--		then
--			echo "$i"
--			return 0
--		fi
-+		is_available "$tool" && echo "$tool" && return 0
- 	done
- 
--	echo >&2 "No known merge resolution program available."
-+	echo >&2 "No known ${TOOL_MODE} tool is available."
- 	return 1
- }
- 
 -- 
 1.8.0.13.g3ff16bb
