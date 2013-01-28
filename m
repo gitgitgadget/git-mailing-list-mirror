@@ -1,88 +1,120 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: translate 11 new messages
-Date: Mon, 28 Jan 2013 18:55:14 +0100
-Message-ID: <20130128175514.GA2926@rath-ubuntu>
-References: <1359353699-3987-1-git-send-email-ralf.thielow@gmail.com>
- <87sj5l38d6.fsf@pctrast.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] add: warn when -u or -A is used without filepattern
+Date: Mon, 28 Jan 2013 10:07:07 -0800
+Message-ID: <7v4ni1xjuc.fsf@alter.siamese.dyndns.org>
+References: <vpqobg966cv.fsf@grenoble-inp.fr>
+ <1359364593-10933-1-git-send-email-Matthieu.Moy@imag.fr>
+ <51067353.2090006@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jk@jk.gs, stimming@tuhh.de, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jan 28 18:55:43 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Jan 28 19:07:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tzsvl-0005U1-U3
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 18:55:42 +0100
+	id 1Tzt7F-0001Zc-LM
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 19:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757655Ab3A1RzV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jan 2013 12:55:21 -0500
-Received: from mail-bk0-f45.google.com ([209.85.214.45]:52785 "EHLO
-	mail-bk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757661Ab3A1RzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 12:55:19 -0500
-Received: by mail-bk0-f45.google.com with SMTP id i18so1515478bkv.32
-        for <git@vger.kernel.org>; Mon, 28 Jan 2013 09:55:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=IbS7m5Rwx7VYCS882AW06RMQZG7Zyv3q2eZC3qmxlm0=;
-        b=pFtgxV0sA7iBhpk/hrXEcajoMP1PvAt8PhJNAHQH13JFFZZSr3ytV+suGehbxPf9UI
-         bd+rL6gVZ01XsyyeVf599WCCQmlP12JgieHpm8uv7LD2b7q3JnPZcTfUaFgT429iSgow
-         HHhUgM+D37TOStWl4HihIQpMMJDmHdx9TzQXG4We7jwinfa5rucsGldDVNau1MhQ1hQ8
-         Bih99jfCFmsCe8XS86H3lv6HU+rHRde1ZZTI4QWW2fGrBdt7bEpvL84MXjHnkSf2dvqr
-         m5yc5TjjnBPOI632RtxiCzZUNrltBMZAzUMz92Gp0mGUGEtFA5AtbVIEWOnCr9cxF4Nc
-         nMKw==
-X-Received: by 10.204.12.206 with SMTP id y14mr4166343bky.132.1359395717990;
-        Mon, 28 Jan 2013 09:55:17 -0800 (PST)
-Received: from rath-ubuntu (dslb-094-222-138-000.pools.arcor-ip.net. [94.222.138.0])
-        by mx.google.com with ESMTPS id ho6sm7003879bkc.0.2013.01.28.09.55.16
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 28 Jan 2013 09:55:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <87sj5l38d6.fsf@pctrast.inf.ethz.ch>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757684Ab3A1SHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 13:07:12 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42430 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753475Ab3A1SHK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 13:07:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 872C6CFBD;
+	Mon, 28 Jan 2013 13:07:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tEGWvVRS3vZvf8CA5E2eScX8VMo=; b=I9qYUX
+	N4RaoVUCSP01oyC1K560fQhv5BX+BrY2eMSn6QHYgX3YX/iQSsqts4l08W2WoXMh
+	1TdDH1CpvbjWz7riBmCIqkE+BUou0V9e0LMm1PxWQ0XRY4WXt7MMLXUiqBJKhlbk
+	06aO/nx6wEz04pNy85/b13kbM3nwRLVU1bflo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KTkenYcWW1sGQDPS0WlFOt4Ae8JGwlGK
+	xixaKKRiwo5zfzMZGnb7uicNVGhzGJC417VLdtLeX9MF1RLY2Rz2scEI2A9GnXdk
+	Xffi1sE7USk8KCPT9hO8C2EHTj8kHcVeQyTXw6sDPlDzdfcX83NqHhoPQiBnJmO2
+	wEWOhksll+I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79550CFBC;
+	Mon, 28 Jan 2013 13:07:09 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 00294CFBA; Mon, 28 Jan 2013
+ 13:07:08 -0500 (EST)
+In-Reply-To: <51067353.2090006@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Mon, 28 Jan 2013 13:47:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 88201610-6975-11E2-BB34-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214846>
 
-On Mon, Jan 28, 2013 at 11:33:09AM +0100, Thomas Rast wrote:
-> Ralf Thielow <ralf.thielow@gmail.com> writes:
->=20
-> >  #: builtin/reset.c:275
-> > -#, fuzzy, c-format
-> > +#, c-format
-> >  msgid "Failed to resolve '%s' as a valid revision."
-> > -msgstr "Konnte '%s' nicht als g=FCltige Referenz aufl=F6sen."
-> > +msgstr "Konnte '%s' nicht als g=FCltige Revision aufl=F6sen."
->=20
-> You don't have "revision" in the glossary[1] yet.  Wouldn't it be
-> appropriate to treat it as "commit", and translate as "Version" to av=
-oid
-> introducing yet another term?
->=20
-> Or am I missing some subtle distinction between commit and revision?
->=20
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-I don't think there's a distinction. Since we've already translated
-"revision" as "Revision" in a couple of other messages, I'll make a
-new "s/Revision/Version" commit on top.
+> Matthieu Moy venit, vidit, dixit 28.01.2013 10:16:
+>> Most git commands that can be used with our without a filepattern are
+>> tree-wide by default, the filepattern being used to restrict their scope.
+>> A few exceptions are: 'git grep', 'git clean', 'git add -u' and 'git add -A'.
+>
+> Since I didn't follow this thread, my first reaction was: "Huh? Aren't
+> they treewide?" (for the relative tree)
+>
+> So, for someone reading just the commit message, it would be helpful to
+> say what the others do, i.e. default to the relative tree at pwd (rather
+> than defaulting to an empty tree, or all files whether tracked or not,
+> or...).
 
-> Since it's only a single nit, feel free to add my ack when you reroll=
-:
->=20
-> Acked-by: Thomas Rast <trast@inf.ethz.ch>
->=20
->=20
-> [1] https://github.com/ralfth/git-po-de/wiki/Glossary
->=20
-> --=20
-> Thomas Rast
-> trast@{inf,student}.ethz.ch
+I think "add -u && commit" vs "commit -a" you brought up is a good
+thing to mention, so let's do this.  Another tweak is that I did
+s/filepattern/pathspec/ here.  I know that both the documentation
+and the help text for "git add" say filepattern, but we say pathspec
+starting from glossary fairly consistently everywhere in the rest of
+the system.
+
+We should probably update the documentation/help for "git add", but
+that is entirely a separate topic.
+
+    add: warn when -u or -A is used without pathspec
+    
+    Most Git commands that can be used with or without pathspec operate
+    tree-wide by default, the pathspec being used to restrict their
+    scope.  A few exceptions are: 'git grep', 'git clean', 'git add -u'
+    and 'git add -A'.  When run in a subdirectory without pathspec, they
+    operate only on paths in the current directory.
+    
+    The inconsistency of 'git add -u' and 'git add -A' are particularly
+    problematic since other 'git add' subcommands (namely 'git add -p'
+    and 'git add -e') are tree-wide by default.  It also means that "git
+    add -u && git commit" will record a state that is different from
+    what is recorded with "git commit -a".
+    
+    Flipping the default now is unacceptable, so let's start training
+    users to type 'git add -u|-A :/' or 'git add -u|-A .' explicitly, to
+    prepare for the next steps:
+    
+    * forbid 'git add -u|-A' without pathspec (like 'git add' without
+      option)
+    
+    * much later, maybe, re-allow 'git add -u|-A' without pathspec, that
+      will add all tracked and modified files, or all files, tree-wide.
+    
+    A nice side effect of this patch is that it makes the :/ magic
+    pathspec easier to discover for users.
+    
+    When the command is called from the root of the tree, there is no
+    ambiguity and no need to change the behavior, hence no need to warn.
+    
+    Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
