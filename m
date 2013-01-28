@@ -1,142 +1,83 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: translate "reset" as "neu setzen"
-Date: Mon, 28 Jan 2013 19:33:34 +0100
-Message-ID: <1359398014-3325-3-git-send-email-ralf.thielow@gmail.com>
-References: <1359353699-3987-1-git-send-email-ralf.thielow@gmail.com>
- <1359398014-3325-1-git-send-email-ralf.thielow@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 1/2] for-each-repo: new command used for multi-repo
+ operations
+Date: Mon, 28 Jan 2013 10:35:00 -0800
+Message-ID: <7vvcahw3zf.fsf@alter.siamese.dyndns.org>
+References: <1359290777-5483-1-git-send-email-hjemli@gmail.com>
+ <1359290777-5483-2-git-send-email-hjemli@gmail.com>
+ <7vk3qywiqf.fsf@alter.siamese.dyndns.org>
+ <CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com>
+ <20130128081006.GA2434@elie.Belkin>
+ <CAFXTnz6zN0izx8S23JFww5niVD6x-r2e7TSthqZnempUrvAEWw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jk@jk.gs, stimming@tuhh.de,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: trast@student.ethz.ch, jojo@schmitz-digital.de
-X-From: git-owner@vger.kernel.org Mon Jan 28 19:34:18 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 19:35:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TztX7-0004Jt-IA
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 19:34:17 +0100
+	id 1TztYE-0004qB-BH
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 19:35:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751927Ab3A1Sdx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jan 2013 13:33:53 -0500
-Received: from mail-bk0-f51.google.com ([209.85.214.51]:44520 "EHLO
-	mail-bk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752172Ab3A1Sdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 13:33:49 -0500
-Received: by mail-bk0-f51.google.com with SMTP id ik5so1561160bkc.38
-        for <git@vger.kernel.org>; Mon, 28 Jan 2013 10:33:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=GAiJ0jl5+01IIzSfgXEyNC1We7zZwnTIiUSU6uwr3t8=;
-        b=iLgNZEgJoQbu8sNeUBDg0PF4k0rls2O4818gr0ZASJVeBegDcmklvlnh0XJR/mLhh2
-         W9E6ib6u/eQhJDzj4OSUtGc13G53FTyQlBWQA7+bvY1YhyaPlpQE2Qg0Y6hu7NK5b/Ff
-         FX5PlC0qwwQn8wesFsKFlHzqgg0Macgo+yAv/hUzLvILVpSAluSr29+WXLczM+lBc5lV
-         QWnD69HCZzSxpW8CrXPTi0wWRaW1cGpWDygxyczcSYTEaFBrgzitx1wMnWgjbyy0Kmag
-         I+Ni9ZTyUekTk4F6wWKX394cyVpNjvexiZn8bVi6QxN8e4lZTJeebcMTnMaKClwjjRjk
-         w3cA==
-X-Received: by 10.204.3.205 with SMTP id 13mr4196980bko.38.1359398028040;
-        Mon, 28 Jan 2013 10:33:48 -0800 (PST)
-Received: from localhost.localdomain (dslb-094-222-138-000.pools.arcor-ip.net. [94.222.138.0])
-        by mx.google.com with ESMTPS id n1sm7137805bkv.14.2013.01.28.10.33.46
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Jan 2013 10:33:47 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1.439.g50a6b54
-In-Reply-To: <1359398014-3325-1-git-send-email-ralf.thielow@gmail.com>
+	id S1751467Ab3A1SfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 13:35:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38275 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750938Ab3A1SfC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 13:35:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A188CC92;
+	Mon, 28 Jan 2013 13:35:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1Yx8kShqUGKXgLm3O4Lb0Mebf9Q=; b=FXms+y
+	zLE0T2ZD3w7N+Batmi7ak2pQVJDI4ne7GZKZNdE/FlCcDHHYUhLMHafsmx0fLz7i
+	uu5r55Z6K7VPsseV7eHY+B8KZ/4SXrk/oB+WYabErPToIj2mMw9rfNOFXHfF/wmR
+	yozEZRGbwGTX9AIua9KJaunQxCUmEqxsvnkg4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f7mLTCU4POLlyTM2+BNM6aVpxIeLeHxj
+	SeUzgLGFD7NV7wzxouTxeg+91rV0kog0xxZEORUtRGb42QMQrSq0owZLqB8vQN1I
+	wZbUwQkTrbYwKwYPDEVRjiwpUxnedxNwUKEg/TPcXyuh9dt/aKeRN7Moea+lzil1
+	T1bSkWuL0k0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D66DCC91;
+	Mon, 28 Jan 2013 13:35:02 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CBBD2CC8C; Mon, 28 Jan 2013
+ 13:35:01 -0500 (EST)
+In-Reply-To: <CAFXTnz6zN0izx8S23JFww5niVD6x-r2e7TSthqZnempUrvAEWw@mail.gmail.com> (Lars
+ Hjemli's message of "Mon, 28 Jan 2013 18:11:06 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6D311418-6979-11E2-BA6B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214854>
 
-According to the glossary, "reset" should be
-translated as "neu setzen" but in a couple of
-messages we've translated it as "zur=C3=BCcksetzen".
-This fixes that.
+Lars Hjemli <hjemli@gmail.com> writes:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
+> On Mon, Jan 28, 2013 at 9:10 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> ...
+>> So if I ran the world, then having commands
+>>
+>>         git -a diff
+>>
+>> and
+>>
+>>         git for-each-repo git diff
+>>
+>> do the same thing would be fine.  Of course I don't run the world. ;-)
+>
+> This would make me very happy. Junio?
 
-Note that the part "neu" is not used in any places because
-I think sometimes it sounds better without them.
-
- po/de.po | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/po/de.po b/po/de.po
-index 6c7384b..9b1f589 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -2764,7 +2764,7 @@ msgstr "Zweigspitze (HEAD) ist jetzt bei"
- #: builtin/checkout.c:609
- #, c-format
- msgid "Reset branch '%s'\n"
--msgstr "Setze Zweig '%s' zur=C3=BCck\n"
-+msgstr "Setze Zweig '%s' neu\n"
-=20
- #: builtin/checkout.c:612
- #, c-format
-@@ -2774,7 +2774,7 @@ msgstr "Bereits auf '%s'\n"
- #: builtin/checkout.c:616
- #, c-format
- msgid "Switched to and reset branch '%s'\n"
--msgstr "Gewechselt zu zur=C3=BCckgesetztem Zweig '%s'\n"
-+msgstr "Gewechselt zu neu gesetztem Zweig '%s'\n"
-=20
- #: builtin/checkout.c:618 builtin/checkout.c:955
- #, c-format
-@@ -7900,19 +7900,19 @@ msgstr "weniger Ausgaben, meldet nur Fehler"
-=20
- #: builtin/reset.c:250
- msgid "reset HEAD and index"
--msgstr "setzt Zweigspitze (HEAD) und Bereitstellung zur=C3=BCck"
-+msgstr "setzt Zweigspitze (HEAD) und Bereitstellung neu"
-=20
- #: builtin/reset.c:251
- msgid "reset only HEAD"
--msgstr "setzt nur Zweigspitze (HEAD) zur=C3=BCck"
-+msgstr "setzt nur Zweigspitze (HEAD) neu"
-=20
- #: builtin/reset.c:253 builtin/reset.c:255
- msgid "reset HEAD, index and working tree"
--msgstr "setzt Zweigspitze (HEAD), Bereitstellung und Arbeitsbaum zur=C3=
-=BCck"
-+msgstr "setzt Zweigspitze (HEAD), Bereitstellung und Arbeitsbaum neu"
-=20
- #: builtin/reset.c:257
- msgid "reset HEAD but keep local changes"
--msgstr "setzt Zweigspitze (HEAD) zur=C3=BCck, beh=C3=A4lt aber lokale =
-=C3=84nderungen"
-+msgstr "setzt Zweigspitze (HEAD) neu, beh=C3=A4lt aber lokale =C3=84nd=
-erungen"
-=20
- #: builtin/reset.c:275
- #, c-format
-@@ -7952,7 +7952,7 @@ msgstr "'%s' Zur=C3=BCcksetzung ist in einem blo=C3=
-=9Fen Projektarchiv nicht erlaubt"
- #: builtin/reset.c:333
- #, c-format
- msgid "Could not reset index file to revision '%s'."
--msgstr "Konnte Bereitstellungsdatei nicht zu Version '%s' zur=C3=BCcks=
-etzen."
-+msgstr "Konnte Bereitstellungsdatei nicht zu Version '%s' setzen."
-=20
- #: builtin/reset.c:339
- msgid "Unstaged changes after reset:"
-@@ -8833,7 +8833,7 @@ msgstr "Baut lokale Versionen auf einem aktueller=
-em externen Zweig neu auf"
- #: common-cmds.h:24
- msgid "Reset current HEAD to the specified state"
- msgstr ""
--"Setzt die aktuelle Zweigspitze (HEAD) zu einem spezifizierten Zustand=
- zur=C3=BCck"
-+"Setzt die aktuelle Zweigspitze (HEAD) zu einem spezifizierten Zustand=
-"
-=20
- #: common-cmds.h:25
- msgid "Remove files from the working tree and from the index"
---=20
-1.8.1.1.439.g50a6b54
+Ahh, our mails crossed (rather, I responded to the other message I
+saw before I saw this one).  I am not completely sold on "git -a"
+yet, but another worry I have is which one between "submodule
+foreach" and "for-each-repo" should use "git -a", if we decide that
+it is useful to the users to add it.
