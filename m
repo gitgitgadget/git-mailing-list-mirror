@@ -1,87 +1,123 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v3 2/4] branch: reject -D/-d without branch name
-Date: Mon, 28 Jan 2013 08:18:14 +0700
-Message-ID: <1359335896-24406-2-git-send-email-pclouds@gmail.com>
-References: <1359118225-14356-1-git-send-email-pclouds@gmail.com>
- <1359335896-24406-1-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 04/10] sequencer.c: recognize "(cherry picked from
+ ..." as part of s-o-b footer
+Date: Sun, 27 Jan 2013 17:24:19 -0800
+Message-ID: <20130128012419.GC8206@elie.Belkin>
+References: <1358757627-16682-1-git-send-email-drafnel@gmail.com>
+ <1358757627-16682-5-git-send-email-drafnel@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 28 02:19:43 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org,
+	Brandon Casey <bcasey@nvidia.com>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 02:24:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzdNt-0008TD-Tr
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 02:19:42 +0100
+	id 1TzdSq-0001RW-4W
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 02:24:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757200Ab3A1BTA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jan 2013 20:19:00 -0500
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:61446 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757163Ab3A1BS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2013 20:18:57 -0500
-Received: by mail-pb0-f47.google.com with SMTP id rp8so381439pbb.20
-        for <git@vger.kernel.org>; Sun, 27 Jan 2013 17:18:57 -0800 (PST)
+	id S1757163Ab3A1BY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2013 20:24:27 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:40321 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755390Ab3A1BY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2013 20:24:26 -0500
+Received: by mail-pa0-f43.google.com with SMTP id fb10so1193817pad.2
+        for <git@vger.kernel.org>; Sun, 27 Jan 2013 17:24:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=SQWjF2QWybqyXTzOTS7VtRIkixlPg9dwCkUVLsNq6RY=;
-        b=UstVkrniVNgAIHFNjD0eBHkY7PHIu7io3fufzpDYhrwRQHR0WeW6HrIHgddOGm6LZm
-         sLZjSdPFCIrz4kxqvbSJu7kkN2J9/rI2tXPUys051LUe6qXRskk8hPHQ5atCAvLlMPdQ
-         cFLP/5HT3OJjcP2XlyCRKMhk2eALB8wwruCM3RkQHf6xTY84cYFEL99SuQBg9kXfJ5gK
-         M86ekIsopyQ+GF6+b6Jes9LOK8TSHgQl332N6Ztld+7CkHxenAjOlb0huLP7Ddc2+6tr
-         Vyg+PO+5eLvUHAunUPQKVkIIord/TOkbTAYzeF54523JS1LV7sUSRttjVpOVoh0ug96F
-         dQ8g==
-X-Received: by 10.66.72.225 with SMTP id g1mr31962588pav.79.1359335937032;
-        Sun, 27 Jan 2013 17:18:57 -0800 (PST)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id ql9sm5209532pbc.61.2013.01.27.17.18.53
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 27 Jan 2013 17:18:56 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 Jan 2013 08:18:31 +0700
-X-Mailer: git-send-email 1.8.1.1.459.g5970e58
-In-Reply-To: <1359335896-24406-1-git-send-email-pclouds@gmail.com>
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=FBmd6tiKjVqwdJM1KTtp+Ftf5yTfcuy+4BFjbUFHwEA=;
+        b=Sm/2f1BmJkYA8QRsVk8MUmq7ixZ5tfRG6AKmwi0OEUJXih2PrEeZx2H1GKIriv5P2q
+         q65QpnI5g0LDXa56+iggtq1ZnPyV8L84207b0GbHBx29oOtOKQY7lIv4Jmaw+K+YAU6d
+         eK9Jw+lzRB2JNd6QPGCdAgzPYFmJ4LDiZsHxsVkSK/f7opkDqk2gVwg9cYw1zzLqE2nL
+         meJunkkuZdTIw48pgZqwDKjH61OytbURQw4uzKVcxG0qEC843Y1DTKyIM6kPuJR7AN0k
+         q1zAB43c7C0ovjCBCsx8POlXmkF2bcVCQGMm2unF+4QCZLubBhBbjvkEN1WPwa1gqJ5g
+         LFOA==
+X-Received: by 10.68.225.42 with SMTP id rh10mr33485148pbc.145.1359336265525;
+        Sun, 27 Jan 2013 17:24:25 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id ux4sm5228067pbc.25.2013.01.27.17.24.22
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 27 Jan 2013 17:24:24 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1358757627-16682-5-git-send-email-drafnel@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214780>
 
+Hi,
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/branch.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Brandon Casey wrote:
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index ea6498b..30c4545 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -837,9 +837,11 @@ int cmd_branch(int argc, const char **argv, const =
-char *prefix)
- 		colopts =3D 0;
- 	}
-=20
--	if (delete)
-+	if (delete) {
-+		if (!argc)
-+			die(_("branch name required"));
- 		return delete_branches(argc, argv, delete > 1, kinds, quiet);
--	else if (list) {
-+	} else if (list) {
- 		int ret =3D print_ref_list(kinds, detached, verbose, abbrev,
- 					 with_commit, argv);
- 		print_columns(&output, colopts, NULL);
---=20
-1.8.1.1.459.g5970e58
+> Let's detect "(cherry picked from...)" as part of the footer so that we
+> will produce this:
+>
+>    Signed-off-by: A U Thor <author@example.com>
+>    (cherry picked from da39a3ee5e6b4b0d3255bfef95601890afd80709)
+>    Signed-off-by: C O Mmitter <committer@example.com>
+>
+> instead of this:
+>
+>    Signed-off-by: A U Thor <author@example.com>
+>    (cherry picked from da39a3ee5e6b4b0d3255bfef95601890afd80709)
+>
+>    Signed-off-by: C O Mmitter <committer@example.com>
+
+My last review was based on a misunderstanding of
+ends_rfc2822_footer().  This time I can unreservedly say I like this.
+
+[...]
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -18,6 +18,7 @@
+>  #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+>  
+>  const char sign_off_header[] = "Signed-off-by: ";
+> +static const char cherry_picked_prefix[] = "(cherry picked from commit ";
+
+The static/nonstatic mismatch looks strange.  Not about this patch,
+but probably rest_is_empty() from builtin-commit.c should move here
+some day.
+
+[...]
+> @@ -1021,11 +1022,36 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+[...]
+> +static int is_cherry_picked_from_line(const char *buf, int len)
+> +{
+> +	/*
+> +	 * We only care that it looks roughly like (cherry picked from ...)
+> +	 */
+> +	return !prefixcmp(buf, cherry_picked_prefix) &&
+> +		(buf[len - 1] == ')' ||
+> +		 (buf[len - 1] == '\n' && buf[len - 2] == ')'));
+
+These two cases are based on whether the commit message ended with
+a '(cherry picked from' with no trailing newline, I guess?
+
+I wonder if switching the convention for 'k' would make this simpler:
+
+	const char *line, *eol;
+
+	line = buf + i;
+	eol = memchr(buf, '\n', len - i);
+	if (!eol)
+		eol = buf + len;
+
+	if (!is_rfc2822_field(line, eol - line) &&
+	    !is_cherry_picked_from_line(line, eol - line))
+		return 0;
+
+I notice you just sent a new version of the series.  I'll try this out
+on top of that.
+
+Thanks,
+Jonathan
