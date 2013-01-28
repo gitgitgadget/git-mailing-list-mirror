@@ -1,76 +1,134 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v2 0/4] Auto-generate mergetool lists
-Date: Mon, 28 Jan 2013 21:19:17 -0000
-Organization: OPDS
-Message-ID: <2CAD0EB4A81B49E6AAF06BB29A4C8E05@PhilipOakley>
-References: <1359334346-5879-1-git-send-email-davvid@gmail.com><5F78436DB1994B6DA686EC1BFA96B54E@PhilipOakley> <CAJDDKr4BT_1YnnfJv-YFHOpWhYpuA_5CMRw_hPTiowMr49RLKQ@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v4 1/2] for-each-repo: new command used for multi-repo
+ operations
+Date: Mon, 28 Jan 2013 22:25:10 +0100
+Message-ID: <5106ECB6.9010801@web.de>
+References: <1359290777-5483-1-git-send-email-hjemli@gmail.com> <1359290777-5483-2-git-send-email-hjemli@gmail.com> <7vk3qywiqf.fsf@alter.siamese.dyndns.org> <CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com> <20130128081006.GA2434@elie.Belkin> <7vham1xktx.fsf@alter.siamese.dyndns.org> <CAFXTnz6xBMo42jWdqahYX-bnTBucVmQpFPN29X8tGRd7L=g2wQ@mail.gmail.com> <7vr4l5w385.fsf@alter.siamese.dyndns.org> <5106DBB7.70007@web.de> <7vlibdvyh3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>,
-	"John Keeping" <john@keeping.me.uk>
-To: "David Aguilar" <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 22:19:30 2013
+Cc: Lars Hjemli <hjemli@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 22:30:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tzw6z-0008AB-Fn
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 22:19:29 +0100
+	id 1TzwHJ-0003vt-V7
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 22:30:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754324Ab3A1VTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 16:19:08 -0500
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:59355 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754311Ab3A1VTG (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jan 2013 16:19:06 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhgKAD7qBlFcHKA3/2dsb2JhbABEhkaFPbFTA3wXc4IZBQEBBQgBARkVHgEBIQsCAwUCAQMOBwECAgIFIQICFAEECBIGBxcGEwgCAQIDAYduAxOtcYheDYlVgSOKbYEfgmMyYQONfoY5jQyFEoJ3
-X-IronPort-AV: E=Sophos;i="4.84,554,1355097600"; 
-   d="scan'208";a="407217691"
-Received: from host-92-28-160-55.as13285.net (HELO PhilipOakley) ([92.28.160.55])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 28 Jan 2013 21:19:03 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1754200Ab3A1V3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 16:29:48 -0500
+Received: from mout.web.de ([212.227.17.12]:65131 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754074Ab3A1V3q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 16:29:46 -0500
+Received: from [192.168.178.41] ([79.193.83.234]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0MaJng-1UJewg25DU-00KWCH; Mon, 28 Jan 2013 22:25:10
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <7vlibdvyh3.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5
+X-Provags-ID: V02:K0:98ASfHCQ4hcXSVbWgSW/w1zaZkBtBRzPxWZa/ZDrq0R
+ JbRu6c/TLPW1eqK5DmdySC/riQNdf5Wg+gyfFRq60R4y8aiH5W
+ tR/ppwjG6dhXQ72ftzgZYF1w2svT8/A72dhWbjAAIALe2pGAmx
+ X3UsZQNs3xpiheOoUD4939a1W5HeA7hrYl/XfabsKOaTs4J56q
+ ooBseAPZkrNJ/4gtKnANA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214876>
 
-From: "David Aguilar" <davvid@gmail.com>
-Sent: Monday, January 28, 2013 9:16 AM
-> On Mon, Jan 28, 2013 at 12:20 AM, Philip Oakley <philipoakley@iee.org> 
-> wrote:
->> From: "David Aguilar" <davvid@gmail.com>
->> Sent: Monday, January 28, 2013 12:52 AM
+Am 28.01.2013 21:34, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> Am 28.01.2013 19:51, schrieb Junio C Hamano:
+>>> Lars Hjemli <hjemli@gmail.com> writes:
+>>>
+>>>>> Come to think of it, is there a reason why "for-each-repo" should
+>>>>> not be an extention to "submodule foreach"?  We can view this as
+>>>>> visiting repositories that _could_ be registered as a submodule, in
+>>>>> addition to iterating over the registered submodules, no?
+>>>>
+>>>> Yes, but I see some possible problems with that approach:
+>>>> -'git for-each-repo' does not need to be started from within a git worktree
+>>>
+>>> True, but "git submodule foreach --untracked" can be told that it is
+>>> OK not (yet) to be in any superproject, no?
 >>
->>> This is round two of this series.
->>> I think this touched on everything brought up in the code review.
->>> 4/4 could use a review as I'm not completely familiar with the
->>> makefile dependencies, though it seems to work correctly.
->>
->>
->> Does this 4/4 have any effect on the Msysgit / Git for Windows 
->> documentation
->> which simply refers [IIRC] to HTML documenation made by Junio?
->>
->> That is, how easy is it to create a 'default' set of docs, rather 
->> than
->> personalised documenation. Or have I misunderstood how it is working?
->
-> It doesn't have any effect on Msysgit. The resulting documentation
-> lists all available tools, on all platforms.
->
-That's useful to know. I must have misunderstood one of the earlier 
-messages suggesting it would also list all the users other (non typical) 
-installed mergetools and hence add them into the documentation.
+>> Hmm, I'm not sure how that would work as it looks for gitlinks
+>> in the index which point to work tree paths.
+> 
+> I was imagining that "foreach --untracked" could go something like this:
+> 
+>  * If you are inside an existing git repository, read its index to
+>    learn the gitlinks in the directory and its subdirectories.
+> 
+>  * Start from the current directory and recursively apply the
+>    procedure in this step:
+> 
+>    * Scan the directory and iterate over the ones that has ".git" in
+>      it:
+> 
+>      * If it is a gitlinked one, show it, but do not descend into it
+>        unless --recursive is given (e.g. you start from /home/jens,
+>        find /home/jens/proj/ directory that has /home/jens/proj/.git
+>        in it.  /home/jens/.git/index knows that it is a submodule of
+>        the top-level superproject.  "proj" is handled, and it is up
+>        to the --recursive option if its submodules are handled).
+> 
+>      * If it is _not_ a gitlinked one, show it and descend into it
+>        (e.g. /home/jens/ is not a repository or /home/jens/proj is
+>        not a tracked submodule) to apply this procedure recursively.
+> 
+> Of course, without --untracked, we have no need to iterate over the
+> readdir() return values; instead we just scan the index of the
+> top-level superproject.
 
-Philip 
+Thanks for explaining, that makes tons of sense.
+
+>>>> -'git for-each-repo' and 'git submodule foreach' have different
+>>>> semantics for --dirty and --clean
+>>
+>> I'm confused, what semantics of --dirty and --clean does current
+>> 'git submodule foreach' have? I can't find any sign of it in the
+>> current code ... did I miss something while skimming through this
+>> thread? Or are you talking about status and diff here?
+> 
+> I think Lars is hinting that "submodule foreach" could restrict its
+> operation to a similar --dirty/--clean/--both option he has.  Of
+> course, the command given to foreach can decide to become no-op by
+> inspecting the submodule itself, so in that sense, --dirty/--clean
+> can be done without, but I think it would make sense to have it in
+> "submodule foreach" even without the "--untracked" option.
+
+Nice idea. E.g. that would help submodule users to easily script
+a workflow which descends only into modified submodules to create
+branches and push them there. Or to remove branches which were
+created everywhere only in those submodules that weren't changed.
+
+>> But I think the current for-each-repo
+>> proposal doesn't allow to traverse repos which contain untracked
+>> content (and it would be nice if the user could somehow combine
+>> that with the current --dirty flag to have both in one go).
+> 
+> Perhaps.  I personally felt it was really strange that submodule
+> diff and status consider that it is a sin to have untracked and
+> unignored cruft in the submodule working tree, though.
+
+The VCS we used at work before Git didn't show us any untracked
+files, which caused trouble on a regular basis as people were
+breaking builds for others because they forgot to check in new
+files. That didn't happen with Git anymore, which was very cool.
+But the problem reappeared as we started using submodules. Since
+I taught status and diff to show that we're happy again. So for
+us it was everything but strange ;-)
+
+But for for-each-repo I would rather propose that modifications of
+tracked files can optionally and/or solely be used to pick the
+repos. Maybe: --dirty=modified, --dirty=untracked and --dirty=both
+with --dirty defaulting to modified?
