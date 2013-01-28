@@ -1,94 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fixup! git-remote-testpy: fix path hashing on Python 3
-Date: Mon, 28 Jan 2013 09:53:46 -0800
-Message-ID: <7v8v7dxkgl.fsf@alter.siamese.dyndns.org>
-References: <cover.1358686905.git.john@keeping.me.uk>
- <611a44568bdc969bcfa3d7d870560855e00baf1e.1358686905.git.john@keeping.me.uk>
- <20130126175158.GK7498@serenity.lan>
- <7vwquzzkiw.fsf@alter.siamese.dyndns.org> <5104B0B5.1030501@alum.mit.edu>
- <20130127141329.GN7498@serenity.lan> <20130127145056.GP7498@serenity.lan>
- <51065692.9000708@alum.mit.edu> <20130128112043.GZ7498@serenity.lan>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate 11 new messages
+Date: Mon, 28 Jan 2013 18:55:14 +0100
+Message-ID: <20130128175514.GA2926@rath-ubuntu>
+References: <1359353699-3987-1-git-send-email-ralf.thielow@gmail.com>
+ <87sj5l38d6.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Jan 28 18:54:19 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: jk@jk.gs, stimming@tuhh.de, git@vger.kernel.org
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jan 28 18:55:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TzsuK-0004lh-1A
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 18:54:12 +0100
+	id 1Tzsvl-0005U1-U3
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 18:55:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757633Ab3A1Rxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 12:53:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63779 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757603Ab3A1Rxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 12:53:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62D04C606;
-	Mon, 28 Jan 2013 12:53:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Fnh2thjDb0V1qiA3ADMkdoqbpqI=; b=V7abV9
-	9V6bQa3+9uNIkhHHBuD/gpa/ESYhrIXXnlsuIrYLMF1mdn/XTd4rsmhNm5DqM8cr
-	1xL7wn7dfIIWhqgPDLSY/2ForeRreZaglBUFGvC2Gru8oasv9RejCNC5brNv6ZEp
-	XbU+4F08IpIoOxSL7rZhznG7w4CJ66unfS+q4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wwq95VNRfrJsK6/ZgwAurRCzVw1JNZAP
-	7Qm5lc9ZEOSCjM6/NAzUepVsA510pWJh0LIFU/FrS3tRsXc4OlNXXt51Smv94KI2
-	ZCUyHxLcV6uZgPY5JScAdW8JAHSfjpul6p+sMHm/MSeARhqcmYETdv9D/pcc/9jH
-	iRkxzgGEm4g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56F47C605;
-	Mon, 28 Jan 2013 12:53:49 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD67FC601; Mon, 28 Jan 2013
- 12:53:48 -0500 (EST)
-In-Reply-To: <20130128112043.GZ7498@serenity.lan> (John Keeping's message of
- "Mon, 28 Jan 2013 11:20:43 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AB1825D8-6973-11E2-8EB6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757655Ab3A1RzV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jan 2013 12:55:21 -0500
+Received: from mail-bk0-f45.google.com ([209.85.214.45]:52785 "EHLO
+	mail-bk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757661Ab3A1RzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 12:55:19 -0500
+Received: by mail-bk0-f45.google.com with SMTP id i18so1515478bkv.32
+        for <git@vger.kernel.org>; Mon, 28 Jan 2013 09:55:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=IbS7m5Rwx7VYCS882AW06RMQZG7Zyv3q2eZC3qmxlm0=;
+        b=pFtgxV0sA7iBhpk/hrXEcajoMP1PvAt8PhJNAHQH13JFFZZSr3ytV+suGehbxPf9UI
+         bd+rL6gVZ01XsyyeVf599WCCQmlP12JgieHpm8uv7LD2b7q3JnPZcTfUaFgT429iSgow
+         HHhUgM+D37TOStWl4HihIQpMMJDmHdx9TzQXG4We7jwinfa5rucsGldDVNau1MhQ1hQ8
+         Bih99jfCFmsCe8XS86H3lv6HU+rHRde1ZZTI4QWW2fGrBdt7bEpvL84MXjHnkSf2dvqr
+         m5yc5TjjnBPOI632RtxiCzZUNrltBMZAzUMz92Gp0mGUGEtFA5AtbVIEWOnCr9cxF4Nc
+         nMKw==
+X-Received: by 10.204.12.206 with SMTP id y14mr4166343bky.132.1359395717990;
+        Mon, 28 Jan 2013 09:55:17 -0800 (PST)
+Received: from rath-ubuntu (dslb-094-222-138-000.pools.arcor-ip.net. [94.222.138.0])
+        by mx.google.com with ESMTPS id ho6sm7003879bkc.0.2013.01.28.09.55.16
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 28 Jan 2013 09:55:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <87sj5l38d6.fsf@pctrast.inf.ethz.ch>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214844>
 
-John Keeping <john@keeping.me.uk> writes:
+On Mon, Jan 28, 2013 at 11:33:09AM +0100, Thomas Rast wrote:
+> Ralf Thielow <ralf.thielow@gmail.com> writes:
+>=20
+> >  #: builtin/reset.c:275
+> > -#, fuzzy, c-format
+> > +#, c-format
+> >  msgid "Failed to resolve '%s' as a valid revision."
+> > -msgstr "Konnte '%s' nicht als g=FCltige Referenz aufl=F6sen."
+> > +msgstr "Konnte '%s' nicht als g=FCltige Revision aufl=F6sen."
+>=20
+> You don't have "revision" in the glossary[1] yet.  Wouldn't it be
+> appropriate to treat it as "commit", and translate as "Version" to av=
+oid
+> introducing yet another term?
+>=20
+> Or am I missing some subtle distinction between commit and revision?
+>=20
 
-> ---
-> On Mon, Jan 28, 2013 at 11:44:34AM +0100, Michael Haggerty wrote:
->> NAK.  It is still not right.  If the locale is not utf-8 based, then it
->> is incorrect to re-encode the string using utf-8.  I think you really
->> have to use sys.getfilesystemencoding() as I suggested.
->
-> If you'd asked me what the patch contained I would have said it did use
-> getfilesystemencoding(), but I can't disbelieve my own eyes :-(
->
-> Junio, please can you squash this in?
+I don't think there's a distinction. Since we've already translated
+"revision" as "Revision" in a couple of other messages, I'll make a
+new "s/Revision/Version" commit on top.
 
-Sure.  Thanks for double-checking, Michael.  I knew there was
-something missing but I didn't spot the difference myself.
-
->  git-remote-testpy.py | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/git-remote-testpy.py b/git-remote-testpy.py
-> index 6098bdd..ca67899 100644
-> --- a/git-remote-testpy.py
-> +++ b/git-remote-testpy.py
-> @@ -49,7 +49,7 @@ def encode_filepath(path):
->      """
->      if sys.hexversion < 0x03000000:
->          return path
-> -    return path.encode('utf-8', 'surrogateescape')
-> +    return path.encode(sys.getfilesystemencoding(), 'surrogateescape')
->  
->  
->  def get_repo(alias, url):
+> Since it's only a single nit, feel free to add my ack when you reroll=
+:
+>=20
+> Acked-by: Thomas Rast <trast@inf.ethz.ch>
+>=20
+>=20
+> [1] https://github.com/ralfth/git-po-de/wiki/Glossary
+>=20
+> --=20
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
