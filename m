@@ -1,99 +1,79 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [feature request] git add completion should exclude staged content
-Date: Mon, 28 Jan 2013 10:26:39 +0100
-Message-ID: <5106444F.2040007@gmail.com>
-References: <20130126172137.GB5852@mobster.11n_AP_Router> <7vip6iteod.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] l10n: de.po: translate 11 new messages
+Date: Mon, 28 Jan 2013 11:33:09 +0100
+Message-ID: <87sj5l38d6.fsf@pctrast.inf.ethz.ch>
+References: <1359353699-3987-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: wookietreiber <kizkizzbangbang@googlemail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 10:27:20 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <jk@jk.gs>, <stimming@tuhh.de>, <git@vger.kernel.org>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 11:33:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tzkzl-0008SG-SZ
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 10:27:18 +0100
+	id 1Tzm1w-0007Il-EG
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 11:33:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755690Ab3A1J0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 04:26:55 -0500
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:36216 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754241Ab3A1J0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 04:26:51 -0500
-Received: by mail-wi0-f177.google.com with SMTP id hm14so148820wib.4
-        for <git@vger.kernel.org>; Mon, 28 Jan 2013 01:26:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=cTC6e//zULFbKvv9QxsrJwApi8x1M6SJ99/RjnUSXUM=;
-        b=gLn2VPLvaVU81Hfhyo6fUE0EW1bgP1y5YouJMvHEgxmHDlNvniCnK5yIck4d9PLqmd
-         xy7bGIEjcrLaasxHUEgKB8+D+W4H6axuJbevpi5kDE780fj/DAQ/zFQ89F+y2jROPWBK
-         uZcxbv57S6Z34By+8LPk8+wIePtjyr9w7YynAgyw7C5er0uYUEX5nOraessuPvEHLXtd
-         OrkTpZS6c3jY6ecljvT3K6AKMd/he9/xSXx9D5yU8F11C2XLgUb57BbwvUIbiUvkpLmb
-         PpnCDvCKl3HlrsZGK4dVIx3iawivdlMD/Ze5Eb96mLmQV/naWRbp+ZZUiJb5EQStxVpJ
-         biZg==
-X-Received: by 10.194.177.199 with SMTP id cs7mr19858937wjc.41.1359365210294;
-        Mon, 28 Jan 2013 01:26:50 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.195.28])
-        by mx.google.com with ESMTPS id ge2sm5292748wib.4.2013.01.28.01.26.48
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Jan 2013 01:26:49 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <7vip6iteod.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.0.1
+	id S1755018Ab3A1KdO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jan 2013 05:33:14 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:43732 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751773Ab3A1KdM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jan 2013 05:33:12 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 28 Jan
+ 2013 11:33:09 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
+ CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 28 Jan 2013 11:33:09 +0100
+In-Reply-To: <1359353699-3987-1-git-send-email-ralf.thielow@gmail.com> (Ralf
+	Thielow's message of "Mon, 28 Jan 2013 07:14:59 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214826>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-Il 28/01/2013 00:00, Junio C Hamano ha scritto:
-> wookietreiber <kizkizzbangbang@googlemail.com> writes:
-> 
->> I have a feature request for `git add` auto completion:
->>
->> `git add` auto completion suggests all files / directories,
->> filtered by nothing. I guess it would be much nicer (as in
->> increasing productivity) if it would only suggest unstaged
->> content, as reported by `git status`, because that would be the
->> only content one would be able to add.
-> 
-> I think that is what Manlio Perillo tried to do with the stalled
-> mp/complete-paths topic that is queued in 'pu'.
-> 
-> Manlio, any progress?
+> Translate 11 new messages came from git.pot update
+> in 46bc403 (l10n: Update git.pot (11 new, 7 removed
+> messages)).
 
-Well, I assumed that the patch was stalled due to missing review from
-git completion experts...
+>  #: builtin/log.c:104
+>  msgid "Use mail map file"
+> -msgstr ""
+> +msgstr "verwendet \"mailmap\"-Datei"
 
-For this reason I have not updated it with your latest suggestions,
-waiting for the review (also, because now I'm busy with other projects).
+Note that case differs here, but it's the English one that doesn't fit
+the pattern -- option descriptions usually start with lowercase.
 
-For the OP: the last patch can be found in the mailing list archive,
-with the subject:
-	[PATCH v5] git-completion.bash: add support for path completion
-and date:
-	Fri, 11 Jan 2013 19:48:43 +0100
+>  #: builtin/reset.c:275
+> -#, fuzzy, c-format
+> +#, c-format
+>  msgid "Failed to resolve '%s' as a valid revision."
+> -msgstr "Konnte '%s' nicht als g=C3=BCltige Referenz aufl=C3=B6sen."
+> +msgstr "Konnte '%s' nicht als g=C3=BCltige Revision aufl=C3=B6sen."
 
-Can you please test it?
+You don't have "revision" in the glossary[1] yet.  Wouldn't it be
+appropriate to treat it as "commit", and translate as "Version" to avoi=
+d
+introducing yet another term?
 
+Or am I missing some subtle distinction between commit and revision?
+
+Since it's only a single nit, feel free to add my ack when you reroll:
+
+Acked-by: Thomas Rast <trast@inf.ethz.ch>
 
 
+[1] https://github.com/ralfth/git-po-de/wiki/Glossary
 
-Regards   Manlio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlEGRE8ACgkQscQJ24LbaUSX9ACfUMBH/X6lVH4V7FUaB2wlqj8C
-eYQAnAzuYwhYhDvkW3d29IeqHsDFyWBT
-=BpRi
------END PGP SIGNATURE-----
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
