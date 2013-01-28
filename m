@@ -1,99 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 1/2] for-each-repo: new command used for multi-repo
- operations
-Date: Mon, 28 Jan 2013 10:51:22 -0800
-Message-ID: <7vr4l5w385.fsf@alter.siamese.dyndns.org>
-References: <1359290777-5483-1-git-send-email-hjemli@gmail.com>
- <1359290777-5483-2-git-send-email-hjemli@gmail.com>
- <7vk3qywiqf.fsf@alter.siamese.dyndns.org>
- <CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com>
- <20130128081006.GA2434@elie.Belkin> <7vham1xktx.fsf@alter.siamese.dyndns.org>
- <CAFXTnz6xBMo42jWdqahYX-bnTBucVmQpFPN29X8tGRd7L=g2wQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 19:51:50 2013
+From: Andrej Andb <admin@andrej-andb.ru>
+Subject: [PATCH] remove protocol from gravatar and picon links for clear if Gitweb is being called through a secure server
+Date: Mon, 28 Jan 2013 20:14:50 +0100
+Message-ID: <1359400490-16449-1-git-send-email-admin@andrej-andb.ru>
+Cc: Andrej Andb <admin@andrej-andb.ru>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 28 20:15:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tzto3-00032K-U9
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 19:51:48 +0100
+	id 1TzuAp-0004Ap-El
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jan 2013 20:15:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751390Ab3A1Sv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 13:51:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51517 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751068Ab3A1SvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 13:51:24 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F32FB8C2;
-	Mon, 28 Jan 2013 13:51:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5R/mZ63oMo/xNLUqwjhw8Af4oIk=; b=nNq8mT
-	uVw797ouvKUOxZr76nkx+YWJwJicY61+v9ze8dmkwvIswSlcy3h8tk+/fLf8zBo0
-	9ZbnZVlN92H6hIii85uVFot3X+4aP2yYhVgmxa5Zb1K+hd5GdLXWdu107015ERrv
-	N1/DVI5wSHsAUgGojVislTUEer2Utu0zrvOds=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d2LDPOe2a482Xk9IGsJvA8MWImA/a31q
-	QJMp3W5ZQEBTv/oYkmv3CAL6nLeP3OY3Uayca6492DcERMyIOJSJf/XHAjTibZSA
-	hG40SzGEBqN4ETFUqBnfK21gL5kkV9D54XvMx1wPm8ejGc+Rc3rjVUQUkl5qQqeL
-	PMGgB54tC3k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53872B8C1;
-	Mon, 28 Jan 2013 13:51:24 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5B03B8BE; Mon, 28 Jan 2013
- 13:51:23 -0500 (EST)
-In-Reply-To: <CAFXTnz6xBMo42jWdqahYX-bnTBucVmQpFPN29X8tGRd7L=g2wQ@mail.gmail.com> (Lars
- Hjemli's message of "Mon, 28 Jan 2013 19:35:21 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B67EA3D6-697B-11E2-AC2F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753104Ab3A1TO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 14:14:57 -0500
+Received: from mail-ee0-f51.google.com ([74.125.83.51]:59456 "EHLO
+	mail-ee0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751415Ab3A1TO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 14:14:56 -0500
+Received: by mail-ee0-f51.google.com with SMTP id d17so1455340eek.38
+        for <git@vger.kernel.org>; Mon, 28 Jan 2013 11:14:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=andrej-andb.ru; s=google;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=FIXZ+h3eOtwQrabbeo4IVp4zA1dD3jM6n7l6DHAP7WE=;
+        b=QPfkZiDS24rXAuuKNPRHbJ4/57n7LNjKDZ7h2OaMPiyh8KZKUaRD/NXApy13xR1jZ/
+         C0ENIOXJLcVNRPgscBV5BLYBoIiZa5e3+UOoaLimAtVTahOQaT3fseOYTqH45tgMmaKN
+         iTdYPQtLHosadNE84fOhOzSc4GxIPXDWHy34k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer
+         :x-gm-message-state;
+        bh=FIXZ+h3eOtwQrabbeo4IVp4zA1dD3jM6n7l6DHAP7WE=;
+        b=Ex8qR/G3tVKVMXPXbiISBsqz938hz4wtGmpPd3lVidDCMQLjvQO3fSqdVYgL8fmjoM
+         9grpnIz+KHFHiyJnBQ04XIg+tuYLaYsdzVkcJNlVoQ+2TGptHS8fmc6h2YWtV5M9C+wb
+         LIZHgVKtXxKD6j4mBkWv1G/iEm+xCqSo1ivDYT7CLJf+05QDBtGO78tgmlqVVLbep695
+         lSDAnuik+X42b/8q4n9+Mt+MBq0x15Vw4pPm/stNrSfoImUZSBYCA5uNif4JHMyQ+KfI
+         aYSQBpxl4IFUm09zYt77Z8H6qhFi9msZbGGw/+7752SAkZOLoJ2atLerpDS1HqscTLEn
+         tCig==
+X-Received: by 10.14.206.132 with SMTP id l4mr14351720eeo.38.1359400495405;
+        Mon, 28 Jan 2013 11:14:55 -0800 (PST)
+Received: from andrej-andb.ru.ru (andrej-andb.ru. [78.46.145.210])
+        by mx.google.com with ESMTPS id o3sm13359872eem.15.2013.01.28.11.14.54
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 28 Jan 2013 11:14:54 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.1
+X-Gm-Message-State: ALoCoQnDT1GItD9UFehWIz8J0heHUXu31h/e08S2jqk0Wt5F/OyLh4EHgy6+QbZmojIKbZgW6Pw6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214857>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+---
+ gitweb/gitweb.perl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
->> Come to think of it, is there a reason why "for-each-repo" should
->> not be an extention to "submodule foreach"?  We can view this as
->> visiting repositories that _could_ be registered as a submodule, in
->> addition to iterating over the registered submodules, no?
->
-> Yes, but I see some possible problems with that approach:
-> -'git for-each-repo' does not need to be started from within a git worktree
-
-True, but "git submodule foreach --untracked" can be told that it is
-OK not (yet) to be in any superproject, no?
-
-> -'git for-each-repo' and 'git submodule foreach' have different
-> semantics for --dirty and --clean
-
-That could be a problem.  Is there a good reason why they should use
-different definitions of dirtyness?
-
-> -'git for-each-repo' is in C because my 'git-all' shell script was
-> horribly slow on large directory trees (especially on windows)
-
-Your for-each-repo could be a good basis to build a new builtin
-"submodule--foreach" that is a pure helper hidden from the end users
-that does both; cmd_foreach() in git-submodule.sh can simply delegate
-to it.
-
-> All of these problems are probably solvable, but it would require
-> quite some reworking of git-submodule.sh
-
-Of course some work is needed, but we do not have to convert all the
-cmd_foo in git-submodule.sh in one step.  For the purpose of
-unifying for-each-repo and submodule foreach to deliver the
-functionality sooner to the end users, we can go the route to add
-only the submodule--foreach builtin, out of which we will get
-reusable implementation of module_list and other helper functions we
-can leverage later to do other cmd_foo functions.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c6bafe6..1309196 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2068,7 +2068,7 @@ sub picon_url {
+ 	if (!$avatar_cache{$email}) {
+ 		my ($user, $domain) = split('@', $email);
+ 		$avatar_cache{$email} =
+-			"http://www.cs.indiana.edu/cgi-pub/kinzler/piconsearch.cgi/" .
++			"//www.cs.indiana.edu/cgi-pub/kinzler/piconsearch.cgi/" .
+ 			"$domain/$user/" .
+ 			"users+domains+unknown/up/single";
+ 	}
+@@ -2083,7 +2083,7 @@ sub gravatar_url {
+ 	my $email = lc shift;
+ 	my $size = shift;
+ 	$avatar_cache{$email} ||=
+-		"http://www.gravatar.com/avatar/" .
++		"//www.gravatar.com/avatar/" .
+ 			Digest::MD5::md5_hex($email) . "?s=";
+ 	return $avatar_cache{$email} . $size;
+ }
+-- 
+1.8.1.1
