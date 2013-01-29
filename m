@@ -1,82 +1,88 @@
-From: Michael Tyson <michael@atastypixel.com>
-Subject: Cloning remote HTTP repository: Can only see 'master' branch
-Date: Tue, 29 Jan 2013 16:54:13 +1100
-Message-ID: <83605E83-1110-449B-969D-AB43158376EA@atastypixel.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 29 07:09:52 2013
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC] The design of new pathspec features
+Date: Tue, 29 Jan 2013 13:13:37 +0700
+Message-ID: <CACsJy8DsKFfGoPUt5b=3MuSmZ2z2Z5vJ20D_kqEowAUc8QTryA@mail.gmail.com>
+References: <20130129043517.GA2878@duynguyen-vnpc.dek-tpc.internal> <7vd2wotuxm.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 29 07:14:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U04OD-000580-BI
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 07:09:49 +0100
+	id 1U04St-0006Sp-P8
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 07:14:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753707Ab3A2GJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 01:09:28 -0500
-Received: from bs4-dallas.accountservergroup.com ([50.23.201.241]:44567 "EHLO
-	bs4-dallas.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753551Ab3A2GJ1 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 01:09:27 -0500
-X-Greylist: delayed 913 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Jan 2013 01:09:27 EST
-Received: from 58-6-250-150.dyn.iinet.net.au ([58.6.250.150]:65420 helo=[10.1.1.7])
-	by bs4-dallas.accountservergroup.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.80)
-	(envelope-from <michael@atastypixel.com>)
-	id 1U0498-000C8n-4M
-	for git@vger.kernel.org; Mon, 28 Jan 2013 23:54:14 -0600
-X-Mailer: Apple Mail (2.1499)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bs4-dallas.accountservergroup.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - atastypixel.com
+	id S1753914Ab3A2GOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 01:14:10 -0500
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:58775 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753574Ab3A2GOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 01:14:08 -0500
+Received: by mail-ob0-f178.google.com with SMTP id wd20so77448obb.37
+        for <git@vger.kernel.org>; Mon, 28 Jan 2013 22:14:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=l/4WnIJxAWHRJ95PGAK2PbkKq1euPFw4YKtSUsXeLwA=;
+        b=WYiQrMgbWxhqS+3RdQtkLo3j0r+cSWu84BXHY2SUqcQwiYc7f+Ephrr7kdpfKfnQu7
+         RAUKUGM8ra5LE4/euXa9dKyhMFcyGgfw72GnzYFdig2Atg9NG4VAb3wmXZMuIYANmrz6
+         omwer3JgCumFU/DnVAqY36ouwuw+/Kd7iKBrCF+3Zj0hNi4tOZqgs0dBcpK/53LepXZs
+         wdiTbQ4LDh9xfQzrS2ezdMPRuHFc2kfGuUO7V10AtRst/0tlUbcCkQ7xX195a+Q/6AI7
+         /VdxBweWw7RGuaUeFoQjGM1DPNhoiS746pYFLNhXR8Ejr215kdgrGxB1962U7z0mVovQ
+         Th/Q==
+X-Received: by 10.182.159.33 with SMTP id wz1mr275205obb.57.1359440047417;
+ Mon, 28 Jan 2013 22:14:07 -0800 (PST)
+Received: by 10.182.118.229 with HTTP; Mon, 28 Jan 2013 22:13:37 -0800 (PST)
+In-Reply-To: <7vd2wotuxm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214906>
 
-Hello!
+On Tue, Jan 29, 2013 at 12:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Have you considered if it may be helpful to have a :(literal) magic
+> (or any magic in general) that applies only to the first N
+> characters of the pathspec pattern?
 
-I've a readonly git repository that I'm hosting via HTTP (a bare git repository located within the appropriate directory on the server). I push to it via my own SSH account (local repository with a remote pointing to the ssh:// URL).
+Not user-driven. But the prefix part is :(literal)-applied. :(glob) is
+currently implemented this way, using nowildcard_len as you mentioned.
+:(icase) is more complicated and does not follow yet.
 
-This has all worked fine so far - I push via ssh, and others can clone and pull via the HTTP URL.
+> I personally think we do not need to support something like this:
+>
+>         prefix=$(git rev-parse --show-prefix)
+>         n=${#prefix}
+>         pathspec=":(literal-$n)$prefix$1"
+>
+> but other aspiring Porcelain script writers may disagree and would
+> want to have it.  We can always solve it by giving them an easy and
+> uniform way to get the glob-quoted version of prefix to solve this
+> particular issue, i.e.
+>
+>         prefixq=$(git rev-parse --show-prefix-glob-quoted)
+>         pathspec="$prefixq$1"
+>
+> but magic that applies only to a substring may have other uses.
 
-I've recently added a branch - "beta" - which pushed just fine, but now cloning via the HTTP URL doesn't seem to show the new branch - just master:
+Yeah, that simplifies things. Supporting applying magic over just
+parts of the pathspec pattern sounds complex. Just a small
+modification. That rev-parse needs to look at "$1" as well. If
+:(literal) is already specified, glob quoting will backfire. The user
+script can deal with that, but it's harder (e.g. parsing magic from
+scripts and deal with magic combination) than letting rev-parse does
+it.
 
-$ git clone http://server.tld/path/to/repository.git repository
-Cloning into 'repository'...
-$ cd repository
-$ git branch -a
-* master
-  remotes/origin/HEAD -> origin/master
-  remotes/origin/master
-
-Cloning via the readwrite ssh URL works fine though:
-
-$ git clone ssh://user@server.tld:www/path/to/repository.git repository
-Cloning into 'repository'...
-stdin: is not a tty
-remote: Counting objects: 225, done.
-remote: Compressing objects: 100% (196/196), done.
-remote: Total 225 (delta 109), reused 77 (delta 25)
-Receiving objects: 100% (225/225), 9.55 MiB | 295 KiB/s, done.
-Resolving deltas: 100% (109/109), done.
-$ cd repository
-$ git branch -a
-* master
-  remotes/origin/HEAD -> origin/master
-  remotes/origin/beta
-  remotes/origin/master
-
-I've tried 'git clone --mirror' just in case, but this just resulted in a bare repository with only the 'master' branch, still.
-
-Anyone have any ideas about what I'm doing wrong?
-
-Cheers,
-Michael
+I've done some form of this already, for supporting add--interactive.
+git-add prefixes the pathspec but keeps all the magic in place, before
+passing pathspec to add--interactive. But I missed the quoting point
+you mentioned above. I probably need de-quoting the prefix as well.
+Many optimizations stop short at the sign of any glob symbols,
+including backslash. This could be a new task for wildmatch.
+-- 
+Duy
