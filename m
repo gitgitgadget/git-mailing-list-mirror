@@ -1,106 +1,69 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] fixup! mergetools: simplify how we handle "vim" and "defaults"
-Date: Mon, 28 Jan 2013 17:37:13 -0800
-Message-ID: <CAJDDKr5wsYqnBk+kvKj1qzUYKJBJ5nAiwMJZ=HpzPPgJf8BBTQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fixup! mergetools: simplify how we handle "vim" and
+ "defaults"
+Date: Mon, 28 Jan 2013 19:02:47 -0800
+Message-ID: <7vy5fcu1wo.fsf@alter.siamese.dyndns.org>
 References: <20130128192856.GA7498@serenity.lan>
+ <CAJDDKr5wsYqnBk+kvKj1qzUYKJBJ5nAiwMJZ=HpzPPgJf8BBTQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Jan 29 02:37:39 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 29 04:03:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U008o-0008SG-0a
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 02:37:38 +0100
+	id 1U01Td-0006Xw-P3
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 04:03:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753108Ab3A2BhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 20:37:16 -0500
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:55675 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752717Ab3A2BhO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 20:37:14 -0500
-Received: by mail-wi0-f171.google.com with SMTP id hn14so1992553wib.4
-        for <git@vger.kernel.org>; Mon, 28 Jan 2013 17:37:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=zWWXW7PIdIgDq7bst9+z2v880BiBOrU43D17Pq8G7Ds=;
-        b=vnzGDXtsBp5qTSmAspa/b4CQqk3NhmJH/b9hmPobs316p3KthyvPCgdLDNAZu5RbfB
-         x52R6nX/W9+bAcxuKLQFInylNAne3ydf76g89uTktpkKooIXw9W+pA0BxS4U7Z/laGU5
-         R6Vwqccq6B5ZmZQhqvsW0fKDXn0Fx/BGMOtiqDe76zpZAYniBygXX0TCiJ/KFZk07dHa
-         +CkBbzNOSXaF/FHKhV7HZPDaU9jRpVslr6cr/f/mvO+DhKFSa3BnkBAreeY8SRl3ONNZ
-         bw1hiHnZ22CRoxy8ny4qSoPSDrG7LG5hbumZtWPgeDsfuKWZhrXcPW3/H1tow86zaEdd
-         YlFg==
-X-Received: by 10.194.119.5 with SMTP id kq5mr314994wjb.48.1359423433137; Mon,
- 28 Jan 2013 17:37:13 -0800 (PST)
-Received: by 10.194.24.231 with HTTP; Mon, 28 Jan 2013 17:37:13 -0800 (PST)
-In-Reply-To: <20130128192856.GA7498@serenity.lan>
+	id S1753080Ab3A2DCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 22:02:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38263 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753723Ab3A2DCv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 22:02:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EBC2B2D6;
+	Mon, 28 Jan 2013 22:02:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3K327eBZZHZkFWmOuIpi6weHjag=; b=UBMHSK
+	h24RYSVJjYfzrjf3QCMZK5DSpBHoDGKbT2o6wNN3LWhBeXxSGKYHLtth9F1PWu2+
+	kNjQSlHLEwmCVjOd+lHAYWOQmTpH0ZpJpOIJjYpWd9AF4QXHAoTAoiUKQ8cVxvMQ
+	AM6OGqrvsIbxMsUfGTeMaAhqgrxvGpGP2xOlg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CQy1WxbA7/xBkKuVgrPDjhS1+6XTODuF
+	3P009cpkwLcVSFpkhr7U/1wJtmHGXDhTP3bUuFwzWWA6Jqm5zkVdQF1Vzabs4Ydb
+	kpISXLMG7GzshhFkXaxzUtJbVcBFTlCsa8ruk2oYMWV31e71EFVRaN5ZynsZfvMb
+	v8/1mGyD7Uw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 435B4B2D5;
+	Mon, 28 Jan 2013 22:02:50 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1171B2D4; Mon, 28 Jan 2013
+ 22:02:49 -0500 (EST)
+In-Reply-To: <CAJDDKr5wsYqnBk+kvKj1qzUYKJBJ5nAiwMJZ=HpzPPgJf8BBTQ@mail.gmail.com> (David
+ Aguilar's message of "Mon, 28 Jan 2013 17:37:13 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5D823852-69C0-11E2-B6A3-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214894>
 
-On Mon, Jan 28, 2013 at 11:28 AM, John Keeping <john@keeping.me.uk> wrote:
-> ---
-> Junio, please can you squash this into f9924e5 on jk/mergetool,
-> providing that David is OK with that?
+David Aguilar <davvid@gmail.com> writes:
 
-This looks good to me.
-
-> The original change breaks custom mergetool by making changing the logic
-> around default functions so that they are now only defined when the tool
-> file exists in $MERGE_TOOLS_DIR but we need the default implementations
-> when a custom tool is in use, which by definition means that the file
-> doesn't exist in $MERGE_TOOLS_DIR.
+> On Mon, Jan 28, 2013 at 11:28 AM, John Keeping <john@keeping.me.uk> wrote:
+>> ---
+>> Junio, please can you squash this into f9924e5 on jk/mergetool,
+>> providing that David is OK with that?
 >
->  git-mergetool--lib.sh | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> index 1d0fb12..211ffe5 100644
-> --- a/git-mergetool--lib.sh
-> +++ b/git-mergetool--lib.sh
-> @@ -48,15 +48,6 @@ valid_tool () {
->  setup_tool () {
->         tool="$1"
->
-> -       if ! test -f "$MERGE_TOOLS_DIR/$tool"
-> -       then
-> -               # Use a special return code for this case since we want to
-> -               # source "defaults" even when an explicit tool path is
-> -               # configured since the user can use that to override the
-> -               # default path in the scriptlet.
-> -               return 2
-> -       fi
-> -
->         # Fallback definitions, to be overriden by tools.
->         can_merge () {
->                 return 0
-> @@ -80,6 +71,15 @@ setup_tool () {
->                 echo "$1"
->         }
->
-> +       if ! test -f "$MERGE_TOOLS_DIR/$tool"
-> +       then
-> +               # Use a special return code for this case since we want to
-> +               # source "defaults" even when an explicit tool path is
-> +               # configured since the user can use that to override the
-> +               # default path in the scriptlet.
-> +               return 2
-> +       fi
-> +
->         # Load the redefined functions
->         . "$MERGE_TOOLS_DIR/$tool"
->
-> --
-> 1.8.1.1
+> This looks good to me.
 
-
-
--- 
-David
+Thanks for a quick response.  Will squash this in and rebuild the
+two affected branches.
