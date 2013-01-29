@@ -1,88 +1,75 @@
-From: =?UTF-8?Q?Mikl=C3=B3s_Fazekas?= <mfazekas@szemafor.com>
-Subject: [PATCH] git p4: chdir resolves symlinks only for relative paths
-Date: Tue, 29 Jan 2013 09:37:52 +0100
-Message-ID: <CAAMmcSSEzs3+vZDO=FDMV9c2rp-8HTdMuPeeQCkok6y7sRDYJw@mail.gmail.com>
-References: <CAAMmcSSvrsZqEVf68Nrqy_ZG6r5ESKhtx7JdQ7vzypkZ3gOFnA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH/RFC 0/6] commit caching
+Date: Tue, 29 Jan 2013 04:14:34 -0500
+Message-ID: <20130129091434.GA6975@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Gary Gibbons <ggibbons@perforce.com>
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 29 09:38:24 2013
+X-From: git-owner@vger.kernel.org Tue Jan 29 10:15:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U06hw-0001s1-IC
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 09:38:20 +0100
+	id 1U07HT-0007M6-87
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 10:15:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754447Ab3A2Ih4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jan 2013 03:37:56 -0500
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:65425 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753853Ab3A2Ihz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jan 2013 03:37:55 -0500
-Received: by mail-wi0-f173.google.com with SMTP id hn17so2197800wib.0
-        for <git@vger.kernel.org>; Tue, 29 Jan 2013 00:37:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=0S6EuI8XVaVVO5VapG1XLnWVGTwIkjL0Wso4wHvwwro=;
-        b=CNqlyGqmpB1AfBrc/o6bxo2OC1gkrTS/9tsZggUZh2rC3X+mGsJoH+e3gypliqKxlX
-         eia8sBv3wav/zxYH0/8Iqcx3fPXRD3h+qEqCdHOlFM7PMc9mib1vpFXJhuNLT/eZYSrp
-         Ap5tiSLmrkroTwwBjLxYZ4KGaadg85fGd6BA+rQtrh/1EO5RkTq0VxaLL8smE82X9e2O
-         ARfhcC5ZTfSM+70e67jlAfL0ANzT9Dtc98/GNePu/wqCBrYgL8Gp87HWDMa1GgRgmBDk
-         Rtsi9KAs6qph9PhJaSRytC0CN455y5zRoRah46ctoEjN0KegTVSeCG/bgmW/j/QEtVBU
-         VGQw==
-X-Received: by 10.180.97.68 with SMTP id dy4mr625157wib.7.1359448672628; Tue,
- 29 Jan 2013 00:37:52 -0800 (PST)
-Received: by 10.194.171.6 with HTTP; Tue, 29 Jan 2013 00:37:52 -0800 (PST)
-In-Reply-To: <CAAMmcSSvrsZqEVf68Nrqy_ZG6r5ESKhtx7JdQ7vzypkZ3gOFnA@mail.gmail.com>
-X-Gm-Message-State: ALoCoQn9Xm/MmM70WOSfo5RiNiyV6cg9KQqD+PpcxB5cFPOVCsHKO+Tmz6TNBX5aYAkG6kmbNEV3
+	id S1755162Ab3A2JOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 04:14:41 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53235 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751067Ab3A2JOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 04:14:38 -0500
+Received: (qmail 19910 invoked by uid 107); 29 Jan 2013 09:16:00 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Jan 2013 04:16:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jan 2013 04:14:34 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214916>
 
-[resending as plain text]
+This is the cleaned-up version of the commit caching patches I mentioned
+here:
 
-If a p4 client is configured to /p/foo which is a symlink
-to /vol/bar/projects/foo, then resolving symlink, which
-is done by git-p4's chdir will confuse p4: "Path
-/vol/bar/projects/foo/... is not under client root /p/foo"
-While AltRoots in p4 client specification can be used as a
-workaround on p4 side, git-p4 should not resolve symlinks
-in client paths.
-chdir(dir) uses os.getcwd() after os.chdir(dir) to resolve
-relative paths, but as a side effect it resolves symlinks
-too. Now it checks if the dir is relative before resolving.
+  http://article.gmane.org/gmane.comp.version-control.git/212329
 
-Signed-off-by: Mikl=C3=B3s Fazekas <mfazekas@szemafor.com>
----
- git-p4.py |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+The basic idea is to generate a cache file that sits alongside a
+packfile and contains the timestamp, tree, and parents in a more compact
+and easy-to-access format.
 
-diff --git a/git-p4.py b/git-p4.py
-index 2da5649..5d74649 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -64,7 +64,10 @@ def chdir(dir):
-     # not using the shell, we have to set it ourselves.  This path cou=
-ld
-     # be relative, so go there first, then figure out where we ended u=
-p.
-     os.chdir(dir)
--    os.environ['PWD'] =3D os.getcwd()
-+    if os.path.isabs(dir):
-+        os.environ['PWD'] =3D dir
-+    else:
-+        os.environ['PWD'] =3D os.getcwd()
+The timings from this one are roughly similar to what I posted earlier.
+Unlike the earlier version, this one keeps the data for a single commit
+together for better cache locality (though I don't think it made a big
+difference in my tests, since my cold-cache timing test ends up touching
+every commit anyway).  The short of it is that for an extra 31M of disk
+space (~4%), I get a warm-cache speedup for "git rev-list --all" of
+~4.2s to ~0.66s.
 
- def die(msg):
-     if verbose:
---=20
-1.7.10.2 (Apple Git-33)
+The big thing it does not (yet) do is use offsets to reference sha1s, as
+Shawn suggested.  This would potentially drop the on-disk size from 84
+bytes to 16 bytes per commit (or about 6M total for linux.git).
+
+Coupled with using compression level 0 for trees (which do not compress
+well at all, and yield only a 2% increase in size when left
+uncompressed), my "git rev-list --objects --all" time drops from ~40s to
+~25s. Perf reveals that we're spending most of the remaining time in
+lookup_object. I've spent a fair bit of time trying to optimize that,
+but with no luck; I think it's fairly close to optimal. The problem is
+just that we call it a very large number of times, since it is the
+mechanism by which we recognize that we have already processed each
+sha1.
+
+  [1/6]: csum-file: make sha1write const-correct
+  [2/6]: strbuf: add string-chomping functions
+  [3/6]: introduce pack metadata cache files
+  [4/6]: introduce a commit metapack
+  [5/6]: add git-metapack command
+  [6/6]: commit: look up commit info in metapack
+
+-Peff
