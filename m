@@ -1,79 +1,142 @@
-From: Bryan Turner <bturner@atlassian.com>
-Subject: Re: [PATCH] The images from picon and gravatar are always used over
- http://, and browsers give mixed contents warning when gitweb is served over https://.
-Date: Tue, 29 Jan 2013 15:16:22 +1100
-Message-ID: <CAGyf7-Gub7pFY+NpX0Cp4p9bUyzZHfp6qj+b5uNOEgHfhSJykw@mail.gmail.com>
-References: <1359416492-8597-1-git-send-email-admin@andrej-andb.ru>
-	<7vtxq0u1v3.fsf@alter.siamese.dyndns.org>
-	<CAGyf7-GJkKDWdykq8iv90tU3TUR5ZKUf2bQc9sJokbq-RFYBYg@mail.gmail.com>
-	<20130129041206.GA15442@google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: [RFC] The design of new pathspec features
+Date: Tue, 29 Jan 2013 11:35:17 +0700
+Message-ID: <20130129043517.GA2878@duynguyen-vnpc.dek-tpc.internal>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 29 05:16:52 2013
+X-From: git-owner@vger.kernel.org Tue Jan 29 05:35:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U02co-0007FJ-Gy
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 05:16:46 +0100
+	id 1U02vI-0004OL-Ll
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 05:35:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753804Ab3A2EQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 23:16:25 -0500
-Received: from na3sys009aog111.obsmtp.com ([74.125.149.205]:37711 "HELO
-	na3sys009aog111.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753431Ab3A2EQY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jan 2013 23:16:24 -0500
-Received: from mail-ob0-f199.google.com ([209.85.214.199]) (using TLSv1) by na3sys009aob111.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUQdNFyMbaEIcBsGvXL1dix63p/+UcpV/@postini.com; Mon, 28 Jan 2013 20:16:23 PST
-Received: by mail-ob0-f199.google.com with SMTP id wd20so100882obb.2
-        for <git@vger.kernel.org>; Mon, 28 Jan 2013 20:16:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:mime-version:x-received:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:x-gm-message-state;
-        bh=eSnOYxwlyI7tMDI87/odOCUzjDMVBUg9XlHxfXgB03Q=;
-        b=ngfoFuaDC2N19Em7iHoQ4PSnvKDrKpu7OcY5UdWNzu0aXCoIEYY15KPoshZtTaClYg
-         ezfnD4BX6xtk/mT+BmUVO4FlRAv5w5BONbtJAI9PDDdN8WIifnO8NUAZGExMH1p2LlOc
-         uZy/jAYPH6vzQg/5qyA5PaBXm7WZ6S2S11PZgc7DEzCaiy4NO0PnXGakVmZhzYXfPKoe
-         MNjkrVtv3IhtbELp8tZmW0uqKOCJUES5d0mF+JT0sGJWTDx3NzRZ422/G/MmH7JbGHLS
-         mwFrHQAUymckpZWouzA7f/XXZzcgE2vI3VPj4D/ekM9ey1g2CzwO1btE0g9EomVFLr+B
-         hQIw==
-X-Received: by 10.60.5.231 with SMTP id v7mr105268oev.62.1359432983046;
-        Mon, 28 Jan 2013 20:16:23 -0800 (PST)
-X-Received: by 10.60.5.231 with SMTP id v7mr105264oev.62.1359432982898; Mon,
- 28 Jan 2013 20:16:22 -0800 (PST)
-Received: by 10.182.232.101 with HTTP; Mon, 28 Jan 2013 20:16:22 -0800 (PST)
-In-Reply-To: <20130129041206.GA15442@google.com>
-X-Gm-Message-State: ALoCoQkKkyvnNCraRcTqFJXDUtgQjiCJtCVTDd0fiixPd7MZ7loBV8Ugw+bDg53clKTKCR0Z8g1SzSNEe42sbPbkVW0q81GB52+n/mppgqRjOHkWeRGPFq0GwqAa3SVrMTR925DZoYByRm0xOUqlYyI67V0lrLf5iQ==
+	id S1756691Ab3A2Ef1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 23:35:27 -0500
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:63056 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753323Ab3A2EfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 23:35:25 -0500
+Received: by mail-pb0-f43.google.com with SMTP id jt11so23136pbb.2
+        for <git@vger.kernel.org>; Mon, 28 Jan 2013 20:35:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=2FAvSLAFdzE8FpF1jtUHGUoDWqMiONY9VcopTW2tedY=;
+        b=GYa0mYKL8X57lQptuw74mlJPvwHDcXO4X5OtQPUX9hZJwh69zbgyVetVDJilQLN8SR
+         heUGxoZ9kxQzxEh0MT2klM/oGcLG5kOQR+dwPi+2zcCXjc4yNPSYfGZj6QiAe94APFxf
+         fKhv4L2GuSOvVbF4jOv20dovwrBDZlhgK+R8JgejWl7s18CZfEDs8MJkyYX9hag4ZHFE
+         Xf0KcpHL3XUGKO94bytlz823C6YoqmWShn3wUx0OQkbbL6ZmulK3IZfCg45v5RdKRSV6
+         u/sjXEB/l75rybYJRAtBo5s9uAEBVOs4hKHQ1G0wEsMmeF7W76mocWjRw2HNWC7jHMAJ
+         wlLA==
+X-Received: by 10.68.233.99 with SMTP id tv3mr559968pbc.64.1359434124531;
+        Mon, 28 Jan 2013 20:35:24 -0800 (PST)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id v2sm8083599paz.36.2013.01.28.20.35.21
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 28 Jan 2013 20:35:23 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 29 Jan 2013 11:35:17 +0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214899>
 
-Interesting. I wonder if they've changed it recently. I only pointed
-it out because a software product I'm working on had a bug because it
-was building the URLs with "https://www..." and the resulting images
-were showing as X's instead of avatars. We had to change the
-implementation to use "https://secure..." to get the avatars to load
-correctly. That's been ~8 months ago now, though, so maybe it's no
-longer the case. It seems like it would be much more convenient if
-they just changed the scheme.
+For those who haven't followed closely, some coming changes allow us
+to extend current pathspec syntax. We should soon be able to do
+case-insenstive matching for example, or introduce "**" wildcard that
+is currently used by gitignore. I just want to discuss about the new
+syntax and behavior.
 
-Bryan
+Many of these are already implemented in [1]. But I don't want you to
+bother with buggy code yet. I'll resend it soon after 1.8.2.
 
-On 29 January 2013 15:12, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi Bryan,
->
-> Bryan Turner wrote:
->
->> This won't work correctly as-is. The secure URL for Gravatar is
->> "https://secure.gravatar.com"[1], not "https://www.gravatar.com".
->
-> Odd.  "https://www.gravatar.com/" also seems to work.  I've put in a
-> technical support query to find out what the Gravatar admins prefer.
->
-> Thanks,
-> Jonathan
+--literal-pathspecs
+===================
+
+This feature is added by Jeff to disable globbing for all pathspecs. I
+want to push it a bit further: disable all pathspec magic. This means
+even ":/" is treated literally when --literal-pathspecs is set.
+Because the intent behind this, as I understand, is for scripting, it
+makes sense to keep it as literal as possible.
+
+:(literal) magic
+================
+
+This magic is for people who want simple no-globbing pathspec (*). It
+can be used in combination with other magic such as case-insensitive
+matching. Incompatible with :(glob) magic below.
+
+Global option --noglob-pathspecs is added to add :(literal) to
+all. This is very similar to --literal-pathspecs. It just does not
+disable pathspec magic. :(glob) magic overrides this global option.
+
+(*) you can always disable wildcards by quoting them using backslash,
+but that's inconvenient
+
+:(glob) magic
+=============
+
+This magic is for people who want globbing. However, it does _not_ use
+the same matching mechanism the non-magic pathspec does today. It uses
+wildmatch(WM_PATHNAME), which basically means '*' does not match
+slashes and "**" does.
+
+Global option --glob-pathspecs is added to add :(glob) to all
+pathspec. :(literal) magic overrides this global option.
+
+fnmatch without FNM_PATHNAME is deprecated
+==========================================
+
+With the two magic above, people can switch between literal and new
+globbing. There is no way to regain current matching behavior once
+--[no]glob-pathspecs is used. And I think that's a good thing. New
+globbing is more powerful than the current one. At some point, I'd
+like to switch the matching behavior when neither literal nor magic
+pathspec is specified. Either:
+
+ - make it literal by default
+ - make it new globbing by default
+
+Which is more often used should be come the default. The question is
+which.
+
+Pathspec mnemonic
+=================
+
+Are :(literal) and :(glob) used often enough to deserve a short
+mnemonic (like :/ is equivalent to :(top))? Which symbols should be
+used? We can only use non-alphanumeric here, and '(', ')', ':' and '/'
+are taken. It should be friendly to UNIX shell, no quoting is
+preferred.
+
+Another magic will come soon: case-insensitive matching. We may want
+to reserve a mnemonic symbol for it as well.
+
+We may also want to reserve option shortcuts for --noglob-pathspecs
+and --glob-pathspecs. I suspect they'll be used more often.
+
+New way to specify long pathspec magic
+======================================
+
+While testing the pathspec magic code, I grow tired of quoting :(glob)
+every time because '(' is the start of a new shell. Which is one of
+the reasons I introduce --[no]glob-pathspecs. Still I'd like a way to
+specify long pathspec magic without quoting.
+
+How about making ":q/xxx/" an equivalence of ":(xxx)"? Any character
+(except ',') following 'q' is used as separator (similar to s/// from
+sed). This violates the guidelines set in glossary-content.txt (only
+use non-alphanumeric).
+
+Another step futher is remove support for ":(xxx)" in favor of
+":q(xxx)". We can do it today because I don't think anybody is using
+":(top)" (the only supported magic) yet.
+
+[1] https://github.com/pclouds/git/tree/parse-pathspec
