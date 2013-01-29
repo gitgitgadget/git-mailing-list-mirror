@@ -1,67 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] README: fix broken mailing list archive link
-Date: Wed, 30 Jan 2013 00:58:26 +0530
-Message-ID: <CALkWK0mvoFs9axrOcak2oFpYjNTRUccKRf3Aqm1A8ksr6hmb5w@mail.gmail.com>
-References: <1359456039-20562-1-git-send-email-artagnon@gmail.com> <7v4nhzq066.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH v2] CodingGuidelines: add Python coding guidelines
+Date: Tue, 29 Jan 2013 11:34:31 -0800
+Message-ID: <7vzjzrokag.fsf@alter.siamese.dyndns.org>
+References: <20130129190844.GB1342@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 20:29:10 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Jan 29 20:35:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0Grl-0005Le-JG
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 20:29:09 +0100
+	id 1U0GxP-0007wG-7x
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 20:34:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754600Ab3A2T2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 14:28:48 -0500
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:51175 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754505Ab3A2T2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 14:28:46 -0500
-Received: by mail-oa0-f42.google.com with SMTP id i18so546087oag.15
-        for <git@vger.kernel.org>; Tue, 29 Jan 2013 11:28:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=oS4nd/mrSwwDLgTvFQoXqLpwy0Wa7MD6I67MiUk3d/g=;
-        b=rzhLue5KumX9gQlxeVvBJV5iTzgg8wILjk/nvKjBzNQ4uAcjrixtR+reo7cPCxDu2d
-         ckYCUKE7P8lUbPa5Zse8GZTZeVuT1bstlMcF4OOAKDkfUaoPqaOwA/O41FslTnCfdcur
-         +c3WoxujuwsV8hgJrCXzgrna+m5dfUO9lvV8DL5JFF0kCHZoCsa00kGv5cLIO3zj99EE
-         /691AAkm7WEkawgcWZtOYpgS6+X4Cer9QjKv2kXKVlo3bAGcPoQHeUHHPjmcCcdrXwGf
-         6KVU40DBcVb655gx4uGRWBvdmQrXe1cQu+Qd+Yq65icpGQJiQdf+91I0ltzPidry0hxZ
-         4duQ==
-X-Received: by 10.60.169.171 with SMTP id af11mr1620624oec.92.1359487726340;
- Tue, 29 Jan 2013 11:28:46 -0800 (PST)
-Received: by 10.76.75.198 with HTTP; Tue, 29 Jan 2013 11:28:26 -0800 (PST)
-In-Reply-To: <7v4nhzq066.fsf@alter.siamese.dyndns.org>
+	id S1752977Ab3A2Teg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 14:34:36 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61237 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751143Ab3A2Tee (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 14:34:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A40BC6B7;
+	Tue, 29 Jan 2013 14:34:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SodLywF9Tx4po7ZtCcM+TqOaXvM=; b=FUTNbU
+	JdpNFbHjs0P304a6XWY9/XnF+a6jtLQqs2x/yk0gdl30SBzHJR6f/MoocYbvJ2HW
+	MNaWzPAHcekjbwJhy7YoybdqnqgxxacfHCBNPTINqZ4QRnUssCNpZ1z2ozu6TiHL
+	iPsSwVSJ9n7N+OFyDtUmsjxaZazMgNhxWf/vA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ui/swB8oCzMnS3EwtAbUhC5rgaGvvo4X
+	jBlSo6tIw326PaS9EgA8tob3QKwD6oKT3r6DfLcffUBuB/AcMpVoBw6oiet/oIpt
+	jPUL85CGOoovFqf415Va0dYrw+ATKD0VAS6fr0kyJ+1gIQBwAnhawdMqIvon/Lkw
+	4y5iWdDwsmA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1043EC6B6;
+	Tue, 29 Jan 2013 14:34:34 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 81755C6B5; Tue, 29 Jan 2013
+ 14:34:33 -0500 (EST)
+In-Reply-To: <20130129190844.GB1342@serenity.lan> (John Keeping's message of
+ "Tue, 29 Jan 2013 19:08:44 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8802664-6A4A-11E2-9506-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214962>
 
-Junio C Hamano wrote:
->  - refer to gmane;
+John Keeping <john@keeping.me.uk> writes:
 
-GMane has a wonderful interface, and deserves to be advertised.
+> Changes since v1:
+>
+> - Set 3.1 as the minimum Python 3 version
+>
+> - Remove the section on Unicode literals - it just adds confusion and
+>   doesn't apply to the current code; we can deal with any issues if they
+>   ever arise.
+> ...
+> + - We use the 'b' prefix for bytes literals.  Note that even though
+> +   the Python documentation for version 2.6 does not mention this
+> +   prefix it is supported since version 2.6.0.
 
->  - git-scm.org gives a CNAME with less commercial feeling to the
->    same thing;
+Do we still need to single out the 'b' prefix?  Even if it were
+necessary, I'd like to see it toned down a bit to make it clear that
+most of the time you can write strings as strings without having to
+worry about the "is it unicode string or a string string" mess.
+Like
 
-Nice touch.
+    - When you must make distinction between Unicode literals and
+      byte string literals, it is OK to use 'b' prefix.  Even though
+      ...
 
->  - "A note from the maintainer" is not usually followed by useful
->    discussion to discuss status, direction nor tasks;
-
-True.
-
->  - There is no separate "What's in git (stable/topics)".
-
-Right.
-
-Looks good to me.  Thanks.
+perhaps?
