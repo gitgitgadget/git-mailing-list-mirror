@@ -1,147 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/3] receive-pack: reject an attempt to update/delete a
- hidden ref
-Date: Mon, 28 Jan 2013 16:13:32 -0800
-Message-ID: <1359418412-26602-4-git-send-email-gitster@pobox.com>
-References: <1359418412-26602-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 29 01:14:08 2013
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] fixup! mergetools: simplify how we handle "vim" and "defaults"
+Date: Mon, 28 Jan 2013 17:37:13 -0800
+Message-ID: <CAJDDKr5wsYqnBk+kvKj1qzUYKJBJ5nAiwMJZ=HpzPPgJf8BBTQ@mail.gmail.com>
+References: <20130128192856.GA7498@serenity.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Jan 29 02:37:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Tzyq0-0005Uz-0E
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 01:14:08 +0100
+	id 1U008o-0008SG-0a
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 02:37:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785Ab3A2ANo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2013 19:13:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52414 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751573Ab3A2ANn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2013 19:13:43 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A66CC7FD
-	for <git@vger.kernel.org>; Mon, 28 Jan 2013 19:13:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Bsrj
-	PVkiTfJwxPvbPH8eHwEiGGw=; b=o9PI7rlXbKMC1eUB9zLEYVtL5C3F35efQEd3
-	6et6XRToH1M4ehQC8d+4pJsWGaV2bTM7B0Ir2dURo3aLO49hzOlAssjj7QjbzAfc
-	jB3X2SNZuBh9Vv5d2g8FCBptvx1iy6rk20s6ypfqUUwPKgDbr2LDQIswhYJGS++W
-	ODHFKuk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=vGZfdF
-	KMBCr/yDvsfgNC9mm237WgwLgBXiqEbfMs1/pOwxaAnpJlaqvkPDWUM0LHQuhjKv
-	iq7QBlUj/ULzMWhy0zDCZcTzjveNiN65fEOHsody0E69kT+wHQ0kJS2W4fmn3P0V
-	GL4uVTaAvHJeD2roY+PSIpZdMlRIJ5Ta4gEn0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F4CDC7FC
-	for <git@vger.kernel.org>; Mon, 28 Jan 2013 19:13:42 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 961D0C7F8 for
- <git@vger.kernel.org>; Mon, 28 Jan 2013 19:13:41 -0500 (EST)
-X-Mailer: git-send-email 1.8.1.2.548.g0e4986f
-In-Reply-To: <1359418412-26602-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: BCB93C34-69A8-11E2-A05B-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753108Ab3A2BhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2013 20:37:16 -0500
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:55675 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752717Ab3A2BhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2013 20:37:14 -0500
+Received: by mail-wi0-f171.google.com with SMTP id hn14so1992553wib.4
+        for <git@vger.kernel.org>; Mon, 28 Jan 2013 17:37:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=zWWXW7PIdIgDq7bst9+z2v880BiBOrU43D17Pq8G7Ds=;
+        b=vnzGDXtsBp5qTSmAspa/b4CQqk3NhmJH/b9hmPobs316p3KthyvPCgdLDNAZu5RbfB
+         x52R6nX/W9+bAcxuKLQFInylNAne3ydf76g89uTktpkKooIXw9W+pA0BxS4U7Z/laGU5
+         R6Vwqccq6B5ZmZQhqvsW0fKDXn0Fx/BGMOtiqDe76zpZAYniBygXX0TCiJ/KFZk07dHa
+         +CkBbzNOSXaF/FHKhV7HZPDaU9jRpVslr6cr/f/mvO+DhKFSa3BnkBAreeY8SRl3ONNZ
+         bw1hiHnZ22CRoxy8ny4qSoPSDrG7LG5hbumZtWPgeDsfuKWZhrXcPW3/H1tow86zaEdd
+         YlFg==
+X-Received: by 10.194.119.5 with SMTP id kq5mr314994wjb.48.1359423433137; Mon,
+ 28 Jan 2013 17:37:13 -0800 (PST)
+Received: by 10.194.24.231 with HTTP; Mon, 28 Jan 2013 17:37:13 -0800 (PST)
+In-Reply-To: <20130128192856.GA7498@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214892>
 
-An attempt to update or delete a ref that is hidden from "git push"
-is rejected.  With this the server side can implement refs that are
-only available for its own use, e.g. refs/pull/11/head used to hold
-an incoming pull request at GitHub.
+On Mon, Jan 28, 2013 at 11:28 AM, John Keeping <john@keeping.me.uk> wrote:
+> ---
+> Junio, please can you squash this into f9924e5 on jk/mergetool,
+> providing that David is OK with that?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config.txt |  3 ++-
- builtin/receive-pack.c   | 16 ++++++++++++++++
- t/t5516-fetch-push.sh    | 24 ++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 1 deletion(-)
+This looks good to me.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 8e2853e..b7b407b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2063,7 +2063,8 @@ transfer.hiderefs::
- 	more than one transfer.hiderefs configuration variables to
- 	specify multiple prefix strings. A ref that has one of these
- 	strings as its prefix is excluded, and is hidden from
--	`git clone --mirror` and `git push :`.
-+	`git clone --mirror` and `git push :`.  An attempt to update
-+	or delete a hidden ref by `git push` is	rejected.
- 
- transfer.unpackLimit::
- 	When `fetch.unpackLimit` or `receive.unpackLimit` are
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 5ed40be..a8248d9 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -696,6 +696,20 @@ static int iterate_receive_command_list(void *cb_data, unsigned char sha1[20])
- 	return -1; /* end of list */
- }
- 
-+static void reject_updates_to_hidden(struct command *commands)
-+{
-+	struct command *cmd;
-+
-+	for (cmd = commands; cmd; cmd = cmd->next) {
-+		if (cmd->error_string || !ref_is_hidden(cmd->ref_name))
-+			continue;
-+		if (is_null_sha1(cmd->new_sha1))
-+			cmd->error_string = "deny deleting a hidden ref";
-+		else
-+			cmd->error_string = "deny updating a hidden ref";
-+	}
-+}
-+
- static void execute_commands(struct command *commands, const char *unpacker_error)
- {
- 	struct command *cmd;
-@@ -712,6 +726,8 @@ static void execute_commands(struct command *commands, const char *unpacker_erro
- 				       0, &cmd))
- 		set_connectivity_errors(commands);
- 
-+	reject_updates_to_hidden(commands);
-+
- 	if (run_receive_hook(commands, pre_receive_hook, 0)) {
- 		for (cmd = commands; cmd; cmd = cmd->next) {
- 			if (!cmd->error_string)
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 6009372..8e8287a 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1037,4 +1037,28 @@ test_expect_success 'push --prune refspec' '
- 	! check_push_result $the_first_commit tmp/foo tmp/bar
- '
- 
-+test_expect_success 'push to update a hidden ref' '
-+	mk_test heads/master hidden/one hidden/two hidden/three &&
-+	(
-+		cd testrepo &&
-+		git config transfer.hiderefs refs/hidden
-+	) &&
-+
-+	# push to unhidden ref succeeds normally
-+	git push testrepo master:refs/heads/master &&
-+	check_push_result $the_commit heads/master &&
-+
-+	# push to update a hidden ref should fail
-+	test_must_fail git push testrepo master:refs/hidden/one &&
-+	check_push_result $the_first_commit hidden/one &&
-+
-+	# push to delete a hidden ref should fail
-+	test_must_fail git push testrepo master:refs/hidden/two &&
-+	check_push_result $the_first_commit hidden/two &&
-+
-+	# idempotent push to update a hidden ref should fail
-+	test_must_fail git push testrepo $the_first_commit:refs/hidden/three &&
-+	check_push_result $the_first_commit hidden/three
-+'
-+
- test_done
+> The original change breaks custom mergetool by making changing the logic
+> around default functions so that they are now only defined when the tool
+> file exists in $MERGE_TOOLS_DIR but we need the default implementations
+> when a custom tool is in use, which by definition means that the file
+> doesn't exist in $MERGE_TOOLS_DIR.
+>
+>  git-mergetool--lib.sh | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
+>
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> index 1d0fb12..211ffe5 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -48,15 +48,6 @@ valid_tool () {
+>  setup_tool () {
+>         tool="$1"
+>
+> -       if ! test -f "$MERGE_TOOLS_DIR/$tool"
+> -       then
+> -               # Use a special return code for this case since we want to
+> -               # source "defaults" even when an explicit tool path is
+> -               # configured since the user can use that to override the
+> -               # default path in the scriptlet.
+> -               return 2
+> -       fi
+> -
+>         # Fallback definitions, to be overriden by tools.
+>         can_merge () {
+>                 return 0
+> @@ -80,6 +71,15 @@ setup_tool () {
+>                 echo "$1"
+>         }
+>
+> +       if ! test -f "$MERGE_TOOLS_DIR/$tool"
+> +       then
+> +               # Use a special return code for this case since we want to
+> +               # source "defaults" even when an explicit tool path is
+> +               # configured since the user can use that to override the
+> +               # default path in the scriptlet.
+> +               return 2
+> +       fi
+> +
+>         # Load the redefined functions
+>         . "$MERGE_TOOLS_DIR/$tool"
+>
+> --
+> 1.8.1.1
+
+
+
 -- 
-1.8.1.2.548.g0e4986f
+David
