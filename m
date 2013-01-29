@@ -1,65 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/6] introduce a commit metapack
-Date: Tue, 29 Jan 2013 06:13:22 -0500
-Message-ID: <20130129111322.GB11055@sigill.intra.peff.net>
-References: <20130129091434.GA6975@sigill.intra.peff.net>
- <20130129091610.GD9999@sigill.intra.peff.net>
- <5107A36D.2050307@alum.mit.edu>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: Re: [PATCH v2 0/4] Auto-generate mergetool lists
+Date: Tue, 29 Jan 2013 12:56:58 +0100
+Message-ID: <ke8de9$lk5$1@ger.gmane.org>
+References: <1359334346-5879-1-git-send-email-davvid@gmail.com> <7v38xm12kk.fsf@alter.siamese.dyndns.org> <CAJDDKr7sQKDNPpaFJi+en479TF=aLXL2pvXODeo6CC3xD1KMGw@mail.gmail.com> <7vr4l6yrd3.fsf@alter.siamese.dyndns.org> <CAJDDKr75K3RGgU79nrznbpjQMLQGkDs=W8XEofURNsS1X1bvjg@mail.gmail.com> <20130128210136.GC7498@serenity.lan> <7vk3qxugdg.fsf@alter.siamese.dyndns.org> <20130128222147.GD7498@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jan 29 12:13:53 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 29 12:57:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U098N-00057k-TT
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 12:13:48 +0100
+	id 1U09ol-0007Hr-Jg
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 12:57:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754942Ab3A2LN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 06:13:26 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53310 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752281Ab3A2LNZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 06:13:25 -0500
-Received: (qmail 20663 invoked by uid 107); 29 Jan 2013 11:14:48 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Jan 2013 06:14:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jan 2013 06:13:22 -0500
-Content-Disposition: inline
-In-Reply-To: <5107A36D.2050307@alum.mit.edu>
+	id S1755966Ab3A2L5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 06:57:14 -0500
+Received: from plane.gmane.org ([80.91.229.3]:60833 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755854Ab3A2L5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 06:57:12 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1U09od-0007FJ-Uw
+	for git@vger.kernel.org; Tue, 29 Jan 2013 12:57:27 +0100
+Received: from dsdf-4db557c4.pool.mediaways.net ([77.181.87.196])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 29 Jan 2013 12:57:27 +0100
+Received: from jojo by dsdf-4db557c4.pool.mediaways.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 29 Jan 2013 12:57:27 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dsdf-4db557c4.pool.mediaways.net
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214930>
 
-On Tue, Jan 29, 2013 at 11:24:45AM +0100, Michael Haggerty wrote:
+John Keeping wrote:
+> On Mon, Jan 28, 2013 at 01:50:19PM -0800, Junio C Hamano wrote:
+>> What are the situations where a valid user-defined tools is
+>> unavailable, by the way?
+>
+> The same as a built-in tool: the command isn't available.
+>
+> Currently I'm extracting the command word using:
+>
+>    cmd=$(eval -- "set -- $(git config mergetool.$tool.cmd); echo
+> \"$1\"")
 
-> On 01/29/2013 10:16 AM, Jeff King wrote:
-> > When we are doing a commit traversal that does not need to
-> > look at the commit messages themselves (e.g., rev-list,
-> > merge-base, etc), we spend a lot of time accessing,
-> > decompressing, and parsing the commit objects just to find
-> > the parent and timestamp information. We can make a
-> > space-time tradeoff by caching that information on disk in a
-> > compact, uncompressed format.
-> > 
-> > TODO: document on-disk format in Documentation/technical
-> > TODO: document API
-> 
-> Would this be a good place to add the commit generation number that is
-> so enthusiastically discussed on the mailing list from time to time?
+Shouldnt this work?
+cmd=$((git config "mergetool.$tool.cmd" || git config "difftool.$tool.cmd") 
+| awk '{print $1}')
 
-Yes, that is one of my goals. We may even be able to just replace the
-timestamp field in the cache with a generation number. When it gets
-pretty-printed we pull it out of the commit message again anyway, so in
-theory the only use inside "struct commit" is for ordering. But I
-haven't looked at all of the use sites yet to be sure nobody is
-depending on it being an actual date stamp.
 
--Peff
+> (it's slightly more complicated due to handling difftool.$tool.cmd as
+> well, but that's essentially it).  Then it just uses the same "type
+> $cmd" test as for built-in tools.
+>
+> I don't know if there's a better way to extract the first word, but
+> that's the best I've come up with so far.
+>
+>
+> John 
