@@ -1,302 +1,278 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/6] introduce pack metadata cache files
-Date: Tue, 29 Jan 2013 04:15:55 -0500
-Message-ID: <20130129091555.GC9999@sigill.intra.peff.net>
+Subject: [PATCH 4/6] introduce a commit metapack
+Date: Tue, 29 Jan 2013 04:16:11 -0500
+Message-ID: <20130129091610.GD9999@sigill.intra.peff.net>
 References: <20130129091434.GA6975@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Duy Nguyen <pclouds@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 29 10:16:23 2013
+X-From: git-owner@vger.kernel.org Tue Jan 29 10:16:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U07Il-0007s4-5e
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 10:16:23 +0100
+	id 1U07J0-0007xh-28
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 10:16:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755382Ab3A2JQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 04:16:00 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53247 "EHLO
+	id S1755409Ab3A2JQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 04:16:16 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53251 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754836Ab3A2JP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 04:15:58 -0500
-Received: (qmail 20007 invoked by uid 107); 29 Jan 2013 09:17:21 -0000
+	id S1754836Ab3A2JQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 04:16:14 -0500
+Received: (qmail 20025 invoked by uid 107); 29 Jan 2013 09:17:36 -0000
 Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Jan 2013 04:17:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jan 2013 04:15:55 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Jan 2013 04:17:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jan 2013 04:16:11 -0500
 Content-Disposition: inline
 In-Reply-To: <20130129091434.GA6975@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214920>
 
-The on-disk packfile format is nicely compact, but it does
-not always provide the fastest format for looking up
-information. This patch introduces the concept of
-"metapacks", optional metadata files which can live
-alongside packs and represent their data in different ways.
-This can allow space-time tradeoffs in accessing certain
-object data.
-
-Such space-time tradeoffs have traditionally gone into the
-.idx file (e.g., the fact that we can quickly find an
-object's offset in the packfile is due to the index). In
-theory, cached data could also go into the .idx file.
-However, keeping it in a separate file makes backwards
-compatibility much simpler. Older versions of git can simply
-ignore the extra files and use the existing methods for
-accessing object data. This also makes metapacks optional,
-so you can easily tune the space-time tradeoff on a per-repo
-basis.
+When we are doing a commit traversal that does not need to
+look at the commit messages themselves (e.g., rev-list,
+merge-base, etc), we spend a lot of time accessing,
+decompressing, and parsing the commit objects just to find
+the parent and timestamp information. We can make a
+space-time tradeoff by caching that information on disk in a
+compact, uncompressed format.
 
 TODO: document on-disk format in Documentation/technical
-TODO: document api
+TODO: document API
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Makefile   |   2 +
- metapack.c | 158 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- metapack.h |  42 ++++++++++++++++
- 3 files changed, 202 insertions(+)
- create mode 100644 metapack.c
- create mode 100644 metapack.h
+ Makefile          |   2 +
+ commit-metapack.c | 175 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ commit-metapack.h |  12 ++++
+ 3 files changed, 189 insertions(+)
+ create mode 100644 commit-metapack.c
+ create mode 100644 commit-metapack.h
 
 diff --git a/Makefile b/Makefile
-index 731b6a8..3e4ae1b 100644
+index 3e4ae1b..6ca5320 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -660,6 +660,7 @@ LIB_H += mergesort.h
- LIB_H += merge-blobs.h
- LIB_H += merge-recursive.h
- LIB_H += mergesort.h
-+LIB_H += metapack.h
- LIB_H += notes-cache.h
- LIB_H += notes-merge.h
- LIB_H += notes.h
-@@ -778,6 +779,7 @@ LIB_OBJS += mergesort.o
- LIB_OBJS += merge-blobs.o
- LIB_OBJS += merge-recursive.o
- LIB_OBJS += mergesort.o
-+LIB_OBJS += metapack.o
- LIB_OBJS += name-hash.o
- LIB_OBJS += notes.o
- LIB_OBJS += notes-cache.o
-diff --git a/metapack.c b/metapack.c
+@@ -619,6 +619,7 @@ LIB_H += column.h
+ LIB_H += cache.h
+ LIB_H += color.h
+ LIB_H += column.h
++LIB_H += commit-metapack.h
+ LIB_H += commit.h
+ LIB_H += compat/bswap.h
+ LIB_H += compat/cygwin.h
+@@ -730,6 +731,7 @@ LIB_OBJS += combine-diff.o
+ LIB_OBJS += color.o
+ LIB_OBJS += column.o
+ LIB_OBJS += combine-diff.o
++LIB_OBJS += commit-metapack.o
+ LIB_OBJS += commit.o
+ LIB_OBJS += compat/obstack.o
+ LIB_OBJS += compat/terminal.o
+diff --git a/commit-metapack.c b/commit-metapack.c
 new file mode 100644
-index 0000000..c859c95
+index 0000000..2c19f48
 --- /dev/null
-+++ b/metapack.c
-@@ -0,0 +1,158 @@
++++ b/commit-metapack.c
+@@ -0,0 +1,175 @@
 +#include "cache.h"
++#include "commit-metapack.h"
 +#include "metapack.h"
-+#include "csum-file.h"
++#include "commit.h"
++#include "sha1-lookup.h"
 +
-+static struct sha1file *create_meta_tmp(void)
++struct commit_metapack {
++	struct metapack mp;
++	uint32_t nr;
++	unsigned char *index;
++	unsigned char *data;
++	struct commit_metapack *next;
++};
++static struct commit_metapack *commit_metapacks;
++
++static struct commit_metapack *alloc_commit_metapack(struct packed_git *pack)
 +{
-+	char tmp[PATH_MAX];
-+	int fd;
++	struct commit_metapack *it = xcalloc(1, sizeof(*it));
++	uint32_t version;
 +
-+	fd = odb_mkstemp(tmp, sizeof(tmp), "pack/tmp_meta_XXXXXX");
-+	return sha1fd(fd, xstrdup(tmp));
-+}
++	if (metapack_init(&it->mp, pack, "commits", &version) < 0) {
++		free(it);
++		return NULL;
++	}
++	if (version != 1) {
++		/*
++		 * This file comes from a more recent git version. Don't bother
++		 * warning the user, as we'll just fallback to reading the
++		 * commits.
++		 */
++		metapack_close(&it->mp);
++		free(it);
++		return NULL;
++	}
 +
-+static void write_meta_header(struct metapack_writer *mw, const char *id,
-+			      uint32_t version)
-+{
-+	version = htonl(version);
-+
-+	sha1write(mw->out, "META", 4);
-+	sha1write(mw->out, "\0\0\0\1", 4);
-+	sha1write(mw->out, mw->pack->sha1, 20);
-+	sha1write(mw->out, id, 4);
-+	sha1write(mw->out, &version, 4);
-+}
-+
-+void metapack_writer_init(struct metapack_writer *mw,
-+			  const char *pack_idx,
-+			  const char *name,
-+			  int version)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	memset(mw, 0, sizeof(*mw));
-+
-+	mw->pack = add_packed_git(pack_idx, strlen(pack_idx), 1);
-+	if (!mw->pack || open_pack_index(mw->pack))
-+		die("unable to open packfile '%s'", pack_idx);
-+
-+	strbuf_addstr(&path, pack_idx);
-+	strbuf_chompstr(&path, ".idx");
-+	strbuf_addch(&path, '.');
-+	strbuf_addstr(&path, name);
-+	mw->path = strbuf_detach(&path, NULL);
-+
-+	mw->out = create_meta_tmp();
-+	write_meta_header(mw, name, version);
-+}
-+
-+void metapack_writer_finish(struct metapack_writer *mw)
-+{
-+	const char *tmp = mw->out->name;
-+
-+	sha1close(mw->out, NULL, CSUM_FSYNC);
-+	if (rename(tmp, mw->path))
-+		die_errno("unable to rename temporary metapack file");
-+
-+	close_pack_index(mw->pack);
-+	free(mw->pack);
-+	free(mw->path);
-+	free((char *)tmp);
-+}
-+
-+void metapack_writer_add(struct metapack_writer *mw, const void *data, int len)
-+{
-+	sha1write(mw->out, data, len);
-+}
-+
-+void metapack_writer_add_uint32(struct metapack_writer *mw, uint32_t v)
-+{
-+	v = htonl(v);
-+	metapack_writer_add(mw, &v, 4);
-+}
-+
-+void metapack_writer_foreach(struct metapack_writer *mw,
-+			     metapack_writer_each_fn cb,
-+			     void *data)
-+{
-+	const unsigned char *sha1;
-+	uint32_t i = 0;
++	if (it->mp.len < 4) {
++		warning("commit metapack for '%s' is truncated", pack->pack_name);
++		metapack_close(&it->mp);
++		free(it);
++		return NULL;
++	}
++	memcpy(&it->nr, it->mp.data, 4);
++	it->nr = ntohl(it->nr);
 +
 +	/*
-+	 * We'll feed these to the callback in sorted order, since that is the
-+	 * order that they are stored in the .idx file.
++	 * We need 84 bytes for each entry: sha1(20), date(4), tree(20),
++	 * parents(40).
 +	 */
-+	while ((sha1 = nth_packed_object_sha1(mw->pack, i++)))
-+		cb(mw, sha1, data);
++	if (it->mp.len < (84 * it->nr + 4)) {
++		warning("commit metapack for '%s' is truncated", pack->pack_name);
++		metapack_close(&it->mp);
++		free(it);
++		return NULL;
++	}
++
++	it->index = it->mp.data + 4;
++	it->data = it->index + 20 * it->nr;
++
++	return it;
 +}
 +
-+int metapack_init(struct metapack *m,
-+		  struct packed_git *pack,
-+		  const char *name,
-+		  uint32_t *version)
++static void prepare_commit_metapacks(void)
 +{
-+	struct strbuf path = STRBUF_INIT;
-+	int fd;
-+	struct stat st;
++	static int initialized;
++	struct commit_metapack **tail = &commit_metapacks;
++	struct packed_git *p;
 +
-+	memset(m, 0, sizeof(*m));
++	if (initialized)
++		return;
 +
-+	strbuf_addstr(&path, pack->pack_name);
-+	strbuf_chompstr(&path, ".pack");
-+	strbuf_addch(&path, '.');
-+	strbuf_addstr(&path, name);
++	prepare_packed_git();
++	for (p = packed_git; p; p = p->next) {
++		struct commit_metapack *it = alloc_commit_metapack(p);
 +
-+	fd = open(path.buf, O_RDONLY);
-+	strbuf_release(&path);
-+	if (fd < 0)
-+		return -1;
-+	if (fstat(fd, &st) < 0) {
-+		close(fd);
-+		return -1;
++		if (it) {
++			*tail = it;
++			tail = &it->next;
++		}
 +	}
 +
-+	m->mapped_len = xsize_t(st.st_size);
-+	m->mapped_buf = xmmap(NULL, m->mapped_len, PROT_READ, MAP_PRIVATE, fd, 0);
-+	close(fd);
-+
-+	m->data = m->mapped_buf;
-+	m->len = m->mapped_len;
-+
-+	if (m->len < 8 ||
-+	    memcmp(m->mapped_buf, "META", 4) ||
-+	    memcmp(m->mapped_buf + 4, "\0\0\0\1", 4)) {
-+		warning("metapack '%s' for '%s' does not have a valid header",
-+			name, pack->pack_name);
-+		metapack_close(m);
-+		return -1;
-+	}
-+	m->data += 8;
-+	m->len -= 8;
-+
-+	if (m->len < 20 || hashcmp(m->data, pack->sha1)) {
-+		warning("metapack '%s' for '%s' does not match pack sha1",
-+			name, pack->pack_name);
-+		metapack_close(m);
-+		return -1;
-+	}
-+	m->data += 20;
-+	m->len -= 20;
-+
-+	if (m->len < 8 || memcmp(m->data, name, 4)) {
-+		warning("metapack '%s' for '%s' does not have expected header id",
-+			name, pack->pack_name);
-+		metapack_close(m);
-+		return -1;
-+	}
-+	memcpy(version, m->data + 4, 4);
-+	*version = ntohl(*version);
-+	m->data += 8;
-+	m->len -= 8;
-+
-+	return 0;
++	initialized = 1;
 +}
 +
-+void metapack_close(struct metapack *m)
++int commit_metapack(unsigned char *sha1,
++		    uint32_t *timestamp,
++		    unsigned char **tree,
++		    unsigned char **parent1,
++		    unsigned char **parent2)
 +{
-+	munmap(m->mapped_buf, m->mapped_len);
++	struct commit_metapack *p;
++
++	prepare_commit_metapacks();
++	for (p = commit_metapacks; p; p = p->next) {
++		unsigned char *data;
++		int pos = sha1_entry_pos(p->index, 20, 0, 0, p->nr, p->nr, sha1);
++		if (pos < 0)
++			continue;
++
++		/* timestamp(4) + tree(20) + parents(40) */
++		data = p->data + 64 * pos;
++		*timestamp = *(uint32_t *)data;
++		*timestamp = ntohl(*timestamp);
++		data += 4;
++		*tree = data;
++		data += 20;
++		*parent1 = data;
++		data += 20;
++		*parent2 = data;
++
++		return 0;
++	}
++
++	return -1;
 +}
-diff --git a/metapack.h b/metapack.h
++
++static void get_commits(struct metapack_writer *mw,
++			const unsigned char *sha1,
++			void *data)
++{
++	struct commit_list ***tail = data;
++	enum object_type type = sha1_object_info(sha1, NULL);
++	struct commit *c;
++
++	if (type != OBJ_COMMIT)
++		return;
++
++	c = lookup_commit(sha1);
++	if (!c || parse_commit(c))
++		die("unable to read commit %s", sha1_to_hex(sha1));
++
++	/*
++	 * Our fixed-size parent list cannot represent root commits, nor
++	 * octopus merges. Just skip those commits, as we can fallback
++	 * in those rare cases to reading the actual commit object.
++	 */
++	if (!c->parents ||
++	    (c->parents && c->parents->next && c->parents->next->next))
++		return;
++
++	*tail = &commit_list_insert(c, *tail)->next;
++}
++
++void commit_metapack_write(const char *idx)
++{
++	struct metapack_writer mw;
++	struct commit_list *commits = NULL, *p;
++	struct commit_list **tail = &commits;
++	uint32_t nr = 0;
++
++	metapack_writer_init(&mw, idx, "commits", 1);
++
++	/* Figure out how many eligible commits we've got in this pack. */
++	metapack_writer_foreach(&mw, get_commits, &tail);
++	for (p = commits; p; p = p->next)
++		nr++;
++	metapack_writer_add_uint32(&mw, nr);
++
++	/* Then write an index of commit sha1s */
++	for (p = commits; p; p = p->next)
++		metapack_writer_add(&mw, p->item->object.sha1, 20);
++
++	/* Followed by the actual date/tree/parents data */
++	for (p = commits; p; p = p->next) {
++		struct commit *c = p->item;
++		metapack_writer_add_uint32(&mw, c->date);
++		metapack_writer_add(&mw, c->tree->object.sha1, 20);
++		metapack_writer_add(&mw, c->parents->item->object.sha1, 20);
++		metapack_writer_add(&mw,
++				    c->parents->next ?
++				    c->parents->next->item->object.sha1 :
++				    null_sha1, 20);
++	}
++
++	metapack_writer_finish(&mw);
++}
+diff --git a/commit-metapack.h b/commit-metapack.h
 new file mode 100644
-index 0000000..6af17fe
+index 0000000..4684573
 --- /dev/null
-+++ b/metapack.h
-@@ -0,0 +1,42 @@
-+#ifndef METAPACK_H
-+#define METAPACK_H
++++ b/commit-metapack.h
+@@ -0,0 +1,12 @@
++#ifndef METAPACK_COMMIT_H
++#define METAPACK_COMMIT_H
 +
-+struct packed_git;
-+struct sha1file;
++int commit_metapack(unsigned char *sha1,
++		    uint32_t *timestamp,
++		    unsigned char **tree,
++		    unsigned char **parent1,
++		    unsigned char **parent2);
 +
-+struct metapack_writer {
-+	char *path;
-+	struct packed_git *pack;
-+	struct sha1file *out;
-+};
-+
-+void metapack_writer_init(struct metapack_writer *mw,
-+			  const char *pack_idx,
-+			  const char *name,
-+			  int version);
-+void metapack_writer_add(struct metapack_writer *mw, const void *data, int len);
-+void metapack_writer_add_uint32(struct metapack_writer *mw, uint32_t v);
-+void metapack_writer_finish(struct metapack_writer *mw);
-+
-+typedef void (*metapack_writer_each_fn)(struct metapack_writer *,
-+					const unsigned char *sha1,
-+					void *data);
-+void metapack_writer_foreach(struct metapack_writer *mw,
-+			     metapack_writer_each_fn cb,
-+			     void *data);
-+
-+struct metapack {
-+	void *mapped_buf;
-+	size_t mapped_len;
-+
-+	void *data;
-+	size_t len;
-+};
-+
-+int metapack_init(struct metapack *m,
-+		  struct packed_git *pack,
-+		  const char *name,
-+		  uint32_t *version);
-+void metapack_close(struct metapack *m);
++void commit_metapack_write(const char *idx_file);
 +
 +#endif
 -- 
