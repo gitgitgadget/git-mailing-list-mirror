@@ -1,68 +1,67 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/2] optimizing pack access on "read only" fetch repos
-Date: Tue, 29 Jan 2013 18:01:38 +0700
-Message-ID: <CACsJy8AHEyQ5-qz9auB3vT_Esmos2t-cRhtvf3zbVJDMFRET_A@mail.gmail.com>
-References: <20130126224011.GA20675@sigill.intra.peff.net> <7vlibfxhit.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/6] strbuf: add string-chomping functions
+Date: Tue, 29 Jan 2013 06:10:29 -0500
+Message-ID: <20130129111028.GA11055@sigill.intra.peff.net>
+References: <20130129091434.GA6975@sigill.intra.peff.net>
+ <20130129091540.GB9999@sigill.intra.peff.net>
+ <5107A146.4000309@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 12:02:34 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 29 12:10:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U08xU-0000hw-QD
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 12:02:33 +0100
+	id 1U095b-0003tU-JL
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 12:10:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884Ab3A2LCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 06:02:10 -0500
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:35349 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751451Ab3A2LCJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 06:02:09 -0500
-Received: by mail-ob0-f180.google.com with SMTP id ef5so276247obb.11
-        for <git@vger.kernel.org>; Tue, 29 Jan 2013 03:02:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=YyDabLqvywvNDbZtkyeMXn6xD5uzYstPDu1Zm1jSOGE=;
-        b=aaILvrKUHDc+uBnMtlD24PN5h9Oc9Y/PFtQXGKZufY71IYFNr/mvVIRbaZn4hOkcnV
-         K+r2Xyn+pRTuhblHpw4UVKTnkpO44gp5FrEDsLKZHskx+i58tExfRMpd3Ua9eGtUx3qF
-         ngEYal9Z+dhrLXzTxdgU1ARXThDAPaT4qSPLG4w1viMGYJ9eIBfYB0nR82ALbl9JRE5P
-         eGFnbuwZf55P3aTMjdx7AwFpric49KHkdiKVNay94e62wXuygBKwGE1cO6SxrnDlARZJ
-         BcCBLUc16i1ZR1UDQ3TbtEn6BkJiaoP7tRLMhXMxaJJjSEnXleY+hMDzCj1lXl3r+6PY
-         kxFQ==
-X-Received: by 10.60.3.1 with SMTP id 1mr343706oey.138.1359457328953; Tue, 29
- Jan 2013 03:02:08 -0800 (PST)
-Received: by 10.182.118.229 with HTTP; Tue, 29 Jan 2013 03:01:38 -0800 (PST)
-In-Reply-To: <7vlibfxhit.fsf@alter.siamese.dyndns.org>
+	id S1753993Ab3A2LKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 06:10:33 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53302 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752260Ab3A2LKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 06:10:32 -0500
+Received: (qmail 20643 invoked by uid 107); 29 Jan 2013 11:11:55 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Jan 2013 06:11:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jan 2013 06:10:29 -0500
+Content-Disposition: inline
+In-Reply-To: <5107A146.4000309@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214928>
 
-On Sun, Jan 27, 2013 at 1:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I also wonder if we would be helped by another "repack" mode that
-> coalesces small packs into a single one with minimum overhead, and
-> run that often from "gc --auto", so that we do not end up having to
-> have 50 packfiles.
->
-> When we have 2 or more small and young packs, we could:
->
->  - iterate over idx files for these packs to enumerate the objects
->    to be packed, replacing read_object_list_from_stdin() step;
->
->  - always choose to copy the data we have in these existing packs,
->    instead of doing a full prepare_pack(); and
->
->  - use the order the objects appear in the original packs, bypassing
->    compute_write_order().
+On Tue, Jan 29, 2013 at 11:15:34AM +0100, Michael Haggerty wrote:
 
-Isn't it easier and cheaper to create the "master index", something
-like bup does?
--- 
-Duy
+> > +void strbuf_chompmem(struct strbuf *sb, const void *data, size_t len)
+> > +{
+> > +	if (sb->len >= len && !memcmp(data, sb->buf + sb->len - len, len))
+> > +		strbuf_setlen(sb, sb->len - len);
+> > +}
+> > +
+> > +void strbuf_chompstr(struct strbuf *sb, const char *str)
+> > +{
+> > +	strbuf_chompmem(sb, str, strlen(str));
+> > +}
+> > +
+> It might be handy to have these functions return true/false based on
+> whether the suffix was actually found.
+
+Yeah, that sounds reasonable.
+
+> Please document the new functions in
+> Documentation/technical/api-strbuf.txt.  Personally I would also
+> advocate a "docstring" in the header file, but obviously that preference
+> is the exception rather than the rule in the git project :-(
+
+Will do. I need to document the metapack functions, too, so I was thinking
+about experimenting with some inline documentation systems.
+
+-Peff
