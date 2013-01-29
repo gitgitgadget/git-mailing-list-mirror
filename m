@@ -1,165 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] introduce a commit metapack
-Date: Tue, 29 Jan 2013 09:38:10 -0800
-Message-ID: <7vy5fbq48t.fsf@alter.siamese.dyndns.org>
-References: <20130129091434.GA6975@sigill.intra.peff.net>
- <20130129091610.GD9999@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] README: fix broken mailing list archive link
+Date: Tue, 29 Jan 2013 23:11:15 +0530
+Message-ID: <CALkWK0mm8UKBHE=tbXsiS4Z_qBGcRUUsmCKHHFequRiQRL3hsw@mail.gmail.com>
+References: <1359456039-20562-1-git-send-email-artagnon@gmail.com> <7v622grlj6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 29 18:38:37 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 29 18:42:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0F8l-0005jt-Hu
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 18:38:35 +0100
+	id 1U0FC3-0007K9-AF
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 18:41:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754133Ab3A2RiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 12:38:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50350 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750949Ab3A2RiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 12:38:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C06CCC2D0;
-	Tue, 29 Jan 2013 12:38:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=WWD7NpeEfDDRgrYyXMVBTh9dUOU=; b=SyVbhjhHgJkZVdfS82c7
-	vL2X//4FTz7EmVRt+WAlfsH2V3e//jLjfAyW9Ei9E2oG7eE5rrEm8ji5BPTYFfaU
-	BJGBAmtZgYfYaiGTFu0IRKbSb8MSZDpvaluEZ0zkhytUx8UXOUvKaXDFcMke5TPn
-	LtcX4Zr1adFrgtzCKZbeJ60=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=p961sNwWosGngKKfm1BN4wY9cEKcseiyAeg7T6AuTJVUDd
-	Il1sIzED9eWWtSrIUV9vdkrBDovSt9L8eGV5GEuH/skVd/Ty24q8FT+xnwgOtJtf
-	QJBcBX9Cs7F3/WI6vC8MgnaK18eToNmEwDTt/ZKN6t3tT45rj+srHUqT7EAnc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B56A4C2CF;
-	Tue, 29 Jan 2013 12:38:12 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E6A10C2CD; Tue, 29 Jan 2013
- 12:38:11 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A726F644-6A3A-11E2-9D64-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753266Ab3A2Rlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 12:41:37 -0500
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:53446 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750949Ab3A2Rlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 12:41:36 -0500
+Received: by mail-ob0-f177.google.com with SMTP id wc18so680418obb.8
+        for <git@vger.kernel.org>; Tue, 29 Jan 2013 09:41:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=Lf3GX4rMYESxd/crUejJnaQMWttDIvDCMYWYKkoZiAo=;
+        b=KFM4FZEKZPPH6Rk32YRgkdJMPcSDsRU7LlHhKzDO+Ag66PqYwpgUg0AvLnONQeUhIN
+         1768iwaoZzsETDI3cAMnK5QKJnEcn1jB1bq+4mTzXuuUaUsQDpeFF9dErNCvg6fOSHm+
+         pHxDti0aszjkzl92i9AzII1v5eoHTCNDmcgN2CDusa3H0wsDG8kSJTQTkK3Ggiwgt3hN
+         o2PpqrCpRfDIml70ekY+uiTS/HFFTWkagYSUR+N53m6MexeaHuR+b1GwTgmyNHK5Cx8T
+         8UQ5kM0S4yl62v8NL0dc2fBxiiKQUL6XEbkrp80aWF1l3pBHtzCvfstISxAb7i+h677P
+         r56Q==
+X-Received: by 10.60.31.39 with SMTP id x7mr1424821oeh.45.1359481296054; Tue,
+ 29 Jan 2013 09:41:36 -0800 (PST)
+Received: by 10.76.75.198 with HTTP; Tue, 29 Jan 2013 09:41:15 -0800 (PST)
+In-Reply-To: <7v622grlj6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214951>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>> marc.theaimsgroup.com does not exist anymore, so replace it
+>> with a link to the archive on GMane.
+>
+> I think it has been at http://marc.info/?l=git for some time.
 
-> +int commit_metapack(unsigned char *sha1,
-> +		    uint32_t *timestamp,
-> +		    unsigned char **tree,
-> +		    unsigned char **parent1,
-> +		    unsigned char **parent2)
-> +{
-> +	struct commit_metapack *p;
-> +
-> +	prepare_commit_metapacks();
-> +	for (p = commit_metapacks; p; p = p->next) {
-> +		unsigned char *data;
-> +		int pos = sha1_entry_pos(p->index, 20, 0, 0, p->nr, p->nr, sha1);
-
-This is a tangent, but isn't it about time to rip out the check for
-GIT_USE_LOOKUP in find_pack_entry_one(), I wonder.
-
-> +	prepare_commit_metapacks();
-> +	for (p = commit_metapacks; p; p = p->next) {
-> +		unsigned char *data;
-> +		int pos = sha1_entry_pos(p->index, 20, 0, 0, p->nr, p->nr, sha1);
-> +		if (pos < 0)
-> +			continue;
-> +
-> +		/* timestamp(4) + tree(20) + parents(40) */
-> +		data = p->data + 64 * pos;
-> +		*timestamp = *(uint32_t *)data;
-> +		*timestamp = ntohl(*timestamp);
-> +		data += 4;
-> +		*tree = data;
-> +		data += 20;
-> +		*parent1 = data;
-> +		data += 20;
-> +		*parent2 = data;
-> +
-> +		return 0;
-> +	}
-> +
-> +	return -1;
-> +}
-
-I am torn on this one.
-
-These cached properties of a single commit will not change no matter
-which pack it appears in, and it feels logically wrong, especially
-when you record these object names in the full SHA-1 form, to tie a
-"commit metapack" to a pack.  Logically there needs only one commit
-metapack that describes all the commits known to the repository when
-the metapack was created.
-
-In order to reduce the disk footprint and I/O cost, the future
-direction for this mechanism may want to point into an existing
-store of SHA-1 hashes with a shorter file offset, and the .idx file
-could be such a store, and in order to move in that direction, you
-cannot avoid tying a metapack to a pack.
-
-> +static void get_commits(struct metapack_writer *mw,
-> +			const unsigned char *sha1,
-> +			void *data)
-> +{
-> +	struct commit_list ***tail = data;
-> +	enum object_type type = sha1_object_info(sha1, NULL);
-> +	struct commit *c;
-> +
-> +	if (type != OBJ_COMMIT)
-> +		return;
-> +
-> +	c = lookup_commit(sha1);
-> +	if (!c || parse_commit(c))
-> +		die("unable to read commit %s", sha1_to_hex(sha1));
-> +
-> +	/*
-> +	 * Our fixed-size parent list cannot represent root commits, nor
-> +	 * octopus merges. Just skip those commits, as we can fallback
-> +	 * in those rare cases to reading the actual commit object.
-> +	 */
-> +	if (!c->parents ||
-> +	    (c->parents && c->parents->next && c->parents->next->next))
-> +		return;
-> +
-> +	*tail = &commit_list_insert(c, *tail)->next;
-> +}
-
-It feels somewhat wasteful to:
-
- - use commit_list for this, rather than an array of commit
-   objects.  If you have a rough estimate of the number of commits
-   in the pack, you could just preallocate a single array and use
-   ALLOC_GROW() on it, no?
-
- - iterate over the .idx file and run sha1_object_info() and
-   parse_commit() on many objects in the SHA-1 order.  Iterating in
-   the way builtin/pack-objects.c::get_object_details() does avoids
-   jumping around in existing packfiles, which may be more
-   efficient, no?
-
-> +void commit_metapack_write(const char *idx)
-> +{
-> +	struct metapack_writer mw;
-> +	struct commit_list *commits = NULL, *p;
-> +	struct commit_list **tail = &commits;
-> +	uint32_t nr = 0;
-> +
-> +	metapack_writer_init(&mw, idx, "commits", 1);
-> +
-> +	/* Figure out how many eligible commits we've got in this pack. */
-> +	metapack_writer_foreach(&mw, get_commits, &tail);
-> +	for (p = commits; p; p = p->next)
-> +		nr++;
+Isn't GMane what all of us refer to on the list though?
