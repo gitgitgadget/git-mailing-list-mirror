@@ -1,108 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/4] Auto-generate mergetool lists
-Date: Tue, 29 Jan 2013 08:15:15 -0800
-Message-ID: <7vsj5krmng.fsf@alter.siamese.dyndns.org>
-References: <1359334346-5879-1-git-send-email-davvid@gmail.com>
- <7v38xm12kk.fsf@alter.siamese.dyndns.org>
- <CAJDDKr7sQKDNPpaFJi+en479TF=aLXL2pvXODeo6CC3xD1KMGw@mail.gmail.com>
- <7vr4l6yrd3.fsf@alter.siamese.dyndns.org>
- <CAJDDKr75K3RGgU79nrznbpjQMLQGkDs=W8XEofURNsS1X1bvjg@mail.gmail.com>
- <20130128210136.GC7498@serenity.lan>
- <7vk3qxugdg.fsf@alter.siamese.dyndns.org>
- <20130128222147.GD7498@serenity.lan> <ke8de9$lk5$1@ger.gmane.org>
- <20130129120923.GE7498@serenity.lan>
+Subject: Re: [PATCH] status: show branch name if possible in in-progress info
+Date: Tue, 29 Jan 2013 08:18:27 -0800
+Message-ID: <7vobg8rmi4.fsf@alter.siamese.dyndns.org>
+References: <1359461450-24456-1-git-send-email-pclouds@gmail.com>
+ <vpqy5fcrwzq.fsf@grenoble-inp.fr>
+ <CACsJy8DLdG9O+HaWS8u4n+imdaSZe=GrbYbPOhcMsYMWDq9NZw@mail.gmail.com>
+ <vpqd2worv23.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Joachim Schmitz <jojo@schmitz-digital.de>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Jan 29 17:15:54 2013
+Cc: Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jan 29 17:18:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0DqY-00010F-Py
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 17:15:43 +0100
+	id 1U0Dtd-0002PQ-29
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 17:18:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751650Ab3A2QPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 11:15:21 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52735 "EHLO
+	id S1751336Ab3A2QSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 11:18:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54982 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750809Ab3A2QPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 11:15:19 -0500
+	id S1751129Ab3A2QSa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 11:18:30 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A6DCCC37;
-	Tue, 29 Jan 2013 11:15:18 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F6A5CE87;
+	Tue, 29 Jan 2013 11:18:30 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qU0wAwbYfaPtO9INbEFekwQ3NdE=; b=CypKtv
-	XAHW9OB8Nk0OO1vb2X9E25CRNE0IwkFYZtK6kn5AnmMnXSTimerCY0JI4/jKeML0
-	uruEHwhn3YFN7zOf7Q0p6C3QbMwAw1bLrY+0c18u73ol2RU7KuYDOQzcHLP6zlhj
-	sN3VhD2PGXu0/fws0nFNPMpfy+A0/r+/BHm0A=
+	:content-type; s=sasl; bh=7wlh+SoF/S47291xfoy91CwC6Ws=; b=KYe6hr
+	Cku0qUtvsRlM9hUMf+7AFiJj7QkgrElfOiliSkkMrCuZTF3ccxTZMrbwuAGXrAiR
+	vkIP0ApccLBG2rf0GVpGyz38idI5x/NxO/ztiHPLyuD6nQE5yh/RdJre2uwQHjTU
+	2n++tTYYhkDOdp8pSrYExnrJvtF6NSw16nnjU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mLDgoGJQAknN20xf9ZyacmDOE6dkQIA4
-	ic3DsUWZNQobVzPum642koS2HCLd4UdmYDwbLyKAXT5zz2LnvMAI8CBf0lva2/cf
-	RupQLrdNWfdbfvGbNC9bEU8oPf22/Gi7Jzfb5v/1cgwNRiPEasnS0SoT/WjKaHFr
-	9VzAFNQj7zU=
+	:content-type; q=dns; s=sasl; b=PrLt7uujcjXJuc2UqJTle8ipLaWyygx4
+	sY0XoSQvQ2qULJHDxMz3JL4Tplqx467OWslHTEoe0g/YmSqMAUZFZDbGpS7MPbjm
+	Dswu88txStDMc0SDL8GjZjOGrmHaPIZnuPXYACyOYz0BY75HhXmW/x9niWrl0Gpi
+	jlI7HT4P25E=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F7A8CC36;
-	Tue, 29 Jan 2013 11:15:18 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F0C9ACE85;
+	Tue, 29 Jan 2013 11:18:29 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB11DCC34; Tue, 29 Jan 2013
- 11:15:17 -0500 (EST)
-In-Reply-To: <20130129120923.GE7498@serenity.lan> (John Keeping's message of
- "Tue, 29 Jan 2013 12:09:23 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 60F1ACE83; Tue, 29 Jan 2013
+ 11:18:29 -0500 (EST)
+In-Reply-To: <vpqd2worv23.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+ "Tue, 29 Jan 2013 14:13:40 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 12638050-6A2F-11E2-9794-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 84881236-6A2F-11E2-ACC3-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214944>
 
-John Keeping <john@keeping.me.uk> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> On Tue, Jan 29, 2013 at 12:56:58PM +0100, Joachim Schmitz wrote:
->> John Keeping wrote:
->> > Currently I'm extracting the command word using:
->> >
->> >    cmd=$(eval -- "set -- $(git config mergetool.$tool.cmd); echo
->> > \"$1\"")
->> 
->> Shouldnt this work?
->> cmd=$((git config "mergetool.$tool.cmd" || git config "difftool.$tool.cmd") 
->> | awk '{print $1}')
->
-> That doesn't handle paths with spaces in, whereas the eval in a subshell
-> does:
->
->     $ cmd='"my command" $BASE $LOCAL $REMOTE'
->     $ echo "$cmd" | awk '{print $1}'
->     "my
->     $ ( eval -- "set -- $cmd; echo \"\$1\"" )
->     my command
+> Not HEAD, but .git/rebase-merge/onto, i.e. the target of the rebase.
+> Ideally, I would have loved to see "rebasing master on origin/master",
+> but I do not think the target ref name is stored during rebase.
 
-I'd rather not to see you do any of the above.
-
-With any backend that is non-trivial, it would not be unusual for
-the *tool.cmd to look like:
-
-     [mergetool]
-     	mytool = sh -c '
-        	... some massaging to prepare the command line
-                ... to run the real tool backend comes here, and
-     		... then ...
-                my_real_tool $arg1 $arg2 ...
-	'
-
-and you will end up detecting the presence of the shell, which is
-not very useful.
-
-I think it is perfectly fine to say "you configured it, so it must
-exist; it may fail when we try to run it but it is your problem".
-It is simpler to explain and requires one less eval.
-
-        
-                
+Perhaps do it with --format=%s then.  It often is useless to know
+only the commit object name (or the branch name for that matter, as
+you wouldn't know what exact commit the branch tip happens to have)
+you are rebasing onto.
