@@ -1,163 +1,109 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 3/4] mergetool--lib: Add functions for finding
- available tools
-Date: Tue, 29 Jan 2013 19:48:47 +0000
-Message-ID: <20130129194846.GD1342@serenity.lan>
-References: <1359334346-5879-1-git-send-email-davvid@gmail.com>
- <1359334346-5879-2-git-send-email-davvid@gmail.com>
- <1359334346-5879-3-git-send-email-davvid@gmail.com>
- <1359334346-5879-4-git-send-email-davvid@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
+Date: Tue, 29 Jan 2013 11:53:19 -0800
+Message-ID: <7vvcafojf4.fsf@alter.siamese.dyndns.org>
+References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 20:49:18 2013
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: git@vger.kernel.org, Krzysztof Mazur <krzysiek@podlesie.net>,
+	Michal Nazarewicz <mina86@mina86.com>
+To: Michal Nazarewicz <mpn@google.com>
+X-From: git-owner@vger.kernel.org Tue Jan 29 20:53:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0HBF-0005iQ-BD
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 20:49:17 +0100
+	id 1U0HFY-0007c4-2S
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 20:53:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753302Ab3A2Tsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 14:48:55 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:49309 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750913Ab3A2Tsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 14:48:54 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id F093660656C;
-	Tue, 29 Jan 2013 19:48:53 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yEAEHJ9mb0Vd; Tue, 29 Jan 2013 19:48:53 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 4F449606598;
-	Tue, 29 Jan 2013 19:48:48 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <1359334346-5879-4-git-send-email-davvid@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754398Ab3A2TxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 14:53:24 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39019 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754308Ab3A2TxW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 14:53:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE878CE4F;
+	Tue, 29 Jan 2013 14:53:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3MsgRl8sa2ehIgkWhgIVkLFgY/0=; b=f0UcN/
+	ultUDERIZYbpIhieHbSzcp8p+3Yjyotv2FT/ro4TY0pxkP5IoR0RbaE/HtgEJL3S
+	P0BeBXZVhDKolzBOtUw2IKaN3WrwLMDyWt4U57m55+1U7XWrnS0OOC/+x+KGNfNL
+	SgT8hhrCbbDV3BOlIn2sDN2ietE1rOrFkcUug=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t+D31c7j68h9FYm2JoivWIMwkreKIuk5
+	TmK417I219kXhWSFUOBQi/ciT4w8GtyqKtKLE3ka5Jw94hGlMm1O0DiOTTS1LUns
+	yRlxBkNMJmFVPGKgQkY8fzvtZZsS2cXcWp1yqEtLYuAl2idskcOYdwaivNi36Afp
+	del+QehxDus=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2739CE4E;
+	Tue, 29 Jan 2013 14:53:21 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 03D1ACE4A; Tue, 29 Jan 2013
+ 14:53:20 -0500 (EST)
+In-Reply-To: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
+ (Michal Nazarewicz's message of "Tue, 29 Jan 2013 20:13:40 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8888FD82-6A4D-11E2-B91D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214965>
 
-On Sun, Jan 27, 2013 at 04:52:25PM -0800, David Aguilar wrote:
-> --- a/git-mergetool--lib.sh
-> +++ b/git-mergetool--lib.sh
-> @@ -2,6 +2,35 @@
->  # git-mergetool--lib is a library for common merge tool functions
->  MERGE_TOOLS_DIR=$(git --exec-path)/mergetools
->  
-> +mode_ok () {
-> +	diff_mode && can_diff ||
-> +	merge_mode && can_merge
-> +}
-> +
-> +is_available () {
-> +	merge_tool_path=$(translate_merge_tool_path "$1") &&
-> +	type "$merge_tool_path" >/dev/null 2>&1
-> +}
-> +
-> +show_tool_names () {
-> +	condition=${1:-true} per_line_prefix=${2:-} preamble=${3:-}
-> +
-> +	( cd "$MERGE_TOOLS_DIR" && ls -1 * ) |
+Michal Nazarewicz <mpn@google.com> writes:
 
-Is the '*' necessary here?  I would expect ls to list the current
-directory if given no arguments, but perhaps some platforms behave
-differently?
+> From: Michal Nazarewicz <mina86@mina86.com>
+>
+> Make git-send-email read password from a ~/.authinfo file instead of
+> requiring it to be stored in git configuration, passed as command line
+> argument or typed in.
 
-> +	while read toolname
-> +	do
-> +		if setup_tool "$toolname" 2>/dev/null &&
-> +			(eval "$condition" "$toolname")
-> +		then
-> +			if test -n "$preamble"
-> +			then
-> +				echo "$preamble"
-> +				preamble=
-> +			fi
-> +			printf "%s%s\n" "$per_line_prefix" "$tool"
-> +		fi
-> +	done
-> +}
-> +
->  diff_mode() {
->  	test "$TOOL_MODE" = diff
->  }
-> @@ -199,35 +228,21 @@ list_merge_tool_candidates () {
->  }
->  
->  show_tool_help () {
-> -	unavailable= available= LF='
-> -'
-> -	for i in "$MERGE_TOOLS_DIR"/*
-> -	do
-> -		tool=$(basename "$i")
-> -		setup_tool "$tool" 2>/dev/null || continue
-> -
-> -		merge_tool_path=$(translate_merge_tool_path "$tool")
-> -		if type "$merge_tool_path" >/dev/null 2>&1
-> -		then
-> -			available="$available$tool$LF"
-> -		else
-> -			unavailable="$unavailable$tool$LF"
-> -		fi
-> -	done
-> -
-> -	cmd_name=${TOOL_MODE}tool
-> +	tool_opt="'git ${TOOL_MODE}tool --tool-<tool>'"
-> +	available=$(show_tool_names 'mode_ok && is_available' '\t\t' \
-> +		"$tool_opt may be set to one of the following:")
-> +	unavailable=$(show_tool_names 'mode_ok && ! is_available' '\t\t' \
-> +		"The following tools are valid, but not currently available:")
->  	if test -n "$available"
->  	then
-> -		echo "'git $cmd_name --tool=<tool>' may be set to one of the following:"
-> -		echo "$available" | sort | sed -e 's/^/	/'
-> +		echo "$available"
->  	else
->  		echo "No suitable tool for 'git $cmd_name --tool=<tool>' found."
->  	fi
->  	if test -n "$unavailable"
->  	then
->  		echo
-> -		echo 'The following tools are valid, but not currently available:'
-> -		echo "$unavailable" | sort | sed -e 's/^/	/'
-> +		echo "$unavailable"
->  	fi
->  	if test -n "$unavailable$available"
->  	then
+Makes one wonder why .authinfo and not .netrc; 
 
-You haven't taken full advantage of the simplification Junio suggested
-in response to v1 here.  We can change the "unavailable" block to be:
+http://www.gnu.org/software/emacs/manual/html_node/auth/Help-for-users.html
 
-    show_tool_names 'mode_ok && ! is_available' "$TAB$TAB" \
-        "${LF}The following tools are valid, but not currently available:"
+phrases it amusingly:
 
-If you also add a "not_found_msg" parameter to show_tool_names then the
-"available" case is also simplified:
+        “Netrc” files are usually called .authinfo or .netr
+        nowadays .authinfo seems to be more popular and the
+        auth-source library encourages this confusion by accepting
+        both
 
-    show_tool_names 'mode_ok && is_available' "$TAB$TAB" \
-        "$tool_opt may be set to one of the following:" \
-        "No suitable tool for 'git $cmd_name --tool=<tool>' found."
+Either way it still encourages a plaintext password to be on disk,
+which may not be what we want, even though it may be slight if not
+really much of an improvement.  Again the Help-for-users has this
+amusing bit:
 
-with this at the end of show_tool_names:
+	You could just say (but we don't recommend it, we're just
+	showing that it's possible)
 
-    test -n "$preamble" && test -n "$not_found_msg" && \
-        echo "$not_found_msg"
+	     password mypassword
 
+	to use the same password everywhere. Again, DO NOT DO THIS
+	or you will be pwned as the kids say.
 
-John
+> +The '~/.authinfo' file is read if Text::CSV Perl module is installed
+> +on the system; if it's missing, a notification message will be printed
+> +and the file ignored altogether.  The file should contain a line with
+> +the following format:
+> ++
+> +  machine <domain> port <port> login <user> password <pass>
+
+It is rather strange to require a comma-separated-values parser to
+read a file format this simple, isn't it?
+
+> ++
+> +Contrary to other tools, 'git-send-email' does not support symbolic
+> +port names like 'imap' thus `<port>` must be a number.
+
+Perhaps you can convert at least some popular ones yourself?  After
+all, the user may be using an _existing_ .authinfo/.netrc that she
+has been using with other programs that do understand symbolic port
+names.  Rather than forcing all such users to update their files,
+the patch can work a bit harder for them and the world will be a
+better place, no?
