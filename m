@@ -1,70 +1,67 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] README: fix broken mailing list archive link
-Date: Tue, 29 Jan 2013 16:10:39 +0530
-Message-ID: <1359456039-20562-1-git-send-email-artagnon@gmail.com>
+Subject: [PATCH] gitk-git/.gitignore: add rule for gitk-wish
+Date: Tue, 29 Jan 2013 16:22:30 +0530
+Message-ID: <1359456750-29342-1-git-send-email-artagnon@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 29 11:40:07 2013
+X-From: git-owner@vger.kernel.org Tue Jan 29 11:51:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U08bm-0007uE-O7
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 11:40:07 +0100
+	id 1U08nE-0004WC-7q
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jan 2013 11:51:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754265Ab3A2Kjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 05:39:44 -0500
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:64060 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752131Ab3A2Kjn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 05:39:43 -0500
-Received: by mail-pa0-f42.google.com with SMTP id rl6so321235pac.29
-        for <git@vger.kernel.org>; Tue, 29 Jan 2013 02:39:43 -0800 (PST)
+	id S1752143Ab3A2Kvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 05:51:35 -0500
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:42490 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751741Ab3A2Kvd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 05:51:33 -0500
+Received: by mail-pb0-f50.google.com with SMTP id ro8so211817pbb.9
+        for <git@vger.kernel.org>; Tue, 29 Jan 2013 02:51:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:subject:date:message-id:x-mailer;
-        bh=EBlPvn1teqzJdSCAlVLCVNJyhU6E4TObX5XgKQcFqYU=;
-        b=obhPNSTd1ewkvgwmSn5mpabv1WXmqNhhbcGczc2VxPCSASnyJyjSQd/7RJjavHG3Tr
-         YDsWs8uTouL00KluB/GfFe0lzZPfE8VOwibifQx/2Lc8HS+ymnvYmAhH76N+VpcWqSj6
-         HAuUolmGWo4Fb6h5sfHUe03dN2KW0UKaOBO1a8xJ8pqHmDRkynw+mLfyPfyJ61GeqWY5
-         L7fuvNWxmflJ/9qfnaBfoS1m9h0cNyo+Au8Uno+zpYhiHND7DoZEfH/yumqPQ0YhI1ra
-         ZBnFM4J3RS5wP2Lzl6fgrd0nuw/JzuHHLHLTN8St1hEaszLIkZyOzbfQXRsG9qOZuY0p
-         Rh/A==
-X-Received: by 10.66.76.37 with SMTP id h5mr1563873paw.33.1359455983034;
-        Tue, 29 Jan 2013 02:39:43 -0800 (PST)
+        bh=mh3AabNVRRevX0+7SQzwLjcnqip7tTuVuRFvYE78BV8=;
+        b=G3vh4NraklzmX1anUyqRmbcQhBOpVJy2Qj359ZHJo/deibXVl0zkueBQ4AtpBKiUv3
+         gP+g0CnAdoIaOlj6raefPUd4VexocNsMS0Ww9RV2JgrLoSV8l3jAxx0X4+a/4zv1ekra
+         h9kCm0irR6uR5/ErddEDwcBDHKaoW5O16nLNy+n5pu7FVtG16nwoOHkArrHW40+Az04d
+         iMDAgnLyJGYxzbWY5WKj95Q/N8zmHUFDXurfGWGt3p2W+5Yot4HVWv7vmyRTG86WUf5s
+         DJUOQoyDGsH4fzoJTJmwOH2S8cokMUFaTL0E1NOMlPmkGGkeBszLXXwwiJ7GXGJKpDGj
+         TSsA==
+X-Received: by 10.68.132.232 with SMTP id ox8mr1318609pbb.46.1359456693287;
+        Tue, 29 Jan 2013 02:51:33 -0800 (PST)
 Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPS id kl3sm8184776pbc.15.2013.01.29.02.39.40
+        by mx.google.com with ESMTPS id q4sm8709099paz.20.2013.01.29.02.51.31
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 29 Jan 2013 02:39:42 -0800 (PST)
+        Tue, 29 Jan 2013 02:51:32 -0800 (PST)
 X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214926>
 
-marc.theaimsgroup.com does not exist anymore, so replace it
-with a link to the archive on GMane.
+8f26aa4 (Makefile: remove tracking of TCLTK_PATH, 2012-12-18) removed
+"/gitk-git/gitk-wish" from the toplevel .gitignore, with the intent of
+moving it to gitk-git/.gitignore in a later patch.  This was never
+realized.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- README |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Minor patch, so I didn't bother sending it through Paul.
 
-diff --git a/README b/README
-index 49713ea..3aae16a 100644
---- a/README
-+++ b/README
-@@ -47,8 +47,8 @@ requests, comments and patches to git@vger.kernel.org (read
- Documentation/SubmittingPatches for instructions on patch submission).
- To subscribe to the list, send an email with just "subscribe git" in
- the body to majordomo@vger.kernel.org. The mailing list archives are
--available at http://marc.theaimsgroup.com/?l=git and other archival
--sites.
-+available at http://thread.gmane.org/gmane.comp.version-control.git/
-+and other archival sites.
- 
- The messages titled "A note from the maintainer", "What's in
- git.git (stable)" and "What's cooking in git.git (topics)" and
+ gitk-git/.gitignore |    1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 gitk-git/.gitignore
+
+diff --git a/gitk-git/.gitignore b/gitk-git/.gitignore
+new file mode 100644
+index 0000000..1dc38be
+--- /dev/null
++++ b/gitk-git/.gitignore
+@@ -0,0 +1 @@
++/gitk-wish
 -- 
 1.7.10.4
