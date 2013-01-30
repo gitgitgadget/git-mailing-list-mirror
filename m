@@ -1,84 +1,160 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH/RFC 0/6] commit caching
-Date: Wed, 30 Jan 2013 15:32:44 +0700
-Message-ID: <CACsJy8BEyha1QdQmRH9o-h_3JLPmMemoc4ucSaQ_nrOMzQ64AQ@mail.gmail.com>
-References: <20130129091434.GA6975@sigill.intra.peff.net> <CACsJy8BE3LdxbZzdQXuvEJop23KnnLbCTgPos9CywKV7EY2q9g@mail.gmail.com>
- <20130130071839.GF11147@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC/PATCH v2] CodingGuidelines: add Python coding guidelines
+Date: Wed, 30 Jan 2013 11:05:10 +0100
+Message-ID: <5108F056.9040406@alum.mit.edu>
+References: <20130129190844.GB1342@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 30 09:33:38 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jan 30 11:12:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0T6u-0007eg-VC
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 09:33:37 +0100
+	id 1U0Uek-0000X6-Hr
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 11:12:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751766Ab3A3IdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 03:33:15 -0500
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:44301 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751382Ab3A3IdO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 03:33:14 -0500
-Received: by mail-ob0-f181.google.com with SMTP id ni5so1344592obc.26
-        for <git@vger.kernel.org>; Wed, 30 Jan 2013 00:33:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=UzsIjeSbDfK8Sai1yHeu8YKWKabE0C3489WpZQzx8kg=;
-        b=Ete5F0ERgri0MMfU0TTKQgN8MXz2J1m8H9MaGCmgVSD7oJnKiHQaHuIBBB093tnoBm
-         eSQKoY9DSirQj7nO8X13kIBISYfbUfncGKwMO68f2zjMWCFxPfR4n/v4xyocHMnVae1+
-         o/J/LyMPYK5giZOrP/DeEr3jXo1rIPhlwrjyMoGBPiqdM7ngLHUAT1WoArukAkNpeVSN
-         gOKYa4sFqnPZTU8wz5H2Weo7Fr7D4Vko6/ufNf6Ys52AQ0FaGA8W15CBPW/LvOIJB8qj
-         vQbmWDuAfjUWTrdmMBOdo2E1eJxP3oXYMlB5GeXNCtNm8yxWCPwph6vjgdgtYUaMB1a5
-         6GRQ==
-X-Received: by 10.60.22.164 with SMTP id e4mr2978992oef.87.1359534794055; Wed,
- 30 Jan 2013 00:33:14 -0800 (PST)
-Received: by 10.182.118.229 with HTTP; Wed, 30 Jan 2013 00:32:44 -0800 (PST)
-In-Reply-To: <20130130071839.GF11147@sigill.intra.peff.net>
+	id S1754357Ab3A3KMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 05:12:17 -0500
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:48273 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753970Ab3A3KMP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Jan 2013 05:12:15 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Jan 2013 05:12:14 EST
+X-AuditID: 12074412-b7f216d0000008e3-98-5108f059a9db
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 16.64.02275.950F8015; Wed, 30 Jan 2013 05:05:13 -0500 (EST)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0UA5AML000950
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 30 Jan 2013 05:05:12 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+In-Reply-To: <20130129190844.GB1342@serenity.lan>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqBv5gSPQoGc5q0XXlW4mixvnd7E6
+	MHmcffSA2ePzJrkApihum6TEkrLgzPQ8fbsE7oy2F/dYC97IVnRsPM3UwLhNvIuRk0NCwETi
+	0MY3LBC2mMSFe+vZuhi5OIQELjNKnDv2Fso5ziRx+M9uZpAqXgFtid1XbrGC2CwCqhLzvvxg
+	A7HZBHQlFvU0M4HYogJhEr2vzzFC1AtKnJz5BGyDCFD9tE832LsYOTiYBcQl+v+BhYUFvCSu
+	rJwLNkZIwECi4+9NMJtTwFBi+41DYKuYBXQk3vU9YIaw5SW2v53DPIFRYBaSDbOQlM1CUraA
+	kXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6ZXm5miV5qSukmRkigCu1gXH9S7hCjAAejEg/v
+	0hfsgUKsiWXFlbmHGCU5mJREebe+4QgU4kvKT6nMSCzOiC8qzUktPsQowcGsJMKroAaU401J
+	rKxKLcqHSUlzsCiJ8/5crO4nJJCeWJKanZpakFoEk5Xh4FCS4F3zDqhRsCg1PbUiLTOnBCHN
+	xMEJMpxLSqQ4NS8ltSixtCQjHhSp8cXAWAVJ8QDtlX0Psre4IDEXKArReorRmGP/k/bnjBzb
+	fwNJIZa8/LxUKXHeTyCbBEBKM0rz4BbBUtQrRnGgv4V5tUEG8gDTG9y8V0CrmIBWGbWxg6wq
+	SURISTUw7hJicprd2S0/W9GnyM24/BNDvMfO5oReqS19TzSkJv87/8YjMCly3f7zV8t/9526
+	0BDKb9fhuE6hxm+Rf1n+A894753nq6QUjjG3M+UtmRc+T32x5CreuqpLXpeP2iaF 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215007>
 
-On Wed, Jan 30, 2013 at 2:18 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Jan 30, 2013 at 10:31:43AM +0700, Nguyen Thai Ngoc Duy wrote:
->
->> On Tue, Jan 29, 2013 at 4:14 PM, Jeff King <peff@peff.net> wrote:
->> > The timings from this one are roughly similar to what I posted earlier.
->> > Unlike the earlier version, this one keeps the data for a single commit
->> > together for better cache locality (though I don't think it made a big
->> > difference in my tests, since my cold-cache timing test ends up touching
->> > every commit anyway).  The short of it is that for an extra 31M of disk
->> > space (~4%), I get a warm-cache speedup for "git rev-list --all" of
->> > ~4.2s to ~0.66s.
->>
->> Some data point on caching 1-parent vs 2-parent commits on webkit
->> repo, 26k commits. With your changes (caching 2-parent commits), the
->> .commits file takes 2241600 bytes. "rev-list --all --quiet":
->
-> Hmm. My webkit repo has zero merges in it (though it is the older
-> svn-based one). What percentage of the one you have are merges? How does
-> your 1-parent cache perform on something like git.git, where about 25%
-> of all commits are merges?
+On 01/29/2013 08:08 PM, John Keeping wrote:
+> These are kept short by simply deferring to PEP-8.  Most of the Python
+> code in Git is already very close to this style (some things in contrib/
+> are not).
+> 
+> Rationale for version suggestions:
+> 
+>  - Amongst the noise in [1], there isn't any disagreement about using
+>    2.6 as a base (see also [2]), although Brandon Casey recently added
+>    support for 2.4 and 2.5 to git-p4 [3].
+> 
+>  - Restricting ourselves to 2.6+ makes aiming for Python 3 compatibility
+>    significantly easier [4].
+> 
+>  - Advocating Python 3 support in all scripts is currently unrealistic
+>    because:
+> 
+>      - 'p4 -G' provides output in a format that is very hard to use with
+>        Python 3 (and its documentation claims Python 3 is unsupported).
+> 
+>      - Mercurial does not support Python 3.
+> 
+>      - Bazaar does not support Python 3.
+> 
+>  - But we should try to make new scripts compatible with Python 3
+>    because all new Python development is happening on version 3 and the
+>    Python community will eventually stop supporting Python 2 [5].
+> 
+>  - Python 3.1 is required to support the 'surrogateescape' error handler
+>    for encoding/decodng filenames to/from Unicode strings and Python 3.0
+>    is not longer supported.
+> 
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/210329
+> [2] http://article.gmane.org/gmane.comp.version-control.git/210429
+> [3] http://thread.gmane.org/gmane.comp.version-control.git/214579
+> [4] http://docs.python.org/3.3/howto/pyporting.html#try-to-support-python-2-6-and-newer-only
+> [5] http://www.python.org/dev/peps/pep-0404/
+> 
+> ---
+> Changes since v1:
+> 
+> - Set 3.1 as the minimum Python 3 version
+> 
+> - Remove the section on Unicode literals - it just adds confusion and
+>   doesn't apply to the current code; we can deal with any issues if they
+>   ever arise.
+> 
+>  Documentation/CodingGuidelines | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index 69f7e9b..db7a416 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -179,6 +179,19 @@ For C programs:
+>   - Use Git's gettext wrappers to make the user interface
+>     translatable. See "Marking strings for translation" in po/README.
+>  
+> +For Python scripts:
+> +
+> + - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
+> +
+> + - As a minimum, we aim to be compatible with Python 2.6 and 2.7.
+> +
+> + - Where required libraries do not restrict us to Python 2, we try to
+> +   also be compatible with Python 3.1 and later.
+> +
+> + - We use the 'b' prefix for bytes literals.  Note that even though
+> +   the Python documentation for version 2.6 does not mention this
+> +   prefix it is supported since version 2.6.0.
+> +
+>  Writing Documentation:
+>  
+>   Every user-visible change should be reflected in the documentation.
+> 
 
-git.git performs worse with 1-parent cache. But the point is it should
-be customizable.
+Nit: s/it is supported/it has been supported/
 
->> The performance loss in 1-parent case is not significant while disk
->> saving is (although it'll be less impressive after you do Shawn's
->> suggestion not storing SHA-1 directly)
->
-> Yeah, I think moving to offsets instead of sha1s is going to be a big
-> enough win that it won't matter anymore.
+I think this would be a good Python policy.
 
-Yeah, if we use uint32_t instead of sha-1, the cache is just about
-400k 2 parents for webkit, 312k for 1 parent. The total size is so
-small that reduction does not really matter anymore.
+I would hate to junk up all Python code with things like
+
+    ' '.encode('ascii')
+
+though, so maybe we should establish a small Python library of
+compatibility utilities (like a small "six").  It could contain b().
+
+Another handy utility function could be
+
+    def check_python_version(minimum_v2=0x02060000,
+                             minimum_v3=0x03010000)
+
+which checks our default Python requirements by default, but is
+overrideable by specific scripts if they know that they can deal with
+older Python versions.
+
+But I haven't had time to think of where to put such a library, how to
+install it, etc.
+
+Michael
+
 -- 
-Duy
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
