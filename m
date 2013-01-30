@@ -1,165 +1,167 @@
-From: Chris Hiestand <chiestand@salk.edu>
-Subject: Re: [RFC v2] git-multimail: a replacement for post-receive-email
-Date: Tue, 29 Jan 2013 18:27:17 -0800
-Message-ID: <4D9815B7-983E-4963-875D-DB0059FFD811@salk.edu>
-References: <5104E738.602@alum.mit.edu> <CACBZZX7RA7dLcFhaHmmK97Kxfa9zLmozfdx5s9C=29DJOceq-A@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_1089C14D-27CC-4613-9EE5-88B7159B5F65"; protocol="application/pkcs7-signature"; micalg=sha1
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>,
-	Andy Parkins <andyparkins@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <mbranchaud@xiplink.com>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 03:27:43 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/4] mergetool--lib: Add functions for finding
+ available tools
+Date: Tue, 29 Jan 2013 19:08:56 -0800
+Message-ID: <7vwquvmkon.fsf@alter.siamese.dyndns.org>
+References: <1359334346-5879-1-git-send-email-davvid@gmail.com>
+ <1359334346-5879-2-git-send-email-davvid@gmail.com>
+ <1359334346-5879-3-git-send-email-davvid@gmail.com>
+ <1359334346-5879-4-git-send-email-davvid@gmail.com>
+ <20130129194846.GD1342@serenity.lan>
+ <7vr4l3oi1z.fsf@alter.siamese.dyndns.org>
+ <CAJDDKr4e=pg=YJ4CfUk7guUCcikBtXTveVX9j6CV5NtGvPB=9Q@mail.gmail.com>
+ <7va9rroazl.fsf@alter.siamese.dyndns.org>
+ <20130129230607.GG1342@serenity.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jan 30 04:09:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0NOn-0001BG-43
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 03:27:41 +0100
+	id 1U0O3E-0000UA-QL
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 04:09:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752937Ab3A3C1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 21:27:19 -0500
-Received: from riis.snl.salk.edu ([198.202.70.55]:51421 "EHLO
-	riis.snl.salk.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752361Ab3A3C1S (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 21:27:18 -0500
-Received: from cerberus.dhcp.snl.salk.edu (Cerberus.dhcp.snl.salk.edu [198.202.70.246])
-	(Authenticated sender: chiestand)
-	by riis.snl.salk.edu (Postfix) with ESMTPSA id 0956EEE004;
-	Tue, 29 Jan 2013 18:27:18 -0800 (PST)
-In-Reply-To: <CACBZZX7RA7dLcFhaHmmK97Kxfa9zLmozfdx5s9C=29DJOceq-A@mail.gmail.com>
-X-Mailer: Apple Mail (2.1499)
+	id S1752303Ab3A3DJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 22:09:01 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61991 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751626Ab3A3DI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 22:08:59 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A9A7B761;
+	Tue, 29 Jan 2013 22:08:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QUDdSGLX7trfIxcHZqXutQQ0uiY=; b=CH2HeJ
+	+lwmIQKNZMYjafYqLckyPod7CXf4axC059pY8k96yK+g5u55uN4lY7evkcC77gIN
+	T2asGY8AEtSDBGq8QRzJMJmyHwv0d2ZdQrVzmmZFYelGLNXE8EYJBKfEQeCSMcT4
+	epfR4fCuHIIaHzKsddm8tID+RiMZlEYNtPs5M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FgRH7UNMnCVE0eBlKTNVxHYFu3cmQUhk
+	5FBvweTTGX7x1+BFcBOjlRiqH7RNDbc8g25+/3RMsNYR+b7impXWfONZ1JqWjRdt
+	9aT2TRjeoLuKkVcElxy3H8NTN6mKRlyGgK9N+mZte01u6SAiDbbBsBd4ohwgwObk
+	soJS0Wp5/vU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F40B4B760;
+	Tue, 29 Jan 2013 22:08:58 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 20A50B75D; Tue, 29 Jan 2013
+ 22:08:58 -0500 (EST)
+In-Reply-To: <20130129230607.GG1342@serenity.lan> (John Keeping's message of
+ "Tue, 29 Jan 2013 23:06:08 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 637891E6-6A8A-11E2-B2C1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214988>
 
+John Keeping <john@keeping.me.uk> writes:
 
---Apple-Mail=_1089C14D-27CC-4613-9EE5-88B7159B5F65
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=iso-8859-1
+> On Tue, Jan 29, 2013 at 02:55:26PM -0800, Junio C Hamano wrote:
+> ...
+>> I can work with John to get this part into a shape to support his
+>> extended use sometime toward the end of this week, by which time
+>> hopefully you have some time to comment on the result.  John, how
+>> does that sound?
+>
+> My email crossed with yours - that sounds good to me.  If
+> da/mergetool-docs is in a reasonable state by tomorrow evening (GMT) I
+> should be able to have a look at it then - if not I'm happy to hold off
+> longer.
 
-On Jan 29, 2013, at 7:25 AM, =C6var Arnfj=F6r=F0 Bjarmason =
-<avarab@gmail.com> wrote:
+Heh, I actually was hoping that you will send in a replacement for
+David's patch ;-)
 
-> On Sun, Jan 27, 2013 at 9:37 AM, Michael Haggerty =
-<mhagger@alum.mit.edu> wrote:
->> A while ago, I submitted an RFC for adding a new email notification
->> script to "contrib" [1].  The reaction seemed favorable and it was
->> suggested that the new script should replace post-receive-email =
-rather
->> than be added separately, ideally with some kind of migration =
-support.
->=20
-> I just want to say since I think this thread hasn't been getting the
-> attention it deserves: I'm all for this. I've used git-multimail and
-> it's a joy to configure and extend compared to the existing hacky
-> shellscript.
+Here is what I will squash into the one we have been discussing.  In
+a few hours, I expect I'll be able to push this out in the 'pu'
+branch.
 
+-- >8 --
+From: Junio C Hamano <gitster@pobox.com>
+Date: Tue, 29 Jan 2013 18:57:55 -0800
+Subject: [PATCH] [SQUASH] mergetools: tweak show_tool_names and its users
 
-This seems good to me as long as it's okay for git contrib to depend on =
-python.
-I've started testing git-multimail in my environment.
+Use show_tool_names as a function to produce output, not as a
+function to compute a string.  Indicate if any output was given
+with its return status, so that the caller can say "if it didn't
+give any output, I'll say this instead" easily.
 
+To be squashed into the previous; no need to keep this log message.
+---
+ git-mergetool--lib.sh | 30 +++++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
---Apple-Mail=_1089C14D-27CC-4613-9EE5-88B7159B5F65
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIO1TCCBIow
-ggNyoAMCAQICECf06hH0eobEbp27bqkXBwcwDQYJKoZIhvcNAQEFBQAwbzELMAkGA1UEBhMCU0Ux
-FDASBgNVBAoTC0FkZFRydXN0IEFCMSYwJAYDVQQLEx1BZGRUcnVzdCBFeHRlcm5hbCBUVFAgTmV0
-d29yazEiMCAGA1UEAxMZQWRkVHJ1c3QgRXh0ZXJuYWwgQ0EgUm9vdDAeFw0wNTA2MDcwODA5MTBa
-Fw0yMDA1MzAxMDQ4MzhaMIGuMQswCQYDVQQGEwJVUzELMAkGA1UECBMCVVQxFzAVBgNVBAcTDlNh
-bHQgTGFrZSBDaXR5MR4wHAYDVQQKExVUaGUgVVNFUlRSVVNUIE5ldHdvcmsxITAfBgNVBAsTGGh0
-dHA6Ly93d3cudXNlcnRydXN0LmNvbTE2MDQGA1UEAxMtVVROLVVTRVJGaXJzdC1DbGllbnQgQXV0
-aGVudGljYXRpb24gYW5kIEVtYWlsMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsjmF
-pPJ9q0E7YkY3rs3BYHW8OWX5ShpHornMSMxqmNVNNRm5pELlzkniii8efNIxB8dOtINknS4p1aJk
-xIW9hVE1eaROaJB7HHqkkqgX8pgV8pPMyaQylbsMTzC9mKALi+VuG6JG+ni8om+rWV6lL8/K2m2q
-L+usobNqqrcuZzWLeeEeaYji5kbNoKXqvgvOdjp6Dpvq/NonWz1zHyLmSGHGTPNpsaguG7bUMSAs
-vIKKjqQOpdeJQ/wWWq8dcdcRWdq6hw2v+vPhwvCkxWeM1tZUOt4KpLoDd7NlyP0e03RiqhjKaJMe
-oYV+9Udly/hNVyh00jT/MLbu9mIwFIws6wIDAQABo4HhMIHeMB8GA1UdIwQYMBaAFK29mHo0tCb3
-+sQmVO8DveAky1QaMB0GA1UdDgQWBBSJgmd9xJ0mcABLtFBIfN49rgRufTAOBgNVHQ8BAf8EBAMC
-AQYwDwYDVR0TAQH/BAUwAwEB/zB7BgNVHR8EdDByMDigNqA0hjJodHRwOi8vY3JsLmNvbW9kb2Nh
-LmNvbS9BZGRUcnVzdEV4dGVybmFsQ0FSb290LmNybDA2oDSgMoYwaHR0cDovL2NybC5jb21vZG8u
-bmV0L0FkZFRydXN0RXh0ZXJuYWxDQVJvb3QuY3JsMA0GCSqGSIb3DQEBBQUAA4IBAQAZ2IkRbyis
-pgCi54fBm5AD236hEv0e8+LwAamUVEJrmgnEoG3XkJIEA2Z5Q3H8+G+v23ZF4jcaPd3kWQR4rBz0
-g0bzes9bhHIt5UbBuhgRKfPLSXmHPLptBZ2kbWhPrXIUNqi5sf2/z3/wpGqUNVCPz4FtVbHdWTBK
-322gnGQfSXzvNrv042n0+DmPWq1LhTq3Du3Tzw1EovsEv+QvcI4l+1pUBrPQxLxtjftzMizpm4Qk
-LdZ/kXpoAlAfDj9N6cz1u2fo3BwuO/xOzf4CjuOoEwqlJkRl6RDyTVKnrtw+ymsyXEFs/vVdoOr/
-0fqbhlhtPZZH5f4ulQTCAMyOofK7MIIFGjCCBAKgAwIBAgIQbRnqpxlPajMi5iIyeqpx3jANBgkq
-hkiG9w0BAQUFADCBrjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAlVUMRcwFQYDVQQHEw5TYWx0IExh
-a2UgQ2l0eTEeMBwGA1UEChMVVGhlIFVTRVJUUlVTVCBOZXR3b3JrMSEwHwYDVQQLExhodHRwOi8v
-d3d3LnVzZXJ0cnVzdC5jb20xNjA0BgNVBAMTLVVUTi1VU0VSRmlyc3QtQ2xpZW50IEF1dGhlbnRp
-Y2F0aW9uIGFuZCBFbWFpbDAeFw0xMTA0MjgwMDAwMDBaFw0yMDA1MzAxMDQ4MzhaMIGTMQswCQYD
-VQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRow
-GAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAkoSEW0tXmNReL4uk4UDIo1NYX2Zl8TJO958yfVXQeExVt0KU4PkncQfFxmmkuTLE8UAakMwn
-VmJ/F7Vxaa7lIBvky2NeYMqiQfZq4aP/uN8fSG1lQ4wqLitjOHffsReswtqCAtbUMmrUZ28gE49c
-NfrlVICv2HEKHTcKAlBTbJUdqRAUtJmVWRIx/wmi0kzcUtve4kABW0ho3cVKtODtJB86r3FfB+Os
-vxQ7sCVxaD30D9YXWEYVgTxoi4uDD216IVfmNLDbMn7jSuGlUnJkJpFOpZIP/+CxYP0ab2hRmWON
-GoulzEKbm30iY9OpoPzOnpDfRBn0XFs1uhbzp5v/wQIDAQABo4IBSzCCAUcwHwYDVR0jBBgwFoAU
-iYJnfcSdJnAAS7RQSHzePa4Ebn0wHQYDVR0OBBYEFHoTTgB0W8Z4Y2QnwS/ioFu8ecV7MA4GA1Ud
-DwEB/wQEAwIBBjASBgNVHRMBAf8ECDAGAQH/AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBYBgNVHR8E
-UTBPME2gS6BJhkdodHRwOi8vY3JsLnVzZXJ0cnVzdC5jb20vVVROLVVTRVJGaXJzdC1DbGllbnRB
-dXRoZW50aWNhdGlvbmFuZEVtYWlsLmNybDB0BggrBgEFBQcBAQRoMGYwPQYIKwYBBQUHMAKGMWh0
-dHA6Ly9jcnQudXNlcnRydXN0LmNvbS9VVE5BZGRUcnVzdENsaWVudF9DQS5jcnQwJQYIKwYBBQUH
-MAGGGWh0dHA6Ly9vY3NwLnVzZXJ0cnVzdC5jb20wDQYJKoZIhvcNAQEFBQADggEBAIXWvnhXVW0z
-f0RS/kLVBqgBA4CK+w2y/Uq/9q9BSfUbWsXSrRtzbj7pJnzmTJjBMCjfy/tCPKElPgp11tA9OYZm
-0aGbtU2bb68obB2v5ep0WqjascDxdXovnrqTecr+4pEeVnSy+I3T4ENyG+2P/WA5IEf7i686ZUg8
-mD2lJb+972DgSeUWyOs/Q4Pw4O4NwdPNM1+b0L1garM7/vrUyTo8H+2b/5tJM75CKTmD7jNpLoKd
-RU2oadqAGx490hpdfEeZpZsIbRKZhtZdVwcbpzC+S0lEuJB+ytF5OOu0M/qgOl0mWJ5hVRi0IdWZ
-1eBDQEIwvuql55TSsP7zdfl/bucwggUlMIIEDaADAgECAhAJi8lShk8jTNMgVo7nXaDGMA0GCSqG
-SIb3DQEBBQUAMIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAw
-DgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09N
-T0RPIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTEyMDgxNDAw
-MDAwMFoXDTEzMDgxNDIzNTk1OVowIzEhMB8GCSqGSIb3DQEJARYSY2hpZXN0YW5kQHNhbGsuZWR1
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtqz/Yy0csi37dTvyoNn8MNtPRvG2D7E3
-pwSsuXFnBML17AZU1wpAKsQpggGoznvsFQvvOzJyWRBWKdF0deds1xpFGhe7+/GzMhnQKwFDeVZs
-9hTXKWEERVVaBmyIbj0BP3D5VrUo/7eaybMALnxEjrteg9jyuFTSrGDc8qJ+c1Ps5vlH0v+Fvp4V
-HoI8bW/+auu4mNT1E0nzpm3eWCsF1Rif2FVDetoDaArW1uTJh+g6oV3d1eJeGiqRnc+k7Q+ShfHj
-wehOQT7dvYRE1CqArv69m2BBue+gHXQXWFgfaHx7/9mJapJG/ALpmqaHU8x9bMaBcZcIQHqEQV9E
-3yOWpQIDAQABo4IB4jCCAd4wHwYDVR0jBBgwFoAUehNOAHRbxnhjZCfBL+KgW7x5xXswHQYDVR0O
-BBYEFGOY5NfMgoO8duC6gWVGeskIkDbrMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMCAG
-A1UdJQQZMBcGCCsGAQUFBwMEBgsrBgEEAbIxAQMFAjARBglghkgBhvhCAQEEBAMCBSAwRgYDVR0g
-BD8wPTA7BgwrBgEEAbIxAQIBAQEwKzApBggrBgEFBQcCARYdaHR0cHM6Ly9zZWN1cmUuY29tb2Rv
-Lm5ldC9DUFMwVwYDVR0fBFAwTjBMoEqgSIZGaHR0cDovL2NybC5jb21vZG9jYS5jb20vQ09NT0RP
-Q2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNybDCBiAYIKwYBBQUHAQEEfDB6
-MFIGCCsGAQUFBzAChkZodHRwOi8vY3J0LmNvbW9kb2NhLmNvbS9DT01PRE9DbGllbnRBdXRoZW50
-aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3J0MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5jb21v
-ZG9jYS5jb20wHQYDVR0RBBYwFIESY2hpZXN0YW5kQHNhbGsuZWR1MA0GCSqGSIb3DQEBBQUAA4IB
-AQCHpk5ZpwS5faNtGTJxlHTy9hQm4NwJZhatrTz7xq23Q93RjLxwVn9tFG/YuPB1iN1aEA1DZWwP
-Xi5OMbYxEb4Icw7/QGbJGwdHn6IDkU6IR2UOx5RzQJ84Fl6jUKCvlnJ3/UbZuzYG3fCyqi5GhUk1
-PN4l/qwbxmsZKLwZep45lrbmea5XmqIO5NB4F02NLFYZWmEByKEi92aHLfgsvULq1CfNJMKIIYD2
-/AW96vDQmk/liJHld+gkQQkIlTTzZmOYbHKtkeN8B8kFkB5OmdUZJvWoDMDMLLHhPkfRBBYuS7WO
-jQY521z50tPATaS3yDZUYlcFyXjns8Wew/gv/XT5MYIDqzCCA6cCAQEwgagwgZMxCzAJBgNVBAYT
-AkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNV
-BAoTEUNPTU9ETyBDQSBMaW1pdGVkMTkwNwYDVQQDEzBDT01PRE8gQ2xpZW50IEF1dGhlbnRpY2F0
-aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEAmLyVKGTyNM0yBWjuddoMYwCQYFKw4DAhoFAKCCAdcw
-GAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTMwMTMwMDIyNzE4WjAj
-BgkqhkiG9w0BCQQxFgQU18y7dHgZRZGAVo7k3cZQL0RW1xgwgbkGCSsGAQQBgjcQBDGBqzCBqDCB
-kzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2Fs
-Zm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxOTA3BgNVBAMTMENPTU9ETyBDbGllbnQg
-QXV0aGVudGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIQCYvJUoZPI0zTIFaO512gxjCBuwYL
-KoZIhvcNAQkQAgsxgauggagwgZMxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNo
-ZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMTkwNwYD
-VQQDEzBDT01PRE8gQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEAmL
-yVKGTyNM0yBWjuddoMYwDQYJKoZIhvcNAQEBBQAEggEAnByhsCu0DPXsXUGQEq0jsySVEGOYrHVe
-WO57Y/OPyPGsd2WbfaH8ZwCg3gBit07APmY2g45SDIpguZ+JesPNreGOqcSl7ipF1AztTegQWaem
-xBjFdyOGfRfHFJOUsvr7aTxhXzG3aiOHHvku3/VrQblutS/4q/+n1k4uI4rZTbN/GCSQ8AEDR0IO
-+3qP8NMolWWdxR7UYMdesOrBxixtJogTln30COdozSP3KlHXyAtE98ysiDYPUIicFsmpMVPD011K
-FQJ5jXthSHkoKjkmOcFOZAmif7SP/Q0DhkCWSQzjAb4JAEdbGUGSV9RpM25s4QUXhZm+WotZqE8A
-9GbTQAAAAAAAAA==
-
---Apple-Mail=_1089C14D-27CC-4613-9EE5-88B7159B5F65--
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 135da96..79cbdc7 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -22,7 +22,7 @@ is_available () {
+ show_tool_names () {
+ 	condition=${1:-true} per_line_prefix=${2:-} preamble=${3:-}
+ 
+-	( cd "$MERGE_TOOLS_DIR" && ls -1 * ) |
++	( cd "$MERGE_TOOLS_DIR" && ls ) |
+ 	while read toolname
+ 	do
+ 		if setup_tool "$toolname" 2>/dev/null &&
+@@ -36,6 +36,7 @@ show_tool_names () {
+ 			printf "%s%s\n" "$per_line_prefix" "$tool"
+ 		fi
+ 	done
++	test -n "$preamble"
+ }
+ 
+ diff_mode() {
+@@ -236,27 +237,30 @@ list_merge_tool_candidates () {
+ 
+ show_tool_help () {
+ 	tool_opt="'git ${TOOL_MODE}tool --tool-<tool>'"
+-	available=$(show_tool_names 'mode_ok && is_available' '\t\t' \
+-		"$tool_opt may be set to one of the following:")
+-	unavailable=$(show_tool_names 'mode_ok && ! is_available' '\t\t' \
+-		"The following tools are valid, but not currently available:")
+-	if test -n "$available"
++
++	tab='	' av_shown= unav_shown=
++
++	if show_tool_names 'mode_ok && is_available' "$tab$tab" \
++		"$tool_opt may be set to one of the following:"
+ 	then
+-		echo "$available"
++		av_shown=yes
+ 	else
+ 		echo "No suitable tool for 'git $cmd_name --tool=<tool>' found."
++		av_shown=no
+ 	fi
+-	if test -n "$unavailable"
++
++	if show_tool_names 'mode_ok && ! is_available' "$tab$tab" \
++		"The following tools are valid, but not currently available:"
+ 	then
+-		echo
+-		echo "$unavailable"
++		unav_shown=yes
+ 	fi
+-	if test -n "$unavailable$available"
+-	then
++
++	case ",$av_shown,$unav_shown," in
++	*,yes,*)
+ 		echo
+ 		echo "Some of the tools listed above only work in a windowed"
+ 		echo "environment. If run in a terminal-only session, they will fail."
+-	fi
++	esac
+ 	exit 0
+ }
+ 
+-- 
+1.8.1.2.555.gedafe79
