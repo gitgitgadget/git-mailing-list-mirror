@@ -1,88 +1,131 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 1/3] fixup! mergetool--lib: add functions for finding
- available tools
-Date: Wed, 30 Jan 2013 20:34:39 +0000
-Message-ID: <20130130203439.GO1342@serenity.lan>
-References: <cover.1359575447.git.john@keeping.me.uk>
- <2c7dec096455e6e43d2e9aa28668f69a26f3d5f9.1359575447.git.john@keeping.me.uk>
- <7vk3quju7t.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 21:35:15 2013
+Subject: [PATCH v3] CodingGuidelines: add Python coding guidelines
+Date: Wed, 30 Jan 2013 20:47:32 +0000
+Message-ID: <5c15718db7bd34da2679c88ddabe3e63b0117ef2.1359578487.git.john@keeping.me.uk>
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 30 21:48:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0eNB-00062o-EE
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 21:35:09 +0100
+	id 1U0eZh-0003Bb-Q9
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 21:48:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754066Ab3A3Uer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 15:34:47 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:53723 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752123Ab3A3Ueq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 15:34:46 -0500
+	id S1756965Ab3A3Urn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 15:47:43 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:42300 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756957Ab3A3Urj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 15:47:39 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 0F5AD1980BE;
-	Wed, 30 Jan 2013 20:34:46 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+	by jackal.aluminati.org (Postfix) with ESMTP id 9A7BC8660E3;
+	Wed, 30 Jan 2013 20:47:38 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
 X-Spam-Flag: NO
-X-Spam-Score: -1
+X-Spam-Score: -12.9
 X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id D2GIoiTTfFtx; Wed, 30 Jan 2013 20:34:45 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bA++GC0TFxCk; Wed, 30 Jan 2013 20:47:38 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id 0DB388660E0;
+	Wed, 30 Jan 2013 20:47:38 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id F31F7161E2AE;
+	Wed, 30 Jan 2013 20:47:37 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id dJfx146GUp0Y; Wed, 30 Jan 2013 20:47:37 +0000 (GMT)
+Received: from river.lan (tg1.aluminati.org [10.0.16.53])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 88CD9198052;
-	Wed, 30 Jan 2013 20:34:41 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7vk3quju7t.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 61C74161E4E3;
+	Wed, 30 Jan 2013 20:47:32 +0000 (GMT)
+X-Mailer: git-send-email 1.8.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215074>
 
-On Wed, Jan 30, 2013 at 12:23:34PM -0800, Junio C Hamano wrote:
-> > diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> > index 25631cd..b6ed2fa 100644
-> > --- a/git-mergetool--lib.sh
-> > +++ b/git-mergetool--lib.sh
-> > @@ -34,9 +34,9 @@ show_tool_names () {
-> >  				then
-> >  					echo "$preamble"
-> >  					preamble=
-> > -					shown_any=yes
-> >  				fi
-> > -				printf "%s%s\n" "$per_line_prefix" "$tool"
-> > +				shown_any=yes
-> > +				printf "%s%s\n" "$per_line_prefix" "$toolname"
-> 
-> Thanks for spotting s/tool/toolname/; does the change to shown_any
-> matter, though?
+These are kept short by simply deferring to PEP-8.  Most of the Python
+code in Git is already very close to this style (some things in contrib/
+are not).
 
-Not really since we don't call it with an empty "$preamble" but if
-something ever did then this ensures that shown_any is set correctly.
+Rationale for version suggestions:
 
-The $tool -> $toolname doesn't really matter either since setup_tool
-sets it as a global variable, but I'd rather not rely on that.
+ - Amongst the noise in [1], there isn't any disagreement about using
+   2.6 as a base (see also [2]), although Brandon Casey recently added
+   support for 2.4 and 2.5 to git-p4 [3].
 
-> >  			fi
-> >  		done
-> >  		test -n "$shown_any"
-> > @@ -244,6 +244,7 @@ show_tool_help () {
-> >  
-> >  	tab='	' av_shown= unav_shown=
-> >  
-> > +	cmd_name=${TOOL_MODE}tool
-> >  	if show_tool_names 'mode_ok && is_available' "$tab$tab" \
-> >  		"$tool_opt may be set to one of the following:"
-> >  	then
+ - Restricting ourselves to 2.6+ makes aiming for Python 3 compatibility
+   significantly easier [4].
+
+ - Advocating Python 3 support in all scripts is currently unrealistic
+   because:
+
+     - 'p4 -G' provides output in a format that is very hard to use with
+       Python 3 (and its documentation claims Python 3 is unsupported).
+
+     - Mercurial does not support Python 3.
+
+     - Bazaar does not support Python 3.
+
+ - But we should try to make new scripts compatible with Python 3
+   because all new Python development is happening on version 3 and the
+   Python community will eventually stop supporting Python 2 [5].
+
+ - Python 3.1 is required to support the 'surrogateescape' error handler
+   for encoding/decodng filenames to/from Unicode strings and Python 3.0
+   is not longer supported.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/210329
+[2] http://article.gmane.org/gmane.comp.version-control.git/210429
+[3] http://thread.gmane.org/gmane.comp.version-control.git/214579
+[4] http://docs.python.org/3.3/howto/pyporting.html#try-to-support-python-2-6-and-newer-only
+[5] http://www.python.org/dev/peps/pep-0404/
+
+---
+Changes since v2:
+
+- Tone down discussion of the byte string prefix.
+
+- Change "is supported since" to "has been supported since".
+
+ Documentation/CodingGuidelines | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 69f7e9b..432c6cd 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -179,6 +179,20 @@ For C programs:
+  - Use Git's gettext wrappers to make the user interface
+    translatable. See "Marking strings for translation" in po/README.
+ 
++For Python scripts:
++
++ - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
++
++ - As a minimum, we aim to be compatible with Python 2.6 and 2.7.
++
++ - Where required libraries do not restrict us to Python 2, we try to
++   also be compatible with Python 3.1 and later.
++
++ - When you must differentiate between Unicode literals and byte string
++   literals, it is OK to use the 'b' prefix.  Even though the Python
++   documentation for version 2.6 does not mention this prefix, it has
++   been supported since version 2.6.0.
++
+ Writing Documentation:
+ 
+  Every user-visible change should be reflected in the documentation.
+-- 
+1.8.1.2.633.gbba9ccc
