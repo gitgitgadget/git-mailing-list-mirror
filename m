@@ -1,80 +1,71 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: What's cooking in git.git (Jan 2013, #11; Wed, 30)
-Date: Wed, 30 Jan 2013 19:19:52 +0000
-Message-ID: <20130130191952.GK1342@serenity.lan>
-References: <7vd2wmldw9.fsf@alter.siamese.dyndns.org>
- <20130130190759.GJ1342@serenity.lan>
- <7v4nhylbus.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] git_remote_helpers: remove GIT-PYTHON-VERSION upon "clean"
+Date: Wed, 30 Jan 2013 11:30:10 -0800
+Message-ID: <7vzjzqjwot.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 20:20:35 2013
+Cc: John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 30 20:30:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0dCw-0004JR-Lu
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 20:20:31 +0100
+	id 1U0dMj-000158-9B
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 20:30:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756741Ab3A3TUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 14:20:03 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:52147 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756730Ab3A3TT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 14:19:59 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 11EE760651D;
-	Wed, 30 Jan 2013 19:19:59 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -11
-X-Spam-Level: 
-X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 46qbmp4lSD+Q; Wed, 30 Jan 2013 19:19:58 +0000 (GMT)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 7BC206064FF;
-	Wed, 30 Jan 2013 19:19:54 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7v4nhylbus.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756747Ab3A3TaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 14:30:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37685 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755333Ab3A3TaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 14:30:12 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 452B6C6CD;
+	Wed, 30 Jan 2013 14:30:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=3
+	gHoERYQFvX/CNVnXOx0xdQz0Lc=; b=mEcNpEc7PLg1P6L/FPsImu1vNpTbrWUDW
+	OItkKwpktERlS0rcf6/hHlSfI6cAACF6zTPEvJD18uvZb7vK1tZffI99N6Ys/mtP
+	KozlCaLtBC+tYYJh7VFLEMAP9OTJMPP8tt7asnrFQKsvGM8YrM+wN7IsXHCNY7et
+	SgBTJfDMVI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=vZoOIo81pVR68zHymkqDkl3+96ZjUup/ZEQqZ1VJCxD8ZspMUPUC2fTG
+	RvSl52jDwmknr5E+Fp6nDIqDegyE0tkxKPo1icQ1TkW493PgyGg02lbJM6cabFoI
+	NcmqTsAU+J9NnU2SZULwMQ9AYT9mxv1GOvSKw86m4GP6FD5zV5s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38DEBC6CB;
+	Wed, 30 Jan 2013 14:30:12 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5824C6CA; Wed, 30 Jan 2013
+ 14:30:11 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 76D69CEA-6B13-11E2-A127-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215061>
 
-On Wed, Jan 30, 2013 at 11:17:15AM -0800, Junio C Hamano wrote:
-> Let's do something like this on top of the topic.
+fadf8c7 (git_remote_helpers: force rebuild if python version changes, 2013-01-20)
+started using a marker file to keep track of the version of Python interpreter
+used for the last build, but forgot to remove it when asked to "make clean".
 
-This looks good to me.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git_remote_helpers/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->  INSTALL | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/INSTALL b/INSTALL
-> index b96e16d..2dc3b61 100644
-> --- a/INSTALL
-> +++ b/INSTALL
-> @@ -131,8 +131,9 @@ Issues of note:
->  	  use English. Under autoconf the configure script will do this
->  	  automatically if it can't find libintl on the system.
->  
-> -	- Python version 2.4 or later is needed to use the git-p4
-> -	  interface to Perforce.
-> +	- Python version 2.4 or later (but not 3.x, which is not
-> +	  supported by Perforce) is needed to use the git-p4 interface
-> +	  to Perforce.
->  
->   - Some platform specific issues are dealt with Makefile rules,
->     but depending on your specific installation, you may not
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
+index 0d2ae74..3d12232 100644
+--- a/git_remote_helpers/Makefile
++++ b/git_remote_helpers/Makefile
+@@ -42,4 +42,4 @@ instlibdir: $(pysetupfile)
+ 
+ clean:
+ 	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) clean -a
+-	$(RM) *.pyo *.pyc
++	$(RM) *.pyo *.pyc GIT-PYTHON-VERSION
