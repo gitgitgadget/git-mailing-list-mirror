@@ -1,160 +1,146 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC/PATCH v2] CodingGuidelines: add Python coding guidelines
-Date: Wed, 30 Jan 2013 11:05:10 +0100
-Message-ID: <5108F056.9040406@alum.mit.edu>
-References: <20130129190844.GB1342@serenity.lan>
+From: Caspar Zhang <caspar@casparzhang.com>
+Subject: [BUG] incorrect search result returned when using git log with a
+ future date parameter
+Date: Wed, 30 Jan 2013 19:28:04 +0800
+Message-ID: <510903C4.6060809@casparzhang.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Jan 30 11:12:40 2013
+Cc: Gris Ge <fge@redhat.com>, Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 30 12:28:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0Uek-0000X6-Hr
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 11:12:39 +0100
+	id 1U0VqL-0005QH-NJ
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 12:28:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754357Ab3A3KMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 05:12:17 -0500
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:48273 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753970Ab3A3KMP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Jan 2013 05:12:15 -0500
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Jan 2013 05:12:14 EST
-X-AuditID: 12074412-b7f216d0000008e3-98-5108f059a9db
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 16.64.02275.950F8015; Wed, 30 Jan 2013 05:05:13 -0500 (EST)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r0UA5AML000950
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 30 Jan 2013 05:05:12 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <20130129190844.GB1342@serenity.lan>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqBv5gSPQoGc5q0XXlW4mixvnd7E6
-	MHmcffSA2ePzJrkApihum6TEkrLgzPQ8fbsE7oy2F/dYC97IVnRsPM3UwLhNvIuRk0NCwETi
-	0MY3LBC2mMSFe+vZuhi5OIQELjNKnDv2Fso5ziRx+M9uZpAqXgFtid1XbrGC2CwCqhLzvvxg
-	A7HZBHQlFvU0M4HYogJhEr2vzzFC1AtKnJz5BGyDCFD9tE832LsYOTiYBcQl+v+BhYUFvCSu
-	rJwLNkZIwECi4+9NMJtTwFBi+41DYKuYBXQk3vU9YIaw5SW2v53DPIFRYBaSDbOQlM1CUraA
-	kXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6ZXm5miV5qSukmRkigCu1gXH9S7hCjAAejEg/v
-	0hfsgUKsiWXFlbmHGCU5mJREebe+4QgU4kvKT6nMSCzOiC8qzUktPsQowcGsJMKroAaU401J
-	rKxKLcqHSUlzsCiJ8/5crO4nJJCeWJKanZpakFoEk5Xh4FCS4F3zDqhRsCg1PbUiLTOnBCHN
-	xMEJMpxLSqQ4NS8ltSixtCQjHhSp8cXAWAVJ8QDtlX0Psre4IDEXKArReorRmGP/k/bnjBzb
-	fwNJIZa8/LxUKXHeTyCbBEBKM0rz4BbBUtQrRnGgv4V5tUEG8gDTG9y8V0CrmIBWGbWxg6wq
-	SURISTUw7hJicprd2S0/W9GnyM24/BNDvMfO5oReqS19TzSkJv87/8YjMCly3f7zV8t/9526
-	0BDKb9fhuE6hxm+Rf1n+A894753nq6QUjjG3M+UtmRc+T32x5CreuqpLXpeP2iaF 
+	id S1755326Ab3A3L2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 06:28:19 -0500
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:52225 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755141Ab3A3L2S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 06:28:18 -0500
+Received: by mail-pb0-f52.google.com with SMTP id mc8so163098pbc.39
+        for <git@vger.kernel.org>; Wed, 30 Jan 2013 03:28:17 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:content-type:content-transfer-encoding:x-gm-message-state;
+        bh=EydpjvF7mXL73tSlpnHe93nV4Yq1JCjp1RZuCbrDg1Y=;
+        b=jW0CSPXj96CQTpFsSg+lgjv7Jyqx9cqpZ+SO9fBlkY7ErWwAcfCNegHst3c8O4Ebex
+         sqEi+tE4sd4Vdg0XAwHlfWplGpRTU1JsLeG4OzwGbHvT6mu4YDFj/Fa/eGpYi1sp1tMi
+         UulBDjfgph4yqXz5gv/Gmfu/JgvJmaakvf+HokQhxCqVSrUQEOG6hCA09v4BiAfhiO9u
+         DKaBP0J+zPZs2Pf6LkfDpP8KUek4YztVI4OwTKWxD6G9S4eh4wGKvK0sp+QXnGylnvVh
+         FiYM5YmBQr9S/YtkA1Oi2wyUZHchWEabb8802jXpNe/5nzP4z0P9hL6uAkDBfvB6yIwk
+         yWww==
+X-Received: by 10.68.220.198 with SMTP id py6mr11619329pbc.119.1359545297567;
+        Wed, 30 Jan 2013 03:28:17 -0800 (PST)
+Received: from [10.208.11.194] (nat-pool-sin2-t.redhat.com. [209.132.188.254])
+        by mx.google.com with ESMTPS id i5sm1788260pax.13.2013.01.30.03.28.13
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 30 Jan 2013 03:28:16 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+X-Gm-Message-State: ALoCoQlRZcJfURInxJjtqYL4yr2t3YrULQdW1TQLEIfAihGjt1DAQ4Kx8TStDAt1zkpCsDbD9i6j
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215008>
 
-On 01/29/2013 08:08 PM, John Keeping wrote:
-> These are kept short by simply deferring to PEP-8.  Most of the Python
-> code in Git is already very close to this style (some things in contrib/
-> are not).
-> 
-> Rationale for version suggestions:
-> 
->  - Amongst the noise in [1], there isn't any disagreement about using
->    2.6 as a base (see also [2]), although Brandon Casey recently added
->    support for 2.4 and 2.5 to git-p4 [3].
-> 
->  - Restricting ourselves to 2.6+ makes aiming for Python 3 compatibility
->    significantly easier [4].
-> 
->  - Advocating Python 3 support in all scripts is currently unrealistic
->    because:
-> 
->      - 'p4 -G' provides output in a format that is very hard to use with
->        Python 3 (and its documentation claims Python 3 is unsupported).
-> 
->      - Mercurial does not support Python 3.
-> 
->      - Bazaar does not support Python 3.
-> 
->  - But we should try to make new scripts compatible with Python 3
->    because all new Python development is happening on version 3 and the
->    Python community will eventually stop supporting Python 2 [5].
-> 
->  - Python 3.1 is required to support the 'surrogateescape' error handler
->    for encoding/decodng filenames to/from Unicode strings and Python 3.0
->    is not longer supported.
-> 
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/210329
-> [2] http://article.gmane.org/gmane.comp.version-control.git/210429
-> [3] http://thread.gmane.org/gmane.comp.version-control.git/214579
-> [4] http://docs.python.org/3.3/howto/pyporting.html#try-to-support-python-2-6-and-newer-only
-> [5] http://www.python.org/dev/peps/pep-0404/
-> 
-> ---
-> Changes since v1:
-> 
-> - Set 3.1 as the minimum Python 3 version
-> 
-> - Remove the section on Unicode literals - it just adds confusion and
->   doesn't apply to the current code; we can deal with any issues if they
->   ever arise.
-> 
->  Documentation/CodingGuidelines | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index 69f7e9b..db7a416 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -179,6 +179,19 @@ For C programs:
->   - Use Git's gettext wrappers to make the user interface
->     translatable. See "Marking strings for translation" in po/README.
->  
-> +For Python scripts:
-> +
-> + - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
-> +
-> + - As a minimum, we aim to be compatible with Python 2.6 and 2.7.
-> +
-> + - Where required libraries do not restrict us to Python 2, we try to
-> +   also be compatible with Python 3.1 and later.
-> +
-> + - We use the 'b' prefix for bytes literals.  Note that even though
-> +   the Python documentation for version 2.6 does not mention this
-> +   prefix it is supported since version 2.6.0.
-> +
->  Writing Documentation:
->  
->   Every user-visible change should be reflected in the documentation.
-> 
+Hi there,
 
-Nit: s/it is supported/it has been supported/
+when I'm using the commit limit option `--before/--until` when doing 
+`git log` search, I meet a bug when the upper-bound date is 10days later 
+in the future. Here is an example:
 
-I think this would be a good Python policy.
+$ date +%F
+2013-01-30
+$ git log --oneline --since=2013-01-01 --until=2013-02-01
+<several git log entry from 2013-01-01 to 2013-01-30 printed>
+$ git log --oneline --since=2013-01-01 --until=2013-02-13
+<null>
 
-I would hate to junk up all Python code with things like
+I debugged into the problem with ./test-date program in git source tree, 
+got:
 
-    ' '.encode('ascii')
+$ ./test-date approxidate 2013-02-01
+2013-02-01 -> 2013-02-01 10:47:13 +0000   // correctly parsed
+$ ./test-date approxidate 2013-02-13
+2013-02-13 -> 2013-01-02 10:47:20 +0000   // incorrectly parsed
 
-though, so maybe we should establish a small Python library of
-compatibility utilities (like a small "six").  It could contain b().
+When looking into the codes of date.c, in is_date() function, I found:
 
-Another handy utility function could be
+  382         /* Be it commit time or author time, it does not make
+  383          * sense to specify timestamp way into the future.  Make
+  384          * sure it is not later than ten days from now...
+  385          */
+  386         if (now + 10*24*3600 < specified)
+  387                  return 0;
+  388         tm->tm_mon = r->tm_mon;
+  389         tm->tm_mday = r->tm_mday;
+  390         if (year != -1)
+  391                 tm->tm_year = r->tm_year;
+  392         return 1;
 
-    def check_python_version(minimum_v2=0x02060000,
-                             minimum_v3=0x03010000)
+If I comment Line 386 & 387 out, the parsing works correctly. So I guess 
+here is the cause of the problem.
 
-which checks our default Python requirements by default, but is
-overrideable by specific scripts if they know that they can deal with
-older Python versions.
+Then I checked the git history, the change was introduced in commit 
+38035cf4 by Junio C Hamano (cc-ed):
 
-But I haven't had time to think of where to put such a library, how to
-install it, etc.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+commit 38035cf4a51c48cccf6c5e3977130261bc0c03a7
+Author: Junio C Hamano <junkio@cox.net>
+Date:   Wed Apr 5 15:31:12 2006 -0700
 
-Michael
+     date parsing: be friendlier to our European friends.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+     This does three things, only applies to cases where the user
+     manually tries to override the author/commit time by environment
+     variables, with non-ISO, non-2822 format date-string:
+
+      - Refuses to use the interpretation to put the date in the
+        future; recent kernel history has a commit made with
+        10/03/2006 which is recorded as October 3rd.
+
+      - Adds '.' as the possible year-month-date separator.  We
+        learned from our European friends on the #git channel that
+        dd.mm.yyyy is the norm there.
+
+      - When the separator is '.', we prefer dd.mm.yyyy over
+        mm.dd.yyyy; otherwise mm/dd/yy[yy] takes precedence over
+        dd/mm/yy[yy].
+
+     Signed-off-by: Junio C Hamano <junkio@cox.net>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It seems like the original commit was going to fix European date style, 
+but it fixed(?) the future date problem as well. However, this part of 
+fix is not perfect:
+
+1) it makes date parsing not working correctly. (see my test examples 
+above).
+
+IMO, it should be in another place (maybe in commit.c or somewhere 
+else?) we check if commit date is valid or not, instead of in the date 
+parsing function. A date parsing function should parse _all dates with 
+correctly format_, despite if it's an old date, or the date in the future.
+
+2) from the test example I gave above, in fact the codes don't really 
+prevent git from accepting the changes with illegal date, e.g., if there 
+is a commit recorded as "2013-02-13", it will be parsed to "2013-01-02", 
+which is a legal (old) date, thus, this commit will be accepted, but 
+this is wrong.
+
+My suggestion is we might need to revert the first part of commit 
+38035cf4 since this part of code doesn't work correctly and causes 
+problems; then we should create a new checking mechanism to prevent 
+those "future date commits" to be accepted in other functions. I'm not 
+able to do the second part since I'm not familiar with git codes yet.. :-(
+
+Thoughts?
+
+Caspar
