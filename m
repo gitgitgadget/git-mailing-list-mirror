@@ -1,80 +1,84 @@
-From: John Keeping <john@keeping.me.uk>
+From: Sebastian Staudt <koraktor@gmail.com>
 Subject: Re: Anybody know a website with up-to-date git documentation?
-Date: Wed, 30 Jan 2013 11:54:39 +0000
-Message-ID: <20130130115439.GH1342@serenity.lan>
-References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
+Date: Wed, 30 Jan 2013 12:56:37 +0100
+Message-ID: <CA+xP2SbWKucCCPq3sS8Y2DQQM129urrM7-QzeDYju4+wA_-aUg@mail.gmail.com>
+References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de> <20130130115439.GH1342@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
 To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Wed Jan 30 12:55:12 2013
+X-From: git-owner@vger.kernel.org Wed Jan 30 12:57:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0WFz-0006Nc-Nr
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 12:55:12 +0100
+	id 1U0WIf-0007a7-E3
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 12:57:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752017Ab3A3Lyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 06:54:50 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:51424 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751339Ab3A3Lys (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 06:54:48 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 2733219803D;
-	Wed, 30 Jan 2013 11:54:48 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -11
-X-Spam-Level: 
-X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zFVm95ltBbNb; Wed, 30 Jan 2013 11:54:47 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id CB43619803E;
-	Wed, 30 Jan 2013 11:54:46 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id C0BA7161E560;
-	Wed, 30 Jan 2013 11:54:46 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6zIEb4unNPKU; Wed, 30 Jan 2013 11:54:46 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 1FDD9161E3A7;
-	Wed, 30 Jan 2013 11:54:41 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751339Ab3A3L5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 06:57:36 -0500
+Received: from mail-we0-f176.google.com ([74.125.82.176]:46879 "EHLO
+	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750884Ab3A3L5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 06:57:35 -0500
+Received: by mail-we0-f176.google.com with SMTP id s43so1109589wey.7
+        for <git@vger.kernel.org>; Wed, 30 Jan 2013 03:57:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=o5omykBJi/j1BOAFVqU/xibGruNQWTIY+Tm84JiR5xI=;
+        b=C8tWaDGYnXIs6eBLwZlzyal1ArWbDjrVRl2o6CdshmNK4S64X5VSzYz38utSeodIwR
+         aX3BitTScYH1iCk8pR/HKqdIF7L+I5WVFk05n9/XuoSq916ORDRlp23+2l0DsVs2GLtj
+         7si06KDHwiqIptCJ/wi/galDAl650nFDym5fgOyRyRIMBomn7jgNA7A3IuPhruhPudMl
+         WoL3YrI6QITm59DMEfvoe9vtxMRtIIECv4DVICJsRNBKUS55fGYrMG59I1dbgJwIPxPK
+         b9zV5vBcEUmEa/p6PblG1R6a8JmIGQDrEus0INOhVbG7OB9lYlXJAr9sT4juLV9Yiro+
+         Xt0Q==
+X-Received: by 10.194.119.5 with SMTP id kq5mr8290919wjb.48.1359547051038;
+ Wed, 30 Jan 2013 03:57:31 -0800 (PST)
+Received: by 10.216.113.196 with HTTP; Wed, 30 Jan 2013 03:56:37 -0800 (PST)
+In-Reply-To: <20130130115439.GH1342@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215012>
 
-On Wed, Jan 30, 2013 at 12:46:47PM +0100, Max Horn wrote:
-> does anybody know a website where one can view that latest git
-> documentation? Here, "latest" means "latest release" (though being
-> also able to access it for "next" would of course be a nice bonus,
-> likewise for older versions). While I do have those docs on my local
-> machine, I would like to access them online, too (e.g. easier to
-> pointer people at this, I can access it from other machines, etc.).
+Hello Max,
 
-How about http://git-htmldocs.googlecode.com/git/ ?
+git-scm.com is the best source and it's not outdated. It gets an
+update after every single release of Git.
+See e.g. http://git-scm.com/docs/git-config which was updated in the
+current stable version.
+It seems that git-remote-helper's documentation was just not updated
+since version 1.7.12.3.
 
-It's just a directory listing of the git-htmldocs repository that Junio
-maintains - the latest update was yesterday: Autogenerated HTML docs for
-v1.8.1.2-422-g08c0e.
+Best regards,
+    Sebastian
 
-[I didn't know Google Code let you view the repository like that, but I
-got there by clicking the "raw" link against one of the files so I
-assume it's not likely to go away.]
-
-
-John
+2013/1/30 John Keeping <john@keeping.me.uk>:
+> On Wed, Jan 30, 2013 at 12:46:47PM +0100, Max Horn wrote:
+>> does anybody know a website where one can view that latest git
+>> documentation? Here, "latest" means "latest release" (though being
+>> also able to access it for "next" would of course be a nice bonus,
+>> likewise for older versions). While I do have those docs on my local
+>> machine, I would like to access them online, too (e.g. easier to
+>> pointer people at this, I can access it from other machines, etc.).
+>
+> How about http://git-htmldocs.googlecode.com/git/ ?
+>
+> It's just a directory listing of the git-htmldocs repository that Junio
+> maintains - the latest update was yesterday: Autogenerated HTML docs for
+> v1.8.1.2-422-g08c0e.
+>
+> [I didn't know Google Code let you view the repository like that, but I
+> got there by clicking the "raw" link against one of the files so I
+> assume it's not likely to go away.]
+>
+>
+> John
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
