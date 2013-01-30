@@ -1,79 +1,66 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Files excluded but not ignored
-Date: Wed, 30 Jan 2013 08:17:21 -0800
-Message-ID: <7v38ximyr2.fsf@alter.siamese.dyndns.org>
-References: <loom.20130130T161911-66@post.gmane.org>
+Subject: Re: Anybody know a website with up-to-date git documentation?
+Date: Wed, 30 Jan 2013 08:46:51 -0800
+Message-ID: <7vtxpylitg.fsf@alter.siamese.dyndns.org>
+References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jason Wenger <jcwenger@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 17:17:47 2013
+Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Wed Jan 30 17:47:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0aM6-0008KT-Ph
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 17:17:47 +0100
+	id 1U0aof-0005LP-SQ
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 17:47:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193Ab3A3QRZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 11:17:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55509 "EHLO
+	id S1755177Ab3A3Qqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 11:46:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42518 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753845Ab3A3QRY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 11:17:24 -0500
+	id S1754331Ab3A3Qqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 11:46:54 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB1C2C205;
-	Wed, 30 Jan 2013 11:17:23 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D3ADB38F;
+	Wed, 30 Jan 2013 11:46:53 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MM/+/CO8ElsOK5hzrfLj4IDTAbc=; b=Kzg1lG
-	0IueBfFotOEZFbEXyYGtNh0YegryTh1U0d/AQcRNeJ8c8ezXjtG7x1s16OfJvTm7
-	r5iI9enivNzhPdO2hA3MqrDXa7aYJBblYiVRZk0T2gsv+WhzbnYuqgbMPJOO9jxe
-	M4RcAX0TERMSudoTBYXMzX/RNwrqi3+C52Ra8=
+	:content-type; s=sasl; bh=HVikve52w4wEfWmW/5OfM1Udjbs=; b=At7nqB
+	/gmcA4m7DHXDn5Y2ngjb5seKYUlbP0TiEwCIApizLEI4vAZGM5WpmZZoxbiM4JQj
+	YGAo2++7YkVXrITomDrNe/aoGUze/uZ4jO6qVMlGIXaTZoT8gn/a/EKXCJy38tuv
+	hraRbLP/fHI9WBon4K0Y9o2rVBwOXYLFNeCvw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dqDNQ6XVsE+3t1anOJHv8MBYpNMC2TgY
-	RI0nopuL7IhRofmXJWQ56o3QQcOCeinnQxgcuA53nV1kx2DLGQXV2imDpU0/vnRI
-	LRNoeLEhXi5SbbBtZpoE8hmx49Dvn1FODTM1cye6HrjpT3+SIYg6N7l5i0DfE4IQ
-	QqwkIIcyHeE=
+	:content-type; q=dns; s=sasl; b=rim99lyHnr76SPPuXbDnyLU/G9e/PubB
+	YuhtlH2U4REXg81Pv7BV7WIZ4rvsamnhVsme1+9XPOH/X4Apf/1csnVgfFWRQle6
+	UY6qvxfNSTisERrTGuUj8EeG1y3GO2UFmGb1T6bvbdC8UaSVg6S5LAEfJbyNCKtu
+	CsvmxShM2y0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D03F4C204;
-	Wed, 30 Jan 2013 11:17:23 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 91CB1B38E;
+	Wed, 30 Jan 2013 11:46:53 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57838C202; Wed, 30 Jan 2013
- 11:17:23 -0500 (EST)
-In-Reply-To: <loom.20130130T161911-66@post.gmane.org> (Jason Wenger's message
- of "Wed, 30 Jan 2013 15:34:42 +0000 (UTC)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 16898B38B; Wed, 30 Jan 2013
+ 11:46:52 -0500 (EST)
+In-Reply-To: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de> (Max Horn's
+ message of "Wed, 30 Jan 2013 12:46:47 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8794F736-6AF8-11E2-8883-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A66D0E9C-6AFC-11E2-BB18-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215030>
 
-Jason Wenger <jcwenger@gmail.com> writes:
+Max Horn <max@quendi.de> writes:
 
-> I prefer to not add core.* files to my ignore listings because I find it helpful 
-> to see them in git status -- It helps me notice and clean them up periodically.  
-> Not having them ignored is also good ,because it allows git clean to care of 
-> core.*  files.
->
-> The problem is that git add -A, git stash -u, etc, remain interested in the core 
-> files.
->
-> Trying to start up discussion of whether there would be merit to a "half-
-> ignored" state -- Files which are excluded from tracking, but which still 
-> show in git status, and which are removed by git clean.
->
-> Not trying to propose yet how .git/exclude or .gitignore would be formatted 
-> or anything like that.  Just looking for opinions on whether such a state 
-> would be considered by the community as a good thing and merit the added 
-> complexity in the code.
+> does anybody know a website where one can view that latest git
+> documentation? Here, "latest" means "latest release" (though being
+> also able to access it for "next" would of course be a nice bonus,
+> likewise for older versions).
 
-I see no merit for "ignored and never to be tracked, but are still
-shown loudly in the untracked list" myself.  Use cases for "ignored
-and never to be tracked, but not expendable" class were mentioned
-often in the past, though.
+Preformatted ones for the tip of 'master' are reachable from
+
+    http://git-htmldocs.googlecode.com/git/git.html
