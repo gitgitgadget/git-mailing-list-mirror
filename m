@@ -1,152 +1,69 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Anybody know a website with up-to-date git documentation?
-Date: Thu, 31 Jan 2013 04:37:09 +0530
-Message-ID: <20130130230709.GA7787@sita-lt.atc.tcs.com>
-References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
- <20130130115439.GH1342@serenity.lan>
- <71A3AA8C-DBA2-44F7-9B69-AEDB81BB0906@quendi.de>
- <CAMK1S_i+ML+HuTRuox5rU4bsV0+xoFLWpK63WrdXuzhgyHJbrA@mail.gmail.com>
- <6BE76AE4-254E-43DD-A3FF-88B5486029A5@quendi.de>
- <7vlibalhcv.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "sha1 information is lacking or useless" when rebasing with a
+ submodule pointer conflict
+Date: Wed, 30 Jan 2013 15:39:04 -0800
+Message-ID: <7v38xijl5z.fsf@alter.siamese.dyndns.org>
+References: <CAFyOhY8YAO4zx6jKQxrEW=-Vbo-TTjU6wJ7UgNVEjA7B2dasng@mail.gmail.com>
+ <20130130215615.GA1053@book.hvoigt.net>
+ <20130130224904.GB1053@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Max Horn <max@quendi.de>, John Keeping <john@keeping.me.uk>,
-	git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 31 00:07:50 2013
+Cc: Michael Sims <michael.h.sims@gmail.com>, git@vger.kernel.org,
+	Jens Lehmann <jens.lehmann@web.de>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Jan 31 00:39:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0gkr-0004Zx-08
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 00:07:45 +0100
+	id 1U0hFb-0008Gk-D1
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 00:39:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756406Ab3A3XHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 18:07:23 -0500
-Received: from mail-da0-f51.google.com ([209.85.210.51]:34284 "EHLO
-	mail-da0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754183Ab3A3XHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 18:07:21 -0500
-Received: by mail-da0-f51.google.com with SMTP id i30so984878dad.24
-        for <git@vger.kernel.org>; Wed, 30 Jan 2013 15:07:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=pI0sdj864lC/j1aVkhBvrEJT7l5Z/71UsnFBTtWatIk=;
-        b=sCaYFTTmQGLFRZys024o73RvN7+MTRR5cWChyTLsV/iity0wH8opL42j4ZK6oRs43h
-         4VVbT+mnNDujOGD0XkaNBebggEqBvfPBSWmpA2VI2rouHNKOyAjEyS1C/mHrr0xHP3Gz
-         xc7uyfK8yjvLI1zXQxWxa31scrjqePDK5GOHrScmjEjZdLXFemxO87kG/pF+wsa9KaMA
-         4PE80Y16L03yWARhFQRMc4UHXNX9KsGxBOpLfNRxkKTxhmZmpXt2U52ZqMNyKn/5iLXq
-         wxuGJW+xX8JtSZF2ywClSXTdpb62lvcG8agtgyCgvkK6e2tGKNhndLTbythAuPeyGfEn
-         YU+g==
-X-Received: by 10.68.235.1 with SMTP id ui1mr16435051pbc.138.1359587240850;
-        Wed, 30 Jan 2013 15:07:20 -0800 (PST)
-Received: from sita-lt.atc.tcs.com ([117.195.163.246])
-        by mx.google.com with ESMTPS id az8sm3383917pab.3.2013.01.30.15.07.17
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 30 Jan 2013 15:07:20 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vlibalhcv.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755953Ab3A3XjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 18:39:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47626 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753300Ab3A3XjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 18:39:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACA60CCC0;
+	Wed, 30 Jan 2013 18:39:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1K/yyMWTH9d2FcmoLx1iuf66aTQ=; b=FEvARG
+	l4oydBjGy0CaexLiIiPsJ6LXooP4ktymZP4zOnev81VdydkxFFY/6mSWqCF4q8vA
+	FDgdUR7dihyRXldR8arBNTwMWWXW6XCyRCNNld2/Xstehs92mrFF63jnOkZueTZh
+	Xi4kG6T1/r4IhYaEsP1cWooi3nvbUtpRUb1rM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SQ58yVCUkH63vI5vByl84Je1T4pukmSU
+	d+EGfGdXwwhN+p+Pb+aHmAdukgGMaRPHoVDi5ajUy+hb7F6XZ5hgNKJFOVOQNLnt
+	/Dgz45N8bHljVirkvN5dUDFU5iepn1/1+RX4H+JrCRMSzSY7RWJ8XVXHt3fsfOi3
+	kVyj+uuvYV8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DFDFCCBF;
+	Wed, 30 Jan 2013 18:39:06 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23C60CCBE; Wed, 30 Jan 2013
+ 18:39:06 -0500 (EST)
+In-Reply-To: <20130130224904.GB1053@book.hvoigt.net> (Heiko Voigt's message
+ of "Wed, 30 Jan 2013 23:49:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3C79AACE-6B36-11E2-850C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215080>
 
-On Wed, Jan 30, 2013 at 09:18:24AM -0800, Junio C Hamano wrote:
-> Max Horn <max@quendi.de> writes:
-> 
-> [administrivia: please wrap lines to a reasonable width]
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-Curiously, gmail's web interface appears to have started doing
-this only recently.  I've noticed it when trying to respond to
-others too.
+> Maybe Martin or Junio immediately see whats going wrong here? I would
+> need to further dig into the git-am code to find out how to fix it.
 
-> > On 30.01.2013, at 16:59, Sitaram Chamarty wrote:
-> >
-> >> I'm curious... what's wrong with 'git checkout html' from the git repo
-> >> and just browsing them using a web browser?
-> >
-> > Hm, do you mean "make html", perhaps? At least I couldn't figure
-> > out what "git checkout html" should do, but out of curiosity gave
-> > it a try and got an error...
-> 
-> Perhaps some information from "A note from the maintainer" (posted
-> to this list from time to time) is lacking.  Some excerpts:
-> 
->     You can browse the HTML manual pages at:
-> 
->             http://git-htmldocs.googlecode.com/git/git.html
-> 
->     Preformatted documentation from the tip of the "master" branch can be
->     found in:
-> 
->             git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
->             git://repo.or.cz/git-{htmldocs,manpages}.git/
->             ...
-> 
-> 
-> Armed with that knowledge, I think Sitaram may have something like
-> this:
-> 
-> 	[remote "htmldocs"]
-> 		url = git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-> 		fetch = +refs/heads/master:refs/heads/html
-> 
-> and does
-> 
-> 	git fetch htmldocs
->         git checkout html
-
-Hmm; I don't recall ever doing that.  But I just realised that
-my "html" branch is stuck at 1.7.7:
-
-    $ git branch -v -v | grep html
-      html   8fb66e5 [origin/html] Autogenerated HTML docs for v1.7.7-138-g7f41b6
-
-Is it possible that upto that point, the main git.git repo did
-carry this branch also?  I have 3 remotes:
-
-    $ git remote -v
-    gc	https://code.google.com/p/git-core (fetch)
-    gc	https://code.google.com/p/git-core (push)
-    ghgit	git://github.com/git/git.git (fetch)
-    ghgit	git://github.com/git/git.git (push)
-    origin	git://git.kernel.org/pub/scm/git/git.git (fetch)
-    origin	git://git.kernel.org/pub/scm/git/git.git (push)
-
-and all 3 of them carry this branch:
-
-    $ git branch -a -v -v | grep html
-      html                  8fb66e5 [origin/html] Autogenerated HTML docs for v1.7.7-138-g7f41b6
-      remotes/gc/html       8fb66e5 Autogenerated HTML docs for v1.7.7-138-g7f41b6
-      remotes/ghgit/html    8fb66e5 Autogenerated HTML docs for v1.7.7-138-g7f41b6
-      remotes/origin/html   8fb66e5 Autogenerated HTML docs for v1.7.7-138-g7f41b6
-
-Even if I had, at one point, added a remote specifically for
-html, I am sure it could not have created those refs!
-
-So I tried a prune:
-
-    $ git remote update --prune
-    Fetching origin
-     x [deleted]         (none)     -> origin/html
-     x [deleted]         (none)     -> origin/man
-    Fetching ghgit
-     x [deleted]         (none)     -> ghgit/html
-     x [deleted]         (none)     -> ghgit/man
-    Fetching gc
-     x [deleted]         (none)     -> gc/html
-     x [deleted]         (none)     -> gc/man
-
-and now I'm on par with the rest of you ;-)
-
-> You can, too, of course ;-)
-
-You can do even more!  If you don't find a suitable website for
-this, it's trivial to host it yourself.  You can host it on your
-intranet, if you have one.
+"am -3" has never worked on a patch that describes changes to any
+non-blobs; the underlyihng "apply --fake-ancestor" is not prepared
+to see anything other than blobs.
