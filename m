@@ -1,72 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] incorrect search result returned when using git log with a
- future date parameter
-Date: Wed, 30 Jan 2013 11:57:57 -0800
-Message-ID: <7vsj5ijvei.fsf@alter.siamese.dyndns.org>
-References: <51090466.9070105@casparzhang.com>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [feature request] git add completion should exclude staged content
+Date: Wed, 30 Jan 2013 20:58:01 +0100
+Message-ID: <51097B49.6070301@gmail.com>
+References: <20130126172137.GB5852@mobster.11n_AP_Router> <7vip6iteod.fsf@alter.siamese.dyndns.org> <5106444F.2040007@gmail.com> <51067487.9050505@drmicha.warpmail.net> <510684FB.80104@gmail.com> <5106A5CE.3000800@drmicha.warpmail.net> <7vd2wpxki1.fsf@alter.siamese.dyndns.org> <5106DC87.7090607@gmail.com> <E59706EF8DB1D147B15BECA3322E4BDC097A7E@eusaamb103.ericsson.se> <51096543.9050100@gmail.com> <E59706EF8DB1D147B15BECA3322E4BDC097E39@eusaamb103.ericsson.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Gris Ge <fge@redhat.com>
-To: Caspar Zhang <caspar@casparzhang.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 20:58:39 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: 'Junio C Hamano' <gitster@pobox.com>,
+	'Michael J Gruber' <git@drmicha.warpmail.net>,
+	'wookietreiber' <kizkizzbangbang@googlemail.com>,
+	"'git@vger.kernel.org'" <git@vger.kernel.org>
+To: Marc Khouzam <marc.khouzam@ericsson.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 21:00:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0dnm-0007Ql-GO
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 20:58:34 +0100
+	id 1U0dpV-0008CW-Lm
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 21:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756899Ab3A3T6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 14:58:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63965 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756792Ab3A3T6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 14:58:03 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2A62C0A3;
-	Wed, 30 Jan 2013 14:58:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SR03M7hUEAvlhodGGfAdBGLlQJI=; b=TJWfGw
-	CghsKvNCIFJst1HriGbLyvkX2TkE6FaHz8bKdXpOMOxAPcVe3Pvj1PKh5vwV65cd
-	5UYTlyevY78G17hN6m85DU3ZY9V8slIHURZa8AHBE/F1flHmn3UEEqgtYpy/1p6l
-	YKbjY7vzheo4aG3M9LK2iNwJg8xAFVOzW2ybM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NTcJrkFI+NUdgLVBlRxcC9L6hEA+xc3Q
-	dGJCuZyHbva3wsz7bWHmSZjGRuGB++qkMkDbjq9EaQrmIIK2JzIR8X8uzZE5DqKp
-	8Cc/Y4Cyyn5wQTsjJW7/YZb1U69709+lyuaXj14bRbLiMDwvrValI8kF08QBfwsV
-	7inte3HB8ic=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3B99C0A1;
-	Wed, 30 Jan 2013 14:58:00 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0FBEAC09E; Wed, 30 Jan 2013
- 14:57:59 -0500 (EST)
-In-Reply-To: <51090466.9070105@casparzhang.com> (Caspar Zhang's message of
- "Wed, 30 Jan 2013 19:30:46 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 59463D76-6B17-11E2-97F2-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753782Ab3A3T76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 14:59:58 -0500
+Received: from mail-ee0-f41.google.com ([74.125.83.41]:56488 "EHLO
+	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753168Ab3A3T75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 14:59:57 -0500
+Received: by mail-ee0-f41.google.com with SMTP id c13so1091329eek.28
+        for <git@vger.kernel.org>; Wed, 30 Jan 2013 11:59:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=ieOEzT12tNeR/oAomkXIWfBnLAvin46ZDFhS4X4NMhI=;
+        b=HcMQR4uL5rsH8QrQoUGhrz4Wk950z6ymG1OKQnCa99juWPdXvtZMexbYgA8ONHtyKT
+         voEOv9sdxvE6gEpx8qmKhvbLo3pyl/P0KWDh6hxxCRvMAIQcmKrm5WDX27qpzD7tv/pT
+         c1G7zO0wFiqHzQYkurfWwjL75bgzZjwybKTCz7caIY7ayaS7egwppWIbLAMdFPC9cDHg
+         mpkvQtdsHjXMoOg8pgi8y13Z++lHRLn+3pbtWgztSVdjfEVnYdd8Um4lrOZkQO0yPftg
+         6d2p7oMx0F+NxoD7I8w5K2qj1YhF41ndwDGR7PFXehKxpJY2gA4qHRc2vN3sJh9MuhXV
+         DbOw==
+X-Received: by 10.14.174.198 with SMTP id x46mr18221379eel.23.1359575996584;
+        Wed, 30 Jan 2013 11:59:56 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.202.186])
+        by mx.google.com with ESMTPS id f6sm3643333eeo.7.2013.01.30.11.58.51
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 30 Jan 2013 11:59:55 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <E59706EF8DB1D147B15BECA3322E4BDC097E39@eusaamb103.ericsson.se>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215065>
 
-Caspar Zhang <caspar@casparzhang.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> .... A date parsing function should parse _all dates with
-> correctly format_, despite if it's an old date, or the date in the
-> future.
+Il 30/01/2013 19:55, Marc Khouzam ha scritto:
+> [...]
+>>>> The new logic in git-completion.bash tells bash that 'filenames'
+>>>> completion is ongoing so bash will add a '/' after directories.
+>>>> Sadly, tcsh won't do that, so it would be simpler if
+>>>> git-completion.bash added the '/' itself.  I looked at the 
+>>>> git-completion.bash script changes and I noticed that for 
+>>>> bash version < 4, you have to add the '/' yourself.
+> 
+> The compatible version is not only required for Bash; you can 
+> use it for
+> other shells.
+> 
+> Try to redefine the __git_index_file_list_filter function to use the
+> version that adds a slash to directory names.
+> 
+>> I hadn't thought of that!
+>> Although I would prefer not to have special cases like that,
+>> it does work well.
 
-When it is fed 2013-02-12, it is ambiguous and "approxidate" can and
-should use whatever heuristics (including rejection of future) to
-guess what the user wanted, but 2013-02-13 cannot be interpreted in
-any other way, so we should parse it as such.
+The zsh compatible code does something like this; this is the reason I
+tried to do the same thing, in order to keep coding consistent.
 
-Patches welcome, as long as the fix does not make things worse for
-cases other than you observed.
+> [...]
+>
+> Bash 4.1.5(1) always adds an additional slash for directories.
+> I have tested it right now: change the filter function to use the
+> compatible version:
+> 
+> __git_index_file_list_filter ()
+> {
+> 	# Default to Bash >= 4.x
+> 	__git_index_file_list_filter_compat
+> }
+> 
+> 
+> Then running `git add <TAB>` inside the git repository, I get 
+> this file
+> completion list:
+> 
+> $ git add <TAB>
+> contrib//
+> 
+>> Ok, I see.  The double-slash is visible in the completion list
+>> but it does not appear on the command-line when bash automatically
+>> adds it.
 
-Thanks.
+Right; that's why I wrote in the comment that Bash behaviour "seems" stupid.
+But probably that comment should be remove or changed for the final
+version of the patch; I'll leave that to a Bash expert.
+
+> [...]
+
+
+Regards  Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlEJe0kACgkQscQJ24LbaUScGgCeMDDdprJMgnYtFzqnFQamhfvU
+BikAniMkwbOEVkkomOd9G0m3KY44f/9O
+=c8rC
+-----END PGP SIGNATURE-----
