@@ -1,212 +1,192 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 7/8] fetch: fetch objects by their exact SHA-1 object
- names
-Date: Wed, 30 Jan 2013 10:45:41 -0800
-Message-ID: <1359571542-19852-8-git-send-email-gitster@pobox.com>
-References: <1359571542-19852-1-git-send-email-gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 30 19:46:37 2013
+From: Marc Khouzam <marc.khouzam@ericsson.com>
+Subject: RE: [feature request] git add completion should exclude staged
+ content
+Date: Wed, 30 Jan 2013 18:55:35 +0000
+Message-ID: <E59706EF8DB1D147B15BECA3322E4BDC097E39@eusaamb103.ericsson.se>
+References: <20130126172137.GB5852@mobster.11n_AP_Router>
+ <7vip6iteod.fsf@alter.siamese.dyndns.org> <5106444F.2040007@gmail.com>
+ <51067487.9050505@drmicha.warpmail.net> <510684FB.80104@gmail.com>
+ <5106A5CE.3000800@drmicha.warpmail.net>
+ <7vd2wpxki1.fsf@alter.siamese.dyndns.org> <5106DC87.7090607@gmail.com>
+ <E59706EF8DB1D147B15BECA3322E4BDC097A7E@eusaamb103.ericsson.se>
+ <51096543.9050100@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: 'Junio C Hamano' <gitster@pobox.com>,
+	'Michael J Gruber' <git@drmicha.warpmail.net>,
+	'wookietreiber' <kizkizzbangbang@googlemail.com>,
+	"'git@vger.kernel.org'" <git@vger.kernel.org>
+To: 'Manlio Perillo' <manlio.perillo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 19:56:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0cg5-0004fU-Up
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 19:46:34 +0100
+	id 1U0cpE-00011N-W0
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 19:56:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756694Ab3A3SqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 13:46:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33802 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756650Ab3A3Sp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 13:45:59 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 414F9C414;
-	Wed, 30 Jan 2013 13:45:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=RcA6
-	petF+NPmVw/8et/hyphc6yQ=; b=DL9iApL/0sRokPpAfbhRHcpo5FFXLUtLlF1y
-	02yOgdVGSNv9nYR2nmrfo0APxlPgdJpIl66hj/YXHVEMuyicA22/zn7gWpvui7ml
-	PsEQFVw2R//hZ+WMxEkeftS2AJufbKm6TVyvqnQAtnEEGoPxUpmQmLh/k/AiDqgH
-	5T7kG6E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	d15WoKgwt//T2+GxBuBPZlbuIL1ROhiwuDM19c+aOFIy5Zb+CidbZpjqoPSNea6e
-	8gN2FUwo0kSKRcQnrZvJncr8IjEteJ12W+rjBt/LjShtcqjbSzVjFkt8wCoYaiR3
-	Z05JuG2usKHHNQGss6WT3FIIi34GrRXd31Xe7EhTAGM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36707C413;
-	Wed, 30 Jan 2013 13:45:59 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4CDFEC411; Wed, 30 Jan 2013
- 13:45:58 -0500 (EST)
-X-Mailer: git-send-email 1.8.1.2.589.ga9b91ac
-In-Reply-To: <1359571542-19852-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 494F57A4-6B0D-11E2-BBF5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756538Ab3A3Szj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 13:55:39 -0500
+Received: from usevmg20.ericsson.net ([198.24.6.45]:56705 "EHLO
+	usevmg20.ericsson.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755604Ab3A3Szi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Jan 2013 13:55:38 -0500
+X-AuditID: c618062d-b7fcb6d000007ada-8f-51096ca96cc8
+Received: from EUSAAHC002.ericsson.se (Unknown_Domain [147.117.188.78])
+	by usevmg20.ericsson.net (Symantec Mail Security) with SMTP id 34.2C.31450.9AC69015; Wed, 30 Jan 2013 19:55:37 +0100 (CET)
+Received: from EUSAAMB103.ericsson.se ([147.117.188.120]) by
+ EUSAAHC002.ericsson.se ([147.117.188.78]) with mapi id 14.02.0318.004; Wed,
+ 30 Jan 2013 13:55:36 -0500
+Thread-Topic: [feature request] git add completion should exclude staged
+ content
+Thread-Index: AQHN++mhfJpcTCjP3EKl2TzxlKhfVJhdzFlAgAECzICAADl7gIAAE52AgAAnIQD//8WNMYAAe6+AgAJnELCAAJ5KgP//sNnw
+In-Reply-To: <51096543.9050100@gmail.com>
+Accept-Language: en-CA, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [147.117.188.134]
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrDLMWRmVeSWpSXmKPExsUyuXSPn+7KHM5AgyPvNSzWvDjNbNF1pZvJ
+	oqH3CrPF1JZnjBYX/3SxO7B6tE6exOyxc9Zddo+nEyaze1y8pOzxeZNcAGsUl01Kak5mWWqR
+	vl0CV8bfg+eYC3bKV6w53c/UwPhdoouRk0NCwETi94EzzBC2mMSFe+vZuhi5OIQEjjBKNK25
+	zQjhLGeUOHTsNStIFZuAnsSNn7fYQWwRAX2JDVenMIMUMQvsYZT4u2M/WJGwQKDEo80fGCGK
+	giQap/xjhrDzJI4t+gJWwyKgKrGh/xgTiM0r4C3xd1kX1OrZzBJb5l8Ea+YU0JR4/LUBzGYU
+	kJXYffY6WAOzgLjErSfzmSDuFpBYsuc81A+iEi8f/2OFsJUlljzZzwJRryOxYPcnNghbW2LZ
+	wtfMEIsFJU7OfMIygVFsFpKxs5C0zELSMgtJywJGllWMHKXFqWW56UYGmxiBMXZMgk13B+Oe
+	l5aHGKU5WJTEeYNcLwQICaQnlqRmp6YWpBbFF5XmpBYfYmTi4JRqYGRlCTqitoFj0XZvM5+7
+	Evef9/9onP2QWbFj9zm21I0rRO7bFCc4fyw/d+DAgireCTziv1oaiip3xW3sPJi0ojP5aO6U
+	2V+WX1ruPLVUZXL/Ws8FDmmf3frTQxSCNL6GPDJ+cnR949yrvZ3iK86Ur+H09TQOMK72XKVv
+	eSkmRfF/qYuGUdAcNSWW4oxEQy3mouJEAGLyp2h/AgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215056>
 
-Teach "git fetch" to accept an exact SHA-1 object name the user may
-obtain out of band on the LHS of a pathspec, and send it on a "want"
-message when the server side advertises the allow-tip-sha1-in-want
-capability.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- fetch-pack.c          | 22 +++++++++++++++++++++-
- remote.c              | 12 +++++++++++-
- remote.h              |  1 +
- t/t5516-fetch-push.sh | 34 ++++++++++++++++++++++++++++++++++
- 4 files changed, 67 insertions(+), 2 deletions(-)
+> -----Original Message-----
+> From: git-owner@vger.kernel.org 
+> [mailto:git-owner@vger.kernel.org] On Behalf Of Manlio Perillo
+> Sent: Wednesday, January 30, 2013 1:24 PM
+> To: Marc Khouzam
+> Cc: 'Junio C Hamano'; 'Michael J Gruber'; 'wookietreiber'; 
+> 'git@vger.kernel.org'
+> Subject: Re: [feature request] git add completion should 
+> exclude staged content
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Il 30/01/2013 15:06, Marc Khouzam ha scritto:
+> > [...]
+> >> I will try to update the patch, with your latest suggestions (avoid
+> >> tricky POSIX shell syntax, and CDPATH issue - if I remember 
+> >> correctly),
+> >> and with an update for the t/t9902-completion.sh test (that I 
+> >> completely
+> >> missed).
+> > 
+> > Hi Manlio,
+> > 
+> 
+> Hi.
+> 
+> > I'm trying to update git-completion.tcsh to work properly with
+> > your nice new completion feature.  But I'm having trouble with 
+> > the missing '/' at the end of directories.
+> > 
+> > The new logic in git-completion.bash tells bash that 'filenames'
+> > completion is ongoing so bash will add a '/' after directories.
+> > Sadly, tcsh won't do that, so it would be simpler if
+> > git-completion.bash added the '/' itself.  I looked at the 
+> > git-completion.bash script changes and I noticed that for 
+> > bash version < 4, you have to add the '/' yourself.
+> 
+> The compatible version is not only required for Bash; you can 
+> use it for
+> other shells.
+> 
+> Try to redefine the __git_index_file_list_filter function to use the
+> version that adds a slash to directory names.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 915c0b7..70db646 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -36,7 +36,7 @@ static int marked;
- #define MAX_IN_VAIN 256
- 
- static struct commit_list *rev_list;
--static int non_common_revs, multi_ack, use_sideband;
-+static int non_common_revs, multi_ack, use_sideband, allow_tip_sha1_in_want;
- 
- static void rev_list_push(struct commit *commit, int mark)
- {
-@@ -563,6 +563,21 @@ static void filter_refs(struct fetch_pack_args *args,
- 		}
- 	}
- 
-+	/* Append unmatched requests to the list */
-+	if (allow_tip_sha1_in_want) {
-+		for (i = 0; i < nr_sought; i++) {
-+			ref = sought[i];
-+			if (ref->matched)
-+				continue;
-+			if (get_sha1_hex(ref->name, ref->old_sha1))
-+				continue;
-+
-+			ref->matched = 1;
-+			*newtail = ref;
-+			ref->next = NULL;
-+			newtail = &ref->next;
-+		}
-+	}
- 	*refs = newlist;
- }
- 
-@@ -803,6 +818,11 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 			fprintf(stderr, "Server supports side-band\n");
- 		use_sideband = 1;
- 	}
-+	if (server_supports("allow-tip-sha1-in-want")) {
-+		if (args->verbose)
-+			fprintf(stderr, "Server supports allow-tip-sha1-in-want\n");
-+		allow_tip_sha1_in_want = 1;
-+	}
- 	if (!server_supports("thin-pack"))
- 		args->use_thin_pack = 0;
- 	if (!server_supports("no-progress"))
-diff --git a/remote.c b/remote.c
-index 1b7828d..1118d05 100644
---- a/remote.c
-+++ b/remote.c
-@@ -15,6 +15,7 @@ static struct refspec s_tag_refspec = {
- 	0,
- 	1,
- 	0,
-+	0,
- 	"refs/tags/*",
- 	"refs/tags/*"
- };
-@@ -565,9 +566,13 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
- 		flags = REFNAME_ALLOW_ONELEVEL | (is_glob ? REFNAME_REFSPEC_PATTERN : 0);
- 
- 		if (fetch) {
-+			unsigned char unused[40];
-+
- 			/* LHS */
- 			if (!*rs[i].src)
- 				; /* empty is ok; it means "HEAD" */
-+			else if (llen == 40 && !get_sha1_hex(rs[i].src, unused))
-+				rs[i].exact_sha1 = 1; /* ok */
- 			else if (!check_refname_format(rs[i].src, flags))
- 				; /* valid looking ref is ok */
- 			else
-@@ -1495,7 +1500,12 @@ int get_fetch_map(const struct ref *remote_refs,
- 	} else {
- 		const char *name = refspec->src[0] ? refspec->src : "HEAD";
- 
--		ref_map = get_remote_ref(remote_refs, name);
-+		if (refspec->exact_sha1) {
-+			ref_map = alloc_ref(name);
-+			get_sha1_hex(name, ref_map->old_sha1);
-+		} else {
-+			ref_map = get_remote_ref(remote_refs, name);
-+		}
- 		if (!missing_ok && !ref_map)
- 			die("Couldn't find remote ref %s", name);
- 		if (ref_map) {
-diff --git a/remote.h b/remote.h
-index 251d8fd..f7b08f1 100644
---- a/remote.h
-+++ b/remote.h
-@@ -62,6 +62,7 @@ struct refspec {
- 	unsigned force : 1;
- 	unsigned pattern : 1;
- 	unsigned matching : 1;
-+	unsigned exact_sha1 : 1;
- 
- 	char *src;
- 	char *dst;
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 852efb6..522056f 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1037,6 +1037,40 @@ test_expect_success 'push --prune refspec' '
- 	! check_push_result $the_first_commit tmp/foo tmp/bar
- '
- 
-+test_expect_success 'fetch exact SHA1' '
-+	mk_test heads/master hidden/one &&
-+	git push testrepo master:refs/hidden/one &&
-+	(
-+		cd testrepo &&
-+		git config transfer.hiderefs refs/hidden
-+	) &&
-+	check_push_result $the_commit hidden/one &&
-+
-+	mk_child child &&
-+	(
-+		cd child &&
-+
-+		# make sure $the_commit does not exist here
-+		git repack -a -d &&
-+		git prune &&
-+		test_must_fail git cat-file -t $the_commit &&
-+
-+		# fetching the hidden object should fail by default
-+		test_must_fail git fetch -v ../testrepo $the_commit:refs/heads/copy &&
-+		test_must_fail git rev-parse --verify refs/heads/copy &&
-+
-+		# the server side can allow it to succeed
-+		(
-+			cd ../testrepo &&
-+			git config uploadpack.allowtipsha1inwant true
-+		) &&
-+
-+		git fetch -v ../testrepo $the_commit:refs/heads/copy &&
-+		result=$(git rev-parse --verify refs/heads/copy) &&
-+		test "$the_commit" = "$result"
-+	)
-+'
-+
- test_expect_success 'push to update a hidden ref' '
- 	mk_test heads/master hidden/one hidden/two hidden/three &&
- 	(
--- 
-1.8.1.2.589.ga9b91ac
+I hadn't thought of that!
+Although I would prefer not to have special cases like that,
+it does work well.
+Thanks!
+
+> > I also noticed the following comment:
+> > 
+> >  # XXX if we append a slash to directory names when using
+> >  # `compopt -o filenames`, Bash will append another slash.
+> >  # This is pretty stupid, and this the reason why we have to
+> >  # define a compatible version for this function.
+> > 
+> > So I gather you would rather add a '/' all the time to deal
+> > with older bash version transparently.  This would be great
+> > for tcsh also.  I'm trying to figure out
+> > when bash mis-behaves when you add the '/' all the time?
+> > When I try it (I have bash 4.1.5(1)-release) I didn't run
+> > into the double slash problem you mention in the comment.
+> > 
+> 
+> I'm using the same version: 4.1.5(1), on Debian stable.
+> 
+> > I'm hoping we can straighten this out and have
+> > git-completion.bash add the '/' all the time.
+> > 
+> > Could you explain when the problem happens?
+> > 
+> 
+> Bash 4.1.5(1) always adds an additional slash for directories.
+> I have tested it right now: change the filter function to use the
+> compatible version:
+> 
+> __git_index_file_list_filter ()
+> {
+> 	# Default to Bash >= 4.x
+> 	__git_index_file_list_filter_compat
+> }
+> 
+> 
+> Then running `git add <TAB>` inside the git repository, I get 
+> this file
+> completion list:
+> 
+> $ git add <TAB>
+> contrib//
+
+Ok, I see.  The double-slash is visible in the completion list
+but it does not appear on the command-line when bash automatically
+adds it.  So if you typed 
+  git add contri<tab>
+you will properly get
+  git add contrib/
+That is the case I was looking at.
+I understand why you cannot put that second slash in the code now.
+
+Thanks
+
+> 
+> 
+> > Thanks
+> > 
+> 
+> 
+> Thanks to you
+> 
+> Manlio
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.10 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> 
+> iEYEARECAAYFAlEJZUMACgkQscQJ24LbaUQUGACgkMG/bZrJKBzlZ8toEQwmggQX
+> m9kAn2ATJbSp87kOkoCCc00eHmh71r3y
+> =D9iu
+> -----END PGP SIGNATURE-----
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
