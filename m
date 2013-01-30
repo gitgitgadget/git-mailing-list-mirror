@@ -1,69 +1,165 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 3/6] introduce pack metadata cache files
-Date: Wed, 30 Jan 2013 08:30:57 +0700
-Message-ID: <CACsJy8Af9g9Tdqr0dXyucq-M2aP5U2HvX3ANSsabqtuX=w4Q0w@mail.gmail.com>
-References: <20130129091434.GA6975@sigill.intra.peff.net> <20130129091555.GC9999@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 30 02:31:50 2013
+From: Chris Hiestand <chiestand@salk.edu>
+Subject: Re: [RFC v2] git-multimail: a replacement for post-receive-email
+Date: Tue, 29 Jan 2013 18:27:17 -0800
+Message-ID: <4D9815B7-983E-4963-875D-DB0059FFD811@salk.edu>
+References: <5104E738.602@alum.mit.edu> <CACBZZX7RA7dLcFhaHmmK97Kxfa9zLmozfdx5s9C=29DJOceq-A@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_1089C14D-27CC-4613-9EE5-88B7159B5F65"; protocol="application/pkcs7-signature"; micalg=sha1
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 03:27:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0MWk-0007Ec-9I
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 02:31:50 +0100
+	id 1U0NOn-0001BG-43
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 03:27:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752712Ab3A3Bb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 20:31:29 -0500
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:38863 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752172Ab3A3Bb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 20:31:27 -0500
-Received: by mail-ob0-f176.google.com with SMTP id v19so1124824obq.21
-        for <git@vger.kernel.org>; Tue, 29 Jan 2013 17:31:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=WPkE/qQwki2TI2h5VPXQE2Aex6RaAxQdtU92QpazDe4=;
-        b=mPEukO/LrBp/5SEjlYP5sZ0hINTq/+5eatncCaSfvh46tLjsmOQyYYrC42tJgGqsCR
-         ZcPG/Z6p7zs/KyA2btg0NpsioWPO1kecXavo6wriWHmvHVoVkBrkkPHrWZS07Bi3CaT0
-         IDDtZfKGdMNxWz+U6ObaNPTgZK+oq/v1TEbF11A+vJs0d7I1zSXhLUjYE9NBfrcEzRgz
-         6QGbr7aMmYyIyQ/6JL3klrar92Us99jBLikE0kgPHKeUc6pXdT/y8rBdAHBJKa7bMRon
-         LM9+13NlH/fyn3yZSMQ1KkaminQE8BHaBlSvS/bHwrvTl7EIy5CtPiCXeF8lA0dhsXxz
-         JJZg==
-X-Received: by 10.60.8.131 with SMTP id r3mr2416481oea.14.1359509487390; Tue,
- 29 Jan 2013 17:31:27 -0800 (PST)
-Received: by 10.182.118.229 with HTTP; Tue, 29 Jan 2013 17:30:57 -0800 (PST)
-In-Reply-To: <20130129091555.GC9999@sigill.intra.peff.net>
+	id S1752937Ab3A3C1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 21:27:19 -0500
+Received: from riis.snl.salk.edu ([198.202.70.55]:51421 "EHLO
+	riis.snl.salk.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752361Ab3A3C1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 21:27:18 -0500
+Received: from cerberus.dhcp.snl.salk.edu (Cerberus.dhcp.snl.salk.edu [198.202.70.246])
+	(Authenticated sender: chiestand)
+	by riis.snl.salk.edu (Postfix) with ESMTPSA id 0956EEE004;
+	Tue, 29 Jan 2013 18:27:18 -0800 (PST)
+In-Reply-To: <CACBZZX7RA7dLcFhaHmmK97Kxfa9zLmozfdx5s9C=29DJOceq-A@mail.gmail.com>
+X-Mailer: Apple Mail (2.1499)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214987>
 
-On Tue, Jan 29, 2013 at 4:15 PM, Jeff King <peff@peff.net> wrote:
-> +static void write_meta_header(struct metapack_writer *mw, const char *id,
-> +                             uint32_t version)
-> +{
-> +       version = htonl(version);
-> +
-> +       sha1write(mw->out, "META", 4);
-> +       sha1write(mw->out, "\0\0\0\1", 4);
-> +       sha1write(mw->out, mw->pack->sha1, 20);
-> +       sha1write(mw->out, id, 4);
-> +       sha1write(mw->out, &version, 4);
-> +}
 
-Because you go with all-commit-info-in-one-file, perhaps we should
-have an uint32_t bitmap to describe what info this cache contains? So
-far we need 4 bits for date, tree, 1st and 2nd parents (yes, I still
-want to check if storing 1-parent commits only gains us anything on
-some other repos). When commit count comes, it can take the fifth bit.
-Reachability bitmap offsets can take the sixth bit, if we just append
-the bitmaps at the end of the same file.
--- 
-Duy
+--Apple-Mail=_1089C14D-27CC-4613-9EE5-88B7159B5F65
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=iso-8859-1
+
+On Jan 29, 2013, at 7:25 AM, =C6var Arnfj=F6r=F0 Bjarmason =
+<avarab@gmail.com> wrote:
+
+> On Sun, Jan 27, 2013 at 9:37 AM, Michael Haggerty =
+<mhagger@alum.mit.edu> wrote:
+>> A while ago, I submitted an RFC for adding a new email notification
+>> script to "contrib" [1].  The reaction seemed favorable and it was
+>> suggested that the new script should replace post-receive-email =
+rather
+>> than be added separately, ideally with some kind of migration =
+support.
+>=20
+> I just want to say since I think this thread hasn't been getting the
+> attention it deserves: I'm all for this. I've used git-multimail and
+> it's a joy to configure and extend compared to the existing hacky
+> shellscript.
+
+
+This seems good to me as long as it's okay for git contrib to depend on =
+python.
+I've started testing git-multimail in my environment.
+
+
+--Apple-Mail=_1089C14D-27CC-4613-9EE5-88B7159B5F65
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIO1TCCBIow
+ggNyoAMCAQICECf06hH0eobEbp27bqkXBwcwDQYJKoZIhvcNAQEFBQAwbzELMAkGA1UEBhMCU0Ux
+FDASBgNVBAoTC0FkZFRydXN0IEFCMSYwJAYDVQQLEx1BZGRUcnVzdCBFeHRlcm5hbCBUVFAgTmV0
+d29yazEiMCAGA1UEAxMZQWRkVHJ1c3QgRXh0ZXJuYWwgQ0EgUm9vdDAeFw0wNTA2MDcwODA5MTBa
+Fw0yMDA1MzAxMDQ4MzhaMIGuMQswCQYDVQQGEwJVUzELMAkGA1UECBMCVVQxFzAVBgNVBAcTDlNh
+bHQgTGFrZSBDaXR5MR4wHAYDVQQKExVUaGUgVVNFUlRSVVNUIE5ldHdvcmsxITAfBgNVBAsTGGh0
+dHA6Ly93d3cudXNlcnRydXN0LmNvbTE2MDQGA1UEAxMtVVROLVVTRVJGaXJzdC1DbGllbnQgQXV0
+aGVudGljYXRpb24gYW5kIEVtYWlsMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsjmF
+pPJ9q0E7YkY3rs3BYHW8OWX5ShpHornMSMxqmNVNNRm5pELlzkniii8efNIxB8dOtINknS4p1aJk
+xIW9hVE1eaROaJB7HHqkkqgX8pgV8pPMyaQylbsMTzC9mKALi+VuG6JG+ni8om+rWV6lL8/K2m2q
+L+usobNqqrcuZzWLeeEeaYji5kbNoKXqvgvOdjp6Dpvq/NonWz1zHyLmSGHGTPNpsaguG7bUMSAs
+vIKKjqQOpdeJQ/wWWq8dcdcRWdq6hw2v+vPhwvCkxWeM1tZUOt4KpLoDd7NlyP0e03RiqhjKaJMe
+oYV+9Udly/hNVyh00jT/MLbu9mIwFIws6wIDAQABo4HhMIHeMB8GA1UdIwQYMBaAFK29mHo0tCb3
++sQmVO8DveAky1QaMB0GA1UdDgQWBBSJgmd9xJ0mcABLtFBIfN49rgRufTAOBgNVHQ8BAf8EBAMC
+AQYwDwYDVR0TAQH/BAUwAwEB/zB7BgNVHR8EdDByMDigNqA0hjJodHRwOi8vY3JsLmNvbW9kb2Nh
+LmNvbS9BZGRUcnVzdEV4dGVybmFsQ0FSb290LmNybDA2oDSgMoYwaHR0cDovL2NybC5jb21vZG8u
+bmV0L0FkZFRydXN0RXh0ZXJuYWxDQVJvb3QuY3JsMA0GCSqGSIb3DQEBBQUAA4IBAQAZ2IkRbyis
+pgCi54fBm5AD236hEv0e8+LwAamUVEJrmgnEoG3XkJIEA2Z5Q3H8+G+v23ZF4jcaPd3kWQR4rBz0
+g0bzes9bhHIt5UbBuhgRKfPLSXmHPLptBZ2kbWhPrXIUNqi5sf2/z3/wpGqUNVCPz4FtVbHdWTBK
+322gnGQfSXzvNrv042n0+DmPWq1LhTq3Du3Tzw1EovsEv+QvcI4l+1pUBrPQxLxtjftzMizpm4Qk
+LdZ/kXpoAlAfDj9N6cz1u2fo3BwuO/xOzf4CjuOoEwqlJkRl6RDyTVKnrtw+ymsyXEFs/vVdoOr/
+0fqbhlhtPZZH5f4ulQTCAMyOofK7MIIFGjCCBAKgAwIBAgIQbRnqpxlPajMi5iIyeqpx3jANBgkq
+hkiG9w0BAQUFADCBrjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAlVUMRcwFQYDVQQHEw5TYWx0IExh
+a2UgQ2l0eTEeMBwGA1UEChMVVGhlIFVTRVJUUlVTVCBOZXR3b3JrMSEwHwYDVQQLExhodHRwOi8v
+d3d3LnVzZXJ0cnVzdC5jb20xNjA0BgNVBAMTLVVUTi1VU0VSRmlyc3QtQ2xpZW50IEF1dGhlbnRp
+Y2F0aW9uIGFuZCBFbWFpbDAeFw0xMTA0MjgwMDAwMDBaFw0yMDA1MzAxMDQ4MzhaMIGTMQswCQYD
+VQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRow
+GAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAkoSEW0tXmNReL4uk4UDIo1NYX2Zl8TJO958yfVXQeExVt0KU4PkncQfFxmmkuTLE8UAakMwn
+VmJ/F7Vxaa7lIBvky2NeYMqiQfZq4aP/uN8fSG1lQ4wqLitjOHffsReswtqCAtbUMmrUZ28gE49c
+NfrlVICv2HEKHTcKAlBTbJUdqRAUtJmVWRIx/wmi0kzcUtve4kABW0ho3cVKtODtJB86r3FfB+Os
+vxQ7sCVxaD30D9YXWEYVgTxoi4uDD216IVfmNLDbMn7jSuGlUnJkJpFOpZIP/+CxYP0ab2hRmWON
+GoulzEKbm30iY9OpoPzOnpDfRBn0XFs1uhbzp5v/wQIDAQABo4IBSzCCAUcwHwYDVR0jBBgwFoAU
+iYJnfcSdJnAAS7RQSHzePa4Ebn0wHQYDVR0OBBYEFHoTTgB0W8Z4Y2QnwS/ioFu8ecV7MA4GA1Ud
+DwEB/wQEAwIBBjASBgNVHRMBAf8ECDAGAQH/AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBYBgNVHR8E
+UTBPME2gS6BJhkdodHRwOi8vY3JsLnVzZXJ0cnVzdC5jb20vVVROLVVTRVJGaXJzdC1DbGllbnRB
+dXRoZW50aWNhdGlvbmFuZEVtYWlsLmNybDB0BggrBgEFBQcBAQRoMGYwPQYIKwYBBQUHMAKGMWh0
+dHA6Ly9jcnQudXNlcnRydXN0LmNvbS9VVE5BZGRUcnVzdENsaWVudF9DQS5jcnQwJQYIKwYBBQUH
+MAGGGWh0dHA6Ly9vY3NwLnVzZXJ0cnVzdC5jb20wDQYJKoZIhvcNAQEFBQADggEBAIXWvnhXVW0z
+f0RS/kLVBqgBA4CK+w2y/Uq/9q9BSfUbWsXSrRtzbj7pJnzmTJjBMCjfy/tCPKElPgp11tA9OYZm
+0aGbtU2bb68obB2v5ep0WqjascDxdXovnrqTecr+4pEeVnSy+I3T4ENyG+2P/WA5IEf7i686ZUg8
+mD2lJb+972DgSeUWyOs/Q4Pw4O4NwdPNM1+b0L1garM7/vrUyTo8H+2b/5tJM75CKTmD7jNpLoKd
+RU2oadqAGx490hpdfEeZpZsIbRKZhtZdVwcbpzC+S0lEuJB+ytF5OOu0M/qgOl0mWJ5hVRi0IdWZ
+1eBDQEIwvuql55TSsP7zdfl/bucwggUlMIIEDaADAgECAhAJi8lShk8jTNMgVo7nXaDGMA0GCSqG
+SIb3DQEBBQUAMIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAw
+DgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09N
+T0RPIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTEyMDgxNDAw
+MDAwMFoXDTEzMDgxNDIzNTk1OVowIzEhMB8GCSqGSIb3DQEJARYSY2hpZXN0YW5kQHNhbGsuZWR1
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtqz/Yy0csi37dTvyoNn8MNtPRvG2D7E3
+pwSsuXFnBML17AZU1wpAKsQpggGoznvsFQvvOzJyWRBWKdF0deds1xpFGhe7+/GzMhnQKwFDeVZs
+9hTXKWEERVVaBmyIbj0BP3D5VrUo/7eaybMALnxEjrteg9jyuFTSrGDc8qJ+c1Ps5vlH0v+Fvp4V
+HoI8bW/+auu4mNT1E0nzpm3eWCsF1Rif2FVDetoDaArW1uTJh+g6oV3d1eJeGiqRnc+k7Q+ShfHj
+wehOQT7dvYRE1CqArv69m2BBue+gHXQXWFgfaHx7/9mJapJG/ALpmqaHU8x9bMaBcZcIQHqEQV9E
+3yOWpQIDAQABo4IB4jCCAd4wHwYDVR0jBBgwFoAUehNOAHRbxnhjZCfBL+KgW7x5xXswHQYDVR0O
+BBYEFGOY5NfMgoO8duC6gWVGeskIkDbrMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMCAG
+A1UdJQQZMBcGCCsGAQUFBwMEBgsrBgEEAbIxAQMFAjARBglghkgBhvhCAQEEBAMCBSAwRgYDVR0g
+BD8wPTA7BgwrBgEEAbIxAQIBAQEwKzApBggrBgEFBQcCARYdaHR0cHM6Ly9zZWN1cmUuY29tb2Rv
+Lm5ldC9DUFMwVwYDVR0fBFAwTjBMoEqgSIZGaHR0cDovL2NybC5jb21vZG9jYS5jb20vQ09NT0RP
+Q2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNybDCBiAYIKwYBBQUHAQEEfDB6
+MFIGCCsGAQUFBzAChkZodHRwOi8vY3J0LmNvbW9kb2NhLmNvbS9DT01PRE9DbGllbnRBdXRoZW50
+aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3J0MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5jb21v
+ZG9jYS5jb20wHQYDVR0RBBYwFIESY2hpZXN0YW5kQHNhbGsuZWR1MA0GCSqGSIb3DQEBBQUAA4IB
+AQCHpk5ZpwS5faNtGTJxlHTy9hQm4NwJZhatrTz7xq23Q93RjLxwVn9tFG/YuPB1iN1aEA1DZWwP
+Xi5OMbYxEb4Icw7/QGbJGwdHn6IDkU6IR2UOx5RzQJ84Fl6jUKCvlnJ3/UbZuzYG3fCyqi5GhUk1
+PN4l/qwbxmsZKLwZep45lrbmea5XmqIO5NB4F02NLFYZWmEByKEi92aHLfgsvULq1CfNJMKIIYD2
+/AW96vDQmk/liJHld+gkQQkIlTTzZmOYbHKtkeN8B8kFkB5OmdUZJvWoDMDMLLHhPkfRBBYuS7WO
+jQY521z50tPATaS3yDZUYlcFyXjns8Wew/gv/XT5MYIDqzCCA6cCAQEwgagwgZMxCzAJBgNVBAYT
+AkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNV
+BAoTEUNPTU9ETyBDQSBMaW1pdGVkMTkwNwYDVQQDEzBDT01PRE8gQ2xpZW50IEF1dGhlbnRpY2F0
+aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEAmLyVKGTyNM0yBWjuddoMYwCQYFKw4DAhoFAKCCAdcw
+GAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTMwMTMwMDIyNzE4WjAj
+BgkqhkiG9w0BCQQxFgQU18y7dHgZRZGAVo7k3cZQL0RW1xgwgbkGCSsGAQQBgjcQBDGBqzCBqDCB
+kzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2Fs
+Zm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxOTA3BgNVBAMTMENPTU9ETyBDbGllbnQg
+QXV0aGVudGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIQCYvJUoZPI0zTIFaO512gxjCBuwYL
+KoZIhvcNAQkQAgsxgauggagwgZMxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNo
+ZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMTkwNwYD
+VQQDEzBDT01PRE8gQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEAmL
+yVKGTyNM0yBWjuddoMYwDQYJKoZIhvcNAQEBBQAEggEAnByhsCu0DPXsXUGQEq0jsySVEGOYrHVe
+WO57Y/OPyPGsd2WbfaH8ZwCg3gBit07APmY2g45SDIpguZ+JesPNreGOqcSl7ipF1AztTegQWaem
+xBjFdyOGfRfHFJOUsvr7aTxhXzG3aiOHHvku3/VrQblutS/4q/+n1k4uI4rZTbN/GCSQ8AEDR0IO
++3qP8NMolWWdxR7UYMdesOrBxixtJogTln30COdozSP3KlHXyAtE98ysiDYPUIicFsmpMVPD011K
+FQJ5jXthSHkoKjkmOcFOZAmif7SP/Q0DhkCWSQzjAb4JAEdbGUGSV9RpM25s4QUXhZm+WotZqE8A
+9GbTQAAAAAAAAA==
+
+--Apple-Mail=_1089C14D-27CC-4613-9EE5-88B7159B5F65--
