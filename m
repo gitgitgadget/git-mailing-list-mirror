@@ -1,76 +1,74 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: What's cooking in git.git (Jan 2013, #10; Sun, 27)
-Date: Wed, 30 Jan 2013 07:34:20 -0500
-Message-ID: <20130130123420.GA3793@padd.com>
-References: <7vlibdyfdt.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
+From: Max Horn <max@quendi.de>
+Subject: Re: Anybody know a website with up-to-date git documentation?
+Date: Wed, 30 Jan 2013 14:27:51 +0100
+Message-ID: <72077344-E4EF-43E1-A9E0-A907C423616F@quendi.de>
+References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de> <20130130115439.GH1342@serenity.lan> <CA+xP2SbWKucCCPq3sS8Y2DQQM129urrM7-QzeDYju4+wA_-aUg@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 13:34:46 2013
+To: Sebastian Staudt <koraktor@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 14:28:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0WsH-0000AZ-LM
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 13:34:45 +0100
+	id 1U0Xi3-00062Y-68
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 14:28:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753156Ab3A3MeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 07:34:25 -0500
-Received: from honk.padd.com ([74.3.171.149]:57932 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752032Ab3A3MeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 07:34:23 -0500
-Received: from arf.padd.com (unknown [50.52.174.88])
-	by honk.padd.com (Postfix) with ESMTPSA id B8CF62F3F;
-	Wed, 30 Jan 2013 04:34:22 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 7952F22EAB; Wed, 30 Jan 2013 07:34:20 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vlibdyfdt.fsf@alter.siamese.dyndns.org>
+	id S1754019Ab3A3N1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 08:27:53 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:48018 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753674Ab3A3N1w convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 08:27:52 -0500
+Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1U0Xhf-0000b3-8w; Wed, 30 Jan 2013 14:27:51 +0100
+In-Reply-To: <CA+xP2SbWKucCCPq3sS8Y2DQQM129urrM7-QzeDYju4+wA_-aUg@mail.gmail.com>
+X-Mailer: Apple Mail (2.1283)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1359552472;326dc7fc;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215015>
 
-gitster@pobox.com wrote on Sun, 27 Jan 2013 22:45 -0800:
-> * pw/git-p4-on-cygwin (2013-01-26) 21 commits
->  - git p4: introduce gitConfigBool
->  - git p4: avoid shell when calling git config
->  - git p4: avoid shell when invoking git config --get-all
->  - git p4: avoid shell when invoking git rev-list
->  - git p4: avoid shell when mapping users
->  - git p4: disable read-only attribute before deleting
->  - git p4 test: use test_chmod for cygwin
->  - git p4: cygwin p4 client does not mark read-only
->  - git p4 test: avoid wildcard * in windows
->  - git p4 test: use LineEnd unix in windows tests too
->  - git p4 test: newline handling
->  - git p4: scrub crlf for utf16 files on windows
->  - git p4: remove unreachable windows \r\n conversion code
->  - git p4 test: translate windows paths for cygwin
->  - git p4 test: start p4d inside its db dir
->  - git p4 test: use client_view in t9806
->  - git p4 test: avoid loop in client_view
->  - git p4 test: use client_view to build the initial client
->  - git p4: generate better error message for bad depot path
->  - git p4: remove unused imports
->  - git p4: temp branch name should use / even on windows
+Hi Sebastian,
+
+On 30.01.2013, at 12:56, Sebastian Staudt wrote:
+
+> Hello Max,
 > 
->  Improve "git p4" on Cygwin.  The cover letter said it is not yet
->  ready for full Windows support so I won't move this to 'next' until
->  told by the author (the area maintainer) otherwise.
+> git-scm.com is the best source and it's not outdated.
 
-The series is ready as is to support Cygwin platforms, and
-thus useful to people who would use git on windows via cygwin.
+Then it seems you are using the word "outdated" in a different way than me which I don't understand :-). Sure, it strives to be up-to-date, but fact is that it fails to do that, due to a bug (I guess). The end result (failure to update at all, vs. failure in an attempted update) sadly amount to the same.
 
-Future work will be to add support for Msysgit.  That work
-will need much of the changes in this Cygwin series as well.
-It is more complicated since there's no native python for
-Msysgit (yet).
+> It gets an
+> update after every single release of Git.
+> See e.g. http://git-scm.com/docs/git-config which was updated in the
+> current stable version.
+> It seems that git-remote-helper's documentation was just not updated
+> since version 1.7.12.3.
 
-I think the Cygwin changes should go in now.
+Yes, and it is not alone in that, which makes the site somewhat unreliable, sadly. Some more examples of pages tuck at version 1.7.12.3 and showing outdated content:
 
-		-- Pete
+http://git-scm.com/docs/git-log
+http://git-scm.com/docs/git-merge
+http://git-scm.com/docs/git-merge-base
+http://git-scm.com/docs/git-mergetool
+http://git-scm.com/docs/git-reset
+http://git-scm.com/docs/git-rm
+http://git-scm.com/docs/git-status
+http://git-scm.com/docs/git-symbolic-ref
+
+I did not bother to check every single page, though, and I am pretty sure there are plenty more. Because there definitely is a plethora of other pages that are stuck at 1.7.12.3. Several of them still show the latest version due to not having had updates since the 1.7.12.3, but that is not always easy to tell due to included files (e.g. git-log.txt was not changed v1.7.12.2, but it includes rev-list-options.txt which was last changed in 1.8.1).
+
+
+So, yeah, I do think git-scm.com is outdated -- in the sense that for many pages, it does not show the latest officially released version of the page.
+
+
+Best regards,
+Max
