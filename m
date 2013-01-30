@@ -1,69 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
-Date: Wed, 30 Jan 2013 07:57:29 -0800
-Message-ID: <7v7gmumzo6.fsf@alter.siamese.dyndns.org>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
- <7vvcafojf4.fsf@alter.siamese.dyndns.org>
- <20130130074306.GA17868@sigill.intra.peff.net>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Anybody know a website with up-to-date git documentation?
+Date: Wed, 30 Jan 2013 21:29:31 +0530
+Message-ID: <CAMK1S_i+ML+HuTRuox5rU4bsV0+xoFLWpK63WrdXuzhgyHJbrA@mail.gmail.com>
+References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
+	<20130130115439.GH1342@serenity.lan>
+	<71A3AA8C-DBA2-44F7-9B69-AEDB81BB0906@quendi.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michal Nazarewicz <mpn@google.com>, git@vger.kernel.org,
-	Krzysztof Mazur <krzysiek@podlesie.net>,
-	Michal Nazarewicz <mina86@mina86.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 30 16:57:55 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Wed Jan 30 16:59:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0a2s-0007o3-Di
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 16:57:54 +0100
+	id 1U0a4r-0000Hs-43
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 16:59:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755273Ab3A3P5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 10:57:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42197 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753733Ab3A3P5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 10:57:31 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 860C6B66A;
-	Wed, 30 Jan 2013 10:57:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IRkicqg3xwq024BYbKWEnnHK+rs=; b=Gccb+N
-	SouO6lSx6fy/8EDs/4wfQQS5+PjJwLFUI960jvC/6GIsrMkF/NzU5y/G5u5gKnx/
-	oqk6MtXBleQ3HRV3Za5rz66Vl9xO5RsTAizSdivGfuVNqGSoT3es+2kvE5ayWcoq
-	fLEigURwUo2za32uwORTs5XRfMUljsCJVgyME=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GtYDZBuGOlCYjjROnoAv4ok2sbq/6XDx
-	0F+i3ksssH61WARXlcfnVdrZCun6BMO9mFQL2AlIoHY2aOWzyQNwLM/1XGk58UZQ
-	B15s473c2Z6QOrixRDv8s7GcOxomfQc5GHLYoUHWR2g1ne3D7ZwP/tm14TlMjmze
-	dkDxsQUBA14=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79383B669;
-	Wed, 30 Jan 2013 10:57:31 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F19ACB663; Wed, 30 Jan 2013
- 10:57:30 -0500 (EST)
-In-Reply-To: <20130130074306.GA17868@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 30 Jan 2013 02:43:06 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C0E02554-6AF5-11E2-A12A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755664Ab3A3P7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 10:59:35 -0500
+Received: from mail-we0-f170.google.com ([74.125.82.170]:42625 "EHLO
+	mail-we0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752876Ab3A3P7d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 10:59:33 -0500
+Received: by mail-we0-f170.google.com with SMTP id z53so1327862wey.15
+        for <git@vger.kernel.org>; Wed, 30 Jan 2013 07:59:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=TulWGkjhAL5NMfp7AoEvC/zNiaklEvBXpZ46OkdnbTA=;
+        b=Y6KIxxB7UOY/9CsKT9CgX6ZzpHDYdHkZYGNkzew4TmnVKBPU4xCt+1i/j+JFrxoo5q
+         7swa6FZaXj8/o3bf+9cyNyB7oY4mn/ykI+CVFsaY5XwIBvW7acgFRdjaWs0bAss4rtHV
+         7BcMlYMrIKh0afEIkfV3WfYFsy716fHEVJYO0Rq4PCI/IO1ebVZa/hElcdWZqrDtpjzT
+         nbf1Gwf6zARA2XFco25GCjmQoS7CXsfoUvOV5KE0e8YoJRjeSIfYlt147QoIWpcVawDZ
+         UuWXgnCyzU5TYISO3oFyXMD8cyACIwbBubldnMVEw0QBGpHUn/E65NikYQntpAhLgkSl
+         Webw==
+X-Received: by 10.180.97.68 with SMTP id dy4mr9617265wib.7.1359561571689; Wed,
+ 30 Jan 2013 07:59:31 -0800 (PST)
+Received: by 10.194.133.100 with HTTP; Wed, 30 Jan 2013 07:59:31 -0800 (PST)
+In-Reply-To: <71A3AA8C-DBA2-44F7-9B69-AEDB81BB0906@quendi.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215028>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jan 30, 2013 at 7:28 PM, Max Horn <max@quendi.de> wrote:
+>
+> On 30.01.2013, at 12:54, John Keeping wrote:
+>
+>> On Wed, Jan 30, 2013 at 12:46:47PM +0100, Max Horn wrote:
+>>> does anybody know a website where one can view that latest git
+>>> documentation? Here, "latest" means "latest release" (though being
+>>> also able to access it for "next" would of course be a nice bonus,
+>>> likewise for older versions). While I do have those docs on my local
+>>> machine, I would like to access them online, too (e.g. easier to
+>>> pointer people at this, I can access it from other machines, etc.).
+>>
+>> How about http://git-htmldocs.googlecode.com/git/ ?
+>>
+>> It's just a directory listing of the git-htmldocs repository that Junio
+>> maintains - the latest update was yesterday: Autogenerated HTML docs for
+>> v1.8.1.2-422-g08c0e.
+>>
+>> [I didn't know Google Code let you view the repository like that, but I
+>> got there by clicking the "raw" link against one of the files so I
+>> assume it's not likely to go away.]
+>>
+>
+> Thanks John, that looks pretty good!
+>
+> In addition, I just discovered
+>
+>    http://manned.org/git-remote-helpers/2b9e4c86
+>
+> which contains git docs from Arch Linux, Debian, FreeBSD and Ubuntu packages. And since Arch tends to have the latest, so does manned.org. And best, it even lets me browser to older versions of a file.
+>
+> So, taken together, I guess that solves my problem -- with John's link, I can see the bleeding edge versions, with manned.org the latest released version (as soon as Arch Linux catches up, which seems to be pretty quick :-).
 
-> But it would probably make sense for send-email to support the existing
-> git-credential subsystem, so that it can take advantage of secure
-> system-specific storage. And that is where we should be pointing new
-> users. I think contrib/mw-to-git even has credential support written in
-> perl, so it would just need to be factored out to Git.pm.
-
-Yeah, that sounds like a neat idea.
+I'm curious... what's wrong with 'git checkout html' from the git repo
+and just browsing them using a web browser?
