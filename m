@@ -1,82 +1,109 @@
 From: "Gustavo L. de M. Chaves" <gnustavo@cpan.org>
-Subject: [PATCH 0/7] perl/Git.pm: a bunch of fixes for Windows
-Date: Wed, 30 Jan 2013 15:22:56 -0200
-Message-ID: <1359566583-19654-1-git-send-email-gnustavo@cpan.org>
+Subject: [PATCH 2/7] perl/Git.pm: set up command environment on Windows
+Date: Wed, 30 Jan 2013 15:22:58 -0200
+Message-ID: <1359566583-19654-3-git-send-email-gnustavo@cpan.org>
+References: <1359566583-19654-1-git-send-email-gnustavo@cpan.org>
 Cc: "Gustavo L. de M. Chaves" <gnustavo@cpan.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 30 18:23:35 2013
+X-From: git-owner@vger.kernel.org Wed Jan 30 18:23:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0bNk-0006Wu-AY
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 18:23:32 +0100
+	id 1U0bNq-0006ZD-41
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 18:23:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754690Ab3A3RXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 12:23:10 -0500
-Received: from mail-ye0-f174.google.com ([209.85.213.174]:34616 "EHLO
-	mail-ye0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754607Ab3A3RXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 12:23:08 -0500
-Received: by mail-ye0-f174.google.com with SMTP id m3so300746yen.19
-        for <git@vger.kernel.org>; Wed, 30 Jan 2013 09:23:08 -0800 (PST)
+	id S1754915Ab3A3RXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 12:23:14 -0500
+Received: from mail-yh0-f43.google.com ([209.85.213.43]:42372 "EHLO
+	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754607Ab3A3RXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 12:23:13 -0500
+Received: by mail-yh0-f43.google.com with SMTP id z6so302243yhz.30
+        for <git@vger.kernel.org>; Wed, 30 Jan 2013 09:23:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer
-         :x-gm-message-state;
-        bh=IDvubykrQulWGuB9TUW8TnzihnNForSG+Pl+bcdrkw8=;
-        b=JzIaw/OppBVbsGTuRFaaA7DzbzpkU4hPUo1lNmNNNhsRUTAoyKkrTSiU6Utz0oQK6B
-         32ROH991T4VXbz21lZQNV1TS27iFdXbMqQtRvav/nFsEPHf5WYCmCR+KEcEXubSILpFB
-         UN6quwwC0JNdcj+VU8r3EuTcuv3V8brAK2A+V/dxpts25YRG7vhcUVJ55R1728legaVR
-         JxGUEwitNrPXptohkbsjHrLrZ9qxqKeiH7caq0QZ/P0Z3m2r8neNMqW4Tq5RYQa3tFJs
-         c1Qi6TDSg91yoMing52TS40DV9XVcpWNbkx3XTibYHX8vnBBfLWVeDU+9dMo0aL9G7JC
-         To5Q==
-X-Received: by 10.236.131.211 with SMTP id m59mr6448648yhi.49.1359566587780;
-        Wed, 30 Jan 2013 09:23:07 -0800 (PST)
+         :in-reply-to:references:x-gm-message-state;
+        bh=OHpyMRtR3PS5Pv46Jc/EURcKoXnqVq4foxNvqLZWHSc=;
+        b=FsMa9wqf6pkhxBR3P59Xnbw2mGwHUEQZWAtVY/LEMCf1WPlaEhcbJhzDqBMjOVj80i
+         EDNm/dMeQLnU0ZvsKR0xEYJAxris5Q6jd8H9B/PPsZeXiKK6hQ1eSFScCvtSSfUCf8rm
+         pVXV8ujRL3Gw2/MCKDPKCBhh6Hj/TXhTtf+eAoL3hri+8s25EcSL+6qpCFvc6tPb/Ab/
+         OmQLBqGvVv41G80RyckmIIGG8Du8iwwYokwJMl5mSA2F74DsG/nGx9ZFzseyv4MVeHaf
+         sDNunCqKqLE+EKuyChtKKpcMKeYGX26OBzlgpDFkVgVqffOSfWtcAAT1WptRJcAe//UM
+         QcPw==
+X-Received: by 10.236.120.50 with SMTP id o38mr6569379yhh.100.1359566591561;
+        Wed, 30 Jan 2013 09:23:11 -0800 (PST)
 Received: from gnu.cpqd.com.br (fw-cpqd.cpqd.com.br. [189.112.183.66])
-        by mx.google.com with ESMTPS id q11sm1689802anp.13.2013.01.30.09.23.05
+        by mx.google.com with ESMTPS id q11sm1689802anp.13.2013.01.30.09.23.10
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 30 Jan 2013 09:23:06 -0800 (PST)
+        Wed, 30 Jan 2013 09:23:10 -0800 (PST)
 X-Mailer: git-send-email 1.7.12.464.g83379df.dirty
-X-Gm-Message-State: ALoCoQmTZNxaiVaD6rqlucb2xPOxxM7OQ+iQ4dzCDj47TprgGkwQX+mq1yB0Cli8oB7dDuoT2x6V
+In-Reply-To: <1359566583-19654-1-git-send-email-gnustavo@cpan.org>
+X-Gm-Message-State: ALoCoQm7seIlBhtgOjRdYaDzhiE7MgfHzvqgxrIOm0M/489ZjuAGrzna2XQEATAP38D4JEzE/Af9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215035>
 
 From: "Gustavo L. de M. Chaves" <gnustavo@cpan.org>
 
-I'm working on Git::Hooks, a Perl module to facilitate the
-implementation of git hooks. (http://search.cpan.org/dist/Git-Hooks/)
+Routine _cmd_exec invokes _setup_git_cmd_env inside the child process
+before invoking an external git command to set up the environment
+variables GIT_DIR and GIT_WORK_TREE and, also, to chdir to the
+repository. But _cmd_exec is only used on Unix. On Windows, it's not
+used and the main code path is in _command_common_pipe, which didn't
+prepare the environment like _cmd_exec.
 
-Git::Hooks uses the Git module implemented in perl/Git.pm and
-distributed with git.
+Without this environment preparation some git commands, such as "git
+clone", don't work.
 
-While working on porting Git::Hooks to Windows I stumbled upon a few
-problems in the Git module, problems specific to the Windows
-environment. In the following sequence of patches I try to fix them.
+We can't use _setup_git_cmd_env in this case because we don't use a
+forking open like _cmd_exec does and don't get a chance to make such
+preparations on the child process.
 
-For the record, I'm using Strawberry Perl on Windows.
+So, the preparation is done on _command_common_pipe by setting up
+localized environment variables and by chdir temporarily just before
+invoking the external command.
 
-This is my first patch submission to git. I tried to follow all the
-project conventions but I may have done it wrong. If so, please, help
-me learn it.
+Signed-off-by: Gustavo L. de M. Chaves <gnustavo@cpan.org>
+---
+ perl/Git.pm | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-Thanks!
-
-Gustavo L. de M. Chaves (7):
-  perl/Git.pm: test portably if a path is absolute
-  perl/Git.pm: set up command environment on Windows
-  perl/Git.pm: fix _cmd_close on Windows
-  perl/Git.pm: escape external command's arguments on Windows
-  perl/Git.pm: simplify Git::activestate_pipe
-  perl/Git.pm: make command pipe work in slurp-mode on Windows
-  perl/Git.pm: rename 'ActiveState' to 'Windows'
-
- perl/Git.pm | 63 +++++++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 36 insertions(+), 27 deletions(-)
-
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 658b602..e14b41a 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -1302,6 +1302,19 @@ sub _command_common_pipe {
+ 		#	warn 'ignoring STDERR option - running w/ ActiveState';
+ 		$direction eq '-|' or
+ 			die 'input pipe for ActiveState not implemented';
++
++		# Set up repo environment
++		local $ENV{GIT_DIR}       = $self->repo_path() if defined $self && $self->repo_path();
++		local $ENV{GIT_WORK_TREE} = $self->wc_path()   if defined $self && $self->repo_path() && $self->wc_path();
++
++		my $cwd = cwd;
++
++		if (defined $self) {
++			chdir $self->repo_path() if $self->repo_path();
++			chdir $self->wc_path()	 if $self->wc_path();
++			chdir $self->wc_subdir() if $self->wc_subdir();
++		}
++
+ 		# the strange construction with *ACPIPE is just to
+ 		# explain the tie below that we want to bind to
+ 		# a handle class, not scalar. It is not known if
+@@ -1310,6 +1323,7 @@ sub _command_common_pipe {
+ 		tie (*ACPIPE, 'Git::activestate_pipe', $cmd, @args);
+ 		$fh = *ACPIPE;
+ 
++		chdir $cwd;
+ 	} else {
+ 		my $pid = open($fh, $direction);
+ 		if (not defined $pid) {
 -- 
 1.7.12.464.g83379df.dirty
