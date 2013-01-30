@@ -1,77 +1,66 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] git_remote_helpers: remove GIT-PYTHON-VERSION upon
- "clean"
-Date: Wed, 30 Jan 2013 20:03:56 +0000
-Message-ID: <20130130200356.GL1342@serenity.lan>
-References: <7vzjzqjwot.fsf@alter.siamese.dyndns.org>
+Subject: git-remote-helpers.txt: should it be gitremote-helpers.txt?
+Date: Wed, 30 Jan 2013 20:11:02 +0000
+Message-ID: <20130130201102.GM1342@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 21:04:26 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 30 21:11:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0dtR-0001Ru-JJ
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 21:04:25 +0100
+	id 1U0e0J-0004Wk-TW
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 21:11:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756648Ab3A3UED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 15:04:03 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:42202 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753574Ab3A3UEC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 15:04:02 -0500
+	id S1755604Ab3A3ULJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 15:11:09 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:41550 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753613Ab3A3ULH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 15:11:07 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id C34FF60651D;
-	Wed, 30 Jan 2013 20:04:01 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+	by jackal.aluminati.org (Postfix) with ESMTP id 6F1C986601F
+	for <git@vger.kernel.org>; Wed, 30 Jan 2013 20:11:07 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
 X-Spam-Flag: NO
-X-Spam-Score: -1
+X-Spam-Score: -12.9
 X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SgA-DXXoPvV1; Wed, 30 Jan 2013 20:04:01 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 11A2sIEZ9PCQ for <git@vger.kernel.org>;
+	Wed, 30 Jan 2013 20:11:06 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 8EDDB198043;
-	Wed, 30 Jan 2013 20:03:58 +0000 (GMT)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 29F1786601C
+	for <git@vger.kernel.org>; Wed, 30 Jan 2013 20:11:04 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <7vzjzqjwot.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215069>
 
-On Wed, Jan 30, 2013 at 11:30:10AM -0800, Junio C Hamano wrote:
-> fadf8c7 (git_remote_helpers: force rebuild if python version changes, 2013-01-20)
-> started using a marker file to keep track of the version of Python interpreter
-> used for the last build, but forgot to remove it when asked to "make clean".
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Max Horn's email today prompted me to try reading the git-remote-helpers
+man page, so I tried:
 
-Looks obviously correct to me.  Sorry for missing this at the time.
-FWIW:
+    $ git help remote-helpers
+    No manual entry for gitremote-helpers
 
-Reviewed-by: John Keeping <john@keeping.me.uk>
+But "man git-remote-helpers" does work.
 
-> ---
->  git_remote_helpers/Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
-> index 0d2ae74..3d12232 100644
-> --- a/git_remote_helpers/Makefile
-> +++ b/git_remote_helpers/Makefile
-> @@ -42,4 +42,4 @@ instlibdir: $(pysetupfile)
->  
->  clean:
->  	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) clean -a
-> -	$(RM) *.pyo *.pyc
-> +	$(RM) *.pyo *.pyc GIT-PYTHON-VERSION
+It turns out that "builtin/help.c" maps its argument to a page by
+prepending "git-" if given the name of a Git command and "git"
+otherwise.
+
+Does this mean that "git-remote-helpers.txt" should lose the first
+hyphen or is help.c not being clever enough in some way?
+
+
+John
