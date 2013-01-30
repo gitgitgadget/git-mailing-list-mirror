@@ -1,79 +1,77 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH/RFC 0/6] commit caching
-Date: Wed, 30 Jan 2013 10:31:43 +0700
-Message-ID: <CACsJy8BE3LdxbZzdQXuvEJop23KnnLbCTgPos9CywKV7EY2q9g@mail.gmail.com>
-References: <20130129091434.GA6975@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/4] mergetool--lib: Add functions for finding
+ available tools
+Date: Tue, 29 Jan 2013 19:34:17 -0800
+Message-ID: <7vsj5jmjie.fsf@alter.siamese.dyndns.org>
+References: <1359334346-5879-1-git-send-email-davvid@gmail.com>
+ <1359334346-5879-2-git-send-email-davvid@gmail.com>
+ <1359334346-5879-3-git-send-email-davvid@gmail.com>
+ <1359334346-5879-4-git-send-email-davvid@gmail.com>
+ <20130129194846.GD1342@serenity.lan>
+ <7vr4l3oi1z.fsf@alter.siamese.dyndns.org>
+ <CAJDDKr4e=pg=YJ4CfUk7guUCcikBtXTveVX9j6CV5NtGvPB=9Q@mail.gmail.com>
+ <7va9rroazl.fsf@alter.siamese.dyndns.org>
+ <20130129230607.GG1342@serenity.lan>
+ <7vwquvmkon.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 30 04:32:37 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jan 30 04:34:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0OPc-0000fN-8b
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 04:32:36 +0100
+	id 1U0ORe-0001N8-Fo
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 04:34:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752598Ab3A3DcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 22:32:15 -0500
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:36045 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752431Ab3A3DcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 22:32:14 -0500
-Received: by mail-ob0-f170.google.com with SMTP id wc20so1216659obb.1
-        for <git@vger.kernel.org>; Tue, 29 Jan 2013 19:32:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=ptWNMPT63yXptjQ6v1ZKjVmzEOyU6SGyJEvhVOU3rOs=;
-        b=dyQZna2+2MeFF6nhwGk3C+LYf20ZQTJMDadkuBL6DdaJtHVSLIBb8gd9/vyBjKkiOr
-         bBm+p+dCfFdAOXuA9Pfzub2g+W0LlAuJhmx+LyIwIpDv6ROLnGy/vjZdOVfbIweNO8Rw
-         lbLZJBVY4kDTIzyzjwmzPa8QqmM0lbgMhyc2xbEvmOGZsAhdr7On0J92U2WljPmDuBg/
-         yxh0NvMKg0XyNoSjw2Ujq4c6O03EUbT7Mz72l1L6wJGBvoU3S1Yi322bEc2CJ+ZjehgI
-         pMtj/5zPjyrkbCNsZgyzNghSM6CTUZbXlsYQHOmfrdehzoSlMO3IkCe98cWZtki5aPFz
-         yvOg==
-X-Received: by 10.60.154.169 with SMTP id vp9mr2523766oeb.109.1359516733880;
- Tue, 29 Jan 2013 19:32:13 -0800 (PST)
-Received: by 10.182.118.229 with HTTP; Tue, 29 Jan 2013 19:31:43 -0800 (PST)
-In-Reply-To: <20130129091434.GA6975@sigill.intra.peff.net>
+	id S1752773Ab3A3DeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 22:34:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44478 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752434Ab3A3DeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 22:34:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D4DFC579;
+	Tue, 29 Jan 2013 22:34:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g+y7QosTG9vqqrd+wQRQ5EYLfoY=; b=pgJSI2
+	T/Zfp4hclklomN9H4OAg8ZZG8r1Iqm7ybkjvXmwJhjfx6rxID/fOIQIdpn5vD7hS
+	k+Z3Dg7PURReflP7gzvFnZn+K8KRiEmNxeI7/CrUmI0yxjfRNy9f1hFuadDL6ZTo
+	XtsyZb8tDjADfwEQzqhsZlhE4oZnrErXlnsGI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OnYZbxmCCPyeWXjRtvvqmDQAugWfhgsV
+	BUS4nOruJzmpkSSJoCe0Nm8TsEEMlg166mKnNJGZUUJuKI0vQ1a/OlzKMh52DZN3
+	CbMXK5KlZqika3rylnyEcamWq//4toa/XLfZPEUGkXhOPmw+UraceNEzEVuCJ0uu
+	FQ1pq1kUD3U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41FE1C577;
+	Tue, 29 Jan 2013 22:34:19 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3001C574; Tue, 29 Jan 2013
+ 22:34:18 -0500 (EST)
+In-Reply-To: <7vwquvmkon.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 29 Jan 2013 19:08:56 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EDDBAC4E-6A8D-11E2-B631-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214991>
 
-On Tue, Jan 29, 2013 at 4:14 PM, Jeff King <peff@peff.net> wrote:
-> The timings from this one are roughly similar to what I posted earlier.
-> Unlike the earlier version, this one keeps the data for a single commit
-> together for better cache locality (though I don't think it made a big
-> difference in my tests, since my cold-cache timing test ends up touching
-> every commit anyway).  The short of it is that for an extra 31M of disk
-> space (~4%), I get a warm-cache speedup for "git rev-list --all" of
-> ~4.2s to ~0.66s.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Some data point on caching 1-parent vs 2-parent commits on webkit
-repo, 26k commits. With your changes (caching 2-parent commits), the
-.commits file takes 2241600 bytes. "rev-list --all --quiet":
+> Heh, I actually was hoping that you will send in a replacement for
+> David's patch ;-)
+>
+> Here is what I will squash into the one we have been discussing.  In
+> a few hours, I expect I'll be able to push this out in the 'pu'
+> branch.
 
-0.06user 0.00system 0:00.08elapsed 95%CPU (0avgtext+0avgdata 26288maxresident)k
-0inputs+0outputs (0major+2094minor)pagefaults 0swaps
-
-With caching 1-parent commits only, the .commits file takes 1707900
-bytes (30% less), the same rev-list command:
-
-0.07user 0.00system 0:00.07elapsed 96%CPU (0avgtext+0avgdata 24144maxresident)k
-0inputs+0outputs (0major+1960minor)pagefaults 0swaps
-
-Compared to the timing without caching at all:
-
-0.72user 0.02system 0:00.76elapsed 98%CPU (0avgtext+0avgdata 108976maxresident)k
-0inputs+0outputs (0major+7272minor)pagefaults 0swaps
-
-The performance loss in 1-parent case is not significant while disk
-saving is (although it'll be less impressive after you do Shawn's
-suggestion not storing SHA-1 directly)
--- 
-Duy
+I ended up doing this a bit differently; will push out the result
+after merging the other topics to 'pu'.
