@@ -1,60 +1,80 @@
-From: Max Horn <max@quendi.de>
-Subject: Anybody know a website with up-to-date git documentation?
-Date: Wed, 30 Jan 2013 12:46:47 +0100
-Message-ID: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
-Mime-Version: 1.0 (Apple Message framework v1283)
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Anybody know a website with up-to-date git documentation?
+Date: Wed, 30 Jan 2013 11:54:39 +0000
+Message-ID: <20130130115439.GH1342@serenity.lan>
+References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Scott Chacon <schacon@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 30 12:47:18 2013
+Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Wed Jan 30 12:55:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0W8H-0003eM-3q
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 12:47:13 +0100
+	id 1U0WFz-0006Nc-Nr
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 12:55:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755404Ab3A3Lqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 06:46:52 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:53770 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754213Ab3A3Lqu convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 06:46:50 -0500
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1U0W7r-0002il-NM; Wed, 30 Jan 2013 12:46:47 +0100
-X-Mailer: Apple Mail (2.1283)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1359546410;6898cd81;
+	id S1752017Ab3A3Lyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 06:54:50 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:51424 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751339Ab3A3Lys (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 06:54:48 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 2733219803D;
+	Wed, 30 Jan 2013 11:54:48 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -11
+X-Spam-Level: 
+X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zFVm95ltBbNb; Wed, 30 Jan 2013 11:54:47 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id CB43619803E;
+	Wed, 30 Jan 2013 11:54:46 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id C0BA7161E560;
+	Wed, 30 Jan 2013 11:54:46 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6zIEb4unNPKU; Wed, 30 Jan 2013 11:54:46 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 1FDD9161E3A7;
+	Wed, 30 Jan 2013 11:54:41 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215011>
 
-Hi,
+On Wed, Jan 30, 2013 at 12:46:47PM +0100, Max Horn wrote:
+> does anybody know a website where one can view that latest git
+> documentation? Here, "latest" means "latest release" (though being
+> also able to access it for "next" would of course be a nice bonus,
+> likewise for older versions). While I do have those docs on my local
+> machine, I would like to access them online, too (e.g. easier to
+> pointer people at this, I can access it from other machines, etc.).
 
-does anybody know a website where one can view that latest git documentation? Here, "latest" means "latest release" (though being also able to access it for "next" would of course be a nice bonus, likewise for older versions). While I do have those docs on my local machine, I would like to access them online, too (e.g. easier to pointer people at this, I can access it from other machines, etc.).
+How about http://git-htmldocs.googlecode.com/git/ ?
 
+It's just a directory listing of the git-htmldocs repository that Junio
+maintains - the latest update was yesterday: Autogenerated HTML docs for
+v1.8.1.2-422-g08c0e.
 
-My problem is that all sites I know of are outdated, and thus don't show recent improvements. Also, for many it is hard to determine for which version of git they carry documentation. Here are the contenders I know, and the problems they have:
-
-
-* The closest I know is http://git-scm.com/ -- they fit the bill almost perfectly. Except that sadly, some pages that are crucial for me are permanently stuck at outdated versions, like http://git-scm.com/docs/git-remote-helpers which is stuck at 1.7.12.3. I tried contacting them about this for two months now, but to no avail (multiple bug reports, direct emails, etc. all went w/o reaction). Of course time and resources are limited, so I fully understand and respect that the people behind it (Scott Chacon in particular, who did an awesome job creating that site in the first place) have other priorities.
-
-* http://www.kernel.org/pub/software/scm/git/docs/ was last updated in May 2012. No hints on who maintains this and how to contact them. Attempts to contact kernel.org webadmins to find out more were not answered either :-(. Anybody know more?
-
-* http://schacon.github.com/git/git-remote-helpers.html was lasted updated in May 2011. I assume git-scm.com is supposed to replace it, though, as Scott Chacon made git-scm.com. (In that case, a redirect to git-scm.com might be nice *g* but of course is extra work) 
-
-* http://www.manpagez.com/man/1/git/ and http://man.he.net/man1/git at least document on each page from which git version it is taken. Unfortunately, both are stuck at the 1.7.x series.
-
-* http://linux.die.net/man/1/git does not indicate the git version, but it seems to be a 1.7.x, too
-
-
-Anybody know an up-to-date alternative? Or do I have to setup my own? :-(.
+[I didn't know Google Code let you view the repository like that, but I
+got there by clicking the "raw" link against one of the files so I
+assume it's not likely to go away.]
 
 
-Cheers,
-Max
+John
