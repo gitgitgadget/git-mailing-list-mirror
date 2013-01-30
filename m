@@ -1,84 +1,76 @@
-From: Sebastian Staudt <koraktor@gmail.com>
-Subject: Re: Anybody know a website with up-to-date git documentation?
-Date: Wed, 30 Jan 2013 12:56:37 +0100
-Message-ID: <CA+xP2SbWKucCCPq3sS8Y2DQQM129urrM7-QzeDYju4+wA_-aUg@mail.gmail.com>
-References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de> <20130130115439.GH1342@serenity.lan>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: What's cooking in git.git (Jan 2013, #10; Sun, 27)
+Date: Wed, 30 Jan 2013 07:34:20 -0500
+Message-ID: <20130130123420.GA3793@padd.com>
+References: <7vlibdyfdt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Wed Jan 30 12:57:58 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 13:34:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0WIf-0007a7-E3
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 12:57:57 +0100
+	id 1U0WsH-0000AZ-LM
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 13:34:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751339Ab3A3L5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 06:57:36 -0500
-Received: from mail-we0-f176.google.com ([74.125.82.176]:46879 "EHLO
-	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750884Ab3A3L5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 06:57:35 -0500
-Received: by mail-we0-f176.google.com with SMTP id s43so1109589wey.7
-        for <git@vger.kernel.org>; Wed, 30 Jan 2013 03:57:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=o5omykBJi/j1BOAFVqU/xibGruNQWTIY+Tm84JiR5xI=;
-        b=C8tWaDGYnXIs6eBLwZlzyal1ArWbDjrVRl2o6CdshmNK4S64X5VSzYz38utSeodIwR
-         aX3BitTScYH1iCk8pR/HKqdIF7L+I5WVFk05n9/XuoSq916ORDRlp23+2l0DsVs2GLtj
-         7si06KDHwiqIptCJ/wi/galDAl650nFDym5fgOyRyRIMBomn7jgNA7A3IuPhruhPudMl
-         WoL3YrI6QITm59DMEfvoe9vtxMRtIIECv4DVICJsRNBKUS55fGYrMG59I1dbgJwIPxPK
-         b9zV5vBcEUmEa/p6PblG1R6a8JmIGQDrEus0INOhVbG7OB9lYlXJAr9sT4juLV9Yiro+
-         Xt0Q==
-X-Received: by 10.194.119.5 with SMTP id kq5mr8290919wjb.48.1359547051038;
- Wed, 30 Jan 2013 03:57:31 -0800 (PST)
-Received: by 10.216.113.196 with HTTP; Wed, 30 Jan 2013 03:56:37 -0800 (PST)
-In-Reply-To: <20130130115439.GH1342@serenity.lan>
+	id S1753156Ab3A3MeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 07:34:25 -0500
+Received: from honk.padd.com ([74.3.171.149]:57932 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752032Ab3A3MeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 07:34:23 -0500
+Received: from arf.padd.com (unknown [50.52.174.88])
+	by honk.padd.com (Postfix) with ESMTPSA id B8CF62F3F;
+	Wed, 30 Jan 2013 04:34:22 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 7952F22EAB; Wed, 30 Jan 2013 07:34:20 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vlibdyfdt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215014>
 
-Hello Max,
+gitster@pobox.com wrote on Sun, 27 Jan 2013 22:45 -0800:
+> * pw/git-p4-on-cygwin (2013-01-26) 21 commits
+>  - git p4: introduce gitConfigBool
+>  - git p4: avoid shell when calling git config
+>  - git p4: avoid shell when invoking git config --get-all
+>  - git p4: avoid shell when invoking git rev-list
+>  - git p4: avoid shell when mapping users
+>  - git p4: disable read-only attribute before deleting
+>  - git p4 test: use test_chmod for cygwin
+>  - git p4: cygwin p4 client does not mark read-only
+>  - git p4 test: avoid wildcard * in windows
+>  - git p4 test: use LineEnd unix in windows tests too
+>  - git p4 test: newline handling
+>  - git p4: scrub crlf for utf16 files on windows
+>  - git p4: remove unreachable windows \r\n conversion code
+>  - git p4 test: translate windows paths for cygwin
+>  - git p4 test: start p4d inside its db dir
+>  - git p4 test: use client_view in t9806
+>  - git p4 test: avoid loop in client_view
+>  - git p4 test: use client_view to build the initial client
+>  - git p4: generate better error message for bad depot path
+>  - git p4: remove unused imports
+>  - git p4: temp branch name should use / even on windows
+> 
+>  Improve "git p4" on Cygwin.  The cover letter said it is not yet
+>  ready for full Windows support so I won't move this to 'next' until
+>  told by the author (the area maintainer) otherwise.
 
-git-scm.com is the best source and it's not outdated. It gets an
-update after every single release of Git.
-See e.g. http://git-scm.com/docs/git-config which was updated in the
-current stable version.
-It seems that git-remote-helper's documentation was just not updated
-since version 1.7.12.3.
+The series is ready as is to support Cygwin platforms, and
+thus useful to people who would use git on windows via cygwin.
 
-Best regards,
-    Sebastian
+Future work will be to add support for Msysgit.  That work
+will need much of the changes in this Cygwin series as well.
+It is more complicated since there's no native python for
+Msysgit (yet).
 
-2013/1/30 John Keeping <john@keeping.me.uk>:
-> On Wed, Jan 30, 2013 at 12:46:47PM +0100, Max Horn wrote:
->> does anybody know a website where one can view that latest git
->> documentation? Here, "latest" means "latest release" (though being
->> also able to access it for "next" would of course be a nice bonus,
->> likewise for older versions). While I do have those docs on my local
->> machine, I would like to access them online, too (e.g. easier to
->> pointer people at this, I can access it from other machines, etc.).
->
-> How about http://git-htmldocs.googlecode.com/git/ ?
->
-> It's just a directory listing of the git-htmldocs repository that Junio
-> maintains - the latest update was yesterday: Autogenerated HTML docs for
-> v1.8.1.2-422-g08c0e.
->
-> [I didn't know Google Code let you view the repository like that, but I
-> got there by clicking the "raw" link against one of the files so I
-> assume it's not likely to go away.]
->
->
-> John
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I think the Cygwin changes should go in now.
+
+		-- Pete
