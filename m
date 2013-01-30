@@ -1,109 +1,115 @@
 From: "Gustavo L. de M. Chaves" <gnustavo@cpan.org>
-Subject: [PATCH 2/7] perl/Git.pm: set up command environment on Windows
-Date: Wed, 30 Jan 2013 15:22:58 -0200
-Message-ID: <1359566583-19654-3-git-send-email-gnustavo@cpan.org>
+Subject: [PATCH 5/7] perl/Git.pm: simplify Git::activestate_pipe
+Date: Wed, 30 Jan 2013 15:23:01 -0200
+Message-ID: <1359566583-19654-6-git-send-email-gnustavo@cpan.org>
 References: <1359566583-19654-1-git-send-email-gnustavo@cpan.org>
 Cc: "Gustavo L. de M. Chaves" <gnustavo@cpan.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 30 18:23:41 2013
+X-From: git-owner@vger.kernel.org Wed Jan 30 18:23:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0bNq-0006ZD-41
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 18:23:38 +0100
+	id 1U0bNu-0006al-0N
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 18:23:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754915Ab3A3RXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 12:23:14 -0500
-Received: from mail-yh0-f43.google.com ([209.85.213.43]:42372 "EHLO
-	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754607Ab3A3RXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 12:23:13 -0500
-Received: by mail-yh0-f43.google.com with SMTP id z6so302243yhz.30
-        for <git@vger.kernel.org>; Wed, 30 Jan 2013 09:23:12 -0800 (PST)
+	id S1755951Ab3A3RXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 12:23:19 -0500
+Received: from mail-ye0-f174.google.com ([209.85.213.174]:65000 "EHLO
+	mail-ye0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755053Ab3A3RXS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 12:23:18 -0500
+Received: by mail-ye0-f174.google.com with SMTP id m3so303555yen.33
+        for <git@vger.kernel.org>; Wed, 30 Jan 2013 09:23:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:x-gm-message-state;
-        bh=OHpyMRtR3PS5Pv46Jc/EURcKoXnqVq4foxNvqLZWHSc=;
-        b=FsMa9wqf6pkhxBR3P59Xnbw2mGwHUEQZWAtVY/LEMCf1WPlaEhcbJhzDqBMjOVj80i
-         EDNm/dMeQLnU0ZvsKR0xEYJAxris5Q6jd8H9B/PPsZeXiKK6hQ1eSFScCvtSSfUCf8rm
-         pVXV8ujRL3Gw2/MCKDPKCBhh6Hj/TXhTtf+eAoL3hri+8s25EcSL+6qpCFvc6tPb/Ab/
-         OmQLBqGvVv41G80RyckmIIGG8Du8iwwYokwJMl5mSA2F74DsG/nGx9ZFzseyv4MVeHaf
-         sDNunCqKqLE+EKuyChtKKpcMKeYGX26OBzlgpDFkVgVqffOSfWtcAAT1WptRJcAe//UM
-         QcPw==
-X-Received: by 10.236.120.50 with SMTP id o38mr6569379yhh.100.1359566591561;
-        Wed, 30 Jan 2013 09:23:11 -0800 (PST)
+        bh=EYOHaKik1rNFBRo/SWW53+/hLKulpRXowErI+tA1Ejg=;
+        b=c6hY2n5JUjViklvFnQoULzxWRHbutczwPid9QmzZGwYuZMrBgvRLsSglCV3sVTa6LR
+         sDrlfy65T9vEV2epEayClh39CTRhiBMdTIXtnrdu5Ynw7bJRt9gIshsKcsmTp3cHul+K
+         UIqrY0UlY5aFUewAPhiQ41ZtcQG/tbY8hfQy+WYYS7wy7Aj4VmE37pBdV2IsWiQ70Tm2
+         CmJ/R3YbsQFHCdsRswtZTiYMhhMfbP5nzrVsoWWWRRbcA3+5eZ1pyHdVUufMGtaDrFVV
+         ubeAt5aCtKf05VOHdSrdjRwIkq/jpKcITWo0MXIHsRI8FPWu62vV6VtNSshtIZcpL/3T
+         R7Vg==
+X-Received: by 10.236.89.49 with SMTP id b37mr6621467yhf.33.1359566597630;
+        Wed, 30 Jan 2013 09:23:17 -0800 (PST)
 Received: from gnu.cpqd.com.br (fw-cpqd.cpqd.com.br. [189.112.183.66])
-        by mx.google.com with ESMTPS id q11sm1689802anp.13.2013.01.30.09.23.10
+        by mx.google.com with ESMTPS id q11sm1689802anp.13.2013.01.30.09.23.15
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 30 Jan 2013 09:23:10 -0800 (PST)
+        Wed, 30 Jan 2013 09:23:16 -0800 (PST)
 X-Mailer: git-send-email 1.7.12.464.g83379df.dirty
 In-Reply-To: <1359566583-19654-1-git-send-email-gnustavo@cpan.org>
-X-Gm-Message-State: ALoCoQm7seIlBhtgOjRdYaDzhiE7MgfHzvqgxrIOm0M/489ZjuAGrzna2XQEATAP38D4JEzE/Af9
+X-Gm-Message-State: ALoCoQmjpBfBfZIKRIltnnePGLiRP+m4v1zZU5MhC8hDaxpk0gd/febsYIluNnqS1LTXr0UOK5IN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215036>
 
 From: "Gustavo L. de M. Chaves" <gnustavo@cpan.org>
 
-Routine _cmd_exec invokes _setup_git_cmd_env inside the child process
-before invoking an external git command to set up the environment
-variables GIT_DIR and GIT_WORK_TREE and, also, to chdir to the
-repository. But _cmd_exec is only used on Unix. On Windows, it's not
-used and the main code path is in _command_common_pipe, which didn't
-prepare the environment like _cmd_exec.
+Git::activestate_pipe::TIEHANDLE creates an object to keep the
+external command's output as an array of lines. The object also kept
+an index into the array to know up to which line had already been read
+via Git::activestate_pipe::READLINE.
 
-Without this environment preparation some git commands, such as "git
-clone", don't work.
+We don't really need that index because lines already read don't need
+to be kept. So, we simply unshift lines as they're being read and use
+the array's size to know when we have read all lines.
 
-We can't use _setup_git_cmd_env in this case because we don't use a
-forking open like _cmd_exec does and don't get a chance to make such
-preparations on the child process.
-
-So, the preparation is done on _command_common_pipe by setting up
-localized environment variables and by chdir temporarily just before
-invoking the external command.
+This implementation uses more idiomatic Perl, which makes it more
+readable and probably a little bit faster.
 
 Signed-off-by: Gustavo L. de M. Chaves <gnustavo@cpan.org>
 ---
- perl/Git.pm | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ perl/Git.pm | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
 diff --git a/perl/Git.pm b/perl/Git.pm
-index 658b602..e14b41a 100644
+index 42c3971..2d88b89 100644
 --- a/perl/Git.pm
 +++ b/perl/Git.pm
-@@ -1302,6 +1302,19 @@ sub _command_common_pipe {
- 		#	warn 'ignoring STDERR option - running w/ ActiveState';
- 		$direction eq '-|' or
- 			die 'input pipe for ActiveState not implemented';
-+
-+		# Set up repo environment
-+		local $ENV{GIT_DIR}       = $self->repo_path() if defined $self && $self->repo_path();
-+		local $ENV{GIT_WORK_TREE} = $self->wc_path()   if defined $self && $self->repo_path() && $self->wc_path();
-+
-+		my $cwd = cwd;
-+
-+		if (defined $self) {
-+			chdir $self->repo_path() if $self->repo_path();
-+			chdir $self->wc_path()	 if $self->wc_path();
-+			chdir $self->wc_subdir() if $self->wc_subdir();
-+		}
-+
- 		# the strange construction with *ACPIPE is just to
- 		# explain the tie below that we want to bind to
- 		# a handle class, not scalar. It is not known if
-@@ -1310,6 +1323,7 @@ sub _command_common_pipe {
- 		tie (*ACPIPE, 'Git::activestate_pipe', $cmd, @args);
- 		$fh = *ACPIPE;
+@@ -1402,33 +1402,28 @@ sub TIEHANDLE {
+ 	# should take care of the most common cases.
+ 	my @escaped_params = map { "\"$_\"" } map { s/"/""/g; $_ } @params;
+ 	my @data = qx{git @escaped_params};
+-	bless { i => 0, data => \@data, exit => $? }, $class;
++	bless { data => \@data, exit => $? }, $class;
+ }
  
-+		chdir $cwd;
- 	} else {
- 		my $pid = open($fh, $direction);
- 		if (not defined $pid) {
+ sub READLINE {
+ 	my $self = shift;
+-	if ($self->{i} >= scalar @{$self->{data}}) {
+-		return undef;
+-	}
+-	my $i = $self->{i};
++	return unless @{$self->{data}};
+ 	if (wantarray) {
+-		$self->{i} = $#{$self->{'data'}} + 1;
+-		return splice(@{$self->{'data'}}, $i);
++		return splice @{$self->{data}};
++	} else {
++		return shift @{$self->{data}};
+ 	}
+-	$self->{i} = $i + 1;
+-	return $self->{'data'}->[ $i ];
+ }
+ 
+ sub CLOSE {
+ 	my $self = shift;
+ 	delete $self->{data};
+-	delete $self->{i};
+ 	return $self->{exit} == 0;
+ }
+ 
+ sub EOF {
+ 	my $self = shift;
+-	return ($self->{i} >= scalar @{$self->{data}});
++	return @{$self->{data}} == 0;
+ }
+ 
+ 
 -- 
 1.7.12.464.g83379df.dirty
