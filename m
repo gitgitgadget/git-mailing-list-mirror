@@ -1,79 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3] git-send-email: add ~/.authinfo parsing
-Date: Tue, 29 Jan 2013 16:34:22 -0800
-Message-ID: <7v1ud3o6ep.fsf@alter.siamese.dyndns.org>
-References: <7vehh3obs0.fsf@alter.siamese.dyndns.org>
- <5d18d777d6ddf6f01bbf460f37af637d3dc28ed5.1359503987.git.mina86@mina86.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2] status: show the branch name if possible in
+ in-progress info
+Date: Wed, 30 Jan 2013 08:13:49 +0700
+Message-ID: <CACsJy8ByU8jNFHi2wDyJG+Qfzg7r8R3=RwOqxo3o5UCqjRyy+g@mail.gmail.com>
+References: <1359461450-24456-1-git-send-email-pclouds@gmail.com>
+ <1359471493-32531-1-git-send-email-pclouds@gmail.com> <20130129184435.GA18266@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Krzysztof Mazur <krzysiek@podlesie.net>,
-	Michal Nazarewicz <mina86@mina86.com>
-To: Michal Nazarewicz <mpn@google.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 01:34:50 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 02:14:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0Lda-0001W3-0W
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 01:34:50 +0100
+	id 1U0MGD-0001Lj-9a
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 02:14:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752276Ab3A3Ae1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 19:34:27 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34206 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751652Ab3A3AeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 19:34:25 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14D3AC1A4;
-	Tue, 29 Jan 2013 19:34:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kbERRqegRB9P8nmjSKR1EHhx1ww=; b=vn3dLt
-	fNw621HomW654y1Djo6l83/69vxJT+G+sWHRAp67tOZ5ZHDFpyEHwimtRRvmcz41
-	0lZg7fM5Hu5cu1Tjgo3sN5w2qobU+tq+yfOIt1GB4IKlDszMi24lOOB+ux8A29y1
-	TtG++rkYBGdlFJrT1AudRm7RiFySFZQ94Awyw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cZMf4k/YNsg7Fpt3fZu6zhtYge/unGSn
-	MT2JnJArVIJ6YN7LQ1fBc6p4hRJ7kiYHhwdmeIzKZvOBYE9js3FMcSzlnHVDGHlJ
-	15OuVl9XtslM2/DVBM21gCUUyueZPt37POQ0UpyFyHiuVDtvIDaiIQIQ8iOET1E/
-	gGEOuaGeNaA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F19A7C1A2;
-	Tue, 29 Jan 2013 19:34:24 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C5C5C19F; Tue, 29 Jan 2013
- 19:34:24 -0500 (EST)
-In-Reply-To: <5d18d777d6ddf6f01bbf460f37af637d3dc28ed5.1359503987.git.mina86@mina86.com>
- (Michal Nazarewicz's message of "Wed, 30 Jan 2013 01:03:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CBF5E040-6A74-11E2-821A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753108Ab3A3BOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 20:14:23 -0500
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:56537 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752424Ab3A3BOU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 20:14:20 -0500
+Received: by mail-ob0-f176.google.com with SMTP id v19so1096245obq.7
+        for <git@vger.kernel.org>; Tue, 29 Jan 2013 17:14:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=+ItMfbJsOw8hZ009e8HTkDqN9OB+6iF2nRmRmDdi0zc=;
+        b=q7+agDOvrQrEoRmkp0qq2H3rzr37wFPjwrjy73UVE3MVN2+o66Lqttz1skMT4dFHsH
+         erbN1dtrmCS9HrSlA4ZvFR3tgiJpJoHpUcz40CqpTgBVbMX2H5rU+Y1KPHPc5YqpgKPQ
+         F6jBEJ39mU0rNn4hjH+YRAvHAv+XVQtr0nGrYHODL0CI80bq+wRwr75DVa9TQMrduor9
+         svhM6YqqeQAy/sL58JQ4Up7NmCF2mr5puAkQ+uRVuCaYgBTlP4O1N3ZIao/JMoKsaEhl
+         Y4JFo4ViN7wBvNqEkpe3j9MeVTItjbcSs1Txu48HJq+rBZ39jMNGlX9Zqm24Pj2gp+z5
+         rypA==
+X-Received: by 10.182.159.5 with SMTP id wy5mr2392163obb.31.1359508459930;
+ Tue, 29 Jan 2013 17:14:19 -0800 (PST)
+Received: by 10.182.118.229 with HTTP; Tue, 29 Jan 2013 17:13:49 -0800 (PST)
+In-Reply-To: <20130129184435.GA18266@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214985>
 
-Michal Nazarewicz <mpn@google.com> writes:
-
->> Is it bad to use Net::Netrc instead?  This looks like exactly the
->> use case that module was written for, no?
+On Wed, Jan 30, 2013 at 1:44 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> -     # You are currently rebasing.
+>> +     # You are currently rebasing branch '\''rebase_conflicts'\'' on '\''000106f'\''.
 >
-> I don't think that's the case.  For one, Net::Netrc does not seem to
-> process port number.
+> SHA1-in-tests radar blinking.
 >
-> There is a Text::Authinfo module but it just uses Text::CSV.
+> Would it be possible to compute the expected output, as in
 >
-> I can change the code to use Net::Netrc, but I dunno if that's really
-> the best option, since I feel people would expect parsing to be
-> somehow compatible with
-> <http://www.gnu.org/software/emacs/manual/html_node/gnus/NNTP.html>
-> rather than the original .netrc file format.
+>         dest=$(git rev-parse --short HEAD^^)
+>         cat >expected <<-EOF &&
+>         # Not currently on any branch.
+>         # You are currently rebasing branch '\''rebase_conflicts'\'' on '\''$dest'\''.
+>
+> ?
 
-Thanks for pushing back (I wish more contributors did so when I
-suggest nonsense ;-)); you are right that both canned modules are
-lacking.
+That may be better. Yeah.
 
-Will queue.  Thanks.
+> I'm not sure what to think about the actual change itself yet.  Can you
+> give an example of when you felt the need for this, so it can be
+> included in the commit message or documentation?
+
+http://thread.gmane.org/gmane.comp.version-control.git/214932/focus=214937
+-- 
+Duy
