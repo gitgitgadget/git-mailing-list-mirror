@@ -1,129 +1,64 @@
-From: Marc Khouzam <marc.khouzam@ericsson.com>
-Subject: RE: [feature request] git add completion should exclude staged
- content
-Date: Wed, 30 Jan 2013 14:06:44 +0000
-Message-ID: <E59706EF8DB1D147B15BECA3322E4BDC097A7E@eusaamb103.ericsson.se>
-References: <20130126172137.GB5852@mobster.11n_AP_Router>
- <7vip6iteod.fsf@alter.siamese.dyndns.org> <5106444F.2040007@gmail.com>
- <51067487.9050505@drmicha.warpmail.net> <510684FB.80104@gmail.com>
- <5106A5CE.3000800@drmicha.warpmail.net>
- <7vd2wpxki1.fsf@alter.siamese.dyndns.org> <5106DC87.7090607@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 4/6] introduce a commit metapack
+Date: Wed, 30 Jan 2013 21:16:29 +0700
+Message-ID: <CACsJy8Bqg6knVtddwaGSqtiXzVDgbO1JjbFOPMbF_RqrxM2rFQ@mail.gmail.com>
+References: <20130129091434.GA6975@sigill.intra.peff.net> <20130129091610.GD9999@sigill.intra.peff.net>
+ <20130130135607.GA23154@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: 'Michael J Gruber' <git@drmicha.warpmail.net>,
-	'wookietreiber' <kizkizzbangbang@googlemail.com>,
-	"'git@vger.kernel.org'" <git@vger.kernel.org>
-To: 'Manlio Perillo' <manlio.perillo@gmail.com>,
-	'Junio C Hamano' <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 15:08:05 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 30 15:17:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0YKY-00071V-T1
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 15:08:03 +0100
+	id 1U0YTb-00030C-M4
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 15:17:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754061Ab3A3OHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 09:07:41 -0500
-Received: from usevmg20.ericsson.net ([198.24.6.45]:46726 "EHLO
-	usevmg20.ericsson.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754907Ab3A3OHi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Jan 2013 09:07:38 -0500
-X-AuditID: c618062d-b7fcb6d000007ada-ec-510929273450
-Received: from EUSAAHC003.ericsson.se (Unknown_Domain [147.117.188.81])
-	by usevmg20.ericsson.net (Symantec Mail Security) with SMTP id 3A.06.31450.72929015; Wed, 30 Jan 2013 15:07:36 +0100 (CET)
-Received: from EUSAAMB103.ericsson.se ([147.117.188.120]) by
- EUSAAHC003.ericsson.se ([147.117.188.81]) with mapi id 14.02.0318.004; Wed,
- 30 Jan 2013 09:06:45 -0500
-Thread-Topic: [feature request] git add completion should exclude staged
- content
-Thread-Index: AQHN++mhfJpcTCjP3EKl2TzxlKhfVJhdzFlAgAECzICAADl7gIAAE52AgAAnIQD//8WNMYAAe6+AgAJnELA=
-In-Reply-To: <5106DC87.7090607@gmail.com>
-Accept-Language: en-CA, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [147.117.188.134]
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNLMWRmVeSWpSXmKPExsUyuXRPoK6GJmegwbY9HBZrXpxmtui60s1k
-	0dB7hdliasszRouLf7rYHVg9WidPYvbYOesuu8fTCZPZPS5eUvb4vEkugDWKyyYlNSezLLVI
-	3y6BK2PZundsBX1CFdcWHWNtYNzB18XIySEhYCLxf9d3FghbTOLCvfVsXYxcHEICRxglml6e
-	ZYJwljNKPJh7iR2kik1AT+LGz1tgtohAuMT6488YQYqYBaYxSnQ0PwZLCAsESjza/IERoihI
-	onHKP2YIO0ni2PlbYDaLgKrE+aMLwVbzCnhLzF18CqxeSGAXk8TdR2EgNqeApsTuDVuYQGxG
-	AVmJ3Wevg9nMAuISt57MZ4I4W0BiyZ7zzBC2qMTLx/9YIWxliSVP9rNA1OtILNj9iQ3C1pZY
-	tvA1M8ReQYmTM5+wTGAUm4Vk7CwkLbOQtMxC0rKAkWUVI0dpcWpZbrqRwSZGYIQdk2DT3cG4
-	56XlIUZpDhYlcd4g1wsBQgLpiSWp2ampBalF8UWlOanFhxiZODilGhil8pQSS1ov1M7VaXwv
-	PJk9b4pLj986n4CmZVUzfpgFfHuhomlwzUZ7wRum2OC7zo8Xh+aGLk6omjFzi8remX8jDHs4
-	/Yp6nwk9r1oZp3fBZm7p/A8SrwUuFDsG1SV4V1zU/D33NmPJ//tPu2vs+KMvzBa3Wx0jUMPQ
-	48Rn6Wh2sHzBcWnBFiWW4oxEQy3mouJEAIBEGsh+AgAA
+	id S1754880Ab3A3ORB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 09:17:01 -0500
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:39750 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754828Ab3A3ORA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 09:17:00 -0500
+Received: by mail-oa0-f53.google.com with SMTP id m1so791747oag.40
+        for <git@vger.kernel.org>; Wed, 30 Jan 2013 06:17:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=lgVycKducQy+TUHcxXFi+EF6JQgu557Cf3IuQMwan+4=;
+        b=IrCPXZlT50UNBxpw/qi5E2te4094xi0xY1uGmR6Hk5z+G0f1Yx0033TWSX/8lwSxc/
+         xTyz3hTaCw96WwapFKKhOlF6TEs2vzf3AdYq99wHcRrvZfPMJJ0ifGw7Q8fPXpkViAUp
+         kO+lrKLs7AZ8F8A4p/2Wj96CfuK3Zq+az3T8EMr1FVvxfZZ6WgqZLjWZDmpWGl3nJkrC
+         zgkGo/hRjAPVS058vvnBP1kLaJ/W/YLrYZaTVOynLtnTQBFWs6Gb3AsGqBsXiu+8x3fD
+         AGLcs7/e7YxMnEgFmh/aUwnh+WNskBLxRJX4ARxmIEaeGiAmCXRvIBDJ8HBFs/IRqjS+
+         yXAQ==
+X-Received: by 10.182.18.133 with SMTP id w5mr3760457obd.64.1359555420083;
+ Wed, 30 Jan 2013 06:17:00 -0800 (PST)
+Received: by 10.182.118.229 with HTTP; Wed, 30 Jan 2013 06:16:29 -0800 (PST)
+In-Reply-To: <20130130135607.GA23154@lanh>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215021>
 
+On Wed, Jan 30, 2013 at 8:56 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> However, performance seems to suffer too. Maybe I do more lookups than
+> necessary, I don't know.
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org 
-> [mailto:git-owner@vger.kernel.org] On Behalf Of Manlio Perillo
-> Sent: Monday, January 28, 2013 3:16 PM
-> To: Junio C Hamano
-> Cc: Michael J Gruber; wookietreiber; git@vger.kernel.org
-> Subject: Re: [feature request] git add completion should 
-> exclude staged content
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Il 28/01/2013 18:52, Junio C Hamano ha scritto:
-> > [...]
-> > 
-> > Thanks both for commenting.  I'll find time to read it over again
-> > and perhaps we can merge it to 'next' and advertise it in the next
-> > issue of "What's cooking" report to ask for wider testing to move it
-> > forward.
-> 
-> Thanks.
-> 
-> I will try to update the patch, with your latest suggestions (avoid
-> tricky POSIX shell syntax, and CDPATH issue - if I remember 
-> correctly),
-> and with an update for the t/t9902-completion.sh test (that I 
-> completely
-> missed).
+Yes, I should have stored the position in the sha-1 <-> offset map
+instead of the position of the object in .pack file. Even so,
+performance does not improve.
 
-Hi Manlio,
+> I should probably measure the cost of revindex separately.
 
-I'm trying to update git-completion.tcsh to work properly with
-your nice new completion feature.  But I'm having trouble with 
-the missing '/' at the end of directories.
+And the cost of create_pack_revindex() is 0.6 sec :-(
 
-The new logic in git-completion.bash tells bash that 'filenames'
-completion is ongoing so bash will add a '/' after directories.
-Sadly, tcsh won't do that, so it would be simpler if
-git-completion.bash added the '/' itself.  I looked at the 
-git-completion.bash script changes and I noticed that for 
-bash version < 4, you have to add the '/' yourself.  
-I also noticed the following comment:
-
- # XXX if we append a slash to directory names when using
- # `compopt -o filenames`, Bash will append another slash.
- # This is pretty stupid, and this the reason why we have to
- # define a compatible version for this function.
-
-So I gather you would rather add a '/' all the time to deal
-with older bash version transparently.  This would be great
-for tcsh also.  I'm trying to figure out
-when bash mis-behaves when you add the '/' all the time?
-When I try it (I have bash 4.1.5(1)-release) I didn't run
-into the double slash problem you mention in the comment.
-
-I'm hoping we can straighten this out and have
-git-completion.bash add the '/' all the time.
-
-Could you explain when the problem happens?
-
-Thanks
-
-Marc
+Perhaps we could store abbrev sha-1 instead of full sha-1. Nice
+space/time trade-off.
+-- 
+Duy
