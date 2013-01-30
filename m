@@ -1,167 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/4] mergetool--lib: Add functions for finding
- available tools
-Date: Tue, 29 Jan 2013 19:08:56 -0800
-Message-ID: <7vwquvmkon.fsf@alter.siamese.dyndns.org>
-References: <1359334346-5879-1-git-send-email-davvid@gmail.com>
- <1359334346-5879-2-git-send-email-davvid@gmail.com>
- <1359334346-5879-3-git-send-email-davvid@gmail.com>
- <1359334346-5879-4-git-send-email-davvid@gmail.com>
- <20130129194846.GD1342@serenity.lan>
- <7vr4l3oi1z.fsf@alter.siamese.dyndns.org>
- <CAJDDKr4e=pg=YJ4CfUk7guUCcikBtXTveVX9j6CV5NtGvPB=9Q@mail.gmail.com>
- <7va9rroazl.fsf@alter.siamese.dyndns.org>
- <20130129230607.GG1342@serenity.lan>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC 0/6] commit caching
+Date: Wed, 30 Jan 2013 10:31:43 +0700
+Message-ID: <CACsJy8BE3LdxbZzdQXuvEJop23KnnLbCTgPos9CywKV7EY2q9g@mail.gmail.com>
+References: <20130129091434.GA6975@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Jan 30 04:09:30 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 30 04:32:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0O3E-0000UA-QL
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 04:09:29 +0100
+	id 1U0OPc-0000fN-8b
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 04:32:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303Ab3A3DJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 22:09:01 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61991 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751626Ab3A3DI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 22:08:59 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A9A7B761;
-	Tue, 29 Jan 2013 22:08:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QUDdSGLX7trfIxcHZqXutQQ0uiY=; b=CH2HeJ
-	+lwmIQKNZMYjafYqLckyPod7CXf4axC059pY8k96yK+g5u55uN4lY7evkcC77gIN
-	T2asGY8AEtSDBGq8QRzJMJmyHwv0d2ZdQrVzmmZFYelGLNXE8EYJBKfEQeCSMcT4
-	epfR4fCuHIIaHzKsddm8tID+RiMZlEYNtPs5M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FgRH7UNMnCVE0eBlKTNVxHYFu3cmQUhk
-	5FBvweTTGX7x1+BFcBOjlRiqH7RNDbc8g25+/3RMsNYR+b7impXWfONZ1JqWjRdt
-	9aT2TRjeoLuKkVcElxy3H8NTN6mKRlyGgK9N+mZte01u6SAiDbbBsBd4ohwgwObk
-	soJS0Wp5/vU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F40B4B760;
-	Tue, 29 Jan 2013 22:08:58 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 20A50B75D; Tue, 29 Jan 2013
- 22:08:58 -0500 (EST)
-In-Reply-To: <20130129230607.GG1342@serenity.lan> (John Keeping's message of
- "Tue, 29 Jan 2013 23:06:08 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 637891E6-6A8A-11E2-B2C1-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752598Ab3A3DcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 22:32:15 -0500
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:36045 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752431Ab3A3DcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 22:32:14 -0500
+Received: by mail-ob0-f170.google.com with SMTP id wc20so1216659obb.1
+        for <git@vger.kernel.org>; Tue, 29 Jan 2013 19:32:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=ptWNMPT63yXptjQ6v1ZKjVmzEOyU6SGyJEvhVOU3rOs=;
+        b=dyQZna2+2MeFF6nhwGk3C+LYf20ZQTJMDadkuBL6DdaJtHVSLIBb8gd9/vyBjKkiOr
+         bBm+p+dCfFdAOXuA9Pfzub2g+W0LlAuJhmx+LyIwIpDv6ROLnGy/vjZdOVfbIweNO8Rw
+         lbLZJBVY4kDTIzyzjwmzPa8QqmM0lbgMhyc2xbEvmOGZsAhdr7On0J92U2WljPmDuBg/
+         yxh0NvMKg0XyNoSjw2Ujq4c6O03EUbT7Mz72l1L6wJGBvoU3S1Yi322bEc2CJ+ZjehgI
+         pMtj/5zPjyrkbCNsZgyzNghSM6CTUZbXlsYQHOmfrdehzoSlMO3IkCe98cWZtki5aPFz
+         yvOg==
+X-Received: by 10.60.154.169 with SMTP id vp9mr2523766oeb.109.1359516733880;
+ Tue, 29 Jan 2013 19:32:13 -0800 (PST)
+Received: by 10.182.118.229 with HTTP; Tue, 29 Jan 2013 19:31:43 -0800 (PST)
+In-Reply-To: <20130129091434.GA6975@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214990>
 
-John Keeping <john@keeping.me.uk> writes:
+On Tue, Jan 29, 2013 at 4:14 PM, Jeff King <peff@peff.net> wrote:
+> The timings from this one are roughly similar to what I posted earlier.
+> Unlike the earlier version, this one keeps the data for a single commit
+> together for better cache locality (though I don't think it made a big
+> difference in my tests, since my cold-cache timing test ends up touching
+> every commit anyway).  The short of it is that for an extra 31M of disk
+> space (~4%), I get a warm-cache speedup for "git rev-list --all" of
+> ~4.2s to ~0.66s.
 
-> On Tue, Jan 29, 2013 at 02:55:26PM -0800, Junio C Hamano wrote:
-> ...
->> I can work with John to get this part into a shape to support his
->> extended use sometime toward the end of this week, by which time
->> hopefully you have some time to comment on the result.  John, how
->> does that sound?
->
-> My email crossed with yours - that sounds good to me.  If
-> da/mergetool-docs is in a reasonable state by tomorrow evening (GMT) I
-> should be able to have a look at it then - if not I'm happy to hold off
-> longer.
+Some data point on caching 1-parent vs 2-parent commits on webkit
+repo, 26k commits. With your changes (caching 2-parent commits), the
+.commits file takes 2241600 bytes. "rev-list --all --quiet":
 
-Heh, I actually was hoping that you will send in a replacement for
-David's patch ;-)
+0.06user 0.00system 0:00.08elapsed 95%CPU (0avgtext+0avgdata 26288maxresident)k
+0inputs+0outputs (0major+2094minor)pagefaults 0swaps
 
-Here is what I will squash into the one we have been discussing.  In
-a few hours, I expect I'll be able to push this out in the 'pu'
-branch.
+With caching 1-parent commits only, the .commits file takes 1707900
+bytes (30% less), the same rev-list command:
 
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Tue, 29 Jan 2013 18:57:55 -0800
-Subject: [PATCH] [SQUASH] mergetools: tweak show_tool_names and its users
+0.07user 0.00system 0:00.07elapsed 96%CPU (0avgtext+0avgdata 24144maxresident)k
+0inputs+0outputs (0major+1960minor)pagefaults 0swaps
 
-Use show_tool_names as a function to produce output, not as a
-function to compute a string.  Indicate if any output was given
-with its return status, so that the caller can say "if it didn't
-give any output, I'll say this instead" easily.
+Compared to the timing without caching at all:
 
-To be squashed into the previous; no need to keep this log message.
----
- git-mergetool--lib.sh | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+0.72user 0.02system 0:00.76elapsed 98%CPU (0avgtext+0avgdata 108976maxresident)k
+0inputs+0outputs (0major+7272minor)pagefaults 0swaps
 
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 135da96..79cbdc7 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -22,7 +22,7 @@ is_available () {
- show_tool_names () {
- 	condition=${1:-true} per_line_prefix=${2:-} preamble=${3:-}
- 
--	( cd "$MERGE_TOOLS_DIR" && ls -1 * ) |
-+	( cd "$MERGE_TOOLS_DIR" && ls ) |
- 	while read toolname
- 	do
- 		if setup_tool "$toolname" 2>/dev/null &&
-@@ -36,6 +36,7 @@ show_tool_names () {
- 			printf "%s%s\n" "$per_line_prefix" "$tool"
- 		fi
- 	done
-+	test -n "$preamble"
- }
- 
- diff_mode() {
-@@ -236,27 +237,30 @@ list_merge_tool_candidates () {
- 
- show_tool_help () {
- 	tool_opt="'git ${TOOL_MODE}tool --tool-<tool>'"
--	available=$(show_tool_names 'mode_ok && is_available' '\t\t' \
--		"$tool_opt may be set to one of the following:")
--	unavailable=$(show_tool_names 'mode_ok && ! is_available' '\t\t' \
--		"The following tools are valid, but not currently available:")
--	if test -n "$available"
-+
-+	tab='	' av_shown= unav_shown=
-+
-+	if show_tool_names 'mode_ok && is_available' "$tab$tab" \
-+		"$tool_opt may be set to one of the following:"
- 	then
--		echo "$available"
-+		av_shown=yes
- 	else
- 		echo "No suitable tool for 'git $cmd_name --tool=<tool>' found."
-+		av_shown=no
- 	fi
--	if test -n "$unavailable"
-+
-+	if show_tool_names 'mode_ok && ! is_available' "$tab$tab" \
-+		"The following tools are valid, but not currently available:"
- 	then
--		echo
--		echo "$unavailable"
-+		unav_shown=yes
- 	fi
--	if test -n "$unavailable$available"
--	then
-+
-+	case ",$av_shown,$unav_shown," in
-+	*,yes,*)
- 		echo
- 		echo "Some of the tools listed above only work in a windowed"
- 		echo "environment. If run in a terminal-only session, they will fail."
--	fi
-+	esac
- 	exit 0
- }
- 
+The performance loss in 1-parent case is not significant while disk
+saving is (although it'll be less impressive after you do Shawn's
+suggestion not storing SHA-1 directly)
 -- 
-1.8.1.2.555.gedafe79
+Duy
