@@ -1,102 +1,152 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: "sha1 information is lacking or useless" when rebasing
-	with a submodule pointer conflict
-Date: Wed, 30 Jan 2013 23:49:04 +0100
-Message-ID: <20130130224904.GB1053@book.hvoigt.net>
-References: <CAFyOhY8YAO4zx6jKQxrEW=-Vbo-TTjU6wJ7UgNVEjA7B2dasng@mail.gmail.com> <20130130215615.GA1053@book.hvoigt.net>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Anybody know a website with up-to-date git documentation?
+Date: Thu, 31 Jan 2013 04:37:09 +0530
+Message-ID: <20130130230709.GA7787@sita-lt.atc.tcs.com>
+References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
+ <20130130115439.GH1342@serenity.lan>
+ <71A3AA8C-DBA2-44F7-9B69-AEDB81BB0906@quendi.de>
+ <CAMK1S_i+ML+HuTRuox5rU4bsV0+xoFLWpK63WrdXuzhgyHJbrA@mail.gmail.com>
+ <6BE76AE4-254E-43DD-A3FF-88B5486029A5@quendi.de>
+ <7vlibalhcv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Michael Sims <michael.h.sims@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 23:49:39 2013
+Cc: Max Horn <max@quendi.de>, John Keeping <john@keeping.me.uk>,
+	git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 00:07:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0gTG-0003Oq-FA
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 23:49:34 +0100
+	id 1U0gkr-0004Zx-08
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 00:07:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756281Ab3A3WtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 17:49:12 -0500
-Received: from smtprelay05.ispgateway.de ([80.67.31.97]:45229 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755004Ab3A3WtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 17:49:12 -0500
-Received: from [77.21.76.82] (helo=localhost)
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1U0gSn-00063x-AB; Wed, 30 Jan 2013 23:49:05 +0100
+	id S1756406Ab3A3XHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 18:07:23 -0500
+Received: from mail-da0-f51.google.com ([209.85.210.51]:34284 "EHLO
+	mail-da0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754183Ab3A3XHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 18:07:21 -0500
+Received: by mail-da0-f51.google.com with SMTP id i30so984878dad.24
+        for <git@vger.kernel.org>; Wed, 30 Jan 2013 15:07:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=pI0sdj864lC/j1aVkhBvrEJT7l5Z/71UsnFBTtWatIk=;
+        b=sCaYFTTmQGLFRZys024o73RvN7+MTRR5cWChyTLsV/iity0wH8opL42j4ZK6oRs43h
+         4VVbT+mnNDujOGD0XkaNBebggEqBvfPBSWmpA2VI2rouHNKOyAjEyS1C/mHrr0xHP3Gz
+         xc7uyfK8yjvLI1zXQxWxa31scrjqePDK5GOHrScmjEjZdLXFemxO87kG/pF+wsa9KaMA
+         4PE80Y16L03yWARhFQRMc4UHXNX9KsGxBOpLfNRxkKTxhmZmpXt2U52ZqMNyKn/5iLXq
+         wxuGJW+xX8JtSZF2ywClSXTdpb62lvcG8agtgyCgvkK6e2tGKNhndLTbythAuPeyGfEn
+         YU+g==
+X-Received: by 10.68.235.1 with SMTP id ui1mr16435051pbc.138.1359587240850;
+        Wed, 30 Jan 2013 15:07:20 -0800 (PST)
+Received: from sita-lt.atc.tcs.com ([117.195.163.246])
+        by mx.google.com with ESMTPS id az8sm3383917pab.3.2013.01.30.15.07.17
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 30 Jan 2013 15:07:20 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20130130215615.GA1053@book.hvoigt.net>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+In-Reply-To: <7vlibalhcv.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215079>
 
-Hi,
-
-On Wed, Jan 30, 2013 at 10:56:15PM +0100, Heiko Voigt wrote:
-> On Wed, Jan 30, 2013 at 12:43:31PM -0600, Michael Sims wrote:
-> > I'm seeing what might be a bug that was introduced in git 1.7.12 (also
-> > observed in 1.8.1.2).  If not a bug, it's a changed behavior from
-> > previous versions that I don't understand.
-> > 
-> > Here's the scenario:
-> > * I have a remote repo containing a pointer to a submodule.
-> > * Developer A and Developer B clone this repo, and both make a commit
-> > to first the submodule, and then the parent repo, changing some files
-> > and also the submodule pointer at the same time.
-> > * Developer A pushes his changes to both the submodule and the parent
-> > module to the shared remote
-> > * Developer B either does a "git pull --rebase" or a "git fetch && git
-> > rebase origin/master"
+On Wed, Jan 30, 2013 at 09:18:24AM -0800, Junio C Hamano wrote:
+> Max Horn <max@quendi.de> writes:
 > 
-> Thanks for the detailed bug report and the demo script. I can reproduce
-> the behavior here and will have a look into it. The submodule should be
-> marked as conflict.
+> [administrivia: please wrap lines to a reasonable width]
 
-Bisect identified the following commit:
+Curiously, gmail's web interface appears to have started doing
+this only recently.  I've noticed it when trying to respond to
+others too.
 
-commit a230949409f4a650c6a1a9a5879e2a8b993ba695 (HEAD)
-Author: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Date:   Tue Jun 26 07:51:56 2012 -0700
+> > On 30.01.2013, at 16:59, Sitaram Chamarty wrote:
+> >
+> >> I'm curious... what's wrong with 'git checkout html' from the git repo
+> >> and just browsing them using a web browser?
+> >
+> > Hm, do you mean "make html", perhaps? At least I couldn't figure
+> > out what "git checkout html" should do, but out of curiosity gave
+> > it a try and got an error...
+> 
+> Perhaps some information from "A note from the maintainer" (posted
+> to this list from time to time) is lacking.  Some excerpts:
+> 
+>     You can browse the HTML manual pages at:
+> 
+>             http://git-htmldocs.googlecode.com/git/git.html
+> 
+>     Preformatted documentation from the tip of the "master" branch can be
+>     found in:
+> 
+>             git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+>             git://repo.or.cz/git-{htmldocs,manpages}.git/
+>             ...
+> 
+> 
+> Armed with that knowledge, I think Sitaram may have something like
+> this:
+> 
+> 	[remote "htmldocs"]
+> 		url = git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+> 		fetch = +refs/heads/master:refs/heads/html
+> 
+> and does
+> 
+> 	git fetch htmldocs
+>         git checkout html
 
-    am --rebasing: get patch body from commit, not from mailbox
-    
-    Rebasing a commit that contains a diff in the commit message results
-    in a failure with output such as
-    
-      First, rewinding head to replay your work on top of it...
-      Applying: My cool patch.
-      fatal: sha1 information is lacking or useless
-      (app/controllers/settings_controller.rb).
-      Repository lacks necessary blobs to fall back on 3-way merge.
-      Cannot fall back to three-way merge.
-      Patch failed at 0001 My cool patch.
-    
-    The reason is that 'git rebase' without -p/-i/-m internally calls 'git
-    format-patch' and pipes the output to 'git am --rebasing', which has
-    no way of knowing what is a real patch and what is a commit message
-    that contains a patch.
-    
-    Make 'git am' while in --rebasing mode get the patch body from the
-    commit object instead of extracting it from the mailbox.
-    
-    Patch by Junio, test case and commit log message by Martin.
-    
-    Reported-by: anikey <arty.anikey@gmail.com>
-    Helped-by: Junio C Hamano <gitster@pobox.com>
-    Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Hmm; I don't recall ever doing that.  But I just realised that
+my "html" branch is stuck at 1.7.7:
 
-Maybe Martin or Junio immediately see whats going wrong here? I would
-need to further dig into the git-am code to find out how to fix it.
+    $ git branch -v -v | grep html
+      html   8fb66e5 [origin/html] Autogenerated HTML docs for v1.7.7-138-g7f41b6
 
-Cheers Heiko
+Is it possible that upto that point, the main git.git repo did
+carry this branch also?  I have 3 remotes:
+
+    $ git remote -v
+    gc	https://code.google.com/p/git-core (fetch)
+    gc	https://code.google.com/p/git-core (push)
+    ghgit	git://github.com/git/git.git (fetch)
+    ghgit	git://github.com/git/git.git (push)
+    origin	git://git.kernel.org/pub/scm/git/git.git (fetch)
+    origin	git://git.kernel.org/pub/scm/git/git.git (push)
+
+and all 3 of them carry this branch:
+
+    $ git branch -a -v -v | grep html
+      html                  8fb66e5 [origin/html] Autogenerated HTML docs for v1.7.7-138-g7f41b6
+      remotes/gc/html       8fb66e5 Autogenerated HTML docs for v1.7.7-138-g7f41b6
+      remotes/ghgit/html    8fb66e5 Autogenerated HTML docs for v1.7.7-138-g7f41b6
+      remotes/origin/html   8fb66e5 Autogenerated HTML docs for v1.7.7-138-g7f41b6
+
+Even if I had, at one point, added a remote specifically for
+html, I am sure it could not have created those refs!
+
+So I tried a prune:
+
+    $ git remote update --prune
+    Fetching origin
+     x [deleted]         (none)     -> origin/html
+     x [deleted]         (none)     -> origin/man
+    Fetching ghgit
+     x [deleted]         (none)     -> ghgit/html
+     x [deleted]         (none)     -> ghgit/man
+    Fetching gc
+     x [deleted]         (none)     -> gc/html
+     x [deleted]         (none)     -> gc/man
+
+and now I'm on par with the rest of you ;-)
+
+> You can, too, of course ;-)
+
+You can do even more!  If you don't find a suitable website for
+this, it's trivial to host it yourself.  You can host it on your
+intranet, if you have one.
