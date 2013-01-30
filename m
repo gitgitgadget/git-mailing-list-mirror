@@ -1,103 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Anybody know a website with up-to-date git documentation?
-Date: Wed, 30 Jan 2013 09:18:24 -0800
-Message-ID: <7vlibalhcv.fsf@alter.siamese.dyndns.org>
-References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
- <20130130115439.GH1342@serenity.lan>
- <71A3AA8C-DBA2-44F7-9B69-AEDB81BB0906@quendi.de>
- <CAMK1S_i+ML+HuTRuox5rU4bsV0+xoFLWpK63WrdXuzhgyHJbrA@mail.gmail.com>
- <6BE76AE4-254E-43DD-A3FF-88B5486029A5@quendi.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Wed Jan 30 18:18:56 2013
+From: "Gustavo L. de M. Chaves" <gnustavo@cpan.org>
+Subject: [PATCH 0/7] perl/Git.pm: a bunch of fixes for Windows
+Date: Wed, 30 Jan 2013 15:22:56 -0200
+Message-ID: <1359566583-19654-1-git-send-email-gnustavo@cpan.org>
+Cc: "Gustavo L. de M. Chaves" <gnustavo@cpan.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 30 18:23:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0bJF-00041e-Lk
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 18:18:54 +0100
+	id 1U0bNk-0006Wu-AY
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 18:23:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754505Ab3A3RSa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 12:18:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34153 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754290Ab3A3RS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 12:18:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 901EBC853;
-	Wed, 30 Jan 2013 12:18:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/3AR1zRGUcp5M0l/2a1dEGb8FJs=; b=Bh3cVJ
-	juMzmuOLUbzz8cQuogcrCm7klb2OAJPCFgP8APXxq4zVk4HwD/gQAEVIhmVFRn9c
-	HXcWwRF338kDfWTYdcyU5pv28P24IcWcLd6tkky12aiM+bw87FAutFgQzj5nFx3t
-	w2amq3sBqet2fzXKwj5rlOdOqp+lnkOReUXTM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O45vN7fr5BT4iHU1l/nKiD9cUO5cMC7V
-	odNWihw31c3s5vOzWvq3DtzeER05dNF2vkRqUO+HK2rdUne34IZeJzQlU4dY/72j
-	FlWr0ycyQQ2MUo+ogaudx1k1ob6WxXpyzXzyiS6lvBQcb2ZR8BBHsfMeAcktCG9Q
-	ubCXe3JNSyM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84842C852;
-	Wed, 30 Jan 2013 12:18:26 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E307CC851; Wed, 30 Jan 2013
- 12:18:25 -0500 (EST)
-In-Reply-To: <6BE76AE4-254E-43DD-A3FF-88B5486029A5@quendi.de> (Max Horn's
- message of "Wed, 30 Jan 2013 18:05:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0EA5632A-6B01-11E2-84D5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754690Ab3A3RXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 12:23:10 -0500
+Received: from mail-ye0-f174.google.com ([209.85.213.174]:34616 "EHLO
+	mail-ye0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754607Ab3A3RXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 12:23:08 -0500
+Received: by mail-ye0-f174.google.com with SMTP id m3so300746yen.19
+        for <git@vger.kernel.org>; Wed, 30 Jan 2013 09:23:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer
+         :x-gm-message-state;
+        bh=IDvubykrQulWGuB9TUW8TnzihnNForSG+Pl+bcdrkw8=;
+        b=JzIaw/OppBVbsGTuRFaaA7DzbzpkU4hPUo1lNmNNNhsRUTAoyKkrTSiU6Utz0oQK6B
+         32ROH991T4VXbz21lZQNV1TS27iFdXbMqQtRvav/nFsEPHf5WYCmCR+KEcEXubSILpFB
+         UN6quwwC0JNdcj+VU8r3EuTcuv3V8brAK2A+V/dxpts25YRG7vhcUVJ55R1728legaVR
+         JxGUEwitNrPXptohkbsjHrLrZ9qxqKeiH7caq0QZ/P0Z3m2r8neNMqW4Tq5RYQa3tFJs
+         c1Qi6TDSg91yoMing52TS40DV9XVcpWNbkx3XTibYHX8vnBBfLWVeDU+9dMo0aL9G7JC
+         To5Q==
+X-Received: by 10.236.131.211 with SMTP id m59mr6448648yhi.49.1359566587780;
+        Wed, 30 Jan 2013 09:23:07 -0800 (PST)
+Received: from gnu.cpqd.com.br (fw-cpqd.cpqd.com.br. [189.112.183.66])
+        by mx.google.com with ESMTPS id q11sm1689802anp.13.2013.01.30.09.23.05
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 30 Jan 2013 09:23:06 -0800 (PST)
+X-Mailer: git-send-email 1.7.12.464.g83379df.dirty
+X-Gm-Message-State: ALoCoQmTZNxaiVaD6rqlucb2xPOxxM7OQ+iQ4dzCDj47TprgGkwQX+mq1yB0Cli8oB7dDuoT2x6V
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215034>
 
-Max Horn <max@quendi.de> writes:
+From: "Gustavo L. de M. Chaves" <gnustavo@cpan.org>
 
-[administrivia: please wrap lines to a reasonable width]
+I'm working on Git::Hooks, a Perl module to facilitate the
+implementation of git hooks. (http://search.cpan.org/dist/Git-Hooks/)
 
-> On 30.01.2013, at 16:59, Sitaram Chamarty wrote:
->
->> I'm curious... what's wrong with 'git checkout html' from the git repo
->> and just browsing them using a web browser?
->
-> Hm, do you mean "make html", perhaps? At least I couldn't figure
-> out what "git checkout html" should do, but out of curiosity gave
-> it a try and got an error...
+Git::Hooks uses the Git module implemented in perl/Git.pm and
+distributed with git.
 
-Perhaps some information from "A note from the maintainer" (posted
-to this list from time to time) is lacking.  Some excerpts:
+While working on porting Git::Hooks to Windows I stumbled upon a few
+problems in the Git module, problems specific to the Windows
+environment. In the following sequence of patches I try to fix them.
 
-    You can browse the HTML manual pages at:
+For the record, I'm using Strawberry Perl on Windows.
 
-            http://git-htmldocs.googlecode.com/git/git.html
+This is my first patch submission to git. I tried to follow all the
+project conventions but I may have done it wrong. If so, please, help
+me learn it.
 
-    Preformatted documentation from the tip of the "master" branch can be
-    found in:
+Thanks!
 
-            git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-            git://repo.or.cz/git-{htmldocs,manpages}.git/
-            ...
+Gustavo L. de M. Chaves (7):
+  perl/Git.pm: test portably if a path is absolute
+  perl/Git.pm: set up command environment on Windows
+  perl/Git.pm: fix _cmd_close on Windows
+  perl/Git.pm: escape external command's arguments on Windows
+  perl/Git.pm: simplify Git::activestate_pipe
+  perl/Git.pm: make command pipe work in slurp-mode on Windows
+  perl/Git.pm: rename 'ActiveState' to 'Windows'
 
+ perl/Git.pm | 63 +++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 36 insertions(+), 27 deletions(-)
 
-Armed with that knowledge, I think Sitaram may have something like
-this:
-
-	[remote "htmldocs"]
-		url = git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-		fetch = +refs/heads/master:refs/heads/html
-
-and does
-
-	git fetch htmldocs
-        git checkout html
-
-You can, too, of course ;-)
+-- 
+1.7.12.464.g83379df.dirty
