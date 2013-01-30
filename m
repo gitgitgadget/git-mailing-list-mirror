@@ -1,65 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/3] transfer.hiderefs
-Date: Tue, 29 Jan 2013 23:19:52 -0800
-Message-ID: <7vfw1jm92f.fsf@alter.siamese.dyndns.org>
-References: <1359418412-26602-1-git-send-email-gitster@pobox.com>
- <7vham0tvus.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
+Date: Wed, 30 Jan 2013 02:43:06 -0500
+Message-ID: <20130130074306.GA17868@sigill.intra.peff.net>
+References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
+ <7vvcafojf4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 30 08:20:18 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Krzysztof Mazur <krzysiek@podlesie.net>,
+	Michal Nazarewicz <mina86@mina86.com>
+To: Michal Nazarewicz <mpn@google.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 08:43:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0Rxx-0007CX-68
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 08:20:17 +0100
+	id 1U0SKa-00088i-R6
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 08:43:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753866Ab3A3HT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 02:19:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64472 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753684Ab3A3HTz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 02:19:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0E578D4E;
-	Wed, 30 Jan 2013 02:19:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BTVIRUtola2y0svc9HNBdHBM59E=; b=Em54PJ
-	pNGUgQ/PuVkW8MkaDTdwv6J1oFBwPfOjrxiOsXOcTqannOS8mZ29VBCFAacThUZB
-	xYZGg3ZfsUoUvse8o1uxKIz5oZ35KNTAFNQbBZkM5eFuQtbEUnlHEvoBYyQOEzBU
-	6+OXJXeGnZ5e5NS4RAmotjQh7ag8O2XHf9BEU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rGVLhoXUzfRuvDUxD+g8XB8rsqF8rWGe
-	OuwjyBdbG8VaXAjw7VMB+LCCvf4zvyMArKvfTBsFWthZwjZN6X100eCmrVNbMLY+
-	+d4C7oH0HVdb8Ja39znehTA4akv/wv/msvnlnb37vCwJeG0WjRZWhPvPISUICFVf
-	0OxfUObsk8I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A68838D4D;
-	Wed, 30 Jan 2013 02:19:54 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 263548D4A; Wed, 30 Jan 2013
- 02:19:54 -0500 (EST)
-In-Reply-To: <7vham0tvus.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 28 Jan 2013 21:13:31 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 718F1CBE-6AAD-11E2-8D7C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752254Ab3A3HnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 02:43:11 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53847 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751689Ab3A3HnJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 02:43:09 -0500
+Received: (qmail 27756 invoked by uid 107); 30 Jan 2013 07:44:32 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Jan 2013 02:44:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Jan 2013 02:43:06 -0500
+Content-Disposition: inline
+In-Reply-To: <7vvcafojf4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215004>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Jan 29, 2013 at 11:53:19AM -0800, Junio C Hamano wrote:
 
-> Please take this as just a preview of early WIP.  I think I may end
-> up doing moderate amount of refactoring as a preparatory step before
-> these patches, so nitpick-reviews are likely to become waste of
-> reviewer's time at this point.
+> Either way it still encourages a plaintext password to be on disk,
+> which may not be what we want, even though it may be slight if not
+> really much of an improvement.  Again the Help-for-users has this
+> amusing bit:
 
-I've pushed out a mostly-done reroll on 'pu'; I'll send them out as
-patches for review tomorrow.  I think I am making a good progress.
+I do not mind a .netrc or .authinfo parser, because while those formats
+do have security problems, they are standard files that may already be
+in use. So as long as we are not encouraging their use, I do not see a
+problem in supporting them (and we already do the same with curl's netrc
+support).
+
+But it would probably make sense for send-email to support the existing
+git-credential subsystem, so that it can take advantage of secure
+system-specific storage. And that is where we should be pointing new
+users. I think contrib/mw-to-git even has credential support written in
+perl, so it would just need to be factored out to Git.pm.
+
+-Peff
