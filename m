@@ -1,83 +1,79 @@
-From: Michael Tyson <michael@atastypixel.com>
-Subject: Re: Cloning remote HTTP repository: Can only see 'master' branch
-Date: Wed, 30 Jan 2013 11:06:31 +1100
-Message-ID: <C0C712AF-7EAF-4594-ACDB-27D7ADE9B49F@atastypixel.com>
-References: <83605E83-1110-449B-969D-AB43158376EA@atastypixel.com> <20130129082317.GA6396@sigill.intra.peff.net>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3] git-send-email: add ~/.authinfo parsing
+Date: Tue, 29 Jan 2013 16:34:22 -0800
+Message-ID: <7v1ud3o6ep.fsf@alter.siamese.dyndns.org>
+References: <7vehh3obs0.fsf@alter.siamese.dyndns.org>
+ <5d18d777d6ddf6f01bbf460f37af637d3dc28ed5.1359503987.git.mina86@mina86.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 30 01:07:03 2013
+Cc: git@vger.kernel.org, Krzysztof Mazur <krzysiek@podlesie.net>,
+	Michal Nazarewicz <mina86@mina86.com>
+To: Michal Nazarewicz <mpn@google.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 01:34:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0LCY-0008IG-AX
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 01:06:54 +0100
+	id 1U0Lda-0001W3-0W
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 01:34:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751771Ab3A3AGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2013 19:06:33 -0500
-Received: from bs4-dallas.accountservergroup.com ([50.23.201.241]:60135 "EHLO
-	bs4-dallas.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751452Ab3A3AGc convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2013 19:06:32 -0500
-Received: from 58-6-250-150.dyn.iinet.net.au ([58.6.250.150]:56988 helo=[10.1.1.7])
-	by bs4-dallas.accountservergroup.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.80)
-	(envelope-from <michael@atastypixel.com>)
-	id 1U0LCA-000Do0-UG
-	for git@vger.kernel.org; Tue, 29 Jan 2013 18:06:31 -0600
-In-Reply-To: <20130129082317.GA6396@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1499)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bs4-dallas.accountservergroup.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - atastypixel.com
+	id S1752276Ab3A3Ae1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2013 19:34:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34206 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751652Ab3A3AeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2013 19:34:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14D3AC1A4;
+	Tue, 29 Jan 2013 19:34:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kbERRqegRB9P8nmjSKR1EHhx1ww=; b=vn3dLt
+	fNw621HomW654y1Djo6l83/69vxJT+G+sWHRAp67tOZ5ZHDFpyEHwimtRRvmcz41
+	0lZg7fM5Hu5cu1Tjgo3sN5w2qobU+tq+yfOIt1GB4IKlDszMi24lOOB+ux8A29y1
+	TtG++rkYBGdlFJrT1AudRm7RiFySFZQ94Awyw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cZMf4k/YNsg7Fpt3fZu6zhtYge/unGSn
+	MT2JnJArVIJ6YN7LQ1fBc6p4hRJ7kiYHhwdmeIzKZvOBYE9js3FMcSzlnHVDGHlJ
+	15OuVl9XtslM2/DVBM21gCUUyueZPt37POQ0UpyFyHiuVDtvIDaiIQIQ8iOET1E/
+	gGEOuaGeNaA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F19A7C1A2;
+	Tue, 29 Jan 2013 19:34:24 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C5C5C19F; Tue, 29 Jan 2013
+ 19:34:24 -0500 (EST)
+In-Reply-To: <5d18d777d6ddf6f01bbf460f37af637d3dc28ed5.1359503987.git.mina86@mina86.com>
+ (Michal Nazarewicz's message of "Wed, 30 Jan 2013 01:03:51 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CBF5E040-6A74-11E2-821A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/214984>
 
-Ah!  Lovely, thank you, Jeff!
+Michal Nazarewicz <mpn@google.com> writes:
 
-Alas, it's a shared server so I'm limited to what the host provides, but that solves my problem.
+>> Is it bad to use Net::Netrc instead?  This looks like exactly the
+>> use case that module was written for, no?
+>
+> I don't think that's the case.  For one, Net::Netrc does not seem to
+> process port number.
+>
+> There is a Text::Authinfo module but it just uses Text::CSV.
+>
+> I can change the code to use Net::Netrc, but I dunno if that's really
+> the best option, since I feel people would expect parsing to be
+> somehow compatible with
+> <http://www.gnu.org/software/emacs/manual/html_node/gnus/NNTP.html>
+> rather than the original .netrc file format.
 
-Cheers!
+Thanks for pushing back (I wish more contributors did so when I
+suggest nonsense ;-)); you are right that both canned modules are
+lacking.
 
-
-On 29 Jan 2013, at 19:23, Jeff King <peff@peff.net> wrote:
-
-> On Tue, Jan 29, 2013 at 04:54:13PM +1100, Michael Tyson wrote:
-> 
->> I've a readonly git repository that I'm hosting via HTTP (a bare git
->> repository located within the appropriate directory on the server). I
->> push to it via my own SSH account (local repository with a remote
->> pointing to the ssh:// URL).
->> 
->> This has all worked fine so far - I push via ssh, and others can clone
->> and pull via the HTTP URL.
->> 
->> I've recently added a branch - "beta" - which pushed just fine, but
->> now cloning via the HTTP URL doesn't seem to show the new branch -
->> just master:
-> 
-> If you are using the "dumb" http protocol (i.e., the web server knows
-> nothing about git, and just serves the repo files), you need to run "git
-> update-server-info" after each push in order to update the static file
-> that tells the git client about each ref. You can have git do it
-> automatically for you by setting receive.updateServerInfo in the server
-> repo's config.
-> 
-> If the server is yours to control, consider setting up the "smart" http
-> protocol, as it is much more efficient. Details are in "git help
-> http-backend".
-> 
-> -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Will queue.  Thanks.
