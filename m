@@ -1,73 +1,84 @@
-From: Jed Brown <jed@59A2.org>
-Subject: Re: Updating shared ref from remote helper, or fetch hook
-Date: Wed, 30 Jan 2013 02:06:41 -0600
-Message-ID: <874nhzksby.fsf@59A2.org>
-References: <87ehh5lw9j.fsf@59A2.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC 0/6] commit caching
+Date: Wed, 30 Jan 2013 15:32:44 +0700
+Message-ID: <CACsJy8BEyha1QdQmRH9o-h_3JLPmMemoc4ucSaQ_nrOMzQ64AQ@mail.gmail.com>
+References: <20130129091434.GA6975@sigill.intra.peff.net> <CACsJy8BE3LdxbZzdQXuvEJop23KnnLbCTgPos9CywKV7EY2q9g@mail.gmail.com>
+ <20130130071839.GF11147@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Max Horn <max@quendi.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 30 09:07:10 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 30 09:33:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0ShJ-00076E-M1
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 09:07:10 +0100
+	id 1U0T6u-0007eg-VC
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jan 2013 09:33:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753270Ab3A3IGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 03:06:49 -0500
-Received: from mail-ia0-f179.google.com ([209.85.210.179]:63764 "EHLO
-	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753102Ab3A3IGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 03:06:46 -0500
-Received: by mail-ia0-f179.google.com with SMTP id x24so1920504iak.10
-        for <git@vger.kernel.org>; Wed, 30 Jan 2013 00:06:46 -0800 (PST)
+	id S1751766Ab3A3IdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 03:33:15 -0500
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:44301 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751382Ab3A3IdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 03:33:14 -0500
+Received: by mail-ob0-f181.google.com with SMTP id ni5so1344592obc.26
+        for <git@vger.kernel.org>; Wed, 30 Jan 2013 00:33:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version:content-type;
-        bh=v2cmy+iEgE2HLmujjjL757Ec+tSjRZ+KY43fuNZkqms=;
-        b=eDh2QlnSCXTisjuyktdJ4HFSH1tCWyBOZVcsT1Z4ugfyu7H7sZn8hTxzaZu13ydz5m
-         Pqui8+PE9CNvS2/wMR6oIA8gawdViRTzx0vKu7B0X1PN16Jxcja5jxTieCljCjQ90Gl6
-         5pokE3uWkC9NPOwcbXpcu2kVRNnogj9mTBdRm6eZYg2zP/vcOWC2qoPFUHW5LjY7zRoi
-         YQPhA71ZlX+ybLzmL/g6AQpipG+4HfA5eI9Z0fh0tjwvk9GCOKgljvc4+7W7FK8dY8xh
-         0wT4nA31RDhhrSauPC3sJF1ICsE30+A+ZN4lWHHc6xnpRgv0IyYX8Qnt4gthHuyMlI+W
-         a09g==
-X-Received: by 10.43.134.8 with SMTP id ia8mr1752231icc.42.1359533205946;
-        Wed, 30 Jan 2013 00:06:45 -0800 (PST)
-Received: from batura ([38.69.41.115])
-        by mx.google.com with ESMTPS id c3sm5123033igj.1.2013.01.30.00.06.42
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 30 Jan 2013 00:06:43 -0800 (PST)
-In-Reply-To: <87ehh5lw9j.fsf@59A2.org>
-User-Agent: Notmuch/0.15 (http://notmuchmail.org) Emacs/24.2.1 (x86_64-unknown-linux-gnu)
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=UzsIjeSbDfK8Sai1yHeu8YKWKabE0C3489WpZQzx8kg=;
+        b=Ete5F0ERgri0MMfU0TTKQgN8MXz2J1m8H9MaGCmgVSD7oJnKiHQaHuIBBB093tnoBm
+         eSQKoY9DSirQj7nO8X13kIBISYfbUfncGKwMO68f2zjMWCFxPfR4n/v4xyocHMnVae1+
+         o/J/LyMPYK5giZOrP/DeEr3jXo1rIPhlwrjyMoGBPiqdM7ngLHUAT1WoArukAkNpeVSN
+         gOKYa4sFqnPZTU8wz5H2Weo7Fr7D4Vko6/ufNf6Ys52AQ0FaGA8W15CBPW/LvOIJB8qj
+         vQbmWDuAfjUWTrdmMBOdo2E1eJxP3oXYMlB5GeXNCtNm8yxWCPwph6vjgdgtYUaMB1a5
+         6GRQ==
+X-Received: by 10.60.22.164 with SMTP id e4mr2978992oef.87.1359534794055; Wed,
+ 30 Jan 2013 00:33:14 -0800 (PST)
+Received: by 10.182.118.229 with HTTP; Wed, 30 Jan 2013 00:32:44 -0800 (PST)
+In-Reply-To: <20130130071839.GF11147@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215006>
 
-Jed Brown <jed@59A2.org> writes:
-
-> I'm working on an hg remote helper that uses git notes for the sha1
-> revision, so that git users can more easily refer to specific commits
-> when communicating with hg users.  Since there may be multiple
-> concurrent fast-import streams, I write the notes to a private ref
-> (refs/notes/hg-REMOTE), to be merged eventually using
+On Wed, Jan 30, 2013 at 2:18 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Jan 30, 2013 at 10:31:43AM +0700, Nguyen Thai Ngoc Duy wrote:
 >
->   git notes --ref hg merge hg-REMOTE*
+>> On Tue, Jan 29, 2013 at 4:14 PM, Jeff King <peff@peff.net> wrote:
+>> > The timings from this one are roughly similar to what I posted earlier.
+>> > Unlike the earlier version, this one keeps the data for a single commit
+>> > together for better cache locality (though I don't think it made a big
+>> > difference in my tests, since my cold-cache timing test ends up touching
+>> > every commit anyway).  The short of it is that for an extra 31M of disk
+>> > space (~4%), I get a warm-cache speedup for "git rev-list --all" of
+>> > ~4.2s to ~0.66s.
+>>
+>> Some data point on caching 1-parent vs 2-parent commits on webkit
+>> repo, 26k commits. With your changes (caching 2-parent commits), the
+>> .commits file takes 2241600 bytes. "rev-list --all --quiet":
+>
+> Hmm. My webkit repo has zero merges in it (though it is the older
+> svn-based one). What percentage of the one you have are merges? How does
+> your 1-parent cache perform on something like git.git, where about 25%
+> of all commits are merges?
 
-A related issue is that when a remote helper replies to an 'import' with
-_only_ a commit in refs/notes/, git (fetch or pull) produces an error
-message like
+git.git performs worse with 1-parent cache. But the point is it should
+be customizable.
 
-  error: refs/notes/hg-84b3865b750a567acb16929c21e14c4a45a5639b does not point to a valid object
+>> The performance loss in 1-parent case is not significant while disk
+>> saving is (although it'll be less impressive after you do Shawn's
+>> suggestion not storing SHA-1 directly)
+>
+> Yeah, I think moving to offsets instead of sha1s is going to be a big
+> enough win that it won't matter anymore.
 
-but successfully updates the ref (which is indeed valid) and returns
-0. I have not been able to determine what exactly git thinks is
-invalid. As long as there is at least one non-notes commit in the
-stream, no such error message is produced.
-
-Is this behavior intended?
+Yeah, if we use uint32_t instead of sha-1, the cache is just about
+400k 2 parents for webkit, 312k for 1 parent. The total size is so
+small that reduction does not really matter anymore.
+-- 
+Duy
