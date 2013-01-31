@@ -1,75 +1,64 @@
-From: Stephen Boyd <sboyd@codeaurora.org>
-Subject: [PATCHv2 1/3] gpg: Close stderr once finished with it in verify_signed_buffer()
-Date: Thu, 31 Jan 2013 10:18:40 -0800
-Message-ID: <1359656320-4434-1-git-send-email-sboyd@codeaurora.org>
-References: <20130131055053.GA11912@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] gpg: Allow translation of more error messages
+Date: Thu, 31 Jan 2013 10:20:52 -0800
+Message-ID: <20130131182052.GA27340@google.com>
+References: <1359597666-10108-1-git-send-email-sboyd@codeaurora.org>
+ <1359597666-10108-4-git-send-email-sboyd@codeaurora.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 31 19:19:05 2013
+To: Stephen Boyd <sboyd@codeaurora.org>
+X-From: git-owner@vger.kernel.org Thu Jan 31 19:21:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0yj2-0002QB-TD
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 19:19:05 +0100
+	id 1U0ylM-0003yL-0k
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 19:21:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754942Ab3AaSSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 13:18:43 -0500
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:16998 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751752Ab3AaSSm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 13:18:42 -0500
-X-IronPort-AV: E=Sophos;i="4.84,578,1355126400"; 
-   d="scan'208";a="23265115"
-Received: from pdmz-ns-snip_114_130.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
-  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 31 Jan 2013 10:18:42 -0800
-Received: from sboyd-linux.qualcomm.com (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 019BA10004C7;
-	Thu, 31 Jan 2013 10:18:41 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1.442.gfb9beb5
-In-reply-to: <20130131055053.GA11912@sigill.intra.peff.net>
+	id S1754987Ab3AaSVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 13:21:06 -0500
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:60304 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752122Ab3AaSVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 13:21:04 -0500
+Received: by mail-pb0-f52.google.com with SMTP id mc8so985033pbc.39
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 10:21:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=R7+eaY5/dRcW9bPQcwf2UAjbBti/dcF0gw85KPhruTs=;
+        b=T/ev5Y/UTFLOSXGMc+/6cUJpObvEjKwESJAayMZ9vN34nZlzi5vS56GJcgSxB+O+IO
+         S1ugyjts1iNp4jbfb/fHBnvB4lBsVqgk+SyxD8Cvm3u8wAyj8+jmVM7YR5opkPrGRWLx
+         geC0ofHY+RJ8wKflqXtJ9zd61zOaeWmHrni8qSBwN3sOyLU4S/ZTunCdyeu+OErgBNnM
+         I++K2cdbGj4kATJbHb4pm28PrzZ7MYl2HIuVSeOk/Crr2OfxGFZ71xfP482pOUmjeINo
+         p7eKChRsDyc07flz1cG3c+p/ILsQq2+X8p6XVPqpPcFMSU6rnU63YH/JPdNp0lYj3OGx
+         slqQ==
+X-Received: by 10.68.134.228 with SMTP id pn4mr24695270pbb.31.1359656463748;
+        Thu, 31 Jan 2013 10:21:03 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id i5sm6286103pax.13.2013.01.31.10.21.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 31 Jan 2013 10:21:01 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1359597666-10108-4-git-send-email-sboyd@codeaurora.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215140>
 
-Failing to close the stderr pipe in verify_signed_buffer() causes
-git to run out of file descriptors if there are many calls to
-verify_signed_buffer(). An easy way to trigger this is to run
+Stephen Boyd wrote:
 
- git log --show-signature --merges | grep "key"
+> Mark these strings for translation so that error messages are
+> printed in the user's language of choice.
 
-on the linux kernel git repo. Eventually it will fail with
+Yeah.  Other error messages in this file are already translated, so
+it's oddly inconsistent.
 
- error: cannot create pipe for gpg: Too many open files
- error: could not run gpg.
-
-Close the stderr pipe so that this can't happen.
-
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Stephen Boyd <sboyd@codeaurora.org>
----
- gpg-interface.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 0863c61..5f142f6 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -130,8 +130,10 @@ int verify_signed_buffer(const char *payload, size_t payload_size,
- 	write_in_full(gpg.in, payload, payload_size);
- 	close(gpg.in);
- 
--	if (gpg_output)
-+	if (gpg_output) {
- 		strbuf_read(gpg_output, gpg.err, 0);
-+		close(gpg.err);
-+	}
- 	ret = finish_command(&gpg);
- 
- 	unlink_or_warn(path);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-hosted by The Linux Foundation
+Assuming this passes tests with GETTEXT_POISON=YesPlease,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
