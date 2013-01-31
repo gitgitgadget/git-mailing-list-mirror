@@ -1,135 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] run-command: Be more informative about what failed
-Date: Thu, 31 Jan 2013 08:24:21 -0800
-Message-ID: <7vfw1hiami.fsf@alter.siamese.dyndns.org>
-References: <1359597666-10108-1-git-send-email-sboyd@codeaurora.org>
- <1359597666-10108-3-git-send-email-sboyd@codeaurora.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 0/2] optimizing pack access on "read only" fetch repos
+Date: Thu, 31 Jan 2013 08:47:37 -0800
+Message-ID: <CAJo=hJuGw8x=VrjWhvZhzakuhWrCWr2FRuEsNt5gQNC=6PPuVw@mail.gmail.com>
+References: <20130126224011.GA20675@sigill.intra.peff.net> <7vlibfxhit.fsf@alter.siamese.dyndns.org>
+ <20130129082939.GB6396@sigill.intra.peff.net> <7vwquwrng6.fsf@alter.siamese.dyndns.org>
+ <20130129211932.GA17377@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Boyd <sboyd@codeaurora.org>
-X-From: git-owner@vger.kernel.org Thu Jan 31 17:24:55 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 31 17:48:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0wwR-00084a-VS
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 17:24:48 +0100
+	id 1U0xJE-0007HQ-O6
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 17:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755564Ab3AaQY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 11:24:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58998 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755494Ab3AaQYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 11:24:25 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C788BD0A;
-	Thu, 31 Jan 2013 11:24:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FfxOu5oOtnC/t0vkhGI/E8bbORw=; b=NIjd3t
-	77RrKQcIRWj1sWLkh35A6KRdUXYCQIxE6N1lmEimrmopqCw+U1dlcCx5yniGYuwm
-	g49DRcd7LocC2mCEvP2RHzf0GegNzZPUiHsSIC63TdsghL58+bF/GAb9yXuyiRT1
-	rq7rp88NUntDWT9yCPk6fq+yjmzmnMsFVXjj8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yz2d7RXKh48p08ygJXQop/tHOkjTkqZh
-	ttXSy2FGQ7HJY5xiDHDaDAZpGVA1jQwkoDnKlzAzr7vjsgZi2ZbfD8VOT5RX3c62
-	oIH+uf6KBwxdmfoMLYb2HYcmCgEAzWHFuhOnTSGITSDOxRzSYhlSRZpAkd8PI65/
-	hN2MhU6gWw4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F64ABD09;
-	Thu, 31 Jan 2013 11:24:24 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75BF5BD07; Thu, 31 Jan 2013
- 11:24:23 -0500 (EST)
-In-Reply-To: <1359597666-10108-3-git-send-email-sboyd@codeaurora.org>
- (Stephen Boyd's message of "Wed, 30 Jan 2013 18:01:05 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AC687EA0-6BC2-11E2-A8DB-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753448Ab3AaQr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 11:47:59 -0500
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:35251 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751688Ab3AaQr5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 11:47:57 -0500
+Received: by mail-ie0-f182.google.com with SMTP id k14so2557849iea.27
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 08:47:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=wkXkJf6wFo+nRLPrziFvSYloZ6nT2QJpQ7C1y2Oj6+Y=;
+        b=XQmcZkvXf9uqpUEYRSyTBnH0h0hzL+K5kXwFNhdObjcPseUeFj0ouAcafj0W8s83Kb
+         xrKpblvzU20RWRw0f6GItzCIG9UExVzKxqUrDtpZJiDvz9Nbd77HumLV75oBBM+V7IHp
+         zep++9hlstDMf0EqEKwu3dUExlz7rL9tBhn/4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:x-gm-message-state;
+        bh=wkXkJf6wFo+nRLPrziFvSYloZ6nT2QJpQ7C1y2Oj6+Y=;
+        b=VMY4+UOeWqEd6yOaWQMPq+iOFPEUrzYNXvIWevurWG69pXWqup1nRNfK74NDbNLpRn
+         Op/spQnO/m6gFhXgWOpmIDVoBZ0U86w6aWwkcYR2OQrrr+7VlITN39hdgsJSyX4V2sFb
+         GBnj0TW1/ImssbC8dpY1q9rZW+2UzAXr4GjJh00JfBg2rgqf6B9Jj9VmiVbkW23pjmFN
+         12PhPraEn8oZZucYgaWp0SCmk9Oyx0JDTecFzWVhbAQiuQdHdSz3oWEUmpF2bDy34Kw4
+         Vab+biN6yzdvnOD/j5PZesCT6fjXLFHInay12FgTZ8zx0zIWLMX5offBIgTxyGbl1xh8
+         qu6g==
+X-Received: by 10.50.216.229 with SMTP id ot5mr1699057igc.76.1359650877149;
+ Thu, 31 Jan 2013 08:47:57 -0800 (PST)
+Received: by 10.64.170.100 with HTTP; Thu, 31 Jan 2013 08:47:37 -0800 (PST)
+In-Reply-To: <20130129211932.GA17377@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQkdobLp4UQ7SSKcU8d/WHrxi7IPLqnaHkOt/QJzkgqGwTefUbsGeBkSATQysUqAECznzorU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215124>
 
-Stephen Boyd <sboyd@codeaurora.org> writes:
-
-> While debugging an error with verify_signed_buffer() the error
-> messages from run-command weren't very useful:
+On Tue, Jan 29, 2013 at 1:19 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jan 29, 2013 at 07:58:01AM -0800, Junio C Hamano wrote:
 >
->  error: cannot create pipe for gpg: Too many open files
->  error: could not run gpg.
+>> The point is not about space.  Disk is cheap, and it is not making
+>> it any worse than what happens to your target audience, that is a
+>> fetch-only repository with only "gc --auto" in it, where nobody
+>> passes "-f" to "repack" to cause recomputation of delta.
+>>
+>> What I was trying to seek was a way to reduce the runtime penalty we
+>> pay every time we run git in such a repository.
+>>
+>>  - Object look-up cost will become log2(50*n) from 50*log2(n), which
+>>    is about 50/log2(50) improvement;
 >
-> because they didn't indicate *which* pipe couldn't be created.
+> Yes and no. Our heuristic is to look at the last-used pack for an
+> object. So assuming we have locality of requests, we should quite often
+> get "lucky" and find the object in the first log2 search. Even if we
+> don't assume locality, a situation with one large pack and a few small
+> packs will have the large one as "last used" more often than the others,
+> and it will also have the looked-for object more often than the others
 
-For the message emitted here with your update (or without for that
-matter) to be useful, it has to hold that there is a single leaker,
-that leaker fails in this codepath, and that there is nobody else
-involved.  Otherwise, you may be able to tell that one caller could
-not create its stdin, but the reason it couldn't may be because
-somebody else consumed all the available file descriptors.
+Opening all of those files does impact performance. It depends on how
+slow your open(2) syscall is. I know on Mac OS X that its not the
+fastest function we get from the C library. Performing ~40 opens to
+look through the most recent pack files and finally find the "real"
+pack that contains that tag you asked `git show` for isn't that quick.
 
-I am not opposed to this change per-se, but I am not sure that
-saying "stdin" etc. makes the message more useful for the purpose of
-debugging.
+Some of us also use Git on filesystems that are network based, and
+slow compared to local disk Linux ext2/3/4 with gobs of free RAM.
 
-> For example, the above error now prints:
+> So I can see how it is something we could potentially optimize, but I
+> could also see it being surprisingly not a big deal. I'd be very
+> interested to see real measurements, even of something as simple as a
+> "master index" which can reference multiple packfiles.
+
+I actually tried this many many years ago. There are threads in the
+archive about it. Its slower. We ruled it out.
+
+>>  - System resource cost we incur by having to keep 50 file
+>>    descriptors open and maintaining 50 mmap windows will reduce by
+>>    50 fold.
 >
->  error: cannot create stderr pipe for gpg: Too many open files
->  error: could not run gpg.
+> I wonder how measurable that is (and if it matters on Linux versus less
+> efficient platforms).
 
-I'd prefer to see these names spelled out (e.g. "standard error")
-in any case.
-
-Thanks.
-
-> Signed-off-by: Stephen Boyd <sboyd@codeaurora.org>
-> ---
-
->  run-command.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/run-command.c b/run-command.c
-> index 12d4ddb..016dd05 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -274,6 +274,7 @@ int start_command(struct child_process *cmd)
->  	int need_in, need_out, need_err;
->  	int fdin[2], fdout[2], fderr[2];
->  	int failed_errno = failed_errno;
-> +	char *str;
->  
->  	/*
->  	 * In case of errors we must keep the promise to close FDs
-> @@ -286,6 +287,7 @@ int start_command(struct child_process *cmd)
->  			failed_errno = errno;
->  			if (cmd->out > 0)
->  				close(cmd->out);
-> +			str = "stdin";
->  			goto fail_pipe;
->  		}
->  		cmd->in = fdin[1];
-> @@ -301,6 +303,7 @@ int start_command(struct child_process *cmd)
->  				close_pair(fdin);
->  			else if (cmd->in)
->  				close(cmd->in);
-> +			str = "stdout";
->  			goto fail_pipe;
->  		}
->  		cmd->out = fdout[0];
-> @@ -318,9 +321,10 @@ int start_command(struct child_process *cmd)
->  				close_pair(fdout);
->  			else if (cmd->out)
->  				close(cmd->out);
-> +			str = "stderr";
->  fail_pipe:
-> -			error("cannot create pipe for %s: %s",
-> -				cmd->argv[0], strerror(failed_errno));
-> +			error("cannot create %s pipe for %s: %s",
-> +				str, cmd->argv[0], strerror(failed_errno));
->  			errno = failed_errno;
->  			return -1;
->  		}
+It does matter. We know it has a negative impact on JGit even on Linux
+for example. You don't want 300 packs in a repository. 50 might be
+tolerable. 300 is not.
