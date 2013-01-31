@@ -1,91 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 2/7] Undocument deprecated alias 'push.default=tracking'
-Date: Thu, 31 Jan 2013 12:01:29 -0800
-Message-ID: <7va9rpgm06.fsf@alter.siamese.dyndns.org>
+Date: Thu, 31 Jan 2013 12:04:34 -0800
+Message-ID: <20130131200434.GI27340@google.com>
 References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
  <1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
  <1335170284-30768-3-git-send-email-Matthieu.Moy@imag.fr>
  <CACBZZX552fnD+u9Zp-BhqDyYWN+OiyvCyub-xjMZ-_GXCG-vQA@mail.gmail.com>
- <7vvcadgss0.fsf@alter.siamese.dyndns.org> <20130131190747.GE27340@google.com>
- <7vip6dgmx2.fsf@alter.siamese.dyndns.org> <20130131195712.GH27340@google.com>
+ <7vvcadgss0.fsf@alter.siamese.dyndns.org>
+ <20130131190747.GE27340@google.com>
+ <7vip6dgmx2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
 	Jeff King <peff@peff.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 31 21:02:03 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 21:05:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U10Kc-0004og-Fv
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 21:01:58 +0100
+	id 1U10NZ-0006mb-J2
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 21:05:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756964Ab3AaUBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 15:01:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44786 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756718Ab3AaUBc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 15:01:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDBC4C714;
-	Thu, 31 Jan 2013 15:01:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UE62aBsb0bnq7Oy5nhgPFbDcOn8=; b=NP26PS
-	M5m+0iCVH4c/95pNkbQn10X//CpHhZ6M+tV0+RFB+fn9XFihXo4N+6N9v8NSn5pp
-	maMz+9lOERCJ2XF/CjTBC5ew+j4qRIP1WmuwYDO8eLVGtB7U3+WtORxwZ1TJzIZs
-	L4UFGZI+XE1GDqx5c+a/wPYC0I5xTxr7h/Yv0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xADa2l3k4oTVM6IR7yw1O+RS45ByL8Wj
-	qbJ6cyMWSFQxWE1fZyr/QfAPh0T90USQcyPlRIeDIZbjDk+G0u/OQ4MMMi4aZ+vj
-	8lGGDBcUnPN6IlDHLB/IopXEGVHaP2WutnHouQwzO/6nuUgJCzspdmGj4VaHs/L+
-	d5tMPG1AoQg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0298C713;
-	Thu, 31 Jan 2013 15:01:31 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 56886C70E; Thu, 31 Jan 2013
- 15:01:31 -0500 (EST)
-In-Reply-To: <20130131195712.GH27340@google.com> (Jonathan Nieder's message
- of "Thu, 31 Jan 2013 11:57:12 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 01A41758-6BE1-11E2-B8A0-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755236Ab3AaUEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 15:04:40 -0500
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:41603 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754060Ab3AaUEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 15:04:39 -0500
+Received: by mail-pb0-f52.google.com with SMTP id mc8so1018461pbc.25
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 12:04:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=3XHhI3SzyXqHzECXGd9F5jY5B05hCAY91w12HHFqYV0=;
+        b=kOxJ3txC4dZIUxKmWw50cjQYHMhbyrEdSl+RAbRNPfyPH54OsVY6d8JcJsrqIiH5pW
+         Xxq54fx254/ElxbShAODhMZLxUE6/esMvLl3DY7hgjKBPKVS2v4IOW3Lenpor6FQIpne
+         fiN3poTmjR5rh/roYvt0q3oLyVU1MTqPdPLoMhdlT8G6gJPVvk5m1kpoX2ZBzqnOLh2U
+         eR/7XHlFbayrIA6voHqHcPzH/bxFImvw//biKMFa9OUNnxC0b2BHvMkZVvI15bOSE540
+         +eA4ZgZuUcgItu/rUYEWZUlYkMXRUOKuWLx6sR3Trfx7s31jWv7rGoXWA63z7bYclGdT
+         pLmg==
+X-Received: by 10.68.244.6 with SMTP id xc6mr25572781pbc.94.1359662679049;
+        Thu, 31 Jan 2013 12:04:39 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id a4sm6496861paw.21.2013.01.31.12.04.36
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 31 Jan 2013 12:04:37 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vip6dgmx2.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215160>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano wrote:
 
-> Junio C Hamano wrote:
->
->> That is why I tend to prefer how check-ref-format documentation
->> describes --print:
->>
->>         --normalize::
->>                 Normalize 'refname' by removing any leading slash (`/`)
->>                 characters and collapsing runs of adjacent slashes between
->>                 name components into a single slash.  Iff the normalized
->>                 refname is valid then print it to standard output and exit
->>                 with a status of 0.  (`--print` is a deprecated way to spell
->>                 `--normalize`.)
->
-> That works because, as you mention, the usual way to look up an option
-> in manpages is to search for "--print", including the two minus signs.
->
-> Unfortunately an analagous approach in gitconfig(5) would be seriously
-> broken, because searching for "tracking" (no minus signs) is going to
-> hit many false positives.  I do not think such a change would be an
-> improvement.
+>                                                      For those who
+> want to _learn_ what possibilities are available to them (i.e. they
+> are not going from `tracking` to what it means, but going in the
+> opposite direction), it should be unmistakingly clear that
+> `tracking` is not a part of the choices they should make.
 
-I thought your example was that you saw "pull.default = tracking"
-and wondering what it is.  Why do you need global search for
-"tracking", not just near pull.default is described, in the first
-place?
+Until pre-1.7.4 versions of git fall out of use, I don't agree that
+the above is true. :(
+
+
+>                                                            I do not
+> think the following list created by a simple "revert" makes it clear.
+>
+>     * `nothing` - do not push anything.
+>     * `matching` - push all branches having the same name in both ends.
+>     * `upstream` - push the current branch to ...
+>     * `simple` - like `upstream`, but refuses to ...
+>     * `tracking` - deprecated synonym for `upstream`.
+>     * `current` - push the current branch to a branch of the same name.
+
+How about the following?
+
+    * `nothing` - ...
+    * `matching` - ...
+    * `upstream` - ...
+    * `simple` - ...
+    * `current` - ...
+
+  For compatibility with ancient config files, the following synonym
+  is also supported.  Don't use it.
+
+    * `tracking` - old name for `upstream`
