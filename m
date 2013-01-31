@@ -1,72 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/7] Undocument deprecated alias 'push.default=tracking'
-Date: Thu, 31 Jan 2013 11:11:05 -0800
-Message-ID: <20130131191105.GF27340@google.com>
-References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
- <1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
- <1335170284-30768-3-git-send-email-Matthieu.Moy@imag.fr>
- <CACBZZX552fnD+u9Zp-BhqDyYWN+OiyvCyub-xjMZ-_GXCG-vQA@mail.gmail.com>
- <7vvcadgss0.fsf@alter.siamese.dyndns.org>
- <20130131190747.GE27340@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] Fix msvc build
+Date: Thu, 31 Jan 2013 11:28:31 -0800
+Message-ID: <7vmwvpgnj4.fsf@alter.siamese.dyndns.org>
+References: <510AB766.4030806@ramsay1.demon.co.uk>
+ <alpine.DEB.1.00.1301311956470.32206@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 31 20:11:39 2013
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 31 20:28:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0zXp-0004s7-GL
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 20:11:33 +0100
+	id 1U0zoe-0008Ft-B7
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 20:28:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754972Ab3AaTLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 14:11:12 -0500
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:34979 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751945Ab3AaTLK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 14:11:10 -0500
-Received: by mail-pb0-f47.google.com with SMTP id rp8so1752880pbb.34
-        for <git@vger.kernel.org>; Thu, 31 Jan 2013 11:11:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=SGwBed3a6sHezbHy3hK4fFhWPmyz43694QHRQEhKHoY=;
-        b=nw+wb+HGpqcMyP2Y8ZnkVaWWQkQInxwRD6WhkWFgXvHyrtxtc2k0qvIZv5deWqkaVc
-         opEw3olpB5umv9Vrs+WysoqVJHvg1fq45ovRNPO6Q2+XrNNgw6p5ElL57afr1bo4i1oR
-         kFESibjm5lmRk21CbJ+aZJ652f0PU3A13qrtJiUZPW2rHAfx4d9rDJyGfmvvYZq+Keck
-         SmNjOISq9/BGhmAsuD/K84N0EBGpb+NgsDibRbx1J7R6u2kTN5I0ssTwXLUErewQppeu
-         EdQt5X9PAe6zGZSEdHzWqljPF5g2eCjofDjXdkNkLcXFG5SkhgHcvLNKAe2qKeKs0jJX
-         0QNQ==
-X-Received: by 10.68.235.200 with SMTP id uo8mr25105567pbc.29.1359659470293;
-        Thu, 31 Jan 2013 11:11:10 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id vk5sm5778454pbc.34.2013.01.31.11.11.08
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 31 Jan 2013 11:11:08 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20130131190747.GE27340@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753716Ab3AaT2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 14:28:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54970 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751339Ab3AaT2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 14:28:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F00BB26E;
+	Thu, 31 Jan 2013 14:28:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Rn6EyNK9+xkKmQaQxvtsnh7IbEg=; b=vAK4N3
+	0cmmZgp2onMzfbZwAUU8k6fOQ1MAoiDgtzMmvubwSOymxQKiZ3amDGL3w2rXjs8c
+	dT/WY5UhXMWQi6lvI+sLxGnvuHx4vaRYbinHgLlI4zYCsxesUcbJfJi0ksqmoB3S
+	JSaMOyQPjw0pmip/bzTyzgI/r6xsaHT6HpSgY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mNhBpAanrl2LAE5X4jDU0ZNp8SCIQ7iq
+	rEmUx0bru8wPSWK6aCkiqHaggrBHjyQmiU4RnMpKkak3AJw3D9bp13CFfF0ykz93
+	QI5qvBOIKDPhl71qYXxTcNkBUEU+fRgjXxEW561sqgC8RiwRoDtqc18qOlRMBVbk
+	vI1zzjmPMBI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 236EFB26C;
+	Thu, 31 Jan 2013 14:28:33 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B51DB267; Thu, 31 Jan 2013
+ 14:28:32 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1301311956470.32206@s15462909.onlinehome-server.info>
+ (Johannes Schindelin's message of "Thu, 31 Jan 2013 19:57:21 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 662DFBE4-6BDC-11E2-A67A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215153>
 
-Jonathan Nieder wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Is the problem that "deprecated" is not precise enough?  For example,
-> would it make sense to say "deprecated synonym for `upstream`.  Will
-> be dropped in git 2.1" or something like that?
+> Hi Ramsay,
+>
+> On Thu, 31 Jan 2013, Ramsay Jones wrote:
+>
+>> As I mentioned recently, while discussing a cygwin specific patch
+>> (see "Version 1.8.1 does not compile on Cygwin 1.7.14" thread), the
+>> MSVC build is broken for me.
+>> 
+>> The first 4 patches fix the MSVC build for me. The final patch is
+>> not really related to fixing the build, but it removed some make
+>> warnings which were quite irritating ...
+>
+> Thanks!
+>
+>> Note that I used the Makefile, with the Visual C++ 2008 command line
+>> compiler on Windows XP (SP3), to build a vanilla git on MinGW.  I'm not
+>> subscribed to the msysgit mailing list, nor do I follow the msysgit fork
+>> of git, so these patches may conflict with commits in their repository.
+>
+> Maybe you can Cc: the patch series to msysgit@googlegroups.com
+> nevertheless?
 
-Also, if we plan to remove support soon, we should start warning when
-this setting is encountered so people know to update their
-configuration.
+OK.  The only thing I can say about these patches is that none of
+them would affect my boxes would exercise, so I'll wait until I get
+a final-for-application re-send from mysgit folks, preferrably with
+their Acked-by: lines.
 
-Jonathan
+Thanks.
