@@ -1,71 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/5] Fix msvc build
-Date: Thu, 31 Jan 2013 19:57:21 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1301311956470.32206@s15462909.onlinehome-server.info>
-References: <510AB766.4030806@ramsay1.demon.co.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/7] Undocument deprecated alias 'push.default=tracking'
+Date: Thu, 31 Jan 2013 11:07:47 -0800
+Message-ID: <20130131190747.GE27340@google.com>
+References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1335170284-30768-3-git-send-email-Matthieu.Moy@imag.fr>
+ <CACBZZX552fnD+u9Zp-BhqDyYWN+OiyvCyub-xjMZ-_GXCG-vQA@mail.gmail.com>
+ <7vvcadgss0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Jan 31 19:57:51 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 20:08:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0zKV-0004BA-LP
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 19:57:47 +0100
+	id 1U0zUg-0002gf-EX
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 20:08:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756128Ab3AaS5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 13:57:25 -0500
-Received: from mout.gmx.net ([212.227.17.20]:52979 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753873Ab3AaS5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 13:57:24 -0500
-Received: from mailout-de.gmx.net ([10.1.76.2]) by mrigmx.server.lan
- (mrigmx002) with ESMTP (Nemesis) id 0Lnmgj-1Ud2dB43NX-00hxEk for
- <git@vger.kernel.org>; Thu, 31 Jan 2013 19:57:23 +0100
-Received: (qmail invoked by alias); 31 Jan 2013 18:57:22 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp002) with SMTP; 31 Jan 2013 19:57:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/aMPFoGR3a5LYiLvGHKKxAdLdMeYrEAJIj5aKPwU
-	tS9Cmjn4Hv205X
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <510AB766.4030806@ramsay1.demon.co.uk>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756293Ab3AaTHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 14:07:54 -0500
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:33622 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756484Ab3AaTHx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 14:07:53 -0500
+Received: by mail-pb0-f52.google.com with SMTP id mc8so997714pbc.25
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 11:07:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=OmO7oG9sNFZbBl4H+FSQAfT/ANSuigTLTshXK7ovOA4=;
+        b=BAYGds9ybgGFn7i/piBa3dyUIU8M8eyuJNYiICtPpddsTla3xeEVH7m5Caljmc+pYE
+         9YlObVVyT4Riq5aEzWi+GRixrnrFm46BrYdlRB8Fm0M14hykBApVP+W2PViY1KL4rttN
+         jUx0d55R0q3P6dm0ZSZ+/QOnR7PuLN2dy2jHI9eFgjDhz4UoHtcPN+Y/efbempPFFNS/
+         A2NVH93SE40cqIAofG4pNy/p6ss7YBfzYevlGb+naL3DJjJ5sT6NCpx0HMWGwgboWezP
+         GefV6KcmSLImv3LvzENEoVRXAn+9kGRfJRK/neKQaU93GtRGyPz38zz9LeapkGLnnANg
+         fmEQ==
+X-Received: by 10.66.72.198 with SMTP id f6mr23010399pav.42.1359659272277;
+        Thu, 31 Jan 2013 11:07:52 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id t6sm6389817paz.11.2013.01.31.11.07.49
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 31 Jan 2013 11:07:50 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vvcadgss0.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215150>
 
-Hi Ramsay,
+Hi,
 
-On Thu, 31 Jan 2013, Ramsay Jones wrote:
+Junio C Hamano wrote:
 
-> As I mentioned recently, while discussing a cygwin specific patch
-> (see "Version 1.8.1 does not compile on Cygwin 1.7.14" thread), the
-> MSVC build is broken for me.
-> 
-> The first 4 patches fix the MSVC build for me. The final patch is
-> not really related to fixing the build, but it removed some make
-> warnings which were quite irritating ...
+> Wow, that's a blast from the past.
+>
+> I tend to agree that deprecating and removing are quite different,
+> but a simple "revert" of the change would not be good, either.  We
+> still would want to _discourage_ its use.
 
-Thanks!
+Hm, I was about to try adding a line in that vein, like
 
-> Note that I used the Makefile, with the Visual C++ 2008 command line
-> compiler on Windows XP (SP3), to build a vanilla git on MinGW.  I'm not
-> subscribed to the msysgit mailing list, nor do I follow the msysgit fork
-> of git, so these patches may conflict with commits in their repository.
+ * `tracking` - deprecated synonym for `upstream`.
+ 
+Imagine my surprise when I saw that that is what you just said
+would be no good:
 
-Maybe you can Cc: the patch series to msysgit@googlegroups.com
-nevertheless?
+[...]
+>>>    `git pull`.
+>>> -* `tracking` - deprecated synonym for `upstream`.
+>>>  * `current` - push the current branch to a branch of the same name.
 
-Thanks,
-Dscho
+I really do think that including `tracking` in the same list would be
+valuable.  When I look over a friend's .gitconfig file to help track
+down a problem she is running into, it is helpful if I can find the
+meaning of each item in a straightforward way.
+
+Is the problem that "deprecated" is not precise enough?  For example,
+would it make sense to say "deprecated synonym for `upstream`.  Will
+be dropped in git 2.1" or something like that?
+
+My two cents,
+Jonathan
