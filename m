@@ -1,93 +1,135 @@
-From: Peter Wu <lekensteyn@gmail.com>
-Subject: Re: [PATCH 2/2] branch: let branch filters imply --list
-Date: Thu, 31 Jan 2013 17:13:15 +0100
-Message-ID: <1504250.y8BAS4sG2O@al>
-References: <20130131064357.GA24660@sigill.intra.peff.net> <20130131064611.GB25315@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] run-command: Be more informative about what failed
+Date: Thu, 31 Jan 2013 08:24:21 -0800
+Message-ID: <7vfw1hiami.fsf@alter.siamese.dyndns.org>
+References: <1359597666-10108-1-git-send-email-sboyd@codeaurora.org>
+ <1359597666-10108-3-git-send-email-sboyd@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 31 17:21:07 2013
+To: Stephen Boyd <sboyd@codeaurora.org>
+X-From: git-owner@vger.kernel.org Thu Jan 31 17:24:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0wst-0005XQ-3j
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 17:21:07 +0100
+	id 1U0wwR-00084a-VS
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 17:24:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753985Ab3AaQUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 11:20:45 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:63095 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753666Ab3AaQUo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 11:20:44 -0500
-Received: by mail-wi0-f174.google.com with SMTP id hj13so4294177wib.1
-        for <git@vger.kernel.org>; Thu, 31 Jan 2013 08:20:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:user-agent
-         :in-reply-to:references:mime-version:content-transfer-encoding
-         :content-type;
-        bh=2eYQ0lKcNgXGfKwGhcdfrZJ2fdPDbmCp3A/xmwFtUdo=;
-        b=kF/HqEUxJRbcL84nGzbbEdHMpKDKS5JigV9IhZp+necBmzCWvxMq+S0qs5jvLoTaMO
-         Qp6lRFJMUcPWPP8QjabKzGwRS5MwB+AMWYINlDInZoiRf5267+9Ka3h/2bU270ChCFtB
-         Bbu0VSic7JHtcqfO+78/OxxMty5DT8rZoRouzNQIU1v/zLlk+bC/GEbcojPmwjwVcpjO
-         KYRnPU0IJ9Ry05plM0Lu+4/wJ0ZYxtLr3R9giY0uTAPVLfe5aYhwnUqdthgYynuOMKh9
-         sgmTfo/QMxqajShKrTTiupwf2BliY6JMMcFLTWjZFubKaWPEgMoMOFHSm99KmHehuxAl
-         Omjg==
-X-Received: by 10.180.78.34 with SMTP id y2mr16197509wiw.3.1359648798297;
-        Thu, 31 Jan 2013 08:13:18 -0800 (PST)
-Received: from al.localnet (svr.lekensteyn.nl. [178.21.112.251])
-        by mx.google.com with ESMTPS id s10sm10239008wiw.4.2013.01.31.08.13.16
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 31 Jan 2013 08:13:17 -0800 (PST)
-User-Agent: KMail/4.9.5 (Linux/3.8.0-2-custom; KDE/4.9.5; x86_64; ; )
-In-Reply-To: <20130131064611.GB25315@sigill.intra.peff.net>
+	id S1755564Ab3AaQY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 11:24:28 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58998 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755494Ab3AaQYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 11:24:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C788BD0A;
+	Thu, 31 Jan 2013 11:24:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FfxOu5oOtnC/t0vkhGI/E8bbORw=; b=NIjd3t
+	77RrKQcIRWj1sWLkh35A6KRdUXYCQIxE6N1lmEimrmopqCw+U1dlcCx5yniGYuwm
+	g49DRcd7LocC2mCEvP2RHzf0GegNzZPUiHsSIC63TdsghL58+bF/GAb9yXuyiRT1
+	rq7rp88NUntDWT9yCPk6fq+yjmzmnMsFVXjj8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yz2d7RXKh48p08ygJXQop/tHOkjTkqZh
+	ttXSy2FGQ7HJY5xiDHDaDAZpGVA1jQwkoDnKlzAzr7vjsgZi2ZbfD8VOT5RX3c62
+	oIH+uf6KBwxdmfoMLYb2HYcmCgEAzWHFuhOnTSGITSDOxRzSYhlSRZpAkd8PI65/
+	hN2MhU6gWw4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F64ABD09;
+	Thu, 31 Jan 2013 11:24:24 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75BF5BD07; Thu, 31 Jan 2013
+ 11:24:23 -0500 (EST)
+In-Reply-To: <1359597666-10108-3-git-send-email-sboyd@codeaurora.org>
+ (Stephen Boyd's message of "Wed, 30 Jan 2013 18:01:05 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AC687EA0-6BC2-11E2-A8DB-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215123>
 
-On Thursday 31 January 2013 01:46:11 Jeff King wrote:
-> Currently, a branch filter like `--contains`, `--merged`, or
-> `--no-merged` is ignored when we are not in listing mode.
-> For example:
-> 
->   git branch --contains=foo bar
-> 
-> will create the branch "bar" from the current HEAD, ignoring
-> the `--contains` argument entirely. This is not very
-> helpful. There are two reasonable behaviors for git here:
-> 
->   1. Flag an error; the arguments do not make sense.
-> 
->   2. Implicitly go into `--list` mode
-> 
-> This patch chooses the latter, as it is more convenient, and
-> there should not be any ambiguity with attempting to create
-> a branch; using `--contains` and not wanting to list is
-> nonsensical.
-> 
-> That leaves the case where an explicit modification option
-> like `-d` is given.  We already catch the case where
-> `--list` is given alongside `-d` and flag an error. With
-> this patch, we will also catch the use of `--contains` and
-> other filter options alongside `-d`.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-Tested-by: Peter Wu <lekensteyn@gmail.com>
+Stephen Boyd <sboyd@codeaurora.org> writes:
 
-I have tested this patch on top of 1.8.1.2 and it seems to work.
+> While debugging an error with verify_signed_buffer() the error
+> messages from run-command weren't very useful:
+>
+>  error: cannot create pipe for gpg: Too many open files
+>  error: could not run gpg.
+>
+> because they didn't indicate *which* pipe couldn't be created.
 
-One note, the following command spits out master without complaining about the 
-non-existing branch name:
+For the message emitted here with your update (or without for that
+matter) to be useful, it has to hold that there is a single leaker,
+that leaker fails in this codepath, and that there is nobody else
+involved.  Otherwise, you may be able to tell that one caller could
+not create its stdin, but the reason it couldn't may be because
+somebody else consumed all the available file descriptors.
 
-    git branch --contains <id> master <non-existant branch name>
+I am not opposed to this change per-se, but I am not sure that
+saying "stdin" etc. makes the message more useful for the purpose of
+debugging.
 
-(the order of branches doesn't affect the result.)
+> For example, the above error now prints:
+>
+>  error: cannot create stderr pipe for gpg: Too many open files
+>  error: could not run gpg.
 
-Regards,
-Peter
+I'd prefer to see these names spelled out (e.g. "standard error")
+in any case.
+
+Thanks.
+
+> Signed-off-by: Stephen Boyd <sboyd@codeaurora.org>
+> ---
+
+>  run-command.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/run-command.c b/run-command.c
+> index 12d4ddb..016dd05 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -274,6 +274,7 @@ int start_command(struct child_process *cmd)
+>  	int need_in, need_out, need_err;
+>  	int fdin[2], fdout[2], fderr[2];
+>  	int failed_errno = failed_errno;
+> +	char *str;
+>  
+>  	/*
+>  	 * In case of errors we must keep the promise to close FDs
+> @@ -286,6 +287,7 @@ int start_command(struct child_process *cmd)
+>  			failed_errno = errno;
+>  			if (cmd->out > 0)
+>  				close(cmd->out);
+> +			str = "stdin";
+>  			goto fail_pipe;
+>  		}
+>  		cmd->in = fdin[1];
+> @@ -301,6 +303,7 @@ int start_command(struct child_process *cmd)
+>  				close_pair(fdin);
+>  			else if (cmd->in)
+>  				close(cmd->in);
+> +			str = "stdout";
+>  			goto fail_pipe;
+>  		}
+>  		cmd->out = fdout[0];
+> @@ -318,9 +321,10 @@ int start_command(struct child_process *cmd)
+>  				close_pair(fdout);
+>  			else if (cmd->out)
+>  				close(cmd->out);
+> +			str = "stderr";
+>  fail_pipe:
+> -			error("cannot create pipe for %s: %s",
+> -				cmd->argv[0], strerror(failed_errno));
+> +			error("cannot create %s pipe for %s: %s",
+> +				str, cmd->argv[0], strerror(failed_errno));
+>  			errno = failed_errno;
+>  			return -1;
+>  		}
