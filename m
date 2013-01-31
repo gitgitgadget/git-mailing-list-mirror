@@ -1,72 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] branch: let branch filters imply --list
-Date: Thu, 31 Jan 2013 09:02:00 -0800
-Message-ID: <7v4nhxi8vr.fsf@alter.siamese.dyndns.org>
-References: <20130131064357.GA24660@sigill.intra.peff.net>
- <20130131064611.GB25315@sigill.intra.peff.net> <1504250.y8BAS4sG2O@al>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 4/6] introduce a commit metapack
+Date: Thu, 31 Jan 2013 09:03:26 -0800
+Message-ID: <CAJo=hJv0aqLpitnRJ6WKdPCETT6YgX5Njpv44DAYUg_KALhf=g@mail.gmail.com>
+References: <20130129091434.GA6975@sigill.intra.peff.net> <20130129091610.GD9999@sigill.intra.peff.net>
+ <7vy5fbq48t.fsf@alter.siamese.dyndns.org> <7vtxpzq2uv.fsf@alter.siamese.dyndns.org>
+ <20130130071209.GD11147@sigill.intra.peff.net> <7vboc6mzpf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Peter Wu <lekensteyn@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 31 18:02:28 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 18:04:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0xWt-0000N2-Bi
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 18:02:27 +0100
+	id 1U0xYX-0001aZ-51
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 18:04:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753577Ab3AaRCE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 12:02:04 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51948 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752485Ab3AaRCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 12:02:03 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DDC2B4C7;
-	Thu, 31 Jan 2013 12:02:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4AMyJc4VsQhE2m05gVcgTniF/zw=; b=k2Cp+c
-	XDPdrnaAzneMd0GSHiHgxiHjiRvreh07Nb40E1HLrCYugHdjK8HLrI2WlNrqHXL0
-	VOWL8hH1yu1R0emQGbISbN6ATrtr/L0IaSR7ZSdF4ZqDEgxtdP9ub4NrXMSy4MDC
-	0T4UeoSBAm98ZzI6dTdr/qcnKGKzTrCYy/fIs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vX5CPZ00Clbl7KCjPVkGtwammHeSDOvg
-	IgCI3sQ1HhEfA14dR7rdkLppu21EOuqmFSi1V/CMpZqL/9myu2Nu+muiwQFRkSUb
-	jtP1JXTn8zSDcGfj4JUNPAg0x2bqfgoE3i/J0wrqtxkWWu83/Ka1aQd6nFvVjoqD
-	LF+WxvsaImI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22723B4C5;
-	Thu, 31 Jan 2013 12:02:02 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 870F2B4C4; Thu, 31 Jan 2013
- 12:02:01 -0500 (EST)
-In-Reply-To: <1504250.y8BAS4sG2O@al> (Peter Wu's message of "Thu, 31 Jan 2013
- 17:13:15 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EE52F598-6BC7-11E2-9761-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754077Ab3AaRDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 12:03:48 -0500
+Received: from mail-ia0-f175.google.com ([209.85.210.175]:65464 "EHLO
+	mail-ia0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753918Ab3AaRDq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 12:03:46 -0500
+Received: by mail-ia0-f175.google.com with SMTP id r4so4165548iaj.34
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 09:03:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=k4OFPiJLFM9DyfkwfCvyTv+KYKCFKDcOREZBhZG1Mfo=;
+        b=Wd9jAQd1TF1JjC3EO2BkfvBbupXyMfNKZFxEHJB140VSVpfX0rhuEqlrkA7/diDz5+
+         xUPg7F4udwHp7kR4nGtyai6UojRiyeDep13MggQQ1TdWIA8ZtFQxLtpC8XHK03p5W0Ob
+         gv028cN93JKRdj345Q7YGRXKe+MCpkTuRZ/Rs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:x-gm-message-state;
+        bh=k4OFPiJLFM9DyfkwfCvyTv+KYKCFKDcOREZBhZG1Mfo=;
+        b=WIMt8M708/heLxzo66YFGf9rou/L9gtbIXR5/DKJk7O9gQij0YmxA0OhjwYyKmj8nD
+         nyz5HVyXKKFMb9R6LeTkjcQ3WYfWqo6X6j3Meo+7+kwGxMeHcYnQdHzMtbH5WTOaGZrW
+         nazV6yDHOMXwy9Girtobv8KBCuMIOo3MULmamLj6mpLG6rKKAQPc10nXcJ3bvHZqSdys
+         5pMXrOx0j5XSJd6qGBppAl0WQohScvF32Af0r6z1C0Ds3D45DYjHcjrqVNgpjtK7vYiH
+         md8k7GqnzciN/ndEv9S0VrcvlGYf4xQ0KRIY6KkHixbcckArN6nglV4zOSTgnntz9R+L
+         +F2Q==
+X-Received: by 10.50.163.35 with SMTP id yf3mr1738098igb.60.1359651826158;
+ Thu, 31 Jan 2013 09:03:46 -0800 (PST)
+Received: by 10.64.170.100 with HTTP; Thu, 31 Jan 2013 09:03:26 -0800 (PST)
+In-Reply-To: <7vboc6mzpf.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQmyaTtEsXLhhO2hB5w3SoFH/v0iWY9r3QhrPwKCQaEKzGwME8PYtYg+vkfOfkdnAMPoxkig
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215127>
 
-Peter Wu <lekensteyn@gmail.com> writes:
-
-> One note, the following command spits out master without complaining about the 
-> non-existing branch name:
+On Wed, Jan 30, 2013 at 7:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
->     git branch --contains <id> master <non-existant branch name>
+>>>From this:
+>>
+>>> Then it will be very natural for the extension data that store the
+>>> commit metainfo to name objects in the pack the .idx file describes
+>>> by the offset in the SHA-1 table.
+>>
+>> I guess your argument is that putting it all in the same file makes it
+>> more natural for there to be a data dependency.
 >
-> (the order of branches doesn't affect the result.)
+> It is more about the "I am torn on this one" I mentioned earlier.
+>
+> It would be more "logical" if this weren't tied to a particular
+> pack, as the properties of a commit you record in this series do not
+> depend on which pack the commit is in, and such a repository-global
+> file by definition cannot be inside anybody's .idx.
+>
+> But if we split the information into separate pieces and store one
+> piece per .idx for implementation reasons, it is crazy not to at
+> least consider it a longer term goal to put it inside .idx file.
+>
+> Of course, it is more convenient to store this kind of things in a
+> separate file while experimenting and improving the mechanism, but I
+> do not think we want to see each packfile in a repository comes with
+> 47 auxiliary files with different suffixes 5 years down the road.
 
-That is perfectly normal.
+Arrrrgggh.
 
-What you gave after "--contains <id>" are *not* branch names.  They
-are patterns against branch names that fits the given criteria (in
-this case "--contains <id>") are matched, and the branches that do
-not match any of the patterns will not appear in the result.
+Right now we are in the middle of refactoring the JGit reachability
+bitmap implementation to store it into a separate file and get it out
+of the .idx file. This work is nearly completed. So this thread is
+great timing. :-)
+
+I think Junio is right about not wanting 47 different tiny auxiliary
+files for a single pack. We are unlikely to create that many, but
+right now there are proposals floating around for at least 2 new
+auxiliary files (commit cache and reachability bitmaps). So its not
+impossible that another will be discovered in the future.
+
+Junio may be right about the hole in the index file for git-core. I
+haven't checked the JGit implementation, but I suspect it does not
+have this hole. IIRC JGit consumes the index sections and then expects
+the pack trailer SHA-1 to be present immediately after the last table.
+This happens because JGit doesn't use mmap() to load the index, it
+streams the file into memory and does some reformatting on the tables
+to make search faster.
+
+If we are going to change the index to support extension sections and
+I have to modify JGit to grok this new format, it needs to be index v3
+not index v2. If we are making index v3 we should just put index v3 on
+the end of the pack file.
