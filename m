@@ -1,101 +1,58 @@
-From: Stephen Boyd <sboyd@codeaurora.org>
-Subject: [PATCH 2/3] run-command: Be more informative about what failed
-Date: Wed, 30 Jan 2013 18:01:05 -0800
-Message-ID: <1359597666-10108-3-git-send-email-sboyd@codeaurora.org>
-References: <1359597666-10108-1-git-send-email-sboyd@codeaurora.org>
+From: TJ <git@iam.tj>
+Subject: [PATCH 0/1] Introduce new build variables INSTALL_MODE_EXECUTABLE
+ and INSTALL_MODE_DATA.
+Date: Thu, 31 Jan 2013 02:08:29 +0000
+Message-ID: <5109D21D.8010701@iam.tj>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 31 03:01:59 2013
+X-From: git-owner@vger.kernel.org Thu Jan 31 03:18:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0jTP-0008G0-MG
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 03:01:56 +0100
+	id 1U0jjj-00078C-55
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 03:18:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755682Ab3AaCBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2013 21:01:24 -0500
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:42603 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755477Ab3AaCBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2013 21:01:15 -0500
-X-IronPort-AV: E=Sophos;i="4.84,573,1355126400"; 
-   d="scan'208";a="23137437"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 30 Jan 2013 18:01:09 -0800
-Received: from sboyd-linux.qualcomm.com (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 4A45210004C7
-	for <git@vger.kernel.org>; Wed, 30 Jan 2013 18:01:09 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1.439.g50a6b54
-In-Reply-To: <1359597666-10108-1-git-send-email-sboyd@codeaurora.org>
+	id S1753513Ab3AaCSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2013 21:18:25 -0500
+Received: from yes.iam.tj ([109.74.197.121]:49805 "EHLO iam.tj"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753300Ab3AaCSY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2013 21:18:24 -0500
+Received: from [10.254.251.193] (jeeves.iam.tj [82.71.24.87])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by iam.tj (Postfix) with ESMTPSA id 8A98F7C430
+	for <git@vger.kernel.org>; Thu, 31 Jan 2013 02:08:30 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215087>
 
-While debugging an error with verify_signed_buffer() the error
-messages from run-command weren't very useful:
+During a build/install cycle of the current HEAD whilst attempting to identify the cause of a bug in
+git version 1.8.0.3 whilst doing:
 
- error: cannot create pipe for gpg: Too many open files
- error: could not run gpg.
+GIT_CURL_VERBOSE=1 git clone -v https://git01.codeplex.com/typescript
 
-because they didn't indicate *which* pipe couldn't be created.
+* GnuTLS recv error (-9): A TLS packet with unexpected length was received.
+* Closing connection #0
+error: RPC failed; result=56, HTTP code = 200
 
-Print which pipe failed to be created in the error message so we
-can more easily debug similar problems in the future.
+I hit a local install failure whilst installing to the prefix /usr/local/ where the $(INSTALL)
+command reported a Permission Denied error.
 
-For example, the above error now prints:
+This was due to the $(INSTALL) modes being 755/644 but the file-system modes being 775/664.
+In this case ownership and permissions are:
 
- error: cannot create stderr pipe for gpg: Too many open files
- error: could not run gpg.
+$ ls -ald /usr/local
+drwxrwxr-x 13 root adm 4096 Sep 26 04:16 /usr/local
 
-Signed-off-by: Stephen Boyd <sboyd@codeaurora.org>
----
- run-command.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Users belonging to the 'adm' group have permission to install local packages.
 
-diff --git a/run-command.c b/run-command.c
-index 12d4ddb..016dd05 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -274,6 +274,7 @@ int start_command(struct child_process *cmd)
- 	int need_in, need_out, need_err;
- 	int fdin[2], fdout[2], fderr[2];
- 	int failed_errno = failed_errno;
-+	char *str;
- 
- 	/*
- 	 * In case of errors we must keep the promise to close FDs
-@@ -286,6 +287,7 @@ int start_command(struct child_process *cmd)
- 			failed_errno = errno;
- 			if (cmd->out > 0)
- 				close(cmd->out);
-+			str = "stdin";
- 			goto fail_pipe;
- 		}
- 		cmd->in = fdin[1];
-@@ -301,6 +303,7 @@ int start_command(struct child_process *cmd)
- 				close_pair(fdin);
- 			else if (cmd->in)
- 				close(cmd->in);
-+			str = "stdout";
- 			goto fail_pipe;
- 		}
- 		cmd->out = fdout[0];
-@@ -318,9 +321,10 @@ int start_command(struct child_process *cmd)
- 				close_pair(fdout);
- 			else if (cmd->out)
- 				close(cmd->out);
-+			str = "stderr";
- fail_pipe:
--			error("cannot create pipe for %s: %s",
--				cmd->argv[0], strerror(failed_errno));
-+			error("cannot create %s pipe for %s: %s",
-+				str, cmd->argv[0], strerror(failed_errno));
- 			errno = failed_errno;
- 			return -1;
- 		}
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-hosted by The Linux Foundation
+The fix I've implemented is to convert the hard-coded 755/644 modes to variables which can
+be over-ridden on the make command-line if necessary.
