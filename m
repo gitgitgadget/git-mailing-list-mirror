@@ -1,91 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Fix msvc build
-Date: Thu, 31 Jan 2013 11:28:31 -0800
-Message-ID: <7vmwvpgnj4.fsf@alter.siamese.dyndns.org>
-References: <510AB766.4030806@ramsay1.demon.co.uk>
- <alpine.DEB.1.00.1301311956470.32206@s15462909.onlinehome-server.info>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Why git-whatchanged shows a commit touching every file, but
+ git-log doesn't?
+Date: Thu, 31 Jan 2013 11:34:34 -0800
+Message-ID: <20130131193434.GG27340@google.com>
+References: <CAPKkNb49FUgLxZxHmQJoqccQ1XVcFYbYF8kYDp0+Y27cmi56fg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 31 20:28:56 2013
+Cc: git@vger.kernel.org
+To: "Constantine A. Murenin" <mureninc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 20:35:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0zoe-0008Ft-B7
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 20:28:56 +0100
+	id 1U0zuY-0003ow-Ra
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 20:35:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753716Ab3AaT2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 14:28:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54970 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751339Ab3AaT2e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 14:28:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F00BB26E;
-	Thu, 31 Jan 2013 14:28:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Rn6EyNK9+xkKmQaQxvtsnh7IbEg=; b=vAK4N3
-	0cmmZgp2onMzfbZwAUU8k6fOQ1MAoiDgtzMmvubwSOymxQKiZ3amDGL3w2rXjs8c
-	dT/WY5UhXMWQi6lvI+sLxGnvuHx4vaRYbinHgLlI4zYCsxesUcbJfJi0ksqmoB3S
-	JSaMOyQPjw0pmip/bzTyzgI/r6xsaHT6HpSgY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mNhBpAanrl2LAE5X4jDU0ZNp8SCIQ7iq
-	rEmUx0bru8wPSWK6aCkiqHaggrBHjyQmiU4RnMpKkak3AJw3D9bp13CFfF0ykz93
-	QI5qvBOIKDPhl71qYXxTcNkBUEU+fRgjXxEW561sqgC8RiwRoDtqc18qOlRMBVbk
-	vI1zzjmPMBI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 236EFB26C;
-	Thu, 31 Jan 2013 14:28:33 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B51DB267; Thu, 31 Jan 2013
- 14:28:32 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.1301311956470.32206@s15462909.onlinehome-server.info>
- (Johannes Schindelin's message of "Thu, 31 Jan 2013 19:57:21 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 662DFBE4-6BDC-11E2-A67A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755323Ab3AaTel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 14:34:41 -0500
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:49715 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753928Ab3AaTej (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 14:34:39 -0500
+Received: by mail-pb0-f42.google.com with SMTP id wz17so1768704pbc.15
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 11:34:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=cw+EJth3cJ/i6WP6sjj4QqEjQ0fWIMc1LDESBEeWe3s=;
+        b=T+irjwTuH7g7KM9rTq1LBqUIkw4whtlFb39SNVSkDtP374z59eKUboquzvLxyeVfQs
+         hhXKVE9IErfzMnILvfVnRYUQ9pvge/JeiSbBO9/zz13uhSec4wPNiCp2FXt8WvW5t3tB
+         pjeuU55tB0DICn+K5Pc67jLUtWwH5ASESkAunaVEyY2wsfGLQwpe19LWbyYN9NiDMPrc
+         fTqJDO24jdRjACHbPUpCfYEQzlOmbZzMqXleusFaNmem9Hua4+1qvIBg8KU8hOzipVr8
+         YzLgpHebo7bFp1/Lk/+Ao9TNI4DGfPDWwVciYDFsRzmadYjeoWtwt11BiVPqd2+OVsOR
+         aoyw==
+X-Received: by 10.68.203.129 with SMTP id kq1mr25048997pbc.30.1359660879334;
+        Thu, 31 Jan 2013 11:34:39 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id ux4sm5832450pbc.25.2013.01.31.11.34.37
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 31 Jan 2013 11:34:37 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAPKkNb49FUgLxZxHmQJoqccQ1XVcFYbYF8kYDp0+Y27cmi56fg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215154>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Constantine,
 
-> Hi Ramsay,
->
-> On Thu, 31 Jan 2013, Ramsay Jones wrote:
->
->> As I mentioned recently, while discussing a cygwin specific patch
->> (see "Version 1.8.1 does not compile on Cygwin 1.7.14" thread), the
->> MSVC build is broken for me.
->> 
->> The first 4 patches fix the MSVC build for me. The final patch is
->> not really related to fixing the build, but it removed some make
->> warnings which were quite irritating ...
->
-> Thanks!
->
->> Note that I used the Makefile, with the Visual C++ 2008 command line
->> compiler on Windows XP (SP3), to build a vanilla git on MinGW.  I'm not
->> subscribed to the msysgit mailing list, nor do I follow the msysgit fork
->> of git, so these patches may conflict with commits in their repository.
->
-> Maybe you can Cc: the patch series to msysgit@googlegroups.com
-> nevertheless?
+Constantine A. Murenin wrote:
 
-OK.  The only thing I can say about these patches is that none of
-them would affect my boxes would exercise, so I'll wait until I get
-a final-for-application re-send from mysgit folks, preferrably with
-their Acked-by: lines.
+> DragonFly BSD uses git as its SCM, with one single repository and
+> branch for both the kernel and the whole userland.
+>
+> On 2011-11-26 (1322296064), someone did a commit that somehow touched
+> every single file in the repository, even though most of the files
+> were not modified one bit.
 
-Thanks.
+"gitk --simplify-by-decoration" might provide some insight.
+
+In the dragonfly history, it seems that imports of a packages typically
+proceed in two steps:
+
+ 1. First, the upstream code is imported as a new "initial commit"
+    with no history:
+
+	cd ~/src
+	git init gcc-4.7.2-import
+	cd gcc-4.7.2-import
+	tar -xf /path/to/gcc-4.7.2
+	mkdir contrib
+	mv gcc-4.7.2 contrib/gcc-4.7
+	git add .
+	git commit -m 'Import gcc-4.7.2 to new vendor branch'
+
+ 2. Next, that code is incorporated into dragonfly.
+
+	cd ~/src/dragonfly
+	git fetch ../gcc-4.7.2-import master:refs/heads/vendor/GCC47
+	git merge vendor/GCC47
+	rm -fr ../gcc-4.7.2-import
+
+Unfortunately in the commit you mentioned, someone made a mistake.
+Instead of importing a single new upstream package, the author
+imported the entire dragonfly tree as a new vendor branch.  Oops.
+
+The effects might be counterintuitive:
+
+ * tools like "git blame" and path-limited "git log" get a choice:
+   when looking at the merge that pulled in a copy of dragonfly into
+   the existing dragonfly codebase, either parent is an equally
+   sensible from blame's point of view as an explanation of the origin
+   of this code.  I think both prefer the first parent here, making them
+   happen to produce the "right" result.
+
+ * tools like "git show" that describe what change a commit made
+   get a choice: when looking at a parentless commit, the diff that
+   brings a project into existence may or may not be interesting,
+   depending on the situation.
+
+   See
+   http://thread.gmane.org/gmane.comp.version-control.git/182571/focus=182577
+   for more about that.
+
+But at its heart, this is just an instance of "lie when creating your
+history and history-mining tools will lie back to you." :)
+
+Hoping that clarifies a little,
+Jonathan
