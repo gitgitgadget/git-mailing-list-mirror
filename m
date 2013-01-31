@@ -1,108 +1,85 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH 4/5] msvc: test-svn-fe: Fix linker "unresolved external" error
-Date: Thu, 31 Jan 2013 18:32:55 +0000
-Message-ID: <510AB8D7.5000706@ramsay1.demon.co.uk>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH v3 00/11] unify appending of sob
+Date: Thu, 31 Jan 2013 10:45:07 -0800
+Message-ID: <CA+sFfMe4NYWKQBM0N0isBfF+RY2AemKugKT+RyA98boO-p1rYQ@mail.gmail.com>
+References: <1359335515-13818-1-git-send-email-drafnel@gmail.com>
+	<20130128034831.GQ8206@elie.Belkin>
+	<7v7gmxzwkj.fsf@alter.siamese.dyndns.org>
+	<7vhalylggd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 31 19:39:23 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	pclouds@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 19:45:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0z2a-0007Mm-1p
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 19:39:16 +0100
+	id 1U0z8t-0003VB-DS
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 19:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756387Ab3AaSik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 13:38:40 -0500
-Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:48881 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756300Ab3AaSif (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 13:38:35 -0500
-Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP id D0DFD18C712;
-	Thu, 31 Jan 2013 18:38:34 +0000 (GMT)
-Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])	by mdfmta005.tch.inty.net (Postfix) with ESMTP id E71F618C710;	Thu, 31 Jan 2013 18:38:33 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta005.tch.inty.net (Postfix) with ESMTP;	Thu, 31 Jan 2013 18:38:32 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-X-MDF-HostID: 18
+	id S1756799Ab3AaSpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 13:45:13 -0500
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:57687 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756433Ab3AaSpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 13:45:09 -0500
+Received: by mail-wg0-f44.google.com with SMTP id dr12so2227692wgb.11
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 10:45:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=LRp4DVANWO3WdJtc1e6PPohTNSJH+nYmxMb/Ax6XFyo=;
+        b=cppF+Khbrsy2VMSk21C/0cQpHNjUNwWkpjtl3LetwD3GRv6DggwQgeZgsOgAS6JPQb
+         ctKFr3uNx1BZrvgMtKop2/m3MMaA3SSER33eD1BnBvTZI7FsOK7m+4wyQcPYLUW4C0QL
+         o8lCO6rXJhljUGYGZPX8eiWwB0IeVyaoHMEu3bX57zaerr/s4eoyr2dNrwMxWj2ot3bk
+         n3G97j+052elQRHpeSULkjSuBFKqYLDCT4NMaAXcvEpK/7HUT//uxgY0qTNoFyF2oR8U
+         dSiw37O96BUTeG4p6TtqLmpXjemOj9YYWm/biRaA8WWRdYG1Dsppt/lo1SVPj+fyKM2D
+         /2PA==
+X-Received: by 10.180.93.133 with SMTP id cu5mr16916710wib.32.1359657907926;
+ Thu, 31 Jan 2013 10:45:07 -0800 (PST)
+Received: by 10.194.78.170 with HTTP; Thu, 31 Jan 2013 10:45:07 -0800 (PST)
+In-Reply-To: <7vhalylggd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215148>
 
-In particular, while linking test-svn-fe.exe, the linker complains
-that the external symbol _strtoull is unresolved. A call to this
-function was added in commit ddcc8c5b ("vcs-svn: skeleton of an svn
-delta parser", 25-12-2010).
+On Wed, Jan 30, 2013 at 9:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>>
+>>> Brandon Casey wrote:
+>>>
+>>>> Round 3.
+>>>
+>>> Thanks for a pleasant read.  My only remaining observations are
+>>> cosmetic, except for a portability question in Duy's test script, a
+>>> small behavior change when the commit message ends with an
+>>> RFC2822-style header with no trailing newline and the possibility of
+>>> tightening the pattern in sequencer.c to match the strictness of
+>>> format-patch (which could easily wait for a later patch).
+>>
+>> Thanks for a quick review.  I agree that this series is getting very
+>> close with your help.
+>
+> Unless Brandon and/or Jonathan wants to have another chance to
+> excise warts from the recorded history by rerolling the entire
+> series one more time, I think what we have queued is in a good
+> enough shape to merge to 'next' and any further improvement and fix
+> can be done incrementally.
+>
+> OK?  Or "stop, I want to reroll"?
+>
+> I'll wait for a day or two.
 
-The NO_STRTOULL build variable attempts to provide support to old
-systems which can't even declare 'unsigned long long' variables,
-let alone provide the strtoll() or strtoull() functions. Setting
-this build variable does not provide an implementation of these
-functions. Rather, it simply allows the compat implementations
-of strto{i,u}max() to use strtol() and strtoul() instead.
+Let's hold off so I can do another round.  I worked on this last night
+and was able to simplify some things nicely.  I'll try to finish up
+tonight and resubmit.
 
-In order to fix the linker error on systems with NO_STRTOULL set,
-currently MSVC and OSF1, we can substitute a call to strtoumax().
-
-However, we can easily provide support for the strtoull() and
-strtoll() functions on MSVC, since they are essentially already
-available as _strtoui64() and _strtoi64(). This allows us to
-remove NO_STRTOULL for MSVC.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
- compat/msvc.h    | 2 ++
- config.mak.uname | 1 -
- test-svn-fe.c    | 2 +-
- 3 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/compat/msvc.h b/compat/msvc.h
-index aa4b563..96b6d60 100644
---- a/compat/msvc.h
-+++ b/compat/msvc.h
-@@ -12,6 +12,8 @@
- #define __attribute__(x)
- #define strncasecmp  _strnicmp
- #define ftruncate    _chsize
-+#define strtoull     _strtoui64
-+#define strtoll      _strtoi64
- 
- static __inline int strcasecmp (const char *s1, const char *s2)
- {
-diff --git a/config.mak.uname b/config.mak.uname
-index 7e52f3c..bfb8a39 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -327,7 +327,6 @@ ifeq ($(uname_S),Windows)
- 	# NEEDS_LIBICONV = YesPlease
- 	NO_ICONV = YesPlease
- 	NO_STRTOUMAX = YesPlease
--	NO_STRTOULL = YesPlease
- 	NO_MKDTEMP = YesPlease
- 	NO_MKSTEMPS = YesPlease
- 	SNPRINTF_RETURNS_BOGUS = YesPlease
-diff --git a/test-svn-fe.c b/test-svn-fe.c
-index 0f2d9a4..120ec96 100644
---- a/test-svn-fe.c
-+++ b/test-svn-fe.c
-@@ -24,7 +24,7 @@ static int apply_delta(int argc, char *argv[])
- 		die_errno("cannot open preimage");
- 	if (buffer_init(&delta, argv[3]))
- 		die_errno("cannot open delta");
--	if (svndiff0_apply(&delta, (off_t) strtoull(argv[4], NULL, 0),
-+	if (svndiff0_apply(&delta, (off_t) strtoumax(argv[4], NULL, 0),
- 					&preimage_view, stdout))
- 		return 1;
- 	if (buffer_deinit(&preimage))
--- 
-1.8.1
+-Brandon
