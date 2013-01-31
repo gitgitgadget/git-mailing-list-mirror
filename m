@@ -1,91 +1,116 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/7] Undocument deprecated alias 'push.default=tracking'
-Date: Thu, 31 Jan 2013 18:10:59 +0100
-Message-ID: <CACBZZX552fnD+u9Zp-BhqDyYWN+OiyvCyub-xjMZ-_GXCG-vQA@mail.gmail.com>
-References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
- <1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr> <1335170284-30768-3-git-send-email-Matthieu.Moy@imag.fr>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH/RFC 0/6] commit caching
+Date: Thu, 31 Jan 2013 09:14:26 -0800
+Message-ID: <CAJo=hJtTYZg+1+RZVfEGTgOGzqxQbN1CLYWrvUp+WHKGxGwHMQ@mail.gmail.com>
+References: <20130129091434.GA6975@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jan 31 18:11:49 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 31 18:15:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0xfu-0006wH-AW
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 18:11:46 +0100
+	id 1U0xjB-0000uA-EK
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 18:15:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755479Ab3AaRLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 12:11:22 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:32874 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755441Ab3AaRLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 12:11:21 -0500
-Received: by mail-ob0-f174.google.com with SMTP id 16so3111518obc.19
-        for <git@vger.kernel.org>; Thu, 31 Jan 2013 09:11:20 -0800 (PST)
+	id S1753884Ab3AaROs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 12:14:48 -0500
+Received: from mail-ia0-f179.google.com ([209.85.210.179]:33951 "EHLO
+	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751942Ab3AaROq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 12:14:46 -0500
+Received: by mail-ia0-f179.google.com with SMTP id x24so4123480iak.38
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 09:14:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=spearce.org; s=google;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=6n0qH+bpBJHR06linqdClW0v1MpQf5pJFzNEwhBoaqA=;
-        b=tOIIvJjcvkLsyGSwFuJx2MVTgQjLMTl7ydYYE6gwyi+0aXs6U8R6QHXnWbUJzvtjn8
-         zjNg/eGwguHedy4nFA4Bg/GrgHQ5e2tyXFJUqyFeXWB04aW4aheewvpl9P40UKV1bFdI
-         gdp2m8M4GBcpumR7PbfwjiYNv9hPPYwzwIbgQ6rYGgQZ93Uyf0mNbIfokpGwjBpIvrnS
-         /4Yu9KB8C8Rdsn9v3NpoGaBMXsXqyIlcqRbZ1o5vDz7OGVwQp7Z/Hv9Kg7k4OJD283jB
-         zVw0nZPZCoRrCrYBtoROXQQukaynjt0/it3Pc1ZFsS4nDQPZ1r6aoUFrQBZzjtkqV24c
-         iy6g==
-X-Received: by 10.60.7.167 with SMTP id k7mr7413904oea.20.1359652280091; Thu,
- 31 Jan 2013 09:11:20 -0800 (PST)
-Received: by 10.76.168.163 with HTTP; Thu, 31 Jan 2013 09:10:59 -0800 (PST)
-In-Reply-To: <1335170284-30768-3-git-send-email-Matthieu.Moy@imag.fr>
+        bh=Qw5c6EAJURZV5QbfhuN4Q6KcPoTkUSMYY897EcCFRoA=;
+        b=Rvx5NB0S2zknf0zVoC9qMOUh9kG0EKhWkuGeCUgSfP7QPZxABK+6lfeZ+r+itDuPAu
+         8SEqZijbqwYLvVDR/CDwtnteFVmJo4Sn78rXNGGJ3zbxS4F3wneBdTXd93K0C0NqEY7z
+         K8t4mTNJxH67Gc4KPjozIupJfMUVLTyR+9X4A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:x-gm-message-state;
+        bh=Qw5c6EAJURZV5QbfhuN4Q6KcPoTkUSMYY897EcCFRoA=;
+        b=DestXzZ2lsEe+1oM1JHMB+Tf77+RUathjkykBXkSzkteyOYJMUprdtwNsSW1XVFIrV
+         U7z4jDWeLlMHHIuB639F56Y8Xe4pj/jAVcinrB4CdeBHjtCuTrfPkjS/Rkqxot3EUv9t
+         xVmEyq3eVnI5dxyywqb1KFrZzBjYK2MkQsdwqFjn2v9V6bFvcLU0T94qvBBN6c+MMFlf
+         Mad2HdGaFdTJvZRO2J0/a7kCMaAbeu0Tp0LMVZV2FIcFd0ZUGRb7SdZEQsZfI3PMVwZi
+         h2wh3H7cIyyWTpHxAXQgd8SjhGZbCkSuMfkBjRnRJqwYo9rF3aMA0TGn7mrcwBDZZBqf
+         462Q==
+X-Received: by 10.50.163.35 with SMTP id yf3mr1771892igb.60.1359652486248;
+ Thu, 31 Jan 2013 09:14:46 -0800 (PST)
+Received: by 10.64.170.100 with HTTP; Thu, 31 Jan 2013 09:14:26 -0800 (PST)
+In-Reply-To: <20130129091434.GA6975@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQlK0YTqsFngAySVx8AexnIB2nG3dTk6p5Sn1aUtBElJB7RE2duVF83cOLy3SlO6DXASyFz2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215129>
 
-On Mon, Apr 23, 2012 at 10:37 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> It's been deprecated since 53c4031 (Johan Herland, Wed Feb 16 2011,
-> push.default: Rename 'tracking' to 'upstream'), so it's OK to remove it
-> from documentation (even though it's still supported) to make the
-> explanations more readable.
-
-I don't think this was a good move for the documentation. Now every
-time I find an old repo with "push.default=tracking" I end up
-wondering what it was a synonym for again, and other users who don't
-know what it does will just assume it's an invalid value or something.
-
-We can't treat existing config values we still support as any other
-deprecated feature. They still exist in files we have no control over,
-and in people's brains who are reading "man git-config" trying to
-remember what it meant.
-
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> Feel free to squash into previous one if needed.
+On Tue, Jan 29, 2013 at 1:14 AM, Jeff King <peff@peff.net> wrote:
+> This is the cleaned-up version of the commit caching patches I mentioned
+> here:
 >
->  Documentation/config.txt |    1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index e38fab1..ddf6043 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1693,7 +1693,6 @@ push.default::
->    makes `git push` and `git pull` symmetrical in the sense that `push`
->    will update the same remote ref as the one which is merged by
->    `git pull`.
-> -* `tracking` - deprecated synonym for `upstream`.
->  * `current` - push the current branch to a branch of the same name.
->    +
->    The `current` and `upstream` modes are for those who want to
-> --
-> 1.7.10.234.ge65dd.dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>   http://article.gmane.org/gmane.comp.version-control.git/212329
+...
+> The short of it is that for an extra 31M of disk
+> space (~4%), I get a warm-cache speedup for "git rev-list --all" of
+> ~4.2s to ~0.66s.
+
+I have to admit, this is a nice gain. I don't think users often dig
+through all commits to the root but I can see how this might improve
+git log with a path filter.
+
+> Coupled with using compression level 0 for trees (which do not compress
+> well at all, and yield only a 2% increase in size when left
+> uncompressed), my "git rev-list --objects --all" time drops from ~40s to
+> ~25s.
+
+This uhm.... is nice?
+
+But consider reachability bitmaps. ~40s to ~80ms. :-)
+
+> Perf reveals that we're spending most of the remaining time in
+> lookup_object. I've spent a fair bit of time trying to optimize that,
+> but with no luck; I think it's fairly close to optimal. The problem is
+> just that we call it a very large number of times, since it is the
+> mechanism by which we recognize that we have already processed each
+> sha1.
+
+Yup. I have also futzed with the one in JGit for quite a while now. I
+pull some tricks there like making it a 2 level directory to reduce
+the need to find a contiguous array of 8M entries when processing the
+Linux kernel, and I try to preallocate the first level table based on
+the number of objects in pack-*.idx files. But the bottleneck is
+basically the cache lookups and hits, these happen like 100M times on
+2M objects, because its every link in nearly every tree.
+
+Reachability bitmaps basically let you skip this. So they go fast. But
+I have another that you could try.
+
+If we modified pack-objects' delta compressor for tree objects to only
+generate delta instructions at tree record boundaries, a delta-encoded
+tree can be processed without inflating the full content of that tree.
+Because of the way deltas are created, "most" tree deltas should have
+their delta base scanned by the object traversal before the delta is
+considered. This means the tree delta just needs to consider the much
+smaller records that are inserted into the base. We know these are
+different SHA-1s than what was there before, so they are more likely
+to be new to the lookup_object table.
+
+So the --objects traversal algorithm can change to get the delta base
+SHA-1 and raw tree delta from the pack storage. Perform a
+lookup_object on the base to see if it has been scanned. If it has,
+just scan the delta insert instructions. If the base has not yet been
+scanned, inflate the tree to its normal format and scan the entire
+tree.
+
+This is an approximation of what Nico and I were talking about doing
+for pack v4. But doesn't require a file format change. :-)
