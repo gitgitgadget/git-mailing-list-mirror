@@ -1,72 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Segmentation fault with latest git (070c57df)
-Date: Thu, 31 Jan 2013 03:54:31 -0500
-Message-ID: <20130131085431.GA8467@sigill.intra.peff.net>
-References: <15825158.309231359617223702.JavaMail.weblogic@epml26>
- <20130131075511.GB5342@sigill.intra.peff.net>
- <87wqutvj4w.fsf@pctrast.inf.ethz.ch>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: How to identify the users?
+Date: Thu, 31 Jan 2013 15:42:08 +0530
+Message-ID: <510A4378.9010302@gmail.com>
+References: <CACkbei+Jby13B7rsEb3iLQM2ZSFDgrkgvrYC5M7u4yatppvLxA@mail.gmail.com> <1359612481-ner-5936@calvin> <510A0ACF.5060501@gmail.com> <CACkbei+_dJowH-odL+UCS3hQwOwFZ7B5_6sxw=ZZg1V4=upSKg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jongman Heo <jongman.heo@samsung.com>, git <git@vger.kernel.org>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jan 31 09:55:00 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Tomas Carnecky <tomas.carnecky@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Scott Yan <scottyan19@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 11:12:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0pv7-0003Z3-G1
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 09:54:57 +0100
+	id 1U0r8I-0000jD-Lz
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 11:12:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753048Ab3AaIyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 03:54:36 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54529 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751594Ab3AaIye (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 03:54:34 -0500
-Received: (qmail 9527 invoked by uid 107); 31 Jan 2013 08:55:58 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Jan 2013 03:55:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Jan 2013 03:54:31 -0500
-Content-Disposition: inline
-In-Reply-To: <87wqutvj4w.fsf@pctrast.inf.ethz.ch>
+	id S1753446Ab3AaKMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 05:12:16 -0500
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:41350 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754086Ab3AaKMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 05:12:14 -0500
+Received: by mail-pb0-f52.google.com with SMTP id mc8so787791pbc.25
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 02:12:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=RL8w5Q71AsQlQGVcKEuWYm8tRG6C5OHcxildklnWz7k=;
+        b=kLkejB89JEoJBu4CQi6L/XHc6BK8cM7L7DhRyqdKqpEH3IJH85CpxvMHg82q26uy2n
+         FkWs2rSS5unBVjHv6juqcTt6bG7SvrcV5//RSwUQJo4jPEFVv2Z4C/Doz9JIs3S4P3FH
+         URnHh7+hjhH98ddLon1O+lEaTV/xNDf1DyJmq0f+VFtPX2NvMTCMiuydMIMr+9cDa24X
+         4kubqwcazn3e68tdHLCRq9sXClQdzz3Z/T0LnYL7xeshnjWQsc056yv1rjfX9hVprv9A
+         bJY6uPHhCd6K5iynpeAVg6vJ8RTy8U8lM8WHwbw2tuasNtohxzKjMKp6r82czD+Va7Dl
+         uMQA==
+X-Received: by 10.68.219.67 with SMTP id pm3mr20730185pbc.150.1359627133681;
+        Thu, 31 Jan 2013 02:12:13 -0800 (PST)
+Received: from sita-lt.atc.tcs.com (atcmail.atc.tcs.co.in. [203.200.212.145])
+        by mx.google.com with ESMTPS id od3sm4605188pbb.6.2013.01.31.02.12.10
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 31 Jan 2013 02:12:12 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <CACkbei+_dJowH-odL+UCS3hQwOwFZ7B5_6sxw=ZZg1V4=upSKg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215111>
 
-On Thu, Jan 31, 2013 at 09:42:07AM +0100, Thomas Rast wrote:
+On 01/31/2013 12:23 PM, Scott Yan wrote:
 
-> > int main(void)
-> > {
-> >   struct foo f = { NULL, 0, 0, 0 };
-> >   printf("cmp is %lu\n", (unsigned long)f.cmp);
-> >   return 0;
-> > }
+> Sitaram:
 > 
-> I doubt that would help because that stack region would be 0 anyway due
-> to kernel initialization of new pages.  You'd have to somehow trample
-> over it first, like below.
+> It seems I must host my central repo on Gitolite first...
 
-Good point. Unfortunately, I can't get either yours or mine to fail,
-neither with a recent version of gcc nor with gcc-4.1.  But I can't
-convince git to fail, either. The only gcc-4.1 I have is Debian's
-4.1.3 release, which is not quite what the OP has.
+There is no "must" but yes it is a decent solution and can, in
+principle, do the kind of checking you want if you set it up to do that.
+ Please note that I don't use that mode and, as my rant would have
+indicated, I don't think it's a smart thing to do.
 
-> Or perhaps something in the build process went wrong, and fetch.c didn't
-> get the memo about the new field in the struct.  Depending on stack
-> layout, the next variable might be the 'int i' right before the
-> 'string_list list' in the code, which could explain the value of 1.
+> I don't know Gitolite much, but you are right, maybe I should use
+> Gitolite as my git server.
+> I'll find more documents about gitolite these days,
+> can you give me some suggestion which tutorial should I read?  Thanks!
+> ps: my OS is windows.
 
-Yeah, that would make sense to me with respect to the behavior we are
-seeing, but that part of the Makefile should be pretty simple and
-bug-free, I'd think (and from the original report, it seems like he was
-able to reproduce it well enough to bisect). Still, trying a "make clean
-&& make" might be worth it just to rule that out.
+Try
+http://therightstuff.de/CommentView,guid,b969ea4d-8d2c-42af-9806-de3631f4df68.aspx
 
-Puzzled...
+I normally don't mention blog posts (favouring instead the official
+documentation) but Windows is an exception.  Hence the link.
 
--Peff
+Good luck.
