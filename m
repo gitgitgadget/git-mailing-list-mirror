@@ -1,104 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Re: Segmentation fault with latest git (070c57df)
-Date: Thu, 31 Jan 2013 02:55:11 -0500
-Message-ID: <20130131075511.GB5342@sigill.intra.peff.net>
-References: <15825158.309231359617223702.JavaMail.weblogic@epml26>
+From: =?euc-kr?B?x+PBvri4?= <jongman.heo@samsung.com>
+Subject: Re: Re: Re: Segmentation fault with latest git (070c57df)
+Date: Thu, 31 Jan 2013 08:07:16 +0000 (GMT)
+Message-ID: <6083817.360021359619635900.JavaMail.weblogic@epv6ml01>
+Reply-To: jongman.heo@samsung.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=euc-kr
+Content-Transfer-Encoding: base64
 Cc: git <git@vger.kernel.org>, Antoine Pelisse <apelisse@gmail.com>
-To: Jongman Heo <jongman.heo@samsung.com>
-X-From: git-owner@vger.kernel.org Thu Jan 31 08:55:39 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 31 09:07:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0ozi-00033v-FP
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 08:55:38 +0100
+	id 1U0pBO-0001U0-D0
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 09:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755078Ab3AaHzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 02:55:16 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54481 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754928Ab3AaHzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 02:55:14 -0500
-Received: (qmail 4379 invoked by uid 107); 31 Jan 2013 07:56:37 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Jan 2013 02:56:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Jan 2013 02:55:11 -0500
-Content-Disposition: inline
-In-Reply-To: <15825158.309231359617223702.JavaMail.weblogic@epml26>
+	id S1755210Ab3AaIHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 03:07:19 -0500
+Received: from mailout4.samsung.com ([203.254.224.34]:49527 "EHLO
+	mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755132Ab3AaIHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 03:07:18 -0500
+Received: from epcpsbge7.samsung.com (epcpsbge7 [203.254.230.17])
+ by mailout4.samsung.com
+ (Oracle Communications Messaging Server 7u4-24.01(7.0.4.24.0) 64bit (built Nov
+ 17 2011)) with ESMTP id <0MHH00K6XD5HPF10@mailout4.samsung.com> for
+ git@vger.kernel.org; Thu, 31 Jan 2013 17:07:16 +0900 (KST)
+Received: from epcpsbge7.samsung.com ( [203.254.230.41])
+	by epcpsbge7.samsung.com (EPCPMTA) with SMTP id 30.CB.10066.4362A015; Thu,
+ 31 Jan 2013 17:07:16 +0900 (KST)
+X-AuditID: cbfee611-b7f1c6d000002752-b6-510a2634ba52
+Received: from epextmailer03 ( [203.254.219.153])
+	by epcpsbge7.samsung.com (EPCPMTA) with SMTP id 00.CB.10066.4362A015; Thu,
+ 31 Jan 2013 17:07:16 +0900 (KST)
+X-MTR: 20130131080437345@jongman.heo
+Msgkey: 20130131080437345@jongman.heo
+X-EPLocale: ko_KR.euc-kr
+X-Priority: 3
+X-EPWebmail-Msg-Type: personal
+X-EPWebmail-Reply-Demand: 0
+X-EPApproval-Locale: 
+X-EPHeader: ML
+X-EPTrCode: 
+X-EPTrName: 
+X-MLAttribute: 
+X-RootMTR: 20130131080437345@jongman.heo
+X-ParentMTR: 
+X-ArchiveUser: 
+X-CPGSPASS: N
+MIME-version: 1.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDKsWRmVeSWpSXmKPExsVy+t8zTV0TNa5Ag2/NGhZdV7qZHBg9Pm+S
+	C2CM4rJJSc3JLEst0rdL4Mo4eu8Dc8EK9or+vlVMDYw97F2MnBxCAmoSNz8fYgSxJQRMJBYf
+	mw5li0lcuLeerYuRC6hmGaPEl78bWGCKpkx7xwyRmM8osXnKV7AEi4CqxLYdEDabgJnEsfO/
+	wSYJCzhJzF7TDWaLCMhL3Jq2kA3EZhbwlJj4fgYjxBWKEteWLgaL8woISpyc+QRqmYpE1+l/
+	LBBxVYlJf9uZIeISErOmX2CFsHklZrQ/haqXk5j2dQ1UjbTE+Vkb4L5Z/P0xVJxf4tjtHUxd
+	jBxgvU/uB8OM2b35CxuELSAx9cxBRogSTYkJa8UhwnwSaxa+ZYGZsuvUcmaY1vtb5jJBfKUo
+	MaX7ITuErSXx5cc+DF/xCjhL3Fiyk20Co/IsJKlZSNpnIWlHVrOAkWUVo2hqQXJBcVJ6qrle
+	cWJucWleul5yfu4mRkhaENzBuLTB4hCjAAejEg+vhiNnoBBrYllxZe4hRgkOZiUR3uaLQCHe
+	lMTKqtSi/Pii0pzU4kOMycD4m8gsJZqcD0xZeSXxhsYGxoaGloZmppamBqQJK4nzclZMDxAS
+	SE8sSc1OTS1ILYLZwsTBKdXAmHehO2XhtmqFvJjXh5Lsrr9b9tw49fjOFWtXCblcberZEx/l
+	KBilyBTynu+Q5q5Jj0Ry72dIXl+10/zZw9g/59Xy/jd5/2FdWPTuBxOblHx5Tvb2NdU9Ci0e
+	JucvrDxfE7vvx5flNYnBl3eyn03cn31tzgTF/GqOEylVlVlvPrZtvKFWm3nhuRJL 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkk+LIzCtJLcpLzFFi42I5/e/2TF0TNa5AgytPlSy6rnQzOTB6fN4k
+	F8AYlWGTkZqYklqkkJqXnJ+SmZduq+QdHO8cb2pmYKhraGlhrqSQl5ibaqvk4hOg65aZAzRU
+	SaEsMacUKBSQWFyspG9nU5RfWpKqkJFfXGKrFG1kYKxnZGqiZ2RsoGdiEGtlaGBgZApUlZCR
+	cfTeB+aCFewV/X2rmBoYe9i7GDk5hATUJG5+PsQIYksImEhMmfaOGcIWk7hwbz1bFyMXUM18
+	RonNU76ygCRYBFQltu2AsNkEzCSOnf8N1iws4CQxe003mC0iIC9xa9pCNhCbWcBTYuL7GYwQ
+	yxQlri1dDBbnFRCUODnzCQvEMhWJrtP/WCDiqhKT/rZDHSEhMWv6BVYIm1diRvtTqHo5iWlf
+	10DVSEucn7WBEeboxd8fQ8X5JY7d3sHUxcgB1vvkfjDMmN2bv7BB2AISU88cZIQo0ZSYsFYc
+	IswnsWbhWxaYKbtOLWeGab2/ZS4TxFeKElO6H7JD2FoSX37sw/AVr4CzxI0lO9kmMMrNQpKa
+	haR9FpJ2ZDULGFlWMYqmFiQXFCelp5rrFSfmFpfmpesl5+duYgQnqGeCOxiXNlgcYhTgYFTi
+	4dVw5AwUYk0sK67MPcQowcGsJMLbfBEoxJuSWFmVWpQfX1Sak1p8iDEZGH8TmaVEk/OByTOv
+	JN7Q2MDY0NDS3MDU0MiCNGElcV7OiukBQgLpiSWp2ampBalFMFuYODilGhgz15dunBd19tbl
+	7tnh61uFr09a0dfhKxN4KzbrdpuLYfkf28X5c1ceXKJplPiyess6HY76r5kVWZtD 
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215108>
 
-On Thu, Jan 31, 2013 at 07:27:04AM +0000, Jongman Heo wrote:
-
-> FYI, gdb backtrace and valgrind output attached below, Thanks.
-
-Thanks, that's helpful.
-
-> #4  0x0812bda0 in string_list_insert (list=0xbfffe7c0, string=0x821ec3c "refs/remotes/origin/HEAD") at string-list.c:57
-> #5  0x08071838 in add_existing (refname=0x821ec3c "refs/remotes/origin/HEAD", 
->     sha1=0x821ec14 "\a\fW\337B\352N\255\314C\320Em\021E`\022C&", <incomplete sequence \303>, flag=1, cbdata=0xbfffe7c0)
->     at builtin/fetch.c:570
-
-So we are inserting the string from add_existing, which gets the list
-from a callback parameter. Which comes from...
-
-> #13 0x0807390a in do_fetch (remote=<value optimized out>, argc=0, argv=0xbfffe9f8) at builtin/fetch.c:699
-
-...here, which does this:
-
-  struct string_list existing_refs = STRING_LIST_INIT_NODUP;
-  [...]
-  for_each_ref(add_existing, &existing_refs);
-
-And yet we get:
-
-> ==2195== Conditional jump or move depends on uninitialised value(s)
-> ==2195==    at 0x812B41F: get_entry_index (string-list.c:10)
-> ==2195==    by 0x812BD5F: string_list_insert_at_index (string-list.c:33)
-> ==2195==    by 0x812BD9F: string_list_insert (string-list.c:57)
-> ==2195==    by 0x8071837: add_existing (fetch.c:570)
-> ==2195==    by 0x810AF96: do_one_ref (refs.c:525)
-> ==2195==    by 0x810BB20: do_for_each_ref_in_dir (refs.c:551)
-> ==2195==    by 0x810BD34: do_for_each_ref_in_dirs (refs.c:623)
-> ==2195==    by 0x810BC8D: do_for_each_ref_in_dirs (refs.c:597)
-> ==2195==    by 0x810C303: do_for_each_ref (refs.c:1295)
-> ==2195==    by 0x810C63A: for_each_ref (refs.c:1343)
-> ==2195==    by 0x8073909: fetch_one (fetch.c:699)
-> ==2195==    by 0x8074250: cmd_fetch (fetch.c:992)
-
-which seems odd. cmp should be initialized to NULL, and then we never
-touch it (and even if we did, it wouldn't be unitialized, but rather
-have the value we put in it).
-
-It's almost like the compiler is getting the initializer wrong. It's a
-long shot, but I wonder if the presence of the bitfield could be
-triggering a compiler bug (or there is a subtle C rule about bitfield
-initializations that I do not know). Just for the sake of my sanity,
-what does the following program output for you?
-
--- >8 --
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef int (*compare_fn)(const char *, const char *);
-
-struct foo {
-  char **items;
-  unsigned int nr, alloc;
-  unsigned int bitfield:1;
-  compare_fn cmp;
-};
-
-int main(void)
-{
-  struct foo f = { NULL, 0, 0, 0 };
-  printf("cmp is %lu\n", (unsigned long)f.cmp);
-  return 0;
-}
+DQo+IEl0J3MgYWxtb3N0IGxpa2UgdGhlIGNvbXBpbGVyIGlzIGdldHRpbmcgdGhlIGluaXRpYWxp
+emVyIHdyb25nLiBJdCdzIGENCj4gbG9uZyBzaG90LCBidXQgSSB3b25kZXIgaWYgdGhlIHByZXNl
+bmNlIG9mIHRoZSBiaXRmaWVsZCBjb3VsZCBiZQ0KPiB0cmlnZ2VyaW5nIGEgY29tcGlsZXIgYnVn
+IChvciB0aGVyZSBpcyBhIHN1YnRsZSBDIHJ1bGUgYWJvdXQgYml0ZmllbGQNCj4gaW5pdGlhbGl6
+YXRpb25zIHRoYXQgSSBkbyBub3Qga25vdykuIEp1c3QgZm9yIHRoZSBzYWtlIG9mIG15IHNhbml0
+eSwNCj4gd2hhdCBkb2VzIHRoZSBmb2xsb3dpbmcgcHJvZ3JhbSBvdXRwdXQgZm9yIHlvdT8NCg0K
+SGksIA0KDQpqdXN0ICJjbXAgaXMgMCIgIGlzIHByaW50ZWQuDQoNCiQgZ2NjIC0tdmVyc2lvbg0K
+Z2NjIChHQ0MpIDQuMS4yIDIwMDgwNzA0IChSZWQgSGF0IDQuMS4yLTQ4KQ0KQ29weXJpZ2h0IChD
+KSAyMDA2IEZyZWUgU29mdHdhcmUgRm91bmRhdGlvbiwgSW5jLg0KVGhpcyBpcyBmcmVlIHNvZnR3
+YXJlOyBzZWUgdGhlIHNvdXJjZSBmb3IgY29weWluZyBjb25kaXRpb25zLiAgVGhlcmUgaXMgTk8N
+CndhcnJhbnR5OyBub3QgZXZlbiBmb3IgTUVSQ0hBTlRBQklMSVRZIG9yIEZJVE5FU1MgRk9SIEEg
+UEFSVElDVUxBUiBQVVJQT1NFLg0KDQoNCkJlc3QgcmVnYXJkcywNCkpvbmdtYW4gSGVvLg==
