@@ -1,131 +1,72 @@
-From: "Constantine A. Murenin" <mureninc@gmail.com>
-Subject: Why git-whatchanged shows a commit touching every file, but git-log doesn't?
-Date: Thu, 31 Jan 2013 11:09:35 -0800
-Message-ID: <CAPKkNb49FUgLxZxHmQJoqccQ1XVcFYbYF8kYDp0+Y27cmi56fg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/7] Undocument deprecated alias 'push.default=tracking'
+Date: Thu, 31 Jan 2013 11:11:05 -0800
+Message-ID: <20130131191105.GF27340@google.com>
+References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1335170284-30768-3-git-send-email-Matthieu.Moy@imag.fr>
+ <CACBZZX552fnD+u9Zp-BhqDyYWN+OiyvCyub-xjMZ-_GXCG-vQA@mail.gmail.com>
+ <7vvcadgss0.fsf@alter.siamese.dyndns.org>
+ <20130131190747.GE27340@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 31 20:09:59 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 20:11:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0zWI-0003rj-6C
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 20:09:58 +0100
+	id 1U0zXp-0004s7-GL
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 20:11:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753950Ab3AaTJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 14:09:37 -0500
-Received: from mail-ia0-f176.google.com ([209.85.210.176]:38791 "EHLO
-	mail-ia0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751945Ab3AaTJf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 14:09:35 -0500
-Received: by mail-ia0-f176.google.com with SMTP id i18so4300707iac.21
-        for <git@vger.kernel.org>; Thu, 31 Jan 2013 11:09:35 -0800 (PST)
+	id S1754972Ab3AaTLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 14:11:12 -0500
+Received: from mail-pb0-f47.google.com ([209.85.160.47]:34979 "EHLO
+	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751945Ab3AaTLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 14:11:10 -0500
+Received: by mail-pb0-f47.google.com with SMTP id rp8so1752880pbb.34
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 11:11:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to
-         :content-type;
-        bh=+RkMEuCbgY4u+6p6ZovGh3zVoauyYb4nxy7BRJAqv0U=;
-        b=PxUaYmvjS4bc6cOuy0B0BMs3kms58nykEFeohDOn2mQB9l1Q+Ne9k/qKClbmo1jnwT
-         6r8i1x8Vauoed9VXG1+RpWzFnmsblnx8J6hWGD6JRbh3NoEGZYiweUX3WDgrT31uBgYL
-         SSH6d/4QQzgH/aMhAVPbtpiOJuDjlMugA+hX1i9Hguh+s+Dd9wy0wjWKlZjTsZKOzPlR
-         iReAFXrz9y5bPOivgEcl6lwb+pCmXqcIF91zsmZZ3K3/rEqcQoDJ5sfme02AVkrWr31/
-         WSuKJtJAcSrzw53UJE18/HEAmMKZx01cNPF1lDyYXt/U3GuJEHXLe3J8vSSGB4Pcq/cQ
-         9hzA==
-X-Received: by 10.50.41.225 with SMTP id i1mr2070143igl.100.1359659375414;
- Thu, 31 Jan 2013 11:09:35 -0800 (PST)
-Received: by 10.64.166.66 with HTTP; Thu, 31 Jan 2013 11:09:35 -0800 (PST)
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=SGwBed3a6sHezbHy3hK4fFhWPmyz43694QHRQEhKHoY=;
+        b=nw+wb+HGpqcMyP2Y8ZnkVaWWQkQInxwRD6WhkWFgXvHyrtxtc2k0qvIZv5deWqkaVc
+         opEw3olpB5umv9Vrs+WysoqVJHvg1fq45ovRNPO6Q2+XrNNgw6p5ElL57afr1bo4i1oR
+         kFESibjm5lmRk21CbJ+aZJ652f0PU3A13qrtJiUZPW2rHAfx4d9rDJyGfmvvYZq+Keck
+         SmNjOISq9/BGhmAsuD/K84N0EBGpb+NgsDibRbx1J7R6u2kTN5I0ssTwXLUErewQppeu
+         EdQt5X9PAe6zGZSEdHzWqljPF5g2eCjofDjXdkNkLcXFG5SkhgHcvLNKAe2qKeKs0jJX
+         0QNQ==
+X-Received: by 10.68.235.200 with SMTP id uo8mr25105567pbc.29.1359659470293;
+        Thu, 31 Jan 2013 11:11:10 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id vk5sm5778454pbc.34.2013.01.31.11.11.08
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 31 Jan 2013 11:11:08 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20130131190747.GE27340@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215152>
 
-Hi,
+Jonathan Nieder wrote:
 
-DragonFly BSD uses git as its SCM, with one single repository and
-branch for both the kernel and the whole userland.
+> Is the problem that "deprecated" is not precise enough?  For example,
+> would it make sense to say "deprecated synonym for `upstream`.  Will
+> be dropped in git 2.1" or something like that?
 
-On 2011-11-26 (1322296064), someone did a commit that somehow touched
-every single file in the repository, even though most of the files
-were not modified one bit.
+Also, if we plan to remove support soon, we should start warning when
+this setting is encountered so people know to update their
+configuration.
 
-That's the offending commit from 2011-11-26:
-
-http://gitweb.dragonflybsd.org/dragonfly.git/commitdiff/86d7f5d305c6adaa56ff4582ece9859d73106103
-https://github.com/DragonFlyBSD/DragonFlyBSD/commit/86d7f5d305c6adaa56ff4582ece9859d73106103
-
-Since then, with some tools, if you look at file history for any file
-anywhere in the repo, you can see that all files were changed on
-2011-11-26 with that commit, but it's only shown in some tools, and
-not shown in others.
-
-
-For example, the bogus 2011-11-26 commit is not shown with the following:
-
- * git log sys/sys/sensors.h
-
- * https://github.com/DragonFlyBSD/DragonFlyBSD/commits/master/sys/sys/sensors.h
-
-
-However, the bogus commit is [erroneously] shown with the following:
-
-% git whatchanged --pretty=%at sys/sys/sensors.h | cat
-1322296064
-
-:000000 100644 0000000... 554cfc2... A  sys/sys/sensors.h
-1191329821
-
-:000000 100644 0000000... 554cfc2... A  sys/sys/sensors.h
-%
-
-Notice how the file was ]A]dded once again at 1322296064 without ever
-being deleted, and that the dst sha1 is the same for both the latest
-and the immediately prior revision of the file.
-
-
-Gitweb, unlike github, would also show the erroneous commit from 2011-11:
-
-http://gitweb.dragonflybsd.org/dragonfly.git/history/HEAD:/sys/sys/sensors.h
-
-
-Another, more representative example, which shows that src sha1 (field
-names are documented in git-diff-tree(1)) is always "0000000..." in
-such bogus touch-all commits (even though it makes little sense when
-you consider that the files were never deleted and still have the same
-dst sha1):
-
-% git whatchanged --pretty=%at sys/sys/sysctl.h | head -9
-1322296064
-
-:000000 100644 0000000... 6659977... A  sys/sys/sysctl.h
-1296826445
-
-:100644 100644 94b8d96... 6659977... M  sys/sys/sysctl.h
-1292413105
-
-:100644 100644 8c9deaa... 94b8d96... M  sys/sys/sysctl.h
-%
-
-
-So, my questions are as follows:
-
-* How was it possible for all these files to be added without first
-being deleted in the first place? Was / is it a bug in git (during a
-commit) to allow something like that?
-
-* Why do some tools compact such bogus commits out (and hide them from
-the user), but some don't?
-
-* Is there a way to make git-whatchanged and gitweb ignore such bogus
-commits on files that weren't actually modified, just as git-log and
-github already do?
-
-
-P.S. I've asked this question on
-http://stackoverflow.com/q/14632828/1122270, if anyone wants a cookie.
-
-
-Best regards,
-Constantine.
+Jonathan
