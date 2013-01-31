@@ -1,61 +1,85 @@
-From: Tomas Carnecky <tomas.carnecky@gmail.com>
-Subject: Re: [PATCH] gitremote-helpers.txt: rename from
- git-remote-helpers.txt
-Date: Thu, 31 Jan 2013 22:28:10 +0000
-Message-ID: <1359671290-ner-7089@calvin>
-References: <7vfw1ijtz2.fsf@alter.siamese.dyndns.org>
-	<fc96ae61bb64ce19e856d7a1624e2130c99afd47.1359662569.git.john@keeping.me.uk>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] Rename {git- => git}remote-helpers.txt
+Date: Thu, 31 Jan 2013 22:28:17 +0000
+Message-ID: <20130131222817.GP1342@serenity.lan>
+References: <7v1ud1gke7.fsf@alter.siamese.dyndns.org>
+ <3f26b82599aa2a45897d345c851fab4751c55810.1359669205.git.john@keeping.me.uk>
+ <7vy5f9dmrt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Max Horn <max@quendi.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 31 23:28:44 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Max Horn <max@quendi.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 23:28:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U12cZ-0000Qu-Gc
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 23:28:39 +0100
+	id 1U12ck-0000XQ-1g
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 23:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756223Ab3AaW2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 17:28:17 -0500
-Received: from mail-ee0-f41.google.com ([74.125.83.41]:47658 "EHLO
-	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755326Ab3AaW2P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 17:28:15 -0500
-Received: by mail-ee0-f41.google.com with SMTP id c13so1716345eek.14
-        for <git@vger.kernel.org>; Thu, 31 Jan 2013 14:28:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:subject:to:cc:references:in-reply-to:mime-version
-         :date:message-id:content-type;
-        bh=Dx9dsnQ3P0X9SqjVvzJNTUZZpQqxqN8fsmXcSIaB2X8=;
-        b=hPu14IFtQF/CRu76fdR4VNZXIWTweVVLs3NUB1VKavJ7k1wL73FQIuEkbAnc7EMm3Z
-         PljoLSmkK/P4UhIJ1g02+Cz5kG/ckRZtIQl4Cy6IGUEwQht4qHYGbXzjpkTuVALQe2hr
-         Oa7ywRGFxKKlhXmyXrXvLtTcekISJffaH7J0Hg1p9hH0yxjvC4m/Av9JzBBQR6L+S6Tn
-         w5csNR4RGx2v+jepocWo52tAk2KqDAnz170v8WeBMjkirljg7WXEjkrwSw5Rza6Wyvy3
-         zAWONJRrkNARI8fz1KvIZKnfp1iG2WhXdeE1fdzyNLmWEgDIFbBWBds3xVSKYSL6mr+t
-         QLig==
-X-Received: by 10.14.178.196 with SMTP id f44mr32235642eem.14.1359671294095;
-        Thu, 31 Jan 2013 14:28:14 -0800 (PST)
-Received: from calvin.caurea.org (cust.static.46-14-151-191.swisscomdata.ch. [46.14.151.191])
-        by mx.google.com with ESMTPS id h5sm9603639eem.1.2013.01.31.14.28.12
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 31 Jan 2013 14:28:13 -0800 (PST)
-Received: by calvin.caurea.org (Postfix, from userid 3301)
-	id CAECE1A9018; Thu, 31 Jan 2013 22:28:10 +0000 (UTC)
-In-Reply-To: <fc96ae61bb64ce19e856d7a1624e2130c99afd47.1359662569.git.john@keeping.me.uk>
+	id S1756247Ab3AaW22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 17:28:28 -0500
+Received: from pichi.aluminati.org ([72.9.246.58]:34242 "EHLO
+	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755044Ab3AaW21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 17:28:27 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 3858C161E3FB;
+	Thu, 31 Jan 2013 22:28:26 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: 0.775
+X-Spam-Level: 
+X-Spam-Status: No, score=0.775 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, URIBL_BLACK=1.775] autolearn=no
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2HbnzzxSt5PV; Thu, 31 Jan 2013 22:28:25 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 13E58161E394;
+	Thu, 31 Jan 2013 22:28:19 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vy5f9dmrt.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215177>
 
-On Thu, 31 Jan 2013 20:08:14 +0000, John Keeping <john@keeping.me.uk> wrote:
-> This is the patch to rename it to "gitremote-helpers.txt".
+On Thu, Jan 31, 2013 at 02:13:10PM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
 > 
->  Documentation/{git-remote-helpers.txt => gitremote-helpers.txt} | 6 +++---
+> > When looking up a topic via "git help <topic>", git-help prepends "git-"
+> > to topics that are the names of commands (either builtin or found on the
+> > path) and "git" (no hyphen) to any other topic name.
+> >
+> > "git-remote-helpers" is not the name of a command, so "git help
+> > remote-helpers" looks for "gitremote-helpers" and does not find it.
+> >
+> > Fix this by renaming "git-remote-helpers.txt" to
+> > "gitremote-helpers.txt".
+> >
+> > Signed-off-by: John Keeping <john@keeping.me.uk>
+> >
+> > ---
+> > Changes since v1:
+> >
+> > - add gitremote-helpers.txt to the Makefile since it is no longer caught
+> >   by git-*.txt.
+> >
+> > - add a simple git-remote-helpers.html to help people following links to
+> >   the old name.
+> 
+> Doesn't "make clean" remove the placeholder file?
 
-It feels somewhat weird to have 'git-remote' but 'gitremote-helpers'.
+Yes.  Should I change it to "git-remote-helpers.html.in" and then copy
+it into place?  That seems like the simplest answer and means that
+"*.html" will continue to refer only to generated files.
+
+
+John
