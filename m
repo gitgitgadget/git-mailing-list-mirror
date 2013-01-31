@@ -1,85 +1,83 @@
-From: John Keeping <john@keeping.me.uk>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] Rename {git- => git}remote-helpers.txt
-Date: Thu, 31 Jan 2013 22:28:17 +0000
-Message-ID: <20130131222817.GP1342@serenity.lan>
+Date: Thu, 31 Jan 2013 17:33:05 -0500
+Message-ID: <20130131223305.GB21729@sigill.intra.peff.net>
 References: <7v1ud1gke7.fsf@alter.siamese.dyndns.org>
  <3f26b82599aa2a45897d345c851fab4751c55810.1359669205.git.john@keeping.me.uk>
- <7vy5f9dmrt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Max Horn <max@quendi.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 31 23:28:56 2013
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Jan 31 23:33:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U12ck-0000XQ-1g
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 23:28:50 +0100
+	id 1U12hH-0003ff-HJ
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 23:33:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756247Ab3AaW22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 17:28:28 -0500
-Received: from pichi.aluminati.org ([72.9.246.58]:34242 "EHLO
-	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755044Ab3AaW21 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 17:28:27 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 3858C161E3FB;
-	Thu, 31 Jan 2013 22:28:26 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: 0.775
-X-Spam-Level: 
-X-Spam-Status: No, score=0.775 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLACK=1.775] autolearn=no
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2HbnzzxSt5PV; Thu, 31 Jan 2013 22:28:25 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 13E58161E394;
-	Thu, 31 Jan 2013 22:28:19 +0000 (GMT)
+	id S1756964Ab3AaWdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 17:33:09 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54971 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755326Ab3AaWdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 17:33:08 -0500
+Received: (qmail 15580 invoked by uid 107); 31 Jan 2013 22:34:32 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Jan 2013 17:34:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Jan 2013 17:33:05 -0500
 Content-Disposition: inline
-In-Reply-To: <7vy5f9dmrt.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <3f26b82599aa2a45897d345c851fab4751c55810.1359669205.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215178>
 
-On Thu, Jan 31, 2013 at 02:13:10PM -0800, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
+On Thu, Jan 31, 2013 at 09:59:50PM +0000, John Keeping wrote:
+
+> When looking up a topic via "git help <topic>", git-help prepends "git-"
+> to topics that are the names of commands (either builtin or found on the
+> path) and "git" (no hyphen) to any other topic name.
 > 
-> > When looking up a topic via "git help <topic>", git-help prepends "git-"
-> > to topics that are the names of commands (either builtin or found on the
-> > path) and "git" (no hyphen) to any other topic name.
-> >
-> > "git-remote-helpers" is not the name of a command, so "git help
-> > remote-helpers" looks for "gitremote-helpers" and does not find it.
-> >
-> > Fix this by renaming "git-remote-helpers.txt" to
-> > "gitremote-helpers.txt".
-> >
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> >
-> > ---
-> > Changes since v1:
-> >
-> > - add gitremote-helpers.txt to the Makefile since it is no longer caught
-> >   by git-*.txt.
-> >
-> > - add a simple git-remote-helpers.html to help people following links to
-> >   the old name.
+> "git-remote-helpers" is not the name of a command, so "git help
+> remote-helpers" looks for "gitremote-helpers" and does not find it.
 > 
-> Doesn't "make clean" remove the placeholder file?
+> Fix this by renaming "git-remote-helpers.txt" to
+> "gitremote-helpers.txt".
 
-Yes.  Should I change it to "git-remote-helpers.html.in" and then copy
-it into place?  That seems like the simplest answer and means that
-"*.html" will continue to refer only to generated files.
+Maybe it is just me, but the fact that accessing the manpage is now:
 
+  man gitremote-helpers
 
-John
+feels weird to me. I know it technically follows our syntactic rules,
+but having the lack of dash be significant between "git" and "remote",
+but then having a dash later makes it hard on the eyes.
+
+Would it make more sense to just call it "gitremotehelpers", and then
+access it as:
+
+  git help remotehelpers
+
+or
+
+  man gitremotehelpers
+
+?
+
+That has it its own ugliness (two words run together), but at least my
+version of man will accept arbitrary capitalization, allowing:
+
+  git help remoteHelpers
+
+and
+
+  man gitremoteHelpers
+
+I dunno.
+
+-Peff
