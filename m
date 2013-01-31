@@ -1,116 +1,97 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH/RFC 0/6] commit caching
-Date: Thu, 31 Jan 2013 09:14:26 -0800
-Message-ID: <CAJo=hJtTYZg+1+RZVfEGTgOGzqxQbN1CLYWrvUp+WHKGxGwHMQ@mail.gmail.com>
-References: <20130129091434.GA6975@sigill.intra.peff.net>
+From: Greg KH <gregkh@linuxfoundation.org>
+Subject: "git archve --format=tar" output changed from 1.8.1 to 1.8.2.1
+Date: Thu, 31 Jan 2013 18:28:05 +0100
+Message-ID: <20130131172805.GC16593@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 31 18:15:11 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Konstantin Ryabitsev <mricon@kernel.org>
+To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 18:27:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U0xjB-0000uA-EK
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 18:15:09 +0100
+	id 1U0xuj-0000yL-Ir
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jan 2013 18:27:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753884Ab3AaROs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 12:14:48 -0500
-Received: from mail-ia0-f179.google.com ([209.85.210.179]:33951 "EHLO
-	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751942Ab3AaROq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 12:14:46 -0500
-Received: by mail-ia0-f179.google.com with SMTP id x24so4123480iak.38
-        for <git@vger.kernel.org>; Thu, 31 Jan 2013 09:14:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Qw5c6EAJURZV5QbfhuN4Q6KcPoTkUSMYY897EcCFRoA=;
-        b=Rvx5NB0S2zknf0zVoC9qMOUh9kG0EKhWkuGeCUgSfP7QPZxABK+6lfeZ+r+itDuPAu
-         8SEqZijbqwYLvVDR/CDwtnteFVmJo4Sn78rXNGGJ3zbxS4F3wneBdTXd93K0C0NqEY7z
-         K8t4mTNJxH67Gc4KPjozIupJfMUVLTyR+9X4A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:x-gm-message-state;
-        bh=Qw5c6EAJURZV5QbfhuN4Q6KcPoTkUSMYY897EcCFRoA=;
-        b=DestXzZ2lsEe+1oM1JHMB+Tf77+RUathjkykBXkSzkteyOYJMUprdtwNsSW1XVFIrV
-         U7z4jDWeLlMHHIuB639F56Y8Xe4pj/jAVcinrB4CdeBHjtCuTrfPkjS/Rkqxot3EUv9t
-         xVmEyq3eVnI5dxyywqb1KFrZzBjYK2MkQsdwqFjn2v9V6bFvcLU0T94qvBBN6c+MMFlf
-         Mad2HdGaFdTJvZRO2J0/a7kCMaAbeu0Tp0LMVZV2FIcFd0ZUGRb7SdZEQsZfI3PMVwZi
-         h2wh3H7cIyyWTpHxAXQgd8SjhGZbCkSuMfkBjRnRJqwYo9rF3aMA0TGn7mrcwBDZZBqf
-         462Q==
-X-Received: by 10.50.163.35 with SMTP id yf3mr1771892igb.60.1359652486248;
- Thu, 31 Jan 2013 09:14:46 -0800 (PST)
-Received: by 10.64.170.100 with HTTP; Thu, 31 Jan 2013 09:14:26 -0800 (PST)
-In-Reply-To: <20130129091434.GA6975@sigill.intra.peff.net>
-X-Gm-Message-State: ALoCoQlK0YTqsFngAySVx8AexnIB2nG3dTk6p5Sn1aUtBElJB7RE2duVF83cOLy3SlO6DXASyFz2
+	id S1755980Ab3AaR0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 12:26:11 -0500
+Received: from mail.kernel.org ([198.145.19.201]:40906 "EHLO mail.kernel.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755978Ab3AaR0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 12:26:09 -0500
+Received: from mail.kernel.org (localhost [127.0.0.1])
+	by mail.kernel.org (Postfix) with ESMTP id 2402E20318;
+	Thu, 31 Jan 2013 17:26:08 +0000 (UTC)
+Received: from localhost (ip-188-118-20-209.reverse.destiny.be [188.118.20.209])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mail.kernel.org (Postfix) with ESMTPSA id C17D720317;
+	Thu, 31 Jan 2013 17:26:05 +0000 (UTC)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
+	autolearn=ham version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mail.kernel.org
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215130>
 
-On Tue, Jan 29, 2013 at 1:14 AM, Jeff King <peff@peff.net> wrote:
-> This is the cleaned-up version of the commit caching patches I mentioned
-> here:
->
->   http://article.gmane.org/gmane.comp.version-control.git/212329
-...
-> The short of it is that for an extra 31M of disk
-> space (~4%), I get a warm-cache speedup for "git rev-list --all" of
-> ~4.2s to ~0.66s.
+Hi,
 
-I have to admit, this is a nice gain. I don't think users often dig
-through all commits to the root but I can see how this might improve
-git log with a path filter.
+The way we upload the Linux kernel to kernel.org involves creating a tar
+archive, signing the archive, and then just uploading the signature.
+The server then checks out the repo based on the tag, generates the tar
+archive and checks the signature to make sure they match.
 
-> Coupled with using compression level 0 for trees (which do not compress
-> well at all, and yield only a 2% increase in size when left
-> uncompressed), my "git rev-list --objects --all" time drops from ~40s to
-> ~25s.
+A few days ago I released the 3.0.61 kernel, and it turned out that I
+couldn't upload the kernel release because 'git archive' now creates a
+binary file that differs from an older version of git.
 
-This uhm.... is nice?
+I tracked this down to commit 22f0dcd9634a818a0c83f23ea1a48f2d620c0546
+(archive-tar: split long paths more carefully).  The diff of a hex dump
+of the tar archives shows the following difference:
 
-But consider reachability bitmaps. ~40s to ~80ms. :-)
+--- old_git_archive	2013-01-31 17:31:24.466343388 +0100
++++ new_git_archive	2013-01-31 17:32:21.509674417 +0100
+@@ -19239998,8 +19239998,8 @@
+ 125943d0:0000 0000 0000 0000 0000 0000 0000 0000  ................
+ 125943e0:0000 0000 0000 0000 0000 0000 0000 0000  ................
+ 125943f0:0000 0000 0000 0000 0000 0000 0000 0000  ................
+-12594400:0000 0000 0000 0000 0000 0000 0000 0000  ................
+-12594410:0000 0000 0000 0000 0000 0000 0000 0000  ................
++12594400:7765 7374 6272 6964 6765 2d6f 6d61 7033  westbridge-omap3
++12594410:2d70 6e61 6e64 2d68 616c 2f00 0000 0000  -pnand-hal/.....
+ 12594420:0000 0000 0000 0000 0000 0000 0000 0000  ................
+ 12594430:0000 0000 0000 0000 0000 0000 0000 0000  ................
+ 12594440:0000 0000 0000 0000 0000 0000 0000 0000  ................
+@@ -19240025,8 +19240025,8 @@
+ 12594580:2f61 7374 6f72 6961 2f61 7263 682f 6172  /astoria/arch/ar
+ 12594590:6d2f 706c 6174 2d6f 6d61 702f 696e 636c  m/plat-omap/incl
+ 125945a0:7564 652f 6d61 6368 2f77 6573 7462 7269  ude/mach/westbri
+-125945b0:6467 652f 7765 7374 6272 6964 6765 2d6f  dge/westbridge-o
+-125945c0:6d61 7033 2d70 6e61 6e64 2d68 616c 0000  map3-pnand-hal..
++125945b0:6467 6500 0000 0000 0000 0000 0000 0000  dge.............
++125945c0:0000 0000 0000 0000 0000 0000 0000 0000  ................
+ 125945d0:0000 0000 0000 0000 0000 0000 0000 0000  ................
+ 125945e0:0000 0000 0000 0000 0000 0000 0000 0000  ................
+ 125945f0:0000 0000 0000 0000 0000 0000 0000 0000  ................
 
-> Perf reveals that we're spending most of the remaining time in
-> lookup_object. I've spent a fair bit of time trying to optimize that,
-> but with no luck; I think it's fairly close to optimal. The problem is
-> just that we call it a very large number of times, since it is the
-> mechanism by which we recognize that we have already processed each
-> sha1.
+Interestingly, the output of uncompressing the tar archives is
+identical, so the data is correct, but the binary isn't.
 
-Yup. I have also futzed with the one in JGit for quite a while now. I
-pull some tricks there like making it a 2 level directory to reduce
-the need to find a contiguous array of 8M entries when processing the
-Linux kernel, and I try to preallocate the first level table based on
-the number of objects in pack-*.idx files. But the bottleneck is
-basically the cache lookups and hits, these happen like 100M times on
-2M objects, because its every link in nearly every tree.
+Now keeping binary compatibility of tar archive files isn't really a big
+deal, but, the commit to git that causes this seems a bit odd, is it
+really needed?  Or can we just fix the version of tar with NetBSD
+instead?  :)
 
-Reachability bitmaps basically let you skip this. So they go fast. But
-I have another that you could try.
+Any ideas?
 
-If we modified pack-objects' delta compressor for tree objects to only
-generate delta instructions at tree record boundaries, a delta-encoded
-tree can be processed without inflating the full content of that tree.
-Because of the way deltas are created, "most" tree deltas should have
-their delta base scanned by the object traversal before the delta is
-considered. This means the tree delta just needs to consider the much
-smaller records that are inserted into the base. We know these are
-different SHA-1s than what was there before, so they are more likely
-to be new to the lookup_object table.
+thanks,
 
-So the --objects traversal algorithm can change to get the delta base
-SHA-1 and raw tree delta from the pack storage. Perform a
-lookup_object on the base to see if it has been scanned. If it has,
-just scan the delta insert instructions. If the base has not yet been
-scanned, inflate the tree to its normal format and scan the entire
-tree.
-
-This is an approximation of what Nico and I were talking about doing
-for pack v4. But doesn't require a file format change. :-)
+greg k-h
