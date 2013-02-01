@@ -1,9 +1,10 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: [PATCH 6/6] Use consistent links for User Manual and Everyday Git;
- Fix a quoting error
-Date: Fri, 1 Feb 2013 19:12:53 +0100 (CET)
-Message-ID: <549641245.1090170.1359742373184.JavaMail.ngmail@webmail18.arcor-online.net>
-References: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net> <7vzjzodfp1.fsf@alter.siamese.dyndns.org> <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Aw: Re: Aw: Re: [PATCH v3 3/6] Change 'git' to 'Git' whenever
+ the whole system is referred to #2
+Date: Fri, 01 Feb 2013 10:37:40 -0800
+Message-ID: <7v8v77c22z.fsf@alter.siamese.dyndns.org>
+References: <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
+ <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
  <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
  <7vvcark1f2.fsf@alter.siamese.dyndns.org>
  <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
@@ -11,127 +12,79 @@ References: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-onl
  <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
  <CAJDDKr4fnUp_35ni72XJS_NSp4jxbvQPENLnk3AhFv2FBg3DTg@mail.gmail.com>
  <50804391.814945.1358931502165.JavaMail.ngmail@webmail07.arcor-online.net>
+ <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, davvid@gmail.com
-To: gitster@pobox.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Fri Feb 01 19:13:20 2013
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Fri Feb 01 19:38:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1L6z-0006Cl-CP
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:13:17 +0100
+	id 1U1LV0-0006C2-5g
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:38:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754156Ab3BASMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 13:12:55 -0500
-Received: from mail-in-10.arcor-online.net ([151.189.21.50]:37558 "EHLO
-	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752990Ab3BASMy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 13:12:54 -0500
-Received: from mail-in-15-z2.arcor-online.net (mail-in-15-z2.arcor-online.net [151.189.8.32])
-	by mx.arcor.de (Postfix) with ESMTP id 369503B6022;
-	Fri,  1 Feb 2013 19:12:53 +0100 (CET)
-Received: from mail-in-18.arcor-online.net (mail-in-18.arcor-online.net [151.189.21.58])
-	by mail-in-15-z2.arcor-online.net (Postfix) with ESMTP id 2E14611202F;
-	Fri,  1 Feb 2013 19:12:53 +0100 (CET)
-Received: from webmail18.arcor-online.net (webmail18.arcor-online.net [151.189.8.76])
-	by mail-in-18.arcor-online.net (Postfix) with ESMTP id 2343C3DC337;
-	Fri,  1 Feb 2013 19:12:53 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-18.arcor-online.net 2343C3DC337
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1359742373; bh=21Blh7t7kl10I6UTtQiJCGUCuHxcY55XWwZrIQTB/F4=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=omAC3mjySnDyzSGVRJ1kMf2HMYI5IIhASH0K+mIHAAkhplACpop5QrPMfy3cFulqs
-	 /IamsiWk0DfsS1mAP7mO3CmDLD20mtggf8Dp9y5hp4RZraDg9wIysj+A7gJVFoCiEC
-	 /TC4LwNW2afZBOuE8GLuiI1K1byqVOF9RnV+gI1U=
-Received: from [188.105.106.49] by webmail18.arcor-online.net (151.189.8.76) with HTTP (Arcor Webmail); Fri, 1 Feb 2013 19:12:53 +0100 (CET)
+	id S1756261Ab3BASho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 13:37:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45439 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753360Ab3BAShm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 13:37:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20CE6C3A6;
+	Fri,  1 Feb 2013 13:37:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M4dK5SXHRjntdri+QyeaVkpCek0=; b=Xsq1A8
+	M4/S1k8BNrAN/lze6OfRkcEHzrd1rY0y+/XbntsW3A+V5mDMO+Ft+FvAX8U640GJ
+	Exi/BBEoYQTIXkCMurI9piiLWBqLSvL/e/p9zCAwvi+UIVdGpuxf96z1CJjmQ8ku
+	LkQu8SsrHWpkSReWjlaSTVXqzD02+6iOLNSYQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wo8xbWLXpa1B6pvZ+iR06uKAmZpOMKJs
+	6MVV3cb/xx6L5/bykkP7hro+qac/aqRM4OT6tt7HGlH0t0J46zPRFQgK/GAM4jNE
+	qyGxC31QriNQPqUivvnM2BuBpid1gt0EjbtMuAVJctWbiYr2yU2xac/B4zM0NVnz
+	+3R0BeSxyG4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15E73C3A5;
+	Fri,  1 Feb 2013 13:37:42 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F7D1C3A3; Fri,  1 Feb 2013
+ 13:37:41 -0500 (EST)
 In-Reply-To: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 188.105.106.49
+ (Thomas Ackermann's message of "Fri, 1 Feb 2013 19:04:00 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7610C74A-6C9E-11E2-96BC-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215245>
 
-Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
----
- Documentation/git.txt              | 2 +-
- Documentation/gitcore-tutorial.txt | 6 +++---
- Documentation/gittutorial-2.txt    | 2 +-
- Documentation/gittutorial.txt      | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
+Thomas Ackermann <th.acker@arcor.de> writes:
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index c431ba2..c5f6845 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -23,7 +23,7 @@ and full access to internals.
- 
- See linkgit:gittutorial[7] to get started, then see
- link:everyday.html[Everyday Git] for a useful minimum set of
--commands.  The link:user-manual.html[Git User's Manual] has a more
-+commands.  The link:user-manual.html[The Git User's Manual] has a more
- in-depth introduction.
- 
- After you mastered the basic concepts, you can come back to this
-diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-index 59c1c17..88e9839 100644
---- a/Documentation/gitcore-tutorial.txt
-+++ b/Documentation/gitcore-tutorial.txt
-@@ -17,7 +17,7 @@ work with a Git repository.
- 
- If you just need to use Git as a revision control system you may prefer
- to start with "A Tutorial Introduction to Git" (linkgit:gittutorial[7]) or
--link:user-manual.html[the Git User Manual].
-+link:user-manual.html[The Git User's Manual].
- 
- However, an understanding of these low-level tools can be helpful if
- you want to understand Git's internals.
-@@ -568,8 +568,8 @@ can explore on your own.
- 
- [NOTE]
- Most likely, you are not directly using the core
--Git Plumbing commands, but using Porcelain such as 'git add', `git-rm'
--and `git-commit'.
-+Git Plumbing commands, but using Porcelain such as 'git add', 'git rm'
-+and 'git commit'.
- 
- 
- Tagging a version
-diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
-index 94c906e..2db4ea3 100644
---- a/Documentation/gittutorial-2.txt
-+++ b/Documentation/gittutorial-2.txt
-@@ -406,7 +406,7 @@ pages for any of the git commands; one good place to start would be
- with the commands mentioned in link:everyday.html[Everyday Git].  You
- should be able to find any unknown jargon in linkgit:gitglossary[7].
- 
--The link:user-manual.html[Git User's Manual] provides a more
-+The link:user-manual.html[The Git User's Manual] provides a more
- comprehensive introduction to Git.
- 
- linkgit:gitcvs-migration[7] explains how to
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-index 8262196..e63fd9f 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -656,7 +656,7 @@ digressions that may be interesting at this point are:
-   * linkgit:gitworkflows[7]: Gives an overview of recommended
-     workflows.
- 
--  * link:everyday.html[Everyday Git with 20 Commands Or So]
-+  * link:everyday.html[Everyday Git]
- 
-   * linkgit:gitcvs-migration[7]: Git for CVS users.
- 
--- 
-1.8.0.msysgit.0
+>  > 
+>> I think we have waited long enough and as far as I recall we didn't
+>> see any reports of misconversion or forgotten conversion, so I'll
+>> squash the fixes parked on the topic branch, whose tip is at
+>> bfb8e1eb6375afb (fixup! Change 'git' to 'Git' whenever the whole
+>> system is referred to #4, 2013-01-22), and merge the result to
+>> 'next' sometime tomorrow.
+>
+> Here are my final fixups on top of bfb8e1eb6375afb:
+> I morphed the remarks from Junio and David into patch form and
+> also did the reverse check for wrong usage of 'Git' instead of 'git'.
+> While doing the later I also noticed some small glitches and fixed them.
+> Squash at your will.
 
+Thanks.
 
----
-Thomas
+> [PATCH 1/6] fixup! fixup! Change 'git' to 'Git' whenever the whole system is referred to #2
+> [PATCH 2/6] fixup! fixup! fixup! Change 'git' to 'Git' whenever the whole system is referred to #1
+> [PATCH 3/6] fixup! Documentation: avoid poor-man's small caps
+> [PATCH 4/6] Fix places where 'Git' should be 'git
+> [PATCH 5/6] Add a description for 'gitfile' to glossary
+> [PATCH 6/6] Use consistent links for User Manual and Everyday Git; Fix a quoting error
