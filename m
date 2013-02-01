@@ -1,98 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Rename {git- => git}remote-helpers.txt
-Date: Fri, 01 Feb 2013 10:52:52 -0800
-Message-ID: <7vr4kzamt7.fsf@alter.siamese.dyndns.org>
-References: <7v1ud1gke7.fsf@alter.siamese.dyndns.org>
- <3f26b82599aa2a45897d345c851fab4751c55810.1359669205.git.john@keeping.me.uk>
- <20130131223305.GB21729@sigill.intra.peff.net>
- <20130131230455.GN27340@google.com>
- <20130201050343.GA29973@sigill.intra.peff.net>
- <7v7gmsd26o.fsf@alter.siamese.dyndns.org>
- <20130201073352.GB970@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Verify Content-Type from smart HTTP servers
+Date: Fri, 1 Feb 2013 13:58:27 -0500
+Message-ID: <20130201185827.GA22919@sigill.intra.peff.net>
+References: <7v38xhf1i3.fsf@alter.siamese.dyndns.org>
+ <20130201085248.GA30644@sigill.intra.peff.net>
+ <7vip6bc3e1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Max Horn <max@quendi.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 01 19:53:19 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 01 19:58:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1Lji-0001ML-DO
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:53:18 +0100
+	id 1U1Lp8-0005eO-GJ
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:58:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756261Ab3BASw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 13:52:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54681 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752073Ab3BASwz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 13:52:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BC4FCBA1;
-	Fri,  1 Feb 2013 13:52:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4OSFKlsAWQPawXH2gEcK95UBliI=; b=nHVYWK
-	0w6jhdSdgb2jtIA2mmAJWM0nyf6BVeHwdi2sm42/+v5tdPSKO8AyeZ3nY95JFRWK
-	gcs42fT27KJIb1p8Wlb5GblFdqxvDU7jRuYyLg6PvemiIe4TiVwvL0wIjbYePYBx
-	leBbmKEIPHybqrBS9gnqq879TmOL4nqlXjodE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vc3Q14hSbJ+lskY8BCaz8s5x9FaLxjn5
-	F69vjDimO3E7CO9RTFmDSzaYHjxqHAkjfMO1JW8fJYxD7aeSb9nNKlXV/7CEZSZm
-	M3OZUoAsctL2IXWjCek8U7tTLpC/25Q/r9VGNm+kQFKnl9G4N3uiPdSY0kEk2YBD
-	23j5xw+6mr4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 005F9CBA0;
-	Fri,  1 Feb 2013 13:52:55 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61309CB9F; Fri,  1 Feb 2013
- 13:52:54 -0500 (EST)
-In-Reply-To: <20130201073352.GB970@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 1 Feb 2013 02:33:52 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 962460B2-6CA0-11E2-B60F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756373Ab3BAS6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 13:58:31 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55592 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755035Ab3BAS6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 13:58:30 -0500
+Received: (qmail 30968 invoked by uid 107); 1 Feb 2013 18:59:54 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 13:59:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 13:58:27 -0500
+Content-Disposition: inline
+In-Reply-To: <7vip6bc3e1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215251>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Feb 01, 2013 at 10:09:26AM -0800, Junio C Hamano wrote:
 
-> Right. So we have some that must be "gitfoo", and others that do not
-> care. If we turned "githooks" into "git-hooks" and removed the "is it a
-> command?" magic from "git help", then "git help hooks" would still find
-> hooks. And likewise, "git help gitignore" would still find "gitignore".
-> But you could no longer say "git help ignore" to find "gitignore".
+> > so I do not think the patch makes anything worse. However, should we
+> > take this opportunity to make the "did we get a smart response" test
+> > more robust? That is, should we actually be checking the content-type
+> > in the outer conditional, and going down the smart code-path if it is
+> > application/x-%s-advertisement, and otherwise treating the result as
+> > dumb?
+> 
+> Does the outer caller that switches between dumb and smart actually
+> know what service type it is requesting (I am not familiar with the
+> callchain involved)?  Even if it doesn't, it may still make sense.
 
-Which I think is a good thing ;-)
+I was specifically thinking of this (on top of your patch):
 
-> Which personally I am OK with. It is not a sensible thing to ask for;
-> the concept is not "ignore", but rather "the gitignore file".
+diff --git a/remote-curl.c b/remote-curl.c
+index e6f3b63..63680a8 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -134,14 +134,12 @@ static struct discovery* discover_refs(const char *service)
+ 	last->buf_alloc = strbuf_detach(&buffer, &last->len);
+ 	last->buf = last->buf_alloc;
+ 
+-	if (maybe_smart && 5 <= last->len && last->buf[4] == '#') {
++	strbuf_addf(&exp, "application/x-%s-advertisement", service);
++	if (maybe_smart && !strbuf_cmp(&exp, &type)) {
+ 		/*
+ 		 * smart HTTP response; validate that the service
+ 		 * pkt-line matches our request.
+ 		 */
+-		strbuf_addf(&exp, "application/x-%s-advertisement", service);
+-		if (strbuf_cmp(&exp, &type))
+-			die("invalid content-type %s", type.buf);
+ 		if (packet_get_line(&buffer, &last->buf, &last->len) <= 0)
+ 			die("%s has invalid packet header", refs_url);
+ 		if (buffer.len && buffer.buf[buffer.len - 1] == '\n')
 
-Yes, exactly.
+To just follow the dumb path if we don't get the content-type we expect.
+We may want to keep the '#' format check in addition (packet_get_line
+will check it and die, anyway, but we may want to drop back to
+considering it dumb, just to protect against a badly configured dumb
+server which uses our mime type, but I do not think it likely).
 
->   4. Replace the rename "gitfoo" above with a "see git-foo..." pointer.
->      Users of "git help foo" would not ever see this, but people who
->      have trained their fingers to type "man gitfoo" would, along with
->      anybody following an outdated HTML link.
->
->   5. Update internal references to "linkgit:gitfoo" to point to
->      "git-foo".
->
-> Hmm. That really does not seem so bad. The biggest downside is the
-> people who have to see the redirect made in step 4.
+> > As a side note, should we (can we) care about the content-type for dumb
+> > http? It should probably be text/plain or application/octet-stream, but
+> > I would not be surprised if we get a variety of random junk in the real
+> > world, though.
+> 
+> The design objective of dumb http protocol was to allow working with
+> any dumb bit transfer thing, so I'd prefer to keep it lenient and
+> allow application/x-git-loose-object-file and somesuch.
 
-Yeah, I see that a show-stopper in the whole sequence.
+Yeah, I do not think it really buys us anything in practice, and we have
+no way of knowing what kind of crap is in the wild. Not worth it.
 
-This is one of the "if we had perfect knowledge we would have
-designed it this way, and we could still migrate our current system
-to that ideal, but it is dubious the difference between the current
-system and the ideal will outweigh the cost of migration" moment,
-isn't it?
+-Peff
