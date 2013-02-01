@@ -1,114 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] Documentation/Makefile: clean up MAN*_TXT lists
-Date: Fri, 1 Feb 2013 14:41:14 -0500
-Message-ID: <20130201194114.GA24939@sigill.intra.peff.net>
-References: <20130201082538.GA25674@sigill.intra.peff.net>
- <20130201082650.GA25783@sigill.intra.peff.net>
- <20130201192010.GA12368@google.com>
- <20130201193851.GA24588@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/6] fixup! fixup! fixup! Change 'git' to 'Git' whenever
+ the whole system is referred to #1
+Date: Fri, 1 Feb 2013 11:43:08 -0800
+Message-ID: <20130201194308.GC12368@google.com>
+References: <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
+ <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
+ <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
+ <7vvcark1f2.fsf@alter.siamese.dyndns.org>
+ <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
+ <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
+ <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
+ <CAJDDKr4fnUp_35ni72XJS_NSp4jxbvQPENLnk3AhFv2FBg3DTg@mail.gmail.com>
+ <50804391.814945.1358931502165.JavaMail.ngmail@webmail07.arcor-online.net>
+ <242116275.1090080.1359742076320.JavaMail.ngmail@webmail18.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Max Horn <max@quendi.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 20:41:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com,
+	Fredrik Gustafsson <iveqy@iveqy.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Fri Feb 01 20:43:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1MUW-0001Qq-AG
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:41:40 +0100
+	id 1U1MWO-0002he-Es
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:43:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756709Ab3BATlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 14:41:19 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55636 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754717Ab3BATlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 14:41:17 -0500
-Received: (qmail 31622 invoked by uid 107); 1 Feb 2013 19:42:41 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 14:42:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 14:41:14 -0500
+	id S1756780Ab3BATnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 14:43:15 -0500
+Received: from mail-da0-f41.google.com ([209.85.210.41]:57348 "EHLO
+	mail-da0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753297Ab3BATnN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 14:43:13 -0500
+Received: by mail-da0-f41.google.com with SMTP id e20so1855102dak.0
+        for <git@vger.kernel.org>; Fri, 01 Feb 2013 11:43:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=013Dl7Cm8rb1FHhtQuJR4xukalQX+8dg2wkQ4W8825g=;
+        b=SCwzcXWSAo3R4tABSo4zKOSVhRLUNdukcNNPuvTcd7dwY4HRFlYCiEeO5gHZlyct+E
+         a5b9GyY5XHrg/LC+fpeS8ksdY1tCgeYQ/QnuqnHwEkImBv7EHjOITGY/9IB6jeHNZUUH
+         AdnjqwvyTozUpRBlefapEJk+1Jl+5aA6UD4SSiIjpSK1BbdztoXGyeaiyPlCLwieAlej
+         4OWNphfg1D2cLejAZVWaaXwYeZEom/K9YoPz0N2loQlYbbNqsXK9t38Sr0+tHcxwSMjw
+         o04dnCRliymoaqFGMQYdVzMIbXpAdcDnqnhmfQxiH+m1UZIzdJq3hq7WZ8NhtvlgtB8Z
+         5SEw==
+X-Received: by 10.66.88.198 with SMTP id bi6mr32538707pab.54.1359747793376;
+        Fri, 01 Feb 2013 11:43:13 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id l5sm10034390pax.10.2013.02.01.11.43.11
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 01 Feb 2013 11:43:12 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20130201193851.GA24588@sigill.intra.peff.net>
+In-Reply-To: <242116275.1090080.1359742076320.JavaMail.ngmail@webmail18.arcor-online.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215261>
 
-On Fri, Feb 01, 2013 at 02:38:51PM -0500, Jeff King wrote:
+Hi,
 
-> Junio, do you want to apply the patch below? I guess it conflicts with
-> John's gitremote-helper.txt tweak, though.
+Thomas Ackermann wrote:
 
-Argh, it would help if I actually ran "git commit", and/or looked at
-what I was sending out. Here it is with the actual change.
+> Found by Junio:
+> Change git-dir to $GIT_DIR and git-file to gitfile.
+>
+> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+> ---
+>  Documentation/git-rev-parse.txt | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+> index c743469..14386ed 100644
+> --- a/Documentation/git-rev-parse.txt
+> +++ b/Documentation/git-rev-parse.txt
+> @@ -187,9 +187,9 @@ print a message to stderr and exit with nonzero status.
+>  	Flags and parameters to be parsed.
+>  
+>  --resolve-git-dir <path>::
+> -	Check if <path> is a valid git-dir or a git-file pointing to a valid
+> -	git-dir. If <path> is a valid git-dir the resolved path to git-dir will
+> -	be printed.
+> +	Check if <path> is a valid `$GIT_DIR` or a gitfile pointing to a valid
+> +	`$GIT_DIR`. If <path> is a valid `$GIT_DIR` the resolved path to `$GIT_DIR`
+> +	will be printed.
 
--- >8 --
-Subject: [PATCH] Documentation/Makefile: clean up MAN*_TXT lists
+Hm, I don't find the old or the new version very easy to understand.  Perhaps the
+idea is something like this?
 
-We keep a list of the various files that end up as man1,
-man5, etc. Let's break these single-line lists into sorted
-multi-line lists, which makes diffs that touch them much
-easier to read.
+	Check if <path> is a valid git repository (.git or <project>.git
+	directory) or "gitdir:" file.  If <path> is a "gitdir:" file
+	then the resolved path to the corresponding real git repository
+	will be printed.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/Makefile | 38 +++++++++++++++++++++++++++++---------
- 1 file changed, 29 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 971977b..5d22e0e 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -1,13 +1,33 @@ MAN7_TXT += gitcredentials.txt
--MAN1_TXT= \
--	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
--		$(wildcard git-*.txt)) \
--	gitk.txt gitweb.txt git.txt
--MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt \
--	gitrepository-layout.txt gitweb.conf.txt
--MAN7_TXT=gitcli.txt gittutorial.txt gittutorial-2.txt \
--	gitcvs-migration.txt gitcore-tutorial.txt gitglossary.txt \
--	gitdiffcore.txt gitnamespaces.txt gitrevisions.txt gitworkflows.txt
-+# Guard against environment variables
-+MAN1_TXT =
-+MAN5_TXT =
-+MAN7_TXT =
-+
-+MAN1_TXT += $(filter-out \
-+		$(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
-+		$(wildcard git-*.txt))
-+MAN1_TXT += git.txt
-+MAN1_TXT += gitk.txt
-+MAN1_TXT += gitweb.txt
-+
-+MAN5_TXT += gitattributes.txt
-+MAN5_TXT += githooks.txt
-+MAN5_TXT += gitignore.txt
-+MAN5_TXT += gitmodules.txt
-+MAN5_TXT += gitrepository-layout.txt
-+MAN5_TXT += gitweb.conf.txt
-+
-+MAN7_TXT += gitcli.txt
-+MAN7_TXT += gitcore-tutorial.txt
- MAN7_TXT += gitcredentials.txt
-+MAN7_TXT += gitcvs-migration.txt
-+MAN7_TXT += gitdiffcore.txt
-+MAN7_TXT += gitglossary.txt
-+MAN7_TXT += gitnamespaces.txt
-+MAN7_TXT += gitrevisions.txt
-+MAN7_TXT += gittutorial-2.txt
-+MAN7_TXT += gittutorial.txt
-+MAN7_TXT += gitworkflows.txt
- 
- MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
- MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
--- 
-1.8.1.2.11.g1a2f572
+Thanks,
+Jonathan
