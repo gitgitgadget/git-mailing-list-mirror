@@ -1,14 +1,8 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Rename {git- => git}remote-helpers.txt
-Date: Fri, 1 Feb 2013 03:25:38 -0500
-Message-ID: <20130201082538.GA25674@sigill.intra.peff.net>
-References: <7v1ud1gke7.fsf@alter.siamese.dyndns.org>
- <3f26b82599aa2a45897d345c851fab4751c55810.1359669205.git.john@keeping.me.uk>
- <20130131223305.GB21729@sigill.intra.peff.net>
- <20130131230455.GN27340@google.com>
- <20130201050343.GA29973@sigill.intra.peff.net>
- <7v7gmsd26o.fsf@alter.siamese.dyndns.org>
- <20130201073352.GB970@sigill.intra.peff.net>
+Subject: [PATCH 1/2] Documentation/Makefile: clean up MAN*_TXT lists
+Date: Fri, 1 Feb 2013 03:26:51 -0500
+Message-ID: <20130201082650.GA25783@sigill.intra.peff.net>
+References: <20130201082538.GA25674@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
@@ -16,50 +10,85 @@ Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Max Horn <max@quendi.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 09:26:06 2013
+X-From: git-owner@vger.kernel.org Fri Feb 01 09:27:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1Bwi-0007lh-N3
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 09:26:05 +0100
+	id 1U1Bxt-00009w-Aa
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 09:27:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752686Ab3BAIZn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 03:25:43 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55277 "EHLO
+	id S1755561Ab3BAI04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 03:26:56 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55285 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750918Ab3BAIZm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 03:25:42 -0500
-Received: (qmail 19236 invoked by uid 107); 1 Feb 2013 08:27:05 -0000
+	id S1750918Ab3BAI0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 03:26:55 -0500
+Received: (qmail 19280 invoked by uid 107); 1 Feb 2013 08:28:18 -0000
 Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 03:27:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 03:25:38 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 03:28:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 03:26:51 -0500
 Content-Disposition: inline
-In-Reply-To: <20130201073352.GB970@sigill.intra.peff.net>
+In-Reply-To: <20130201082538.GA25674@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215216>
 
-On Fri, Feb 01, 2013 at 02:33:52AM -0500, Jeff King wrote:
+We keep a list of the various files that end up as man1,
+man5, etc. Let's break these single-line lists into sorted
+multi-line lists, which makes diffs that touch them much
+easier to read.
 
-> I am starting to think it has grown in an unnecessarily complex
-> direction, and we would be much happier just calling all of the
-> "concept" documentation "git-".
-> 
-> The steps I see are:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/Makefile | 33 ++++++++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 9 deletions(-)
 
-I am still undecided on whether it is a good idea (in some ways, I like
-that "gitrevisions" signals to the user that it is not a command; but I
-also recognize that it is more complex for users, and gitremote-helpers
-looks silly to me). But here is what the patch looks like, for
-reference. The first one is a cleanup we might want to take anyway, and
-the second one is the meat.
-
-  [1/2]: Documentation/Makefile: clean up MAN*_TXT lists
-  [2/2]: docs: convert "concept" manpages to git-*
-
--Peff
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 971977b..8e7939f 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -1,13 +1,28 @@ MAN7_TXT += gitcredentials.txt
+-MAN1_TXT= \
+-	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+-		$(wildcard git-*.txt)) \
+-	gitk.txt gitweb.txt git.txt
+-MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt \
+-	gitrepository-layout.txt gitweb.conf.txt
+-MAN7_TXT=gitcli.txt gittutorial.txt gittutorial-2.txt \
+-	gitcvs-migration.txt gitcore-tutorial.txt gitglossary.txt \
+-	gitdiffcore.txt gitnamespaces.txt gitrevisions.txt gitworkflows.txt
++MAN1_TXT += $(filter-out \
++		$(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
++		$(wildcard git-*.txt))
++MAN1_TXT += git.txt
++MAN1_TXT += gitk.txt
++MAN1_TXT += gitweb.txt
++
++MAN5_TXT += gitattributes.txt
++MAN5_TXT += githooks.txt
++MAN5_TXT += gitignore.txt
++MAN5_TXT += gitmodules.txt
++MAN5_TXT += gitrepository-layout.txt
++MAN5_TXT += gitweb.conf.txt
++
++MAN7_TXT += gitcli.txt
++MAN7_TXT += gitcore-tutorial.txt
+ MAN7_TXT += gitcredentials.txt
++MAN7_TXT += gitcvs-migration.txt
++MAN7_TXT += gitdiffcore.txt
++MAN7_TXT += gitglossary.txt
++MAN7_TXT += gitnamespaces.txt
++MAN7_TXT += gitrevisions.txt
++MAN7_TXT += gittutorial-2.txt
++MAN7_TXT += gittutorial.txt
++MAN7_TXT += gitworkflows.txt
+ 
+ MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
+ MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
+-- 
+1.8.1.2.11.g1a2f572
