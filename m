@@ -1,9 +1,9 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] Use consistent links for User Manual and Everyday
- Git; Fix a quoting error
-Date: Fri, 01 Feb 2013 12:17:06 -0800
-Message-ID: <7v1uczaiwt.fsf@alter.siamese.dyndns.org>
-References: <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: [PATCH 6/6] Use consistent links for User Manual and
+ Everyday Git; Fix a quoting error
+Date: Fri, 1 Feb 2013 21:25:13 +0100 (CET)
+Message-ID: <1609076047.1915083.1359750313593.JavaMail.ngmail@webmail12.arcor-online.net>
+References: <20130201195140.GE12368@google.com> <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
  <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
  <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
  <7vvcark1f2.fsf@alter.siamese.dyndns.org>
@@ -13,79 +13,67 @@ References: <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
  <CAJDDKr4fnUp_35ni72XJS_NSp4jxbvQPENLnk3AhFv2FBg3DTg@mail.gmail.com>
  <50804391.814945.1358931502165.JavaMail.ngmail@webmail07.arcor-online.net>
  <549641245.1090170.1359742373184.JavaMail.ngmail@webmail18.arcor-online.net>
- <20130201195140.GE12368@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Ackermann <th.acker@arcor.de>, git@vger.kernel.org,
-	davvid@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 21:17:32 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
+To: jrnieder@gmail.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Fri Feb 01 21:25:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1N3D-0008NM-PQ
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 21:17:32 +0100
+	id 1U1NB4-0005S6-Vl
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 21:25:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757290Ab3BAURJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 15:17:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41335 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757125Ab3BAURI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 15:17:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53478BA6F;
-	Fri,  1 Feb 2013 15:17:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WSJ8T6alQkzPJLlLadnazk6L+rA=; b=GH1VrE
-	ylgSzg3spTrt0Na/QCBRfGkwE5v0ETXpKn2woZkuXYfzlNvJVFfqAfAPVXtDoHjN
-	acu3T3Ee+XawM0kdGTUu804FDUIMLulNeNYWL/GuekhDf8caEAIhD8lTFMUZysbI
-	UJPjB+dwrqyNEM8RS2dpvxuL5nMenrB4Kkd5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pj7LpYBhnC8rmJNLE5G7J5U6RJkGW8ie
-	9JcaDB9Y30L5d4fC6txUvHSAU9NBkaxWV9HxuqUztMnHZaoVYbBfLue0j8mEExN2
-	AJP9BtsufyqFiN/gtN0Z5P14Gi2DNPnGyFymODlui3de37nVrTQa7W9cw6Dk2Ujs
-	Pbt9KSlOYHg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47F0ABA6E;
-	Fri,  1 Feb 2013 15:17:08 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E9FABA68; Fri,  1 Feb 2013
- 15:17:07 -0500 (EST)
-In-Reply-To: <20130201195140.GE12368@google.com> (Jonathan Nieder's message
- of "Fri, 1 Feb 2013 11:51:40 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5A1D33B2-6CAC-11E2-9042-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757413Ab3BAUZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 15:25:17 -0500
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:47963 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757296Ab3BAUZO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 15:25:14 -0500
+Received: from mail-in-15-z2.arcor-online.net (mail-in-15-z2.arcor-online.net [151.189.8.32])
+	by mx.arcor.de (Postfix) with ESMTP id A0E65D7F27;
+	Fri,  1 Feb 2013 21:25:13 +0100 (CET)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-15-z2.arcor-online.net (Postfix) with ESMTP id 946EF112038;
+	Fri,  1 Feb 2013 21:25:13 +0100 (CET)
+Received: from webmail12.arcor-online.net (webmail12.arcor-online.net [151.189.8.64])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 8B54B19783D;
+	Fri,  1 Feb 2013 21:25:13 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net 8B54B19783D
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1359750313; bh=HaQIz+fJRhWnrVdnz5Et3l2SQMfDSmonSYVqlZ7dS4g=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=I7a76IPHhIUpznVAL2hXWk+pVeUdkCOLvCdfHn4F6eDQ0Ra/Oy6Bpl5L+ntrwiU8F
+	 4ivoWfqOwoE3FsGQkwAFUtKPYtpuF7cD3Vl0PeKlgdwaPfYIb/tephp1G4PBcjcHKS
+	 CjO/XNnCWZbUTIq2VTD3JVVdaT4NdZzZMiADHFvI=
+Received: from [188.105.106.49] by webmail12.arcor-online.net (151.189.8.64) with HTTP (Arcor Webmail); Fri, 1 Feb 2013 21:25:13 +0100 (CET)
+In-Reply-To: <20130201195140.GE12368@google.com>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 188.105.106.49
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215268>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Thomas Ackermann wrote:
->
->> --- a/Documentation/git.txt
->> +++ b/Documentation/git.txt
->> @@ -23,7 +23,7 @@ and full access to internals.
->>  
->>  See linkgit:gittutorial[7] to get started, then see
->>  link:everyday.html[Everyday Git] for a useful minimum set of
->> -commands.  The link:user-manual.html[Git User's Manual] has a more
->> +commands.  The link:user-manual.html[The Git User's Manual] has a more
->>  in-depth introduction.
->
-> In the rendered version, this looks like:
->
-> 	The The Git User's Manual[1] has a more in-depth introduction.
->
+> 
 > Presumably the first "The" should be dropped from either the link or
 > the surrounding text.
->...
+>
+> Doubled 'The'.
+> 
+You are right. I missed that; sorry.
 
-Thanks for a review; I'll drop this from today's integration cycle.
+> 
+> Isn't the old title more informative?
+> 
+Yes; but every other link just uses the shorter version "Everyday Git".
+
+
+---
+Thomas
