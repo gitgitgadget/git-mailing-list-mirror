@@ -1,8 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/3] git-am: record full index line in the patch used while
- rebasing
-Date: Thu, 31 Jan 2013 20:32:03 -0800
-Message-ID: <1359693125-22357-2-git-send-email-gitster@pobox.com>
+Subject: [PATCH 2/3] apply: simplify build_fake_ancestor()
+Date: Thu, 31 Jan 2013 20:32:04 -0800
+Message-ID: <1359693125-22357-3-git-send-email-gitster@pobox.com>
 References: <20130130224904.GB1053@book.hvoigt.net>
  <1359693125-22357-1-git-send-email-gitster@pobox.com>
 Cc: Heiko Voigt <hvoigt@hvoigt.net>,
@@ -14,130 +13,106 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U18Is-0002r0-RM
+	id 1U18It-0002r0-Al
 	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 05:32:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754063Ab3BAEcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 23:32:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57499 "EHLO
+	id S1754300Ab3BAEcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 23:32:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57525 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752492Ab3BAEcJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 23:32:09 -0500
+	id S1753641Ab3BAEcL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 23:32:11 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F914C7FC;
-	Thu, 31 Jan 2013 23:32:09 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E22CC803;
+	Thu, 31 Jan 2013 23:32:11 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=UAue
-	ogMsKdS63ePE+il2UuEsjaY=; b=vBgBrXUCME4VtoVaIUEIcs2Xxb39rm/y+Da/
-	+Iv2VpWDf1ccCRuNF1f/QaWB4DhEBJl+mnXsf5crRN9XhThvbBmdRVBvFl2jwJ2m
-	PYGO4JGW8MVAHGXVR2K4FiHxGKG+V9TU6x7eIVEBpLvuPILH7Wju8KICsyf/jEN0
-	ARHFa7k=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=uKMI
+	8jjfTjpc50wb5Cr+nYilinM=; b=ARSY/PfwheTL66IEigmJMk3mZDE0SB4q6Yqk
+	/Wv1rZZ5brASAzZ/ONmekJ2PfM9oN1a/VjkWq0uY5VMXEioyX3ZD/r1J8u8SEmdo
+	MXvGzI7wHUZTaqMVSHcsKYWtVtXSCIQOU8IgDZ1XBwP43/QyEM5t+g2KvLa19gdu
+	GvWsgpY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	nHjQdfUvbJP9fHeg3VE4rlOptirUP+Ujqw9BRgytvFe1lCPiRJTaTmcOvk86hYqu
-	Pskj65qpxayaQbdam4o8oAxQXXXlUeO0IA/B67o8rwIAC+mWAa52BeaPO7sub1YK
-	huWHxhhi/aXjBUbvP4mAHnL6TFVku9wQCTL8ian9/9A=
+	ElbWL/VCwGP+fAOE2/Dv4AUVZC2qI7OvOSueq6Z2cD+oL/ir7CUR9+jSimq8PT23
+	+YhdXBDO9JidcB02sdOPVEiZ1jVkfVbFtCkzjQxvUsT8FKCz12KeIxMy05aXbAoQ
+	rcidG8eaML6t7KN8hxFqKkEsrdppTZifTGk4tYUhQW4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54132C7FB;
-	Thu, 31 Jan 2013 23:32:09 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42CC4C802;
+	Thu, 31 Jan 2013 23:32:11 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C3DAC7F9; Thu, 31 Jan 2013
- 23:32:08 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1ABDC801; Thu, 31 Jan 2013
+ 23:32:10 -0500 (EST)
 X-Mailer: git-send-email 1.8.1.2.612.g09f4be5
 In-Reply-To: <1359693125-22357-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 56DECB40-6C28-11E2-931D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 581D5C88-6C28-11E2-8A4C-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215200>
 
-Earlier, a230949 (am --rebasing: get patch body from commit, not
-from mailbox, 2012-06-26) learned to regenerate patch body from the
-commit object while rebasing, instead of reading from the rebase-am
-front-end.  While doing so, it used "git diff-tree" but without
-giving it the "--full-index" option.
+The local variable sha1_ptr in the build_fake_ancestor() function
+used to either point at the null_sha1[] (if the ancestor did not
+have the path) or at sha1[] (if we read the object name into the
+local array), but 7a98869 (apply: get rid of --index-info in favor
+of --build-fake-ancestor, 2007-09-17) made the "missing in the
+ancestor" case unnecessary, hence sha1_ptr, when used, always points
+at the local array.
 
-This does not matter for in-repository objects; during rebasing, any
-abbreviated object name should uniquely identify them.
-
-But we may be rebasing a commit that contains a change to a gitlink,
-in which case we usually should not have the object (it names a
-commit in the submodule).  A full object name is necessary to later
-reconstruct a fake ancestor index for them.
+Get rid of the unneeded variable, and restructure the if/else
+cascade a bit to make it easier to read.  There should be no
+behaviour change.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-am.sh                   |  2 +-
- t/t7402-submodule-rebase.sh | 30 ++++++++++++++++++++++++++++--
- 2 files changed, 29 insertions(+), 3 deletions(-)
+ builtin/apply.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index c682d34..0e0a096 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -664,7 +664,7 @@ do
- 			sed -e '1,/^$/d' >"$dotest/msg-clean"
- 			echo "$commit" >"$dotest/original-commit"
- 			get_author_ident_from_commit "$commit" >"$dotest/author-script"
--			git diff-tree --root --binary "$commit" >"$dotest/patch"
-+			git diff-tree --root --binary --full-index "$commit" >"$dotest/patch"
- 		else
- 			git mailinfo $keep $no_inbody_headers $scissors $utf8 "$dotest/msg" "$dotest/patch" \
- 				<"$dotest/$msgnum" >"$dotest/info" ||
-diff --git a/t/t7402-submodule-rebase.sh b/t/t7402-submodule-rebase.sh
-index f919c8d..8e32f19 100755
---- a/t/t7402-submodule-rebase.sh
-+++ b/t/t7402-submodule-rebase.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2008 Johannes Schindelin
- #
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 156b3ce..a1db7b4 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -3598,7 +3598,6 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
+ 	 * worth showing the new sha1 prefix, but until then...
+ 	 */
+ 	for (patch = list; patch; patch = patch->next) {
+-		const unsigned char *sha1_ptr;
+ 		unsigned char sha1[20];
+ 		struct cache_entry *ce;
+ 		const char *name;
+@@ -3606,20 +3605,19 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
+ 		name = patch->old_name ? patch->old_name : patch->new_name;
+ 		if (0 < patch->is_new)
+ 			continue;
+-		else if (get_sha1_blob(patch->old_sha1_prefix, sha1))
+-			/* git diff has no index line for mode/type changes */
+-			if (!patch->lines_added && !patch->lines_deleted) {
+-				if (get_current_sha1(patch->old_name, sha1))
+-					die("mode change for %s, which is not "
+-						"in current HEAD", name);
+-				sha1_ptr = sha1;
+-			} else
+-				die("sha1 information is lacking or useless "
+-					"(%s).", name);
+-		else
+-			sha1_ptr = sha1;
  
--test_description='Test rebasing and stashing with dirty submodules'
-+test_description='Test rebasing, stashing, etc. with submodules'
- 
- . ./test-lib.sh
- 
-@@ -20,7 +20,8 @@ test_expect_success setup '
- 	echo second line >> file &&
- 	(cd submodule && git pull) &&
- 	test_tick &&
--	git commit -m file-and-submodule -a
-+	git commit -m file-and-submodule -a &&
-+	git branch added-submodule
- 
- '
- 
-@@ -89,4 +90,29 @@ test_expect_success 'stash with a dirty submodule' '
- 
- '
- 
-+test_expect_success 'rebasing submodule that should conflict' '
-+	git reset --hard &&
-+	git checkout added-submodule &&
-+	git add submodule &&
-+	test_tick &&
-+	git commit -m third &&
-+	(
-+		cd submodule &&
-+		git commit --allow-empty -m extra
-+	) &&
-+	git add submodule &&
-+	test_tick &&
-+	git commit -m fourth &&
+-		ce = make_cache_entry(patch->old_mode, sha1_ptr, name, 0, 0);
++		if (!get_sha1_blob(patch->old_sha1_prefix, sha1)) {
++			; /* ok */
++		} else if (!patch->lines_added && !patch->lines_deleted) {
++			/* mode-only change: update the current */
++			if (get_current_sha1(patch->old_name, sha1))
++				die("mode change for %s, which is not "
++				    "in current HEAD", name);
++		} else
++			die("sha1 information is lacking or useless "
++			    "(%s).", name);
 +
-+	test_must_fail git rebase --onto HEAD^^ HEAD^ HEAD^0 &&
-+	git ls-files -s submodule >actual &&
-+	(
-+		cd submodule &&
-+		echo "160000 $(git rev-parse HEAD^) 1	submodule" &&
-+		echo "160000 $(git rev-parse HEAD^^) 2	submodule" &&
-+		echo "160000 $(git rev-parse HEAD) 3	submodule"
-+	) >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
++		ce = make_cache_entry(patch->old_mode, sha1, name, 0, 0);
+ 		if (!ce)
+ 			die(_("make_cache_entry failed for path '%s'"), name);
+ 		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD))
 -- 
 1.8.1.2.612.g09f4be5
