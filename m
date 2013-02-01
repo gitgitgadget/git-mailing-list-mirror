@@ -1,144 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/6] Add a description for 'gitfile' to glossary
-Date: Fri, 01 Feb 2013 11:26:35 -0800
-Message-ID: <7vlib7al90.fsf@alter.siamese.dyndns.org>
-References: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
- <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
- <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
- <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
- <7vvcark1f2.fsf@alter.siamese.dyndns.org>
- <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
- <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
- <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
- <CAJDDKr4fnUp_35ni72XJS_NSp4jxbvQPENLnk3AhFv2FBg3DTg@mail.gmail.com>
- <50804391.814945.1358931502165.JavaMail.ngmail@webmail07.arcor-online.net>
- <274664435.1090127.1359742284591.JavaMail.ngmail@webmail18.arcor-online.net>
- <7v4nhvc1vv.fsf@alter.siamese.dyndns.org>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: [PATCH] mergetools: Enable tortoisemerge to handle filenames with
+Date: Fri, 01 Feb 2013 20:33:06 +0100
+Message-ID: <510C1872.3090304@tu-clausthal.de>
+References: <50FBD4AD.2060208@tu-clausthal.de> <7v4nibjrg0.fsf@alter.siamese.dyndns.org> <50FCFBBB.2080305@tu-clausthal.de> <7vfw1qbbr4.fsf@alter.siamese.dyndns.org> <5101B0A5.1020308@tu-clausthal.de> <51024B02.9020400@tu-clausthal.de> <CAJDDKr7eNyJp1ffBYEJaZkmnVWqd0AMpnm1kdjnrrhPtuGNL_w@mail.gmail.com> <5102837C.9000608@tu-clausthal.de> <7v622l5d87.fsf@alter.siamese.dyndns.org> <51032E96.2040209@tu-clausthal.de> <CAJDDKr6OhZOitTdDkHWnhVhdAis0U+95xUtaNn6nwkQ-k+bA+w@mail.gmail.com> <5104F009.5020606@tu-clausthal.de> <7vzjzuwm7s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, davvid@gmail.com,
-	Lars Hjemli <hjemli@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Fri Feb 01 20:27:02 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 01 20:33:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1MGM-0000JB-4V
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:27:02 +0100
+	id 1U1MMa-0004Tv-NS
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757026Ab3BAT0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 14:26:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43210 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752921Ab3BAT0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 14:26:39 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0003EBE6E;
-	Fri,  1 Feb 2013 14:26:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U+mevOQxZcCgBelBnVNgtJUp3BE=; b=eeEsaw
-	PXBLp6DFS3EjfuesxSzXHPdc6oXxXjiafLV4ngiqgLQsB/OZamHOnSAp2L9d6FRO
-	YjvEJYQ0odR8LQLGxQ1AW9fn4aa2xFvw+radX9xrK9h66WfcPx/gp5q3rTJ+J9f8
-	wP6iV0sgJXg+Pktr232YBPOmM0Vc3J6Gw80iI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hJcr55OHk+XBW8AeOtwS1OrDREOtp/E9
-	IuNhg9uBzl8J6kyNPJP9pjksf1ugIhj8cu/lcNXBsMH+ree/ELVwVaFoILo9jXSU
-	q/SjTBgTnqs+7gUft+BMf8hQfvOpQ8kMAHo1WU5fjaJUDtPQOa42CxW4uUYzpGLK
-	KdbFTLCSIOQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8A94BE6D;
-	Fri,  1 Feb 2013 14:26:38 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38F34BDB6; Fri,  1 Feb 2013
- 14:26:37 -0500 (EST)
-In-Reply-To: <7v4nhvc1vv.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 01 Feb 2013 10:41:56 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4BD86846-6CA5-11E2-B858-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757087Ab3BATdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 14:33:06 -0500
+Received: from mailrelay2.rz.tu-clausthal.de ([139.174.2.43]:40377 "EHLO
+	mailrelay2.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755768Ab3BATdE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 14:33:04 -0500
+Received: from poseidon.rz.tu-clausthal.de (poseidon.rz.tu-clausthal.de [139.174.2.21])
+	by mailrelay2.rz.tu-clausthal.de (Postfix) with ESMTP id B3591289D43;
+	Fri,  1 Feb 2013 20:33:01 +0100 (CET)
+Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 98925299AAD;
+	Fri,  1 Feb 2013 20:33:01 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=WvRjw7MEYH8MM7Tj4zLeEZ7Y2v4=; b=x5XBqxRudwMti+eJRnXgfLUk4bZo
+	dfwbtsBWS9oiY7F72WLPrQmO0pO/eX8L65VnzsQIqakqlD2XVbe9D1q0zyWaI1mH
+	8xAsFD96AaaimNaePWT2CxHE8lIsH2hUNlXm6hXyUi25vTGC7/CiNLfQN6fPqeM7
+	jmqh2Vo67wuDRn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=Ef7tvlwzMC7yprjfIP25W6Fq2E/LGPIsic4bQiJByEPOpLjOsgOHFHj
+	pDDyHm+yvp1Ok3sQXsNv1qvPTVLyLe9zK/IXeNO1aHAI2MyQzZkxINJnLZJqBjmY
+	Seh/5x/vnBINyXo6Of3etv35zDf9XtWjXv7GWQDibSb6JXwulfvg=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 547492999E9;
+	Fri,  1 Feb 2013 20:33:01 +0100 (CET)
+Received: from [79.193.90.228] (account sstri@tu-clausthal.de HELO [192.168.0.20])
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.8)
+  with ESMTPSA id 43698954; Fri, 01 Feb 2013 20:33:01 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <7vzjzuwm7s.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+X-Spam-Level: (10%, '
+ __FRAUD_WEBMAIL! 0, MULTIPLE_RCPTS 0.1, HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1500_1599 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, DKIM_SIGNATURE 0, DOMAINKEY_SIG 0, __ANY_URI 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __FRAUD_BODY_WEBMAIL 0, __HAS_FROM 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __MOZILLA_USER_AGENT 0, __MULTIPLE_RCPTS_CC_X2 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __TO_NO_NAME 0, __URI_NO_PATH 0, __URI_NO_WWW 0, __URI_NS , __USER_AGENT 0')
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215257>
 
-Junio C Hamano <gitster@pobox.com> writes:
+spaces with TortoiseGitMerge
 
-> Thomas Ackermann <th.acker@arcor.de> writes:
->
->> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
->> ---
->>  Documentation/glossary-content.txt | 3 +++
->>  1 file changed, 3 insertions(+)
->>
->> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
->> index 7c15bc0..ddf2f66 100644
->> --- a/Documentation/glossary-content.txt
->> +++ b/Documentation/glossary-content.txt
->> @@ -149,6 +149,9 @@ to point at the new commit.
->>  [[def_git_archive]]Git archive::
->>  	Synonym for <<def_repository,repository>> (for arch people).
->>  
->> +[[def_gitfile]]gitfile::
->> +	A `.git` file which points to a `$GIT_DIR` (used for Git submodules).
->> +
->
-> It is more like 'used by' ;-)  People are free to write their
-> Porcelain system that uses this mechanism.
+TortoiseGitMerge, unlike TortoiseMerge, can be told to handle paths
+with spaces in them by using -option "$FILE" (not -option:"$FILE",
+which does not work for such paths) syntax. Both do not have a fully
+posix compatible cli parameter parser, however, TortoiseGitMerge was
+modified in order to handle filenames with spaces correctly. The
+"-key value" form was choosen because this way no escaping for
+quotes within quotes is necessary; see
+https://github.com/msysgit/msysgit/issues/57
 
-The series merged at e2e2def (Merge branch 'lh/git-file', 2008-05-05)
-added a mention of this to repository-layout and the readers can see
-how it is interpreted by Git, but I doubt that anything explains why
-you may want to use it in the documentation.
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
+Reported-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ mergetools/tortoisemerge | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-How about saying something like this here in the glossary:
-
-	A plain file `.git` at the root of a working tree that
-	points at the directory that is the real repository.
-
-And then as a separate patch, in gitrepository-layout.txt (eek---see
-the other thread), we can do something like this:
-
- Documentation/gitrepository-layout.txt | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
-index 9f62886..473c6a0 100644
---- a/Documentation/gitrepository-layout.txt
-+++ b/Documentation/gitrepository-layout.txt
-@@ -12,12 +12,24 @@ $GIT_DIR/*
- DESCRIPTION
- -----------
- 
--You may find these things in your git repository (`.git`
--directory for a repository associated with your working tree, or
--`<project>.git` directory for a public 'bare' repository. It is
--also possible to have a working tree where `.git` is a plain
--ASCII file containing `gitdir: <path>`, i.e. the path to the
--real git repository).
-+A Git repository comes in two different flavours:
-+
-+ * a `.git` directory at the root of the working tree;
-+
-+ * a `<project>.git` directory that is a 'bare' repository
-+   (i.e. without its own working tree), that is typically used for
-+   exchanging histories with others by pushing into it and fetching
-+   from it.
-+
-+*Note*: Also you can have a plain text file `.git` at the root of
-+your working tree, containing `gitdir: <path>` to point at the real
-+directory that has the repository.  This mechanism is often used for
-+a working tree of a submodule checkout, to allow you in the
-+containing superproject to `git checkout` a branch that does not
-+have the submodule.  The `checkout` has to remove the entire
-+submodule working tree, without losing the submodule repository.
-+
-+These things may exist in a Git repository.
- 
- objects::
- 	Object store associated with this repository.  Usually
+diff --git a/mergetools/tortoisemerge b/mergetools/tortoisemerge
+index 8476afa..3b89f1c 100644
+--- a/mergetools/tortoisemerge
++++ b/mergetools/tortoisemerge
+@@ -6,9 +6,17 @@ merge_cmd () {
+ 	if $base_present
+ 	then
+ 		touch "$BACKUP"
+-		"$merge_tool_path" \
+-			-base:"$BASE" -mine:"$LOCAL" \
+-			-theirs:"$REMOTE" -merged:"$MERGED"
++		basename="$(basename "$merge_tool_path" .exe)"
++		if test "$basename" = "tortoisegitmerge"
++		then
++			"$merge_tool_path" \
++				-base "$BASE" -mine "$LOCAL" \
++				-theirs "$REMOTE" -merged "$MERGED"
++		else
++			"$merge_tool_path" \
++				-base:"$BASE" -mine:"$LOCAL" \
++				-theirs:"$REMOTE" -merged:"$MERGED"
++		fi
+ 		check_unchanged
+ 	else
+ 		echo "$merge_tool_path cannot be used without a base" 1>&2
+-- 
+Best regards,
+ Sven Strickroth
+ PGP key id F5A9D4C4 @ any key-server
