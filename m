@@ -1,9 +1,9 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Aw: Re: Aw: Re: [PATCH v3 3/6] Change 'git' to 'Git' whenever
- the whole system is referred to #2
-Date: Fri, 01 Feb 2013 10:37:40 -0800
-Message-ID: <7v8v77c22z.fsf@alter.siamese.dyndns.org>
-References: <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 5/6] Add a description for 'gitfile' to glossary
+Date: Fri, 01 Feb 2013 10:41:56 -0800
+Message-ID: <7v4nhvc1vv.fsf@alter.siamese.dyndns.org>
+References: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
+ <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
  <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
  <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
  <7vvcark1f2.fsf@alter.siamese.dyndns.org>
@@ -12,79 +12,80 @@ References: <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
  <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
  <CAJDDKr4fnUp_35ni72XJS_NSp4jxbvQPENLnk3AhFv2FBg3DTg@mail.gmail.com>
  <50804391.814945.1358931502165.JavaMail.ngmail@webmail07.arcor-online.net>
- <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
+ <274664435.1090127.1359742284591.JavaMail.ngmail@webmail18.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, davvid@gmail.com
 To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Fri Feb 01 19:38:09 2013
+X-From: git-owner@vger.kernel.org Fri Feb 01 19:42:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1LV0-0006C2-5g
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:38:06 +0100
+	id 1U1LZ8-0000mm-5f
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:42:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756261Ab3BASho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 13:37:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45439 "EHLO
+	id S1757094Ab3BASmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 13:42:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48591 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753360Ab3BAShm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 13:37:42 -0500
+	id S1756502Ab3BASl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 13:41:59 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20CE6C3A6;
-	Fri,  1 Feb 2013 13:37:42 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85170C6B7;
+	Fri,  1 Feb 2013 13:41:58 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M4dK5SXHRjntdri+QyeaVkpCek0=; b=Xsq1A8
-	M4/S1k8BNrAN/lze6OfRkcEHzrd1rY0y+/XbntsW3A+V5mDMO+Ft+FvAX8U640GJ
-	Exi/BBEoYQTIXkCMurI9piiLWBqLSvL/e/p9zCAwvi+UIVdGpuxf96z1CJjmQ8ku
-	LkQu8SsrHWpkSReWjlaSTVXqzD02+6iOLNSYQ=
+	:content-type; s=sasl; bh=umlxs044NMYA3EJ5+JMYSIAokj0=; b=xRBA0l
+	zrDcL2EfeLNjCU7oNP6L5md6oUa6AKQII5E1VkLBaIeOV2fITRKzW6S/tnmHzVs3
+	/PiA0XxjoT6qX3q2SlMUK1dbZ6Udral8aZeKbTWWJqRqfCcF55K/huwR2OSACFrz
+	P0kdAES4xA7+0/U351nzmMe1dgZYnFJKlpY2k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wo8xbWLXpa1B6pvZ+iR06uKAmZpOMKJs
-	6MVV3cb/xx6L5/bykkP7hro+qac/aqRM4OT6tt7HGlH0t0J46zPRFQgK/GAM4jNE
-	qyGxC31QriNQPqUivvnM2BuBpid1gt0EjbtMuAVJctWbiYr2yU2xac/B4zM0NVnz
-	+3R0BeSxyG4=
+	:content-type; q=dns; s=sasl; b=VCpHufLZijE9WQSp/7UFNQ0hR6PH/+pE
+	9CHafJh2AYVfhonATdnd9jcPuT1ZY5vJWTjk7I6DI/0WrHttiD7L/KA3OkLhvUJn
+	qnhLQOMjn7u88+JNbqk5mIB8514ibkuwsHFXnkvb4hCfxFuIKcdjJ67KdiarjY0o
+	svy3E14Awg0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15E73C3A5;
-	Fri,  1 Feb 2013 13:37:42 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79725C6B6;
+	Fri,  1 Feb 2013 13:41:58 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F7D1C3A3; Fri,  1 Feb 2013
- 13:37:41 -0500 (EST)
-In-Reply-To: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
- (Thomas Ackermann's message of "Fri, 1 Feb 2013 19:04:00 +0100 (CET)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D8775C6B4; Fri,  1 Feb 2013
+ 13:41:57 -0500 (EST)
+In-Reply-To: <274664435.1090127.1359742284591.JavaMail.ngmail@webmail18.arcor-online.net>
+ (Thomas Ackermann's message of "Fri, 1 Feb 2013 19:11:24 +0100 (CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7610C74A-6C9E-11E2-96BC-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0ED483D6-6C9F-11E2-AEE9-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215246>
 
 Thomas Ackermann <th.acker@arcor.de> writes:
 
->  > 
->> I think we have waited long enough and as far as I recall we didn't
->> see any reports of misconversion or forgotten conversion, so I'll
->> squash the fixes parked on the topic branch, whose tip is at
->> bfb8e1eb6375afb (fixup! Change 'git' to 'Git' whenever the whole
->> system is referred to #4, 2013-01-22), and merge the result to
->> 'next' sometime tomorrow.
+> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+> ---
+>  Documentation/glossary-content.txt | 3 +++
+>  1 file changed, 3 insertions(+)
 >
-> Here are my final fixups on top of bfb8e1eb6375afb:
-> I morphed the remarks from Junio and David into patch form and
-> also did the reverse check for wrong usage of 'Git' instead of 'git'.
-> While doing the later I also noticed some small glitches and fixed them.
-> Squash at your will.
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index 7c15bc0..ddf2f66 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -149,6 +149,9 @@ to point at the new commit.
+>  [[def_git_archive]]Git archive::
+>  	Synonym for <<def_repository,repository>> (for arch people).
+>  
+> +[[def_gitfile]]gitfile::
+> +	A `.git` file which points to a `$GIT_DIR` (used for Git submodules).
+> +
 
-Thanks.
+It is more like 'used by' ;-)  People are free to write their
+Porcelain system that uses this mechanism.
 
-> [PATCH 1/6] fixup! fixup! Change 'git' to 'Git' whenever the whole system is referred to #2
-> [PATCH 2/6] fixup! fixup! fixup! Change 'git' to 'Git' whenever the whole system is referred to #1
-> [PATCH 3/6] fixup! Documentation: avoid poor-man's small caps
-> [PATCH 4/6] Fix places where 'Git' should be 'git
-> [PATCH 5/6] Add a description for 'gitfile' to glossary
-> [PATCH 6/6] Use consistent links for User Manual and Everyday Git; Fix a quoting error
+>  [[def_grafts]]grafts::
+>  	Grafts enables two otherwise different lines of development to be joined
+>  	together by recording fake ancestry information for commits. This way
