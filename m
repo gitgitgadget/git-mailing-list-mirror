@@ -1,74 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Rename {git- => git}remote-helpers.txt
-Date: Fri, 1 Feb 2013 14:00:08 -0500
-Message-ID: <20130201190007.GB22919@sigill.intra.peff.net>
-References: <7v1ud1gke7.fsf@alter.siamese.dyndns.org>
- <3f26b82599aa2a45897d345c851fab4751c55810.1359669205.git.john@keeping.me.uk>
- <20130131223305.GB21729@sigill.intra.peff.net>
- <20130131230455.GN27340@google.com>
- <20130201050343.GA29973@sigill.intra.peff.net>
- <7v7gmsd26o.fsf@alter.siamese.dyndns.org>
- <20130201073352.GB970@sigill.intra.peff.net>
- <7vr4kzamt7.fsf@alter.siamese.dyndns.org>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [PATCH] rebase --preserve-merges keeps empty merge commits
+Date: Fri, 1 Feb 2013 11:15:28 -0800
+Message-ID: <CANiSa6gM1gpj0A6PC0qNVSaWvVrOBnSnjn2uKR9-cHSLAZ2OVA@mail.gmail.com>
+References: <1358023561-26773-1-git-send-email-hordp@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Max Horn <max@quendi.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 20:00:37 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, phil.hord@gmail.com,
+	Neil Horman <nhorman@tuxdriver.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Fri Feb 01 20:15:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1Lql-00071v-4w
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:00:35 +0100
+	id 1U1M5Z-0001GR-1L
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:15:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757150Ab3BATAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 14:00:13 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55600 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754156Ab3BATAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 14:00:11 -0500
-Received: (qmail 31037 invoked by uid 107); 1 Feb 2013 19:01:35 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 14:01:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 14:00:08 -0500
-Content-Disposition: inline
-In-Reply-To: <7vr4kzamt7.fsf@alter.siamese.dyndns.org>
+	id S1757369Ab3BATPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 14:15:31 -0500
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:64577 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755273Ab3BATPa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 14:15:30 -0500
+Received: by mail-wg0-f50.google.com with SMTP id es5so3209461wgb.29
+        for <git@vger.kernel.org>; Fri, 01 Feb 2013 11:15:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=D9lMmnVTNrfqjPDOi1q7lIz8bmUG7mZe99WbSQxvPlM=;
+        b=pgy5dMWfjtAOnXAKGj5YlKOjJWB4YPeJOlO0NPQpR8LsiPUUR88vMQ8F3oxff9RcP3
+         OoVVzYxlT6kgBbFSs1Q1e1RmtLSH5SSpDKUhyq10BZ+K/uLXTyjcn3Npw5BVa/KjOZ8V
+         tFfnZkUok3m7MZypDY3uiyjfvqE7YFKl02tXt23dyEfBZSN+c2SakWVx8K61lQSf2TkI
+         +tiVrBaBIITNB+XQcjmfGjejWB7xC9QcrVsYesVnS/1YQtzYfDpSFJTqBCRjEU+2VnqQ
+         //ixlOXLl1g9If/nr+N7h1YGOfDR+52Exp1xv1KVW4Lndl1QPaMLtymnEz7V7rFr0sIO
+         2pcw==
+X-Received: by 10.180.85.97 with SMTP id g1mr4717174wiz.29.1359746128842; Fri,
+ 01 Feb 2013 11:15:28 -0800 (PST)
+Received: by 10.180.85.8 with HTTP; Fri, 1 Feb 2013 11:15:28 -0800 (PST)
+In-Reply-To: <1358023561-26773-1-git-send-email-hordp@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215253>
 
-On Fri, Feb 01, 2013 at 10:52:52AM -0800, Junio C Hamano wrote:
+I'm working on a re-roll of
 
-> >   4. Replace the rename "gitfoo" above with a "see git-foo..." pointer.
-> >      Users of "git help foo" would not ever see this, but people who
-> >      have trained their fingers to type "man gitfoo" would, along with
-> >      anybody following an outdated HTML link.
-> >
-> >   5. Update internal references to "linkgit:gitfoo" to point to
-> >      "git-foo".
-> >
-> > Hmm. That really does not seem so bad. The biggest downside is the
-> > people who have to see the redirect made in step 4.
-> 
-> Yeah, I see that a show-stopper in the whole sequence.
-> 
-> This is one of the "if we had perfect knowledge we would have
-> designed it this way, and we could still migrate our current system
-> to that ideal, but it is dubious the difference between the current
-> system and the ideal will outweigh the cost of migration" moment,
-> isn't it?
+http://thread.gmane.org/gmane.comp.version-control.git/205796
 
-Yeah, perhaps. I did the patch series just to see what the effort would
-be like. But at this point I am fine if we drop it (it sounded like
-Jonathan was in favor of this direction, so maybe he wants to make a
-final argument).
+and finally got around to including test cases for what you fixed in
+this patch. I want to make sure I'm testing what you fixed here. See
+questions below.
 
--Peff
+On Sat, Jan 12, 2013 at 12:46 PM, Phil Hord <hordp@cisco.com> wrote:
+> Since 90e1818f9a  (git-rebase: add keep_empty flag, 2012-04-20)
+> 'git rebase --preserve-merges' fails to preserve empty merge commits
+> unless --keep-empty is also specified.  Merge commits should be
+> preserved in order to preserve the structure of the rebased graph,
+> even if the merge commit does not introduce changes to the parent.
+>
+> Teach rebase not to drop merge commits only because they are empty.
+
+Consider a history like
+
+# a---b---c
+#      \   \
+#       d---l
+#        \
+#         e
+#          \
+#           C
+
+where 'l' is tree-same with 'd' and 'C' introduces the same change as 'c'.
+
+My test case runs 'git rebase -p e l' and expects the result to look like
+
+# a---b---c
+#      \   \
+#       d   \
+#        \   \
+#         e---l
+
+> A special case which is not handled by this change is for a merge commit
+> whose parents are now the same commit because all the previous different
+> parents have been dropped as a result of this rebase or some previous
+> operation.
+
+And for this case, the test case runs 'git rebase -p C l'. Is that
+what you meant here?
+
+Before your patch, git would just say "Nothing to do" and after your
+patch, we get
+
+# a---b---c
+#      \   \
+#       d   \
+#        \   \
+#         e   \
+#          \   \
+#           C---l
+
+As you say, your patch doesn't try to handle this case, but at least
+the new behavior seems better. I think we would ideally want the
+recreated 'l' to have only 'C' as parent in this case. Does that make
+sense?
+
+Martin
