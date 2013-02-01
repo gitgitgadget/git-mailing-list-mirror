@@ -1,113 +1,85 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [RFC/PATCH v2] CodingGuidelines: add Python coding guidelines
-Date: Fri, 1 Feb 2013 11:16:34 +0000
-Message-ID: <20130201111634.GA2476@farnsworth.metanate.com>
-References: <20130129190844.GB1342@serenity.lan>
- <5108F056.9040406@alum.mit.edu>
- <20130130203158.GN1342@serenity.lan>
- <510B7F4B.7040902@alum.mit.edu>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: Aw: Re: [PATCH v3 3/6] Change 'git' to 'Git' whenever the
+ whole system is referred to #2
+Date: Fri, 1 Feb 2013 19:04:00 +0100 (CET)
+Message-ID: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
+References: <7vzjzodfp1.fsf@alter.siamese.dyndns.org> <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
+ <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
+ <7vvcark1f2.fsf@alter.siamese.dyndns.org>
+ <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
+ <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
+ <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
+ <CAJDDKr4fnUp_35ni72XJS_NSp4jxbvQPENLnk3AhFv2FBg3DTg@mail.gmail.com>
+ <50804391.814945.1358931502165.JavaMail.ngmail@webmail07.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Feb 01 12:17:04 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, davvid@gmail.com
+To: gitster@pobox.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Fri Feb 01 19:04:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1EcB-0002oL-Vd
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 12:17:04 +0100
+	id 1U1KyU-0008Ow-0h
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:04:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756270Ab3BALQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 06:16:42 -0500
-Received: from dougal.metanate.com ([90.155.101.14]:3831 "EHLO metanate.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755768Ab3BALQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 06:16:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=simple/simple; d=metanate.com; s=stronger;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=XIA+YDfZk1oGiqPBQA9toojsX1lPgpBDRnXFG/GErXU=;
-	b=rQ6GbZLhpM8NsDuD+F6eWgt/TvZFZ0OGiF3eqhZbwH/qUVPak5M5ApScYCSSIiteUMfgCvJ5EGRSzVtVp9HTBNmcaQiUqqf2GvDZtSSqCsYiNNaLvJivkuPsB0zU5avSU+mIFyfC9/nqOD+x8HAiA9U85VGjI8MOiffO48pLJRFHh9V/umwO1llhXussTXUlS2P6tyr1qfzghatHNUjSPuV/VSOdGMf0bD+o7JW4EK6F5lTliWFjlhyk2QIwdbJWMs1WunvYjDqHb3hWJb9Uh7l0UKifD5VKvMfs8SxYUbBGC/yjjvELW1ZNdtnRpNzz8mbC4p35I+wP+yM1+fjkIQ==;
-Received: from brian.metanate.com ([192.168.88.1] helo=farnsworth.metanate.com)
-	by shrek.metanate.com with esmtps (TLSv1:DHE-RSA-AES128-SHA:128)
-	(Exim 4.80.1)
-	(envelope-from <john@keeping.me.uk>)
-	id 1U1Ebk-0003aU-Oe; Fri, 01 Feb 2013 11:16:36 +0000
-Content-Disposition: inline
-In-Reply-To: <510B7F4B.7040902@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753600Ab3BASEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 13:04:06 -0500
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:57378 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752990Ab3BASEE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 13:04:04 -0500
+Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
+	by mx.arcor.de (Postfix) with ESMTP id 3B801D8085;
+	Fri,  1 Feb 2013 20:03:59 +0100 (CET)
+Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
+	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id 4C1503C413B;
+	Fri,  1 Feb 2013 19:04:00 +0100 (CET)
+Received: from webmail18.arcor-online.net (webmail18.arcor-online.net [151.189.8.76])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 4268D305B1;
+	Fri,  1 Feb 2013 19:04:00 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-02.arcor-online.net 4268D305B1
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1359741840; bh=Iy8i49dqwSod3p3MjSVziRVcu/4+Grgb+9F2qmT1Yiw=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=leyk6oUlvxOovxAK8Z+Qn4WT/dk+syUg0XUHcuMl+XHw3sYe90mvK+LREV7yxkPMW
+	 L4hUiaHnBTx80iDcZBuDdidplffm4ZzKDCTUU3fDN9aPwH0SzyLxXKSoCxQ9f8WoO+
+	 Dnn030MmR3IpzVkKDlyhqXIpfqzGTq1I0DzvYqyc=
+Received: from [188.105.106.49] by webmail18.arcor-online.net (151.189.8.76) with HTTP (Arcor Webmail); Fri, 1 Feb 2013 19:04:00 +0100 (CET)
+In-Reply-To: <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 188.105.106.49
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215237>
 
-On Fri, Feb 01, 2013 at 09:39:39AM +0100, Michael Haggerty wrote:
-> On 01/30/2013 09:31 PM, John Keeping wrote:
-> > On Wed, Jan 30, 2013 at 11:05:10AM +0100, Michael Haggerty wrote:
-> >> [...] maybe we should establish a small Python library of
-> >> compatibility utilities (like a small "six"). [...]
-> >> But I haven't had time to think of where to put such a library, how to
-> >> install it, etc.
-> > 
-> > If we want to go that route, I think restructuring the
-> > "git_remote_helpers" directory and re-using its infrastructure for
-> > installing the "Git Python modules" would be the way to go.  The
-> > directory structure would become something like this:
-> > 
-> >     git/
-> >     `-- python/
-> >         |-- Makefile    # existing file pulled out of git_remote_helpers
-> >         |-- < some new utility library >
-> >         |-- git_remote_helpers
-> >         |   |-- __init__.py
-> >         |   |-- git
-> >         |   |   |-- __init__.py
-> >         |   |   |-- exporter.py
-> >         |   |   |-- git.py
-> >         |   |   |-- importer.py
-> >         |   |   |-- non_local.py
-> >         |   |   `-- repo.py
-> >         |   `-- util.py
-> >         |-- setup.cfg   # existing file pulled out of git_remote_helpers
-> >         `-- setup.py    # existing file pulled out of git_remote_helpers
-> > 
-> > 
-> > It looks like the GitPython project[1] as already taken the "git" module
-> > name, so perhaps we should use "git_core" if we do introduce a new
-> > module.
-> > 
-> > [1] http://pypi.python.org/pypi/GitPython
+ > 
+> I think we have waited long enough and as far as I recall we didn't
+> see any reports of misconversion or forgotten conversion, so I'll
+> squash the fixes parked on the topic branch, whose tip is at
+> bfb8e1eb6375afb (fixup! Change 'git' to 'Git' whenever the whole
+> system is referred to #4, 2013-01-22), and merge the result to
+> 'next' sometime tomorrow.
 > 
-> This sounds reasonable.  But not all Python code will go under the
-> "python" subdirectory, right?  For example, I am working on a Python
-> script that fits thematically under contrib/hooks.
 
-I was thinking of it as analagous with the "perl" directory that
-currently exists.  So the "python" directory will contain library code
-but scripts can live wherever is most appropriate.
+Here are my final fixups on top of bfb8e1eb6375afb:
+I morphed the remarks from Junio and David into patch form and
+also did the reverse check for wrong usage of 'Git' instead of 'git'.
+While doing the later I also noticed some small glitches and fixed them.
+Squash at your will.
 
-One way of looking at it is: could the user want to have this installed
-for all available versions of Python?  For a script, the answer is "no"
-because they will call it and it will just run.  For libraries, you want
-them to be available with whatever Python interpreter you happen to be
-running (assuming that it is a version supported by the library).
-
-> OTOH (I'm thinking aloud here) it is probably a bad idea for a hook
-> script to depend on a Python module that is part of git itself.  Doing
-> so would make the hook script depend on a particular version of git (or
-> at least a version with a compatible Python module).  But users might be
-> reluctant to upgrade git just to install a hook script.
-
-I don't think such a dependency is a bad idea in the longer term.  If a
-"Git Python library" is developed, then at some point most people who
-have Git installed will have some version of that library - it becomes a
-case of perhaps wanting to limit yourself to some subset of the library
-rather than just not using it.
-
-In fact, git_remote_helpers has been available since Git 1.7.0 and
-contains a lot of functionality that is more generic than its name
-suggests.
+[PATCH 1/6] fixup! fixup! Change 'git' to 'Git' whenever the whole system is referred to #2
+[PATCH 2/6] fixup! fixup! fixup! Change 'git' to 'Git' whenever the whole system is referred to #1
+[PATCH 3/6] fixup! Documentation: avoid poor-man's small caps
+[PATCH 4/6] Fix places where 'Git' should be 'git
+[PATCH 5/6] Add a description for 'gitfile' to glossary
+[PATCH 6/6] Use consistent links for User Manual and Everyday Git; Fix a quoting error
 
 
-John
+---
+Thomas
