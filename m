@@ -1,95 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Verify Content-Type from smart HTTP servers
-Date: Fri, 1 Feb 2013 13:58:27 -0500
-Message-ID: <20130201185827.GA22919@sigill.intra.peff.net>
-References: <7v38xhf1i3.fsf@alter.siamese.dyndns.org>
- <20130201085248.GA30644@sigill.intra.peff.net>
- <7vip6bc3e1.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Rename {git- => git}remote-helpers.txt
+Date: Fri, 1 Feb 2013 14:00:08 -0500
+Message-ID: <20130201190007.GB22919@sigill.intra.peff.net>
+References: <7v1ud1gke7.fsf@alter.siamese.dyndns.org>
+ <3f26b82599aa2a45897d345c851fab4751c55810.1359669205.git.john@keeping.me.uk>
+ <20130131223305.GB21729@sigill.intra.peff.net>
+ <20130131230455.GN27340@google.com>
+ <20130201050343.GA29973@sigill.intra.peff.net>
+ <7v7gmsd26o.fsf@alter.siamese.dyndns.org>
+ <20130201073352.GB970@sigill.intra.peff.net>
+ <7vr4kzamt7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Max Horn <max@quendi.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 19:58:56 2013
+X-From: git-owner@vger.kernel.org Fri Feb 01 20:00:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1Lp8-0005eO-GJ
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:58:54 +0100
+	id 1U1Lql-00071v-4w
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:00:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756373Ab3BAS6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 13:58:31 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55592 "EHLO
+	id S1757150Ab3BATAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 14:00:13 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55600 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755035Ab3BAS6a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 13:58:30 -0500
-Received: (qmail 30968 invoked by uid 107); 1 Feb 2013 18:59:54 -0000
+	id S1754156Ab3BATAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 14:00:11 -0500
+Received: (qmail 31037 invoked by uid 107); 1 Feb 2013 19:01:35 -0000
 Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 13:59:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 13:58:27 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 14:01:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 14:00:08 -0500
 Content-Disposition: inline
-In-Reply-To: <7vip6bc3e1.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vr4kzamt7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215252>
 
-On Fri, Feb 01, 2013 at 10:09:26AM -0800, Junio C Hamano wrote:
+On Fri, Feb 01, 2013 at 10:52:52AM -0800, Junio C Hamano wrote:
 
-> > so I do not think the patch makes anything worse. However, should we
-> > take this opportunity to make the "did we get a smart response" test
-> > more robust? That is, should we actually be checking the content-type
-> > in the outer conditional, and going down the smart code-path if it is
-> > application/x-%s-advertisement, and otherwise treating the result as
-> > dumb?
+> >   4. Replace the rename "gitfoo" above with a "see git-foo..." pointer.
+> >      Users of "git help foo" would not ever see this, but people who
+> >      have trained their fingers to type "man gitfoo" would, along with
+> >      anybody following an outdated HTML link.
+> >
+> >   5. Update internal references to "linkgit:gitfoo" to point to
+> >      "git-foo".
+> >
+> > Hmm. That really does not seem so bad. The biggest downside is the
+> > people who have to see the redirect made in step 4.
 > 
-> Does the outer caller that switches between dumb and smart actually
-> know what service type it is requesting (I am not familiar with the
-> callchain involved)?  Even if it doesn't, it may still make sense.
-
-I was specifically thinking of this (on top of your patch):
-
-diff --git a/remote-curl.c b/remote-curl.c
-index e6f3b63..63680a8 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -134,14 +134,12 @@ static struct discovery* discover_refs(const char *service)
- 	last->buf_alloc = strbuf_detach(&buffer, &last->len);
- 	last->buf = last->buf_alloc;
- 
--	if (maybe_smart && 5 <= last->len && last->buf[4] == '#') {
-+	strbuf_addf(&exp, "application/x-%s-advertisement", service);
-+	if (maybe_smart && !strbuf_cmp(&exp, &type)) {
- 		/*
- 		 * smart HTTP response; validate that the service
- 		 * pkt-line matches our request.
- 		 */
--		strbuf_addf(&exp, "application/x-%s-advertisement", service);
--		if (strbuf_cmp(&exp, &type))
--			die("invalid content-type %s", type.buf);
- 		if (packet_get_line(&buffer, &last->buf, &last->len) <= 0)
- 			die("%s has invalid packet header", refs_url);
- 		if (buffer.len && buffer.buf[buffer.len - 1] == '\n')
-
-To just follow the dumb path if we don't get the content-type we expect.
-We may want to keep the '#' format check in addition (packet_get_line
-will check it and die, anyway, but we may want to drop back to
-considering it dumb, just to protect against a badly configured dumb
-server which uses our mime type, but I do not think it likely).
-
-> > As a side note, should we (can we) care about the content-type for dumb
-> > http? It should probably be text/plain or application/octet-stream, but
-> > I would not be surprised if we get a variety of random junk in the real
-> > world, though.
+> Yeah, I see that a show-stopper in the whole sequence.
 > 
-> The design objective of dumb http protocol was to allow working with
-> any dumb bit transfer thing, so I'd prefer to keep it lenient and
-> allow application/x-git-loose-object-file and somesuch.
+> This is one of the "if we had perfect knowledge we would have
+> designed it this way, and we could still migrate our current system
+> to that ideal, but it is dubious the difference between the current
+> system and the ideal will outweigh the cost of migration" moment,
+> isn't it?
 
-Yeah, I do not think it really buys us anything in practice, and we have
-no way of knowing what kind of crap is in the wild. Not worth it.
+Yeah, perhaps. I did the patch series just to see what the effort would
+be like. But at this point I am fine if we drop it (it sounded like
+Jonathan was in favor of this direction, so maybe he wants to make a
+final argument).
 
 -Peff
