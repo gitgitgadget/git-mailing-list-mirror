@@ -1,80 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 1/2] Documentation/Makefile: clean up MAN*_TXT lists
-Date: Fri, 01 Feb 2013 11:38:46 -0800
-Message-ID: <7vehgzakop.fsf@alter.siamese.dyndns.org>
+Date: Fri, 1 Feb 2013 14:38:51 -0500
+Message-ID: <20130201193851.GA24588@sigill.intra.peff.net>
 References: <20130201082538.GA25674@sigill.intra.peff.net>
  <20130201082650.GA25783@sigill.intra.peff.net>
  <20130201192010.GA12368@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, John Keeping <john@keeping.me.uk>,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Max Horn <max@quendi.de>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 20:39:13 2013
+X-From: git-owner@vger.kernel.org Fri Feb 01 20:39:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1MS7-00089V-OP
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:39:12 +0100
+	id 1U1MSD-0008HW-MK
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:39:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755273Ab3BATiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 14:38:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50598 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753600Ab3BATit (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 14:38:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA774C512;
-	Fri,  1 Feb 2013 14:38:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mvdkdhpU/6wiSx9VrWmVqSGIAJc=; b=lXsj/c
-	xZGV6dFB3PDUTwXN18MLt85GxtbP6Rlyymz0riJCIw8nRTc4NRbm8gzROWJ3qS2W
-	FzvTPXEMwJwTBvaL3OTDziA+Iz1lHy4WfdW1aevlosoBSyCLXLoJsmHPdPn+iTjw
-	Kn/SMznriA/w+AGQlhQFurP9p5BF3K+MAcF70=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x5jOPaKUrfCOnnx6N0mvFp908QM7gf8G
-	BwKqTx2S8HUTf3p5wJ8HSjlbbvl2mUK6/IxixGclG+qh4H2QVOArVvTMqx296PA3
-	KwPsO1Vba8givE6KdP52d2hG3849X9FVYKcSwQXwk53gSG2jCyKAv+Iq506DXVtt
-	P6/IVc62718=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEE86C511;
-	Fri,  1 Feb 2013 14:38:48 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1286DC510; Fri,  1 Feb 2013
- 14:38:48 -0500 (EST)
-In-Reply-To: <20130201192010.GA12368@google.com> (Jonathan Nieder's message
- of "Fri, 1 Feb 2013 11:20:10 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FF7C31A6-6CA6-11E2-A174-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755633Ab3BATi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 14:38:56 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55628 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753297Ab3BATiy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 14:38:54 -0500
+Received: (qmail 31540 invoked by uid 107); 1 Feb 2013 19:40:18 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 14:40:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 14:38:51 -0500
+Content-Disposition: inline
+In-Reply-To: <20130201192010.GA12368@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215259>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Fri, Feb 01, 2013 at 11:20:10AM -0800, Jonathan Nieder wrote:
 
->> --- a/Documentation/Makefile
->> +++ b/Documentation/Makefile
->> @@ -1,13 +1,28 @@ MAN7_TXT += gitcredentials.txt
->> -MAN1_TXT= \
->> -	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
->> -		$(wildcard git-*.txt)) \
->> -	gitk.txt gitweb.txt git.txt
->> +MAN1_TXT += git.txt
->> +MAN1_TXT += gitk.txt
->> +MAN1_TXT += gitweb.txt
->> +
->
+> Jeff King wrote:
+> 
+> > We keep a list of the various files that end up as man1,
+> > man5, etc. Let's break these single-line lists into sorted
+> > multi-line lists, which makes diffs that touch them much
+> > easier to read.
+> 
+> Independentally of the rest of the series, I think this is a good
+> cleanup.
+
+Yeah, I'd agree.
+
+> > --- a/Documentation/Makefile
+> > +++ b/Documentation/Makefile
+> > @@ -1,13 +1,28 @@ MAN7_TXT += gitcredentials.txt
+> > -MAN1_TXT= \
+> > -	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+> > -		$(wildcard git-*.txt)) \
+> > -	gitk.txt gitweb.txt git.txt
+> > +MAN1_TXT += git.txt
+> > +MAN1_TXT += gitk.txt
+> > +MAN1_TXT += gitweb.txt
+> > +
+> 
 > If the user happens to have MAN[157]_TXT set in the environment, this
 > would be affected by that.  How about:
->
+> 
 > 	# Guard against environment variables
 > 	MAN1_TXT =
 > 	MAN5_TXT =
@@ -82,10 +76,76 @@ Jonathan Nieder <jrnieder@gmail.com> writes:
 > 	
 > 	MAN1_TXT += ...
 > 	...
->
-> With that change,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> 
+> ?
 
-Sounds sensible.  Let's go in that direction.
+Sure, not that likely, but no reason not to be careful. I notice the
+rest of the file uses the:
 
-Thanks.
+  FOO = first
+  FOO += second
+  ...
+
+pattern, though I prefer the style you showed myself.
+
+Junio, do you want to apply the patch below? I guess it conflicts with
+John's gitremote-helper.txt tweak, though.
+
+-- >8 --
+Subject: [PATCH] Documentation/Makefile: clean up MAN*_TXT lists
+
+We keep a list of the various files that end up as man1,
+man5, etc. Let's break these single-line lists into sorted
+multi-line lists, which makes diffs that touch them much
+easier to read.
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/Makefile | 33 ++++++++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 971977b..8e7939f 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -1,13 +1,28 @@ MAN7_TXT += gitcredentials.txt
+-MAN1_TXT= \
+-	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+-		$(wildcard git-*.txt)) \
+-	gitk.txt gitweb.txt git.txt
+-MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt \
+-	gitrepository-layout.txt gitweb.conf.txt
+-MAN7_TXT=gitcli.txt gittutorial.txt gittutorial-2.txt \
+-	gitcvs-migration.txt gitcore-tutorial.txt gitglossary.txt \
+-	gitdiffcore.txt gitnamespaces.txt gitrevisions.txt gitworkflows.txt
++MAN1_TXT += $(filter-out \
++		$(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
++		$(wildcard git-*.txt))
++MAN1_TXT += git.txt
++MAN1_TXT += gitk.txt
++MAN1_TXT += gitweb.txt
++
++MAN5_TXT += gitattributes.txt
++MAN5_TXT += githooks.txt
++MAN5_TXT += gitignore.txt
++MAN5_TXT += gitmodules.txt
++MAN5_TXT += gitrepository-layout.txt
++MAN5_TXT += gitweb.conf.txt
++
++MAN7_TXT += gitcli.txt
++MAN7_TXT += gitcore-tutorial.txt
+ MAN7_TXT += gitcredentials.txt
++MAN7_TXT += gitcvs-migration.txt
++MAN7_TXT += gitdiffcore.txt
++MAN7_TXT += gitglossary.txt
++MAN7_TXT += gitnamespaces.txt
++MAN7_TXT += gitrevisions.txt
++MAN7_TXT += gittutorial-2.txt
++MAN7_TXT += gittutorial.txt
++MAN7_TXT += gitworkflows.txt
+ 
+ MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
+ MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
+-- 
+1.8.1.2.11.g1a2f572
