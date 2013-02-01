@@ -1,73 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] run-command: Be more informative about what failed
-Date: Thu, 31 Jan 2013 15:57:46 -0800
-Message-ID: <7v8v78ewhx.fsf@alter.siamese.dyndns.org>
-References: <1359597666-10108-1-git-send-email-sboyd@codeaurora.org>
- <1359597666-10108-3-git-send-email-sboyd@codeaurora.org>
- <7vfw1hiami.fsf@alter.siamese.dyndns.org>
- <20130131223559.GC21729@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] docs: clarify git-branch --list behavior
+Date: Thu, 31 Jan 2013 19:20:45 -0500
+Message-ID: <CAPig+cT21Fx6BaD=1jT7KSBZSZkWu-A-0U+QsM2qO8g5gki=YQ@mail.gmail.com>
+References: <20130131064357.GA24660@sigill.intra.peff.net>
+	<20130131064545.GA25315@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Stephen Boyd <sboyd@codeaurora.org>
-X-From: git-owner@vger.kernel.org Fri Feb 01 00:58:12 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Peter Wu <lekensteyn@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 01 01:21:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U141D-0000wU-UW
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 00:58:12 +0100
+	id 1U14NR-0006kH-9t
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 01:21:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753568Ab3AaX5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 18:57:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35961 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752877Ab3AaX5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 18:57:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5998DC36C;
-	Thu, 31 Jan 2013 18:57:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BKmDEGmoRrcUdFD5YQCkdFS7S/k=; b=mn8Bud
-	hQAY4j5a+SUmrlESVjjMXUjUS4ux1p7KhgUkA25BKAOlqgFxXXbehr9JuQBx/ZkQ
-	dif7SoDXQ4Qxcbx5mZbFYDd61IbtrbBW0GlbY+VhsxaIDDpn9uzmibW4tFjUXIRw
-	gu016KcQpHn7zl4RDrzMweADhyt4T+Tu5DkwE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=miQ4KLfU8qvyI3Hya774fAVtupo7S5kg
-	ftLGUxqpVsKHJs4rV2YvTb2ogexyVcMhSkrnYC4OKAUodGDQ+GEdog7mppvXVNFm
-	Mmt0K7dFdkK7bYi9ztQecdbBlX62zokPvwK1CXt99NS9zsZV05I+4kS0srUFCBmV
-	TIzTZH5nXgc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45542C36B;
-	Thu, 31 Jan 2013 18:57:48 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B8FF6C367; Thu, 31 Jan 2013
- 18:57:47 -0500 (EST)
-In-Reply-To: <20130131223559.GC21729@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 31 Jan 2013 17:35:59 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 036BA36E-6C02-11E2-8036-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754044Ab3BAAUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2013 19:20:48 -0500
+Received: from mail-vb0-f47.google.com ([209.85.212.47]:38978 "EHLO
+	mail-vb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751945Ab3BAAUq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2013 19:20:46 -0500
+Received: by mail-vb0-f47.google.com with SMTP id e21so2100354vbm.6
+        for <git@vger.kernel.org>; Thu, 31 Jan 2013 16:20:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=500cReSmYA9x2TJD40ujttbSHN80KU6vlW9HDGaqKUo=;
+        b=Ccnje50gPL9JukMgZ3ZGZypz2fZBiGd8Lm9i6EtLkY8x+da7NehJha1oT3R0qDjGHW
+         lrO5iqlKFaVY24i/0WJGoTbK/u0+t14l6PhhPrlrJTjArOJtEJpbq+g9LEA9TIfXONxR
+         roQqOFn0Xp+io95pR8evd1Z2UOJRLrRqJRZO8T1u5GS4L7genbP/J8vp57wuY3x2QTuO
+         Jy34DiiHKsdv2vy+/Mi7q103F6P2CPxHipEWTAyozMC3qWzBwBsyn64wgUrMXjET59ns
+         25/i2XzYOo0b1n+Ax8q3RVw3I1PsB/A2QExjZwzu9HooVSjLItfMFQCAE2xf8eHGZA7o
+         fYLA==
+X-Received: by 10.220.106.133 with SMTP id x5mr9677262vco.61.1359678045953;
+ Thu, 31 Jan 2013 16:20:45 -0800 (PST)
+Received: by 10.58.75.15 with HTTP; Thu, 31 Jan 2013 16:20:45 -0800 (PST)
+In-Reply-To: <20130131064545.GA25315@sigill.intra.peff.net>
+X-Google-Sender-Auth: j5CxeOAu7lZQZVt-dNjBcnct2bE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215191>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jan 31, 2013 at 1:45 AM, Jeff King <peff@peff.net> wrote:
+> +If `--list` is given, or if there are no non-option arguments, existing
+> +branches are listed; the current branch will be highlighted with an
+> +asterisk.  Option `-r` causes the remote-tracking branches to be listed,
+> +and option `-a` shows both local and remote branches. If a `<pattern>`
+> +is given, it is used as a shell wildcard to restrict the output to
+> +matching branches. If multiple patterns are given, a branch is shown if
+> +any it is matched by any of the patterns.
 
-> But it is not much code, and sometimes it is surprising what information
-> can be helpful when debugging, so like you, I am not opposed, just
-> doubtful.
+s/if any it is/if it is/
 
-Yes, exactly my feeling.
-
-Perhaps I should just amend the 'stdin' and friends away without
-asking Stephen to reroll.  In the other two I did not see any
-issues.  I've queued all three of them including this one but as
-separate topics.
-
-Thanks.
+-- ES
