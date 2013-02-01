@@ -1,154 +1,146 @@
-From: TJ <git@iam.tj>
-Subject: [BUG] git-clone fails due to GnuTLS recv error (-9), then deletes
- entire local repo
-Date: Fri, 01 Feb 2013 09:00:06 +0000
-Message-ID: <510B8416.7010802@iam.tj>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC 0/6] commit caching
+Date: Fri, 1 Feb 2013 04:11:30 -0500
+Message-ID: <20130201091130.GB30644@sigill.intra.peff.net>
+References: <20130129091434.GA6975@sigill.intra.peff.net>
+ <CAJo=hJtTYZg+1+RZVfEGTgOGzqxQbN1CLYWrvUp+WHKGxGwHMQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 01 10:00:32 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Feb 01 10:12:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1CU4-0004VL-6U
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 10:00:32 +0100
+	id 1U1Cf9-0003eB-Mi
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 10:12:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755323Ab3BAJAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 04:00:10 -0500
-Received: from yes.iam.tj ([109.74.197.121]:42397 "EHLO iam.tj"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752905Ab3BAJAJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 04:00:09 -0500
-Received: from [10.254.251.193] (jeeves.iam.tj [82.71.24.87])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by iam.tj (Postfix) with ESMTPSA id 8ECA118177
-	for <git@vger.kernel.org>; Fri,  1 Feb 2013 09:00:07 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+	id S1755958Ab3BAJLh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 04:11:37 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55313 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755837Ab3BAJLd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 04:11:33 -0500
+Received: (qmail 19592 invoked by uid 107); 1 Feb 2013 09:12:57 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 04:12:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 04:11:30 -0500
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJtTYZg+1+RZVfEGTgOGzqxQbN1CLYWrvUp+WHKGxGwHMQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215221>
 
-Using Ubuntu Precise 12.04 with git version (1.8.0.3) I discovered a bug whereby git-clone deletes the repository
-it has just created if there is a GnuTLS error after the final transfer.
+On Thu, Jan 31, 2013 at 09:14:26AM -0800, Shawn O. Pearce wrote:
 
-I switched to building and using the current git head (1.8.1.2.433.g070c57d.dirty) and found the same issue is still present.
+> On Tue, Jan 29, 2013 at 1:14 AM, Jeff King <peff@peff.net> wrote:
+> > This is the cleaned-up version of the commit caching patches I mentioned
+> > here:
+> >
+> >   http://article.gmane.org/gmane.comp.version-control.git/212329
+> ...
+> > The short of it is that for an extra 31M of disk
+> > space (~4%), I get a warm-cache speedup for "git rev-list --all" of
+> > ~4.2s to ~0.66s.
+> 
+> I have to admit, this is a nice gain. I don't think users often dig
+> through all commits to the root but I can see how this might improve
+> git log with a path filter.
 
-There are two problems here:
+It doesn't just help digging to the roots. It should speed up most
+traversals. So merge-bases, --contains, etc, would all be better. I
+suspect we could also make --topo-order startup a lot faster, too.
 
-1. At the end of the transfer "GnuTLS recv error (-9): A TLS packet with unexpected length was received"
-2. git-clone goes on to resolve deltas *then* deletes the entire repository
+It also helps "rev-list --objects --all", though obviously not by as
+large a percentage. And since the main use of that is reachability
+bitmaps, the improvements aren't as exciting there.
 
-This is reported as Ubuntu bug #1111882 at https://bugs.launchpad.net/ubuntu/+bug/1111882
+> > Coupled with using compression level 0 for trees (which do not compress
+> > well at all, and yield only a 2% increase in size when left
+> > uncompressed), my "git rev-list --objects --all" time drops from ~40s to
+> > ~25s.
+> 
+> This uhm.... is nice?
+> 
+> But consider reachability bitmaps. ~40s to ~80ms. :-)
 
-The following transcript uses git built with one local patch on top of commit 070c57d which fixes the $(INSTALL) file mode
-issue as per my previous list posting "PATCH 1/1] Introduce new build variables INSTALL_MODE_EXECUTABLE and INSTALL_MODE_DATA".
+Yeah, yeah. I'm working my way up to it. :)
 
-GIT_CURL_VERBOSE=1 git clone -v https://git01.codeplex.com/typescript
+I wanted to see first how good we could get with a more generic
+approach. I think this work may still have value even with reachability
+bitmaps, as it will help regular traversals as well as tree access for
+pathspec limiting.
 
-the operation fails after the final git pack-file has been received and the already-created repository is deleted from the file system.
+At this point I'm convinced that my 25s is about the best we will do for
+reachability analysis with a graph traversal. The repeated hashcmps to
+see that we've visited each node are starting to dominate. So the next
+obvious step is to try reachability bitmaps. I was hoping to iron out
+the "pack metadata goes here" issues with the commit cache stuff,
+though, as the actual cache implementation is quite simple (whereas the
+bitmap stuff is more on the complex side, but can build on the same
+metadata base).
 
-...
-> POST /typescript/git-upload-pack HTTP/1.1
-User-Agent: git/1.8.1.2.433.g9808ce0.dirty
-Host: git01.codeplex.com
-Accept-Encoding: gzip
-Content-Type: application/x-git-upload-pack-request
-Accept: application/x-git-upload-pack-result
-Content-Length: 611
+> Yup. I have also futzed with the one in JGit for quite a while now. I
+> pull some tricks there like making it a 2 level directory to reduce
+> the need to find a contiguous array of 8M entries when processing the
+> Linux kernel, and I try to preallocate the first level table based on
+> the number of objects in pack-*.idx files. But the bottleneck is
+> basically the cache lookups and hits, these happen like 100M times on
+> 2M objects, because its every link in nearly every tree.
 
-* upload completely sent off: 611out of 611 bytes
-< HTTP/1.1 200 OK
-< Cache-Control: no-cache, max-age=0, must-revalidate
-< Pragma: no-cache
-< Content-Type: application/x-git-upload-pack-result
-< Expires: Fri, 01 Jan 1980 00:00:00 GMT
-< Server: Microsoft-IIS/7.5
-< X-Powered-By: ASP.NET
-< Date: Thu, 31 Jan 2013 21:43:55 GMT
-< Connection: close
-<
-remote: Counting objects: 149766, done.
-remote: Compressing objects: 100% (10580/10580), done.
-* GnuTLS recv error (-9): A TLS packet with unexpected length was received.
-* Closing connection #0
-remote: Total 149766 (delta 138201), reused 149559 (delta 138077)
-Receiving objects: 100% (149766/149766), 198.98 MiB | 361 KiB/s, done.
-error: RPC failed; result=56, HTTP code = 200
-Resolving deltas: 100% (138201/138201), done.
+Right. I tried some multi-level tricks (and even a radix trie), but I
+couldn't get anything to beat the simple-and-stupid single hash table
+with linear probing.
 
+> If we modified pack-objects' delta compressor for tree objects to only
+> generate delta instructions at tree record boundaries, a delta-encoded
+> tree can be processed without inflating the full content of that tree.
+> Because of the way deltas are created, "most" tree deltas should have
+> their delta base scanned by the object traversal before the delta is
+> considered. This means the tree delta just needs to consider the much
+> smaller records that are inserted into the base. We know these are
+> different SHA-1s than what was there before, so they are more likely
+> to be new to the lookup_object table.
 
-git exits at this point but it deletes the entire cloned ./typescript directory.
+So sort of a magic shortcut tree diff you get while accessing the
+object. Neat idea.
 
-So far as I can tell from watching the ./typescript directory from another terminal and also the ethernet interface activity
-the transfer is complete but GnuTLS is expecting something more from the HTTPS server which isn't forthcoming, leading to
-the error.
+> So the --objects traversal algorithm can change to get the delta base
+> SHA-1 and raw tree delta from the pack storage. Perform a
+> lookup_object on the base to see if it has been scanned. If it has,
+> just scan the delta insert instructions. If the base has not yet been
+> scanned, inflate the tree to its normal format and scan the entire
+> tree.
 
-The git bug - if this is accepted as a bug - is the deletion of the entire cloned repository.
+This would not perform well if we hit the deltas before the bases. In
+general, though, our "use the larger as the base" heuristic should mean
+that our traversal hits the bases first.
 
+> This is an approximation of what Nico and I were talking about doing
+> for pack v4. But doesn't require a file format change. :-)
 
-I tried building the git binary and including an additional debug option in "http.c" that allowed me to set the protocol version using an environment option:
+Yeah. It just needs to be very careful that the deltas it is looking at
+all fall on record boundaries, since we might get deltas generated by
+other versions of git. Can we necessarily identify that case for sure,
+though?  I imagine a tree delta like that would look something like:
 
-CURLOPT_SSLVERSION=1 git clone ...
+  delete bytes 100-120
+  add 20 bytes at offset 100: \x12\x34\x56...
 
-where 1 = TLSv1, 2 = SSLv2, 3 = SSLv3.
+Without looking at the base object, and without knowing whether the
+delta was generated by our particular implementation, how can we be sure
+this is a sha1 replacement and not the renaming of part of a file? Or
+are you proposing some flag in the packfile to indicate "yes, this tree
+really was delta'd only at record boundaries"?
 
-I tried each protocol but the result was the same.
+It could be a big win, but it does seem quite complex and error-prone.
+And it only helps with reachability, not regular traversals, so it's not
+very generic. Which makes me think the bitmap route is a much better way
+to go.
 
-I did some experimentation using gnutl-cli-debug but was unable to figure out a way to reproduce the SSL/TLS error without
-this particular git-clone operation. However, that is a GnuTLS bug, not a git bug.
-
-I did try to build the latest gnutls but it needs a very recent version of libnettle which has the "rsa_decrypt_tr" function. I stopped at that point since I don't want to get into dependency and
-library version issues.
-
-Additional research seems to indicate this is a known intentional gnutls behaviour (that has been modified in very recent gnutls that makes use of a very recent libnettle - as mentioned above). The
-issue is, apparently, the random size padding of packets to prevent communications compromise for stream ciphers.
-
-I installed stunnel4 (which depends on openssl rather than gnutls) and created a reverse-proxy (client in stunnel terminology):
-
-$ cat /etc/stunnel/rp-codeplex.com.conf
-client = yes
-
-[http]
-accept = 8888
-connect = git01.codeplex.com:443
-TIMEOUTclose = 0
-
-$ sudo sed -i 's/\(ENABLED\).*/\1=1/' /etc/default/stunnel4
-$ sudo service stunnel4 restart
-
-$ GIT_CURL_VERBOSE=1 git clone -v http://localhost:8888/typescript
-
-...
-> POST http://localhost:8888/typescript/git-upload-pack HTTP/1.1
-User-Agent: git/1.8.1.2.433.g9808ce0.dirty
-Host: localhost:8888
-Accept-Encoding: gzip
-Proxy-Connection: Keep-Alive
-Content-Type: application/x-git-upload-pack-request
-Accept: application/x-git-upload-pack-result
-Content-Length: 611
-
-* upload completely sent off: 611out of 611 bytes
-< HTTP/1.1 200 OK
-< Cache-Control: no-cache, max-age=0, must-revalidate
-< Pragma: no-cache
-< Content-Type: application/x-git-upload-pack-result
-< Expires: Fri, 01 Jan 1980 00:00:00 GMT
-< Server: Microsoft-IIS/7.5
-< X-Powered-By: ASP.NET
-< Date: Thu, 31 Jan 2013 23:38:19 GMT
-< Connection: close
-<
-remote: Counting objects: 149798, done.
-remote: Compressing objects: 100% (10612/10612), done.
-remote: Total 149798 (delta 138221), reused 149558 (delta 138077)
-* Closing connection #0
-Receiving objects: 100% (149798/149798), 198.99 MiB | 640 KiB/s, done.
-Resolving deltas: 100% (138221/138221), done.
-Checking out files: 100% (2851/2851), done.
+-Peff
