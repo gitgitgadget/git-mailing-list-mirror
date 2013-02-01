@@ -1,9 +1,9 @@
 From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: Re: Aw: Re: [PATCH v3 3/6] Change 'git' to 'Git' whenever the
- whole system is referred to #2
-Date: Fri, 1 Feb 2013 19:04:00 +0100 (CET)
-Message-ID: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
-References: <7vzjzodfp1.fsf@alter.siamese.dyndns.org> <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH 1/6] fixup! fixup! Change 'git' to 'Git' whenever the whole
+ system is referred to #2
+Date: Fri, 1 Feb 2013 19:06:45 +0100 (CET)
+Message-ID: <7880599.1090070.1359742005398.JavaMail.ngmail@webmail18.arcor-online.net>
+References: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net> <7vzjzodfp1.fsf@alter.siamese.dyndns.org> <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
  <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
  <7vvcark1f2.fsf@alter.siamese.dyndns.org>
  <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
@@ -16,69 +16,71 @@ Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, davvid@gmail.com
 To: gitster@pobox.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Fri Feb 01 19:04:33 2013
+X-From: git-owner@vger.kernel.org Fri Feb 01 19:07:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1KyU-0008Ow-0h
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:04:30 +0100
+	id 1U1L13-0001sP-Ei
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:07:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753600Ab3BASEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 13:04:06 -0500
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:57378 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752990Ab3BASEE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 13:04:04 -0500
-Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
-	by mx.arcor.de (Postfix) with ESMTP id 3B801D8085;
-	Fri,  1 Feb 2013 20:03:59 +0100 (CET)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id 4C1503C413B;
-	Fri,  1 Feb 2013 19:04:00 +0100 (CET)
+	id S1753309Ab3BASGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 13:06:48 -0500
+Received: from mail-in-11.arcor-online.net ([151.189.21.51]:49156 "EHLO
+	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753109Ab3BASGq (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 13:06:46 -0500
+Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
+	by mx.arcor.de (Postfix) with ESMTP id 62D8735AC6E;
+	Fri,  1 Feb 2013 19:06:45 +0100 (CET)
+Received: from mail-in-14.arcor-online.net (mail-in-14.arcor-online.net [151.189.21.54])
+	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 645A31F600E;
+	Fri,  1 Feb 2013 19:06:45 +0100 (CET)
 Received: from webmail18.arcor-online.net (webmail18.arcor-online.net [151.189.8.76])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 4268D305B1;
-	Fri,  1 Feb 2013 19:04:00 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-02.arcor-online.net 4268D305B1
+	by mail-in-14.arcor-online.net (Postfix) with ESMTP id 5A4E79BCEC;
+	Fri,  1 Feb 2013 19:06:45 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-14.arcor-online.net 5A4E79BCEC
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1359741840; bh=Iy8i49dqwSod3p3MjSVziRVcu/4+Grgb+9F2qmT1Yiw=;
+	t=1359742005; bh=OOGD/AMjLW/CA6GUEoY9so/DYa8WQ/ayro8sGF2BDAE=;
 	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=leyk6oUlvxOovxAK8Z+Qn4WT/dk+syUg0XUHcuMl+XHw3sYe90mvK+LREV7yxkPMW
-	 L4hUiaHnBTx80iDcZBuDdidplffm4ZzKDCTUU3fDN9aPwH0SzyLxXKSoCxQ9f8WoO+
-	 Dnn030MmR3IpzVkKDlyhqXIpfqzGTq1I0DzvYqyc=
-Received: from [188.105.106.49] by webmail18.arcor-online.net (151.189.8.76) with HTTP (Arcor Webmail); Fri, 1 Feb 2013 19:04:00 +0100 (CET)
-In-Reply-To: <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
+	b=eDDFWJ3sL9GhZMzejEHgj56BieZkuN9JONZ1ZOsn3rM+Syg7na5fHrfF7yVkL54wE
+	 J2VexA6yBvYK0pVW9nfmH5ZSX76z4jEdnqr+LCOhvMyAF489ZLmWg2aw4qE/5x94HQ
+	 naJ5P1XLg7JorK20gca7sHHw+AEA9cLmN/a9mNrM=
+Received: from [188.105.106.49] by webmail18.arcor-online.net (151.189.8.76) with HTTP (Arcor Webmail); Fri, 1 Feb 2013 19:06:45 +0100 (CET)
+In-Reply-To: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
 X-ngMessageSubType: MessageSubType_MAIL
 X-WebmailclientIP: 188.105.106.49
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215238>
 
- > 
-> I think we have waited long enough and as far as I recall we didn't
-> see any reports of misconversion or forgotten conversion, so I'll
-> squash the fixes parked on the topic branch, whose tip is at
-> bfb8e1eb6375afb (fixup! Change 'git' to 'Git' whenever the whole
-> system is referred to #4, 2013-01-22), and merge the result to
-> 'next' sometime tomorrow.
-> 
+Found by David and Junio:
+Inconsistent quoting within config.txt should be fixed in a separate patch.
 
-Here are my final fixups on top of bfb8e1eb6375afb:
-I morphed the remarks from Junio and David into patch form and
-also did the reverse check for wrong usage of 'Git' instead of 'git'.
-While doing the later I also noticed some small glitches and fixed them.
-Squash at your will.
+Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+---
+ Documentation/config.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[PATCH 1/6] fixup! fixup! Change 'git' to 'Git' whenever the whole system is referred to #2
-[PATCH 2/6] fixup! fixup! fixup! Change 'git' to 'Git' whenever the whole system is referred to #1
-[PATCH 3/6] fixup! Documentation: avoid poor-man's small caps
-[PATCH 4/6] Fix places where 'Git' should be 'git
-[PATCH 5/6] Add a description for 'gitfile' to glossary
-[PATCH 6/6] Use consistent links for User Manual and Everyday Git; Fix a quoting error
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3652ee0..1bfbc7a 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1773,7 +1773,7 @@ pull.twohead::
+ 	The default merge strategy to use when pulling a single branch.
+ 
+ push.default::
+-	Defines the action Git push should take if no refspec is given
++	Defines the action `git push` should take if no refspec is given
+ 	on the command line, no refspec is configured in the remote, and
+ 	no refspec is implied by any of the options given on the command
+ 	line. Possible values are:
+-- 
+1.8.0.msysgit.0
 
 
 ---
