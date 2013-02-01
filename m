@@ -1,66 +1,62 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Rename {git- => git}remote-helpers.txt
-Date: Fri, 1 Feb 2013 00:03:43 -0500
-Message-ID: <20130201050343.GA29973@sigill.intra.peff.net>
-References: <7v1ud1gke7.fsf@alter.siamese.dyndns.org>
- <3f26b82599aa2a45897d345c851fab4751c55810.1359669205.git.john@keeping.me.uk>
- <20130131223305.GB21729@sigill.intra.peff.net>
- <20130131230455.GN27340@google.com>
+Subject: Re: [PATCH 1/2] docs: clarify git-branch --list behavior
+Date: Fri, 1 Feb 2013 00:06:37 -0500
+Message-ID: <20130201050637.GC29973@sigill.intra.peff.net>
+References: <20130131064357.GA24660@sigill.intra.peff.net>
+ <20130131064545.GA25315@sigill.intra.peff.net>
+ <CAPig+cT21Fx6BaD=1jT7KSBZSZkWu-A-0U+QsM2qO8g5gki=YQ@mail.gmail.com>
+ <7v4nhweuoi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Max Horn <max@quendi.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 06:04:22 2013
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Peter Wu <lekensteyn@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 01 06:07:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U18nN-0004EE-DX
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 06:04:13 +0100
+	id 1U18q7-00060y-KA
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 06:07:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750873Ab3BAFDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 00:03:48 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55150 "EHLO
+	id S1751182Ab3BAFGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 00:06:42 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55163 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750787Ab3BAFDr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 00:03:47 -0500
-Received: (qmail 17706 invoked by uid 107); 1 Feb 2013 05:05:10 -0000
+	id S1751048Ab3BAFGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 00:06:41 -0500
+Received: (qmail 17746 invoked by uid 107); 1 Feb 2013 05:08:04 -0000
 Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 00:05:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 00:03:43 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 00:08:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 00:06:37 -0500
 Content-Disposition: inline
-In-Reply-To: <20130131230455.GN27340@google.com>
+In-Reply-To: <7v4nhweuoi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215204>
 
-On Thu, Jan 31, 2013 at 03:04:55PM -0800, Jonathan Nieder wrote:
+On Thu, Jan 31, 2013 at 04:37:01PM -0800, Junio C Hamano wrote:
 
-> Jeff King wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 > 
-> > Maybe it is just me, but the fact that accessing the manpage is now:
+> > On Thu, Jan 31, 2013 at 1:45 AM, Jeff King <peff@peff.net> wrote:
+> >> +If `--list` is given, or if there are no non-option arguments, existing
+> >> +branches are listed; the current branch will be highlighted with an
+> >> +asterisk.  Option `-r` causes the remote-tracking branches to be listed,
+> >> +and option `-a` shows both local and remote branches. If a `<pattern>`
+> >> +is given, it is used as a shell wildcard to restrict the output to
+> >> +matching branches. If multiple patterns are given, a branch is shown if
+> >> +any it is matched by any of the patterns.
 > >
-> >   man gitremote-helpers
-> >
-> > feels weird to me. I know it technically follows our syntactic rules,
-> > but having the lack of dash be significant between "git" and "remote",
-> > but then having a dash later makes it hard on the eyes.
+> > s/if any it is/if it is/
 > 
-> Yes.  I have thought for years that it should be git-remote-helpers,
-> that "git help" should be tweaked to look for that, and that the
-> existing gitrepository-layout and friends should be replaced with
-> redirects.
+> Thanks; I'll squash this in.  Peff, no need to resend.
 
-What was the original rationale for the "gitfoo" form? Was it just to
-visually distinguish command manpages from non-command manpages? I can't
-remember the origins now. It does seem like it is causing more
-hassle than it is worth, but maybe there is something I am forgetting.
+Thanks. No matter how many times I proofread a doc change, I always
+manage to slip an error into the final version. Hooray for many eyes.
 
 -Peff
