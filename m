@@ -1,108 +1,77 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/6] introduce a commit metapack
-Date: Fri, 1 Feb 2013 04:42:41 -0500
-Message-ID: <20130201094237.GE30644@sigill.intra.peff.net>
-References: <20130129091434.GA6975@sigill.intra.peff.net>
- <20130129091610.GD9999@sigill.intra.peff.net>
- <7vy5fbq48t.fsf@alter.siamese.dyndns.org>
- <7vtxpzq2uv.fsf@alter.siamese.dyndns.org>
- <20130130071209.GD11147@sigill.intra.peff.net>
- <7vboc6mzpf.fsf@alter.siamese.dyndns.org>
- <CAJo=hJv0aqLpitnRJ6WKdPCETT6YgX5Njpv44DAYUg_KALhf=g@mail.gmail.com>
+Subject: Re: Re: Segmentation fault with latest git (070c57df)
+Date: Fri, 1 Feb 2013 04:57:09 -0500
+Message-ID: <20130201095709.GA31971@sigill.intra.peff.net>
+References: <17285958.791361359710080706.JavaMail.weblogic@epml01>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Feb 01 10:43:29 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Jongman Heo <jongman.heo@samsung.com>
+X-From: git-owner@vger.kernel.org Fri Feb 01 10:57:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1D9d-0006cz-3o
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 10:43:29 +0100
+	id 1U1DNQ-0007Xu-4q
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 10:57:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756169Ab3BAJnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 04:43:06 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55337 "EHLO
+	id S1756660Ab3BAJ5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 04:57:18 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55348 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755721Ab3BAJnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 04:43:04 -0500
-Received: (qmail 19990 invoked by uid 107); 1 Feb 2013 09:44:24 -0000
+	id S1756645Ab3BAJ5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 04:57:13 -0500
+Received: (qmail 27771 invoked by uid 107); 1 Feb 2013 09:58:37 -0000
 Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 04:44:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 04:42:41 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 04:58:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 04:57:09 -0500
 Content-Disposition: inline
-In-Reply-To: <CAJo=hJv0aqLpitnRJ6WKdPCETT6YgX5Njpv44DAYUg_KALhf=g@mail.gmail.com>
+In-Reply-To: <17285958.791361359710080706.JavaMail.weblogic@epml01>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215227>
 
-On Thu, Jan 31, 2013 at 09:03:26AM -0800, Shawn O. Pearce wrote:
+On Fri, Feb 01, 2013 at 09:14:41AM +0000, Jongman Heo wrote:
 
-> > Of course, it is more convenient to store this kind of things in a
-> > separate file while experimenting and improving the mechanism, but I
-> > do not think we want to see each packfile in a repository comes with
-> > 47 auxiliary files with different suffixes 5 years down the road.
-> 
-> Arrrrgggh.
-> 
-> Right now we are in the middle of refactoring the JGit reachability
-> bitmap implementation to store it into a separate file and get it out
-> of the .idx file. This work is nearly completed. So this thread is
-> great timing. :-)
-> 
-> I think Junio is right about not wanting 47 different tiny auxiliary
-> files for a single pack. We are unlikely to create that many, but
-> right now there are proposals floating around for at least 2 new
-> auxiliary files (commit cache and reachability bitmaps). So its not
-> impossible that another will be discovered in the future.
+> I can reproduce the issue in my machine (RedHat Enterprise 5, x86 PAE) as follows. 
 
-Why don't we want 47 files (or even 3)? If it makes the implementation
-more flexible or simple without sacrificing performance, I don't see a
-problem. The filesystem is there to organize our data; we do not cram
-all of our files into one just to save a few inodes.
+Great, thanks for taking the time to reproduce.
 
-We _do_ cram our data into packfiles and packed-refs when we can save
-O(n) inodes. But if we are talking about a handful of extra files that
-we must readdir() over while preparing the objects/pack directory, I
-don't think that is the same thing.
+> But in my different machine (Fedora 16 x86) I can't reproduce.
 
-The data dependency issues (can the files get out of sync? How common is
-it? Can we detect it?) and performance issues are more interesting to
-me. With respect to the latter, here's specifically what I'm thinking
-of. Let's imagine we have an extension for reachability bitmaps that
-takes up an extra 10MB. When we mmap the .idx file, do we always mmap
-the extra bytes? What's the performance impact of the extra mmap? I
-recall on some non-Linux systems it can be quite expensive. For most git
-commands which are not going to do a reachability analysis, this is a
-loss.
+That makes me wonder if it is related to the gcc or make version. I
+couldn't reproduce the problem on my gcc-4.1 system, though. My make is:
 
-I don't know if this is an issue big enough to care about or not. But I
-think it's worth benchmarking and including in the decision.
+  $ make --version
+  GNU Make 3.81
+  [...]
 
-> Junio may be right about the hole in the index file for git-core. I
-> haven't checked the JGit implementation, but I suspect it does not
-> have this hole. IIRC JGit consumes the index sections and then expects
-> the pack trailer SHA-1 to be present immediately after the last table.
-> This happens because JGit doesn't use mmap() to load the index, it
-> streams the file into memory and does some reformatting on the tables
-> to make search faster.
+>   $ git reset --hard v1.8.1       # back to v1.8.1
+>   $ make clean 
+>   $ make all install               # this git works fine
 
-Yeah, looking at the PackIndexV2 implementation, it counts the 64-bit
-offsets from the first table, calculates the size of the large offset
-table, reads past it, and then expects the pack checksum. So let's
-assume we would have to bump to v3 to implement it inside the .idx file.
+After this step, what does builtin/.depend/fetch.o.d contain? It should
+show a dependency of builtin/fetch.o on string-list (among other
+things).
 
-> If we are going to change the index to support extension sections and
-> I have to modify JGit to grok this new format, it needs to be index v3
-> not index v2. If we are making index v3 we should just put index v3 on
-> the end of the pack file.
+>   $ git pull                          # top commit 9a6c84e6, "Merge git://ozlabs.org/~paulus/gitk"
+>   $ make all install
 
-I'm not sure what you mean by your last sentence here.
+Can you try running "make -d builtin/fetch.o" here instead of "make all
+install"? Can you confirm that it reads builtin/.depend/fetch.o, and
+that fetch.o gets rebuilt (you should even be able to see the list of
+"newer than" dependencies in the debug output)?
+
+Another thing to double-check: does it work if you instead run
+
+  make all install COMPUTE_HEADER_DEPENDENCIES=no
+
+?
 
 -Peff
