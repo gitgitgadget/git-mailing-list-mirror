@@ -1,81 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/3] rebasing changes that update submodules
-Date: Thu, 31 Jan 2013 20:32:02 -0800
-Message-ID: <1359693125-22357-1-git-send-email-gitster@pobox.com>
-References: <20130130224904.GB1053@book.hvoigt.net>
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 01 05:32:45 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Rename {git- => git}remote-helpers.txt
+Date: Fri, 1 Feb 2013 00:03:43 -0500
+Message-ID: <20130201050343.GA29973@sigill.intra.peff.net>
+References: <7v1ud1gke7.fsf@alter.siamese.dyndns.org>
+ <3f26b82599aa2a45897d345c851fab4751c55810.1359669205.git.john@keeping.me.uk>
+ <20130131223305.GB21729@sigill.intra.peff.net>
+ <20130131230455.GN27340@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Max Horn <max@quendi.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 01 06:04:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U18Ip-0002r0-AZ
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 05:32:39 +0100
+	id 1U18nN-0004EE-DX
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 06:04:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753600Ab3BAEcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2013 23:32:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57468 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752492Ab3BAEcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2013 23:32:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CFFEC7F1;
-	Thu, 31 Jan 2013 23:32:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=43JC
-	yd156gj+w28cPrqA+vrx8N0=; b=VBMLEDM3N4BEMQkC3ecV2fFJ7HCOA8P0th4M
-	SiTsiIFpLXb4QKU46jXw1OeY2AwFG8ETRARWB7UwFT/9fm0OrWizIApuaqNApMa8
-	8B7RBP49uDEo5mz89BB4QtWtQhogWKe3W2HX5eEJgGZ54sRnMebKaoZAnBJMvdsj
-	QY+52Jk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	S58NcuYFFR3Z7/nq+IeRRmwbv6VtzBQVU+UvrgPzul5pNy4B7TVkG4Uf413TmIej
-	HmvIfXdVN87cn5NSpdeR26nk1GzobT/OM8xQn3G4Ht4xTOeW1lkyK/7TGAcuPh7f
-	EF/0q51bBYkh51X5PfrY7WX5AaylmMI9nJoxLqpPqX4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41D12C7F0;
-	Thu, 31 Jan 2013 23:32:07 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF286C7EF; Thu, 31 Jan 2013
- 23:32:06 -0500 (EST)
-X-Mailer: git-send-email 1.8.1.2.612.g09f4be5
-In-Reply-To: <20130130224904.GB1053@book.hvoigt.net>
-X-Pobox-Relay-ID: 55B97134-6C28-11E2-9CD5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750873Ab3BAFDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 00:03:48 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55150 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750787Ab3BAFDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 00:03:47 -0500
+Received: (qmail 17706 invoked by uid 107); 1 Feb 2013 05:05:10 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Feb 2013 00:05:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2013 00:03:43 -0500
+Content-Disposition: inline
+In-Reply-To: <20130131230455.GN27340@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215203>
 
-"git rebase" used to use "format-patch --full-index" to generate a
-series of patches and let "git am --rebase" reconstruct a fake
-preimage tree by reading the object names from the "index" lines.
+On Thu, Jan 31, 2013 at 03:04:55PM -0800, Jonathan Nieder wrote:
 
-With a230949 (am --rebasing: get patch body from commit, not from
-mailbox, 2012-06-26), we switched to use "diff-tree", but forgot
-that without "--full-index", the information generated on the
-"index" line is insufficient to recreate a preimage tree that
-contains a submodule.
+> Jeff King wrote:
+> 
+> > Maybe it is just me, but the fact that accessing the manpage is now:
+> >
+> >   man gitremote-helpers
+> >
+> > feels weird to me. I know it technically follows our syntactic rules,
+> > but having the lack of dash be significant between "git" and "remote",
+> > but then having a dash later makes it hard on the eyes.
+> 
+> Yes.  I have thought for years that it should be git-remote-helpers,
+> that "git help" should be tweaked to look for that, and that the
+> existing gitrepository-layout and friends should be replaced with
+> redirects.
 
-The first one is the real fix to this issue.
+What was the original rationale for the "gitfoo" form? Was it just to
+visually distinguish command manpages from non-command manpages? I can't
+remember the origins now. It does seem like it is causing more
+hassle than it is worth, but maybe there is something I am forgetting.
 
-The other two falls into the niceties category; they are to issue a
-better error messge when the machinery is fed an abbreviated object
-name on the "index" line for a submodule.
-
-Junio C Hamano (3):
-  git-am: record full index line in the patch used while rebasing
-  apply: simplify build_fake_ancestor()
-  apply: diagnose incomplete submodule object name better
-
- builtin/apply.c             | 30 ++++++++++++++++--------------
- git-am.sh                   |  2 +-
- t/t7402-submodule-rebase.sh | 30 ++++++++++++++++++++++++++++--
- 3 files changed, 45 insertions(+), 17 deletions(-)
-
--- 
-1.8.1.2.612.g09f4be5
+-Peff
