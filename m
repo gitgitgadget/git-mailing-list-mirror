@@ -1,122 +1,131 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/6] Add a description for 'gitfile' to glossary
-Date: Fri, 1 Feb 2013 11:46:37 -0800
-Message-ID: <20130201194637.GD12368@google.com>
-References: <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
+Subject: Re: [PATCH 6/6] Use consistent links for User Manual and Everyday
+ Git; Fix a quoting error
+Date: Fri, 1 Feb 2013 11:51:40 -0800
+Message-ID: <20130201195140.GE12368@google.com>
+References: <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
+ <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
+ <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
  <7vvcark1f2.fsf@alter.siamese.dyndns.org>
  <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
  <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
  <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
  <CAJDDKr4fnUp_35ni72XJS_NSp4jxbvQPENLnk3AhFv2FBg3DTg@mail.gmail.com>
  <50804391.814945.1358931502165.JavaMail.ngmail@webmail07.arcor-online.net>
- <274664435.1090127.1359742284591.JavaMail.ngmail@webmail18.arcor-online.net>
- <7v4nhvc1vv.fsf@alter.siamese.dyndns.org>
- <7vlib7al90.fsf@alter.siamese.dyndns.org>
+ <549641245.1090170.1359742373184.JavaMail.ngmail@webmail18.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Ackermann <th.acker@arcor.de>, git@vger.kernel.org,
-	davvid@gmail.com, Lars Hjemli <hjemli@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Fredrik Gustafsson <iveqy@iveqy.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 20:47:05 2013
+Cc: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Fri Feb 01 20:52:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1MZk-0004zG-Ik
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:47:04 +0100
+	id 1U1Mej-00007g-Ez
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 20:52:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756301Ab3BATqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 14:46:43 -0500
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:52768 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753297Ab3BATql (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 14:46:41 -0500
-Received: by mail-pb0-f50.google.com with SMTP id ro8so2286614pbb.37
-        for <git@vger.kernel.org>; Fri, 01 Feb 2013 11:46:41 -0800 (PST)
+	id S1757116Ab3BATvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 14:51:51 -0500
+Received: from mail-da0-f45.google.com ([209.85.210.45]:50417 "EHLO
+	mail-da0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756523Ab3BATvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 14:51:50 -0500
+Received: by mail-da0-f45.google.com with SMTP id w4so1850507dam.18
+        for <git@vger.kernel.org>; Fri, 01 Feb 2013 11:51:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=vkenK6OdfEr5OEDGma1zu8cKBILZ/a27Wyv7JvwEl2I=;
-        b=IAje4LyLW3PFXUqLZcLsg5La2g2RpRFMXJzBo6doDkel4ZN3Gz9cT5qs4A6C/vNXTT
-         Z/Zd5+hHh/7xHScBB2IThAIl2gpLmzJhrJxE4KTHd5DkATrT7Cj2a+2zBYMtbDVDROGw
-         Y9+wpSlhBzo3xhA/GCh+Yalb8qedQSeCayUnSfFG5ho6VRGHOFdcNoU13SL5qPJZ3wyg
-         cemWwHyUsjyhOpj40GZ+twBcZloopWQ8A+1cpA48pYtMlavBf1dnhB8/9Vm8sPrWI9Q9
-         b8qvsBsUL5NXaBhy5eXpOi5QnMuBe8WcBNUJmlrgqHLnlla1EHm4hQkQq+JP5xs1RDyM
-         oZHg==
-X-Received: by 10.68.238.163 with SMTP id vl3mr34386057pbc.89.1359748001321;
-        Fri, 01 Feb 2013 11:46:41 -0800 (PST)
+        bh=HT2ii8+YYoCvzflNCHwEmbvuMlgpiYjIvNkEi1d8cAg=;
+        b=OBbxFsGJ3KWZx6VBHgANSwx7i+ZfEddTYlP6CgdoSk89RzaniqmhClySJu6iUUT/L9
+         0VuQN4AMkPIh3wnW9m5u73I0USMknwmQbrJi+DyH7X9stFC1TdPoPPAbrFUqQS8/LEY0
+         FuiTpLNv8Uu4HZEwxsLZRD83hUzNXmoabwONZhsUR0G12pP5TIUReGOLyI+wH4otNF3+
+         zs5StUqaya9bkaieUzcD5IID9PQGk1jdfOpjzHImF3TL+1a5Og6y4iRlOrLmkvFUjx9W
+         jJ4XJRy/kanV7836vhVKa8TgZoiZo7ZC8C9YdEINZSRQ1VXXlxWtAhnmWTPF98KnPI19
+         k4ZQ==
+X-Received: by 10.66.81.231 with SMTP id d7mr32763631pay.27.1359748309974;
+        Fri, 01 Feb 2013 11:51:49 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id sb3sm9288142pbc.44.2013.02.01.11.46.39
+        by mx.google.com with ESMTPS id jo6sm9324730pbb.5.2013.02.01.11.51.42
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 01 Feb 2013 11:46:40 -0800 (PST)
+        Fri, 01 Feb 2013 11:51:48 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7vlib7al90.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <549641245.1090170.1359742373184.JavaMail.ngmail@webmail18.arcor-online.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215263>
 
-Junio C Hamano wrote:
+Thomas Ackermann wrote:
 
-> How about saying something like this here in the glossary:
->
-> 	A plain file `.git` at the root of a working tree that
-> 	points at the directory that is the real repository.
->
-> And then as a separate patch, in gitrepository-layout.txt (eek---see
-> the other thread), we can do something like this:
->
->  Documentation/gitrepository-layout.txt | 24 ++++++++++++++++++------
->  1 file changed, 18 insertions(+), 6 deletions(-)
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -23,7 +23,7 @@ and full access to internals.
+>  
+>  See linkgit:gittutorial[7] to get started, then see
+>  link:everyday.html[Everyday Git] for a useful minimum set of
+> -commands.  The link:user-manual.html[Git User's Manual] has a more
+> +commands.  The link:user-manual.html[The Git User's Manual] has a more
+>  in-depth introduction.
 
-Looks correct and very readable.  Thanks.
+In the rendered version, this looks like:
 
+	The The Git User's Manual[1] has a more in-depth introduction.
+
+Presumably the first "The" should be dropped from either the link or
+the surrounding text.
+
+[...]
+> --- a/Documentation/gitcore-tutorial.txt
+> +++ b/Documentation/gitcore-tutorial.txt
+> @@ -17,7 +17,7 @@ work with a Git repository.
+>  
+>  If you just need to use Git as a revision control system you may prefer
+>  to start with "A Tutorial Introduction to Git" (linkgit:gittutorial[7]) or
+> -link:user-manual.html[the Git User Manual].
+> +link:user-manual.html[The Git User's Manual].
+
+This comes out as
+
+	... you may prefer to start with "A Tutorial Instruction to Git"
+	(gittutorial(7)) or The Git User's Manual[1].
+
+The capital 'T' in "The" looks a bit strange, but a lowercase 't' in
+the corresponding footnote would also look strange.  We can't have
+everything, I guess.
+
+A possible fix would be to drop the "The" from the link.  The way you
+have it here also seems fine.
+
+[...]
+> --- a/Documentation/gittutorial-2.txt
+> +++ b/Documentation/gittutorial-2.txt
+> @@ -406,7 +406,7 @@ pages for any of the git commands; one good place to start would be
+>  with the commands mentioned in link:everyday.html[Everyday Git].  You
+>  should be able to find any unknown jargon in linkgit:gitglossary[7].
+>  
+> -The link:user-manual.html[Git User's Manual] provides a more
+> +The link:user-manual.html[The Git User's Manual] provides a more
+>  comprehensive introduction to Git.
+
+Doubled 'The'.
+
+[...]
+> --- a/Documentation/gittutorial.txt
+> +++ b/Documentation/gittutorial.txt
+> @@ -656,7 +656,7 @@ digressions that may be interesting at this point are:
+>    * linkgit:gitworkflows[7]: Gives an overview of recommended
+>      workflows.
+>  
+> -  * link:everyday.html[Everyday Git with 20 Commands Or So]
+> +  * link:everyday.html[Everyday Git]
+
+Isn't the old title more informative?
+
+Thanks and hope that helps,
 Jonathan
-(patch left unsnipped for reference)
-
-> diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
-> index 9f62886..473c6a0 100644
-> --- a/Documentation/gitrepository-layout.txt
-> +++ b/Documentation/gitrepository-layout.txt
-> @@ -12,12 +12,24 @@ $GIT_DIR/*
->  DESCRIPTION
->  -----------
->  
-> -You may find these things in your git repository (`.git`
-> -directory for a repository associated with your working tree, or
-> -`<project>.git` directory for a public 'bare' repository. It is
-> -also possible to have a working tree where `.git` is a plain
-> -ASCII file containing `gitdir: <path>`, i.e. the path to the
-> -real git repository).
-> +A Git repository comes in two different flavours:
-> +
-> + * a `.git` directory at the root of the working tree;
-> +
-> + * a `<project>.git` directory that is a 'bare' repository
-> +   (i.e. without its own working tree), that is typically used for
-> +   exchanging histories with others by pushing into it and fetching
-> +   from it.
-> +
-> +*Note*: Also you can have a plain text file `.git` at the root of
-> +your working tree, containing `gitdir: <path>` to point at the real
-> +directory that has the repository.  This mechanism is often used for
-> +a working tree of a submodule checkout, to allow you in the
-> +containing superproject to `git checkout` a branch that does not
-> +have the submodule.  The `checkout` has to remove the entire
-> +submodule working tree, without losing the submodule repository.
-> +
-> +These things may exist in a Git repository.
->  
->  objects::
->  	Object store associated with this repository.  Usually
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
