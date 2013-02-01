@@ -1,79 +1,73 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: Re: [PATCH 6/6] Use consistent links for User Manual and
- Everyday Git; Fix a quoting error
-Date: Fri, 1 Feb 2013 21:25:13 +0100 (CET)
-Message-ID: <1609076047.1915083.1359750313593.JavaMail.ngmail@webmail12.arcor-online.net>
-References: <20130201195140.GE12368@google.com> <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
- <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
- <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
- <7vvcark1f2.fsf@alter.siamese.dyndns.org>
- <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
- <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
- <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
- <CAJDDKr4fnUp_35ni72XJS_NSp4jxbvQPENLnk3AhFv2FBg3DTg@mail.gmail.com>
- <50804391.814945.1358931502165.JavaMail.ngmail@webmail07.arcor-online.net>
- <549641245.1090170.1359742373184.JavaMail.ngmail@webmail18.arcor-online.net>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: [PATCH] mergetools: Enable tortoisemerge to handle filenames
+ with
+Date: Fri, 01 Feb 2013 21:10:27 +0100
+Message-ID: <510C2133.5070905@tu-clausthal.de>
+References: <50FBD4AD.2060208@tu-clausthal.de> <7v4nibjrg0.fsf@alter.siamese.dyndns.org> <50FCFBBB.2080305@tu-clausthal.de> <7vfw1qbbr4.fsf@alter.siamese.dyndns.org> <5101B0A5.1020308@tu-clausthal.de> <51024B02.9020400@tu-clausthal.de> <CAJDDKr7eNyJp1ffBYEJaZkmnVWqd0AMpnm1kdjnrrhPtuGNL_w@mail.gmail.com> <5102837C.9000608@tu-clausthal.de> <7v622l5d87.fsf@alter.siamese.dyndns.org> <51032E96.2040209@tu-clausthal.de> <CAJDDKr6OhZOitTdDkHWnhVhdAis0U+95xUtaNn6nwkQ-k+bA+w@mail.gmail.com> <5104F009.5020606@tu-clausthal.de> <7vzjzuwm7s.fsf@alter.siamese.dyndns.org> <510C1872.3090304@tu-clausthal.de> <CAHGBnuNpHtfnD6D+sji6e1yp2x6iLxjAbawwO6USF2iWW17nuQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
-To: jrnieder@gmail.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Fri Feb 01 21:25:40 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>, Jeff King <peff@peff.net>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 01 21:27:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1NB4-0005S6-Vl
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 21:25:39 +0100
+	id 1U1NCt-0006nA-Ei
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 21:27:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757413Ab3BAUZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 15:25:17 -0500
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:47963 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757296Ab3BAUZO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 15:25:14 -0500
-Received: from mail-in-15-z2.arcor-online.net (mail-in-15-z2.arcor-online.net [151.189.8.32])
-	by mx.arcor.de (Postfix) with ESMTP id A0E65D7F27;
-	Fri,  1 Feb 2013 21:25:13 +0100 (CET)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-15-z2.arcor-online.net (Postfix) with ESMTP id 946EF112038;
-	Fri,  1 Feb 2013 21:25:13 +0100 (CET)
-Received: from webmail12.arcor-online.net (webmail12.arcor-online.net [151.189.8.64])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 8B54B19783D;
-	Fri,  1 Feb 2013 21:25:13 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net 8B54B19783D
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1359750313; bh=HaQIz+fJRhWnrVdnz5Et3l2SQMfDSmonSYVqlZ7dS4g=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=I7a76IPHhIUpznVAL2hXWk+pVeUdkCOLvCdfHn4F6eDQ0Ra/Oy6Bpl5L+ntrwiU8F
-	 4ivoWfqOwoE3FsGQkwAFUtKPYtpuF7cD3Vl0PeKlgdwaPfYIb/tephp1G4PBcjcHKS
-	 CjO/XNnCWZbUTIq2VTD3JVVdaT4NdZzZMiADHFvI=
-Received: from [188.105.106.49] by webmail12.arcor-online.net (151.189.8.64) with HTTP (Arcor Webmail); Fri, 1 Feb 2013 21:25:13 +0100 (CET)
-In-Reply-To: <20130201195140.GE12368@google.com>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 188.105.106.49
+	id S1757284Ab3BAU1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 15:27:08 -0500
+Received: from mailrelay2.rz.tu-clausthal.de ([139.174.2.43]:45583 "EHLO
+	mailrelay2.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756267Ab3BAU1H (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 15:27:07 -0500
+Received: from poseidon.rz.tu-clausthal.de (poseidon.rz.tu-clausthal.de [139.174.2.21])
+	by mailrelay2.rz.tu-clausthal.de (Postfix) with ESMTP id 0B87F289D33;
+	Fri,  1 Feb 2013 21:27:05 +0100 (CET)
+Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id AA61829A795;
+	Fri,  1 Feb 2013 21:27:04 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=TmuNqItTMJJrC9+uSITfQs3/uxQ=; b=tvyt2qFyLu/G4SVabyQ4b2OyLglS
+	Gcbo9O4sh0ElMLaFeCCUx8/3ODzOBsn7AL2tyIGjd0LkSo5evQiP9dwdCQDzpNn+
+	4axdDAzaQdu4M5QJfdDyq2oIiiDVulSoLQm9sr1yO4Cv+1ropUwnWrhJ37dZMqZo
+	7zi3zn+k5BnDp3U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=YAoeYj3jfX2WLCMIxDCRFDn4AOcISk0ydB+/Ehq7DPsd73wKUDLW2V6
+	ZQ69fBZqqCeNw6p7ILl+nZdLiXsf8BMog2eNcfCcgUP7id8hTOmpSAl/GjjJ9a71
+	ZZZTypF3zRvRsxOOuEvH3Ko8NfoYiqjLVknwVhGATj87JxIkSZfo=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 346AD25721;
+	Fri,  1 Feb 2013 21:10:22 +0100 (CET)
+Received: from [79.193.90.228] (account sstri@tu-clausthal.de HELO [192.168.0.20])
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.8)
+  with ESMTPSA id 43699778; Fri, 01 Feb 2013 21:10:22 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <CAHGBnuNpHtfnD6D+sji6e1yp2x6iLxjAbawwO6USF2iWW17nuQ@mail.gmail.com>
+X-Enigmail-Version: 1.5
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+X-Spam-Level: (8%, '
+ MULTIPLE_RCPTS 0.1, HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_200_299 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, CT_TEXT_PLAIN_UTF8_CAPS 0, DKIM_SIGNATURE 0, DOMAINKEY_SIG 0, SMALL_BODY 0, __ANY_URI 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_FROM 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __MOZILLA_USER_AGENT 0, __MULTIPLE_RCPTS_CC_X2 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __URI_NO_MAILTO 0, __URI_NO_PATH 0, __URI_NO_WWW 0, __USER_AGENT 0')
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215269>
 
+Am 01.02.2013 21:07 schrieb Sebastian Schuberth:
+> mergetools: Teach tortoisemerge about TortoiseGitMerge
 
-> 
-> Presumably the first "The" should be dropped from either the link or
-> the surrounding text.
->
-> Doubled 'The'.
-> 
-You are right. I missed that; sorry.
+This subject doesn't make any sense if we don't combine the two patches.
 
-> 
-> Isn't the old title more informative?
-> 
-Yes; but every other link just uses the shorter version "Everyday Git".
-
-
----
-Thomas
+-- 
+Best regards,
+ Sven Strickroth
+ PGP key id F5A9D4C4 @ any key-server
