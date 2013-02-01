@@ -1,105 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/6] fixup! Documentation: avoid poor-man's small caps
-Date: Fri, 01 Feb 2013 10:44:52 -0800
-Message-ID: <7vvcaban6j.fsf@alter.siamese.dyndns.org>
-References: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
- <7vzjzodfp1.fsf@alter.siamese.dyndns.org>
- <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
- <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
- <7vvcark1f2.fsf@alter.siamese.dyndns.org>
- <775908345.1391972.1358713010522.JavaMail.ngmail@webmail12.arcor-online.net>
- <884336319.632675.1358795540870.JavaMail.ngmail@webmail20.arcor-online.net>
- <2009548606.632825.1358795980319.JavaMail.ngmail@webmail20.arcor-online.net>
- <CAJDDKr4fnUp_35ni72XJS_NSp4jxbvQPENLnk3AhFv2FBg3DTg@mail.gmail.com>
- <50804391.814945.1358931502165.JavaMail.ngmail@webmail07.arcor-online.net>
- <544568068.1090092.1359742136040.JavaMail.ngmail@webmail18.arcor-online.net>
+Subject: Re: [PATCH] Rename {git- => git}remote-helpers.txt
+Date: Fri, 01 Feb 2013 10:52:52 -0800
+Message-ID: <7vr4kzamt7.fsf@alter.siamese.dyndns.org>
+References: <7v1ud1gke7.fsf@alter.siamese.dyndns.org>
+ <3f26b82599aa2a45897d345c851fab4751c55810.1359669205.git.john@keeping.me.uk>
+ <20130131223305.GB21729@sigill.intra.peff.net>
+ <20130131230455.GN27340@google.com>
+ <20130201050343.GA29973@sigill.intra.peff.net>
+ <7v7gmsd26o.fsf@alter.siamese.dyndns.org>
+ <20130201073352.GB970@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, davvid@gmail.com
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Fri Feb 01 19:45:18 2013
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Max Horn <max@quendi.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 01 19:53:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1Lbx-0002kk-NO
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:45:18 +0100
+	id 1U1Lji-0001ML-DO
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:53:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755892Ab3BASo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 13:44:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50305 "EHLO
+	id S1756261Ab3BASw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 13:52:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54681 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756669Ab3BASoz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 13:44:55 -0500
+	id S1752073Ab3BASwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 13:52:55 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC659C79B;
-	Fri,  1 Feb 2013 13:44:54 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BC4FCBA1;
+	Fri,  1 Feb 2013 13:52:55 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=O6VcnuinyikLAp2kGLyvcawcAp0=; b=Cgllci
-	fYHev7grBa8s/6csq3to3fiLGnI6NIT4k1xhPHzOEszNE7CGohPiPufxSHG4mbza
-	Vd5NMUJgVK9mXK99zzwW+yzzoeL6xbE9smgBIglOphbzB62lRX2vc7UZWb1Vjk+o
-	hZo1ZKm58F82mMQpKtc+I9p6IbyJAuEAUONSw=
+	:content-type; s=sasl; bh=4OSFKlsAWQPawXH2gEcK95UBliI=; b=nHVYWK
+	0w6jhdSdgb2jtIA2mmAJWM0nyf6BVeHwdi2sm42/+v5tdPSKO8AyeZ3nY95JFRWK
+	gcs42fT27KJIb1p8Wlb5GblFdqxvDU7jRuYyLg6PvemiIe4TiVwvL0wIjbYePYBx
+	leBbmKEIPHybqrBS9gnqq879TmOL4nqlXjodE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IeWvn+Rr3b9hu9TPU+HPLwZQXWyAuKW5
-	CXsolwcb/MaBc1nm1FZYg18OpG7AdSW0Vn1KF6iaxXwn729mogGJgHHijKqxFH2E
-	pC5bN3rpCcIQFbJ6cOgRZdhyr3UvTlnIDTTdf0VE1Uy7hqmIUst/RXsbkza9cBze
-	yeUUwV1Xu7I=
+	:content-type; q=dns; s=sasl; b=vc3Q14hSbJ+lskY8BCaz8s5x9FaLxjn5
+	F69vjDimO3E7CO9RTFmDSzaYHjxqHAkjfMO1JW8fJYxD7aeSb9nNKlXV/7CEZSZm
+	M3OZUoAsctL2IXWjCek8U7tTLpC/25Q/r9VGNm+kQFKnl9G4N3uiPdSY0kEk2YBD
+	23j5xw+6mr4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0B4FC79A;
-	Fri,  1 Feb 2013 13:44:54 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 005F9CBA0;
+	Fri,  1 Feb 2013 13:52:55 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33660C799; Fri,  1 Feb 2013
- 13:44:54 -0500 (EST)
-In-Reply-To: <544568068.1090092.1359742136040.JavaMail.ngmail@webmail18.arcor-online.net>
- (Thomas Ackermann's message of "Fri, 1 Feb 2013 19:08:56 +0100 (CET)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61309CB9F; Fri,  1 Feb 2013
+ 13:52:54 -0500 (EST)
+In-Reply-To: <20130201073352.GB970@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 1 Feb 2013 02:33:52 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 77ED4E7A-6C9F-11E2-AC28-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 962460B2-6CA0-11E2-B60F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215250>
 
-Thomas Ackermann <th.acker@arcor.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
-> ---
+> Right. So we have some that must be "gitfoo", and others that do not
+> care. If we turned "githooks" into "git-hooks" and removed the "is it a
+> command?" magic from "git help", then "git help hooks" would still find
+> hooks. And likewise, "git help gitignore" would still find "gitignore".
+> But you could no longer say "git help ignore" to find "gitignore".
 
-I think this deserves to be a separate patch in the series, that
-says "StGit is the right spelling of the system, not StGIT",
-referring to https://gna.org/projects/stgit/ or somewhere, in the
-log message.
+Which I think is a good thing ;-)
 
-Will massage the above in; no need to resend.
+> Which personally I am OK with. It is not a sensible thing to ask for;
+> the concept is not "ignore", but rather "the gitignore file".
 
-Thanks.
+Yes, exactly.
 
->  Documentation/git-tools.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>   4. Replace the rename "gitfoo" above with a "see git-foo..." pointer.
+>      Users of "git help foo" would not ever see this, but people who
+>      have trained their fingers to type "man gitfoo" would, along with
+>      anybody following an outdated HTML link.
 >
-> diff --git a/Documentation/git-tools.txt b/Documentation/git-tools.txt
-> index 338986a..ad8b823 100644
-> --- a/Documentation/git-tools.txt
-> +++ b/Documentation/git-tools.txt
-> @@ -29,7 +29,7 @@ Alternative/Augmentative Porcelains
->     - *pg* (http://www.spearce.org/category/projects/scm/pg/)
->  
->     pg is a shell script wrapper around Git to help the user manage a set of
-> -   patches to files. pg is somewhat like quilt or StGIT, but it does have a
-> +   patches to files. pg is somewhat like quilt or StGit, but it does have a
->     slightly different feature set.
->  
->  
-> @@ -60,7 +60,7 @@ History Viewers
->  
->     - *qgit* (http://digilander.libero.it/mcostalba/)
->  
-> -   QGit is a git/StGIT GUI viewer built on Qt/C++. QGit could be used
-> +   QGit is a git/StGit GUI viewer built on Qt/C++. QGit could be used
->     to browse history and directory tree, view annotated files, commit
->     changes cherry picking single files or applying patches.
->     Currently it is the fastest and most feature rich among the Git
+>   5. Update internal references to "linkgit:gitfoo" to point to
+>      "git-foo".
+>
+> Hmm. That really does not seem so bad. The biggest downside is the
+> people who have to see the redirect made in step 4.
+
+Yeah, I see that a show-stopper in the whole sequence.
+
+This is one of the "if we had perfect knowledge we would have
+designed it this way, and we could still migrate our current system
+to that ideal, but it is dubious the difference between the current
+system and the ideal will outweigh the cost of migration" moment,
+isn't it?
