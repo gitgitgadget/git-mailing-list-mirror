@@ -1,82 +1,60 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] gitk-git/.gitignore: add rule for gitk-wish
-Date: Fri, 1 Feb 2013 15:52:10 -0800
-Message-ID: <20130201235209.GK12368@google.com>
-References: <1359456750-29342-1-git-send-email-artagnon@gmail.com>
+From: Ben Aveling <bena.001@optusnet.com.au>
+Subject: Re: Files excluded but not ignored
+Date: Sat, 02 Feb 2013 10:54:58 +1100
+Message-ID: <510C55D2.20103@optusnet.com.au>
+References: <loom.20130130T161911-66@post.gmane.org> <7v38ximyr2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Paul Mackerras <paulus@samba.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 02 00:52:48 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jason Wenger <jcwenger@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 02 00:55:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1QPW-0003sq-Sj
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Feb 2013 00:52:47 +0100
+	id 1U1QS8-0005W6-1R
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Feb 2013 00:55:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757027Ab3BAXwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 18:52:15 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:36287 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755464Ab3BAXwP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 18:52:15 -0500
-Received: by mail-pa0-f54.google.com with SMTP id fa10so826121pad.27
-        for <git@vger.kernel.org>; Fri, 01 Feb 2013 15:52:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=RIJCALW/FcI4fEglbqI4OKLbgxoOnIkEMBMWYhQQKAg=;
-        b=iEcqlUIKi025zTIjS7N+g6JQfjfbctNTB3CSpw1Z/s/2TVAvlDXfvZIvoArBN/CWEj
-         oCT92r5kzHTDwmuST3UfxgT9s2UwJ5EANT3GbOyHdV0QTaAxgQqEexQDbToKaXOx7HmA
-         M3RGJ7VbbxSmGu5MOQX7Kkv+XIwJ0X54f69sfR8fG9tP+WVBd6iO5xu7k/G29dPR0M6B
-         eiXfNLw+HgR6QCOvG3pmwD5JoE2Oj7rtz3k9RnvflUF8rLkwi6kbCv9pkgAkkI+KSBPi
-         bx5TuQ+dcc9KCc0BbKJW+D9LKNCouu/2vOUs788dhYWeZFsPHeJJlyyBr4otBD69Qzd2
-         JT1A==
-X-Received: by 10.66.82.200 with SMTP id k8mr34256396pay.56.1359762734474;
-        Fri, 01 Feb 2013 15:52:14 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id a1sm10578112pav.2.2013.02.01.15.52.12
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 01 Feb 2013 15:52:13 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1359456750-29342-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756243Ab3BAXzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 18:55:06 -0500
+Received: from mail06.syd.optusnet.com.au ([211.29.132.187]:32809 "EHLO
+	mail06.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755633Ab3BAXzE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 18:55:04 -0500
+Received: from [10.1.1.7] (d110-33-194-207.mas801.nsw.optusnet.com.au [110.33.194.207])
+	(authenticated sender bena.001)
+	by mail06.syd.optusnet.com.au (8.13.1/8.13.1) with ESMTP id r11NssUe016172
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 2 Feb 2013 10:54:55 +1100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <7v38ximyr2.fsf@alter.siamese.dyndns.org>
+X-Optus-CM-Score: 0
+X-Optus-CM-Analysis: v=2.0 cv=RbTIkCRv c=1 sm=1 a=kfTud4QeKxsA:10
+	a=OeJE13a6dSgA:10 a=8nJEP1OIZ-IA:10 a=PO7r1zJSAAAA:8 a=YC0M7niL4NYA:10
+	a=pGLkceISAAAA:8 a=Zx_lQvsMsP3VFSgDhvAA:9 a=wPNLvfGTeEIA:10
+	a=MSl-tDqOz04A:10 a=8hDSsFRbc579JZyDoJakvw==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215280>
 
-Hi Ram,
-
-Ramkumar Ramachandra wrote:
-
-> 8f26aa4 (Makefile: remove tracking of TCLTK_PATH, 2012-12-18) removed
-> "/gitk-git/gitk-wish" from the toplevel .gitignore, with the intent of
-> moving it to gitk-git/.gitignore in a later patch.  This was never
-> realized.
+On 31/01/2013 3:17 AM, Junio C Hamano wrote:
+> Jason Wenger <jcwenger@gmail.com> writes:
 >
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  Minor patch, so I didn't bother sending it through Paul.
+>> Trying to start up discussion of whether there would be merit to a "half-
+>> ignored" state -- Files which are excluded from tracking, but which still
+>> show in git status, and which are removed by git clean.
+> I see no merit for "ignored and never to be tracked, but are still
+> shown loudly in the untracked list" myself.  Use cases for "ignored
+> and never to be tracked, but not expendable" class were mentioned
+> often in the past, though.
 
-All gitk patches go through Paul's repo.  I keep forgetting the
-address, so I look it up each time.
+A new state seems over the top.
 
-	$ git log -1 --oneline gitk-git/
-	9a6c84e Merge git://ozlabs.org/~paulus/gitk
+Jason, would adding a parameter to "git status" telling it to ignore all 
+.gitignores give you what you need?
 
-Looks like this was fixed in the week since last pull.
-
-	http://thread.gmane.org/gmane.comp.version-control.git/214312
-
-Paul, would it be safe for Junio to pull again?
-
-Thanks,
-Jonathan
+Regards, Ben
