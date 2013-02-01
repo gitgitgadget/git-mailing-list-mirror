@@ -1,7 +1,7 @@
 From: Thomas Ackermann <th.acker@arcor.de>
-Subject: [PATCH 4/6] Fix places where 'Git' should be 'git
-Date: Fri, 1 Feb 2013 19:10:25 +0100 (CET)
-Message-ID: <253726098.1090112.1359742225624.JavaMail.ngmail@webmail18.arcor-online.net>
+Subject: [PATCH 5/6] Add a description for 'gitfile' to glossary
+Date: Fri, 1 Feb 2013 19:11:24 +0100 (CET)
+Message-ID: <274664435.1090127.1359742284591.JavaMail.ngmail@webmail18.arcor-online.net>
 References: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net> <7vzjzodfp1.fsf@alter.siamese.dyndns.org> <7v38xsjzxg.fsf@alter.siamese.dyndns.org>
  <1860384981.631689.1358793375131.JavaMail.ngmail@webmail20.arcor-online.net>
  <7vvcark1f2.fsf@alter.siamese.dyndns.org>
@@ -15,39 +15,39 @@ Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, davvid@gmail.com
 To: gitster@pobox.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Fri Feb 01 19:10:49 2013
+X-From: git-owner@vger.kernel.org Fri Feb 01 19:11:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1L4a-0004XV-Sa
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:10:49 +0100
+	id 1U1L5X-0005Fl-Jn
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Feb 2013 19:11:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753309Ab3BASK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 13:10:28 -0500
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:43690 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753109Ab3BASK0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 13:10:26 -0500
-Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
-	by mx.arcor.de (Postfix) with ESMTP id 9AFD93073C;
-	Fri,  1 Feb 2013 19:10:25 +0100 (CET)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id 91E7919711;
-	Fri,  1 Feb 2013 19:10:25 +0100 (CET)
+	id S1753140Ab3BASL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 13:11:26 -0500
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:60202 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751246Ab3BASLZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2013 13:11:25 -0500
+Received: from mail-in-15-z2.arcor-online.net (mail-in-15-z2.arcor-online.net [151.189.8.32])
+	by mx.arcor.de (Postfix) with ESMTP id 8B242D86ED;
+	Fri,  1 Feb 2013 19:11:24 +0100 (CET)
+Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
+	by mail-in-15-z2.arcor-online.net (Postfix) with ESMTP id 8FE3B11202D;
+	Fri,  1 Feb 2013 19:11:24 +0100 (CET)
 Received: from webmail18.arcor-online.net (webmail18.arcor-online.net [151.189.8.76])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 937D9107C11;
-	Fri,  1 Feb 2013 19:10:25 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-07.arcor-online.net 937D9107C11
+	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 8408B35AA8D;
+	Fri,  1 Feb 2013 19:11:24 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-11.arcor-online.net 8408B35AA8D
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1359742225; bh=1QcfhD34LFRJ7ZGDm9ueBgVjUcZB5jIXF2hrMj/LXdw=;
+	t=1359742284; bh=J0EpiMlc4pDh/LshHMuJ3EbQOCHSvjVggD5FyTs539s=;
 	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=JWXSg1F1X3/8ofdPyGETNd7JL1uUc2Rb5MjOPeO7IYn3OkmlAKXRjXf4XMELNcA8T
-	 +AGwwhjeYWA7GnLR/z/nGfC7ywjvevrhvUUFAsbPBVWvqqiddpKK6FLDuQGXTrDhU3
-	 u/ER4JDth8atuHQSwKAnFkhbwt+vJpv13BohcxwY=
-Received: from [188.105.106.49] by webmail18.arcor-online.net (151.189.8.76) with HTTP (Arcor Webmail); Fri, 1 Feb 2013 19:10:25 +0100 (CET)
+	b=sNWbiI6B/TIBeGjXcO/B0bDLJVP3i9w3Kkt83KhNFTsuBL3/lFjlYdR8/w9HUX9cc
+	 zZrgdt5g7JefDWoeGysKHTsUgrNKxWPN/lkwrQnkYYs5DTYoAFznNxXtxHDu3GPOq0
+	 ZNDZG8CZOWzNgX8JjRQel7JixXWwg/ykFVrELS6Y=
+Received: from [188.105.106.49] by webmail18.arcor-online.net (151.189.8.76) with HTTP (Arcor Webmail); Fri, 1 Feb 2013 19:11:24 +0100 (CET)
 In-Reply-To: <210945773.1090030.1359741840305.JavaMail.ngmail@webmail18.arcor-online.net>
 X-ngMessageSubType: MessageSubType_MAIL
 X-WebmailclientIP: 188.105.106.49
@@ -55,59 +55,27 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215243>
 
 Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
 ---
- Documentation/git-p4.txt        | 4 ++--
- Documentation/git-remote-fd.txt | 2 +-
- Documentation/gittutorial.txt   | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ Documentation/glossary-content.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-index 1d1b020..3417cb3 100644
---- a/Documentation/git-p4.txt
-+++ b/Documentation/git-p4.txt
-@@ -334,11 +334,11 @@ configuration file.  This allows future 'git p4 submit' commands to
- work properly; the submit command looks only at the variable and does
- not have a command-line option.
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index 7c15bc0..ddf2f66 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -149,6 +149,9 @@ to point at the new commit.
+ [[def_git_archive]]Git archive::
+ 	Synonym for <<def_repository,repository>> (for arch people).
  
--The full syntax for a p4 view is documented in 'p4 help views'.  'Git p4'
-+The full syntax for a p4 view is documented in 'p4 help views'.  'git p4'
- knows only a subset of the view syntax.  It understands multi-line
- mappings, overlays with '+', exclusions with '-' and double-quotes
- around whitespace.  Of the possible wildcards, 'git p4' only handles
--'...', and only when it is at the end of the path.  'Git p4' will complain
-+'...', and only when it is at the end of the path.  'git p4' will complain
- if it encounters an unhandled wildcard.
- 
- Bugs in the implementation of overlap mappings exist.  If multiple depot
-diff --git a/Documentation/git-remote-fd.txt b/Documentation/git-remote-fd.txt
-index 9bfe12c..933c2ad 100644
---- a/Documentation/git-remote-fd.txt
-+++ b/Documentation/git-remote-fd.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- DESCRIPTION
- -----------
- This helper uses specified file descriptors to connect to a remote Git server.
--This is not meant for end users but for programs and scripts calling Git
-+This is not meant for end users but for programs and scripts calling git
- fetch, push or archive.
- 
- If only <infd> is given, it is assumed to be a bidirectional socket connected
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-index 6091988..8262196 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -462,7 +462,7 @@ Exploring history
- 
- Git history is represented as a series of interrelated commits.  We
- have already seen that the 'git log' command can list those commits.
--Note that first line of each Git log entry also gives a name for the
-+Note that first line of each git log entry also gives a name for the
- commit:
- 
- -------------------------------------
++[[def_gitfile]]gitfile::
++	A `.git` file which points to a `$GIT_DIR` (used for Git submodules).
++
+ [[def_grafts]]grafts::
+ 	Grafts enables two otherwise different lines of development to be joined
+ 	together by recording fake ancestry information for commits. This way
 -- 
 1.8.0.msysgit.0
 
