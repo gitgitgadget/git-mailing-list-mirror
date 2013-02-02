@@ -1,118 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetools: Enable tortoisemerge to handle filenames
- with spaces with TortoiseGitMerge
-Date: Fri, 01 Feb 2013 18:08:18 -0800
-Message-ID: <7vehgz8o31.fsf@alter.siamese.dyndns.org>
-References: <50FBD4AD.2060208@tu-clausthal.de>
- <7v4nibjrg0.fsf@alter.siamese.dyndns.org> <50FCFBBB.2080305@tu-clausthal.de>
- <7vfw1qbbr4.fsf@alter.siamese.dyndns.org> <5101B0A5.1020308@tu-clausthal.de>
- <51024B02.9020400@tu-clausthal.de>
- <CAJDDKr7eNyJp1ffBYEJaZkmnVWqd0AMpnm1kdjnrrhPtuGNL_w@mail.gmail.com>
- <5102837C.9000608@tu-clausthal.de> <7v622l5d87.fsf@alter.siamese.dyndns.org>
- <51032E96.2040209@tu-clausthal.de>
- <CAJDDKr6OhZOitTdDkHWnhVhdAis0U+95xUtaNn6nwkQ-k+bA+w@mail.gmail.com>
- <5104F009.5020606@tu-clausthal.de> <7vzjzuwm7s.fsf@alter.siamese.dyndns.org>
- <510C1872.3090304@tu-clausthal.de>
- <CAHGBnuNpHtfnD6D+sji6e1yp2x6iLxjAbawwO6USF2iWW17nuQ@mail.gmail.com>
- <510C229E.2050705@tu-clausthal.de>
- <CAJDDKr4L3efzp6eBdTKQxXu8sfvyT91bK6MNh5OhXzWvms8TtQ@mail.gmail.com>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [PATCH] rebase --preserve-merges keeps empty merge commits
+Date: Sat, 2 Feb 2013 00:21:56 -0800
+Message-ID: <CANiSa6gxoHPWO85ZYu5iyHxzpE4HAprpEgG4305_jhyOE0LWGQ@mail.gmail.com>
+References: <1358023561-26773-1-git-send-email-hordp@cisco.com>
+	<CANiSa6gM1gpj0A6PC0qNVSaWvVrOBnSnjn2uKR9-cHSLAZ2OVA@mail.gmail.com>
+	<510C2E10.1050403@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 02 03:08:46 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, phil.hord@gmail.com,
+	Neil Horman <nhorman@tuxdriver.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Sat Feb 02 09:22:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1SX6-0008Ka-Rx
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Feb 2013 03:08:45 +0100
+	id 1U1YN7-0002Gc-1z
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Feb 2013 09:22:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757428Ab3BBCIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 21:08:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62401 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757349Ab3BBCIV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 21:08:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09EFCBEDD;
-	Fri,  1 Feb 2013 21:08:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fJLIYFKGmRlL8u9WpzK2Y3EAmrI=; b=WL3YYZ
-	A4js+Fg26ataQUqrPu3Pc2R2ODSALg6ZldkH2Jq3na5lKbIDWgCcDiYBKfNAzC11
-	eF2zG+ZX/9LvzEFleFOF2Gguf28ZSr5z5Qi6Zs9eLrVwz94Nhq1YcBxhYTop7CN7
-	ngmVt3l+HeGCrCd3jqgcNQMd3f+mXSQ0t4NRU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RvXv4L3HKoEgMn2ReuswEgUbKU+7aUyx
-	WxN0/qf8lBeUIMK2s1FsKk/mWvEFqCWg8SufUts2OXpNGDoIvCYL/VDY9hqmwn4C
-	nTA2RYkALS1LjISAPOO8kj9++CccUjOyohjFFDRSqTRnqPjdwZAaQf1NRXMidTwX
-	Ka2sSxyjj60=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2F27BEDC;
-	Fri,  1 Feb 2013 21:08:20 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5BB17BEDB; Fri,  1 Feb 2013
- 21:08:20 -0500 (EST)
-In-Reply-To: <CAJDDKr4L3efzp6eBdTKQxXu8sfvyT91bK6MNh5OhXzWvms8TtQ@mail.gmail.com> (David
- Aguilar's message of "Fri, 1 Feb 2013 17:59:57 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6A70227A-6CDD-11E2-A00A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752606Ab3BBIWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2013 03:22:00 -0500
+Received: from mail-we0-f171.google.com ([74.125.82.171]:36328 "EHLO
+	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751611Ab3BBIV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2013 03:21:59 -0500
+Received: by mail-we0-f171.google.com with SMTP id u54so3623705wey.16
+        for <git@vger.kernel.org>; Sat, 02 Feb 2013 00:21:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=vAKCIDMfnx2iu2jpxxeHWiGy8HeZwHQSkAFeRfNX9qo=;
+        b=zyHxRZtnWrQahFdU6PERgjQIIpvhHj7fI/F3Cdremt+ELS6DBKPCYlcc9dY/Wu5eSD
+         h4aSi4ZFMhkAMRD3B7QX7XJ7LeWw91NeSi1sl6y1ikEmRK/pJATvD5aYaAONMpcSBydx
+         s8FLBLQpG1FtCv8G+0vvw/cQmDdlJpToJd7zqcvgJGmqcwrORGCV4aq6cHnCXUjQSedt
+         PIdWIJ8ReB+x+LhooS8I+xbIm3yyiB4gTegUvfx9EdCUKfepABhMoRxmRPvUZgdIdz6i
+         UIUjotOExBDpsQSdkWDYMgTSbBJwO82cCs7ihzZfveiqZp7ZUVfCLKmWsrxk4BsruQaR
+         tLcQ==
+X-Received: by 10.194.78.236 with SMTP id e12mr25842856wjx.32.1359793316353;
+ Sat, 02 Feb 2013 00:21:56 -0800 (PST)
+Received: by 10.180.85.8 with HTTP; Sat, 2 Feb 2013 00:21:56 -0800 (PST)
+In-Reply-To: <510C2E10.1050403@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215285>
 
-David Aguilar <davvid@gmail.com> writes:
-
-> On Fri, Feb 1, 2013 at 12:16 PM, Sven Strickroth
-> <sven.strickroth@tu-clausthal.de> wrote:
->> TortoiseMerge caused to whole
->> argument instead of just the file name to be quoted
+On Fri, Feb 1, 2013 at 1:05 PM, Phil Hord <hordp@cisco.com> wrote:
 >
-> s/caused to whole/caused the whole/
+> This is probably right, but it is not exactly the case that caused my itch.
+> I think my branch looked like [...]
+
+That also makes sense. I'll add tests for both cases. Your patch makes
+both of them pass.
+
+>> # a---b---c
+>> #      \   \
+>> #       d   \
+>> #        \   \
+>> #         e   \
+>> #          \   \
+>> #           C---l
+>>
+>> As you say, your patch doesn't try to handle this case, but at least
+>> the new behavior seems better. I think we would ideally want the
+>> recreated 'l' to have only 'C' as parent in this case. Does that make
+>> sense?
 >
-> I think this commit message is very nice.  Is it too late to replace
-> the current patch with this one?
+> This is not what I meant, but it is a very interesting corner case.  I
+> am not sure I have a solid opinion on what the result should be here.
 
-Haven't merged it to 'next'; I will replace with this, with a bit of
-retitling to make it shorter.
+Neither do I, so I'll just drop the test case. Thanks.
 
+> Here is the corner case I was thinking of.  I did not test this to see
+> if this will happen, but I conceived that it might.  Suppose you have
+> this tree where
+>
+> # a---b---c
+> #      \
+> #       d---g---l
+> #        \ /
+> #         C
+>
+> where 'C' introduced the same changes as 'c'.
+>
+> When I execute 'git rebase -p l c', I expect that I will end up with
+> this:
+>
+> # a---b---c---d---
+> #              \  \
+> #               ---g---l
+>
+> That is, 'C' gets skipped because it introduces the same changes already
+> seen in 'c'.  So 'g' now has two parents: 'd' and 'C^'.  But 'C^' is 'd',
+> so 'g' now has two parents, both of whom are 'd'.
+>
+> I think it should collapse to this instead:
+>
+> # a---b---c---d---g---l
 
-commit 81ed7b9581f7eafb334824264abb492d85a5ffb8
-Author: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Date:   Fri Feb 1 21:16:30 2013 +0100
+I think this is actually what you will get. But I think it will only
+be linearized if the branch that should be dropped is the second
+parent. I have two tests for this, but I need to simplify them a
+little to see that that (parent number) is the only difference.
 
-    mergetools: teach tortoisemerge to handle filenames with SP correctly
-    
-    TortoiseGitMerge, unlike TortoiseMerge, can be told to handle paths
-    with spaces in them by using -option "$FILE" (not -option:"$FILE",
-    which does not work for such paths) syntax.
-    
-    This change was necessary because of MSYS path mangling [1], the ":"
-    after the "base" etc. arguments to TortoiseMerge caused the whole
-    argument instead of just the file name to be quoted in case of file
-    names with spaces. So TortoiseMerge was passed
-    
-        "-base:new file.txt"
-    
-    instead of
-    
-        -base:"new file.txt"
-    
-    (including the quotes). To work around this, TortoiseGitMerge does not
-    require the ":" after the arguments anymore which fixes handling file
-    names with spaces [2] (as written above).
-    
-    [1] http://www.mingw.org/wiki/Posix_path_conversion
-    [2] https://github.com/msysgit/msysgit/issues/57
-    
-    Signed-off-by: Sven Strickroth <email@cs-ware.de>
-    Reported-by: Sebastian Schuberth <sschuberth@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> I hope this is clear, but please let me know if I made it too confusing.
+
+Very clear. Thanks.
