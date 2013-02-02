@@ -1,80 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk-git/.gitignore: add rule for gitk-wish
-Date: Fri, 01 Feb 2013 16:33:35 -0800
-Message-ID: <7vlib78sgw.fsf@alter.siamese.dyndns.org>
-References: <1359456750-29342-1-git-send-email-artagnon@gmail.com>
- <20130201235209.GK12368@google.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] mergetools: Enable tortoisemerge to handle filenames with
+ spaces with TortoiseGitMerge
+Date: Fri, 1 Feb 2013 17:59:57 -0800
+Message-ID: <CAJDDKr4L3efzp6eBdTKQxXu8sfvyT91bK6MNh5OhXzWvms8TtQ@mail.gmail.com>
+References: <50FBD4AD.2060208@tu-clausthal.de>
+	<7v4nibjrg0.fsf@alter.siamese.dyndns.org>
+	<50FCFBBB.2080305@tu-clausthal.de>
+	<7vfw1qbbr4.fsf@alter.siamese.dyndns.org>
+	<5101B0A5.1020308@tu-clausthal.de>
+	<51024B02.9020400@tu-clausthal.de>
+	<CAJDDKr7eNyJp1ffBYEJaZkmnVWqd0AMpnm1kdjnrrhPtuGNL_w@mail.gmail.com>
+	<5102837C.9000608@tu-clausthal.de>
+	<7v622l5d87.fsf@alter.siamese.dyndns.org>
+	<51032E96.2040209@tu-clausthal.de>
+	<CAJDDKr6OhZOitTdDkHWnhVhdAis0U+95xUtaNn6nwkQ-k+bA+w@mail.gmail.com>
+	<5104F009.5020606@tu-clausthal.de>
+	<7vzjzuwm7s.fsf@alter.siamese.dyndns.org>
+	<510C1872.3090304@tu-clausthal.de>
+	<CAHGBnuNpHtfnD6D+sji6e1yp2x6iLxjAbawwO6USF2iWW17nuQ@mail.gmail.com>
+	<510C229E.2050705@tu-clausthal.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 02 01:34:02 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+X-From: git-owner@vger.kernel.org Sat Feb 02 03:08:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1R3R-0003TA-FZ
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Feb 2013 01:34:01 +0100
+	id 1U1SWU-0007zp-3r
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Feb 2013 03:08:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757093Ab3BBAdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2013 19:33:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49105 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756243Ab3BBAdi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2013 19:33:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C12F6B6CB;
-	Fri,  1 Feb 2013 19:33:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0v+Z+7BedULzb5yhPCTldJeh0Kk=; b=mflqAF
-	IWiDkCipzNaQxWNbXUgQJIEvesa3rQRBTAX0jpVb0cArxOVvonma9ywHnxHZ6ol3
-	Q/n3qnD+OHa/CLQytFSP8+bBv9V920GesNbpGf6P9CVpaTp1OpylOZ46xy4H/gPZ
-	dXjyiidmAha4/TxsMVfE9Eqmlpi3wjkELnUK8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tHNZapiCcl1hsUwMo2rTU24VObwPcctC
-	pVwMKO4QWremHSAykhh1R+2twG5eDyupeq14rlWzmIJzIGBZVRigSxQIvwFoEkn3
-	VKJ3lGmFIVbcytWNSDVwpI18XtSP2zU0dyOjF+GiBdp4amKu5iwWCw/4SYSxOaOt
-	Blp2Bu98XEY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B64D6B6CA;
-	Fri,  1 Feb 2013 19:33:37 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 37A9FB6C8; Fri,  1 Feb 2013
- 19:33:37 -0500 (EST)
-In-Reply-To: <20130201235209.GK12368@google.com> (Jonathan Nieder's message
- of "Fri, 1 Feb 2013 15:52:10 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2F04C1B2-6CD0-11E2-80D2-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757370Ab3BBCHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2013 21:07:44 -0500
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:51660 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757296Ab3BBCHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2013 21:07:43 -0500
+Received: by mail-wg0-f45.google.com with SMTP id dq12so3273290wgb.0
+        for <git@vger.kernel.org>; Fri, 01 Feb 2013 18:07:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=3AJj/ontQYFcYqR23ZOjsn93H92cs3uITPJ/iXG49VM=;
+        b=Bo7r762Jt3mXNjKyGAiLAFPlfEI8Ch0DyjZEM601Sb4TcW2XbuEGhgFnKGz784Ff29
+         fa/vL5Faozz6JWypRKmVUZbZvYO93EmrT9b9a14oOI9DZbzQlzV4I3VFKkCe8ruViJbq
+         u+5gFj+y7/Y0xR2nRwR6Gq5Aamuf7jQdGaQafgnNxMP7xcYDPnt3Tby3gboh//BeHT+S
+         v59hZaBTDoy27tblaQPC/OkKuFAsRwZl0quumCSP1l01ir/O/2pAnIhxvBmu6y/+seck
+         qcFnLEDj4yXDJohd0r/YUagIaNtKovZ0hDmnRsiUCJ2bI6aW5iqWpR2dzBBlVfjWzcLC
+         N+8Q==
+X-Received: by 10.194.240.233 with SMTP id wd9mr24946653wjc.54.1359770397978;
+ Fri, 01 Feb 2013 17:59:57 -0800 (PST)
+Received: by 10.194.63.9 with HTTP; Fri, 1 Feb 2013 17:59:57 -0800 (PST)
+In-Reply-To: <510C229E.2050705@tu-clausthal.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215283>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Fri, Feb 1, 2013 at 12:16 PM, Sven Strickroth
+<sven.strickroth@tu-clausthal.de> wrote:
+> TortoiseMerge caused to whole
+> argument instead of just the file name to be quoted
 
-> Looks like this was fixed in the week since last pull.
->
-> 	http://thread.gmane.org/gmane.comp.version-control.git/214312
->
-> Paul, would it be safe for Junio to pull again?
+s/caused to whole/caused the whole/
 
-Thanks.  I think I pulled a few days ago, and the result should have
-already been propagated out.
-
-    commit 9a6c84e6e9078b0ef4fd2c50b200e8552a28c6fa
-    Merge: 070c57d a8b38d9
-    Author: Junio C Hamano <gitster@pobox.com>
-    Date:   Wed Jan 30 13:52:44 2013 -0800
-
-        Merge git://ozlabs.org/~paulus/gitk
-
-        * git://ozlabs.org/~paulus/gitk:
-          gitk: Ignore gitk-wish buildproduct
+I think this commit message is very nice.  Is it too late to replace
+the current patch with this one?
+-- 
+David
