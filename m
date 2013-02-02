@@ -1,91 +1,356 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 0/2] optimizing pack access on "read only" fetch repos
-Date: Sat, 2 Feb 2013 02:07:49 -0800
-Message-ID: <CAJo=hJvPz_EYFGzb8LLdW77T2MhcOqnUBtroLMWKkEWWKSTchQ@mail.gmail.com>
-References: <20130126224011.GA20675@sigill.intra.peff.net> <7vlibfxhit.fsf@alter.siamese.dyndns.org>
- <20130129082939.GB6396@sigill.intra.peff.net> <7vwquwrng6.fsf@alter.siamese.dyndns.org>
- <20130129211932.GA17377@sigill.intra.peff.net> <CAJo=hJuGw8x=VrjWhvZhzakuhWrCWr2FRuEsNt5gQNC=6PPuVw@mail.gmail.com>
- <20130201091431.GC30644@sigill.intra.peff.net>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
+Date: Sat, 02 Feb 2013 06:57:29 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <87k3qrx712.fsf@lifelogs.com>
+References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
+	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
+	<20130130074306.GA17868@sigill.intra.peff.net>
+	<7v7gmumzo6.fsf@alter.siamese.dyndns.org>
+	<87pq0l5qbc.fsf@lifelogs.com>
+	<20130131193844.GA14460@sigill.intra.peff.net>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 02 11:08:37 2013
+Content-Type: multipart/mixed; boundary="=-=-="
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 02 12:58:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1a1U-0000X7-IM
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Feb 2013 11:08:36 +0100
+	id 1U1bjQ-0002EJ-Uf
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Feb 2013 12:58:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754959Ab3BBKIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2013 05:08:15 -0500
-Received: from mail-ia0-f172.google.com ([209.85.210.172]:53420 "EHLO
-	mail-ia0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754206Ab3BBKIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2013 05:08:13 -0500
-Received: by mail-ia0-f172.google.com with SMTP id u8so6479733iag.31
-        for <git@vger.kernel.org>; Sat, 02 Feb 2013 02:08:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=rFXDxd0CGN8RXQz8Vhri9EmCot3tArzOk85901EhJKs=;
-        b=AVpzKh72sTgdHr7jErH9lL39KK+TSL1IGtJ5c1Kb7tDOy6ybi+SDUw6w589I797Vrx
-         v/F6c7BSp58HI9oE05/SuSImQY90YcscY02E38d/0l6exItrw2ejVqG/SYI+yNhwqhQN
-         10nD53CseKBKVtCmLB2U4NyWzEMabCTm9Pqp8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:x-gm-message-state;
-        bh=rFXDxd0CGN8RXQz8Vhri9EmCot3tArzOk85901EhJKs=;
-        b=HliqGHYRmXJNi9HWvcDgxtt+OryXzBhKCxpRJcb4qmds1Yd5jn6wM/u6gkvY6s6pWb
-         TUDxODorX/DSoJQ8CENv34wS385vRHs7tjcNV0vKXR9f2ml1JCA/VL1NW/EYJKkcAyW4
-         njFBtdRUcVQL6tMnquhE7XMhJikWER/REcoyusjDxeISFevNJFmZ9cavEQMjzV0vCff8
-         6dQcnBTI/+W6uWoKKvuB5XaMsc9izDmgtBGirApavouh9UaqeTEx8Fhf7JclTKZSziKV
-         ObEJKKBhz7sTBpNkn0atEsOKKQVYylVdYski3nxa2X2ORJlJOhHPQv25XHuJjEjocvj3
-         IoBQ==
-X-Received: by 10.50.189.163 with SMTP id gj3mr1073300igc.14.1359799693125;
- Sat, 02 Feb 2013 02:08:13 -0800 (PST)
-Received: by 10.64.170.100 with HTTP; Sat, 2 Feb 2013 02:07:49 -0800 (PST)
-In-Reply-To: <20130201091431.GC30644@sigill.intra.peff.net>
-X-Gm-Message-State: ALoCoQmXz3ICXL5b0plUoJcwih1RxcJD8r+kFn+gRIUoKr68eaVZHuySlXA5XyLTHFE8WxtGSBkb
+	id S1756818Ab3BBL5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2013 06:57:42 -0500
+Received: from plane.gmane.org ([80.91.229.3]:36155 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756785Ab3BBL5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2013 06:57:40 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1U1bjI-00029A-T7
+	for git@vger.kernel.org; Sat, 02 Feb 2013 12:57:56 +0100
+Received: from c-65-96-148-157.hsd1.ma.comcast.net ([65.96.148.157])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 02 Feb 2013 12:57:56 +0100
+Received: from tzz by c-65-96-148-157.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 02 Feb 2013 12:57:56 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Mail-Followup-To: git@vger.kernel.org
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: c-65-96-148-157.hsd1.ma.comcast.net
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+Mail-Copies-To: never
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
+Cancel-Lock: sha1:Cr+tC1Q4UTuxOlBjKVWeVLzeO9Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215289>
 
-On Fri, Feb 1, 2013 at 1:14 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Jan 31, 2013 at 08:47:37AM -0800, Shawn O. Pearce wrote:
->
->> >>  - System resource cost we incur by having to keep 50 file
->> >>    descriptors open and maintaining 50 mmap windows will reduce by
->> >>    50 fold.
->> >
->> > I wonder how measurable that is (and if it matters on Linux versus less
->> > efficient platforms).
->>
->> It does matter. We know it has a negative impact on JGit even on Linux
->> for example. You don't want 300 packs in a repository. 50 might be
->> tolerable. 300 is not.
->
-> I'd love to see numbers if you have them. It's not that I don't believe
-> it is slower, but knowing _how much_ is important when thinking about
-> what kind of performance increase we are looking to get (which in turn
-> impacts how much effort to put into the repacking).
+--=-=-=
+Content-Type: text/plain
 
-Never done a formal experiment. Just working from memory where 4 years
-and 3 desks ago I got called because one of our Git servers was
-struggling to keep up with user git fetch commands. Turns out the
-repository had O(200) pack files. git gc that normally took only about
-5 minutes took a hellva lot longer, like an hour or more.
+On Thu, 31 Jan 2013 14:38:45 -0500 Jeff King <peff@peff.net> wrote: 
 
-The problem happened because the server was saving every push to a
-pack and never exploding incoming packs to loose objects. This meant
-the thin packs from the wire got delta bases appended to them.
-pack-objects was looking at O(50) different alternatives for most
-objects when trying to decide which one it should copy into the output
-pack... for either a fetch/clone client, or the gc I was trying to run
-to fix the repository.
+JK> On Thu, Jan 31, 2013 at 10:23:51AM -0500, Ted Zlatanov wrote:
+>> Jeff, is there a way for git-credential to currently support
+>> authinfo/netrc parsing?  I assume that's the right way, instead of using
+>> Michal's proposal to parse internally?
+>> 
+>> I'd like to add that, plus support for the 'string' and "string"
+>> formats, and authinfo.gpg decoding through GPG.  I'd write it in Perl,
+>> if there's a choice.
+
+JK> Yes, you could write a credential helper that understands netrc and
+JK> friends; git talks to the helpers over a socket, so there is no problem
+JK> with writing it in Perl. See Documentation/technical/api-credentials.txt
+JK> for an overview, or the sample implementation in credential-store.c for a
+JK> simple example.
+
+I wrote a Perl credential helper for netrc parsing which is pretty
+robust, has built-in docs with -h, and doesn't depend on external
+modules.  The netrc parser regex was stolen from Net::Netrc.
+
+It will by default use ~/.authinfo.gpg, ~/.netrc.gpg, ~/.authinfo, and
+~/.netrc (whichever is found first) and this can be overridden with -f.
+
+If the file name ends with ".gpg", it will run "gpg --decrypt FILE" and
+use the output.  So non-interactively, that could hang if GPG was
+waiting for input.  Does Git handle that, or should I check for a TTY?
+
+Take a look at the proposed patch and let me know if it's usable, if you
+need a formal copyright assignment, etc.
+
+Thanks
+Ted
+
+
+--=-=-=
+Content-Type: text/x-patch; charset=utf-8
+Content-Disposition: inline; filename=p
+Content-Transfer-Encoding: 8bit
+Content-Description: Add git-credential-netrc
+
+commit 3d28bc2a610ebcc988eba5443d82d0ded92c24bc
+Author: Ted Zlatanov <tzz@lifelogs.com>
+Date:   Sat Feb 2 06:42:13 2013 -0500
+
+    Add contrib/credentials/netrc with GPG support
+
+diff --git a/contrib/credential/netrc/git-credential-netrc b/contrib/credential/netrc/git-credential-netrc
+new file mode 100755
+index 0000000..92fc306
+--- /dev/null
++++ b/contrib/credential/netrc/git-credential-netrc
+@@ -0,0 +1,242 @@
++#!/usr/bin/perl
++
++use strict;
++use warnings;
++
++use Data::Dumper;
++
++use Getopt::Long;
++use File::Basename;
++
++my $VERSION = "0.1";
++
++my %options = (
++               help => 0,
++               debug => 0,
++
++               # identical token maps, e.g. host -> host, will be inserted later
++               tmap => {
++                        port => 'protocol',
++                        machine => 'host',
++                        path => 'path',
++                        login => 'username',
++                        user => 'username',
++                        password => 'password',
++                       }
++              );
++
++foreach my $v (values %{$options{tmap}})
++{
++ $options{tmap}->{$v} = $v;
++}
++
++foreach my $suffix ('.gpg', '')
++{
++ foreach my $base (qw/authinfo netrc/)
++ {
++  my $file = glob("~/.$base$suffix");
++  next unless (defined $file && -f $file);
++  $options{file} = $file ;
++ }
++}
++
++Getopt::Long::Configure("bundling");
++
++# TODO: maybe allow the token map $options{tmap} to be configurable.
++GetOptions(\%options,
++           "help|h",
++           "debug|d",
++           "file|f=s",
++          );
++
++if ($options{help})
++{
++ my $shortname = basename($0);
++ $shortname =~ s/git-credential-//;
++
++ print <<EOHIPPUS;
++
++$0 [-f AUTHFILE] [-d] get
++
++Version $VERSION by tzz\@lifelogs.com.  License: any use is OK.
++
++Options:
++  -f AUTHFILE: specify a netrc-style file
++  -d: turn on debugging
++
++To enable (note that Git will prepend "git-credential-" to the helper
++name and look for it in the path):
++
++  git config credential.helper '$shortname -f AUTHFILE'
++
++And if you want lots of debugging info:
++
++  git config credential.helper '$shortname -f AUTHFILE -d'
++
++Only "get" mode is supported by this credential helper.  It opens
++AUTHFILE and looks for entries that match the requested search
++criteria:
++
++ 'port|protocol':
++   The protocol that will be used (e.g., https). (protocol=X)
++
++ 'machine|host':
++   The remote hostname for a network credential. (host=X)
++
++ 'path':
++   The path with which the credential will be used. (path=X)
++
++ 'login|user|username':
++   The credential’s username, if we already have one. (username=X)
++
++Thus, when we get "protocol=https\nusername=tzz", this credential
++helper will look for lines in AUTHFILE that match
++
++port https login tzz
++
++OR
++
++protocol https login tzz
++
++OR... etc. acceptable tokens as listed above.  Any unknown tokens are
++simply ignored.
++
++Then, the helper will print out whatever tokens it got from the line,
++including "password" tokens, mapping e.g. "port" back to "protocol".
++
++The first matching line is used.  Tokens can be quoted as 'STRING' or
++"STRING".
++
++No caching is performed by this credential helper.
++
++EOHIPPUS
++
++ exit;
++}
++
++my $mode = shift @ARGV;
++
++# credentials may get 'get', 'store', or 'erase' as parameters but
++# only acknowledge 'get'
++die "Syntax: $0 [-f AUTHFILE] [-d] get" unless defined $mode;
++
++# only support 'get' mode
++exit unless $mode eq 'get';
++
++my $debug = $options{debug};
++my $file = $options{file};
++
++die "Sorry, you need to specify an existing netrc file (with or without a .gpg extension) with -f AUTHFILE"
++ unless defined $file;
++
++die "Sorry, the specified netrc $file is not accessible"
++ unless -f $file;
++
++if ($file =~ m/\.gpg$/)
++{
++ $file = "gpg --decrypt $file|";
++}
++
++my @data = load($file);
++chomp @data;
++
++die "Sorry, we could not load data from [$file]"
++ unless (scalar @data);
++
++# the query
++my %q;
++
++foreach my $v (values %{$options{tmap}})
++{
++ undef $q{$v};
++}
++
++while (<STDIN>)
++{
++ next unless m/([a-z]+)=(.+)/;
++
++ my ($token, $value) = ($1, $2);
++ die "Unknown search token $1" unless exists $q{$token};
++ $q{$token} = $value;
++}
++
++# build reverse token map
++my %rmap;
++foreach my $k (keys %{$options{tmap}})
++{
++ push @{$rmap{$options{tmap}->{$k}}}, $k;
++}
++
++# there are CPAN modules to do this better, but we want to avoid
++# dependencies and generally, complex netrc-style files are rare
++
++if ($debug)
++{
++ foreach (sort keys %q)
++ {
++  printf STDERR "searching for %s = %s\n",
++   $_, $q{$_} || '(any value)';
++ }
++}
++
++LINE: foreach my $line (@data)
++{
++
++ print STDERR "line [$line]\n" if $debug;
++ my @tok;
++ # gratefully stolen from Net::Netrc
++ while (length $line &&
++        $line =~ s/^("((?:[^"]+|\\.)*)"|((?:[^\\\s]+|\\.)*))\s*//)
++ {
++  (my $tok = $+) =~ s/\\(.)/$1/g;
++  push(@tok, $tok);
++ }
++
++ my %tokens;
++ while (@tok)
++ {
++  my ($k, $v) = (shift @tok, shift @tok);
++  next unless defined $v;
++  next unless exists $options{tmap}->{$k};
++  $tokens{$options{tmap}->{$k}} = $v;
++ }
++
++ foreach my $check (sort keys %q)
++ {
++  if (exists $tokens{$check} && defined $q{$check})
++  {
++   print STDERR "comparing [$tokens{$check}] to [$q{$check}] in line [$line]\n" if $debug;
++   next LINE unless $tokens{$check} eq $q{$check};
++  }
++  else
++  {
++   print STDERR "we could not find [$check] but it's OK\n" if $debug;
++  }
++ }
++
++ print STDERR "line has passed all the search checks\n" if $debug;
++ foreach my $token (sort keys %rmap)
++ {
++  print STDERR "looking for useful token $token\n" if $debug;
++  next unless exists $tokens{$token}; # did we match?
++
++  foreach my $rctoken (@{$rmap{$token}})
++  {
++   next if defined $q{$rctoken};           # don't re-print given tokens
++  }
++
++  print STDERR "FOUND: $token=$tokens{$token}\n" if $debug;
++  printf "%s=%s\n", $token, $tokens{$token};
++ }
++
++ last;
++}
++
++sub load
++{
++ my $file = shift;
++ # this supports pipes too
++ my $io = new IO::File($file) or die "Could not open $file: $!\n";
++
++ return <$io>;                          # whole file
++}
+
+--=-=-=--
