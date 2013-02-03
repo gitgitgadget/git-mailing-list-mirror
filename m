@@ -1,134 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] combine-diff: suppress a clang warning
-Date: Sun, 03 Feb 2013 13:07:48 -0800
-Message-ID: <7v8v7585sr.fsf@alter.siamese.dyndns.org>
-References: <cover.1359901732.git.john@keeping.me.uk>
- <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
- <7vwqup890o.fsf@alter.siamese.dyndns.org>
- <20130203203150.GU1342@serenity.lan>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] branch: show rebase/bisect info when possible instead of "(no branch)"
+Date: Sun, 03 Feb 2013 22:23:46 +0100
+Message-ID: <vpqpq0hnlb1.fsf@grenoble-inp.fr>
+References: <1359461574-24529-1-git-send-email-pclouds@gmail.com>
+	<1359870520-22644-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Feb 03 22:08:16 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 22:24:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U26nO-00010G-M8
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 22:08:15 +0100
+	id 1U272y-0006wf-W4
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 22:24:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753658Ab3BCVHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 16:07:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40608 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753597Ab3BCVHv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 16:07:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E7ADC7AC;
-	Sun,  3 Feb 2013 16:07:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kGKG3lgp5Sl2UhCGFWQ8t9R3/aw=; b=C1G86L
-	WwstUkVHt0GkEk1zCiLdCH4eUQszb4HMLQgEMG3lnyaWxuzjx/PWBzMaCJlSDtHi
-	2D22/NRQqEkj4p3Dd7mHEQxI51ft5XEeD3fdKaHbHw02dX0iCdzRlFuOVat+ycCs
-	VXkBu8sS5kjJt5hlGcjabYT5ueRb3JVzA2IT4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qCyzUgxJYYUJR8C2ZtIXC65UX1rTfTYJ
-	cAY8DmnounN7r4VWr6qK4BSsiqC+fIqOScVR6lX58paQ/KijYHBDfB9miNwIYZf7
-	g5oKQVrf4M/93aXGeVKfbeMBI+ecJ2Br6veD30pHKxLdurdtnM4uv8FE2EDIxqTk
-	/tHYSl7aUlg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22DB5C7AB;
-	Sun,  3 Feb 2013 16:07:51 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 697EEC7AA; Sun,  3 Feb 2013
- 16:07:50 -0500 (EST)
-In-Reply-To: <20130203203150.GU1342@serenity.lan> (John Keeping's message of
- "Sun, 3 Feb 2013 20:31:50 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C494A6B8-6E45-11E2-A17D-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753746Ab3BCVXz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Feb 2013 16:23:55 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:36640 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753667Ab3BCVXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 16:23:53 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r13LNixK014528
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 3 Feb 2013 22:23:44 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1U272Q-000108-P2; Sun, 03 Feb 2013 22:23:46 +0100
+In-Reply-To: <1359870520-22644-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 3 Feb
+ 2013 12:48:40 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 03 Feb 2013 22:23:44 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r13LNixK014528
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1360531428.17824@i6YgF7+0sEso+dtRfoVcxg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215336>
 
-John Keeping <john@keeping.me.uk> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-> A quick search turned up the original thread where this feature was
-> added to Clang [1].  It seems that it does find genuine bugs where
-> people try to log values by doing:
->
->     log("failed to handle error: " + errno);
+> --- a/t/t6030-bisect-porcelain.sh
+> +++ b/t/t6030-bisect-porcelain.sh
+> @@ -164,7 +164,7 @@ test_expect_success 'bisect start: existing ".git=
+/BISECT_START" not modified if
+>  	cp .git/BISECT_START saved &&
+>  	test_must_fail git bisect start $HASH4 foo -- &&
+>  	git branch > branch.output &&
+> -	test_i18ngrep "* (no branch)" branch.output > /dev/null &&
+> +	test_i18ngrep "* (bisecting other)" branch.output > /dev/null &&
 
-To be perfectly honest, anybody who writes such a code should be
-sent back to school before trying to touch out code ever again ;-).
-It is not even valid Python, Perl nor Java, I would think.
+I'd have spelled it (no branch, bisecting other) to make it clear that
+we're on detached HEAD, and avoid confusing old-timers. But maybe your
+version is enough, I'm not sure.
 
-> Are you happy to change COLONS to a const char[] instead of a #define?
-
-Happy?  Not really.
-
-It could be a good change for entirely different reason. We will
-save space if we ever need to use it in multiple places.  But the
-entire "COLONS + offset" thing was a hack we did, knowing that it
-will break when we end up showing a muiti-way diff for more than 32
-blobs.
-
-If we were to be touching that area of code, I'd rather see a change
-to make it more robust against such a corner case.  If it results in
-squelching misguided clang warnings against programmers who should
-not be writing in C, that is a nice side effect, but I loathe to see
-any change whose primary purpose is to squelch pointless warnings.
-
- combine-diff.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
-
-diff --git a/combine-diff.c b/combine-diff.c
-index bb1cc96..7f6187f 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -982,14 +982,10 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 	free(sline);
- }
- 
--#define COLONS "::::::::::::::::::::::::::::::::"
--
- static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct rev_info *rev)
- {
- 	struct diff_options *opt = &rev->diffopt;
--	int i, offset;
--	const char *prefix;
--	int line_termination, inter_name_termination;
-+	int line_termination, inter_name_termination, i;
- 
- 	line_termination = opt->line_termination;
- 	inter_name_termination = '\t';
-@@ -1000,17 +996,14 @@ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct re
- 		show_log(rev);
- 
- 	if (opt->output_format & DIFF_FORMAT_RAW) {
--		offset = strlen(COLONS) - num_parent;
--		if (offset < 0)
--			offset = 0;
--		prefix = COLONS + offset;
-+		/* As many colons as there are parents */
-+		for (i = 0; i < num_parent; i++)
-+			putchar(':');
- 
- 		/* Show the modes */
--		for (i = 0; i < num_parent; i++) {
--			printf("%s%06o", prefix, p->parent[i].mode);
--			prefix = " ";
--		}
--		printf("%s%06o", prefix, p->mode);
-+		for (i = 0; i < num_parent; i++)
-+			printf("%06o ", p->parent[i].mode);
-+		printf("%06o", p->mode);
- 
- 		/* Show sha1's */
- 		for (i = 0; i < num_parent; i++)
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
