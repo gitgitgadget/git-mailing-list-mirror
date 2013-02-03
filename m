@@ -1,80 +1,158 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/3] fix clang -Wtautological-compare with unsigned enum
-Date: Sun, 3 Feb 2013 11:38:28 -0800
-Message-ID: <20130203193816.GA3221@elie.Belkin>
-References: <cover.1359901732.git.john@keeping.me.uk>
- <a9fe675ed9b34d3c15f4678ee13e90cddaa36055.1359901732.git.john@keeping.me.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
+Date: Sun, 3 Feb 2013 14:41:49 -0500
+Message-ID: <20130203194148.GA26318@sigill.intra.peff.net>
+References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
+ <7vvcafojf4.fsf@alter.siamese.dyndns.org>
+ <20130130074306.GA17868@sigill.intra.peff.net>
+ <7v7gmumzo6.fsf@alter.siamese.dyndns.org>
+ <87pq0l5qbc.fsf@lifelogs.com>
+ <20130131193844.GA14460@sigill.intra.peff.net>
+ <87k3qrx712.fsf@lifelogs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Feb 03 20:39:00 2013
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 03 20:42:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U25P1-0002iP-Ky
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 20:38:59 +0100
+	id 1U25S9-0003qX-MZ
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 20:42:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753528Ab3BCTih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 14:38:37 -0500
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:64390 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753431Ab3BCTig (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 14:38:36 -0500
-Received: by mail-pb0-f52.google.com with SMTP id mc8so2073507pbc.25
-        for <git@vger.kernel.org>; Sun, 03 Feb 2013 11:38:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=S8BfODhwIvKFl551RXqhU153CBOR3SfTMuKnUy3l4uo=;
-        b=mT71qfqE5/pDjMVNdTh25gv3Q0ySid5s5E82xFIuMpc66u0htohjuQy8ozN7jR0eJj
-         XdcgGVKqG27pMmqcko+HGNC6NkrigimpVzYtqcleS5Ezj91ACwnn41hJ6kSUHPwK3IQl
-         LD0Hv59rXhsGoTCTlErhuZQ/BJZC/Xir3xG/9sQ++170pBVCYdAqxZouCkif9gq/sr2X
-         AHAHnnmLUQy/52ia/ItMVhfaJ8M9uxoHa5bZG15VxeIk7ati/uAtm0eLusbRbQ76z+tp
-         L9pblDluPB7284Uh+UFdX82KNjVYEfIqvrxXUE0XbyzF/eK+0u2vkDMcJqEMDOViL5sw
-         aAZQ==
-X-Received: by 10.68.131.35 with SMTP id oj3mr49595216pbb.17.1359920316103;
-        Sun, 03 Feb 2013 11:38:36 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id ou3sm14503198pbb.46.2013.02.03.11.38.33
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 03 Feb 2013 11:38:34 -0800 (PST)
+	id S1753528Ab3BCTlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 14:41:52 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56675 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753431Ab3BCTlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 14:41:51 -0500
+Received: (qmail 13159 invoked by uid 107); 3 Feb 2013 19:43:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 03 Feb 2013 14:43:15 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 03 Feb 2013 14:41:49 -0500
 Content-Disposition: inline
-In-Reply-To: <a9fe675ed9b34d3c15f4678ee13e90cddaa36055.1359901732.git.john@keeping.me.uk>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+In-Reply-To: <87k3qrx712.fsf@lifelogs.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215325>
 
-John Keeping wrote:
+On Sat, Feb 02, 2013 at 06:57:29AM -0500, Ted Zlatanov wrote:
 
-> From: Antoine Pelisse <apelisse@gmail.com>
+> I wrote a Perl credential helper for netrc parsing which is pretty
+> robust, has built-in docs with -h, and doesn't depend on external
+> modules.  The netrc parser regex was stolen from Net::Netrc.
 >
-> Create a GREP_HEADER_FIELD_MIN so we can check that the field value is
-> sane and silent the clang warning.
+> It will by default use ~/.authinfo.gpg, ~/.netrc.gpg, ~/.authinfo, and
+> ~/.netrc (whichever is found first) and this can be overridden with -f.
 
-Thanks.  Looks good to me.
+Cool, thanks for working on this.
 
-[...]
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -625,7 +625,8 @@ static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
->  	for (p = opt->header_list; p; p = p->next) {
->  		if (p->token != GREP_PATTERN_HEAD)
->  			die("bug: a non-header pattern in grep header list.");
-> -		if (p->field < 0 || GREP_HEADER_FIELD_MAX <= p->field)
-> +		if (p->field < GREP_HEADER_FIELD_MIN ||
-> +		    GREP_HEADER_FIELD_MAX <= p->field)
->  			die("bug: unknown header field %d", p->field);
+> If the file name ends with ".gpg", it will run "gpg --decrypt FILE" and
+> use the output.  So non-interactively, that could hang if GPG was
+> waiting for input.  Does Git handle that, or should I check for a TTY?
 
-I also think it would be fine to drop this test or replace it with an
+No, git does not do anything special with respect to credential helpers
+and ttys (nor should it, since one use of helpers is to get credentials
+when there is no tty). I think it is GPG's problem to deal with, though.
+We will invoke it, and it is up to it to decide whether it can acquire
+the passphrase or not (either through the tty, or possibly from
+gpg-agent). So it would be wrong to do the tty check yourself.
 
-	assert((unsigned) p->field < ARRAY_SIZE(header_field));
+I haven't tested GPG, but I assume it properly tries to read from
+/dev/tty and not stdin. Your helper's stdio is connected to git and
+speaking the credential-helper protocol, so GPG reading from stdin would
+either steal your input (if run before you read it), or just get EOF (if
+you have read all of the pipe content already). If GPG isn't well
+behaved, it may be worth redirecting its stdin from /dev/null as a
+safety measure.
 
-because we know the test never trips.
+> Take a look at the proposed patch and let me know if it's usable, if you
+> need a formal copyright assignment, etc.
+
+Overall looks sane to me, though my knowledge of .netrc is not
+especially good. Usually we try to send patches inline in the email
+(i.e., as generated by git-format-patch), and include a "Signed-off-by"
+line indicating that content is released to the project; see
+Documentation/SubmittingPatches.
+
+> +use Data::Dumper;
+
+I don't see it used here. Leftover from debugging?
+
+> + print <<EOHIPPUS;
+
+Cute, I haven't seen that one before.
+
+> +$0 [-f AUTHFILE] [-d] get
+> +
+> +Version $VERSION by tzz\@lifelogs.com.  License: any use is OK.
+
+I don't know if we have a particular policy for items in contrib/, but
+this license may be too vague. In particular, it does not explicitly
+allow redistribution, which would make Junio shipping a release with it
+a copyright violation.
+
+Any objection to just putting it under some well-known simple license
+(GPL, BSD, or whatever)?
+
+> +if ($file =~ m/\.gpg$/)
+> +{
+> + $file = "gpg --decrypt $file|";
+> +}
+
+Does this need to quote $file, since the result will get passed to the
+shell? It might be easier to just use the list form of open(), like:
+
+  my @data = $file =~ /\.gpg$/ ?
+             load('-|', qw(gpg --decrypt), $file) :
+             load('<', $file);
+
+(and then obviously update load to just dump all of @_ to open()).
+
+> +die "Sorry, we could not load data from [$file]"
+> + unless (scalar @data);
+
+Probably not that interesting a corner case, but this means we die on an
+empty .netrc, whereas it might be more sensible for it to behave as "no
+match".
+
+For the same reason, it might be worth silently exiting when we don't
+find a .netrc (or any of its variants). That lets people who share their
+dot-files across machines configure git globally, even if they don't
+necessarily have a netrc on every machine.
+
+> +# the query
+> +my %q;
+> +
+> +foreach my $v (values %{$options{tmap}})
+> +{
+> + undef $q{$v};
+> +}
+
+Just my personal style, but I find the intent more obvious with "map" (I
+know some people find it unreadable, though):
+
+  my %q = map { $_ => undef } values(%{$options{tmap}});
+
+> +while (<STDIN>)
+> +{
+> + next unless m/([a-z]+)=(.+)/;
+
+We don't currently have any exotic tokens that this would not match, nor
+do I plan to add them, but the credential documentation defines a valid
+line as /^([^=]+)=(.+)/.
+
+It's also possible for the value to be empty, but I do not think
+off-hand that current git will ever send such an empty value.
+
+> [...]
+
+The rest of it looks fine to me. I don't think any of my comments are
+show-stoppers. Tests would be nice, but integrating contrib/ stuff with
+the test harness is kind of a pain.
+
+-Peff
