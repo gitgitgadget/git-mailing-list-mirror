@@ -1,95 +1,150 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Feb 2013, #01; Fri, 1)
-Date: Sat, 02 Feb 2013 21:44:34 -0800
-Message-ID: <7vlib69cjh.fsf@alter.siamese.dyndns.org>
-References: <7vwqur8z4s.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2] branch: show rebase/bisect info when possible instead of "(no branch)"
+Date: Sun,  3 Feb 2013 12:48:40 +0700
+Message-ID: <1359870520-22644-1-git-send-email-pclouds@gmail.com>
+References: <1359461574-24529-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>, John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Feb 03 06:45:20 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Niedier <jrnieder@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 03 06:48:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1sOC-0002my-Jl
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 06:45:16 +0100
+	id 1U1sRO-0004U4-KT
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 06:48:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751202Ab3BCFov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 00:44:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35166 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751002Ab3BCFot (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 00:44:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42B2183A3;
-	Sun,  3 Feb 2013 00:44:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FNTjO8IGdjqfK/Mq74yo7fd2hoM=; b=Is2MxH
-	ul1eB+wL1G30KUO8xYJS8GdMIWn5FiAfWsBXeCbaAdPdXqT9bvnqYGCmZgJHMAbr
-	CRaNa38QcVg9+rP2hIDZsmO5MS8wKFsrGl42J/9aV1uesOq6mr8gw/oqu/s7P0RM
-	XXEiojNEVuiW+sZE3GbitFn8TPnTzxyBrgCnU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Qe70scudRRTUeoefXuiZKf/UvnLM3k9H
-	zK1YeWUO6nCDOaFaDzHg0V/iyMMtLRixxZbU6jze9sIE8AAJxt18pmNQnt71Qhbf
-	1IRcALT582LNHEqMDcI6/6PkKaMJOuY6/QcZ+dGA/Wym9Kwz9RE+mxcPiG+zdxa4
-	1xjSFufStj8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3787783A2;
-	Sun,  3 Feb 2013 00:44:39 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4F01E83A1; Sun,  3 Feb 2013
- 00:44:38 -0500 (EST)
-In-Reply-To: <7vwqur8z4s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 01 Feb 2013 14:09:39 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC4F72CE-6DC4-11E2-9D7E-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751204Ab3BCFsJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Feb 2013 00:48:09 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:63702 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002Ab3BCFsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 00:48:08 -0500
+Received: by mail-pa0-f49.google.com with SMTP id kp6so777454pab.8
+        for <git@vger.kernel.org>; Sat, 02 Feb 2013 21:48:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=SKFRmyw9XBiL0Mbn6b8J4bxYDLqrZeU0jR4ZKj26KtY=;
+        b=tk7Lck7bXLirKf4JhLEWzLdVeVkfE0MuBzVsFIJ7Ew6z+jdlh4oWuy65SwBxQbhlNz
+         h99ILcBXE879rzP5aLhYR7SOBQP71EHnbAsbYGXrH0lZYz1+P8vqvLTrGIBe10l1x3SW
+         I7M77J3wLyhE490dmbfPRhKjSHtjfCHPLq2TPKFlxpVO9RrZ2IcOiPEH3dKe+atKo/xz
+         xamk+aOnez8Gf5Sx5mAwgkwsF1xzXNXaeJnc/QP+cBkw75CAEC5ac4ALuQPEe0JkCVoC
+         ul49gSALT2JTS3dQZQZWZhKWAWaugxHTxKkGEfJa+tb5hhbRHiFx1hc64oHWsP6qS5qr
+         puvA==
+X-Received: by 10.66.81.166 with SMTP id b6mr42251878pay.7.1359870487046;
+        Sat, 02 Feb 2013 21:48:07 -0800 (PST)
+Received: from lanh ([115.74.36.51])
+        by mx.google.com with ESMTPS id ba3sm13763223pbd.29.2013.02.02.21.48.03
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 02 Feb 2013 21:48:05 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 03 Feb 2013 12:48:42 +0700
+X-Mailer: git-send-email 1.8.1.1.459.g5970e58
+In-Reply-To: <1359461574-24529-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215300>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This prints more helpful info when HEAD is detached: is it detached
+because of bisect or rebase? What is the original branch name in those
+cases?
 
-Regarding these two topics....
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+  - Incorporate Jonathan's version of checking
+  - Show original branch name, e.g. "(rebasing foo)", when possible
 
-> * da/mergetool-docs (2013-01-30) 7 commits
->  - doc: generate a list of valid merge tools
->  - mergetool--lib: list user configured tools in '--tool-help'
->  - fixup! doc: generate a list of valid merge tools
->  - fixup! mergetool--lib: add functions for finding available tools
->  - mergetool--lib: add functions for finding available tools
->  - mergetool--lib: improve the help text in guess_merge_tool()
->  - mergetool--lib: simplify command expressions
->  (this branch uses jk/mergetool.)
->
->  Build on top of the clean-up done by jk/mergetool and automatically
->  generate the list of mergetool and difftool backends the build
->  supports to be included in the documentation.
->
->  Will merge to 'next', after squashing the fixup! commits from John
->  Keeping.
->
->
-> * jk/mergetool (2013-01-28) 8 commits
->  - mergetools: simplify how we handle "vim" and "defaults"
->  - mergetool--lib: don't call "exit" in setup_tool
->  - mergetool--lib: improve show_tool_help() output
->  - mergetools/vim: remove redundant diff command
->  - git-difftool: use git-mergetool--lib for "--tool-help"
->  - git-mergetool: don't hardcode 'mergetool' in show_tool_help
->  - git-mergetool: remove redundant assignment
->  - git-mergetool: move show_tool_help to mergetool--lib
->  (this branch is used by da/mergetool-docs.)
->
->  Cleans up mergetool/difftool combo.
->
->  This is looking ready for 'next'.
+ builtin/branch.c            | 40 +++++++++++++++++++++++++++++++++++++=
+++-
+ t/t6030-bisect-porcelain.sh |  2 +-
+ 2 files changed, 40 insertions(+), 2 deletions(-)
 
-Do the tips of these two topics look reasonable to both of you, or
-are there anything you sent but I missed?
+diff --git a/builtin/branch.c b/builtin/branch.c
+index ea6498b..40f20ad 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -550,6 +550,44 @@ static int calc_maxwidth(struct ref_list *refs)
+ 	return w;
+ }
+=20
++static char *get_head_description()
++{
++	struct stat st;
++	struct strbuf sb =3D STRBUF_INIT;
++	struct strbuf result =3D STRBUF_INIT;
++	int bisect =3D 0;
++	int ret;
++	if (!stat(git_path("rebase-merge"), &st) && S_ISDIR(st.st_mode))
++		ret =3D strbuf_read_file(&sb, git_path("rebase-merge/head-name"), 0)=
+;
++	else if (!access(git_path("rebase-apply/rebasing"), F_OK))
++		ret =3D strbuf_read_file(&sb, git_path("rebase-apply/head-name"), 0)=
+;
++	else if (!access(git_path("BISECT_LOG"), F_OK)) {
++		ret =3D strbuf_read_file(&sb, git_path("BISECT_START"), 0);
++		bisect =3D 1;
++	} else
++		return xstrdup(_("(no branch)"));
++
++	if (ret <=3D 0)
++		return xstrdup(bisect ? _("(bisecting)") : _("_(rebasing)"));
++
++	while (sb.len && sb.buf[sb.len - 1] =3D=3D '\n')
++		strbuf_setlen(&sb, sb.len - 1);
++
++	if (bisect) {
++		unsigned char sha1[20];
++		if (!get_sha1_hex(sb.buf, sha1))
++			strbuf_addstr(&result, _("(bisecting)"));
++		else
++			strbuf_addf(&result, _("(bisecting %s)"), sb.buf);
++	} else {
++		if (!prefixcmp(sb.buf, "refs/heads/"))
++			strbuf_addf(&result, _("(rebasing %s)"), sb.buf + 11);
++		else
++			strbuf_addstr(&result, _("(rebasing)"));
++	}
++	strbuf_release(&sb);
++	return strbuf_detach(&result, NULL);
++}
+=20
+ static void show_detached(struct ref_list *ref_list)
+ {
+@@ -557,7 +595,7 @@ static void show_detached(struct ref_list *ref_list=
+)
+=20
+ 	if (head_commit && is_descendant_of(head_commit, ref_list->with_commi=
+t)) {
+ 		struct ref_item item;
+-		item.name =3D xstrdup(_("(no branch)"));
++		item.name =3D get_head_description();
+ 		item.width =3D utf8_strwidth(item.name);
+ 		item.kind =3D REF_LOCAL_BRANCH;
+ 		item.dest =3D NULL;
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 3e0e15f..90968d5 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -164,7 +164,7 @@ test_expect_success 'bisect start: existing ".git/B=
+ISECT_START" not modified if
+ 	cp .git/BISECT_START saved &&
+ 	test_must_fail git bisect start $HASH4 foo -- &&
+ 	git branch > branch.output &&
+-	test_i18ngrep "* (no branch)" branch.output > /dev/null &&
++	test_i18ngrep "* (bisecting other)" branch.output > /dev/null &&
+ 	test_cmp saved .git/BISECT_START
+ '
+ test_expect_success 'bisect start: no ".git/BISECT_START" if mistaken =
+rev' '
+--=20
+1.8.1.1.459.g5970e58
