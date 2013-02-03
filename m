@@ -1,85 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk: Display the date of a tag in a human friendly way.
-Date: Sun, 03 Feb 2013 12:23:42 -0800
-Message-ID: <7vlib587u9.fsf@alter.siamese.dyndns.org>
-References: <1357314431-32710-1-git-send-email-wildfire@progsoc.org>
- <7vhamwse2c.fsf@alter.siamese.dyndns.org>
- <CAM1C4Gm_ea8DgrVhnp_MHmqaF6pyDe98EDA_BPkjvc8M5AO6FQ@mail.gmail.com>
- <7v1udzqv1v.fsf@alter.siamese.dyndns.org>
- <CAM1C4G=mKzfgrfO-n_yXjyDkZ9vA7H6kQEY5Yja-5C-YRRLmyw@mail.gmail.com>
- <20130203201217.GB3221@elie.Belkin>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 2/3] combine-diff: suppress a clang warning
+Date: Sun, 3 Feb 2013 20:31:50 +0000
+Message-ID: <20130203203150.GU1342@serenity.lan>
+References: <cover.1359901732.git.john@keeping.me.uk>
+ <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
+ <7vwqup890o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Anand Kumria <wildfire@progsoc.org>,
-	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 21:24:19 2013
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 21:32:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U266s-0001zL-NZ
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 21:24:19 +0100
+	id 1U26Ef-0004mn-9K
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 21:32:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753501Ab3BCUXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 15:23:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48775 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753450Ab3BCUXr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 15:23:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2542B27E;
-	Sun,  3 Feb 2013 15:23:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JPe5szbbn2KPK1gsyCj7UCSkZ80=; b=yOTOBd
-	mM9mgQcOxtGhdSvd5RjqgrJzHwtYNv+8JYsLclNGoA2PCV4XTSWfBBiGfLQ5QGyx
-	4Ir4anXJieXn3FzAHYR6ZXlfmM1avLXZa48BfiRaOJSiCcCDhJ27QkFtTOgqq0F/
-	y9zZ7lEwlSpqmmhLbW+bCPuPji1kchBVKe+m0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OngVQEgYGVn8NG72AhhfBbqFwAa/ig04
-	euaCcz+BOFo15wZlOMSMxUsIqLMyOE0IFVlKuFFBe2rC8L8u1AqW64IjHpi6Z6Ba
-	nQKR6aM34fX0MaifeOdxdUFjQJcxPYAEOvvRFiZ5RMcp08SNYpv8feZBfnxHMH6A
-	ohhz9LNzXkc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96C28B27D;
-	Sun,  3 Feb 2013 15:23:46 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D056AB27B; Sun,  3 Feb 2013
- 15:23:45 -0500 (EST)
-In-Reply-To: <20130203201217.GB3221@elie.Belkin> (Jonathan Nieder's message
- of "Sun, 3 Feb 2013 12:12:17 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9C49EE80-6E3F-11E2-9158-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753537Ab3BCUb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 15:31:59 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:33993 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753524Ab3BCUb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 15:31:58 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id C59D86064E2;
+	Sun,  3 Feb 2013 20:31:57 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id MRYOSnU3VlKZ; Sun,  3 Feb 2013 20:31:57 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 260B06064D4;
+	Sun,  3 Feb 2013 20:31:52 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vwqup890o.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215332>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Sun, Feb 03, 2013 at 11:58:15AM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > When compiling combine-diff.c, clang 3.2 says:
+> >
+> >     combine-diff.c:1006:19: warning: adding 'int' to a string does not
+> > 	    append to the string [-Wstring-plus-int]
+> > 		prefix = COLONS + offset;
+> > 			 ~~~~~~~^~~~~~~~
+> >     combine-diff.c:1006:19: note: use array indexing to silence this warning
+> > 		prefix = COLONS + offset;
+> > 				^
+> > 			 &      [       ]
+> >
+> > Suppress this by making the suggested change.
+> >
+> > Signed-off-by: John Keeping <john@keeping.me.uk>
+> > ---
+> 
+> This was not lost in the noise.
+> 
+> I thought that this wasn't a serious patch, but your attempt to
+> demonstrate to others why patches trying to squelch clang warnings
+> are not necessarily a good thing to do.
+>
+> Who is that compiler trying to help with such a warning message?
+> After all, we are writing in C, and clang is supposed to be a C
+> compiler.  And adding integer to a pointer to (const) char is a
+> straight-forward way to look at the trailing part of a given string.
 
-> Anand Kumria wrote:
->
->> I've not been able to find the canonical location of your gitk repository.
->
-> Here's how I find it:
->
-> 	$ git clone git://repo.or.cz/git.git
-> [...]
-> 	$ cd git
-> 	$ git log -1 --oneline -- gitk-git
-> 	ec3ae6ec Merge git://ozlabs.org/~paulus/gitk
-> 	$ cd ..
-> 	$ git clone git://ozlabs.org/~paulus/gitk.git
->
-> Patches, including documentation patches, go to git@vger.kernel.org,
-> cc-ing Paul Mackerras.
+A quick search turned up the original thread where this feature was
+added to Clang [1].  It seems that it does find genuine bugs where
+people try to log values by doing:
 
-Or look at "A note from the maintainer" posted here every few
-months.
+    log("failed to handle error: " + errno);
 
-	
+[1] http://thread.gmane.org/gmane.comp.compilers.clang.scm/47203
+
+> > -		prefix = COLONS + offset;
+> > +		prefix = &COLONS[offset];
+> 
+> In other words, both are perfectly valid C.  Why should we make it
+> less readable to avoid a stupid compiler warning?
+
+Are you happy to change COLONS to a const char[] instead of a #define?
+That also suppresses the warning.
+
+Since Git is warning-free on GCC and so close to being warning-free on
+recent Clang I think it is worthwhile to fix the remaining two issues
+which do seem to be intentional diagnostics rather than Clang bugs.
+
+
+John
