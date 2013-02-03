@@ -1,102 +1,91 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Getting started contributing.
-Date: Sun, 3 Feb 2013 13:34:54 -0000
-Organization: OPDS
-Message-ID: <77A6ABB842334FFFA04970DEAFAB6D0D@PhilipOakley>
-References: <1359872508519-7576834.post@n2.nabble.com> <7vd2whalax.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Robert Clausecker <fuzxxl@gmail.com>
+Subject: Feature request: Allow extracting revisions into directories
+Date: Sun, 03 Feb 2013 15:18:05 +0100
+Message-ID: <1359901085.24730.11.camel@t520>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>
-To: "adamfraser" <adamfraser0@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 14:35:20 2013
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-wUMmeZUxhLbH0dGHTT3Z"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 03 15:18:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1zj5-0007EG-Jh
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 14:35:19 +0100
+	id 1U20P5-0005Ud-MJ
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 15:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753020Ab3BCNe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 08:34:56 -0500
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:46146 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752698Ab3BCNey (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Feb 2013 08:34:54 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AlYJALFmDlFcHmfN/2dsb2JhbAA+BowEsioEgQAXc4IaBQEBBQgBAS4eAQEhCwIDBQIBAxUBCyUUAQQIEgYHCQENBhMIAgECAwGHbgMTCLUPDYlSBIwdgRkJDIMmYQOIMIVXhkCNF4USgnw
-X-IronPort-AV: E=Sophos;i="4.84,593,1355097600"; 
-   d="scan'208";a="564693792"
-Received: from host-92-30-103-205.as13285.net (HELO PhilipOakley) ([92.30.103.205])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 03 Feb 2013 13:34:52 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753237Ab3BCOSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 09:18:22 -0500
+Received: from mail-bk0-f49.google.com ([209.85.214.49]:34779 "EHLO
+	mail-bk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753102Ab3BCOSV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 09:18:21 -0500
+Received: by mail-bk0-f49.google.com with SMTP id w11so2421808bku.8
+        for <git@vger.kernel.org>; Sun, 03 Feb 2013 06:18:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:subject:from:to:date:content-type:x-mailer
+         :mime-version;
+        bh=u0AoVTIeINzS5hyrRCFySkGxC3uZQLM7WqIEvCuOJDc=;
+        b=mI/psy9Lh/zXiEbPq7yfMIvF9XLX3rUu2Pen5Nk7spfVX4ZP5jTrOn0L36/UiEGtD4
+         33Szxzt6KyADw9xhLAwV73zamhWLjFc5DCfTzUEDlIKzOS4boJIJL4YbehOxInndNLNy
+         nYVh5Y+8PDKN8Rbs5oWtZE3gHV/nhlndy3AJ0vDpQoNQv8QSYs6PGtkDXkXEeNXjWGKc
+         cQXSCuQOoz8c9tnV0y/UOJvojHe97kqtH9by7TxmHGyktmBcxNOoJ1qlFDwK1myx4TEi
+         aFNBoyupxp9UfrQEDc6pPUYDTZa++67WecuTIMK9yDA0d8VLcXs+Es2wBYBY7jaHbVUp
+         hpPg==
+X-Received: by 10.204.145.83 with SMTP id c19mr4019987bkv.69.1359901099790;
+        Sun, 03 Feb 2013 06:18:19 -0800 (PST)
+Received: from ?IPv6:2a01:1e8:e100:10b::2? (cl-268.leo-01.de.sixxs.net. [2a01:1e8:e100:10b::2])
+        by mx.google.com with ESMTPS id r17sm4403437bkw.21.2013.02.03.06.18.18
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 03 Feb 2013 06:18:19 -0800 (PST)
+X-Mailer: Evolution 3.6.0-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215309>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Sunday, February 03, 2013 7:49 AM
-> adamfraser <adamfraser0@gmail.com> writes:
->
->> I've done a little searching and
->> haven't been able to find an official bug tracker for git is there 
->> somewhere
->> I can find some bugs to help fix?
->
-> You came to the right place.  A new bug or regression is reported to
-> this list, and it often is fixed (or often diagnosed as pebcak)
-> fairly quickly by list regulars.  Nobody maintains a bugzilla that
-> is not maintained and is full of stale/invalid bug reports.
->
-> The best contribution a new person can make is to use the software
-> regularly and find issues.  It is very hard to find real bugs that
-> can easily be fixed by somebody totally new to the codebase in Git
-> these days.
->
-> On the other hand, there probably still are many loose ends.  When a
-> command is supposed to take only two arguments because taking more
-> than three does not make any sense, for example, it has not been
-> unusual for us to document the two-argument form of the command,
-> reject if the user gives only one argument with an error message,
-> but we simply ignore the third argument if the user mistakenly runs
-> the command with three arguments, instead of erroring out (i.e. the
-> code does not bother to help insane or too inexperienced users).
-> That kind of things are hard to find by users experienced with Git
-> exactly because they know running such a command with three or more
-> arguments is nonsense, and they do not even try to make such a
-> mistake.  Still, it would be very nice to find and fix such issues.
->
-A review of the git-user list 
-https://groups.google.com/forum/?fromgroups#!forum/git-users is one 
-place to discover some of the user issues and thinking about how to 
-address them. Or resurrect issues from this Git list. E.g. There are a 
-number of sub-module improvements available there.
 
-If you have any Windows experience the MSysGit team 
-https://github.com/msysgit/msysgit is always looking for help on some of 
-the compatibility issues, e.g. where the Linux optimisations conflict 
-with the Windows approaches.
+--=-wUMmeZUxhLbH0dGHTT3Z
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Another area is picking out documentation issues you have seen and 
-submitting patches for them, whether in the command man pages or in the 
-guides. On my 'todo' list is to make the `help` command actually list 
-the "Help me" (i.e. guides and articles) pages, not just the command man 
-pages.
+Hello!
 
-I also had -
-* Bulk move detection (when folk change/move upper level directory 
-names).
-* add a .gitnevermerge option to stop private files you don't want in 
-'master' (or any other branch) to be merged
+git currently has the archive command that allows to save an arbitrary
+revision into a tar or zip file. Sometimes it is useful to not save this
+revision into an archive but to directly put all files into an arbitrary
+directory. Currently this seems to be not possible to archive directly;
+the only way I found to do it is to run git archive and then directly
+unpack the archive into a directory.
 
-Philip
+    git --git-dir REPO archive REVISION | tar x
+
+It would be nice to have a command or simply a switch to git archive
+that allows the user to put the files of REVISION into a directory
+instead of making an archive.
+
+Thank you very much for your help. Yours,
+
+Robert Clausecker
+
+--=-wUMmeZUxhLbH0dGHTT3Z
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJRDnGdAAoJEDpa/qG5y+V5/30IAIRGEW8r3yHH9OAgh27XT528
+HIGmYETKXxX7557XKDdQq8MiXzQeus9D/7luE+ab+ZSpNaI49tHq5o6cBQ+Gz6Ki
+nH1Ma6WWS8bdIEdqs7S8iaXjBBXfEa07YjXkAtgpca9e3R21oI8GzsFMypNPAIN/
+NObvYIlD5gzS9DoLT0rg2KIhAKmiT6/Dyz3lECJINLzoMhEN/seYy6A+SlF6fC7j
+8BUdurGUv3QG9UotxOOAoxlTwprVIpW5J7weKMq4Ih30LmokyFI7DjcKfSLK9EoN
+QuYLUO2TyuNvck0JvuiUD5hGDHIVmyjNz57uhS3NcMfj2L6Z6AfsRXqd681M8wI=
+=rKVJ
+-----END PGP SIGNATURE-----
+
+--=-wUMmeZUxhLbH0dGHTT3Z--
