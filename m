@@ -1,81 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Getting started contributing.
-Date: Sun, 03 Feb 2013 11:46:33 -0800
-Message-ID: <7v1ucx9o4m.fsf@alter.siamese.dyndns.org>
-References: <1359872508519-7576834.post@n2.nabble.com>
- <7vd2whalax.fsf@alter.siamese.dyndns.org>
- <CACsJy8AYOAwLKufQ34brk1agyFAX9xjgAE9_LAcRx=RGxcEZzg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] combine-diff: suppress a clang warning
+Date: Sun, 03 Feb 2013 11:58:15 -0800
+Message-ID: <7vwqup890o.fsf@alter.siamese.dyndns.org>
+References: <cover.1359901732.git.john@keeping.me.uk>
+ <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: adamfraser <adamfraser0@gmail.com>, git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 20:47:02 2013
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Feb 03 20:58:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U25Wm-0005ZP-BF
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 20:47:00 +0100
+	id 1U25i7-0001J1-Lx
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 20:58:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753495Ab3BCTqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 14:46:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60368 "EHLO
+	id S1753502Ab3BCT6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 14:58:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35282 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753431Ab3BCTqh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 14:46:37 -0500
+	id S1753453Ab3BCT6U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 14:58:20 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA6D2C049;
-	Sun,  3 Feb 2013 14:46:36 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A6C8C803;
+	Sun,  3 Feb 2013 14:58:20 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dxCaxvukGHlNuXMiULNsQGVEx80=; b=HzyPDe
-	dIYgq3x4UVSDkNpqP5gFj17gG10ZXvFDFsUjB0o7G8fwZBVg3I0KWyQfo3x1eaWx
-	o/Iqq+9cTLLxuBW6HByNS7kpWs2l+FTcfLS+NQinc3Lvl0jT/adeapysbIOLvgMb
-	fXn+8j1MGUSMclkfYQ8Y2aq0paIm6JigeAl1Y=
+	:content-type; s=sasl; bh=9dF1sp4333N4XhL0kcpxjv77hg0=; b=pDcDgp
+	mef6YCYorEqa/sQyknVMRP3DT+Ifc5A4/4nH3hTIX53VzGojUbx0uGzGZ/Jhnr46
+	s8h9YNPGkftGMdJYStfpXiZZ54MLBLBzNwKiztvaKqTi48xAxHQhywMll1oug5Wo
+	C++C9FKU7qneWfNZNem1M3eOo88/cZ1+Wkotk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ePNj3NMI6u+DCugYetHgqCgExZyECmVy
-	DZNJs3+B+cBdBRP8hD6nlDT5QAEH6ZqL2mub8iCgU79QwPLRz8utTH4RIHlQUa7I
-	sQ51dqJD8RbcOwfOSoY77aP8NPfcN/xL7RXnaXzOxB2AG2789N1/2eanbz34X2jP
-	4SFKOw/EIn4=
+	:content-type; q=dns; s=sasl; b=mhdFo3N5lRqDIN5pXk2zW6GRvrW0Pjsi
+	l+GYqTQOqGf31owVw0WynvPdQ/MITbVaVWYgde2gTilL1EfRTp5ZKjPPxsIQ40UY
+	Hikptv0vk+9tomPWylCoIMBATuwLUqmeXW8B0NnovC5H4cGfQOKc/V8BIc106HN9
+	UCPuqn0QneQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE834C048;
-	Sun,  3 Feb 2013 14:46:36 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1EBB5C802;
+	Sun,  3 Feb 2013 14:58:20 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63D24C046; Sun,  3 Feb 2013
- 14:46:36 -0500 (EST)
-In-Reply-To: <CACsJy8AYOAwLKufQ34brk1agyFAX9xjgAE9_LAcRx=RGxcEZzg@mail.gmail.com> (Duy
- Nguyen's message of "Sun, 3 Feb 2013 16:54:57 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4EA24C7FF; Sun,  3 Feb 2013
+ 14:58:18 -0500 (EST)
+In-Reply-To: <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
+ (John Keeping's message of "Sun, 3 Feb 2013 14:37:10 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B6FA336-6E3A-11E2-B396-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0E679EB2-6E3C-11E2-B542-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215328>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+John Keeping <john@keeping.me.uk> writes:
 
-> On Sun, Feb 3, 2013 at 2:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> On the other hand, there probably still are many loose ends.
+> When compiling combine-diff.c, clang 3.2 says:
 >
-> A few other things
+>     combine-diff.c:1006:19: warning: adding 'int' to a string does not
+> 	    append to the string [-Wstring-plus-int]
+> 		prefix = COLONS + offset;
+> 			 ~~~~~~~^~~~~~~~
+>     combine-diff.c:1006:19: note: use array indexing to silence this warning
+> 		prefix = COLONS + offset;
+> 				^
+> 			 &      [       ]
 >
->  - Mark more strings for translation (not as easy as it sounds, some
-> strings can't be translated)
+> Suppress this by making the suggested change.
+>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
 
-True, but not a good advice for somebody new, exactly for the reason
-you stated, i.e. some strings must not be translated.
+This was not lost in the noise.
 
->  - Color more in the output where it makes sense
+I thought that this wasn't a serious patch, but your attempt to
+demonstrate to others why patches trying to squelch clang warnings
+are not necessarily a good thing to do.
 
-Eeek.
+Who is that compiler trying to help with such a warning message?
+After all, we are writing in C, and clang is supposed to be a C
+compiler.  And adding integer to a pointer to (const) char is a
+straight-forward way to look at the trailing part of a given string.
 
->  - Stop/Warn the user from updating HEAD (e.g. checkout another
-> branch) while in the middle of a rebase (some makes sense, most is by
-> mistake)
+> -		prefix = COLONS + offset;
+> +		prefix = &COLONS[offset];
 
-Perhaps, but again probably not for somebody new who hasn't mastered
-various workflows and understood why it may make sense to allow it.
+In other words, both are perfectly valid C.  Why should we make it
+less readable to avoid a stupid compiler warning?
