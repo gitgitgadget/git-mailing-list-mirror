@@ -1,91 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] combine-diff: suppress a clang warning
-Date: Sun, 03 Feb 2013 11:58:15 -0800
-Message-ID: <7vwqup890o.fsf@alter.siamese.dyndns.org>
-References: <cover.1359901732.git.john@keeping.me.uk>
- <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [PATCH] Handle path completion and colon for tcsh script
+Date: Sun, 03 Feb 2013 20:59:32 +0100
+Message-ID: <510EC1A4.4000207@gmail.com>
+References: <E59706EF8DB1D147B15BECA3322E4BDC09AA38@eusaamb103.ericsson.se> <7vboc2bhpj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Feb 03 20:58:51 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Marc Khouzam <marc.khouzam@ericsson.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 21:00:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U25i7-0001J1-Lx
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 20:58:43 +0100
+	id 1U25jo-0001yU-0t
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 21:00:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502Ab3BCT6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 14:58:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35282 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753453Ab3BCT6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 14:58:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A6C8C803;
-	Sun,  3 Feb 2013 14:58:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9dF1sp4333N4XhL0kcpxjv77hg0=; b=pDcDgp
-	mef6YCYorEqa/sQyknVMRP3DT+Ifc5A4/4nH3hTIX53VzGojUbx0uGzGZ/Jhnr46
-	s8h9YNPGkftGMdJYStfpXiZZ54MLBLBzNwKiztvaKqTi48xAxHQhywMll1oug5Wo
-	C++C9FKU7qneWfNZNem1M3eOo88/cZ1+Wkotk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mhdFo3N5lRqDIN5pXk2zW6GRvrW0Pjsi
-	l+GYqTQOqGf31owVw0WynvPdQ/MITbVaVWYgde2gTilL1EfRTp5ZKjPPxsIQ40UY
-	Hikptv0vk+9tomPWylCoIMBATuwLUqmeXW8B0NnovC5H4cGfQOKc/V8BIc106HN9
-	UCPuqn0QneQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1EBB5C802;
-	Sun,  3 Feb 2013 14:58:20 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4EA24C7FF; Sun,  3 Feb 2013
- 14:58:18 -0500 (EST)
-In-Reply-To: <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
- (John Keeping's message of "Sun, 3 Feb 2013 14:37:10 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0E679EB2-6E3C-11E2-B542-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753506Ab3BCUAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 15:00:06 -0500
+Received: from mail-bk0-f41.google.com ([209.85.214.41]:41792 "EHLO
+	mail-bk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753496Ab3BCUAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 15:00:04 -0500
+Received: by mail-bk0-f41.google.com with SMTP id q16so2526117bkw.0
+        for <git@vger.kernel.org>; Sun, 03 Feb 2013 12:00:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=9WOwHW8eoMUqm0pvc9Z4+KCNF5d99fURMCOHy7gVRwk=;
+        b=EVXnuB9BLk6Wz+n6p2nbMASH2dfHtXpkPG9/zqLK4aCjfBDPGEFPa14A/IfPML3LY3
+         cATJG+/Q2ddWZDCg9FSAbXTspKgfuZ8F4fPF0Nc8r+PhL9WDr//5vcpELhi3Y5gm/y89
+         TRIFyQ66U+tiFdAEYu6N7qwj45DUNEmTRQHteGDjq56geS+t421GjdPzYkKuihfJ4PME
+         wl8ZutgSpI0n/r9t9VNlAjoOf+PTxDRjrtcKk8vwxhXbmlCobp/PL4e9D/1MogllTOS+
+         ZqOj1Cu9U4ASxRKk4GMn7Fk6M9b/Qi3/sWW7emDhv3uNr4dOnsCXLvwTBdOPIo9qgCuC
+         afEA==
+X-Received: by 10.204.150.199 with SMTP id z7mr4858309bkv.139.1359921602463;
+        Sun, 03 Feb 2013 12:00:02 -0800 (PST)
+Received: from [192.168.0.3] ([151.70.210.59])
+        by mx.google.com with ESMTPS id b21sm3449465bkw.12.2013.02.03.11.59.57
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 03 Feb 2013 12:00:01 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <7vboc2bhpj.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215329>
 
-John Keeping <john@keeping.me.uk> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> When compiling combine-diff.c, clang 3.2 says:
->
->     combine-diff.c:1006:19: warning: adding 'int' to a string does not
-> 	    append to the string [-Wstring-plus-int]
-> 		prefix = COLONS + offset;
-> 			 ~~~~~~~^~~~~~~~
->     combine-diff.c:1006:19: note: use array indexing to silence this warning
-> 		prefix = COLONS + offset;
-> 				^
-> 			 &      [       ]
->
-> Suppress this by making the suggested change.
->
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
+Il 02/02/2013 21:10, Junio C Hamano ha scritto:
+> Marc Khouzam <marc.khouzam@ericsson.com> writes:
+> 
+>> Recent enhancements to git-completion.bash provide
+>> intelligent path completion for git commands.  Such
+>> completions do not add the '/' at the end of directories
+>> for recent versions of bash.
+>> ...
+>> Here is the update for tcsh completion which is needed to handle
+>> the cool new path completion feature just pushed to 'next'.
+>>
+> [...]
+> But I have to wonder if this is sweeping a problem under the rug.
+> Shouldn't the completion for bash users end completed directory name
+> with '/', even if we didn't have to worry about tcsh?
+> 
 
-This was not lost in the noise.
+The problem is that when using the "new"
+`compopt -o filenames` command, Bash assumes COMPREPLY contains a list
+of filenames, and when it detects a directory name, it adds a slash.
 
-I thought that this wasn't a serious patch, but your attempt to
-demonstrate to others why patches trying to squelch clang warnings
-are not necessarily a good thing to do.
+The problem is, if the directory name *already* has a slash, Bash adds
+another slash!
 
-Who is that compiler trying to help with such a warning message?
-After all, we are writing in C, and clang is supposed to be a C
-compiler.  And adding integer to a pointer to (const) char is a
-straight-forward way to look at the trailing part of a given string.
+I don't know if this can be considered a bug or a feature.
 
-> -		prefix = COLONS + offset;
-> +		prefix = &COLONS[offset];
 
-In other words, both are perfectly valid C.  Why should we make it
-less readable to avoid a stupid compiler warning?
+Regards  Manlio
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAlEOwaQACgkQscQJ24LbaUSjwgCfbgb1id5DcNG0Q75FWwgNPCqb
+qkUAnAmMzCahB745/BWeDJTHbJFXucxs
+=vf+P
+-----END PGP SIGNATURE-----
