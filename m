@@ -1,101 +1,102 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: What's cooking in git.git (Feb 2013, #01; Fri, 1)
-Date: Sun, 3 Feb 2013 13:02:37 +0000
-Message-ID: <20130203130237.GS1342@serenity.lan>
-References: <7vwqur8z4s.fsf@alter.siamese.dyndns.org>
- <7vlib69cjh.fsf@alter.siamese.dyndns.org>
- <CAJDDKr6bPjKwe3NitvGCec2LyesY3yL=UtN85Bsox-bGWN=qeA@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Getting started contributing.
+Date: Sun, 3 Feb 2013 13:34:54 -0000
+Organization: OPDS
+Message-ID: <77A6ABB842334FFFA04970DEAFAB6D0D@PhilipOakley>
+References: <1359872508519-7576834.post@n2.nabble.com> <7vd2whalax.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 14:03:14 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>
+To: "adamfraser" <adamfraser0@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 14:35:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1zDw-00073d-KM
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 14:03:08 +0100
+	id 1U1zj5-0007EG-Jh
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 14:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753194Ab3BCNCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 08:02:47 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:34566 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753089Ab3BCNCq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 08:02:46 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 796796064E2;
-	Sun,  3 Feb 2013 13:02:45 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Q8A0uA+mVNkz; Sun,  3 Feb 2013 13:02:44 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 0B0A06064E3;
-	Sun,  3 Feb 2013 13:02:39 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CAJDDKr6bPjKwe3NitvGCec2LyesY3yL=UtN85Bsox-bGWN=qeA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753020Ab3BCNe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 08:34:56 -0500
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:46146 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752698Ab3BCNey (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Feb 2013 08:34:54 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AlYJALFmDlFcHmfN/2dsb2JhbAA+BowEsioEgQAXc4IaBQEBBQgBAS4eAQEhCwIDBQIBAxUBCyUUAQQIEgYHCQENBhMIAgECAwGHbgMTCLUPDYlSBIwdgRkJDIMmYQOIMIVXhkCNF4USgnw
+X-IronPort-AV: E=Sophos;i="4.84,593,1355097600"; 
+   d="scan'208";a="564693792"
+Received: from host-92-30-103-205.as13285.net (HELO PhilipOakley) ([92.30.103.205])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 03 Feb 2013 13:34:52 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215308>
 
-On Sun, Feb 03, 2013 at 04:13:22AM -0800, David Aguilar wrote:
-> On Sat, Feb 2, 2013 at 9:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> > Regarding these two topics....
-> >
-> >> * da/mergetool-docs (2013-01-30) 7 commits
-> >>  - doc: generate a list of valid merge tools
-> >>  - mergetool--lib: list user configured tools in '--tool-help'
-> >>  - fixup! doc: generate a list of valid merge tools
-> >>  - fixup! mergetool--lib: add functions for finding available tools
-> >>  - mergetool--lib: add functions for finding available tools
-> >>  - mergetool--lib: improve the help text in guess_merge_tool()
-> >>  - mergetool--lib: simplify command expressions
-> >>  (this branch uses jk/mergetool.)
-> >>
-> >>  Build on top of the clean-up done by jk/mergetool and automatically
-> >>  generate the list of mergetool and difftool backends the build
-> >>  supports to be included in the documentation.
-> >>
-> >>  Will merge to 'next', after squashing the fixup! commits from John
-> >>  Keeping.
-> >>
-> >>
-> >> * jk/mergetool (2013-01-28) 8 commits
-> >>  - mergetools: simplify how we handle "vim" and "defaults"
-> >>  - mergetool--lib: don't call "exit" in setup_tool
-> >>  - mergetool--lib: improve show_tool_help() output
-> >>  - mergetools/vim: remove redundant diff command
-> >>  - git-difftool: use git-mergetool--lib for "--tool-help"
-> >>  - git-mergetool: don't hardcode 'mergetool' in show_tool_help
-> >>  - git-mergetool: remove redundant assignment
-> >>  - git-mergetool: move show_tool_help to mergetool--lib
-> >>  (this branch is used by da/mergetool-docs.)
-> >>
-> >>  Cleans up mergetool/difftool combo.
-> >>
-> >>  This is looking ready for 'next'.
-> >
-> > Do the tips of these two topics look reasonable to both of you, or
-> > are there anything you sent but I missed?
-> 
-> It looks good to go.  The additional "|| :" in the makefile is a nice
-> touchup that made it more robust too.
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Sunday, February 03, 2013 7:49 AM
+> adamfraser <adamfraser0@gmail.com> writes:
+>
+>> I've done a little searching and
+>> haven't been able to find an official bug tracker for git is there 
+>> somewhere
+>> I can find some bugs to help fix?
+>
+> You came to the right place.  A new bug or regression is reported to
+> this list, and it often is fixed (or often diagnosed as pebcak)
+> fairly quickly by list regulars.  Nobody maintains a bugzilla that
+> is not maintained and is full of stale/invalid bug reports.
+>
+> The best contribution a new person can make is to use the software
+> regularly and find issues.  It is very hard to find real bugs that
+> can easily be fixed by somebody totally new to the codebase in Git
+> these days.
+>
+> On the other hand, there probably still are many loose ends.  When a
+> command is supposed to take only two arguments because taking more
+> than three does not make any sense, for example, it has not been
+> unusual for us to document the two-argument form of the command,
+> reject if the user gives only one argument with an error message,
+> but we simply ignore the third argument if the user mistakenly runs
+> the command with three arguments, instead of erroring out (i.e. the
+> code does not bother to help insane or too inexperienced users).
+> That kind of things are hard to find by users experienced with Git
+> exactly because they know running such a command with three or more
+> arguments is nonsense, and they do not even try to make such a
+> mistake.  Still, it would be very nice to find and fix such issues.
+>
+A review of the git-user list 
+https://groups.google.com/forum/?fromgroups#!forum/git-users is one 
+place to discover some of the user issues and thinking about how to 
+address them. Or resurrect issues from this Git list. E.g. There are a 
+number of sub-module improvements available there.
 
-Looks good to me as well.
+If you have any Windows experience the MSysGit team 
+https://github.com/msysgit/msysgit is always looking for help on some of 
+the compatibility issues, e.g. where the Linux optimisations conflict 
+with the Windows approaches.
 
+Another area is picking out documentation issues you have seen and 
+submitting patches for them, whether in the command man pages or in the 
+guides. On my 'todo' list is to make the `help` command actually list 
+the "Help me" (i.e. guides and articles) pages, not just the command man 
+pages.
 
-John
+I also had -
+* Bulk move detection (when folk change/move upper level directory 
+names).
+* add a .gitnevermerge option to stop private files you don't want in 
+'master' (or any other branch) to be merged
+
+Philip
