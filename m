@@ -1,158 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
-Date: Sun, 3 Feb 2013 14:41:49 -0500
-Message-ID: <20130203194148.GA26318@sigill.intra.peff.net>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
- <7vvcafojf4.fsf@alter.siamese.dyndns.org>
- <20130130074306.GA17868@sigill.intra.peff.net>
- <7v7gmumzo6.fsf@alter.siamese.dyndns.org>
- <87pq0l5qbc.fsf@lifelogs.com>
- <20130131193844.GA14460@sigill.intra.peff.net>
- <87k3qrx712.fsf@lifelogs.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Feb 2013, #01; Fri, 1)
+Date: Sun, 03 Feb 2013 11:43:55 -0800
+Message-ID: <7v8v759o90.fsf@alter.siamese.dyndns.org>
+References: <7vwqur8z4s.fsf@alter.siamese.dyndns.org>
+ <7vlib69cjh.fsf@alter.siamese.dyndns.org>
+ <CAJDDKr6bPjKwe3NitvGCec2LyesY3yL=UtN85Bsox-bGWN=qeA@mail.gmail.com>
+ <20130203130237.GS1342@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 03 20:42:14 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Feb 03 20:44:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U25S9-0003qX-MZ
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 20:42:14 +0100
+	id 1U25UJ-0004Y7-1a
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 20:44:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753528Ab3BCTlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 14:41:52 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56675 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753431Ab3BCTlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 14:41:51 -0500
-Received: (qmail 13159 invoked by uid 107); 3 Feb 2013 19:43:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 03 Feb 2013 14:43:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 03 Feb 2013 14:41:49 -0500
-Content-Disposition: inline
-In-Reply-To: <87k3qrx712.fsf@lifelogs.com>
+	id S1753532Ab3BCToE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 14:44:04 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57194 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753431Ab3BCToD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 14:44:03 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7ED4BD24;
+	Sun,  3 Feb 2013 14:44:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QjrKpER4mflXECfcFW62aES1a7U=; b=gbKX6H
+	VDehYzACa3fVP+JvHO8Hu96/iiS0Mgp3n4YGElvPRSBwxJsc4WxzFI8js9bvbdtI
+	VYGoRfsrrKJrK8aX7UjOwn+/rE7uj5BWtGrjkhXjGdq+RhyCXgDYYvHWGwQXR8Je
+	sxuWfgp6FhFfKo5Xz29BETo3SMD8qd31rPKmk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YxfPtFWnqEHt0FUbuyNfikF5hhD6JbZH
+	sXJOKe+Z3U34VymilyOartFzt3ckzhTHK0phpGBIt2RMghqihPE4NzQolSShiBi2
+	QtbB3T5LRsXRtx0jYrcHekFiOXDNnoapqBrAbqiEmddznN7ZYLiXxRVsZsBCLVwi
+	qG6TWXxgJ0E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4269BD23;
+	Sun,  3 Feb 2013 14:44:01 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78550BD22; Sun,  3 Feb 2013
+ 14:44:00 -0500 (EST)
+In-Reply-To: <20130203130237.GS1342@serenity.lan> (John Keeping's message of
+ "Sun, 3 Feb 2013 13:02:37 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0E80A3DC-6E3A-11E2-A5D5-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215326>
 
-On Sat, Feb 02, 2013 at 06:57:29AM -0500, Ted Zlatanov wrote:
+John Keeping <john@keeping.me.uk> writes:
 
-> I wrote a Perl credential helper for netrc parsing which is pretty
-> robust, has built-in docs with -h, and doesn't depend on external
-> modules.  The netrc parser regex was stolen from Net::Netrc.
+> On Sun, Feb 03, 2013 at 04:13:22AM -0800, David Aguilar wrote:
+>> It looks good to go.  The additional "|| :" in the makefile is a nice
+>> touchup that made it more robust too.
 >
-> It will by default use ~/.authinfo.gpg, ~/.netrc.gpg, ~/.authinfo, and
-> ~/.netrc (whichever is found first) and this can be overridden with -f.
+> Looks good to me as well.
 
-Cool, thanks for working on this.
-
-> If the file name ends with ".gpg", it will run "gpg --decrypt FILE" and
-> use the output.  So non-interactively, that could hang if GPG was
-> waiting for input.  Does Git handle that, or should I check for a TTY?
-
-No, git does not do anything special with respect to credential helpers
-and ttys (nor should it, since one use of helpers is to get credentials
-when there is no tty). I think it is GPG's problem to deal with, though.
-We will invoke it, and it is up to it to decide whether it can acquire
-the passphrase or not (either through the tty, or possibly from
-gpg-agent). So it would be wrong to do the tty check yourself.
-
-I haven't tested GPG, but I assume it properly tries to read from
-/dev/tty and not stdin. Your helper's stdio is connected to git and
-speaking the credential-helper protocol, so GPG reading from stdin would
-either steal your input (if run before you read it), or just get EOF (if
-you have read all of the pipe content already). If GPG isn't well
-behaved, it may be worth redirecting its stdin from /dev/null as a
-safety measure.
-
-> Take a look at the proposed patch and let me know if it's usable, if you
-> need a formal copyright assignment, etc.
-
-Overall looks sane to me, though my knowledge of .netrc is not
-especially good. Usually we try to send patches inline in the email
-(i.e., as generated by git-format-patch), and include a "Signed-off-by"
-line indicating that content is released to the project; see
-Documentation/SubmittingPatches.
-
-> +use Data::Dumper;
-
-I don't see it used here. Leftover from debugging?
-
-> + print <<EOHIPPUS;
-
-Cute, I haven't seen that one before.
-
-> +$0 [-f AUTHFILE] [-d] get
-> +
-> +Version $VERSION by tzz\@lifelogs.com.  License: any use is OK.
-
-I don't know if we have a particular policy for items in contrib/, but
-this license may be too vague. In particular, it does not explicitly
-allow redistribution, which would make Junio shipping a release with it
-a copyright violation.
-
-Any objection to just putting it under some well-known simple license
-(GPL, BSD, or whatever)?
-
-> +if ($file =~ m/\.gpg$/)
-> +{
-> + $file = "gpg --decrypt $file|";
-> +}
-
-Does this need to quote $file, since the result will get passed to the
-shell? It might be easier to just use the list form of open(), like:
-
-  my @data = $file =~ /\.gpg$/ ?
-             load('-|', qw(gpg --decrypt), $file) :
-             load('<', $file);
-
-(and then obviously update load to just dump all of @_ to open()).
-
-> +die "Sorry, we could not load data from [$file]"
-> + unless (scalar @data);
-
-Probably not that interesting a corner case, but this means we die on an
-empty .netrc, whereas it might be more sensible for it to behave as "no
-match".
-
-For the same reason, it might be worth silently exiting when we don't
-find a .netrc (or any of its variants). That lets people who share their
-dot-files across machines configure git globally, even if they don't
-necessarily have a netrc on every machine.
-
-> +# the query
-> +my %q;
-> +
-> +foreach my $v (values %{$options{tmap}})
-> +{
-> + undef $q{$v};
-> +}
-
-Just my personal style, but I find the intent more obvious with "map" (I
-know some people find it unreadable, though):
-
-  my %q = map { $_ => undef } values(%{$options{tmap}});
-
-> +while (<STDIN>)
-> +{
-> + next unless m/([a-z]+)=(.+)/;
-
-We don't currently have any exotic tokens that this would not match, nor
-do I plan to add them, but the credential documentation defines a valid
-line as /^([^=]+)=(.+)/.
-
-It's also possible for the value to be empty, but I do not think
-off-hand that current git will ever send such an empty value.
-
-> [...]
-
-The rest of it looks fine to me. I don't think any of my comments are
-show-stoppers. Tests would be nice, but integrating contrib/ stuff with
-the test harness is kind of a pain.
-
--Peff
+Thanks, both.
