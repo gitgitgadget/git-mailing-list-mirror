@@ -1,82 +1,116 @@
-From: Anand Kumria <wildfire@progsoc.org>
-Subject: Re: [PATCH] gitk: Display the date of a tag in a human friendly way.
-Date: Sun, 3 Feb 2013 18:37:42 +0000
-Message-ID: <CAM1C4G=mKzfgrfO-n_yXjyDkZ9vA7H6kQEY5Yja-5C-YRRLmyw@mail.gmail.com>
-References: <1357314431-32710-1-git-send-email-wildfire@progsoc.org>
- <7vhamwse2c.fsf@alter.siamese.dyndns.org> <CAM1C4Gm_ea8DgrVhnp_MHmqaF6pyDe98EDA_BPkjvc8M5AO6FQ@mail.gmail.com>
- <7v1udzqv1v.fsf@alter.siamese.dyndns.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 2/3] combine-diff: suppress a clang warning
+Date: Sun, 3 Feb 2013 19:06:21 +0000
+Message-ID: <20130203190621.GT1342@serenity.lan>
+References: <cover.1359901732.git.john@keeping.me.uk>
+ <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
+ <CALUzUxowrh53g50ZxkXSjLfOrSgX-YiZEB2MJXbLwxmwNB187A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Feb 03 19:38:40 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 20:06:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U24Sd-0005aL-B0
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 19:38:39 +0100
+	id 1U24ty-0008RK-GU
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 20:06:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397Ab3BCSiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 13:38:17 -0500
-Received: from mail-oa0-f48.google.com ([209.85.219.48]:61489 "EHLO
-	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341Ab3BCSiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 13:38:15 -0500
-Received: by mail-oa0-f48.google.com with SMTP id j1so4544154oag.7
-        for <git@vger.kernel.org>; Sun, 03 Feb 2013 10:38:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=X51goCwzcAELyFVumK4IxVkaO90v5PXeulPK6wSFS4Q=;
-        b=QFajICMcC0GFCpthoNNce1l/zRjXtC48F6kHd3di0wNPmMuS68bbUy8g5tBoUT4ITd
-         wlJazB+wn0fxyx2XrBe2wJhx93jq2P5f/nGXMmjrdjVclCPeg/bjQ0a3FtdIxjaCUGSy
-         DR8LC6kg/qf16/RUQ30/ULMb0qSHTDpggpSpEUE1KaX1BhzIm64P/MLp6NVW1ESjPWM9
-         NRy3/2X3e85kUYVZfOiOD/R+2LWDb9cUwQ6HSy7xxoClVcJkkBoz8uElLTHproriNkje
-         AeZasHDG4Rh/+54M8Qk2o9DrJl0EMCMvoKSBThWoQI5I8GgCx4AYr9HmRN1RRiHt6Wos
-         JZrA==
-X-Received: by 10.60.28.8 with SMTP id x8mr4165504oeg.40.1359916692928; Sun,
- 03 Feb 2013 10:38:12 -0800 (PST)
-Received: by 10.76.5.81 with HTTP; Sun, 3 Feb 2013 10:37:42 -0800 (PST)
-In-Reply-To: <7v1udzqv1v.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: OQ--5cK2vJwXY_xmOtQ0ucQHsZQ
+	id S1753544Ab3BCTGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 14:06:31 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:38602 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753431Ab3BCTGa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 14:06:30 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 4CA3BCDA4DF;
+	Sun,  3 Feb 2013 19:06:29 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id mk04Qw3NP-F5; Sun,  3 Feb 2013 19:06:28 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id C1166CDA590;
+	Sun,  3 Feb 2013 19:06:23 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <CALUzUxowrh53g50ZxkXSjLfOrSgX-YiZEB2MJXbLwxmwNB187A@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215323>
 
-Hi Pau,
+On Mon, Feb 04, 2013 at 02:20:06AM +0800, Tay Ray Chuan wrote:
+> On Sun, Feb 3, 2013 at 10:37 PM, John Keeping <john@keeping.me.uk> wrote:
+> > When compiling combine-diff.c, clang 3.2 says:
+> >
+> >     combine-diff.c:1006:19: warning: adding 'int' to a string does not
+> >             append to the string [-Wstring-plus-int]
+> >                 prefix = COLONS + offset;
+> >                          ~~~~~~~^~~~~~~~
+> >     combine-diff.c:1006:19: note: use array indexing to silence this warning
+> >                 prefix = COLONS + offset;
+> >                                 ^
+> >                          &      [       ]
+> >
+> > Suppress this by making the suggested change.
+> >
+> > Signed-off-by: John Keeping <john@keeping.me.uk>
+> > ---
+> >  combine-diff.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/combine-diff.c b/combine-diff.c
+> > index bb1cc96..dba4748 100644
+> > --- a/combine-diff.c
+> > +++ b/combine-diff.c
+> > @@ -1003,7 +1003,7 @@ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct re
+> >                 offset = strlen(COLONS) - num_parent;
+> >                 if (offset < 0)
+> >                         offset = 0;
+> > -               prefix = COLONS + offset;
+> > +               prefix = &COLONS[offset];
+> >
+> >                 /* Show the modes */
+> >                 for (i = 0; i < num_parent; i++) {
+> 
+> Hmm, does
+> 
+>                prefix = (const char *) COLONS + offset;
+> 
+> suppress the warning?
 
-I've not been able to find the canonical location of your gitk repository.
+It does, but it turns out that the following also suppresses the
+warning:
 
-I've tried kernel.org, samba.org and ozlabs.org; none of them to have
-it - nor does any amount of google searching I do reveal the location.
+-- >8 --
 
-I realise you've probably had a busy month with linux.conf.au but it
-would be nice to have some feedback.
+diff --git a/combine-diff.c b/combine-diff.c
+index bb1cc96..a07d329 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -982,7 +982,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 	free(sline);
+ }
+ 
+-#define COLONS "::::::::::::::::::::::::::::::::"
++static const char COLONS[] = "::::::::::::::::::::::::::::::::";
+ 
+ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct rev_info *rev)
+ {
 
-Could you let me know where gitk is hosted and I'll re-roll this patch
-against that (and update the docs so others don't need to go hunting).
+I think that's a nicer change than the original suggestion.
 
-Thanks,
-Anand
 
-On 5 January 2013 19:38, Junio C Hamano <gitster@pobox.com> wrote:
-> Anand Kumria <wildfire@progsoc.org> writes:
->
->> Sorry, I didn't know that gitk had been split back out (and
->> Documentation/gitk.txt still mentions it is part of the git suite).
->
-> It is not "split back" at all, and it won't be.  From "git" user's
-> point of view it is part of the suite.
->
-> Gitk however is still a viable freestanding project, so it would be
-> selfish for me to take a patch to gitk-git/gitk directly to my tree,
-> as the patch will not be able to flow back to the standalone gitk
-> project. Hence we always let patches go through Paul's tree and then
-> I pull from him.
->
->
+John
