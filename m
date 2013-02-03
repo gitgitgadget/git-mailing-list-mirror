@@ -1,86 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: Getting started contributing.
-Date: Sat, 02 Feb 2013 23:49:58 -0800
-Message-ID: <7vd2whalax.fsf@alter.siamese.dyndns.org>
-References: <1359872508519-7576834.post@n2.nabble.com>
+Date: Sun, 3 Feb 2013 16:54:57 +0700
+Message-ID: <CACsJy8AYOAwLKufQ34brk1agyFAX9xjgAE9_LAcRx=RGxcEZzg@mail.gmail.com>
+References: <1359872508519-7576834.post@n2.nabble.com> <7vd2whalax.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: adamfraser <adamfraser0@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 08:50:46 2013
+X-From: git-owner@vger.kernel.org Sun Feb 03 10:59:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U1uLb-0004FN-P4
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 08:50:44 +0100
+	id 1U1wMZ-0002Ee-0E
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 10:59:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751982Ab3BCHuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 02:50:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56633 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751827Ab3BCHuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 02:50:04 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 644515497;
-	Sun,  3 Feb 2013 02:50:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zvey7zf+YGnHZtbW+bQBSP00+S8=; b=nDtxG8
-	R1kuteYKXenwUTTQmSQgOhoNUxjBUewciXHnKlOaEaCNxLUy+HxZ9XV8oKAaKfeg
-	qTkX/MN41Jb1cUmUdr98+mleSXtumVFd3OnrZkLtDDT/tWgYFyBq6HduWMqf18B2
-	AAhs+H/b92kjXG7O3/NISPht63Y6OKLB8Umj8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=umwsXI4i5Uedhs8/zROyE+31xs7Khp1P
-	KKllOlcBIaDQd4mTQJW8WVf26EnbQLrz6YEgrukd6I/HIpUBRNi4CAG6Q9hUQxrI
-	pVoc2Vt+fKS5nM9cX6CP5Th8SMes2iDbEg+6yjVNicxLOoI9yeNW7R2Mb6EZ9KUU
-	oAEB/+28C10=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 545875492;
-	Sun,  3 Feb 2013 02:50:04 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 276CD5491; Sun,  3 Feb 2013
- 02:50:02 -0500 (EST)
-In-Reply-To: <1359872508519-7576834.post@n2.nabble.com> (adamfraser's message
- of "Sat, 2 Feb 2013 22:21:48 -0800 (PST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 51769354-6DD6-11E2-8127-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752993Ab3BCJza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 04:55:30 -0500
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:51765 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752913Ab3BCJz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 04:55:28 -0500
+Received: by mail-oa0-f47.google.com with SMTP id o17so4015843oag.20
+        for <git@vger.kernel.org>; Sun, 03 Feb 2013 01:55:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=rCpfJN0sKtU+1xnk/10CA04HC+eSQC8ejOceNQpp1LU=;
+        b=F7BuG+CNrZfbbhyDYuxFQ+J6b5PB1+iGPgbqB9Z7GQnk05Rpg7L93btUs7p2DN9jrI
+         3SNsJqxGYpgC3qWVB3NGyYxn8ysKq4fUbrkZeiIJSk94jpu/hWcRaw2LGwIWSG7WFmPj
+         O3jCgO47ZGwKM7ZQwX/rPqi8yE6xax7J9xmMD8hbL92x4Qio02hz5rXArvsRwSVfcZd+
+         fVWrdr+Bm+1ZI5m52HmB5cDxOIXA+iQLBB6SUn2cXLuLFiVYoPwYiL+MWfmAv/Wd1wx8
+         AsD4WWGdMTuh+5zZrQyU3NOA35Iu1IDZWh3BsSn0E8FBH7dk/erB4jI6DCB3c36KUBVF
+         C/CA==
+X-Received: by 10.60.154.169 with SMTP id vp9mr13752365oeb.109.1359885327892;
+ Sun, 03 Feb 2013 01:55:27 -0800 (PST)
+Received: by 10.182.118.229 with HTTP; Sun, 3 Feb 2013 01:54:57 -0800 (PST)
+In-Reply-To: <7vd2whalax.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215305>
 
-adamfraser <adamfraser0@gmail.com> writes:
+On Sun, Feb 3, 2013 at 2:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> On the other hand, there probably still are many loose ends.
 
-> I've done a little searching and
-> haven't been able to find an official bug tracker for git is there somewhere
-> I can find some bugs to help fix?
+A few other things
 
-You came to the right place.  A new bug or regression is reported to
-this list, and it often is fixed (or often diagnosed as pebcak)
-fairly quickly by list regulars.  Nobody maintains a bugzilla that
-is not maintained and is full of stale/invalid bug reports.
+ - Mark more strings for translation (not as easy as it sounds, some
+strings can't be translated)
+ - Color more in the output where it makes sense
+ - Stop/Warn the user from updating HEAD (e.g. checkout another
+branch) while in the middle of a rebase (some makes sense, most is by
+mistake)
 
-The best contribution a new person can make is to use the software
-regularly and find issues.  It is very hard to find real bugs that
-can easily be fixed by somebody totally new to the codebase in Git
-these days.
-
-On the other hand, there probably still are many loose ends.  When a
-command is supposed to take only two arguments because taking more
-than three does not make any sense, for example, it has not been
-unusual for us to document the two-argument form of the command,
-reject if the user gives only one argument with an error message,
-but we simply ignore the third argument if the user mistakenly runs
-the command with three arguments, instead of erroring out (i.e. the
-code does not bother to help insane or too inexperienced users).
-That kind of things are hard to find by users experienced with Git
-exactly because they know running such a command with three or more
-arguments is nonsense, and they do not even try to make such a
-mistake.  Still, it would be very nice to find and fix such issues.
-
-Thanks.
+PS. You are welcome to improve my two patches Junio mentioned. I don't
+think it overlaps much with "git rebase --status" though. Printing the
+remaining steps, or what patch being applied is not going to be done
+by "git status".
+-- 
+Duy
