@@ -1,88 +1,118 @@
-From: Alexandre Courbot <gnurou@gmail.com>
-Subject: [PATCH] send-email: ignore files ending with ~
-Date: Sun,  3 Feb 2013 23:55:40 +0900
-Message-ID: <1359903340-14508-1-git-send-email-gnurou@gmail.com>
-Cc: git@vger.kernel.org, Alexandre Courbot <gnurou@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 15:54:10 2013
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [RFC/PATCH v2] CodingGuidelines: add Python coding guidelines
+Date: Sun, 3 Feb 2013 10:12:03 -0500
+Message-ID: <20130203151203.GA10423@padd.com>
+References: <20130129190844.GB1342@serenity.lan>
+ <5108F056.9040406@alum.mit.edu>
+ <20130130203158.GN1342@serenity.lan>
+ <510B7F4B.7040902@alum.mit.edu>
+ <20130201111634.GA2476@farnsworth.metanate.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Feb 03 16:10:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U20xN-00009d-O9
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 15:54:10 +0100
+	id 1U21DK-00016G-MV
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 16:10:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752876Ab3BCOxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 09:53:47 -0500
-Received: from mail-da0-f44.google.com ([209.85.210.44]:33266 "EHLO
-	mail-da0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750944Ab3BCOxq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 09:53:46 -0500
-Received: by mail-da0-f44.google.com with SMTP id z20so2331029dae.17
-        for <git@vger.kernel.org>; Sun, 03 Feb 2013 06:53:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=ELGWruhqco8lWwA/IggI0hx5a+5S9wJfps7qQ8HLCRI=;
-        b=xPGEDLJcwYW972/YnIYuihXPXWRITfOQlo/baKAfd+3FjsnASDZkMCmdCBGlLWvqPR
-         c6c13jmdOhigU76kX6as97/OPnrULPtplZ+6N6sT2QZgAj12sEnxn3P65aiYVnDdtA3J
-         PqNujjsCZ+2Rb9j6OOoEFBXei6ZGdb3eZiU/WqD5p+6UnidO0mzC5eB2FqPuaoPg0rNG
-         YSlMMaZCLx9LhJHvolKlF390W8O5EVrKlPWSojZ4Vi2MF7xqkTGojf+B8h7D7LCefbYu
-         hoYWwerfxl7rqVuayKEhYskMJ2Ln9LfjUoGdoq6i/lJRvnRmfqPIlWyUvLwbvZqu+7Yx
-         UiRw==
-X-Received: by 10.68.193.199 with SMTP id hq7mr47334329pbc.3.1359903225387;
-        Sun, 03 Feb 2013 06:53:45 -0800 (PST)
-Received: from localhost.localdomain (softbank126010191003.bbtec.net. [126.10.191.3])
-        by mx.google.com with ESMTPS id wh4sm14907937pbc.18.2013.02.03.06.53.42
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 03 Feb 2013 06:53:43 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1
+	id S1754698Ab3BCPKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 10:10:14 -0500
+Received: from honk.padd.com ([74.3.171.149]:42991 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754615Ab3BCPKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 10:10:12 -0500
+Received: from tic.padd.com (unknown [50.52.174.88])
+	by honk.padd.com (Postfix) with ESMTPSA id 771272E8;
+	Sun,  3 Feb 2013 07:10:11 -0800 (PST)
+Received: by tic.padd.com (Postfix, from userid 1000)
+	id B9AB5100F04; Sun,  3 Feb 2013 10:12:03 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20130201111634.GA2476@farnsworth.metanate.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215315>
 
-It certainly happened to a lot of people already: you carefully prepare
-your set of patches, export them using format-patch --cover-letter,
-write your cover letter, and send the set like this:
+john@keeping.me.uk wrote on Fri, 01 Feb 2013 11:16 +0000:
+> On Fri, Feb 01, 2013 at 09:39:39AM +0100, Michael Haggerty wrote:
+> > On 01/30/2013 09:31 PM, John Keeping wrote:
+> > > On Wed, Jan 30, 2013 at 11:05:10AM +0100, Michael Haggerty wrote:
+> > >> [...] maybe we should establish a small Python library of
+> > >> compatibility utilities (like a small "six"). [...]
+> > >> But I haven't had time to think of where to put such a library, how to
+> > >> install it, etc.
+> > > 
+> > > If we want to go that route, I think restructuring the
+> > > "git_remote_helpers" directory and re-using its infrastructure for
+> > > installing the "Git Python modules" would be the way to go.  The
+> > > directory structure would become something like this:
+> > > 
+> > >     git/
+> > >     `-- python/
+> > >         |-- Makefile    # existing file pulled out of git_remote_helpers
+> > >         |-- < some new utility library >
+> > >         |-- git_remote_helpers
+> > >         |   |-- __init__.py
+> > >         |   |-- git
+> > >         |   |   |-- __init__.py
+> > >         |   |   |-- exporter.py
+> > >         |   |   |-- git.py
+> > >         |   |   |-- importer.py
+> > >         |   |   |-- non_local.py
+> > >         |   |   `-- repo.py
+> > >         |   `-- util.py
+> > >         |-- setup.cfg   # existing file pulled out of git_remote_helpers
+> > >         `-- setup.py    # existing file pulled out of git_remote_helpers
+> > > 
+> > > 
+> > > It looks like the GitPython project[1] as already taken the "git" module
+> > > name, so perhaps we should use "git_core" if we do introduce a new
+> > > module.
+> > > 
+> > > [1] http://pypi.python.org/pypi/GitPython
+> > 
+> > This sounds reasonable.  But not all Python code will go under the
+> > "python" subdirectory, right?  For example, I am working on a Python
+> > script that fits thematically under contrib/hooks.
+> 
+> I was thinking of it as analagous with the "perl" directory that
+> currently exists.  So the "python" directory will contain library code
+> but scripts can live wherever is most appropriate.
+> 
+> One way of looking at it is: could the user want to have this installed
+> for all available versions of Python?  For a script, the answer is "no"
+> because they will call it and it will just run.  For libraries, you want
+> them to be available with whatever Python interpreter you happen to be
+> running (assuming that it is a version supported by the library).
+> 
+> > OTOH (I'm thinking aloud here) it is probably a bad idea for a hook
+> > script to depend on a Python module that is part of git itself.  Doing
+> > so would make the hook script depend on a particular version of git (or
+> > at least a version with a compatible Python module).  But users might be
+> > reluctant to upgrade git just to install a hook script.
+> 
+> I don't think such a dependency is a bad idea in the longer term.  If a
+> "Git Python library" is developed, then at some point most people who
+> have Git installed will have some version of that library - it becomes a
+> case of perhaps wanting to limit yourself to some subset of the library
+> rather than just not using it.
+> 
+> In fact, git_remote_helpers has been available since Git 1.7.0 and
+> contains a lot of functionality that is more generic than its name
+> suggests.
 
-$ git send-email --to=somerenowneddeveloper --to=myfutureemployer
-  --cc=thismailinglistiwanttoimpress 00*
+This library idea would be a great help; there are 100-odd calls
+to git in git-p4, and we've had to deal with getting the arguments
+and parsing correct.  I'd happily switch to using git_core.
 
-And of course since you think you know what you are doing, you just
-answer 'a' at the first prompt to send all emails at once.
+Probably some elements of GitPython can be used too.  I'm not so
+interested in the raw database manipulation, but the command
+wrappers look reasonable.
 
-The next day, all these people are laughing at you because the editor
-you used to write your cover letter saved a backup of the previous
-version and they received two versions of it, including one containing
-the familiar *** BLURB HERE *** (or potentially more humiliating stuff
-if you used the buffer as a temporary scratch).
-
-Let's save people's reputations by ignoring files ending with '~' in
-send-email. There should be no reason to send such a file anyways.
-
-Signed-off-by: Alexandre Courbot <gnurou@gmail.com>
----
- git-send-email.perl | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index be809e5..4cc5855 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -548,7 +548,10 @@ while (defined(my $f = shift @ARGV)) {
- 				sort readdir $dh;
- 		closedir $dh;
- 	} elsif ((-f $f or -p $f) and !check_file_rev_conflict($f)) {
--		push @files, $f;
-+		# Ignore backup files
-+		if ($f !~ "~\$") {
-+			push @files, $f;
-+		}
- 	} else {
- 		push @rev_list_opts, $f;
- 	}
--- 
-1.8.1.1
+		-- Pete
