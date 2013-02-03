@@ -1,105 +1,94 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 2/3] combine-diff: suppress a clang warning
-Date: Sun, 3 Feb 2013 20:31:50 +0000
-Message-ID: <20130203203150.GU1342@serenity.lan>
-References: <cover.1359901732.git.john@keeping.me.uk>
- <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
- <7vwqup890o.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Handle path completion and colon for tcsh script
+Date: Sun, 03 Feb 2013 12:43:56 -0800
+Message-ID: <7vhalt86wj.fsf@alter.siamese.dyndns.org>
+References: <E59706EF8DB1D147B15BECA3322E4BDC09AA38@eusaamb103.ericsson.se>
+ <7vboc2bhpj.fsf@alter.siamese.dyndns.org> <510EC1A4.4000207@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 21:32:22 2013
+Cc: Marc Khouzam <marc.khouzam@ericsson.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Manlio Perillo <manlio.perillo@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 21:44:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U26Ef-0004mn-9K
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 21:32:21 +0100
+	id 1U26QI-0000fG-9q
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Feb 2013 21:44:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537Ab3BCUb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 15:31:59 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:33993 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753524Ab3BCUb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 15:31:58 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id C59D86064E2;
-	Sun,  3 Feb 2013 20:31:57 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MRYOSnU3VlKZ; Sun,  3 Feb 2013 20:31:57 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 260B06064D4;
-	Sun,  3 Feb 2013 20:31:52 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7vwqup890o.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753542Ab3BCUoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 15:44:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58948 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753528Ab3BCUn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 15:43:59 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A131EBB86;
+	Sun,  3 Feb 2013 15:43:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dFx/OHZtkLyQ3tKvcgePIG3cO78=; b=YRLij/
+	Kmh51SWhDrS5lyDuplOIMCTyv7+tYyuEIdj+3Qkn3QM3QYTgIUAIZfItkVHrq+jk
+	UmsDOiWRLquA0asamCdWA95Jo0uVMN1WP5kHLtEabzHJkPQbtmTbKPzhBdunY1c4
+	1qF1PhQH23qQbzp3ntO1D4yKCs/iw3Hxuzch8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vX7cYjJuLcsmfBzZ7VzIKNhgfb/UzHvq
+	7O+CFRb4prFkS62YNWORk6PWxLYnLh7mPx+INz0qFx2ddZx3CGb75QIl1QUUNESN
+	VI+Mra2KRlbSewmhL9zAB0XQfOkswHUtwnYZ2+3FUJlFkyz+rjoXVzjuRm/lvOZL
+	JHFemdp9o5U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 956F8BB85;
+	Sun,  3 Feb 2013 15:43:58 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14B1CBB84; Sun,  3 Feb 2013
+ 15:43:57 -0500 (EST)
+In-Reply-To: <510EC1A4.4000207@gmail.com> (Manlio Perillo's message of "Sun,
+ 03 Feb 2013 20:59:32 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6ED58F10-6E42-11E2-90E8-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215333>
 
-On Sun, Feb 03, 2013 at 11:58:15AM -0800, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > When compiling combine-diff.c, clang 3.2 says:
-> >
-> >     combine-diff.c:1006:19: warning: adding 'int' to a string does not
-> > 	    append to the string [-Wstring-plus-int]
-> > 		prefix = COLONS + offset;
-> > 			 ~~~~~~~^~~~~~~~
-> >     combine-diff.c:1006:19: note: use array indexing to silence this warning
-> > 		prefix = COLONS + offset;
-> > 				^
-> > 			 &      [       ]
-> >
-> > Suppress this by making the suggested change.
-> >
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> > ---
-> 
-> This was not lost in the noise.
-> 
-> I thought that this wasn't a serious patch, but your attempt to
-> demonstrate to others why patches trying to squelch clang warnings
-> are not necessarily a good thing to do.
+Manlio Perillo <manlio.perillo@gmail.com> writes:
+
+> The problem is that when using the "new"
+> `compopt -o filenames` command, Bash assumes COMPREPLY contains a list
+> of filenames, and when it detects a directory name, it adds a slash.
 >
-> Who is that compiler trying to help with such a warning message?
-> After all, we are writing in C, and clang is supposed to be a C
-> compiler.  And adding integer to a pointer to (const) char is a
-> straight-forward way to look at the trailing part of a given string.
+> The problem is, if the directory name *already* has a slash, Bash adds
+> another slash!
 
-A quick search turned up the original thread where this feature was
-added to Clang [1].  It seems that it does find genuine bugs where
-people try to log values by doing:
+So bash users do see the trailing slash because bash adds one to
+what we compute and return, which we do strip the trailing slash
+exactly because we know bash will add one.  Because tcsh completion
+uses what we compute directly, without bash massaging our output to
+add the trailing slash, it needs some magic.
 
-    log("failed to handle error: " + errno);
+OK, that makes sense.  It was this part from the originally proposed
+log message:
 
-[1] http://thread.gmane.org/gmane.comp.compilers.clang.scm/47203
+>> ... Such completions do not add the '/' at the end of directories
+>> for recent versions of bash.  However, the '/' is needed by tcsh,
+>> ...
 
-> > -		prefix = COLONS + offset;
-> > +		prefix = &COLONS[offset];
-> 
-> In other words, both are perfectly valid C.  Why should we make it
-> less readable to avoid a stupid compiler warning?
+with a large gap between the two sentences that fooled me, and the
+explanation in your message helped to fill the gap to understand the
+situation better.
 
-Are you happy to change COLONS to a const char[] instead of a #define?
-That also suppresses the warning.
+Perhaps
 
-Since Git is warning-free on GCC and so close to being warning-free on
-recent Clang I think it is worthwhile to fix the remaining two issues
-which do seem to be intentional diagnostics rather than Clang bugs.
+	... for recent versions of bash, which will then add the
+	trailing slash for paths that are directory to the result of
+	our completion.  The completion for tcsh however uses the
+	result of our completion directly, so it either needs to add
+	the necessary slash itself, or needs to ask us to keep the
+	trailiing slash.  This patch does the latter.
 
-
-John
+or something?
