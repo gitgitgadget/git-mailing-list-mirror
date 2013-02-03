@@ -1,95 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC] Should "log --cc" imply "log --cc -p"?
-Date: Sun, 03 Feb 2013 15:10:50 -0800
-Message-ID: <7vmwvl6lj9.fsf@alter.siamese.dyndns.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 2/3] combine-diff: suppress a clang warning
+Date: Sun, 3 Feb 2013 23:15:49 +0000
+Message-ID: <20130203231549.GV1342@serenity.lan>
+References: <cover.1359901732.git.john@keeping.me.uk>
+ <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
+ <7vwqup890o.fsf@alter.siamese.dyndns.org>
+ <20130203203150.GU1342@serenity.lan>
+ <7v8v7585sr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 00:11:17 2013
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 00:16:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U28iS-0007oY-Df
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 00:11:16 +0100
+	id 1U28nN-0001I4-Ct
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 00:16:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753932Ab3BCXKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2013 18:10:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42543 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753841Ab3BCXKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2013 18:10:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E1BAC054;
-	Sun,  3 Feb 2013 18:10:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=Y
-	JQaIyWmD+VURrI2+VGbMkSuWhY=; b=pMLg/9rTLk1TkMAXV4z039T747r6o/SOF
-	wQuwu/3oBDhQ2ccMMt+/OLIdMzMuOwSEKqdSjRG6lexk+apesE3yMK0Dcity8l7P
-	C9T5Gye/ZmWZLXX6Ul5MwjwGUUtBWGdn9F8L/FZQBn9wjCr12trYcNo9blTJ2wT7
-	pkQPzdQ8X4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=qKl
-	hQl/hRo8mPCvtAIHo6RUIJHxZ3Q5Mj2LFT5waiBM22GPMXAL0MvWEWL87g+jex3O
-	HWnq6vnKY9i4Io+NR+tB90VMl8gohKHdmfpgz9ONYrGYnZCieywrDtfjktY2EHi3
-	pmtyBJQahF+OX8hLRlzRgzoqfaHm+4SeF9vWSXfM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9445AC053;
-	Sun,  3 Feb 2013 18:10:52 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 081FBC052; Sun,  3 Feb 2013
- 18:10:51 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F45B558E-6E56-11E2-9797-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753914Ab3BCXQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2013 18:16:00 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:53289 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753840Ab3BCXP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2013 18:15:58 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id E4E496064E2;
+	Sun,  3 Feb 2013 23:15:57 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id xWlKkgtNd0mo; Sun,  3 Feb 2013 23:15:56 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 2F11D6064A8;
+	Sun,  3 Feb 2013 23:15:51 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7v8v7585sr.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215342>
 
-I think a natural way to ask reviewing the recent merges while
-showing tricky ones would be to say:
+On Sun, Feb 03, 2013 at 01:07:48PM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > A quick search turned up the original thread where this feature was
+> > added to Clang [1].  It seems that it does find genuine bugs where
+> > people try to log values by doing:
+> >
+> >     log("failed to handle error: " + errno);
+> 
+> To be perfectly honest, anybody who writes such a code should be
+> sent back to school before trying to touch out code ever again ;-).
 
-	$ git log --first-parent --cc master..pu
+Yeah, I can't see that getting through review here :-).
 
-But this does not to show what I expect to see, which is an output
-of:
+> It is not even valid Python, Perl nor Java, I would think.
 
-	$ git log --first-parent --cc -p master..pu
+It is valid Java, although I can't think of any other languages that let
+you do that.
 
-This is only a minor irritation, but I think it might make sense to
-make it notice the --cc in the former and turn -p on automatically.
+> > Are you happy to change COLONS to a const char[] instead of a #define?
+> 
+> Happy?  Not really.
+> 
+> It could be a good change for entirely different reason. We will
+> save space if we ever need to use it in multiple places.  But the
+> entire "COLONS + offset" thing was a hack we did, knowing that it
+> will break when we end up showing a muiti-way diff for more than 32
+> blobs.
+> 
+> If we were to be touching that area of code, I'd rather see a change
+> to make it more robust against such a corner case.  If it results in
+> squelching misguided clang warnings against programmers who should
+> not be writing in C, that is a nice side effect, but I loathe to see
+> any change whose primary purpose is to squelch pointless warnings.
 
-The same for
+This seems like a sensible change.
 
-	$ git log --cc next~3..next
+I generally like to get rid of the pointless warnings so that the useful
+ones can't hide in the noise.  Perhaps "CFLAGS += -Wno-string-plus-int"
+would be better for this particular warning, but when there's only one
+bit of code that triggers it, tweaking that seemed simpler.
 
-which may make sense to turn into "git log -p --cc next~3..next".
-
-When deciding if the above makes sense, there are a few things to
-know to be true as prerequisites for the discussion:
-
- * Neither of these
-
-	$ git log --first-parent -p master..pu
-	$ git log -p master..pu
-
-   shows any patches, and it is not a bug.  No patches are shown for
-   merges unless -m is given, and when -m is given, we give pairwise
-   2-way diffs for the number of parents.
-
- * We recently tweaked this:
-
-	$ git log --first-parent -m -p master..pu
-
-   to omit diffs with second and later parents, as that is what the
-   user wishes with --first-parent.
-
- * The "--cc" option, when comparing two trees (i.e. showing a
-   non-merge commit), is designed to show a normal patch.  In other
-   words, you can view "--cc" as a modifier when you request a patch
-   output format with "-p".  For "git show", "--cc -p" is turned on
-   by default, and giving "-m" explicity (i.e. "git show -m") you
-   can turn it off and have it do "-m -p" instead.
+>  combine-diff.c | 21 +++++++--------------
+>  1 file changed, 7 insertions(+), 14 deletions(-)
+> 
+> diff --git a/combine-diff.c b/combine-diff.c
+> index bb1cc96..7f6187f 100644
+> --- a/combine-diff.c
+> +++ b/combine-diff.c
+> @@ -982,14 +982,10 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+>  	free(sline);
+>  }
+>  
+> -#define COLONS "::::::::::::::::::::::::::::::::"
+> -
+>  static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct rev_info *rev)
+>  {
+>  	struct diff_options *opt = &rev->diffopt;
+> -	int i, offset;
+> -	const char *prefix;
+> -	int line_termination, inter_name_termination;
+> +	int line_termination, inter_name_termination, i;
+>  
+>  	line_termination = opt->line_termination;
+>  	inter_name_termination = '\t';
+> @@ -1000,17 +996,14 @@ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct re
+>  		show_log(rev);
+>  
+>  	if (opt->output_format & DIFF_FORMAT_RAW) {
+> -		offset = strlen(COLONS) - num_parent;
+> -		if (offset < 0)
+> -			offset = 0;
+> -		prefix = COLONS + offset;
+> +		/* As many colons as there are parents */
+> +		for (i = 0; i < num_parent; i++)
+> +			putchar(':');
+>  
+>  		/* Show the modes */
+> -		for (i = 0; i < num_parent; i++) {
+> -			printf("%s%06o", prefix, p->parent[i].mode);
+> -			prefix = " ";
+> -		}
+> -		printf("%s%06o", prefix, p->mode);
+> +		for (i = 0; i < num_parent; i++)
+> +			printf("%06o ", p->parent[i].mode);
+> +		printf("%06o", p->mode);
+>  
+>  		/* Show sha1's */
+>  		for (i = 0; i < num_parent; i++)
