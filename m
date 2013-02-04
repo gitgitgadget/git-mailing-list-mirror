@@ -1,140 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 1/2] for-each-repo: new command used for multi-repo
- operations
-Date: Sun, 03 Feb 2013 22:41:41 -0800
-Message-ID: <7vip6860nu.fsf@alter.siamese.dyndns.org>
-References: <1359290777-5483-1-git-send-email-hjemli@gmail.com>
- <1359290777-5483-2-git-send-email-hjemli@gmail.com>
- <7vk3qywiqf.fsf@alter.siamese.dyndns.org>
- <CAFXTnz6GTVgY4DK-FLELGF-Cb1=iNYyWcUsUiaUytGRx9Tr4Ow@mail.gmail.com>
- <20130128081006.GA2434@elie.Belkin> <7vham1xktx.fsf@alter.siamese.dyndns.org>
- <CAFXTnz6xBMo42jWdqahYX-bnTBucVmQpFPN29X8tGRd7L=g2wQ@mail.gmail.com>
- <7vr4l5w385.fsf@alter.siamese.dyndns.org> <5106DBB7.70007@web.de>
- <7vlibdvyh3.fsf@alter.siamese.dyndns.org> <5106ECB6.9010801@web.de>
+From: Jongman Heo <jongman.heo@samsung.com>
+Subject: Re: Re: Segmentation fault with latest git (070c57df)
+Date: Mon, 04 Feb 2013 06:58:27 +0000 (GMT)
+Message-ID: <12070540.431901359961105650.JavaMail.weblogic@epml10>
+Reply-To: jongman.heo@samsung.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Feb 04 07:42:08 2013
+Content-Type: text/plain; charset=euc-kr
+Content-Transfer-Encoding: base64
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 07:59:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2Fkl-00072x-Ho
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 07:42:07 +0100
+	id 1U2G1X-0004Hq-J7
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 07:59:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751699Ab3BDGlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2013 01:41:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58402 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751557Ab3BDGlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2013 01:41:44 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D54C58B91;
-	Mon,  4 Feb 2013 01:41:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=P35fPSyia4OI1UTPm3X6rBrjz7o=; b=dVEwTo
-	8B/3iacP3TQWnuGAtUGpFMlhzoemoL08n9eR8WmtnnlPiVbDaEYBs6sO92h1BRdO
-	o5cYW67uiUj+iQq63Op3AS2rh5gNGJsJE5bhzoanqbJ6MdLJNbXn3PEed9Qfp3Xq
-	N6tRbEIhLE2+IZzsiBtWxjPqKtvoZyhnTIb5g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NGMUGzkmGOw9YsUI7rP/HO1DOB8zNhce
-	fIKt3EsrNAplfMFgFTsECtdOedOj8bK47sFDZfbsKJEtIYOSCRKxBKYC8DhcW6Wr
-	eO7RmKtfpgJ8jfY7eiMnulyroN7mwb0Eurm8nPGL8Uft7oz6YH/Hqmiz+Ch99N2X
-	Zh0YKoSCN3Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9BE58B90;
-	Mon,  4 Feb 2013 01:41:43 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 311B38B8F; Mon,  4 Feb 2013
- 01:41:43 -0500 (EST)
-In-Reply-To: <5106ECB6.9010801@web.de> (Jens Lehmann's message of "Mon, 28
- Jan 2013 22:25:10 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F02031B2-6E95-11E2-8C14-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751557Ab3BDG6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 01:58:30 -0500
+Received: from mailout3.samsung.com ([203.254.224.33]:16192 "EHLO
+	mailout3.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751343Ab3BDG63 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 01:58:29 -0500
+Received: from epcpsbge7.samsung.com (epcpsbge7 [203.254.230.17])
+ by mailout3.samsung.com
+ (Oracle Communications Messaging Server 7u4-24.01(7.0.4.24.0) 64bit (built Nov
+ 17 2011)) with ESMTP id <0MHO00KO5OIJOIQ0@mailout3.samsung.com> for
+ git@vger.kernel.org; Mon, 04 Feb 2013 15:58:28 +0900 (KST)
+Received: from epcpsbge7.samsung.com ( [203.254.230.42])
+	by epcpsbge7.samsung.com (EPCPMTA) with SMTP id 44.C1.10066.31C5F015; Mon,
+ 04 Feb 2013 15:58:28 +0900 (KST)
+X-AuditID: cbfee611-b7f1c6d000002752-a2-510f5c13b366
+Received: from epextmailer01 ( [203.254.219.151])
+	by epcpsbge7.samsung.com (EPCPMTA) with SMTP id 14.C1.10066.31C5F015; Mon,
+ 04 Feb 2013 15:58:27 +0900 (KST)
+X-MTR: 20130204065608887@jongman.heo
+Msgkey: 20130204065608887@jongman.heo
+X-EPLocale: ko_KR.euc-kr
+X-Priority: 3
+X-EPWebmail-Msg-Type: personal
+X-EPWebmail-Reply-Demand: 0
+X-EPApproval-Locale: 
+X-EPHeader: ML
+X-EPTrCode: 
+X-EPTrName: 
+X-MLAttribute: 
+X-RootMTR: 20130204065608887@jongman.heo
+X-ParentMTR: 
+X-ArchiveUser: 
+X-CPGSPASS: N
+MIME-version: 1.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDKsWRmVeSWpSXmKPExsVy+t8zLV2RGP5Ag7eHmS26rnQzOTB6fN4k
+	F8AYxWWTkpqTWZZapG+XwJWx+uwe5oJFrBVzJ0xhb2DsYe1i5OQQElCTuPn5EGMXIweHhICJ
+	xI6rjCBhCQExiQv31rN1MXIBlSxjlLh/+CwzRMJE4tWNdmaIxHxGic7ma+wgzSwCKhInNiSB
+	1LAJ6Eh0/N8PNl9YwE7icEs7mC0ioCXx7vdtRpBeZoGdjBJX5txkhDhCUeLa0sVsIDavgKDE
+	yZlPWCCWqUjMuLiXESKuKvH2cQ87RFxCYtb0C6wQNq/EjPanUPVyEtO+roE6VFri/KwNcN8s
+	/v4YKs4vcez2DiaIh3klntwPhhmze/MXNghbQGLqmYNQrZoSRzb8g7L5JNYsfMsCM2bXqeXM
+	ML33t8xlArGZgV6Z0v2QHcLWkvjyYx+Gt3gFnCTmTm9gm8CoPAtJahaS9llI2pHVLGBkWcUo
+	mlqQXFCclJ5qrlecmFtcmpeul5yfu4kRkhYEdzAubbA4xCjAwajEw8vwiy9QiDWxrLgy9xCj
+	BAezkgjvVSOgEG9KYmVValF+fFFpTmrxIcZkYAROZJYSTc4Hpqy8knhDYwNjQ0NLQzNTS1MD
+	0oSVxHk5K6YHCAmkJ5akZqemFqQWwWxh4uCUamAMmbdRX/+lRPDqXeu3lXGYl29RFS24/fIL
+	z87ljPKdE/lvPZ574Xh23CbXa2t1rvrd5lqk1dAzNcVIpD5gn9+BrZ/Cl5fG9ObWW25YWPhl
+	PkNeX/YcW4/TPAkFf/9d5//xZ9Jyb5l7tsxOvz99702fZq4zef2zudnJG0L9z/o0 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpik+LIzCtJLcpLzFFi42I5/e/2dF3hGP5AgzcHrS26rnQzOTB6fN4k
+	F8AYlWGTkZqYklqkkJqXnJ+SmZduq+QdHO8cb2pmYKhraGlhrqSQl5ibaqvk4hOg65aZAzRU
+	SaEsMacUKBSQWFyspG9nU5RfWpKqkJFfXGKrFG1kYKxnZGqiZ2RsoGdiEGtlaGBgZApUlZCR
+	sfrsHuaCRawVcydMYW9g7GHtYuTkEBJQk7j5+RAjiC0hYCLx6kY7M4QtJnHh3nq2LkYuoJr5
+	jBKdzdfYuxg5OFgEVCRObEgCqWET0JHo+L8fbI6wgJ3E4ZZ2MFtEQEvi3e/bjCC9zAI7GSWu
+	zLnJCLFMUeLa0sVsIDavgKDEyZlPWCCWqUjMuLiXESKuKvH2cQ87RFxCYtb0C6wQNq/EjPan
+	UPVyEtO+roE6VFri/KwNjDBHL/7+GCrOL3Hs9g4mkJtBep/cD4YZs3vzFzYIW0Bi6pmDUK2a
+	Ekc2/IOy+STWLHzLAjNm16nlzDC997fMZQKxmYFemdL9kB3C1pL48mMfhrd4BZwk5k5vYJvA
+	KDcLSWoWkvZZSNqR1SxgZFnFKJpakFxQnJSeaq5XnJhbXJqXrpecn7uJEZyingnuYFzaYHGI
+	UYCDUYmHl+EXX6AQa2JZcWXuIUYJDmYlEd6rRkAh3pTEyqrUovz4otKc1OJDjMnACJzILCWa
+	nA9Mn3kl8YbGBsaGhpbmBqaGRhakCSuJ83JWTA8QEkhPLEnNTk0tSC2C2cLEwSnVwDjv1tRv
+	b+aluk/4abii7v6OPfXr+oUEGV+3sXN/67om7SpiVBuff27D5At9B4orUmaU/Mrd 
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215359>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
-
-> Am 28.01.2013 21:34, schrieb Junio C Hamano:
-> ...
->> I was imagining that "foreach --untracked" could go something like this:
->> 
->>  * If you are inside an existing git repository, read its index to
->>    learn the gitlinks in the directory and its subdirectories.
->> 
->>  * Start from the current directory and recursively apply the
->>    procedure in this step:
->> 
->>    * Scan the directory and iterate over the ones that has ".git" in
->>      it:
->> 
->>      * If it is a gitlinked one, show it, but do not descend into it
->>        unless --recursive is given (e.g. you start from /home/jens,
->>        find /home/jens/proj/ directory that has /home/jens/proj/.git
->>        in it.  /home/jens/.git/index knows that it is a submodule of
->>        the top-level superproject.  "proj" is handled, and it is up
->>        to the --recursive option if its submodules are handled).
->> 
->>      * If it is _not_ a gitlinked one, show it and descend into it
->>        (e.g. /home/jens/ is not a repository or /home/jens/proj is
->>        not a tracked submodule) to apply this procedure recursively.
->> 
->> Of course, without --untracked, we have no need to iterate over the
->> readdir() return values; instead we just scan the index of the
->> top-level superproject.
->
-> Thanks for explaining, that makes tons of sense.
-
-There is a small thinko above, though, and I'd like to correct it
-before anybody takes the above too seriously as _the_ outline of the
-design and implements it to the letter.
-
-The --recursive option should govern both a tracked submodule and an
-untracked one.  When asking to list both existing submodules and
-directories that could become submodules, you should be able to say
-
-	$ git submodule foreach --untracked
-
-to list the direct submodules and the directories with .git in them
-that are not yet submodules of the top-level superproject, but the
-latter is limited to those with no parent directories with .git in
-them (other than the top-level of the working tree of the
-superproject).  With
-
-	$ git submodule foreach --untracked --recursive
-
-you would see submodules and their submodules recursively, and also
-directories with .git in them (i.e. candidates to become direct
-submodules of the superproject) and the directories with .git in
-them inside such submodule candidates (i.e. candidates to become
-direct submodules of the directories that could become direct
-submodules of the superproject) recursively.
-
-If we set things up this way:
-
-	mkdir -p a/b c/d &&
-	for d in . a a/b c c/d
-        do
-		git init $d &&
-                ( cd $d && git commit --allow-empty -m initial )
-	done &&
-        git add a &&
-        ( cd a && git add b )
-
-The expected results for various combinations are:
-
- * "git submodule foreach" would visit 'a' and nothing else;
- * "git submodule foreach --recursive" would visit 'a' and 'a/b';
- * "git submodule foreach --untracked" would visit 'a' and 'c'; and
- * "git submodule foreach --untracked --recursive" would visit all four.
+DQpKb25hdGhhbiBOaWVkZXIgd3JvdGU6DQo+IEpvbmdtYW4gSGVvIHdyb3RlOg0KPiANCj4+IFVu
+Zm9ydHVuYXRlbHksIHRoZSBwYXRjaCBkaWRuJ3QgaGVscCB0byBtZS4NCj4NCj5UaGFua3MgZm9y
+IHRlc3RpbmcuICBEaWQgeW91IGFwcGx5IHRoZSBwYXRjaCB0byB0aGUgb2xkZXIgdmVyc2lvbiBv
+Zg0KPmdpdCB0aGF0IGdlbmVyYXRlcyBidWlsdGluLy5kZXBlbmQvZmV0Y2guby5kIG9yIHRoZSBu
+ZXdlciB2ZXJzaW9uIHRoYXQNCj5jb25zdW1lcyBpdD8NCj4NCj5DdXJpb3VzLA0KPkpvbmF0aGFu
+DQoNCkhpLCBKb25hdGhhbiwNCg0KSSBhcHBsaWVkIHRoZSBwYXRjaCB0byBuZXdlciB2ZXJzaW9u
+LiANCg0KVGhpcyB0aW1lLCBJIHRyaWVkIHRvIGFwcGx5IHRoZSBwYXRjaCB0byBvbGRlciB2ZXJz
+aW9uIG9mIE1ha2VmaWxlLCBhbmQgbm93IHRoZSBpc3N1ZSBpcyBmaXhlZH4uIA0KVGhhbmtzfiEN
+Cg0KQmVzdCByZWdhcmRzLA0KSm9uZ21hbiBIZW8NCg==
