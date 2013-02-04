@@ -1,74 +1,83 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
-Date: Mon, 04 Feb 2013 12:00:34 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <878v74vwst.fsf@lifelogs.com>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
-	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
-	<20130130074306.GA17868@sigill.intra.peff.net>
-	<xa1tmwvk9gy1.fsf@mina86.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] count-objects: report garbage files in
+ .git/objects/pack directory too
+Date: Mon, 04 Feb 2013 09:06:39 -0800
+Message-ID: <7vy5f42elc.fsf@alter.siamese.dyndns.org>
+References: <1359982145-10792-1-git-send-email-pclouds@gmail.com>
+ <1359982145-10792-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Krzysztof Mazur <krzysiek@podlesie.net>
-To: Michal Nazarewicz <mina86@mina86.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 18:01:01 2013
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 18:07:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2PPe-0003qB-Hi
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 18:00:58 +0100
+	id 1U2PVX-000795-V4
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 18:07:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753515Ab3BDRAg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Feb 2013 12:00:36 -0500
-Received: from z.lifelogs.com ([173.255.230.239]:36831 "EHLO z.lifelogs.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750773Ab3BDRAf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2013 12:00:35 -0500
-Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: tzz)
-	by z.lifelogs.com (Postfix) with ESMTPSA id DF8B4DE0C5;
-	Mon,  4 Feb 2013 17:00:34 +0000 (UTC)
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-Mail-Copies-To: never
-Gmane-Reply-To-List: yes
-In-Reply-To: <xa1tmwvk9gy1.fsf@mina86.com> (Michal Nazarewicz's message of
-	"Mon, 04 Feb 2013 17:33:58 +0100")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
+	id S1754302Ab3BDRGn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Feb 2013 12:06:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45468 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754276Ab3BDRGm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2013 12:06:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8716B178;
+	Mon,  4 Feb 2013 12:06:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=R+DgEKFSbIBt
+	+HVOyYE6ngTVf/8=; b=F5Wd7Q2QrgWgyzntw00DJr5LM1AUMa4Fjh/IZikgPSzo
+	w8kpO+bOHjTIjOGQIA9DOBoOOUyvYjjlgdW3Ot2p+s2EP8ls4nAtIROd6JLDQJy3
+	syy2sy1O4qqR+Bh3w5g1LpL+Qyi1v3zs411+HrH8uN8zH/kWvFHKxN4rpxL8SF4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=BEVFrP
+	ui8PdynZM0AWKYVByrxEP9tpwnJeH5l6MolKNsQl3mzjiqaevWK3BT/3wsLRZf+K
+	y0Sbmh8SaUOJI33XLuHhWESz9Sq+28r7fewsjoZn7TXFZ/6aHFsVccfdCPV80ooO
+	Q747kCZEleUjtytRAzkC2S+G+D3OGrl+0l6lo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBE08B177;
+	Mon,  4 Feb 2013 12:06:41 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45C36B16F; Mon,  4 Feb 2013
+ 12:06:41 -0500 (EST)
+In-Reply-To: <1359982145-10792-2-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 4 Feb
+ 2013 19:49:05 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3EB5BC32-6EED-11E2-82E6-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215398>
 
-On Mon, 04 Feb 2013 17:33:58 +0100 Michal Nazarewicz <mina86@mina86.com=
-> wrote:=20
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-MN> As far as I understand, there could be a git-credential helper that
-MN> reads ~/.authinfo and than git-send-email would just call =E2=80=9C=
-git
-MN> credential fill=E2=80=9D, right?
+>  The hook in prepare_packed_git_one is ugly, but I don't want to
+>  duplicate the search file logic there in count-objects. Maybe I'm
+>  wrong.
 
-MN> I've noticed though, that git-credential does not support port argu=
-ment,
-MN> which makes it slightly incompatible with ~/.authinfo.
+In this particular case I do not think you are completely wrong;
+you are probably only two thirds wrong ;-)
 
-My proposed netrc credential helper does this :)
+The idea to use a customizable function pointer to allow it do extra
+work is probably fine, but adding three identical calls and continue
+is a bad taste.  Just have one callsite for the error path and do
+not hesitate to jump to it with 'goto'.
 
-The token mapping I use:
+I do not think failure to add_packed_git() should be treated the
+same way as other cases where the files readdir() found are truly
+garbage, by the way.
 
-port, protocol        =3D> protocol
-machine, host         =3D> host
-path                  =3D> path
-login, username, user =3D> username
-password              =3D> password
-
-I think that's sensible.
-
-Ted
+I also wonder, especially because you are enumerating the temporary
+pack files in .git/objects/pack/, if it make more sense to account
+for their sizes as well.  After all, you would end up doing stat()
+for a common case of files with ".pack" suffix---doing so for all of
+them shouldn't be too bad.
