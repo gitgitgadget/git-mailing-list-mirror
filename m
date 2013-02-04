@@ -1,91 +1,121 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] branch: show rebase/bisect info when possible instead
- of "(no branch)"
-Date: Mon, 4 Feb 2013 14:14:34 +0700
-Message-ID: <CACsJy8CGqiahw3y42KRt61gChtfOucFHqZqn_uvLrj7j7KrQbg@mail.gmail.com>
-References: <1359461574-24529-1-git-send-email-pclouds@gmail.com>
- <1359870520-22644-1-git-send-email-pclouds@gmail.com> <vpqpq0hnlb1.fsf@grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Verify Content-Type from smart HTTP servers
+Date: Sun, 03 Feb 2013 23:17:33 -0800
+Message-ID: <7va9rk5z02.fsf@alter.siamese.dyndns.org>
+References: <7v38xhf1i3.fsf@alter.siamese.dyndns.org>
+ <20130201085248.GA30644@sigill.intra.peff.net>
+ <7vip6bc3e1.fsf@alter.siamese.dyndns.org>
+ <20130201185827.GA22919@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 04 08:15:43 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 04 08:18:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2GHF-0001mi-Ov
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 08:15:42 +0100
+	id 1U2GJo-0002lH-OR
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 08:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753576Ab3BDHPJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Feb 2013 02:15:09 -0500
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:60487 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751632Ab3BDHPE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2013 02:15:04 -0500
-Received: by mail-oa0-f53.google.com with SMTP id m1so5240151oag.40
-        for <git@vger.kernel.org>; Sun, 03 Feb 2013 23:15:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=vDTHkVwC6knIdv5JH+CP9brL1bGZNVs4w2G8ZESE4Jg=;
-        b=Q5DF1pWHiMwtWCdPlKEASAYIw3TjJCIGv0j8zWmb+dE6j5AQLWFUYZcSUgQKayULcZ
-         tCf7pB5YSPvvpNVa0hRNsngNZrEGG8UKWlGmGR2zSqXnjdTJRfbW3Th46+OMBBvqK1RU
-         Au+mCJcm4xbhj2i8ZgGqSvS/v4wiJ6hKIGCgYs3OiVJtJh2sQ6hAkLiIVYmQ2t9L7gmj
-         uswapCEt3bkn0ROT8wNQl65SgCuer+gtk1X2KlGleOA5/j4GmKH+YlIUnJNNQsn9Teie
-         zGavU/Bb4hFlZDXisiLBsPbjU3sYIR0URcAJGaj86dEEZ+Sow6udsjRwk09E3s9U7tGI
-         nONA==
-X-Received: by 10.182.18.133 with SMTP id w5mr14945108obd.64.1359962104187;
- Sun, 03 Feb 2013 23:15:04 -0800 (PST)
-Received: by 10.182.118.229 with HTTP; Sun, 3 Feb 2013 23:14:34 -0800 (PST)
-In-Reply-To: <vpqpq0hnlb1.fsf@grenoble-inp.fr>
+	id S1754039Ab3BDHRh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 02:17:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39692 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753125Ab3BDHRf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 02:17:35 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 679AD981A;
+	Mon,  4 Feb 2013 02:17:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5eBmBj/rV3uAeAxRlN6WLd6M/oU=; b=QBmYfb
+	ojAexuk369wLf9tRgrXFmnBqgHNz9M2mBV4mIQLLJUrVTGfeGUBNs0Aa0qOXuk7A
+	BcYlsnUE1w7mWRANIznRzz0g7HP1SFZg0YmktjV0jO33qTI4Oo5BIZc5xIRcxRGG
+	E/VZHvQ7CSu9FU5IX7jUiRvMCeK/GQSXGGoJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oarILzCFU+XCvh8V9bGHmkcYLycpFDWm
+	ariWQsdhNXemtG7NH5NCsUw60xZ+e7DsrnKW15bdH3JJEIV87q1xJ0oUuo6LVXb9
+	6xKC0o5jvti6ztxd8xTbKdhFkhjt/TRgo8yJ7fbrlB1Nr4whrwGJOC20/76mxtWv
+	QKaDax5H4yo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CD3C9819;
+	Mon,  4 Feb 2013 02:17:35 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8FF89818; Mon,  4 Feb 2013
+ 02:17:34 -0500 (EST)
+In-Reply-To: <20130201185827.GA22919@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 1 Feb 2013 13:58:27 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F27F86CE-6E9A-11E2-8F51-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215362>
 
-On Mon, Feb 4, 2013 at 4:23 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
+
+> I was specifically thinking of this (on top of your patch):
 >
->> --- a/t/t6030-bisect-porcelain.sh
->> +++ b/t/t6030-bisect-porcelain.sh
->> @@ -164,7 +164,7 @@ test_expect_success 'bisect start: existing ".gi=
-t/BISECT_START" not modified if
->>       cp .git/BISECT_START saved &&
->>       test_must_fail git bisect start $HASH4 foo -- &&
->>       git branch > branch.output &&
->> -     test_i18ngrep "* (no branch)" branch.output > /dev/null &&
->> +     test_i18ngrep "* (bisecting other)" branch.output > /dev/null =
-&&
+> diff --git a/remote-curl.c b/remote-curl.c
+> index e6f3b63..63680a8 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -134,14 +134,12 @@ static struct discovery* discover_refs(const char *service)
+>  	last->buf_alloc = strbuf_detach(&buffer, &last->len);
+>  	last->buf = last->buf_alloc;
+>  
+> -	if (maybe_smart && 5 <= last->len && last->buf[4] == '#') {
+> +	strbuf_addf(&exp, "application/x-%s-advertisement", service);
+> +	if (maybe_smart && !strbuf_cmp(&exp, &type)) {
+>  		/*
+>  		 * smart HTTP response; validate that the service
+>  		 * pkt-line matches our request.
+>  		 */
+> -		strbuf_addf(&exp, "application/x-%s-advertisement", service);
+> -		if (strbuf_cmp(&exp, &type))
+> -			die("invalid content-type %s", type.buf);
+>  		if (packet_get_line(&buffer, &last->buf, &last->len) <= 0)
+>  			die("%s has invalid packet header", refs_url);
+>  		if (buffer.len && buffer.buf[buffer.len - 1] == '\n')
 >
-> I'd have spelled it (no branch, bisecting other) to make it clear tha=
-t
-> we're on detached HEAD, and avoid confusing old-timers. But maybe you=
-r
-> version is enough, I'm not sure.
+> To just follow the dumb path if we don't get the content-type we expect.
+> We may want to keep the '#' format check in addition (packet_get_line
+> will check it and die, anyway, but we may want to drop back to
+> considering it dumb, just to protect against a badly configured dumb
+> server which uses our mime type, but I do not think it likely).
 
-If we want to make it clear, I think the standard "* (no branch)" shoul=
-d become
+Yeah, but it doesn't cost anything to check, so let's do so.
 
-* HEAD (detached)
+Does this look good to both of you (relative to Shawn's patch)?
 
-or non-detached case:
+ remote-curl.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-* HEAD -> foo
-
-Then we could present rebase/bisect information as
-
-* HEAD (detached, bisecting)
-* HEAD (detached, rebasing)
-* foo (rebasing)
-
-I don't want to make this line too long because it would break (well,
-waste space in) column layout. So if we do this, no branch name added
-for rebase/bisect.
---=20
-Duy
+diff --git a/remote-curl.c b/remote-curl.c
+index e6f3b63..933c69a 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -134,14 +134,14 @@ static struct discovery* discover_refs(const char *service)
+ 	last->buf_alloc = strbuf_detach(&buffer, &last->len);
+ 	last->buf = last->buf_alloc;
+ 
+-	if (maybe_smart && 5 <= last->len && last->buf[4] == '#') {
++	strbuf_addf(&exp, "application/x-%s-advertisement", service);
++	if (maybe_smart &&
++	    (5 <= last->len && last->buf[4] == '#') &&
++	    !strbuf_cmp(&exp, &type)) {
+ 		/*
+ 		 * smart HTTP response; validate that the service
+ 		 * pkt-line matches our request.
+ 		 */
+-		strbuf_addf(&exp, "application/x-%s-advertisement", service);
+-		if (strbuf_cmp(&exp, &type))
+-			die("invalid content-type %s", type.buf);
+ 		if (packet_get_line(&buffer, &last->buf, &last->len) <= 0)
+ 			die("%s has invalid packet header", refs_url);
+ 		if (buffer.len && buffer.buf[buffer.len - 1] == '\n')
