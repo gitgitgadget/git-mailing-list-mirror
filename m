@@ -1,56 +1,67 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] branch: show rebase/bisect info when possible instead
- of "(no branch)"
-Date: Mon, 4 Feb 2013 14:17:27 +0700
-Message-ID: <CACsJy8C4MippsxZMdp0ZLmzQyJkAMe_2caFi3hbEDt4P+wNp6w@mail.gmail.com>
-References: <1359461574-24529-1-git-send-email-pclouds@gmail.com>
- <1359870520-22644-1-git-send-email-pclouds@gmail.com> <vpqpq0hnlb1.fsf@grenoble-inp.fr>
- <CACsJy8CGqiahw3y42KRt61gChtfOucFHqZqn_uvLrj7j7KrQbg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Segmentation fault with latest git (070c57df)
+Date: Mon, 4 Feb 2013 03:37:01 -0500
+Message-ID: <20130204083701.GA30835@sigill.intra.peff.net>
+References: <12070540.431901359961105650.JavaMail.weblogic@epml10>
+ <7vehgw5z7n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 04 08:18:22 2013
+Content-Type: text/plain; charset=utf-8
+Cc: jongman.heo@samsung.com, Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 09:37:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2GJp-0002lH-Mj
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 08:18:22 +0100
+	id 1U2HYk-00053D-B5
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 09:37:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753981Ab3BDHR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2013 02:17:59 -0500
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:38122 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753125Ab3BDHR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2013 02:17:58 -0500
-Received: by mail-ob0-f182.google.com with SMTP id va7so5986016obc.27
-        for <git@vger.kernel.org>; Sun, 03 Feb 2013 23:17:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=T3/NcHs9BV+mz4VDtpRUMblXV5pT7tZkUHBEsCpZNRc=;
-        b=PLkHyLTBy2bg+wMGg/ZH7hoThehNVk0LLwyPacK8Ar/y1IS+OG0Ymz42f8t4z7fTz1
-         Ho0mpphVe/6G60SHoeibE9a4eciWYcg4JOPkSTKR81f6RpmLg2a4CST2G1JQGrZFyvus
-         2Q2PxV+1xDKCj8T0GJi+WfQQ/pdPEC+enakOMdYTUTye42V0dgNKABgOq+8EP7bQwiw8
-         f1Te3rgDRI+EZVWK704fVjDsKBiaRUgMJFCWNuWS+X1nytfQgTEm4AP5VByWA7ie74go
-         pc6ibycgybVeNGvzYeqqVSTAyrV4LBTCrmLbBC6HILwiUjRgh1nM4fjeS75hLY2RfGOy
-         1Oiw==
-X-Received: by 10.60.8.131 with SMTP id r3mr15624137oea.14.1359962277906; Sun,
- 03 Feb 2013 23:17:57 -0800 (PST)
-Received: by 10.182.118.229 with HTTP; Sun, 3 Feb 2013 23:17:27 -0800 (PST)
-In-Reply-To: <CACsJy8CGqiahw3y42KRt61gChtfOucFHqZqn_uvLrj7j7KrQbg@mail.gmail.com>
+	id S1753711Ab3BDIhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 03:37:24 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59927 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753691Ab3BDIhE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 03:37:04 -0500
+Received: (qmail 16839 invoked by uid 107); 4 Feb 2013 08:38:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 04 Feb 2013 03:38:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Feb 2013 03:37:01 -0500
+Content-Disposition: inline
+In-Reply-To: <7vehgw5z7n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215367>
 
-On Mon, Feb 4, 2013 at 2:14 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> * foo (rebasing)
+On Sun, Feb 03, 2013 at 11:13:00PM -0800, Junio C Hamano wrote:
 
-Well, this one does not make sense (or causes more confusion).
--- 
-Duy
+> Yeah, that result is understandable, as .depend/*.o.d files will not
+> be rebuilt when the rules to build them changes in the Makefile.
+> Applying the patch to the Makefile in the pristine old tree, run the
+> build (which will generate .depend/*.o.d files with the corrected
+> rules), then checking out the new tree and running the build again
+> without "make clean", with or with the patch applied, would validate
+> that the patch fixes the issue for old ccache.
+> 
+> Thanks Jonathan for diagnosing, fixing, and thanks Jongman for
+> testing.
+
+Do we want to do anything with the other dependency hole I found here:
+
+  http://article.gmane.org/gmane.comp.version-control.git/215211
+
+It's definitely a potential problem, but I don't think we have any
+reports of it happening in practice, so it might not be worth worrying
+about. Doing a clean version of the fix here:
+
+  http://article.gmane.org/gmane.comp.version-control.git/215212
+
+would probably involve reorganizing our .depend directory structure,
+unless somebody can cook up some clever use of make's patsubst.
+
+-Peff
