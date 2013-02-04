@@ -1,80 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
-Date: Mon, 4 Feb 2013 16:22:03 -0500
-Message-ID: <20130204212203.GC13186@sigill.intra.peff.net>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
- <7vvcafojf4.fsf@alter.siamese.dyndns.org>
- <20130130074306.GA17868@sigill.intra.peff.net>
- <xa1tmwvk9gy1.fsf@mina86.com>
- <878v74vwst.fsf@lifelogs.com>
- <20130204201040.GA13272@sigill.intra.peff.net>
- <87a9rju8l7.fsf@lifelogs.com>
- <20130204205911.GA13186@sigill.intra.peff.net>
- <8738xbu6qj.fsf@lifelogs.com>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: [PATCH] Add contrib/credentials/netrc with GPG support
+Date: Mon, 04 Feb 2013 16:32:49 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <87vca7sr26.fsf@lifelogs.com>
+References: <87ehgvua6h.fsf@lifelogs.com>
+	<20130204211726.GB13186@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michal Nazarewicz <mina86@mina86.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Krzysztof Mazur <krzysiek@podlesie.net>
-To: Ted Zlatanov <tzz@lifelogs.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 22:22:33 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 04 22:33:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2TUl-00077X-87
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 22:22:31 +0100
+	id 1U2Tf7-0004hu-Jt
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 22:33:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755105Ab3BDVWI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2013 16:22:08 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60666 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754019Ab3BDVWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2013 16:22:07 -0500
-Received: (qmail 22518 invoked by uid 107); 4 Feb 2013 21:23:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 04 Feb 2013 16:23:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Feb 2013 16:22:03 -0500
-Content-Disposition: inline
-In-Reply-To: <8738xbu6qj.fsf@lifelogs.com>
+	id S1754610Ab3BDVcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 16:32:51 -0500
+Received: from z.lifelogs.com ([173.255.230.239]:41486 "EHLO z.lifelogs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754161Ab3BDVcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 16:32:50 -0500
+Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: tzz)
+	by z.lifelogs.com (Postfix) with ESMTPSA id 07368DE0CA;
+	Mon,  4 Feb 2013 21:32:50 +0000 (UTC)
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+In-Reply-To: <20130204211726.GB13186@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 4 Feb 2013 16:17:26 -0500")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215423>
 
-On Mon, Feb 04, 2013 at 04:08:52PM -0500, Ted Zlatanov wrote:
+On Mon, 4 Feb 2013 16:17:26 -0500 Jeff King <peff@peff.net> wrote: 
 
-> >> That would create the following possibilities:
-> >> 
-> >> * host example.com:31337, protocol https
-> >> * host example.com:31337, protocol unspecified
-> >> * host example.com, protocol https
-> >> * host example.com, protocol unspecified
-> 
-> JK> Possibilities for .netrc, or for git? Git will always specify the
-> JK> protocol.
-> 
-> Possibilities for the netrc data.  How clever do we want to be with
-> taking 31337 and mapping it to the "protocol"?  My preference is to be
-> very simple here.
+JK> Do you need to quote "\n" here?
 
-I think simple is OK, as we can iterate on it as specific use-cases come
-up. The important thing is to make sure we err on the side of "does not
-match" and not "oops, we accidentally sent your plaintext credentials to
-the wrong server".
+Fixed.
 
-> Currently, we map both the "port" and "protocol" netrc tokens to the
-> credential helper protocol's "protocol".  So this will have undefined
-> results.  To do what you specify could be pretty simple: we could do a
-> preliminary scan of the tokens, looking for "host X port Y" where Y is
-> an integer, and rewriting the host to be "X:Y".  That would be clean and
-> simple, unless the user breaks it with "host x:23 port 22".  Let me know
-> if you agree and I'll do.
+JK> Hmm, so it's not an error (just a warning) to say:
 
-Yeah, I think that is simple and obvious. If the user is saying "host
-x:23 port 22", that is nonsensical.
+JK>   git credential-netrc -f /does/not/exist
 
--Peff
+JK> but it is an error to say:
+
+JK>   git credential-netrc
+
+JK> and have it fail to find any netrc files. Shouldn't the latter be a
+JK> lesser error than the former?
+
+Fixed, they should both exit(0).
+
+>> +	next unless m/([^=]+)=(.+)/;
+
+JK> Should this regex be anchored at the start of the string?
+
+Fixed.
+
+>> +	printf STDERR "searching for %s = %s\n", $_, $q{$_} || '(any value)'
+>> +	 foreach sort keys %q;
+JK> Leftover one-char indent.
+
+Fixed.
+
+Ted
