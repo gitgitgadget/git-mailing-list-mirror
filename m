@@ -1,73 +1,89 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: [PATCH 3/3] Fix contrib/credentials/netrc minor issues: exit quietly; use 3-parameter open; etc.
-Date: Mon, 04 Feb 2013 13:41:23 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <874nhrvs4s.fsf@lifelogs.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] Add contrib/credentials/netrc with GPG support
+Date: Mon, 04 Feb 2013 11:06:16 -0800
+Message-ID: <7vvca7291z.fsf@alter.siamese.dyndns.org>
 References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
-	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
-	<20130130074306.GA17868@sigill.intra.peff.net>
-	<7v7gmumzo6.fsf@alter.siamese.dyndns.org>
-	<87pq0l5qbc.fsf@lifelogs.com>
-	<20130131193844.GA14460@sigill.intra.peff.net>
-	<87k3qrx712.fsf@lifelogs.com>
-	<20130203194148.GA26318@sigill.intra.peff.net>
-	<87k3qovxlp.fsf_-_@lifelogs.com>
-	<7vfw1c2dm5.fsf@alter.siamese.dyndns.org>
+ <7vvcafojf4.fsf@alter.siamese.dyndns.org>
+ <20130130074306.GA17868@sigill.intra.peff.net>
+ <7v7gmumzo6.fsf@alter.siamese.dyndns.org> <87pq0l5qbc.fsf@lifelogs.com>
+ <20130131193844.GA14460@sigill.intra.peff.net> <87k3qrx712.fsf@lifelogs.com>
+ <20130203194148.GA26318@sigill.intra.peff.net>
+ <87sj5cvxnf.fsf_-_@lifelogs.com> <7vk3qo2dsc.fsf@alter.siamese.dyndns.org>
+ <87k3qoudxp.fsf@lifelogs.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 19:41:53 2013
+To: Ted Zlatanov <tzz@lifelogs.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 20:06:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2QzE-0006fY-8u
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 19:41:48 +0100
+	id 1U2RNL-0001zc-FI
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 20:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754855Ab3BDSlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2013 13:41:25 -0500
-Received: from z.lifelogs.com ([173.255.230.239]:41669 "EHLO z.lifelogs.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750773Ab3BDSlY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2013 13:41:24 -0500
-Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: tzz)
-	by z.lifelogs.com (Postfix) with ESMTPSA id DDFD1DE0CA;
-	Mon,  4 Feb 2013 18:41:23 +0000 (UTC)
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-In-Reply-To: <7vfw1c2dm5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 04 Feb 2013 09:27:46 -0800")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
+	id S1754702Ab3BDTGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 14:06:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57548 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753735Ab3BDTGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 14:06:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2CEECC4D;
+	Mon,  4 Feb 2013 14:06:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8Q6Ri/CrbkkBPF04/zuOHx58b5Q=; b=H5mJ1Q
+	AHovAt+1NfalFv7I76bYZ37/ikhCSqjiQjjHhrzwNpxc4jtVI7RYujsAqDyUksvO
+	nzsKyH4Q5eQ1YnkPu7dpgCvaDbMJ00r9o4iCsoFptEFS4E+Qa4IGXjiPUvU5rzwa
+	UXSoV9Xpn80kKHkhNS/XpmVXg8+946OPo0sm4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Fc+WKpkwxRzYxQtqgkYfKPeAQ/Wh0QSd
+	rWv5xnIec9jpOpQz0pY5QyWO4MLWOTdhzHtaP8+CysNabCfAbFe/GaPRUJHF7LTF
+	6n/lxlNxBBPJf7EWYtrRMsP/gNiv9cBsR3N7PmONeeFoEh3HxmE86hCsvLZThk0n
+	cdEBjGtMApc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98260CC4C;
+	Mon,  4 Feb 2013 14:06:18 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 17D00CC4B; Mon,  4 Feb 2013
+ 14:06:18 -0500 (EST)
+In-Reply-To: <87k3qoudxp.fsf@lifelogs.com> (Ted Zlatanov's message of "Mon,
+ 04 Feb 2013 13:33:22 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F46C3514-6EFD-11E2-98BF-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215409>
 
-On Mon, 04 Feb 2013 09:27:46 -0800 Junio C Hamano <gitster@pobox.com> wrote: 
+Ted Zlatanov <tzz@lifelogs.com> writes:
 
-JCH> Ted Zlatanov <tzz@lifelogs.com> writes:
->> Signed-off-by: Ted Zlatanov <tzz@lifelogs.com>
->> ---
->> contrib/credential/netrc/git-credential-netrc |   38 +++++++++++++------------
->> 1 files changed, 20 insertions(+), 18 deletions(-)
+> Sorry, I didn't realize contrib/ stuff was under the same rules.
 
-JCH> Especially because this is an initial submission, please equash
-JCH> three patches into one, instead of sending three "here is my first
-JCH> attempt with many problems I know I do not want to be there", "one
-JCH> small improvement", "another one to fix remaining issues".
+I had a feeling that this may start out from contrib/ but will soon
+prove to be fairly important to be part of the Git proper.
 
-JCH> Otherwise you will waste reviewers' time, getting distracted by
-JCH> undesirable details they find in an earlier patch while reviewing,
-JCH> without realizing that some of them are fixed in a later one.
+> It would help if the requirements were codified as the fairly standard
+> Emacs file-local variables, so I can just put them in the Perl code or
+> in .dir-locals.el in the source tree.  At least for Perl I'd like that,
+> and it could be nice for the Emacs users who write C too.
+>
+> Would you like me to propose that as a patch?
 
-OK, thanks.  I wasn't sure, since Jeff already reviewed it, if it was
-better to squash or not.  Ignore this same question in my other reply to
-you, and thanks for your patience.
+I thought that we tend to avoid Emacs/Vim formatting cruft left in
+the file.  Do we have any in existing file outside contrib/?
 
-Ted
+> Either way, I guessed that these settings are what you want as far as
+> tabs and indentation (I use cperl-mode but perl-mode is the same):
+>
+> # -*- mode: cperl; tab-width: 8; cperl-indent-level: 4; indent-tabs-mode: t; -*-
+
+Indent is done with a Tab and indent level is 8 places (check add--interactive.perl
+and imitate it, perhaps?).
+
+Thanks.
