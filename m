@@ -1,88 +1,182 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Should "log --cc" imply "log --cc -p"?
-Date: Mon, 04 Feb 2013 08:36:43 -0800
-Message-ID: <7vfw1c3ujo.fsf@alter.siamese.dyndns.org>
-References: <7vmwvl6lj9.fsf@alter.siamese.dyndns.org>
- <510F95D7.6010107@drmicha.warpmail.net>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
+Date: Mon, 04 Feb 2013 11:40:54 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <87wquovxpl.fsf@lifelogs.com>
+References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
+	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
+	<20130130074306.GA17868@sigill.intra.peff.net>
+	<7v7gmumzo6.fsf@alter.siamese.dyndns.org>
+	<87pq0l5qbc.fsf@lifelogs.com>
+	<20130131193844.GA14460@sigill.intra.peff.net>
+	<87k3qrx712.fsf@lifelogs.com>
+	<20130203194148.GA26318@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Feb 04 17:37:15 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 04 17:41:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2P2b-0007qz-9q
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 17:37:09 +0100
+	id 1U2P6d-0001Yy-MO
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 17:41:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756082Ab3BDQgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2013 11:36:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57727 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753996Ab3BDQgq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2013 11:36:46 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A712ABEBB;
-	Mon,  4 Feb 2013 11:36:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YzxC1UwzRKsJsYMpVvzQcbO6ZKM=; b=uVCffN
-	GIkJYIE6dvYLNsILCbQqqyLEKO9MzrPT4HQb9wwFtm4JBMANVUBovci0EAqdEyj6
-	tETZJiccBLzV4sSL+8mdb5/Nwd4cSIko9kx6zV30bKojSOLlmC9pyWBxF/gjN0ih
-	QCYHKs+VSvP12Zj3ryCutwt2P2BurPzG+/1MQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DJevhvFMszyEqd0+TWSilwuBjkQqwPLQ
-	VS3QDYtL1BbOgCPdCjbMWJcUfPmnI0XuLjjFDHeeRjGs8343rXbMqpFkuECg96Jb
-	qM45YoutaHZIBhUVZsoGs9Kw7yC0mguaWAD8QRTjbkMRUd6TxubZD47NuBHiDMwa
-	ctOWsz6KQX4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9779ABEB9;
-	Mon,  4 Feb 2013 11:36:45 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0022EBEB2; Mon,  4 Feb 2013
- 11:36:44 -0500 (EST)
-In-Reply-To: <510F95D7.6010107@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Mon, 04 Feb 2013 12:04:55 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 100E641E-6EE9-11E2-922F-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756532Ab3BDQk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 11:40:57 -0500
+Received: from z.lifelogs.com ([173.255.230.239]:38225 "EHLO z.lifelogs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756391Ab3BDQkz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 11:40:55 -0500
+Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: tzz)
+	by z.lifelogs.com (Postfix) with ESMTPSA id BFB74DE0C5;
+	Mon,  4 Feb 2013 16:40:54 +0000 (UTC)
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+Mail-Copies-To: never
+Gmane-Reply-To-List: yes
+In-Reply-To: <20130203194148.GA26318@sigill.intra.peff.net> (Jeff King's
+	message of "Sun, 3 Feb 2013 14:41:49 -0500")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215389>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Sun, 3 Feb 2013 14:41:49 -0500 Jeff King <peff@peff.net> wrote: 
 
-> But diffs are on here ("-p"), it's just that the default diff option for
-> merges is to not display them. Well, I admit there's two different ways
-> of thinking here:
->
-> A) "git log -p" turns on diffs for all commits, and the default diff
-> options is the (non-existing) "--no-show" diff-option for merges.
->
-> B) "git log -p" applies "-p" to all commits except merge commits.
->
-> I'm strongly in the A camp,...
+JK> On Sat, Feb 02, 2013 at 06:57:29AM -0500, Ted Zlatanov wrote:
+>> If the file name ends with ".gpg", it will run "gpg --decrypt FILE" and
+>> use the output.  So non-interactively, that could hang if GPG was
+>> waiting for input.  Does Git handle that, or should I check for a TTY?
 
-I can personally be trained to think either way, but I suspect that
-we already came halfway to
+JK> No, git does not do anything special with respect to credential helpers
+JK> and ttys (nor should it, since one use of helpers is to get credentials
+JK> when there is no tty). I think it is GPG's problem to deal with, though.
+JK> We will invoke it, and it is up to it to decide whether it can acquire
+JK> the passphrase or not (either through the tty, or possibly from
+JK> gpg-agent). So it would be wrong to do the tty check yourself.
 
-  C) "-p" asks for two-way patches, and "-c/--cc" ask for n-way
-     patches (including but not limited to n==2); it is not that -p
-     asks for patch generation and others modify the finer behaviour
-     of patch generation.
+JK> I haven't tested GPG, but I assume it properly tries to read from
+JK> /dev/tty and not stdin. Your helper's stdio is connected to git and
+JK> speaking the credential-helper protocol, so GPG reading from stdin would
+JK> either steal your input (if run before you read it), or just get EOF (if
+JK> you have read all of the pipe content already). If GPG isn't well
+JK> behaved, it may be worth redirecting its stdin from /dev/null as a
+JK> safety measure.
 
-"git log/diff-files -U8" do not need "-p" to enable textual patches,
-for example.  It is "I already told you that I want 8-line context.
-For what else, other than showing textual diff, do you think I told
-you that for?" and replacing "8-line context" with various other
-options that affect patch generation will give us a variety of end
-user complaints that would tell us that C) is more intuitive to
-them.
+In my testing GPG did the right thing, so I think this is OK.
 
-But I do not feel very strongly that I am *right* on this issue, so
-I won't do anything about it hastily right now.
+>> Take a look at the proposed patch and let me know if it's usable, if you
+>> need a formal copyright assignment, etc.
+
+JK> Overall looks sane to me, though my knowledge of .netrc is not
+JK> especially good. Usually we try to send patches inline in the email
+JK> (i.e., as generated by git-format-patch), and include a "Signed-off-by"
+JK> line indicating that content is released to the project; see
+JK> Documentation/SubmittingPatches.
+
+OK, thanks.  I will fire that off.
+
+>> +use Data::Dumper;
+
+JK> I don't see it used here. Leftover from debugging?
+
+It's part of my Perl new script skeleton, sorry.
+
+>> + print <<EOHIPPUS;
+
+JK> Cute, I haven't seen that one before.
+
+Heh heh.  I've had to explain that one in code review many times.  "See,
+it's the precursor to the modern horse..."
+
+>> +$0 [-f AUTHFILE] [-d] get
+>> +
+>> +Version $VERSION by tzz\@lifelogs.com.  License: any use is OK.
+
+JK> I don't know if we have a particular policy for items in contrib/, but
+JK> this license may be too vague. In particular, it does not explicitly
+JK> allow redistribution, which would make Junio shipping a release with it
+JK> a copyright violation.
+
+JK> Any objection to just putting it under some well-known simple license
+JK> (GPL, BSD, or whatever)?
+
+No, I didn't know what Git requires, and I'd like it to be the least
+restrictive, so BSD is OK.  Stated in -h now.
+
+>> +if ($file =~ m/\.gpg$/)
+>> +{
+>> + $file = "gpg --decrypt $file|";
+>> +}
+
+JK> Does this need to quote $file, since the result will get passed to the
+JK> shell? It might be easier to just use the list form of open(), like:
+
+JK>   my @data = $file =~ /\.gpg$/ ?
+JK>              load('-|', qw(gpg --decrypt), $file) :
+JK>              load('<', $file);
+
+JK> (and then obviously update load to just dump all of @_ to open()).
+
+Yes, thanks.  Done.
+
+>> +die "Sorry, we could not load data from [$file]"
+>> + unless (scalar @data);
+
+JK> Probably not that interesting a corner case, but this means we die on an
+JK> empty .netrc, whereas it might be more sensible for it to behave as "no
+JK> match".
+
+JK> For the same reason, it might be worth silently exiting when we don't
+JK> find a .netrc (or any of its variants). That lets people who share their
+JK> dot-files across machines configure git globally, even if they don't
+JK> necessarily have a netrc on every machine.
+
+OK; done.
+
+>> +# the query
+>> +my %q;
+>> +
+>> +foreach my $v (values %{$options{tmap}})
+>> +{
+>> + undef $q{$v};
+>> +}
+
+JK> Just my personal style, but I find the intent more obvious with "map" (I
+JK> know some people find it unreadable, though):
+
+JK>   my %q = map { $_ => undef } values(%{$options{tmap}});
+
+Yes, changed.
+
+>> +while (<STDIN>)
+>> +{
+>> + next unless m/([a-z]+)=(.+)/;
+
+JK> We don't currently have any exotic tokens that this would not match, nor
+JK> do I plan to add them, but the credential documentation defines a valid
+JK> line as /^([^=]+)=(.+)/.
+
+JK> It's also possible for the value to be empty, but I do not think
+JK> off-hand that current git will ever send such an empty value.
+
+Yes, changed.
+
+JK> The rest of it looks fine to me. I don't think any of my comments are
+JK> show-stoppers. Tests would be nice, but integrating contrib/ stuff with
+JK> the test harness is kind of a pain.
+
+"I tested it on AIX, it works great!" :)
+
+It's pretty easy to write a local Makefile with a test target, if you
+think it worthwhile.
+
+Ted
