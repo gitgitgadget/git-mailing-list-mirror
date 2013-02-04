@@ -1,96 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Segmentation fault with latest git (070c57df)
-Date: Mon, 04 Feb 2013 08:46:29 -0800
-Message-ID: <7vboc03u3e.fsf@alter.siamese.dyndns.org>
-References: <12070540.431901359961105650.JavaMail.weblogic@epml10>
- <7vehgw5z7n.fsf@alter.siamese.dyndns.org>
- <20130204083701.GA30835@sigill.intra.peff.net>
- <7vsj5c4exz.fsf@alter.siamese.dyndns.org>
- <20130204093821.GA32095@sigill.intra.peff.net>
+Subject: Re: Feature request: Allow extracting revisions into directories
+Date: Mon, 04 Feb 2013 08:52:29 -0800
+Message-ID: <7v7gmo3tte.fsf@alter.siamese.dyndns.org>
+References: <1359901085.24730.11.camel@t520>
+ <510F9907.7010107@drmicha.warpmail.net> <1359980045.24730.32.camel@t520>
+ <1359982065-ner-9588@calvin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: jongman.heo@samsung.com, Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>, git <git@vger.kernel.org>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 04 17:46:59 2013
+Cc: Robert Clausecker <fuzxxl@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Tomas Carnecky <tomas.carnecky@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 17:53:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2PC3-0004aJ-2h
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 17:46:55 +0100
+	id 1U2PHw-0007so-J2
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 17:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755695Ab3BDQqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2013 11:46:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41854 "EHLO
+	id S1756575Ab3BDQwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 11:52:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50873 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754348Ab3BDQqc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2013 11:46:32 -0500
+	id S1756393Ab3BDQwc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 11:52:32 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90AFFCE76;
-	Mon,  4 Feb 2013 11:46:31 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAC12C8F0;
+	Mon,  4 Feb 2013 11:52:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vmQrkfM7o9cEbPL44xJppC2A3yw=; b=HnAIJG
-	xFduqbtk/mwvy0WRiwkBNjer39m3KqEAjsQ9mptH99eRiFmz3YUjq0B4//fQka1C
-	YDVrqt0WCvWN1f0qFxrZNlHH0IyBgR95QkPnZ6ng7maUG1K1QzKlB4cYzbY3CGnu
-	E00cXxTZCGpcScsdSZWQ0lBPQigiqjMHcYNmM=
+	:content-type; s=sasl; bh=lsBf+ZxWt+mbx0KIpmGQVWxTjdw=; b=eqHiEE
+	SrX0yORZ94trCNJ1jX7il6Ht4gIFuD1zFcBZWsQwk9vpNo5e/8mFFC1yoOVVkDcl
+	3rS+cLHEWEa4kK4OugWSaQXA+tm9BIWCt4xv9MVE4aDuy72cCCG8888x/FbvY0VZ
+	z0ouyTbx613LEhZ22/TDOBYj9DM2FYlYAWSvw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tc0KGTrihbH7RsErHl7Ux6S6MjgOAiUg
-	YfUCxFh1Obktb0hg5I0OUDSf2FOZs9dLetP5jiLCqH51ChP0n0hdrTHkcV5N19Jz
-	QIw8VWWpehdQr/oWJDN34V+tOoFBz0xg2IMU1IyhjALbggOeJVgSSIkKizQ1uuSC
-	dk/m0d8s47M=
+	:content-type; q=dns; s=sasl; b=APqhCIR5DzXxAipOXkq9+Cag+DcwJQbF
+	ItKB1hY0E0YqOA4E7SwHTj7Pplzi4PKvwhsyB4sp5mPc+9ebPisDPHFFF5W6h9Iq
+	qiQaRcP0l/RURTpFDJXP/tH3g3tvktki9XpzDJihEx22qoFKCkjIc+zzVGFGttTF
+	y+dlnv5dP/0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80EFCCE74;
-	Mon,  4 Feb 2013 11:46:31 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CEB99C8EF;
+	Mon,  4 Feb 2013 11:52:31 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E0ADDCE6A; Mon,  4 Feb 2013
- 11:46:30 -0500 (EST)
-In-Reply-To: <20130204093821.GA32095@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 4 Feb 2013 04:38:21 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FF66C8EB; Mon,  4 Feb 2013
+ 11:52:31 -0500 (EST)
+In-Reply-To: <1359982065-ner-9588@calvin> (Tomas Carnecky's message of "Mon,
+ 04 Feb 2013 12:47:45 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6D471B02-6EEA-11E2-9599-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 441871B2-6EEB-11E2-832A-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215394>
 
-Jeff King <peff@peff.net> writes:
+Tomas Carnecky <tomas.carnecky@gmail.com> writes:
 
-> On Mon, Feb 04, 2013 at 01:16:08AM -0800, Junio C Hamano wrote:
->
->> I think this really boils down to where we draw the "this is good
->> enough" line.  I am not sure if losing the file as in $gmane/215211
->> is common enough to be special cased to buy us much, while leaving
->> other ".depend/foo.o.d was updated to contain a wrong info" cases
->> still broken.
->
-> Hmm. Yeah, I was thinking it might be more common than ordinary munging
-> due to something like an interrupted "git clean -x". But given that:
->
->   1. As far as I can tell, it is not a situation that can happen through
->      regular use of checkout/make/etc, and...
->
->   2. We have zero reports of it happening in practice (I only discovered
->      it while explicitly trying to break the Makefile), and...
->
->   3. It is just one of many possible breakages, all of which can be
->      fixed by "git clean -dx" if you suspect issues...
->
-> let's just leave it. Thanks for a sanity check.
+> That's what `git checkout` is for. And I would even argue that it's the better
+> choice in your situation because it would delete files from /var/www/foo which
+> you have deleted in your repo. git archive|tar wouldn't do that.
 
-The only case that worries me is when make or cc gets interrupted.
-As long as make removes the ultimate target *.o in such a case, it
-is fine to leave a half-written .depend/foo.o.d (or getting it
-removed) behind.
+The point about removal is an interesting one.  From that /var/www
+location I guess that you are discussing some webapp, but if you let
+it _write_ into it, you may also have to worry about how to handle
+the case where an update from the source end that comes from the
+checkout and an update by the webapp collide with each other.
 
-How expensive to generate the dependency for a single foo.c file
-into a temporary without compiling it into foo.o, and comparing the
-resulting dependency with existing .depend/foo.o.d?  If it is very
-cheap, it might be worth doing it before linking the final build
-product and error the build out when we see discrepancies.  I dunno.
+You also need to maintain the .git/index file that corresponds to
+what should be in /var/www/foo/ if you go that route.
+
+Just to be sure, I am not saying "checkout" is an inappropriate
+solution to whatever problem you are trying to solve. I am just
+pointing out things you need to be aware of if you take that
+approach.
