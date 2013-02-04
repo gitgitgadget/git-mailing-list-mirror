@@ -1,126 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] count-objects: report garbage files in
- .git/objects/pack directory too
-Date: Mon, 04 Feb 2013 10:16:23 -0800
-Message-ID: <7v1ucw2bd4.fsf@alter.siamese.dyndns.org>
-References: <1359982145-10792-1-git-send-email-pclouds@gmail.com>
- <1359982145-10792-2-git-send-email-pclouds@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Feature request: Allow extracting revisions into directories
+Date: Mon, 04 Feb 2013 19:21:58 +0100
+Message-ID: <m2ip689by1.fsf@igel.home>
+References: <1359901085.24730.11.camel@t520>
+	<510F9907.7010107@drmicha.warpmail.net>
+	<1359980045.24730.32.camel@t520>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 19:16:55 2013
+Content-Type: text/plain
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Robert Clausecker <fuzxxl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 19:22:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2Qb5-0002F2-Jr
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 19:16:51 +0100
+	id 1U2QgV-0004xe-Oh
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Feb 2013 19:22:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754902Ab3BDSQ3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Feb 2013 13:16:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54704 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754477Ab3BDSQ2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2013 13:16:28 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BBA9DB98;
-	Mon,  4 Feb 2013 13:16:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=wxmLQL9nFsMx
-	UWDzM+lnLqY6Vb0=; b=XgwRw8QZJXaJqhhlzcAI7wf6BLZmYlKvvMjwCA35g+JH
-	4Q/ocOkguopRrAKZ86QjZRvb199TFuGD8KChOBcwhfj7tbq6UB5nQlpNWf7MUrkG
-	mvMcSo2zOGXspCx4Hm4Jo51lpi5fGcZAVqi2dbEPfl7wMmxSVgN4qWe2m4n5lNk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LI0l0y
-	d4H24u2ngY++87D+ub06zvzlOUA/t4Juy+j+NZpHRgUo37O3A9WUhLV3lyArC1MH
-	2fs0XO7HO0LFf18D3YqOO0nEx4g1j1zEZESFHpdy/z6foPpp+r4lfDFkm7OrN9Yr
-	aJlUjZsTO4w/EMniSNOpIgeg0fWK+c/+mUPWE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F81ADB97;
-	Mon,  4 Feb 2013 13:16:25 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 017C6DB94; Mon,  4 Feb 2013
- 13:16:24 -0500 (EST)
-In-Reply-To: <1359982145-10792-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 4 Feb
- 2013 19:49:05 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FC66BB4C-6EF6-11E2-BE18-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754359Ab3BDSWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 13:22:04 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:43325 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751908Ab3BDSWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 13:22:03 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3Z0HLv4Y4lz3hhky;
+	Mon,  4 Feb 2013 19:21:59 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3Z0HLv1CZJzbbhf;
+	Mon,  4 Feb 2013 19:21:59 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id CrE-afutsBay; Mon,  4 Feb 2013 19:20:53 +0100 (CET)
+X-Auth-Info: 3kiXAovYsE2rGQ9lNZXWTH49PuBeLpLGa1ctJ1peETc=
+Received: from igel.home (ppp-93-104-147-7.dynamic.mnet-online.de [93.104.147.7])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Mon,  4 Feb 2013 19:21:58 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 3AB7ECA2A1; Mon,  4 Feb 2013 19:21:58 +0100 (CET)
+X-Yow: I've gotta GO, now!!  I wanta tell you you're a GREAT bunch of guys
+ but you ought to CHANGE your UNDERWEAR more often!!
+In-Reply-To: <1359980045.24730.32.camel@t520> (Robert Clausecker's message of
+	"Mon, 04 Feb 2013 13:14:05 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215404>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Robert Clausecker <fuzxxl@gmail.com> writes:
 
-> @@ -1024,11 +1035,15 @@ static void prepare_packed_git_one(char *objd=
-ir, int local)
->  		int namelen =3D strlen(de->d_name);
->  		struct packed_git *p;
-> =20
-> -		if (!has_extension(de->d_name, ".idx"))
-> +		if (!has_extension(de->d_name, ".idx")) {
-> +			report_pack_garbage(path, len - 1, de->d_name);
->  			continue;
-> +		}
-> =20
-> -		if (len + namelen + 1 > sizeof(path))
-> +		if (len + namelen + 1 > sizeof(path)) {
-> +			report_pack_garbage(path, len - 1, de->d_name);
->  			continue;
-> +		}
-> =20
->  		/* Don't reopen a pack we already have. */
->  		strcpy(path + len, de->d_name);
-> @@ -1042,8 +1057,10 @@ static void prepare_packed_git_one(char *objdi=
-r, int local)
->  		 * .pack file that we can map.
->  		 */
->  		p =3D add_packed_git(path, len + namelen, local);
-> -		if (!p)
-> +		if (!p) {
-> +			report_pack_garbage(path, len - 1, de->d_name);
->  			continue;
-> +		}
->  		install_packed_git(p);
->  	}
->  	closedir(dir);
+> I have a server that hosts a bare git repository. This git repository
+> contains a branch production. Whenever somebody pushes to production a
+> hook automatically puts a copy of the current production branch
+> into /var/www/foo. I could of course use pull for that but it just does
+> not feels right. Why should I have a repository twice on the server? 
 
-I forgot to mention one more thing.  Your report_pack_garbage()
-special cases ".pack" to see if it is a regular file, but this loop
-structure causes a regular file whose name ends with ".pack" but
-without corresponding ".idx" file to go unreported.
+You can avoid the separate repo copy by using git new-workdir.
 
-I think the loop should be restructured to iterate over all known
-file types and report unknown ones, if you want to repurpose it for
-the reporting, something along this line, perhaps:
+Andreas.
 
-	for (each name) {
-		if (does it end with ".idx") {
-			if (is it unusable ".idx") {
-				report garbage;
-			}
-                        continue;
-		}
-		if (! we are in report mode)
-			continue;
-		if (does it end with ".pack") {
-			if (!have we seen corresponding ".idx")
-				remember it;
-			continue;
-		}
-		report garbage;
-	}
-	for (remembered pack) {
-		if (does it have corresponding ".idx" &&
-			is it really usable ".pack")
-			continue;
-		report garbage;
-	}
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
