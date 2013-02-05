@@ -1,9 +1,9 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/13] contrib/subtree: Fix whitespaces
-Date: Mon, 04 Feb 2013 20:42:58 -0800
-Message-ID: <7v6227xtf1.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 10/13] contrib/subtree: Code cleaning and refactoring
+Date: Mon, 04 Feb 2013 21:01:19 -0800
+Message-ID: <7v1ucvxskg.fsf@alter.siamese.dyndns.org>
 References: <1360037173-23291-1-git-send-email-greened@obbligato.org>
- <1360037173-23291-8-git-send-email-greened@obbligato.org>
+ <1360037173-23291-11-git-send-email-greened@obbligato.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: James Nylen <jnylen@gmail.com>, git@vger.kernel.org,
@@ -14,86 +14,548 @@ Cc: James Nylen <jnylen@gmail.com>, git@vger.kernel.org,
 	John Yani <vanuan@gmail.com>,
 	"David A. Greene <greened@obbligato.org>"@b-sasl-quonix.pobox.com
 To: "David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Tue Feb 05 05:43:31 2013
+X-From: git-owner@vger.kernel.org Tue Feb 05 06:01:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2aNW-0004Hd-IH
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 05:43:30 +0100
+	id 1U2afJ-0003Qg-0h
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 06:01:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756582Ab3BEEnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2013 23:43:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50523 "EHLO
+	id S1750782Ab3BEFBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2013 00:01:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63182 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755601Ab3BEEnF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2013 23:43:05 -0500
+	id S1750720Ab3BEFBY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2013 00:01:24 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD620CE5A;
-	Mon,  4 Feb 2013 23:43:04 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F2AAB91B;
+	Tue,  5 Feb 2013 00:01:23 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JcwKuFALK816IlcpkuYfYjg3Xq8=; b=sQJyfc
-	2bDicou/F4GCaIpZPIPisMA6Qlu7hyxlFrtC7aESc3pFOH5Hw+bjrWq/Ew8sSld0
-	mVbmXNTl9uOMJ4Z7e22kts5+4qsAxIUSTAiNnKS3Qi06SmAX4oTwgANkA2LZnj2r
-	AwLLf1ySSg06MiPnk7QeUj2/varXWS5gE/hFY=
+	:content-type; s=sasl; bh=lw0m5WAldqgFECftmeY6gt51dhg=; b=Ai6Pkj
+	iTGggta8qGZ9eNO0ZQuqxZdDtUzE5P2ONet5u7niAD+wA3FgMj4AwlWs2mHjl+me
+	B6T+sLzbTq4eEIr7lf63dv9SYWk4ypBZTbyBuRgbatDEgtM0ThoAO08pNv7/mEp6
+	A3BVTe5D2MMhmKRdgHHc3zZVr+yBb/zXa1vxs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B+f8dx5UXtLt9XyVIOt5WzOmwbu0X+9V
-	3/WdsCaoYA1K96ptCyCZAEHcO5+34bVxiUFJHiiPM3dhCvUt2D99lMuUOJ1uqqr+
-	0gTxuYrTSkHhMC2EFiCItBmm5Ihl98q5cuzenoQ9/4URZfgc/X+MnYy9Toyc9hqD
-	SHBQzB4FU8U=
+	:content-type; q=dns; s=sasl; b=CKXuROmV08GYq9ZSx2nG+vbL/MDB48DW
+	FuVq+t2dpgIKj8R8CmR/7zyyvqwbp3KksOrTjlQXl6fvB9/BYHDHaNMbgcg7l3nK
+	L+wibFhVxUji7OkcOKEUllvvR00uGOn7s+uAK38G4cSlDRBWThLA6bkGkOHAzxTG
+	5DVBvd1E+mE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C193CCE57;
-	Mon,  4 Feb 2013 23:43:04 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EE91B91A;
+	Tue,  5 Feb 2013 00:01:23 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A96FCE53; Mon,  4 Feb 2013
- 23:43:03 -0500 (EST)
-In-Reply-To: <1360037173-23291-8-git-send-email-greened@obbligato.org> (David
- A. Greene's message of "Mon, 4 Feb 2013 22:06:07 -0600")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C42EB914; Tue,  5 Feb 2013
+ 00:01:21 -0500 (EST)
+In-Reply-To: <1360037173-23291-11-git-send-email-greened@obbligato.org>
+ (David A. Greene's message of "Mon, 4 Feb 2013 22:06:10 -0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 86D5F7E6-6F4E-11E2-8CBE-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 153F2820-6F51-11E2-91F9-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215458>
 
 "David A. Greene" <greened@obbligato.org> writes:
 
 > From: Techlive Zheng <techlivezheng@gmail.com>
 >
-> Previous code does not fulfill Git's whitespace policy.
+> Mostly prepare for the later tests refactoring.
 >
 > Signed-off-by: Techlive Zheng <techlivezheng@gmail.com>
 > Signed-off-by: David A. Greene <greened@obbligato.org>
 > ---
-
-This does not seem to apply; I hand-tweaked it to make it apply, but
-the reindentation of t/t7900 does not look correct.
-
+>  contrib/subtree/t/t7900-subtree.sh |  270 ++++++++++++++++++------------------
+>  1 file changed, 136 insertions(+), 134 deletions(-)
+>
 > diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-> index 3f17f55..e6a3702 100755
+> index e6bcd50..9cfaaf9 100755
 > --- a/contrib/subtree/t/t7900-subtree.sh
 > +++ b/contrib/subtree/t/t7900-subtree.sh
-> @@ -23,7 +23,7 @@ check_equal()
->  {
->  	test_debug 'echo'
->  	test_debug "echo \"check a:\" \"{$1}\""
-> -	test_debug "echo \"      b:\" \"{$2}\""
-> +	test_debug "echo \"		 b:\" \"{$2}\""
->  	if [ "$1" = "$2" ]; then
->  		return 0
->  	else
-> @@ -61,17 +61,17 @@ last_commit_message()
+> @@ -4,7 +4,7 @@
+>  #
+>  test_description='Basic porcelain support for subtrees
+>  
+> -This test verifies the basic operation of the merge, pull, add
+> +This test verifies the basic operation of the add, pull, merge
+>  and split subcommands of git subtree.
+>  '
+>  
+> @@ -18,19 +18,6 @@ create()
+>  	git add "$1"
 >  }
 >  
->  test_expect_success 'init subproj' '
-> -        test_create_repo subproj
-> +		test_create_repo subproj
+> -
+> -check_equal()
+> -{
+> -	test_debug 'echo'
+> -	test_debug "echo \"check a:\" \"{$1}\""
+> -	test_debug "echo \"		 b:\" \"{$2}\""
+> -	if [ "$1" = "$2" ]; then
+> -		return 0
+> -	else
+> -		return 1
+> -	fi
+> -}
+> -
+>  fixnl()
+>  {
+>  	t=""
+> @@ -55,6 +42,42 @@ undo()
+>  	git reset --hard HEAD~
+>  }
+>  
+> +test_equal()
+> +{
+> +	test_debug 'echo'
+> +	test_debug "echo \"check a:\" \"{$1}\""
+> +	test_debug "echo \"		 b:\" \"{$2}\""
+> +	if [ "$1" = "$2" ]; then
+> +		return 0
+> +	else
+> +		return 1
+> +	fi
+> +}
 
-Perhaps this was originally done with an editor whose tabwidth was
-set to 4?  It gives too much indentation when standard tabwidth of 8
-is used.
+Why is the above improvement?  It does not seem to be fixing shell
+script style to conform to the CodingGuidelines; the only thing I
+can see it change is the name of the heper function.
+
+Additional helper functions introduced by this patch seem to
+introduce even more style violations.
+
+This may be a tangent, but I would have expected "we expect these
+two things to be the same, but help me debug the situation when then
+differ" to be written more like this:
+
+	test_equal () {
+		if test "x$1" = "x$2"
+		then
+			return 0
+		else
+                	test_debug "echo" ...
+                        return 1
+		fi
+	}
+
+> +# Make sure no patch changes more than one file.
+> +# The original set of commits changed only one file each.
+> +# A multi-file change would imply that we pruned commits
+> +# too aggressively.
+> +join_commits()
+> +{
+> +	commit=
+> +	all=
+> +	while read x y; do
+> +		if [ -z "$x" ]; then
+> +			continue
+> +		elif [ "$x" = "commit:" ]; then
+> +			if [ -n "$commit" ]; then
+> +				echo "$commit $all"
+> +				all=
+> +			fi
+> +			commit="$y"
+> +		else
+> +			all="$all $y"
+> +		fi
+> +	done
+> +	echo "$commit $all"
+> +}
+
+Swapped location in the file and renamed the function?  Doing
+anything else?
+
+This only reads from 
+
+    git log --pretty="format:commit: %H"
+
+so I am not sure how $all is ever relevant.
+
+Doesn't it always see "$x=commit:" with "$y=<commit object name>"?
+
+>  last_commit_message()
+>  {
+>  	git log --pretty=format:%s -1
+> @@ -97,7 +120,7 @@ test_expect_success 'add main4' '
+>  		create main4 &&
+>  		git commit -m "main4" &&
+>  		git branch -m master mainline &&
+> -		git branch subdir
+> +		git branch init
+>  '
+>  
+>  test_expect_success 'fetch subproj history' '
+> @@ -105,40 +128,43 @@ test_expect_success 'fetch subproj history' '
+>  		git branch sub1 FETCH_HEAD
+>  '
+>  
+> -test_expect_success 'no subtree exists in main tree' '
+> -		test_must_fail git subtree merge --prefix=subdir sub1
+> -'
+> -
+>  test_expect_success 'no pull from non-existant subtree' '
+>  		test_must_fail git subtree pull --prefix=subdir ./subproj sub1
+>  '
+>  
+v> -test_expect_success 'check if --message works for add' '
+> -		git subtree add --prefix=subdir --message="Added subproject" sub1 &&
+> -		check_equal ''"$(last_commit_message)"'' "Added subproject" &&
+> +test_expect_success 'no merge from non-existant subtree' '
+
+s/tant/tent/
+
+The remainder of the patch not snipped for others.
+
+> +		test_must_fail git subtree merge --prefix=subdir FETCH_HEAD
+> +'
+> +
+> +test_expect_success 'add subproj as subtree into subdir/ with --prefix' '
+> +		git subtree add --prefix=subdir FETCH_HEAD &&
+> +		test_equal "$(last_commit_message)" "Add '\''subdir/'\'' from commit '\''$(git rev-parse FETCH_HEAD)'\''" &&
+>  		undo
+>  '
+>  
+> -test_expect_success 'check if --message works as -m and --prefix as -P' '
+> -		git subtree add -P subdir -m "Added subproject using git subtree" sub1 &&
+> -		check_equal ''"$(last_commit_message)"'' "Added subproject using git subtree" &&
+> +test_expect_success 'add subproj as subtree into subdir/ with --prefix and --message' '
+> +		git subtree add --prefix=subdir --message="Added subproject" FETCH_HEAD &&
+> +		test_equal "$(last_commit_message)" "Added subproject" &&
+>  		undo
+>  '
+>  
+> -test_expect_success 'check if --message works with squash too' '
+> -		git subtree add -P subdir -m "Added subproject with squash" --squash sub1 &&
+> -		check_equal ''"$(last_commit_message)"'' "Added subproject with squash" &&
+> +test_expect_success 'add subproj as subtree into subdir/ with --prefix as -P and --message as -m' '
+> +		git subtree add -P subdir -m "Added subproject" FETCH_HEAD &&
+> +		test_equal "$(last_commit_message)" "Added subproject" &&
+>  		undo
+>  '
+>  
+> -test_expect_success 'add subproj to mainline' '
+> -		git subtree add --prefix=subdir/ FETCH_HEAD &&
+> -		check_equal ''"$(last_commit_message)"'' "Add '"'subdir/'"' from commit '"'"'''"$(git rev-parse sub1)"'''"'"'"
+> +test_expect_success 'add subproj as subtree into subdir/ with --squash and --prefix and --message' '
+> +		git subtree add --prefix=subdir --message="Added subproject with squash" --squash FETCH_HEAD &&
+> +		test_equal "$(last_commit_message)" "Added subproject with squash" &&
+> +		undo
+>  '
+>  
+> -# this shouldn't actually do anything, since FETCH_HEAD is already a parent
+> -test_expect_success 'merge fetched subproj' '
+> -		git merge -m "merge -s -ours" -s ours FETCH_HEAD
+> +test_expect_success 'merge the added subproj again, should do nothing' '
+> +		git subtree add --prefix=subdir FETCH_HEAD &&
+> +		# this shouldn not actually do anything, since FETCH_HEAD
+> +		# is already a parent
+> +		git merge -s ours -m "merge -s -ours" FETCH_HEAD
+>  '
+>  
+>  test_expect_success 'add main-sub5' '
+> @@ -161,25 +187,30 @@ test_expect_success 'fetch new subproj history' '
+>  		git branch sub2 FETCH_HEAD
+>  '
+>  
+> -test_expect_success 'check if --message works for merge' '
+> -		git subtree merge --prefix=subdir -m "Merged changes from subproject" sub2 &&
+> -		check_equal ''"$(last_commit_message)"'' "Merged changes from subproject" &&
+> +test_expect_success 'merge new subproj history into subdir/ with --prefix' '
+> +		git subtree merge --prefix=subdir FETCH_HEAD &&
+> +		test_equal "$(last_commit_message)" "Merge commit '\''$(git rev-parse FETCH_HEAD)'\'' into mainline" &&
+>  		undo
+>  '
+>  
+> -test_expect_success 'check if --message for merge works with squash too' '
+> -		git subtree merge --prefix subdir -m "Merged changes from subproject using squash" --squash sub2 &&
+> -		check_equal ''"$(last_commit_message)"'' "Merged changes from subproject using squash" &&
+> +test_expect_success 'merge new subproj history into subdir/ with --prefix and --message' '
+> +		git subtree merge --prefix=subdir --message="Merged changes from subproject" FETCH_HEAD &&
+> +		test_equal "$(last_commit_message)" "Merged changes from subproject" &&
+>  		undo
+>  '
+>  
+> -test_expect_success 'merge new subproj history into subdir' '
+> +test_expect_success 'merge new subproj history into subdir/ with --squash and --prefix and --message' '
+> +		git subtree merge --prefix=subdir --message="Merged changes from subproject using squash" --squash FETCH_HEAD &&
+> +		test_equal "$(last_commit_message)" "Merged changes from subproject using squash" &&
+> +		undo
+> +'
+> +
+> +test_expect_success 'merge new subproj history into subdir/' '
+>  		git subtree merge --prefix=subdir FETCH_HEAD &&
+> -		git branch pre-split &&
+> -		check_equal ''"$(last_commit_message)"'' "Merge commit '"'"'"$(git rev-parse sub2)"'"'"' into mainline"
+> +		git branch pre-split
+>  '
+>  
+> -test_expect_success 'Check that prefix argument is required for split' '
+> +test_expect_success 'split requires option --prefix' '
+>  		echo "You must provide the --prefix option." > expected &&
+>  		test_must_fail git subtree split > actual 2>&1 &&
+>  		test_debug "echo -n expected: " &&
+> @@ -190,59 +221,56 @@ test_expect_success 'Check that prefix argument is required for split' '
+>  		rm -f expected actual
+>  '
+>  
+> -test_expect_success 'Check that the <prefix> exists for a split' '
+> -		echo "'"'"'non-existent-directory'"'"'" does not exist\; use "'"'"'git subtree add'"'"'" > expected &&
+> +test_expect_success 'split requires path given by option --prefix must exist' '
+> +		echo "'\''non-existent-directory'\'' does not exist; use '\''git subtree add'\''" > expected &&
+>  		test_must_fail git subtree split --prefix=non-existent-directory > actual 2>&1 &&
+>  		test_debug "echo -n expected: " &&
+>  		test_debug "cat expected" &&
+>  		test_debug "echo -n actual: " &&
+>  		test_debug "cat actual" &&
+> -		test_cmp expected actual
+> -#		 rm -f expected actual
+> +		test_cmp expected actual &&
+> +		rm -f expected actual
+>  '
+>  
+> -test_expect_success 'check if --message works for split+rejoin' '
+> -		spl1=''"$(git subtree split --annotate='"'*'"' --prefix subdir --onto FETCH_HEAD --message "Split & rejoin" --rejoin)"'' &&
+> -		git branch spl1 "$spl1" &&
+> -		check_equal ''"$(last_commit_message)"'' "Split & rejoin" &&
+> -		undo
+> -'
+> +test_expect_success 'split subdir/ with --rejoin' '
+> +		spl1=$(git subtree split --prefix=subdir --annotate="*") &&
+> + 		git branch spl1 "$spl1" &&
+> +		git subtree split --prefix=subdir --annotate="*" --rejoin &&
+> +		test_equal "$(last_commit_message)" "Split '\''subdir/'\'' into commit '\''$spl1'\''" &&
+> + 		undo
+> + '
+>  
+> -test_expect_success 'check split with --branch' '
+> -		spl1=$(git subtree split --annotate='"'*'"' --prefix subdir --onto FETCH_HEAD --message "Split & rejoin" --rejoin) &&
+> -		undo &&
+> -		git subtree split --annotate='"'*'"' --prefix subdir --onto FETCH_HEAD --branch splitbr1 &&
+> -		check_equal ''"$(git rev-parse splitbr1)"'' "$spl1"
+> +test_expect_success 'split subdir/ with --rejoin and --message' '
+> +		git subtree split --prefix=subdir --message="Split & rejoin" --annotate="*" --rejoin &&
+> +		test_equal "$(last_commit_message)" "Split & rejoin" &&
+> +		undo
+>  '
+>  
+> -test_expect_success 'check hash of split' '
+> -        spl1=$(git subtree split --prefix subdir) &&
+> -        undo &&
+> -        git subtree split --prefix subdir --branch splitbr1test &&
+> -        check_equal ''"$(git rev-parse splitbr1test)"'' "$spl1"
+> -        git checkout splitbr1test &&
+> -        new_hash=$(git rev-parse HEAD~2) &&
+> -        git checkout mainline &&
+> -        check_equal ''"$new_hash"'' "$subdir_hash"
+> -'
+> +test_expect_success 'split subdir/ with --branch' '
+> +		spl1=$(git subtree split --prefix=subdir --message="Split & rejoin" --annotate="*" --rejoin) &&
+> + 		undo &&
+> +		git subtree split --prefix=subdir --annotate="*" --branch splitbr1 &&
+> +		test_equal "$(git rev-parse splitbr1)" "$spl1"
+> + '
+>  
+> -test_expect_success 'check split with --branch for an existing branch' '
+> -		spl1=''"$(git subtree split --annotate='"'*'"' --prefix subdir --onto FETCH_HEAD --message "Split & rejoin" --rejoin)"'' &&
+> +test_expect_success 'split subdir/ with --branch for an existing branch' '
+> +		spl1=$(git subtree split --prefix=subdir --annotate="*" --message="Split & rejoin" --rejoin) &&
+>  		undo &&
+>  		git branch splitbr2 sub1 &&
+> -		git subtree split --annotate='"'*'"' --prefix subdir --onto FETCH_HEAD --branch splitbr2 &&
+> -		check_equal ''"$(git rev-parse splitbr2)"'' "$spl1"
+> +		git subtree split --prefix=subdir --annotate="*" --branch splitbr2 &&
+> +		test_equal "$(git rev-parse splitbr2)" "$spl1"
+>  '
+>  
+> -test_expect_success 'check split with --branch for an incompatible branch' '
+> -		test_must_fail git subtree split --prefix subdir --onto FETCH_HEAD --branch subdir
+> +test_expect_success 'split subdir/ with --branch for an incompatible branch' '
+> +		test_must_fail git subtree split --prefix=subdir --branch init
+>  '
+>  
+> -test_expect_success 'check split+rejoin' '
+> -		spl1=''"$(git subtree split --annotate='"'*'"' --prefix subdir --onto FETCH_HEAD --message "Split & rejoin" --rejoin)"'' &&
+> +test_expect_success 'check --unannotate' '
+> +		spl1=$(git subtree split --unannotate="subproj:" --prefix subdir --onto FETCH_HEAD --message "Split & rejoin" --rejoin) &&
+>  		undo &&
+> -		git subtree split --annotate='"'*'"' --prefix subdir --onto FETCH_HEAD --rejoin &&
+> -		check_equal ''"$(last_commit_message)"'' "Split '"'"'subdir/'"'"' into commit '"'"'"$spl1"'"'"'"
+> + 		git subtree split --unannotate="subproj:" --prefix subdir --onto FETCH_HEAD --branch splitunann &&
+> +		test_equal "$(git rev-parse splitunann)" "$spl1" &&
+> +		test_equal "$(git log splitunann | grep subproj)" ""
+>  '
+>  
+>  test_expect_success 'add main-sub8' '
+> @@ -268,8 +296,8 @@ test_expect_success 'add sub9' '
+>  cd ..
+>  
+>  test_expect_success 'split for sub8' '
+> -		split2=''"$(git subtree split --annotate='"'*'"' --prefix subdir/ --rejoin)"''
+> -		git branch split2 "$split2"
+> +		spl2=$(git subtree split --prefix=subdir/ --annotate="*" --rejoin) &&
+> +		git branch spl2 "$spl2"
+>  '
+>  
+>  test_expect_success 'add main-sub10' '
+> @@ -278,7 +306,7 @@ test_expect_success 'add main-sub10' '
+>  '
+>  
+>  test_expect_success 'split for sub10' '
+> -		spl3=''"$(git subtree split --annotate='"'*'"' --prefix subdir --rejoin)"'' &&
+> +		spl3=$(git subtree split --prefix=subdir --annotate="*" --rejoin) &&
+>  		git branch spl3 "$spl3"
+>  '
+>  
+> @@ -299,13 +327,13 @@ chks="sub1 sub2 sub3 sub9"
+>  chks_sub=$(echo $chks | multiline | sed 's,^,subdir/,' | fixnl)
+>  
+>  test_expect_success 'make sure exactly the right set of files ends up in the subproj' '
+> -		subfiles=''"$(git ls-files | fixnl)"'' &&
+> -		check_equal "$subfiles" "$chkms $chks"
+> +		subfiles=$(git ls-files | fixnl) &&
+> +		test_equal "$subfiles" "$chkms $chks"
+>  '
+>  
+> -test_expect_success 'make sure the subproj history *only* contains commits that affect the subdir' '
+> -		allchanges=''"$(git log --name-only --pretty=format:'"''"' | sort | fixnl)"'' &&
+> -		check_equal "$allchanges" "$chkms $chks"
+> +test_expect_success 'make sure the subproj *only* contains commits that affect the subdir' '
+> +		allchanges=$(git log --name-only --pretty=format:"" | sort | fixnl) &&
+> +		test_equal "$allchanges" "$chkms $chks"
+>  '
+>  
+>  # Back to mainline
+> @@ -318,25 +346,25 @@ test_expect_success 'pull from subproj' '
+>  '
+>  
+>  test_expect_success 'make sure exactly the right set of files ends up in the mainline' '
+> -		mainfiles=''"$(git ls-files | fixnl)"'' &&
+> -		check_equal "$mainfiles" "$chkm $chkms_sub $chks_sub"
+> +		mainfiles=$(git ls-files | fixnl) &&
+> +		test_equal "$mainfiles" "$chkm $chkms_sub $chks_sub"
+>  '
+>  
+>  test_expect_success 'make sure each filename changed exactly once in the entire history' '
+>  		# main-sub?? and /subdir/main-sub?? both change, because those are the
+>  		# changes that were split into their own history.  And subdir/sub?? never
+>  		# change, since they were *only* changed in the subtree branch.
+> -		allchanges=''"$(git log --name-only --pretty=format:'"''"' | sort | fixnl)"'' &&
+> -		check_equal "$allchanges" ''"$(echo $chkms $chkm $chks $chkms_sub | multiline | sort | fixnl)"''
+> +		allchanges=$(git log --name-only --pretty=format:"" | sort | fixnl) &&
+> +		test_equal "$allchanges" "$(echo $chkms $chkm $chks $chkms_sub | multiline | sort | fixnl)"
+>  '
+>  
+>  test_expect_success 'make sure the --rejoin commits never make it into subproj' '
+> -		check_equal ''"$(git log --pretty=format:'"'%s'"' HEAD^2 | grep -i split)"'' ""
+> +		test_equal "$(git log --pretty=format:"%s" HEAD^2 | grep -i split)" ""
+>  '
+>  
+>  test_expect_success 'make sure no "git subtree" tagged commits make it into subproj' '
+>  		# They are meaningless to subproj since one side of the merge refers to the mainline
+> -		check_equal ''"$(git log --pretty=format:'"'%s%n%b'"' HEAD^2 | grep "git-subtree.*:")"'' ""
+> +		test_equal "$(git log --pretty=format:"%s%n%b" HEAD^2 | grep "git-subtree.*:")" ""
+>  '
+>  
+>  # prepare second pair of repositories
+> @@ -374,7 +402,7 @@ cd ../main
+>  test_expect_success 'add sub as subdir in main' '
+>  		git fetch ../sub master &&
+>  		git branch sub2 FETCH_HEAD &&
+> -		git subtree add --prefix subdir sub2
+> +		git subtree add --prefix=subdir sub2
+>  '
+>  
+>  cd ../sub
+> @@ -389,7 +417,7 @@ cd ../main
+>  test_expect_success 'merge from sub' '
+>  		git fetch ../sub master &&
+>  		git branch sub3 FETCH_HEAD &&
+> -		git subtree merge --prefix subdir sub3
+> +		git subtree merge --prefix=subdir sub3
+>  '
+>  
+>  test_expect_success 'add main-sub4' '
+> @@ -398,7 +426,7 @@ test_expect_success 'add main-sub4' '
+>  '
+>  
+>  test_expect_success 'split for main-sub4 without --onto' '
+> -		git subtree split --prefix subdir --branch mainsub4
+> +		git subtree split --prefix=subdir --branch mainsub4
+>  '
+>  
+>  # at this point, the new commit parent should be sub3 if it is not,
+> @@ -407,7 +435,7 @@ test_expect_success 'split for main-sub4 without --onto' '
+>  # itself)
+>  
+>  test_expect_success 'check that the commit parent is sub3' '
+> -		check_equal ''"$(git log --pretty=format:%P -1 mainsub4)"'' ''"$(git rev-parse sub3)"''
+> +		test_equal "$(git log --pretty=format:%P -1 mainsub4)" "$(git rev-parse sub3)"
+>  '
+>  
+>  test_expect_success 'add main-sub5' '
+> @@ -420,49 +448,23 @@ test_expect_success 'split for main-sub5 without --onto' '
+>  		# also test that we still can split out an entirely new subtree
+>  		# if the parent of the first commit in the tree is not empty,
+>  		# then the new subtree has accidently been attached to something
+> -		git subtree split --prefix subdir2 --branch mainsub5 &&
+> -		check_equal ''"$(git log --pretty=format:%P -1 mainsub5)"'' ""
+> +		git subtree split --prefix=subdir2 --branch mainsub5 &&
+> +		test_equal "$(git log --pretty=format:%P -1 mainsub5)" ""
+>  '
+>  
+> -# make sure no patch changes more than one file.  The original set of commits
+> -# changed only one file each.  A multi-file change would imply that we pruned
+> -# commits too aggressively.
+> -joincommits()
+> -{
+> -	commit=
+> -	all=
+> -	while read x y; do
+> -		#echo "{$x}" >&2
+> -		if [ -z "$x" ]; then
+> -			continue
+> -		elif [ "$x" = "commit:" ]; then
+> -			if [ -n "$commit" ]; then
+> -				echo "$commit $all"
+> -				all=
+> -			fi
+> -			commit="$y"
+> -		else
+> -			all="$all $y"
+> -		fi
+> -	done
+> -	echo "$commit $all"
+> -}
+> -
+>  test_expect_success 'verify one file change per commit' '
+>  		x= &&
+> -		list=''"$(git log --pretty=format:'"'commit: %H'"' | joincommits)"'' &&
+> -#		 test_debug "echo HERE" &&
+> -#		 test_debug "echo ''"$list"''" &&
+> -		(git log --pretty=format:'"'commit: %H'"' | joincommits |
+> -		(		while read commit a b; do
+> -				test_debug "echo Verifying commit "''"$commit"''
+> -				test_debug "echo a: "''"$a"''
+> -				test_debug "echo b: "''"$b"''
+> -				check_equal "$b" ""
+> +		git log --pretty=format:"commit: %H" | join_commits |
+> +		(
+> +			while read commit a b; do
+> +				test_debug "echo Verifying commit $commit"
+> +				test_debug "echo a: $a"
+> +				test_debug "echo b: $b"
+> +				test_equal "$b" ""
+>  				x=1
+>  			done
+> -			check_equal "$x" 1
+> -		))
+> +			test_equal "$x" 1
+> +		)
+>  '
+>  
+>  test_done
