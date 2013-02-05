@@ -1,90 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [WIP/RFH/RFD/PATCH] grep: allow to use textconv filters
-Date: Tue, 5 Feb 2013 15:11:06 -0500
-Message-ID: <20130205201106.GA29248@sigill.intra.peff.net>
-References: <2c0641ea4df6a872a4466efe0c0124f304f44c3e.1359991521.git.git@drmicha.warpmail.net>
- <20130205111353.GD24973@sigill.intra.peff.net>
- <5111317E.8060906@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add contrib/credentials/netrc with GPG support, try #2
+Date: Tue, 05 Feb 2013 12:23:00 -0800
+Message-ID: <7vd2wese6z.fsf@alter.siamese.dyndns.org>
+References: <87ehgvua6h.fsf@lifelogs.com>
+ <20130204211726.GB13186@sigill.intra.peff.net>
+ <87mwvjsqjc.fsf_-_@lifelogs.com> <7vvca6u47f.fsf@alter.siamese.dyndns.org>
+ <87k3qmr8yc.fsf@lifelogs.com> <7vip66sftf.fsf@alter.siamese.dyndns.org>
+ <87bobyr0ju.fsf@lifelogs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Feb 05 21:11:38 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Ted Zlatanov <tzz@lifelogs.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 21:23:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2orc-0008Re-GO
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 21:11:32 +0100
+	id 1U2p3O-0001PC-Is
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 21:23:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755369Ab3BEULK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2013 15:11:10 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35040 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754689Ab3BEULI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2013 15:11:08 -0500
-Received: (qmail 31861 invoked by uid 107); 5 Feb 2013 20:12:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Feb 2013 15:12:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Feb 2013 15:11:06 -0500
-Content-Disposition: inline
-In-Reply-To: <5111317E.8060906@drmicha.warpmail.net>
+	id S1756615Ab3BEUXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2013 15:23:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51456 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756400Ab3BEUXC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2013 15:23:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 501C2B92A;
+	Tue,  5 Feb 2013 15:23:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Vd7lCK1XdL+uwsDnAlq79ZkaFqg=; b=DbRzgh
+	1zldz+e87NncY4e6BwBI94Fk8MLh78fbmVvaqzRpjDxDJ35qhfhhZkpigsSfCZP7
+	VLRDOOzTiZPsK9ezrU/8iq5yPvYQr/5nePslcW2GhBfkvR1+WOACI5bpcvyUFENM
+	K1ugaiz48rP1t/Z8iZD8EN14HSpMr0cygSOdk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qujkCzP9mxZ3Z8KB4I2SVuyRicir3M+i
+	Nzt0bmkL/BjlUtgPpUdYnGVy/6+46/rJPlL5Y32ybYlKDoVsO+1mPU8wyLL8oWBW
+	RptIh2kFC226wfoLXO8R9Vj0Dz3emun2085BjM90cgjIyestcMlL/yAAylQu3nku
+	ThK7CUywpnw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 454EFB928;
+	Tue,  5 Feb 2013 15:23:02 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A64EEB925; Tue,  5 Feb 2013
+ 15:23:01 -0500 (EST)
+In-Reply-To: <87bobyr0ju.fsf@lifelogs.com> (Ted Zlatanov's message of "Tue,
+ 05 Feb 2013 15:03:01 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D6C923E4-6FD1-11E2-AA5F-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215533>
 
-On Tue, Feb 05, 2013 at 05:21:18PM +0100, Michael J Gruber wrote:
+Ted Zlatanov <tzz@lifelogs.com> writes:
 
-> Thanks Jeff, that helps a lot! It covers "grep expr" and "grep expr rev
-> -- path" just fine. I'll look into "grep expr rev:path" which does not
-> work yet because of an empty driver.
-> 
-> I also have "show --textconv" covered and a suggestion for "cat-file
-> --textconv" (to work without a textconv filter).
-> 
-> Expect a mini-series soon :)
+> JCH> You still need to parse a file that has a "default" entry correctly;
+> JCH> otherwise the users won't be able to share existing .netrc files
+> JCH> with other applications e.g. ftp, which is the whole point of this
+> JCH> series.  Not using values from the "default" entry is probably fine,
+> JCH> though.
+>
+> OK; done in PATCHv4.
 
-Cool, I'm glad it helped. It would be great if diff_filespec and
-grep_source could grow together into a unified object. One of the gross
-things about the patch I posted is that we will now sometimes read the
-file/blob data via grep_source_load, and sometimes via
-diff_populate_filespec. They _should_ be equivalent, but in an ideal
-world, they would be the same code path.
+Hmph.
 
-That may be too much to tackle for your series, though (I wanted to do
-it when I factored out grep_source, but backed off for the same reason).
-
-The "grep expr rev:path" fix should look something like this:
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 915c8ef..cdc7d32 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -820,13 +820,17 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	for (i = 0; i < argc; i++) {
- 		const char *arg = argv[i];
- 		unsigned char sha1[20];
-+		struct object_context oc;
- 		/* Is it a rev? */
--		if (!get_sha1(arg, sha1)) {
-+		if (!get_sha1_with_context(arg, sha1, &oc)) {
- 			struct object *object = parse_object(sha1);
- 			if (!object)
- 				die(_("bad object %s"), arg);
- 			if (!seen_dashdash)
- 				verify_non_filename(prefix, arg);
-+			/* oops, we need something that will remember oc.path
-+			 * here, so that we can pass it along to
-+			 * grep_source_init  */
- 			add_object_array(object, arg, &list);
- 			continue;
- 		}
-
-But you'll have to replace the object_array with something more
-featureful, I think.
-
--Peff
+Didn't you remove that from your version of net_netrc_loader when
+you borrowed the bulk of the code from Net::Netrc::_readrc?  I see
+"default" token handled at the beginning of "TOKEN: while (@tok)"
+loop in the original but not in your version I see in v4.
