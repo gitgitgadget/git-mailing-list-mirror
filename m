@@ -1,104 +1,80 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v2] t4038: add tests for "diff --cc --raw <trees>"
-Date: Tue, 5 Feb 2013 21:39:49 +0000
-Message-ID: <20130205213949.GY1342@serenity.lan>
-References: <cover.1359901732.git.john@keeping.me.uk>
- <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
- <7vwqup890o.fsf@alter.siamese.dyndns.org>
- <20130203203150.GU1342@serenity.lan>
- <7v8v7585sr.fsf@alter.siamese.dyndns.org>
- <20130203231549.GV1342@serenity.lan>
- <7vip696i3v.fsf@alter.siamese.dyndns.org>
- <20130205202558.GX1342@serenity.lan>
- <7v8v72sczp.fsf@alter.siamese.dyndns.org>
+From: "Constantine A. Murenin" <mureninc@gmail.com>
+Subject: importing two different trees into a fresh git repo
+Date: Tue, 5 Feb 2013 13:46:09 -0800
+Message-ID: <CAPKkNb6+ojb+uvBW+AkhGrhjR85LrJEbmR0KmvaKYb2Cj5Aa4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 22:40:22 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 05 22:46:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2qFY-0002ol-Re
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 22:40:21 +0100
+	id 1U2qLb-0008Rm-7I
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 22:46:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756348Ab3BEVj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2013 16:39:57 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:45720 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756247Ab3BEVj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2013 16:39:57 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id B7C0A6064A7;
-	Tue,  5 Feb 2013 21:39:56 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Z1o4s7JGElb2; Tue,  5 Feb 2013 21:39:56 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 2F0D86064CD;
-	Tue,  5 Feb 2013 21:39:51 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7v8v72sczp.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756727Ab3BEVqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2013 16:46:12 -0500
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:39750 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756690Ab3BEVqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2013 16:46:11 -0500
+Received: by mail-lb0-f173.google.com with SMTP id gf7so628241lbb.4
+        for <git@vger.kernel.org>; Tue, 05 Feb 2013 13:46:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=AYSphruvL2yY92yfmqXoP15/kEFoYA5/5kgVS+uAUXM=;
+        b=u3f+yDLIVp/1o1tu3+N2aH5OIBDRiyyGJrjJMp1Xga0jukmTFpBhfkRmqi59V6/g3S
+         qCyHuPJUc7HrYXAh9vIPQb8AYHNbf1krQkze4VKgmYc9SCtpbMozZ36gxNlKsZedGFmI
+         pvlqFQbjJQvd7yukIRVfW4yH3hDndDfyxLSfQdzFUAItKsAOwJ4s6u8VgWyhxo6ETQJ1
+         9y1lUZ0aZlbfwxon1TetKEQWMW0febwGDRFhz9KrifYgrizBrHPME9GuV76/4AHeaUky
+         yXXfzRpyQc4+oMGW35rS3hs6VQfiGYNeyK3L9lEJZgxjFQeS6cuf+XJqp/FbJYc07gZy
+         WEHg==
+X-Received: by 10.112.17.166 with SMTP id p6mr4920623lbd.41.1360100769707;
+ Tue, 05 Feb 2013 13:46:09 -0800 (PST)
+Received: by 10.114.98.168 with HTTP; Tue, 5 Feb 2013 13:46:09 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215543>
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
+Hi,
 
----
-Changes since v1:
+I have two distinct trees that were not managed by any RCS, and I'd
+like to import them into a single repository into two separate orphan
+branches, then make sense of what's in there, merge, and unify into
+'master'.
 
-- more spaces around '|'
-- create trees with line feeds and use 'sed -e 4q'
----
- t/t4038-diff-combined.sh | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+(To give some context, it's /etc/nginx config files from nginx/1.0.12
+on Debian 6 and nginx/1.2.2 on OpenBSD 5.2.)
 
-diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
-index 40277c7..614425a 100755
---- a/t/t4038-diff-combined.sh
-+++ b/t/t4038-diff-combined.sh
-@@ -89,4 +89,28 @@ test_expect_success 'diagnose truncated file' '
- 	grep "diff --cc file" out
- '
- 
-+test_expect_success 'setup for --cc --raw' '
-+	blob=$(echo file | git hash-object --stdin -w) &&
-+	base_tree=$(echo "100644 blob $blob	file" | git mktree) &&
-+	trees= &&
-+	for i in `test_seq 1 40`
-+	do
-+		blob=$(echo file$i | git hash-object --stdin -w) &&
-+		trees="$trees$(echo "100644 blob $blob	file" | git mktree)$LF"
-+	done
-+'
-+
-+test_expect_success 'check --cc --raw with four trees' '
-+	four_trees=$(echo "$trees" | sed -e 4q) &&
-+	git diff --cc --raw $four_trees $base_tree >out &&
-+	# Check for four leading colons in the output:
-+	grep "^::::[^:]" out
-+'
-+
-+test_expect_success 'check --cc --raw with forty trees' '
-+	git diff --cc --raw $trees $base_tree >out &&
-+	# Check for forty leading colons in the output:
-+	grep "^::::::::::::::::::::::::::::::::::::::::[^:]" out
-+'
-+
- test_done
--- 
-1.8.1.2.689.g36c777b
+I've encountered two problems so far:
+
+0. After initialising the repository, I was unable to `git checkout
+--orphan Debian-6.0.4-nginx-1.0.12` -- presumably it doesn't work when
+the repo is empty?  This sounds like a bug or an artefact of
+implementation.  I presume this can be worked around by committing
+into master instead, and then doing `git checkout -b
+Debian-6.0.4-nginx-1.0.12`, and then force-fixing the master somehow
+later on.
+
+1. After making a mistake on my first commit (my first commit into
+OpenBSD-5.2-nginx-1.2.2 orphan branch ended up including a directory
+from master by mistake), I am now unable to rebase and "fixup" the
+changes -- `git rebase --interactive HEAD~2` doesn't work, which, from
+one perspective, makes perfect sense (indeed there's no prior
+revision), but, from another, it's not immediately obvious how to
+quickly work around it.
+
+Any suggestions?
+
+It would seem like making some kind of a dummy first commit into
+master would be the best workaround for both of these problems.  Is
+that basically the suggested approach?
+
+Best regards,
+Constantine.
