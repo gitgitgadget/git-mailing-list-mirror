@@ -1,89 +1,113 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC] Should "log --cc" imply "log --cc -p"?
-Date: Tue, 5 Feb 2013 15:27:28 +0100
-Message-ID: <CACBZZX7JNwZYHn--Cp4g1rLPratJ9nEa-Q8HsYk65jjDYAkFqA@mail.gmail.com>
-References: <7vmwvl6lj9.fsf@alter.siamese.dyndns.org> <510F95D7.6010107@drmicha.warpmail.net>
- <7vfw1c3ujo.fsf@alter.siamese.dyndns.org> <CACBZZX7FJ39sereptAQ40Q4MwEpf15v0H=++WvB7+BpMknxoYw@mail.gmail.com>
- <20130205112249.GE24973@sigill.intra.peff.net>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Feature request: Allow extracting revisions into directories
+Date: Tue, 5 Feb 2013 10:11:53 -0500
+Message-ID: <CABURp0rMk-W8VMRhXoR9YYQSwjWTfPbXz5mhPX3-HKsBSu5_mw@mail.gmail.com>
+References: <1359901085.24730.11.camel@t520> <510E8F82.9050306@gmail.com>
+ <1359915086.24730.19.camel@t520> <510F03FC.6080501@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 05 15:28:13 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Robert Clausecker <fuzxxl@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 16:12:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2jVL-0004uE-Q3
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 15:28:12 +0100
+	id 1U2kCL-00064P-Qj
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 16:12:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754204Ab3BEO1t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Feb 2013 09:27:49 -0500
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:59839 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753176Ab3BEO1s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Feb 2013 09:27:48 -0500
-Received: by mail-ob0-f181.google.com with SMTP id ni5so186016obc.40
-        for <git@vger.kernel.org>; Tue, 05 Feb 2013 06:27:48 -0800 (PST)
+	id S1755593Ab3BEPMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2013 10:12:15 -0500
+Received: from mail-vb0-f47.google.com ([209.85.212.47]:37922 "EHLO
+	mail-vb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754885Ab3BEPMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2013 10:12:14 -0500
+Received: by mail-vb0-f47.google.com with SMTP id e21so147427vbm.20
+        for <git@vger.kernel.org>; Tue, 05 Feb 2013 07:12:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=dsr3o+7YbJSH6gn3rJOGa9spWE1XhJ7xtaHm/YjEfGo=;
-        b=giH1UwXZROvri5JeUWnwCUgvaL57BacKqshKGpbCFr2RUMQXZOixtUzL5WBCyuUw2K
-         5QFUi1ThFOFlmB8GMycwUP4l68jpnagr6lY1B+V5lwa9VejaIymIfT7NxgUkIXiRXMD1
-         1zQ3rPIk/rySse9PJBEd4bMnckSYfGVJztcIR5ZKEex8xU32NiXH0aqKrFIheq+ueP8B
-         +GKqs66qH1upcyi3E79Tm8YTEuC3UjqcHpBHAVlOYcg/K+pk/fPOIhM+wYhMjLijb48H
-         JafKqgy9I7oMh4gigFK/JvFpQnFRuR/aVf//OkFGT49cIP9kZG2quTJyiIryOwzGpFiK
-         WRDA==
-X-Received: by 10.60.21.101 with SMTP id u5mr591715oee.71.1360074468174; Tue,
- 05 Feb 2013 06:27:48 -0800 (PST)
-Received: by 10.76.168.163 with HTTP; Tue, 5 Feb 2013 06:27:28 -0800 (PST)
-In-Reply-To: <20130205112249.GE24973@sigill.intra.peff.net>
+         :subject:to:cc:content-type;
+        bh=z/LzE9J3jkEwJWyxFwbAMJTQxg0ZGl3ImRUAchFQyyU=;
+        b=XGDQVcQlML8PISJ7uRUu26tBrY9Y1tjO5UqYbQKAXWaEG90L7Ry+2P39iZVYcx0gGv
+         qE0ulipSIJB8lRtlBlDI+Ccf7Y+aN10NZbyuYa0m0IodiEgaOS+Op9VJNT1zCIRlEa0L
+         VblB8urCuuiu5mHkcenYzIgK84ElnxPpnP8gGF1bWEnR9BOTchTXrQ8jl0ZFkA/kGBr7
+         YbadvMWGFleiV5Xy2bI/AqlYjazzMbFOzCpkiBqTG9ZdRiEY4sx4b59PtPq+Fh1/m5ha
+         QLpWVMtFUXqLgynaBJ0aazs1zujFPInB0MV8q8DKPjQHhuLQm7ySxSkKMcYbssFqaA05
+         OCVg==
+X-Received: by 10.220.39.69 with SMTP id f5mr28027436vce.45.1360077133310;
+ Tue, 05 Feb 2013 07:12:13 -0800 (PST)
+Received: by 10.58.201.103 with HTTP; Tue, 5 Feb 2013 07:11:53 -0800 (PST)
+In-Reply-To: <510F03FC.6080501@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215503>
 
-On Tue, Feb 5, 2013 at 12:22 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Feb 05, 2013 at 11:16:52AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->
->> On Mon, Feb 4, 2013 at 5:36 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> > "git log/diff-files -U8" do not need "-p" to enable textual patche=
-s,
->> > for example.  It is "I already told you that I want 8-line context=
-=2E
->> > For what else, other than showing textual diff, do you think I tol=
-d
->> > you that for?" and replacing "8-line context" with various other
->> > options that affect patch generation will give us a variety of end
->> > user complaints that would tell us that C) is more intuitive to
->> > them.
+On Sun, Feb 3, 2013 at 7:42 PM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+> On 02/03/2013 11:41 PM, Robert Clausecker wrote:
 >>
->> On a related note I think "--full-diff" should imply "-p" too.
+>> Am Sonntag, den 03.02.2013, 21:55 +0530 schrieb Sitaram Chamarty:
+>>> Could you help me understand why piping it to tar (actually 'tar -C
+>>> /dest/dir -x') is not sufficient to achieve what you want?
+>>
+>> Piping the output of git archive into tar is of course a possible
+>> solution; I just don't like the fact that you need to pipe the output
+>> into a separate program to do something that should be possible with a
+>> simple switch and not an extra command. It feels unintuitive and like a
+>> workaround to make an archive just to unpack it on-the-fly. Also, adding
+>> such a command (or at least documenting the way to do this using a pipe
+>> to tar somewhere in the man pages) is a small and simple change that
+>> improves usability.
 >
-> I don't think that is in the same class. --full-diff is quite useful =
-for
-> many other diff formats. E.g.:
+> I realise it appears to be the fashion these days to get away from the
+> Unix philosophy of having different tools do different things and
+> combining them as needed.
 >
->   git log --full-diff --raw Makefile
->
-> If you are proposing to default to "-p" when "--full-diff" is used bu=
-t
-> no format is given, that is a slightly different thing. The --full-di=
-ff
-> in such a case is indeed useless, but I do not think it necessarily
-> follows that "-p" was what the user wanted.
+> Ignoring the option-heavy GNU, and looking at the more traditional BSD
+> tar manpage [1], I notice the following flags that could still be
+> potentially needed by someone running 'git archive': '-t' (instead of
+> '-x'), '-C dir', '--exclude/include', '-k', '-m', '--numeric-owner', -o,
+> -P, -p, -q, -s, -T, -U, -v, -w, and -X.
 
-You're right. I didn't notice that it could work with other things besi=
-des -p.
+OP did not ask about tar so I do not see why any of these tar options
+are relevant.  It seems like what he really wants is 'git archive
+--format=native' , maybe.   You can almost create this option by
+saying
 
-On a related note then, it's a bit confusing that it's called
-"--full-diff" when it doesn't actually show a diff.
+   git config tar.native.command "tar -x"
+
+except that you do not get the opportunity to specify a target directory.
+
+But maybe he really wants a form of 'git checkout' instead.
+
+
+> And I'm ignoring the esoteric ones like "--chroot" and "-S" (sparse mode).
+>
+> How many of these options would you like included in git?  And if you
+> say "I don't need any of those; I just need '-x'", that's not relevant.
+>  Someone else may need any or all of those flags, and if you accept "-x"
+> you have to accept some of the others too.
+
+This is only true if you cannot stop yourself from thinking about
+'tar'.  What about zip, for example?
+
+I think none of these options is relevant.
+
+
+> Also, I often want to deploy to a different host, and I might do that
+> like so:
+>
+>     git archive ... | ssh host tar -C /deploy/dir -x
+>
+> Why not put that ssh functionality into git also?
+
+This slippery-slope argument is growing tiresome.
+
+Phil
+
+p.s. Conceded: OP set off this avalanche by disparaging the vaunted
+PIPE operation.
