@@ -1,148 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: On (re)packing
-Date: Mon, 04 Feb 2013 22:35:48 -0800
-Message-ID: <7vbobzw9mj.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3] status: show the branch name if possible in
+ in-progress info
+Date: Mon, 4 Feb 2013 22:38:47 -0800
+Message-ID: <20130205063847.GA3240@elie.Belkin>
+References: <1359471493-32531-1-git-send-email-pclouds@gmail.com>
+ <1359870807-22817-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: peff@peff.net, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Tue Feb 05 07:36:20 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 07:39:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2c8i-0001dT-Bp
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 07:36:20 +0100
+	id 1U2cBb-00034F-L8
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 07:39:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751118Ab3BEGfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2013 01:35:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37924 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750747Ab3BEGfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2013 01:35:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4702C7BC4;
-	Tue,  5 Feb 2013 01:35:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=y
-	lKDTNSgdPav48kPzXLjjLjv0TM=; b=s2f0Xsyv+90og1Ze6LjNnK+0w6Lm6FHqP
-	VVq0hRaR+lt03PCrwzAnh8SLzZ7wJ+umPTUUBmdo1weV8Rfw+Au5mP+sh+xIrLuq
-	BZTc6sm4ts+LJtZuRHm/3HPAoP85uyICxwi2YbbY4qbjZ9X4QFoS6nAecbsT7Jvq
-	zNU2ujYrXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=byIjjRMtky/RoXQKOHFw0P+9xme7WDQVdHPzGnCX+0Wpzk4HoF2ZSqQ/
-	WgdLVH/j51jO4B+D/PEu5PybDVJTt8oDBmTV+iJrV7F/NELK7IjjhY+pn4dFdaRe
-	rDmb/wZ4S/7gvOasUke0ywHdKGCPXRGRgvpcft+s1uYzLsV2SY8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C8CB7BB9;
-	Tue,  5 Feb 2013 01:35:51 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C7F57BB8; Tue,  5 Feb 2013
- 01:35:50 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 484D6E7C-6F5E-11E2-BCAC-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751238Ab3BEGi5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Feb 2013 01:38:57 -0500
+Received: from mail-da0-f43.google.com ([209.85.210.43]:41960 "EHLO
+	mail-da0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751109Ab3BEGi4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Feb 2013 01:38:56 -0500
+Received: by mail-da0-f43.google.com with SMTP id u36so2993310dak.30
+        for <git@vger.kernel.org>; Mon, 04 Feb 2013 22:38:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=H6MYg98Qz+Pk+KBooPbwkRvTSSzFzeY/wJKPfAX/pec=;
+        b=HO7gI5GjmBwvZ2z1j3OYLBEzTRPtE+P/h4nbNFN3gJPMs/d24UIIHUUsHflNaXyFXV
+         eD34LoBk7BP6n0+BMPT141fi0PSOJMwPgduPDYZ1vyiKoPxDRtsz/1ncuRPI/xg57LBn
+         4EKYmP6wB0wZcn9e9BsyiFLqirTJVAqVZYkSRBw7caAqW/13RKsrMj3E4eBtFI4Yx4cl
+         A8LovhW3BHsb+Ot4fmuQFXMvYVM6jlrF8CYvhw6vSaqHgQ0g1TsvlvatoNRcZvkbtSYx
+         ghSBHMsvB4olErsbzczttAEn29A6g22B/OgucOn6Vh3OywlBSIofu7zNljza3dvLhpRz
+         4mnw==
+X-Received: by 10.66.83.136 with SMTP id q8mr60968697pay.83.1360046336371;
+        Mon, 04 Feb 2013 22:38:56 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id a1sm26927405pav.2.2013.02.04.22.38.53
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 04 Feb 2013 22:38:54 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1359870807-22817-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215463>
 
-Just a random thought...
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-"git pack-objects" runs "rev-list --objects" to obtain three
-different kinds of information about objects:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 
- * Reachability.  Objects that appear in the output of rev-list are
-   relevant, and those that do not are not;
+Missing description.  Stealing from the link you sent:
 
- * Recency, aka closeness in the time dimension.  Objects that
-   appear in the output of rev-list close together appear in the
-   history nearby (a commit and its parents, a commit and its tree,
-   a tree and its subtree and blob);
+	The typical use-case is starting a rebase, do something else, come bac=
+k
+	the day after, run "git status" or make a new commit and wonder what
+	in the world's going on. Which branch is being rebased is probably the
+	most useful tidbit to help, but the target may help too.
 
- * Paths, aka closeness in the space dimension.  Trees and blobs are
-   labelled with paths they are first discovered at.
+	Ideally, I would have loved to see "rebasing master on origin/master",
+	but the target ref name is not stored during rebase, so this patch
+	writes "rebasing master on a78c8c98b" as a half-measure to remind
+	future users of that potential improvement.
 
-All of these are necessary for reasonable packing.  We choose only
-the reachable objects to pack.  We place objects close in the time
-dimension together in the output pack stream.  And we delta objects
-close in the space dimension against each other.
-
-Now, we are planning to use object reachability bitmap to speed up
-the object enumeration phase of repacking.  This primarily gives us
-the reachability information.  Placing objects that are packed close
-in existing packs close to each other in the output stream hopefully
-may give us good enough approximation of the recency order.  And
-reusing the delta will keep good existing delta if both deltified
-object and its delta base object are included in the output.
-
-What should happen when we repack two or more packs?  Placing an
-object that appears near the beginning of one pack close to another
-object that appears near the beginning of the other pack would
-probably not make much sense, so the natural extension of emulating
-recency order by pack offset would be to place all objects from one
-pack together (in their original in-pack offset orde) and then
-objects from the other pack together.
-
-More problematic is how to coalesce one delta chain from one pack
-with another delta chain from the other pack.  Without having the
-path information, we cannot efficiently do this.  Especially if we
-are to repack 50 small packs into one, it would be desirable if we
-can avoid packing 50 similar objects in their undeltified form.
-
-Assuming that we would want some extra information, in addition to
-the bitmaps, to help repacking, and also with the recent "commit
-metadata" topic in mind, lets do a back-of-the-envelope enumeration
-of what we would want.  Here is a list off the top of my head.
-
-* commits
-
-  99.9% of all commits have no more than two parents.  Assuming that
-  we keep this information per-pack, and we will not be packing more
-  than 2^32 objects in a pack, we can represent up to two parent
-  commits by two int32s to represent their position in the table of
-  SHA-1's in the .idx file.  Also we can store another uint32 for
-  the commit timestamp (compute the timestamp of the oldest commit
-  in the pack and store it as uint64, and represent the commmit
-  timestamp of each commit with uint32 (we can represent a pack that
-  spans 68 years with this scheme).  Give up storing metainformation
-  for any commit whose information cannot fit this scheme (e.g. an
-  octopus, or a commit with timestamp way out of line).
-
-  That costs 12 bytes per commit (plus 8-byte for the oldest
-  timestamp in the pack).
-
-* tags
-
-  The timestamp can be expressed with a uint32 in the same way as
-  commit's timestamp, and the tagged object can be expressed with a
-  uint32 in the same way as commit's parent.  Two uint32s
-
-* trees and blobs
-
-  The name hash value is uint32.
-
-If we have other information that are needed for trees and blobs
-that fit in two more uint32s, then we can just build a table of
-12-byte entries for all objects in the pack.  
-
-Otherwise, we would need a way to have separate table that can be
-quickly accessed, going from an object name to either 3 uint32 tuple
-(if it is a commit), 2 uint32 tuple (if it is a tag), or a uint32
-(others).
-
-Whether we can do a table with uniform entry size or split tables,
-once we locate an entry, we can find out the object number in the
-SHA-1 table the object refers to (e.g. parents, or tagged) so I do
-not think it is a good idea to express object pointer with an
-abbreviated SHA-1.  But if we have to build commit-only table, we
-may need to use a table with 16-byte entry size, that has 8
-hexdigits (i.e. 4-bytes) abbreviated object name of a commit,
-followed by the 12 byte commit metainformation, and sort it by the
-abbreviated object name.  With the same scheme, another table for
-trees and blobs will cost 4-bytes for abbreviated object name as key
-and 4-bytes for name-hash payload.  That sounds a bit too wasteful
-to my taste.
+	Signed-off-by: <...>
