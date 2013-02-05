@@ -1,76 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3] status: show the branch name if possible in
- in-progress info
-Date: Mon, 4 Feb 2013 22:38:47 -0800
-Message-ID: <20130205063847.GA3240@elie.Belkin>
-References: <1359471493-32531-1-git-send-email-pclouds@gmail.com>
- <1359870807-22817-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 07:39:20 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] Get correct column with for options in command usage
+Date: Tue,  5 Feb 2013 15:40:32 +0800
+Message-ID: <0b035132df6de2cac56ac59d66b04f30e90ad760.1360049671.git.worldhello.net@gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 08:41:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2cBb-00034F-L8
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 07:39:19 +0100
+	id 1U2d9c-0005py-IU
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 08:41:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751238Ab3BEGi5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Feb 2013 01:38:57 -0500
-Received: from mail-da0-f43.google.com ([209.85.210.43]:41960 "EHLO
-	mail-da0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751109Ab3BEGi4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Feb 2013 01:38:56 -0500
-Received: by mail-da0-f43.google.com with SMTP id u36so2993310dak.30
-        for <git@vger.kernel.org>; Mon, 04 Feb 2013 22:38:56 -0800 (PST)
+	id S1751627Ab3BEHk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2013 02:40:58 -0500
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:43038 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751137Ab3BEHk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2013 02:40:57 -0500
+Received: by mail-ie0-f180.google.com with SMTP id bn7so5824943ieb.39
+        for <git@vger.kernel.org>; Mon, 04 Feb 2013 23:40:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=H6MYg98Qz+Pk+KBooPbwkRvTSSzFzeY/wJKPfAX/pec=;
-        b=HO7gI5GjmBwvZ2z1j3OYLBEzTRPtE+P/h4nbNFN3gJPMs/d24UIIHUUsHflNaXyFXV
-         eD34LoBk7BP6n0+BMPT141fi0PSOJMwPgduPDYZ1vyiKoPxDRtsz/1ncuRPI/xg57LBn
-         4EKYmP6wB0wZcn9e9BsyiFLqirTJVAqVZYkSRBw7caAqW/13RKsrMj3E4eBtFI4Yx4cl
-         A8LovhW3BHsb+Ot4fmuQFXMvYVM6jlrF8CYvhw6vSaqHgQ0g1TsvlvatoNRcZvkbtSYx
-         ghSBHMsvB4olErsbzczttAEn29A6g22B/OgucOn6Vh3OywlBSIofu7zNljza3dvLhpRz
-         4mnw==
-X-Received: by 10.66.83.136 with SMTP id q8mr60968697pay.83.1360046336371;
-        Mon, 04 Feb 2013 22:38:56 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id a1sm26927405pav.2.2013.02.04.22.38.53
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 04 Feb 2013 22:38:54 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1359870807-22817-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=wa5ov/D5icwNtq3MyzsUy2ay7MPDdxcyCqz/VslWocE=;
+        b=ykWdQ6bMCikINKFgtCkOZNCxLDeRH918/deSyOv8p0/WMdVi92To519Ig15+FCaf1J
+         oGxJ2P/oCZ5J2ty5BOVZMvcLP7Xy1LP6mvN427tRl6r7lFyy84ssHDLpq68af+B6PpZb
+         vR2Qf1vSRDYLX+DJ6HXqpX7pPLLPchiMihIRRhyrA/Wl6Ja6Vol0dMnSCYha03TX1J0R
+         v3mKJ+OGPH5iTl9kGYsCSLJQLEv8RcPytyh1eyiaFiEnMclHAixnulMq3afqCBOO5uEf
+         RkBNxLYpJT5ZPj30y4YAZ0v9K7LmuCbkQCMEO/lkRMcbVh5YbNeNb0O3XpNy+OJxvBIF
+         4xUg==
+X-Received: by 10.50.10.130 with SMTP id i2mr11330940igb.63.1360050056980;
+        Mon, 04 Feb 2013 23:40:56 -0800 (PST)
+Received: from localhost.localdomain ([124.207.10.6])
+        by mx.google.com with ESMTPS id x7sm21482290igk.8.2013.02.04.23.40.50
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 04 Feb 2013 23:40:55 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.1.367.g57acac9.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215464>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Command usage would not align well if command options are translated,
+especially to CJK. Call utf8_strwidth in function usage_argh, so that
+the caller will get correct column width.
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ parse-options.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Missing description.  Stealing from the link you sent:
-
-	The typical use-case is starting a rebase, do something else, come bac=
-k
-	the day after, run "git status" or make a new commit and wonder what
-	in the world's going on. Which branch is being rebased is probably the
-	most useful tidbit to help, but the target may help too.
-
-	Ideally, I would have loved to see "rebasing master on origin/master",
-	but the target ref name is not stored during rebase, so this patch
-	writes "rebasing master on a78c8c98b" as a half-measure to remind
-	future users of that potential improvement.
-
-	Signed-off-by: <...>
+diff --git a/parse-options.c b/parse-options.c
+index 67e98..ca0e6 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -473,7 +473,7 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ 
+ static int usage_argh(const struct option *opts, FILE *outfile)
+ {
+-	const char *s;
++	const char *s, *p;
+ 	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh;
+ 	if (opts->flags & PARSE_OPT_OPTARG)
+ 		if (opts->long_name)
+@@ -482,7 +482,9 @@ static int usage_argh(const struct option *opts, FILE *outfile)
+ 			s = literal ? "[%s]" : "[<%s>]";
+ 	else
+ 		s = literal ? " %s" : " <%s>";
+-	return fprintf(outfile, s, opts->argh ? _(opts->argh) : _("..."));
++	p = opts->argh ? _(opts->argh) : _("...");
++	fprintf(outfile, s, p);
++	return utf8_strwidth(p) + strlen(s) - 2;
+ }
+ 
+ #define USAGE_OPTS_WIDTH 24
+-- 
+1.8.1.1.367.g57acac9.dirty
