@@ -1,90 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] status: show the branch name if possible in
- in-progress info
-Date: Tue, 05 Feb 2013 08:28:42 -0800
-Message-ID: <7vmwviu3lx.fsf@alter.siamese.dyndns.org>
-References: <1359471493-32531-1-git-send-email-pclouds@gmail.com>
- <1359870807-22817-1-git-send-email-pclouds@gmail.com>
- <20130205063847.GA3240@elie.Belkin>
- <CACsJy8D_kSrJYagxo1LWt=P8XKj9F9_yAwH3vzQWQOi+yvP8kg@mail.gmail.com>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: [PATCH] Add contrib/credentials/netrc with GPG support, try #2
+Date: Tue, 05 Feb 2013 12:01:31 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <87k3qmr8yc.fsf@lifelogs.com>
+References: <87ehgvua6h.fsf@lifelogs.com>
+	<20130204211726.GB13186@sigill.intra.peff.net>
+	<87mwvjsqjc.fsf_-_@lifelogs.com>
+	<7vvca6u47f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 17:29:11 2013
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 18:01:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2lOP-0008Pm-Sq
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 17:29:10 +0100
+	id 1U2lu9-0001Gd-AL
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 18:01:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753929Ab3BEQ2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2013 11:28:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55696 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751234Ab3BEQ2p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2013 11:28:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5F77BAB1;
-	Tue,  5 Feb 2013 11:28:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pjyVxFFKH5CW7fGNrksvsRgKehY=; b=rUJhkn
-	p821gN7vnFt5Fh+tSR6tDr05U6AcnIK9P8a6AdxCg4ETMOji3XM2VN+rl4hRJcXB
-	p5LUGgQeBaXKStUF3rCYmGR2g0cB9pPwesvO2H1ghCNFdmM+7MyFXOLCBPxwA2HD
-	aBt3MCuGBz3n7Pfg2fK9snmgWa2/uf1XfVNJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XGy0NdBO5WjTZfnXN/oMANz86RExNxcJ
-	my3IPd4skaVJ/YNWqODCM9ErZUxHJLezxsnpVUzm6d/s3rHkYCg9iY38LiwUhVMA
-	OxTGS/ztvG46gqcyPHsRf24U3t3w93exTbNZw427X7zh+YJEykQh83ct4jcsnVGW
-	M0K2cDwG6OU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAE95BAAF;
-	Tue,  5 Feb 2013 11:28:44 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 18253BAAE; Tue,  5 Feb 2013
- 11:28:44 -0500 (EST)
-In-Reply-To: <CACsJy8D_kSrJYagxo1LWt=P8XKj9F9_yAwH3vzQWQOi+yvP8kg@mail.gmail.com> (Duy
- Nguyen's message of "Tue, 5 Feb 2013 19:20:51 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1BD06504-6FB1-11E2-8765-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755869Ab3BERBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2013 12:01:33 -0500
+Received: from z.lifelogs.com ([173.255.230.239]:55447 "EHLO z.lifelogs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755330Ab3BERBd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2013 12:01:33 -0500
+Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: tzz)
+	by z.lifelogs.com (Postfix) with ESMTPSA id 4D616DE0E3;
+	Tue,  5 Feb 2013 17:01:32 +0000 (UTC)
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+In-Reply-To: <7vvca6u47f.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 05 Feb 2013 08:15:48 -0800")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215519>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Tue, 05 Feb 2013 08:15:48 -0800 Junio C Hamano <gitster@pobox.com> wrote: 
 
-> On Tue, Feb 5, 2013 at 1:38 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Missing description.  Stealing from the link you sent:
->>
->>         The typical use-case is starting a rebase, do something else, come back
->>         the day after, run "git status" or make a new commit and wonder what
->>         in the world's going on. Which branch is being rebased is probably the
->>         most useful tidbit to help, but the target may help too.
->>
->>         Ideally, I would have loved to see "rebasing master on origin/master",
->>         but the target ref name is not stored during rebase, so this patch
->>         writes "rebasing master on a78c8c98b" as a half-measure to remind
->>         future users of that potential improvement.
->>
->>         Signed-off-by: <...>
->
-> Looking good. Junio, do you need a new patch mail or can you just
-> amend the commit message?
+JCH> Ted Zlatanov <tzz@lifelogs.com> writes:
+>> +# build reverse token map
+>> +my %rmap;
+>> +foreach my $k (keys %{$options{tmap}}) {
+>> +	push @{$rmap{$options{tmap}->{$k}}}, $k;
+>> +}
 
-I'd like to see you either
+JCH> Mental note: "$rmap{foo} -eq 'bar'" means that what Git calls 'bar'
+JCH> is found as 'foo' in the netrc/authinfo file.  Keys in %rmap are
+JCH> what we expect to read from the netrc/authinfo file.
 
- - send a reroll, making it clear it is a reroll, or
- - tell me to amend.
+I'll document that better in PATCHv4.
 
-instead of asking which one I would prefer ;-)  One less message I
-have to respond to that way.
+JCH> So you grabbed one line of input, split them into token pairs, and
+JCH> built %tokens = ('key Git may want to see' => 'value read from file')
+JCH> mapping.
 
-"commit --amend" done.
+This will be fixed with PATCHv4 to do multiple lines (as defined by the
+netrc manpage, etc.).
+
+>> +	# for "host X port Y" where Y is an integer (captured by
+>> +	# $num_port above), set the host to "X:Y"
+>> +	$tokens{host} = join(':', $tokens{host}, $num_port)
+>> +		if defined $tokens{host} && defined $num_port;
+
+JCH> What happens when 'host' does not exist?  netrc/authinfo should be a
+JCH> stream of SP/HT/LF delimited tokens and 'machine' token (or
+JCH> 'default') begins a new entry, so it would mean the input file is
+JCH> corrupt if we do not have $tokens{host} when we get here, I think.
+
+Yes.  I'll make the host/machine token required, which will avoid this
+issue.
+
+JCH> Oh, another thing. 'default' is like 'machine' followed by any
+JCH> machine name, so the above while loop that reads two tokens
+JCH> pair-wise needs to be aware that 'default' is not followed by a
+JCH> value.  I think the loop will fail to parse this:
+
+JCH>         default       login anonymous    password me@home
+JCH>         machine k.org login me           password mysecret
+
+I'd prefer to ignore "default" because it should not be used for the Git
+credential helpers (its only use case is for anonymous services AFAIK).
+So I'll add a case to ignore it in PATCHv4, if that's OK.
+
+JCH> Hmph, aren't you checking what you read a bit too early?  This is a
+JCH> valid input:
+
+JCH>         default       
+JCH>                 login anonymous
+JCH>                 password me@home
+JCH>         machine k.org
+JCH>                 login me
+JCH>                 password mysecret
+
+JCH> but does this loop gives mysecret back to me when asked for
+JCH> host=k.org and user=me? 
+
+To be fixed in PATCHv4, which will require the host/machine, use it as
+the primary key, and only examine entries with it.
+
+JCH> I would probably structure this part like this: [...]
+
+I will do it like that, thank you for the suggestion.
+
+I'll also add a simple testing Makefile for my own use, and you can
+consider adding tests to the general framework later.
+
+Ted
