@@ -1,69 +1,104 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: [PATCH] Add contrib/credentials/netrc with GPG support, try #2
-Date: Mon, 04 Feb 2013 18:54:11 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <87zjzjr5y4.fsf@lifelogs.com>
-References: <87ehgvua6h.fsf@lifelogs.com>
-	<20130204211726.GB13186@sigill.intra.peff.net>
-	<87mwvjsqjc.fsf_-_@lifelogs.com>
-	<7vd2wf1yex.fsf@alter.siamese.dyndns.org>
-	<87bobzslke.fsf@lifelogs.com>
-	<7vy5f3zlzj.fsf@alter.siamese.dyndns.org>
+From: Roberto Tyley <roberto.tyley@gmail.com>
+Subject: A fast alternative to git-filter-branch - The BFG Repo-Cleaner
+Date: Tue, 5 Feb 2013 00:04:20 +0000
+Message-ID: <CAFY1edb6osN+Qe33K9e6imaMG=3_ZUJx7Q1R++RHfY6h+zGXYQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 00:54:38 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 05 01:04:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2Vrv-0001m4-Gl
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 00:54:35 +0100
+	id 1U2W1k-0006dF-QL
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 01:04:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754954Ab3BDXyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2013 18:54:13 -0500
-Received: from z.lifelogs.com ([173.255.230.239]:54249 "EHLO z.lifelogs.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754356Ab3BDXyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2013 18:54:12 -0500
-Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: tzz)
-	by z.lifelogs.com (Postfix) with ESMTPSA id 2640CDE0E0;
-	Mon,  4 Feb 2013 23:54:12 +0000 (UTC)
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-In-Reply-To: <7vy5f3zlzj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 04 Feb 2013 15:40:32 -0800")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
+	id S1755360Ab3BEAEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 19:04:22 -0500
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:41694 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755292Ab3BEAEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 19:04:21 -0500
+Received: by mail-ie0-f178.google.com with SMTP id c13so6445017ieb.23
+        for <git@vger.kernel.org>; Mon, 04 Feb 2013 16:04:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=eDa98ksSDAGYqkDvg3PfAPvfDbJ3tNbZl9462X3NJNY=;
+        b=S3qWcc0u6fUK5l9E/sPA11oFjr/Dp84GSkbfPLEBvF1+GWLTFzt+TaaLuWGARgbcv1
+         /eL4yK4N17eP/xNiMwyAIbP9QWH151srygCIRyQ3KFgXR/W3c3BvIfPlOEEQD02nTcks
+         2yMUGQsqmT4Gao753RON+rWJSMY9eupYWwKmk8W3qGFKLAfSOlkXtD3suXQ53zrLe0sd
+         z/PuhIX4+TX1pzFJ4FYKVSZfUS5RkLkpf1SdTrenfLxyMURBoTgnz7HPew0A8OM0wRik
+         3++1inQjDMCiQ0piiNz8rUIZ1KE5j7VwAvDXU7QXBDHhmCxtOEjOv0nYEZ2Z5TN2Ndi7
+         rqOw==
+X-Received: by 10.50.209.100 with SMTP id ml4mr9550686igc.28.1360022661185;
+ Mon, 04 Feb 2013 16:04:21 -0800 (PST)
+Received: by 10.64.8.178 with HTTP; Mon, 4 Feb 2013 16:04:20 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215437>
 
-On Mon, 04 Feb 2013 15:40:32 -0800 Junio C Hamano <gitster@pobox.com> wrote: 
+I recently released The BFG Repo-Cleaner, a new tool for cleansing bad
+data out of Git repository histories. The BFG is typically at least
+10-50x faster than git-filter-branch at these tasks:
 
-JCH> "Sorry we couldn't" sounded like an error messag to me.  If this is
-JCH> a normal exit, then please make sure it is a normal exit.
+* Removing Crazy Big Files from repo history
+* Removing Passwords, Credentials & other Private data
 
-OK; done in PATCHv4: removed all "Sorry" because they are not abnormal
-exits.  I'll hold PATCHv4 until the below are known.
+http://rtyley.github.com/bfg-repo-cleaner/
 
-JCH> The review cycle is not like reviewers give you instructions and
-JCH> designs and you blindly implement them.  It is a creative process
-JCH> where you show the design and a clear implementation of that design.
+As an example, these are timings for deleting an arbitrary file from
+the large GCC repository (148495 commits):
 
-OK.  I would like you to make the decisions I asked for, though:
+The BFG : 3m29s
+$ bfg -D README-fixinc
 
-- do you want to support backslashed newlines?
-- do you want me to remove the statement modifiers?
-- should all die() calls just print to STDERR and exit(0)?
-- do you want to support multiple netrc files, as you and Peff suggested?
+git filter-branch : 472m31s
+$ git filter-branch --index-filter 'git rm --cached --ignore-unmatch
+gcc/README-fixinc' --prune-empty --tag-name-filter cat -- --all
 
-On all of those, I can go either way, it's just a little more work for me.
+(roughly a 135x speed increase, reducing the task of processing a
+large codebase from an overnight job to the work of a few minutes....
+all timings done in a 4GB tmpfs ramdisk)
 
-Ted
+
+The BFG has some simple but very powerful command-line options, which
+perform at similar speed:
+
+remove all blobs bigger than 1 megabyte :
+$ bfg --strip-blobs-bigger-than 1M  my-repo.git
+
+replace all passwords (listed in a file 'passwords.txt') with ***REMOVED*** :
+$ bfg --replace-banned-strings passwords.txt  my-repo.git
+
+
+The main source of the BFG's performance advantage comes from
+preventing repeated examination of the same tree objects. The approach
+of git-filter-branch performs filtering for each commit, against the
+complete file-hierarchy of each commit, one after the other, even
+though commit trees are largely very similar. For the use-cases of The
+BFG that's unnecessary- we don't care where, and in which commit, a
+'bad' file exists - we just want it dealt with. Consequently the BFG
+processes the Git object db on a memoised tree-by-tree basis,
+processing each and every file & folder exactly once - the final
+processing of the commit hierarchy is very quick. This _does_ mean
+that it's not possible to delete files based on their absolute path
+within the repo, but they can deleted based on their filename,
+blob-id, or contents. This, and multi-core processing by default,
+gives the dramatic speed-up while still providing the same results.
+There's more performance data here:
+https://docs.google.com/spreadsheet/ccc?key=0AsR1d5Zpes8HdER3VGU1a3dOcmVHMmtzT2dsS2xNenc
+
+I'd welcome feedback, and if anyone has cause to filter a repository's
+history in future, I'd appreciate you giving the BFG a try and letting
+me know how you found it.
+
+thanks,
+Roberto Tyley
+software dev @ The Guardian
+
+http://rtyley.github.com/bfg-repo-cleaner/
