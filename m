@@ -1,106 +1,66 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4] Add contrib/credentials/netrc with GPG support
-Date: Tue, 05 Feb 2013 14:09:58 -0800
-Message-ID: <7vpq0equo9.fsf@alter.siamese.dyndns.org>
-References: <87ehgvua6h.fsf@lifelogs.com>
- <20130204211726.GB13186@sigill.intra.peff.net>
- <87mwvjsqjc.fsf_-_@lifelogs.com> <7vvca6u47f.fsf@alter.siamese.dyndns.org>
- <87k3qmr8yc.fsf@lifelogs.com> <87fw1ar3og.fsf_-_@lifelogs.com>
- <7vhalqsfkf.fsf@alter.siamese.dyndns.org> <877gmmqyho.fsf@lifelogs.com>
+Subject: Re: [PATCH v2] t4038: add tests for "diff --cc --raw <trees>"
+Date: Tue, 05 Feb 2013 14:27:13 -0800
+Message-ID: <7vehguqtvi.fsf@alter.siamese.dyndns.org>
+References: <cover.1359901732.git.john@keeping.me.uk>
+ <6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
+ <7vwqup890o.fsf@alter.siamese.dyndns.org>
+ <20130203203150.GU1342@serenity.lan>
+ <7v8v7585sr.fsf@alter.siamese.dyndns.org>
+ <20130203231549.GV1342@serenity.lan>
+ <7vip696i3v.fsf@alter.siamese.dyndns.org>
+ <20130205202558.GX1342@serenity.lan>
+ <7v8v72sczp.fsf@alter.siamese.dyndns.org>
+ <20130205213949.GY1342@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Ted Zlatanov <tzz@lifelogs.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 23:25:23 2013
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Feb 05 23:28:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2qx6-0005ZL-QX
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 23:25:21 +0100
+	id 1U2qzb-0007Uv-5R
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 23:27:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757547Ab3BEWYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2013 17:24:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35170 "EHLO
+	id S1757382Ab3BEW1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2013 17:27:18 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47046 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756073Ab3BEWKB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2013 17:10:01 -0500
+	id S1757324Ab3BEW1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2013 17:27:16 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA4E9B613;
-	Tue,  5 Feb 2013 17:10:00 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C9D091AB;
+	Tue,  5 Feb 2013 17:27:15 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2t6x/Knn+6SH/RSktSSgodK4IIU=; b=b1qKMb
-	Eva77p2RfqHa8raQWFL/++gErID7jW41HZHsk8BxW7sVVTHh+Z17Pd/ewU+qNJRj
-	0UncxRwpUjrkwgYBcADglyHul8IDHpoNrpBLjgzfgirpyZZ4cjjt+nh3t313T6VX
-	ZTEoTsj+RlhCWQrG2ahQh5t74bJnD1HiyFHAk=
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=FiPpc+
+	NzfPYysPACCVtH9csloDa+tnncA/qxi+sPYF0+QMB8qF0veYsN0wYddyvxBRjPlW
+	J+ZQ3Jjq+BPhOWkem2luRlpEV772ZkPgjsJt+R3Hw08N8n6kbYrLps3HVELKeSV2
+	XBQRWcvyx3NLaQpnosKavU/dUjaS/dNFlPhT0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nksVOBU88zDyCe+xRYdgl131XDh5oKyg
-	lciFToNMOVopIAHIQlTCnlKv3ugT8nNdSh0ZvQTjt6zWG6bTLnTnvvm9prfezF3O
-	M9ZHo25mZ0Ccf5EkMTv9igW5klGiXRhdugrG4kWr5NeHiq09wHAMWAwt24rJBqSl
-	qEMBB0dQkCk=
+	:content-type; q=dns; s=sasl; b=SD9A4Vefp3T47nPbjnF1aV9grskAsYH7
+	WqmdOxAbtk6wsd0JViRaRvypo0H3nlqtHLbpl7+XLmmXuPxlJP++tCd7Lk4D3akI
+	a9o/QN/U3n8aXdus4TVaLTe5ujnPLKwruX+nTxSV1i6+ePqUWoC7mMbWjfbH35UQ
+	wEN/jUPoddg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACCA8B612;
-	Tue,  5 Feb 2013 17:10:00 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 416BF91AA;
+	Tue,  5 Feb 2013 17:27:15 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 101D4B611; Tue,  5 Feb 2013
- 17:09:59 -0500 (EST)
-In-Reply-To: <877gmmqyho.fsf@lifelogs.com> (Ted Zlatanov's message of "Tue,
- 05 Feb 2013 15:47:31 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B04BB91A7; Tue,  5 Feb 2013
+ 17:27:14 -0500 (EST)
+In-Reply-To: <20130205213949.GY1342@serenity.lan> (John Keeping's message of
+ "Tue, 5 Feb 2013 21:39:49 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C8711144-6FE0-11E2-ABAB-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3124FBFE-6FE3-11E2-AEE9-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215547>
 
-Ted Zlatanov <tzz@lifelogs.com> writes:
-
-> On Tue, 05 Feb 2013 11:53:20 -0800 Junio C Hamano <gitster@pobox.com> wrote: 
->
-> I think it's more readable with large loops, and it actually makes sense
-> when you read the code.  Not a big deal to me either, I just felt for
-> this particular script it was OK.
->
->>> +	if ($file =~ m/\.gpg$/) {
->>> +		log_verbose("Using GPG to open $file");
->>> +		# GPG doesn't work well with 2- or 3-argument open
->
-> JCH> If that is the case, please quote $file properly against shell
-> JCH> munging it.
->
-> Ahhh that gets ugly.  OK, quoted.
->
-> JCH> The only thing you do on $io is to read from it via "while (<$io>)",
-> JCH> so I would personally have written this part like this without
-> JCH> having to use IO::File(), though:
->
-> JCH> 	$io = open("-|", qw(gpg --decrypt), $file);
->
-> That doesn't work for me, unfortunately.  I'm trying to avoid the IPC::*
-> modules and such.  Please test it yourself with GPG.  I'm on Perl
-> 5.14.2.
-
-This works for me as expected (sorry for that open $io syntax
-gotcha).
-
--- cut here -- >8 -- cut here --
-
-#!/usr/bin/perl
-my $io;
-open $io, "-|", qw(gpg --decrypt), $ARGV[0]
-        or die "$!: gpg open";
-while (<$io>) {
-        print;
-}
-close $io
-        or die "$!: gpg close";
-
--- cut here -- 8< -- cut here --
-
-$ perl --version
-This is perl, v5.10.1 (*) built for x86_64-linux-gnu-thread-multi
+Thanks.
