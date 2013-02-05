@@ -1,92 +1,108 @@
-From: James Nylen <jnylen@gmail.com>
-Subject: Re: [PATCH 13/13] contrib/subtree: Remove --annotate
-Date: Tue, 5 Feb 2013 08:27:34 -0500
-Message-ID: <CABVa4NiyVksEn4+NqBPXpaWGYnP6FeUqeacLOnAOHtw9FgMJdA@mail.gmail.com>
-References: <1360037173-23291-1-git-send-email-greened@obbligato.org>
-	<1360037173-23291-14-git-send-email-greened@obbligato.org>
-	<7vobfzwd8g.fsf@alter.siamese.dyndns.org>
-	<87pq0frnmb.fsf@waller.obbligato.org>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: [PATCH] Add contrib/credentials/netrc with GPG support, try #2
+Date: Tue, 05 Feb 2013 08:39:40 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <87sj5ariar.fsf@lifelogs.com>
+References: <87ehgvua6h.fsf@lifelogs.com>
+	<20130204211726.GB13186@sigill.intra.peff.net>
+	<87mwvjsqjc.fsf_-_@lifelogs.com>
+	<7vd2wf1yex.fsf@alter.siamese.dyndns.org>
+	<87bobzslke.fsf@lifelogs.com>
+	<7vy5f3zlzj.fsf@alter.siamese.dyndns.org>
+	<87zjzjr5y4.fsf@lifelogs.com>
+	<7vmwvjzkcs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Techlive Zheng <techlivezheng@gmail.com>,
-	Wayne Walter <wayne@tickzoom.com>,
-	"Avery Pennarun \"" <apenwarr@gmail.com>
-To: greened@obbligato.org
-X-From: git-owner@vger.kernel.org Tue Feb 05 14:28:03 2013
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 14:40:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2iZ5-0000SV-Gb
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 14:27:59 +0100
+	id 1U2ikt-0001Aq-MY
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 14:40:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754058Ab3BEN1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2013 08:27:37 -0500
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:36848 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753986Ab3BEN1g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2013 08:27:36 -0500
-Received: by mail-vb0-f46.google.com with SMTP id b13so81740vby.33
-        for <git@vger.kernel.org>; Tue, 05 Feb 2013 05:27:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=9o6fCz6oS64mNk2N1DWbYncsGyejgiyXJZEWnGK7Nho=;
-        b=OqXOsSQFiKMfWcN6Zy/gb/ng2SKXnCfrg6OCB5H6AKGn/2eJpj0PYdvPkauJ6UrPfc
-         xe2uV3scd+ec4yRqX1peM03gl7QijCpdIgolhxBSgG0qjpSycsLPffugixbNf3LvOqPv
-         ENXqQIwyWXiIJM6DqzKeutiugZRhmj66D26ePDjq2qTROyOz8wwaWIPO2UglRruile0j
-         b1tlsW1r/zaBwkCZaDo2jC7mIIPZxhc8gmr41a0nmrvx3pj+His3gKLCe9TNunZBkzOy
-         Nj6UruaNVIvIW1RAe4lTKwBR76iQXHTzicsF9AjnCdyxp4Ih1kUqKSTG/i9njm9MCFzA
-         RmUg==
-X-Received: by 10.58.171.38 with SMTP id ar6mr23689513vec.23.1360070854845;
- Tue, 05 Feb 2013 05:27:34 -0800 (PST)
-Received: by 10.220.125.65 with HTTP; Tue, 5 Feb 2013 05:27:34 -0800 (PST)
-In-Reply-To: <87pq0frnmb.fsf@waller.obbligato.org>
+	id S1755409Ab3BENjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2013 08:39:44 -0500
+Received: from z.lifelogs.com ([173.255.230.239]:41680 "EHLO z.lifelogs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755395Ab3BENjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2013 08:39:42 -0500
+Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: tzz)
+	by z.lifelogs.com (Postfix) with ESMTPSA id 2831DDE0E0;
+	Tue,  5 Feb 2013 13:39:41 +0000 (UTC)
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+In-Reply-To: <7vmwvjzkcs.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 04 Feb 2013 16:15:47 -0800")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215501>
 
-On Tue, Feb 5, 2013 at 6:44 AM,  <greened@obbligato.org> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>> Remove --annotate.  This obviates the need for an --unannotate
->>> command.  We really want a more generalized commit message rewrite
->>> mechanism.
->>
->> That may be a good goal as the end result, but wouldn't it be a bit
->> unhelpful to remove these before adding such a "more generalized"
->> mechanism to replace them?
->
-> I did think about that.  I sent out an e-mail some time ago asking for
-> opinions on this.  No one responded.  Since this is in contrib/ I feel
-> comfortable getting rid of this option early so that people don't get
-> too attached to it.  :)
+On Mon, 04 Feb 2013 16:15:47 -0800 Junio C Hamano <gitster@pobox.com> wrote: 
 
-I don't agree that removing `--annotate` obviates the need for `--unannotate`.
+JCH> Ted Zlatanov <tzz@lifelogs.com> writes:
 
-I responded on 1/17 with what I think is a typical and normal use case
-for that option:
+>> - do you want to support backslashed newlines?
 
- - add "fancylib" as a subtree of "myprog"
- - commit to "myprog" repo: "fancylib: don't crash as much"
- - split these commits back out to "fancylib" main repo, and remove
-the "fancylib: " prefix
+JCH> What for?  netrc/authinfo is not a line oriented file format at all,
+JCH> and
 
-In my opinion this is a pretty normal workflow.  Commits to "fancylib"
-in the "myprog" repo are prefixed with "fancylib: ", and that prefix
-becomes redundant and should be removed if those commits are split
-back out into the "fancylib" main repo.
+JCH> 	machine k.org
+JCH> 	        	login me
+JCH>                         password mysecret
 
-I also tried to come up with another situation that would justify a
-more general commit message rewriting facility, and I couldn't think
-of any other good use cases that don't involve removing a prefix.  But
-that doesn't mean there aren't any.
+JCH> is a single entry; you do not need backslash at the end of any line.
 
-`--unannotate` is a clunky name, but I think this functionality is
-worth taking another look at.  Maybe it could be called
-`--remove-prefix` ?
+Hmm. The parser I implemented only does single-line parsing, and I
+misunderstood the format to be single-line (partly because I have never
+seen anyone using the multi-line format you show).  Looking at
+Net::Netrc more carefully, it seems that the "machine" token is what
+defines an entry, so a new entry starts with a new line that contains a
+"machine" token.  Is that acceptable and does it match your
+understanding of the format?  It matches Net::Netrc, at least.
+
+I'll add this change to PATCHv4 with the assumption you agree.
+
+>> - should all die() calls just print to STDERR and exit(0)?
+
+JCH> Where "when unhandled, the helper should silently exit with 0" is
+JCH> expected by the invoker, we shouldn't say anything to error stream,
+JCH> and exit with zero.  Please leave a comment to make it easy to
+JCH> understand to the readers that is what is going on there.
+
+JCH> If on the other hand it diagnosed an error (not a bug in the
+JCH> implementation but a misconfiguration on the user's side), I _think_
+JCH> it should loudly die() so that the user can notice and take
+JCH> corrective action.
+
+OK, I'll review these for PATCHv4 (also see below).  Thanks.
+
+>> - do you want to support multiple netrc files, as you and Peff suggested?
+
+JCH> I didn't even suggest such thing IIRC---I expected it to iterate
+JCH> from the most desirable (.authinfo.gpg) to the least (.netrc) and
+JCH> stop at the first found one.  There may be use cases people use more
+JCH> than one and expect an entry to be found in any file, but I suspect
+JCH> that might be more confusing than it is worth.  But I do not care
+JCH> very deeply myself either way.
+
+After thinking about it, I agree with Peff multiple sources make sense
+and will simplify the code flow (especially the default case, which
+won't need to be handled separately).  And the functionality doesn't
+have to be confusing with the right debugging messages.  So I'll add
+them in PATCHv4.
+
+The debugging messages will be fewer and simpler with this approach,
+which makes it feel like the right track :)
+
+Thanks
+Ted
