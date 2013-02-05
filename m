@@ -1,86 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Verify Content-Type from smart HTTP servers
-Date: Mon, 04 Feb 2013 16:21:13 -0800
-Message-ID: <7vip67zk3q.fsf@alter.siamese.dyndns.org>
-References: <7v38xhf1i3.fsf@alter.siamese.dyndns.org>
- <20130201085248.GA30644@sigill.intra.peff.net>
- <7vip6bc3e1.fsf@alter.siamese.dyndns.org>
- <20130201185827.GA22919@sigill.intra.peff.net>
- <7va9rk5z02.fsf@alter.siamese.dyndns.org>
- <20130204083824.GB30835@sigill.intra.peff.net>
- <CAJo=hJtZ64ER4X+axtFZJ5ArnEg3h_nCVEBdd8KmE0nUpskzBA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 05 01:21:54 2013
+From: "David A. Greene" <greened@obbligato.org>
+Subject: Assorted contrib/subtree Patches
+Date: Mon,  4 Feb 2013 22:06:00 -0600
+Message-ID: <1360037173-23291-1-git-send-email-greened@obbligato.org>
+To: James Nylen <jnylen@gmail.com>, git@vger.kernel.org,
+	Techlive Zheng <techlivezheng@gmail.com>,
+	Wayne Walter <wayne@tickzoom.com>,
+	"Avery Pennarun \"" <apenwarr@gmail.com>,
+	Jakub Suder <jakub.suder@gmail.com>,
+	John Yani <vanuan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 05:07:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2WIL-0006Iv-60
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 01:21:53 +0100
+	id 1U2Zp0-0005eE-K9
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 05:07:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755083Ab3BEAVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2013 19:21:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39311 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754612Ab3BEAVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2013 19:21:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D1EBC382;
-	Mon,  4 Feb 2013 19:21:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IGwR+kcTARv0OMnoycheCqzUmZo=; b=Qvaq4y
-	P9wyF5vqsJt2W4K1B14q+1Bfj4pnfTyV0BYNHQfCLvdcGRLM3+KMu+zftDgnEgZU
-	xtwf8QCG6JXw0FhEBG2E01OjYU7q1bQK7PHuuMf9MZmyeX+w5l7If5XUHm+D6iXz
-	71nK6F3TCCaQ03ns8U8P+Vv/D3aH/1Z0PBcgU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SSQCIcpRiG8ZcZk5ciObqpm62UE9XKbx
-	29QWF9cbYxXZ3aZjXeEvPy9ar0H+i/F3QuIwQeRnjMu1VLc982aCvJtjr7v+PdTj
-	fkICe4mEW8luyydiDpO44OHDdIGNxDuDkzQTFUzC2l1zLK+TnRu936O079vWZvsH
-	zW+cf+xlo88=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71D6EC381;
-	Mon,  4 Feb 2013 19:21:15 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E94C0C37E; Mon,  4 Feb 2013
- 19:21:14 -0500 (EST)
-In-Reply-To: <CAJo=hJtZ64ER4X+axtFZJ5ArnEg3h_nCVEBdd8KmE0nUpskzBA@mail.gmail.com> (Shawn
- Pearce's message of "Mon, 4 Feb 2013 15:49:35 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F3D4075E-6F29-11E2-8949-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755364Ab3BEEHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 23:07:25 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:37992 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754307Ab3BEEHY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 23:07:24 -0500
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
+	(Exim 4.80)
+	(envelope-from <greened@obbligato.org>)
+	id 1U2ZpV-0003ZD-4c; Mon, 04 Feb 2013 22:08:21 -0600
+X-Mailer: git-send-email 1.7.10.4
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  All of the patches I have received from others as well as
+   a few of my own follow. Probably the most controversial is a patch to remove
+    --annotate. After some discussion on the list it became clear that we really
+    want a more general commit rewrite feature. Removing --annotate means we
+   don't have to also support --unannotate and carry both forward as backward-compatibility
+    baggage. [...] 
+ Content analysis details:   (-2.9 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- ------------- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215440>
 
-Shawn Pearce <spearce@spearce.org> writes:
+All of the patches I have received from others as well as a few of my
+own follow.  Probably the most controversial is a patch to remove
+--annotate.  After some discussion on the list it became clear that we
+really want a more general commit rewrite feature.  Removing
+--annotate means we don't have to also support --unannotate and carry
+both forward as backward-compatibility baggage.
 
-> Looks fine to me too, but I think the test won't work now. :-)
+Before --annotate was added, git-subtree would force an annotation of
+"*" on every split commit message.  It now does no such thing so
+there's no need to unannotate anything.
 
-Heh, that's amusing ;-)
+Please review and integrate.  Thanks!
 
- t/t5551-http-fetch.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
-index cb95b95..47eb769 100755
---- a/t/t5551-http-fetch.sh
-+++ b/t/t5551-http-fetch.sh
-@@ -158,9 +158,8 @@ test_expect_success 'GIT_SMART_HTTP can disable smart http' '
- '
- 
- test_expect_success 'invalid Content-Type rejected' '
--	echo "fatal: invalid content-type text/html" >expect
- 	test_must_fail git clone $HTTPD_URL/broken_smart/repo.git 2>actual
--	test_cmp expect actual
-+	grep "not valid:" actual
- '
- 
- test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
+                        -David
