@@ -1,96 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/13] contrib/subtree: Ignore testing directory
-Date: Mon, 04 Feb 2013 20:36:34 -0800
-Message-ID: <7vpq0fxtpp.fsf@alter.siamese.dyndns.org>
+From: "David A. Greene" <greened@obbligato.org>
+Subject: [PATCH 12/13] contrib/subtree: Handle '--prefix' argument with a slash appended
+Date: Mon,  4 Feb 2013 22:06:12 -0600
+Message-ID: <1360037173-23291-13-git-send-email-greened@obbligato.org>
 References: <1360037173-23291-1-git-send-email-greened@obbligato.org>
- <1360037173-23291-10-git-send-email-greened@obbligato.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: James Nylen <jnylen@gmail.com>, git@vger.kernel.org,
+Cc: "David A. Greene" <greened@obbligato.org>
+To: James Nylen <jnylen@gmail.com>, git@vger.kernel.org,
 	Techlive Zheng <techlivezheng@gmail.com>,
 	Wayne Walter <wayne@tickzoom.com>,
 	"Avery Pennarun \"" <apenwarr@gmail.com>,
 	Jakub Suder <jakub.suder@gmail.com>,
-	John Yani <vanuan@gmail.com>,
-	"David A. Greene <greened@obbligato.org>"@b-sasl-quonix.pobox.com
-To: "David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Tue Feb 05 05:37:08 2013
+	John Yani <vanuan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 05 05:37:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2aHH-0001SW-LF
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 05:37:03 +0100
+	id 1U2aIA-0001tY-Ju
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 05:37:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754543Ab3BEEgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2013 23:36:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44266 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753985Ab3BEEgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2013 23:36:39 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E01CC888;
-	Mon,  4 Feb 2013 23:36:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/S5d6WOQ7/UO4WWoNIpgWreutIk=; b=bT/ANg
-	zG4wSe1bmDkoJ01RufVH9y5W77S+dy6s7vlYHEg6dOZMUKvOk5rQUBqxLMJStfut
-	eK9vXvxuGSvW0dsdXpNKvuVxRZbXRLOsF5CM9MAQyaAeb15SD8LYFtflriOcOTEK
-	L9MdtHnWBzxvZrKLDavXUtRfSWnrGsadFVRqo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OX09ROcc7IW2Lj3WTOStRHarBgMvODaA
-	IyBHwz2Yvfi2VSjfMtlUkNtJrOIQF/icSQPFFXh7uv4X1XJOCHGdPSs//MFAT7lR
-	kavFBK+fU6w2KPHN1aWuQtm1LVR+uMf0P6JzyOqAMtNb10SHbGkNxi01j8w37L8U
-	VEcu6w6iE8g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01E8EC887;
-	Mon,  4 Feb 2013 23:36:39 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3E69C827; Mon,  4 Feb 2013
- 23:36:37 -0500 (EST)
-In-Reply-To: <1360037173-23291-10-git-send-email-greened@obbligato.org>
- (David A. Greene's message of "Mon, 4 Feb 2013 22:06:09 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A1093278-6F4D-11E2-9E98-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754584Ab3BEEhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2013 23:37:37 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:38058 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753882Ab3BEEhg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2013 23:37:36 -0500
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
+	(Exim 4.80)
+	(envelope-from <greened@obbligato.org>)
+	id 1U2Zq6-0003ZD-MP; Mon, 04 Feb 2013 22:08:59 -0600
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1360037173-23291-1-git-send-email-greened@obbligato.org>
+X-Filter-Spam-Score: -2.9 (--)
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  From: Techlive Zheng <techlivezheng@gmail.com> 'git subtree
+    merge' will fail if the argument of '--prefix' has a slash appended. Signed-off-by:
+    Techlive Zheng <techlivezheng@gmail.com> Signed-off-by: David A. Greene <greened@obbligato.org>
+    --- contrib/subtree/git-subtree.sh | 2 +- contrib/subtree/t/t7900-subtree.sh
+    | 19 +++++++++++++++++++ 2 files changed, 20 insertions(+), 1 deletion(-)
+    [...] 
+ Content analysis details:   (-2.9 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --- 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215452>
 
-"David A. Greene" <greened@obbligato.org> writes:
+From: Techlive Zheng <techlivezheng@gmail.com>
 
-> From: Techlive Zheng <techlivezheng@gmail.com>
->
+'git subtree merge' will fail if the argument of '--prefix' has a slash
+appended.
 
-Justification is missing here.
+Signed-off-by: Techlive Zheng <techlivezheng@gmail.com>
+Signed-off-by: David A. Greene <greened@obbligato.org>
+---
+ contrib/subtree/git-subtree.sh     |    2 +-
+ contrib/subtree/t/t7900-subtree.sh |   19 +++++++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-contrib/subtree/Makefile seems to do "rm -rf" on 'mainline' and
-'subproj' in its "clean" target, which makes them look like
-build/test artifacts that need to be ignored.
-
-If they are no longer build/test artifacts, perhaps their removal
-also need to be dropped from the Makefile?
-
-> Signed-off-by: Techlive Zheng <techlivezheng@gmail.com>
-> Signed-off-by: David A. Greene <greened@obbligato.org>
-> ---
->  contrib/subtree/.gitignore |    5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
->
-> diff --git a/contrib/subtree/.gitignore b/contrib/subtree/.gitignore
-> index 91360a3..59aeeb4 100644
-> --- a/contrib/subtree/.gitignore
-> +++ b/contrib/subtree/.gitignore
-> @@ -1,6 +1,5 @@
->  *~
->  git-subtree
-> -git-subtree.xml
->  git-subtree.1
-> -mainline
-> -subproj
-> +git-subtree.xml
-> +t/trash\ directory.*
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index c72af95..0493e47 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -82,7 +82,7 @@ while [ $# -gt 0 ]; do
+ 		--annotate) annotate="$1"; shift ;;
+ 		--no-annotate) annotate= ;;
+ 		-b) branch="$1"; shift ;;
+-		-P) prefix="$1"; shift ;;
++		-P) prefix="${1%/}"; shift ;;
+ 		-m) message="$1"; shift ;;
+ 		--no-prefix) prefix= ;;
+ 		--onto) onto="$1"; shift ;;
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 769b116..1afd544 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -239,6 +239,25 @@ test_expect_success 'merge new subproj history into subdir/ with --squash and --
+ 	)
+ '
+ 
++test_expect_success 'merge new subproj history into subdir/ with a slash appended to the argument of --prefix' '
++	test_create_repo "$test_count" &&
++	test_create_repo "$test_count/subproj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/subproj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./subproj master &&
++		git subtree add --prefix=subdir/ FETCH_HEAD
++	) &&
++	test_create_commit "$test_count/subproj" sub2 &&
++	(
++		cd "$test_count" &&
++		git fetch ./subproj master &&
++		git subtree merge --prefix=subdir/ FETCH_HEAD &&
++		test_equal "$(last_commit_message)" "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
++	)
++'
++
+ #
+ # Tests for 'git subtree split'
+ #
+-- 
+1.7.10.4
