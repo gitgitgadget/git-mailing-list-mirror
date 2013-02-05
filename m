@@ -1,69 +1,92 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3] status: show the branch name if possible in
- in-progress info
-Date: Tue, 5 Feb 2013 19:20:51 +0700
-Message-ID: <CACsJy8D_kSrJYagxo1LWt=P8XKj9F9_yAwH3vzQWQOi+yvP8kg@mail.gmail.com>
-References: <1359471493-32531-1-git-send-email-pclouds@gmail.com>
- <1359870807-22817-1-git-send-email-pclouds@gmail.com> <20130205063847.GA3240@elie.Belkin>
+From: James Nylen <jnylen@gmail.com>
+Subject: Re: [PATCH 13/13] contrib/subtree: Remove --annotate
+Date: Tue, 5 Feb 2013 08:27:34 -0500
+Message-ID: <CABVa4NiyVksEn4+NqBPXpaWGYnP6FeUqeacLOnAOHtw9FgMJdA@mail.gmail.com>
+References: <1360037173-23291-1-git-send-email-greened@obbligato.org>
+	<1360037173-23291-14-git-send-email-greened@obbligato.org>
+	<7vobfzwd8g.fsf@alter.siamese.dyndns.org>
+	<87pq0frnmb.fsf@waller.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 13:21:51 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Techlive Zheng <techlivezheng@gmail.com>,
+	Wayne Walter <wayne@tickzoom.com>,
+	"Avery Pennarun \"" <apenwarr@gmail.com>
+To: greened@obbligato.org
+X-From: git-owner@vger.kernel.org Tue Feb 05 14:28:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2hX1-0004Eg-3X
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 13:21:47 +0100
+	id 1U2iZ5-0000SV-Gb
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 14:27:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755058Ab3BEMVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2013 07:21:24 -0500
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:34614 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755041Ab3BEMVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2013 07:21:22 -0500
-Received: by mail-oa0-f54.google.com with SMTP id n12so69065oag.27
-        for <git@vger.kernel.org>; Tue, 05 Feb 2013 04:21:21 -0800 (PST)
+	id S1754058Ab3BEN1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2013 08:27:37 -0500
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:36848 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753986Ab3BEN1g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2013 08:27:36 -0500
+Received: by mail-vb0-f46.google.com with SMTP id b13so81740vby.33
+        for <git@vger.kernel.org>; Tue, 05 Feb 2013 05:27:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=4d0CzCY1ydpCgPcET3YsDVOb7RfIxjJVkmWYM83hzMc=;
-        b=L7C7OGNmAFjesyYpdgjl1alpAg5fLAKkBLuJBunm5eIenqgbnW9sX74NdN8ZGg0VXO
-         uryr3aa0k47y3W7tkHLxcv84/DQy1hDHzuaPx6XnMslg/kqOfN7Dthyf39Hle8U7zwO1
-         xhBE6YMZIG1bRClf1Vvy8QYZrTtMRVNpT5b2MVyK+RbXwuSAgpU9sD5WYRayzCGgTN8a
-         8kbHaoG8razPItMbnBbOvER/aQ+hekNRW+eYZ6yGgTa7ZSj+WYCq1zCOM3D2TpDlWrgv
-         sXI1zzCg6mqB/QyoneVqJPblgj8Y+QoX8p+pTM6R1T+2504/QaXxPRXilkCyYjQjirNb
-         vVKw==
-X-Received: by 10.182.18.133 with SMTP id w5mr18399061obd.64.1360066881879;
- Tue, 05 Feb 2013 04:21:21 -0800 (PST)
-Received: by 10.182.118.229 with HTTP; Tue, 5 Feb 2013 04:20:51 -0800 (PST)
-In-Reply-To: <20130205063847.GA3240@elie.Belkin>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=9o6fCz6oS64mNk2N1DWbYncsGyejgiyXJZEWnGK7Nho=;
+        b=OqXOsSQFiKMfWcN6Zy/gb/ng2SKXnCfrg6OCB5H6AKGn/2eJpj0PYdvPkauJ6UrPfc
+         xe2uV3scd+ec4yRqX1peM03gl7QijCpdIgolhxBSgG0qjpSycsLPffugixbNf3LvOqPv
+         ENXqQIwyWXiIJM6DqzKeutiugZRhmj66D26ePDjq2qTROyOz8wwaWIPO2UglRruile0j
+         b1tlsW1r/zaBwkCZaDo2jC7mIIPZxhc8gmr41a0nmrvx3pj+His3gKLCe9TNunZBkzOy
+         Nj6UruaNVIvIW1RAe4lTKwBR76iQXHTzicsF9AjnCdyxp4Ih1kUqKSTG/i9njm9MCFzA
+         RmUg==
+X-Received: by 10.58.171.38 with SMTP id ar6mr23689513vec.23.1360070854845;
+ Tue, 05 Feb 2013 05:27:34 -0800 (PST)
+Received: by 10.220.125.65 with HTTP; Tue, 5 Feb 2013 05:27:34 -0800 (PST)
+In-Reply-To: <87pq0frnmb.fsf@waller.obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215500>
 
-On Tue, Feb 5, 2013 at 1:38 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Missing description.  Stealing from the link you sent:
+On Tue, Feb 5, 2013 at 6:44 AM,  <greened@obbligato.org> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->         The typical use-case is starting a rebase, do something else, come back
->         the day after, run "git status" or make a new commit and wonder what
->         in the world's going on. Which branch is being rebased is probably the
->         most useful tidbit to help, but the target may help too.
+>>> Remove --annotate.  This obviates the need for an --unannotate
+>>> command.  We really want a more generalized commit message rewrite
+>>> mechanism.
+>>
+>> That may be a good goal as the end result, but wouldn't it be a bit
+>> unhelpful to remove these before adding such a "more generalized"
+>> mechanism to replace them?
 >
->         Ideally, I would have loved to see "rebasing master on origin/master",
->         but the target ref name is not stored during rebase, so this patch
->         writes "rebasing master on a78c8c98b" as a half-measure to remind
->         future users of that potential improvement.
->
->         Signed-off-by: <...>
+> I did think about that.  I sent out an e-mail some time ago asking for
+> opinions on this.  No one responded.  Since this is in contrib/ I feel
+> comfortable getting rid of this option early so that people don't get
+> too attached to it.  :)
 
-Looking good. Junio, do you need a new patch mail or can you just
-amend the commit message?
--- 
-Duy
+I don't agree that removing `--annotate` obviates the need for `--unannotate`.
+
+I responded on 1/17 with what I think is a typical and normal use case
+for that option:
+
+ - add "fancylib" as a subtree of "myprog"
+ - commit to "myprog" repo: "fancylib: don't crash as much"
+ - split these commits back out to "fancylib" main repo, and remove
+the "fancylib: " prefix
+
+In my opinion this is a pretty normal workflow.  Commits to "fancylib"
+in the "myprog" repo are prefixed with "fancylib: ", and that prefix
+becomes redundant and should be removed if those commits are split
+back out into the "fancylib" main repo.
+
+I also tried to come up with another situation that would justify a
+more general commit message rewriting facility, and I couldn't think
+of any other good use cases that don't involve removing a prefix.  But
+that doesn't mean there aren't any.
+
+`--unannotate` is a clunky name, but I think this functionality is
+worth taking another look at.  Maybe it could be called
+`--remove-prefix` ?
