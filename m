@@ -1,103 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] i18n: mark OPTION_NUMBER (-NUM) for translation
-Date: Tue, 05 Feb 2013 09:07:49 -0800
-Message-ID: <7vd2weu1sq.fsf@alter.siamese.dyndns.org>
-References: <883efc2358a0deb48bee48134d45ddd528a732d3.1360080194.git.worldhello.net@gmail.com> <20130205121552.GA16601@lanh> <883efc2358a0deb48bee48134d45ddd528a732d3.1360080194.git.worldhello.net@gmail.com> <8d6d4d869ea58e0a26b3bb6377fc102728948997.1360080194.git.worldhello.net@gmail.com>
+Subject: Re: [PATCH v3 0/8] Hiding refs
+Date: Tue, 05 Feb 2013 09:27:31 -0800
+Message-ID: <7v8v72u0vw.fsf@alter.siamese.dyndns.org>
+References: <1359571542-19852-1-git-send-email-gitster@pobox.com>
+ <5110BD18.3080608@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 18:08:22 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Feb 05 18:27:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2m0F-0006NV-Qh
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 18:08:16 +0100
+	id 1U2mJK-0005ZO-GM
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Feb 2013 18:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755883Ab3BERHx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Feb 2013 12:07:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49819 "EHLO
+	id S1754447Ab3BER1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2013 12:27:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37734 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754949Ab3BERHw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Feb 2013 12:07:52 -0500
+	id S1754018Ab3BER1e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2013 12:27:34 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74760B213;
-	Tue,  5 Feb 2013 12:07:51 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25847C6B9;
+	Tue,  5 Feb 2013 12:27:34 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=z5oFDqi6uyFV
-	BSYyQ4MHPcWMd1s=; b=g62Z6p5HbvsVZI8h60s8WDafswmc3+R76yKlF5p9AUBS
-	LDmFer4jv2IndQSyBoC4tUgoLFtUiWQc2eLZgnVO8p8VrCR15y3W7Xb86I6F8y3f
-	v4gzHab/W+DFj8n21pRfyl3X2aHImMqOKpIRlY/E4k7CQrN+0oicMmSWvH4UbX0=
+	:content-type; s=sasl; bh=ixv53GxGPadSMXGLb2dSANg9M9U=; b=vAyeQS
+	4jtkfYUPSRLeyxW3iEUSKpf5WFWOL9yENdDATFugcPCOGHz7Jy6RGvjUrA6/gCrI
+	fZy/f5ZKQYFAMNJMruLOQgpedfc7JV1PneaE3AR+LOF2OMi/2TZqNCmS06Eh9cQ+
+	Dkq6z+syeSriiQqE4QEjrxnh5CDw6xK766SuA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=erMZY2
-	ala/oLD8/06S8p4XJFRHJVoeRVzYC+2PotQypfbCKSgrkIBOMH11WnFzQYPKrzB1
-	LGSpNRXS9BXEbRZCwNTFaagE7jRw61Szw67t6GeGnVaHU/awy/TMCUrxBNrzJqHD
-	G9hpbKLYRFpLafilgNdLw5KFgxFUtL/5Pyu3Q=
+	:content-type; q=dns; s=sasl; b=h4Cw8pc4lVo3GTT4LgMtNFh8M1WvioSF
+	z0Xk9YJr26p4jnlE5GZMy9sRSdU2/2p62pUVJeYUK6Qe1PZCcy6olIO7toy0u1Ad
+	5UNCPVR96Qx8xIodxHpiRjciRl15fCu+1548nPnK4kAJ9TCFkqVjsLOWSygdCdm9
+	ZZNgfae5kL4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68BFCB212;
-	Tue,  5 Feb 2013 12:07:51 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A334C6B8;
+	Tue,  5 Feb 2013 12:27:34 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3CE5B210; Tue,  5 Feb 2013
- 12:07:50 -0500 (EST)
-In-Reply-To: <8d6d4d869ea58e0a26b3bb6377fc102728948997.1360080194.git.worldhello.net@gmail.com> (Jiang Xin's message of "Wed, 6 Feb 2013 00:16:56 +0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 426C3C6B6; Tue,  5 Feb 2013
+ 12:27:33 -0500 (EST)
+In-Reply-To: <5110BD18.3080608@alum.mit.edu> (Michael Haggerty's message of
+ "Tue, 05 Feb 2013 09:04:40 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 928EFFD4-6FB6-11E2-AD69-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 535D9E1C-6FB9-11E2-A095-F0CE2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215522>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  parse-options.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/parse-options.c b/parse-options.c
-> index cd029f..be916 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -497,6 +497,8 @@ static int usage_with_options_internal(struct par=
-se_opt_ctx_t *ctx,
->  				       const struct option *opts, int full, int err)
->  {
->  	FILE *outfile =3D err ? stderr : stdout;
-> +	const char *opt_num_buff =3D _("-NUM");
-> +	int opt_num_size =3D utf8_strwidth(opt_num_buff);
-> =20
->  	if (!usagestr)
->  		return PARSE_OPT_HELP;
-> @@ -544,8 +546,10 @@ static int usage_with_options_internal(struct pa=
-rse_opt_ctx_t *ctx,
->  			pos +=3D fprintf(outfile, ", ");
->  		if (opts->long_name)
->  			pos +=3D fprintf(outfile, "--%s", opts->long_name);
-> -		if (opts->type =3D=3D OPTION_NUMBER)
-> -			pos +=3D fprintf(outfile, "-NUM");
-> +		if (opts->type =3D=3D OPTION_NUMBER) {
-> +			fputs(opt_num_buff, outfile);
-> +			pos +=3D opt_num_size;
-> +		}
+> I would again like to express my discomfort about this feature, which is
+> already listed as "will merge to next".
 
-I somehow suspect that this is going in a direction that makes this
-piece of code much less maintainable.
+Do not take "will merge to next" too literally.  One major purpose
+of marking a topic as such is exactly to solicit comments like this
+;-)
 
-Look at the entire function and see how many places you do fprintf
-on strings that are marked with _().  short_name and long_name are
-not likely to be translated, but everything else is, especially
-multiple places that show _(opts->help) neither of these patches
-touch.
+> * I didn't see a response to Peff's convincing arguments that this
+> should be a client-side feature rather than a server-side feature [1].
 
-I wonder if it makes more sense to add a helper function that
-returns the number of column positions (not bytes) with a signature
-similar to fprintf() and use that throughout the function instead.
+Uncluttering is not about a choice client should make.  "delayed
+advertisement" is an orthogonal issue and requires a larger protocol
+update (it needs to make "git fetch" speak first instead of the
+current protocol in which "upload-pack" speaks first).
+
+> * I didn't see an answer to Duy's question [2] about what is different
+> between the proposed feature and gitnamespaces.
+
+I think Jonathan addressed this already.
+
+> * I didn't see a response to my worries that this feature could be
+> abused [3].
+
+You can choose not to advertise allow-tip-sha1-in-want capability; I
+do not think it is making things worse than the status quo.
+
+> * Why should a repository have exactly one setting for what refs should
+> be hidden?  Wouldn't it make more sense to allow multiple "views" to be
+> defined?:
+
+You are welcome to extend to have different views, but how would
+your clients express which view they would want?
+
+Giving a single view that the serving end decides gives us an
+immediate benefit of showing an uncluttered set of refs of server's
+choice, without making the problem space larger than necessary.
+
+> * Is it enough to support only reference exclusion (as opposed to
+> exclusion and inclusion rules)?
+
+Again, I do not think you cannot extend it to do positive and
+negative filtering "exclude these, but include those even though
+they match the 'exclude these' patterns I gave you earlier".
+
+> * Why should this feature only be available remotely?
+
+The whole point is to give the server side a choice to show selected
+refs, so that it can use hidden portion for its own use.  These refs
+should not be hidden from local operations like "gc".
+
+I appreciate the comments, but I do not think any point you raised
+in this message is very much relevant as objections.
