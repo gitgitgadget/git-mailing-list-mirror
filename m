@@ -1,106 +1,80 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Bug in "git log --graph -p -m" (version 1.7.7.6)
-Date: Wed, 6 Feb 2013 15:14:47 +0000
-Message-ID: <20130206151447.GZ1342@serenity.lan>
-References: <201302051700.r15H0GXx031004@freeze.ariadne.com>
- <7vtxpqslpm.fsf@alter.siamese.dyndns.org>
- <vpqmwvia2n7.fsf@grenoble-inp.fr>
- <201302061503.r16F30UA016375@freeze.ariadne.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] i18n: mark OPTION_NUMBER (-NUM) for translation
+Date: Wed, 06 Feb 2013 07:47:39 -0800
+Message-ID: <7va9rho350.fsf@alter.siamese.dyndns.org>
+References: <20130205121552.GA16601@lanh>
+ <883efc2358a0deb48bee48134d45ddd528a732d3.1360080194.git.worldhello.net@gmail.com> <8d6d4d869ea58e0a26b3bb6377fc102728948997.1360080194.git.worldhello.net@gmail.com> <7vd2weu1sq.fsf@alter.siamese.dyndns.org> <CANYiYbF1cS=K9M0cwE5V0pUJMPEYGiJOjJwg5KQScCf8pjyTqw@mail.gmail.com> <7vpq0enoui.fsf@alter.siamese.dyndns.org> <CANYiYbF8DCPxqGQ2AFFXpSm0nO+wFDg=qrn9C8uoZO6fj__NHA@mail.gmail.com> <7vip66njpj.fsf@alter.siamese.dyndns.org> <CACsJy8DcXuFqjBtufQq1-0Vm3H4uxs03Crx+akY-kbrVgY8vUw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, gitster@pobox.com,
-	git@vger.kernel.org
-To: "Dale R. Worley" <worley@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 06 16:23:24 2013
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 16:48:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U36qI-0000LA-4o
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 16:23:22 +0100
+	id 1U37EE-0004Lq-Ok
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 16:48:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757292Ab3BFPW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 10:22:59 -0500
-Received: from pichi.aluminati.org ([72.9.246.58]:51787 "EHLO
-	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756701Ab3BFPW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 10:22:58 -0500
-X-Greylist: delayed 480 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Feb 2013 10:22:58 EST
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id A524F161E384;
-	Wed,  6 Feb 2013 15:14:57 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tnUr865y4ybz; Wed,  6 Feb 2013 15:14:55 +0000 (GMT)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id A4988161E4DF;
-	Wed,  6 Feb 2013 15:14:49 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <201302061503.r16F30UA016375@freeze.ariadne.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754938Ab3BFPrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 10:47:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39195 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751707Ab3BFPrm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 10:47:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EFF7B158;
+	Wed,  6 Feb 2013 10:47:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=I4mNajaLIKX9eI9F+H7l+d8xBsQ=; b=p4D47j
+	dngm5PQLteJro2no3DAqodXDgQrBsB6XSR1vochZHN2rWXxvpM2GI5oevB4+LL8T
+	/k86TCm9CSA/VvPJA3yAmwqjo5nVgvavbfACDzf6EQ0U5y1l0jaAOGhP/EeZX/de
+	P5/k8liCmksKmBbK44RJNylb5zrIPnrK+41zw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MxnQiNZpTEb5PPzhDzYjWz9ceVcq2F4c
+	0lxXUDHes8jvMcq2ho8TIjcN2DvmXmO52hH30Fl1UtwluH9/tttxK+xRw8gqaGPZ
+	t9RjXiBJHFKzYlGUlf7iLhsXKTBHKfk2vDPOutgS27D8936+3U6XSxOcpjBGs0rb
+	lZk0Guebk2E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23483B156;
+	Wed,  6 Feb 2013 10:47:42 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 82B28B153; Wed,  6 Feb 2013
+ 10:47:41 -0500 (EST)
+In-Reply-To: <CACsJy8DcXuFqjBtufQq1-0Vm3H4uxs03Crx+akY-kbrVgY8vUw@mail.gmail.com> (Duy
+ Nguyen's message of "Wed, 6 Feb 2013 17:45:41 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8A6CC246-7074-11E2-8C41-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215590>
 
-On Wed, Feb 06, 2013 at 10:03:00AM -0500, Dale R. Worley wrote:
-> > From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-> > 
-> > In any case, I can't reproduce with 1.8.1.2.526.gf51a757: I don't get
-> > undless output. On the other hand, I get a slightly misformatted output:
-> > 
-> > *   commit a393ed598e9fb11436f85bd58f1a38c82f2cadb7 (from 2c1e6a36f4b712e914fac994463da7d0fdb2bc6d)
-> > |\  Merge: 2c1e6a3 33e70e7
-> > | | Author: Matthieu Moy <Matthieu.Moy@imag.fr>
-> > | | Date:   Tue Feb 5 22:05:33 2013 +0100
-> > | | 
-> > | |     Commit S
-> > | | 
-> > | | diff --git a/file b/file
-> > | | index 6bb4d3e..afd2e75 100644
-> > | | --- a/file
-> > | | +++ b/file
-> > | | @@ -1,4 +1,5 @@
-> > | |  1
-> > | |  1a
-> > | |  2
-> > | | +2a
-> > | |  3
-> > | | 
-> > commit a393ed598e9fb11436f85bd58f1a38c82f2cadb7 (from 33e70e70c0173d634826b998bdc304f93c0966b8)
-> > | | Merge: 2c1e6a3 33e70e7
-> > | | Author: Matthieu Moy <Matthieu.Moy@imag.fr>
-> > | | Date:   Tue Feb 5 22:05:33 2013 +0100
-> > 
-> > The second "commit" line (diff with second parent) doesn't have the
-> > "| |" prefix, I don't think this is intentional.
-> 
-> The second "commit" line should start with "| * ":
+Duy Nguyen <pclouds@gmail.com> writes:
 
-No.  That would indicate a commit on the branch that is the second
-parent of the first commit.  But this is the same commit as the one
-above, just with a diff against its second parent instead of its first
-parent.
+> How about utf8_fwprintf? wprintf() deals with wide characters and
+> returns the number of wide characters, I think the name fits. And we
+> could just drop utf8_ and use the existing name, because we don't use
+> wchar_t* anyway.
 
-I would argue that the line should start with "| | ", since it really is
-just a continuation of the same commit.
+Please, no.  That line of reasoning shows a horrible design taste
+(or lack of taste).  "We don't use X right now" (or "We will promise
+never to use X", for that matter) is never a good reason to abuse a
+name that normal people would closely associate with X to something
+that is completely different.  That leads to more confusion, not
+less.
 
-| | 
-| | commit a393ed598e9fb11436f85bd58f1a38c82f2cadb7 (from 33e70e70c0173d634826b998bdc304f93c0966b8)
-| | Merge: 2c1e6a3 33e70e7
-| | Author: Matthieu Moy <Matthieu.Moy@imag.fr>
-| | Date:   Tue Feb 5 22:05:33 2013 +0100
-
-
-John
+I guess utf8_fprintf() is not so bad after all.  fprintf() without
+the utf8_ prefix is perfectly capable of showing a string encoded in
+UTF-8, and anybody can correctly guess that the magic utf8_ prefix
+would introduce (i.e. the difference between utf8_fprintf and
+fprintf) can only be about the return value.  It can be reasonably
+expected that everybody would then know that the display column
+count can be the only sane return value that is different from what
+fprintf() would return.
