@@ -1,89 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: CodingGuidelines Perl amendment
-Date: Wed, 06 Feb 2013 10:16:21 -0800
-Message-ID: <7vehgtcnpm.fsf@alter.siamese.dyndns.org>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
- <7vvcafojf4.fsf@alter.siamese.dyndns.org>
- <20130130074306.GA17868@sigill.intra.peff.net>
- <7v7gmumzo6.fsf@alter.siamese.dyndns.org> <87pq0l5qbc.fsf@lifelogs.com>
- <20130131193844.GA14460@sigill.intra.peff.net> <87k3qrx712.fsf@lifelogs.com>
- <20130203194148.GA26318@sigill.intra.peff.net>
- <87sj5cvxnf.fsf_-_@lifelogs.com> <7vk3qo2dsc.fsf@alter.siamese.dyndns.org>
- <87k3qoudxp.fsf@lifelogs.com> <7vvca7291z.fsf@alter.siamese.dyndns.org>
- <87lib3uats.fsf@lifelogs.com> <7v7gmn1xqi.fsf@alter.siamese.dyndns.org>
- <871ucto4vj.fsf_-_@lifelogs.com> <7vvca5mmmt.fsf@alter.siamese.dyndns.org>
- <87vca5gvx6.fsf@lifelogs.com>
+From: Ulrik Sverdrup <ulrik.sverdrup@gmail.com>
+Subject: Announcement of git-remote-gcrypt (A custom encrypted remote format)
+Date: Wed, 6 Feb 2013 19:19:39 +0100
+Message-ID: <CAPQrgXuuGfrskLpdrVgCXD6RLurtBQxJHKdSzFeJd30gVpGXPg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Ted Zlatanov <tzz@lifelogs.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 19:16:51 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 06 19:20:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U39Y7-000346-IZ
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 19:16:47 +0100
+	id 1U39bH-0005jO-SO
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 19:20:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755383Ab3BFSQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 13:16:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56589 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754059Ab3BFSQY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 13:16:24 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E0AABB857;
-	Wed,  6 Feb 2013 13:16:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CeUCyziRf5nDAc/Dz+HkJ8swnqM=; b=cvlb2h
-	WgGdWagS+02hoLA/aMT5VX8c2/J/YsK+G6HpBcd5GhkPaJzbHWpJDx9zRnupueMu
-	w8/8nxJGEtUc/RQQ2UvMWPqyPf8mV5WPun/YRl69/B6VhyyjhxuVH8yDkCjPtfRa
-	j+WY4gZOZ3F/SjpSWF7fnhljO/QH+AX6UjG80=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ttf0Wm1YdzaqxNgsiha8Nv5tyehFAoao
-	w5Pwrylue2fXc52QCCNfdnyw5O3eFG/BWA/XPuGyqs4fxJjQgUbRLlYKN4VUdR1a
-	U5gvGv1XMWK3PjZS11RTTuVKwxhDv5gF9PC6C8wZcpeMORL9c7Wq9nYSTaFrvOmy
-	k5OV6b1KI9o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D49C2B856;
-	Wed,  6 Feb 2013 13:16:23 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4341AB855; Wed,  6 Feb 2013
- 13:16:23 -0500 (EST)
-In-Reply-To: <87vca5gvx6.fsf@lifelogs.com> (Ted Zlatanov's message of "Wed,
- 06 Feb 2013 13:05:25 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 503232FE-7089-11E2-ADB2-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755489Ab3BFSTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 13:19:41 -0500
+Received: from mail-qa0-f51.google.com ([209.85.216.51]:39353 "EHLO
+	mail-qa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752089Ab3BFSTk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 13:19:40 -0500
+Received: by mail-qa0-f51.google.com with SMTP id cr7so792935qab.17
+        for <git@vger.kernel.org>; Wed, 06 Feb 2013 10:19:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=LCXr/DtMYNJifkTdJ1yP891+AUj1a2VY8r0/hxemtS0=;
+        b=FbKSsiE3AYaWHUUTCIyrWo/mFlNtXTDqJ/wU3eByaFVW53u+pLz4IDg5WZ74ovrruX
+         kcHnMUP7YuZEyh4tpug7C+oFd47EFTqBlaT8FdMH/gOguAYCyLaEphXu7bayyh5kg2cG
+         DtRaAXhmZeFDm0WnZdhF7pp5ImNt2qYshd7UKsheVaxNN7FdTfmNY4jmjpAAewS5vKEV
+         795AsbCKtfSoKZVGVMZP0TLhetmuhKEMku34cMgtkfGuzHT7xgs3acPHKdG8AXc41Qgv
+         K5JnJnpAQ5Kz2z1HL+1dL0z/kwnNNyWd15s82Ewc8u8wJc1f6foVGxYuxhwgGnJwQ8oK
+         up1w==
+X-Received: by 10.49.16.9 with SMTP id b9mr24892927qed.16.1360174779370; Wed,
+ 06 Feb 2013 10:19:39 -0800 (PST)
+Received: by 10.49.117.135 with HTTP; Wed, 6 Feb 2013 10:19:39 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215614>
 
-Ted Zlatanov <tzz@lifelogs.com> writes:
+Hi,
 
-> On Wed, 06 Feb 2013 08:29:30 -0800 Junio C Hamano <gitster@pobox.com> wrote: 
->
-> JCH> Is it ever (as opposed to "not always") possible to omit braces?
->
-> Oh yes!  Not that I recommend it, and I'm not even going to touch on
-> Perl Golf :)
->
-> JCH> It sounds as if we encourage the use of statement modifiers, which
-> JCH> certainly is not what I want to see.
->
-> Yup.  I think I captured that in the patch, but please feel free to
-> revise it after applying or throw it back to me.
+git-remote-gcrypt is a remote helper for git that (ab)uses this format
+to make it possible to push, pull and clone directly to and from a
+custom encrypted repository format. Available from::
 
-I'd suggest to just drop that "try to write without braces" entirely.
+     https://github.com/blake2-ppc/git-remote-gcrypt
 
-> JCH> Incidentally, your sentence is a good example of where use of
-> JCH> statement modifiers is appropriate: $youmust is rarely true.
->
-> I was trying to be funny, honestly.  But OK; reworded.
+It is relatively simple, and hopefully the protocol is sound and
+secure; it uses GPG and allows multiple participants to possibly
+collaborate using an untrusted and even public host. The git-on-git
+backend is experimental and probably buggy, but it works.
 
-It wasn't a useful guidance, but it _was_ funny.  
+The format intentionally targets mainly dumb hosts such as various
+bulk storage providers and therefore there is nothing smart about the
+protocol; when fetching we can do no better than downloading every new
+packfile.
+
+I hope it interests someone, and maybe it even reaches the target of
+being both usable and secure. It also helps me if you point out
+if/how/why it is broken(!).
+
+-ulrik
