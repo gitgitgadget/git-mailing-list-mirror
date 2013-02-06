@@ -1,80 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Why is ident_is_sufficient different on Windows?
-Date: Wed, 06 Feb 2013 12:52:39 -0800
-Message-ID: <7vbobxb1wo.fsf@alter.siamese.dyndns.org>
-References: <991CBC1C-912C-4DD6-B911-93F6B41D895E@quendi.de>
- <7vmwvhb2fm.fsf@alter.siamese.dyndns.org>
- <7vip65b25c.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 0/4] Make git-send-email git-credential
+Date: Wed, 06 Feb 2013 12:54:09 -0800
+Message-ID: <7v4nhpb1u6.fsf@alter.siamese.dyndns.org>
+References: <cover.1360172967.git.mina86@mina86.com>
+ <xa1thalpp47z.fsf@mina86.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Wed Feb 06 21:53:07 2013
+Cc: Ted Zlatanov <tzz@lifelogs.com>, Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org
+To: Michal Nazarewicz <mina86@mina86.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 21:54:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3BzN-0001ia-EH
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 21:53:05 +0100
+	id 1U3C0q-00030h-SE
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 21:54:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758516Ab3BFUwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 15:52:42 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63442 "EHLO
+	id S1758381Ab3BFUyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 15:54:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64856 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758121Ab3BFUwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 15:52:41 -0500
+	id S1758099Ab3BFUyN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 15:54:13 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 467C4B060;
-	Wed,  6 Feb 2013 15:52:41 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6761EB203;
+	Wed,  6 Feb 2013 15:54:12 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ALaZfbwlSgAOeSZEj8e6FW1ncFM=; b=BPRQud
-	VaKWEangPDdEghed0vyoRgjtgskDXBO3fQSJJAAzZDf7fYS7WaWoVXEEjnTD968Q
-	9SqDxwIIlqB8ccwQoVfoZ9lARRzzjP9dMgYaWpdxqUA+gmngtLfkxu5JnJh/vIAR
-	wt+fHDu+EAF8vAQr1YDguMIkpzBMLF8bOBWpE=
+	:content-type; s=sasl; bh=gqo5EmpERCkGG+J85fk2IogRXIY=; b=IX0sF7
+	gqVB180so2L8+cNGdS1yC6sXPfV9NLu51DimtFcR6T22IQ7reAcE8TiAowbb0b9Q
+	L8PBJVkZgHLp5E5rFaYf7SElIxSC+Xq44pctrkSXYstmQdpE6C751D4BS+Sv9j++
+	jl43OhsD4GoiPygZJdWkp43diZ8Q6QD1+krng=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TyDS0IGNnzT7nQBlj87tVvvrSScLnXgA
-	Ln/T3XdwMRGZAehy6dJV4c4MJXiUuGQjBoHytmiCi4d/r6FPimjVFqceVVwBhnPN
-	c5Zuy//jTRlG0YwuHHvRoi863CyyeED8fS/tNY2xiSY/EY/LqEjgHDBW4B7zMVEy
-	JpMzqj+5N1A=
+	:content-type; q=dns; s=sasl; b=HFdP4g/hWa4vSR/g9jJRdE7E4xAXM5h3
+	kjC4cb0gVnUZRhf2sNEIxl2jq+RZ/tqQYRwvJX5mxi08xOMgnKbgcDxquM2RtACd
+	ZaclcInvE3gJzHcNbd+jBBoqeL9QDfxcyP5TmOMBNsJK19OBOXNzJu7NGt8G/NXF
+	Kox/OzOrRKg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 381E0B05F;
-	Wed,  6 Feb 2013 15:52:41 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6DE7B1FE;
+	Wed,  6 Feb 2013 15:54:11 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B3859B05C; Wed,  6 Feb 2013
- 15:52:40 -0500 (EST)
-In-Reply-To: <7vip65b25c.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 06 Feb 2013 12:47:27 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1F0B9B1FA; Wed,  6 Feb 2013
+ 15:54:11 -0500 (EST)
+In-Reply-To: <xa1thalpp47z.fsf@mina86.com> (Michal Nazarewicz's message of
+ "Wed, 06 Feb 2013 21:38:56 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2599007A-709F-11E2-B231-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5B9C1716-709F-11E2-A458-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215642>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Michal Nazarewicz <mina86@mina86.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I suspect somebody from the Windows camp saw a patch I posted
->> without the ifdef, noticed that there is a problem to expect
->> IDENT_NAME_GIVEN to be set on Windows for some reason, and resulted
->> in a reroll of the function in that shape.
->>
->> I didn't find anything in the list archive, though.  So I am
->> stumped.
->
-> The only thing I can think of is that on Unix we can guess name from
-> GECOS, which could be considered sufficiently your name, while on
-> Windows we probably do not get anything useful there.
+> On second thought, give me a moment, ;) I've just discovered a bug
+> preventing git-send-email from mailing a patchset.
 
-http://thread.gmane.org/gmane.comp.version-control.git/137312/focus=137345
+I somehow found this highly amusing.
 
-These days, we encourage setting user.name explicitly even on a
-system on which it is likely that we will see a good GECOS value, so
-removing the ifdef and always check with ALL may not hurt anybody.
-I dunno.
+I wish all the bugs are like that: if your series is buggy, some
+parts of the system prevents you from sending it to the list.
+
+;-)
