@@ -1,134 +1,120 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
-Date: Wed, 06 Feb 2013 17:41:01 +0100
-Message-ID: <vpqobfxwg2q.fsf@grenoble-inp.fr>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
-	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
-	<20130130074306.GA17868@sigill.intra.peff.net>
-	<7v6226pdb7.fsf@alter.siamese.dyndns.org>
-	<vpqa9rhaml6.fsf@grenoble-inp.fr> <876225o5mj.fsf@lifelogs.com>
-	<vpqmwvhxyuj.fsf@grenoble-inp.fr> <87sj59mo2y.fsf@lifelogs.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 2/4] cat-file: do not die on --textconv without
+ textconv filters
+Date: Wed, 06 Feb 2013 08:47:16 -0800
+Message-ID: <7vr4ktmlt7.fsf@alter.siamese.dyndns.org>
+References: <20130205201106.GA29248@sigill.intra.peff.net>
+ <cover.1360162813.git.git@drmicha.warpmail.net>
+ <b20e91bc71e59b5390005f2e6428e69a467e80b5.1360162813.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Michal Nazarewicz <mpn@google.com>, git@vger.kernel.org,
-	Krzysztof Mazur <krzysiek@podlesie.net>,
-	Michal Nazarewicz <mina86@mina86.com>
-To: Ted Zlatanov <tzz@lifelogs.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 17:41:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Feb 06 17:47:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3844-00079s-Mn
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 17:41:41 +0100
+	id 1U389v-00047Q-JM
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 17:47:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757259Ab3BFQlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 11:41:20 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:43900 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756532Ab3BFQlQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 11:41:16 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r16GexjV001171
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 6 Feb 2013 17:40:59 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1U383R-00041J-Gv; Wed, 06 Feb 2013 17:41:01 +0100
-In-Reply-To: <87sj59mo2y.fsf@lifelogs.com> (Ted Zlatanov's message of "Wed, 06
-	Feb 2013 10:58:13 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 06 Feb 2013 17:41:01 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r16GexjV001171
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1360773662.49668@Jm8BZx+aeilD72Pi1xeDtQ
+	id S1757301Ab3BFQrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 11:47:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49254 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756532Ab3BFQrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 11:47:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B4AAB750;
+	Wed,  6 Feb 2013 11:47:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zoJ4Ky6alU9IXUgP5X8VrrBD+HY=; b=l9TybM
+	SKJtEIamdvLfjvZyFclTstPKdy0KxYIKfnrLICqaDRsO40I7y0GqwNNqKPMd05mc
+	m5OhFY2F0lo+y3iCE7eo1qR8ywfWy9AMIBlEXvcSrVBmrLr+CHmRRH7fTrccfzJJ
+	GkeiwzuTT0KCWxKnwqpmfw2qCMdBdSfIgUYlE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NCdWgfj1YwnAGHVDTrSM8K2sH9v9Re6b
+	9x7XXZC97ToquGrUkKYzmY42FBWygfActsiUW7DzG+EKmJrQ0r9rn1/URpomJm9s
+	CJ5R3Vz/uaXrxXUp3pFnThvEo2hTyWalWc5fPV0dx4dLRByUMwYewfCJXM5dM42n
+	TXf1xJcWxT4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FEB4B74E;
+	Wed,  6 Feb 2013 11:47:19 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9CA40B74D; Wed,  6 Feb 2013
+ 11:47:18 -0500 (EST)
+In-Reply-To: <b20e91bc71e59b5390005f2e6428e69a467e80b5.1360162813.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Wed, 6 Feb 2013 16:08:51 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DE8BBF14-707C-11E2-B749-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215598>
 
-Ted Zlatanov <tzz@lifelogs.com> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> None of these are a big deal, and Michal said he's working on libifying
-> this anyhow:
+> When a command is supposed to use textconv filters (by default or with
+> "--textconv") and none are configured then the blob is output without
+> conversion; the only exception to this rule is "cat-file --textconv".
+
+I am of two minds.  Because cat-file is mostly a low-level plumbing,
+I do not necessarily think it is a bad behaviour for it to error out
+when it was asked to apply textconv where there is no filter or when
+the filter fails to produce an output.  On the other hand, it
+certainly makes it more convenient for callers that do not care too
+deeply, taking textconv as a mere hint just like Porcelains do.
+
 >
-> - making 'fill' a special operation is weird
-
-Well, 'fill' is the only operation that mutates the credential structure
-(i.e. the only one for which "git credential" emits an output to be
-parsed), so you don't have much choice.
-
-> - anchor the key regex to beginning of line (not strictly necessary)
-
-Right. The greedyness of * ensures correction, but I like explicit
-anchors ^...$ too.
-
-> - sort the output tokens (after 'url' is extracted) so the output is consistent and testable
-
-Why not, if you want to use the output of credential_write in tests. But
-credential_write is essentially used to talk to "git credential", so the
-important information is the content of the hash before credential_write
-and after credential_read. They are unordered, but consistent and
-testable.
-
->>> Maybe this can be merged with the netrc credential helper's
->>> read_credential_data_from_stdin() and print_credential_data()?
+> Make it behave like the rest of textconv aware commands.
 >
-> MM> I don't know about the netrc credential helper, but I guess that's
-> MM> another layer. The git-remote-mediawiki code is the code to call the
-> MM> credential C API, that in turn may (or may not) call a credential
-> MM> helper.
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+>  builtin/cat-file.c           |  9 +++++----
+>  t/t8007-cat-file-textconv.sh | 20 +++++---------------
+>  2 files changed, 10 insertions(+), 19 deletions(-)
 >
-> Yup.  But what you call "read" and "write" are, to the credential
-> helper, "write" and "read" but it's the same protocol :)  So maybe the
-> names should be changed to reflect that, e.g. "query" and "response."
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 00528dd..6912dc2 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -146,10 +146,11 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+>  			die("git cat-file --textconv %s: <object> must be <sha1:path>",
+>  			    obj_name);
+>  
+> -		if (!textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
+> -			die("git cat-file --textconv: unable to run textconv on %s",
+> -			    obj_name);
+> -		break;
+> +		if (textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
+> +			break;
+> +
+> +		/* otherwise expect a blob */
+> +		exp_type = "blob";
 
-I don't think that would be a better naming. Maybe "serialize" and
-"parse" would be better, but "query" would sound like it establishes the
-connection and possibly reads the response to me.
+Please use the constant string blob_type that is available for all
+callers including this one.
 
-> MM> One thing to be careful about: git-remote-mediawiki is currently a
-> MM> standalone script, so it can be installed with a plain "cp
-> MM> git-remote-mediawiki $somewhere/".  One consequence of libification
-> MM> is that it adds a dependency on the library (e.g. Git.pm). We should
-> MM> be carefull to keep it easy for the user to install it (e.g. some
-> MM> kind of "make install", or update the doc).
->
-> I don't know--it's up to the `git-remote-mediawiki' maintainers...
+But stepping back a bit.
 
-That is, me ;-).
+What happens when I say "cat-file -c HEAD:Documentation", and what
+should happen when I do so?
 
-> But I think anywhere you have Git, you also have Git.pm, right?
+I think what we want to see in the ideal world might be:
 
-Yes, but you have to find out where it is installed. Git's Makefile
-hardcodes the path to Git.pm at build time, inserting one line in the
-perl script:
+ * If we have a textconv for tree objects at that path to format it
+   specially, textconv_object() may be allowed to textualize it
+   (even though it is not a blob, and textconv so far has always
+   been about blobs; it needs to be considered carefully if it makes
+   sense to allow such a usage) and show it;
 
-use lib (split(/:/, $ENV{GITPERLLIB} || "$INSTLIBDIR"));
+ * If we don't, we act as if -c were -p; in other words, we treat
+   the built-in "human output" implemented by "cat-file -p" as if
+   that is a textconv.
 
-The same needs to be done for git-remote-mediawiki. As much as possible,
-I'd rather avoid copy-pasting from Git's Makefile, so this means
-extracting the perl part of Git's Makefile and make it available in
-contrib/.
-
-I'll try a patch in this direction.
-
-> Maybe? But then you also have to look at whether Git.pm has the
-> functionality you need...
-
-If git-remote-mediawiki is installed from Git's source, I think it's OK
-to assume that Git.pm will be up to date, but that would be even better
-if we can issue a clean error message when the functions to be called do
-not exist.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+In other words, you may want to fall-thru to case 'p', not case 0
+with forced "blob" type.
