@@ -1,66 +1,55 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: CodingGuidelines Perl amendment
-Date: Wed, 06 Feb 2013 13:08:12 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <87r4ktgvsj.fsf@lifelogs.com>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
-	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
-	<20130130074306.GA17868@sigill.intra.peff.net>
-	<7v7gmumzo6.fsf@alter.siamese.dyndns.org>
-	<87pq0l5qbc.fsf@lifelogs.com>
-	<20130131193844.GA14460@sigill.intra.peff.net>
-	<87k3qrx712.fsf@lifelogs.com>
-	<20130203194148.GA26318@sigill.intra.peff.net>
-	<87sj5cvxnf.fsf_-_@lifelogs.com>
-	<7vk3qo2dsc.fsf@alter.siamese.dyndns.org>
-	<87k3qoudxp.fsf@lifelogs.com>
-	<7vvca7291z.fsf@alter.siamese.dyndns.org>
-	<87lib3uats.fsf@lifelogs.com>
-	<7v7gmn1xqi.fsf@alter.siamese.dyndns.org>
-	<871ucto4vj.fsf_-_@lifelogs.com>
-	<7vvca5mmmt.fsf@alter.siamese.dyndns.org>
-	<CANgJU+V5bhdpN_kWxQPEJgx24LXLtQJWRbnHwkSgm9zFwzm+fA@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: How to diff 2 file revisions with gitk
+Date: Wed, 06 Feb 2013 19:09:06 +0100
+Message-ID: <51129C42.4040207@kdbg.org>
+References: <1360164008.49200.YahooMailNeo@web171204.mail.ir2.yahoo.com> <1360166273.33888.YahooMailNeo@web171204.mail.ir2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 19:08:41 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "R. Diez" <rdiezmail-buspirate@yahoo.de>
+X-From: git-owner@vger.kernel.org Wed Feb 06 19:09:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U39QG-0004ln-Ch
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 19:08:40 +0100
+	id 1U39R9-0005Zp-AY
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 19:09:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757887Ab3BFSIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 13:08:16 -0500
-Received: from z.lifelogs.com ([173.255.230.239]:58963 "EHLO z.lifelogs.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757873Ab3BFSIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 13:08:14 -0500
-Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: tzz)
-	by z.lifelogs.com (Postfix) with ESMTPSA id C18A2DE0E3;
-	Wed,  6 Feb 2013 18:08:13 +0000 (UTC)
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-In-Reply-To: <CANgJU+V5bhdpN_kWxQPEJgx24LXLtQJWRbnHwkSgm9zFwzm+fA@mail.gmail.com>
-	(demerphq@gmail.com's message of "Wed, 6 Feb 2013 18:45:56 +0100")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
+	id S1757298Ab3BFSJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 13:09:13 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:53500 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755334Ab3BFSJL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 13:09:11 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 804E71001C;
+	Wed,  6 Feb 2013 19:09:07 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id DE46F19F459;
+	Wed,  6 Feb 2013 19:09:06 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130105 Thunderbird/17.0.2
+In-Reply-To: <1360166273.33888.YahooMailNeo@web171204.mail.ir2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215606>
 
-On Wed, 6 Feb 2013 18:45:56 +0100 demerphq <demerphq@gmail.com> wrote: 
+Am 06.02.2013 16:57, schrieb R. Diez:
+> I would like to start gitk, select with the mouse 2 
+> revisions of some file and then compare them, hopefully with an external
+>  diff tool, very much like I am used to with WinCVS.
+> 
+> The closest I
+>  got is to start gitk with a filename as an argument, in order to 
+> restrict the log to that one file. Then I right-click on a commit (a 
+> file revision) and choose "Mark this commit". However, if I right-click 
+> on another commit and choose "Compare with marked commit", I get a full 
+> commit diff with all files, and not just the file I specified on the 
+> command-line arguments.
 
-d> So if you objective is maintainability I would just ban "unless" outright.
+Edit->Preferences, tick 'Limit diff to listed paths'.
 
-Please consider me opposed to such a ban.
-
-Ted
+-- Hannes
