@@ -1,78 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 2/4] cat-file: do not die on --textconv without
- textconv filters
-Date: Wed, 06 Feb 2013 14:23:36 -0800
-Message-ID: <7vvca59j4n.fsf@alter.siamese.dyndns.org>
-References: <cover.1360162813.git.git@drmicha.warpmail.net>
- <b20e91bc71e59b5390005f2e6428e69a467e80b5.1360162813.git.git@drmicha.warpmail.net> <20130206221912.GD27507@sigill.intra.peff.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v3 0/8] Hiding refs
+Date: Wed, 6 Feb 2013 23:26:23 +0100
+Message-ID: <CACBZZX6xLvuMEhPnfYLj8W9pMLwdoS7Zb+mTtn+3DanJPiWfXw@mail.gmail.com>
+References: <1359571542-19852-1-git-send-email-gitster@pobox.com>
+ <5110BD18.3080608@alum.mit.edu> <20130205083327.GA4931@elie.Belkin>
+ <5110DF1D.8010505@alum.mit.edu> <CACsJy8BhL4qDb8BgOVuaUFF_9GXvgu55urYyKqPuZMZCTCoLwA@mail.gmail.com>
+ <7v4nhpckwd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 06 23:24:17 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 23:27:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3DPc-0003RP-LF
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 23:24:16 +0100
+	id 1U3DSN-0005px-0d
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 23:27:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932186Ab3BFWXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 17:23:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58156 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932131Ab3BFWXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 17:23:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E0A4B374;
-	Wed,  6 Feb 2013 17:23:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FTKG59U09BbUZrIBCXU+x7Z23uI=; b=oPMy6z
-	JGX5EiKeFoZGxHZx3661AbZWaTBRaNBRXwWGcDvNWWTnQR1GHH1VnzhWAOzdrBdi
-	3lwjXLfZNUNAgNuaAztA6dtHrxDlTC4DtswMK2ZCC6jmUqz1pV11C0XIixc0AU34
-	qWyo6lyc97Ftq+wH7auqSgWTwOfwiAFp3eqKs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gopt1vvidK6a+t9qHiVwnpcas9jmgP6U
-	4NA0VYW5FWiypYiCKlm/VZ5dY6+36MsiVJN6enhPw7xhxVczaeXDDgZM375Ck+Kn
-	MVpiOr8TCpy1qTdjqoATUboCo66pJtA6Ctnf7e6zSxJezm8hTvnofyxeVkoLyOgt
-	UdJ+brkmUak=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50BB2B350;
-	Wed,  6 Feb 2013 17:23:43 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 22844B320; Wed,  6 Feb 2013
- 17:23:38 -0500 (EST)
-In-Reply-To: <20130206221912.GD27507@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 6 Feb 2013 17:19:12 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DD423190-70AB-11E2-A5D1-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756749Ab3BFW0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 17:26:44 -0500
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:53815 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754330Ab3BFW0o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 17:26:44 -0500
+Received: by mail-oa0-f53.google.com with SMTP id m1so2136379oag.12
+        for <git@vger.kernel.org>; Wed, 06 Feb 2013 14:26:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=0PxxtyfSkOUmNeDyMV5KO49NxwppVKTn16oJdIUnpAQ=;
+        b=LqgJgvKPDLaS+b7ZA/bhUOQMBNmXY4VcecB3QDl+1nB+JhwfZakSkolDxYsijNjLbv
+         VxgcpIuCGmmzfsTFZncTtyFLtek/yYtagGHD9I5mazdeOEbQ4kkLAj8ndxhvGkURFaqN
+         ByWn/c6mkwQC8KNwO2iEUdauUEnzmsC3MK9a4hR7M9N4RFNohmQEMpjsMJP8yQ861FzE
+         a1Ytk+2uKAjwTA49s4JDJwvL9DIRA3eEnGqs6qlpiARKkEzzJ8jlCe7yVBxXyqPptBHT
+         cpsZi/8LpcNNMlrqid3fpq3ycFIBIr/4mQpTQ2GN/xoRmrjP3QblsqzDWVfH/w0z0U7N
+         veWg==
+X-Received: by 10.60.32.243 with SMTP id m19mr18648182oei.13.1360189603469;
+ Wed, 06 Feb 2013 14:26:43 -0800 (PST)
+Received: by 10.76.168.163 with HTTP; Wed, 6 Feb 2013 14:26:23 -0800 (PST)
+In-Reply-To: <7v4nhpckwd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215655>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Feb 6, 2013 at 8:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Which made me wonder: what happens with:
->
->   git cat-file --textconv HEAD
->
-> It looks like we die just before textconv-ing, because we have no
-> obj_context.path. But that is also unlike all of the other --textconv
-> switches, which mean "turn on textconv if you are showing a blob that
-> supports it" and not "the specific operation is --textconv, apply it to
-> this blob". I don't know if that is worth changing or not.
+Maybe this should be split up into a different thread, but:
 
-OK, so in that sense, "cat-file --textconv HEAD" (or HEAD:) should
-die with "Hey, that is not a blob", in other words, Michael's patch
-does what we want without further tweaks, right?
+> The upload-pack-2 service sits on a port different from today's
+> [...].
 
-By the way are we sure textconv_object() barfs and dies if fed a non
-blob?  Otherwise the above does not hold, and the semantics become
-"turn on textconv if the object you are showing supports it,
-otherwise it has to be a blob.", I think.
+I think there's a simpler way to do this, which is that:
+
+ * New clients supporting v2 of the protocol send some piece of data
+   that would break old servers.
+
+ * If that fails the new client goes "oh jeeze, I guess it's an old
+   server", and try again with the old protocol.
+
+ * The client then saves a date (or the version the server gave us)
+   indicating that it tried the new protocol on that remote, tries
+   again sometime later.
+
+We already covered in previous discussions how this would be simpler
+with the HTTP protocol, since you could just send an extra header
+inviting the server to speak the new protocol.
+
+But for the other transports we can just try the new protocol and
+retry with the old one as a fallback if it doesn't work. That'll allow
+us to gracefully migrate without needing to change the git:// port.
+
+Besides, I think the vast majority of users are using Git via http://
+or ssh://, where we can't just change the port, but even so making
+people change the port when we could handle this more gracefully would
+be a big PITA. Adding new firewall holes is often a big bureaucratic
+nightmare in some organizations.
