@@ -1,100 +1,100 @@
-From: "R. Diez" <rdiezmail-buspirate@yahoo.de>
-Subject: How to diff 2 file revisions with gitk
-Date: Wed, 6 Feb 2013 15:57:53 +0000 (GMT)
-Message-ID: <1360166273.33888.YahooMailNeo@web171204.mail.ir2.yahoo.com>
-References: <1360164008.49200.YahooMailNeo@web171204.mail.ir2.yahoo.com>
-Reply-To: "R. Diez" <rdiezmail-buspirate@yahoo.de>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
+Date: Wed, 06 Feb 2013 10:58:13 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <87sj59mo2y.fsf@lifelogs.com>
+References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
+	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
+	<20130130074306.GA17868@sigill.intra.peff.net>
+	<7v6226pdb7.fsf@alter.siamese.dyndns.org>
+	<vpqa9rhaml6.fsf@grenoble-inp.fr> <876225o5mj.fsf@lifelogs.com>
+	<vpqmwvhxyuj.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 06 16:58:31 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Michal Nazarewicz <mpn@google.com>, git@vger.kernel.org,
+	Krzysztof Mazur <krzysiek@podlesie.net>,
+	Michal Nazarewicz <mina86@mina86.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Feb 06 16:58:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U37OG-0004ib-Qy
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 16:58:29 +0100
+	id 1U37OV-0004wG-OJ
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 16:58:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757553Ab3BFP6A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Feb 2013 10:58:00 -0500
-Received: from nm10.bullet.mail.ird.yahoo.com ([77.238.189.39]:47449 "HELO
-	nm10.bullet.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1757495Ab3BFP5z convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Feb 2013 10:57:55 -0500
-Received: from [77.238.189.53] by nm10.bullet.mail.ird.yahoo.com with NNFMP; 06 Feb 2013 15:57:54 -0000
-Received: from [212.82.108.118] by tm6.bullet.mail.ird.yahoo.com with NNFMP; 06 Feb 2013 15:57:54 -0000
-Received: from [127.0.0.1] by omp1027.mail.ird.yahoo.com with NNFMP; 06 Feb 2013 15:57:54 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 103215.99133.bm@omp1027.mail.ird.yahoo.com
-Received: (qmail 35009 invoked by uid 60001); 6 Feb 2013 15:57:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1360166274; bh=4fRIoHheZa8cKbWBxKEDZmAzaqpmBPh+dAlOsjgvXZk=; h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:References:Message-ID:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=OZuD/So4CfZXuM9162R0Pp7FwHLuvfcu/e9tXAjuuRPI3c3t6NaXx+ytTaSpAcArxR8Xt52sjUN7tRYg3QbyW5oFIJisbEUtzSRHxjM6w3HIRT8FuZFAxkvIpgD8vrtwoLpGCiH1XBMlgoKleGYH/TjC14DA/Fw9fxYiiEHJ4Co=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.de;
-  h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:References:Message-ID:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=PcgdRt6fiXgKMVgeigWvjGg6ATyEz67lJFEpAsyz2S7tItPcrh1h109xnvlwwSpvwU/Y6uODqLbBmFZzi5OfLKfsJrYP7XzbyYtzs8zm1+wHHGeO0YqdAW+Qd4wi4nZ6R3RlPDkjTFxFoJlsp9Z7RpQW8B+O/om3wuRUufVd/DQ=;
-X-YMail-OSG: SFRUKOcVM1kSsho4yBuKu_vm.RcDEMH07q7lVA5Wv7Q52Bi
- DHJ6Qy9AUJ7xfljxCryMG755bSh2PUGMT6oxE8xn0tzY7zYbE4vc38CeCk8B
- f5r9EtEo8h0N3xZF2WFCzWVIC1H0Swn6AnS2k0CBOLzQj4S9sZ_z9tjX0ZmO
- 5Tx8T5BiKW2u163MUN4fjMJasIhClSgjSrbayV9gwuhSnFqbkHEkn43mduJC
- QL1Heg80Q.VvQ_j._S0znGTtwWJYiMd8KNacHmZrfVz9_y0_uphUqzfpErgY
- CGcru4KW.6.l1tvrT9QYFIUmppS4y80ccTT19aIIaTdlUeA6IlsOgf6Zb_Kg
- Zz5QBBEbZwOeMn9jZtIJHyamP9YH1qZjQ8zg5vc0f2qsBpQaWnzI8CIUVyY5
- .gFNaBH6veEtxnkNJX0ZAunJbRrHX6coTaMjODy64.MDPNwvOGaF04kn94tI
- 3vsBbUWqtOwkHKLgSaTxhUVK0ibj8cQxHzMVtZiWaD923RmOWqUBTYwy_QWb
- rSGN5zLRTXTzkUI4RrQj7.Yxm3zf.e7APSEH4O_M8dhvLzHJeCkv6Z75alfv
- H_SBKmTt6CU2KrOwMuCyNwUrEsCA-
-Received: from [84.246.251.221] by web171204.mail.ir2.yahoo.com via HTTP; Wed, 06 Feb 2013 15:57:53 GMT
-X-Rocket-MIMEInfo: 001.001,SGkgdGhlcmU6CgpJIGFza2VkIGEgZmV3IGRheXMgYWdvIHdoZXRoZXIgSSBjb3VsZCBlYXNpbHkgZGlmZiAyIGZpbGUgcmV2aXNpb25zIHdpdGggdGhlIG1vdXNlIGluIGdpdGssIGJ1dCBJIGdvdCBubyByZXBseSB5ZXQsIHNlZSBoZXJlOgoKCsKgwqAgSG93IHRvIGRpZmYgdHdvIGZpbGUgcmV2aXNpb25zIHdpdGggdGhlIG1vdXNlICh3aXRoIGdpdGspCsKgwqAgaHR0cHM6Ly9ncm91cHMuZ29vZ2xlLmNvbS9mb3J1bS8jIXRvcGljL2dpdC11c2Vycy85em5zUXNUQjBkRQoKSSBhbSBob3BpbmcgdGhhdCBpdCABMAEBAQE-
-X-Mailer: YahooMailWebService/0.8.132.503
-In-Reply-To: <1360164008.49200.YahooMailNeo@web171204.mail.ir2.yahoo.com>
+	id S1757557Ab3BFP6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 10:58:18 -0500
+Received: from z.lifelogs.com ([173.255.230.239]:45807 "EHLO z.lifelogs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757517Ab3BFP6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 10:58:15 -0500
+Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: tzz)
+	by z.lifelogs.com (Postfix) with ESMTPSA id ACA69DE0E3;
+	Wed,  6 Feb 2013 15:58:14 +0000 (UTC)
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+In-Reply-To: <vpqmwvhxyuj.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+	"Wed, 06 Feb 2013 16:10:12 +0100")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215594>
 
-Hi there:
+On Wed, 06 Feb 2013 16:10:12 +0100 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote: 
 
-I asked a few days ago whether I could easily diff 2 file revisions wit=
-h the mouse in gitk, but I got no reply yet, see here:
+MM> Ted Zlatanov <tzz@lifelogs.com> writes:
+MM> [...] so the way to go for send-email is probably to libify the
+MM> credential support in git-remote-mediawiki, and to use it in send-email.
+>> 
+>> I looked and that's indeed very useful.  If it's put in a library, I'd
+>> use credential_read() and credential_write() in my netrc credential
+>> helper.  But I would formalize it a little more about the token names
+>> and output,
 
+MM> Can you elaborate on this? The idea of the Perl code was to mimick a
+MM> call to the C API, keeping essentially the same names.
 
-=A0=A0 How to diff two file revisions with the mouse (with gitk)
-=A0=A0 https://groups.google.com/forum/#!topic/git-users/9znsQsTB0dE
+None of these are a big deal, and Michal said he's working on libifying
+this anyhow:
 
-I am hoping that it was the wrong mailing list, and this one the right =
-one. 8-)
+- making 'fill' a special operation is weird
+- anchor the key regex to beginning of line (not strictly necessary)
+- sort the output tokens (after 'url' is extracted) so the output is consistent and testable
 
-Here is the full question text again:
+>> and I wouldn't necessarily die() on error. 
 
---------8<--------8<--------8<--------8<--------
+MM> Sure, die()ing in a library is bad.
 
-I would like to start gitk, select with the mouse 2=20
-revisions of some file and then compare them, hopefully with an externa=
-l
- diff tool, very much like I am used to with WinCVS.
+>> Maybe this can be merged with the netrc credential helper's
+>> read_credential_data_from_stdin() and print_credential_data()?
 
-The closest I
- got is to start gitk with a filename as an argument, in order to=20
-restrict the log to that one file. Then I right-click on a commit (a=20
-file revision) and choose "Mark this commit". However, if I right-click=
-=20
-on another commit and choose "Compare with marked commit", I get a full=
-=20
-commit diff with all files, and not just the file I specified on the=20
-command-line arguments.
+MM> I don't know about the netrc credential helper, but I guess that's
+MM> another layer. The git-remote-mediawiki code is the code to call the
+MM> credential C API, that in turn may (or may not) call a credential
+MM> helper.
 
-Selecting a filename in the "Tree" view and choosing "Highlight this on=
-ly", as I found on the Internet, does not seem to help.
+Yup.  But what you call "read" and "write" are, to the credential
+helper, "write" and "read" but it's the same protocol :)  So maybe the
+names should be changed to reflect that, e.g. "query" and "response."
 
-I have git 1.7.9 (on Cygwin). Can someone help?
+MM> One thing to be careful about: git-remote-mediawiki is currently a
+MM> standalone script, so it can be installed with a plain "cp
+MM> git-remote-mediawiki $somewhere/".  One consequence of libification
+MM> is that it adds a dependency on the library (e.g. Git.pm). We should
+MM> be carefull to keep it easy for the user to install it (e.g. some
+MM> kind of "make install", or update the doc).
 
-By the way, it would be nice if gitk could launch the external diff too=
-l from the "Compare with marked commit" option too.
+I don't know--it's up to the `git-remote-mediawiki' maintainers...  But
+I think anywhere you have Git, you also have Git.pm, right?  Maybe?  But
+then you also have to look at whether Git.pm has the functionality you
+need... so I better go quiet :)
 
---------8<--------8<--------8<--------8<--------
-
-Thanks in advance,
-=A0=A0 rdiez
+Ted
