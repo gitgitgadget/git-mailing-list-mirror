@@ -1,68 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
-Date: Wed, 06 Feb 2013 09:11:17 +0100
-Message-ID: <vpqa9rhaml6.fsf@grenoble-inp.fr>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
-	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
-	<20130130074306.GA17868@sigill.intra.peff.net>
-	<7v6226pdb7.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: importing two different trees into a fresh git repo
+Date: Wed, 6 Feb 2013 04:07:32 -0500
+Message-ID: <20130206090731.GA6452@sigill.intra.peff.net>
+References: <CAPKkNb6+ojb+uvBW+AkhGrhjR85LrJEbmR0KmvaKYb2Cj5Aa4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Michal Nazarewicz <mpn@google.com>,
-	git@vger.kernel.org, Krzysztof Mazur <krzysiek@podlesie.net>,
-	Michal Nazarewicz <mina86@mina86.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 09:12:05 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Constantine A. Murenin" <mureninc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 10:08:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U306v-0005Xl-3i
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 09:12:05 +0100
+	id 1U30z4-0006V8-P8
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 10:08:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751330Ab3BFILm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 03:11:42 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:55605 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751044Ab3BFILl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 03:11:41 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r168BHsr026430
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 6 Feb 2013 09:11:17 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1U306A-0000mS-7W; Wed, 06 Feb 2013 09:11:18 +0100
-In-Reply-To: <7v6226pdb7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 05 Feb 2013 15:10:20 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 06 Feb 2013 09:11:19 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r168BHsr026430
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1360743081.38725@tf3uOH5dXiM65fLMAssubw
+	id S1751261Ab3BFJHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 04:07:39 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35600 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750716Ab3BFJHf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 04:07:35 -0500
+Received: (qmail 3325 invoked by uid 107); 6 Feb 2013 09:09:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Feb 2013 04:09:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Feb 2013 04:07:32 -0500
+Content-Disposition: inline
+In-Reply-To: <CAPKkNb6+ojb+uvBW+AkhGrhjR85LrJEbmR0KmvaKYb2Cj5Aa4g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215566>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Feb 05, 2013 at 01:46:09PM -0800, Constantine A. Murenin wrote:
 
-> I see a lot of rerolls on the credential helper front, but is there
-> anybody working on hooking send-email to the credential framework?
+> I've encountered two problems so far:
+> 
+> 0. After initialising the repository, I was unable to `git checkout
+> --orphan Debian-6.0.4-nginx-1.0.12` -- presumably it doesn't work when
+> the repo is empty?  This sounds like a bug or an artefact of
+> implementation.  I presume this can be worked around by committing
+> into master instead, and then doing `git checkout -b
+> Debian-6.0.4-nginx-1.0.12`, and then force-fixing the master somehow
+> later on.
 
-Not answering the question, but git-remote-mediawiki supports the
-credential framework. It is written in perl, and the credential support
-is rather cleanly written and doesn't have dependencies on the wiki
-part, so the way to go for send-email is probably to libify the
-credential support in git-remote-mediawiki, and to use it in send-email.
+What version of git are you using? Using both "-b" and "--orphan" from a
+non-existing branch used to be broken, but was fixed by abe1998 (git
+checkout -b: allow switching out of an unborn branch, 2012-01-30), which
+first appeared in git v1.7.9.2.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> 1. After making a mistake on my first commit (my first commit into
+> OpenBSD-5.2-nginx-1.2.2 orphan branch ended up including a directory
+> from master by mistake), I am now unable to rebase and "fixup" the
+> changes -- `git rebase --interactive HEAD~2` doesn't work, which, from
+> one perspective, makes perfect sense (indeed there's no prior
+> revision), but, from another, it's not immediately obvious how to
+> quickly work around it.
+
+You cannot ask to rebase onto HEAD~2 because it does not exist (I'm assuming
+from your description that HEAD~1 is the root of your repository). But
+you can use the "--root" flag to ask git to rebase all the way down to
+the roots, like:
+
+  git rebase -i --root
+
+However, note that older versions of git do not support using "--root"
+with "-i". The first usable version is v1.7.12.
+
+-Peff
