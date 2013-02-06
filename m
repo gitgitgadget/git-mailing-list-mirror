@@ -1,83 +1,86 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 2/4] cat-file: do not die on --textconv without
- textconv filters
-Date: Wed, 6 Feb 2013 17:19:12 -0500
-Message-ID: <20130206221912.GD27507@sigill.intra.peff.net>
+Subject: Re: [RFC/PATCH 3/4] grep: allow to use textconv filters
+Date: Wed, 6 Feb 2013 17:23:44 -0500
+Message-ID: <20130206222344.GE27507@sigill.intra.peff.net>
 References: <cover.1360162813.git.git@drmicha.warpmail.net>
- <b20e91bc71e59b5390005f2e6428e69a467e80b5.1360162813.git.git@drmicha.warpmail.net>
+ <da8c01b918c94c84ab61859b1b1453885bff5b06.1360162813.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Feb 06 23:19:47 2013
+X-From: git-owner@vger.kernel.org Wed Feb 06 23:24:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3DLA-00082Z-1g
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 23:19:40 +0100
+	id 1U3DPW-0003On-WB
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 23:24:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932197Ab3BFWTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 17:19:18 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37147 "EHLO
+	id S932165Ab3BFWXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 17:23:48 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37156 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932146Ab3BFWTQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 17:19:16 -0500
-Received: (qmail 11255 invoked by uid 107); 6 Feb 2013 22:20:41 -0000
+	id S932131Ab3BFWXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 17:23:47 -0500
+Received: (qmail 11336 invoked by uid 107); 6 Feb 2013 22:25:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Feb 2013 17:20:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Feb 2013 17:19:12 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Feb 2013 17:25:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Feb 2013 17:23:44 -0500
 Content-Disposition: inline
-In-Reply-To: <b20e91bc71e59b5390005f2e6428e69a467e80b5.1360162813.git.git@drmicha.warpmail.net>
+In-Reply-To: <da8c01b918c94c84ab61859b1b1453885bff5b06.1360162813.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215653>
 
-On Wed, Feb 06, 2013 at 04:08:51PM +0100, Michael J Gruber wrote:
+On Wed, Feb 06, 2013 at 04:08:52PM +0100, Michael J Gruber wrote:
 
-> When a command is supposed to use textconv filters (by default or with
-> "--textconv") and none are configured then the blob is output without
-> conversion; the only exception to this rule is "cat-file --textconv".
+> From: Jeff King <peff@peff.net>
 > 
-> Make it behave like the rest of textconv aware commands.
+> Recently and not so recently, we made sure that log/grep type operations
+> use textconv filters when a userfacing diff would do the same:
+> 
+> ef90ab6 (pickaxe: use textconv for -S counting, 2012-10-28)
+> b1c2f57 (diff_grep: use textconv buffers for add/deleted files, 2012-10-28)
+> 0508fe5 (combine-diff: respect textconv attributes, 2011-05-23)
+> 
+> "git grep" currently does not use textconv filters at all, that is
+> neither for displaying the match and context nor for the actual grepping.
+> 
+> Introduce an option "--textconv" which makes git grep use any configured
+> textconv filters for grepping and output purposes. It is off by default.
+> 
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 
-Makes sense.
+Signed-off-by: Jeff King <peff@peff.net>
 
-> -		if (!textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
-> -			die("git cat-file --textconv: unable to run textconv on %s",
-> -			    obj_name);
-> -		break;
-> +		if (textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
-> +			break;
+I'd really love to see the refactoring I talked about in my earlier
+message. But as I'm not willing to devote the time to do it right now,
+and I do not think this patch has any particular bugs, I think it is OK
+as it gets the job done, and does not make the later refactoring any
+harder.
 
-The implication here is that textconv_object should be handling its own
-errors and dying, and the return is always "yes, I converted" or "no, I
-did not". Which I think is the case.
+The one ugliness that still remains is:
 
-> +
-> +		/* otherwise expect a blob */
-> +		exp_type = "blob";
->  
->  	case 0:
->  		if (type_from_string(exp_type) == OBJ_BLOB) {
+> +	if (opt->allow_textconv) {
+> +		grep_source_load_driver(gs);
+> +		/*
+> +		 * We might set up the shared textconv cache data here, which
+> +		 * is not thread-safe.
+> +		 */
+> +		grep_attr_lock();
+> +		textconv = userdiff_get_textconv(gs->driver);
+> +		grep_attr_unlock();
+> +	}
 
-I wondered at first why we needed to set exp_type here; shouldn't we
-already be expecting a blob if we are doing textconv? But then I see
-this is really about the fall-through in the switch (which we might want
-an explicit comment for).
-
-Which made me wonder: what happens with:
-
-  git cat-file --textconv HEAD
-
-It looks like we die just before textconv-ing, because we have no
-obj_context.path. But that is also unlike all of the other --textconv
-switches, which mean "turn on textconv if you are showing a blob that
-supports it" and not "the specific operation is --textconv, apply it to
-this blob". I don't know if that is worth changing or not.
+We lock/unlock the grep_attr_lock twice here: once in
+grep_source_load_driver, and then immediately again to call
+userdiff_get_textconv. I don't know if it is worth doing the two under
+the same lock or not (I guess it should not increase lock contention,
+since we do the same amount of work, so it is really just the extra lock
+instructions).
 
 -Peff
