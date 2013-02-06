@@ -1,72 +1,93 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
-Date: Wed, 06 Feb 2013 09:53:56 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <876225o5mj.fsf@lifelogs.com>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
-	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
-	<20130130074306.GA17868@sigill.intra.peff.net>
-	<7v6226pdb7.fsf@alter.siamese.dyndns.org>
-	<vpqa9rhaml6.fsf@grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Michal Nazarewicz <mpn@google.com>, git@vger.kernel.org,
-	Krzysztof Mazur <krzysiek@podlesie.net>,
-	Michal Nazarewicz <mina86@mina86.com>
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: Re: Bug in "git log --graph -p -m" (version 1.7.7.6)
+Date: Wed, 6 Feb 2013 10:03:00 -0500
+Message-ID: <201302061503.r16F30UA016375@freeze.ariadne.com>
+References: <201302051700.r15H0GXx031004@freeze.ariadne.com>
+	<7vtxpqslpm.fsf@alter.siamese.dyndns.org> <vpqmwvia2n7.fsf@grenoble-inp.fr>
+Cc: gitster@pobox.com, git@vger.kernel.org
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 06 15:54:23 2013
+X-From: git-owner@vger.kernel.org Wed Feb 06 16:03:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U36OD-000655-SJ
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 15:54:22 +0100
+	id 1U36X2-0006bJ-Tj
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 16:03:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754132Ab3BFOx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 09:53:59 -0500
-Received: from z.lifelogs.com ([173.255.230.239]:45399 "EHLO z.lifelogs.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751294Ab3BFOx7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 09:53:59 -0500
-Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: tzz)
-	by z.lifelogs.com (Postfix) with ESMTPSA id 69192DE0E3;
-	Wed,  6 Feb 2013 14:53:57 +0000 (UTC)
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-In-Reply-To: <vpqa9rhaml6.fsf@grenoble-inp.fr> (Matthieu Moy's message of
-	"Wed, 06 Feb 2013 09:11:17 +0100")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
+	id S1756309Ab3BFPDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 10:03:07 -0500
+Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:37415
+	"EHLO qmta05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755168Ab3BFPDE (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Feb 2013 10:03:04 -0500
+Received: from omta10.westchester.pa.mail.comcast.net ([76.96.62.28])
+	by qmta05.westchester.pa.mail.comcast.net with comcast
+	id wzaY1k0030cZkys55332fF; Wed, 06 Feb 2013 15:03:02 +0000
+Received: from freeze.ariadne.com ([24.34.72.61])
+	by omta10.westchester.pa.mail.comcast.net with comcast
+	id x3311k01B1KKtkw3W33218; Wed, 06 Feb 2013 15:03:02 +0000
+Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r16F30kb016376;
+	Wed, 6 Feb 2013 10:03:01 -0500
+Received: (from worley@localhost)
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r16F30UA016375;
+	Wed, 6 Feb 2013 10:03:00 -0500
+In-reply-to: <vpqmwvia2n7.fsf@grenoble-inp.fr> (Matthieu.Moy@grenoble-inp.fr)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1360162982;
+	bh=A5JDwsN+8GrFtuYdcJuDVm8NtiTPbXB+vrB5BMnKy28=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=kKUZiA+0eHpyeOHXq0lF67/QrfU3x39o4+cSKLshn7+21rd1X8qTckHzHUW8Te563
+	 FSl4OCGdwXFS/7OpvqOYW1cRMnS7+A1lOsrHPWYI/dJHsL1PmVnI5dFaRGjLPkEAQS
+	 F+7TaVlVRT3aNqOmTtJY0QY/nveC2uSR3noWZEOaUo7rnlcf3D9MnZjw7K8mSKEEUP
+	 x/1sIbfbuPImbo0054Gadk2ZgQbGzVeRWsOx0ar6gHhRv5Kt7AtGNTfkkDgMfc24QU
+	 J8VfgTF9GZP0NdvOAmgTYYQBz0gsFpPiwV/Xj8pF4nHBf1m4LCezNm73EaT/Uu83iW
+	 Lly4Sblojdk2w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215580>
 
-On Wed, 06 Feb 2013 09:11:17 +0100 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote: 
+> From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+> 
+> In any case, I can't reproduce with 1.8.1.2.526.gf51a757: I don't get
+> undless output. On the other hand, I get a slightly misformatted output:
+> 
+> *   commit a393ed598e9fb11436f85bd58f1a38c82f2cadb7 (from 2c1e6a36f4b712e914fac994463da7d0fdb2bc6d)
+> |\  Merge: 2c1e6a3 33e70e7
+> | | Author: Matthieu Moy <Matthieu.Moy@imag.fr>
+> | | Date:   Tue Feb 5 22:05:33 2013 +0100
+> | | 
+> | |     Commit S
+> | | 
+> | | diff --git a/file b/file
+> | | index 6bb4d3e..afd2e75 100644
+> | | --- a/file
+> | | +++ b/file
+> | | @@ -1,4 +1,5 @@
+> | |  1
+> | |  1a
+> | |  2
+> | | +2a
+> | |  3
+> | | 
+> commit a393ed598e9fb11436f85bd58f1a38c82f2cadb7 (from 33e70e70c0173d634826b998bdc304f93c0966b8)
+> | | Merge: 2c1e6a3 33e70e7
+> | | Author: Matthieu Moy <Matthieu.Moy@imag.fr>
+> | | Date:   Tue Feb 5 22:05:33 2013 +0100
+> 
+> The second "commit" line (diff with second parent) doesn't have the
+> "| |" prefix, I don't think this is intentional.
 
-MM> Junio C Hamano <gitster@pobox.com> writes:
->> I see a lot of rerolls on the credential helper front, but is there
->> anybody working on hooking send-email to the credential framework?
+The second "commit" line should start with "| * ":
 
-MM> Not answering the question, but git-remote-mediawiki supports the
-MM> credential framework. It is written in perl, and the credential support
-MM> is rather cleanly written and doesn't have dependencies on the wiki
-MM> part, so the way to go for send-email is probably to libify the
-MM> credential support in git-remote-mediawiki, and to use it in send-email.
+> | | 
+> | * commit a393ed598e9fb11436f85bd58f1a38c82f2cadb7 (from 33e70e70c0173d634826b998bdc304f93c0966b8)
+> | | Merge: 2c1e6a3 33e70e7
+> | | Author: Matthieu Moy <Matthieu.Moy@imag.fr>
+> | | Date:   Tue Feb 5 22:05:33 2013 +0100
 
-I looked and that's indeed very useful.  If it's put in a library, I'd
-use credential_read() and credential_write() in my netrc credential
-helper.  But I would formalize it a little more about the token names
-and output, and I wouldn't necessarily die() on error.  Maybe this can
-be merged with the netrc credential helper's
-read_credential_data_from_stdin() and print_credential_data()?
-
-Let me know if you'd like me to libify this...  I'm happy to leave it to
-Matthieu or Michal, or anyone else interested.
-
-Ted
+Dale
