@@ -1,7 +1,9 @@
-From: demerphq <demerphq@gmail.com>
+From: Ted Zlatanov <tzz@lifelogs.com>
 Subject: Re: CodingGuidelines Perl amendment
-Date: Wed, 6 Feb 2013 19:44:16 +0100
-Message-ID: <CANgJU+X=Bb=ncqOxsd1hZDWsnFkt-bJw=Zbtuz8_KC0gO-dLaQ@mail.gmail.com>
+Date: Wed, 06 Feb 2013 13:54:47 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <87bobxgtmw.fsf@lifelogs.com>
 References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
 	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
 	<20130130074306.GA17868@sigill.intra.peff.net>
@@ -21,99 +23,65 @@ References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina
 	<87vca5gvx6.fsf@lifelogs.com>
 	<CANgJU+VbkQ+xa+_sSAu-3pMe+6gycHi9J4VR18M5YJt=pa9QUw@mail.gmail.com>
 	<87ip65guj8.fsf@lifelogs.com>
+	<CANgJU+X=Bb=ncqOxsd1hZDWsnFkt-bJw=Zbtuz8_KC0gO-dLaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Jeff King <peff@peff.net>
-To: Ted Zlatanov <tzz@lifelogs.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 19:44:41 2013
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 19:55:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U39z7-0001P4-1Q
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 19:44:41 +0100
+	id 1U3A9I-00027f-Aq
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 19:55:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757141Ab3BFSoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 13:44:18 -0500
-Received: from mail-qc0-f182.google.com ([209.85.216.182]:38568 "EHLO
-	mail-qc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756615Ab3BFSoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 13:44:17 -0500
-Received: by mail-qc0-f182.google.com with SMTP id k19so661677qcs.27
-        for <git@vger.kernel.org>; Wed, 06 Feb 2013 10:44:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=DaEilMuBsES5M6KUBnA5IuU5BPnzOwUNhwaqCvUt0ao=;
-        b=W0KQ4b435Srutnmt1nQAxkchC3k6wivsrnRu41jYMGhADJe8rJd85JzOonPJ8MWlWX
-         mFwNQsm/i5fO+4kRtdne3QNPzcibS1Vz9bQecMp7OiiA7a8uwtfNKXLZXb9EETmq0R9j
-         i5nNlkP/NNsCYjRasZKBFO5rAQT0QHNi7l30KApyPsDn/7QMJB0glULdtdTiY4lLeaYD
-         Yr5DvJ6HB0JmSajGtNx6936Dz8RlisKEapNtqRx02aGTg96hE4DLYf9wtObCdEJa7LA2
-         8VGLAknNMo4ApZxGGjYDJ5Mlod48wMJmZEt/iAlfigVtzQrpnI6G0knEcnEPIN4mh7R9
-         EH9g==
-X-Received: by 10.224.52.68 with SMTP id h4mr21047144qag.17.1360176256959;
- Wed, 06 Feb 2013 10:44:16 -0800 (PST)
-Received: by 10.49.94.196 with HTTP; Wed, 6 Feb 2013 10:44:16 -0800 (PST)
-In-Reply-To: <87ip65guj8.fsf@lifelogs.com>
+	id S1756368Ab3BFSyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 13:54:50 -0500
+Received: from z.lifelogs.com ([173.255.230.239]:46942 "EHLO z.lifelogs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755877Ab3BFSyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 13:54:49 -0500
+Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: tzz)
+	by z.lifelogs.com (Postfix) with ESMTPSA id D5F25DE0E3;
+	Wed,  6 Feb 2013 18:54:48 +0000 (UTC)
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+In-Reply-To: <CANgJU+X=Bb=ncqOxsd1hZDWsnFkt-bJw=Zbtuz8_KC0gO-dLaQ@mail.gmail.com>
+	(demerphq@gmail.com's message of "Wed, 6 Feb 2013 19:44:16 +0100")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215622>
 
-On 6 February 2013 19:35, Ted Zlatanov <tzz@lifelogs.com> wrote:
-> On Wed, 6 Feb 2013 19:25:43 +0100 demerphq <demerphq@gmail.com> wrote:
->
-> d> On 6 February 2013 19:05, Ted Zlatanov <tzz@lifelogs.com> wrote:
->>> On Wed, 06 Feb 2013 08:29:30 -0800 Junio C Hamano <gitster@pobox.com> wrote:
->>>
-> JCH> Is it ever (as opposed to "not always") possible to omit braces?
->>>
->>> Oh yes!  Not that I recommend it, and I'm not even going to touch on
->>> Perl Golf :)
->
-> d> I think you are wrong. Can you provide an example?
->
-> d> Larry specifically wanted to avoid the "dangling else" problem that C
-> d> suffers from, and made it so that blocks are mandatory. The only
-> d> exception is statement modifiers, which are not only allowed to omit
-> d> the braces but also the parens on the condition.
->
-> Oh, perhaps I didn't state it correctly.  You can avoid braces, but not
-> if you want to use if/elsif/else/unless/etc. which require them:
->
-> condition && do_this();
-> condition || do_this();
-> condition ? do_this() : do_that();
->
-> (and others I can't recall right now)
->
-> But my point was only that it's always possible to get around these
-> artificial restrictions; it's more important to ask for legible sensible
-> code.  Sorry if that was unclear!
+On Wed, 6 Feb 2013 19:44:16 +0100 demerphq <demerphq@gmail.com> wrote: 
 
-Ah ok. Right, at a low level:
+d> Ah ok. Right, at a low level:
 
-if (condition) { do_this() }
+d> if (condition) { do_this() }
 
-is identical to
+d> is identical to
 
-condition && do_this();
+d> condition && do_this();
 
-IOW, Perl allows logical operators to act as control flow statements.
+d> IOW, Perl allows logical operators to act as control flow statements.
 
-I hope your document include something that says that using logical
-operators as control flow statements should be used sparingly, and
-generally should be restricted to low precedence operators and should
-never involve more than one operator.
+d> I hope your document include something that says that using logical
+d> operators as control flow statements should be used sparingly, and
+d> generally should be restricted to low precedence operators and should
+d> never involve more than one operator.
 
-Yves
+I'd stay away from wording it so tightly, but instead just say
 
+"Make your code readable and sensible, and don't try to be clever."
 
+But this is good C and shell advice too, so I'd put it under "General
+Guidelines" and leave it for Junio to decide if it's appropriate.
 
-
--- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+Ted
