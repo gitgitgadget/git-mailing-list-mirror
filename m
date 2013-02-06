@@ -1,78 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: CodingGuidelines Perl amendment
-Date: Wed, 06 Feb 2013 11:37:06 -0800
-Message-ID: <7vwqulb5el.fsf@alter.siamese.dyndns.org>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
- <7vvcafojf4.fsf@alter.siamese.dyndns.org>
- <20130130074306.GA17868@sigill.intra.peff.net>
- <7v7gmumzo6.fsf@alter.siamese.dyndns.org> <87pq0l5qbc.fsf@lifelogs.com>
- <20130131193844.GA14460@sigill.intra.peff.net> <87k3qrx712.fsf@lifelogs.com>
- <20130203194148.GA26318@sigill.intra.peff.net>
- <87sj5cvxnf.fsf_-_@lifelogs.com> <7vk3qo2dsc.fsf@alter.siamese.dyndns.org>
- <87k3qoudxp.fsf@lifelogs.com> <7vvca7291z.fsf@alter.siamese.dyndns.org>
- <87lib3uats.fsf@lifelogs.com> <7v7gmn1xqi.fsf@alter.siamese.dyndns.org>
- <871ucto4vj.fsf_-_@lifelogs.com> <7vvca5mmmt.fsf@alter.siamese.dyndns.org>
- <87vca5gvx6.fsf@lifelogs.com>
- <CANgJU+VbkQ+xa+_sSAu-3pMe+6gycHi9J4VR18M5YJt=pa9QUw@mail.gmail.com>
- <87ip65guj8.fsf@lifelogs.com>
- <CANgJU+X=Bb=ncqOxsd1hZDWsnFkt-bJw=Zbtuz8_KC0gO-dLaQ@mail.gmail.com>
- <87bobxgtmw.fsf@lifelogs.com>
+Subject: Re: What's cooking in git.git (Feb 2013, #03; Wed, 6)
+Date: Wed, 06 Feb 2013 11:39:29 -0800
+Message-ID: <7vsj59b5am.fsf@alter.siamese.dyndns.org>
+References: <7v8v71cn3m.fsf@alter.siamese.dyndns.org>
+ <5112AE34.6080107@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: demerphq <demerphq@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Ted Zlatanov <tzz@lifelogs.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 20:37:34 2013
+Cc: git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Feb 06 20:39:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3AoH-0004RD-RV
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 20:37:34 +0100
+	id 1U3AqZ-0006Q4-S8
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 20:39:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757981Ab3BFThL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 14:37:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55259 "EHLO
+	id S1757943Ab3BFTjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 14:39:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56952 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756226Ab3BFThJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 14:37:09 -0500
+	id S1755031Ab3BFTjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 14:39:32 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2156BABD;
-	Wed,  6 Feb 2013 14:37:08 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD837BE83;
+	Wed,  6 Feb 2013 14:39:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eKs+stVXDOLuvG5di5eWCLmREFE=; b=n5Z4fF
-	wT0m2IU2cS8el3xUCRGzesdM8LXQW/tBEmx5t2amLoGtYZ6GhwBuz/GIrrNAnJMk
-	fTdv6p2WBV28ZZaggipCMdlhW7iZusybduhPwrkA3NB2b//98Q5eSeHWLuOnWR2f
-	flbKqJsT3m0TQlme6C+tuQhbDrmj7hlLiJmAY=
+	:content-type; s=sasl; bh=MiHsa9HslUkW9kFYT2cM7TubJDI=; b=QMMXpI
+	oOC+f/Fn/fAvZ9mVSGbC9y6MqljMXsFXA/l2n73uF7kTZ7PmMYT5mu7XQg+fgs2S
+	TxxdVxGTb9KtZcUe03Fa1ap97h2LJmChkw4RhQ0bKqqbFFBQNPHebypOOepx4ViP
+	At/sd0VRkxUsC4eAEdWbIAHzFR8Zb9JdTCPFU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fu0YUmbqxo84hW8+Svkv7etuLKk2ET4N
-	GW1DiEuQSTtvxncHzWVYFIikpiV3dMgll8+pF8KA1sWbm5jYiNqzJ7154E/5j6jW
-	OjIQL3pWHV72X7vuZG+M8qFWaRnK0Iwo4rzxarzfy0c8AV9N93LAZAMS+oJ2y72d
-	n5G3xElR7wo=
+	:content-type; q=dns; s=sasl; b=rLeHbrpiha6KHj0Fnw9ls3XGzd+NCVUv
+	6Xi1pSkuuFhfLP12NQUZCg11b21IDQriVBZPnKdNd0xVuDm2HZzhINOpLI+j9zs+
+	B+0JIShYTJumq/dUMGS/YmgpiE1q/wledD3vtlPSP8K/eKh2Glr1pUDyeI/pfb/Z
+	+lRVhRvNcbY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D607DBABC;
-	Wed,  6 Feb 2013 14:37:08 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0582BE81;
+	Wed,  6 Feb 2013 14:39:31 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 581A1BAB9; Wed,  6 Feb 2013
- 14:37:08 -0500 (EST)
-In-Reply-To: <87bobxgtmw.fsf@lifelogs.com> (Ted Zlatanov's message of "Wed,
- 06 Feb 2013 13:54:47 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2D62ABE7E; Wed,  6 Feb 2013
+ 14:39:31 -0500 (EST)
+In-Reply-To: <5112AE34.6080107@web.de> (Jens Lehmann's message of "Wed, 06
+ Feb 2013 20:25:40 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 98177FC4-7094-11E2-9587-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: ED38E268-7094-11E2-8BB4-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215626>
 
-Ted Zlatanov <tzz@lifelogs.com> writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> "Make your code readable and sensible, and don't try to be clever."
+> Am 06.02.2013 19:29, schrieb Junio C Hamano:
+>> * jl/submodule-deinit (2013-02-04) 1 commit
+>>  - submodule: add 'deinit' command
+>> 
+>>  There was no Porcelain way to say "I no longer am interested in
+>>  this submodule", once you express your interest in a submodule with
+>>  "submodule init".  "submodule deinit" is the way to do so.
+>> 
+>>  Will merge to 'next'.
 >
-> But this is good C and shell advice too,...
+> Oops, I though you were waiting for a reroll. Currently I'm having the
+> appended interdiff compared to your version. Changes are:
+>
+> - Add deinit to the --force documentation of "git submodule"
+> - Never remove submodules containing a .git dir, even when forced
+> - diagnostic output when "rm -rf" or "mkdir" fails
+> - More test cases
+>
+> And I wanted to add three more test cases for modified submodules before
+> sending v4. You could squash in the first two hunks into the commit you
+> have in pu and I'll send a follow up patch with the extra tests soon or
+> you could wait for me sending an updated patch. What do you think?
 
-Sounds sensible.
+I haven't merged it down to 'next' yet.  So please proceed as you
+planned.  Thanks for stopping me.
