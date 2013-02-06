@@ -1,74 +1,556 @@
-From: "Constantine A. Murenin" <mureninc@gmail.com>
-Subject: Re: importing two different trees into a fresh git repo
-Date: Tue, 5 Feb 2013 16:35:54 -0800
-Message-ID: <CAPKkNb494MvSETOS+1R+dbxKzcwZhbz7jEB-W=z-XuLBKDJWeA@mail.gmail.com>
-References: <CAPKkNb6+ojb+uvBW+AkhGrhjR85LrJEbmR0KmvaKYb2Cj5Aa4g@mail.gmail.com>
-	<7va9riqtro.fsf@alter.siamese.dyndns.org>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: [PATCHv6] Add contrib/credentials/netrc with GPG support
+Date: Tue, 05 Feb 2013 19:38:58 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <876226p97h.fsf_-_@lifelogs.com>
+References: <87ehgvua6h.fsf@lifelogs.com>
+	<20130204211726.GB13186@sigill.intra.peff.net>
+	<87mwvjsqjc.fsf_-_@lifelogs.com>
+	<7vvca6u47f.fsf@alter.siamese.dyndns.org>
+	<87k3qmr8yc.fsf@lifelogs.com> <87fw1ar3og.fsf_-_@lifelogs.com>
+	<87ehgvua6h.fsf@lifelogs.com>
+	<20130204211726.GB13186@sigill.intra.peff.net>
+	<87mwvjsqjc.fsf_-_@lifelogs.com>
+	<7vvca6u47f.fsf@alter.siamese.dyndns.org>
+	<87k3qmr8yc.fsf@lifelogs.com>
+	<7vhalqsfkf.fsf@alter.siamese.dyndns.org>
+	<8738xaqy40.fsf_-_@lifelogs.com>
+	<7vip66qu0u.fsf@alter.siamese.dyndns.org>
+	<7vtxpqnwiv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 01:36:23 2013
+X-From: git-owner@vger.kernel.org Wed Feb 06 01:39:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2szv-00035u-8M
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 01:36:23 +0100
+	id 1U2t2s-00057t-QZ
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 01:39:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754696Ab3BFAf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2013 19:35:57 -0500
-Received: from mail-la0-f42.google.com ([209.85.215.42]:64915 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752034Ab3BFAf4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2013 19:35:56 -0500
-Received: by mail-la0-f42.google.com with SMTP id fe20so827504lab.15
-        for <git@vger.kernel.org>; Tue, 05 Feb 2013 16:35:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=YXCpABcGlQJV/AadWBYDqGGmjMWX34QEvA4UWksfbqU=;
-        b=RejC16il9ZdcyFN219oFvmKfk1IXKLuGIaD+bzbXxm3t5/XE9XrPeFEodkR4/n2f8u
-         hsn4ljKGXb08/crbC7MRnBTDR3Hpt/Me2NnJH9D+polJiSAvVmiEwYu81AGNucNaihXZ
-         Yxhpy1wWkOItDCRm0654RoN1DQnYJNJbyHHhnk+1oOC+7pN7tqIrjXALO8GCrK/LdZjt
-         Sd5rR7iVENM/OIthmM7wwBcU/dGRJ6Eq51Z9gIUx0TlI9Y6p6EB5XX8fJKt+hQ/CRTQQ
-         i0lzFz9pH+/H0GNiRqY9PR1VGl+Azq+WVvtw3nOqXlBzN28gjHRUR8JQmGyw1Lh9Joyq
-         wCQA==
-X-Received: by 10.112.17.166 with SMTP id p6mr5069527lbd.41.1360110954609;
- Tue, 05 Feb 2013 16:35:54 -0800 (PST)
-Received: by 10.114.98.168 with HTTP; Tue, 5 Feb 2013 16:35:54 -0800 (PST)
-In-Reply-To: <7va9riqtro.fsf@alter.siamese.dyndns.org>
+	id S1756198Ab3BFAjE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Feb 2013 19:39:04 -0500
+Received: from z.lifelogs.com ([173.255.230.239]:44945 "EHLO z.lifelogs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754943Ab3BFAjA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Feb 2013 19:39:00 -0500
+Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: tzz)
+	by z.lifelogs.com (Postfix) with ESMTPSA id B51BDDE0E3;
+	Wed,  6 Feb 2013 00:38:59 +0000 (UTC)
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+In-Reply-To: <7vtxpqnwiv.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 05 Feb 2013 15:58:16 -0800")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215556>
 
-On 5 February 2013 14:29, Junio C Hamano <gitster@pobox.com> wrote:
-> "Constantine A. Murenin" <mureninc@gmail.com> writes:
->
->> I have two distinct trees that were not managed by any RCS, and I'd
->> like to import them into a single repository into two separate orphan
->> branches, then make sense of what's in there, merge, and unify into
->> 'master'.
->>
->> (To give some context, it's /etc/nginx config files from nginx/1.0.12
->> on Debian 6 and nginx/1.2.2 on OpenBSD 5.2.)
->
-> As these come from two totally separate sources, I'd find it more
-> natural to do two repositories, deb-nginx-conf and obsd-nginx-conf,
-> each with one commit and then pull one into the other (or pull both
-> to master-nginx-conf if you really wanted to), to me.
+Add Git credential helper that can parse netrc/authinfo files.
 
-Yeah, I guess it might be more of a git-style to have two/three
-separate repositories here.  (The sources are just a couple of files,
-so I think my specific example still calls for merely two orphan
-branches.)
+This credential helper supports multiple files, returning the first one
+that matches.  It checks file permissions and owner.  For *.gpg files,
+it will run GPG to decrypt the file.
 
-Still, is it really expected that you can't create an orphan branch in
-an empty repository?  On the outside, this sounds like a rather benign
-bug.
+Signed-off-by: Ted Zlatanov <tzz@lifelogs.com>
+---
+Changes since PATCHv5:
 
-C.
+- reroll from tz/credential-authinfo:
+ * brace fixes
+ * list attempted default files in help doc
+ * 3-arg open() for the GPG pipe
+ * instead of skipping 'default' tokens, store them as machine =3D> und=
+ef
+
+ contrib/credential/netrc/Makefile             |   12 +
+ contrib/credential/netrc/git-credential-netrc |  421 +++++++++++++++++=
+++++++++
+ 2 files changed, 433 insertions(+), 0 deletions(-)
+ create mode 100644 contrib/credential/netrc/Makefile
+ create mode 100755 contrib/credential/netrc/git-credential-netrc
+
+diff --git a/contrib/credential/netrc/Makefile b/contrib/credential/net=
+rc/Makefile
+new file mode 100644
+index 0000000..18a924f
+--- /dev/null
++++ b/contrib/credential/netrc/Makefile
+@@ -0,0 +1,12 @@
++test_netrc:
++	@(echo "bad data" | ./git-credential-netrc -f A -d -v) || echo "Bad i=
+nvocation test, ignoring failure"
++	@echo "=3D> Silent invocation... nothing should show up here with a m=
+issing file"
++	@echo "bad data" | ./git-credential-netrc -f A get
++	@echo "=3D> Back to noisy: -v and -d used below, missing file"
++	echo "bad data" | ./git-credential-netrc -f A -d -v get
++	@echo "=3D> Look for any entry in the default file set"
++	echo "" | ./git-credential-netrc -d -v get
++	@echo "=3D> Look for github.com in the default file set"
++	echo "host=3Dgoogle.com" | ./git-credential-netrc -d -v get
++	@echo "=3D> Look for a nonexistent machine in the default file set"
++	echo "host=3Dkorovamilkbar" | ./git-credential-netrc -d -v get
+diff --git a/contrib/credential/netrc/git-credential-netrc b/contrib/cr=
+edential/netrc/git-credential-netrc
+new file mode 100755
+index 0000000..30e05fb
+--- /dev/null
++++ b/contrib/credential/netrc/git-credential-netrc
+@@ -0,0 +1,421 @@
++#!/usr/bin/perl
++
++use strict;
++use warnings;
++
++use Getopt::Long;
++use File::Basename;
++
++my $VERSION =3D "0.1";
++
++my %options =3D (
++	       help =3D> 0,
++	       debug =3D> 0,
++	       verbose =3D> 0,
++	       insecure =3D> 0,
++	       file =3D> [],
++
++	       # identical token maps, e.g. host -> host, will be inserted la=
+ter
++	       tmap =3D> {
++			port =3D> 'protocol',
++			machine =3D> 'host',
++			path =3D> 'path',
++			login =3D> 'username',
++			user =3D> 'username',
++			password =3D> 'password',
++		       }
++	      );
++
++# Map each credential protocol token to itself on the netrc side.
++foreach (values %{$options{tmap}}) {
++	$options{tmap}->{$_} =3D $_;
++}
++
++# Now, $options{tmap} has a mapping from the netrc format to the Git c=
+redential
++# helper protocol.
++
++# Next, we build the reverse token map.
++
++# When $rmap{foo} contains 'bar', that means that what the Git credent=
+ial helper
++# protocol calls 'bar' is found as 'foo' in the netrc/authinfo file.  =
+Keys in
++# %rmap are what we expect to read from the netrc/authinfo file.
++
++my %rmap;
++foreach my $k (keys %{$options{tmap}}) {
++	push @{$rmap{$options{tmap}->{$k}}}, $k;
++}
++
++Getopt::Long::Configure("bundling");
++
++# TODO: maybe allow the token map $options{tmap} to be configurable.
++GetOptions(\%options,
++           "help|h",
++           "debug|d",
++           "insecure|k",
++           "verbose|v",
++           "file|f=3Ds@",
++          );
++
++if ($options{help}) {
++	my $shortname =3D basename($0);
++	$shortname =3D~ s/git-credential-//;
++
++	print <<EOHIPPUS;
++
++$0 [-f AUTHFILE1] [-f AUTHFILEN] [-d] [-v] [-k] get
++
++Version $VERSION by tzz\@lifelogs.com.  License: BSD.
++
++Options:
++
++  -f|--file AUTHFILE : specify netrc-style files.  Files with the .gpg=
+ extension
++                       will be decrypted by GPG before parsing.  Multi=
+ple -f
++                       arguments are OK.  They are processed in order,=
+ and the
++                       first matching entry found is returned via the =
+credential
++                       helper protocol (see below).
++
++                       When no -f option is given, .authinfo.gpg, .net=
+rc.gpg,
++		       .authinfo, and .netrc files in your home directory are used
++		       in this order.
++
++  -k|--insecure      : ignore bad file ownership or permissions
++
++  -d|--debug         : turn on debugging (developer info)
++
++  -v|--verbose       : be more verbose (show files and information fou=
+nd)
++
++To enable this credential helper:
++
++  git config credential.helper '$shortname -f AUTHFILE1 -f AUTHFILE2'
++
++(Note that Git will prepend "git-credential-" to the helper name and l=
+ook for it
++in the path.)
++
++...and if you want lots of debugging info:
++
++  git config credential.helper '$shortname -f AUTHFILE -d'
++
++...or to see the files opened and data found:
++
++  git config credential.helper '$shortname -f AUTHFILE -v'
++
++Only "get" mode is supported by this credential helper.  It opens ever=
+y AUTHFILE
++and looks for the first entry that matches the requested search criter=
+ia:
++
++ 'port|protocol':
++   The protocol that will be used (e.g., https). (protocol=3DX)
++
++ 'machine|host':
++   The remote hostname for a network credential. (host=3DX)
++
++ 'path':
++   The path with which the credential will be used. (path=3DX)
++
++ 'login|user|username':
++   The credential=E2=80=99s username, if we already have one. (usernam=
+e=3DX)
++
++Thus, when we get this query on STDIN:
++
++host=3Dgithub.com
++protocol=3Dhttps
++username=3Dtzz
++
++this credential helper will look for the first entry in every AUTHFILE=
+ that
++matches
++
++machine github.com port https login tzz
++
++OR
++
++machine github.com protocol https login tzz
++
++OR... etc. acceptable tokens as listed above.  Any unknown tokens are
++simply ignored.
++
++Then, the helper will print out whatever tokens it got from the entry,=
+ including
++"password" tokens, mapping back to Git's helper protocol; e.g. "port" =
+is mapped
++back to "protocol".  Any redundant entry tokens (part of the original =
+query) are
++skipped.
++
++Again, note that only the first matching entry from all the AUTHFILEs,=
+ processed
++in the sequence given on the command line, is used.
++
++Netrc/authinfo tokens can be quoted as 'STRING' or "STRING".
++
++No caching is performed by this credential helper.
++
++EOHIPPUS
++
++	exit 0;
++}
++
++my $mode =3D shift @ARGV;
++
++# Credentials must get a parameter, so die if it's missing.
++die "Syntax: $0 [-f AUTHFILE1] [-f AUTHFILEN] [-d] get" unless defined=
+ $mode;
++
++# Only support 'get' mode; with any other unsupported ones we just exi=
+t.
++exit 0 unless $mode eq 'get';
++
++my $files =3D $options{file};
++
++# if no files were given, use a predefined list.
++# note that .gpg files come first
++unless (scalar @$files) {
++	my @candidates =3D qw[
++				   ~/.authinfo.gpg
++				   ~/.netrc.gpg
++				   ~/.authinfo
++				   ~/.netrc
++			  ];
++
++	$files =3D $options{file} =3D [ map { glob $_ } @candidates ];
++}
++
++my $query =3D read_credential_data_from_stdin();
++
++FILE:
++foreach my $file (@$files) {
++	my $gpgmode =3D $file =3D~ m/\.gpg$/;
++	unless (-r $file) {
++		log_verbose("Unable to read $file; skipping it");
++		next FILE;
++	}
++
++	# the following check is copied from Net::Netrc, for non-GPG files
++	# OS/2 and Win32 do not handle stat in a way compatable with this che=
+ck :-(
++	unless ($gpgmode || $options{insecure} ||
++		$^O eq 'os2'
++		|| $^O eq 'MSWin32'
++		|| $^O eq 'MacOS'
++		|| $^O =3D~ /^cygwin/) {
++		my @stat =3D stat($file);
++
++		if (@stat) {
++			if ($stat[2] & 077) {
++				log_verbose("Insecure $file (mode=3D%04o); skipping it",
++					    $stat[2] & 07777);
++				next FILE;
++			}
++
++			if ($stat[4] !=3D $<) {
++				log_verbose("Not owner of $file; skipping it");
++				next FILE;
++			}
++		}
++	}
++
++	my @entries =3D load_netrc($file, $gpgmode);
++
++	unless (scalar @entries) {
++		if ($!) {
++			log_verbose("Unable to open $file: $!");
++		} else {
++			log_verbose("No netrc entries found in $file");
++		}
++
++		next FILE;
++	}
++
++	my $entry =3D find_netrc_entry($query, @entries);
++	if ($entry) {
++		print_credential_data($entry, $query);
++		# we're done!
++		last FILE;
++	}
++}
++
++exit 0;
++
++sub load_netrc {
++	my $file =3D shift @_;
++	my $gpgmode =3D shift @_;
++
++	my $io;
++	if ($gpgmode) {
++		my @cmd =3D (qw(gpg --decrypt), $file)
++		log_verbose("Using GPG to open $file: [@cmd]");
++		open $io, "-|", @cmd;
++	} else {
++		log_verbose("Opening $file...");
++		open $io, '<', $file;
++	}
++
++	# nothing to do if the open failed (we log the error later)
++	return unless $io;
++
++	# Net::Netrc does this, but the functionality is merged with the file
++	# detection logic, so we have to extract just the part we need
++	my @netrc_entries =3D net_netrc_loader($io);
++
++	# these entries will use the credential helper protocol token names
++	my @entries;
++
++	foreach my $nentry (@netrc_entries) {
++		my %entry;
++		my $num_port;
++
++		if (!defined $nentry->{machine}) {
++			next;
++		}
++		if (defined $nentry->{port} && $nentry->{port} =3D~ m/^\d+$/) {
++			$num_port =3D $nentry->{port};
++			delete $nentry->{port};
++		}
++
++		# create the new entry for the credential helper protocol
++		$entry{$options{tmap}->{$_}} =3D $nentry->{$_} foreach keys %$nentry=
+;
++
++		# for "host X port Y" where Y is an integer (captured by
++		# $num_port above), set the host to "X:Y"
++		if (defined $entry{host} && defined $num_port) {
++			$entry{host} =3D join(':', $entry{host}, $num_port);
++		}
++
++		push @entries, \%entry;
++	}
++
++	return @entries;
++}
++
++sub net_netrc_loader {
++	my $fh =3D shift @_;
++	my @entries;
++	my ($mach, $macdef, $tok, @tok);
++
++    LINE:
++	while (<$fh>) {
++		undef $macdef if /\A\n\Z/;
++
++		if ($macdef) {
++			next LINE;
++		}
++
++		s/^\s*//;
++		chomp;
++
++		while (length && s/^("((?:[^"]+|\\.)*)"|((?:[^\\\s]+|\\.)*))\s*//) {
++			(my $tok =3D $+) =3D~ s/\\(.)/$1/g;
++			push(@tok, $tok);
++		}
++
++	    TOKEN:
++		while (@tok) {
++			if ($tok[0] eq "default") {
++				shift(@tok);
++				$mach =3D { machine =3D> undef }
++				next TOKEN;
++			}
++
++			$tok =3D shift(@tok);
++
++			if ($tok eq "machine") {
++				my $host =3D shift @tok;
++				$mach =3D { machine =3D> $host };
++				push @entries, $mach;
++			} elsif (exists $options{tmap}->{$tok}) {
++				unless ($mach) {
++					log_debug("Skipping token $tok because no machine was given");
++					next TOKEN;
++				}
++
++				my $value =3D shift @tok;
++				unless (defined $value) {
++					log_debug("Token $tok had no value, skipping it.");
++					next TOKEN;
++				}
++
++				# Following line added by rmerrell to remove '/' escape char in .n=
+etrc
++				$value =3D~ s/\/\\/\\/g;
++				$mach->{$tok} =3D $value;
++			} elsif ($tok eq "macdef") { # we ignore macros
++				next TOKEN unless $mach;
++				my $value =3D shift @tok;
++				$macdef =3D 1;
++			}
++		}
++	}
++
++	return @entries;
++}
++
++sub read_credential_data_from_stdin {
++	# the query: start with every token with no value
++	my %q =3D map { $_ =3D> undef } values(%{$options{tmap}});
++
++	while (<STDIN>) {
++		next unless m/^([^=3D]+)=3D(.+)/;
++
++		my ($token, $value) =3D ($1, $2);
++		die "Unknown search token $token" unless exists $q{$token};
++		$q{$token} =3D $value;
++		log_debug("We were given search token $token and value $value");
++	}
++
++	foreach (sort keys %q) {
++		log_debug("Searching for %s =3D %s", $_, $q{$_} || '(any value)');
++	}
++
++	return \%q;
++}
++
++# takes the search tokens and then a list of entries
++# each entry is a hash reference
++sub find_netrc_entry {
++	my $query =3D shift @_;
++
++    ENTRY:
++	foreach my $entry (@_)
++	{
++		my $entry_text =3D join ', ', map { "$_=3D$entry->{$_}" } keys %$ent=
+ry;
++		foreach my $check (sort keys %$query) {
++			if (defined $query->{$check}) {
++				log_debug("compare %s [%s] to [%s] (entry: %s)",
++					  $check,
++					  $entry->{$check},
++					  $query->{$check},
++					  $entry_text);
++				unless ($query->{$check} eq $entry->{$check}) {
++					next ENTRY;
++				}
++			} else {
++				log_debug("OK: any value satisfies check $check");
++			}
++		}
++
++		return $entry;
++	}
++
++	# nothing was found
++	return;
++}
++
++sub print_credential_data {
++	my $entry =3D shift @_;
++	my $query =3D shift @_;
++
++	log_debug("entry has passed all the search checks");
++ TOKEN:
++	foreach my $git_token (sort keys %$entry) {
++		log_debug("looking for useful token $git_token");
++		# don't print unknown (to the credential helper protocol) tokens
++		next TOKEN unless exists $query->{$git_token};
++
++		# don't print things asked in the query (the entry matches them)
++		next TOKEN if defined $query->{$git_token};
++
++		log_debug("FOUND: $git_token=3D$entry->{$git_token}");
++		printf "%s=3D%s\n", $git_token, $entry->{$git_token};
++	}
++}
++sub log_verbose {
++	return unless $options{verbose};
++	printf STDERR @_;
++	printf STDERR "\n";
++}
++
++sub log_debug {
++	return unless $options{debug};
++	printf STDERR @_;
++	printf STDERR "\n";
++}
+--=20
+1.7.9.rc2
