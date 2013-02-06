@@ -1,55 +1,94 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: How to diff 2 file revisions with gitk
-Date: Wed, 06 Feb 2013 19:09:06 +0100
-Message-ID: <51129C42.4040207@kdbg.org>
-References: <1360164008.49200.YahooMailNeo@web171204.mail.ir2.yahoo.com> <1360166273.33888.YahooMailNeo@web171204.mail.ir2.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "R. Diez" <rdiezmail-buspirate@yahoo.de>
-X-From: git-owner@vger.kernel.org Wed Feb 06 19:09:36 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/4] perl.mak: introduce $(GIT_ROOT_DIR) to allow inclusion from other directories
+Date: Wed,  6 Feb 2013 19:11:30 +0100
+Message-ID: <1360174292-14793-3-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqobfxwg2q.fsf@grenoble-inp.fr>
+ <1360174292-14793-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Feb 06 19:12:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U39R9-0005Zp-AY
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 19:09:35 +0100
+	id 1U39Tb-0007fn-09
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 19:12:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757298Ab3BFSJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 13:09:13 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:53500 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755334Ab3BFSJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 13:09:11 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 804E71001C;
-	Wed,  6 Feb 2013 19:09:07 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id DE46F19F459;
-	Wed,  6 Feb 2013 19:09:06 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130105 Thunderbird/17.0.2
-In-Reply-To: <1360166273.33888.YahooMailNeo@web171204.mail.ir2.yahoo.com>
+	id S1755670Ab3BFSLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 13:11:44 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:53950 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751048Ab3BFSLn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 13:11:43 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r16IBZG8029430
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 6 Feb 2013 19:11:36 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1U39T7-0005kS-MX; Wed, 06 Feb 2013 19:11:37 +0100
+Received: from moy by anie with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1U39T7-0003rg-JD; Wed, 06 Feb 2013 19:11:37 +0100
+X-Mailer: git-send-email 1.8.1.2.526.gf51a757
+In-Reply-To: <1360174292-14793-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 06 Feb 2013 19:11:36 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r16IBZG8029430
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1360779096.95211@hVR5xAZzp0eKMIinucd/fw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215607>
 
-Am 06.02.2013 16:57, schrieb R. Diez:
-> I would like to start gitk, select with the mouse 2 
-> revisions of some file and then compare them, hopefully with an external
->  diff tool, very much like I am used to with WinCVS.
-> 
-> The closest I
->  got is to start gitk with a filename as an argument, in order to 
-> restrict the log to that one file. Then I right-click on a commit (a 
-> file revision) and choose "Mark this commit". However, if I right-click 
-> on another commit and choose "Compare with marked commit", I get a full 
-> commit diff with all files, and not just the file I specified on the 
-> command-line arguments.
+perl.mak uses relative path, which is OK when called from the toplevel,
+but won't be anymore if one includes it from elsewhere. It is now
+possible to include the file using:
 
-Edit->Preferences, tick 'Limit diff to listed paths'.
+GIT_ROOT_DIR=<whatever>
+include $(GIT_ROOT_DIR)/perl.mak
 
--- Hannes
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ perl.mak | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/perl.mak b/perl.mak
+index 8bbeef3..a2b8717 100644
+--- a/perl.mak
++++ b/perl.mak
+@@ -1,5 +1,9 @@
+ # Rules to build Git commands written in perl
+ 
++ifndef GIT_ROOT_DIR
++	GIT_ROOT_DIR = .
++endif
++
+ ifndef PERL_PATH
+ 	PERL_PATH = /usr/bin/perl
+ endif
+@@ -11,12 +15,11 @@ NO_PERL = NoThanks
+ endif
+ 
+ ifndef NO_PERL
+-$(patsubst %.perl,%,$(SCRIPT_PERL)): perl/perl.mak
+-
++$(patsubst %.perl,%,$(SCRIPT_PERL)): $(GIT_ROOT_DIR)/perl/perl.mak
+ 
+-$(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl GIT-VERSION-FILE
++$(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl $(GIT_ROOT_DIR)/GIT-VERSION-FILE
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
++	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C $(GIT_ROOT_DIR)/perl -s --no-print-directory instlibdir` && \
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+ 	    -e '	h' \
+-- 
+1.8.1.2.526.gf51a757
