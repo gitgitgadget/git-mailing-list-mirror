@@ -1,61 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/4] textconv for show and grep
-Date: Wed, 06 Feb 2013 08:55:22 -0800
-Message-ID: <7vip65mlfp.fsf@alter.siamese.dyndns.org>
-References: <20130205201106.GA29248@sigill.intra.peff.net>
- <cover.1360162813.git.git@drmicha.warpmail.net>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
+Date: Wed, 06 Feb 2013 12:40:35 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <874nhpibn0.fsf@lifelogs.com>
+References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
+	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
+	<20130130074306.GA17868@sigill.intra.peff.net>
+	<7v6226pdb7.fsf@alter.siamese.dyndns.org>
+	<vpqa9rhaml6.fsf@grenoble-inp.fr> <876225o5mj.fsf@lifelogs.com>
+	<vpqmwvhxyuj.fsf@grenoble-inp.fr> <87sj59mo2y.fsf@lifelogs.com>
+	<vpqobfxwg2q.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Feb 06 17:55:49 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Michal Nazarewicz <mpn@google.com>, git@vger.kernel.org,
+	Krzysztof Mazur <krzysiek@podlesie.net>,
+	Michal Nazarewicz <mina86@mina86.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Feb 06 18:41:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U38Hj-0002Y0-Q2
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 17:55:48 +0100
+	id 1U38zU-0006Cp-QA
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 18:41:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752296Ab3BFQzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 11:55:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60395 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751216Ab3BFQzZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 11:55:25 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB0FBC219;
-	Wed,  6 Feb 2013 11:55:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=O6QM+gwXbiJ25BUhGCXJ7u3bmag=; b=T43spT
-	HWK6HZkiZjGYVc1iUuptrSKFFtFKgQWPukMr7JxjPP+2pMk20EEn6aqkmeVy/E3V
-	bauMPoRWTxZVJ85XWs60BFO0jc47s0B+kgFNRTivLh7dtVh/qNTE7j0G+bRZXa6u
-	BBvOMkVQli7oL0kqTWhKnJCtgfYZr4YH8oXKk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qW0A6p+DtSPL7abtJezOzN8eCUsArYNB
-	GWWi8jb+A2hAGqIq4Hhtga5eIZlXyFoSSS7dqy5jBqe9oK/wEPiLx79gY4GgxTrh
-	DssfOK6/iFxjDnUi7iYeYmIa9zxf44W4hYL7u4C8egg9H+vr06MthWYav9aAEwJC
-	F4YYRz/W48k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FC90C218;
-	Wed,  6 Feb 2013 11:55:24 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 22CADC213; Wed,  6 Feb 2013
- 11:55:24 -0500 (EST)
-In-Reply-To: <cover.1360162813.git.git@drmicha.warpmail.net> (Michael J.
- Gruber's message of "Wed, 6 Feb 2013 16:08:49 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FFED352E-707D-11E2-881A-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753765Ab3BFRki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 12:40:38 -0500
+Received: from z.lifelogs.com ([173.255.230.239]:44047 "EHLO z.lifelogs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752003Ab3BFRkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 12:40:37 -0500
+Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: tzz)
+	by z.lifelogs.com (Postfix) with ESMTPSA id 91BFDDE0E3;
+	Wed,  6 Feb 2013 17:40:36 +0000 (UTC)
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+In-Reply-To: <vpqobfxwg2q.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+	"Wed, 06 Feb 2013 17:41:01 +0100")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215601>
 
-The parts for "grep" in the series makes tons of sense to me.  I am
-not yet convinced about the other two, though.
+On Wed, 06 Feb 2013 17:41:01 +0100 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote: 
 
-Thanks.
+MM> Ted Zlatanov <tzz@lifelogs.com> writes:
+>> - sort the output tokens (after 'url' is extracted) so the output is consistent and testable
+
+MM> Why not, if you want to use the output of credential_write in tests. But
+MM> credential_write is essentially used to talk to "git credential", so the
+MM> important information is the content of the hash before credential_write
+MM> and after credential_read. They are unordered, but consistent and
+MM> testable.
+
+I like testing output (especially when it's part of an API), so we
+should make the externally observable output consistent and testable.
+
+The change is tiny, just sort the keys instead of calling each(), so I
+hope it makes it in the final version.
+
+>> Yup.  But what you call "read" and "write" are, to the credential
+>> helper, "write" and "read" but it's the same protocol :)  So maybe the
+>> names should be changed to reflect that, e.g. "query" and "response."
+
+MM> I don't think that would be a better naming. Maybe "serialize" and
+MM> "parse" would be better, but "query" would sound like it establishes the
+MM> connection and possibly reads the response to me.
+
+I'm OK with anything unambiguous.
+
+Thanks!
+Ted
