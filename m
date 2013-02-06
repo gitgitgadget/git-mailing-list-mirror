@@ -1,102 +1,89 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [RFC] test-lib.sh: No POSIXPERM for cygwin
-Date: Wed, 06 Feb 2013 21:16:13 +0100
-Message-ID: <5112BA0D.6020200@web.de>
-References: <201301271557.08994.tboegi@web.de> <CABPQNSYmGhaDG0Dzpp2C0ZwKoFwP5EokJW+TC8JT-Bw6rKa79A@mail.gmail.com>
+From: Michal Nazarewicz <mpn@google.com>
+Subject: [PATCH 0/4] Make git-send-email git-credential
+Date: Wed,  6 Feb 2013 21:34:37 +0100
+Message-ID: <cover.1360172967.git.mina86@mina86.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	ramsay@ramsay1.demon.co.uk, git@vger.kernel.org, j6t@kdbg.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Wed Feb 06 21:16:37 2013
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Ted Zlatanov <tzz@lifelogs.com>, Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Feb 06 21:35:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3BQ4-0004n8-Ed
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 21:16:36 +0100
+	id 1U3BiD-0003Z3-Mg
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 21:35:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757205Ab3BFUQO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Feb 2013 15:16:14 -0500
-Received: from mout.web.de ([212.227.17.11]:62609 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756394Ab3BFUQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 15:16:13 -0500
-Received: from [192.168.209.22] ([195.67.191.23]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0Lxf5f-1V0Avh33CV-016clD; Wed, 06 Feb 2013 21:16:11
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <CABPQNSYmGhaDG0Dzpp2C0ZwKoFwP5EokJW+TC8JT-Bw6rKa79A@mail.gmail.com>
-X-Provags-ID: V02:K0:3VytoePXhPGgPdpacaudcs1RvLM8K79QinlSkJHytHw
- swhzE/5TOavtTSCxnul5iV5+wzh42ZZVX4np1i4iz7tYlgKHdE
- Dx3QxL27iL3TF8aHU/VD7h+g+SQXxOa/ZDCxr5jZ9NhP+LNjKe
- yUGu6LNm2AfvnT1QbN+H/DWPjmj7XYrXL9JL+9FKvLKxp8Z+Br
- fDVXjufbhLdCq5Kfd2JWA==
+	id S1758188Ab3BFUe6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Feb 2013 15:34:58 -0500
+Received: from mail-ea0-f180.google.com ([209.85.215.180]:52347 "EHLO
+	mail-ea0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758087Ab3BFUe5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 15:34:57 -0500
+Received: by mail-ea0-f180.google.com with SMTP id c1so746642eaa.11
+        for <git@vger.kernel.org>; Wed, 06 Feb 2013 12:34:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=5n3xOk7t5CqbfP9+qtQerHSSWhJPHUG8mfu5tQ1ocIo=;
+        b=Q7EsH3ISpuB9oRicrAlcFlBsV1vVgeeH/sqauH6KA9BMI+GPJtcPjkwaDGbK70lAFB
+         3hR6AHX+QaGFLpfZGF4XoBNSNTqeXazceXnp6/8i4NvNQVi+PQP5LNwYf0XZKld3el4T
+         m0FcvfXOBIo1Izom4IE6ruLwfWmth/1/5Obz38nfUXLJQTF0YkJ1ZHvM5mdCzB8F+CVz
+         huKYdwomTAtH4f9q/HzWfJUw/P8W9rxvfJl8nf1bXobwDFW1Jg5WQYyGBSP+Vixca2yp
+         3Hb1Lq3nzTVqkBlgQ0AaDAmvKXICxZqO9Xi98Y7YQVk41bQOMvsxLnE03DqVbH4Qt4r2
+         utNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding:x-gm-message-state;
+        bh=5n3xOk7t5CqbfP9+qtQerHSSWhJPHUG8mfu5tQ1ocIo=;
+        b=f4WR4zm9aYctOe4f5CQq7o2QpTsLNGRzaqmLAWl3SetYfbCy8S2Wjjy9OfjMgFBG7x
+         jLgF97fkApebeF9iwbYPwn7czeUWrlnSwBRDI+o2y54h02gmZdy2LS5CDtTvFdVK/6mL
+         ofpnrX60O0hwIzYoCddY3oN9o/XkSasb2b8KXjRliy4JJ54cD5Q0Lo1znkqflBnspfvx
+         EZk8cZYQzI/pNJyWaZHJvaQlmshVrg7WdhifcFj9IuO3okgraopJKeShZaRQE8eVHkdT
+         5ljURPCDUl9nwESk39L6N3V3up3w3i8YfxSOBHYcUnSnhg4OOUX1pBNbGuBYVDvLhMbV
+         Bihg==
+X-Received: by 10.14.173.69 with SMTP id u45mr100642377eel.21.1360182895989;
+        Wed, 06 Feb 2013 12:34:55 -0800 (PST)
+Received: from mpn-glaptop.corp.google.com ([2620:0:105f:5:e809:df2d:46af:f661])
+        by mx.google.com with ESMTPS id h5sm38686311eem.1.2013.02.06.12.34.54
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 06 Feb 2013 12:34:54 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.2.550.g0d3a9c0.dirty
+X-Gm-Message-State: ALoCoQnpK59rYdr8CR4XKky9u4n/0ReBokGAri4xezr8n/9UHks4bTBj7bQxd4nmHUEWMrrL1icu0/mWxsGyKM9CKg4viFnmOLwOt00RvfwakVMGb5nsCO+GqSzDWGI+SGjGlzdREnmxZGPaiAaRV6OdILj8uFBZKADRceBtO/rqW4SXz32vIAXwAp+uqAXWFdLMs7utZj1j
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215632>
 
-Am 2013-02-06 10:34, schrieb Erik Faye-Lund:
-> On Sun, Jan 27, 2013 at 3:57 PM, Torsten B=F6gershausen <tboegi@web.d=
-e> wrote:
->> t0070 and t1301 fail when running the test suite under cygwin.
->> Skip the failing tests by unsetting POSIXPERM.
->>
->
-> But is this the real reason? I thought Cygwin implemented POSIX permi=
-ssions...?
-t0070:
-  'mktemp to unwritable directory prints filename'
-   mkdir cannotwrite &&
-   chmod -w cannotwrite &&
-   test_when_finished "chmod +w cannotwrite" &&
-   test_must_fail test-mktemp cannotwrite/testXXXXXX 2>err &&
-   grep "cannotwrite/test" err
+=46rom: Michal Nazarewicz <mina86@mina86.com>
 
-When a directory under Linux/*nix has no write permission,
-it is not allowed to create another directory (or file..) here.
-This is not working under cygwin, a directory/file can be created
-even if the parent directory has chmod 0.
--------------
-tb@PC /cygdrive/c/temp
-$ mkdir ttt
+As discussed on the list, adding git-credential interface to Git.pm
+(sort of copied from git-remote-mediawiki) and making git-send-email
+use it.
 
-tb@PC /cygdrive/c/temp
-$ chmod 0 ttt
+I see git-remote-mediawiki does not have =E2=80=9Cuse Git=E2=80=9D so I=
+ did not touch
+it.  On top of that I'd have no way to tests the changes anyway.
 
-tb@PC /cygdrive/c/temp
-$ ls -ld ttt
-d---------+ 1 tb None 0 Feb  6 20:33 ttt
+Michal Nazarewicz (4):
+  Git.pm: Allow command_close_bidi_pipe() to be called as method
+  Git.pm: Allow pipes to be closed prior to calling
+    command_close_bidi_pipe
+  Git.pm: Add interface for git credential command.
+  git-send-email: Use git credential to obtain password.
 
-tb@PC /cygdrive/c/temp
-$ touch ttt/x
+ Documentation/git-send-email.txt |   4 +-
+ git-send-email.perl              |  60 +++++++++++---------
+ perl/Git.pm                      | 116 +++++++++++++++++++++++++++++++=
++++++++-
+ 3 files changed, 149 insertions(+), 31 deletions(-)
 
-tb@PC /cygdrive/c/temp
-$ ls -ld ttt
-d---------+ 1 tb None 0 Feb  6 20:33 ttt
-
-tb@PC /cygdrive/c/temp
-$ ls -l ttt
-total 0
--rw-r--r--+ 1 tb None 0 Feb  6 20:33 x
--------------------------------------------
-
-If this is POSIX compliant? I'm not an expert here.
-On the other hand:
-This test case does not test git, but rather the file system,
-so we can probaly remove it?
-
-About 1301:
-Some resereach needs to be done, to find out the connection between
-umask, cygwin and the mount options.
-
-On my system I have:
-$mount
-C: on /cygdrive/c type ntfs (binary,posix=3D0,user,noumount,auto)
-
-/Torsten
+--=20
+1.8.1.2.550.g0d3a9c0.dirty
