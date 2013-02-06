@@ -1,106 +1,136 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 0/8] Hiding refs
-Date: Wed, 6 Feb 2013 11:45:43 -0800
-Message-ID: <20130206194542.GB21003@google.com>
-References: <1359571542-19852-1-git-send-email-gitster@pobox.com>
- <5110BD18.3080608@alum.mit.edu>
- <20130205083327.GA4931@elie.Belkin>
- <5110DF1D.8010505@alum.mit.edu>
- <CACsJy8BhL4qDb8BgOVuaUFF_9GXvgu55urYyKqPuZMZCTCoLwA@mail.gmail.com>
- <7v4nhpckwd.fsf@alter.siamese.dyndns.org>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: [PATCH v2] Update CodingGuidelines for Perl 5
+Date: Wed, 06 Feb 2013 14:49:01 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <877gmlgr4i.fsf_-_@lifelogs.com>
+References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
+	<20130130074306.GA17868@sigill.intra.peff.net>
+	<7v7gmumzo6.fsf@alter.siamese.dyndns.org>
+	<87pq0l5qbc.fsf@lifelogs.com>
+	<20130131193844.GA14460@sigill.intra.peff.net>
+	<87k3qrx712.fsf@lifelogs.com>
+	<20130203194148.GA26318@sigill.intra.peff.net>
+	<87sj5cvxnf.fsf_-_@lifelogs.com>
+	<7vk3qo2dsc.fsf@alter.siamese.dyndns.org>
+	<87k3qoudxp.fsf@lifelogs.com>
+	<7vvca7291z.fsf@alter.siamese.dyndns.org>
+	<87lib3uats.fsf@lifelogs.com>
+	<7v7gmn1xqi.fsf@alter.siamese.dyndns.org>
+	<871ucto4vj.fsf_-_@lifelogs.com>
+	<7vvca5mmmt.fsf@alter.siamese.dyndns.org>
+	<87vca5gvx6.fsf@lifelogs.com>
+	<CANgJU+VbkQ+xa+_sSAu-3pMe+6gycHi9J4VR18M5YJt=pa9QUw@mail.gmail.com>
+	<87ip65guj8.fsf@lifelogs.com>
+	<CANgJU+X=Bb=ncqOxsd1hZDWsnFkt-bJw=Zbtuz8_KC0gO-dLaQ@mail.gmail.com>
+	<87bobxgtmw.fsf@lifelogs.com>
+	<7vwqulb5el.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>
+Content-Type: text/plain
+Cc: demerphq <demerphq@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 20:46:18 2013
+X-From: git-owner@vger.kernel.org Wed Feb 06 20:49:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3Awh-0003Yi-QZ
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 20:46:16 +0100
+	id 1U3Azo-0006eA-52
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 20:49:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757925Ab3BFTpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 14:45:51 -0500
-Received: from mail-oa0-f49.google.com ([209.85.219.49]:39086 "EHLO
-	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756226Ab3BFTpv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 14:45:51 -0500
-Received: by mail-oa0-f49.google.com with SMTP id j6so1913195oag.22
-        for <git@vger.kernel.org>; Wed, 06 Feb 2013 11:45:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=z2qr6Org8VZpYP8/ERl1rK5pbfR+Fs+oxaDtMdZWtHk=;
-        b=FTrlQ/enKunt4Gt4gLTJVqtxlm1w6O1Vy/gPVxfAMpANCKJepoajI9RHv1ezUEeyiG
-         LCasum7Oz3N1GDIRD77fa8evqc/PPsd3USgK2lwruQlmDSAXry+XLreVdYJ6lmJzMNWl
-         OLsDxsSMnsSkCuIjjD03Ks8SJOQqDa9ayezPTbAdiX+gdIt1kWR8laJqx6+AnUJn59li
-         TdoF2mJ+FUaGRUJxLyqYu9g/cUdHl2UxDdngWKFg75xlYUafrzCte4kCrcg/TuDlRvpG
-         zUQ4rC4FauqeTvbZ4ChI9uOYXCF5/khsEODB/UHvlzNOs6xfCdXsN4/MPSac+UWagvSK
-         JBQg==
-X-Received: by 10.182.113.40 with SMTP id iv8mr16196398obb.12.1360179950517;
-        Wed, 06 Feb 2013 11:45:50 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id q4sm39975160paz.20.2013.02.06.11.45.48
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 06 Feb 2013 11:45:49 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7v4nhpckwd.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758075Ab3BFTtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 14:49:06 -0500
+Received: from z.lifelogs.com ([173.255.230.239]:60803 "EHLO z.lifelogs.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755031Ab3BFTtD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 14:49:03 -0500
+Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: tzz)
+	by z.lifelogs.com (Postfix) with ESMTPSA id 3E601DE0E3;
+	Wed,  6 Feb 2013 19:49:02 +0000 (UTC)
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+In-Reply-To: <7vwqulb5el.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 06 Feb 2013 11:37:06 -0800")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215628>
 
-Junio C Hamano wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->> On Tue, Feb 5, 2013 at 5:29 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+Update the coding guidelines for Perl 5.
 
->>> Hiderefs creates a "dark" corner of a remote git repo
-[...]
->> Or you can think hiderefs is the first step to addressing the
->> initial ref advertisment problem.  The series says hidden refs are
->> to be fetched out of band, but that's not the only way.
->
-> Let me help unconfuse this thread.
->
-> I think the series as 8-patch series was poorly presented, and
-> separating it into two will help understanding what they are about.
->
-> The first three:
->
->   upload-pack: share more code
->   upload-pack: simplify request validation
->   upload/receive-pack: allow hiding ref hierarchies
->
-> is _the_ topic of the series.  As far as I am concerned (I am not
-> speaking for Gerrit users, but am speaking as the Git maintainer),
-> the topic is solely about uncluttering.  There may be refs that the
-> server end may need to keep for its operation, but that remote users
-> have _no_ business knowing about.
+Signed-off-by: Ted Zlatanov <tzz@lifelogs.com>
+---
+Changes since PATCHv1:
+- removed brace guidelines
+- add "don't try to be clever" at beginning
 
-An obvious question when looking at that alone is, is there ever
-actually need for such private refs?  If the refs are not meant to be
-shared with users *at all*, why are they even refs?
+ Documentation/CodingGuidelines |   42 ++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 42 insertions(+), 0 deletions(-)
 
-An answer is "because refs force gc to keep the corresponding
-objects".  For example, the sysadmin may want to keep refs/archived/
-refs for dead branches that should not be advertised or accessible to
-the user any more.  Seems sane, though not especially exciting.
-
-What is more exciting to me is that it is a first step toward
-addressing the complicated problem of offering access to more refs
-than can be efficiently presented in the current ref advertisement.  I
-think that's a harder problem but something like this would be needed
-in order to support existing clients without performance degredation.
-
-And in the meantime, it helps with the refs/archived case.
-
-Thanks for explaining.
-Jonathan
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 1d7de5f..166c141 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -18,6 +18,8 @@ code.  For Git in general, three rough rules are:
+    judgement call, the decision based more on real world
+    constraints people face than what the paper standard says.
+ 
++For any programming language below, make your code readable and sensible, and
++don't try to be clever.
+ 
+ As for more concrete guidelines, just imitate the existing code
+ (this is a good guideline, no matter which project you are
+@@ -179,6 +181,46 @@ For C programs:
+  - Use Git's gettext wrappers to make the user interface
+    translatable. See "Marking strings for translation" in po/README.
+ 
++For Perl 5 programs:
++
++ - Most of the C guidelines above apply.
++
++ - We try to support Perl 5.8 and later ("use Perl 5.008").
++
++ - use strict and use warnings are strongly preferred.
++
++ - Don't abuse statement modifiers--they are discouraged.  But in general:
++
++	... do something ...
++	do_this() unless (condition);
++        ... do something else ...
++
++   should be used instead of
++
++	... do something ...
++	unless (condition) {
++		do_this();
++	}
++        ... do something else ...
++
++   *only* when when the condition is so rare that do_this() will be called
++   almost always.
++
++ - We try to avoid assignments inside if().
++
++ - Learn and use Git.pm if you need that functionality.
++
++ - For Emacs, it's useful to put the following in
++   GIT_CHECKOUT/.dir-locals.el, assuming you use cperl-mode:
++
++    ;; note the first part is useful for C editing, too
++    ((nil . ((indent-tabs-mode . t)
++                  (tab-width . 8)
++                  (fill-column . 80)))
++     (cperl-mode . ((cperl-indent-level . 8)
++                    (cperl-extra-newline-before-brace . nil)
++                    (cperl-merge-trailing-else . t))))
++
+ Writing Documentation:
+ 
+  Every user-visible change should be reflected in the documentation.
+-- 
+1.7.9.rc2
