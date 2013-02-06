@@ -1,73 +1,68 @@
-From: Neil <kngspook@gmail.com>
-Subject: Adding Missing Tags to a Repository
-Date: Tue, 5 Feb 2013 20:45:37 -0800
-Message-ID: <CANC5J9F5Pnp08KTem-fdcs_4DcmoN+OgqCHR0=r0y--U8=fdog@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git-send-email: add ~/.authinfo parsing
+Date: Wed, 06 Feb 2013 09:11:17 +0100
+Message-ID: <vpqa9rhaml6.fsf@grenoble-inp.fr>
+References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
+	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
+	<20130130074306.GA17868@sigill.intra.peff.net>
+	<7v6226pdb7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 06 05:46:25 2013
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Michal Nazarewicz <mpn@google.com>,
+	git@vger.kernel.org, Krzysztof Mazur <krzysiek@podlesie.net>,
+	Michal Nazarewicz <mina86@mina86.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 06 09:12:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U2wtt-0006YV-4L
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 05:46:25 +0100
+	id 1U306v-0005Xl-3i
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 09:12:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757152Ab3BFEqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2013 23:46:01 -0500
-Received: from mail-bk0-f50.google.com ([209.85.214.50]:63811 "EHLO
-	mail-bk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755163Ab3BFEp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2013 23:45:59 -0500
-Received: by mail-bk0-f50.google.com with SMTP id jg9so428892bkc.9
-        for <git@vger.kernel.org>; Tue, 05 Feb 2013 20:45:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=Q4CgSJw+XLYiV5Zo1RmqYI25J7qGDOBQrDzdnqefsXY=;
-        b=R0syGju8Nrz350h9T9LdK7PJitQU8f9W5YTCjXcZqr0soELVa1qTFX6/qIsan/I9Gc
-         AEOGZ3a8IsBh+vkdZcIty6KxuKNbCDHLz4qmZujHAJyaEqZBMvv+ZKdtYzsEvG6MTkcC
-         XaRIWp+ZmItyM4EU84ct4bV4nB8c8QGVOut2cb0Yr5l68dxAnawX5hCbC7WTOW7CZaAO
-         7fPqlM4aKrsHu61+z0pptYqd0DJ7ucBN6+NQiDPpDQZBbCxDyghg70kmZLQLme6yDQfn
-         LuFywdgQPsZyS5JUSmuJzs22T0EWvEQwP1SNAmLY6xRkqdyCTWrrTXHcl6ewAi+ke45V
-         RUcA==
-X-Received: by 10.204.5.211 with SMTP id 19mr7236882bkw.29.1360125957369; Tue,
- 05 Feb 2013 20:45:57 -0800 (PST)
-Received: by 10.204.33.77 with HTTP; Tue, 5 Feb 2013 20:45:37 -0800 (PST)
+	id S1751330Ab3BFILm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 03:11:42 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:55605 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751044Ab3BFILl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 03:11:41 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r168BHsr026430
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 6 Feb 2013 09:11:17 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1U306A-0000mS-7W; Wed, 06 Feb 2013 09:11:18 +0100
+In-Reply-To: <7v6226pdb7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 05 Feb 2013 15:10:20 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 06 Feb 2013 09:11:19 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r168BHsr026430
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1360743081.38725@tf3uOH5dXiM65fLMAssubw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215565>
 
-Hi everyone,
+Junio C Hamano <gitster@pobox.com> writes:
 
-A while back I did a svn-to-git migration for my team. Our subversion
-repository had about 30K+ commits, 100+ branches, 2K+ tags, all made
-over a 20+ year period. I was doing the migration using git-svn, and
-my big problem was the tags. git-svn seemed to want to traverse the
-entire history of each tag, which was taking a long time. Because time
-and resources were limited, I ended up just migrating the branches and
-trunk, with the idea that I would handle the tags at a later date. My
-original plan to do that was to crawl the subversion log, find where
-the tags were made, and apply a git tag to the commit that was the
-source of the tag. This was a bad idea.
+> I see a lot of rerolls on the credential helper front, but is there
+> anybody working on hooking send-email to the credential framework?
 
-I've found that over the years, people have made tags that are only
-subdirectories of the source tree, made tags off of other tags, and
-committed to tags. The latter is the biggest problem, since those
-commits don't seem to be stored in the git repository because they
-never appeared in the branches/trunk.
+Not answering the question, but git-remote-mediawiki supports the
+credential framework. It is written in perl, and the credential support
+is rather cleanly written and doesn't have dependencies on the wiki
+part, so the way to go for send-email is probably to libify the
+credential support in git-remote-mediawiki, and to use it in send-email.
 
-So, I'm wondering what my options are to bring back this history. One
-idea is to somehow resume the git-svn download, but changing it to
-also scan tags (it sounds like it should be possible, but I haven't
-tried it yet). Or maybe there's some other tool that will more quickly
-clone the repository including tags, and then I can somehow splice the
-tags back into the repository we're already using?
-
-Any ideas or suggestions?
-
-Thanks!
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
