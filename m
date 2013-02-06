@@ -1,84 +1,608 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: CodingGuidelines Perl amendment
-Date: Wed, 06 Feb 2013 13:27:33 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <87mwvhguwa.fsf@lifelogs.com>
-References: <2f93ce7b6b5d3f6c6d1b99958330601a5560d4ba.1359486391.git.mina86@mina86.com>
-	<7vvcafojf4.fsf@alter.siamese.dyndns.org>
-	<20130130074306.GA17868@sigill.intra.peff.net>
-	<7v7gmumzo6.fsf@alter.siamese.dyndns.org>
-	<87pq0l5qbc.fsf@lifelogs.com>
-	<20130131193844.GA14460@sigill.intra.peff.net>
-	<87k3qrx712.fsf@lifelogs.com>
-	<20130203194148.GA26318@sigill.intra.peff.net>
-	<87sj5cvxnf.fsf_-_@lifelogs.com>
-	<7vk3qo2dsc.fsf@alter.siamese.dyndns.org>
-	<87k3qoudxp.fsf@lifelogs.com>
-	<7vvca7291z.fsf@alter.siamese.dyndns.org>
-	<87lib3uats.fsf@lifelogs.com>
-	<7v7gmn1xqi.fsf@alter.siamese.dyndns.org>
-	<871ucto4vj.fsf_-_@lifelogs.com>
-	<7vvca5mmmt.fsf@alter.siamese.dyndns.org>
-	<87vca5gvx6.fsf@lifelogs.com>
-	<7vehgtcnpm.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Feb 2013, #03; Wed, 6)
+Date: Wed, 06 Feb 2013 10:29:33 -0800
+Message-ID: <7v8v71cn3m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 06 19:27:59 2013
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 06 19:30:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U39iv-0004Cr-Qn
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 19:27:58 +0100
+	id 1U39kw-0005yK-RO
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 19:30:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755294Ab3BFS1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Feb 2013 13:27:35 -0500
-Received: from z.lifelogs.com ([173.255.230.239]:35868 "EHLO z.lifelogs.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754059Ab3BFS1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 13:27:34 -0500
-Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: tzz)
-	by z.lifelogs.com (Postfix) with ESMTPSA id 0E952DE0E3;
-	Wed,  6 Feb 2013 18:27:34 +0000 (UTC)
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-In-Reply-To: <7vehgtcnpm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 06 Feb 2013 10:16:21 -0800")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
+	id S1757690Ab3BFS3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 13:29:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40793 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754059Ab3BFS3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 13:29:37 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EC0ECA58;
+	Wed,  6 Feb 2013 13:29:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=T
+	s5MMB4oIRjlgs8fXSmA8QvVtpA=; b=JqCK8ZsNja4FtwS5+OFRvpH9KzbdUKJrQ
+	dAhBPl+vVGm3Acf9v2Yqo0oPZru8bzYPGj3EjwAb3uD4ihGKvoiHoOTCWHFjElkq
+	F8ezovrhdR4iZ/I1/os1CiNIG64nESHFjYUTTh+fGYZAi9f5+ZejB4uoX+zisWBt
+	STF2gVMD6A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=nIi
+	En6rhOymwur9I+Mlm1oro+/gd1C7QKka77GXuwIxzt6sJ6PVSqJLHvg688sadSA1
+	0O4jOk0FlFPquweyo+X/od4mppqpF+WvQjGP1IrNEGz74eQ1KAoNp0QamWPw7FAV
+	+G0QpNbyNWo7FesXSMmhMeBiqHuLczWinBvlHADw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5297ACA56;
+	Wed,  6 Feb 2013 13:29:36 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1ED12CA4F; Wed,  6 Feb 2013
+ 13:29:35 -0500 (EST)
+X-master-at: 2f19ada7f8a5bb768816cf7334f65ae0ab03c8a7
+X-next-at: 8bc64348c96661c4cb37542730b0df4dd12eb8c2
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 282D0462-708B-11E2-B96E-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215618>
 
-On Wed, 06 Feb 2013 10:16:21 -0800 Junio C Hamano <gitster@pobox.com> wrote: 
+Here are the topics that have been cooking.  Commits prefixed with
+'-' are only in 'pu' (proposed updates) while commits prefixed with
+'+' are in 'next'.
 
-JCH> I'd suggest to just drop that "try to write without braces" entirely.
+As usual, this cycle is expected to last for 8 to 10 weeks, with a
+preview -rc0 sometime in the middle of this month.
 
-OK, I'll do it on the reroll, or you can just make the change directly.
+You can find the changes described here in the integration branches of the
+repositories listed at
 
-I agree it was not going anywhere :)
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
-Ted
+--------------------------------------------------
+[Graduated to "master"]
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 951d74c..857f4e2 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -187,10 +187,6 @@ For Perl 5 programs:
- 
-  - use strict and use warnings are strongly preferred.
- 
-- - As in C (see above), we avoid using braces unnecessarily (but Perl forces
--   braces around if/unless/else/foreach blocks, so this is not always possible).
--   At least make sure braces do not sit on their own line, like with C.
--
-  - Don't abuse statement modifiers--they are discouraged.  But in general:
- 
-        ... do something ...
+* ft/transport-report-segv (2013-01-31) 1 commit
+  (merged to 'next' on 2013-02-02 at 6c450a7)
+ + push: fix segfault when HEAD points nowhere
+
+ A failure to push due to non-ff while on an unborn branch
+ dereferenced a NULL pointer when showing an error message.
+
+
+* jc/fake-ancestor-with-non-blobs (2013-01-31) 3 commits
+  (merged to 'next' on 2013-02-02 at 86d457a)
+ + apply: diagnose incomplete submodule object name better
+ + apply: simplify build_fake_ancestor()
+ + git-am: record full index line in the patch used while rebasing
+ (this branch is used by jc/extended-fake-ancestor-for-gitlink.)
+
+ Rebasing the history of superproject with change in the submodule
+ has been broken since v1.7.12.
+
+
+* jn/auto-depend-workaround-buggy-ccache (2013-02-01) 1 commit
+  (merged to 'next' on 2013-02-02 at db5940a)
+ + Makefile: explicitly set target name for autogenerated dependencies
+
+ An age-old workaround to prevent buggy versions of ccache from
+ breaking the auto-generation of dependencies, which unfortunately
+ is still relevant because some people use ancient distros.
+
+
+* sb/gpg-plug-fd-leak (2013-01-31) 1 commit
+  (merged to 'next' on 2013-02-02 at c271a31)
+ + gpg: close stderr once finished with it in verify_signed_buffer()
+
+ We forgot to close the file descriptor reading from "gpg" output,
+ killing "git log --show-signature" on a long history.
+
+
+* ta/doc-no-small-caps (2013-02-01) 6 commits
+  (merged to 'next' on 2013-02-02 at 77cbd0e)
+ + Documentation: StGit is the right spelling, not StGIT
+ + Documentation: describe the "repository" in repository-layout
+ + Documentation: add a description for 'gitfile' to glossary
+ + Documentation: do not use undefined terms git-dir and git-file
+ + Documentation: the name of the system is 'Git', not 'git'
+ + Documentation: avoid poor-man's small caps GIT
+
+ Update documentation to change "GIT" which was a poor-man's small
+ caps to "Git".  The latter was the intended spelling.
+
+ Also change "git" spelled in all-lowercase to "Git" when it refers
+ to the system as the whole or the concept it embodies, as opposed to
+ the command the end users would type.
+
+--------------------------------------------------
+[New Topics]
+
+* jc/extended-fake-ancestor-for-gitlink (2013-02-05) 1 commit
+ - apply: verify submodule commit object name better
+
+ Instead of requiring the full 40-hex object names on the index
+ line, we can read submodule commit object names from the textual
+ diff when synthesizing a fake ancestore tree for "git am -3".
+
+ Will merge to 'next'.
+
+
+* tz/credential-authinfo (2013-02-05) 1 commit
+ - Add contrib/credentials/netrc with GPG support
+
+ A new read-only credential helper (in contrib/) to interact with
+ the .netrc/.authinfo files.  Hopefully mn/send-email-authinfo topic
+ can rebuild on top of something like this.
+
+ Waiting for further reviews.
+
+
+* jx/utf8-printf-width (2013-02-05) 1 commit
+ - Add utf8_fprintf helper which returns correct columns
+
+ Use a new helper that prints a message and counts its display width
+ to align the help messages parse-options produces.
+
+--------------------------------------------------
+[Stalled]
+
+* mn/send-email-authinfo (2013-01-29) 1 commit
+ - git-send-email: add ~/.authinfo parsing
+
+ This triggered a subtopic to add a credential helper for
+ authinfo/netrc files (with or without GPG encryption), but nobody
+ seems to be working on connecting send-email to the credential
+ framework.
+
+
+* mp/diff-algo-config (2013-01-16) 3 commits
+ - diff: Introduce --diff-algorithm command line option
+ - config: Introduce diff.algorithm variable
+ - git-completion.bash: Autocomplete --minimal and --histogram for git-diff
+
+ Add diff.algorithm configuration so that the user does not type
+ "diff --histogram".
+
+ Looking better; may want tests to protect it from future breakages,
+ but otherwise it looks ready for 'next'.
+
+ Expecting a follow-up to add tests.
+
+
+* mb/gitweb-highlight-link-target (2012-12-20) 1 commit
+ - Highlight the link target line in Gitweb using CSS
+
+ Expecting a reroll.
+ $gmane/211935
+
+
+* jk/lua-hackery (2012-10-07) 6 commits
+ - pretty: fix up one-off format_commit_message calls
+ - Minimum compilation fixup
+ - Makefile: make "lua" a bit more configurable
+ - add a "lua" pretty format
+ - add basic lua infrastructure
+ - pretty: make some commit-parsing helpers more public
+
+ Interesting exercise. When we do this for real, we probably would want
+ to wrap a commit to make it more like an "object" with methods like
+ "parents", etc.
+
+
+* rc/maint-complete-git-p4 (2012-09-24) 1 commit
+ - Teach git-completion about git p4
+
+ Comment from Pete will need to be addressed ($gmane/206172).
+
+
+* jc/maint-name-rev (2012-09-17) 7 commits
+ - describe --contains: use "name-rev --algorithm=weight"
+ - name-rev --algorithm=weight: tests and documentation
+ - name-rev --algorithm=weight: cache the computed weight in notes
+ - name-rev --algorithm=weight: trivial optimization
+ - name-rev: --algorithm option
+ - name_rev: clarify the logic to assign a new tip-name to a commit
+ - name-rev: lose unnecessary typedef
+
+ "git name-rev" names the given revision based on a ref that can be
+ reached in the smallest number of steps from the rev, but that is
+ not useful when the caller wants to know which tag is the oldest one
+ that contains the rev.  This teaches a new mode to the command that
+ uses the oldest ref among those which contain the rev.
+
+ I am not sure if this is worth it; for one thing, even with the help
+ from notes-cache, it seems to make the "describe --contains" even
+ slower. Also the command will be unusably slow for a user who does
+ not have a write access (hence unable to create or update the
+ notes-cache).
+
+ Stalled mostly due to lack of responses.
+
+
+* jc/xprm-generation (2012-09-14) 1 commit
+ - test-generation: compute generation numbers and clock skews
+
+ A toy to analyze how bad the clock skews are in histories of real
+ world projects.
+
+ Stalled mostly due to lack of responses.
+
+
+* jc/add-delete-default (2012-08-13) 1 commit
+ - git add: notice removal of tracked paths by default
+
+ "git add dir/" updated modified files and added new files, but does
+ not notice removed files, which may be "Huh?" to some users.  They
+ can of course use "git add -A dir/", but why should they?
+
+ Resurrected from graveyard, as I thought it was a worthwhile thing
+ to do in the longer term.
+
+ Stalled mostly due to lack of responses.
+
+
+* mb/remote-default-nn-origin (2012-07-11) 6 commits
+ - Teach get_default_remote to respect remote.default.
+ - Test that plain "git fetch" uses remote.default when on a detached HEAD.
+ - Teach clone to set remote.default.
+ - Teach "git remote" about remote.default.
+ - Teach remote.c about the remote.default configuration setting.
+ - Rename remote.c's default_remote_name static variables.
+
+ When the user does not specify what remote to interact with, we
+ often attempt to use 'origin'.  This can now be customized via a
+ configuration variable.
+
+ Expecting a reroll.
+ $gmane/210151
+
+ "The first remote becomes the default" bit is better done as a
+ separate step.
+
+
+* nd/parse-pathspec (2013-01-11) 20 commits
+ . Convert more init_pathspec() to parse_pathspec()
+ . Convert add_files_to_cache to take struct pathspec
+ . Convert {read,fill}_directory to take struct pathspec
+ . Convert refresh_index to take struct pathspec
+ . Convert report_path_error to take struct pathspec
+ . checkout: convert read_tree_some to take struct pathspec
+ . Convert unmerge_cache to take struct pathspec
+ . Convert read_cache_preload() to take struct pathspec
+ . add: convert to use parse_pathspec
+ . archive: convert to use parse_pathspec
+ . ls-files: convert to use parse_pathspec
+ . rm: convert to use parse_pathspec
+ . checkout: convert to use parse_pathspec
+ . rerere: convert to use parse_pathspec
+ . status: convert to use parse_pathspec
+ . commit: convert to use parse_pathspec
+ . clean: convert to use parse_pathspec
+ . Export parse_pathspec() and convert some get_pathspec() calls
+ . Add parse_pathspec() that converts cmdline args to struct pathspec
+ . pathspec: save the non-wildcard length part
+
+ Uses the parsed pathspec structure in more places where we used to
+ use the raw "array of strings" pathspec.
+
+ Ejected from 'pu' for now; will take a look at the rerolled one
+ later ($gmane/213340).
+
+--------------------------------------------------
+[Cooking]
+
+* dg/subtree-fixes (2013-02-05) 6 commits
+ - contrib/subtree: make the manual directory if needed
+ - contrib/subtree: honor DESTDIR
+ - contrib/subtree: fix synopsis
+ - contrib/subtree: better error handling for 'subtree add'
+ - contrib/subtree: use %B for split subject/body
+ - contrib/subtree: remove test number comments
+
+ contrib/subtree updates, but here are only the ones that looked
+ ready to be merged to 'next'.  For the remainder, they will have
+ another day.
+
+ Will merge to 'next'.
+
+
+* jl/submodule-deinit (2013-02-04) 1 commit
+ - submodule: add 'deinit' command
+
+ There was no Porcelain way to say "I no longer am interested in
+ this submodule", once you express your interest in a submodule with
+ "submodule init".  "submodule deinit" is the way to do so.
+
+ Will merge to 'next'.
+
+
+* ct/autoconf-htmldir (2013-02-02) 1 commit
+  (merged to 'next' on 2013-02-05 at bba4f8c)
+ + Honor configure's htmldir switch
+
+ The autoconf subsystem passed --mandir down to generated
+ config.mak.autogen but forgot to do the same for --htmldir.
+
+ Will merge to 'master'.
+
+
+* mk/tcsh-complete-only-known-paths (2013-02-03) 1 commit
+  (merged to 'next' on 2013-02-05 at 4409b08)
+ + completion: handle path completion and colon for tcsh script
+ (this branch uses mp/complete-paths.)
+
+ Manlio's "complete with known paths only" update to completion
+ scripts returns directory names without trailing slash to
+ compensate the addition of '/' done by bash that reads from our
+ completion result.  tcsh completion code that reads from our
+ internal completion result does not add '/', so let it ask our
+ complletion code to keep the '/' at the end.
+
+ Will merge to 'master'.
+
+
+* jc/combine-diff-many-parents (2013-02-05) 2 commits
+  (merged to 'next' on 2013-02-05 at e382aa6)
+ + t4038: add tests for "diff --cc --raw <trees>"
+ + combine-diff: lift 32-way limit of combined diff
+
+ We used to have an arbitrary 32 limit for combined diff input,
+ resulting in incorrect number of leading colons shown when showing
+ the "--raw --cc" output.
+
+ Will merge to 'master'.
+
+
+* jc/remove-export-from-config-mak-in (2013-02-03) 1 commit
+ - config.mak.in: remove unused definitions
+
+ config.mak.in template had an "export" line to cause a few
+ common makefile variables to be exported; if they need to be
+ expoted for autoconf/configure users, they should also be exported
+ for people who write config.mak the same way.  Move the "export" to
+ the main Makefile.
+
+
+* jk/apply-similaritly-parsing (2013-02-03) 1 commit
+  (merged to 'next' on 2013-02-05 at ccf1c97)
+ + builtin/apply: tighten (dis)similarity index parsing
+
+ Make sure the similarity value shown in the "apply --summary"
+ output is sensible, even when the input had a bogus value.
+
+ Will merge to 'master'.
+
+
+* nd/status-show-in-progress (2013-02-05) 1 commit
+ - status: show the branch name if possible in in-progress info
+
+ Will merge to 'next'.
+
+
+* sb/gpg-i18n (2013-01-31) 1 commit
+  (merged to 'next' on 2013-02-02 at 7a54574)
+ + gpg: allow translation of more error messages
+
+ Will merge to 'master'.
+
+
+* sb/run-command-fd-error-reporting (2013-02-01) 1 commit
+  (merged to 'next' on 2013-02-02 at be7e970)
+ + run-command: be more informative about what failed
+
+ Will merge to 'master'.
+
+
+* jk/remote-helpers-doc (2013-02-01) 1 commit
+  (merged to 'next' on 2013-02-02 at ce1461a)
+ + Rename {git- => git}remote-helpers.txt
+
+ "git help remote-helpers" did not work; 'remote-helpers' is not
+ a subcommand name but a concept, so its documentation should have
+ been in gitremote-helpers, not git-remote-helpers.
+
+ Will merge to 'master'.
+
+
+* sp/smart-http-content-type-check (2013-02-06) 3 commits
+  (merged to 'next' on 2013-02-06 at 8bc6434)
+ + http_request: reset "type" strbuf before adding
+  (merged to 'next' on 2013-02-05 at 157812c)
+ + t5551: fix expected error output
+  (merged to 'next' on 2013-02-04 at d0759cb)
+ + Verify Content-Type from smart HTTP servers
+
+ The smart HTTP clients forgot to verify the content-type that comes
+ back from the server side to make sure that the request is being
+ handled properly.
+
+
+* jc/mention-tracking-for-pull-default (2013-01-31) 1 commit
+ - doc: mention tracking for pull.default
+
+ We stopped mentioning `tracking` is a deprecated but supported
+ synonym for `upstream` in pull.default even though we have no
+ intention of removing the support for it.
+
+ This is my "don't list it to catch readers' eyes, but make sure it
+ can be found if the reader looks for it" version; I'm not married
+ to the layout and will be happy to take a replacement patch.
+
+ Waiting for couter-proposal patches.
+
+
+* jk/doc-makefile-cleanup (2013-02-01) 1 commit
+  (merged to 'next' on 2013-02-02 at 86ff373)
+ + Documentation/Makefile: clean up MAN*_TXT lists
+
+ Will merge to 'master'.
+
+
+* ab/gitweb-use-same-scheme (2013-01-28) 1 commit
+  (merged to 'next' on 2013-02-02 at 7e4a108)
+ + gitweb: refer to picon/gravatar images over the same scheme
+
+ Avoid mixed contents on a page coming via http and https when
+ gitweb is hosted on a https server.
+
+ Will merge to 'master'.
+
+
+* jk/python-styles (2013-01-30) 1 commit
+  (merged to 'next' on 2013-02-02 at 293edc1)
+ + CodingGuidelines: add Python coding guidelines
+
+ Will merge to 'master'.
+
+
+* mp/complete-paths (2013-01-11) 1 commit
+  (merged to 'next' on 2013-01-30 at 70e4f1a)
+ + git-completion.bash: add support for path completion
+ (this branch is used by mk/tcsh-complete-only-known-paths.)
+
+ The completion script used to let the default completer to suggest
+ pathnames, which gave too many irrelevant choices (e.g. "git add"
+ would not want to add an unmodified path).  Teach it to use a more
+ git-aware logic to enumerate only relevant ones.
+
+ This is logically the right thing to do, and we would really love
+ to see people who have been involved in completion code to review
+ and comment on the implementation.
+
+ Will cook in 'next' to see if anybody screams.
+
+
+* ss/mergetools-tortoise (2013-02-01) 2 commits
+  (merged to 'next' on 2013-02-03 at d306b83)
+ + mergetools: teach tortoisemerge to handle filenames with SP correctly
+ + mergetools: support TortoiseGitMerge
+
+ Update mergetools to work better with newer merge helper tortoise ships.
+
+ Will merge to 'master'.
+
+
+* da/mergetool-docs (2013-02-02) 5 commits
+  (merged to 'next' on 2013-02-03 at f822dcf)
+ + doc: generate a list of valid merge tools
+ + mergetool--lib: list user configured tools in '--tool-help'
+ + mergetool--lib: add functions for finding available tools
+ + mergetool--lib: improve the help text in guess_merge_tool()
+ + mergetool--lib: simplify command expressions
+ (this branch uses jk/mergetool.)
+
+ Build on top of the clean-up done by jk/mergetool and automatically
+ generate the list of mergetool and difftool backends the build
+ supports to be included in the documentation.
+
+ Will merge to 'master'.
+
+
+* nd/branch-error-cases (2013-01-31) 6 commits
+  (merged to 'next' on 2013-02-02 at cf5e745)
+ + branch: let branch filters imply --list
+ + docs: clarify git-branch --list behavior
+ + branch: mark more strings for translation
+ + Merge branch 'nd/edit-branch-desc-while-detached' into HEAD
+ + branch: give a more helpful message on redundant arguments
+ + branch: reject -D/-d without branch name
+
+ Fix various error messages and conditions in "git branch", e.g. we
+ advertised "branch -d/-D" to remove one or more branches but actually
+ implemented removal of zero or more branches---request to remove no
+ branches was not rejected.
+
+ Will merge to 'master'.
+
+
+* jk/mergetool (2013-01-28) 8 commits
+  (merged to 'next' on 2013-02-03 at 2ff5dee)
+ + mergetools: simplify how we handle "vim" and "defaults"
+ + mergetool--lib: don't call "exit" in setup_tool
+ + mergetool--lib: improve show_tool_help() output
+ + mergetools/vim: remove redundant diff command
+ + git-difftool: use git-mergetool--lib for "--tool-help"
+ + git-mergetool: don't hardcode 'mergetool' in show_tool_help
+ + git-mergetool: remove redundant assignment
+ + git-mergetool: move show_tool_help to mergetool--lib
+ (this branch is used by da/mergetool-docs.)
+
+ Cleans up mergetool/difftool combo.
+
+ Will merge to 'master'.
+
+
+* jc/hidden-refs (2013-01-30) 7 commits
+ - fetch: fetch objects by their exact SHA-1 object names
+ - upload-pack: optionally allow fetching from the tips of hidden refs
+ - fetch: use struct ref to represent refs to be fetched
+ - parse_fetch_refspec(): clarify the codeflow a bit
+ - upload/receive-pack: allow hiding ref hierarchies
+ - upload-pack: simplify request validation
+ - upload-pack: share more code
+
+ Allow the server side to unclutter the refs/ namespace it shows to
+ the client.  Optionally allow requests for histories leading to the
+ tips of hidden refs by updated clients.
+
+ Need to split the configuration into three (one for sending, one
+ for receiving, and then another to cover both for convenience)
+ before this topic can go forward. Perhaps people involved in the
+ review cycle can help.
+
+
+* jc/remove-treesame-parent-in-simplify-merges (2013-01-17) 1 commit
+  (merged to 'next' on 2013-01-30 at b639b47)
+ + simplify-merges: drop merge from irrelevant side branch
+
+ The --simplify-merges logic did not cull irrelevant parents from a
+ merge that is otherwise not interesting with respect to the paths
+ we are following.
+
+ This touches a fairly core part of the revision traversal
+ infrastructure; even though I think this change is correct, please
+ report immediately if you find any unintended side effect.
+
+ Will cook in 'next'.
+
+
+* jc/push-2.0-default-to-simple (2013-01-16) 14 commits
+  (merged to 'next' on 2013-01-16 at 23f5df2)
+ + t5570: do not assume the "matching" push is the default
+ + t5551: do not assume the "matching" push is the default
+ + t5550: do not assume the "matching" push is the default
+  (merged to 'next' on 2013-01-09 at 74c3498)
+ + doc: push.default is no longer "matching"
+ + push: switch default from "matching" to "simple"
+ + t9401: do not assume the "matching" push is the default
+ + t9400: do not assume the "matching" push is the default
+ + t7406: do not assume the "matching" push is the default
+ + t5531: do not assume the "matching" push is the default
+ + t5519: do not assume the "matching" push is the default
+ + t5517: do not assume the "matching" push is the default
+ + t5516: do not assume the "matching" push is the default
+ + t5505: do not assume the "matching" push is the default
+ + t5404: do not assume the "matching" push is the default
+
+ Will cook in 'next' until Git 2.0 ;-).
+
+
+* bc/append-signed-off-by (2013-01-27) 11 commits
+ - Unify appending signoff in format-patch, commit and sequencer
+ - format-patch: update append_signoff prototype
+ - t4014: more tests about appending s-o-b lines
+ - sequencer.c: teach append_signoff to avoid adding a duplicate newline
+ - sequencer.c: teach append_signoff how to detect duplicate s-o-b
+ - sequencer.c: always separate "(cherry picked from" from commit body
+ - sequencer.c: recognize "(cherry picked from ..." as part of s-o-b footer
+ - t/t3511: add some tests of 'cherry-pick -s' functionality
+ - t/test-lib-functions.sh: allow to specify the tag name to test_commit
+ - commit, cherry-pick -s: remove broken support for multiline rfc2822 fields
+ - sequencer.c: rework search for start of footer to improve clarity
+
+ Waiting for the final round of reroll before merging to 'next'.
+ After that we will go incremental.
