@@ -1,89 +1,70 @@
-From: Michal Nazarewicz <mpn@google.com>
-Subject: [PATCH 0/4] Make git-send-email git-credential
-Date: Wed,  6 Feb 2013 21:47:02 +0100
-Message-ID: <cover.1360183427.git.mina86@mina86.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why is ident_is_sufficient different on Windows?
+Date: Wed, 06 Feb 2013 12:47:27 -0800
+Message-ID: <7vip65b25c.fsf@alter.siamese.dyndns.org>
+References: <991CBC1C-912C-4DD6-B911-93F6B41D895E@quendi.de>
+ <7vmwvhb2fm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Ted Zlatanov <tzz@lifelogs.com>, Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 06 21:47:45 2013
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Wed Feb 06 21:47:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3BuB-0005cR-Go
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 21:47:43 +0100
+	id 1U3BuO-0005mO-Ep
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Feb 2013 21:47:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758624Ab3BFUrU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Feb 2013 15:47:20 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:42540 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758551Ab3BFUrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Feb 2013 15:47:19 -0500
-Received: by mail-ee0-f46.google.com with SMTP id e49so1007629eek.33
-        for <git@vger.kernel.org>; Wed, 06 Feb 2013 12:47:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=P4kwczN/nKNU7kum/jtFRZV6ypnWQg/WmHz8Z5hGK3s=;
-        b=KqGhohSZVLM+qBrRHH1SaUWM9/sqUuKKZBrgD7y3nWncQaTMVczkYJ8Jc/X3uaflwA
-         BK6K3RfVzHxBpoj8961hFEa3YD71Ry8icmPzGhqoJlshYB77+oaEHcx057x7i4DKkYUr
-         vdE1o6rbFQO3759nJisRk9+QKA5S/c3fRCv27cALeYw3LFWKMMPJ1z66QHJsIKYBcUX5
-         NZ+3cLv2cVQfKedFTcAnfwLdrLygBHjGtgz0C6M+/dHbaLnFia75aMVG5a4rWkXAdBr/
-         vz9Srn/aI1fxjXIy+yDq7U0xXZ5gbzyjXN9cuVvxfJ18Nrg+knQYwOWJM50X3BIv/BzE
-         gKvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding:x-gm-message-state;
-        bh=P4kwczN/nKNU7kum/jtFRZV6ypnWQg/WmHz8Z5hGK3s=;
-        b=XEZADC2aC6v+ofkukacZ0nuhoLfvFDzy/7IlOJl4ah0AvZgWONF7okscjNRZdVDTcf
-         sYtnzCMAf1zTjpbX0/GPFSJsAXaXBM3tTBLgbnVlsd6UNh5b4cKcvsZXSdXUNEmZYiS4
-         RJHqRtyV0qOy6YMa/rscUPGMALYiWjT5ObKrhd4DEUFVIAcJPoDISe7w0jL7/dV5WlGs
-         IOhbsXy/c9LeZeAcRzd+QINvy+rEZCKh0WMGFmwFoK/6+uOYX7g8eqGIHi+kHU3gw5A0
-         p3KEPBATWvpmv/yK62Nv2lzRIyB1K6HJxzHLtkBkWb3rx7FNnzW471Bulwr/w9OleP/9
-         T4zQ==
-X-Received: by 10.14.194.4 with SMTP id l4mr4169195een.12.1360183638455;
-        Wed, 06 Feb 2013 12:47:18 -0800 (PST)
-Received: from mpn-glaptop.corp.google.com ([2620:0:105f:5:e809:df2d:46af:f661])
-        by mx.google.com with ESMTPS id z5sm294639eep.16.2013.02.06.12.47.16
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 06 Feb 2013 12:47:17 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.2.549.g1d13f9f
-X-Gm-Message-State: ALoCoQnkM0Mp26LOZlpI2SXMVPHl7sC0XSUdJ4ziMyAsPOLv1J+KsxmZXAiEjkCmYN8kwKedicGtJglsICVNoVluflUWV+Vnd6pxLmSnUioRJ/tcQ5Nn1D77PB7FINfk+JTW2b/CiFfyZ88SSDM+u7UXjbcZ9idQMxIonJqL8Z7NwR5OLTwUZXrOxgCflbaan22XSReb66BZ
+	id S1758640Ab3BFUre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Feb 2013 15:47:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58367 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758625Ab3BFUr3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Feb 2013 15:47:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 694C5DC67;
+	Wed,  6 Feb 2013 15:47:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qhUDv1L7jdOIxWpTJvGudcEL9eM=; b=KrbKWK
+	CHWMX9FrWg4CHH9sAwLo4a89qMgPugP/fQI3LetZPktnaBlvHW2HoFU3rZkDRbF0
+	/HOJMGcKVnaJqXmH8WlLqWqiZW9YhVrfjU/bje0P39pCSBp8NAafmcXfMtpUHCuA
+	VAA7C4Vbcwugpm4OfjEhpZKN2/t3lFVwbVHD4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OmkzbSF69yqorOgTkO4HvVw061SLrFI6
+	IddZiA6BMVWEWdfBtkhcW/jhSLshabWK2Um065XXKOdMJwAyuOD2iTUTC1ytIpqb
+	2qZjC4hhFbVunMVFn0z9TSL73eEKSNl7G/XtGhue78pl1yt+bzLbYBLfRRUmseO7
+	tWVDfYaAcU8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E25BDC66;
+	Wed,  6 Feb 2013 15:47:29 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D508DDC64; Wed,  6 Feb 2013
+ 15:47:28 -0500 (EST)
+In-Reply-To: <7vmwvhb2fm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 06 Feb 2013 12:41:17 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6BB660E4-709E-11E2-BB50-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215636>
 
-=46rom: Michal Nazarewicz <mina86@mina86.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-As discussed on the list, adding git-credential interface to Git.pm
-(sort of copied from git-remote-mediawiki) and making git-send-email
-use it.
+> I suspect somebody from the Windows camp saw a patch I posted
+> without the ifdef, noticed that there is a problem to expect
+> IDENT_NAME_GIVEN to be set on Windows for some reason, and resulted
+> in a reroll of the function in that shape.
+>
+> I didn't find anything in the list archive, though.  So I am
+> stumped.
 
-I see git-remote-mediawiki does not have =E2=80=9Cuse Git=E2=80=9D so I=
- did not touch
-it.  On top of that I'd have no way to tests the changes anyway.
-
-Michal Nazarewicz (4):
-  Git.pm: Allow command_close_bidi_pipe() to be called as method
-  Git.pm: Allow pipes to be closed prior to calling
-    command_close_bidi_pipe
-  Git.pm: Add interface for git credential command.
-  git-send-email: Use git credential to obtain password.
-
- Documentation/git-send-email.txt |   4 +-
- git-send-email.perl              |  59 +++++++++++---------
- perl/Git.pm                      | 116 +++++++++++++++++++++++++++++++=
-+++++++-
- 3 files changed, 149 insertions(+), 30 deletions(-)
-
---=20
-1.8.1.2.549.g4fa355e
+The only thing I can think of is that on Unix we can guess name from
+GECOS, which could be considered sufficiently your name, while on
+Windows we probably do not get anything useful there.
