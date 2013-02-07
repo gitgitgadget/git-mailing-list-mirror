@@ -1,99 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] test-lib.sh: No POSIXPERM for cygwin
-Date: Thu, 07 Feb 2013 11:35:17 -0800
-Message-ID: <7vd2wb7w96.fsf@alter.siamese.dyndns.org>
-References: <201301271557.08994.tboegi@web.de>
- <5113F1B1.3010102@ramsay1.demon.co.uk>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Proposal: branch.<name>.remotepush
+Date: Fri, 8 Feb 2013 01:07:04 +0530
+Message-ID: <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
+References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
+ <5113E849.8000602@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, j6t@kdbg.org
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Feb 07 20:35:49 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Thu Feb 07 20:37:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3XG4-0003n8-8P
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 20:35:44 +0100
+	id 1U3XI4-0005qg-Hv
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 20:37:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759182Ab3BGTfV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Feb 2013 14:35:21 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56423 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758962Ab3BGTfU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Feb 2013 14:35:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3C64D256;
-	Thu,  7 Feb 2013 14:35:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/RvWSgHN7np1
-	us1SzCW5Hn6zuGA=; b=XKPlPkNDaDZv4tU45ahmlpVXr8tiKCes6mOoN3gWsatg
-	Z8+ULxMRbRFeJg/bnc2NmNONwIzWQHAXitpDFl/SVp9vsWLUX+cuDxXMrbBB8Kc6
-	XTt5NOnReVSJn514vhLNGpPw8pRirDfcJPug/PiI1PcyQ/+3pXmKBTZprhCLSB8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OtGeu2
-	gCg330UWv52XOdWXMm/cR0iAihLk5K87d9VyIXUwM+zNN+KDabAhNc66gzHWYtzH
-	rgthOLMRYimbrEWnFxod925NsIvRgRsd8+Ypoa4L+5E3GsHgf4gf1yNjuPu6EVF6
-	foKIELz9atJf2ZHWOr0QG2/pkNFl3mmk/OwkI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E76D5D255;
-	Thu,  7 Feb 2013 14:35:19 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FE33D252; Thu,  7 Feb 2013
- 14:35:19 -0500 (EST)
-In-Reply-To: <5113F1B1.3010102@ramsay1.demon.co.uk> (Ramsay Jones's message
- of "Thu, 07 Feb 2013 18:25:53 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 818433D2-715D-11E2-92DB-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759095Ab3BGTh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 14:37:26 -0500
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:61253 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756283Ab3BGThZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 14:37:25 -0500
+Received: by mail-oa0-f41.google.com with SMTP id i10so3280156oag.14
+        for <git@vger.kernel.org>; Thu, 07 Feb 2013 11:37:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=D6Pbgmc+PRlyaeCAFNsqknbiA0V7DgbeGuOmaOMIy74=;
+        b=LHvl6ext15HnannRw8ogh+WedaGDwqXCFldR9Fqz269SILfzjXCs2VZAGSNp++XYEl
+         vOW0UbIo7+b9zfDgGgMTox+A8Vq73weQ1IadsioLtftcbt3sH5gI+OOoLKv/vJv066ZW
+         jLL3Rp1HOmvN5qyb+dRSzq28+AxUsd1FaX9PHPNAsbO8TwqV8l0w57xo69Pl0CGzEf3u
+         NgEx4Fb99q0E6PtGk8dooT97rP1DUiMBxoiPz2ZnOhglGPaIZj4H1OHwm5ZZQlaqDHMn
+         rfLeQJUhf5zS69bC5At82/+LRGwia038VgsFNjosEvZKU4RVwVV0LB+R3U+W9a0523Fc
+         6+NQ==
+X-Received: by 10.60.169.203 with SMTP id ag11mr2085840oec.124.1360265844607;
+ Thu, 07 Feb 2013 11:37:24 -0800 (PST)
+Received: by 10.76.128.79 with HTTP; Thu, 7 Feb 2013 11:37:04 -0800 (PST)
+In-Reply-To: <5113E849.8000602@elegosoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215717>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+There's a reason why remote.<name>.pushurl feels wrong.  If one remote
+has a different push from pull, there should be something
+corresponding to refs/remotes/* for push (and the equivalent of fetch
+for updating it).  Second, I can't even diff between a branch on my
+push URL and a local branch: the [ahead 1, behind 1] in status output
+really doesn't make sense if the repository you're pushing to is
+different from the one you're pulling from.  In contrast, if you take
+what I proposed, refs/remotes/{upstream, mine}/* already exist, and
+it's easy to diff them with the corresponding local branch.
 
-> Torsten B=C3=B6gershausen wrote:
->> t0070 and t1301 fail when running the test suite under cygwin.
->> Skip the failing tests by unsetting POSIXPERM.
->
-> t1301 does not fail for me. (WIN XP (SP3) on NTFS)
-
-Others run Cygwin with vfat or some other filesystem, and some of
-them do not cope will with POSIXPERM, perhaps?
-
-Not having POSIXPERM by default for Cygwin may be a saner default
-than having one, if we have to pick one.
-
-It may be debatable to have this default as platform attribute,
-though.
-
->> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
->> ---
->>  t/test-lib.sh | 1 -
->>  1 file changed, 1 deletion(-)
->>=20
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index 1a6c4ab..94b097e 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -669,7 +669,6 @@ case $(uname -s) in
->>  	test_set_prereq SED_STRIPS_CR
->>  	;;
->>  *CYGWIN*)
->> -	test_set_prereq POSIXPERM
->>  	test_set_prereq EXECKEEPSPID
->>  	test_set_prereq NOT_MINGW
->>  	test_set_prereq SED_STRIPS_CR
->>=20
->
-> So, I'm not in favour of this, FWIW.
->
-> ATB,
-> Ramsay Jones
+And yes, a regular `git push origin refs/for/master` is just retarded.
+ I don't personally use Gerrit, but the people who do should not have
+to suffer.
