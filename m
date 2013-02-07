@@ -1,103 +1,55 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: [RFC/PATCH 1/4] show: obey --textconv for blobs
-Date: Thu, 07 Feb 2013 09:48:21 +0100
-Message-ID: <51136A55.7060805@drmicha.warpmail.net>
-References: <20130205201106.GA29248@sigill.intra.peff.net> <cover.1360162813.git.git@drmicha.warpmail.net> <883f0163cb732932061a368ea9bc187c13e4ecca.1360162813.git.git@drmicha.warpmail.net> <7vmwvhmli7.fsf@alter.siamese.dyndns.org>
+Date: Thu, 07 Feb 2013 10:05:26 +0100
+Message-ID: <51136E56.7060703@drmicha.warpmail.net>
+References: <cover.1360162813.git.git@drmicha.warpmail.net> <883f0163cb732932061a368ea9bc187c13e4ecca.1360162813.git.git@drmicha.warpmail.net> <20130206220644.GB27507@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 07 09:48:49 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 07 10:05:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3N9y-0001VE-QI
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 09:48:47 +0100
+	id 1U3NQW-0000rf-Qj
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 10:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590Ab3BGIsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 03:48:23 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:46431 "EHLO
+	id S1754522Ab3BGJFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 04:05:30 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:57268 "EHLO
 	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752401Ab3BGIsW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Feb 2013 03:48:22 -0500
+	by vger.kernel.org with ESMTP id S1751962Ab3BGJF1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Feb 2013 04:05:27 -0500
 Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 3B0BD21209;
-	Thu,  7 Feb 2013 03:48:21 -0500 (EST)
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 644C020AC6;
+	Thu,  7 Feb 2013 04:05:26 -0500 (EST)
 Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 07 Feb 2013 03:48:21 -0500
+  by compute2.internal (MEProxy); Thu, 07 Feb 2013 04:05:26 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=message-id:date:from:mime-version:to:cc
 	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=haBbWjjZR+IPNunJpLqz+b
-	dkCB4=; b=pPwGjM2KR04LlbflKzSHNzVQtM/tdxCiZULU2cZ/D6vhp+SrBzkD+c
-	j6NQo9vPbI09qsahEvPgRBRTe21FYhcpcBm7xMdLnYLkce+AK99J8CdR5yKYYBQk
-	hxTKGjbAG+76UU7FlOEWzERM06azEhYR9Ud7xZGPkVd7w12Vrw8FY=
-X-Sasl-enc: V2lNZXTL8SND73CwFVSjlpLzznEefzou5/H51BcSi1IG 1360226900
+	:content-transfer-encoding; s=smtpout; bh=3L4aUo5i1m3iegrqPdgcUQ
+	RexHg=; b=Qx3eAQ4T9InBqfn5pu8DlV166xByPZKVrBIhBmatr1TBnaSU5gRdbc
+	mmIEZCjahZAlMG70r6mUnfxutFGBKXTEbcSwT28BMKGsYR/4b5Dx0H2s4XpS0MLU
+	9i5OWe2n+a1VK43zIiRVUPZ4+Dx3HmwELfTgRmRWw7mAJjIvFbtXQ=
+X-Sasl-enc: w0fBwUs/YvsO2JRJMOs0Z7AQBEWE/hG9i3yEBvtvxLlB 1360227926
 Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 7F9AF482484;
-	Thu,  7 Feb 2013 03:48:20 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id AC9DC482524;
+	Thu,  7 Feb 2013 04:05:25 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
-In-Reply-To: <7vmwvhmli7.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20130206220644.GB27507@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215680>
 
-Junio C Hamano venit, vidit, dixit 06.02.2013 17:53:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+Jeff King venit, vidit, dixit 06.02.2013 23:06:
+> On Wed, Feb 06, 2013 at 04:08:50PM +0100, Michael J Gruber wrote:
 > 
->> Currently, "diff" and "cat-file" for blobs obey "--textconv" options
->> (with the former defaulting to "--textconv" and the latter to
->> "--no-textconv") whereas "show" does not obey this option, even though
->> it takes diff options.
->>
->> Make "show" on blobs behave like "diff", i.e. obey "--textconv" by
->> default and "--no-textconv" when given.
-> 
-> What does "log -p" do currently, and what should it do?  Does/should
-> it also use --textconv?
-
-It invokes "--textconv" by default, and allows to override with
-"--no-textconv. That's what I meant to say but seem to have failed to.
-
-I think at some point we decided to have "human output" on by default
-for all things diff (porcelain only, of course) unless the diff is meant
-for machine consumption, such as in the case of format-patch.
-
-> The --textconv is a natural extension of what --ext-diff provides us,
-> so I think it should trigger the same way as how --ext-diff triggers.
-
-This series' aim is to make the textconv behavior the same for all
-"human output" commands. I don't see textconv and ext-diff to be
-strongly related, and if then the other way round:
-
-textconv is about converting blobs to a (possibly lossy) human
-consumable text.
-
-ext-diff is about computing diffs with an external diff "tool" (not in
-the sense of diff-tool).
-
-One way of diffing is textconving blobs then using internal diff on the
-resulting text blobs, but ext-diff is more general and, really,
-orthogonal in a way. (It used to be used often for what textconv does
-when that didn't exist.)
-
-> We apply "--ext-diff" for "diff" by default but not for "log -p" and
-> "show"; I suspect this may have been for a good reason but I do not
-> recall the discussion that led to the current behaviour offhand.
-
-I don't think I changed anything ext-diff related, did I? 1/4 is about
-showing blobs, not diffs.
-
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->>  builtin/log.c | 24 +++++++++++++++++++++---
->>  1 file changed, 21 insertions(+), 3 deletions(-)
->>
 >> diff --git a/builtin/log.c b/builtin/log.c
 >> index 8f0b2e8..f83870d 100644
 >> --- a/builtin/log.c
@@ -108,6 +60,12 @@ showing blobs, not diffs.
 >>  
 >> -static int show_blob_object(const unsigned char *sha1, struct rev_info *rev)
 >> +static int show_blob_object(const unsigned char *sha1, struct rev_info *rev, const char *obj_name)
+> 
+> Should this maybe just take the whole object_array_entry as a cleanup?
+
+It's just a question of one or two/three pointers (I can't count), but
+yes, that would be possible.
+
 >>  {
 >> +	unsigned char sha1c[20];
 >> +	struct object_context obj_context;
@@ -121,24 +79,25 @@ showing blobs, not diffs.
 >> +
 >> +	if (get_sha1_with_context(obj_name, 0, sha1c, &obj_context))
 >> +		die("Not a valid object name %s", obj_name);
->> +	if (!obj_context.path[0] ||
->> +	    !textconv_object(obj_context.path, obj_context.mode, sha1c, 1, &buf, &size))
->> +		return stream_blob_to_fd(1, sha1, NULL, 0);
->> +
->> +	if (!buf)
->> +		die("git show %s: bad file", obj_name);
->> +
->> +	write_or_die(1, buf, size);
->> +	return 0;
->>  }
->>  
->>  static int show_tag_object(const unsigned char *sha1, struct rev_info *rev)
->> @@ -491,7 +509,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
->>  		const char *name = objects[i].name;
->>  		switch (o->type) {
->>  		case OBJ_BLOB:
->> -			ret = show_blob_object(o->sha1, NULL);
->> +			ret = show_blob_object(o->sha1, &rev, name);
->>  			break;
->>  		case OBJ_TAG: {
->>  			struct tag *t = (struct tag *)o;
+> 
+> It seems a little hacky that we have to look up the sha1 again. What
+> should happen in the off chance that "hashcmp(sha1, sha1c) != 0" due to
+> a race with a simultaneous update of a ref?
+
+I thought about a check here but didn't bother to because I knew the
+refactoring would come up again...
+
+> Would it be better if object_array_entry replaced its "mode" member with
+> an object_context?
+
+Do all callers/users want to deal with object_context?
+
+I'm wondering why o_c has a mode at all, since it is mostly used in
+conjunction with an object, isn't it?
+
+> The only downside I see is that we might waste a
+> significant amount of memory (each context has a PATH_MAX buffer in it).
+
+That's why I used a reference to the struct, see my other reply.
+
+Michael
