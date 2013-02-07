@@ -1,69 +1,74 @@
-From: Matt Kraai <kraai@ftbfs.org>
-Subject: [PATCH] Use __VA_ARGS__ for all of error's arguments
-Date: Thu,  7 Feb 2013 13:30:32 -0800
-Message-ID: <1360272632-22566-1-git-send-email-kraai@ftbfs.org>
-References: <20130207212438.GA22253@ftbfs.org>
-Cc: Matt Kraai <matt.kraai@amo.abbott.com>
-To: git@vger.kernel.org, Max Horn <max@quendi.de>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 22:31:08 2013
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Proposal: branch.<name>.remotepush
+Date: Thu, 7 Feb 2013 15:30:17 -0800
+Message-ID: <20130207233017.GD19397@google.com>
+References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
+ <5113E849.8000602@elegosoft.com>
+ <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Schubert <mschub@elegosoft.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 00:30:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3Z3j-0003IV-Hk
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 22:31:07 +0100
+	id 1U3avd-0002jM-Tv
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 00:30:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422640Ab3BGVao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 16:30:44 -0500
-Received: from kvm.ftbfs.org ([46.22.115.26]:55522 "EHLO kvm.ftbfs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161008Ab3BGVao (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2013 16:30:44 -0500
-Received: from kraai by kvm.ftbfs.org with local (Exim 4.72)
-	(envelope-from <kraai@ftbfs.org>)
-	id 1U3Z3K-0005sW-Te; Thu, 07 Feb 2013 13:30:42 -0800
-X-Mailer: git-send-email 1.7.2.5
-In-Reply-To: <20130207212438.GA22253@ftbfs.org>
+	id S1759531Ab3BGXa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 18:30:28 -0500
+Received: from mail-da0-f48.google.com ([209.85.210.48]:44667 "EHLO
+	mail-da0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759479Ab3BGXa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 18:30:27 -0500
+Received: by mail-da0-f48.google.com with SMTP id v40so1445783dad.35
+        for <git@vger.kernel.org>; Thu, 07 Feb 2013 15:30:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Zb4/Teqc+4F2+VP7nR2XJ/NgCiKXYTelMiKbn8wrSok=;
+        b=kwkkmPMSfbrqx9/qB7GpTk94jQb5nD5sjJnZCVuX4b2D4sd22Wxq+LVvuJG2l+uGPA
+         Qi6ia2kpZjIlhmf8zuTaHD/1yXfhLq2Da38m2RYMWP0HJRnkn7rxtMHyoOrTrrbSDG8s
+         eZGAHTjXdZyCr7ag5KYOLnOf/Mh4PxeyAXGKEt1OowgeVHjVMhiBXIg3wJ/n3kf5snaD
+         fcMRFlR0pzghrQbTCTD7scJdFScYr5HpW5qRCT7euI+TnvfYmAoYdPqJq1IqAluebhwx
+         mCHi+IWSyvuKO2m4q89bgNXrxV60ekLD/Jur7Id3PEfjNjo7XQQDpV9aKfUZvB7BzPkL
+         0CWg==
+X-Received: by 10.66.82.198 with SMTP id k6mr10604964pay.53.1360279826906;
+        Thu, 07 Feb 2013 15:30:26 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id w2sm44002577pax.22.2013.02.07.15.30.23
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 07 Feb 2013 15:30:24 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215734>
 
-From: Matt Kraai <matt.kraai@amo.abbott.com>
+Hi Ram,
 
-QNX 6.3.2 uses GCC 2.95.3 by default, and GCC 2.95.3 doesn't remove the
-comma if the error macro's variable argument is left out.
+Ramkumar Ramachandra wrote:
 
-Instead of testing for a sufficiently recent version of GCC, make
-__VA_ARGS__ match all of the arguments.
+> And yes, a regular `git push origin refs/for/master` is just retarded.
 
-Signed-off-by: Matt Kraai <matt.kraai@amo.abbott.com>
----
- git-compat-util.h | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+The usual incantation is "git push gerrit HEAD:refs/for/master".  Is
+the code review creation push that uses a different branchname from
+the branch the integrator pulls what seems backward, or is it the need
+to specify a refname at all on the command line?
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index cc2abee..2e960a9 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -305,13 +305,10 @@ extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)))
- 
- /*
-  * Let callers be aware of the constant return value; this can help
-- * gcc with -Wuninitialized analysis. We have to restrict this trick to
-- * gcc, though, because of the variadic macro and the magic ## comma pasting
-- * behavior. But since we're only trying to help gcc, anyway, it's OK; other
-- * compilers will fall back to using the function as usual.
-+ * gcc with -Wuninitialized analysis.
-  */
- #if defined(__GNUC__) && ! defined(__clang__)
--#define error(fmt, ...) (error((fmt), ##__VA_ARGS__), -1)
-+#define error(...) (error(__VA_ARGS__), -1)
- #endif
- 
- extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
--- 
-1.8.1.2.546.gfc9f004
+I agree that a "[branch "master"] pushremote" configuration would be
+handy.  pushremote instead of remotepush to be less surprising to
+people who have already seen pushurl.
+
+Good luck,
+Jonathan
