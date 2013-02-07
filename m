@@ -1,63 +1,83 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Proposal: branch.<name>.remotepush
-Date: Fri, 8 Feb 2013 01:44:49 +0530
-Message-ID: <CALkWK0k=k5P8gL-1gNXQ4gO7uNiw9QUUqWrbuf8=iUFfn=TRNg@mail.gmail.com>
-References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
- <5113E849.8000602@elegosoft.com> <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
- <CALkWK0=_0hZP_SjMCjooUAr+MrRoXCCzdQF8y9RhW1g7ShsC7w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Thu Feb 07 21:15:42 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 3/6] diff.c: make constant string arguments const
+Date: Thu,  7 Feb 2013 20:15:25 +0000
+Message-ID: <41ec7ef2fdc2a56c43abd00ef9a48fc41b765c9b.1360267849.git.john@keeping.me.uk>
+References: <cover.1360267849.git.john@keeping.me.uk>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 07 21:23:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3Xsd-0001nz-S1
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 21:15:36 +0100
+	id 1U3Y0K-0001Kr-Hm
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 21:23:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422646Ab3BGUPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 15:15:10 -0500
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:62110 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759291Ab3BGUPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2013 15:15:09 -0500
-Received: by mail-oa0-f45.google.com with SMTP id o6so3306875oag.18
-        for <git@vger.kernel.org>; Thu, 07 Feb 2013 12:15:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=jyS9ebfuxDHAtV5nA9Wh2B2dD4rxp5moNY/zfPHSuKk=;
-        b=R+KBdw11rkuUpOCBDt7fngPqscSiRxvDLqkfP7h1yIKoHnXzWnB1H6Ytxlz13QFMmB
-         ojYt/q5+UDUJa+GYt5nlceq3s2YIMiL/CvXhvo9eurzaaRlh85TP+WuWZe923O+iMvjm
-         /AARB+5Lsefb1KG/7j1npX8T1KzooxTjU4gokb/pQQAeQNOrMpXedodbYyopz9AxhIc8
-         nZOZ1m5l3qktUcE+f80Jr080Jsv/v/6sV6I8HdgN2tSCU223qHsjhFg5TekIg/YLvFwK
-         IERA18Yz9VgeaLMuNgIcbRwuSnqyTll1/XqShxCDvOOl7BUgIYMsfo3SYEo7WJZgQji5
-         ZYHw==
-X-Received: by 10.182.157.44 with SMTP id wj12mr2198529obb.41.1360268109139;
- Thu, 07 Feb 2013 12:15:09 -0800 (PST)
-Received: by 10.76.128.79 with HTTP; Thu, 7 Feb 2013 12:14:49 -0800 (PST)
-In-Reply-To: <CALkWK0=_0hZP_SjMCjooUAr+MrRoXCCzdQF8y9RhW1g7ShsC7w@mail.gmail.com>
+	id S1759379Ab3BGUXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 15:23:08 -0500
+Received: from pichi.aluminati.org ([72.9.246.58]:37243 "EHLO
+	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759337Ab3BGUXF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 15:23:05 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id DC349161E4E1;
+	Thu,  7 Feb 2013 20:15:46 +0000 (GMT)
+X-Quarantine-ID: <vnOY55Zriapn>
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vnOY55Zriapn; Thu,  7 Feb 2013 20:15:46 +0000 (GMT)
+Received: from river.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id BA6FC161E4D8;
+	Thu,  7 Feb 2013 20:15:40 +0000 (GMT)
+X-Mailer: git-send-email 1.8.1.2
+In-Reply-To: <cover.1360267849.git.john@keeping.me.uk>
+In-Reply-To: <cover.1360267849.git.john@keeping.me.uk>
+References: <cover.1360267849.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215722>
 
-Ramkumar Ramachandra wrote:
-> Ramkumar Ramachandra wrote:
->> And yes, a regular `git push origin refs/for/master` is just retarded.
->
-> Actually a git config remote.origin.push refs/heads/*:refs/for/* makes
-> more sense here.
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ diff.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Sorry about all that confusion.  The first line should be `git push
-origin master:refs/for/master`, but a rule like refs/head/*:refs/for/*
-is insufficient: what if I want refs/head/*:refs/heads/* for one set
-of branches (private ones that I don't send for review), and
-refs/heads/*:refs/for/* for another set (which I send for review)?
-That certainly won't play well will the existing remote.origin.push;
-it'd have to behave as an override.
+diff --git a/diff.c b/diff.c
+index bf95235..73ae02d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2123,7 +2123,8 @@ static unsigned char *deflate_it(char *data,
+ 	return deflated;
+ }
+ 
+-static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two, char *prefix)
++static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two,
++				  const char *prefix)
+ {
+ 	void *cp;
+ 	void *delta;
+@@ -2184,7 +2185,8 @@ static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two, char
+ 	free(data);
+ }
+ 
+-static void emit_binary_diff(FILE *file, mmfile_t *one, mmfile_t *two, char *prefix)
++static void emit_binary_diff(FILE *file, mmfile_t *one, mmfile_t *two,
++			     const char *prefix)
+ {
+ 	fprintf(file, "%sGIT binary patch\n", prefix);
+ 	emit_binary_diff_body(file, one, two, prefix);
+-- 
+1.8.1.2
