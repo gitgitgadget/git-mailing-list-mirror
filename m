@@ -1,78 +1,141 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH 1/4] show: obey --textconv for blobs
-Date: Thu, 07 Feb 2013 10:34:26 +0100
-Message-ID: <51137522.3010005@drmicha.warpmail.net>
-References: <cover.1360162813.git.git@drmicha.warpmail.net> <883f0163cb732932061a368ea9bc187c13e4ecca.1360162813.git.git@drmicha.warpmail.net> <20130206220644.GB27507@sigill.intra.peff.net> <51136E56.7060703@drmicha.warpmail.net> <20130207091116.GB15727@sigill.intra.peff.net>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: [PATCH] connect.c: Tell *PLink to always use ssh protocol
+Date: Thu, 07 Feb 2013 10:40:57 +0100
+Message-ID: <511376A9.6030803@tu-clausthal.de>
+References: <5112D219.3020604@tu-clausthal.de> <20130206232214.GN27507@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com, git@vger.kernel.org, gitster@pobox.com
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 10:34:52 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+X-From: msysgit+bncBDS5J3OFVYGBBIPNZWEAKGQELLXZXTI@googlegroups.com Thu Feb 07 10:41:09 2013
+Return-path: <msysgit+bncBDS5J3OFVYGBBIPNZWEAKGQELLXZXTI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-we0-f192.google.com ([74.125.82.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3NsZ-0001QA-R1
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 10:34:52 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756699Ab3BGJe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 04:34:28 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:50150 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756327Ab3BGJe0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Feb 2013 04:34:26 -0500
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 9D2C2213B4;
-	Thu,  7 Feb 2013 04:34:25 -0500 (EST)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute4.internal (MEProxy); Thu, 07 Feb 2013 04:34:25 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=2h7PZy0vrzd41hjDWUawxX
-	zgfRM=; b=G2Cwm2peTz8j/J1aPYhimEIAMgJ5ZsqieVY7n8mMCD206eXVZa3Mns
-	CyUJJmV1DFKGP5bXlSqF7eBEe6EKj8ThbcqzZ20iIf1nFHu7Wz+IFkTxaEGbpVWs
-	BA26J0Bt5kWD7ngpNFJMFapwFJuXP8qwT3vt7jIbv2eiqEMXcXQd8=
-X-Sasl-enc: h9OnVJnZjR+VeKRRmsz9OpLEscPnEE9UgNy3E5hWU0UI 1360229665
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 021554825F1;
-	Thu,  7 Feb 2013 04:34:24 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
-In-Reply-To: <20130207091116.GB15727@sigill.intra.peff.net>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215684>
+	(envelope-from <msysgit+bncBDS5J3OFVYGBBIPNZWEAKGQELLXZXTI@googlegroups.com>)
+	id 1U3Nyf-00074n-6m
+	for gcvm-msysgit@m.gmane.org; Thu, 07 Feb 2013 10:41:09 +0100
+Received: by mail-we0-f192.google.com with SMTP id x10sf710583wey.9
+        for <gcvm-msysgit@m.gmane.org>; Thu, 07 Feb 2013 01:40:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-received:x-beenthere:x-received:x-received:received-spf
+         :message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:x-virus-scanned
+         :x-spam-level:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:x-google-group-id:list-post
+         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
+         :content-type;
+        bh=QaoT4e7VJ8PktrAUVDMjNlAc/4/9AiTpkXayGd4iL/w=;
+        b=j8460kEUWYOKdeG0A4WI97SPkD+7gCt8Utf77CyeE2BPin/Fv6u9BoAsoztFcIxbTM
+         dLxjIBd6Ep3GoCvFePK1qpqr9ncoSbm9aqBtOj0q11dbvR5HDJDSMatmBgnINBjn/oj2
+         b95jMQTpWaaxAilMdNWQjsDh/TjNGWL4+Jw/mXeprl9ITJFa5946QVdXJAQS+oikhIW4
+         q1lF96CCkweFvY63uO9JPth2z+oR4u4hL5xcmLUVVeR5EiPTje0LNtiAQv8Qi 
+X-Received: by 10.180.75.82 with SMTP id a18mr33150wiw.16.1360230050513;
+        Thu, 07 Feb 2013 01:40:50 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.181.13.84 with SMTP id ew20ls49968wid.36.gmail; Thu, 07 Feb
+ 2013 01:40:49 -0800 (PST)
+X-Received: by 10.204.4.217 with SMTP id 25mr78963bks.1.1360230049020;
+        Thu, 07 Feb 2013 01:40:49 -0800 (PST)
+X-Received: by 10.204.4.217 with SMTP id 25mr78962bks.1.1360230049007;
+        Thu, 07 Feb 2013 01:40:49 -0800 (PST)
+Received: from mailrelay2.rz.tu-clausthal.de (mailrelay2.rz.tu-clausthal.de. [139.174.2.43])
+        by gmr-mx.google.com with ESMTP id 14si1936839bky.0.2013.02.07.01.40.48;
+        Thu, 07 Feb 2013 01:40:48 -0800 (PST)
+Received-SPF: pass (google.com: domain of sven.strickroth@tu-clausthal.de designates 139.174.2.43 as permitted sender) client-ip=139.174.2.43;
+Received: from poseidon.rz.tu-clausthal.de (poseidon.rz.tu-clausthal.de [139.174.2.21])
+	by mailrelay2.rz.tu-clausthal.de (Postfix) with ESMTP id 93BE6289D2C;
+	Thu,  7 Feb 2013 10:40:48 +0100 (CET)
+Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 77BB729A260;
+	Thu,  7 Feb 2013 10:40:48 +0100 (CET)
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 38C0429A25F;
+	Thu,  7 Feb 2013 10:40:48 +0100 (CET)
+Received: from [139.174.110.83] (account sstri@tu-clausthal.de [139.174.110.83] verified)
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.8)
+  with ESMTPSA id 43933051; Thu, 07 Feb 2013 10:40:48 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <20130206232214.GN27507@sigill.intra.peff.net>
+X-Enigmail-Version: 1.5
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+X-Spam-Level: (8%, '
+ MULTIPLE_RCPTS 0.1, HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1400_1499 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, CT_TEXT_PLAIN_UTF8_CAPS 0, DKIM_SIGNATURE 0, DOMAINKEY_SIG 0, __ANY_URI 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __FORWARDED_MSG 0, __HAS_FROM 0, __HAS_MSGID 0, __IN_REP_TO 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __MOZILLA_USER_AGENT 0, __MULTIPLE_RCPTS_CC_X2 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __URI_NO_MAILTO 0, __URI_NO_PATH 0, __URI_NO_WWW 0, __USER_AGENT 0')
+X-Original-Sender: sven.strickroth@tu-clausthal.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of sven.strickroth@tu-clausthal.de designates
+ 139.174.2.43 as permitted sender) smtp.mail=sven.strickroth@tu-clausthal.de;
+       dkim=pass header.i=@tu-clausthal.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215685>
 
-Jeff King venit, vidit, dixit 07.02.2013 10:11:
-> On Thu, Feb 07, 2013 at 10:05:26AM +0100, Michael J Gruber wrote:
+Am 07.02.2013 00:22 schrieb Jeff King:
+> On Wed, Feb 06, 2013 at 10:58:49PM +0100, Sven Strickroth wrote:
 > 
->>> Would it be better if object_array_entry replaced its "mode" member with
->>> an object_context?
+>> Default values for *plink can be set using PuTTY. If a user makes
+>> telnet the default in PuTTY this breaks ssh clones in git.
 >>
->> Do all callers/users want to deal with object_context?
-> 
-> Wouldn't it just mean replacing "entry->mode" with "entry->oc.mode" at
-> each user?
+>> Since git clones of the type user@host:path use ssh, tell *plink
+>> to use ssh and override PuTTY defaults for the protocol to use.
+>> ---
+>>  connect.c | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/connect.c b/connect.c
+>> index 49e56ba..d337b6f 100644
+>> --- a/connect.c
+>> +++ b/connect.c
+>> @@ -625,6 +625,8 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
+>>  		if (!ssh) ssh = "ssh";
+>>  
+>>  		*arg++ = ssh;
+>> +		if (putty)
+>> +			*arg++ = "-ssh";
+>>  		if (putty && !strcasestr(ssh, "tortoiseplink"))
+>>  			*arg++ = "-batch";
+>>  		if (port) {
 
-Yes, I meant at the time of creation, i.e. when someone has to create
-and pass an o_a_e and maybe only knows a mode, and thus would have to
-set the path to NULL or "".
+Just for the completeness: This might have an unwanted side effect...
+Using the -ssh parameter sets the protocol to ssh AND the port number to
+22. This might break a setting where a user stores a PuTTY default for
+ssh, but with a different port number (e.g. because a user always pushes
+to a remote ssh repository which resides on a different port).
 
->> I'm wondering why o_c has a mode at all, since it is mostly used in
->> conjunction with an object, isn't it?
-> 
-> Just as we record the path from the surrounding tree, we record the
-> mode. It's that mode which gets put into the pending object list by the
-> revision parser (see the very end of handle_revision_arg). Storing an
-> object_context instead of the mode would be a strict superset of what we
-> store now (right now we just throw the rest away).
+PuTTY settings for a named session still work, it only affects the
+"Default Settings" session - so users can set up specific sessons in
+PuTTY if he wants to change the default port.
 
-Sure. But why does object_context have a mode member at all? Maybe it is
-not alway used together with another struct which has the mode already,
-then that's a reason.
+-- 
+Best regards,
+ Sven Strickroth
+ PGP key id F5A9D4C4 @ any key-server
 
-Michael
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
