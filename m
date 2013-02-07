@@ -1,58 +1,79 @@
-From: Tim Chase <git@tim.thechases.com>
-Subject: Preventing merges from one branch into others
-Date: Thu, 7 Feb 2013 13:14:40 -0600
-Message-ID: <20130207131440.716c1022@bigbox.christie.dr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] Makefile: extract perl-related rules to make them
+ available from other dirs
+Date: Thu, 07 Feb 2013 11:16:00 -0800
+Message-ID: <7v62247x5b.fsf@alter.siamese.dyndns.org>
+References: <vpqobfxwg2q.fsf@grenoble-inp.fr>
+ <1360174292-14793-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1360174292-14793-2-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 07 20:13:37 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Feb 07 20:16:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3Wue-0007Qe-Pc
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 20:13:37 +0100
+	id 1U3WxS-0001sq-NK
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 20:16:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932166Ab3BGTNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 14:13:12 -0500
-Received: from boston.accountservergroup.com ([50.22.11.22]:48220 "EHLO
-	boston.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754503Ab3BGTNL (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Feb 2013 14:13:11 -0500
-Received: from [108.223.140.164] (port=51182 helo=bigbox.christie.dr)
-	by boston.accountservergroup.com with esmtpsa (TLSv1:DHE-RSA-AES128-SHA:128)
-	(Exim 4.80)
-	(envelope-from <git@tim.thechases.com>)
-	id 1U3WuD-0005y9-Qf
-	for git@vger.kernel.org; Thu, 07 Feb 2013 13:13:10 -0600
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - boston.accountservergroup.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tim.thechases.com
+	id S1758869Ab3BGTQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 14:16:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50414 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758806Ab3BGTQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 14:16:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7CBFC7EC;
+	Thu,  7 Feb 2013 14:16:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dScSWi675iYOO8zaH1LoMv9C+oY=; b=BlYMz9
+	/kx7tok/JPAykxbXhnmB4z9w5JnD4vghBYi9bTPcMdQY19A473sCgn17YH0zDXPM
+	ihz6MmFnnfVKJZEb0rt9OVDrNyFvy71KeyCQDNl2hgSVuvJnC0+K5DthVSrlsaLO
+	4vxra+O5kMbs8SAYcBLD0DYZOYHR13ktZz7SE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M7/rbX0dkXbjmZMxTkPxPLMMxIK2tLj4
+	xVMrU78z6IcU/rPGppgyiAlpapbmSEmvXmVzIzhn2a3HJXgFaJPSLg77PPnkjIdq
+	GbEC8TZu3y5llJ77gaiE6y9Ce4JXasdqmzvnQYFvboLXCFlpSVDsIT2gofWM0kao
+	N0w0/uQdnbw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD66BC7E9;
+	Thu,  7 Feb 2013 14:16:02 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 451F1C7E8; Thu,  7 Feb 2013
+ 14:16:02 -0500 (EST)
+In-Reply-To: <1360174292-14793-2-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Wed, 6 Feb 2013 19:11:29 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CFEC8CDE-715A-11E2-814D-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215713>
 
-[tried IRC to no avail]
-I've been trying to find a way to prevent myself from merging a
-client-specific branch back into my dev/master branches.  Is there an
-easy/straightforward way to do this (perhaps via a hook)?  I didn't
-see any sort of "pre-merge" hook script.  Visualized:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-  A -> B -> C [dev]
-   \
-    -> Q -> R -> S [customer-specific]
+> The final goal is to make it easy to write Git commands in perl in the
+> contrib/ directory. It is currently possible to do so, but without the
+> benefits of Git's Makefile: adapt first line with $(PERL_PATH),
+> hardcode the path to Git.pm, ...
+>
+> We make the perl-related part of the Makefile available from directories
+> other than the toplevel so that:
+>
+> * Developers can include it, to avoid code duplication
+>
+> * Users can get a consistent behavior of "make install"
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-and I want to ensure that changes Q/R/S never find their way back
-into dev.
+The goal may be worthy, but the split does not look quite right.
 
-So I was hoping some sort of "hey, you're an idiot for trying to merge
-$CUSTOMER_BRANCH back into dev/master" warning. :-)
-
--tkc
+What business do contrib/ scripts have knowing how gitweb and
+git-instaweb are built and what they depend on, for example?
