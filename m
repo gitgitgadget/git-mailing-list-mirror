@@ -1,68 +1,57 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH 2/3] combine-diff: suppress a clang warning
-Date: Thu, 07 Feb 2013 13:12:59 +0900
-Message-ID: <876224sqwk.fsf@catnip.gol.com>
-References: <cover.1359901732.git.john@keeping.me.uk>
-	<6995fd5e4d9cb3320ab80c983f1b25ae8a399284.1359901732.git.john@keeping.me.uk>
-	<7vwqup890o.fsf@alter.siamese.dyndns.org>
-	<20130203203150.GU1342@serenity.lan>
-	<7v8v7585sr.fsf@alter.siamese.dyndns.org>
-	<20130203231549.GV1342@serenity.lan>
+From: Lingcha X <douglarek@outlook.com>
+Subject: =?windows-1256?Q?RE:_will_g?= =?windows-1256?Q?it_provide?=
+ =?windows-1256?Q?_`submodul?= =?windows-1256?Q?e_remove`_?=
+ =?windows-1256?Q?option_=3F=FE?=
+Date: Thu, 7 Feb 2013 13:45:43 +0800
+Message-ID: <BAY176-W12019EFF3EAAE94F946535B4060@phx.gbl>
+References: <BAY176-W2328CE9FE72C92BCB27421B4000@phx.gbl>,<5112CAD4.8060801@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Antoine Pelisse <apelisse@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Feb 07 05:13:38 2013
+Content-Type: text/plain; charset="windows-1256"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jens Lehmann <jens.lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Feb 07 06:46:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3Ire-0003Ep-V9
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 05:13:35 +0100
+	id 1U3KJT-0004UX-9N
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 06:46:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755741Ab3BGENM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Feb 2013 23:13:12 -0500
-Received: from smtp11.dentaku.gol.com ([203.216.5.73]:38551 "EHLO
-	smtp11.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751621Ab3BGENL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Feb 2013 23:13:11 -0500
-Received: from 218.231.148.126.eo.eaccess.ne.jp ([218.231.148.126] helo=catnip.gol.com)
-	by smtp11.dentaku.gol.com with esmtpa (Dentaku)
-	(envelope-from <miles@gnu.org>)
-	id 1U3Ir6-0006Eo-Cb; Thu, 07 Feb 2013 13:13:00 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id 5C217DFC1; Thu,  7 Feb 2013 13:12:59 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-In-Reply-To: <20130203231549.GV1342@serenity.lan> (John Keeping's message of
-	"Sun, 3 Feb 2013 23:15:49 +0000")
-X-Virus-Scanned: ClamAV GOL (outbound)
-X-Abuse-Complaints: abuse@gol.com
+	id S1751880Ab3BGFpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 00:45:51 -0500
+Received: from bay0-omc2-s7.bay0.hotmail.com ([65.54.190.82]:34413 "EHLO
+	bay0-omc2-s7.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751621Ab3BGFpr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Feb 2013 00:45:47 -0500
+Received: from BAY176-W12 ([65.54.190.124]) by bay0-omc2-s7.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 6 Feb 2013 21:45:43 -0800
+X-EIP: [Atb5mzBVFEVv/2ZEV7ARZvBA8VxESTJm]
+X-Originating-Email: [douglarek@outlook.com]
+Importance: Normal
+In-Reply-To: <5112CAD4.8060801@web.de>
+X-OriginalArrivalTime: 07 Feb 2013 05:45:43.0594 (UTC) FILETIME=[5E9A00A0:01CE04F6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215672>
 
-John Keeping <john@keeping.me.uk> writes:
-> I generally like to get rid of the pointless warnings so that the use=
-ful
-> ones can't hide in the noise.  Perhaps "CFLAGS +=3D -Wno-string-plus-=
-int"
-> would be better for this particular warning, but when there's only on=
-e
-> bit of code that triggers it, tweaking that seemed simpler.
-
-An even better approach would be to file a bug against clang ... it
-really is a very ill-considered warning -- PTR + OFFS is not just
-valid C, it's _idiomatic_ in C for getting interior pointers into
-arrays -- and such a warning should never be enabled by default, or by
-any standard warning options.
-
--miles=20
-
---=20
-=E6=B0=B8=E6=97=A5=E3=81=AE=E3=80=80=E6=BE=84=E3=82=93=E3=81=A0=E7=B4=BA=
-=E3=81=8B=E3=82=89=E3=80=80=E6=B0=B8=E9=81=A0=E3=81=B8
+SGkgSmVucywKoKCgIGBnaXQgcm0gLXIgc3VibW9kdWxlYCB3aWxsIG5vdCBkbyB0aGUgc2FtZSB0
+aGluZywgaSBkbyBOT1Qga25vdyBpZiBgZ2l0IHN1Ym1vZHVsZSBkZWluaXRgLCBpIHdpbGwgaGF2
+ZSBzb21lIHRlc3RzLgotLS0tClRoYW5rcyBhbmQgQmVzdCBSZWdhcmRzLApsaW5nY2hheAoKCi0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KPiBEYXRlOiBXZWQsIDYgRmVi
+IDIwMTMgMjI6Mjc6NDggKzAxMDAKPiBGcm9tOiBKZW5zLkxlaG1hbm5Ad2ViLmRlCj4gVG86IGRv
+dWdsYXJla0BvdXRsb29rLmNvbQo+IENDOiBnaXRAdmdlci5rZXJuZWwub3JnCj4gU3ViamVjdDog
+UmU6IHdpbGwgZ2l0IHByb3ZpZGUgYHN1Ym1vZHVsZSByZW1vdmVgIG9wdGlvbiA//go+Cj4gQW0g
+MDUuMDIuMjAxMyAxMTozMiwgc2NocmllYiBMaW5nY2hhIFg6Cj4gPiBBcyB3ZSBhbGwga25vdywg
+Z2l0IHByb3ZpZGVzIGBzdWJtb2R1bGUgYWRkICwgaW5pdCwgdXBkYXRlLCBzeW5jLCBzdW1hcnks
+IGZvcmVhY2gsIHN0YXR1c2AsIGJ1dCB3aGVyZSBpcyBgc3VibW9kdWxlIHJlbW92ZWA/Cj4gPgo+
+ID4gd2lsbAo+ID4gSSBub3QgZGVsZXRlIG9uZSBvZiB0aGVtIHNvbWV0aW1lIGluIHRoZSBmdXR1
+cmU/IEFsdGhvdWdoIG1vc3QgcGVvcGxlCj4gPiB3aWxsIG5vdCB1c2Ugc3VibW9kdWxlIG9yIG9u
+ZSB3aG8gdXNlcyBpdCBjYW4gcmVtb3ZlIHN1Ym1vZHVsZSBieSBoYW5kLCBwcm92aWRpbmcgY29t
+cGxldGUgb3B0aW9ucyBtYXkgYmUgYSBnb29kIGlkZWEuCj4KPiBJcyBhc3N1bWUgZWl0aGVyICJn
+aXQgcm0gPHN1Ym1vZHVsZT4iIChhdmFpbGFibGUgc2luY2UgMS44LjEpIG9yIHRoZSB1cGNvbWlu
+Zwo+ICJnaXQgc3VibW9kdWxlIGRlaW5pdCIgKGN1cnJlbnRseSBpbiBwdSkgd2lsbCBkbyB3aGF0
+IHlvdSB3YW50PyAJCSAJICAgCQkgIA==
