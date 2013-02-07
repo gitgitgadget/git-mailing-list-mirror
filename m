@@ -1,7 +1,7 @@
 From: Michal Nazarewicz <mpn@google.com>
-Subject: [PATCHv2 3/5] Git.pm: allow pipes to be closed prior to calling command_close_bidi_pipe
-Date: Thu,  7 Feb 2013 15:01:19 +0100
-Message-ID: <afa54fb5dd2d08759317099d10090b81adfb593f.1360242782.git.mina86@mina86.com>
+Subject: [PATCHv2 5/5] git-send-email: use git credential to obtain password
+Date: Thu,  7 Feb 2013 15:01:21 +0100
+Message-ID: <0b3c9b66ccb6c8343dafd210b82c7765891d3785.1360242782.git.mina86@mina86.com>
 References: <cover.1360242782.git.mina86@mina86.com>
 Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
@@ -12,114 +12,159 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3S3L-0005g7-UK
+	id 1U3S3M-0005g7-Ew
 	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 15:02:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758733Ab3BGOBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 09:01:43 -0500
-Received: from mail-ea0-f182.google.com ([209.85.215.182]:52002 "EHLO
-	mail-ea0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758690Ab3BGOBi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2013 09:01:38 -0500
-Received: by mail-ea0-f182.google.com with SMTP id a12so1160239eaa.27
-        for <git@vger.kernel.org>; Thu, 07 Feb 2013 06:01:36 -0800 (PST)
+	id S1758736Ab3BGOBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 09:01:46 -0500
+Received: from mail-ea0-f176.google.com ([209.85.215.176]:49697 "EHLO
+	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753985Ab3BGOBl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 09:01:41 -0500
+Received: by mail-ea0-f176.google.com with SMTP id a13so1209040eaa.35
+        for <git@vger.kernel.org>; Thu, 07 Feb 2013 06:01:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:in-reply-to:references;
-        bh=zwjE3Gy4Q43/GvMd/8vWc6YBASuocCENQL3SPpYvueU=;
-        b=axC0ToeI3sNUH1OA5bmxOfeYTRaA+yxZ1ZGzcV9jrlbg/RIk1Jflxg2do0cpHZLAQw
-         g0p8uYSYmvFBnB4yopLrQmOb4Qmg/4K+QVa1MMTxUR6kYvGvLtT/A1dUlMA6QyVdv7cw
-         VJvOp8E1ZqCGzZm+KUZw1Bo0tqzcBkGmJJzmyGv6mk3ovfpP6A/hArFtO/p5sJ8OZjBa
-         A4U0fUKJkXD+g2F/DduBYqJ4Ez6DpQRJwhmPLjX9GNTH/e9K4Dj9RJDxGwpuy+Ktqv91
-         1gbCgTWqd4B+AkBop99Kxd4Nn4pqTOfarxKr+7ym1QzL6TN/AMEBoIQJPXEnul1gxPAG
-         9WMw==
+        bh=+xwtar54+4LjDHk3hn7vd0+cJl0dzgX0bXgJAEMPCfk=;
+        b=YYbfVaw7gTciL65a4fSl1Kh05EMhONkeCeDJtQGNmsarn5cltdP3TLP+DEP53UFUhm
+         71K7Z6QcZVwU9IjYYePUxHSmYkipE5EN44qkDgnyFegxjn/Vj/yJyYwK/9sYwe3pOKqN
+         FnJ1zc4bo/lhn7MY6LnQCx8MAnMcxQKI8U8UsOGaFhRnmXTwyhSCkFs7tmC04Moj9W9K
+         7GGunwr+KHeY2uzyp/lKiF6+QAJPzct8iYanScDzRf506zXTbBC51VX8Hey9rUn8LETn
+         q5CQpAWl/7dlg6S6oyAT87xrzDv8Ki0g0sFZZXXYQc3FKktb12QAUm1An3onEHa3Ehey
+         HF2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:in-reply-to:references:x-gm-message-state;
-        bh=zwjE3Gy4Q43/GvMd/8vWc6YBASuocCENQL3SPpYvueU=;
-        b=dJ6oF7yqKuSAvBm8m8YJEP9FzB4yhMS2CXNaIHL+IM/8N2+bbpkU0vMqW03F/3FYqP
-         5fSBuiq3LHGJjm/a6b+IsI6UNdyCbxyHyx4a7j6fDE4nZy151iJ6En14puu5JzC3OBBN
-         HF9WkUuEeaIB5EyCJZoQZq/QIIIWj+bPoxBsq2AIS0pCkwIhqIiB3GUURyv8zw9zbUi9
-         wYvdMIGxTsob9xVkE10eJqnnSKWGCYY90nHly216q0wjK+/fjXYY5BLYpsIyZBqg/wml
-         jrH2FI8uRaKlPvjeYho59CeD6f2qt0LaKBwwXG6+KFPh+UNuukuEUm+sSTyJcnK9sdWl
-         6P6g==
-X-Received: by 10.14.2.5 with SMTP id 5mr4348210eee.30.1360245696719;
-        Thu, 07 Feb 2013 06:01:36 -0800 (PST)
+        bh=+xwtar54+4LjDHk3hn7vd0+cJl0dzgX0bXgJAEMPCfk=;
+        b=a8Quql7+ILD4l+WDfa7E0jaz6Vi04ir55d7fXzIklB6sJyA1kVF5Big7nlH/GHD/fh
+         +TVP2rlEmdZoySIqhwKcJ3UadQ8K1yTOA+0OZMA+PmexCsGoRTna1eV9jrB4RYQz2mq4
+         QkyE1HeIsDw5apZpkMHzauNgkRnnTYCSTyeA6+bXoVZL4CVIYWUMBZXnEZKzU7kdGFqt
+         7xuBLcvqZHyzF7Dhflrv+LDkclwJqR3ZROWZ3LPgc7xpQduy2WmFt6BYENy3JgorU5zU
+         8I8NsYI+SncGW7ETcb2H0v9ruuXXtvFlhXT61y52A3G9550DH8sImFto2SY8aKu7suaC
+         kupg==
+X-Received: by 10.14.2.5 with SMTP id 5mr4348563eee.30.1360245699711;
+        Thu, 07 Feb 2013 06:01:39 -0800 (PST)
 Received: from mpn-glaptop.corp.google.com ([2620:0:105f:5:bdef:84b9:750e:31d0])
-        by mx.google.com with ESMTPS id f6sm42214479eeo.7.2013.02.07.06.01.35
+        by mx.google.com with ESMTPS id f6sm42214479eeo.7.2013.02.07.06.01.38
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 07 Feb 2013 06:01:35 -0800 (PST)
+        Thu, 07 Feb 2013 06:01:39 -0800 (PST)
 X-Mailer: git-send-email 1.8.1.2.550.g0b3c9b6
 In-Reply-To: <cover.1360242782.git.mina86@mina86.com>
 In-Reply-To: <cover.1360242782.git.mina86@mina86.com>
 References: <cover.1360242782.git.mina86@mina86.com>
-X-Gm-Message-State: ALoCoQlR+tWbbxcHfmm2FowsTTsC5SIoE5NXCt6pBdEO5xE1RagHVUj+CyWfej9yb0RJprJFx1XNR93JDl9xB/fdiE/TtNDVHZUrfG/1jwqrPgVAxvEfsPGcChPxO4HmyRcIADzaWT7MAXH2oAMY/pJcOZMtEAxEU2b+OzTR92ZJXJxy0hGm/+aixDTFoS9PbN8Fd8O7+oth
+X-Gm-Message-State: ALoCoQn+WC4b59H7sZFMQ+RReQnnbXMfkax9CkuwwHyl6gSqxgtMBc+z421AEludaoJcYUH0fPnX7qvATPSzSXcI0WSxo1Dq5+CnS/eTrP2soILL6YkrhGRa05lLdd1uptgrV67fHviq7Mj2LVMkcyxWKKDlAkUsdwy62sfs60x3nq3JoYwAQjfTj6///atmDcQyWlrJIRPI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215697>
 
 From: Michal Nazarewicz <mina86@mina86.com>
 
-The command_close_bidi_pipe() function will insist on closing both
-input and output pipes returned by command_bidi_pipe().  With this
-change it is possible to close one of the pipes in advance and
-pass undef as an argument.
+If smtp_user is provided but smtp_pass is not, instead of
+prompting for password, make git-send-email use git
+credential command instead.
 
 Signed-off-by: Michal Nazarewicz <mina86@mina86.com>
 ---
- perl/Git.pm | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ Documentation/git-send-email.txt |  4 +--
+ git-send-email.perl              | 59 +++++++++++++++++++++++-----------------
+ 2 files changed, 36 insertions(+), 27 deletions(-)
 
- > On Wed, Feb 06, 2013 at 09:47:04PM +0100, Michal Nazarewicz wrote:
- >> This allows for something like:
- >> 
- >>   my ($pid, $in, $out, $ctx) = command_bidi_pipe(...);
- >>   print $out "write data";
- >>   close $out;
- >>   # ... do stuff with $in
- >>   command_close_bidi_pipe($pid, $in, undef, $ctx);
-
- On Thu, Feb 07 2013, Jeff King <peff@peff.net> wrote:
- > Should this part go into the documentation for command_close_bidi_pipe
- > in Git.pm?
-
- Done.
-
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 11f310a..9dded54 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -426,13 +426,26 @@ Note that you should not rely on whatever actually is in C<CTX>;
- currently it is simply the command name but in future the context might
- have more complicated structure.
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 44a1f7c..0cffef8 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -164,8 +164,8 @@ Sending
+ Furthermore, passwords need not be specified in configuration files
+ or on the command line. If a username has been specified (with
+ '--smtp-user' or a 'sendemail.smtpuser'), but no password has been
+-specified (with '--smtp-pass' or 'sendemail.smtppass'), then the
+-user is prompted for a password while the input is masked for privacy.
++specified (with '--smtp-pass' or 'sendemail.smtppass'), then
++a password is obtained using 'git-credential'.
  
-+C<PIPE_IN> and C<PIPE_OUT> may be C<undef> if they have been closed prior to
-+calling this function.  This may be useful in a query-response type of
-+commands where caller first writes a query and later reads response, eg:
-+
-+	my ($pid, $in, $out, $ctx) = $r->command_bidi_pipe('cat-file --batch-check');
-+	print $out "000000000\n";
-+	close $out;
-+	while (<$in>) { ... }
-+	$r->command_close_bidi_pipe($pid, $in, undef, $ctx);
-+
-+This idiom may prevent potential dead locks caused by data sent to the output
-+pipe not being flushed and thus not reaching the executed command.
-+
- =cut
+ --smtp-server=<host>::
+ 	If set, specifies the outgoing SMTP server to use (e.g.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index be809e5..76bbfc3 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1045,6 +1045,39 @@ sub maildomain {
+ 	return maildomain_net() || maildomain_mta() || 'localhost.localdomain';
+ }
  
- sub command_close_bidi_pipe {
- 	local $?;
- 	my ($self, $pid, $in, $out, $ctx) = _maybe_self(@_);
- 	foreach my $fh ($in, $out) {
--		unless (close $fh) {
-+		if (defined $fh && !close $fh) {
- 			if ($!) {
- 				carp "error closing pipe: $!";
- 			} elsif ($? >> 8) {
++# Returns 1 if authentication succeeded or was not necessary
++# (smtp_user was not specified), and 0 otherwise.
++
++sub smtp_auth_maybe {
++	if (!defined $smtp_authuser || $auth) {
++		return 1;
++	}
++
++	# Workaround AUTH PLAIN/LOGIN interaction defect
++	# with Authen::SASL::Cyrus
++	eval {
++		require Authen::SASL;
++		Authen::SASL->import(qw(Perl));
++	};
++
++	# TODO: Authentication may fail not because credentials were
++	# invalid but due to other reasons, in which we should not
++	# reject credentials.
++	$auth = Git::credential({
++		'protocol' => 'smtp',
++		'host' => join(':', $smtp_server, $smtp_server_port),
++		'username' => $smtp_authuser,
++		# if there's no password, "git credential fill" will
++		# give us one, otherwise it'll just pass this one.
++		'password' => $smtp_authpass
++	}, sub {
++		my $cred = shift;
++		return !!$smtp->auth($cred->{'username'}, $cred->{'password'});
++	});
++
++	return $auth;
++}
++
+ # Returns 1 if the message was sent, and 0 otherwise.
+ # In actuality, the whole program dies when there
+ # is an error sending a message.
+@@ -1185,31 +1218,7 @@ X-Mailer: git-send-email $gitversion
+ 			    defined $smtp_server_port ? " port=$smtp_server_port" : "";
+ 		}
+ 
+-		if (defined $smtp_authuser) {
+-			# Workaround AUTH PLAIN/LOGIN interaction defect
+-			# with Authen::SASL::Cyrus
+-			eval {
+-				require Authen::SASL;
+-				Authen::SASL->import(qw(Perl));
+-			};
+-
+-			if (!defined $smtp_authpass) {
+-
+-				system "stty -echo";
+-
+-				do {
+-					print "Password: ";
+-					$_ = <STDIN>;
+-					print "\n";
+-				} while (!defined $_);
+-
+-				chomp($smtp_authpass = $_);
+-
+-				system "stty echo";
+-			}
+-
+-			$auth ||= $smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
+-		}
++		smtp_auth_maybe or die $smtp->message;
+ 
+ 		$smtp->mail( $raw_from ) or die $smtp->message;
+ 		$smtp->to( @recipients ) or die $smtp->message;
 -- 
 1.8.1.2.549.g1d13f9f
