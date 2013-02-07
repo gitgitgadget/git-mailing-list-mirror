@@ -1,95 +1,60 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH 4/4] grep: obey --textconv for the case rev:path
-Date: Thu, 07 Feb 2013 10:05:57 +0100
-Message-ID: <51136E75.5060002@drmicha.warpmail.net>
-References: <cover.1360162813.git.git@drmicha.warpmail.net> <a2808975f00bac5de0902e6830f254e4b064e8a5.1360162813.git.git@drmicha.warpmail.net> <20130206223656.GF27507@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH 1/4] show: obey --textconv for blobs
+Date: Thu, 7 Feb 2013 04:11:16 -0500
+Message-ID: <20130207091116.GB15727@sigill.intra.peff.net>
+References: <cover.1360162813.git.git@drmicha.warpmail.net>
+ <883f0163cb732932061a368ea9bc187c13e4ecca.1360162813.git.git@drmicha.warpmail.net>
+ <20130206220644.GB27507@sigill.intra.peff.net>
+ <51136E56.7060703@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 10:06:24 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Feb 07 10:11:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3NR0-0001Kg-OG
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 10:06:23 +0100
+	id 1U3NWG-0005zj-M2
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 10:11:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754365Ab3BGJF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 04:05:59 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:51088 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751962Ab3BGJF5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Feb 2013 04:05:57 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 55C3020A3B;
-	Thu,  7 Feb 2013 04:05:57 -0500 (EST)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 07 Feb 2013 04:05:57 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=IGVIeZcRWLR4SfoXnziFN/
-	km9XM=; b=ThTBI7Z2l6gka7n/H9g7VtTUG2UqlavpMaGl2DcBVK21LtsIF1Fgs3
-	LOOM9SY1socrHirsJ7hzDYvEQw9ihr/Lkdf1jXo9VvXimEYz3FlctLyn+tEuaEq8
-	lTqKZegxPnsvH2U3Y9PUsGeXU2iyW3OPB+8FXxixH4oR2SWAiH7rE=
-X-Sasl-enc: xNRVXihfMH3xwSYprx+dnDkkwxyWjSdRcVcrjOvtQvbQ 1360227956
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 6E560482524;
-	Thu,  7 Feb 2013 04:05:56 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
-In-Reply-To: <20130206223656.GF27507@sigill.intra.peff.net>
+	id S1755266Ab3BGJLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 04:11:25 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:38489 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752528Ab3BGJLU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 04:11:20 -0500
+Received: (qmail 16603 invoked by uid 107); 7 Feb 2013 09:12:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 07 Feb 2013 04:12:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Feb 2013 04:11:16 -0500
+Content-Disposition: inline
+In-Reply-To: <51136E56.7060703@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215682>
 
-Jeff King venit, vidit, dixit 06.02.2013 23:36:
-> On Wed, Feb 06, 2013 at 04:08:53PM +0100, Michael J Gruber wrote:
+On Thu, Feb 07, 2013 at 10:05:26AM +0100, Michael J Gruber wrote:
+
+> > Would it be better if object_array_entry replaced its "mode" member with
+> > an object_context?
 > 
->> -			add_object_array(object, arg, &list);
->> +			add_object_array_with_context(object, arg, &list, xmemdupz(&oc, sizeof(struct object_context)));
-> 
-> If we go this route, this new _with_context variant should be used in
-> patch 1, too.
-> 
->> @@ -265,9 +260,28 @@ void add_object_array_with_mode(struct object *obj, const char *name, struct obj
->>  	objects[nr].item = obj;
->>  	objects[nr].name = name;
->>  	objects[nr].mode = mode;
->> +	objects[nr].context = context;
->>  	array->nr = ++nr;
->>  }
-> 
-> This seems a little gross. Who is responsible for allocating the
-> context? Who frees it? It looks like we duplicate it in cmd_grep. Which
+> Do all callers/users want to deal with object_context?
 
-Well, who is responsible for allocating and freeing name and item? I
-didn't want to introduce a new member which is a struct when all other
-complex members are pointers. Wouldn't that be confusing?
+Wouldn't it just mean replacing "entry->mode" with "entry->oc.mode" at
+each user?
 
-> I think is OK, but it means all of this context infrastructure in
-> object.[ch] is just bolted-on junk waiting for somebody to use it wrong
-> or get confused.  It does not get set, for example, by the regular
-> setup_revisions code path.
+> I'm wondering why o_c has a mode at all, since it is mostly used in
+> conjunction with an object, isn't it?
 
-Sure, it's NULL when there is no context info, just like in many other
-cases.
+Just as we record the path from the surrounding tree, we record the
+mode. It's that mode which gets put into the pending object list by the
+revision parser (see the very end of handle_revision_arg). Storing an
+object_context instead of the mode would be a strict superset of what we
+store now (right now we just throw the rest away).
 
-> It would be nice if we could just always have the context available,
-> then setup_revisions could set it up by default (and replace the "mode"
-> parameter entirely). But we'd need to do something to avoid the
-> PATH_MAX-sized buffer for each entry, as some code paths may have a
-> large number of pending objects.
-
-If the information is always available even if we don't need it then it
-always takes space. The only way out would be pointing into a pool of
-path names rather having a copy in each entry. It's not like I hadn't
-talked about providing virtual (blob) objects for path names keyed by
-their sha1 before... It's just that I want my grep --textconv now ;)
-
-Michael
+-Peff
