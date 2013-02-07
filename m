@@ -1,53 +1,69 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Proposal: branch.<name>.remotepush
-Date: Fri, 8 Feb 2013 01:19:57 +0530
-Message-ID: <CALkWK0=_0hZP_SjMCjooUAr+MrRoXCCzdQF8y9RhW1g7ShsC7w@mail.gmail.com>
-References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
- <5113E849.8000602@elegosoft.com> <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Thu Feb 07 20:50:46 2013
+From: Matt Kraai <kraai@ftbfs.org>
+Subject: [PATCH] Use __VA_ARGS__ for all of error's arguments
+Date: Thu,  7 Feb 2013 12:00:38 -0800
+Message-ID: <1360267238-21896-1-git-send-email-kraai@ftbfs.org>
+Cc: Matt Kraai <matt.kraai@amo.abbott.com>
+To: git@vger.kernel.org, Max Horn <max@quendi.de>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 07 21:01:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3XUb-0002JB-JB
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 20:50:45 +0100
+	id 1U3Xf0-0004al-Pd
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 21:01:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030243Ab3BGTuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 14:50:19 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:41096 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030222Ab3BGTuS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2013 14:50:18 -0500
-Received: by mail-ob0-f171.google.com with SMTP id x4so2981046obh.2
-        for <git@vger.kernel.org>; Thu, 07 Feb 2013 11:50:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=0nBrrj7+x04ys0ziuJun0x9xKPV9j3Vh0K0iIpM7rB0=;
-        b=GFdsvc/JV4m5TRswX9Jn1DOodbV3EKbwQJJfOgTaiq2CKoWHk0lykCrW3NnvvHQ7YB
-         1xfEjkEvVUyanGmc3e2LOMKS015pF+MrclJH/6lUXdsHw3IDDvdydXHBlJz7gCZYw7Ww
-         Fzt7zwl52NvZCisWdxN6Ry2P9ByDJMCSjUGEz3Xu5XaY3XjY5wG+XGGfKsUud0WENkk2
-         Vb4HB47OI8EQzeANxG8un/sq0XEvcEQ+bkazWNJYRU9F6snhsW3dme3gKK/642d3bakk
-         CbAbUa5lPWruqHt/u4YkTde1a4I3+BocDLCX57tLX7bSQQEE0YlA6MCEB1pvD3ZqAvMt
-         81hA==
-X-Received: by 10.182.95.173 with SMTP id dl13mr2212854obb.43.1360266617244;
- Thu, 07 Feb 2013 11:50:17 -0800 (PST)
-Received: by 10.76.128.79 with HTTP; Thu, 7 Feb 2013 11:49:57 -0800 (PST)
-In-Reply-To: <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
+	id S1759174Ab3BGUA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 15:00:59 -0500
+Received: from kvm.ftbfs.org ([46.22.115.26]:55483 "EHLO kvm.ftbfs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756283Ab3BGUA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 15:00:59 -0500
+Received: from kraai by kvm.ftbfs.org with local (Exim 4.72)
+	(envelope-from <kraai@ftbfs.org>)
+	id 1U3XeQ-0005ht-PA; Thu, 07 Feb 2013 12:00:54 -0800
+X-Mailer: git-send-email 1.7.2.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215720>
 
-Ramkumar Ramachandra wrote:
-> And yes, a regular `git push origin refs/for/master` is just retarded.
+From: Matt Kraai <matt.kraai@amo.abbott.com>
 
-Actually a git config remote.origin.push refs/heads/*:refs/for/* makes
-more sense here.
+QNX 6.3.2 uses GCC 2.95.3 by default, and GCC 2.95.3 doesn't remove the
+comma if the error macro's variable argument is left out.
+
+Instead of testing for a sufficiently recent version of GCC, make
+__VA_ARGS__ match all of the arguments.  Since this should work on any
+C99-compliant compiler, also remove the tests around the macro definition.
+
+Signed-off-by: Matt Kraai <matt.kraai@amo.abbott.com>
+---
+ git-compat-util.h | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index cc2abee..df1681f 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -305,14 +305,9 @@ extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)))
+ 
+ /*
+  * Let callers be aware of the constant return value; this can help
+- * gcc with -Wuninitialized analysis. We have to restrict this trick to
+- * gcc, though, because of the variadic macro and the magic ## comma pasting
+- * behavior. But since we're only trying to help gcc, anyway, it's OK; other
+- * compilers will fall back to using the function as usual.
++ * gcc with -Wuninitialized analysis.
+  */
+-#if defined(__GNUC__) && ! defined(__clang__)
+-#define error(fmt, ...) (error((fmt), ##__VA_ARGS__), -1)
+-#endif
++#define error(...) (error(__VA_ARGS__), -1)
+ 
+ extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
+ extern void set_error_routine(void (*routine)(const char *err, va_list params));
+-- 
+1.8.1.GIT
