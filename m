@@ -1,63 +1,64 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Proposal: branch.<name>.remotepush
-Date: Thu, 7 Feb 2013 21:44:59 +0530
-Message-ID: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: Proposal: branch.<name>.remotepush
+Date: Thu, 07 Feb 2013 18:45:45 +0100
+Message-ID: <5113E849.8000602@elegosoft.com>
+References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 07 17:15:48 2013
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 07 18:51:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3U8W-0005My-Sw
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 17:15:45 +0100
+	id 1U3VdV-0007so-EV
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 18:51:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756212Ab3BGQPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 11:15:22 -0500
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:57402 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754325Ab3BGQPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2013 11:15:21 -0500
-Received: by mail-ob0-f182.google.com with SMTP id va7so2837073obc.41
-        for <git@vger.kernel.org>; Thu, 07 Feb 2013 08:15:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=Qhga1eTSstvtqYtrsBdBdsHUAklJBqi7N2nLHa87BRA=;
-        b=Pf13vpvHzxNOgR9e0vo+1XbHTxreRKHK1giQ0oyQUNKn5MmD9peNyl6psRu91YDH5U
-         7HtK6I0a8BRWRIrbPp2eVfFwgrqXYu9+fDv1pLCWaTcYwGUT2rwh3hscL9AGavUkjeb9
-         yPCRaZuA6RmYe5HMrnub1ZUoLH/vYUNbYOTCvXvcBEON4KVp4YN3rjmfcAFf3E22sgOq
-         r8HerMdxv8pJv3gfsOSWGpPrtszj7zFu+QGdx1BJYHl7WgER3nqMVYCYXv3dTxI9Ixdx
-         QSzfWv/SRe+mCNxw/ZXfyuz/uI3i7pZcbn3odB/Tv61P3ZtZRVL0xnMCdY/qQtVlSCwa
-         A/xQ==
-X-Received: by 10.60.19.36 with SMTP id b4mr1540899oee.44.1360253720480; Thu,
- 07 Feb 2013 08:15:20 -0800 (PST)
-Received: by 10.76.128.79 with HTTP; Thu, 7 Feb 2013 08:14:59 -0800 (PST)
+	id S1161002Ab3BGRv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 12:51:26 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:38956 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1160999Ab3BGRvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 12:51:25 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 946EBDE074;
+	Thu,  7 Feb 2013 18:51:23 +0100 (CET)
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id mFJAY4hJnBFM; Thu,  7 Feb 2013 18:51:23 +0100 (CET)
+Received: from [192.168.1.233] (f052158234.adsl.alicedsl.de [78.52.158.234])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 2CFA2DE073;
+	Thu,  7 Feb 2013 18:51:23 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130109 Thunderbird/17.0.2
+In-Reply-To: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
+X-Enigmail-Version: 1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215703>
 
-Hi,
+On 02/07/2013 05:14 PM, Ramkumar Ramachandra wrote:
 
-This has been annoying me for a really long time, but I never really
-got around to scratching this particular itch.  I have a very common
-scenario where I fork a project on GitHub.  I have two configured
-remotes: origin which points to "git://upstream" and mine which points
-to "ssh://mine".  By default, I always want to pull `master` from
-origin and push to mine.  Unfortunately, there's only a
-branch.<name>.remote which specifies which remote to use for both
-pulling and pushing.  There's also a remote.<name>.pushurl, but I get
-the feeling that this exists for an entirely different reason: when I
-have a server with a highly-available read-only mirror of the
-repository at git://anongit.*, and a less-available committer-only
-mirror at ssh://*.
+> This has been annoying me for a really long time, but I never really
+> got around to scratching this particular itch.  I have a very common
+> scenario where I fork a project on GitHub.  I have two configured
+> remotes: origin which points to "git://upstream" and mine which points
+> to "ssh://mine".  By default, I always want to pull `master` from
+> origin and push to mine.  Unfortunately, there's only a
+> branch.<name>.remote which specifies which remote to use for both
+> pulling and pushing.  There's also a remote.<name>.pushurl, but I get
+> the feeling that this exists for an entirely different reason: when I
+> have a server with a highly-available read-only mirror of the
+> repository at git://anongit.*, and a less-available committer-only
+> mirror at ssh://*.
+> 
+> How about a branch.<name>.remotepush that specifies a special remote
+> for pushing, falling back to branch.<name>.remote?
 
-How about a branch.<name>.remotepush that specifies a special remote
-for pushing, falling back to branch.<name>.remote?
-
-Ram
+Additionally, it would be nice to have branch.<name>.push or similar
+to configure a default destination branch for push. Gerrit users usually
+want to track refs/heads/master but push to refs/for/master for example.
