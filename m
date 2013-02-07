@@ -1,74 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Proposal: branch.<name>.remotepush
-Date: Thu, 7 Feb 2013 15:30:17 -0800
-Message-ID: <20130207233017.GD19397@google.com>
-References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
- <5113E849.8000602@elegosoft.com>
- <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 4/5] Git.pm: add interface for git credential command
+Date: Thu, 07 Feb 2013 15:38:17 -0800
+Message-ID: <7v7gmj66fq.fsf@alter.siamese.dyndns.org>
+References: <cover.1360242782.git.mina86@mina86.com>
+ <cover.1360242782.git.mina86@mina86.com>
+ <78516627e893e54d5aafe0694d1face9a37893de.1360242782.git.mina86@mina86.com>
+ <vpq38x8m06f.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Schubert <mschub@elegosoft.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 00:30:59 2013
+Cc: Michal Nazarewicz <mpn@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Feb 08 00:38:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3avd-0002jM-Tv
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 00:30:54 +0100
+	id 1U3b3E-0001xy-Nr
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 00:38:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759531Ab3BGXa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 18:30:28 -0500
-Received: from mail-da0-f48.google.com ([209.85.210.48]:44667 "EHLO
-	mail-da0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759479Ab3BGXa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2013 18:30:27 -0500
-Received: by mail-da0-f48.google.com with SMTP id v40so1445783dad.35
-        for <git@vger.kernel.org>; Thu, 07 Feb 2013 15:30:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=Zb4/Teqc+4F2+VP7nR2XJ/NgCiKXYTelMiKbn8wrSok=;
-        b=kwkkmPMSfbrqx9/qB7GpTk94jQb5nD5sjJnZCVuX4b2D4sd22Wxq+LVvuJG2l+uGPA
-         Qi6ia2kpZjIlhmf8zuTaHD/1yXfhLq2Da38m2RYMWP0HJRnkn7rxtMHyoOrTrrbSDG8s
-         eZGAHTjXdZyCr7ag5KYOLnOf/Mh4PxeyAXGKEt1OowgeVHjVMhiBXIg3wJ/n3kf5snaD
-         fcMRFlR0pzghrQbTCTD7scJdFScYr5HpW5qRCT7euI+TnvfYmAoYdPqJq1IqAluebhwx
-         mCHi+IWSyvuKO2m4q89bgNXrxV60ekLD/Jur7Id3PEfjNjo7XQQDpV9aKfUZvB7BzPkL
-         0CWg==
-X-Received: by 10.66.82.198 with SMTP id k6mr10604964pay.53.1360279826906;
-        Thu, 07 Feb 2013 15:30:26 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id w2sm44002577pax.22.2013.02.07.15.30.23
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 07 Feb 2013 15:30:24 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1945922Ab3BGXiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 18:38:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50043 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1945893Ab3BGXiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 18:38:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77E53C9DC;
+	Thu,  7 Feb 2013 18:38:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Os2siKrHqPz063Mr3SzSzhHXKE0=; b=ie+DVB
+	xqfi9fg2RDrDz58vJlrdU9AZiai+NNbODx6z0RrG3K5Bo3+aman9yzMC6fcT6PNj
+	oz+fyMxGgUOu0Do0ZWHMwurSZmQ8nKrgYLRUdLMmMpWmMSI97hmu2ZrmkAt/Lmtk
+	K42NdesW21TduitjyE8z4kkp63ZocybNN8+t8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uTlGJMtbvjyRBUdHbBlbTq9Y43BbjOM+
+	OeJIr+vo/dfp/bXNfcz6ktdPCoBs+PxuJu7nbjVOFcM3JW93a1tRxBwAEUmPOjzw
+	SZjdMGDO7kmRKLMh1x9LpeI5M3jS+X0uAX7AxVu3k9f9MRnb35cg0FEC+e6z3gou
+	e316cIyhe1Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60317C9DB;
+	Thu,  7 Feb 2013 18:38:20 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99600C9D3; Thu,  7 Feb 2013
+ 18:38:19 -0500 (EST)
+In-Reply-To: <vpq38x8m06f.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+ "Thu, 07 Feb 2013 19:46:48 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 74192ED8-717F-11E2-BF3E-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215735>
 
-Hi Ram,
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Ramkumar Ramachandra wrote:
+> Michal Nazarewicz <mpn@google.com> writes:
+>
+>> From: Michal Nazarewicz <mina86@mina86.com>
+>>
+>> Add a credential() function which is an interface to the git
+>> credential command.  The code is heavily based on credential_*
+>> functions in <contrib/mw-to-git/git-remote-mediawiki>.
+>
+> I'm no perl expert, so I cannot comment much on style (there are many
+> small changes compared to the mediawiki code that look like improvement
+> though), but:
+>
+> Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-> And yes, a regular `git push origin refs/for/master` is just retarded.
-
-The usual incantation is "git push gerrit HEAD:refs/for/master".  Is
-the code review creation push that uses a different branchname from
-the branch the integrator pulls what seems backward, or is it the need
-to specify a refname at all on the command line?
-
-I agree that a "[branch "master"] pushremote" configuration would be
-handy.  pushremote instead of remotepush to be less surprising to
-people who have already seen pushurl.
-
-Good luck,
-Jonathan
+Thanks.  I'd actually be more worried about the error checking issue
+Peff raised during his review.  I have a feeling that "when in doubt,
+do not cause harm" is a more prudent way to go than "I do not know,
+so I'll let anything pass".
