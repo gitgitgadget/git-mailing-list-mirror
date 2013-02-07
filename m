@@ -1,251 +1,96 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH 6/6] combine-diff.c: teach combined diffs about line prefix
-Date: Thu,  7 Feb 2013 20:15:28 +0000
-Message-ID: <ca0ba198f798a5d9aeac2bf23a4ec2d0ceebcdb7.1360267849.git.john@keeping.me.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] Improve "git log --graph" output of merges
+Date: Thu, 07 Feb 2013 12:53:31 -0800
+Message-ID: <7v4nhn7sms.fsf@alter.siamese.dyndns.org>
 References: <cover.1360267849.git.john@keeping.me.uk>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 07 21:24:00 2013
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Feb 07 21:54:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3Y0f-0001if-Fs
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 21:23:53 +0100
+	id 1U3YTm-0007mF-B9
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 21:53:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759362Ab3BGUX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 15:23:26 -0500
-Received: from pichi.aluminati.org ([72.9.246.58]:37268 "EHLO
-	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759369Ab3BGUXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2013 15:23:06 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id A70F3161E515;
-	Thu,  7 Feb 2013 20:16:09 +0000 (GMT)
-X-Quarantine-ID: <pDrcw9WH2gYb>
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pDrcw9WH2gYb; Thu,  7 Feb 2013 20:16:08 +0000 (GMT)
-Received: from river.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 9F2C7161E4D6;
-	Thu,  7 Feb 2013 20:16:01 +0000 (GMT)
-X-Mailer: git-send-email 1.8.1.2
-In-Reply-To: <cover.1360267849.git.john@keeping.me.uk>
-In-Reply-To: <cover.1360267849.git.john@keeping.me.uk>
-References: <cover.1360267849.git.john@keeping.me.uk>
+	id S932128Ab3BGUxf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 15:53:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35320 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758877Ab3BGUxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 15:53:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD9E7CA72;
+	Thu,  7 Feb 2013 15:53:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YAv6c2gvjUr8mg30j8Cts7htgP8=; b=cdqXVq
+	NjqHvsG7jGQa3vRONQzVnbiQwIw65jHgYfDSE8Bz9jOsqtlDen8LnyrDnvdU27jd
+	OopWW+EfGa22Cye5CRcs+bm46VqpRIrw6GEuOLs0frmaQcVfSVsuXLrcCD8LNyfp
+	hd7QXKHbSnh55NIEvpyFrGZDZEraDRuZ46jtI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bLRBaFRYnBQH2zBR0koGAaN3i8xb4ke6
+	V7Gt/YGq8es/dF3dvUTE39Mo/qi2ikq1bSe3ZCS0DKol2rsG9MgwwYC93H4+7qgX
+	B1dLA2SNJCNZIq+4Nq+CeKqPbYZNV6RzM0C03zLOCgjow6M5UXKFHzeZdns/OVF5
+	qCDaGslkQ7A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0B98CA71;
+	Thu,  7 Feb 2013 15:53:33 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 39304CA6A; Thu,  7 Feb 2013
+ 15:53:33 -0500 (EST)
+In-Reply-To: <cover.1360267849.git.john@keeping.me.uk> (John Keeping's
+ message of "Thu, 7 Feb 2013 20:15:22 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6F4D8438-7168-11E2-8EDD-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215729>
 
-When running "git log --graph --cc -p" the diff output for merges is not
-indented by the graph structure, unlike the diffs of non-merge commits
-(added in commit 7be5761 - diff.c: Output the text graph padding before
-each diff line).
+John Keeping <john@keeping.me.uk> writes:
 
-Fix this by teaching the combined diff code to output diff_line_prefix()
-before each line.
+> This series changes a couple of places that do not currently indent
+> their output when being shown with a graph.
+>
+> The first patch was already posted [1] and addresses the output of "git
+> log --graph -c -p".  Patch 2 is an independent fix I noticed while
+> working on the later patches.
+>
+> Patches 3-5 introduce a helper function and change existing sites using
+> diff_options->output_prefix to use it, resulting in a net reduction by
+> about 60 lines.  There is no functional change here.
+>
+> The final patch uses the helper introduced in patch 4 to make combined
+> diffs should the output prefix before each line.  This affects the
+> output of "git log --graph --cc [-p|--raw]".
+>
+> [1] http://article.gmane.org/gmane.comp.version-control.git/215630
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- combine-diff.c | 47 ++++++++++++++++++++++++++++++-----------------
- 1 file changed, 30 insertions(+), 17 deletions(-)
+Overall direction looks sensible.
 
-diff --git a/combine-diff.c b/combine-diff.c
-index bb1cc96..35c817b 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -526,7 +526,8 @@ static void show_line_to_eol(const char *line, int len, const char *reset)
- 	       saw_cr_at_eol ? "\r" : "");
- }
- 
--static void dump_sline(struct sline *sline, unsigned long cnt, int num_parent,
-+static void dump_sline(struct sline *sline, const char *line_prefix,
-+		       unsigned long cnt, int num_parent,
- 		       int use_color, int result_deleted)
- {
- 	unsigned long mark = (1UL<<num_parent);
-@@ -582,7 +583,7 @@ static void dump_sline(struct sline *sline, unsigned long cnt, int num_parent,
- 			rlines -= null_context;
- 		}
- 
--		fputs(c_frag, stdout);
-+		printf("%s%s", line_prefix, c_frag);
- 		for (i = 0; i <= num_parent; i++) putchar(combine_marker);
- 		for (i = 0; i < num_parent; i++)
- 			show_parent_lno(sline, lno, hunk_end, i, null_context);
-@@ -614,7 +615,7 @@ static void dump_sline(struct sline *sline, unsigned long cnt, int num_parent,
- 			struct sline *sl = &sline[lno++];
- 			ll = (sl->flag & no_pre_delete) ? NULL : sl->lost_head;
- 			while (ll) {
--				fputs(c_old, stdout);
-+				printf("%s%s", line_prefix, c_old);
- 				for (j = 0; j < num_parent; j++) {
- 					if (ll->parent_map & (1UL<<j))
- 						putchar('-');
-@@ -627,6 +628,7 @@ static void dump_sline(struct sline *sline, unsigned long cnt, int num_parent,
- 			if (cnt < lno)
- 				break;
- 			p_mask = 1;
-+			fputs(line_prefix, stdout);
- 			if (!(sl->flag & (mark-1))) {
- 				/*
- 				 * This sline was here to hang the
-@@ -680,11 +682,13 @@ static void reuse_combine_diff(struct sline *sline, unsigned long cnt,
- static void dump_quoted_path(const char *head,
- 			     const char *prefix,
- 			     const char *path,
-+			     const char *line_prefix,
- 			     const char *c_meta, const char *c_reset)
- {
- 	static struct strbuf buf = STRBUF_INIT;
- 
- 	strbuf_reset(&buf);
-+	strbuf_addstr(&buf, line_prefix);
- 	strbuf_addstr(&buf, c_meta);
- 	strbuf_addstr(&buf, head);
- 	quote_two_c_style(&buf, prefix, path, 0);
-@@ -696,6 +700,7 @@ static void show_combined_header(struct combine_diff_path *elem,
- 				 int num_parent,
- 				 int dense,
- 				 struct rev_info *rev,
-+				 const char *line_prefix,
- 				 int mode_differs,
- 				 int show_file_header)
- {
-@@ -714,8 +719,8 @@ static void show_combined_header(struct combine_diff_path *elem,
- 		show_log(rev);
- 
- 	dump_quoted_path(dense ? "diff --cc " : "diff --combined ",
--			 "", elem->path, c_meta, c_reset);
--	printf("%sindex ", c_meta);
-+			 "", elem->path, line_prefix, c_meta, c_reset);
-+	printf("%s%sindex ", line_prefix, c_meta);
- 	for (i = 0; i < num_parent; i++) {
- 		abb = find_unique_abbrev(elem->parent[i].sha1,
- 					 abbrev);
-@@ -734,11 +739,12 @@ static void show_combined_header(struct combine_diff_path *elem,
- 			    DIFF_STATUS_ADDED)
- 				added = 0;
- 		if (added)
--			printf("%snew file mode %06o",
--			       c_meta, elem->mode);
-+			printf("%s%snew file mode %06o",
-+			       line_prefix, c_meta, elem->mode);
- 		else {
- 			if (deleted)
--				printf("%sdeleted file ", c_meta);
-+				printf("%s%sdeleted file ",
-+				       line_prefix, c_meta);
- 			printf("mode ");
- 			for (i = 0; i < num_parent; i++) {
- 				printf("%s%06o", i ? "," : "",
-@@ -755,16 +761,16 @@ static void show_combined_header(struct combine_diff_path *elem,
- 
- 	if (added)
- 		dump_quoted_path("--- ", "", "/dev/null",
--				 c_meta, c_reset);
-+				 line_prefix, c_meta, c_reset);
- 	else
- 		dump_quoted_path("--- ", a_prefix, elem->path,
--				 c_meta, c_reset);
-+				 line_prefix, c_meta, c_reset);
- 	if (deleted)
- 		dump_quoted_path("+++ ", "", "/dev/null",
--				 c_meta, c_reset);
-+				 line_prefix, c_meta, c_reset);
- 	else
- 		dump_quoted_path("+++ ", b_prefix, elem->path,
--				 c_meta, c_reset);
-+				 line_prefix, c_meta, c_reset);
- }
- 
- static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
-@@ -782,6 +788,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 	struct userdiff_driver *userdiff;
- 	struct userdiff_driver *textconv = NULL;
- 	int is_binary;
-+	const char *line_prefix = diff_line_prefix(opt);
- 
- 	context = opt->context;
- 	userdiff = userdiff_find_by_path(elem->path);
-@@ -901,7 +908,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 	}
- 	if (is_binary) {
- 		show_combined_header(elem, num_parent, dense, rev,
--				     mode_differs, 0);
-+				     line_prefix, mode_differs, 0);
- 		printf("Binary files differ\n");
- 		free(result);
- 		return;
-@@ -962,8 +969,8 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 
- 	if (show_hunks || mode_differs || working_tree_file) {
- 		show_combined_header(elem, num_parent, dense, rev,
--				     mode_differs, 1);
--		dump_sline(sline, cnt, num_parent,
-+				     line_prefix, mode_differs, 1);
-+		dump_sline(sline, line_prefix, cnt, num_parent,
- 			   opt->use_color, result_deleted);
- 	}
- 	free(result);
-@@ -990,6 +997,7 @@ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct re
- 	int i, offset;
- 	const char *prefix;
- 	int line_termination, inter_name_termination;
-+	const char *line_prefix = diff_line_prefix(opt);
- 
- 	line_termination = opt->line_termination;
- 	inter_name_termination = '\t';
-@@ -1000,6 +1008,7 @@ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct re
- 		show_log(rev);
- 
- 	if (opt->output_format & DIFF_FORMAT_RAW) {
-+		printf("%s", line_prefix);
- 		offset = strlen(COLONS) - num_parent;
- 		if (offset < 0)
- 			offset = 0;
-@@ -1040,6 +1049,7 @@ void show_combined_diff(struct combine_diff_path *p,
- 		       struct rev_info *rev)
- {
- 	struct diff_options *opt = &rev->diffopt;
-+
- 	if (!p->len)
- 		return;
- 	if (opt->output_format & (DIFF_FORMAT_RAW |
-@@ -1150,8 +1160,10 @@ void diff_tree_combined(const unsigned char *sha1,
- 
- 		if (show_log_first && i == 0) {
- 			show_log(rev);
-+
- 			if (rev->verbose_header && opt->output_format)
--				putchar(opt->line_termination);
-+				printf("%s%c", diff_line_prefix(opt),
-+				       opt->line_termination);
- 		}
- 		diff_flush(&diffopts);
- 	}
-@@ -1179,7 +1191,8 @@ void diff_tree_combined(const unsigned char *sha1,
- 
- 		if (opt->output_format & DIFF_FORMAT_PATCH) {
- 			if (needsep)
--				putchar(opt->line_termination);
-+				printf("%s%c", diff_line_prefix(opt),
-+				       opt->line_termination);
- 			for (p = paths; p; p = p->next) {
- 				if (p->len)
- 					show_patch_diff(p, num_parent, dense,
--- 
-1.8.1.2
+It is a bit scary that we are doing the the fifth one now, as
+opposed to catching this repetitiveness during the initial review of
+patch series that added the graph code to the diff codepath.
+
+Thanks.
+
+> John Keeping (6):
+>   graph: output padding for merge subsequent parents
+>   diff: write prefix to the correct file
+>   diff.c: make constant string arguments const
+>   diff: add diff_line_prefix function
+>   diff.c: use diff_line_prefix() where applicable
+>   combine-diff.c: teach combined diffs about line prefix
+>
+>  combine-diff.c |  47 +++++++++++++--------
+>  diff.c         | 131 +++++++++++++++------------------------------------------
+>  diff.h         |   3 ++
+>  graph.c        |  10 +++++
+>  4 files changed, 77 insertions(+), 114 deletions(-)
