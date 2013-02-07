@@ -1,62 +1,86 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: Credentials and the Secrets API...
-Date: Thu, 07 Feb 2013 09:46:05 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <87halochci.fsf@lifelogs.com>
-References: <CAEBDL5Udooim_3Za76Q1Rt_aGXtsSv76nxRegGWRBE=WJQzfZA@mail.gmail.com>
+From: Jed Brown <jed@59A2.org>
+Subject: Re: [PATCH v3 0/8] Hiding refs
+Date: Thu, 07 Feb 2013 09:58:00 -0600
+Message-ID: <87pq0c15h3.fsf@59A2.org>
+References: <1359571542-19852-1-git-send-email-gitster@pobox.com> <5110BD18.3080608@alum.mit.edu> <7v8v72u0vw.fsf@alter.siamese.dyndns.org> <51122D9D.9040100@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 15:46:34 2013
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 07 16:58:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3SkB-0002Ec-Ee
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 15:46:31 +0100
+	id 1U3Trs-0003L9-GR
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 16:58:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755589Ab3BGOqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 09:46:09 -0500
-Received: from z.lifelogs.com ([173.255.230.239]:45127 "EHLO z.lifelogs.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754000Ab3BGOqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2013 09:46:07 -0500
-Received: from heechee (c-65-96-148-157.hsd1.ma.comcast.net [65.96.148.157])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: tzz)
-	by z.lifelogs.com (Postfix) with ESMTPSA id 54EF2DE0E3;
-	Thu,  7 Feb 2013 14:46:06 +0000 (UTC)
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-In-Reply-To: <CAEBDL5Udooim_3Za76Q1Rt_aGXtsSv76nxRegGWRBE=WJQzfZA@mail.gmail.com>
-	(John Szakmeister's message of "Thu, 27 Oct 2011 12:05:03 -0400")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
+	id S1758656Ab3BGP6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 10:58:09 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:55464 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758166Ab3BGP6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 10:58:07 -0500
+Received: by mail-ie0-f174.google.com with SMTP id k10so3641473iea.5
+        for <git@vger.kernel.org>; Thu, 07 Feb 2013 07:58:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:in-reply-to:references
+         :user-agent:date:message-id:mime-version:content-type;
+        bh=FGv/s7LnZr43Ip+A3o55YVT7I+keWE+fokKso+J5UXU=;
+        b=b+YzJ5/77lnlhCTlKtj3MXOVWENz0O7f83JovtnyMzex5BOEJvajMq/XzAvqJz/Bml
+         fRxeLim7uNnYEy6Bm1ZiO7OHwBJEh0NzesFp8dfgbByLniPOl/TenuYCOM0zYaLv532T
+         MfKnbcZQpJAhqA7gbGabuN4npUf1RppC5Q9vvp+KzhNHtlvt+T89oBjZ2kRfmN5FV7m4
+         Vu0qufoHm9E3Os6SKy73GJS9nn2XwWBhQD5zKnk4n/7IsHzBKQ+rgL+ghjiT7Hgypnwe
+         C8nDrCWQvIupQW222HuQl4XjcrAeLzBhgjzr75BuWhureQPHq0WZHRqoJKIR9m83h4zP
+         viQg==
+X-Received: by 10.50.170.4 with SMTP id ai4mr3854759igc.40.1360252686561;
+        Thu, 07 Feb 2013 07:58:06 -0800 (PST)
+Received: from batura (vis-v410v070.mcs.anl-external.org. [130.202.17.70])
+        by mx.google.com with ESMTPS id br7sm9392624igb.0.2013.02.07.07.58.02
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 07 Feb 2013 07:58:04 -0800 (PST)
+In-Reply-To: <51122D9D.9040100@alum.mit.edu>
+User-Agent: Notmuch/0.15 (http://notmuchmail.org) Emacs/24.2.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215701>
 
-On Thu, 27 Oct 2011 12:05:03 -0400 John Szakmeister <john@szakmeister.net> wrote: 
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-JS> Just wanted to keep folks in the loop.  It turns out that the Secrets
-JS> API is still to young.  I asked about the format to store credentials
-JS> in (as far as attributes), and got a response from a KDE developer
-JS> that says it's still to young on their front.  They hope to have
-JS> support in the next release of KDE.  But there's still the issue of
-JS> what attributes to use.
+> A first weakness of your proposal is that even though the hidden refs
+> are (optionally) fetchable, there is *no* way to discover them remotely
+> or to bulk-download them; they would have to be retrieved one by one
+> using out-of-band information.  And if I understand correctly, there
+> would be no way to push hidden references remotely (whether manually or
+> from some automated process).  Such processes would have to be local to
+> the machine holding the repository.
 
-JS> With that information, I went ahead and created a
-JS> gnome-credential-keyring that uses Gnome's Keyring facility.  I still
-JS> need to do a few more things (mainly run it against Jeff's tests), but
-JS> it's generally working.  Just wanted to keep folks in the loop.
-JS> Hopefully, I can get patches out this weekend.
+I'm the author of git-fat [1], a smudge/clean filter system for managing
+large files.  I currently store files in the file system
+(.git/fat/objects) and transfer them via rsync because I want to be able
+to transfer exact subsets requested by the user.  I would like to put
+this data in a git repository so that I can take advantage of packfile
+compression when applicable and so that I can use existing access
+control, but I would need to store a separate reference to each blob (so
+that I can transfer exact subsets).  My refs would be named like
+'fat-<SHA1_OF_SMUDGED_DATA>' and are known on the client side because
+they are in the cleaned blob (which contains only this SHA1 and the
+number of bytes [2]).
 
-Do you think the Secrets API has matured enough?  KDE has had a new
-release since your post...
+I believe that my use case would be well supported if git could push and
+pull unadvertised refs, as long as basic operations were not slowed down
+by the existence of a very large number of such refs.
 
-Thanks
-Ted
+
+[1] https://github.com/jedbrown/git-fat
+
+[2] We could eliminate the performance problem of needing to buffer the
+entire file if the smudge filter could be passed the object size as an
+argument and if we could forward that size in a stream to 'git
+hash-object --stdin'.
