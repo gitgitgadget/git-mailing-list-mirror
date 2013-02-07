@@ -1,69 +1,58 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCHv2 4/5] Git.pm: add interface for git credential command
-Date: Thu, 07 Feb 2013 19:46:48 +0100
-Message-ID: <vpq38x8m06f.fsf@grenoble-inp.fr>
-References: <cover.1360242782.git.mina86@mina86.com>
-	<cover.1360242782.git.mina86@mina86.com>
-	<78516627e893e54d5aafe0694d1face9a37893de.1360242782.git.mina86@mina86.com>
+From: Tim Chase <git@tim.thechases.com>
+Subject: Preventing merges from one branch into others
+Date: Thu, 7 Feb 2013 13:14:40 -0600
+Message-ID: <20130207131440.716c1022@bigbox.christie.dr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Michal Nazarewicz <mpn@google.com>
-X-From: git-owner@vger.kernel.org Thu Feb 07 19:49:01 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 07 20:13:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3WWq-000093-8l
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 19:49:00 +0100
+	id 1U3Wue-0007Qe-Pc
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 20:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161126Ab3BGSsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 13:48:30 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:54287 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161002Ab3BGSs3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2013 13:48:29 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r17Ikkm2011002
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 7 Feb 2013 19:46:47 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1U3WUi-0005nP-UC; Thu, 07 Feb 2013 19:46:48 +0100
-In-Reply-To: <78516627e893e54d5aafe0694d1face9a37893de.1360242782.git.mina86@mina86.com>
-	(Michal Nazarewicz's message of "Thu, 7 Feb 2013 15:01:20 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 07 Feb 2013 19:46:47 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r17Ikkm2011002
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1360867610.96425@eZAySfm2sSNngUHTs6vgyA
+	id S932166Ab3BGTNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Feb 2013 14:13:12 -0500
+Received: from boston.accountservergroup.com ([50.22.11.22]:48220 "EHLO
+	boston.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754503Ab3BGTNL (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Feb 2013 14:13:11 -0500
+Received: from [108.223.140.164] (port=51182 helo=bigbox.christie.dr)
+	by boston.accountservergroup.com with esmtpsa (TLSv1:DHE-RSA-AES128-SHA:128)
+	(Exim 4.80)
+	(envelope-from <git@tim.thechases.com>)
+	id 1U3WuD-0005y9-Qf
+	for git@vger.kernel.org; Thu, 07 Feb 2013 13:13:10 -0600
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - boston.accountservergroup.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - tim.thechases.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215712>
 
-Michal Nazarewicz <mpn@google.com> writes:
+[tried IRC to no avail]
+I've been trying to find a way to prevent myself from merging a
+client-specific branch back into my dev/master branches.  Is there an
+easy/straightforward way to do this (perhaps via a hook)?  I didn't
+see any sort of "pre-merge" hook script.  Visualized:
 
-> From: Michal Nazarewicz <mina86@mina86.com>
->
-> Add a credential() function which is an interface to the git
-> credential command.  The code is heavily based on credential_*
-> functions in <contrib/mw-to-git/git-remote-mediawiki>.
+  A -> B -> C [dev]
+   \
+    -> Q -> R -> S [customer-specific]
 
-I'm no perl expert, so I cannot comment much on style (there are many
-small changes compared to the mediawiki code that look like improvement
-though), but:
+and I want to ensure that changes Q/R/S never find their way back
+into dev.
 
-Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+So I was hoping some sort of "hey, you're an idiot for trying to merge
+$CUSTOMER_BRANCH back into dev/master" warning. :-)
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-tkc
