@@ -1,79 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/8] Hiding refs
-Date: Thu, 07 Feb 2013 10:25:48 -0800
-Message-ID: <7vlib07zgz.fsf@alter.siamese.dyndns.org>
-References: <1359571542-19852-1-git-send-email-gitster@pobox.com>
- <5110BD18.3080608@alum.mit.edu> <20130205083327.GA4931@elie.Belkin>
- <5110DF1D.8010505@alum.mit.edu>
- <CACsJy8BhL4qDb8BgOVuaUFF_9GXvgu55urYyKqPuZMZCTCoLwA@mail.gmail.com>
- <7v4nhpckwd.fsf@alter.siamese.dyndns.org>
- <CACBZZX6xLvuMEhPnfYLj8W9pMLwdoS7Zb+mTtn+3DanJPiWfXw@mail.gmail.com>
- <7vmwvh9e3p.fsf@alter.siamese.dyndns.org>
- <20130207001635.GA29318@sigill.intra.peff.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [RFC] test-lib.sh: No POSIXPERM for cygwin
+Date: Thu, 07 Feb 2013 18:25:53 +0000
+Message-ID: <5113F1B1.3010102@ramsay1.demon.co.uk>
+References: <201301271557.08994.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 07 19:26:16 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, j6t@kdbg.org
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Feb 07 19:27:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3WAp-0002as-2s
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 19:26:15 +0100
+	id 1U3WBi-0003XT-1w
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Feb 2013 19:27:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161045Ab3BGSZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Feb 2013 13:25:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42953 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758690Ab3BGSZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Feb 2013 13:25:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8CF3C8DB;
-	Thu,  7 Feb 2013 13:25:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DbLiLxC+R8o8OQC8ljUOnpGOMTM=; b=RkHh8x
-	xcxRJlpeBiIAdp51jTCMKKyjsreDrx4A0oignPZYAGgDiShsrmwMylIqrWt5tGCL
-	XOBRBi4OTL7u6By9brH8tVrO4UHVLshdRBEANLNXpYgFqk07uzxQLRi7gZznAw+p
-	RY2QwYF+NErPE6pQ9A0ARoxtO4QTYhCCKWtCo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=olocC/y68tfi81hDE1wKNqvdiZ4OsxK1
-	btpQyA9NYX12w/xLCAIz4xcp96ZAhFFNsu0GdH+2dzuaIjAHeyqjrl9ln0K41BjD
-	ZKK6my0CHJTw8PB02HRfAsgRWCKDzXe3sufRjRScNMhSnM9SAGt8H0ZH43EU2cnI
-	+vmjQMLEItc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AD78C8D8;
-	Thu,  7 Feb 2013 13:25:50 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0AD96C8CF; Thu,  7 Feb 2013
- 13:25:49 -0500 (EST)
-In-Reply-To: <20130207001635.GA29318@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 6 Feb 2013 19:16:36 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC7103AC-7153-11E2-B285-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1161046Ab3BGS0q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Feb 2013 13:26:46 -0500
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:39141 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1161000Ab3BGS0p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Feb 2013 13:26:45 -0500
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id BB5774006BB;
+	Thu,  7 Feb 2013 18:26:43 +0000 (GMT)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 06C7F400607;	Thu,  7 Feb 2013 18:26:43 +0000 (GMT)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Thu,  7 Feb 2013 18:26:42 +0000 (GMT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <201301271557.08994.tboegi@web.de>
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215708>
 
-Jeff King <peff@peff.net> writes:
+Torsten B=C3=B6gershausen wrote:
+> t0070 and t1301 fail when running the test suite under cygwin.
+> Skip the failing tests by unsetting POSIXPERM.
 
-> If the new client can handle the old-style server's response, then the
-> server can start blasting out refs (optionally after a timeout) and stop
-> when the client interrupts with "hey, wait, I can speak the new
-> protocol". The server just has to include "you can interrupt me" in its
-> capability advertisement (obviously it would have to send out at least
-> the first ref with the capabilities before the timeout).
+t1301 does not fail for me. (WIN XP (SP3) on NTFS)
+[It's so long since I looked, but I'm pretty sure that the failure
+in t0070 is caused by *git*, not by cygwin not supporting POSIXPERM]
 
-Yeah, I would prefer people to come up with a way to share the port
-and autodetect.  It is *not* a requirement for the updated server to
-run on a separate port at all.
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+>  t/test-lib.sh | 1 -
+>  1 file changed, 1 deletion(-)
+>=20
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 1a6c4ab..94b097e 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -669,7 +669,6 @@ case $(uname -s) in
+>  	test_set_prereq SED_STRIPS_CR
+>  	;;
+>  *CYGWIN*)
+> -	test_set_prereq POSIXPERM
+>  	test_set_prereq EXECKEEPSPID
+>  	test_set_prereq NOT_MINGW
+>  	test_set_prereq SED_STRIPS_CR
+>=20
+
+So, I'm not in favour of this, FWIW.
+
+ATB,
+Ramsay Jones
