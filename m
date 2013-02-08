@@ -1,79 +1,65 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Improve 'git help' with basic user guide linkss
-Date: Fri, 8 Feb 2013 20:28:39 -0000
-Organization: OPDS
-Message-ID: <6D91D31A093D46869F43DD8D1012F0FB@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: `git checkout --orpan` leaves a dirty worktree
+Date: Fri, 8 Feb 2013 12:31:39 -0800
+Message-ID: <CANiSa6hD=zX5=evziqQpXHdjUDEU80t_Du7L+Hpa11ru=5XVNQ@mail.gmail.com>
+References: <CALkWK0mjf5vsiHvMW-QyzMHdmZQvdzjw_ORJnMd=mT6RCqB1xg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 08 21:29:11 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 21:32:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3uZG-0005xO-Be
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 21:29:06 +0100
+	id 1U3uc8-000865-0k
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 21:32:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1947070Ab3BHU2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 15:28:33 -0500
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:23339 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1946949Ab3BHU23 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Feb 2013 15:28:29 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AqkTAOxeFVFcHls+/2dsb2JhbABFjAmtC4ZqAgKBCBdzghoUAQETGx4BASwCCAIBJDkBBBoGBx0bAgECAwGIBAieKoZamjCNORkDS4JbYQOIMIVXmHCDAA
-X-IronPort-AV: E=Sophos;i="4.84,630,1355097600"; 
-   d="scan'208";a="413754034"
-Received: from host-92-30-91-62.as13285.net (HELO PhilipOakley) ([92.30.91.62])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 08 Feb 2013 20:28:27 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1947028Ab3BHUbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 15:31:41 -0500
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:40291 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946957Ab3BHUbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 15:31:40 -0500
+Received: by mail-wi0-f171.google.com with SMTP id hn17so1336439wib.16
+        for <git@vger.kernel.org>; Fri, 08 Feb 2013 12:31:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=xoqcW9MBc5iFWErtQ5T2IiIeaekeKaXqcbnnuK0xXU0=;
+        b=X+SzkwTuYw2ObeaPy0CUIcMEQhJPYUYYW4MiVlhS4LhEOgC0wL23irX9+XPOHF/JDo
+         ZNcQmsKOGwSwY6WjeR7vSgubRt6W3WCcQGBG8Q9su1AcZP5u9xlbwD5Ia0hk7v7SpV3W
+         u67d4hrQ2VAQ7MtYP66vprfn5RmE2WSksdflJCWMs5rfzKVfQk3ISGPMewWDAWW0yetJ
+         3knZab4exfvGJAJO02k4I/dvJ9Xq4RLGq7W2Yorb7IA1Azi0gtczmdpTL7KF/i5gJ1Ua
+         QUIqxIJT9K9TAOEoZ6CDZALYym/eWnj+z/UtbNiwnur37OV9LGhWYRjBrNyBFMNwwzOT
+         v8iA==
+X-Received: by 10.180.85.97 with SMTP id g1mr4858481wiz.29.1360355499517; Fri,
+ 08 Feb 2013 12:31:39 -0800 (PST)
+Received: by 10.180.85.8 with HTTP; Fri, 8 Feb 2013 12:31:39 -0800 (PST)
+In-Reply-To: <CALkWK0mjf5vsiHvMW-QyzMHdmZQvdzjw_ORJnMd=mT6RCqB1xg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215815>
 
-I'm looking at extending the 'git help' to include some information for 
-the basic user who isn't ready for the extensive man page documentation 
-for the various commands.
+I'm curious what your use case is.
 
-If the user doesn't yet know which is the relevant command then they 
-should also be offered a clue on how to finding the various guides. Many 
-users are stuck on the 'If I were you I wouldn't start from here' step 
-(many blog comments on the alleged poor documentation and difficulty of 
-understanding ...).
+The behavior has been inconvenient for me too, but I have only used it
+in test cases; I have no real use case where I wanted to create an
+unborn/orphan branch.
 
-I've started on adding a few tweaks to the basic 'git help' message, 
-adding an end line indicating that there are guides, such as 'tutorial'. 
-Initial hacks at https://github.com/PhilipOakley/git/commits/morehelp 
-for thos interested.
-
-My real question is on the right approach to generating a list of guides 
-and including them into the git help options. I'm planning on extending 
-the command-list.txt file to include 'guides' and then extending the 
-generate-cmdlist.sh to generate a guides array in common-cmds.h.
-
-I'm thinking of adding -g --guides and -c --commands options to 
-complement the existing -a --all (becomes both commands and guides) 
-option. I'm not yet sure how to determine which other special guides 
-should be listed (api- etc.) and when.
-
-I was expecting to update the user-manual. to become gituser-manual.txt 
-so that the existing 'git help user-manual' scheme would discover it. 
-The Tutorial and the User manual obviously(?) being the first port of 
-call for the confused user.
-
-Does this appear sensible, and should the Documentation/* directories 
-also be searched for 'guides', or is that a step too far [and it's less 
-coding] ?
-
-Philip Oakley
+On Fri, Feb 8, 2013 at 11:50 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Hi,
+>
+> Why should I have to `git rm -rf .` after a `git checkout --orphan`?
+> What sort of misfeature/ incomplete feature is this?
+>
+> Ram
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
