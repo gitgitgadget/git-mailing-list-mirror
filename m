@@ -1,78 +1,306 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Proposal: branch.<name>.remotepush
-Date: Sat, 9 Feb 2013 00:12:16 +0530
-Message-ID: <CALkWK0kR-KWJbG_kWSf7+JMJEQc7vO0Emx=_yogCB0jMBfccAg@mail.gmail.com>
-References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
- <5113E849.8000602@elegosoft.com> <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
- <20130207233017.GD19397@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] count-objects: report garbage files in pack
+ directory too
+Date: Fri, 08 Feb 2013 10:44:43 -0800
+Message-ID: <7vwqui1w84.fsf@alter.siamese.dyndns.org>
+References: <1359982145-10792-1-git-send-email-pclouds@gmail.com>
+ <1360295307-5469-1-git-send-email-pclouds@gmail.com>
+ <1360295307-5469-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Schubert <mschub@elegosoft.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 19:43:02 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 19:45:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3sua-0003ad-Bh
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 19:43:00 +0100
+	id 1U3sx0-0005fv-8y
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 19:45:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760192Ab3BHSmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 13:42:37 -0500
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:45252 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758314Ab3BHSmh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 13:42:37 -0500
-Received: by mail-oa0-f45.google.com with SMTP id o6so4416198oag.32
-        for <git@vger.kernel.org>; Fri, 08 Feb 2013 10:42:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=STXswUfU+/tyJ+sig3SGOxLkxjJMVsbqk0LFMyr/HU4=;
-        b=rBAM+MejRHZWGTyPAhDQ6l1HR6z0PihrI/S/d/EZskh/aJMR9Isc40d0MVm7R1s1qo
-         P/HByiRTiXnyP+82xTzX2/owiPwLTNfir8YtzM2Ra5+t1QMqcGUnw3SX31u4Zo6gCU/V
-         uKVsUoXG1XUaGL9pamf897nUe+PKWj7KXhQmAOys5KMF+CS206fb6I8EyGponboBBpPL
-         cpPrrb0ANjvFxYXtz8do5xn4cNTGzXpJgyFP+Bs4re5QqvXj9cN7w8Lf4J8j4Q6P9G5z
-         nxSKI3opz38ymuDF2RIGChiMH96zFP9JStWYszLjTwYZIuRxsyTuljyC3eF1Jdochnv3
-         J1zw==
-X-Received: by 10.182.157.44 with SMTP id wj12mr4921260obb.41.1360348956735;
- Fri, 08 Feb 2013 10:42:36 -0800 (PST)
-Received: by 10.76.128.79 with HTTP; Fri, 8 Feb 2013 10:42:16 -0800 (PST)
-In-Reply-To: <20130207233017.GD19397@google.com>
+	id S1946834Ab3BHSos convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2013 13:44:48 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55791 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1946798Ab3BHSoq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Feb 2013 13:44:46 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9032ECE91;
+	Fri,  8 Feb 2013 13:44:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=9/na9IqsT8Eo
+	+cRElynKUahDH5A=; b=J3Xaw3W6XN9pvRPePte7Cg8udAMwRypQHUWWxkeHlWqR
+	mN0g0cvXRp28BNBsXtIjnwdoy7f2rkiCKoxG1neuZ9o9IqRE8hT+M4aRR/svI3tJ
+	t5b0AVEa3TmfiKRGJSgg+MXMRnDMwvV0i1KTZuyEMGAlNGg0kmjEvxJb/7AqfDc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=u5wbKc
+	oPuBueZGN8C01Jc08+4BGQuuDSQbQzomcnaSlyCvI7Fugy1gEVIiGiHeNuCWyN0E
+	1y3lnhs0zc3bcgHTZ5sSzqFq0xSjfDj4ZKSbtpl75f7rwad7pHQCdEDAFWRtqukx
+	syC+wOErmb14OEhsEL8juj43lE10jDI+m2RK4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83B04CE90;
+	Fri,  8 Feb 2013 13:44:45 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B40C1CE8F; Fri,  8 Feb 2013
+ 13:44:44 -0500 (EST)
+In-Reply-To: <1360295307-5469-3-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 8 Feb
+ 2013 10:48:26 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9B2C1094-721F-11E2-A782-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215801>
 
-Jonathan Nieder wrote:
-> Ramkumar Ramachandra wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+
+> prepare_packed_git_one() is modified to allow count-objects to hook a
+> report function to so we don't need to duplicate the pack searching
+> logic in count-objects.c. When report_pack_garbage is NULL, the
+> overhead is insignificant.
 >
->> And yes, a regular `git push origin refs/for/master` is just retarded.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Documentation/git-count-objects.txt |  4 +-
+>  builtin/count-objects.c             | 18 ++++++++-
+>  sha1_file.c                         | 81 +++++++++++++++++++++++++++=
+++++++++--
+>  3 files changed, 97 insertions(+), 6 deletions(-)
 >
-> The usual incantation is "git push gerrit HEAD:refs/for/master".  Is
-> the code review creation push that uses a different branchname from
-> the branch the integrator pulls what seems backward, or is it the need
-> to specify a refname at all on the command line?
+> diff --git a/Documentation/git-count-objects.txt b/Documentation/git-=
+count-objects.txt
+> index e816823..1611d7c 100644
+> --- a/Documentation/git-count-objects.txt
+> +++ b/Documentation/git-count-objects.txt
+> @@ -33,8 +33,8 @@ size-pack: disk space consumed by the packs, in KiB
+>  prune-packable: the number of loose objects that are also present in
+>  the packs. These objects could be pruned using `git prune-packed`.
+>  +
+> -garbage: the number of files in loose object database that are not
+> -valid loose objects
+> +garbage: the number of files in object database that are not valid
+> +loose objects nor valid packs
+> =20
+>  GIT
+>  ---
+> diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+> index 9afaa88..118b2ae 100644
+> --- a/builtin/count-objects.c
+> +++ b/builtin/count-objects.c
+> @@ -9,6 +9,20 @@
+>  #include "builtin.h"
+>  #include "parse-options.h"
+> =20
+> +static unsigned long garbage;
+> +
+> +extern void (*report_pack_garbage)(const char *path, int len, const =
+char *name);
+> +static void real_report_pack_garbage(const char *path, int len, cons=
+t char *name)
+> +{
 
-How else would you design a system to differentiate between a
-push-for-review, and push-to-update-ref?
+Don't some callers call this on paths outside objects/pack/
+directory?  Is it still report-pack-garbage?
 
-On a slightly unrelated note, it would be nice if we could streamline
-the git-format-patch, git-send-email process.  Let's say we make it a
-push', which has a pre-hook that fires up the $EDITOR for a cover
-letter.  Wouldn't you love it if this push' would update refs on your
-private fork and fire off emails to the Git List?  Bonus for contrib/:
-fetch the Google address book, and allow me to auto-complete names
-when sending emails.
+> +	if (len && name)
+> +		error("garbage found: %.*s/%s", len, path, name);
+> +	else if (!len && name)
+> +		error("garbage found: %s%s", path, name);
+> +	else
+> +		error("garbage found: %s", path);
+> +	garbage++;
+> +}
+> +
+>  static void count_objects(DIR *d, char *path, int len, int verbose,
+>  			  unsigned long *loose,
+>  			  off_t *loose_size,
+> @@ -76,7 +90,7 @@ int cmd_count_objects(int argc, const char **argv, =
+const char *prefix)
+>  	const char *objdir =3D get_object_directory();
+>  	int len =3D strlen(objdir);
+>  	char *path =3D xmalloc(len + 50);
+> -	unsigned long loose =3D 0, packed =3D 0, packed_loose =3D 0, garbag=
+e =3D 0;
+> +	unsigned long loose =3D 0, packed =3D 0, packed_loose =3D 0;
+>  	off_t loose_size =3D 0;
+>  	struct option opts[] =3D {
+>  		OPT__VERBOSE(&verbose, N_("be verbose")),
+> @@ -87,6 +101,8 @@ int cmd_count_objects(int argc, const char **argv,=
+ const char *prefix)
+>  	/* we do not take arguments other than flags for now */
+>  	if (argc)
+>  		usage_with_options(count_objects_usage, opts);
+> +	if (verbose)
+> +		report_pack_garbage =3D real_report_pack_garbage;
+>  	memcpy(path, objdir, len);
+>  	if (len && objdir[len-1] !=3D '/')
+>  		path[len++] =3D '/';
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 40b2329..cc6ef03 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -21,6 +21,7 @@
+>  #include "sha1-lookup.h"
+>  #include "bulk-checkin.h"
+>  #include "streaming.h"
+> +#include "dir.h"
+> =20
+>  #ifndef O_NOATIME
+>  #if defined(__linux__) && (defined(__i386__) || defined(__PPC__))
+> @@ -1000,6 +1001,54 @@ void install_packed_git(struct packed_git *pac=
+k)
+>  	packed_git =3D pack;
+>  }
+> =20
+> +/* A hook for count-objects to report invalid files in pack director=
+y */
+> +void (*report_pack_garbage)(const char *path, int len, const char *n=
+ame);
+> +
+> +static const char *known_pack_extensions[] =3D { ".pack", ".keep", N=
+ULL };
 
-> I agree that a "[branch "master"] pushremote" configuration would be
-> handy.  pushremote instead of remotepush to be less surprising to
-> people who have already seen pushurl.
+This sounds wrong.  Isn't ".idx" also known?
 
-Thanks for that, by the way (used in RFC patch).  My taste in variable
-names is a little sour.
+> +static void report_garbage(struct string_list *list)
+> +{
+> +	struct strbuf sb =3D STRBUF_INIT;
+> +	struct packed_git *p;
+> +	int i;
+> +
+> +	if (!report_pack_garbage)
+> +		return;
+> +
+> +	sort_string_list(list);
+> +
+> +	for (p =3D packed_git; p; p =3D p->next) {
+> +		struct string_list_item *item;
+> +		if (!p->pack_local)
+> +			continue;
+> +		strbuf_reset(&sb);
+> +		strbuf_add(&sb, p->pack_name,
+> +			   strlen(p->pack_name) - strlen(".pack"));
+> +		item =3D string_list_lookup(list, sb.buf);
+> +		if (!item)
+> +			continue;
+> +		/*
+> +		 * string_list_lookup does not guarantee to return the
+> +		 * first matched string if it's duplicated.
+> +		 */
+> +		while (item - list->items &&
+> +		       !strcmp(item[-1].string, item->string))
+> +			item--;
+> +		while (item - list->items < list->nr &&
+> +		       !strcmp(item->string, sb.buf)) {
+> +			item->util =3D NULL; /* non-garbage mark */
+> +			item++;
+> +		}
+> +	}
+> +	for (i =3D 0; i < list->nr; i++) {
+> +		struct string_list_item *item =3D list->items + i;
+> +		if (!item->util)
+> +			continue;
+> +		report_pack_garbage(item->string, 0, item->util);
+> +	}
+> +	strbuf_release(&sb);
+> +}
+> +
+>  static void prepare_packed_git_one(char *objdir, int local)
+>  {
+>  	/* Ensure that this buffer is large enough so that we can
+> @@ -1009,6 +1058,7 @@ static void prepare_packed_git_one(char *objdir=
+, int local)
+>  	int len;
+>  	DIR *dir;
+>  	struct dirent *de;
+> +	struct string_list garbage =3D STRING_LIST_INIT_DUP;
+> =20
+>  	sprintf(path, "%s/pack", objdir);
+>  	len =3D strlen(path);
+> @@ -1024,14 +1074,37 @@ static void prepare_packed_git_one(char *objd=
+ir, int local)
+>  		int namelen =3D strlen(de->d_name);
+>  		struct packed_git *p;
+> =20
+> -		if (!has_extension(de->d_name, ".idx"))
+> +		if (len + namelen + 1 > sizeof(path)) {
+> +			if (report_pack_garbage)
+> +				report_pack_garbage(path, len - 1, de->d_name);
+
+A pack/in/a/very/long/path/pack-000000000000000000000000000000000000000=
+0.pack
+may pass when fed to "git verify-pack", but this will report it as "gar=
+bage",
+without reporting what is wrong with it.  Wouldn't that confuse users?
+
+>  			continue;
+> +		}
+> +
+> +		strcpy(path + len, de->d_name);
+> =20
+> -		if (len + namelen + 1 > sizeof(path))
+> +		if (!has_extension(de->d_name, ".idx")) {
+> +			struct string_list_item *item;
+> +			int i, n;
+> +			if (!report_pack_garbage)
+> +				continue;
+> +			if (is_dot_or_dotdot(de->d_name))
+> +				continue;
+> +			for (i =3D 0; known_pack_extensions[i]; i++)
+> +				if (has_extension(de->d_name,
+> +						  known_pack_extensions[i]))
+> +					break;
+> +			if (!known_pack_extensions[i]) {
+> +				report_pack_garbage(path, 0, NULL);
+> +				continue;
+> +			}
+> +			n =3D strlen(path) - strlen(known_pack_extensions[i]);
+> +			item =3D string_list_append_nodup(&garbage,
+> +							xstrndup(path, n));
+> +			item->util =3D (void*)known_pack_extensions[i];
+>  			continue;
+> +		}
+
+Why isn't this part more like this?
+
+		if (dot-or-dotdot) {
+			continue;
+		} else if (has_extension(de->d_name, ".idx")) {
+			do things for the .idx file;
+		} else if (has_extension(de->d_name, ".pack") {
+			do things for the .pack file, including
+                        queuing the name if we haven't seen
+			corresponding .idx for later examination;
+		} else if (has_extension(de->d_name, ".keep") {
+                	nothing special for now but we may
+                        want to add some other checks later
+		} else {
+                	everything else is a garbage
+                        report_pack_garbage();
+		}
+                       =20
+
+> =20
+>  		/* Don't reopen a pack we already have. */
+> -		strcpy(path + len, de->d_name);
+>  		for (p =3D packed_git; p; p =3D p->next) {
+>  			if (!memcmp(path, p->pack_name, len + namelen - 4))
+>  				break;
+> @@ -1047,6 +1120,8 @@ static void prepare_packed_git_one(char *objdir=
+, int local)
+>  		install_packed_git(p);
+>  	}
+>  	closedir(dir);
+> +	report_garbage(&garbage);
+> +	string_list_clear(&garbage, 0);
+>  }
+> =20
+>  static int sort_pack(const void *a_, const void *b_)
