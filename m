@@ -1,81 +1,196 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCHv6] Add contrib/credentials/netrc with GPG support
-Date: Thu, 07 Feb 2013 22:15:48 -0800
-Message-ID: <7vhaln49gr.fsf@alter.siamese.dyndns.org>
+Date: Fri, 8 Feb 2013 01:18:55 -0500
+Message-ID: <20130208061855.GA11892@sigill.intra.peff.net>
 References: <87ehgvua6h.fsf@lifelogs.com>
  <20130204211726.GB13186@sigill.intra.peff.net>
- <87mwvjsqjc.fsf_-_@lifelogs.com> <7vvca6u47f.fsf@alter.siamese.dyndns.org>
- <87k3qmr8yc.fsf@lifelogs.com> <87fw1ar3og.fsf_-_@lifelogs.com>
- <87ehgvua6h.fsf@lifelogs.com> <20130204211726.GB13186@sigill.intra.peff.net>
- <87mwvjsqjc.fsf_-_@lifelogs.com> <7vvca6u47f.fsf@alter.siamese.dyndns.org>
- <87k3qmr8yc.fsf@lifelogs.com> <7vhalqsfkf.fsf@alter.siamese.dyndns.org>
- <8738xaqy40.fsf_-_@lifelogs.com> <7vip66qu0u.fsf@alter.siamese.dyndns.org>
- <7vtxpqnwiv.fsf@alter.siamese.dyndns.org> <876226p97h.fsf_-_@lifelogs.com>
- <7vtxpn4r7a.fsf@alter.siamese.dyndns.org> <87mwvfbmgi.fsf@lifelogs.com>
+ <87mwvjsqjc.fsf_-_@lifelogs.com>
+ <7vvca6u47f.fsf@alter.siamese.dyndns.org>
+ <87k3qmr8yc.fsf@lifelogs.com>
+ <7vhalqsfkf.fsf@alter.siamese.dyndns.org>
+ <8738xaqy40.fsf_-_@lifelogs.com>
+ <7vip66qu0u.fsf@alter.siamese.dyndns.org>
+ <7vtxpqnwiv.fsf@alter.siamese.dyndns.org>
+ <876226p97h.fsf_-_@lifelogs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Ted Zlatanov <tzz@lifelogs.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 07:16:18 2013
+X-From: git-owner@vger.kernel.org Fri Feb 08 07:19:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3hFu-0004BR-4Q
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 07:16:14 +0100
+	id 1U3hIw-0006JK-0p
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 07:19:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752915Ab3BHGPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 01:15:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64584 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752307Ab3BHGPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 01:15:50 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BFA07EED;
-	Fri,  8 Feb 2013 01:15:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kaoTrsaZm9Dgb2Gj4JtSfMHB9Tw=; b=R/Dp2s
-	1JW1CL565S0k2CXJYssAPCH/JkP0Xwsvj0jJBCH4H9/Xa3ezhBz0m+zyy1COKj6e
-	W1WO+4satrT9o08uLsyhXZtXoqDLM+RfXr58AZvc3r0my2L25NUu71B86usDAXe8
-	c/zvRE1De/nf4XBNaU5slHbtS32X9ataCb1vs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CWP7J0EQQg6jc/tsawVaHBB1YYPV9Jgx
-	GeAV4knwO37XSD9gpuSL1HPs2UOwE0RI+ZDdmVyIMS8cE8r/TsP92R2PUtPCm+hR
-	gXyXOBDk9ZSQEMSuArfPjNPenDGWHfD7HLYLvQ1GTRTe5bWXXciDjk9zACJ64o1a
-	A0GoCff5dkU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FF2E7EEC;
-	Fri,  8 Feb 2013 01:15:50 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9DB5F7EE9; Fri,  8 Feb 2013
- 01:15:49 -0500 (EST)
-In-Reply-To: <87mwvfbmgi.fsf@lifelogs.com> (Ted Zlatanov's message of "Thu,
- 07 Feb 2013 20:53:17 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FBC56270-71B6-11E2-99B2-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754221Ab3BHGS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 01:18:58 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39147 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751222Ab3BHGS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 01:18:57 -0500
+Received: (qmail 26551 invoked by uid 107); 8 Feb 2013 06:20:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Feb 2013 01:20:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2013 01:18:55 -0500
+Content-Disposition: inline
+In-Reply-To: <876226p97h.fsf_-_@lifelogs.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215759>
 
-Ted Zlatanov <tzz@lifelogs.com> writes:
+On Tue, Feb 05, 2013 at 07:38:58PM -0500, Ted Zlatanov wrote:
 
-> I agree this Makefile is not a good test to ship out.  It was my quickie
-> test rig that I should have reworked before adding to the patch.  Sorry.
+> Add Git credential helper that can parse netrc/authinfo files.
+> 
+> This credential helper supports multiple files, returning the first one
+> that matches.  It checks file permissions and owner.  For *.gpg files,
+> it will run GPG to decrypt the file.
+> 
+> Signed-off-by: Ted Zlatanov <tzz@lifelogs.com>
 
-Nothing to be sorry about.  Starting with quick-and-dirty and
-polishing for public consumption is what the review cycle is about,
-and we are here to help that process.
 
-> I see contrib/subtree/t and contrib/mw-to-git/t that I could copy.  The
-> test will have a few files to parse, and will be able to compare the
-> expected to the actual output.  Does that sound like a good plan?
+> +	# the following check is copied from Net::Netrc, for non-GPG files
+> +	# OS/2 and Win32 do not handle stat in a way compatable with this check :-(
 
-Yup.
+s/compatable/compatible/
 
-Thanks.
+You mention os/2 and Win32 here, but the check has more:
+
+> +	unless ($gpgmode || $options{insecure} ||
+> +		$^O eq 'os2'
+> +		|| $^O eq 'MSWin32'
+> +		|| $^O eq 'MacOS'
+> +		|| $^O =~ /^cygwin/) {
+
+Does MacOS really not handle stat? Or is this old MacOS, not OS X?
+
+> +sub load_netrc {
+> [...]
+> +	foreach my $nentry (@netrc_entries) {
+> +		my %entry;
+> +		my $num_port;
+> +
+> +		if (!defined $nentry->{machine}) {
+> +			next;
+> +		}
+> +		if (defined $nentry->{port} && $nentry->{port} =~ m/^\d+$/) {
+> +			$num_port = $nentry->{port};
+> +			delete $nentry->{port};
+> +		}
+> +
+> +		# create the new entry for the credential helper protocol
+> +		$entry{$options{tmap}->{$_}} = $nentry->{$_} foreach keys %$nentry;
+> +
+> +		# for "host X port Y" where Y is an integer (captured by
+> +		# $num_port above), set the host to "X:Y"
+> +		if (defined $entry{host} && defined $num_port) {
+> +			$entry{host} = join(':', $entry{host}, $num_port);
+> +		}
+
+So this will convert:
+
+  machine foo port smtp
+
+in the netrc into (protocol => "smtp", host => "foo"), but:
+
+  machine foo port 25
+
+into (protocol => undef, host => "foo:25"), right? That makes sense to
+me.
+
+> +sub net_netrc_loader {
+> [...]
+
+I won't comment here, as I know very little about netrc (I always
+thought it was line-oriented, too!) and Junio has covered it.
+
+> +# takes the search tokens and then a list of entries
+> +# each entry is a hash reference
+> +sub find_netrc_entry {
+> +	my $query = shift @_;
+> +
+> +    ENTRY:
+> +	foreach my $entry (@_)
+> +	{
+> +		my $entry_text = join ', ', map { "$_=$entry->{$_}" } keys %$entry;
+> +		foreach my $check (sort keys %$query) {
+> +			if (defined $query->{$check}) {
+> +				log_debug("compare %s [%s] to [%s] (entry: %s)",
+> +					  $check,
+> +					  $entry->{$check},
+> +					  $query->{$check},
+> +					  $entry_text);
+> +				unless ($query->{$check} eq $entry->{$check}) {
+> +					next ENTRY;
+> +				}
+> +			} else {
+> +				log_debug("OK: any value satisfies check $check");
+> +			}
+
+This looks right to me.
+
+> +sub print_credential_data {
+
+I don't know if you want to take the hit of relying on Git.pm (it is
+nice for the helper to be totally standalone and copy-able), but one
+obvious possible refactor would be to use the credential read/write
+functions recently added there. I'm OK with not doing that, though.
+
+> +	my $entry = shift @_;
+> +	my $query = shift @_;
+> +
+> +	log_debug("entry has passed all the search checks");
+> + TOKEN:
+> +	foreach my $git_token (sort keys %$entry) {
+> +		log_debug("looking for useful token $git_token");
+> +		# don't print unknown (to the credential helper protocol) tokens
+> +		next TOKEN unless exists $query->{$git_token};
+> +
+> +		# don't print things asked in the query (the entry matches them)
+> +		next TOKEN if defined $query->{$git_token};
+> +
+> +		log_debug("FOUND: $git_token=$entry->{$git_token}");
+> +		printf "%s=%s\n", $git_token, $entry->{$git_token};
+> +	}
+
+Printf? Bleh, isn't this supposed to be perl? :P
+
+I don't see anything wrong from the credential-handling side of things.
+As I said, I didn't look closely at the netrc parsing bits. From my
+reading of "perldoc macos", the answer to my question above is "yes,
+stat doesn't work on MacOS Classic". So I think the script itself is
+fine.
+
+In your tests:
+
+> +++ b/contrib/credential/netrc/Makefile
+> @@ -0,0 +1,12 @@
+> +test_netrc:
+> +       @(echo "bad data" | ./git-credential-netrc -f A -d -v) || echo "Bad invocation test, ignoring
+> failure"
+> +       @echo "=> Silent invocation... nothing should show up here with a missing file"
+> +       @echo "bad data" | ./git-credential-netrc -f A get
+> +       @echo "=> Back to noisy: -v and -d used below, missing file"
+> +       echo "bad data" | ./git-credential-netrc -f A -d -v get
+> +       @echo "=> Look for any entry in the default file set"
+> +       echo "" | ./git-credential-netrc -d -v get
+> +       @echo "=> Look for github.com in the default file set"
+> +       echo "host=google.com" | ./git-credential-netrc -d -v get
+> +       @echo "=> Look for a nonexistent machine in the default file set"
+> +       echo "host=korovamilkbar" | ./git-credential-netrc -d -v get
+
+You are depending on whatever the user has in their ~/.netrc, no?
+Wouldn't it make more sense to ship a sample netrc and run all of the
+tests with "-f netrc.example"?
+
+It may also be worth building on top of the regular git test harness.
+It's more work, but the resulting code (and the output) will be much
+more readable.
+
+-Peff
