@@ -1,143 +1,178 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 4/5] Git.pm: add interface for git credential command
-Date: Fri, 8 Feb 2013 00:11:20 -0500
-Message-ID: <20130208051120.GD4157@sigill.intra.peff.net>
-References: <cover.1360242782.git.mina86@mina86.com>
- <78516627e893e54d5aafe0694d1face9a37893de.1360242782.git.mina86@mina86.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v4] Add utf8_fprintf helper which returns correct columns
+Date: Fri, 08 Feb 2013 07:03:46 +0100
+Message-ID: <51149542.8060307@web.de>
+References: <7va9rho350.fsf@alter.siamese.dyndns.org> <4ea03e99bad13e2910b137fd3991951244fa23f1.1360289411.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Michal Nazarewicz <mpn@google.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 06:11:58 2013
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
+	<pclouds@gmail.co>, Git List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 07:06:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3gFc-0003yy-Mk
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 06:11:53 +0100
+	id 1U3h6N-0006B3-PL
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 07:06:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751620Ab3BHFLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 00:11:24 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39115 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751287Ab3BHFLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 00:11:22 -0500
-Received: (qmail 26222 invoked by uid 107); 8 Feb 2013 05:12:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Feb 2013 00:12:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2013 00:11:20 -0500
-Content-Disposition: inline
-In-Reply-To: <78516627e893e54d5aafe0694d1face9a37893de.1360242782.git.mina86@mina86.com>
+	id S1759941Ab3BHGFy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2013 01:05:54 -0500
+Received: from mout.web.de ([212.227.17.12]:59370 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752562Ab3BHGFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 01:05:51 -0500
+Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb103) with
+ ESMTPA (Nemesis) id 0Lheqz-1UhRfm3RtB-00mtdy; Fri, 08 Feb 2013 07:03:48 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <4ea03e99bad13e2910b137fd3991951244fa23f1.1360289411.git.worldhello.net@gmail.com>
+X-Provags-ID: V02:K0:ebM0/7eR5Fb+ppP9IXlrcDHBj8ys+yXi7NrNSgXls/x
+ DcKYFyrtyFCKl9GfjxU6Vlg3pvtCQDapTOHZ0z/Of5Ta8itwGu
+ +CTiDQDo/4MOeAB/jIrYZNVsjT8awpd7RR/qQdl936kNCyZ2V+
+ Z3jWM4dU5/JS8viXgS4j1Brbuuxb0VqKGZCVBbOnpIxtcs1pmI
+ a5MFgfEHxZ2y77BMRMRHQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215753>
 
-On Thu, Feb 07, 2013 at 03:01:20PM +0100, Michal Nazarewicz wrote:
-
->  > There are a few disallowed characters, like "\n" in key or value, and
->  > "=" in a key. They should never happen unless the caller is buggy, but
->  > should we check and catch them here?
-> 
->  I left it as is for now since it's not entairly clear to me what to
->  do in all cases.  In particular:
->  
->  - when reading, what to do if the line is " foo = bar ",
-
-According to the spec, whitespace (except for the final newline) is not
-significant, and that parses key=" foo ", value=" bar ". The spec could
-ignore whitespace on the key side, but I intentionally did not in an
-attempt to keep the protocol simple. Your original implementation did
-the right thing already.
-
->  - when reading, what to do if the line is "foo=" (ie. empty value),
-
-The empty string is a valid value.
-
->  - when writing, what to do if value is a single space,
-
-Then it's a single space. It's the caller's problem whether that is an
-issue or not.
-
->  - when writing, what to do if value ends with a new line,
-
-That's bogus. We cannot represent that value. I'd suggest to simply die,
-as it is a bug in the caller (we _could_ try to be nice and assume the
-caller accidentally forgot to chomp, but I'd rather be careful than
-nice).
-
->  - when writing, what to do if value is empty (currently not printed at all),
-
-I think you should still print it. It's unlikely to matter, but
-technically a helper response may override keys (or set them to blank),
-and the intermediate state gets sent on to the next helper, if there are
-multiple.
-
->  On Thu, Feb 07 2013, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
->  > I think you should credit git-remote-mediawiki for the code in the
->  > commit message. Perhaps have a first "copy/paste" commit, and then an
->  > "adaptation" commit to add sort, ^ anchor in regexp, doc and your
->  > callback mechanism, but I won't insist on that.
-> 
->  Good point.  Creating additional commit is a bit too much for my
->  licking, but added note in commit message.
-
-I think that's fine.
-
-> +sub _credential_read {
-> +	my %credential;
-> +	my ($reader, $op) = (@_);
-> +	while (<$reader>) {
-> +		if (!/^([^=\s]+)=(.*?)\s*$/) {
-> +			throw Error::Simple("unable to parse git credential $op response:\n$_");
-> +		}
-> +		$credential{$1} = $2;
-
-I think this is worse than your previous version. The spec really is as
-simple as:
-
-  while (<$reader>) {
-          last if /^$/; # blank line is OK as end-of-credential
-          /^([^=]+)=(.*)/
-                  or throw Error::Simple(...);
-          $credential{$1} = {$2};
-  }
-
-(actually, the spec as written does not explicitly forbid an empty key,
-but it is nonsensical, and it might be worth updating the docs).
-
-> +sub _credential_write {
-> +	my ($credential, $writer) = @_;
+On 08.02.13 03:10, Jiang Xin wrote:
+> Since command usages can be translated, they may not align well espec=
+ially
+> when they are translated to CJK. A wrapper utf8_fprintf can help to r=
+eturn
+> the correct columns required.
+>=20
+> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  parse-options.c |  5 +++--
+>  utf8.c          | 22 ++++++++++++++++++++++
+>  utf8.h          |  1 +
+>  3 files changed, 26 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/parse-options.c b/parse-options.c
+> index 67e98..a6ce9e 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -3,6 +3,7 @@
+>  #include "cache.h"
+>  #include "commit.h"
+>  #include "color.h"
+> +#include "utf8.h"
+> =20
+>  static int parse_options_usage(struct parse_opt_ctx_t *ctx,
+>  			       const char * const *usagestr,
+> @@ -482,7 +483,7 @@ static int usage_argh(const struct option *opts, =
+=46ILE *outfile)
+>  			s =3D literal ? "[%s]" : "[<%s>]";
+>  	else
+>  		s =3D literal ? " %s" : " <%s>";
+> -	return fprintf(outfile, s, opts->argh ? _(opts->argh) : _("..."));
+> +	return utf8_fprintf(outfile, s, opts->argh ? _(opts->argh) : _("...=
+"));
+>  }
+> =20
+>  #define USAGE_OPTS_WIDTH 24
+> @@ -541,7 +542,7 @@ static int usage_with_options_internal(struct par=
+se_opt_ctx_t *ctx,
+>  		if (opts->long_name)
+>  			pos +=3D fprintf(outfile, "--%s", opts->long_name);
+>  		if (opts->type =3D=3D OPTION_NUMBER)
+> -			pos +=3D fprintf(outfile, "-NUM");
+> +			pos +=3D utf8_fprintf(outfile, _("-NUM"));
+> =20
+>  		if ((opts->flags & PARSE_OPT_LITERAL_ARGHELP) ||
+>  		    !(opts->flags & PARSE_OPT_NOARG))
+> diff --git a/utf8.c b/utf8.c
+> index a4ee6..05925 100644
+> --- a/utf8.c
+> +++ b/utf8.c
+> @@ -430,6 +430,28 @@ int same_encoding(const char *src, const char *d=
+st)
+>  }
+> =20
+>  /*
+> + * Wrapper for fprintf and returns the total number of columns requi=
+red
+> + * for the printed string, assuming that the string is utf8.
+> + */
+> +int utf8_fprintf(FILE *stream, const char *format, ...)
+> +{
+> +	struct strbuf buf =3D STRBUF_INIT;
+> +	va_list arg;
+> +	int columns;
 > +
-> +	for my $key (sort {
-> +		# url overwrites other fields, so it must come first
-> +		return -1 if $a eq 'url';
-> +		return  1 if $b eq 'url';
-> +		return $a cmp $b;
-> +	} keys %$credential) {
-> +		if (defined $credential->{$key} && length $credential->{$key}) {
-> +			print $writer $key, '=', $credential->{$key}, "\n";
-> +		}
+> +	va_start (arg, format);
+> +	strbuf_vaddf(&buf, format, arg);
+> +	va_end (arg);
+> +
+> +	columns =3D fputs(buf.buf, stream);
+> +	/* If no error occurs, returns columns really required with utf8_st=
+rwidth. */
+> +	if (0 <=3D columns)
+> +		columns =3D utf8_strwidth(buf.buf);
+> +	strbuf_release(&buf);
+> +	return columns;
+> +}
+> +
 
-When I mentioned error-checking the format, I really just meant
-something like:
+I don't think we handle the return code from fputs() correctly.
 
-        $key =~ /[=\n\0]/
-                and die "BUG: credential key contains invalid characters: $key";
-        if (defined $credential->{$key}) {
-                $credential->{$key} =~ /[\n\0]/
-                        and die "BUG: credential value contains invalid characters: $credential->{key}";
-                print $writer $key, '=', $credential->{$key}, "\n";
-        }
+Please dee below for specifications on fprintf(),
+something like the following could do:
+=20
+int utf8_fprintf(FILE *stream, const char *format, ...)
+{
+	struct strbuf buf =3D STRBUF_INIT;
+	va_list arg;
+	int columns =3D 0;
 
-Those dies should never happen, and are indicative of a bug in the
-caller. We can't even represent them in the protocol, so we might as
-well alert the user and die rather than trying to guess what the caller
-intended.
+	va_start (arg, format);
+	strbuf_vaddf(&buf, format, arg);
+	va_end (arg);
 
--Peff
+	if (EOF !=3D fputs(buf.buf, stream))
+		columns =3D utf8_strwidth(buf.buf);
+	strbuf_release(&buf);
+	return columns;
+}
+
+And as a side note: would fprintf_strwidth() be a better name?
+
+
+Linux:
+RETURN VALUE
+       fputc(), putc() and  putchar()  return  the  character  written =
+ as  an
+       unsigned char cast to an int or EOF on error.
+
+       puts()  and  fputs()  return a nonnegative number on success, or=
+ EOF on
+       error.
+
+Mac OS:
+COMPATIBILITY
+     fputs() now returns a non-negative number (as opposed to 0) on suc=
+cessful
+     completion.  As a result, many tests (e.g., "fputs() =3D=3D 0", "f=
+puts() !=3D
+     0") do not give the desired result.  Use "fputs() !=3D EOF" or "fp=
+uts() =3D=3D
+     EOF" to determine success or failure.
+
+Posix:
+RETURN VALUE
+       Upon successful completion, fputs() shall return a non-negative =
+number.
+       Otherwise, it shall return EOF, set an error indicator for the  =
+stream,
+       and set errno to indicate the error.
