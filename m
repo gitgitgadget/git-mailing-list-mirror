@@ -1,104 +1,94 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Proposal: branch.<name>.remotepush
-Date: Fri, 8 Feb 2013 01:28:56 -0500
-Message-ID: <20130208062855.GA12271@sigill.intra.peff.net>
+Date: Thu, 07 Feb 2013 22:45:07 -0800
+Message-ID: <7vd2wb483w.fsf@alter.siamese.dyndns.org>
 References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
  <20130208044836.GC4157@sigill.intra.peff.net>
  <7vliaz49sf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 07:29:23 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 08 07:45:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3hSb-0004bC-9F
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 07:29:21 +0100
+	id 1U3hiQ-0007Dd-Eo
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 07:45:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945995Ab3BHG26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 01:28:58 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39154 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753107Ab3BHG26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 01:28:58 -0500
-Received: (qmail 26680 invoked by uid 107); 8 Feb 2013 06:30:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Feb 2013 01:30:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2013 01:28:56 -0500
-Content-Disposition: inline
-In-Reply-To: <7vliaz49sf.fsf@alter.siamese.dyndns.org>
+	id S1756065Ab3BHGpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 01:45:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47517 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753107Ab3BHGpK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 01:45:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67DD78DE3;
+	Fri,  8 Feb 2013 01:45:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SdURLOxySbdmujMUe10lbT3NaVs=; b=vQFtCC
+	lOAsAccb9l2dwbebowvNqrQitpxt3XsZcQYQUTscklIuE7EC/3QPWnBilCLr8vTo
+	mkCPixkkL9GKcWrKQpoiGJU+81KI4oGphLoyNvCnXDGIMly4snqy6UXZNYCIz/bQ
+	8veUFw60YoOLuzMSlOWBlNNTkQAPYfSyds6j8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oD0qjFcqaUtnYh3u0fdS/h1sme/gPNsj
+	jWO+B7jLXupv0fTn2NkcLmKgG11yKtyzZ+SdpkE8iqke543+n3Vbu2vXI1sqtsGT
+	woP4qvZi2j8LLIiHwYwFB+UHMKQ6UHwEWcocA+PmJaPHTBCCPdBN7xAwJmq/cuBB
+	yJqmzgcBAuA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B90A8DE2;
+	Fri,  8 Feb 2013 01:45:09 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9F368DE1; Fri,  8 Feb 2013
+ 01:45:08 -0500 (EST)
+In-Reply-To: <7vliaz49sf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 07 Feb 2013 22:08:48 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 14531270-71BB-11E2-B522-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215762>
 
-On Thu, Feb 07, 2013 at 10:08:48PM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> How best to express the triangle is somewhat tricky, but I think it
-> is sensible to say you have "origin" that points to your upstream
-> (i.e. me), and "peff" that points to your publishing point, in other
-> words, make it explicit that the user deals with two remotes.  Then
-> have push.default name the remote "peff", so that "git push" goes to
-> that remote by default (and have "git fetch/pull" go to "origin).
-> You will have two sets of remote tracking branches (one from "origin"
-> that your push will never pretend to have fetched immediately after
-> finishing, the other from "peff" that keeps track of what you pushed
-> the last time).
+> ....  I think the triangle
+> arrangement where you want to have "this is where I fetch from and
+> integrate with, and that is where I publish" is more common among
+> the Git users these days.
 
-Exactly. That is what I have set up now, except that I have to type "git
-push peff" because there is no such push.default (with the minor nit
-that push.default does something else, so the config should be called
-remote.pushDefault or something). The entirety of the feature would be
-saving the user from the annoyance of:
+Another thing to know about is that the recent move to change the
+behaviour of "git push" to work only on one branch per default may
+have to be polished and strengthened a bit.
 
-  $ git push
-  fatal: remote error:
-    You can't push to git://github.com/gitster/git.git
-    Use git@github.com:gitster/git.git
+Originally, the encouraged workflow was to perfect _everything_ that
+you would push out and then with a single "git push" to publish
+everything at the same time.  Both the "matching" behaviour of "git
+push" which was the default, and the set of push refspecs that is to
+be defined per remote, were ways to discourage "Work on one branch,
+think it is OK, hastily push only that branch out, switch to another
+branch, rinse, repeat".
 
-  [doh! Stupid git, why don't you do what I mean, not what I say?]
-  $ git push peff
-  ... it works ...
-
-> Of course, some people may have "I use this and that branches to
-> interact with upstream X while I use these other branches to
-> interacct with upstream Y, and all of them push to different
-> places", and supporting that may need complex per branch "On this
-> branch fetch from and integrate with remote X, and push to remote Z"
-> settings, but as you said, "I fetch from and integrate with X, and
-> result is pushed out to Y" should be the most common, and it would
-> be desirable to have a simple way to express it with just a single
-> new configuration variable.
-
-Right. Frankly, I do not care that much about the per-branch push remote
-myself. In the rules I gave earlier, that was my complete
-backwards-compatible vision, so that we do not paint ourselves into a
-corner compatibility-wise when somebody wants it later. Just
-implementing the default push remote part would be a fine first step.
-
-I also indicated in my rules that we could have a branch.*.fetchRemote,
-as well, but I do not think it is strictly necessary. I think the
-non-specific branch.*.remote could continue to be used for fetching, and
-as a backup when the push-specific variables are not set.
-
-> *1* It also happens to work reasonably well for people like Linus
-> and I with the "I pull from random places, I locally integrate and I
-> publish the results" workflow, because we are trained to think that
-> it is not just being lazy but simply meaningless to say "git pull"
-> without saying "fetch and integrate _what_ and from _whom_", and
-> that is only because we do not have a fixed upstream.  Linus and I
-> would practically never fetch from "origin", i.e. from ourselves.
-
-Right, I think "git pull" is more useful in a centralized repo setting
-where there is one branch and one repo, so there is no "what and whom"
-to specify. Personally I do not use it much at all, as I do a separate
-fetch, inspect, and merge, but that is somewhat orthogonal to your
-reasons. :)
-
--Peff
+To support a triangular arrangement well, there may need some
+thinking on what $branch@{upstream} means.  The original intent of
+the upstream mode specified for "push.default" is push the result
+back to what you based your work on, but in a triangular arrangement
+that is no longer true.  You may be keeping up with my 'master' by
+constantly rebasing and then pushing out the result to your 'frotz'
+topic.  You want to have a lazy "git fetch" to fetch from my
+'master' (i.e. upstream), and have remotes/origin/master to keep
+track of it.  You want to see "git rebase" to pay attention to the
+updates to remotes/origin/master when figuring out where you forked.
+But at the same time, you want a lazy "git push" to go to your
+push.defaultTo repository (i.e. your publish point) and update your
+'frotz' branch there---remotes/origin/master should not come into
+the picture at all.  But the upstream and simple modes want to pay
+attention to branch.$name.merge, which is all about the "fetch and
+integrate" side of the equation.
