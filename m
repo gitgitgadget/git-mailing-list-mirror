@@ -1,102 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: inotify to minimize stat() calls
-Date: Fri, 08 Feb 2013 14:45:49 -0800
-Message-ID: <7va9rezaoy.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
- <7vehgqzc2p.fsf@alter.siamese.dyndns.org>
+Subject: Re: Improve 'git help' with basic user guide linkss
+Date: Fri, 08 Feb 2013 14:54:50 -0800
+Message-ID: <7v6222za9x.fsf@alter.siamese.dyndns.org>
+References: <6D91D31A093D46869F43DD8D1012F0FB@PhilipOakley>
+ <7vr4kqzfw5.fsf@alter.siamese.dyndns.org>
+ <6BC280F5827C4098BCB6276232DDE8E4@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 23:46:19 2013
+Cc: "Git List" <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Feb 08 23:55:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3wi0-0007uZ-Ug
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 23:46:17 +0100
+	id 1U3wqj-0005iN-IT
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 23:55:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1947286Ab3BHWpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 17:45:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63136 "EHLO
+	id S1947094Ab3BHWyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 17:54:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38619 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760366Ab3BHWpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 17:45:52 -0500
+	id S1757385Ab3BHWyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 17:54:54 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E67EC60E;
-	Fri,  8 Feb 2013 17:45:52 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 800F1CC5C;
+	Fri,  8 Feb 2013 17:54:53 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yJ1m276O3ohlgkf2N1B7kT3QK48=; b=eG33uG
-	2wwpe8m+1farTOoPfA+eSAIEenh+Aur/SLeymHoExNNE7Jr5vQxbCUWOFq6uBtKb
-	gWu3reqshKtRXMWgE6lK9TOtwuwEKXtO4x1sJa0GVefsNP+9z8f9PGa+CUGXlxZW
-	BqTL9zHCD1bNfGX+f+bCTfQA6EUQ2xT3Isuqg=
+	:content-type; s=sasl; bh=4zOyJuLt0o7VLKqPb2TwKq4ZiX0=; b=yievBn
+	qPVcXATYoIjf1Jb4xjTa4QZP/5NqRVS80c7cBld04uGkNGXN8bx7c0JPgGjWkcaZ
+	Gz3NFbp9FSuxA6kX08M5Vf71a3BSla6IyCwYFjKcgPCaam4OCzzkeX/lIIiZFROJ
+	fEdEbPjc7wyapdbJ4dl2jbE9dnanFK8Y//HQE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rmTGlNGaHqMuWRR5jpEyHUoFufooxIml
-	N/p+aYGay1s0acsmYmy7BUJ3EcZ7xccSV41F5fMpun2wojf8C1nAfWuFyiNniZVx
-	G5+crS2WdnUWBZQHTxuK9uDF/PrXh2gWmu+H1XjigzrW4Lk2FkXYhjYmBS5Zmiva
-	IhaPkrJrGzI=
+	:content-type; q=dns; s=sasl; b=c2xmukHmTm5QZu7vs0mu1vnGH/+9Lqy/
+	EjteVAFJvSid7qRlzwvoH82/GnlG4Kaz0Zj3DQAlsjxO+JJcGObLlhW7ACyKOsfq
+	I595DRJimsk16GyHcnurap3bYZldX8oOl9wpqILBLM4WgUPq4eNOfJKa+guY4WDR
+	+IcrKEglozg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62750C60D;
-	Fri,  8 Feb 2013 17:45:52 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 754FCCC5B;
+	Fri,  8 Feb 2013 17:54:53 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C0D08C60B; Fri,  8 Feb 2013
- 17:45:51 -0500 (EST)
-In-Reply-To: <7vehgqzc2p.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 08 Feb 2013 14:15:58 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D83C0CC59; Fri,  8 Feb 2013
+ 17:54:52 -0500 (EST)
+In-Reply-To: <6BC280F5827C4098BCB6276232DDE8E4@PhilipOakley> (Philip Oakley's
+ message of "Fri, 8 Feb 2013 21:43:38 -0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4A353FB8-7241-11E2-A1FF-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8CB9E248-7242-11E2-B25D-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215824>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->
->> ...  Will Git ever
->> consider using inotify on Linux?  What is the downside?
->
-> I think this has come up from time to time, but my understanding is
-> that nobody thought things through to find a good layer in the
-> codebase to interface to an external daemon that listens to inotify
-> events yet.  It is not something like "somebody decreed that we
-> would never consider because of such and such downsides."  We are
-> not there yet.
+> My initial https://github.com/PhilipOakley/git/commit/e6217d simply
+> updates
+> -  N_("See 'git help <command>' for more information on a specific
+> command.");
+> +  N_("See 'git help <command>' for more information on a specific
+> command.\n"
+> +     "Or 'git help <guide>', such as 'tutorial' for an introduction
+> to Git.");
+> as a starter for the new users.
 
-I checked read-cache.c and preload-index.c code.  To get the
-discussion rolling, I think something like the outline below may be
-a good starting point and a feasible weekend hack for somebody
-competent:
+Yeah, that would be a good change to make to "git help<RETURN>"
+output.
 
- * At the beginning of preload_index(), instead of spawning the
-   worker thread and doing the lstat() check ourselves, we open a
-   socket to our daemon (see below) that watches this repository and
-   make a request for lstat update.  The request will contain:
+> My view is that help --all (-a) is essentially incomplete as it
+> currently doesn't provide all the help.
 
-    - The SHA1 checksum of the index file we just read (to ensure
-      that we and our daemon share the same baseline to
-      communicate); and
-
-    - the pathspec data.
-
-   Our daemon, if it already has a fresh data available, will give
-   us a list of <path, lstat result>.  Our main process runs a loop
-   that is equivalent to what preload_thread() runs but uses the
-   lstat() data we obtained from the daemon.  If our daemon says it
-   does not have a fresh data (or somehow our daemon is dead), we do
-   the work ourselves.
-
- * Our daemon watches the index file and the working tree, and
-   waits for the above consumer.  First it reads the index (and
-   remembers what it read), and whenever an inotify event comes,
-   does the lstat() and remembers the result.  It never writes
-   to the index, and does not hold the index lock.  Whenever the
-   index file changes, it needs to reload the index, and discard
-   lstat() data it already has for paths that are lost from the
-   updated index.
+It has always been about "tell me all subcommands", not about "give
+me all the help you could give me".  You are not adding a "help"
+subcommand to a system you wrote last week.  Changing the semantics
+this late feels, eh, too late.
