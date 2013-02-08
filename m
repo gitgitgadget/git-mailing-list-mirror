@@ -1,113 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-mergetool: print filename when it contains %
-Date: Fri, 08 Feb 2013 09:32:23 -0800
-Message-ID: <7vhalm3e54.fsf@alter.siamese.dyndns.org>
-References: <1360286184-14278-1-git-send-email-asheesh@asheesh.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Asheesh Laroia <asheesh@asheesh.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/2] git-remote-mediawiki: use toplevel's Makefile
+Date: Fri,  8 Feb 2013 18:31:17 +0100
+Message-ID: <1360344677-5962-2-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpq4nhmbusp.fsf@grenoble-inp.fr>
+ <1360344677-5962-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
 X-From: git-owner@vger.kernel.org Fri Feb 08 18:32:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3roi-00048N-3M
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 18:32:52 +0100
+	id 1U3roh-00048N-J9
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 18:32:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946812Ab3BHRc2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 12:32:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33091 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946799Ab3BHRc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1946810Ab3BHRc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 12:32:27 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:51155 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1946774Ab3BHRc0 (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 8 Feb 2013 12:32:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A821EBD9A;
-	Fri,  8 Feb 2013 12:32:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=r53qDo8cFkZKvrPPJAnWT1NfObI=; b=l7xQt/
-	hkbAhMM4HAwyBUmP6kMl6F0kiL8qHQIs8Ejq5ciRAGXzIFdAKpr/yKzHyUO0dOLM
-	YwAFlbTYZFTD11X8KzmHnrw2ijteAk2GRwNjlbSKQXRC9h1al5eVOJoJT9o/UF7V
-	x8pO5phevcGRoVEZZ8oWmR4lXqF7JIrCbdJI8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KqfZslEeVpRyQYEqaewD0lsAi3aHXfN3
-	/RyKQlHTreUdyV30wIX1c08K+tLC+D78lYDcYwOBOKmY4GHH3VgOwvlV+HdZ/MOl
-	RNdnW4/EbD+fdVdAeQPOqz1taUToe8/KcgZPzzEOMrqjeQlf4eX774sXVmQRWs8o
-	RU2Y1+shYq4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BCA0BD99;
-	Fri,  8 Feb 2013 12:32:25 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A947BD93; Fri,  8 Feb 2013
- 12:32:25 -0500 (EST)
-In-Reply-To: <1360286184-14278-1-git-send-email-asheesh@asheesh.org> (Asheesh
- Laroia's message of "Thu, 7 Feb 2013 17:16:24 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 808D563A-7215-11E2-AC74-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r18HVNXB028804
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 8 Feb 2013 18:31:23 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1U3rnJ-0002v8-CE; Fri, 08 Feb 2013 18:31:25 +0100
+Received: from moy by anie with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1U3rnJ-0001Yt-8O; Fri, 08 Feb 2013 18:31:25 +0100
+X-Mailer: git-send-email 1.8.1.2.530.g3cc16e4.dirty
+In-Reply-To: <1360344677-5962-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 08 Feb 2013 18:31:23 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r18HVNXB028804
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1360949485.52197@T7Byyl9asqAh1P8ZvUJeKw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215787>
 
-Asheesh Laroia <asheesh@asheesh.org> writes:
+This makes the Makefile simpler, while providing more features, and more
+consistency (the exact same rules with the exact same configuration as
+Git official commands are applied with the new version).
 
-> Before this change, if git-mergetool was invoked with regard to
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ contrib/mw-to-git/.gitignore                       |  1 +
+ contrib/mw-to-git/Makefile                         | 64 ++++++----------------
+ ...-remote-mediawiki => git-remote-mediawiki.perl} |  0
+ 3 files changed, 18 insertions(+), 47 deletions(-)
+ create mode 100644 contrib/mw-to-git/.gitignore
+ rewrite contrib/mw-to-git/Makefile (96%)
+ rename contrib/mw-to-git/{git-remote-mediawiki => git-remote-mediawiki.perl} (100%)
 
-Drop "before this change,"; it is clear (and it is a recommended
-practice) you are first describing what problem you are addressing.
-
-> files with a percent sign (%) in their names, it would print an
-> error. For example, if you were calling mergetool on a file called
-> "%2F":
->
->     printf: %2F: invalid directive
->
-> This changes the behavior to pass "%s" to printf as its first argument
-> to avoid processing the filename as a format string.
->
-> Signed-off-by: Asheesh Laroia <asheesh@asheesh.org>
-> ---
-
-Thanks.
-
-As a follow-up to this patch, we may want to perform a systematic
-audit of
-
-    $ git grep -e 'printf "[^"]*\$[^"]*"'
-
-There is one in git-difftool-helper.sh
-
-    printf "\nViewing: '$MERGED'\n"
-
-and mergetools/p4merge:
-
-    printf "$empty_file"
-
->  git-mergetool.sh |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/git-mergetool.sh b/git-mergetool.sh
-> index c50e18a..d2b9289 100755
-> --- a/git-mergetool.sh
-> +++ b/git-mergetool.sh
-> @@ -440,7 +440,7 @@ then
->  fi
->  
->  printf "Merging:\n"
-> -printf "$files\n"
-> +printf "%s" "$files\n"
-
-I think
-
-	printf "%s\n" "$files"
-
-would be clearer.
-
->  
->  IFS='
->  '
+diff --git a/contrib/mw-to-git/.gitignore b/contrib/mw-to-git/.gitignore
+new file mode 100644
+index 0000000..b919655
+--- /dev/null
++++ b/contrib/mw-to-git/.gitignore
+@@ -0,0 +1 @@
++git-remote-mediawiki
+diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
+dissimilarity index 96%
+index 3ed728b..f149719 100644
+--- a/contrib/mw-to-git/Makefile
++++ b/contrib/mw-to-git/Makefile
+@@ -1,47 +1,17 @@
+-#
+-# Copyright (C) 2012
+-#     Charles Roussel <charles.roussel@ensimag.imag.fr>
+-#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+-#     Julien Khayat <julien.khayat@ensimag.imag.fr>
+-#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+-#     Simon Perrat <simon.perrat@ensimag.imag.fr>
+-#
+-## Build git-remote-mediawiki
+-
+--include ../../config.mak.autogen
+--include ../../config.mak
+-
+-ifndef PERL_PATH
+-	PERL_PATH = /usr/bin/perl
+-endif
+-ifndef gitexecdir
+-	gitexecdir = $(shell git --exec-path)
+-endif
+-
+-PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
+-gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
+-SCRIPT = git-remote-mediawiki
+-
+-.PHONY: install help doc test clean
+-
+-help:
+-	@echo 'This is the help target of the Makefile. Current configuration:'
+-	@echo '  gitexecdir = $(gitexecdir_SQ)'
+-	@echo '  PERL_PATH = $(PERL_PATH_SQ)'
+-	@echo 'Run "$(MAKE) install" to install $(SCRIPT) in gitexecdir'
+-	@echo 'Run "$(MAKE) test" to run the testsuite'
+-
+-install:
+-	sed -e '1s|#!.*/perl|#!$(PERL_PATH_SQ)|' $(SCRIPT) \
+-		> '$(gitexecdir_SQ)/$(SCRIPT)'
+-	chmod +x '$(gitexecdir)/$(SCRIPT)'
+-
+-doc:
+-	@echo 'Sorry, "make doc" is not implemented yet for $(SCRIPT)'
+-
+-test:
+-	$(MAKE) -C t/ test
+-
+-clean:
+-	$(RM) '$(gitexecdir)/$(SCRIPT)'
+-	$(MAKE) -C t/ clean
++#
++# Copyright (C) 2013
++#     Matthieu Moy <Matthieu.Moy@imag.fr>
++#
++## Build git-remote-mediawiki
++
++SCRIPT_PERL=git-remote-mediawiki.perl
++GIT_ROOT_DIR=../..
++HERE=contrib/mw-to-git/
++
++SCRIPT_PERL_FULL=$(patsubst %,$(HERE)/%,$(SCRIPT_PERL))
++
++all: build
++
++build install clean:
++	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL=$(SCRIPT_PERL_FULL) \
++                $@-perl-script
+diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki.perl
+similarity index 100%
+rename from contrib/mw-to-git/git-remote-mediawiki
+rename to contrib/mw-to-git/git-remote-mediawiki.perl
+-- 
+1.8.1.2.530.g3cc16e4.dirty
