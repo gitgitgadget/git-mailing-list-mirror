@@ -1,84 +1,138 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/4] Makefile: factor common configuration in git-default-config.mak
-Date: Fri, 08 Feb 2013 18:05:26 +0100
-Message-ID: <vpq4nhmbusp.fsf@grenoble-inp.fr>
-References: <vpqobfxwg2q.fsf@grenoble-inp.fr>
-	<1360174292-14793-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1360174292-14793-4-git-send-email-Matthieu.Moy@imag.fr>
-	<7vobfv7wkl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Proposal: branch.<name>.remotepush
+Date: Fri, 08 Feb 2013 09:06:27 -0800
+Message-ID: <7vwqui3fcc.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
+ <20130208044836.GC4157@sigill.intra.peff.net>
+ <7vliaz49sf.fsf@alter.siamese.dyndns.org>
+ <7vd2wb483w.fsf@alter.siamese.dyndns.org>
+ <20130208092204.GA15490@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 18:06:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 08 18:07:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3rOq-0005jr-0c
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 18:06:08 +0100
+	id 1U3rPl-0006ZF-II
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 18:07:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946611Ab3BHRFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 12:05:45 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:50004 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758581Ab3BHRFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 12:05:44 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r18H5OHa005132
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 8 Feb 2013 18:05:24 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1U3rOA-0002U1-Gi; Fri, 08 Feb 2013 18:05:26 +0100
-In-Reply-To: <7vobfv7wkl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 07 Feb 2013 11:28:26 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 08 Feb 2013 18:05:25 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r18H5OHa005132
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1360947928.18072@/cPOOSbG7JCeFoVkxqBaKA
+	id S1760206Ab3BHRGe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 12:06:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47488 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758581Ab3BHRGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 12:06:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FB90CF42;
+	Fri,  8 Feb 2013 12:06:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yNM18cK/uCNpaxkLqFzUUTykC3Q=; b=HyUsaS
+	b0rQNvcHV3NoisCUHHeH13sKUPPRQP6CriSckecdkbv8r1UOjC6ZmcOaVXBcdpyr
+	e4vPktdUtwLFdpigryxJIskRm3n4ow8fVLbVtW9Dgf+XOxkvA0iDWYgMpfNK7Uxi
+	GzdDKIO7T4FmRm32Xld5jvgzWviSotCg38Zv4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lSHuFmK4Fj2Y+6lg0nrHIy5qql4Dgz+k
+	N8yVQmCwwsV5Mv3zdED3NzWY3WYdUHgBdlXG1gx4QKpIOwDiHvj1Grh3FIeb3qEh
+	/j+X1YqhoszQCDYcbHLWWsYCD2sCUG8dwr4nZH2v06msR6uUI338krgO9Kbfg5sZ
+	IWNmZmV9lJw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9445CCF41;
+	Fri,  8 Feb 2013 12:06:29 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB5EFCF40; Fri,  8 Feb 2013
+ 12:06:28 -0500 (EST)
+In-Reply-To: <20130208092204.GA15490@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 8 Feb 2013 04:22:04 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E0F07DD0-7211-11E2-8C67-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215782>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> I really think this is going in a wrong direction.  Whatever you
-> happen to have chosen in this patch will be available to others,
-> while whatever are left out will not be.  When adding new things,
-> people need to ask if it needs to be sharable or not, and the right
-> answer to that question will even change over time.
-
-My feeling is that Git's toplevel Makefile has become too large to
-remain completely monolithic, and splitting is good to organize it (and
-yes, splitting code into several files imply that future added code will
-have to be added in the right file, but that's not very different from
-splitting C code into several .c files to me). But that is another
-matter, and ...
-
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Then do something like
+> We have the problem now that new users do not necessarily understand the
+> matching strategy, or why it is useful, and get confused. When we move
+> to "simple", we may be switching to a world where the early part of the
+> learning curve is more gentle for those users, but they eventually run
+> across the steeper part when they want to adjust their workflow (i.e.,
+> they will eventually learn about non-symmetric repo topologies because
+> those are part of many useful workflows).
 >
-> 	all::
-> 		$(MAKE) -C ../.. \
-> 			PERL_SCRIPT=contrib/mw-to-git/git-remote-mediawiki.perl \
->                         build-perl-script
+> But I think it's a good thing to push that part of the learning curve
+> out, because:
+>
+>   1. Some people may stay in the centralized view their whole lives and
+>      never care.
+>
+>   2. It will make more sense to them, because they'll understand how it
+>      fits into what they're trying to do, rather than viewing it as an
+>      arcane and senseless default.
+>
+> There may be some confusion as people hit that learning point. I won't
+> be surprised if we end up adding more advice.* messages in certain cases
+> to guide people to adjusting their push.default. But I'm just as happy
+> to wait until people start hitting the confusion point in practice, and
+> we can see more clearly when that advice should trigger, and what it
+> should say.
 
-This ended up being very simple to implement (essentially, the Makefile
-already knows how to do this, so this just means adding convenience
-build-perl-script target to the toplevel), so 2 new patches follow doing
-this, with a ridiculously small new version of mw-to-git/Makefile.
+Oh, I agree with you that adding new support for triangular workflow
+will not hurt the centralized folks.  I was more interested about
+helping the "fetch from here, push to there" people.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Centralized people do not have to configure anything for each branch
+for "git push" to push their current branch to where they fetch from
+and to the same name (you start building on their 'master', your
+result go to their 'master', because as a centralized person, you
+are part of 'them').  They have branch.$name.merge that names what
+their $name branch merges with, and that is sufficient to decide to
+which branch the result is to be pushed back.  
+
+With the "push.defaultTo = peff" to name what remote the "git push"
+will push to, or even with the "branch.master.remotepush = peff" to
+decide that per branch, would "fetch from here, push to there"
+people have a way similar to what branch.$name.merge gives to the
+centralized people to decide what branch is updated?
+
+It almost seems to me that we may want to extend the semantics given
+to the remote.$name.push refspecs.  They are primarily for "perfect
+all branches you are going to push out, and push them in one go with
+'git push'" workflow, but if it is clear that you are not following
+that (e.g. you are doing an equivalent of what the centralized folks
+would do with "push.default = simple/upstream/current") and pushing
+only the current branch, perhaps we should look at these refspecs to
+see where the current branch goes?
+
+In your case, 'refs/heads/master' would likely to go to
+'refs/heads/master', and we could treat a missing remote.peff.push  
+an equivalent to having remote.peff.push = refs/heads/*:refs/heads/*
+
+In a Gerrit user's case brought up by Michael Schubert in a message
+earlier in the near-by subthread, 'refs/heads/frotz' would likely to
+go to 'refs/for/frotz' and they can express it with something like
+
+	[remote "origin"]
+		url = ... ;# pushurl is the same or just s/git/ssh/;
+                fetch = refs/heads/*:refs/heads/*
+                push = refs/heads/*:refs/for/*
+	[push]
+		default = "???"
+
+where "???" says "I push out only the currently checked-out branch;
+figure out where it goes using remote.origin.push refspec".
+
+Having to set both branch.$name.remotepush to name what remote this
+branch should be pushed, and branch.$name.branchpush to name what
+branch at the remote this branch should update with a push, and
+doing so for each and every branch, sounds like an unnecessary
+complexity.
