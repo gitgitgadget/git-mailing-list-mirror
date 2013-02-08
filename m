@@ -1,81 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Proposal: branch.<name>.remotepush
-Date: Fri, 08 Feb 2013 11:18:29 -0800
-Message-ID: <7vhalm1unu.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
- <5113E849.8000602@elegosoft.com>
- <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
- <20130207233017.GD19397@google.com>
- <CALkWK0kR-KWJbG_kWSf7+JMJEQc7vO0Emx=_yogCB0jMBfccAg@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 1/6] graph: output padding for merge subsequent parents
+Date: Fri, 8 Feb 2013 19:31:26 +0000
+Message-ID: <20130208193026.GA1024@river>
+References: <cover.1360267849.git.john@keeping.me.uk>
+ <b98eb2bfe2b022ddf1afbe9f7123accfe068e8c9.1360267849.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 20:18:58 2013
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	"Dale R. Worley" <worley@alum.mit.edu>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Feb 08 20:32:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3tTN-0007h6-1q
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 20:18:57 +0100
+	id 1U3tg6-00009t-95
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 20:32:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946860Ab3BHTSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 14:18:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48185 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946814Ab3BHTSd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 14:18:33 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EC46C2AF;
-	Fri,  8 Feb 2013 14:18:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XiD+JApAsMs7NKLGkx6eSfsxCK0=; b=OrHD8n
-	uf7E5pzBIl3/TAj/4drSadX7vS0FwJd4zdPM1smZza1MXBTRcdMYZ8cNclol8LCU
-	FxZogF8Q5JvfEaB3EEXvC3yaKzobn1s5soetdcJpX0kRJpzaxDDT5w3RPkEFkd0l
-	h9H5BtzFfK+dPyTzxVteUOYwtM7UrIBnEtupU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Qi8fSUW3pKVGiOzLviFul0L0GR1Vnp/u
-	iwTXw+0oCDaunDE208YYVa8phdTPQxPBD/hO7QAlBK7nUv7y1t61AG17icxRh9hW
-	hK31tE8OmJZU6K01PfO/vwJ7YuhZqKJaH5G24jpMY0pn3bGktSy6IWds8Wi2b+Ne
-	6xn7eVRuLDo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4288BC2AE;
-	Fri,  8 Feb 2013 14:18:32 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B50A4C2AB; Fri,  8 Feb 2013
- 14:18:31 -0500 (EST)
-In-Reply-To: <CALkWK0kR-KWJbG_kWSf7+JMJEQc7vO0Emx=_yogCB0jMBfccAg@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Sat, 9 Feb 2013 00:12:16 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 535C5706-7224-11E2-B840-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760481Ab3BHTbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 14:31:44 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:38553 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760434Ab3BHTbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 14:31:43 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id D7630CDA57C;
+	Fri,  8 Feb 2013 19:31:42 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RD3-kcpq9sAK; Fri,  8 Feb 2013 19:31:42 +0000 (GMT)
+Received: from river (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 17B60CDA330;
+	Fri,  8 Feb 2013 19:31:31 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <b98eb2bfe2b022ddf1afbe9f7123accfe068e8c9.1360267849.git.john@keeping.me.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215805>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+[Moved from the thread where this was initially posted to reply to the
+series.]
 
-> Jonathan Nieder wrote:
->> Ramkumar Ramachandra wrote:
->>
->>> And yes, a regular `git push origin refs/for/master` is just retarded.
->>
->> The usual incantation is "git push gerrit HEAD:refs/for/master".  Is
->> the code review creation push that uses a different branchname from
->> the branch the integrator pulls what seems backward, or is it the need
->> to specify a refname at all on the command line?
->
-> How else would you design a system to differentiate between a
-> push-for-review, and push-to-update-ref?
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+> This works, but if we know we're not going to enter the while loop, it
+> seams even easier to do this:
+> 
+> --- a/graph.c
+> +++ b/graph.c
+> @@ -1227,7 +1227,17 @@ void graph_show_commit(struct git_graph *graph)
+>         if (!graph)
+>                 return;
+>  
+> -       while (!shown_commit_line && !graph_is_commit_finished(graph)) {
+> +       /*
+> +        * When showing a diff of a merge against each of its parents, we
+> +        * are called once for each parent without graph_update having been
+> +        * called.  In this case, simply output a single padding line.
+> +        */
+> +       if (graph_is_commit_finished(graph)) {
+> +               graph_show_padding(graph);
+> +               return;
+> +       }
+> +
+> +       while (!shown_commit_line) {
 
-You don't have to.
+This looks good to me.  I'll amend locally and re-send in a few days
+after giving others a chance to comment.
 
-If the reviewed result is merged on the server side and appear on
-'master', nobody has to push to update refs/heads/master.
+
+John
