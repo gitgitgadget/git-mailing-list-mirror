@@ -1,78 +1,128 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Improve 'git help' with basic user guide linkss
-Date: Fri, 8 Feb 2013 23:16:12 -0000
-Organization: OPDS
-Message-ID: <27C7EA38DDD345F994F01E5B8FB6D278@PhilipOakley>
-References: <6D91D31A093D46869F43DD8D1012F0FB@PhilipOakley> <7vr4kqzfw5.fsf@alter.siamese.dyndns.org> <6BC280F5827C4098BCB6276232DDE8E4@PhilipOakley> <7v6222za9x.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Thomas Haller <thom311@gmail.com>
+Subject: segfault for git log --graph --no-walk --grep a
+Date: Sat, 9 Feb 2013 00:52:16 +0100
+Message-ID: <201302090052.22053.thom311@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: multipart/signed;
+  boundary="nextPart8727496.jfYUQYqPAV";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 00:16:21 2013
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 09 00:52:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3xB6-0001oa-RR
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 00:16:21 +0100
+	id 1U3xkT-0001t0-BH
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 00:52:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1947270Ab3BHXP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 18:15:58 -0500
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:55375 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757205Ab3BHXP5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Feb 2013 18:15:57 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AsALAH5qFVFcHls+/2dsb2JhbABFjAmzdQICgQgXc4IaBQEBBAEIAQEuHgEBIQsCAwUCAQMVAQslFAEEGgYHFwYTCAIBAgMBh3oKCL82BI0fGhlOglthA4gwhVeYcIMAgWc
-X-IronPort-AV: E=Sophos;i="4.84,632,1355097600"; 
-   d="scan'208";a="408357221"
-Received: from host-92-30-91-62.as13285.net (HELO PhilipOakley) ([92.30.91.62])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 08 Feb 2013 23:15:55 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1947401Ab3BHXwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 18:52:30 -0500
+Received: from mail-ea0-f176.google.com ([209.85.215.176]:41524 "EHLO
+	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1947361Ab3BHXw3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 18:52:29 -0500
+Received: by mail-ea0-f176.google.com with SMTP id a13so1961356eaa.35
+        for <git@vger.kernel.org>; Fri, 08 Feb 2013 15:52:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:subject:date:user-agent:mime-version
+         :content-type:content-transfer-encoding:message-id;
+        bh=BH1hfb8xNk07D+7vHMAbkRy1O6VKTw39RkYqipRyca8=;
+        b=QKVQjugUVNfjhDm1CTYRCmhUQh8ozw/WP8E5i806oyuyBV6y02YkzWSJqVd7vTtoR1
+         3uWjYtBGTgSAACXl3DkPGdiZqK7gf6EUvurWCfu4xH5GopdbJTLN0KrhK0KlnL6gs37S
+         tRrzs0MhIXw6haqKqVceOBcjaRhyedg71jLk9FunAI2UsiBS8o2lAvsnmk6JZw9p2tdW
+         uVi6rE5KpmebXK5BKFhH/8lbK7w2YsKyM5fRDdxCGCcaFBGdODyrPAAChTN+xrttq8eI
+         LV78qkjhqtR7BToaccz66g1ytI7sGXjG1DoDtEiLgumYXKAsFxsq5onoXmeOO4h9ZjsX
+         oUeQ==
+X-Received: by 10.14.215.131 with SMTP id e3mr21273549eep.32.1360367548179;
+        Fri, 08 Feb 2013 15:52:28 -0800 (PST)
+Received: from hal.localnet (p4FE61369.dip0.t-ipconnect.de. [79.230.19.105])
+        by mx.google.com with ESMTPS id l8sm15778382een.10.2013.02.08.15.52.26
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 08 Feb 2013 15:52:27 -0800 (PST)
+User-Agent: KMail/1.13.7 (Linux/3.2.0-4-amd64; KDE/4.8.4; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215828>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Friday, February 08, 2013 10:54 PM
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> My initial https://github.com/PhilipOakley/git/commit/e6217d simply
->> updates
->> -  N_("See 'git help <command>' for more information on a specific
->> command.");
->> +  N_("See 'git help <command>' for more information on a specific
->> command.\n"
->> +     "Or 'git help <guide>', such as 'tutorial' for an introduction
->> to Git.");
->> as a starter for the new users.
->
-> Yeah, that would be a good change to make to "git help<RETURN>"
-> output.
+--nextPart8727496.jfYUQYqPAV
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-I'll sort some patches early next week (the weekend's committed 
-elsewhere)
+Hallo,
 
->
->> My view is that help --all (-a) is essentially incomplete as it
->> currently doesn't provide all the help.
->
-> It has always been about "tell me all subcommands", not about "give
-> me all the help you could give me".  You are not adding a "help"
-> subcommand to a system you wrote last week.  Changing the semantics
-> this late feels, eh, too late.
 
-OK, I'll limit the the follow-ons to just an extra --guides option 
-(probably just a list of the common guides initially), and 
-leave --all(-a) for just the commands.
+I just found that git crashes with a segmentation fault when calling
+$ git log --graph --no-walk --grep pattern
+
+It happens both for version 1.7.10.4 from Debian (wheezy,amd64) and
+a fresh compiled git from github (git.git repository, master).
+
+
+For the error to occure, the pattern must match the commit message in HEAD.
+
+
+
+
+How to reproduce:
+  git init .
+  git commit -m 'text1' --allow-empty
+  git commit -m 'text2' --allow-empty
+  git log --graph --no-walk --grep 'text2'
+
+
+
+And here is coredump I got:
+
+Core was generated by `git log --graph --no-walk --grep text2'.
+Program terminated with signal 11, Segmentation fault.
+#0  __strlen_sse42 () at ../sysdeps/x86_64/multiarch/strlen-sse4.S:32
+#1  0x00000000004cc13e in commit_match (opt=0x7fffbd0ee500, commit=0x216d1a8) at revision.c:2306
+#2  get_commit_action (revs=0x7fffbd0ee500, commit=0x216d1a8) at revision.c:2338
+#3  0x00000000004984b4 in graph_is_interesting (commit=<optimized out>, graph=<error reading variable: Unhandled dwarf expression opcode 0xfa>) at graph.c:330
+#4  0x0000000000498569 in first_interesting_parent (graph=graph@entry=0x21629c0) at graph.c:369
+#5  0x000000000049965e in graph_update (graph=0x21629c0, commit=<optimized out>) at graph.c:593
+#6  0x00000000004cc7a9 in get_revision (revs=revs@entry=0x7fffbd0ee500) at revision.c:2580
+#7  0x000000000043988a in cmd_log_walk (rev=rev@entry=0x7fffbd0ee500) at builtin/log.c:309
+#8  0x000000000043a398 in cmd_log (argc=9, argv=0x2162930, prefix=0x0) at builtin/log.c:582
+#9  0x0000000000405988 in run_builtin (argv=0x2162930, argc=9, p=0x751438) at git.c:281
+#10 handle_internal_command (argc=9, argv=0x2162930) at git.c:443
+#11 0x0000000000404df2 in run_argv (argv=0x7fffbd0eec00, argcp=0x7fffbd0eec0c) at git.c:489
+#12 main (argc=9, argv=0x2162930) at git.c:564
+
+
+it happens in file revision.c:2306 because "commit->buffer" is zero:
+
+                retval = grep_buffer(&opt->grep_filter,
+                                     commit->buffer, strlen(commit->buffer));
+
+
+
+
+
+thank you all, for this awesome software.
+Thomas
+
+--nextPart8727496.jfYUQYqPAV
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAABAgAGBQJRFY+wAAoJEBTxipiZOuzV50AIAJcEn78ufZc2O2r4vPngsdIl
+XoU/H/KhSj2TQReqz17j46YQTjJEzP23nOJpRnh/bnmbmyBk53xvmNL9ZjQGGBv6
+4NRhuj9Gyg7OsfeR6/rWGhVPE4QgiQoLd0MIc9upOVT6gyAEiPrM6zf5NgXleh8W
+V1U8JeQv3uv+u/SflJC8w5fLXSSs/9cSl+5eBfDnazsaJjmsCAHoy7aUYO+OFzUP
+7QeEyVlTZJ+o6LWgEpY3TS11qhp2TWTQwqLJVqxtPAE7hgNTy5cE1rBFmRS7oRcf
+HFNhAnZRyyxzTF58sJb2Lxk+K/x0ykRJtx0cyRpfLs10PB1TKqWeGNtZ2u+XWQk=
+=4aef
+-----END PGP SIGNATURE-----
+
+--nextPart8727496.jfYUQYqPAV--
