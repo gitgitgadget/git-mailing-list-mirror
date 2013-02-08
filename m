@@ -1,88 +1,182 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Proposal: branch.<name>.remotepush
-Date: Fri, 8 Feb 2013 23:59:28 +0530
-Message-ID: <CALkWK0nYRiPLnBXFarp8UzZgGvA5Y6motvr5HMFy56ANr161HA@mail.gmail.com>
-References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
- <5113E849.8000602@elegosoft.com> <CALkWK0=53riU3xKbKkyAVS8--9VoAU5P6h88MQ9-geW=H5+a-w@mail.gmail.com>
- <20130207233017.GD19397@google.com> <7v38x766b2.fsf@alter.siamese.dyndns.org>
- <20130208074813.GA7337@elie.Belkin> <7v622343uy.fsf@alter.siamese.dyndns.org>
- <5114D5B0.5080906@drmicha.warpmail.net> <7vobfu3ev3.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] branch: show rebase/bisect info when possible instead
+ of "(no branch)"
+Date: Fri, 08 Feb 2013 10:35:49 -0800
+Message-ID: <7v1ucq3b7e.fsf@alter.siamese.dyndns.org>
+References: <1359870520-22644-1-git-send-email-pclouds@gmail.com>
+ <1360318171-17614-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 19:30:16 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jonathan Niedier <jrnieder@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 19:36:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3siC-0001HZ-O0
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 19:30:13 +0100
+	id 1U3so4-0006Nl-7h
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 19:36:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946782Ab3BHS3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 13:29:50 -0500
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:58598 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946611Ab3BHS3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 13:29:49 -0500
-Received: by mail-oa0-f50.google.com with SMTP id l20so4395261oag.9
-        for <git@vger.kernel.org>; Fri, 08 Feb 2013 10:29:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=MvLmVmUOR+7Nv5M8+dT/QiYYaZt1vqbl+H2hW7/w6SQ=;
-        b=NMsJBrxG3Yqn5JN1IdBme5Ngkcj70nsGO5pybuHdWMOboxkc6NQJraaf32gM5dpJOx
-         WSP9+wDF5KyUAxgQkykQUY4mag/HiR98vJI8w1zuHspHQOx/TPzxkd8hQLkga+4cpOHE
-         vSc9/Vic+V90NJuf5+eSTh/UMBB1FGo9QFONs2WGt07tARPx5XKuTogHQodNP5/Cux6D
-         AVu+TVGW64MRWja8X/fLLa22vy27/kXNATwARs92xGUlyp1rPeuVNcIy6IqZ6L11Q3+m
-         hnBUM/8pg83OY6u19weWeJFfyclHKCK/C7DndmV1HyFLMGbBJ/lzynW2+PFmUc1kDt6y
-         07jg==
-X-Received: by 10.60.22.198 with SMTP id g6mr5070768oef.45.1360348188904; Fri,
- 08 Feb 2013 10:29:48 -0800 (PST)
-Received: by 10.76.128.79 with HTTP; Fri, 8 Feb 2013 10:29:28 -0800 (PST)
-In-Reply-To: <7vobfu3ev3.fsf@alter.siamese.dyndns.org>
+	id S1946793Ab3BHSfx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Feb 2013 13:35:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48983 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1946783Ab3BHSfw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Feb 2013 13:35:52 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A688FC8C4;
+	Fri,  8 Feb 2013 13:35:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=7RWDqoMr1/W4
+	+QvcAxKSM89xEUs=; b=YouNCHuqnYBPCLWfvVuz7FD2TnAsJ39u9NNcgU8LQOeZ
+	87af2tAbIpVqavCudOPOu8/fNX/FOudvsUi7mJfhKs4LzceiFsgPm55dSjH+CuJQ
+	bdMjGUAeavuKOPKj9CnW8wHpxMdXjmhmqYewVzSV0VHplLZ9GpLWXsP7n8m/9d4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pUonGD
+	QLzSdm7+Bt19UQi86tqaHjSYYKJX4LIKsBf8CtQ8fidel0HLquEfbYYoUalMmW5/
+	VKgLAiBA/MakQ1nMp9XO9ovjtnSlZ/eo247/z7/JGdgsdSZnZ0u88e68g6hNgjAH
+	845IL7+7y56BK5dUJwCB6dmqBJn2bjwT8TMBA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B45DC8C3;
+	Fri,  8 Feb 2013 13:35:51 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDD8DC8C2; Fri,  8 Feb 2013
+ 13:35:50 -0500 (EST)
+In-Reply-To: <1360318171-17614-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 8 Feb
+ 2013 17:09:31 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5CFC6C5C-721E-11E2-AC9E-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215797>
 
-Junio C Hamano wrote:
->         [remote "origin"]
->                 url = ... where Ram fetches and pulls from ...
->                 pushurl = ... where Ram pushes to ...
->                 fetch = refs/heads/*:refs/remotes/*
->                 updateTrackOnPush = no
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+
+> This prints more helpful info when HEAD is detached: is it detached
+> because of bisect or rebase? What is the original branch name in thos=
+e
+> cases?
 >
-> Then "git fetch" (or "git pull") will update the remote tracking
-> branches Ram fetches from, and once his topic is finished, he can
-> push to his publishing location, which won't touch the remote
-> tracking branches used to keep track of the place he fetches from.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Keep "no branch" in all cases. Just append "rebasing/bisecting [%s]"
+>  when applicable.
+>
+>  builtin/branch.c            | 44 +++++++++++++++++++++++++++++++++++=
+++++++++-
+>  t/t6030-bisect-porcelain.sh |  2 +-
+>  2 files changed, 44 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 6371bf9..26c0c3d 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -550,6 +550,48 @@ static int calc_maxwidth(struct ref_list *refs)
+>  	return w;
+>  }
+> =20
+> +static char *get_head_description()
+> +{
+> +	struct stat st;
+> +	struct strbuf sb =3D STRBUF_INIT;
+> +	struct strbuf result =3D STRBUF_INIT;
+> +	int bisect =3D 0;
+> +	int ret;
+> +	if (!stat(git_path("rebase-merge"), &st) && S_ISDIR(st.st_mode))
+> +		ret =3D strbuf_read_file(&sb, git_path("rebase-merge/head-name"), =
+0);
+> +	else if (!access(git_path("rebase-apply/rebasing"), F_OK))
+> +		ret =3D strbuf_read_file(&sb, git_path("rebase-apply/head-name"), =
+0);
+> +	else if (!access(git_path("BISECT_LOG"), F_OK)) {
+> +		ret =3D strbuf_read_file(&sb, git_path("BISECT_START"), 0);
+> +		bisect =3D 1;
+> +	} else
+> +		return xstrdup(_("(no branch)"));
+> +
+> +	if (ret <=3D 0) {
 
-A "push" should never touch remote/refs/origin/* if there is a pushurl
-configured.  Otherwise, it should.  I want my push to affect my
-status.  The configuration variable makes no sense and should not
-exist.
+Doesn't the general "negative signals an error" apply here?
 
-Unfortunately, pushurl doesn't get the same privileges as url even
-though they're equal remotes.  How is my fork "inferior" to the
-upstream project in any way?  A lot of us might be working on this
-fork, and we will need something corresponding to refs/remotes/* to
-inspect its state.  Like I said earlier, I think pushurl has a very
-limited usecase: when the two URLs are actually mirrors (there is
-really no fork; we're back in a centralized environment).  In fact, I
-think it should be deprecated, because it interferes with my more
-general approach.
+The end result may be the same, as the later part of this function
+that uses sb with len=3D=3D0 ends up showing the same "bisecting" (or
+"rebasing") without any other information, but the logic to reach
+that outcome looks wrong.
 
-Let's see what happens if we have two actual remotes.
-remote/refs/origin/* will be updated when I fetch from, and push to,
-origin.   remote/refs/ram/* will be updated when I fetch from, and
-push to, ram.  It's very simple, and I don't need this complex rule of
-when to update refs.  We should have a way to pair remotes together as
-upstream/ downstream in the future.  Maybe even have a hierarchy of
-remotes.
+> +		if (bisect)
+> +			return xstrdup(_("(no branch, bisecting)"));
+> +		else
+> +			return xstrdup(_("_(no branch, rebasing)"));
+> +	}
+> +
+> +	while (sb.len && sb.buf[sb.len - 1] =3D=3D '\n')
+> +		strbuf_setlen(&sb, sb.len - 1);
+> +
+> +	if (bisect) {
+> +		unsigned char sha1[20];
+> +		if (!get_sha1_hex(sb.buf, sha1))
+> +			strbuf_addstr(&result, _("(no branch, bisecting)"));
+> +		else
+> +			strbuf_addf(&result, _("(no branch, bisecting %s)"), sb.buf);
+> +	} else {
+> +		if (!prefixcmp(sb.buf, "refs/heads/"))
+> +			strbuf_addf(&result, _("(no branch, rebasing %s)"), sb.buf + 11);
+> +		else
+> +			strbuf_addstr(&result, _("(no branch, rebasing)"));
+> +	}
+> +	strbuf_release(&sb);
+> +	return strbuf_detach(&result, NULL);
+> +}
+
+We may want to refactor wt_status_print_state() and its callee a bit
+so that it and this part can share the logic without duplication and
+risk implementing subtly different decision.  wt_status used to have
+clean separation between collection phase and presentation phase,
+but the wall between the phases seems deteriorated over time as more
+"in progress" crufts have been piled on top.
+
+Such a refactoring may look larger than necessary, but on the other
+hand, I do not see this feature very useful if it can over time
+drift away from what we will see in "git status", so...
+
+> =20
+>  static void show_detached(struct ref_list *ref_list)
+>  {
+> @@ -557,7 +599,7 @@ static void show_detached(struct ref_list *ref_li=
+st)
+> =20
+>  	if (head_commit && is_descendant_of(head_commit, ref_list->with_com=
+mit)) {
+>  		struct ref_item item;
+> -		item.name =3D xstrdup(_("(no branch)"));
+> +		item.name =3D get_head_description();
+>  		item.width =3D utf8_strwidth(item.name);
+>  		item.kind =3D REF_LOCAL_BRANCH;
+>  		item.dest =3D NULL;
+> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.s=
+h
+> index 3e0e15f..9b6f0d0 100755
+> --- a/t/t6030-bisect-porcelain.sh
+> +++ b/t/t6030-bisect-porcelain.sh
+> @@ -164,7 +164,7 @@ test_expect_success 'bisect start: existing ".git=
+/BISECT_START" not modified if
+>  	cp .git/BISECT_START saved &&
+>  	test_must_fail git bisect start $HASH4 foo -- &&
+>  	git branch > branch.output &&
+> -	test_i18ngrep "* (no branch)" branch.output > /dev/null &&
+> +	test_i18ngrep "* (no branch, bisecting other)" branch.output > /dev=
+/null &&
+>  	test_cmp saved .git/BISECT_START
+>  '
+>  test_expect_success 'bisect start: no ".git/BISECT_START" if mistake=
+n rev' '
