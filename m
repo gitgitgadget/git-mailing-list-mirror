@@ -1,62 +1,81 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v4] Add utf8_fprintf helper which returns correct columns
-Date: Fri, 08 Feb 2013 07:13:04 +0100
-Message-ID: <51149770.5070303@web.de>
-References: <7va9rho350.fsf@alter.siamese.dyndns.org> <4ea03e99bad13e2910b137fd3991951244fa23f1.1360289411.git.worldhello.net@gmail.com> <51149542.8060307@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv6] Add contrib/credentials/netrc with GPG support
+Date: Thu, 07 Feb 2013 22:15:48 -0800
+Message-ID: <7vhaln49gr.fsf@alter.siamese.dyndns.org>
+References: <87ehgvua6h.fsf@lifelogs.com>
+ <20130204211726.GB13186@sigill.intra.peff.net>
+ <87mwvjsqjc.fsf_-_@lifelogs.com> <7vvca6u47f.fsf@alter.siamese.dyndns.org>
+ <87k3qmr8yc.fsf@lifelogs.com> <87fw1ar3og.fsf_-_@lifelogs.com>
+ <87ehgvua6h.fsf@lifelogs.com> <20130204211726.GB13186@sigill.intra.peff.net>
+ <87mwvjsqjc.fsf_-_@lifelogs.com> <7vvca6u47f.fsf@alter.siamese.dyndns.org>
+ <87k3qmr8yc.fsf@lifelogs.com> <7vhalqsfkf.fsf@alter.siamese.dyndns.org>
+ <8738xaqy40.fsf_-_@lifelogs.com> <7vip66qu0u.fsf@alter.siamese.dyndns.org>
+ <7vtxpqnwiv.fsf@alter.siamese.dyndns.org> <876226p97h.fsf_-_@lifelogs.com>
+ <7vtxpn4r7a.fsf@alter.siamese.dyndns.org> <87mwvfbmgi.fsf@lifelogs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= <pclouds@gmail.co>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Feb 08 07:13:36 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Ted Zlatanov <tzz@lifelogs.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 07:16:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3hDK-0002P8-R8
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 07:13:35 +0100
+	id 1U3hFu-0004BR-4Q
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 07:16:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752562Ab3BHGNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 01:13:12 -0500
-Received: from mout.web.de ([212.227.17.12]:57354 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750981Ab3BHGNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 01:13:11 -0500
-Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb102) with
- ESMTPA (Nemesis) id 0MLxs8-1U0Nor08zs-007rnS; Fri, 08 Feb 2013 07:13:05 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <51149542.8060307@web.de>
-X-Provags-ID: V02:K0:pXj8HlA+hYJ9zISFDYxGi4cADfOwq+Z3OpSZmMk97Fp
- pHCZkDi+vdHKHPK7GDlCNAj3C4IVpZitJTFZD9qIInqEeCElLK
- Tsngd5rFK62/mbxRrd2U7ptkrCwxzkeE+DnFaT8tRowFeIOQmF
- ZD+y2JDeKYgRFNxf5njIGbRAmpW6F5lAh/Abrr2nY5GEcUjsfd
- Yb3UQkoci712pA6wJk8mA==
+	id S1752915Ab3BHGPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 01:15:51 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64584 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752307Ab3BHGPu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 01:15:50 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BFA07EED;
+	Fri,  8 Feb 2013 01:15:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kaoTrsaZm9Dgb2Gj4JtSfMHB9Tw=; b=R/Dp2s
+	1JW1CL565S0k2CXJYssAPCH/JkP0Xwsvj0jJBCH4H9/Xa3ezhBz0m+zyy1COKj6e
+	W1WO+4satrT9o08uLsyhXZtXoqDLM+RfXr58AZvc3r0my2L25NUu71B86usDAXe8
+	c/zvRE1De/nf4XBNaU5slHbtS32X9ataCb1vs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CWP7J0EQQg6jc/tsawVaHBB1YYPV9Jgx
+	GeAV4knwO37XSD9gpuSL1HPs2UOwE0RI+ZDdmVyIMS8cE8r/TsP92R2PUtPCm+hR
+	gXyXOBDk9ZSQEMSuArfPjNPenDGWHfD7HLYLvQ1GTRTe5bWXXciDjk9zACJ64o1a
+	A0GoCff5dkU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FF2E7EEC;
+	Fri,  8 Feb 2013 01:15:50 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9DB5F7EE9; Fri,  8 Feb 2013
+ 01:15:49 -0500 (EST)
+In-Reply-To: <87mwvfbmgi.fsf@lifelogs.com> (Ted Zlatanov's message of "Thu,
+ 07 Feb 2013 20:53:17 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FBC56270-71B6-11E2-99B2-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215758>
 
-(Sorry for confusing: I should have written:)
+Ted Zlatanov <tzz@lifelogs.com> writes:
 
-Please see below for specifications on fputs()
+> I agree this Makefile is not a good test to ship out.  It was my quickie
+> test rig that I should have reworked before adding to the patch.  Sorry.
 
-Linux:
-RETURN VALUE
-fputc(), putc() and putchar() return the character written as an unsigned char cast to an int or EOF on error.
-puts() and fputs() return a nonnegative number on success, or EOF on error.
+Nothing to be sorry about.  Starting with quick-and-dirty and
+polishing for public consumption is what the review cycle is about,
+and we are here to help that process.
 
-Mac OS:
-COMPATIBILITY
-fputs() now returns a non-negative number (as opposed to 0) on successful completion. As a result, many tests (e.g., "fputs() == 0", "fputs() != 0") do not give the desired result.
-Use "fputs() != EOF" or "fputs() == EOF" to determine success or failure.
+> I see contrib/subtree/t and contrib/mw-to-git/t that I could copy.  The
+> test will have a few files to parse, and will be able to compare the
+> expected to the actual output.  Does that sound like a good plan?
 
-Posix:
-RETURN VALUE
-Upon successful completion, fputs() shall return a non-negative number. Otherwise, it shall return EOF, set an error indicator for the stream, and set errno to indicate the error.
+Yup.
+
+Thanks.
