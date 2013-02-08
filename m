@@ -1,64 +1,84 @@
-From: Martijn van Oosterhout <kleptog@gmail.com>
-Subject: Re: git filter-branch --prune-empty not removing commits
-Date: Fri, 8 Feb 2013 17:53:24 +0100
-Message-ID: <CADWG95skLryj0gxSzmxviP1E=9T8oN0r64gpu3_7P6qMZkDq_g@mail.gmail.com>
-References: <CADWG95sHx6Z2Ukon8FAHKa1qUOj4shd4MbCwahwX++FVWJPDDg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/4] Makefile: factor common configuration in git-default-config.mak
+Date: Fri, 08 Feb 2013 18:05:26 +0100
+Message-ID: <vpq4nhmbusp.fsf@grenoble-inp.fr>
+References: <vpqobfxwg2q.fsf@grenoble-inp.fr>
+	<1360174292-14793-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1360174292-14793-4-git-send-email-Matthieu.Moy@imag.fr>
+	<7vobfv7wkl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 08 17:53:53 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 08 18:06:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3rCv-0002lJ-DA
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 17:53:49 +0100
+	id 1U3rOq-0005jr-0c
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 18:06:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946614Ab3BHQx0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 11:53:26 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:51808 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946584Ab3BHQxZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 11:53:25 -0500
-Received: by mail-lb0-f181.google.com with SMTP id gm6so3153799lbb.12
-        for <git@vger.kernel.org>; Fri, 08 Feb 2013 08:53:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:content-type;
-        bh=AdSlmdmZEJu5mM0A+Fe0aA0CK76LpRMXFbIP2vjkj2I=;
-        b=iMutb155UwI/8UpD/U1Otkzfg+lJhQPVZmhnyUvTUmjK2a/wypiwTsVJTq5mHFx1nX
-         iO2KRq5x0PlHAzJ/MwRnMYIcnj0AnD34vTATCzFJLCbAUGcsqP6bKGBijU3HLNTWZITz
-         yu8x4vBWy61dN1y+8wjhm5qpurN08bT7fvBXPd6M+8JGtR6WuSJBmB4P5UwgWQ7A0aDC
-         PFvwPkXb1+rGJ5MUBSyVNBV77pa2xoFJfGcW+H0T0Q+F35/sy+TpxBTvgY6kl/AQfOqd
-         QJVfwpVUPHAH7TEzxap2FKuFlwLnhuy8rN7fIuG8CV84MWZTNFMzSgoxpkAnzgtulizE
-         LU4w==
-X-Received: by 10.112.84.228 with SMTP id c4mr2481088lbz.113.1360342404254;
- Fri, 08 Feb 2013 08:53:24 -0800 (PST)
-Received: by 10.114.16.35 with HTTP; Fri, 8 Feb 2013 08:53:24 -0800 (PST)
-In-Reply-To: <CADWG95sHx6Z2Ukon8FAHKa1qUOj4shd4MbCwahwX++FVWJPDDg@mail.gmail.com>
+	id S1946611Ab3BHRFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 12:05:45 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:50004 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758581Ab3BHRFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 12:05:44 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r18H5OHa005132
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 8 Feb 2013 18:05:24 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1U3rOA-0002U1-Gi; Fri, 08 Feb 2013 18:05:26 +0100
+In-Reply-To: <7vobfv7wkl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 07 Feb 2013 11:28:26 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 08 Feb 2013 18:05:25 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r18H5OHa005132
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1360947928.18072@/cPOOSbG7JCeFoVkxqBaKA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215781>
 
-On 8 February 2013 16:23, Martijn van Oosterhout <kleptog@gmail.com> wrote:
->  git_commit_non_empty_tree()
->  {
-> +        if test $# = 1 && test -z "$(git ls-tree $1)" ; then
-> +                skip_commit "$@"
-> +        fi
->          if test $# = 3 && test "$1" = $(git rev-parse "$3^{tree}"); then
->                  map "$3"
->          else
->                  git commit-tree "$@"
->          fi
->  }
+Junio C Hamano <gitster@pobox.com> writes:
 
-This bit is a but bunk, the fi should be an else, otherwise it does nothing.
+> I really think this is going in a wrong direction.  Whatever you
+> happen to have chosen in this patch will be available to others,
+> while whatever are left out will not be.  When adding new things,
+> people need to ask if it needs to be sharable or not, and the right
+> answer to that question will even change over time.
 
-Have a nice day,
+My feeling is that Git's toplevel Makefile has become too large to
+remain completely monolithic, and splitting is good to organize it (and
+yes, splitting code into several files imply that future added code will
+have to be added in the right file, but that's not very different from
+splitting C code into several .c files to me). But that is another
+matter, and ...
+
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Then do something like
+>
+> 	all::
+> 		$(MAKE) -C ../.. \
+> 			PERL_SCRIPT=contrib/mw-to-git/git-remote-mediawiki.perl \
+>                         build-perl-script
+
+This ended up being very simple to implement (essentially, the Makefile
+already knows how to do this, so this just means adding convenience
+build-perl-script target to the toplevel), so 2 new patches follow doing
+this, with a ridiculously small new version of mw-to-git/Makefile.
+
 -- 
-Martijn van Oosterhout <kleptog@gmail.com> http://svana.org/kleptog/
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
