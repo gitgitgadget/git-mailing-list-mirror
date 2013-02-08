@@ -1,85 +1,110 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Proposal: branch.<name>.remotepush
-Date: Fri, 8 Feb 2013 04:22:04 -0500
-Message-ID: <20130208092204.GA15490@sigill.intra.peff.net>
-References: <CALkWK0nA4hQ0VWivk3AVVVq8Rbb-9CpQ9xFsSOsTQtvo4w08rw@mail.gmail.com>
- <20130208044836.GC4157@sigill.intra.peff.net>
- <7vliaz49sf.fsf@alter.siamese.dyndns.org>
- <7vd2wb483w.fsf@alter.siamese.dyndns.org>
+Subject: Re: [Request] Git export with hardlinks
+Date: Fri, 8 Feb 2013 04:58:19 -0500
+Message-ID: <20130208095819.GA17220@sigill.intra.peff.net>
+References: <201302061619.07765.thomas@koch.ro>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 08 10:22:36 2013
+Cc: git@vger.kernel.org
+To: Thomas Koch <thomas@koch.ro>
+X-From: git-owner@vger.kernel.org Fri Feb 08 10:59:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3kAF-0000lh-Ln
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 10:22:36 +0100
+	id 1U3kjP-0002VF-9r
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 10:58:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946191Ab3BHJWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 04:22:09 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42102 "EHLO
+	id S1758522Ab3BHJ6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 04:58:31 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42127 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946169Ab3BHJWG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 04:22:06 -0500
-Received: (qmail 27750 invoked by uid 107); 8 Feb 2013 09:23:33 -0000
+	id S1752623Ab3BHJ63 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 04:58:29 -0500
+Received: (qmail 27909 invoked by uid 107); 8 Feb 2013 09:59:55 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Feb 2013 04:23:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2013 04:22:04 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Feb 2013 04:59:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2013 04:58:19 -0500
 Content-Disposition: inline
-In-Reply-To: <7vd2wb483w.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <201302061619.07765.thomas@koch.ro>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215770>
 
-On Thu, Feb 07, 2013 at 10:45:07PM -0800, Junio C Hamano wrote:
+On Wed, Feb 06, 2013 at 04:19:07PM +0100, Thomas Koch wrote:
 
-> To support a triangular arrangement well, there may need some
-> thinking on what $branch@{upstream} means.  The original intent of
-> the upstream mode specified for "push.default" is push the result
-> back to what you based your work on, but in a triangular arrangement
-> that is no longer true.
+> I'd like to script a git export command that can be given a list of already 
+> exported worktrees and the tree SHA1s these worktrees correspond too. The git 
+> export command should then for every file it wants to export lookup in the 
+> existing worktrees whether an identical file is already present and in that 
+> case hardlink to the new export location instead of writing the same file 
+> again.
+> 
+> Use Case: A git based web deployment system that exports git trees to be 
+> served by a web server. Every new deployment is written to a new folder. After 
+> the export the web server should start serving new requests from the new 
+> folder.
+> 
+> It might be possible that this is premature optimization. But I'd like to 
+> learn more Python and dulwich by hacking this.
+> 
+> Do you have any additional thoughts or use cases about this?
 
-I don't think that "upstream" or "simple" push settings really make
-sense in such a triangular arrangement. And IMHO, that's OK. They
-reflect a much simpler view of the world than git is capable of
-supporting. So "simple" works OK as a default, and people can move to
-"matching" (or "current", or even a custom refspec) once they have are
-ready to take advantage of a more advanced topology/workflow.
+If you can handle losing the generality of N deployments, you can do it
+in a few lines of shell.
 
-We have the problem now that new users do not necessarily understand the
-matching strategy, or why it is useful, and get confused. When we move
-to "simple", we may be switching to a world where the early part of the
-learning curve is more gentle for those users, but they eventually run
-across the steeper part when they want to adjust their workflow (i.e.,
-they will eventually learn about non-symmetric repo topologies because
-those are part of many useful workflows).
+Let's assume for a moment that you keep two trees at any given time:
+the existing tree being used, and the tree you are setting up to deploy.
+To save space, you want the new deployment to reuse (via hardlinks) as
+many of the files from the old deployment as possible.
 
-But I think it's a good thing to push that part of the learning curve
-out, because:
+So imagine you have a bare repository storing the actual data:
 
-  1. Some people may stay in the centralized view their whole lives and
-     never care.
+  $ git clone --bare /some/test/repo repo.git
+  $ du -sh *
+  49M     repo.git
 
-  2. It will make more sense to them, because they'll understand how it
-     fits into what they're trying to do, rather than viewing it as an
-     arcane and senseless default.
+and then you have one deployment you've set up previously by checking
+out the repo contents:
 
-There may be some confusion as people hit that learning point. I won't
-be surprised if we end up adding more advice.* messages in certain cases
-to guide people to adjusting their push.default. But I'm just as happy
-to wait until people start hitting the confusion point in practice, and
-we can see more clearly when that advice should trigger, and what it
-should say.
+  $ export GIT_DIR=$PWD/repo.git
+  $ mkdir old
+  $ (cd old && GIT_WORK_TREE=$PWD git checkout HEAD)
+  $ du -sh *
+  24M     old
+  49M     repo.git
 
-Unless you have ideas now, of course, in which case I'm happy to hear
-them. :)
+So a full checkout is 24M. For the next deploy, we'll start by asking
+"cp" to duplicate the old, using hard links:
+
+  $ cp -rl old new
+  $ du -sh *
+  24M     new
+  768K    old
+  49M     repo.git
+
+and we use hardly any extra space (it should just be directory inodes).
+And now we can ask git to make "new" look like some other commit. It
+will only touch files which have changed, so the rest remain hardlinked,
+and we use only a small amount of extra space:
+
+  $ (cd new && GIT_WORK_TREE=$PWD git checkout HEAD~10)
+  $ du -sh *
+  24M     new
+  1.3M    old
+  49M     repo.git
+
+Now you point your deployment at "new", and you are free to leave "old"
+sitting around or remove it at your leisure. You save space while the
+two co-exist, and you saved the I/O of copying any files from "old" to
+"new".
+
+This breaks down, of course, if you want to keep N trees around and
+hard-link to whichever one has the content you want. For that you'd have
+to write some custom code.
 
 -Peff
