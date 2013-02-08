@@ -1,58 +1,72 @@
-From: Javier Domingo <javierdo1@gmail.com>
-Subject: Fwd: Git remote possible feature request
-Date: Fri, 8 Feb 2013 16:30:52 +0100
-Message-ID: <CALZVap=-aGi6zpbvDv5b98pRw7bUSTDUZsPnT0+D1HJZJpsuBA@mail.gmail.com>
-References: <CALZVapkxbY_sQucxznTQ-SJ6-YkxZvFH2TDjRtfL8Qsai1ZsWQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Use __VA_ARGS__ for all of error's arguments
+Date: Fri, 8 Feb 2013 10:54:16 -0500
+Message-ID: <20130208155416.GA20874@sigill.intra.peff.net>
+References: <20130208043915.GB4525@ftbfs.org>
+ <1360336168-27740-1-git-send-email-kraai@ftbfs.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 08 16:31:38 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Max Horn <max@quendi.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Matt Kraai <matt.kraai@amo.abbott.com>
+To: Matt Kraai <kraai@ftbfs.org>
+X-From: git-owner@vger.kernel.org Fri Feb 08 16:54:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3pvO-00018n-DB
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 16:31:38 +0100
+	id 1U3qHj-0002KP-H4
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 16:54:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946614Ab3BHPbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 10:31:15 -0500
-Received: from mail-vc0-f175.google.com ([209.85.220.175]:36448 "EHLO
-	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946601Ab3BHPbO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 10:31:14 -0500
-Received: by mail-vc0-f175.google.com with SMTP id fw7so2398972vcb.20
-        for <git@vger.kernel.org>; Fri, 08 Feb 2013 07:31:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:content-type;
-        bh=NZFfvoJV7NxnKtwxG2vWWD7aJlnrrbqN9dsd3vmjBf8=;
-        b=o4x5WEMwnZzqhH6T6FTGa/q/FBFok03cU60FlIn0IKMKbevP6hfHjDuy/UOAdnsS4K
-         J/+tpkDw1+kgcU4qvtLyqAWOBvu9ER3EwhutefeVz3vWxLFecUwz5SMj5WBY10iM9fVD
-         reawKendWFCUuu81CzPy+DU5d7KPDFSH5/cbMP3/Z+uNHmIcXFooko08/LPkY7mht7yg
-         ZLReyYE1R38jEN3k3GLMX13CI69ySHLEAgELIE6zNLPOZv5ZmUV6cxgKbf8QwOfVoQoQ
-         c01ApK8uGSVROZ76vmt2GMFOT6Gnp+zuTXtRb1dQsyXFIg6RVJZwN2gqGfUDYo2xUZTr
-         4lSA==
-X-Received: by 10.220.150.3 with SMTP id w3mr7054100vcv.37.1360337473993; Fri,
- 08 Feb 2013 07:31:13 -0800 (PST)
-Received: by 10.58.6.211 with HTTP; Fri, 8 Feb 2013 07:30:52 -0800 (PST)
-In-Reply-To: <CALZVapkxbY_sQucxznTQ-SJ6-YkxZvFH2TDjRtfL8Qsai1ZsWQ@mail.gmail.com>
+	id S1946671Ab3BHPyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 10:54:20 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42283 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1946644Ab3BHPyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 10:54:19 -0500
+Received: (qmail 29784 invoked by uid 107); 8 Feb 2013 15:55:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Feb 2013 10:55:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2013 10:54:16 -0500
+Content-Disposition: inline
+In-Reply-To: <1360336168-27740-1-git-send-email-kraai@ftbfs.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215777>
 
-Hi,
+On Fri, Feb 08, 2013 at 07:09:28AM -0800, Matt Kraai wrote:
 
-Just wanted to check if that when you add a remote with
---mirror=fetch, it means that you just want to fetch from that mirror.
+> From: Matt Kraai <matt.kraai@amo.abbott.com>
+> 
+> QNX 6.3.2 uses GCC 2.95.3 by default, and GCC 2.95.3 doesn't remove the
+> comma if the error macro's variable argument is left out.
+> 
+> Instead of testing for a sufficiently recent version of GCC, make
+> __VA_ARGS__ match all of the arguments.
+>
+> [...]
+>
+>  /*
+>   * Let callers be aware of the constant return value; this can help
+> - * gcc with -Wuninitialized analysis. We have to restrict this trick to
+> - * gcc, though, because of the variadic macro and the magic ## comma pasting
+> - * behavior. But since we're only trying to help gcc, anyway, it's OK; other
+> - * compilers will fall back to using the function as usual.
+> + * gcc with -Wuninitialized analysis. We restrict this trick to gcc, though,
+> + * because some compilers may not support variadic macros. Since we're only
+> + * trying to help gcc, anyway, it's OK; other compilers will fall back to
+> + * using the function as usual.
+>   */
+>  #if defined(__GNUC__) && ! defined(__clang__)
+> -#define error(fmt, ...) (error((fmt), ##__VA_ARGS__), -1)
+> +#define error(...) (error(__VA_ARGS__), -1)
 
-Would that avoid accidentally pushing to that mirror?
+Acked-by: Jeff King <peff@peff.net>
 
-I would like to be able to mark some remotes as read-only...
+Thanks.
 
-Thank you,
-
-Javier Domingo
+-Peff
