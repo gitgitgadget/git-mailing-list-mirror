@@ -1,90 +1,64 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: [PATCH] user-manual: Rewrite git-gc section for automatic packing
-Date: Fri, 08 Feb 2013 11:43:02 -0500
-Message-ID: <7ac63ea832711ad4bee636163e277a408cbddda4.1360341577.git.wking@tremily.us>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 08 17:44:03 2013
+From: Martijn van Oosterhout <kleptog@gmail.com>
+Subject: Re: git filter-branch --prune-empty not removing commits
+Date: Fri, 8 Feb 2013 17:53:24 +0100
+Message-ID: <CADWG95skLryj0gxSzmxviP1E=9T8oN0r64gpu3_7P6qMZkDq_g@mail.gmail.com>
+References: <CADWG95sHx6Z2Ukon8FAHKa1qUOj4shd4MbCwahwX++FVWJPDDg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 08 17:53:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3r3R-0002IA-9F
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 17:44:01 +0100
+	id 1U3rCv-0002lJ-DA
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Feb 2013 17:53:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946620Ab3BHQni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 11:43:38 -0500
-Received: from vms173015pub.verizon.net ([206.46.173.15]:55207 "EHLO
-	vms173015pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946552Ab3BHQnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 11:43:37 -0500
-Received: from odin.tremily.us ([unknown] [72.68.84.219])
- by vms173015.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MHW00FRAUFVQ700@vms173015.mailsrvcs.net> for
- git@vger.kernel.org; Fri, 08 Feb 2013 10:43:13 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 7D74F877A79; Fri,
- 08 Feb 2013 11:43:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1360341786; bh=3f5YIKdyow8/rACXb+t/H2klx1M/Y7zNR0pX+NBC+Oc=;
-	h=From:To:Cc:Subject:Date;
-	b=tFZVsxU34i6koIZkNsYm8JQq1nRXVwV162e3YoKipkssUjoT5U7XqxCNwosO9T0dV
- xX6QK64k8m+uJnb6qe6byLvJIbLx0GnFP8xUfnBWcuvD3LMJrL3Iyx6l7ObRjk9Ttn
- vRSEI4zvzSZaFnThsmVOojIrDpzZnW9WrsTWcg9c=
-X-Mailer: git-send-email 1.7.12.4
+	id S1946614Ab3BHQx0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 11:53:26 -0500
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:51808 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946584Ab3BHQxZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 11:53:25 -0500
+Received: by mail-lb0-f181.google.com with SMTP id gm6so3153799lbb.12
+        for <git@vger.kernel.org>; Fri, 08 Feb 2013 08:53:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:content-type;
+        bh=AdSlmdmZEJu5mM0A+Fe0aA0CK76LpRMXFbIP2vjkj2I=;
+        b=iMutb155UwI/8UpD/U1Otkzfg+lJhQPVZmhnyUvTUmjK2a/wypiwTsVJTq5mHFx1nX
+         iO2KRq5x0PlHAzJ/MwRnMYIcnj0AnD34vTATCzFJLCbAUGcsqP6bKGBijU3HLNTWZITz
+         yu8x4vBWy61dN1y+8wjhm5qpurN08bT7fvBXPd6M+8JGtR6WuSJBmB4P5UwgWQ7A0aDC
+         PFvwPkXb1+rGJ5MUBSyVNBV77pa2xoFJfGcW+H0T0Q+F35/sy+TpxBTvgY6kl/AQfOqd
+         QJVfwpVUPHAH7TEzxap2FKuFlwLnhuy8rN7fIuG8CV84MWZTNFMzSgoxpkAnzgtulizE
+         LU4w==
+X-Received: by 10.112.84.228 with SMTP id c4mr2481088lbz.113.1360342404254;
+ Fri, 08 Feb 2013 08:53:24 -0800 (PST)
+Received: by 10.114.16.35 with HTTP; Fri, 8 Feb 2013 08:53:24 -0800 (PST)
+In-Reply-To: <CADWG95sHx6Z2Ukon8FAHKa1qUOj4shd4MbCwahwX++FVWJPDDg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215780>
 
-From: "W. Trevor King" <wking@tremily.us>
+On 8 February 2013 16:23, Martijn van Oosterhout <kleptog@gmail.com> wrote:
+>  git_commit_non_empty_tree()
+>  {
+> +        if test $# = 1 && test -z "$(git ls-tree $1)" ; then
+> +                skip_commit "$@"
+> +        fi
+>          if test $# = 3 && test "$1" = $(git rev-parse "$3^{tree}"); then
+>                  map "$3"
+>          else
+>                  git commit-tree "$@"
+>          fi
+>  }
 
-This should have happened back in 2007, when `git gc` learned about
-auto:
+This bit is a but bunk, the fi should be an else, otherwise it does nothing.
 
-  commit e9831e83e063844b90cf9e525d0003715dd8b395
-  Author: Junio C Hamano <gitster@pobox.com>
-  Date:   Mon Sep 17 00:39:52 2007 -0700
-
-    git-gc --auto: add documentation.
-
-Signed-off-by: W. Trevor King <wking@tremily.us>
----
-I'd also be happy just dropping the whole git-gc section ;).
-
- Documentation/user-manual.txt | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 5077e7c..d14e3c7 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1562,17 +1562,13 @@ Ensuring good performance
- -------------------------
- 
- On large repositories, Git depends on compression to keep the history
--information from taking up too much space on disk or in memory.
-+information from taking up too much space on disk or in memory.  Some
-+git commands may automatically run linkgit:git-gc[1], so you don't
-+have to worry about running it manually.  However, compressing large
-+repositories may take some time, so you might want to disable
-+automatic comression and run it explicitly when you are not doing
-+other work.
- 
--This compression is not performed automatically.  Therefore you
--should occasionally run linkgit:git-gc[1]:
--
---------------------------------------------------
--$ git gc
---------------------------------------------------
--
--to recompress the archive.  This can be very time-consuming, so
--you may prefer to run `git gc` when you are not doing other work.
- 
- 
- [[ensuring-reliability]]
+Have a nice day,
 -- 
-1.8.1.336.g94702dd
+Martijn van Oosterhout <kleptog@gmail.com> http://svana.org/kleptog/
