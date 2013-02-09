@@ -1,86 +1,79 @@
-From: Nick Muerdter <stuff@nickm.org>
-Subject: Re: Permission denied on home dir results in fatal error as of 1.8.1.1
-Date: Fri, 8 Feb 2013 19:33:27 -0700
-Message-ID: <CAECnihwGK8+cHJYQCVMtTwRnrh5V3T-v2-8dM2rd=ziRUA2x5A@mail.gmail.com>
-References: <CAECnihxpvtE1XejzHDCRBF=GkyBHmb53WDLa16Suiq=4SeYzvA@mail.gmail.com>
-	<7v6222xqc4.fsf@alter.siamese.dyndns.org>
-	<20130209010534.GC8461@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: inotify to minimize stat() calls
+Date: Fri, 08 Feb 2013 18:37:24 -0800
+Message-ID: <7vwquiw6u3.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
+ <7vehgqzc2p.fsf@alter.siamese.dyndns.org>
+ <7va9rezaoy.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DW=tkEy2iOAZxQ+ZyVQ+L11JsPcSxrES5YY7gECmX7UQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 03:33:53 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 03:37:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U40GF-0000mu-TI
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 03:33:52 +0100
+	id 1U40K7-0003AZ-Ap
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 03:37:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760537Ab3BICd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 21:33:28 -0500
-Received: from mail-qc0-f172.google.com ([209.85.216.172]:45719 "EHLO
-	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753787Ab3BICd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 21:33:28 -0500
-Received: by mail-qc0-f172.google.com with SMTP id b25so1672383qca.3
-        for <git@vger.kernel.org>; Fri, 08 Feb 2013 18:33:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :x-gm-message-state;
-        bh=Twmf/l7Te62b23om5Prelx3MJquNTeoIYXSVLU55r7Q=;
-        b=AW8HKmu9lGDCY796BlXWMp29RHN7nXoNTdTcHGqglps87VCYORyPznk7K86PFoV0o2
-         bwnDQiBoGcLey2Wv2TzQs29yg6IDCYBVUBNCeQRCRerl6/w9qW06/Vpv9WTZo85KHhwF
-         NWoesafSSaJ2Km/kdq/yx2ZsJF0FCEJ4iGX1tytxk/Oju0uBvnpjW697eIHS0zg7pwPL
-         16sxVHAmo4+0CypUI5qxUUksHbZeM9yC3m8WmvuwuGTi4jpq+dTeeQsUHSspkpf9uz8Q
-         O6q/SgFA63lrUQhnCPrdtDMlW/5BHMRsXlkkhxprj2/yLdNrTJ6flNn6mV2Me5CsJeJC
-         9GiA==
-X-Received: by 10.49.34.146 with SMTP id z18mr3201659qei.29.1360377207303;
- Fri, 08 Feb 2013 18:33:27 -0800 (PST)
-Received: by 10.49.39.37 with HTTP; Fri, 8 Feb 2013 18:33:27 -0800 (PST)
-In-Reply-To: <20130209010534.GC8461@google.com>
-X-Google-Sender-Auth: kg1CN7IUsZiUBhmxkurFJPlE7Ts
-X-Gm-Message-State: ALoCoQmcCADRr158TiZnOJC2Wo7tVrgjFXZSiDlt5swv/a9FYb7XD98FjVfYu2T3Gf1Utrt0gyBo
+	id S1760565Ab3BICh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 21:37:28 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59401 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760527Ab3BICh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 21:37:28 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A8B2B06B;
+	Fri,  8 Feb 2013 21:37:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MOtTWghgAVQy+Cj5BcLKr22zM54=; b=KE5JOb
+	zukFJOUCN/Ln1D0/i3TKcJqrrOljfaN4hmZgVzTcpRvH4DuXofLHtqsO4bVhfao5
+	Ev8PZzp/XFyUUYIkTtANGPoExpTOc8M9pk2U8AIQz9jr3+bJKAFpriHT0cH5PGxT
+	Smx88KIRiXBsRJSVvZuGI7l2Mjb6DqedLSm2Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xYMOhT10XqdR74GbeCwmjN5D0CDexVgP
+	eiarbnFafmTbx3/SZIYqVGsIShlqnrO/ctsnpXsXWTCU8icxkNiNdqe4kNFwbz8R
+	tHQHL/0t4j2N/VGlD/h6CIJHM8nn9OcUqwtC+28vNgmfD8ySaOeMPRZpkblRaakt
+	5jhMQwnzXw4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3ED71B06A;
+	Fri,  8 Feb 2013 21:37:27 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9FEFFB065; Fri,  8 Feb 2013
+ 21:37:26 -0500 (EST)
+In-Reply-To: <CACsJy8DW=tkEy2iOAZxQ+ZyVQ+L11JsPcSxrES5YY7gECmX7UQ@mail.gmail.com> (Duy
+ Nguyen's message of "Sat, 9 Feb 2013 09:10:25 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A4314B90-7261-11E2-ABD1-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215847>
 
-On Fri, Feb 8, 2013 at 6:05 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Junio C Hamano wrote:
->> Nick Muerdter <stuff@nickm.org> writes:
->
->>> As of git 1.8.1.1 and above (tested up to 1.8.1.3), if the home
->>> directory can't be accessed, it results in a fatal error. In git 1.8.1
->>> and below this same setup just resulted in warnings. Was this an
->>> intentional change?
->>
->> I think this was done to not just help diagnosing misconfiguration,
->> but to prevent an unintended misconfiguration from causing problems
->> (e.g. the user thinks user.name is set up correctly, but forbids Git
->> from reading it from the configuration files, and ends up creating
->> commits under wrong names).
->
-> Yes, that's right.  Sometimes ignoring settings has bad consequences,
-> so git errors out to let the user intervene and decide whether the
-> inaccessible settings are important.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Thanks for the quick response.
+> Can we replace "open a socket to our daemon" with "open a special file
+> in .git to get stat data written by our daemon"? TCP/IP socket means
+> system-wide daemon, not attractive. UNIX socket is not available on
+> Windows (although there may be named pipe, I don't know).
 
-Just for reference, the specific issue I ran into stems from using
-Chef to provision servers. Chef gets run as root but can perform the
-git commands as a different user on the system. The way this appears
-to be implemented is to fork, set the uid, and then execute git. But
-since the HOME environment variable is still set to /root, this leads
-to this fatal error. This can obviously be fixed on the script's end
-by properly determining and setting the HOME before executing git, but
-more care has to be taken, and I'm not sure how common this fork + set
-uid + exec approach in other programs might be. But I'll file a bug
-with Chef to get it fixed there.
+I do not think TCP/IP socket is too bad (you have to be able to read
+the index file to be able to ask questions to the daemon to begin
+with, so you must have list of paths already; the answer from the
+daemon would not leak anything more sensitive than you can already
+know), and UNIX domain socket is not too bad either.
 
-Thanks again,
-Nick
+Just like the implementation detail of the daemon itself may differ
+on platforms (does Windows have the identical inotify interface?  I
+doubt it), I expect the RPC mechanism between the daemon and the
+client would be platform dependent.  So take that "open a socket" as
+a generic way to say "have these two communicate with some magic",
+nothing more.
