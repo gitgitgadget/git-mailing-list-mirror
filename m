@@ -1,65 +1,73 @@
-From: Andreas Mohr <andi@lisas.de>
-Subject: Wishlist: git help bisect should mention "stop" keyword
-Date: Sat, 9 Feb 2013 09:44:03 +0100
-Message-ID: <20130209084403.GA14356@rhlx01.hs-esslingen.de>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: Credentials and the Secrets API...
+Date: Sat, 9 Feb 2013 05:58:47 -0500
+Message-ID: <CAEBDL5VQxhnL+wdkf_5=MmG4ptBr4TFyyAvbMWxRom9SRxJ6Lg@mail.gmail.com>
+References: <CAEBDL5Udooim_3Za76Q1Rt_aGXtsSv76nxRegGWRBE=WJQzfZA@mail.gmail.com>
+	<87halochci.fsf@lifelogs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 09 09:44:40 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Ted Zlatanov <tzz@lifelogs.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 11:59:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4636-0007uj-2P
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 09:44:40 +0100
+	id 1U489P-0006dO-SL
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 11:59:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467Ab3BIIoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2013 03:44:07 -0500
-Received: from rhlx01.hs-esslingen.de ([129.143.116.10]:44509 "EHLO
-	rhlx01.hs-esslingen.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751672Ab3BIIoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2013 03:44:06 -0500
-Received: by rhlx01.hs-esslingen.de (Postfix, from userid 102)
-	id B6110A2C52; Sat,  9 Feb 2013 09:44:03 +0100 (CET)
-Content-Disposition: inline
-X-Priority: none
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753802Ab3BIK6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2013 05:58:49 -0500
+Received: from mail-qa0-f42.google.com ([209.85.216.42]:58929 "EHLO
+	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752348Ab3BIK6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2013 05:58:48 -0500
+Received: by mail-qa0-f42.google.com with SMTP id cr7so647003qab.15
+        for <git@vger.kernel.org>; Sat, 09 Feb 2013 02:58:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=R16tAooEfp8dDv0xRh2kEJiK/cjuf8sgVQMSxi0u/FA=;
+        b=hrdXVqQhsWPQHknFuBXjsXAZGQkFfaON6sJAbXly0QJPSb1pZoxJj/9MiBDx3F/pKd
+         2JjQzm/ki8Wd51AVNQN55kJvvWf/5CxkkKPtMZ5nesQcfAkcU+ZTQGk11vOcieZg68/P
+         0UgQitzav/9DXDW+y7rKd72sNZma7MtSJ92aF421I1ttad+jGNwCb9k3neeltDuE3kra
+         Ju0qNpAcQpIy2WyTld+/0HiXe3jSF2JXSvpbF7xJ9+ok2CKi8ZdjjahPORPUjPgE307Y
+         hBiYh0K9Ekbv+aEXo7u2kx6+aKMnbYx1HVZQD098KBTLmuSWM03NgeWtJSN7KCbn5pSY
+         joiQ==
+X-Received: by 10.49.108.9 with SMTP id hg9mr3396956qeb.34.1360407527912; Sat,
+ 09 Feb 2013 02:58:47 -0800 (PST)
+Received: by 10.49.120.102 with HTTP; Sat, 9 Feb 2013 02:58:47 -0800 (PST)
+In-Reply-To: <87halochci.fsf@lifelogs.com>
+X-Google-Sender-Auth: mQqQ3tsl_cSdybnMHB-FgOq57Gg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215857>
 
-Hi,
+On Thu, Feb 7, 2013 at 9:46 AM, Ted Zlatanov <tzz@lifelogs.com> wrote:
+> On Thu, 27 Oct 2011 12:05:03 -0400 John Szakmeister <john@szakmeister.net> wrote:
+>
+> JS> Just wanted to keep folks in the loop.  It turns out that the Secrets
+> JS> API is still to young.  I asked about the format to store credentials
+> JS> in (as far as attributes), and got a response from a KDE developer
+> JS> that says it's still to young on their front.  They hope to have
+> JS> support in the next release of KDE.  But there's still the issue of
+> JS> what attributes to use.
+>
+> JS> With that information, I went ahead and created a
+> JS> gnome-credential-keyring that uses Gnome's Keyring facility.  I still
+> JS> need to do a few more things (mainly run it against Jeff's tests), but
+> JS> it's generally working.  Just wanted to keep folks in the loop.
+> JS> Hopefully, I can get patches out this weekend.
+>
+> Do you think the Secrets API has matured enough?  KDE has had a new
+> release since your post...
 
-the man page (git version 1.7.10.4) is a bit non-symmetric
-since git bisect has the start param, but when searching for "stop"
-(nothing more obvious than that, right?),
-one comes up empty --> usability issue.
+Yes, I think it has.  Several other applications appear to be using
+it, including some things considered "core" in Fedora--which is a good
+sign.
 
-The appropriate action complementary to start appears to be
-git bisect reset, thus its description definitely ought to include a "stop"
-keyword.
-
-Description as of 1.7.10.4 is
-
-       After a bisect session, to clean up the bisection state and
-return to
-       the original HEAD, issue the following command:
-
-           $ git bisect reset
-
-which could be changed into
-
-       After a bisect session, to clean up the bisection state and
-return to
-       the original HEAD (in other words, to "stop" bisect),
-       issue the following command:
-
-           $ git bisect reset
-
-Andreas Mohr
-
--- 
-GNU/Linux. It's not the software that's free, it's you.
+-John
