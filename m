@@ -1,58 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: segfault for git log --graph --no-walk --grep a
-Date: Fri, 8 Feb 2013 20:05:24 -0500
-Message-ID: <20130209010524.GB5469@sigill.intra.peff.net>
-References: <201302090052.22053.thom311@gmail.com>
- <7vsj56xsg5.fsf@alter.siamese.dyndns.org>
- <7vobfuxrns.fsf@alter.siamese.dyndns.org>
- <20130209002710.GA5570@sigill.intra.peff.net>
- <7vfw16xqvj.fsf@alter.siamese.dyndns.org>
- <7va9rexqii.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Permission denied on home dir results in fatal error as of
+ 1.8.1.1
+Date: Fri, 8 Feb 2013 17:05:34 -0800
+Message-ID: <20130209010534.GC8461@google.com>
+References: <CAECnihxpvtE1XejzHDCRBF=GkyBHmb53WDLa16Suiq=4SeYzvA@mail.gmail.com>
+ <7v6222xqc4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Haller <thom311@gmail.com>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 02:06:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nick Muerdter <stuff@nickm.org>
+X-From: git-owner@vger.kernel.org Sat Feb 09 02:06:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3yt8-0006Vy-Ka
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 02:05:54 +0100
+	id 1U3ytO-0006ha-NW
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 02:06:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932353Ab3BIBF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 20:05:28 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42701 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932276Ab3BIBF0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 20:05:26 -0500
-Received: (qmail 2343 invoked by uid 107); 9 Feb 2013 01:06:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Feb 2013 20:06:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2013 20:05:24 -0500
+	id S932368Ab3BIBFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 20:05:41 -0500
+Received: from mail-da0-f49.google.com ([209.85.210.49]:55542 "EHLO
+	mail-da0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932216Ab3BIBFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 20:05:40 -0500
+Received: by mail-da0-f49.google.com with SMTP id t11so2036223daj.8
+        for <git@vger.kernel.org>; Fri, 08 Feb 2013 17:05:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=IlEOyx/ubE2qgeNBXFN8BsuNRfmgTDMcFF/3dnCB6b4=;
+        b=H1OBUlUSKXGyElv6/v54xih+WTaeStNuGHN+kcqLDmRpj54oOuPdfEN9eWLVDFzW2k
+         ILtwwHNA6myZGYjmv+rErHqv705V2Pv/tlCxN65e7t5XiqJ3Ejqkbh36XVfeip1S/JDq
+         LLNCDcrV3mI4fKX84ep/TQHtW7/sALNPO9pngyFMSXSMZKGzYQftFrneHA5yg/PpkHH2
+         NPAXzLyVsWl8MIlZyHxAvw9fHTD1M7S2ekOgDKSN2+3QTQMM0+sqTtkEVRaEsgLi1h5E
+         Ucj+hizabdVHJ5wZsHCyiOzl5cysrsM7fvLsKRQZd4GMadmuWUFDHwx2CTIsFfOdNjF+
+         ACiQ==
+X-Received: by 10.66.87.8 with SMTP id t8mr22943719paz.28.1360371939421;
+        Fri, 08 Feb 2013 17:05:39 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id q4sm58501652paz.20.2013.02.08.17.05.37
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 08 Feb 2013 17:05:37 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7va9rexqii.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7v6222xqc4.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215839>
 
-On Fri, Feb 08, 2013 at 04:47:01PM -0800, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> Nick Muerdter <stuff@nickm.org> writes:
 
-> > Yeah, that actually is a good point.  We should be using logmsg_reencode
-> > so that we look for strings in the user's encoding.
-> 
-> Perhaps like this.  Just like the previous one (which should be
-> discarded), this makes the function always use the temporary strbuf,
-> so doing this upfront actually loses more code than it adds ;-)
+>> As of git 1.8.1.1 and above (tested up to 1.8.1.3), if the home
+>> directory can't be accessed, it results in a fatal error. In git 1.8.1
+>> and below this same setup just resulted in warnings. Was this an
+>> intentional change?
+>
+> I think this was done to not just help diagnosing misconfiguration,
+> but to prevent an unintended misconfiguration from causing problems
+> (e.g. the user thinks user.name is set up correctly, but forbids Git
+> from reading it from the configuration files, and ends up creating
+> commits under wrong names).
 
-I like code simplification, but I worry a little about paying for the
-extra copy in the common case. I did a best-of-five "git rev-list
---count --grep=foo HEAD" before and after your patch, though, and the
-difference was well within the noise. So maybe it's not worth caring
-about.
+Yes, that's right.  Sometimes ignoring settings has bad consequences,
+so git errors out to let the user intervene and decide whether the
+inaccessible settings are important.
 
--Peff
+Thanks,
+Jonathan
