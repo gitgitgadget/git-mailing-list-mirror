@@ -1,89 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git bisect result off by 1 commit
-Date: Fri, 08 Feb 2013 18:03:54 -0800
-Message-ID: <7v1ucqxmyd.fsf@alter.siamese.dyndns.org>
-References: <1360374853.17632.182.camel@schen9-DESK>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: inotify to minimize stat() calls
+Date: Sat, 9 Feb 2013 09:10:25 +0700
+Message-ID: <CACsJy8DW=tkEy2iOAZxQ+ZyVQ+L11JsPcSxrES5YY7gECmX7UQ@mail.gmail.com>
+References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
+ <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, ak <ak@linux.intel.com>
-To: Tim Chen <tim.c.chen@linux.intel.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 03:04:24 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 03:11:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3znh-0008H0-1I
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 03:04:21 +0100
+	id 1U3zuU-0003qg-Mw
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 03:11:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760493Ab3BICD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 21:03:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37953 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756077Ab3BICD5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 21:03:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C4E7BFB9;
-	Fri,  8 Feb 2013 21:03:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BXXKTKm0CuoNFSxiDMijt9SmEdQ=; b=Yz0mT6
-	nqqSuZrl0W3sUFKqz3qXBQlWX0II8nJGcfQd6vfqqp5z61cTXhgBmGervgaBNXcu
-	CnwLZuZDFw+0cj/KtxazxGlt52All+EHaESBCevL25An+tXm3DQnABZSNSST3h5p
-	uz14R1A+/l3wLBtzp/6p1PhN2ffSHr9uYxyH0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lcEIeDifAILvokGUKGP8K1aotXvO4lF2
-	Q5fH6tGK1xZ10RGDO5Q+rl/cWMvV5gT1JYt8VA0XelLXEVwl91wRSn/gULqp8PyU
-	q8oMHoBEyK71/2RbKZWoBQb/xwviJQLBNyCsbq2ZNgLtC1tm5CKUP3elkr8bid6x
-	G+glj0r5pB4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 713C2BFB8;
-	Fri,  8 Feb 2013 21:03:56 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC633BFAE; Fri,  8 Feb 2013
- 21:03:55 -0500 (EST)
-In-Reply-To: <1360374853.17632.182.camel@schen9-DESK> (Tim Chen's message of
- "Fri, 08 Feb 2013 17:54:13 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F5BAEA02-725C-11E2-8926-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760542Ab3BICK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 21:10:58 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:33327 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760541Ab3BICK5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 21:10:57 -0500
+Received: by mail-oa0-f46.google.com with SMTP id k1so4678037oag.19
+        for <git@vger.kernel.org>; Fri, 08 Feb 2013 18:10:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=IRl7pLu0/K05vPslIqL8fGOAk7HdfBkE9eP+wxTSvVI=;
+        b=FM05RCcGACILta/QF1V5p4WSag6u+FYotGxpO5jDBX7jGVLLhkPghUdAo1QiLe69KK
+         5D1jb+5XTKx4jMIpfWMAW5RP5mfJe0w5WVjA3yuVCMqrvP2Hr8CSyPljb3wRJRMTI5D8
+         PKiZ/hvvu5hZCRBtzmqdPWZ5DUTJ17lmk7m5iVsYtYG/O56Tz8bGK8V1Vau0pMunpHfL
+         FUf0cMI/6MbjCh5A2J4P5MURW+n0OyvLCsDCGiGy7Qvxl8oxtE/JLCyVuzB2WJbJh5EE
+         08Ta3qoEL1DmSmY+YAq6TB/Aw1v+Iz9FTffU3X9gNzJ3o6aAodP5YXJooquCwY+O8vSt
+         aaUQ==
+X-Received: by 10.60.7.167 with SMTP id k7mr5967759oea.20.1360375856025; Fri,
+ 08 Feb 2013 18:10:56 -0800 (PST)
+Received: by 10.182.129.46 with HTTP; Fri, 8 Feb 2013 18:10:25 -0800 (PST)
+In-Reply-To: <7va9rezaoy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215845>
 
-Tim Chen <tim.c.chen@linux.intel.com> writes:
-
-> When I am doing a git bisect to track down a problem commit on the Linux 
-> kernel tree, I found that git bisect actually led me to a patch that's one
-> before the problem commit.
+On Sat, Feb 9, 2013 at 5:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> In particular,
+>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>
+>>> ...  Will Git ever
+>>> consider using inotify on Linux?  What is the downside?
+>>
+>> I think this has come up from time to time, but my understanding is
+>> that nobody thought things through to find a good layer in the
+>> codebase to interface to an external daemon that listens to inotify
+>> events yet.  It is not something like "somebody decreed that we
+>> would never consider because of such and such downsides."  We are
+>> not there yet.
 >
-> $ git bisect replay bisectlog 
-> Previous HEAD position was d54b1a9... perf script: Remove use of die/exit
-> HEAD is now at a0d271c... Linux 3.6
-> Bisecting: 0 revisions left to test after this (roughly 0 steps)
-> [d54b1a9e0eaca92cde678d19bd82b9594ed00450] perf script: Remove use of die/exit
+> I checked read-cache.c and preload-index.c code.  To get the
+> discussion rolling, I think something like the outline below may be
+> a good starting point and a feasible weekend hack for somebody
+> competent:
 >
-> However, the patch that is problematic is the one before the one git bisect indicated.
-> [commit 8d3eca20b9f31cf10088e283d704f6a71b9a4ee2].
+>  * At the beginning of preload_index(), instead of spawning the
+>    worker thread and doing the lstat() check ourselves, we open a
+>    socket to our daemon (see below) that watches this repository and
 
-Looks perfectly normal to me.  The message above:
+Can we replace "open a socket to our daemon" with "open a special file
+in .git to get stat data written by our daemon"? TCP/IP socket means
+system-wide daemon, not attractive. UNIX socket is not available on
+Windows (although there may be named pipe, I don't know).
 
-> HEAD is now at a0d271c... Linux 3.6
-> Bisecting: 0 revisions left to test after this (roughly 0 steps)
-> [d54b1a9e0eaca92cde678d19bd82b9594ed00450] perf script: Remove use of die/exit
+>    make a request for lstat update.  The request will contain:
+>
+>     - The SHA1 checksum of the index file we just read (to ensure
+>       that we and our daemon share the same baseline to
+>       communicate); and
+>
+>     - the pathspec data.
+>
+>    Our daemon, if it already has a fresh data available, will give
+>    us a list of <path, lstat result>.  Our main process runs a loop
+>    that is equivalent to what preload_thread() runs but uses the
+>    lstat() data we obtained from the daemon.  If our daemon says it
+>    does not have a fresh data (or somehow our daemon is dead), we do
+>    the work ourselves.
+>
+>  * Our daemon watches the index file and the working tree, and
+>    waits for the above consumer.  First it reads the index (and
+>    remembers what it read), and whenever an inotify event comes,
+>    does the lstat() and remembers the result.  It never writes
+>    to the index, and does not hold the index lock.  Whenever the
+>    index file changes, it needs to reload the index, and discard
+>    lstat() data it already has for paths that are lost from the
+>    updated index.
 
-is asking you to test the commit at d54b1a9e and tell it the result
-of the test.  The message says "0 left to test *after* this";
-doesn't it mean you still need to do *this*?
 
-A bisecct session ends when it tells you
-
-	XXXXXX is the first bad commit
-
-which I do not see in the above.  You seem to have stopped before
-that happens.
+-- 
+Duy
