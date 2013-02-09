@@ -1,105 +1,86 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: inotify to minimize stat() calls
-Date: Sat, 9 Feb 2013 09:10:25 +0700
-Message-ID: <CACsJy8DW=tkEy2iOAZxQ+ZyVQ+L11JsPcSxrES5YY7gECmX7UQ@mail.gmail.com>
-References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
- <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org>
+From: Nick Muerdter <stuff@nickm.org>
+Subject: Re: Permission denied on home dir results in fatal error as of 1.8.1.1
+Date: Fri, 8 Feb 2013 19:33:27 -0700
+Message-ID: <CAECnihwGK8+cHJYQCVMtTwRnrh5V3T-v2-8dM2rd=ziRUA2x5A@mail.gmail.com>
+References: <CAECnihxpvtE1XejzHDCRBF=GkyBHmb53WDLa16Suiq=4SeYzvA@mail.gmail.com>
+	<7v6222xqc4.fsf@alter.siamese.dyndns.org>
+	<20130209010534.GC8461@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 03:11:29 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 03:33:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3zuU-0003qg-Mw
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 03:11:23 +0100
+	id 1U40GF-0000mu-TI
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 03:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760542Ab3BICK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 21:10:58 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:33327 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760541Ab3BICK5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 21:10:57 -0500
-Received: by mail-oa0-f46.google.com with SMTP id k1so4678037oag.19
-        for <git@vger.kernel.org>; Fri, 08 Feb 2013 18:10:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=IRl7pLu0/K05vPslIqL8fGOAk7HdfBkE9eP+wxTSvVI=;
-        b=FM05RCcGACILta/QF1V5p4WSag6u+FYotGxpO5jDBX7jGVLLhkPghUdAo1QiLe69KK
-         5D1jb+5XTKx4jMIpfWMAW5RP5mfJe0w5WVjA3yuVCMqrvP2Hr8CSyPljb3wRJRMTI5D8
-         PKiZ/hvvu5hZCRBtzmqdPWZ5DUTJ17lmk7m5iVsYtYG/O56Tz8bGK8V1Vau0pMunpHfL
-         FUf0cMI/6MbjCh5A2J4P5MURW+n0OyvLCsDCGiGy7Qvxl8oxtE/JLCyVuzB2WJbJh5EE
-         08Ta3qoEL1DmSmY+YAq6TB/Aw1v+Iz9FTffU3X9gNzJ3o6aAodP5YXJooquCwY+O8vSt
-         aaUQ==
-X-Received: by 10.60.7.167 with SMTP id k7mr5967759oea.20.1360375856025; Fri,
- 08 Feb 2013 18:10:56 -0800 (PST)
-Received: by 10.182.129.46 with HTTP; Fri, 8 Feb 2013 18:10:25 -0800 (PST)
-In-Reply-To: <7va9rezaoy.fsf@alter.siamese.dyndns.org>
+	id S1760537Ab3BICd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 21:33:28 -0500
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:45719 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753787Ab3BICd2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 21:33:28 -0500
+Received: by mail-qc0-f172.google.com with SMTP id b25so1672383qca.3
+        for <git@vger.kernel.org>; Fri, 08 Feb 2013 18:33:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :x-gm-message-state;
+        bh=Twmf/l7Te62b23om5Prelx3MJquNTeoIYXSVLU55r7Q=;
+        b=AW8HKmu9lGDCY796BlXWMp29RHN7nXoNTdTcHGqglps87VCYORyPznk7K86PFoV0o2
+         bwnDQiBoGcLey2Wv2TzQs29yg6IDCYBVUBNCeQRCRerl6/w9qW06/Vpv9WTZo85KHhwF
+         NWoesafSSaJ2Km/kdq/yx2ZsJF0FCEJ4iGX1tytxk/Oju0uBvnpjW697eIHS0zg7pwPL
+         16sxVHAmo4+0CypUI5qxUUksHbZeM9yC3m8WmvuwuGTi4jpq+dTeeQsUHSspkpf9uz8Q
+         O6q/SgFA63lrUQhnCPrdtDMlW/5BHMRsXlkkhxprj2/yLdNrTJ6flNn6mV2Me5CsJeJC
+         9GiA==
+X-Received: by 10.49.34.146 with SMTP id z18mr3201659qei.29.1360377207303;
+ Fri, 08 Feb 2013 18:33:27 -0800 (PST)
+Received: by 10.49.39.37 with HTTP; Fri, 8 Feb 2013 18:33:27 -0800 (PST)
+In-Reply-To: <20130209010534.GC8461@google.com>
+X-Google-Sender-Auth: kg1CN7IUsZiUBhmxkurFJPlE7Ts
+X-Gm-Message-State: ALoCoQmcCADRr158TiZnOJC2Wo7tVrgjFXZSiDlt5swv/a9FYb7XD98FjVfYu2T3Gf1Utrt0gyBo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215846>
 
-On Sat, Feb 9, 2013 at 5:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Feb 8, 2013 at 6:05 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Junio C Hamano wrote:
+>> Nick Muerdter <stuff@nickm.org> writes:
 >
->> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>> As of git 1.8.1.1 and above (tested up to 1.8.1.3), if the home
+>>> directory can't be accessed, it results in a fatal error. In git 1.8.1
+>>> and below this same setup just resulted in warnings. Was this an
+>>> intentional change?
 >>
->>> ...  Will Git ever
->>> consider using inotify on Linux?  What is the downside?
->>
->> I think this has come up from time to time, but my understanding is
->> that nobody thought things through to find a good layer in the
->> codebase to interface to an external daemon that listens to inotify
->> events yet.  It is not something like "somebody decreed that we
->> would never consider because of such and such downsides."  We are
->> not there yet.
+>> I think this was done to not just help diagnosing misconfiguration,
+>> but to prevent an unintended misconfiguration from causing problems
+>> (e.g. the user thinks user.name is set up correctly, but forbids Git
+>> from reading it from the configuration files, and ends up creating
+>> commits under wrong names).
 >
-> I checked read-cache.c and preload-index.c code.  To get the
-> discussion rolling, I think something like the outline below may be
-> a good starting point and a feasible weekend hack for somebody
-> competent:
->
->  * At the beginning of preload_index(), instead of spawning the
->    worker thread and doing the lstat() check ourselves, we open a
->    socket to our daemon (see below) that watches this repository and
+> Yes, that's right.  Sometimes ignoring settings has bad consequences,
+> so git errors out to let the user intervene and decide whether the
+> inaccessible settings are important.
 
-Can we replace "open a socket to our daemon" with "open a special file
-in .git to get stat data written by our daemon"? TCP/IP socket means
-system-wide daemon, not attractive. UNIX socket is not available on
-Windows (although there may be named pipe, I don't know).
+Thanks for the quick response.
 
->    make a request for lstat update.  The request will contain:
->
->     - The SHA1 checksum of the index file we just read (to ensure
->       that we and our daemon share the same baseline to
->       communicate); and
->
->     - the pathspec data.
->
->    Our daemon, if it already has a fresh data available, will give
->    us a list of <path, lstat result>.  Our main process runs a loop
->    that is equivalent to what preload_thread() runs but uses the
->    lstat() data we obtained from the daemon.  If our daemon says it
->    does not have a fresh data (or somehow our daemon is dead), we do
->    the work ourselves.
->
->  * Our daemon watches the index file and the working tree, and
->    waits for the above consumer.  First it reads the index (and
->    remembers what it read), and whenever an inotify event comes,
->    does the lstat() and remembers the result.  It never writes
->    to the index, and does not hold the index lock.  Whenever the
->    index file changes, it needs to reload the index, and discard
->    lstat() data it already has for paths that are lost from the
->    updated index.
+Just for reference, the specific issue I ran into stems from using
+Chef to provision servers. Chef gets run as root but can perform the
+git commands as a different user on the system. The way this appears
+to be implemented is to fork, set the uid, and then execute git. But
+since the HOME environment variable is still set to /root, this leads
+to this fatal error. This can obviously be fixed on the script's end
+by properly determining and setting the HOME before executing git, but
+more care has to be taken, and I'm not sure how common this fork + set
+uid + exec approach in other programs might be. But I'll file a bug
+with Chef to get it fixed there.
 
-
--- 
-Duy
+Thanks again,
+Nick
