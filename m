@@ -1,71 +1,76 @@
-From: Andreas Mohr <andi@lisas.de>
-Subject: Re: [PATCH] git-bisect.txt: clarify that reset finishes bisect
-Date: Sun, 10 Feb 2013 00:24:55 +0100
-Message-ID: <20130209232455.GA31027@rhlx01.hs-esslingen.de>
-References: <5e23d4c420f150b700dd5100bffb38d32f874200.1360439176.git.git@drmicha.warpmail.net>
- <7v8v6xw3wf.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/8] Hiding refs
+Date: Sat, 09 Feb 2013 15:23:47 -0800
+Message-ID: <7v38x5ul4s.fsf@alter.siamese.dyndns.org>
+References: <1359571542-19852-1-git-send-email-gitster@pobox.com>
+ <5110BD18.3080608@alum.mit.edu> <7v8v72u0vw.fsf@alter.siamese.dyndns.org>
+ <51122D9D.9040100@alum.mit.edu> <87pq0c15h3.fsf@59A2.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Andreas Mohr <andi@lisas.de>
-To: Junio C Hamano <gitster@pobox.com>
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>
+To: Jed Brown <jed@59A2.org>
 X-From: git-owner@vger.kernel.org Sun Feb 10 00:25:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4JnW-0007AU-NL
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 00:25:31 +0100
+	id 1U4JnW-0007AU-7n
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 00:25:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760875Ab3BIXY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2013 18:24:57 -0500
-Received: from rhlx01.hs-esslingen.de ([129.143.116.10]:48142 "EHLO
-	rhlx01.hs-esslingen.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754832Ab3BIXY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2013 18:24:57 -0500
-Received: by rhlx01.hs-esslingen.de (Postfix, from userid 102)
-	id B7C91A2C52; Sun, 10 Feb 2013 00:24:55 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7v8v6xw3wf.fsf@alter.siamese.dyndns.org>
-X-Priority: none
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1760863Ab3BIXXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2013 18:23:51 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54201 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754832Ab3BIXXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2013 18:23:50 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D330B205;
+	Sat,  9 Feb 2013 18:23:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=c6jc28KbqXldtyAY9mYlqU0CGd8=; b=aEqhxn
+	zfGBDJCphMWvP1FnNXsWQlATWaGQVbXogMPXSe5p6ZcfzAdJNqlPoG5UGw/81qfU
+	/W1pJaExy+nFH3lXj+YEsVTmpg4WsdGOgWi5u3kFd1X5WiMYODhIV6dm07341cKH
+	Tzl+wa4uOMkP2W6jf/fujDPkK8ipsfC4WPLqw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mpqj7huBlB28emLlOydIfbHbhXVXxRLJ
+	9mBk7y8G/tLw6Q05YVXAR1HGy8NQ/4HJWYS/QmLOz539G47GOEaIrl+W+aTDK8RG
+	cs1aGmzDSKE+VDM5KL/s08CgUhcqb0btrZ8dzTg/hhRc1WkBcH2Trdr2BBYzDwyH
+	ErYUITmOcYk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FD8DB203;
+	Sat,  9 Feb 2013 18:23:49 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2ACACB202; Sat,  9 Feb 2013
+ 18:23:49 -0500 (EST)
+In-Reply-To: <87pq0c15h3.fsf@59A2.org> (Jed Brown's message of "Thu, 07 Feb
+ 2013 09:58:00 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C20C7C12-730F-11E2-A48F-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215883>
 
-Hi,
+Jed Brown <jed@59A2.org> writes:
 
-On Sat, Feb 09, 2013 at 01:53:04PM -0800, Junio C Hamano wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> >  After a bisect session, to clean up the bisection state and return to
-> > -the original HEAD, issue the following command:
-> > +the original HEAD (i.e., to finish bisect), issue the following command:
-> 
-> Makes sense.
+> I believe that my use case would be well supported if git could push and
+> pull unadvertised refs, as long as basic operations were not slowed down
+> by the existence of a very large number of such refs.
 
-Doesn't ;)
+I am not sure about "pushing" part, but the jc/fetch-raw-sha1 topic
+(split from the main jc/hidden-refs topic) should allow your script,
+after the client learns the set of smudged object names, to ask for
 
-[aww, very sorry for this blunt reply]
+    git fetch $there $sha1_1 $sha1_2 ...
 
-The main point of my mail was to stretch the (whether actually intended)
-*perceived* start <-> stop symmetry
-(which a *user* quite likely would end up searching for in the document,
-and fail to find any "stop" keyword, thus not getting to the relevant
-reset parameter section in time).
-Quite likely I failed to properly word things to make that obvious,
-in my quickly carved mail.
+or
 
+    git fetch $there $sha1_1:refs/fat/$sha1_1 $sha1_2:refs/fat/$sha1_2 ...
 
-To clarify intent behind these docs, I would thus propose to have
-the sentence improved to something quite similar to
-
-the original HEAD (i.e., to finish - "stop" a started - bisect),
-issue the following command:
-
-
-Thanks a ton for your immediate handling of my wishlist item!
-
-Andreas Mohr
+I think.
