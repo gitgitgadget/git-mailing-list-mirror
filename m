@@ -1,71 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Permission denied on home dir results in fatal error as of
- 1.8.1.1
-Date: Fri, 08 Feb 2013 16:50:51 -0800
-Message-ID: <7v6222xqc4.fsf@alter.siamese.dyndns.org>
-References: <CAECnihxpvtE1XejzHDCRBF=GkyBHmb53WDLa16Suiq=4SeYzvA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: segfault for git log --graph --no-walk --grep a
+Date: Fri, 8 Feb 2013 20:05:24 -0500
+Message-ID: <20130209010524.GB5469@sigill.intra.peff.net>
+References: <201302090052.22053.thom311@gmail.com>
+ <7vsj56xsg5.fsf@alter.siamese.dyndns.org>
+ <7vobfuxrns.fsf@alter.siamese.dyndns.org>
+ <20130209002710.GA5570@sigill.intra.peff.net>
+ <7vfw16xqvj.fsf@alter.siamese.dyndns.org>
+ <7va9rexqii.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nick Muerdter <stuff@nickm.org>
-X-From: git-owner@vger.kernel.org Sat Feb 09 01:51:18 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Haller <thom311@gmail.com>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 02:06:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3yey-0005Rw-Ti
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 01:51:17 +0100
+	id 1U3yt8-0006Vy-Ka
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 02:05:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932274Ab3BIAuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 19:50:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55729 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932076Ab3BIAux (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 19:50:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 126EEB4A3;
-	Fri,  8 Feb 2013 19:50:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AAGTMbru1leFhNakw8MJfJ+bipY=; b=BPXRuy
-	DlalkfmPYtnaqObTnaurJkNxQspvKGkq+XSu9ztjOK5TqpTd7Rb5tA0QAOFmP/IE
-	12HVb1v+TifAOUh/Tux55IVIqAmOtOtb7ibVao+Ttqqbv0byPG3s7FK+U8bezG1E
-	bNfnk8ckLCNvLaaRfuJsMnOBWMVB7/wEbiqvU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MoWg8cVqZWTBR8oroO2UtPUIM5JjAcGU
-	Lxe+qBiM3R9EBYkfH2m36U0pvUFfJyBiwcpQMeiePYdoxWaK7LqW2FVMxtHxyR5X
-	lIYmUJS42rLr3ygCebzl4zC3dVgYRLSITsrm7hT/trKKcezFL0DfsAUgradF8vSZ
-	oufFT2+cV8s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06A55B4A2;
-	Fri,  8 Feb 2013 19:50:53 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F3CBB49F; Fri,  8 Feb 2013
- 19:50:52 -0500 (EST)
-In-Reply-To: <CAECnihxpvtE1XejzHDCRBF=GkyBHmb53WDLa16Suiq=4SeYzvA@mail.gmail.com> (Nick
- Muerdter's message of "Fri, 8 Feb 2013 17:40:19 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C0FDC564-7252-11E2-9347-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932353Ab3BIBF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 20:05:28 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42701 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932276Ab3BIBF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 20:05:26 -0500
+Received: (qmail 2343 invoked by uid 107); 9 Feb 2013 01:06:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Feb 2013 20:06:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2013 20:05:24 -0500
+Content-Disposition: inline
+In-Reply-To: <7va9rexqii.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215838>
 
-Nick Muerdter <stuff@nickm.org> writes:
+On Fri, Feb 08, 2013 at 04:47:01PM -0800, Junio C Hamano wrote:
 
-> As of git 1.8.1.1 and above (tested up to 1.8.1.3), if the home
-> directory can't be accessed, it results in a fatal error. In git 1.8.1
-> and below this same setup just resulted in warnings. Was this an
-> intentional change?
+> > Yeah, that actually is a good point.  We should be using logmsg_reencode
+> > so that we look for strings in the user's encoding.
+> 
+> Perhaps like this.  Just like the previous one (which should be
+> discarded), this makes the function always use the temporary strbuf,
+> so doing this upfront actually loses more code than it adds ;-)
 
-I think this was done to not just help diagnosing misconfiguration,
-but to prevent an unintended misconfiguration from causing problems
-(e.g. the user thinks user.name is set up correctly, but forbids Git
-from reading it from the configuration files, and ends up creating
-commits under wrong names).
+I like code simplification, but I worry a little about paying for the
+extra copy in the common case. I did a best-of-five "git rev-list
+--count --grep=foo HEAD" before and after your patch, though, and the
+difference was well within the noise. So maybe it's not worth caring
+about.
 
-Somebody please correct me if this weren't the case...
+-Peff
