@@ -1,77 +1,176 @@
 From: Ben Walton <bdwalton@gmail.com>
-Subject: [PATCH 3/3] Avoid non-portable strftime format specifiers in git-cvsimport
-Date: Sat,  9 Feb 2013 21:46:58 +0000
-Message-ID: <1360446418-12280-4-git-send-email-bdwalton@gmail.com>
+Subject: [PATCH 1/3] Move Git::SVN::get_tz to Git::get_tz_offset
+Date: Sat,  9 Feb 2013 21:46:56 +0000
+Message-ID: <1360446418-12280-2-git-send-email-bdwalton@gmail.com>
 References: <1360446418-12280-1-git-send-email-bdwalton@gmail.com>
 Cc: git@vger.kernel.org, Ben Walton <bdwalton@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Feb 09 22:47:34 2013
+X-From: git-owner@vger.kernel.org Sat Feb 09 22:47:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4IGj-0000CF-H2
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 22:47:33 +0100
+	id 1U4IGx-0000KT-7Y
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 22:47:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932635Ab3BIVrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2013 16:47:11 -0500
-Received: from jimi.chass.utoronto.ca ([128.100.160.32]:58079 "EHLO
+	id S932631Ab3BIVrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2013 16:47:09 -0500
+Received: from jimi.chass.utoronto.ca ([128.100.160.32]:58075 "EHLO
 	jimi.chass.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932604Ab3BIVrI (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S932574Ab3BIVrI (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 9 Feb 2013 16:47:08 -0500
-Received: from hendrix.chass.utoronto.ca ([128.100.160.33]:52485 ident=93)
+Received: from hendrix.chass.utoronto.ca ([128.100.160.33]:52484 ident=93)
 	  by jimi.chass.utoronto.ca with esmtp  (Exim 4.76)
 	 (envelope-from <bwalton@benandwen.net>)
-	 id 1U4IGI-0001MD-SN ; Sat, 09 Feb 2013 16:47:06 -0500
-Received: from 86-42-148-161-dynamic.b-ras1.bbh.dublin.eircom.net ([86.42.148.161]:39737 helo=neilyoung)
+	 id 1U4IGI-0001MC-SM ; Sat, 09 Feb 2013 16:47:06 -0500
+Received: from 86-42-148-161-dynamic.b-ras1.bbh.dublin.eircom.net ([86.42.148.161]:39734 helo=neilyoung)
 	 (auth info: dovecot_plain:bwalton@chass.utoronto.ca) by hendrix.chass.utoronto.ca with esmtpsa (TLSv1:AES128-SHA:128)
 	 (Exim 4.76)
 	 (envelope-from <bwalton@benandwen.net>)
-	 id 1U4IGF-0007jb-Qn ; Sat, 09 Feb 2013 16:47:04 -0500
+	 id 1U4IGF-0007jY-Qh ; Sat, 09 Feb 2013 16:47:04 -0500
 Received: from bwalton by neilyoung with local (Exim 4.80)
 	(envelope-from <bwalton@benandwen.net>)
-	id 1U4IGM-0003DB-4u; Sat, 09 Feb 2013 21:47:10 +0000
+	id 1U4IGL-0003D4-QY; Sat, 09 Feb 2013 21:47:09 +0000
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1360446418-12280-1-git-send-email-bdwalton@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215874>
 
-Neither %s or %z are portable strftime format specifiers.  There is no
-need for %s in git-cvsimport as the supplied time is already in
-seconds since the epoch.  For %z, use the function get_tz_offset
-provided by Git.pm instead.
+This function has utility outside of the SVN module for any routine
+that needs the equivalent of GNU strftime's %z formatting option.
+Move it to the top-level Git.pm so that non-SVN modules don't need to
+import the SVN module to use it.
+
+The rename makes the purpose of the function clearer.
 
 Signed-off-by: Ben Walton <bdwalton@gmail.com>
 ---
- git-cvsimport.perl |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ perl/Git.pm         |   23 +++++++++++++++++++++++
+ perl/Git/SVN.pm     |   12 ++----------
+ perl/Git/SVN/Log.pm |    8 ++++++--
+ 3 files changed, 31 insertions(+), 12 deletions(-)
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 0a31ebd..344f120 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -26,6 +26,7 @@ use IO::Socket;
- use IO::Pipe;
- use POSIX qw(strftime tzset dup2 ENOENT);
- use IPC::Open2;
-+use Git qw(get_tz_offset);
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 931047c..5649bcc 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -59,6 +59,7 @@ require Exporter;
+                 command_bidi_pipe command_close_bidi_pipe
+                 version exec_path html_path hash_object git_cmd_try
+                 remote_refs prompt
++                get_tz_offset
+                 temp_acquire temp_release temp_reset temp_path);
  
- $SIG{'PIPE'}="IGNORE";
- set_timezone('UTC');
-@@ -864,7 +865,9 @@ sub commit {
- 	}
  
- 	set_timezone($author_tz);
--	my $commit_date = strftime("%s %z", localtime($date));
-+	# $date is in the seconds since epoch format
-+	my $tz_offset = get_tz_offset($date);
-+	my $commit_date = "$date $tz_offset";
- 	set_timezone('UTC');
- 	$ENV{GIT_AUTHOR_NAME} = $author_name;
- 	$ENV{GIT_AUTHOR_EMAIL} = $author_email;
+@@ -102,6 +103,7 @@ use Error qw(:try);
+ use Cwd qw(abs_path cwd);
+ use IPC::Open2 qw(open2);
+ use Fcntl qw(SEEK_SET SEEK_CUR);
++use Time::Local qw(timelocal);
+ }
+ 
+ 
+@@ -511,6 +513,27 @@ C<git --html-path>). Useful mostly only internally.
+ 
+ sub html_path { command_oneline('--html-path') }
+ 
++
++=item get_tz_offset ( TIME )
++
++Return the time zone offset from GMT in the form +/-HHMM where HH is
++the number of hours from GMT and MM is the number of minutes.  This is
++the equivalent of what strftime("%z", ...) would provide on a GNU
++platform.
++
++If TIME is not supplied, the current local time is used.
++
++=cut
++
++sub get_tz_offset {
++	# some systmes don't handle or mishandle %z, so be creative.
++	my $t = shift || time;
++	my $gm = timelocal(gmtime($t));
++	my $sign = qw( + + - )[ $t <=> $gm ];
++	return sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
++}
++
++
+ =item prompt ( PROMPT , ISPASSWORD  )
+ 
+ Query user C<PROMPT> and return answer from user.
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 490e330..0ebc68a 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -11,7 +11,6 @@ use Carp qw/croak/;
+ use File::Path qw/mkpath/;
+ use File::Copy qw/copy/;
+ use IPC::Open3;
+-use Time::Local;
+ use Memoize;  # core since 5.8.0, Jul 2002
+ use Memoize::Storable;
+ use POSIX qw(:signal_h);
+@@ -22,6 +21,7 @@ use Git qw(
+     command_noisy
+     command_output_pipe
+     command_close_pipe
++    get_tz_offset
+ );
+ use Git::SVN::Utils qw(
+ 	fatal
+@@ -1311,14 +1311,6 @@ sub get_untracked {
+ 	\@out;
+ }
+ 
+-sub get_tz {
+-	# some systmes don't handle or mishandle %z, so be creative.
+-	my $t = shift || time;
+-	my $gm = timelocal(gmtime($t));
+-	my $sign = qw( + + - )[ $t <=> $gm ];
+-	return sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
+-}
+-
+ # parse_svn_date(DATE)
+ # --------------------
+ # Given a date (in UTC) from Subversion, return a string in the format
+@@ -1351,7 +1343,7 @@ sub parse_svn_date {
+ 			delete $ENV{TZ};
+ 		}
+ 
+-		my $our_TZ = get_tz();
++		my $our_TZ = get_tz_offset();
+ 
+ 		# This converts $epoch_in_UTC into our local timezone.
+ 		my ($sec, $min, $hour, $mday, $mon, $year,
+diff --git a/perl/Git/SVN/Log.pm b/perl/Git/SVN/Log.pm
+index 3cc1c6f..3f8350a 100644
+--- a/perl/Git/SVN/Log.pm
++++ b/perl/Git/SVN/Log.pm
+@@ -2,7 +2,11 @@ package Git::SVN::Log;
+ use strict;
+ use warnings;
+ use Git::SVN::Utils qw(fatal);
+-use Git qw(command command_oneline command_output_pipe command_close_pipe);
++use Git qw(command
++           command_oneline
++           command_output_pipe
++           command_close_pipe
++           get_tz_offset);
+ use POSIX qw/strftime/;
+ use constant commit_log_separator => ('-' x 72) . "\n";
+ use vars qw/$TZ $limit $color $pager $non_recursive $verbose $oneline
+@@ -119,7 +123,7 @@ sub run_pager {
+ sub format_svn_date {
+ 	my $t = shift || time;
+ 	require Git::SVN;
+-	my $gmoff = Git::SVN::get_tz($t);
++	my $gmoff = get_tz_offset($t);
+ 	return strftime("%Y-%m-%d %H:%M:%S $gmoff (%a, %d %b %Y)", localtime($t));
+ }
+ 
 -- 
 1.7.10.4
