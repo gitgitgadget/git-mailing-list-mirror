@@ -1,75 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Feature request: Allow extracting revisions into directories
-Date: Sat, 09 Feb 2013 15:00:28 -0800
-Message-ID: <7vehgpum7n.fsf@alter.siamese.dyndns.org>
-References: <1359901085.24730.11.camel@t520> <510E8F82.9050306@gmail.com>
- <1359915086.24730.19.camel@t520> <510F03FC.6080501@gmail.com>
- <CABURp0rMk-W8VMRhXoR9YYQSwjWTfPbXz5mhPX3-HKsBSu5_mw@mail.gmail.com>
- <1360425499.3369.10.camel@t520>
+Subject: Re: [PATCH v2 06/10] sequencer.c: teach append_signoff how to detect
+ duplicate s-o-b
+Date: Sat, 09 Feb 2013 15:06:05 -0800
+Message-ID: <7v7gmhulya.fsf@alter.siamese.dyndns.org>
+References: <1358757627-16682-1-git-send-email-drafnel@gmail.com>
+ <1358757627-16682-7-git-send-email-drafnel@gmail.com>
+ <20130122083825.GG6085@elie.Belkin>
+ <CA+sFfMcyupLGPt8-3PWMzwgGR3zrm4ZfA-7KwBh5VkMXmhuTKQ@mail.gmail.com>
+ <7v7gmy12op.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Phil Hord <phil.hord@gmail.com>
-To: Robert Clausecker <fuzxxl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 00:00:59 2013
+Cc: Jonathan Nieder <jrnieder@gmail.com>, pclouds@gmail.com,
+	git@vger.kernel.org, Brandon Casey <bcasey@nvidia.com>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 00:06:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4JPh-0005RF-SE
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 00:00:54 +0100
+	id 1U4JVB-0007kp-Ci
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 00:06:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758543Ab3BIXAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2013 18:00:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41371 "EHLO
+	id S1758543Ab3BIXGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Feb 2013 18:06:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44769 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758441Ab3BIXAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2013 18:00:30 -0500
+	id S1756349Ab3BIXGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Feb 2013 18:06:08 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B288C7FE;
-	Sat,  9 Feb 2013 18:00:30 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02E99C9E0;
+	Sat,  9 Feb 2013 18:06:08 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yqcoPuaHWSnVz1IwUIkhqZS9U88=; b=MRnWt0
-	Xc8F8DVqvPHlpY2F6p96puwQkuLJw1G+uzlPKM5DyZCiAEV/Bu6iyp0NgwSrENrA
-	d+LVSan26uv2F2iajEiyUVyyRn5TAaFhsXrHgSX3f/y+4s0vOpn1CpCSYp+7Npag
-	Pr8artRqQp061iiGeCAlaJi9Nb10k+OBHMKmU=
+	:content-type; s=sasl; bh=Pp2SW0BGxKRv9bl1jNq+stXbHv8=; b=uYn6TF
+	nrSlJcUvjzLQSV6fO8XVupNYHpXbaLWylbtV0uHdR09khl2KC1DX+7EpSwcfcqPx
+	5+qa87l8zowAqA0WHQEyDGXA2y8rO1z756eJI3uXpjRtYz6sjX/73QErUzTZGqnJ
+	j+u4wEi7xgOg0UW0RE+yh+tkGwaKUtCpaHk1Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LsQ+SqzCfF3aNZ5CgqFSAQMwlkF31iyQ
-	FPfvCgEVOTIeDoIkyVpgVHHJHSgkjoh9fevGcsBVXWtWQlf+zJbUCOG+GZJiFtYa
-	1jOq811p8oVzdnoe9jwgUrP43PAHoSXpEwe+EC0Zny1Cxk7u4T/K1TTtC8SQhw1r
-	lvVTaiSipe4=
+	:content-type; q=dns; s=sasl; b=qx8ctp4cIiBf/qnh1mS1KL6TPpfXOhQT
+	J455Xy46OmV5oYTLSDhmxjqHERA4+cMM8PG4t5cD0/QWpp0GNqfgLW4LQhXw9Gik
+	LMU3FBWfVPesHgB06B4s0IfPi9RR50gb1XJjC040J2lVInDkOrcPjXfLtSlmeHHe
+	aAe8De2fjJc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D937C7FD;
-	Sat,  9 Feb 2013 18:00:30 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA31BC9DF;
+	Sat,  9 Feb 2013 18:06:07 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A7550C7F9; Sat,  9 Feb 2013
- 18:00:29 -0500 (EST)
-In-Reply-To: <1360425499.3369.10.camel@t520> (Robert Clausecker's message of
- "Sat, 09 Feb 2013 16:58:19 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65BF5C9DE; Sat,  9 Feb 2013
+ 18:06:07 -0500 (EST)
+In-Reply-To: <7v7gmy12op.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 27 Jan 2013 18:06:30 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7FE323B6-730C-11E2-827B-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 49310788-730D-11E2-B60A-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215881>
 
-Robert Clausecker <fuzxxl@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> After thinking a while about how to solve the problems I have, I
-> consider the following things as a solution to my problem.
+> Brandon Casey <drafnel@gmail.com> writes:
 >
-> Add an option --isolated, -i to git checkout: Check out a branch / tag /
-> revision but do not touch the index. This could be used together with
-> --work-tree to check out a branch into an arbitrary directory. Also, it
-> satisfies all 4 criteria from [1] and therefore is perfect for
-> deployment from a bare repository.
+>> On Tue, Jan 22, 2013 at 12:38 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>>> Brandon Casey wrote:
+>>>
+>>>> Teach append_signoff how to detect a duplicate s-o-b in the commit footer.
+>>>> This is in preparation to unify the append_signoff implementations in
+>>>> log-tree.c and sequencer.c.
+>>> [...]
+>>>> --- a/sequencer.c
+>>>> +++ b/sequencer.c
+>>>> @@ -1082,9 +1101,10 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+>>>>       return pick_commits(todo_list, opts);
+>>>>  }
+>>>>
+>>>> -void append_signoff(struct strbuf *msgbuf, int ignore_footer)
+>>>> +void append_signoff(struct strbuf *msgbuf, int ignore_footer, int no_dup_sob)
+>>>
+>>> Isn't the behavior of passing '1' here just a bug in "format-patch -s"?
+>>
+>> I think that is an open question.
 >
-> What do you think about this feature request?
+> Yes. as I said in a previous review round, I think it was a mistake
+> that format-patch chose to pay attention to any S-o-b in the patch
+> trail, not only the last one, and we may want to correcct it once
+> this series solidifies as a separate "bugfix" change on top.
 
-I am not Phil, but if you ask me, I think it is borderline between
-"meh" and "no way we would give a short-and-sweet -i to something
-like this".
+This is a tangent, but I _think_ (didn't check, though) "git am -s"
+implements this incorrrectly.  Just another LHF somebody may want to
+take a look.
