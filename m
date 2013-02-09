@@ -1,135 +1,89 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/3] count-objects: report garbage files in pack
- directory too
-Date: Sat, 9 Feb 2013 08:58:23 +0700
-Message-ID: <CACsJy8D1qMpLRS0nyayRc=sq2A4X-dbiXhdVdfP6OOTCkxms4Q@mail.gmail.com>
-References: <1359982145-10792-1-git-send-email-pclouds@gmail.com>
- <1360295307-5469-1-git-send-email-pclouds@gmail.com> <1360295307-5469-3-git-send-email-pclouds@gmail.com>
- <7vwqui1w84.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git bisect result off by 1 commit
+Date: Fri, 08 Feb 2013 18:03:54 -0800
+Message-ID: <7v1ucqxmyd.fsf@alter.siamese.dyndns.org>
+References: <1360374853.17632.182.camel@schen9-DESK>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 02:59:25 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, ak <ak@linux.intel.com>
+To: Tim Chen <tim.c.chen@linux.intel.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 03:04:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3zio-0005Nn-93
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 02:59:18 +0100
+	id 1U3znh-0008H0-1I
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 03:04:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760508Ab3BIB6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 20:58:55 -0500
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:54578 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760472Ab3BIB6y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 20:58:54 -0500
-Received: by mail-ob0-f177.google.com with SMTP id wc18so4462093obb.8
-        for <git@vger.kernel.org>; Fri, 08 Feb 2013 17:58:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=qs3MyXdkdpJ56MR2RNIui3WDTVKmZ/xF2KMXC+CE7oU=;
-        b=AsnXzZDDxbTb+CeEUsnMF3pHKa5TJ3Nu1dFxHzpB/3WeA6DcEMCd7t6T2ciJljbNHe
-         uVbxfYRypEDYjEOs5T8MiB/uNAl8LotkOggCame1u/jRJJia1ADU0g/BtSecrIbbbuEx
-         CilESTj4UMosw1tgakv1LgVkSu3Mml6a85UBuvJF/uPdHoK/ma96qN62pi6hdkxcNbMP
-         mRa9xmVpWtLmNMhNJY9kaXAN/7VOecz8rtuIbADbxIB8NDKy+5eJtiipq6wwLH4fhv8O
-         emU8cS84b2rdi3FhXnA436Vq9REF1bt6Lvh4T4pf8UdzRzfu1FsHnw3MAZ7zUDR4WkUe
-         vswQ==
-X-Received: by 10.60.8.65 with SMTP id p1mr5968124oea.4.1360375133914; Fri, 08
- Feb 2013 17:58:53 -0800 (PST)
-Received: by 10.182.129.46 with HTTP; Fri, 8 Feb 2013 17:58:23 -0800 (PST)
-In-Reply-To: <7vwqui1w84.fsf@alter.siamese.dyndns.org>
+	id S1760493Ab3BICD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 21:03:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37953 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756077Ab3BICD5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 21:03:57 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C4E7BFB9;
+	Fri,  8 Feb 2013 21:03:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BXXKTKm0CuoNFSxiDMijt9SmEdQ=; b=Yz0mT6
+	nqqSuZrl0W3sUFKqz3qXBQlWX0II8nJGcfQd6vfqqp5z61cTXhgBmGervgaBNXcu
+	CnwLZuZDFw+0cj/KtxazxGlt52All+EHaESBCevL25An+tXm3DQnABZSNSST3h5p
+	uz14R1A+/l3wLBtzp/6p1PhN2ffSHr9uYxyH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lcEIeDifAILvokGUKGP8K1aotXvO4lF2
+	Q5fH6tGK1xZ10RGDO5Q+rl/cWMvV5gT1JYt8VA0XelLXEVwl91wRSn/gULqp8PyU
+	q8oMHoBEyK71/2RbKZWoBQb/xwviJQLBNyCsbq2ZNgLtC1tm5CKUP3elkr8bid6x
+	G+glj0r5pB4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 713C2BFB8;
+	Fri,  8 Feb 2013 21:03:56 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC633BFAE; Fri,  8 Feb 2013
+ 21:03:55 -0500 (EST)
+In-Reply-To: <1360374853.17632.182.camel@schen9-DESK> (Tim Chen's message of
+ "Fri, 08 Feb 2013 17:54:13 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F5BAEA02-725C-11E2-8926-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215844>
 
-On Sat, Feb 9, 2013 at 1:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> +static void real_report_pack_garbage(const char *path, int len, const char *name)
->> +{
+Tim Chen <tim.c.chen@linux.intel.com> writes:
+
+> When I am doing a git bisect to track down a problem commit on the Linux 
+> kernel tree, I found that git bisect actually led me to a patch that's one
+> before the problem commit.
 >
-> Don't some callers call this on paths outside objects/pack/
-> directory?  Is it still report-pack-garbage?
-
-In fact 3/3 uses it to report loose garbage. Will rename.
-
->> +static const char *known_pack_extensions[] = { ".pack", ".keep", NULL };
+> In particular,
 >
-> This sounds wrong.  Isn't ".idx" also known?
-
-I had a comment saying "all known extensions related to a pack, except
-.idx" but I dropped it. .idx being used as the pointer file needs to
-be handled separately.
-
->> @@ -1024,14 +1074,37 @@ static void prepare_packed_git_one(char *objdir, int local)
->>               int namelen = strlen(de->d_name);
->>               struct packed_git *p;
->>
->> -             if (!has_extension(de->d_name, ".idx"))
->> +             if (len + namelen + 1 > sizeof(path)) {
->> +                     if (report_pack_garbage)
->> +                             report_pack_garbage(path, len - 1, de->d_name);
+> $ git bisect replay bisectlog 
+> Previous HEAD position was d54b1a9... perf script: Remove use of die/exit
+> HEAD is now at a0d271c... Linux 3.6
+> Bisecting: 0 revisions left to test after this (roughly 0 steps)
+> [d54b1a9e0eaca92cde678d19bd82b9594ed00450] perf script: Remove use of die/exit
 >
-> A pack/in/a/very/long/path/pack-0000000000000000000000000000000000000000.pack
-> may pass when fed to "git verify-pack", but this will report it as "garbage",
-> without reporting what is wrong with it.  Wouldn't that confuse users?
+> However, the patch that is problematic is the one before the one git bisect indicated.
+> [commit 8d3eca20b9f31cf10088e283d704f6a71b9a4ee2].
 
-If all other git commands do not recognize the pack, then I think it's
-still considered garbage. We could either
+Looks perfectly normal to me.  The message above:
 
- - make prepare_packed_git_one accept pack/in/a/very/long/path-...
- - show the reason why we consider it garbage
+> HEAD is now at a0d271c... Linux 3.6
+> Bisecting: 0 revisions left to test after this (roughly 0 steps)
+> [d54b1a9e0eaca92cde678d19bd82b9594ed00450] perf script: Remove use of die/exit
 
-Which option do we do? Option 1 may involve chdir in, stat stat stat
-and chdir out to get around short PATH_MAX limit on some system.
+is asking you to test the commit at d54b1a9e and tell it the result
+of the test.  The message says "0 left to test *after* this";
+doesn't it mean you still need to do *this*?
 
->> -             if (len + namelen + 1 > sizeof(path))
->> +             if (!has_extension(de->d_name, ".idx")) {
->> +                     struct string_list_item *item;
->> +                     int i, n;
->> +                     if (!report_pack_garbage)
->> +                             continue;
->> +                     if (is_dot_or_dotdot(de->d_name))
->> +                             continue;
->> +                     for (i = 0; known_pack_extensions[i]; i++)
->> +                             if (has_extension(de->d_name,
->> +                                               known_pack_extensions[i]))
->> +                                     break;
->> +                     if (!known_pack_extensions[i]) {
->> +                             report_pack_garbage(path, 0, NULL);
->> +                             continue;
->> +                     }
->> +                     n = strlen(path) - strlen(known_pack_extensions[i]);
->> +                     item = string_list_append_nodup(&garbage,
->> +                                                     xstrndup(path, n));
->> +                     item->util = (void*)known_pack_extensions[i];
->>                       continue;
->> +             }
->
-> Why isn't this part more like this?
->
->                 if (dot-or-dotdot) {
->                         continue;
->                 } else if (has_extension(de->d_name, ".idx")) {
->                         do things for the .idx file;
->                 } else if (has_extension(de->d_name, ".pack") {
->                         do things for the .pack file, including
->                         queuing the name if we haven't seen
->                         corresponding .idx for later examination;
->                 } else if (has_extension(de->d_name, ".keep") {
->                         nothing special for now but we may
->                         want to add some other checks later
->                 } else {
->                         everything else is a garbage
->                         report_pack_garbage();
->                 }
+A bisecct session ends when it tells you
 
-Originally I checked known_extensions again in report_pack_garbage()
-but after restructuring, yeah we can drop known_extensions and do it
-your way. Looks much clearer.
--- 
-Duy
+	XXXXXX is the first bad commit
+
+which I do not see in the above.  You seem to have stopped before
+that happens.
