@@ -1,128 +1,67 @@
-From: Thomas Haller <thom311@gmail.com>
-Subject: segfault for git log --graph --no-walk --grep a
-Date: Sat, 9 Feb 2013 00:52:16 +0100
-Message-ID: <201302090052.22053.thom311@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: segfault for git log --graph --no-walk --grep a
+Date: Fri, 08 Feb 2013 16:05:14 -0800
+Message-ID: <7vsj56xsg5.fsf@alter.siamese.dyndns.org>
+References: <201302090052.22053.thom311@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart8727496.jfYUQYqPAV";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 09 00:52:53 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Thomas Haller <thom311@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 01:05:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3xkT-0001t0-BH
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 00:52:53 +0100
+	id 1U3xww-0001oa-94
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 01:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1947401Ab3BHXwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 18:52:30 -0500
-Received: from mail-ea0-f176.google.com ([209.85.215.176]:41524 "EHLO
-	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1947361Ab3BHXw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 18:52:29 -0500
-Received: by mail-ea0-f176.google.com with SMTP id a13so1961356eaa.35
-        for <git@vger.kernel.org>; Fri, 08 Feb 2013 15:52:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:subject:date:user-agent:mime-version
-         :content-type:content-transfer-encoding:message-id;
-        bh=BH1hfb8xNk07D+7vHMAbkRy1O6VKTw39RkYqipRyca8=;
-        b=QKVQjugUVNfjhDm1CTYRCmhUQh8ozw/WP8E5i806oyuyBV6y02YkzWSJqVd7vTtoR1
-         3uWjYtBGTgSAACXl3DkPGdiZqK7gf6EUvurWCfu4xH5GopdbJTLN0KrhK0KlnL6gs37S
-         tRrzs0MhIXw6haqKqVceOBcjaRhyedg71jLk9FunAI2UsiBS8o2lAvsnmk6JZw9p2tdW
-         uVi6rE5KpmebXK5BKFhH/8lbK7w2YsKyM5fRDdxCGCcaFBGdODyrPAAChTN+xrttq8eI
-         LV78qkjhqtR7BToaccz66g1ytI7sGXjG1DoDtEiLgumYXKAsFxsq5onoXmeOO4h9ZjsX
-         oUeQ==
-X-Received: by 10.14.215.131 with SMTP id e3mr21273549eep.32.1360367548179;
-        Fri, 08 Feb 2013 15:52:28 -0800 (PST)
-Received: from hal.localnet (p4FE61369.dip0.t-ipconnect.de. [79.230.19.105])
-        by mx.google.com with ESMTPS id l8sm15778382een.10.2013.02.08.15.52.26
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 08 Feb 2013 15:52:27 -0800 (PST)
-User-Agent: KMail/1.13.7 (Linux/3.2.0-4-amd64; KDE/4.8.4; x86_64; ; )
+	id S1947487Ab3BIAFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 19:05:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58516 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1947483Ab3BIAFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 19:05:17 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8519DBB19;
+	Fri,  8 Feb 2013 19:05:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:mime-version:content-type:subject:references:date:in-reply-to
+	:message-id; s=sasl; bh=gpqrKn5HeNi5UqVxBROqc28SIS8=; b=ALNY1GnR
+	UzQ0WUx3kna9yp88eLVXz45iOO4ZdYqxUyMmzFmionqEybBFuqtJCgLgNk4SBnHL
+	xHgY+H/ndOsWCa8TAncc5YYoFLdBIxfSJXSTW4p9TY7AOZ+SPDeyOfPfT0txeEs4
+	HBxVl0ZjG8LEAggFVabHQtbb7r7nKqOSWbA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:mime-version:content-type:subject:references:date:in-reply-to
+	:message-id; q=dns; s=sasl; b=vejQoyJenzpthJymWFIIWDqqB8DO7Fs5io
+	O4Q6cAqs5JjHcgaTzw/x/tq2JVL3OwT9vmQFsPxRFSRu/iEsS2dBjdFas+vcVa7C
+	tPQD05WP/F0t/eGwM5bfhfdcOrC+Hl+2Jt4LEBWW/wnc+rLWb06L6ARZnCxGn5Ey
+	EY37dWHYE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79DA4BB18;
+	Fri,  8 Feb 2013 19:05:16 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 02D31BB17; Fri,  8 Feb 2013
+ 19:05:15 -0500 (EST)
+In-Reply-To: <201302090052.22053.thom311@gmail.com> (Thomas Haller's message
+ of "Sat, 9 Feb 2013 00:52:16 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 61E7C54E-724C-11E2-B8F6-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215829>
 
---nextPart8727496.jfYUQYqPAV
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Thomas Haller <thom311@gmail.com> writes:
 
-Hallo,
+> it happens in file revision.c:2306 because "commit->buffer" is zero:
+>
+>                 retval = grep_buffer(&opt->grep_filter,
+>                                      commit->buffer, strlen(commit->buffer));
 
-
-I just found that git crashes with a segmentation fault when calling
-$ git log --graph --no-walk --grep pattern
-
-It happens both for version 1.7.10.4 from Debian (wheezy,amd64) and
-a fresh compiled git from github (git.git repository, master).
-
-
-For the error to occure, the pattern must match the commit message in HEAD.
-
-
-
-
-How to reproduce:
-  git init .
-  git commit -m 'text1' --allow-empty
-  git commit -m 'text2' --allow-empty
-  git log --graph --no-walk --grep 'text2'
-
-
-
-And here is coredump I got:
-
-Core was generated by `git log --graph --no-walk --grep text2'.
-Program terminated with signal 11, Segmentation fault.
-#0  __strlen_sse42 () at ../sysdeps/x86_64/multiarch/strlen-sse4.S:32
-#1  0x00000000004cc13e in commit_match (opt=0x7fffbd0ee500, commit=0x216d1a8) at revision.c:2306
-#2  get_commit_action (revs=0x7fffbd0ee500, commit=0x216d1a8) at revision.c:2338
-#3  0x00000000004984b4 in graph_is_interesting (commit=<optimized out>, graph=<error reading variable: Unhandled dwarf expression opcode 0xfa>) at graph.c:330
-#4  0x0000000000498569 in first_interesting_parent (graph=graph@entry=0x21629c0) at graph.c:369
-#5  0x000000000049965e in graph_update (graph=0x21629c0, commit=<optimized out>) at graph.c:593
-#6  0x00000000004cc7a9 in get_revision (revs=revs@entry=0x7fffbd0ee500) at revision.c:2580
-#7  0x000000000043988a in cmd_log_walk (rev=rev@entry=0x7fffbd0ee500) at builtin/log.c:309
-#8  0x000000000043a398 in cmd_log (argc=9, argv=0x2162930, prefix=0x0) at builtin/log.c:582
-#9  0x0000000000405988 in run_builtin (argv=0x2162930, argc=9, p=0x751438) at git.c:281
-#10 handle_internal_command (argc=9, argv=0x2162930) at git.c:443
-#11 0x0000000000404df2 in run_argv (argv=0x7fffbd0eec00, argcp=0x7fffbd0eec0c) at git.c:489
-#12 main (argc=9, argv=0x2162930) at git.c:564
-
-
-it happens in file revision.c:2306 because "commit->buffer" is zero:
-
-                retval = grep_buffer(&opt->grep_filter,
-                                     commit->buffer, strlen(commit->buffer));
-
-
-
-
-
-thank you all, for this awesome software.
-Thomas
-
---nextPart8727496.jfYUQYqPAV
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAABAgAGBQJRFY+wAAoJEBTxipiZOuzV50AIAJcEn78ufZc2O2r4vPngsdIl
-XoU/H/KhSj2TQReqz17j46YQTjJEzP23nOJpRnh/bnmbmyBk53xvmNL9ZjQGGBv6
-4NRhuj9Gyg7OsfeR6/rWGhVPE4QgiQoLd0MIc9upOVT6gyAEiPrM6zf5NgXleh8W
-V1U8JeQv3uv+u/SflJC8w5fLXSSs/9cSl+5eBfDnazsaJjmsCAHoy7aUYO+OFzUP
-7QeEyVlTZJ+o6LWgEpY3TS11qhp2TWTQwqLJVqxtPAE7hgNTy5cE1rBFmRS7oRcf
-HFNhAnZRyyxzTF58sJb2Lxk+K/x0ykRJtx0cyRpfLs10PB1TKqWeGNtZ2u+XWQk=
-=4aef
------END PGP SIGNATURE-----
-
---nextPart8727496.jfYUQYqPAV--
+I think this has been fixed at be5c9fb9049e (logmsg_reencode: lazily
+load missing commit buffers, 2013-01-26); I haven't merged it to any
+of the maintenance releases, but the tip of 'master' should have it
+already.
