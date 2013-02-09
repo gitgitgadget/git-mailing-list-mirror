@@ -1,119 +1,95 @@
-From: Robert Zeh <robert.allan.zeh@gmail.com>
-Subject: Re: inotify to minimize stat() calls
-Date: Fri, 8 Feb 2013 21:36:15 -0600
-Message-ID: <9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
-References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com> <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org> <7vsj56w5y9.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Please pull l10n updates for 1.8.2 round 1
+Date: Sat, 9 Feb 2013 11:55:36 +0800
+Message-ID: <CANYiYbHhGDFD3LZKGeRxkBF5s0TRHMvRBZY7c9T8zONiZGiNdA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ralf Thielow <ralf.thielow@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Wang Sheng <wangsheng2008love@163.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Tran Ngoc Quan <vnwildman@gmail.com>,
+	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 09 04:36:50 2013
+X-From: git-owner@vger.kernel.org Sat Feb 09 04:56:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U41F6-0003nd-F4
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 04:36:44 +0100
+	id 1U41Xl-00068k-TC
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 04:56:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760571Ab3BIDgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 22:36:21 -0500
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:62954 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760513Ab3BIDgU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Feb 2013 22:36:20 -0500
-Received: by mail-ob0-f179.google.com with SMTP id un3so4606172obb.10
-        for <git@vger.kernel.org>; Fri, 08 Feb 2013 19:36:20 -0800 (PST)
+	id S1760639Ab3BIDzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 22:55:38 -0500
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:61992 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760635Ab3BIDzh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 22:55:37 -0500
+Received: by mail-wi0-f171.google.com with SMTP id hn17so1562676wib.10
+        for <git@vger.kernel.org>; Fri, 08 Feb 2013 19:55:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:references:mime-version:in-reply-to:content-type
-         :content-transfer-encoding:message-id:cc:x-mailer:from:subject:date
-         :to;
-        bh=ovVrvyp/Z3b4VfjQ0UosZrMNa9spRuZZSG1xYWtKvag=;
-        b=lnXvAUJ6xHh/vnS/AW1PM3MxPutGhdUSp6zJ8Vv7/muwbEd4XkjeF0Nu/J1Jqz6X1r
-         kpHNszAranh/Jae9/mPn4lME/sKmXbJqAkoAIkb1l/6Gx759Q+MeqzI71DMmk806HlBP
-         EVBZ+MT91utDd7wPfDFwW6POKIpFgpuebGl8fXrhBQYPfqU9PONtRLG/kSPKfiqXBFRJ
-         CFxBRgf/7A3HavuddzsGyGoqZYuObslIKgHhwxS7Mbe2jkh107rj5TczztYimKM2X0sE
-         vF8N5cnmeGJjXdmpSldOkRu8w6SpzSIO5TIoZ9P+Itfs4nIfSlphYsUTzihILzTJlEvc
-         zNKA==
-X-Received: by 10.60.6.199 with SMTP id d7mr5740740oea.137.1360380980210;
-        Fri, 08 Feb 2013 19:36:20 -0800 (PST)
-Received: from [192.168.1.72] (108-90-21-196.lightspeed.cicril.sbcglobal.net. [108.90.21.196])
-        by mx.google.com with ESMTPS id ee14sm40362318obb.2.2013.02.08.19.36.17
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 08 Feb 2013 19:36:18 -0800 (PST)
-In-Reply-To: <7vsj56w5y9.fsf@alter.siamese.dyndns.org>
-X-Mailer: iPhone Mail (10B141)
+        h=mime-version:x-received:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=AuMLohP6AutU9WoBX3zCjipQAz4Sh/sVDhvnxD2wIac=;
+        b=yalDJEMbTOLizZhFwsMI81E32SeC1gD+MK6zZGIcxggi9DTZ6pDCvzqh4ip3xhfXsS
+         p6wqYC3OMrUaNJRan86M60GC7lVljbOBpUN2f0ra3dqFdpbUnjztRXPW4VS7oUop7Amk
+         5eF3xcrZerObePjChsWxitpW0+3y8XiEABJEIQa/CuNdKkN1Y06bxVGy90DaskfwEMl4
+         gUNpkFPzUGOD0pRzVh6bjcWfdGk5w25dfCKSFq9T1LH2W9Tpoif2AKKMe8vhZY/lNRo/
+         +mf+Al30X/1xuoIFV4GBu/tsAXGtltod38XVT+yeBL5gJJz2E9NkiMusu05F55sQhHBL
+         AeVw==
+X-Received: by 10.180.84.165 with SMTP id a5mr6015191wiz.6.1360382136505; Fri,
+ 08 Feb 2013 19:55:36 -0800 (PST)
+Received: by 10.194.110.199 with HTTP; Fri, 8 Feb 2013 19:55:36 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215850>
 
-The delay for commands like git status is much worse on Windows than Linux; for my workflow I would be happy with a Windows only implementation. 
+Hi, Junio
 
->From the description so far, I have some question: how does the daemon get started and stopped?  Is there one per repository --- this seems to be implied by putting the unix domain socket in $GIT_DIR. Could we automatically reject connections from anything other than localhost when using TCP?
+The following changes since commit ec3ae6ec46ed48383ae40643990f169b65a563cc:
 
-Robert Zeh
+  Merge git://ozlabs.org/~paulus/gitk (2013-01-23 08:35:03 -0800)
 
-On Feb 8, 2013, at 8:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
+are available in the git repository at:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> I checked read-cache.c and preload-index.c code.  To get the
->> discussion rolling, I think something like the outline below may be
->> a good starting point and a feasible weekend hack for somebody
->> competent:
->> 
->> * At the beginning of preload_index(), instead of spawning the
->>   worker thread and doing the lstat() check ourselves, we open a
->>   socket to our daemon (see below) that watches this repository and
->>   make a request for lstat update.  The request will contain:
->> 
->>    - The SHA1 checksum of the index file we just read (to ensure
->>      that we and our daemon share the same baseline to
->>      communicate); and
->> 
->>    - the pathspec data.
->> 
->>   Our daemon, if it already has a fresh data available, will give
->>   us a list of <path, lstat result>.  Our main process runs a loop
->>   that is equivalent to what preload_thread() runs but uses the
->>   lstat() data we obtained from the daemon.  If our daemon says it
->>   does not have a fresh data (or somehow our daemon is dead), we do
->>   the work ourselves.
->> 
->> * Our daemon watches the index file and the working tree, and
->>   waits for the above consumer.  First it reads the index (and
->>   remembers what it read), and whenever an inotify event comes,
->>   does the lstat() and remembers the result.  It never writes
->>   to the index, and does not hold the index lock.  Whenever the
->>   index file changes, it needs to reload the index, and discard
->>   lstat() data it already has for paths that are lost from the
->>   updated index.
-> 
-> I left the details unsaid in thee above because I thought it was
-> fairly obvious from the nature of the "outline", but let me spend a
-> few more lines to avoid confusion.
-> 
-> - The way the daemon "watches" the changes to the working tree and
->   the index may well be very platform dependent.  I said "inotify"
->   above, but the mechanism does not have to be inotify.
-> 
-> - The channel the daemon and the client communicates would also be
->   system dependent.  UNIX domain socket in $GIT_DIR/ with a
->   well-known name would be one possibility but it does not have to
->   be the only option.
-> 
-> - The data given from the daemon to the client does not have to
->   include full lstat() information.  They start from the same index
->   info, and the only thing preload_index() wants to know is for
->   which paths it should call ce_mark_uptodate(ce), so the answer
->   given by our daemon can be a list of paths.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+  git://github.com/git-l10n/git-po/ master
+
+for you to fetch changes up to 1bbe7c3c124c435b45f87a71516211f5252086f7:
+
+  l10n: de.po: translate "reset" as "neu setzen" (2013-02-08 20:43:30 +0100)
+
+----------------------------------------------------------------
+Jiang Xin (2):
+      l10n: Update git.pot (11 new, 7 removed messages)
+      Merge branch 'master' of git://github.com/ralfth/git-po-de
+
+Peter Krefting (1):
+      l10n: Update Swedish translation (1983t0f0u)
+
+Ralf Thielow (4):
+      l10n: de.po: fix some minor issues
+      l10n: de.po: translate 11 new messages
+      l10n: de.po: translate "revision" consistently as "Revision"
+      l10n: de.po: translate "reset" as "neu setzen"
+
+Tran Ngoc Quan (1):
+      l10n: vi.po: updated Vietnamese translation
+
+Wang Sheng (1):
+      l10n: zh_CN.po: 800+ new translations on command usages
+
+ po/TEAMS    |    1 +
+ po/de.po    | 1545 ++++++++++++----------
+ po/git.pot  | 1137 ++++++++--------
+ po/sv.po    | 1164 ++++++++--------
+ po/vi.po    | 1182 +++++++++--------
+ po/zh_CN.po | 4258 +++++++++++++++++++++++++++++------------------------------
+ 6 files changed, 4728 insertions(+), 4559 deletions(-)
+
+--
+Jiang Xin
