@@ -1,90 +1,135 @@
-From: Tim Chen <tim.c.chen@linux.intel.com>
-Subject: git bisect result off by 1 commit
-Date: Fri, 08 Feb 2013 17:54:13 -0800
-Message-ID: <1360374853.17632.182.camel@schen9-DESK>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 2/3] count-objects: report garbage files in pack
+ directory too
+Date: Sat, 9 Feb 2013 08:58:23 +0700
+Message-ID: <CACsJy8D1qMpLRS0nyayRc=sq2A4X-dbiXhdVdfP6OOTCkxms4Q@mail.gmail.com>
+References: <1359982145-10792-1-git-send-email-pclouds@gmail.com>
+ <1360295307-5469-1-git-send-email-pclouds@gmail.com> <1360295307-5469-3-git-send-email-pclouds@gmail.com>
+ <7vwqui1w84.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: ak <ak@linux.intel.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 09 02:54:35 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 09 02:59:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U3zeD-0002Xs-6B
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 02:54:33 +0100
+	id 1U3zio-0005Nn-93
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Feb 2013 02:59:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760477Ab3BIByK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Feb 2013 20:54:10 -0500
-Received: from mga02.intel.com ([134.134.136.20]:51321 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760434Ab3BIByI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Feb 2013 20:54:08 -0500
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101.jf.intel.com with ESMTP; 08 Feb 2013 17:54:08 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.84,632,1355126400"; 
-   d="scan'208";a="260099293"
-Received: from schen9-desk.jf.intel.com (HELO [10.7.199.63]) ([10.7.199.63])
-  by orsmga001.jf.intel.com with ESMTP; 08 Feb 2013 17:54:08 -0800
-X-Mailer: Evolution 2.32.3 (2.32.3-1.fc14) 
+	id S1760508Ab3BIB6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Feb 2013 20:58:55 -0500
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:54578 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760472Ab3BIB6y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Feb 2013 20:58:54 -0500
+Received: by mail-ob0-f177.google.com with SMTP id wc18so4462093obb.8
+        for <git@vger.kernel.org>; Fri, 08 Feb 2013 17:58:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=qs3MyXdkdpJ56MR2RNIui3WDTVKmZ/xF2KMXC+CE7oU=;
+        b=AsnXzZDDxbTb+CeEUsnMF3pHKa5TJ3Nu1dFxHzpB/3WeA6DcEMCd7t6T2ciJljbNHe
+         uVbxfYRypEDYjEOs5T8MiB/uNAl8LotkOggCame1u/jRJJia1ADU0g/BtSecrIbbbuEx
+         CilESTj4UMosw1tgakv1LgVkSu3Mml6a85UBuvJF/uPdHoK/ma96qN62pi6hdkxcNbMP
+         mRa9xmVpWtLmNMhNJY9kaXAN/7VOecz8rtuIbADbxIB8NDKy+5eJtiipq6wwLH4fhv8O
+         emU8cS84b2rdi3FhXnA436Vq9REF1bt6Lvh4T4pf8UdzRzfu1FsHnw3MAZ7zUDR4WkUe
+         vswQ==
+X-Received: by 10.60.8.65 with SMTP id p1mr5968124oea.4.1360375133914; Fri, 08
+ Feb 2013 17:58:53 -0800 (PST)
+Received: by 10.182.129.46 with HTTP; Fri, 8 Feb 2013 17:58:23 -0800 (PST)
+In-Reply-To: <7vwqui1w84.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215843>
 
-When I am doing a git bisect to track down a problem commit on the Linux 
-kernel tree, I found that git bisect actually led me to a patch that's one
-before the problem commit.
+On Sat, Feb 9, 2013 at 1:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> +static void real_report_pack_garbage(const char *path, int len, const char *name)
+>> +{
+>
+> Don't some callers call this on paths outside objects/pack/
+> directory?  Is it still report-pack-garbage?
 
-In particular,
+In fact 3/3 uses it to report loose garbage. Will rename.
 
-$ git bisect replay bisectlog 
-Previous HEAD position was d54b1a9... perf script: Remove use of die/exit
-HEAD is now at a0d271c... Linux 3.6
-Bisecting: 0 revisions left to test after this (roughly 0 steps)
-[d54b1a9e0eaca92cde678d19bd82b9594ed00450] perf script: Remove use of die/exit
+>> +static const char *known_pack_extensions[] = { ".pack", ".keep", NULL };
+>
+> This sounds wrong.  Isn't ".idx" also known?
 
-However, the patch that is problematic is the one before the one git bisect indicated.
-[commit 8d3eca20b9f31cf10088e283d704f6a71b9a4ee2].
+I had a comment saying "all known extensions related to a pack, except
+.idx" but I dropped it. .idx being used as the pointer file needs to
+be handled separately.
 
-I am running git 1.7.11.7.
+>> @@ -1024,14 +1074,37 @@ static void prepare_packed_git_one(char *objdir, int local)
+>>               int namelen = strlen(de->d_name);
+>>               struct packed_git *p;
+>>
+>> -             if (!has_extension(de->d_name, ".idx"))
+>> +             if (len + namelen + 1 > sizeof(path)) {
+>> +                     if (report_pack_garbage)
+>> +                             report_pack_garbage(path, len - 1, de->d_name);
+>
+> A pack/in/a/very/long/path/pack-0000000000000000000000000000000000000000.pack
+> may pass when fed to "git verify-pack", but this will report it as "garbage",
+> without reporting what is wrong with it.  Wouldn't that confuse users?
 
-Tim
+If all other git commands do not recognize the pack, then I think it's
+still considered garbage. We could either
 
+ - make prepare_packed_git_one accept pack/in/a/very/long/path-...
+ - show the reason why we consider it garbage
 
-The bisect record is as follow:
+Which option do we do? Option 1 may involve chdir in, stat stat stat
+and chdir out to get around short PATH_MAX limit on some system.
 
-------------bisectlog-----------------
-git bisect start
-# good: [a0d271cbfed1dd50278c6b06bead3d00ba0a88f9] Linux 3.6
-git bisect good a0d271cbfed1dd50278c6b06bead3d00ba0a88f9
-# bad: [ddffeb8c4d0331609ef2581d84de4d763607bd37] Linux 3.7-rc1
-git bisect bad ddffeb8c4d0331609ef2581d84de4d763607bd37
-# bad: [24d7b40a60cf19008334bcbcbd98da374d4d9c64] ARM: OMAP2+: PM: MPU DVFS: use generic CPU device for MPU-SS
-git bisect bad 24d7b40a60cf19008334bcbcbd98da374d4d9c64
-# bad: [d9a807461fc8cc0d6ba589ea0730d139122af012] Merge tag 'usb-3.6' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb
-git bisect bad d9a807461fc8cc0d6ba589ea0730d139122af012
-# bad: [06d2fe153b9b35e57221e35831a26918f462db68] Merge tag 'driver-core-3.6' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core
-git bisect bad 06d2fe153b9b35e57221e35831a26918f462db68
-# bad: [7e92daaefa68e5ef1e1732e45231e73adbb724e7] Merge branch 'perf-core-for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip
-git bisect bad 7e92daaefa68e5ef1e1732e45231e73adbb724e7
-# good: [620e77533f29796df7aff861e79bd72e08554ebb] Merge branch 'core-rcu-for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip
-git bisect good 620e77533f29796df7aff861e79bd72e08554ebb
-# bad: [8ad7013b252ba683055df19e657eb03d98f4f312] perf test: Add round trip test for sw and hw event names
-git bisect bad 8ad7013b252ba683055df19e657eb03d98f4f312
-# good: [f47b58b75f5e2a424834eb15f7565a7458a12f44] perf symbols: Fix builds with NO_LIBELF set
-git bisect good f47b58b75f5e2a424834eb15f7565a7458a12f44
-# good: [e1aa7c30c599e99b4544f9e5b4c275c8a5325bdc] tools lib traceevent: Fix strerror_r() use in pevent_strerror
-git bisect good e1aa7c30c599e99b4544f9e5b4c275c8a5325bdc
-# good: [ff1a70e75fd005821ab5f2211312a8aa13bbf959] tools lib traceevent: Modify header to work in C++ programs
-git bisect good ff1a70e75fd005821ab5f2211312a8aa13bbf959
-# bad: [4592281403e74dc4401d5803ec9948d43bbee7ae] perf tools: Remove the node from rblist in strlist__remove
-git bisect bad 4592281403e74dc4401d5803ec9948d43bbee7ae
-# good: [cc58482133296f52873be909a2795f6d934ecec9] perf help: Remove use of die and handle errors
-git bisect good cc58482133296f52873be909a2795f6d934ecec9
-# bad: [8d3eca20b9f31cf10088e283d704f6a71b9a4ee2] perf record: Remove use of die/exit
-git bisect bad 8d3eca20b9f31cf10088e283d704f6a71b9a4ee2
+>> -             if (len + namelen + 1 > sizeof(path))
+>> +             if (!has_extension(de->d_name, ".idx")) {
+>> +                     struct string_list_item *item;
+>> +                     int i, n;
+>> +                     if (!report_pack_garbage)
+>> +                             continue;
+>> +                     if (is_dot_or_dotdot(de->d_name))
+>> +                             continue;
+>> +                     for (i = 0; known_pack_extensions[i]; i++)
+>> +                             if (has_extension(de->d_name,
+>> +                                               known_pack_extensions[i]))
+>> +                                     break;
+>> +                     if (!known_pack_extensions[i]) {
+>> +                             report_pack_garbage(path, 0, NULL);
+>> +                             continue;
+>> +                     }
+>> +                     n = strlen(path) - strlen(known_pack_extensions[i]);
+>> +                     item = string_list_append_nodup(&garbage,
+>> +                                                     xstrndup(path, n));
+>> +                     item->util = (void*)known_pack_extensions[i];
+>>                       continue;
+>> +             }
+>
+> Why isn't this part more like this?
+>
+>                 if (dot-or-dotdot) {
+>                         continue;
+>                 } else if (has_extension(de->d_name, ".idx")) {
+>                         do things for the .idx file;
+>                 } else if (has_extension(de->d_name, ".pack") {
+>                         do things for the .pack file, including
+>                         queuing the name if we haven't seen
+>                         corresponding .idx for later examination;
+>                 } else if (has_extension(de->d_name, ".keep") {
+>                         nothing special for now but we may
+>                         want to add some other checks later
+>                 } else {
+>                         everything else is a garbage
+>                         report_pack_garbage();
+>                 }
+
+Originally I checked known_extensions again in report_pack_garbage()
+but after restructuring, yeah we can drop known_extensions and do it
+your way. Looks much clearer.
+-- 
+Duy
