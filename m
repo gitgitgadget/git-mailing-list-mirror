@@ -1,103 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 15/15] user-manual: Use --format=tar.gz to create a
- gzipped tarball
-Date: Sun, 10 Feb 2013 14:27:08 -0800
-Message-ID: <7va9rbst37.fsf@alter.siamese.dyndns.org>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v2 12/15] user-manual: Use request-pull to generate
+ "please pull" text
+Date: Sun, 10 Feb 2013 17:29:17 -0500
+Message-ID: <20130210222917.GD8377@odin.tremily.us>
 References: <7vzjzexv8l.fsf@alter.siamese.dyndns.org>
  <cover.1360508415.git.wking@tremily.us>
- <92a02e35df3dab70928e56e6790417243beea2af.1360508415.git.wking@tremily.us>
+ <3d860e7c19b33ebc2725eb86ec481f966e3007de.1360508415.git.wking@tremily.us>
+ <7vehgnst8r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=XvKFcGCOAo53UbWW
 Cc: Git <git@vger.kernel.org>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Sun Feb 10 23:27:37 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 23:30:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4fN1-0005ja-9j
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 23:27:35 +0100
+	id 1U4fPH-0006yH-Pz
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 23:29:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756912Ab3BJW1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 17:27:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64469 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756854Ab3BJW1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 17:27:11 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6704BF72;
-	Sun, 10 Feb 2013 17:27:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=axlJnsNAuKLGMZexx/8yrRFf3cQ=; b=c29Vdv
-	fpfeNxkB7jZZTxvGTS1N6B8UmBQr9S3zaJWTxBba+SiBtRm3Ep8WFcJEta4vl+qg
-	WwwJmf1SPyXFLjy3PUfi75xiETH97MJcAb7eKWFbCcrS2TyFfMFeoyY2k1j7oay3
-	PsmBt0gBsh0ZKmtPSjJc5i816nez4gJv4G5D0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F0SSAAs/TckQBwJUvuvbV/RB+YBNXnDW
-	JLcaNl4TsZJB16ewNfiPQ1ri6azWZOKAuKbLhk4B/vs+4jGDhojJhzHV6AZqrcuB
-	8aupQLWMPSlOuVjs1XSdfFGy7Oru3dahvrB2zoj0oYuEf1g9q+awAf80bhClAksa
-	PeJMJragTZs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 793C3BF70;
-	Sun, 10 Feb 2013 17:27:10 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA839BF65; Sun, 10 Feb 2013
- 17:27:09 -0500 (EST)
-In-Reply-To: <92a02e35df3dab70928e56e6790417243beea2af.1360508415.git.wking@tremily.us>
- (W. Trevor King's message of "Sun, 10 Feb 2013 10:10:41 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0252A938-73D1-11E2-AF61-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756927Ab3BJW3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 17:29:33 -0500
+Received: from vms173007pub.verizon.net ([206.46.173.7]:32706 "EHLO
+	vms173007pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756748Ab3BJW3c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 17:29:32 -0500
+Received: from odin.tremily.us ([unknown] [72.68.84.219])
+ by vms173007.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MI00037LZSUK3A0@vms173007.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 10 Feb 2013 16:29:18 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id CAA64879B6D; Sun,
+ 10 Feb 2013 17:29:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1360535357; bh=mDjzON0ey/swU05dhGE5QwrHm+iRLzcqF/IebNgllhc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=KpLPVqCYvWGtUp70cHlgp1rQFgpeYAfNZmNuOdIha/UP7WioTQqwxKbeU8iPHZOSw
+ OZfbUdrs6tlWeKAY6uiDnRjP6ns+Naf1+XUl//EOA+T12Zz2wRqJR4tfko4SNeTO86
+ 5Drf7LRQVn5HO+mlfTcVbRcVDrHUgkHvTZZHF7aU=
+Content-disposition: inline
+In-reply-to: <7vehgnst8r.fsf@alter.siamese.dyndns.org>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215955>
 
-"W. Trevor King" <wking@tremily.us> writes:
 
-> From: "W. Trevor King" <wking@tremily.us>
->
-> This functionality was introduced by 0e804e09 (archive: provide
-> builtin .tar.gz filter, 2011-07-21) for v1.7.7.
->
-> Signed-off-by: W. Trevor King <wking@tremily.us>
-> ---
+--XvKFcGCOAo53UbWW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This is a "meh" at least to me.  Unless it uses something like
+On Sun, Feb 10, 2013 at 02:23:48PM -0800, Junio C Hamano wrote:
+> The request-pull checks a lot more than "does a merge base exist?",
+> no?
 
-	git archive -o latest.tar.gz --prefix=project/ HEAD
-        
-it is not all that interesting.
+It does, but the man page doesn't list the checks, and I didn't want
+to read through the source to find them all ;).  Maybe I should, and
+then update the man page :p.
 
->  Documentation/user-manual.txt | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> index 8024758..c04ea51 100644
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -931,12 +931,19 @@ The linkgit:git-archive[1] command can create a tar or zip archive from
->  any version of a project; for example:
->  
->  -------------------------------------------------
-> -$ git archive --format=tar --prefix=project/ HEAD | gzip >latest.tar.gz
-> +$ git archive --format=tar.gz --prefix=project/ HEAD >latest.tar.gz
->  -------------------------------------------------
->  
->  will use HEAD to produce a tar archive in which each filename is
->  preceded by `project/`.
->  
-> +Versions of Git older than 1.7.7 don't know about the 'tar.gz' format,
-> +you'll need to use gzip explicitly:
-> +
-> +-------------------------------------------------
-> +$ git archive --format=tar --prefix=project/ HEAD | gzip >latest.tar.gz
-> +-------------------------------------------------
-> +
->  If you're releasing a new version of a software project, you may want
->  to simultaneously make a changelog to include in the release
->  announcement.
+> Does the examples in this flow push out what you want to be
+> pulled _before_ running this step?
+
+Err, yes.  And I should have used `mytree` unstead of the explicit
+URL.  Maybe I should have an explicit push just before the
+`request-pull` for extra clarity.
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--XvKFcGCOAo53UbWW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRGB88AAoJEEUbTsx0l5OMikUP+gKgNGlwQBIjw/H4L/6ZGrdl
+5Mrw8EIOtfTgxP+GMhypz5yQGgfOmhLvJOzbM1F90ks2D/y2aJu6xy0gd4OOy/ck
+Xbame6PniuZlOpE18dx3PEOcH/SRZxZ1vC/c+R7p00mc7SLjZI2/BxdpMV4xzA/C
+SaornBApQdNKlzWV5fByJKhZ80DIp9+5l1vYcnVIih52nhS1+Q3XuxKrZ1WoeW3J
+/HKJLH1inV/jw8UMLwqhdvSKS5ray+bE8Riflz1m7JqGW7SJzRh/DgFkKLDAv06T
+ECDi4/xiwraGSygbkwdOy6X4HowQ9ogaAL1jeG+awp7PR9fQaKLSRuDWB+KeKhj1
+8pwVnotg4NoJ//8NOD+RO7bR3WQgCIctoBHPL6GrMKI6rSah2PNb8Bm6H9jSPp5d
+/FeM83v1C8Ahm41RL3jEcbJAv+bBqr40QD0fOh1yIMF/rzPICBbaFIKscOKvjqiI
+653h1+cLZ1yzTjAIJPUsBRvAAGVQGKDHyaZYuS2Dm054hKKIfqv9euez1mpxkPz+
+UZXNgsZ0nAc/ycKAxzcEftxkqCbcJzjjcNTXvj7VoMxJTP6Ws9NGXUrs8F2TvZO2
+hHaxMnOqMQou/Pj+njUkBvYf7aHXroi52tXzifhdVYb8fIq6YZ+33EHeINiidgsw
+omxdlkpYnJIxmLF8Fzmc
+=/SFL
+-----END PGP SIGNATURE-----
+
+--XvKFcGCOAo53UbWW--
