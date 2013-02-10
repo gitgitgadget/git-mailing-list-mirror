@@ -1,94 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/15] user-manual: Use git branch --merged
-Date: Sun, 10 Feb 2013 13:37:01 -0800
-Message-ID: <7v4nhju9z6.fsf@alter.siamese.dyndns.org>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v2 02/15] user-manual: Update for
+ receive.denyCurrentBranch=refuse
+Date: Sun, 10 Feb 2013 16:46:21 -0500
+Message-ID: <20130210214621.GA8000@odin.tremily.us>
 References: <7vzjzexv8l.fsf@alter.siamese.dyndns.org>
  <cover.1360508415.git.wking@tremily.us>
- <c8abf7a75a59302e6bdc66eee13eb2ec53b26b46.1360508415.git.wking@tremily.us>
+ <ba62167be6df7a6ba666373913bfd235bcc29c9d.1360508415.git.wking@tremily.us>
+ <7vd2w7uajk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=5vNYLRcllDrimb99
 Cc: Git <git@vger.kernel.org>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Sun Feb 10 22:37:34 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 22:46:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4eac-0004p2-0T
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 22:37:34 +0100
+	id 1U4eja-0001IG-JZ
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 22:46:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756586Ab3BJVhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 16:37:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47575 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755786Ab3BJVhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 16:37:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7B38BB36;
-	Sun, 10 Feb 2013 16:37:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nSWTQG2tXr1p2JxWgJ70RboMq0E=; b=hq48T1
-	NYlaCPxWNhG0J/OCLQVm7ZJFC34NiaISL2XF1LIHSN+ty6jyZ0oNW7x77medw0+E
-	fJS+/arfOAUcw+8E51QcMeZiGYOqpFwX6HjiKaJYowqbfEQDBANt+ipc3hMvy4Fq
-	LeykU07Q6FtjDkrFl2f8nUZa3zqx2mVGInjRE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FU8ojcuRydGyQImPW1SMN5HokKkx4t7N
-	IM7U3jI6l3AJEcyeOao10WD/RV7FGfVKbSzmXTwermtXIgTnojYMbcTixeDic6Py
-	JOAOtM16t1Hkgb+4cVnSDb9Ndg3BBRw4ArQKUnJ6tL3SZNQim4mQU+BFJJ+JOYG3
-	nE2CWipAZYc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E30CBB2F;
-	Sun, 10 Feb 2013 16:37:04 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA4BDBB24; Sun, 10 Feb 2013
- 16:37:03 -0500 (EST)
-In-Reply-To: <c8abf7a75a59302e6bdc66eee13eb2ec53b26b46.1360508415.git.wking@tremily.us>
- (W. Trevor King's message of "Sun, 10 Feb 2013 10:10:30 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0294E14C-73CA-11E2-953E-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756702Ab3BJVq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 16:46:27 -0500
+Received: from vms173019pub.verizon.net ([206.46.173.19]:54230 "EHLO
+	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756165Ab3BJVq0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 16:46:26 -0500
+Received: from odin.tremily.us ([unknown] [72.68.84.219])
+ by vms173019.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MI000LC6XTA2100@vms173019.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 10 Feb 2013 15:46:23 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 18B9F8798E8; Sun,
+ 10 Feb 2013 16:46:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1360532782; bh=SYxJCNOnBQ6SpfgnJJCjPerEPS+QH+70awsBNAE4sxU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=XKqHY+yF3aEFS4x7ymhbDOXFbGZdjTI6m7ANiBJoY1cVMGGAhzkyQxAEMvIPeSnxO
+ HTENZjDUZfdMIe3Oq9Lm27xL6VTq0Hio6jovj9wT+UVWXVEn6aL/0nmf8dxuQ5FX5K
+ esqX8+xHZhDjJ0QuCnFEhwDHbWU82yWTYlcM8os0=
+Content-disposition: inline
+In-reply-to: <7vd2w7uajk.fsf@alter.siamese.dyndns.org>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215939>
 
-"W. Trevor King" <wking@tremily.us> writes:
 
-> From: "W. Trevor King" <wking@tremily.us>
+--5vNYLRcllDrimb99
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Feb 10, 2013 at 01:24:47PM -0800, Junio C Hamano wrote:
+> I would not be surprised if some readers felt as if "then why not
+> update it instead of rejecting?" were a valid question, without a
+> bit more explanation.
 >
-> Use 'git branch --merged origin'.  This feature was introduced by
-> 049716b (branch --merged/--no-merged: allow specifying arbitrary
-> commit, 2008-07-08), after the documentation that's being replaced
-> moved into the manual with 9e2163ea (user-manual: move
-> howto/using-topic-branches into manual, 2007-05-13).
->
-> Signed-off-by: W. Trevor King <wking@tremily.us>
-> ---
->  Documentation/user-manual.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> index 53f73c3..a8f792d 100644
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -2267,10 +2267,10 @@ then pulled by Linus, and finally coming back into your local
->  You detect this when the output from:
->  
->  -------------------------------------------------
-> -$ git log origin..branchname
-> +$ git branch --merged origin
->  -------------------------------------------------
->  
-> -is empty.  At this point the branch can be deleted:
-> +lists the branch.  At this point the branch can be deleted:
+> 	You can also push to a repository that has a working tree,
+>   =E2=80=A6
 
-This is making things much less useful.  "branch --merged origin"
-will show 47 different branches that you are *not* interested in the
-flow of examples in this part of the tutorial.
+Looks good to me :).  Shall I just drop this patch from v3 and leave
+it to you?
 
-Also, log origin..branchname allows you to notice a situation where
-some but not all of the branch was merged, too.
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--5vNYLRcllDrimb99
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRGBUsAAoJEEUbTsx0l5OM5tUP/j9N/7slV/nOjuztbPEnNZB2
+Ns1jsc6UJCgDNiqwUEJR+MkQ+UGuisMwoO6wKuHkeLsXtPCKBMzWN7E87fNDxjCv
+0dWFolV80anwi9qQ4RubFzaJSZU70DTf430NpSXcdi5TdmRcdR6XJMAygevnp/YD
+toCLyaesLMdnlHWkRMQjOo3yo1LDHSQCDzR4owILMxlVDO86lD7telcM5ol4lB02
+/P2SCUFFwRINCnCYkl/RlKWuo3LWMhpzmsI6Qy13NGLieEb3u8vDC8XkukUo4tth
+GfMkKEgwUc0EnPNXlo79IDPgxDA1987GwMedfj62wde+GXX+iCxxx7s8yigunTHs
+smllYsLVbGIScrz+pySb5UAUcV11BIjSaF7lTioy8ZzPpwhxmkH1MvHELt9yA2BX
+YI1yTHb5tdkfM1kjRXs8ecUV09Cgiixse0UyIVWswC8TDDxmswZ5w5ZJJa1QzI0H
+fUMwLVaCbj+tr6iLJVCnF/18uD3G7cxkxjshUGoG+YH/NbzgnHsCG5TDVfcnpKxW
+ANXVrlWhLNnJGhrM5mdERtveJ/Xy6850hBdeMyNMTjzeCFptxroGWXgMHKI0WLXv
+E/sq2eoAosTc1LP8+V0lJwNwfouM3bHIxe/SzWH9vKT8zCtRA+PiWVyRZ1JbR0xM
+g2GBsWM8NQkwWj6sZpCD
+=Iy1S
+-----END PGP SIGNATURE-----
+
+--5vNYLRcllDrimb99--
