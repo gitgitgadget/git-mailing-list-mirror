@@ -1,97 +1,80 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v2 15/15] user-manual: Use --format=tar.gz to create a
- gzipped tarball
-Date: Sun, 10 Feb 2013 17:32:40 -0500
-Message-ID: <20130210223239.GE8377@odin.tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 02/15] user-manual: Update for
+ receive.denyCurrentBranch=refuse
+Date: Sun, 10 Feb 2013 14:36:19 -0800
+Message-ID: <7v1ucnssnw.fsf@alter.siamese.dyndns.org>
 References: <7vzjzexv8l.fsf@alter.siamese.dyndns.org>
  <cover.1360508415.git.wking@tremily.us>
- <92a02e35df3dab70928e56e6790417243beea2af.1360508415.git.wking@tremily.us>
- <7va9rbst37.fsf@alter.siamese.dyndns.org>
+ <ba62167be6df7a6ba666373913bfd235bcc29c9d.1360508415.git.wking@tremily.us>
+ <7vd2w7uajk.fsf@alter.siamese.dyndns.org>
+ <20130210214621.GA8000@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary="G6nVm6DDWH/FONJq"
+Content-Type: text/plain; charset=iso-2022-jp
 Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 23:33:07 2013
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Sun Feb 10 23:36:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4fSM-00009I-PR
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 23:33:07 +0100
+	id 1U4fVx-00027x-S2
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 23:36:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757021Ab3BJWcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 17:32:42 -0500
-Received: from vms173015pub.verizon.net ([206.46.173.15]:44056 "EHLO
-	vms173015pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756950Ab3BJWcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 17:32:41 -0500
-Received: from odin.tremily.us ([unknown] [72.68.84.219])
- by vms173015.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MI000G18ZYGWB30@vms173015.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 10 Feb 2013 16:32:41 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 204AB879BB7; Sun,
- 10 Feb 2013 17:32:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1360535560; bh=cGHATvabV4soGjzTivOQ/ScrsCpbTQ447OA8AoBQFAo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Vp3bPwq1YJaj+JrwNzrUI4dzgcpSUrnhjuWnKspqKRYUUdyUzLGRG9thb9pETXs3j
- lK1hZ3CsLuE59oPhzqWHWj4KAxvsUZz37hIoUZscdZFXQHdXJCJhH9Sukr2/guFzJV
- ETwjosJhcYzp6hy9nHzPh2JJRGBtUOpVbRTVQ35Q=
-Content-disposition: inline
-In-reply-to: <7va9rbst37.fsf@alter.siamese.dyndns.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756856Ab3BJWg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 17:36:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59048 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756748Ab3BJWg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 17:36:26 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02548C027;
+	Sun, 10 Feb 2013 17:36:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gXmuLhdKRMW8KHuYrZU+GgHqLXg=; b=XNvNKd
+	j6eQ+5JSCnPijSi1vBxDYmwPC1hhQNN4qtbszLIw4aeXEFm8uc16YJ/VzftyLOvL
+	/tl/iH0WUQhBO7mBpgAgFcj6mTYWG3TSX5/9fhpJuC9l0ewufM3LcOcbgbIHCsH/
+	QFPda38Pr6jHOBwHrl53NEUlq4wSfkzcklwsk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MrHrJclnNpQnDZrP1xYALlzSzZvtqJHL
+	cSNz034pZOWUuQpZOk1rwKCb+jLUjAcAjL047FuvNKuYeC0waH1TOq51/vx79sV3
+	xC+E8YEiojbjUn4WSkPgvkbbDjPeKF/MeNRJkUUg6Wg8kGzulAG7UR/+g/ln4H3K
+	ZEnqNnQh/mg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97B24C020;
+	Sun, 10 Feb 2013 17:36:25 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E4E8BC012; Sun, 10 Feb 2013
+ 17:36:23 -0500 (EST)
+In-Reply-To: <20130210214621.GA8000@odin.tremily.us> (W. Trevor King's
+ message of "Sun, 10 Feb 2013 16:46:21 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4D2B99BE-73D2-11E2-8069-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215958>
 
+"W. Trevor King" <wking@tremily.us> writes:
 
---G6nVm6DDWH/FONJq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Sun, Feb 10, 2013 at 01:24:47PM -0800, Junio C Hamano wrote:
+>> I would not be surprised if some readers felt as if "then why not
+>> update it instead of rejecting?" were a valid question, without a
+>> bit more explanation.
+>>
+>> 	You can also push to a repository that has a working tree,
+>>   …
+>
+> Looks good to me :).  Shall I just drop this patch from v3 and leave
+> it to you?
 
-On Sun, Feb 10, 2013 at 02:27:08PM -0800, Junio C Hamano wrote:
-> This is a "meh" at least to me.  Unless it uses something like
->=20
-> 	git archive -o latest.tar.gz --prefix=3Dproject/ HEAD
->        =20
-> it is not all that interesting.
+No.
 
-Great suggestion.  My original goal was to remove the pipe, but if we
-can remove the redirection too, that's one less POSIX-ism for newbies
-to wonder about ;).
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---G6nVm6DDWH/FONJq
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRGCAHAAoJEEUbTsx0l5OM3i0QALzrbMyVCzNtQP/zKJ8jyMFL
-U88hJyRqXOcFEjV4zPyJhbg8Gwf+Y96eKL3sIRShlbDQQi/BGsba/VkeYx6w19Wd
-ENXc0eyZtwbIzNYZwez8ZGk+0qCzYgXJI8Hyc+/DZgq6HQuSK3OVDA5R0AV4CG6b
-S+3q1GAiNFeSF0ETNURt6pnvjlitz6N2S/OPqqIhMKrGy7T91hov8s01wsmJfpL6
-OTyz6cC8lHRH7sGRQnohq25E7hXUHNQT6QeBNUpLN/1hkjdx/LIcEYyeeeIy8ZmV
-e6Xmf/T1J2STbktNHiDKzvSXuKxYyi9RP4Eywlt34qabxEVGmtWykjEG80RDOlx6
-BrofG4IQhe5NIHLKo8S0OWcfcypGj2OTX1YJHa++ozk4bXPL/35Jrep61xL3RNfW
-FUaabK1yaPDPWS79Lw0/3hz3zV5tcGuoKvQEpj2pD97dW/gkj4DEf11iejdyby3L
-ApccfV6FEAg2bLcWGlTyS0vy3DdkgODYl07fpzBdGhRucC6nZPSkbNlciw3kWtuk
-V5c3UxWHMLZOh3CofTb6eKmTtE82djV5qRSa/tCOw9hIeuyeOLscgMU70Div0Q4O
-VBQ6TuQ4DsybeMuEd2+d8O52RcDRyqoxgTDGdJ+MyaAq3VDbV9KnHvO5YvafmNB/
-pNml7r0VbhLBcPcFHxxC
-=aOcO
------END PGP SIGNATURE-----
-
---G6nVm6DDWH/FONJq--
+Others need to object to, comment on and polish what you saw from
+me, before it turns into a commit.  And you need to be credited for
+identifying the problem, initiating the discussion, and collecting
+responses to result in the final patch.
