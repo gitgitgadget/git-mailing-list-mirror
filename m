@@ -1,147 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 05/15] user-manual: Add a few references to 'git
- rebase -i'
-Date: Sun, 10 Feb 2013 13:53:45 -0800
-Message-ID: <7vzjzbsumu.fsf@alter.siamese.dyndns.org>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v2 03/15] user-manual: Use 'remote add' to setup push URLs
+Date: Sun, 10 Feb 2013 16:54:43 -0500
+Message-ID: <20130210215442.GB8000@odin.tremily.us>
 References: <7vzjzexv8l.fsf@alter.siamese.dyndns.org>
  <cover.1360508415.git.wking@tremily.us>
- <4931d9fc83155b29787a3d33a7ac87dbfaa04795.1360508415.git.wking@tremily.us>
+ <44d89e81a8465d3bbf50b106a8a844c9d90ac384.1360508415.git.wking@tremily.us>
+ <7v8v6vua50.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=OwLcNYc0lM97+oe1
 Cc: Git <git@vger.kernel.org>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Sun Feb 10 22:54:18 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 22:55:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4eqm-00059u-W9
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 22:54:17 +0100
+	id 1U4erb-0005Yr-Gh
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 22:55:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756760Ab3BJVxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 16:53:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64843 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756415Ab3BJVxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 16:53:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 486F6B4AF;
-	Sun, 10 Feb 2013 16:53:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J62Dv7ZoSNVdZJ6OoZy4iW3SPM4=; b=ILTAjv
-	/coheC8+NHDhGVxrY/KhO8QvkI7FrRcdLr06j8f6Ly1B6ijhvNVnqmkhrC9efD2p
-	/tio2wF7zZuM1u2rwazaNaPlAXsUx85jmuysLXVIdAsWEylacj79bDORI/hsmsuE
-	BUtb0mpn43fTlQTK6ESLZPjYuMIzhbHH9P5jw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Dhn7gr1dMlL1/mlR3UraAPUruE88xL5H
-	S0EoG4dlDtkGUWp5bpj/7Z3YiKiZFs+Rzj46mIWrGTo7NLp413zGBNknf+bLNw6R
-	CtYLYclLhMhoHk82Wq0O3cQMLQryLdMbHzvtPd9dzJjYuSjtbgBQHY5a9JOEtDTE
-	VemDiXs2EC0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CC6EB49E;
-	Sun, 10 Feb 2013 16:53:51 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C50CB489; Sun, 10 Feb 2013
- 16:53:50 -0500 (EST)
-In-Reply-To: <4931d9fc83155b29787a3d33a7ac87dbfaa04795.1360508415.git.wking@tremily.us>
- (W. Trevor King's message of "Sun, 10 Feb 2013 10:10:31 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5A8E7B72-73CC-11E2-9D02-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756765Ab3BJVyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 16:54:45 -0500
+Received: from vms173019pub.verizon.net ([206.46.173.19]:58591 "EHLO
+	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756415Ab3BJVyo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 16:54:44 -0500
+Received: from odin.tremily.us ([unknown] [72.68.84.219])
+ by vms173019.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MI0009K2Y77TG80@vms173019.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 10 Feb 2013 15:54:44 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 16E7A879935; Sun,
+ 10 Feb 2013 16:54:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1360533283; bh=7enYc2ydOoXB8trXRPF6twAzb/kb86gcp/w2ZT1JdDw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=s+BGFVE+L6kMMmqaKtbibduk7ReqElMUpDx3zEdCCo6wDUtECfSoJgTVRiKx8C8V6
+ Ld6T4nj6MfUcoluu1FYQeT+ufabSY2GEE8CpMGEeCktDPAwM6e6zvvy1xXT/de+zSE
+ JuucDaxBghMk7uzBE+VeHEd66x73FjO6D1Xt1u+4=
+Content-disposition: inline
+In-reply-to: <7v8v6vua50.fsf@alter.siamese.dyndns.org>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215941>
 
-"W. Trevor King" <wking@tremily.us> writes:
 
-> From: "W. Trevor King" <wking@tremily.us>
->
-> I think this interface is much more convenient than extended cherry
-> picking or using 'git format-patch'.  Inserting a number of references
-> should raise awareness among new users.  The previously discussed
-> methods (cherry picking and format-patch-ing) are still useful,
-> because all of these approaches have the same effect, which may help
-> demystify the process for newbies.
->
-> Signed-off-by: W. Trevor King <wking@tremily.us>
-> ---
->  Documentation/user-manual.txt | 21 +++++++++++++++++----
->  1 file changed, 17 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> index a8f792d..5d80b40 100644
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -2532,6 +2532,13 @@ return mywork to the state it had before you started the rebase:
->  $ git rebase --abort
->  -------------------------------------------------
->  
-> +If you need to reorder or edit a number of commits in a branch, it may
-> +be easier to use `git rebase -i`, which allows you to reorder and
-> +squash commits, as well as marking them for individual editing during
-> +the rebase.  See linkgit:git-rebase[1] for details, and
-> +<<reordering-patch-series>> for alternatives.
-> +
-> +
+--OwLcNYc0lM97+oe1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This change is very good (modulo the extra blank line at the end).
+On Sun, Feb 10, 2013 at 01:33:31PM -0800, Junio C Hamano wrote:
+> Look at how "Fetching branches from other repositories" is done.  It
+> shows the use of "remote add" and then shows the result by running
+> "cat" to show the contents.
+>=20
+> I think that organization is much nicer than completely hiding how
+> the result looks like behind another "git config --set" call, like
+> the latter half of this patch does.
 
->  [[rewriting-one-commit]]
->  Rewriting a single commit
->  -------------------------
-> @@ -2546,10 +2553,10 @@ $ git commit --amend
->  which will replace the old commit by a new commit incorporating your
->  changes, giving you a chance to edit the old commit message first.
->  
-> -You can also use a combination of this and linkgit:git-rebase[1] to
-> -replace a commit further back in your history and recreate the
-> -intervening changes on top of it.  First, tag the problematic commit
-> -with
-> +You can also use a combination of `commit --amend` and
-> +linkgit:git-rebase[1] (see <<using-git-rebase>>) to replace a commit
-> +further back in your history and recreate the intervening changes on
-> +top of it.  First, tag the problematic commit with
+I think for new users, `git config =E2=80=A6`'s opacity may a good thing.  =
+Who
+cares how Git stores the config values?  Only users who like to edit
+the config files by hand (like, um, me ;).  For someone trying to wrap
+their head around Git for the first time, the fact that you can read
+and set config values which are stored somewhere should be enough.
 
-I think this section can use a lot more love.  There is no reason to
-have "bad" tag (tagging the tip of mywork might have made sense in
-the old days without detached HEAD or reflog), for example.
+I don't feel strongly enough in favor of `git config` to push on this
+though, so I'd be happy dropping this patch in favor of:
 
-Alternatively, we can explain only the amending of the tip commit in
-this section, removing everything else; I think that is probably a
-better option.  The series of sections around here would then look
-like:
+> The resulting text may read like so:
+> =E2=80=A6
 
- * The section before this talked about a straight-forward "rebase";
+I'm fine with this too, but if this is the suggested route, why bother
+with `git config` at all?  Is it just for ease of scripting?
 
- * This section then talks about "commit --amend", nothing else;
+Cheers,
+Trevor
 
- * The next section talks about taking "format-patch A..B", flipping
-   its output around and applying to A.  Enhance that section with
-   the material to be removed from here, which talks about applying
-   "format-patch A..B" on top of the amended A.
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
- * Then add a separate section after that "Reordering or selecting
-   from a patch series" section to discuss "rebase -i".
+--OwLcNYc0lM97+oe1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
 
-Hmm?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
 
->  -------------------------------------------------
->  $ git tag bad mywork~5
-> @@ -2584,6 +2591,12 @@ new commits having new object names.
->  Reordering or selecting from a patch series
->  -------------------------------------------
->  
-> +There are a number of ways you can go about editing an existing patch
-> +series.  The easiest way is probably by using `git rebase -i`,
-> +mentioned in <<using-git-rebase>>, but whether you use
-> +linkgit:git-rebase[1] or one of the methods discussed below, the
-> +effect is the same.  Pick whichever approach you like best.
-> +
->  Given one existing commit, the linkgit:git-cherry-pick[1] command
->  allows you to apply the change introduced by that commit and create a
->  new commit that records it.  So, for example, if "mywork" points to a
+iQIcBAEBAgAGBQJRGBciAAoJEEUbTsx0l5OMwzcQAKON7F5blMTxwDcwU25wNEEX
+unnRpuKEBiPul3RhPiMUjczxnxetbnqrvxM9ca1qFbsmwJoAmcVLQk2XI2DFAZd2
+t9xz4+OK5+0jAvWCaiIK02/C/V8NpcuOVSlsvuVfwq2HVKvkvrS+H/cR0t3jliqg
+93/tjntY2F09ID9twzzRfixkCnNVG7mSjdyZKQN6TaNpr+5MI99Np/1VcycgSCPo
+K4vdwrEp6aR4ubUM9J6Vp7Qm/vt7kXuErnZ6i3xERuZhQfhbgO7FuJCdVWKASNTF
+y8WC9pIBEtEEYRlk2ms19rbNLdc1ElDyl8wR3bdhvnaNzycEGaUOK6ag7yzcmt18
+gx/ML6880N7oOkY6l9JR5Ll+noT/T8zJvuegpBvYhd6aHXUG2aFgE1oI1O3t3gju
+P9EOKpFhze4LdfTzZXgJ+EYHfEmNgie6py+7dlNj7ExSY/hrOSJHbtbzYiU10pgX
+YyGXqeUXNRqclmE4Sy7eMu3wHhae+ShwqZwEDbPjXwZv4lDrHFjz3qrh2i2jZaFV
+aqzMRGIk4Txua6CAgBXnSHPxPyc+vTgovX0LbjpCcGb4aN/EUOvl634sybXPXebA
+9bo5aesA293coStTd4TA8c1ewvicu/hGqQeVwQMX21kGQLPIOio/aDouuWP8/o9t
+ySCkPSnuk+lkpcoMy9I8
+=BdFw
+-----END PGP SIGNATURE-----
+
+--OwLcNYc0lM97+oe1--
