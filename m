@@ -1,89 +1,113 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: inotify to minimize stat() calls
-Date: Sun, 10 Feb 2013 22:35:46 +0700
-Message-ID: <CACsJy8CsV9JtgQ60k4gV_P5qi+Uw9zP=By7cpCFxNSLVqrBcog@mail.gmail.com>
-References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
- <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org>
- <7vsj56w5y9.fsf@alter.siamese.dyndns.org> <9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
- <CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com>
- <CALkWK0nQVjKpyef8MDYMs0D9HJGCL8egypT3YWSdU8EYTO7Y+w@mail.gmail.com>
- <CACsJy8CEHzqH1X=v4yau0SyZwrZp1r6hNp=yXD+eZh1q_BS-0g@mail.gmail.com>
- <CALkWK0=6_n4rf6AWci6J+uhGHpjTUmK7YFdVHuSJedN2zLWtMA@mail.gmail.com>
- <CACsJy8DeM5--WVXg3b65RxLBS7Jho-7KmcGwWk7B5uAx77yOEw@mail.gmail.com>
- <20130210111732.GA24377@lanh> <CANgJU+WYSD8RHb19EP0M89=Y_XskfjDtFWf51qjg4ur+rDb3ug@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH] Introduce branch.<name>.pushremote
+Date: Sun, 10 Feb 2013 21:11:59 +0530
+Message-ID: <CALkWK0mjEmErd2A5qb8qdfNMSXG1L0dt8A=ecbSVFGPEg5MxkA@mail.gmail.com>
+References: <1360307982-20027-1-git-send-email-artagnon@gmail.com>
+ <7v8v6y1sih.fsf@alter.siamese.dyndns.org> <CALkWK0kp5SvbeTQgLRKWUAT_koSi0wyp6iPTC324iH8+D8oeJg@mail.gmail.com>
+ <7vhallw946.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Robert Zeh <robert.allan.zeh@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>, finnag@pvv.org
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 16:36:50 2013
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 16:42:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4YxO-0007W5-QE
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 16:36:43 +0100
+	id 1U4Z3G-0002sB-LB
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 16:42:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755886Ab3BJPgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 10:36:19 -0500
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:61737 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755772Ab3BJPgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 10:36:19 -0500
-Received: by mail-oa0-f54.google.com with SMTP id n12so5496851oag.27
-        for <git@vger.kernel.org>; Sun, 10 Feb 2013 07:36:16 -0800 (PST)
+	id S1755772Ab3BJPmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 10:42:20 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:57662 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754580Ab3BJPmT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 10:42:19 -0500
+Received: by mail-ie0-f176.google.com with SMTP id k13so6673617iea.7
+        for <git@vger.kernel.org>; Sun, 10 Feb 2013 07:42:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=6ir5gqJc6hP3PFxRMCgdv2oHdYhHKIZ8EYE9T3+fu3I=;
-        b=sp1J6HC/13+wQ5eeVYkctkx2Pz0AhDW1YK4xoX3GhsHBPYoUVpcLqHLH2nYwHSCjbf
-         360GTASfQYRTfIxD9gZs3tpsBjQAwE3WSsgoPlya1wbB8imFe4sig/HrmWStr06zgLnj
-         FFNysH8r7W6du69BMAfPIafk+y8cfun8eVGcnqlwTuSrGqoa9PFPVhc1EVXrik2p6SHg
-         DjANvkhhI8cucRVcDQD1y26iRbG03qnlmPJ95BobXbNqBYzEBrf5sFtfxhzKdGetoMoR
-         JoqUBnk5F5YGDca7PNaJyfctNum8A05xhmAZMmqw/P2OOjqBmWamLkWJSjfduJYmbDDD
-         G3HQ==
-X-Received: by 10.182.43.103 with SMTP id v7mr8599556obl.17.1360510576740;
- Sun, 10 Feb 2013 07:36:16 -0800 (PST)
-Received: by 10.76.154.197 with HTTP; Sun, 10 Feb 2013 07:35:46 -0800 (PST)
-In-Reply-To: <CANgJU+WYSD8RHb19EP0M89=Y_XskfjDtFWf51qjg4ur+rDb3ug@mail.gmail.com>
+        bh=vD75nrbLnE6KIrp0kNGbsSRzoStEsaf/0/TA8BxkLyQ=;
+        b=Hw9UlPukdpQ3q7R4MscRudJcvHtH0HxAt870ViF7jPgGX2O45Fac+7Vy1wfZ6A+Oxv
+         Ii6XRGGFzLV/qxr/CLStdmU+JxArLJya7GLoBRnmAAn4G8uxebhsmlVh/7VXQosdAUSQ
+         N+CxTNEAmVio6le79piWyrDSsB7zGNcmOEcS9r8BJb4jFNZ8UyMSg5VFJath6T164Sor
+         ybz3J+/sj2paJi8ijjeN08Jo/H86NR1dgo23UzPsbYClOBGkFi1DQg3luyydGTgrru/9
+         rrkC095JVmvEEsBlxRO+BJXGu/1BtoXeYD5K0qCJOmiRGfr9B2qni1QzzB7VcH0Nn2WV
+         P5IA==
+X-Received: by 10.50.237.5 with SMTP id uy5mr9944948igc.12.1360510939239; Sun,
+ 10 Feb 2013 07:42:19 -0800 (PST)
+Received: by 10.64.166.33 with HTTP; Sun, 10 Feb 2013 07:41:59 -0800 (PST)
+In-Reply-To: <7vhallw946.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215923>
 
-On Sun, Feb 10, 2013 at 8:26 PM, demerphq <demerphq@gmail.com> wrote:
-> On 10 February 2013 12:17, Duy Nguyen <pclouds@gmail.com> wrote:
->> Bear in mind though this is Linux, where lstat is fast. On systems
->> with slow lstat, these timings could look very different due to the
->> large number of lstat calls compared to open+getdents. I really like
->> to see similar numbers on Windows.
+Junio C Hamano wrote:
+>         struct bp { const char *branch; const char *remotename; };
 >
-> Is windows stat really so slow?
+>         static int pushremote(const char *var, const char *val, void *cb)
+>         {
+>                 struct bp *bp = cb;
+>                 const char *name, *key;
+>                 int namelen;
+>
+>                 if (!parse_config_key(var, "branch", &name, &namelen, &key) &&
+>                     namelen == strlen(bp->branch) &&
+>                     !memcmp(name, bp->branch, name, namelen) &&
+>                     !strcmp(key, "remotepush")) {
+>                         git_config_string(&bp->remotename, var, val);
+>                 }
+>                 return 0;
+>         }
+>
+>         char *find_pushremote(void) {
+>                 struct bp bp;
+>
+>                 bp.branch = get_current_branch();
+>                 bp.remotename = NULL;
+>                 git_config(pushremote, &bp);
+>                 return bp.remotename;
+>         }
 
-I can't say. I haven't used Windows for months (and git on Windows for years)..
+I don't get the point of your illustration.  First, we never deal with
+a char * branch anywhere: handle_config() immediately calls
+make_branch() as soon as it parses the name from the config.  Second,
+remote_name is already bundled with the branch struct: why do you need
+a new bp struct?  This is how I would do it without relying on a
+global:
 
-> I encountered this perception in
-> windows Perl in the past, and I know that on windows Perl stat
-> *appears* slow compared to *nix, because in order to satisfy the full
-> *nix stat interface, specifically the nlink field, it must open and
-> close the file*. As of 5.10 this can be disabled by setting a magic
-> var ${^WIN32_SLOPPY_STAT} to a true value, which makes a significant
-> improvement to the performance of the Perl level stat implementation.
-> I would not be surprised if the cygwin implementation of stat() has
-> the same issue as Perl did, and that stat appears much slower than it
-> actually need be if you don't care about the nlink field.
+	static int handle_config(const char *key, const char *value, void *cb) {
+		/* parse branch name here */
+		/* ... */
+		branch = make_branch(name);
+		if (!strcmp(subkey, ".pushremote"))
+			branch->pushremote_name = xstrdup(value);
+	}
 
-The native port of git uses get_file_attr (in
-compat/mingw.c:do_lstat()) to simulate lstat and always sets nlink to
-1. I assume this means git does not care about nlink field. I don't
-know about cygwin though.
+	struct remote *pushremote_get(struct branch *this_branch)
+	{
+		if (this_branch == get_current_branch())
+			name = this_branch->pushremote_name;
+		/* ... */
+		return make_remote(name);
+	}
 
-> Yves
-> * http://perl5.git.perl.org/perl.git/blob/HEAD:/win32/win32.c#l1492
--- 
-Duy
+Essentially, I need to know for which branch we're trying to get the
+pushremote: hence the parameter this_branch to pushremote_get().
+
+> But there is no reason for anybody to want to know the value for the
+> variables branch.$name.pushremote for all defined $name's at the
+> same time, exactly because this matters only for the current branch,
+> no?
+
+Ah, yes.  You are right.  There's no harm in having globals because
+there can really be only one current branch, and only one pushremote
+corresponding to that.  It's just that globals tend to confuse me in
+general, because I have to keep track of a maze of functions that are
+getting/ setting them.
