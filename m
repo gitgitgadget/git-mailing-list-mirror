@@ -1,96 +1,80 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v2 07/15] user-manual: Mention 'git remote add' for remote
- branch config
-Date: Sun, 10 Feb 2013 17:22:54 -0500
-Message-ID: <20130210222254.GB8377@odin.tremily.us>
-References: <7vzjzexv8l.fsf@alter.siamese.dyndns.org>
- <cover.1360508415.git.wking@tremily.us>
- <1e3996dff5c19010aca1458b202b14cbb54b5d80.1360508415.git.wking@tremily.us>
- <7vmwvbstw1.fsf@alter.siamese.dyndns.org>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH v3 06/11] sequencer.c: always separate "(cherry picked
+ from" from commit body
+Date: Sun, 10 Feb 2013 15:25:42 -0800
+Message-ID: <CA+sFfMc8YGZOUqNbTGa=X5ik0K_eBF86Pk4w5gZNppLayiCxVQ@mail.gmail.com>
+References: <1359335515-13818-1-git-send-email-drafnel@gmail.com>
+	<1359335515-13818-7-git-send-email-drafnel@gmail.com>
+	<20130128023409.GH8206@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary="/NkBOFFp2J2Af1nK"
-Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 00:23:49 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
+	Brandon Casey <bcasey@nvidia.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 00:26:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4gFQ-0008DR-ID
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 00:23:48 +0100
+	id 1U4gHf-00012o-OO
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 00:26:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755330Ab3BJXXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 18:23:24 -0500
-Received: from vms173003pub.verizon.net ([206.46.173.3]:37588 "EHLO
-	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754536Ab3BJXXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 18:23:24 -0500
-Received: from odin.tremily.us ([unknown] [72.68.84.219])
- by vms173003.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MI000LG2ZI7T840@vms173003.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 10 Feb 2013 16:23:00 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id CDE23879AF6; Sun,
- 10 Feb 2013 17:22:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1360534974; bh=JpQ5H1vr4Au2nYz9UTY24XwxHs0BIsA79336JPxg+tA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=TaA0P5s/CZFvS4Udsm3mUNi2CA4H7ta/+P0FEdyIzrE/GnQ2oldg4X8pRSHSSUUMt
- mbqzjh+vFbzAZgAnO/r8ZDKvt4ksxj2oVbbtnjIho74bl60egFZTHpfCL3XSr6kWkc
- pWwIlkmj57qf04hCT6xyA4k6XkstCdIU4EI35pm8=
-Content-disposition: inline
-In-reply-to: <7vmwvbstw1.fsf@alter.siamese.dyndns.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755532Ab3BJXZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 18:25:44 -0500
+Received: from mail-we0-f173.google.com ([74.125.82.173]:61407 "EHLO
+	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754536Ab3BJXZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 18:25:44 -0500
+Received: by mail-we0-f173.google.com with SMTP id r5so4372978wey.18
+        for <git@vger.kernel.org>; Sun, 10 Feb 2013 15:25:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=bOMHIg5G4WfbWlNBc6FlTG7lhs6RWlR7giMMGybQJCQ=;
+        b=VojcMlF1OFK1yNOQd4g9aLxCDydPAhLgsjY3CT8Of9F/I9MFqOqvc5HmDdp+XHYh1E
+         LL9k3PKTT1pRCYZZScfWaDHhiXiU/cvEUXfCHiaOnZ2+WVZ/HpL0/zSap7ri4wj7SVOY
+         +V1RkZE+g4evrY3qKILfDYIoOoL+qhcvPWG6CHzvCNWpVwYsg3r3O9hCYXjFA1VEATTH
+         ZAUx/2ahnsT/8mKAYdfxaZDxcBdLYW2CPIH0/tj1hC5H5k50rWkiCZhR6GGT+Ft+Aalw
+         LFWEet3SQZn/YM5aeU9Zm0uTqYLHjBpdLb1LQ2RSGI+lwtCv01Mh/hSG8M6MaCutmtmx
+         WNfg==
+X-Received: by 10.180.7.232 with SMTP id m8mr12654677wia.8.1360538742800; Sun,
+ 10 Feb 2013 15:25:42 -0800 (PST)
+Received: by 10.194.63.46 with HTTP; Sun, 10 Feb 2013 15:25:42 -0800 (PST)
+In-Reply-To: <20130128023409.GH8206@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215971>
 
+On Sun, Jan 27, 2013 at 6:34 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Brandon Casey wrote:
+>
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
 
---/NkBOFFp2J2Af1nK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> @@ -497,6 +558,8 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+>>               }
+>>
+>>               if (opts->record_origin) {
+>> +                     if (!has_conforming_footer(&msgbuf, 0))
+>> +                             strbuf_addch(&msgbuf, '\n');
+>
+> What should this do in the case of an entirely blank message?
+> (Maybe that's too insane a case to worry about.)
 
-On Sun, Feb 10, 2013 at 02:09:50PM -0800, Junio C Hamano wrote:
-> I'd suggest rewriting everything after "If there are other
-> repositories that you also use frequently,..." of this section.
->=20
-> Replace the first example after "for example, after" that uses
-> "config remote.example.url" with the new text in your patch,
-> [snip additional advice]
+Yeah, I think there are a number of insane cases that I think we
+should just say "behavior is undefined".
 
-Will do in v3.
+  - Entirely blank message
+  - Message lacking trailing newline.
+  - Oneline message that is actually a signed-off-by (equal or not to
+the committer's sob).
+  - Message body that is entirely 1 or more newlines, or one which has
+more than one trailing newline.
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+It's probably not worth going through contortions to handle these cases.
 
---/NkBOFFp2J2Af1nK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRGB29AAoJEEUbTsx0l5OMnxsP/jMxVCKy+1JAHq6NCCetu/Wh
-h8AcIMf1B2FUM2sXPqDHuSm1PVYRYZyJbRsSb7/evT90chnftCpa0xcEpkSewsJj
-obJ2whIE7UtR2RZLZNdvv2nGEbnY4ayf1iIrEZTMVSma5/FQ2YOxkFAXZVXBgfI+
-UC9jJkcJJIGJHxYNZhiaZXxZbsUU3ypWPBneSo5DchMwN5kyBfjBmcNlVZ9ESZHK
-rXNpcgtd2Yr/QHkE1TmZMn1nOYnNIDdJaKodoyn55OtOa/J+ht2mHfcd26QBnfxC
-vgg3Fc24t2bSOKr1nP87L9icrB6R4jWF+NYdgqgPcmHT7iSOAaZNJS9R73qd4AWA
-1XpN15PttiHSvb2oFrfaCgH22NefUi9JFcwkbStHtshjzh8FhBCyHXefmPcNy6tq
-1Glhj+Hd8YkVxPKJoXJq2EvhEplGwffP3xInchNF1wsgkSK7IUjkmOPtSVziRYaw
-0mz3trYej6UCK8+D5pf0Hs5gMgmskeY6dwViV3ZrR9R5cxFIYeHeUHobFB2HaeaU
-Bl7jTLjxjxxEyQCJ2mDk3XhO2Z2wlAKdBDlKMeIOiMaQ02BBs9CcvMRBJ1r3yxh4
-shfeFUDYhBaTkD9yuBpC7aRczJJYlkZj4HFB7tg7ccJjOLVr2VELrREsdcZfIMn2
-tseTm6q3SPen3dXHRKnI
-=syTJ
------END PGP SIGNATURE-----
-
---/NkBOFFp2J2Af1nK--
+-Brandon
