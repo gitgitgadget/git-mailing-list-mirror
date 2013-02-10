@@ -1,92 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fixup! graph: output padding for merge subsequent
- parents
-Date: Sun, 10 Feb 2013 14:38:46 -0800
-Message-ID: <7vwqufrdzd.fsf@alter.siamese.dyndns.org>
-References: <7vtxplt5u2.fsf@alter.siamese.dyndns.org>
- <20130210131647.GA2270@serenity.lan>
- <7vliawt19c.fsf@alter.siamese.dyndns.org>
- <20130210210229.GB2270@serenity.lan>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git prompt
+Date: Sun, 10 Feb 2013 17:43:45 -0500
+Message-ID: <20130210224345.GA32318@sigill.intra.peff.net>
+References: <CAE_TNikk-9sYVRQRwRecNpp3otQ+oc=uV9SPu+7pAkCUNbcUoQ@mail.gmail.com>
+ <20130210212538.GA11720@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	=?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Feb 10 23:39:15 2013
+Cc: Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Greg Brockman <gdb@MIT.EDU>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 23:44:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4fYI-0003Fm-SM
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 23:39:15 +0100
+	id 1U4fdE-0005f4-HV
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 23:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756881Ab3BJWiw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2013 17:38:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34389 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756760Ab3BJWiv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2013 17:38:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6C8EC8EA;
-	Sun, 10 Feb 2013 17:38:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=FNwdXkJihbRc
-	1/d6bjwKIUC2IYs=; b=UPDw9yODR66KEeZGp9nuFXkierlFo9BmqE0I7O2yBO1t
-	NdXEDotcdsRNmy/ir8XA2A7xN6r1Iy90LF8W31ju4mAonSHizYQc71DfVZ/GrcIy
-	wx+67XbbWEs3FWdZbxgPLTfhC3rhJjWrYqljArmi65XSoq/q7uDS4C7qOTHTNgE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OVEl3v
-	upekbhqfmFi9xGi3EJTVfk1PjUXtQXTJGCZf0RnRzHbhVnkJKxBvbfVRN+Lh/Lz4
-	UgtISUFL7I0LS5FkeuN0FZIUrnlOUG4FokxtABBkkcaARpaRE7a7dYnat4cKuoDu
-	Qn6Jm7MY2fYD6rB6eHdjvC2zFxnfPWVmT/7Q0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11B9AC8E4;
-	Sun, 10 Feb 2013 17:38:50 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A68C4C8CC; Sun, 10 Feb 2013
- 17:38:48 -0500 (EST)
-In-Reply-To: <20130210210229.GB2270@serenity.lan> (John Keeping's message of
- "Sun, 10 Feb 2013 21:02:29 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A31E2C9C-73D2-11E2-B8DC-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756912Ab3BJWn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 17:43:57 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43807 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756854Ab3BJWn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 17:43:56 -0500
+Received: (qmail 15873 invoked by uid 107); 10 Feb 2013 22:45:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 10 Feb 2013 17:45:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Feb 2013 17:43:45 -0500
+Content-Disposition: inline
+In-Reply-To: <20130210212538.GA11720@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215961>
 
-John Keeping <john@keeping.me.uk> writes:
+On Sun, Feb 10, 2013 at 01:25:38PM -0800, Jonathan Nieder wrote:
 
-> On Sun, Feb 10, 2013 at 11:30:39AM -0800, Junio C Hamano wrote:
-> ...
->> Is it correct to say that this essentially re-does 656197ad3805
->> (graph.c: infinite loop in git whatchanged --graph -m, 2009-07-25)
->> in a slightly different way, in that Micha=C5=82's original fix also
->> protected against the case where graph->state is flipped to
->> GRAPH_PADDING by graph_next_line() that returns false, but with your
->> fixup, the code knows it never happens (i.e. when graph_next_line()
->> returns false, graph->state is always in the GRAPH_PADDING state),
->> and the only thing we need to be careful about is when graph->state
->> is already in the PADDING state upon entry to this function?
->
-> Yes, although I wonder if we can end up in POST_MERGE or COLLAPSING
-> state here as well.  The check in the loop guards against that becaus=
-e
-> those will eventually end up as PADDING.
->
-> As far as I can see, this is okay because we have called
-> graph_show_remainder() at the end of outputting a commit, even when w=
-e
-> end up outputting the same (merge) commit more than once.  But someon=
-e
-> more familiar with the graph code might want to comment here.
+> Ethan Reesor wrote:
+> 
+> > I have a git user set up on my server. It's prompt is set to
+> > git-prompt and it's git-shell-commands is empty.
+> [...]
+> > How do I make the git user work like github where, upon attempting to
+> > get a prompt, the connection is closed?
+> 
+> I assume you mean that the user's login shell is git-shell.
+> 
+> You can disable interactive logins by removing the
+> ~/git-shell-commands/ directory.  Unfortunately that doesn't let you
+> customize the message.  Perhaps it would make sense to teach shell.c
+> to look for a
+> 
+> 	[shell]
+> 		greeting = 'Hi %(username)! You've successfully authenticated, but I do not provide interactive shell access.'
+> 
+> setting in git's config file.  What do you think?
 
-More importantly, that kind of thought process needs to be
-documented in the log message; that will help people to diagnose the
-cause of the problem if they later find that this patch made an
-incorrect assumption while simplifying the code.
+I think something like that makes sense. To my knowledge there is no way
+with stock git to customize git-shell's output (at GitHub, that message
+comes from our front-end routing process before you even hit git-shell
+on our backend machines).
+
+The "username" in our version of the message comes from a database
+mapping public keys to GitHub users, not the Unix username.  But I
+suspect sites running stock Git would be happy enough to have
+%(username) map to the actual Unix username.
+
+-Peff
