@@ -1,95 +1,92 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v2 00/15] User manual updates
-Date: Sun, 10 Feb 2013 17:36:32 -0500
-Message-ID: <20130210223632.GF8377@odin.tremily.us>
-References: <7vzjzexv8l.fsf@alter.siamese.dyndns.org>
- <cover.1360508415.git.wking@tremily.us>
- <7v621zsswg.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fixup! graph: output padding for merge subsequent
+ parents
+Date: Sun, 10 Feb 2013 14:38:46 -0800
+Message-ID: <7vwqufrdzd.fsf@alter.siamese.dyndns.org>
+References: <7vtxplt5u2.fsf@alter.siamese.dyndns.org>
+ <20130210131647.GA2270@serenity.lan>
+ <7vliawt19c.fsf@alter.siamese.dyndns.org>
+ <20130210210229.GB2270@serenity.lan>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=JSkcQAAxhB1h8DcT
-Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 23:36:58 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	=?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Feb 10 23:39:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4fW5-0002CB-Kt
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 23:36:57 +0100
+	id 1U4fYI-0003Fm-SM
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 23:39:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756927Ab3BJWge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 17:36:34 -0500
-Received: from vms173019pub.verizon.net ([206.46.173.19]:47993 "EHLO
-	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756748Ab3BJWgd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 17:36:33 -0500
-Received: from odin.tremily.us ([unknown] [72.68.84.219])
- by vms173019.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MI1008HC04W0X00@vms173019.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 10 Feb 2013 16:36:33 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 38C09879BF0; Sun,
- 10 Feb 2013 17:36:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1360535792; bh=2YnuAlNe67VfL+e/wno05ovHjydQ0UqPJN3Bc2lHPfM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=QUaWSxBsSpQ+NhQHgWcXGn7nol2hlUF9A5nAbNOLuf2mf3gE3oOMgRi9N/+p5D2XS
- +i5Lx7zHqmrWn6U/22rymjT+OBbVqZSPck667X8lNPH+kQil3F/FaBFx0UXArbPswb
- W5bgDml46uw1KJIQL0IuP9cp0BBrha885hWKCqZ4=
-Content-disposition: inline
-In-reply-to: <7v621zsswg.fsf@alter.siamese.dyndns.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756881Ab3BJWiw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2013 17:38:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34389 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756760Ab3BJWiv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2013 17:38:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6C8EC8EA;
+	Sun, 10 Feb 2013 17:38:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=FNwdXkJihbRc
+	1/d6bjwKIUC2IYs=; b=UPDw9yODR66KEeZGp9nuFXkierlFo9BmqE0I7O2yBO1t
+	NdXEDotcdsRNmy/ir8XA2A7xN6r1Iy90LF8W31ju4mAonSHizYQc71DfVZ/GrcIy
+	wx+67XbbWEs3FWdZbxgPLTfhC3rhJjWrYqljArmi65XSoq/q7uDS4C7qOTHTNgE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OVEl3v
+	upekbhqfmFi9xGi3EJTVfk1PjUXtQXTJGCZf0RnRzHbhVnkJKxBvbfVRN+Lh/Lz4
+	UgtISUFL7I0LS5FkeuN0FZIUrnlOUG4FokxtABBkkcaARpaRE7a7dYnat4cKuoDu
+	Qn6Jm7MY2fYD6rB6eHdjvC2zFxnfPWVmT/7Q0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11B9AC8E4;
+	Sun, 10 Feb 2013 17:38:50 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A68C4C8CC; Sun, 10 Feb 2013
+ 17:38:48 -0500 (EST)
+In-Reply-To: <20130210210229.GB2270@serenity.lan> (John Keeping's message of
+ "Sun, 10 Feb 2013 21:02:29 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A31E2C9C-73D2-11E2-B8DC-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215960>
 
+John Keeping <john@keeping.me.uk> writes:
 
---JSkcQAAxhB1h8DcT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Sun, Feb 10, 2013 at 11:30:39AM -0800, Junio C Hamano wrote:
+> ...
+>> Is it correct to say that this essentially re-does 656197ad3805
+>> (graph.c: infinite loop in git whatchanged --graph -m, 2009-07-25)
+>> in a slightly different way, in that Micha=C5=82's original fix also
+>> protected against the case where graph->state is flipped to
+>> GRAPH_PADDING by graph_next_line() that returns false, but with your
+>> fixup, the code knows it never happens (i.e. when graph_next_line()
+>> returns false, graph->state is always in the GRAPH_PADDING state),
+>> and the only thing we need to be careful about is when graph->state
+>> is already in the PADDING state upon entry to this function?
+>
+> Yes, although I wonder if we can end up in POST_MERGE or COLLAPSING
+> state here as well.  The check in the loop guards against that becaus=
+e
+> those will eventually end up as PADDING.
+>
+> As far as I can see, this is okay because we have called
+> graph_show_remainder() at the end of outputting a commit, even when w=
+e
+> end up outputting the same (merge) commit more than once.  But someon=
+e
+> more familiar with the graph code might want to comment here.
 
-On Sun, Feb 10, 2013 at 02:31:11PM -0800, Junio C Hamano wrote:
-> Thanks.  I queued 01, 10, 11, 13 directly on 'maint'; they looked
-> not just good to me but I wouldn't expect any objection to them.
-
-Ok, I'll drop them from v3.  I based my changes on `master` to avoid
-colliding with 2de9b711 (Documentation: the name of the system is
-'Git', not 'git', 2013-01-21), but if you shifted them already I
-suppose you've fixed any conflicts ;).
-
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---JSkcQAAxhB1h8DcT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRGCDvAAoJEEUbTsx0l5OM/kQP+wUWtSMorYGg34LxRLfnPcG+
-0V/7g+GaOPILTfi1eGiz3LzbtqcV4dYRu+N4kZJGkkqpDxFWkhwdifQH9q9APPhb
-g5iMBT87KHjcNgxEQaIh81pCnN0rYkyr7CnT7i6MvtOSHZ8ZM9HBXuYwP5GlPBh+
-HN06qWjh+g8nDsJLTgoNRxc4tKaZaMY1+hOMYPeKHzn2+8GPrrJ2Ubg9flqK0D/k
-103ZePqAfGQgOMF7h9MYeBfoahFfMuQ/W8jb7/QjqxVVqM+Qv6xkWqDP9PgTmYVI
-jz3YOzzX6ACEEImEfqhXlHDMsDzBP05m/7fWSJM9y+MKTPi8U7rcCk49Vm46ugu3
-cd+DqeaUXe6SIc1QwPmaXJ+fO543StUtfeiZroEAVz8L2CnJ4U8Oq2uUhZTMZJ7b
-cBqppE4k1rU10MeOuQCjUN3WlKMv/sw+D/C3O415//kpiBumBNwV3oWYO8JI26lD
-EGkIHNJrA951B633kDS921IWjYI9vn8pLzE/ffDAQzo5y0Pi8ogD/GuLa9K3T9Up
-aHHxug7o+QdJ+aoewIx9GwzgVL6LaUq5wuW+za1VM4Z0Wu46FXLmou5kujIuDs5m
-qRU5C/CLPQaKr1QC5JRNu0AKzIMpUuAwKlyXN3HZYD3o+V9lp1m9wGlgQ/dts9BC
-t9R5pTK08va0Gwe7qcbz
-=o8nl
------END PGP SIGNATURE-----
-
---JSkcQAAxhB1h8DcT--
+More importantly, that kind of thought process needs to be
+documented in the log message; that will help people to diagnose the
+cause of the problem if they later find that this patch made an
+incorrect assumption while simplifying the code.
