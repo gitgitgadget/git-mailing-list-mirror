@@ -1,71 +1,100 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: inotify to minimize stat() calls
-Date: Sun, 10 Feb 2013 12:26:12 -0700
-Organization: CAF
-Message-ID: <201302101226.12646.mfick@codeaurora.org>
-References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com> <7vliaxwa9p.fsf@alter.siamese.dyndns.org> <CAKXa9=qQwJqxZLxhAS35QeF1+dwH+ukod0NfFggVCuUZHz-USg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fixup! graph: output padding for merge subsequent
+ parents
+Date: Sun, 10 Feb 2013 11:30:39 -0800
+Message-ID: <7vliawt19c.fsf@alter.siamese.dyndns.org>
+References: <7vtxplt5u2.fsf@alter.siamese.dyndns.org>
+ <20130210131647.GA2270@serenity.lan>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Robert Zeh <robert.allan.zeh@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 20:26:45 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	=?utf-8?Q?M?= =?utf-8?Q?icha=C5=82?= Kiedrowicz 
+	<michal.kiedrowicz@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Feb 10 20:31:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4cY0-0007sV-QI
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 20:26:45 +0100
+	id 1U4ccJ-00023W-Lv
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 20:31:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759384Ab3BJT0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 14:26:16 -0500
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:53351 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756517Ab3BJT0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 14:26:15 -0500
-X-IronPort-AV: E=Sophos;i="4.84,639,1355126400"; 
-   d="scan'208";a="24797324"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 10 Feb 2013 11:26:14 -0800
-Received: from mfick-lnx.localnet (pdmz-ns-snip_218_1.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 6706010004B6;
-	Sun, 10 Feb 2013 11:26:14 -0800 (PST)
-User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <CAKXa9=qQwJqxZLxhAS35QeF1+dwH+ukod0NfFggVCuUZHz-USg@mail.gmail.com>
+	id S1760473Ab3BJTat convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Feb 2013 14:30:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49164 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755786Ab3BJTas convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Feb 2013 14:30:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59BD3BF9F;
+	Sun, 10 Feb 2013 14:30:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=xwOsw18rnWJJ
+	jdVmoMAsakt4Wwg=; b=hAx0QQw4WPT6lRVFRNOiFrRZ33nCY0sZ4JEfPYCIkot5
+	TV9emClds8Nd7Uiwt6dpFjpuEV9NoQ3ufOGzUaMms0HARoPOeQIvjeJSBKgLPG4a
+	MmpHz7rkU4XnIB609deQXbL63C0I1U0txlf76cIY6vC4fKeqyEgXRlRQYwP128o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Udlvrc
+	8oD8mRt2VnGBm7RFOoNxDzGIGF05JNIsoVMHQSYXUy2TTq5je40DqNuqD+TIDqXt
+	5yzTQDblVDpEAdCtDvTJxIQoJSEj3GFabCv0Q2QCoJwH51x/73J0y36AsKCrAc/F
+	FxyLPFSZSGebWwoYY6aTlQ1CT+6u0tlLUvYWM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 283C1BF9B;
+	Sun, 10 Feb 2013 14:30:47 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E2E8BF8B; Sun, 10 Feb 2013
+ 14:30:45 -0500 (EST)
+In-Reply-To: <20130210131647.GA2270@serenity.lan> (John Keeping's message of
+ "Sun, 10 Feb 2013 13:16:47 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5E166296-73B8-11E2-A7F2-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215928>
 
-On Sunday, February 10, 2013 12:03:00 pm Robert Zeh wrote:
-> On Sat, Feb 9, 2013 at 1:35 PM, Junio C Hamano 
-<gitster@pobox.com> wrote:
-> > Ramkumar Ramachandra <artagnon@gmail.com> writes:
-> >> This is much better than Junio's suggestion to study
-> >> possible implementations on all platforms and
-> >> designing a generic daemon/ communication channel. 
-> >> That's no weekend project.
-> > 
-> > It appears that you misunderstood what I wrote.  That
-> > was not "here is a design; I want it in my system.  Go
-> > implemment it".
-> > 
-> > It was "If somebody wants to discuss it but does not
-> > know where to begin, doing a small experiment like
-> > this and reporting how well it worked here may be one
-> > way to do so.", nothing more.
-> 
-> What if instead of communicating over a socket, the
-> daemon dumped a file containing all of the lstat
-> information after git wrote a file? By definition the
-> daemon should know about file writes.
+John Keeping <john@keeping.me.uk> writes:
 
-But git doesn't, how will it know when the file is written?
-Will it use inotify, or poll (kind of defeats the point)?
+> Can you squash this into the first commit before you do?
+>
+> Matthieu is correct that the graph_is_commit_finished() check isn't
+> needed in the loop now that we've pulled it out to be checked first -
+> the value returned can't change during the loop.  I've left the early
+> return out.
+>
+>  graph.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/graph.c b/graph.c
+> index 2a3fc5c..56f970f 100644
+> --- a/graph.c
+> +++ b/graph.c
+> @@ -1237,7 +1237,7 @@ void graph_show_commit(struct git_graph *graph)
+>  		shown_commit_line =3D 1;
+>  	}
+> =20
+> -	while (!shown_commit_line && !graph_is_commit_finished(graph)) {
+> +	while (!shown_commit_line) {
+>  		shown_commit_line =3D graph_next_line(graph, &msgbuf);
+>  		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
+>  		if (!shown_commit_line)
 
--Martin
+Is it correct to say that this essentially re-does 656197ad3805
+(graph.c: infinite loop in git whatchanged --graph -m, 2009-07-25)
+in a slightly different way, in that Micha=C5=82's original fix also
+protected against the case where graph->state is flipped to
+GRAPH_PADDING by graph_next_line() that returns false, but with your
+fixup, the code knows it never happens (i.e. when graph_next_line()
+returns false, graph->state is always in the GRAPH_PADDING state),
+and the only thing we need to be careful about is when graph->state
+is already in the PADDING state upon entry to this function?
+
+Sorry for an overlong single sentence question ;-)
+
+Thanks.
