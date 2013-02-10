@@ -1,85 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 06/15] user-manual: Give 'git push -f' as an
- alternative to +master
-Date: Sun, 10 Feb 2013 15:19:33 -0800
-Message-ID: <7vbobrrc3e.fsf@alter.siamese.dyndns.org>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v2 07/15] user-manual: Mention 'git remote add' for remote
+ branch config
+Date: Sun, 10 Feb 2013 17:22:54 -0500
+Message-ID: <20130210222254.GB8377@odin.tremily.us>
 References: <7vzjzexv8l.fsf@alter.siamese.dyndns.org>
  <cover.1360508415.git.wking@tremily.us>
- <f0f8b77a3487be30ee4c492899fe73af05e20413.1360508415.git.wking@tremily.us>
- <7vsj53sub1.fsf@alter.siamese.dyndns.org>
+ <1e3996dff5c19010aca1458b202b14cbb54b5d80.1360508415.git.wking@tremily.us>
+ <7vmwvbstw1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary="/NkBOFFp2J2Af1nK"
 Cc: Git <git@vger.kernel.org>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Mon Feb 11 00:20:10 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 00:23:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4gBq-0006Qg-WE
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 00:20:07 +0100
+	id 1U4gFQ-0008DR-ID
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 00:23:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755458Ab3BJXTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 18:19:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51280 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754536Ab3BJXTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 18:19:37 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 677E9C2D9;
-	Sun, 10 Feb 2013 18:19:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EYGgm6u8qWadnRGN5xBNK07pRU8=; b=HTlTam
-	lLDJhzBi+t1VKXu8PWkcCylejnwqOlCgOPkn7kSC6j+QUJytlr4qNmpddjOyhCS7
-	NbW8aj/HyifjH57GYTVI6ByaGCO9XFPpsbecpOc6zF9zIWzBMHYtjAVf2rXUoyE/
-	8eMVjspIjuUujahIsdVtPtwLZLw7XadgG4440=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ALv1s54pW4N4RQQO12ZjvCIgl8Pdw5GF
-	zOytoF3wcIcjNKHtoX0ZXXtQKFMzB+sH5vGcfunhJw2vv0tDla0rIESztCm9R3wb
-	D8mjbNbxveUjbqe03W63myUP+qnEvHGHv9oHVWAmF2zm5heuyTpRRQBuUdNWjyo3
-	1aRQUi8l+oM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FE68C2D3;
-	Sun, 10 Feb 2013 18:19:36 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 864DBC2D1; Sun, 10 Feb 2013
- 18:19:35 -0500 (EST)
-In-Reply-To: <7vsj53sub1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 10 Feb 2013 14:00:50 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5549FF54-73D8-11E2-88A6-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755330Ab3BJXXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 18:23:24 -0500
+Received: from vms173003pub.verizon.net ([206.46.173.3]:37588 "EHLO
+	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754536Ab3BJXXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 18:23:24 -0500
+Received: from odin.tremily.us ([unknown] [72.68.84.219])
+ by vms173003.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MI000LG2ZI7T840@vms173003.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 10 Feb 2013 16:23:00 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id CDE23879AF6; Sun,
+ 10 Feb 2013 17:22:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1360534974; bh=JpQ5H1vr4Au2nYz9UTY24XwxHs0BIsA79336JPxg+tA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=TaA0P5s/CZFvS4Udsm3mUNi2CA4H7ta/+P0FEdyIzrE/GnQ2oldg4X8pRSHSSUUMt
+ mbqzjh+vFbzAZgAnO/r8ZDKvt4ksxj2oVbbtnjIho74bl60egFZTHpfCL3XSr6kWkc
+ pWwIlkmj57qf04hCT6xyA4k6XkstCdIU4EI35pm8=
+Content-disposition: inline
+In-reply-to: <7vmwvbstw1.fsf@alter.siamese.dyndns.org>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215970>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
->> +Note the addition of the `+` sign.  Alternatively, you can use the
->> +`-f` flag to force the remote update, as in:
->> +
->> +-------------------------------------------------
->> +$ git push -f ssh://yourserver.com/~you/proj.git master
->> +-------------------------------------------------
->> +
->
-> I didn't check the surrounding examples but would it make it a bit
-> too advanced to make the example flow push out more than one
-> branches here (perhaps he is also updating the 'maint' branch)?
-> Then use of "--force" can be explained as "Instead of adding + to
-> each and every refs to be pushed, you can use a single -f to force
-> everything."
+--/NkBOFFp2J2Af1nK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Now I have.  This is after a "git push" failed, saying that 'master'
-does not fast forward, and attempting to push the 'master' out
-forcibly.  There is little risk the user would get confused and say
-"push -f $there master some-other-branch" in the context of this
-flow.
+On Sun, Feb 10, 2013 at 02:09:50PM -0800, Junio C Hamano wrote:
+> I'd suggest rewriting everything after "If there are other
+> repositories that you also use frequently,..." of this section.
+>=20
+> Replace the first example after "for example, after" that uses
+> "config remote.example.url" with the new text in your patch,
+> [snip additional advice]
 
-So I think the patch is good, but others may have comments, so I'll
-let the patch floating on the list for now.
+Will do in v3.
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--/NkBOFFp2J2Af1nK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRGB29AAoJEEUbTsx0l5OMnxsP/jMxVCKy+1JAHq6NCCetu/Wh
+h8AcIMf1B2FUM2sXPqDHuSm1PVYRYZyJbRsSb7/evT90chnftCpa0xcEpkSewsJj
+obJ2whIE7UtR2RZLZNdvv2nGEbnY4ayf1iIrEZTMVSma5/FQ2YOxkFAXZVXBgfI+
+UC9jJkcJJIGJHxYNZhiaZXxZbsUU3ypWPBneSo5DchMwN5kyBfjBmcNlVZ9ESZHK
+rXNpcgtd2Yr/QHkE1TmZMn1nOYnNIDdJaKodoyn55OtOa/J+ht2mHfcd26QBnfxC
+vgg3Fc24t2bSOKr1nP87L9icrB6R4jWF+NYdgqgPcmHT7iSOAaZNJS9R73qd4AWA
+1XpN15PttiHSvb2oFrfaCgH22NefUi9JFcwkbStHtshjzh8FhBCyHXefmPcNy6tq
+1Glhj+Hd8YkVxPKJoXJq2EvhEplGwffP3xInchNF1wsgkSK7IUjkmOPtSVziRYaw
+0mz3trYej6UCK8+D5pf0Hs5gMgmskeY6dwViV3ZrR9R5cxFIYeHeUHobFB2HaeaU
+Bl7jTLjxjxxEyQCJ2mDk3XhO2Z2wlAKdBDlKMeIOiMaQ02BBs9CcvMRBJ1r3yxh4
+shfeFUDYhBaTkD9yuBpC7aRczJJYlkZj4HFB7tg7ccJjOLVr2VELrREsdcZfIMn2
+tseTm6q3SPen3dXHRKnI
+=syTJ
+-----END PGP SIGNATURE-----
+
+--/NkBOFFp2J2Af1nK--
