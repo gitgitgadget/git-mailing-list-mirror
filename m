@@ -1,89 +1,80 @@
-From: Jed Brown <jed@59A2.org>
-Subject: Re: [PATCH v3 0/8] Hiding refs
-Date: Sat, 09 Feb 2013 22:45:06 -0600
-Message-ID: <87y5ew6alp.fsf@59A2.org>
-References: <1359571542-19852-1-git-send-email-gitster@pobox.com> <5110BD18.3080608@alum.mit.edu> <7v8v72u0vw.fsf@alter.siamese.dyndns.org> <51122D9D.9040100@alum.mit.edu> <87pq0c15h3.fsf@59A2.org> <7v38x5ul4s.fsf@alter.siamese.dyndns.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: inotify to minimize stat() calls
+Date: Sun, 10 Feb 2013 12:24:58 +0700
+Message-ID: <CACsJy8DeM5--WVXg3b65RxLBS7Jho-7KmcGwWk7B5uAx77yOEw@mail.gmail.com>
+References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
+ <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org>
+ <7vsj56w5y9.fsf@alter.siamese.dyndns.org> <9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
+ <CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com>
+ <CALkWK0nQVjKpyef8MDYMs0D9HJGCL8egypT3YWSdU8EYTO7Y+w@mail.gmail.com>
+ <CACsJy8CEHzqH1X=v4yau0SyZwrZp1r6hNp=yXD+eZh1q_BS-0g@mail.gmail.com> <CALkWK0=6_n4rf6AWci6J+uhGHpjTUmK7YFdVHuSJedN2zLWtMA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 05:45:44 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Robert Zeh <robert.allan.zeh@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>, finnag@pvv.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 10 06:25:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4OnN-0006af-VU
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 05:45:42 +0100
+	id 1U4PQG-0004si-Uh
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 06:25:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761087Ab3BJEpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Feb 2013 23:45:17 -0500
-Received: from mail-ia0-f176.google.com ([209.85.210.176]:50652 "EHLO
-	mail-ia0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761083Ab3BJEpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Feb 2013 23:45:16 -0500
-Received: by mail-ia0-f176.google.com with SMTP id i18so5479819iac.35
-        for <git@vger.kernel.org>; Sat, 09 Feb 2013 20:45:15 -0800 (PST)
+	id S1750852Ab3BJFZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 00:25:29 -0500
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:37296 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750837Ab3BJFZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 00:25:28 -0500
+Received: by mail-oa0-f50.google.com with SMTP id l20so5314076oag.37
+        for <git@vger.kernel.org>; Sat, 09 Feb 2013 21:25:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version:content-type;
-        bh=NFJ07tPfQyTaUyK6gIaptNNzuKd5rch9VbHQWst/Q9Q=;
-        b=qcLXDG9MGTFBObJd3S8ph/DfWa3MzIXvDlzCSGiETETaQ9x2d6ZeJAR9Hy5HgpmPbe
-         7bOXqaDUm9G1VYCJ+Xd0p9Gz0oHy5zDRvmtYxjrR9VulSZaxMOsDYbyETrSq++JlBSXX
-         fiDUa9ZLcdTxO8TQwX4VqIpeJInqSPVHTHVGliFbrdeFra5Be0m/M9iAEy1x56XZn8DH
-         faCUCyg9Eo7xGcaQJ/mMhYSshv0R62e6wx8UcHtzO/VtbTBM0KaTM0U13fqdkEpXCvxr
-         tNA1CeNhnOdc5GnK+HtnYemR2NxXnX4azO6NkAh59FfGFAJpvafv6OXZ1pZ4aqHHQwl1
-         vn+Q==
-X-Received: by 10.50.88.136 with SMTP id bg8mr8854577igb.96.1360471515638;
-        Sat, 09 Feb 2013 20:45:15 -0800 (PST)
-Received: from batura ([38.69.41.115])
-        by mx.google.com with ESMTPS id uy13sm22803267igb.7.2013.02.09.20.45.07
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 09 Feb 2013 20:45:10 -0800 (PST)
-In-Reply-To: <7v38x5ul4s.fsf@alter.siamese.dyndns.org>
-User-Agent: Notmuch/0.15 (http://notmuchmail.org) Emacs/24.2.1 (x86_64-unknown-linux-gnu)
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=nFEgwP7reVErBsSNaY8X5SxcV54i/UxkAF5zsSElhIc=;
+        b=Pat5qdepsal5VfQZYUOvMoIvp2LQiqnQGvCHCWOkSkcn4EagJppSWXoB65onZm6FcD
+         Zf0GE9vlkoCO3RgblDH1RoWhrVoloYXn48+pC+lL3VXH6yTc3zev/EcQbmcJEEpFjvj2
+         idm+hhEAx+sS6mOMT0b/z2FOVrT0Rob29j0bufAV6Y6heu2jIWmZs//MGtvKpTli4q6W
+         69u52MHxKmGoPNy+CMUsSuFrjB6C47Jia9kfsWfzSgc+4CtX8cdIXCZH32+6EzSgpxQl
+         cmYQ226Ih4jxfBJnWGjeu84y3CGHkRQeJx3KGy4tqtIw25rHPJNEtPnHb7p3YqGyOO6w
+         FPAg==
+X-Received: by 10.60.1.129 with SMTP id 1mr7667356oem.93.1360473928178; Sat,
+ 09 Feb 2013 21:25:28 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Sat, 9 Feb 2013 21:24:58 -0800 (PST)
+In-Reply-To: <CALkWK0=6_n4rf6AWci6J+uhGHpjTUmK7YFdVHuSJedN2zLWtMA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215898>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> I am not sure about "pushing" part, but the jc/fetch-raw-sha1 topic
-> (split from the main jc/hidden-refs topic) should allow your script,
-> after the client learns the set of smudged object names, to ask for
+On Sun, Feb 10, 2013 at 12:10 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Finn notes in the commit message that it offers no speedup, because
+> .gitignore files in every directory still have to be read.  I think
+> this is silly: we really should be caching .gitignore, and touching it
+> only when lstat() reports that the file has changed.
 >
->     git fetch $there $sha1_1 $sha1_2 ...
+> ...
+>
+> Really, the elephant in the room right now seems to be .gitignore.
+> Until that is fixed, there is really no use of writing this inotify
+> daemon, no?  Can someone enlighten me on how exactly .gitignore files
+> are processed?
 
-Well, my out-of-band knowledge is currently the sha1 of the data
-contained in the blob I want, not the blob sha1 itself [1].  After
-experimenting with jc/hidden-refs, I think it already does exactly what
-I want. Specifically, I set this on the server
-
-  git config uploadpack.hiderefs refs/fat
-
-so that 'git ls-remote' no longer transfers these refs. Then on the
-client, I do
-
-  contentid=$(sha1sum thefile | cut -f1 -d \ )
-  blobid=$(git hash-object -w thefile)
-  git update-ref refs/fat/$contentid $blobid
-
-  .... more like this
-
-  git push the-remote refs/fat/$contentid ...
-
-and later, I can fetch specific refs using
-
-  git fetch the-remote refs/fat/$wanted:refs/fat/$wanted ...
-
-The client knows the desired refs out-of-band so this looks okay. It
-would be convenient to have '--stdin' options to 'git push' and 'git
-fetch'. Would a patch for that be welcome?
-
-
-[1] The reason for using $contentid instead of $blobid in the key here
-is to avoid etching the backend=git detail into the cleaned commits.
+.gitignore is a different issue. I think it's mainly used with
+read_directory/fill_directory to collect ignored files (or not-ignored
+files). And it's not always used (well, status and add does, but diff
+should not). I think wee need to measure how much mass lstat
+elimination gains us (especially on big repos) and how much
+.gitignore/.gitattributes caching does. I don't think .gitignore has
+such a big impact though. strace on git.git tells me "git status"
+issues about 2500 lstat calls, and just 740 open+getdents calls (on
+total 3800 syscalls). I will think if we can do something about
+.gitignore/.gitattributes.
+-- 
+Duy
