@@ -1,97 +1,103 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v2 09/15] user-manual: Use 'git config --global user.*' for
- setup
-Date: Sun, 10 Feb 2013 17:25:08 -0500
-Message-ID: <20130210222508.GC8377@odin.tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 15/15] user-manual: Use --format=tar.gz to create a
+ gzipped tarball
+Date: Sun, 10 Feb 2013 14:27:08 -0800
+Message-ID: <7va9rbst37.fsf@alter.siamese.dyndns.org>
 References: <7vzjzexv8l.fsf@alter.siamese.dyndns.org>
  <cover.1360508415.git.wking@tremily.us>
- <b363f5b410098302a02af2d79b5b68ee79210be2.1360508415.git.wking@tremily.us>
- <7vip5zstsa.fsf@alter.siamese.dyndns.org>
+ <92a02e35df3dab70928e56e6790417243beea2af.1360508415.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=3siQDZowHQqNOShm
+Content-Type: text/plain; charset=us-ascii
 Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 10 23:25:42 2013
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Sun Feb 10 23:27:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4fLB-0004kY-8o
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 23:25:41 +0100
+	id 1U4fN1-0005ja-9j
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Feb 2013 23:27:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756881Ab3BJWZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 17:25:16 -0500
-Received: from vms173019pub.verizon.net ([206.46.173.19]:42432 "EHLO
-	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756607Ab3BJWZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 17:25:15 -0500
-Received: from odin.tremily.us ([unknown] [72.68.84.219])
- by vms173019.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MI0000ISZLW6L00@vms173019.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 10 Feb 2013 16:25:09 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 58656879B2B; Sun,
- 10 Feb 2013 17:25:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1360535108; bh=4osGU71wCJcifP/CgwgCxX9a4KQ4SafH0G25siuKr3o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=aAsSbmL0ea8eZDPlZnSIk/LgsVmhPemfFOx9BrhO71qUXj2f9n+TwQgU7YiGcUsYc
- Pc/yTDwYuIIfRmhB/8tx7+USKACamX/+SHmlmdkarihaue3VI4UIuD2kVH7YAeFUGv
- Eccw1hprATBD2+1McLRFHh6ZbUZKITSh7G7F2Cfw=
-Content-disposition: inline
-In-reply-to: <7vip5zstsa.fsf@alter.siamese.dyndns.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756912Ab3BJW1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 17:27:12 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64469 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756854Ab3BJW1L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 17:27:11 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6704BF72;
+	Sun, 10 Feb 2013 17:27:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=axlJnsNAuKLGMZexx/8yrRFf3cQ=; b=c29Vdv
+	fpfeNxkB7jZZTxvGTS1N6B8UmBQr9S3zaJWTxBba+SiBtRm3Ep8WFcJEta4vl+qg
+	WwwJmf1SPyXFLjy3PUfi75xiETH97MJcAb7eKWFbCcrS2TyFfMFeoyY2k1j7oay3
+	PsmBt0gBsh0ZKmtPSjJc5i816nez4gJv4G5D0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F0SSAAs/TckQBwJUvuvbV/RB+YBNXnDW
+	JLcaNl4TsZJB16ewNfiPQ1ri6azWZOKAuKbLhk4B/vs+4jGDhojJhzHV6AZqrcuB
+	8aupQLWMPSlOuVjs1XSdfFGy7Oru3dahvrB2zoj0oYuEf1g9q+awAf80bhClAksa
+	PeJMJragTZs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 793C3BF70;
+	Sun, 10 Feb 2013 17:27:10 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA839BF65; Sun, 10 Feb 2013
+ 17:27:09 -0500 (EST)
+In-Reply-To: <92a02e35df3dab70928e56e6790417243beea2af.1360508415.git.wking@tremily.us>
+ (W. Trevor King's message of "Sun, 10 Feb 2013 10:10:41 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0252A938-73D1-11E2-AF61-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215954>
 
+"W. Trevor King" <wking@tremily.us> writes:
 
---3siQDZowHQqNOShm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> From: "W. Trevor King" <wking@tremily.us>
+>
+> This functionality was introduced by 0e804e09 (archive: provide
+> builtin .tar.gz filter, 2011-07-21) for v1.7.7.
+>
+> Signed-off-by: W. Trevor King <wking@tremily.us>
+> ---
 
-On Sun, Feb 10, 2013 at 02:12:05PM -0800, Junio C Hamano wrote:
-> > +Which will add the following stanza to a file named `.gitconfig` in
-> > +your home directory:
->=20
-> Looks good, even though I do not think we would want/need to confuse
-> the readers with an unfamiliar word "stanza".
+This is a "meh" at least to me.  Unless it uses something like
 
-Aw.  I suppose "section" is better?  (It's what Python's ConfigParser
-uses anyway).  I saw "stanza" in another part of the manual and
-thought it was quite poetic ;).
+	git archive -o latest.tar.gz --prefix=project/ HEAD
+        
+it is not all that interesting.
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---3siQDZowHQqNOShm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRGB5DAAoJEEUbTsx0l5OMfdEP/jMJF4mUmM+Bo4YpQK530PfV
-uK8GizZ3qpovBa8CG3+J1nRZYhwwvtXmQzc8b2gGk5TmbHIe9Uu2Gwhmxwn2K1kQ
-RJUZysHf5W9HiWESJLvAmCsiGlX3RHolFhojT0w/Mdelk3xy9ol7DrfqMJWxYySl
-8T6mVDSrnPzo4JkOd4TTxW+HXmnp1B9BAwUsra5hP/fbMeRKJqGXEbS6nqKKRHFL
-yApM0srzj28e9Hsgj9ncSgqJA1wrYVaWYI9VyFrB0i6Wn2hw85r/YEZkA4QsmzT1
-spWaUjNyxJxEGI8br+txe/FBivEqEoTRFRp2avAB3sAKQNwF2FkOyvsAqMNJO0eS
-lqSL1SqZEaqo6UIo8CxHo87jW64zRPFqK8MXYzEe3MZyg+xK+V4aWpy9NAtyWuwx
-Ieu2yc754h4yrsdfuzQlIOEIPA0hRF6dA8LtDigNHGWZQmLdJjuZMnGyTpFd58US
-a6z0QD8YemQgUWyrQ7QzUS91FJabpTV93yOFROHxCA04NatYajoKDMPJjiZenlqY
-aQUlfd3xY2FLMZdZlpiz6QR5tbPfh/aVthAMnxfWGfspCLdIhvEbJTGIRdMfbmvb
-i70X8ZVonh6z0hCnDDhnwMO9BRbs/VqFAZlOu7yQsfCQWBo11OMAwmX2VWGJ4fNa
-kwxH0JltzO7lvQC9GHrn
-=DERy
------END PGP SIGNATURE-----
-
---3siQDZowHQqNOShm--
+>  Documentation/user-manual.txt | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index 8024758..c04ea51 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -931,12 +931,19 @@ The linkgit:git-archive[1] command can create a tar or zip archive from
+>  any version of a project; for example:
+>  
+>  -------------------------------------------------
+> -$ git archive --format=tar --prefix=project/ HEAD | gzip >latest.tar.gz
+> +$ git archive --format=tar.gz --prefix=project/ HEAD >latest.tar.gz
+>  -------------------------------------------------
+>  
+>  will use HEAD to produce a tar archive in which each filename is
+>  preceded by `project/`.
+>  
+> +Versions of Git older than 1.7.7 don't know about the 'tar.gz' format,
+> +you'll need to use gzip explicitly:
+> +
+> +-------------------------------------------------
+> +$ git archive --format=tar --prefix=project/ HEAD | gzip >latest.tar.gz
+> +-------------------------------------------------
+> +
+>  If you're releasing a new version of a software project, you may want
+>  to simultaneously make a changelog to include in the release
+>  announcement.
