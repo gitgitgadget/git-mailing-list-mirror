@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/2] shell doc: emphasize purpose and security model
-Date: Sun, 10 Feb 2013 21:57:52 -0800
-Message-ID: <20130211055752.GF15329@elie.Belkin>
+Subject: [PATCH 2/2] shell: pay attention to exit status from 'help' command
+Date: Sun, 10 Feb 2013 21:58:47 -0800
+Message-ID: <20130211055847.GG15329@elie.Belkin>
 References: <20130210224345.GA32318@sigill.intra.peff.net>
  <7vfw13rd9x.fsf@alter.siamese.dyndns.org>
  <CAMK1S_jFUXiHM6teVwoxO9gv77B1KBQoSi-B32dwVKemXnDx9w@mail.gmail.com>
@@ -20,41 +20,41 @@ Cc: Sitaram Chamarty <sitaramc@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Greg Brockman <gdb@mit.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 11 06:58:31 2013
+X-From: git-owner@vger.kernel.org Mon Feb 11 06:59:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4mPN-0000dY-Sk
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 06:58:30 +0100
+	id 1U4mQB-0000xX-40
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 06:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751450Ab3BKF6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 00:58:01 -0500
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:40848 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751366Ab3BKF6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 00:58:00 -0500
-Received: by mail-pb0-f52.google.com with SMTP id ma3so544722pbc.25
-        for <git@vger.kernel.org>; Sun, 10 Feb 2013 21:58:00 -0800 (PST)
+	id S1751366Ab3BKF64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 00:58:56 -0500
+Received: from mail-da0-f51.google.com ([209.85.210.51]:44192 "EHLO
+	mail-da0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750717Ab3BKF6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 00:58:55 -0500
+Received: by mail-da0-f51.google.com with SMTP id n15so2544879dad.38
+        for <git@vger.kernel.org>; Sun, 10 Feb 2013 21:58:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=dhp2PFRsV+r+g0LEKOE6zdfLsOejYzAuKfVEDJ57jA8=;
-        b=T31+/c1mqhShiMglr2zGxYAdQFv/NdRwxhL6GAqfGFz69BSHGymN1XapHoYVnI4OLf
-         tKUsC6gMbatQUtuKXCX9OKFqFUIjVevRgL6QMIOxCyNMpVJayaDi4uEljF3SjM23AM62
-         y26EOg8XRMM3cmmCvRb1PkB+wz0dQ7a6oSA4veqDsMXcQY66sttO6voF8jJ8UBh+h/oA
-         8Rk+U3MGK0u0/ximA9gb0lSEFag52I/s+AIfuwBWfqCiYvYC0TyVltqNVlMlXBYbr7GT
-         eztTOCOHVO3/rtXIzJItSQBW4uVg+4RVqpdMY8LhhecSkYuxKCIm1YIzMJ6JEa4RYJFa
-         7Zfw==
-X-Received: by 10.68.11.200 with SMTP id s8mr16157752pbb.141.1360562280144;
-        Sun, 10 Feb 2013 21:58:00 -0800 (PST)
+        bh=9fJhV80UiPQAdLM2WCtYdWb0O9Dap69CKqlRJUK19fs=;
+        b=XnMee7FCH4Egg1OjrJ0UeeT8TdHw+mdm2vCJ2dIgQ+/Nu093e2ia8vYiEMG93NFu6l
+         2Yb+qx4UVYoKCENbSWbsO9foo+ZB0BwZ5UwBFjsAZuhtq74dAw8wqPZzWwhDMZ7YRf8p
+         A2sHTRys+tFFh8Nc69Jp3Js9kIH0uZCosfMPsMJhCqXZZyYwCrZvgfI1TsYF/zZuwNA4
+         JiUclG83pa1YX32E4ZLQglsreV46H2TK3uEdbTS2bdL2DtCrZzkgnwKF+9TXu0e+3I3r
+         WpztPD6Tz1TAPPRnQPGLAPzc0FkesRfvogQ34zwgnXH0XVyocU++y8Eu6IwuOXMrdjFT
+         h3hw==
+X-Received: by 10.66.52.1 with SMTP id p1mr25087420pao.22.1360562335267;
+        Sun, 10 Feb 2013 21:58:55 -0800 (PST)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id zq5sm6587313pbc.16.2013.02.10.21.57.57
+        by mx.google.com with ESMTPS id a4sm65835866paw.21.2013.02.10.21.58.52
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 10 Feb 2013 21:57:58 -0800 (PST)
+        Sun, 10 Feb 2013 21:58:54 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20130211055604.GE15329@elie.Belkin>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
@@ -62,111 +62,103 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215996>
 
-The original git-shell(1) manpage emphasized that the shell
-supports only git transport commands, and as the shell gained
-features that emphasis and focus in the manual has been lost.
-Bring it back by splitting the manpage into a few short sections
-and fleshing out each:
+If I disable git-shell's interactive mode by removing the
+~/git-shell-commands directory, then attempts to use 'ssh' with the
+git account interactively produce an error message intended for the
+administrator:
 
- - SYNOPSIS, describing how the shell gets used in practice
- - DESCRIPTION, which gives an overview of the purpose and
-   guarantees provided by this restricted shell
- - COMMANDS, listing supported commands and restrictions on the
-   arguments they accept
- - INTERACTIVE USE, describing the interactive mode
+	$ ssh git@myserver
+	fatal: Interactive git shell is not enabled.
+	hint: ~/git-shell-commands should exist and have read and execute access.
+	$
 
-Also add a "see also" section with some relevant related reading.
+That is helpful for the new admin who is wondering "What? Why isn't
+the git-shell I just set up working?", but once the site setup is
+finished, it is better to give the user a friendly hint that she is on
+the right track, like GitHub does:
 
+	Hi <username>! You've successfully authenticated, but
+	GitHub does not provide shell access.
+
+An appropriate greeting might even include more complex information,
+like a list of repositories the user has access to.  If the
+git-shell-commands directory exists and contains a "help" script, we
+already run it when the shell is run without any commands, giving the
+server a chance to provide a custom message.  Unfortunately, the
+presence of the git-shell-commands directory means we also enter an
+interactive mode, prompting and accepting commands (of which there may
+be none) from the user, which many servers would not want.  To solve
+this, we abort the interactive shell on a non-zero exit code from the
+"help" script.  This lets the server say whatever it likes, and then
+hang up.
+
+Downside: this will prevent interactive git-shell logins in existing
+setups where the "help" script exits with nonzero status by mistake.
+Hopefully those are rare enough to not cause much trouble in practice.
+
+Reported-by: Ethan Reesor <firelizzard@gmail.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Improved-by: Jeff King <peff@peff.net>
 ---
-New text.  Split off from patch 2 --- this is just documenting
-existing behavior.
-
- Documentation/git-shell.txt | 66 ++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 51 insertions(+), 15 deletions(-)
+ Documentation/git-shell.txt | 20 ++++++++++++++++++++
+ shell.c                     | 10 ++++++++--
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-shell.txt b/Documentation/git-shell.txt
-index 9b925060..4fe93203 100644
+index 4fe93203..60051e63 100644
 --- a/Documentation/git-shell.txt
 +++ b/Documentation/git-shell.txt
-@@ -9,25 +9,61 @@ git-shell - Restricted login shell for Git-only SSH access
- SYNOPSIS
+@@ -59,6 +59,26 @@ users to list repositories they have access to, create, delete, or
+ rename repositories, or change repository descriptions and
+ permissions.
+ 
++If the `help` command exists and exits with nonzero status, the
++interactive shell is aborted.
++
++EXAMPLE
++-------
++
++To disable interactive logins, displaying a greeting instead:
+++
++----------------
++$ chsh -s /usr/bin/git-shell
++$ mkdir $HOME/git-shell-commands
++$ cat >$HOME/git-shell-commands/help <<\EOF
++#!/bin/sh
++printf '%s\n' "Hi $USER! You've successfully authenticated, but I do not"
++printf '%s\n' "provide interactive shell access."
++exit 128
++EOF
++$ chmod +x $HOME/git-shell-commands/help
++----------------
++
+ SEE ALSO
  --------
- [verse]
--'git shell' [-c <command> <argument>]
-+'chsh' -s $(which git-shell) git
-+'git clone' `git@localhost:/path/to/repo.git`
-+'ssh' `git@localhost`
+ ssh(1),
+diff --git a/shell.c b/shell.c
+index 84b237fe..3abc2b84 100644
+--- a/shell.c
++++ b/shell.c
+@@ -63,10 +63,16 @@ static void cd_to_homedir(void)
  
- DESCRIPTION
- -----------
+ static void run_shell(void)
+ {
+-	int done = 0;
++	int done = 0, status;
+ 	static const char *help_argv[] = { HELP_COMMAND, NULL };
+ 	/* Print help if enabled */
+-	run_command_v_opt(help_argv, RUN_SILENT_EXEC_FAILURE);
++	status = run_command_v_opt(help_argv, RUN_SILENT_EXEC_FAILURE);
++	if (!status)
++		; /* success */
++	else if (status == -1 && errno == ENOENT)
++		; /* help disabled */
++	else
++		exit(status);
  
--A login shell for SSH accounts to provide restricted Git access. When
--'-c' is given, the program executes <command> non-interactively;
--<command> can be one of 'git receive-pack', 'git upload-pack', 'git
--upload-archive', 'cvs server', or a command in COMMAND_DIR. The shell
--is started in interactive mode when no arguments are given; in this
--case, COMMAND_DIR must exist, and any of the executables in it can be
--invoked.
--
--'cvs server' is a special command which executes git-cvsserver.
--
--COMMAND_DIR is the path "$HOME/git-shell-commands". The user must have
--read and execute permissions to the directory in order to execute the
--programs in it. The programs are executed with a cwd of $HOME, and
--<argument> is parsed as a command-line string.
-+This is a login shell for SSH accounts to provide restricted Git access.
-+It permits execution only of server-side Git commands implementing the
-+pull/push functionality, plus custom commands present in a subdirectory
-+named `git-shell-commands` in the user's home directory.
-+
-+COMMANDS
-+--------
-+
-+'git shell' accepts the following commands after the '-c' option:
-+
-+'git receive-pack <argument>'::
-+'git upload-pack <argument>'::
-+'git upload-archive <argument>'::
-+	Call the corresponding server-side command to support
-+	the client's 'git push', 'git fetch', or 'git archive --remote'
-+	request.
-+'cvs server'::
-+	Imitate a CVS server.  See linkgit:git-cvsserver[1].
-+
-+If a `~/git-shell-commands` directory is present, 'git shell' will
-+also handle other, custom commands by running
-+"`git-shell-commands/<command> <arguments>`" from the user's home
-+directory.
-+
-+INTERACTIVE USE
-+---------------
-+
-+By default, the commands above can be executed only with the '-c'
-+option; the shell is not interactive.
-+
-+If a `~/git-shell-commands` directory is present, 'git shell'
-+can also be run interactively (with no arguments).  If a `help`
-+command is present in the `git-shell-commands` directory, it is
-+run to provide the user with an overview of allowed actions.  Then a
-+"`git> `" prompt is presented at which one can enter any of the
-+commands from the `git-shell-commands` directory, or `exit` to close
-+the connection.
-+
-+Generally this mode is used as an administrative interface to allow
-+users to list repositories they have access to, create, delete, or
-+rename repositories, or change repository descriptions and
-+permissions.
-+
-+SEE ALSO
-+--------
-+ssh(1),
-+linkgit:git-daemon[1],
-+contrib/git-shell-commands/README
- 
- GIT
- ---
+ 	do {
+ 		struct strbuf line = STRBUF_INIT;
 -- 
 1.8.1.3
