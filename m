@@ -1,151 +1,102 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] git-bisect.txt: clarify that reset finishes bisect
-Date: Mon, 11 Feb 2013 09:04:02 +0100
-Message-ID: <5118A5F2.6000007@drmicha.warpmail.net>
-References: <5e23d4c420f150b700dd5100bffb38d32f874200.1360439176.git.git@drmicha.warpmail.net> <20130210014900.GA7682@elie.Belkin>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH] shell: allow 'help' command to disable interactive
+ shell
+Date: Mon, 11 Feb 2013 00:13:46 -0800
+Message-ID: <20130211081346.GP15329@elie.Belkin>
+References: <20130211041706.GB15329@elie.Belkin>
+ <7vwqufpj50.fsf@alter.siamese.dyndns.org>
+ <20130211043247.GD15329@elie.Belkin>
+ <7vpq07pgpy.fsf@alter.siamese.dyndns.org>
+ <20130211061442.GI15329@elie.Belkin>
+ <7vliavpc4q.fsf@alter.siamese.dyndns.org>
+ <20130211071235.GL15329@elie.Belkin>
+ <7v8v6vpbej.fsf@alter.siamese.dyndns.org>
+ <20130211072154.GN15329@elie.Belkin>
+ <7vvc9znvk6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Andreas Mohr <andi@lisas.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 09:04:43 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Sitaram Chamarty <sitaramc@gmail.com>, Jeff King <peff@peff.net>,
+	Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Greg Brockman <gdb@mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 09:14:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4oNW-0004V6-GF
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 09:04:42 +0100
+	id 1U4oWo-0000bG-5j
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 09:14:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753192Ab3BKIEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 03:04:06 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:52799 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753181Ab3BKIEC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2013 03:04:02 -0500
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 782C720B1B;
-	Mon, 11 Feb 2013 03:04:01 -0500 (EST)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute5.internal (MEProxy); Mon, 11 Feb 2013 03:04:01 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=V37EXmjj68BLmEfiAdGv30
-	AYOUg=; b=ZXZ1PROJFZsa7ZMDY9dmyTUgG8UoRuBpBC5/4OPY1a/I6KSyDAqGaT
-	Kp60sd8akQfDo+KAu3Wk8u1iw87aITm5mQPPpqE4o/8IdNQverxdtngBzK00CxZ3
-	MI/e0tXIbSQW8eItzF+UZjtgrOnJk2DTVV3exoOIp0dJlVkxKyN6I=
-X-Sasl-enc: qMrgN0K2YZNvBGaHnWyrrZRnEOee3LqGq2XCA6tpmEtL 1360569841
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id C0AA98E097E;
-	Mon, 11 Feb 2013 03:04:00 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
-In-Reply-To: <20130210014900.GA7682@elie.Belkin>
+	id S1753017Ab3BKINz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 03:13:55 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:59595 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752934Ab3BKINy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 03:13:54 -0500
+Received: by mail-pa0-f49.google.com with SMTP id kp6so2944461pab.22
+        for <git@vger.kernel.org>; Mon, 11 Feb 2013 00:13:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=GTicpQbZc2PzGCespXmgoo8DcsH31L/PndG+VAFW7PM=;
+        b=s9/4V85/yi40HLRrbMnAXXLMkE1Uj2lBRMoEe3oxLsYrcrzldIxzOIxjkcHdEZQUT4
+         At26Ybt9a3P8v0TSGLWiBTXlCtE7QzD+uYWIx8B5vYdpC5r80mbSAxiNOWZ40m2wSfdN
+         YoqYb3XVU6wscgsvpPhe12zoHACatZYzOl3w86wQ+2pz9y/5OGAgnz75pgG4HsAhhTrN
+         oHI+SCnJ8x4GtjjXgYe6gFi3xde0PISpY1wCOUGRkewAOZ7F1sHF3qyOkmYllcQqVudt
+         THIRd9cA4wdLETsmYq1bpcNV5fx+Pd/+AIbLT1cGGUySwjsNBjHw7KE2LWFujEeRl8gL
+         r71g==
+X-Received: by 10.68.231.226 with SMTP id tj2mr11200308pbc.88.1360570434197;
+        Mon, 11 Feb 2013 00:13:54 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id kr9sm6934292pbc.2.2013.02.11.00.13.51
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 11 Feb 2013 00:13:52 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vvc9znvk6.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216023>
 
-Jonathan Nieder venit, vidit, dixit 10.02.2013 02:49:
-> Hi,
-> 
-> Michael J Gruber wrote:
-> 
->> "reset" can be easily misunderstood as resetting a bisect session to its
->> start without finishing it. Clarify that it actually finishes the bisect
->> session.
-> 
-> FWIW,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-> 
-> Addressing Andreas's original concern about the discoverability of
-> 'git bisect reset' would presumably require doing two more things:
-> 
->  1. adding an example of the normal bisection workflow to the EXAMPLES
->     section
-> 
->  2. training users to look to the EXAMPLES section
-> 
-> That is, something like the below.  But I'm not happy with it, because
-> it just runs over the same material as the current Description
-> section.  Maybe the current tutorial material could be moved to
-> examples and replaced with something terser that fleshes out the
-> descriptions in "git bisect -h" output.  What do you think?
-> 
-> diff --git i/Documentation/git-bisect.txt w/Documentation/git-bisect.txt
-> index e4f46bc1..b89abd78 100644
-> --- i/Documentation/git-bisect.txt
-> +++ w/Documentation/git-bisect.txt
-> @@ -356,6 +356,54 @@ $ git bisect run sh -c "make || exit 125; ~/check_test_case.sh"
->  This shows that you can do without a run script if you write the test
->  on a single line.
->  
-> +* Bisect to find which patch caused a boot failure:
-> ++
-> +Install a recent kernel:
-> ++
-> +------------
-> +$ cd ~/src/linux
-> +$ git checkout origin/master
-> +$ make deb-pkg # or binrpm-pkg, or tar-pkg
-> +$ dpkg -i ../<name of package> # as root (or rpm -i, or tar -C / -xf)
-> +$ reboot # as root
-> +------------
-> ++
-> +Hopefully it fails to boot, so tell git so and begin bisection:
-> ++
-> +------------
-> +$ cd ~/src/linux
-> +$ git bisect start HEAD v3.2 # assuming 3.2 works fine
-> +-------------
-> ++
-> +A candidate revision to test is automatically checked out.
-> +Test it:
-> ++
-> +-------------
-> +$ make deb-pkg # or binrpm-pkg, or tar-pkg
-> +$ dpkg -i ../<name of package> # as root (or rpm -i, or tar -C / -xf)
-> +$ reboot # as root
-> +-------------
-> ++
-> +Record the result:
-> ++
-> +-------------
-> +$ cd ~/src/linux
-> +$ git bisect good # if it booted correctly
-> +$ git bisect bad # if it failed to boot
-> +$ git bisect skip # if some other bug made it hard to test
-> +-------------
-> ++
-> +Repeat until bored or git prints the "first bad commit".  When
-> +done:
-> ++
-> +-------------
-> +$ git bisect log >log # let others pick up where you left off
-> +$ git bisect reset HEAD # exit the bisecting state
-> +-------------
-> ++
-> +At any step, you can run `git bisect visualize` to watch the
-> +regression range narrowing.
-> +
->  * Locate a good region of the object graph in a damaged repository
->  +
->  ------------
-> 
+Junio C Hamano wrote:
 
-[BTW, sorry for failing to set --in-reply-to in the patch e-mail. Need
-to get that automated somehow.]
+> The purpose of the directory is to keep custom commands that are
+> allowed.  If the site administrator does not want any command, it
+> would be more natural to expect that the way to disable them would
+> be _not_ to have that directory which is a collection of allowed
+> commands.  Adding that directory and add a "help" that exits with
+> non-zero feels quite a roundabout and counter-intuitive way, no?
 
-I did not use "stop" for the exact reasons that Junio mentioned. Just
-throw in a third alternative: "quit" may convey that it's not possible
-to ressume, without sounding as "exceptional" as "abort" does. After
-all, it's the normal end to a bisect session much unlike "--abort" for
-rebase, for example.
+I think it comes down to the reason the site admin doesn't want to
+allow interactive logins.  That reason seems to be mostly that
+presenting a
 
-As for the example, we have an example section, and we could simply
-throw in "git reset" lines there. I would even amend my patch with that;
-the great git-bisect.txt refactoring I'd definitely leave to someone else.
+	git>
 
-Michael
+prompt at which you can only ask for "help" or "exit" is a bit
+confusing and pointless.  I have sympathy for that, which is why I
+looked for a way for the admin to ask to avoid the prompt altogether
+in that case.
+
+I do not think the reason is "because I don't want a
+git-shell-commands directory".  I think it's good to have basically
+one kind of setup instead of significantly different ones with and
+without that special directory --- and it means that starting from a
+setup like this, one can easily drop in additional commands like
+set-head or create-repo without changing anything basic.  It's making
+the admin's later life easier.
+
+Maybe a better test than "help exits with special exit code" is "there
+are no other custom commands than help".  Would that be more sensible?
+
+>From a "make it possible to emulate gitolite" point of view, that
+doesn't permit disabling the interactive mode when there are other
+commands available, so my hunch is that it wouldn't.
+
+Jonathan
