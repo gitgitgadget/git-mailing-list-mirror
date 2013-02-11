@@ -1,77 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC/PATCH] shell: allow 'help' command to disable interactive
  shell
-Date: Sun, 10 Feb 2013 20:26:09 -0800
-Message-ID: <20130211042609.GC15329@elie.Belkin>
+Date: Sun, 10 Feb 2013 20:30:19 -0800
+Message-ID: <7vwqufpj50.fsf@alter.siamese.dyndns.org>
 References: <CAE_TNikk-9sYVRQRwRecNpp3otQ+oc=uV9SPu+7pAkCUNbcUoQ@mail.gmail.com>
  <20130210212538.GA11720@elie.Belkin>
  <20130210224345.GA32318@sigill.intra.peff.net>
  <7vfw13rd9x.fsf@alter.siamese.dyndns.org>
  <CAMK1S_jFUXiHM6teVwoxO9gv77B1KBQoSi-B32dwVKemXnDx9w@mail.gmail.com>
  <20130211012016.GA13243@elie.Belkin>
- <20130211035908.GA4543@sigill.intra.peff.net>
- <20130211041404.GA15329@elie.Belkin>
- <20130211041714.GA12281@sigill.intra.peff.net>
+ <7v7gmfqzt1.fsf@alter.siamese.dyndns.org>
+ <20130211041706.GB15329@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
+Cc: Sitaram Chamarty <sitaramc@gmail.com>, Jeff King <peff@peff.net>,
 	Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Greg Brockman <gdb@mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 11 05:26:46 2013
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 05:30:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4kyb-0007oH-9c
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 05:26:45 +0100
+	id 1U4l2U-0001Le-1u
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 05:30:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170Ab3BKE0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 23:26:21 -0500
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:32919 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751929Ab3BKE0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 23:26:17 -0500
-Received: by mail-pb0-f47.google.com with SMTP id rp2so516595pbb.6
-        for <git@vger.kernel.org>; Sun, 10 Feb 2013 20:26:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=VQcDoWZ6GjT34lb8Ki82eAlHFB8KXNC1X4gktmYd0xw=;
-        b=Q0xD6v9ka3WhpxG33qOk697tEy8xsIkGqYw7ECmS93nPK3LaeN7BEmSHkRgAoHZjWY
-         sVHg7Z40F0aRrlqqQteMN2TlwZ/MAZtT8aZX7vgKxQ5WCAKswTlB1CxmTDjueIjknzRi
-         cRCA/6qB0lMA9oP/En1yyfUIkIfq5koDJmXGBkdofAivgrlBAytCmgXMVakcaAOK6A1m
-         RO1zFH2Q/TVnOQDDsOSKvliM1/dAv9gzF7+DGScyK79fhje4oR8baBS2v1SJpF1crwSn
-         n45LONAxWBmx2tQ2Ip15+8A/YMqnX0RYnAf8juT5U3TyfMauYYlBnlk5svTAKRORPAhQ
-         A7lw==
-X-Received: by 10.68.32.194 with SMTP id l2mr15330848pbi.82.1360556776957;
-        Sun, 10 Feb 2013 20:26:16 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id a4sm65577077paw.21.2013.02.10.20.26.14
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 10 Feb 2013 20:26:15 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20130211041714.GA12281@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1752072Ab3BKEaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 23:30:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48008 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752039Ab3BKEaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 23:30:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96A54C07D;
+	Sun, 10 Feb 2013 23:30:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=61PuJpt8OE3n3Bqd9/w88+f5btA=; b=Awwou3
+	c+ssEpJNWs5NWZYQnbikww1LhlpurjqPuWqFchBceBe1BEKFbYJJ/+J+ISh6+8Mo
+	MivgT4TCpvOxFE6p/1Ppm2qpYCDbXXbq1isWSVR7u9KI4DIhYmb5cu3pPqFDhoga
+	/BVVaMSDq6sXXg/RbnrV6emKDCohkN06LX4TU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pAjqgy76zrDZ2i/riPDr3gC+izdVtWVw
+	Y9t868FUrWcMhATwqGmVnFqiq1Lt5wB0F1R8c4Fu6rggvFOW9htQ1ug3kngDTthB
+	maNlVCNM4XOTy95C/QXUjx4SXoM+pRA0uI+nusAvH/m7RQXiwXB3cfkAEHBxJTl8
+	EQiq49dnJuI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 856C0C07C;
+	Sun, 10 Feb 2013 23:30:21 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E272FC070; Sun, 10 Feb 2013
+ 23:30:20 -0500 (EST)
+In-Reply-To: <20130211041706.GB15329@elie.Belkin> (Jonathan Nieder's message
+ of "Sun, 10 Feb 2013 20:17:06 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BED675BC-7403-11E2-8490-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215987>
 
-Jeff King wrote:
-> On Sun, Feb 10, 2013 at 08:14:04PM -0800, Jonathan Nieder wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> Only interactive connections.  That's the existing behavior.
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> Ah, sorry. I misread the patch. I see now that we already run help, and
-> this is just making the exit value significant. In that case, yeah, I
-> think it's fine.
+>>> How about this?
+>>>
+>>> A patch on top could change the default "git-shell-commands is not
+>>> present" message if that seems worthwhile.
+>>
+>> Hmph.
+>>
+>> I wonder if rewording the message when git-shell-commmands directory
+>> is not there may be a better first step (which actually could be the
+>> last step)?
+>
+> Maybe, but it's not a step that I'm interested in.  I don't think it
+> changes the desirability of the patch I sent.  They are independent.
 
-No problem --- the description was unclear.  Would retitling the patch
-to "shell: pay attention to exit status from 'help' command" work?
+What I thought I read in the log message was that you wanted to give
+a better message telling the users that the site does _not_ allow an
+interactive shell access.  I do not see how that is independent from
+a message given from this codepath, where the side has forbidden
+shell access by not having ~/git-shell-commands directory in the
+first place.  Are you shooting for customizability?
