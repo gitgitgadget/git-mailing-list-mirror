@@ -1,141 +1,308 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Include xmlparse.h instead of expat.h on QNX
-Date: Mon, 11 Feb 2013 13:34:52 -0800
-Message-ID: <7vip5ylekj.fsf@alter.siamese.dyndns.org>
-References: <1360616395-18912-1-git-send-email-kraai@ftbfs.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] rebase -i: respect core.commentchar
+Date: Mon, 11 Feb 2013 21:39:00 +0000
+Message-ID: <20130211213900.GE2270@serenity.lan>
+References: <aa1deab1de2e0f998b9ac0bc8c2d76557429a46b.1360610368.git.john@keeping.me.uk>
+ <7vzjzali6a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matt Kraai <matt.kraai@amo.abbott.com>
-To: Matt Kraai <kraai@ftbfs.org>
-X-From: git-owner@vger.kernel.org Mon Feb 11 22:35:22 2013
+Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 22:39:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5120-0001xm-Ob
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 22:35:21 +0100
+	id 1U5166-0002EY-Sh
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 22:39:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932220Ab3BKVe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 16:34:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37777 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759394Ab3BKVez (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 16:34:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B42C1C239;
-	Mon, 11 Feb 2013 16:34:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kzZgk5TNZmNaZwGd5xiUv9zi9HM=; b=Y2xL5u
-	Nq7LkOK7AH8yu1Jmar105XfvqXnK5UzLuStLHb0i0d0//EXVQ1KdY1LI/AkjepeX
-	ZX8hbsk2tWfJrMqZu6tdFN1rr9sUwaBOlbn3S0lb0jChZ3pFEBLQur3MUlPzllAt
-	Q5d/KGw18djBpDyhWS1quOR4D7jOQ15jmXyLc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d0nY9u2uqqBVJW2wqwB2zEjVGiDjtFex
-	r7F4cqDfyB3drimO/m+FxpTyB9A1dhg1mUBdpJh3pEn4qn07we34aJ2mKVHNY3XC
-	z2D2bp1VELVvRfGHlKL9nkvWyWRKWMFi0ZPYp0MqFmH3Z6aCLu01c5BEILTxHAwH
-	NlXgubAMczM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EA7FC233;
-	Mon, 11 Feb 2013 16:34:54 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E8DB2C22E; Mon, 11 Feb 2013
- 16:34:53 -0500 (EST)
-In-Reply-To: <1360616395-18912-1-git-send-email-kraai@ftbfs.org> (Matt
- Kraai's message of "Mon, 11 Feb 2013 12:59:55 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DF946630-7492-11E2-AC44-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932605Ab3BKVjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 16:39:11 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:37583 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759938Ab3BKVjK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 16:39:10 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 4E567CDA58B;
+	Mon, 11 Feb 2013 21:39:09 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ELXyf8yCs3us; Mon, 11 Feb 2013 21:39:07 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id B7D55CDA330;
+	Mon, 11 Feb 2013 21:39:02 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vzjzali6a.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216094>
 
-Matt Kraai <kraai@ftbfs.org> writes:
+On Mon, Feb 11, 2013 at 12:17:01PM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> > +comment_char=$(git config --get core.commentchar 2>/dev/null | cut -c1)
+> > +: ${comment_char:=#}
+> 
+> Hmm, somewhat ugly.  I wonder if we can do this without pipe and cut.
 
-> From: Matt Kraai <matt.kraai@amo.abbott.com>
->
-> QNX 6.3.2 through 6.5.0 include Expat 1.1, which provides xmlparse.h
-> instead of expat.h, so include the former on QNX systems.
->
-> Signed-off-by: Matt Kraai <matt.kraai@amo.abbott.com>
-> ---
+Yeah, but I can't see a better way of doing this if we want to mimic the
+behaviour of the C code in taking only the first character of the
+configured value.
 
-Two points and a possibly irrelevant half:
+> > @@ -105,8 +108,8 @@ mark_action_done () {
+> >  	sed -e 1q < "$todo" >> "$done"
+> >  	sed -e 1d < "$todo" >> "$todo".new
+> >  	mv -f "$todo".new "$todo"
+> > -	new_count=$(sane_grep -c '^[^#]' < "$done")
+> > -	total=$(($new_count+$(sane_grep -c '^[^#]' < "$todo")))
+> > +	new_count=$(sane_grep -c "^[^${comment_char}]" < "$done")
+> > +	total=$(($new_count+$(sane_grep -c "^[^${comment_char}]" < "$todo")))
+> 
+> I do not think we would want to worry about comment_char being a
+> funny character that can possibly interfere with regexp.  Can't we
+> do this with "git stripspace" piped to "wc -l" or something?
 
- - If a fix is platform specific (i.e. tempts to use #ifdef
-   PLATFORM_NAME), we would prefer to see a patch that that is
-   isolated to platform-specific compatibility layer, which would
-   involve:
+I didn't know about "git stripspace", it does make a lot of this
+significantly safer.  I'll work up a new version that uses that instead
+of grep and with printf used where necessary.
 
-   . add compat/qnx/expat.h file that #include <xmlparse.h>
-   . to Makefile, add -Icompat/qnx/ to CFLAGS
+> > @@ -116,19 +119,19 @@ mark_action_done () {
+> >  }
+> >  
+> >  append_todo_help () {
+> > -	cat >> "$todo" << EOF
+> > -#
+> > -# Commands:
+> > -#  p, pick = use commit
+> > -#  r, reword = use commit, but edit the commit message
+> > -#  e, edit = use commit, but stop for amending
+> > -#  s, squash = use commit, but meld into previous commit
+> > -#  f, fixup = like "squash", but discard this commit's log message
+> > -#  x, exec = run command (the rest of the line) using shell
+> > -#
+> > -# These lines can be re-ordered; they are executed from top to bottom.
+> > -#
+> > -# If you remove a line here THAT COMMIT WILL BE LOST.
+> > +	sed -e "s/^/$comment_char /" >>"$todo" <<EOF
+> 
+> When $comment_char is slash or backslash this will break.
+> Perhaps "stripspace --comment-lines" can be used here.
 
- - Is this really a fix for a problem specific to QNX?  It looks
-   like this is for any platform with expat 1, no?
+Not in this case - this is adding the comment char in front of each
+line.  Is there a better option than this?
 
- - What happens to people with QNX older than 6.3.2 or newer than
-   6.5.0 (assuming they will eventually start shipping expat 2) with
-   your patch?
+	while read -r line
+	do
+		printf '%s %s\n' "$comment_char" "$line"
+	done >> "$todo" <<EOF
+	...
+	EOF
 
-Assuming that this change is about building with expat1, it would
-probably be better to do something like this instead, I would think.
+> > +
+> > +Commands:
+> > + p, pick = use commit
+> > + r, reword = use commit, but edit the commit message
+> > + e, edit = use commit, but stop for amending
+> > + s, squash = use commit, but meld into previous commit
+> > + f, fixup = like "squash", but discard this commit's log message
+> > + x, exec = run command (the rest of the line) using shell
+> > +
+> > +These lines can be re-ordered; they are executed from top to bottom.
+> > +
+> > +If you remove a line here THAT COMMIT WILL BE LOST.
+> >  EOF
+> >  }
+> >  
+> > @@ -179,7 +182,7 @@ die_abort () {
+> >  }
+> >  
+> >  has_action () {
+> > -	sane_grep '^[^#]' "$1" >/dev/null
+> > +	sane_grep "^[^${comment_char}]" "$1" >/dev/null
+> 
+> Likewise.
+> 
+> > @@ -363,10 +366,10 @@ update_squash_messages () {
+> >  	if test -f "$squash_msg"; then
+> >  		mv "$squash_msg" "$squash_msg".bak || exit
+> >  		count=$(($(sed -n \
+> > -			-e "1s/^# This is a combination of \(.*\) commits\./\1/p" \
+> > +			-e "1s/^. This is a combination of \(.*\) commits\./\1/p" \
+> 
+> This one is safe.
+> 
+> >  			-e "q" < "$squash_msg".bak)+1))
+> >  		{
+> > -			echo "# This is a combination of $count commits."
+> > +			echo "$comment_char This is a combination of $count commits."
+> 
+> But you need to do "printf" to be safe here, I think, for comment_char='\'.
+> 
+> > @@ -375,8 +378,8 @@ update_squash_messages () {
+> >  		commit_message HEAD > "$fixup_msg" || die "Cannot write $fixup_msg"
+> >  		count=2
+> >  		{
+> > -			echo "# This is a combination of 2 commits."
+> > -			echo "# The first commit's message is:"
+> > +			echo "$comment_char This is a combination of 2 commits."
+> > +			echo "$comment_char The first commit's message is:"
+> 
+> Likewise.
+> 
+> > @@ -385,21 +388,21 @@ update_squash_messages () {
+> >  	squash)
+> >  		rm -f "$fixup_msg"
+> >  		echo
+> > -		echo "# This is the $(nth_string $count) commit message:"
+> > +		echo "$comment_char This is the $(nth_string $count) commit message:"
+> 
+> Likewise.
+> 
+> >  		echo
+> >  		commit_message $2
+> >  		;;
+> >  	fixup)
+> >  		echo
+> > -		echo "# The $(nth_string $count) commit message will be skipped:"
+> > +		echo "$comment_char The $(nth_string $count) commit message will be skipped:"
+> >  		echo
+> > -		commit_message $2 | sed -e 's/^/#	/'
+> > +		commit_message $2 | sed -e "s/^/$comment_char	/"
+> 
+> Likewise.
 
+Again this is adding $comment_char in front of each line, so it may need
+a loop like above again.
 
- Makefile         | 5 +++++
- config.mak.uname | 1 +
- http-push.c      | 4 ++++
- 3 files changed, 10 insertions(+)
-
-diff --git a/Makefile b/Makefile
-index 5a2e02d..57032cc 100644
---- a/Makefile
-+++ b/Makefile
-@@ -43,6 +43,8 @@ all::
- # Define EXPATDIR=/foo/bar if your expat header and library files are in
- # /foo/bar/include and /foo/bar/lib directories.
- #
-+# Define EXPAT_VERSION=1 if you are trying to build with expat 1.x (e.g. QNX).
-+#
- # Define NO_GETTEXT if you don't want Git output to be translated.
- # A translated Git requires GNU libintl or another gettext implementation,
- # plus libintl-perl at runtime.
-@@ -1089,6 +1091,9 @@ else
- 		else
- 			EXPAT_LIBEXPAT = -lexpat
- 		endif
-+		ifdef EXPAT_VERSION
-+		BASIC_CFLAGS += -DEXPAT_VERSION=$(EXPAT_VERSION)
-+		endif
- 	endif
- endif
- 
-diff --git a/config.mak.uname b/config.mak.uname
-index bea34f0..281d834 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -536,4 +536,5 @@ ifeq ($(uname_S),QNX)
- 	NO_R_TO_GCC_LINKER = YesPlease
- 	NO_STRCASESTR = YesPlease
- 	NO_STRLCPY = YesPlease
-+	EXPAT_VERSION = 1
- endif
-diff --git a/http-push.c b/http-push.c
-index 3e72e84..2fdb0cd 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -11,7 +11,11 @@
- #include "list-objects.h"
- #include "sigchain.h"
- 
-+#if EXPAT_VERSION == 1
-+#include <xmlparse.h>
-+#else
- #include <expat.h>
-+#endif
- 
- static const char http_push_usage[] =
- "git http-push [--all] [--dry-run] [--force] [--verbose] <remote> [<head>...]\n";
+> >  peek_next_command () {
+> > -	sed -n -e "/^#/d" -e '/^$/d' -e "s/ .*//p" -e "q" < "$todo"
+> > +	sed -n -e "/^$comment_char/d" -e '/^$/d' -e "s/ .*//p" -e "q" < "$todo"
+> >  }
+> 
+> Likewise.
+> 
+> > @@ -464,7 +467,7 @@ do_next () {
+> >  	rm -f "$msg" "$author_script" "$amend" || exit
+> >  	read -r command sha1 rest < "$todo"
+> >  	case "$command" in
+> > -	'#'*|''|noop)
+> > +	$comment_char*|''|noop)
+> 
+> This is OK.
+> 
+> > @@ -803,15 +806,15 @@ skip)
+> >  	do_rest
+> >  	;;
+> >  edit-todo)
+> > -	sed -e '/^#/d' < "$todo" > "$todo".new
+> > +	sed -e "/^$comment_char/d" < "$todo" > "$todo".new
+> 
+> Unsafe.
+> 
+> >  	mv -f "$todo".new "$todo"
+> >  	append_todo_help
+> > -	cat >> "$todo" << EOF
+> > -#
+> > -# You are editing the todo file of an ongoing interactive rebase.
+> > -# To continue rebase after editing, run:
+> > -#     git rebase --continue
+> > -#
+> > +	sed -e "s/^/$comment_char /" >>"$todo" <<EOF
+> 
+> Unsafe.
+> 
+> > +
+> > +You are editing the todo file of an ongoing interactive rebase.
+> > +To continue rebase after editing, run:
+> > +    git rebase --continue
+> > +
+> >  EOF
+> >  
+> >  	git_sequence_editor "$todo" ||
+> > @@ -881,7 +884,7 @@ do
+> >  
+> >  	if test -z "$keep_empty" && is_empty_commit $shortsha1 && ! is_merge_commit $shortsha1
+> >  	then
+> > -		comment_out="# "
+> > +		comment_out="$comment_char "
+> 
+> OK.
+> 
+> >  	else
+> >  		comment_out=
+> >  	fi
+> > @@ -942,20 +945,20 @@ test -s "$todo" || echo noop >> "$todo"
+> >  test -n "$autosquash" && rearrange_squash "$todo"
+> >  test -n "$cmd" && add_exec_commands "$todo"
+> >  
+> > -cat >> "$todo" << EOF
+> > -
+> > -# Rebase $shortrevisions onto $shortonto
+> > +echo >>"$todo"
+> > +sed -e "s/^/$comment_char /" >> "$todo" << EOF
+> 
+> Unsafe.
+> 
+> > +Rebase $shortrevisions onto $shortonto
+> >  EOF
+> >  append_todo_help
+> > -cat >> "$todo" << EOF
+> > -#
+> > -# However, if you remove everything, the rebase will be aborted.
+> > -#
+> > +sed -e "s/^/$comment_char /" >> "$todo" << EOF
+> 
+> Unsafe.
+> 
+> > +
+> > +However, if you remove everything, the rebase will be aborted.
+> > +
+> >  EOF
+> >  
+> >  if test -z "$keep_empty"
+> >  then
+> > -	echo "# Note that empty commits are commented out" >>"$todo"
+> > +	echo "$comment_char Note that empty commits are commented out" >>"$todo"
+> >  fi
+> >  
+> >  
+> > diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> > index 8462be1..1043cdc 100755
+> > --- a/t/t3404-rebase-interactive.sh
+> > +++ b/t/t3404-rebase-interactive.sh
+> > @@ -934,4 +934,20 @@ test_expect_success 'rebase --edit-todo can be used to modify todo' '
+> >  	test L = $(git cat-file commit HEAD | sed -ne \$p)
+> >  '
+> >  
+> > +test_expect_success 'rebase -i respects core.commentchar' '
+> > +	git reset --hard &&
+> > +	git checkout E^0 &&
+> > +	git config core.commentchar \; &&
+> 
+> Try setting it to '\' or '/' or '-'; they may catch some more breakages.
+> 
+> > +	test_when_finished "git config --unset core.commentchar" &&
+> > +	cat >comment-lines.sh <<EOF &&
+> > +#!$SHELL_PATH
+> > +sed -e "2,\$ s/^/;/" "\$1" >"\$1".tmp
+> > +mv "\$1".tmp "\$1"
+> > +EOF
+> > +	chmod a+x comment-lines.sh &&
+> > +	test_set_editor "$(pwd)/comment-lines.sh" &&
+> > +	git rebase -i B &&
+> > +	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
+> > +'
+> > +
+> >  test_done
