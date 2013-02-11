@@ -1,97 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] branch: show rebase/bisect info when possible instead
- of "(no branch)"
-Date: Mon, 11 Feb 2013 11:13:26 -0800
-Message-ID: <7vehgmmzop.fsf@alter.siamese.dyndns.org>
-References: <1359870520-22644-1-git-send-email-pclouds@gmail.com>
- <1360318171-17614-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: segfault for git log --graph --no-walk --grep a
+Date: Mon, 11 Feb 2013 14:16:07 -0500
+Message-ID: <20130211191607.GA21269@sigill.intra.peff.net>
+References: <201302090052.22053.thom311@gmail.com>
+ <7vsj56xsg5.fsf@alter.siamese.dyndns.org>
+ <7vobfuxrns.fsf@alter.siamese.dyndns.org>
+ <20130209002710.GA5570@sigill.intra.peff.net>
+ <7vfw16xqvj.fsf@alter.siamese.dyndns.org>
+ <7va9rexqii.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Niedier <jrnieder@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 20:13:57 2013
+Cc: Thomas Haller <thom311@gmail.com>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 20:16:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4yp8-0000cI-RT
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 20:13:55 +0100
+	id 1U4yrs-0005er-0R
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 20:16:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758685Ab3BKTNa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2013 14:13:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60487 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758568Ab3BKTN3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2013 14:13:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EF26B75A;
-	Mon, 11 Feb 2013 14:13:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=pTjn07dw/mGv
-	Hu3RiKdYviLop9U=; b=L54Jn09Obz0IsWLdyd3XnFmn4KIEtCYj7t1nUXmjeQja
-	Po68ggq6C+YMeZdgQE+AnnQ2T2kadpRfx2NX5QxGJCVglRxMGumXD7Tn+rX+SAID
-	DXGHgPbXnrUniHfwsNXSqKKl19oAAWrEVf/VBhhyXox6b3THNK0wvAU8Mmn+XtE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=U9ypaY
-	h5jN5JS30weqd0eGLsHlA9miStE7NLyhcJSWDD7IAS+26w2BYYl10jq5yImu1q7q
-	huOwNTUBVLYK5JSP2EodVP1Ho74IjpcGZR0uQV6aosFqnEmLbkaUUI+QPJz/W5ly
-	jqmdBXxCSkPYgzyIA/B43LtnpT/P90MeXo/mE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 719D1B759;
-	Mon, 11 Feb 2013 14:13:28 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D2413B74F; Mon, 11 Feb 2013
- 14:13:27 -0500 (EST)
-In-Reply-To: <1360318171-17614-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 8 Feb
- 2013 17:09:31 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1D795168-747F-11E2-BE12-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758941Ab3BKTQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 14:16:17 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44500 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758164Ab3BKTQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 14:16:14 -0500
+Received: (qmail 25674 invoked by uid 107); 11 Feb 2013 19:17:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Feb 2013 14:17:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Feb 2013 14:16:07 -0500
+Content-Disposition: inline
+In-Reply-To: <7va9rexqii.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216078>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Fri, Feb 08, 2013 at 04:47:01PM -0800, Junio C Hamano wrote:
 
-> +static char *get_head_description()
-> +{
-> +	struct stat st;
-> +	struct strbuf sb =3D STRBUF_INIT;
-> +	struct strbuf result =3D STRBUF_INIT;
-> +	int bisect =3D 0;
-> +	int ret;
-> +	if (!stat(git_path("rebase-merge"), &st) && S_ISDIR(st.st_mode))
-> +		ret =3D strbuf_read_file(&sb, git_path("rebase-merge/head-name"), =
-0);
+> > Yeah, that actually is a good point.  We should be using logmsg_reencode
+> > so that we look for strings in the user's encoding.
+> 
+> Perhaps like this.  Just like the previous one (which should be
+> discarded), this makes the function always use the temporary strbuf,
+> so doing this upfront actually loses more code than it adds ;-)
 
-Hrmph.  Why isn't this checking if the file exists and then read it,
-i.e.
+I didn't see this in What's Cooking or pu. We should probably pick an
+approach and go with it.
 
-	if (access(git_path("rebase-merge/head-name"), F_OK))
-		ret =3D strbuf_read_file(&sb, git_path("rebase-merge/head-name"), 0);
+I think using logmsg_reencode makes sense. I'd be in favor of avoiding
+the extra copy in the common case, so something like the patch below. If
+you feel strongly about the code cleanup at the minor run-time expense,
+I won't argue too much, though.
 
-It is not like you are creating this file and making sure leading
-directories exist, so the sequence looks a bit strange.
-
-> +	else if (!access(git_path("rebase-apply/rebasing"), F_OK))
-> +		ret =3D strbuf_read_file(&sb, git_path("rebase-apply/head-name"), =
-0);
-> +	else if (!access(git_path("BISECT_LOG"), F_OK)) {
-> +		ret =3D strbuf_read_file(&sb, git_path("BISECT_START"), 0);
-> +		bisect =3D 1;
-
-And if the answer to the above question is "because if rebase-merge/
-exists, with or without head-name, we know we are not bisecting",
-then that may suggest that the structure of if/elseif cascade is
-misdesigned.  Shouldn't the "bisect" boolean be an enum "what are we
-doing" that is initialized to "I do not know" and each of these
-if/elseif cascade set the state to it when they know what we are
-doing, in order for this function to be longer-term maintainable?
+---
+diff --git a/revision.c b/revision.c
+index d7562ee..a08d0a5 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2268,7 +2268,10 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+ static int commit_match(struct commit *commit, struct rev_info *opt)
+ {
+ 	int retval;
++	const char *encoding;
++	const char *message;
+ 	struct strbuf buf = STRBUF_INIT;
++
+ 	if (!opt->grep_filter.pattern_list && !opt->grep_filter.header_list)
+ 		return 1;
+ 
+@@ -2279,13 +2282,23 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+ 		strbuf_addch(&buf, '\n');
+ 	}
+ 
++	/*
++	 * We grep in the user's output encoding, under the assumption that it
++	 * is the encoding they are most likely to write their grep pattern
++	 * for. In addition, it means we will match the "notes" encoding below,
++	 * so we will not end up with a buffer that has two different encodings
++	 * in it.
++	 */
++	encoding = get_log_output_encoding();
++	message = logmsg_reencode(commit, encoding);
++
+ 	/* Copy the commit to temporary if we are using "fake" headers */
+ 	if (buf.len)
+-		strbuf_addstr(&buf, commit->buffer);
++		strbuf_addstr(&buf, message);
+ 
+ 	if (opt->grep_filter.header_list && opt->mailmap) {
+ 		if (!buf.len)
+-			strbuf_addstr(&buf, commit->buffer);
++			strbuf_addstr(&buf, message);
+ 
+ 		commit_rewrite_person(&buf, "\nauthor ", opt->mailmap);
+ 		commit_rewrite_person(&buf, "\ncommitter ", opt->mailmap);
+@@ -2294,18 +2307,18 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+ 	/* Append "fake" message parts as needed */
+ 	if (opt->show_notes) {
+ 		if (!buf.len)
+-			strbuf_addstr(&buf, commit->buffer);
+-		format_display_notes(commit->object.sha1, &buf,
+-				     get_log_output_encoding(), 1);
++			strbuf_addstr(&buf, message);
++		format_display_notes(commit->object.sha1, &buf, encoding, 1);
+ 	}
+ 
+-	/* Find either in the commit object, or in the temporary */
++	/* Find either in the original commit message, or in the temporary */
+ 	if (buf.len)
+ 		retval = grep_buffer(&opt->grep_filter, buf.buf, buf.len);
+ 	else
+ 		retval = grep_buffer(&opt->grep_filter,
+-				     commit->buffer, strlen(commit->buffer));
++				     message, strlen(message));
+ 	strbuf_release(&buf);
++	logmsg_free(message, commit);
+ 	return retval;
+ }
+ 
