@@ -1,104 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] shell: pay attention to exit status from 'help'
- command
-Date: Sun, 10 Feb 2013 23:52:45 -0800
-Message-ID: <20130211075245.GO15329@elie.Belkin>
-References: <CAMK1S_jFUXiHM6teVwoxO9gv77B1KBQoSi-B32dwVKemXnDx9w@mail.gmail.com>
- <20130211012016.GA13243@elie.Belkin>
- <20130211035908.GA4543@sigill.intra.peff.net>
- <20130211041404.GA15329@elie.Belkin>
- <20130211041714.GA12281@sigill.intra.peff.net>
- <20130211042609.GC15329@elie.Belkin>
- <20130211043322.GA12735@sigill.intra.peff.net>
- <20130211055604.GE15329@elie.Belkin>
- <20130211055847.GG15329@elie.Belkin>
- <7vd2w7pbh5.fsf@alter.siamese.dyndns.org>
+From: Ethan Reesor <firelizzard@gmail.com>
+Subject: Re: Pushing a git repository to a new server
+Date: Mon, 11 Feb 2013 02:57:51 -0500
+Message-ID: <CAE_TNin6-weutRDToZ7-BBGJTCcf0dwJn0ChUbFcACRU=SbjzA@mail.gmail.com>
+References: <CAE_TNin0Kb_38gnx9W36VZ8CTxYBZ9T1Dkhar1DUFHyQUq7ebg@mail.gmail.com>
+ <20130211075040.GJ5210@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Sitaram Chamarty <sitaramc@gmail.com>,
-	Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Greg Brockman <gdb@mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 08:53:18 2013
+Content-Type: text/plain; charset=KOI8-R
+Cc: git <git@vger.kernel.org>
+To: Konstantin Khomoutov <kostix+git@007spb.ru>
+X-From: git-owner@vger.kernel.org Mon Feb 11 08:58:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4oCT-0007y7-AT
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 08:53:17 +0100
+	id 1U4oHc-0001wZ-6m
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 08:58:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752805Ab3BKHwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 02:52:54 -0500
-Received: from mail-da0-f43.google.com ([209.85.210.43]:40340 "EHLO
-	mail-da0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752731Ab3BKHwx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 02:52:53 -0500
-Received: by mail-da0-f43.google.com with SMTP id u36so2600292dak.2
-        for <git@vger.kernel.org>; Sun, 10 Feb 2013 23:52:53 -0800 (PST)
+	id S1752817Ab3BKH6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 02:58:13 -0500
+Received: from mail-qc0-f169.google.com ([209.85.216.169]:60908 "EHLO
+	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752654Ab3BKH6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 02:58:12 -0500
+Received: by mail-qc0-f169.google.com with SMTP id t2so2144578qcq.0
+        for <git@vger.kernel.org>; Sun, 10 Feb 2013 23:58:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=nYKsn5dwFhgCttyBoVpLmYTpSTG3ees40TRzgSlpf2w=;
-        b=rEfc+3+iTaliPunLmUO36lk2kqsRhCr+lZqltandeuErAVm81WAIyhOzEFwFs36sPJ
-         MTQFIcStG5MbuC8R9uV9wyUeFvhoVXECKqxLUGfF5L0oxVIuv71GZrR0kTuuzSto4Q76
-         aZzNMwOzpJJ8CvHfaPlTcic/YKyK1IDh6KPjtWqyUOfvmgVNTGURuxKz1hruEptYY30n
-         j9aQZVmpZrgCwUnqg1OfN8XDkfVQmKVZv3WYCDMGdQcIHTBroI7IIq5xeLEnpo/WHeP7
-         PdOB+CD9AqXsmsrKcxb+0FRs12Ga6xFfFUmdYB21x6/A5F2BZCGrNZN506p6vDvvSloz
-         ltUA==
-X-Received: by 10.66.84.202 with SMTP id b10mr39243059paz.71.1360569173360;
-        Sun, 10 Feb 2013 23:52:53 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id e6sm66131676paw.16.2013.02.10.23.52.50
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 10 Feb 2013 23:52:52 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vd2w7pbh5.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=qgWxfwogHKabQScP69OOu7KemaHH9599d/hjFEi9tkw=;
+        b=C5de/6UF7jmFXAOwVSk8JtBQ6LvOqA274QkwLenoGb1ySxaXPOmaTVkyvplwXUtUPK
+         5cgm+9UjVouIdPVkq9F+//ycCizINgBfp1+PtV6ihzfSe0k833NDM1eeVVJDMC/H8H+7
+         jXhanHH4lqOJt7clqcDUCrCLff4yrm7DZX+ce3fzFuLK8t1e9EB7y6HZqSDuUqbDAE90
+         PbFWJXApdpiXhpz/tmgC4p/gXA763nlM0X9xDZYamETOSnPTUwJnO3GLDxBlek9tomq0
+         bW7Jguv1r3aL+nagr6NIeQ22AxbtCMucB27RaO7GES4Y/SKvgfB+iMMUzRTEot/d+tLh
+         GvMA==
+X-Received: by 10.229.178.232 with SMTP id bn40mr1226705qcb.44.1360569491327;
+ Sun, 10 Feb 2013 23:58:11 -0800 (PST)
+Received: by 10.49.95.225 with HTTP; Sun, 10 Feb 2013 23:57:51 -0800 (PST)
+In-Reply-To: <20130211075040.GJ5210@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216021>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+On Mon, Feb 11, 2013 at 2:50 AM, Konstantin Khomoutov
+<kostix+git@007spb.ru> wrote:
+> What's wrong with
+> $ ssh myuser@remotehost 'mkdir /path/to/MyRepo.git; cd $_; git init --bare'
+> $ git push --all git@remotehost:MyOtherRepo.git
+> ?
 
->> +To disable interactive logins, displaying a greeting instead:
->> ++
->> +----------------
->> +$ chsh -s /usr/bin/git-shell
->> +$ mkdir $HOME/git-shell-commands
->> +$ cat >$HOME/git-shell-commands/help <<\EOF
->> +#!/bin/sh
->> +printf '%s\n' "Hi $USER! You've successfully authenticated, but I do not"
+Nothing, I just wanted to make myself a command to do that for me.
+
+>> The reason I had to use my user is the git user's shell is git-prompt
 >
-> Where in the sshd to git-shell exec chain is $USER variable set for
-> the user?  Just being curious if this is the simplest but one of the
-> more robust ways to get the user's name.
+> There's no such thing as git-prompt.  The restricted login shell for
+> SSH-only access typically used for such a "virtual" Git user is
+> git-shell.
 
-That's a good question.  environment= in an authorized_keys file is
-obsolete, so USER generally represents the actual logged in user.
+Sorry, git-prompt is something I made for myself. I meant git-shell.
 
-That means the main way to base behavior on private key (letting one
-system user represent multiple people) is a gitolite-style command=
-wrapper that checks SSH_ORIGINAL_COMMAND.  In that setup, there is no
-reason to forward simple no-args "are you there?" requests to the
-git-shell, so we can forget about it here.
+> It's not really clear what do you want to achieve.
+> The reason the git-shell shell is *restricted* (read its manual page)
+> is to shrink the surface of possible attacks in the case the shell
+> account used for accessing Git repos over SSH is compromized (the key or
+> password stolen, for instance).  This is achieved by only allowing
+> commands like git-upload-pack etc in the shell (no general file
+> manipulation commands etc).  So what creating "git command that can
+> talk to the server using git-prompt ..." would really buy you?
 
-So by the time we get to git-shell, most likely either
+I want to create a git-command that 1) creates a bare version of the
+current repo, 2) and uploads it to the specified path on my server
+(using tar, but that's not the point).
 
- A) this is a generic system user, with a username like "git", and the
-    above example would insult the client with "Hi git!" or "Hi
-    project-x-git!"
+My problem is that I have no idea how things like git-push works via a
+user with git-shell. Can you only run certain git commands, like
+git-upload-pack? Because I tried running 'ssh git@server git status'
+and that failed.
 
-or
+> I think the way to go is to start using gitolite [1] or implement by
+> hand a subset of what it does (a custom login shell which is allowed to
+> do certain things in a special area of the filesystem designated to keep
+> Git repositories) or just set up a special account on the server
+> ("git-admin", for instance) which would have a regular login shell set
+> for it and would be in the same group as the user "git" (or even have
+> the same UID) so that they could share the files they create (subject to
+> active umasks of processes run as both users though).
 
- B) each person has a separate account on the system, perhaps to help
-    the admin to set filesystem permissions based on users and groups,
-    and the above would address the user by her normal name.
+I thought about the secondary user idea. I decided that trying to make
+my own command would be more fun.
 
-Jonathan
+
+-- 
+Ethan Reesor (Gmail)
