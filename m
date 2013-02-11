@@ -1,100 +1,81 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] sha1_file.c: Fix a sparse warning
-Date: Mon, 11 Feb 2013 19:02:17 +0000
-Message-ID: <51194039.4010407@ramsay1.demon.co.uk>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] fixup! graph: output padding for merge subsequent parents
+Date: Mon, 11 Feb 2013 19:06:29 +0000
+Message-ID: <20130211190629.GC2270@serenity.lan>
+References: <7vtxplt5u2.fsf@alter.siamese.dyndns.org>
+ <20130210131647.GA2270@serenity.lan>
+ <7vliawt19c.fsf@alter.siamese.dyndns.org>
+ <20130210210229.GB2270@serenity.lan>
+ <7vwqufrdzd.fsf@alter.siamese.dyndns.org>
+ <20130211105433.GA3245@farnsworth.metanate.com>
+ <7vehgmol8y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 20:04:45 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	=?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 20:07:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4ygD-000196-Q7
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 20:04:42 +0100
+	id 1U4yiU-0005RI-Jz
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 20:07:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758358Ab3BKTES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 14:04:18 -0500
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:56511 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758289Ab3BKTER (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 14:04:17 -0500
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 3DC6C400575;
-	Mon, 11 Feb 2013 19:04:15 +0000 (GMT)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 55BB74000EA;	Mon, 11 Feb 2013 19:04:14 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Mon, 11 Feb 2013 19:04:13 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-X-MDF-HostID: 19
+	id S1758667Ab3BKTGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 14:06:39 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:46635 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758568Ab3BKTGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 14:06:39 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 8DC47606518;
+	Mon, 11 Feb 2013 19:06:38 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id U9l3RwkKN+fQ; Mon, 11 Feb 2013 19:06:38 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 458DF606517;
+	Mon, 11 Feb 2013 19:06:31 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vehgmol8y.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216076>
+
+On Mon, Feb 11, 2013 at 08:42:21AM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > Perhaps it's best to leave the patch as it originally was to guarantee
+> > that we can't get stuck in graph_show_commit(), even when it's called at
+> > an unexpected time, but I see you've already squashed this change in.
+> >
+> > Would you prefer me to resend the original patch or send an update with
+> > this change and the above reasoning in the commit message?
+> 
+> Yes, please.  Let's have the original (I think I have it in my
+> reflog so no need to resend it) and this update on top as a separate
+> patch with an updated log message.
+
+I was suggesting dropping the change to remove the
+graph_is_commit_finished() check in the loop.  I'm not sure it buys us
+much and there are still situations that could result in the state
+changing to PADDING during the loop if the graph API is used in an
+unexpected way.
+
+Are others convinced that this change is always safe?
 
 
-Sparse issues an "... was not declared. Should it be static?" warning
-against the 'report_pack_garbage' symbol. In order to suppress the
-warning, since this symbol requires more than file scope, we add an
-extern declaration to the cache.h header file (and remove the now
-redundant extern declaration in builtin/count-objects.c).
-
-[As an alternative solution, make the variable a (static) file scope
-variable and add an extern function set_report_pack_garbage(), which
-would take a function pointer, to set the local variable ... etc.]
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Hi Nguyen,
-
-If you need to re-roll your 'nd/count-garbage' patches, could you
-please squash this (or something like it) into commit c2071d7a
-("count-objects: report garbage files in pack directory too",
-08-02-2013).
-
-Thanks! 
-
-[BTW, I have an unsettling feeling that the above salutation should
-read "Hi Duy," and I'm being (unintentionally) offensive. If so,
-please let me know and accept my apologies. ;-) ]
-
-ATB,
-Ramsay Jones
-
- builtin/count-objects.c | 1 -
- cache.h                 | 3 +++
- 2 files changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-index 118b2ae..605c215 100644
---- a/builtin/count-objects.c
-+++ b/builtin/count-objects.c
-@@ -11,7 +11,6 @@
- 
- static unsigned long garbage;
- 
--extern void (*report_pack_garbage)(const char *path, int len, const char *name);
- static void real_report_pack_garbage(const char *path, int len, const char *name)
- {
- 	if (len && name)
-diff --git a/cache.h b/cache.h
-index 6818d87..0d687b4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -779,6 +779,9 @@ extern int has_pack_index(const unsigned char *sha1);
- 
- extern void assert_sha1_type(const unsigned char *sha1, enum object_type expect);
- 
-+/* A hook for count-objects to report invalid files in pack directory */
-+extern void (*report_pack_garbage)(const char *path, int len, const char *name);
-+
- extern const signed char hexval_table[256];
- static inline unsigned int hexval(unsigned char c)
- {
--- 
-1.8.1
+John
