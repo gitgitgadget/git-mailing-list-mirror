@@ -1,210 +1,107 @@
-From: Blind <stoycho.sleptsov@gmail.com>
-Subject: Re: [RFC/PATCH] Introduce branch.<name>.pushremote
-Date: Mon, 11 Feb 2013 08:16:50 +0200
-Message-ID: <CAGL0X-rKnWBy-Ff=YmEdqgo8RFb40FXTxvUM5X77YaQvhAGHYg@mail.gmail.com>
-References: <1360307982-20027-1-git-send-email-artagnon@gmail.com>
+From: Ethan Reesor <firelizzard@gmail.com>
+Subject: Re: [RFC/PATCH] shell: allow 'help' command to disable interactive shell
+Date: Mon, 11 Feb 2013 01:22:27 -0500
+Message-ID: <CAE_TNimshLGK=Asv1nc=TrPJ89ZHMqOo0p32bRi5EGv2jZHdUw@mail.gmail.com>
+References: <CAMK1S_jFUXiHM6teVwoxO9gv77B1KBQoSi-B32dwVKemXnDx9w@mail.gmail.com>
+ <20130211012016.GA13243@elie.Belkin> <7v7gmfqzt1.fsf@alter.siamese.dyndns.org>
+ <20130211041706.GB15329@elie.Belkin> <7vwqufpj50.fsf@alter.siamese.dyndns.org>
+ <20130211043247.GD15329@elie.Belkin> <7vpq07pgpy.fsf@alter.siamese.dyndns.org>
+ <CAE_TNim2wrL3SWxy_2ugyGmEFDngBJ8+z04y2tJFzMo4N8mUug@mail.gmail.com>
+ <20130211060911.GH15329@elie.Belkin> <CAE_TNi=fN66+9WfMn86H6J_BVAjFP=xiE8m3JHe_4ANHB2V5wA@mail.gmail.com>
+ <20130211061553.GJ15329@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 07:17:18 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Greg Brockman <gdb@mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 07:23:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4mhX-0008TL-Ta
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 07:17:16 +0100
+	id 1U4mnH-0002Xo-P0
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 07:23:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868Ab3BKGQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 01:16:52 -0500
-Received: from mail-ve0-f175.google.com ([209.85.128.175]:60404 "EHLO
-	mail-ve0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751369Ab3BKGQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 01:16:52 -0500
-Received: by mail-ve0-f175.google.com with SMTP id cy12so4854930veb.34
-        for <git@vger.kernel.org>; Sun, 10 Feb 2013 22:16:51 -0800 (PST)
+	id S1751992Ab3BKGWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 01:22:48 -0500
+Received: from mail-qe0-f49.google.com ([209.85.128.49]:48159 "EHLO
+	mail-qe0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823Ab3BKGWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 01:22:47 -0500
+Received: by mail-qe0-f49.google.com with SMTP id 5so2397957qea.8
+        for <git@vger.kernel.org>; Sun, 10 Feb 2013 22:22:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=lKTHqewmJMBazl4pbFeG+T5IliEiIrjheVOdm0l60nw=;
-        b=KWOHLAD/AgktVL8lPydrppgA8VhFXDule1IVJGE1QDOwf3Z+5JdhiWARVOJhfAGd6M
-         zEjrAE29hpJIAOEzWvwtBwJNi9th+0nb9FlzGAtq37mzpGw+Xh7MJL5zWNagsbyxnLi+
-         oQ/L8gav8yNVRMBDqzSelCW5G1am1Or2i/fV3dHU8b3Pm6TQSZqQ6QAiy3y6ag+j6dOr
-         p6xoRyJGe0lYs9rJ8fYd7noQeJFnBhQM583e7ZZopfA+r2xGunMliPtp+R7hcHNvaYiC
-         VhSHOH99IsIgFbpRFRxurTRAZqgclf0pNRwTB5LcCNEnoS5crgqW3h06rI2qZm4JhUHG
-         uHSw==
-X-Received: by 10.52.90.243 with SMTP id bz19mr14895069vdb.112.1360563411018;
- Sun, 10 Feb 2013 22:16:51 -0800 (PST)
-Received: by 10.58.55.228 with HTTP; Sun, 10 Feb 2013 22:16:50 -0800 (PST)
-In-Reply-To: <1360307982-20027-1-git-send-email-artagnon@gmail.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=pLh2mEHe5VhjAxQZjIOKl1XoTby7gURepVA8NSQ4F/g=;
+        b=wdoEBbvK6NGM4VGewNciwuemP4jmdNmAyDK00aAg68MiSzkz1wKutfzpVyDZFNkBJ+
+         ttReqVpt6Bcu64+myIRXEBegS4vYvmesWqzH9/3Q085gAozHk9wNOKc1gt4A1l18Gz4m
+         q/uxHiaoOodbyBK3ugjkLblGX2IhwdyoLRtmNe7YgejuB98dyOACxd3lxalsdEArqlsW
+         KT71Rl9g75LJh7wXsKLXFoWXnMx1jzP6bKFy9A8TbWC5VjgSPEHGlrSVWaF47tkZmQGh
+         gAVhOwwc2ih5Nrqpd7IMmSHxu+hmjnJhFSavGldvXMwbdYKAZOu5jczmqc2B5eUm6QJv
+         dVXA==
+X-Received: by 10.224.209.193 with SMTP id gh1mr5127995qab.86.1360563767146;
+ Sun, 10 Feb 2013 22:22:47 -0800 (PST)
+Received: by 10.49.95.225 with HTTP; Sun, 10 Feb 2013 22:22:27 -0800 (PST)
+In-Reply-To: <20130211061553.GJ15329@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216004>
 
-If I understand correctly,
-in your scenario the branches with branch.<name>.pushremote
-will be still included in the $git push <remote> --all?
-Are you considering some way to exclude a branch from "push --all"
-(branch.<name>.push = always, explicit, never... for example)?
-Or maybe, if the branch is already marked as special
-with branch.<name>.pushremote,
-then it could be logical to push it only when is explicitly specified
-on the command line (excluded from --all)?
+On Mon, Feb 11, 2013 at 1:15 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> [administrivia: please don't top-post]
+> Ethan Reesor wrote:
+>
+>> Why not have both? That way there is a way to get a customizable
+>> response that avoids Junio's complaints and there is a way to do what
+>> you are trying to achieve.
+>
+> What was Junio's complaint?
 
-Thanks,
-Blind.
+I was referring to the one you recently addressed:
 
-2013/2/8 Ramkumar Ramachandra <artagnon@gmail.com>:
-> This new configuration variable overrides the remote in
-> `branch.<name>.remote` for pushes.  It is useful in the typical
-> scenario, where the remote I'm pulling from is not the remote I'm
-> pushing to.  Although `remote.<name>.pushurl` is similar, it does not
-> serve the purpose as the URL would lack corresponding remote tracking
-> branches.
+On Mon, Feb 11, 2013 at 1:14 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>>> Junio C Hamano wrote:
 >
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  This is a first cut.  There's code duplication at the moment, but I'm
->  currently trying to figure out which other remote_get() calls to
->  replace with pushremote_get().  Comments are welcome.
+>>>>               Are you shooting for customizability?
+>>>
+>>> Yes, and the ability to generate the message dynamically.
+>>
+>> Hmph, if that is the case, wouldn't it be a better direction to give
+>> a better help for majority of the case where git-shell is used as
+>> the login shell to allow push and fetch but not for interactive
+>> access at all?
+>>
+>> The first step in that direction may be to give a better canned
+>> message, followed by a mechanism (perhaps a hook) that lets a
+>> message customized for the site's needs, no?
 >
->  I will leave it to future patches to do the following things:
->  1. Fix the status output to be more meaningful when pushremote is
->  set.  At the moment, I'm thinking statuses like [pull: 4 behind,
->  push: 3 ahead] will make sense.
->  2. Introduce a remote.pushDefault (peff)
->  3. Introduce a remote.default (peff)
+> The trouble is that I can't imagine a canned message that everyone
+> will like.  (For example, I quite dislike the current one.)  That's
+> exactly the situation in which some configurability is helpful.
 >
->  Documentation/config.txt |  6 ++++++
->  builtin/push.c           |  2 +-
->  remote.c                 | 41 +++++++++++++++++++++++++++++++++++++++++
->  remote.h                 |  2 ++
->  4 files changed, 50 insertions(+), 1 deletion(-)
+> Some configurability is nice for other situations, anyway.  For
+> example, sites serving a multilingual audience may want the message to
+> vary based on the user's language (or even source IP).  The message
+> can include a list of available repositories or extra information that
+> changes over time.  And so on.
 >
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 9b11597..0b3b1f8 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -727,6 +727,12 @@ branch.<name>.remote::
->         remote to fetch from/push to.  It defaults to `origin` if no remote is
->         configured. `origin` is also used if you are not on any branch.
->
-> +branch.<name>.pushremote::
-> +       When in branch <name>, it tells 'git push' which remote to
-> +       push to.  It falls back to `branch.<name>.remote`, and
-> +       defaults to `origin` if no remote is configured. `origin` is
-> +       also used if you are not on any branch.
-> +
->  branch.<name>.merge::
->         Defines, together with branch.<name>.remote, the upstream branch
->         for the given branch. It tells 'git fetch'/'git pull'/'git rebase' which
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 42b129d..d447a80 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -322,7 +322,7 @@ static int push_with_options(struct transport *transport, int flags)
->  static int do_push(const char *repo, int flags)
->  {
->         int i, errs;
-> -       struct remote *remote = remote_get(repo);
-> +       struct remote *remote = pushremote_get(repo);
->         const char **url;
->         int url_nr;
->
-> diff --git a/remote.c b/remote.c
-> index e53a6eb..d6fcfc0 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -48,6 +48,7 @@ static int branches_nr;
->
->  static struct branch *current_branch;
->  static const char *default_remote_name;
-> +static const char *pushremote_name;
->  static int explicit_default_remote_name;
->
->  static struct rewrites rewrites;
-> @@ -363,6 +364,12 @@ static int handle_config(const char *key, const char *value, void *cb)
->                                 default_remote_name = branch->remote_name;
->                                 explicit_default_remote_name = 1;
->                         }
-> +               } else if (!strcmp(subkey, ".pushremote")) {
-> +                       if (!value)
-> +                               return config_error_nonbool(key);
-> +                       branch->pushremote_name = xstrdup(value);
-> +                       if (branch == current_branch)
-> +                               pushremote_name = branch->pushremote_name;
->                 } else if (!strcmp(subkey, ".merge")) {
->                         if (!value)
->                                 return config_error_nonbool(key);
-> @@ -700,6 +707,40 @@ struct remote *remote_get(const char *name)
->         return ret;
->  }
->
-> +struct remote *pushremote_get(const char *name)
-> +{
-> +       struct remote *ret;
-> +       int name_given = 0;
-> +
-> +       read_config();
-> +       if (name)
-> +               name_given = 1;
-> +       else {
-> +               if (pushremote_name) {
-> +                       name = pushremote_name;
-> +                       name_given = 1;
-> +               } else {
-> +                       name = default_remote_name;
-> +                       name_given = explicit_default_remote_name;
-> +               }
-> +       }
-> +
-> +       ret = make_remote(name, 0);
-> +       if (valid_remote_nick(name)) {
-> +               if (!valid_remote(ret))
-> +                       read_remotes_file(ret);
-> +               if (!valid_remote(ret))
-> +                       read_branches_file(ret);
-> +       }
-> +       if (name_given && !valid_remote(ret))
-> +               add_url_alias(ret, name);
-> +       if (!valid_remote(ret))
-> +               return NULL;
-> +       ret->fetch = parse_fetch_refspec(ret->fetch_refspec_nr, ret->fetch_refspec);
-> +       ret->push = parse_push_refspec(ret->push_refspec_nr, ret->push_refspec);
-> +       return ret;
-> +}
-> +
->  int remote_is_configured(const char *name)
->  {
->         int i;
-> diff --git a/remote.h b/remote.h
-> index 251d8fd..aa42ff5 100644
-> --- a/remote.h
-> +++ b/remote.h
-> @@ -51,6 +51,7 @@ struct remote {
->  };
->
->  struct remote *remote_get(const char *name);
-> +struct remote *pushremote_get(const char *name);
->  int remote_is_configured(const char *name);
->
->  typedef int each_remote_fn(struct remote *remote, void *priv);
-> @@ -130,6 +131,7 @@ struct branch {
->         const char *refname;
->
->         const char *remote_name;
-> +       const char *pushremote_name;
->         struct remote *remote;
->
->         const char **merge_name;
-> --
-> 1.8.1.2.545.g2f19ada.dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Hope that helps,
+> Jonathan
+
+When I made my suggestion, I was tempted to say that both methods
+(having help return non-zero and allowing a git-configurable response)
+should be included, but I couldn't think of a reason to include both
+until you brought your use case back up.
+
+--
+Ethan Reesor (Gmail)
