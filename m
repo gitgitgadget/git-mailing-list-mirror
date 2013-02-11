@@ -1,99 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATH/RFC] parse-options: report invalid UTF-8 switches
-Date: Mon, 11 Feb 2013 09:07:53 -0800
-Message-ID: <7v7gmeok2e.fsf@alter.siamese.dyndns.org>
-References: <1360589687-9233-1-git-send-email-kusmabite@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [Request] Git export with hardlinks
+Date: Mon, 11 Feb 2013 12:13:57 -0500
+Message-ID: <20130211171357.GF16402@sigill.intra.peff.net>
+References: <201302061619.07765.thomas@koch.ro>
+ <20130208095819.GA17220@sigill.intra.peff.net>
+ <201302101133.28746.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 18:08:23 2013
+To: Thomas Koch <thomas@koch.ro>
+X-From: git-owner@vger.kernel.org Mon Feb 11 18:14:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4wrd-0004cv-Iq
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 18:08:21 +0100
+	id 1U4wxV-0004uQ-Ao
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 18:14:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757621Ab3BKRH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 12:07:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53222 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757680Ab3BKRH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 12:07:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16FAAC58D;
-	Mon, 11 Feb 2013 12:07:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=arZl/PrME/oYJXx9fFyTJa2hLlM=; b=bi17Qg
-	rx/h9Y/z1yMII/Ey7XJy6R+yPk7V3XF9AJNEiRh3Y90DHlmE36vF4Gqy09+pMSZl
-	bPYLbaFJxOvLq2no9Upz10ngVjFNxBDzxQYDAnkAISh1diFEOlUhVFfB2YS7lXD0
-	DROWulqLfoyGVNlWeYrhxQyOyx0JBsBG1Fv5Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MCvlS7+j6qwJcwCOf2sld3byguC0E9tC
-	9YjYZLT79SvwzGiXqUJvcjHIOeGOPQEWl3Np8tMnPgzsgojpL/Kf9Adud3/pmt4T
-	DsTdcSMLbif0xf6Ka0u2GM98ZkIO2GqvxK5Ya9nHN3eHIysjJ7cNVW3DGxi/xRBa
-	yDcemq658Uw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AF08C58C;
-	Mon, 11 Feb 2013 12:07:56 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79D42C589; Mon, 11 Feb 2013
- 12:07:55 -0500 (EST)
-In-Reply-To: <1360589687-9233-1-git-send-email-kusmabite@gmail.com> (Erik
- Faye-Lund's message of "Mon, 11 Feb 2013 14:34:47 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 93D5E3F6-746D-11E2-AF64-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758174Ab3BKROA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 12:14:00 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44366 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757740Ab3BKRN7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 12:13:59 -0500
+Received: (qmail 23949 invoked by uid 107); 11 Feb 2013 17:15:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Feb 2013 12:15:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Feb 2013 12:13:57 -0500
+Content-Disposition: inline
+In-Reply-To: <201302101133.28746.thomas@koch.ro>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216056>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+On Sun, Feb 10, 2013 at 11:33:26AM +0100, Thomas Koch wrote:
 
-> However, since git only looks at one byte at the time for
-> short-options, it ends up reporting a partial UTF-8 sequence
-> in such cases, leading to corruption of the output.
+> thank you very much for your idea! It's good and simple. It just breaks down 
+> for the case when a large folder got renamed.
 
-Isn't it a workable, easier and more robust alternative to punt and
-use the entire ctx.argv[0] as unrecognized?
+Yes, it would never find renames, which a true sha1->path map could.
 
->
-> The "real fix" would probably be to add proper multi-byte
-> support to the short-option parser, but this serves little
-> purpose in Git; we don't internationalize the command-line
-> switches.
->
-> So perhaps this is a suitable band-aid instead?
->
->  parse-options.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/parse-options.c b/parse-options.c
-> index 67e98a6..20dc742 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -3,6 +3,7 @@
->  #include "cache.h"
->  #include "commit.h"
->  #include "color.h"
-> +#include "utf8.h"
->  
->  static int parse_options_usage(struct parse_opt_ctx_t *ctx,
->  			       const char * const *usagestr,
-> @@ -462,7 +463,9 @@ int parse_options(int argc, const char **argv, const char *prefix,
->  		if (ctx.argv[0][1] == '-') {
->  			error("unknown option `%s'", ctx.argv[0] + 2);
->  		} else {
-> -			error("unknown switch `%c'", *ctx.opt);
-> +			const char *next = ctx.opt;
-> +			utf8_width(&next, NULL);
-> +			error("unknown switch `%.*s'", (int)(next - ctx.opt), ctx.opt);
->  		}
->  		usage_with_options(usagestr, options);
->  	}
+> But I already hacked the basic layout of the algorithm and it's not 
+> complicated at all, I believe:
+> 
+> https://github.com/thkoch2001/git_export_hardlinks/blob/master/git_export_hardlinks.py
+
+It looks like you create the sha1->path mapping by asking the user to
+provide <tree_sha1>,<path> pairs, and then assuming that the exported
+tree at <path> exactly matches <tree_sha1>. Which it would in the
+workflow you've proposed, but it is also easy for that not to be the
+case (e.g., somebody munges a file in <path> after it has been
+exported).
+
+So it's a bit dangerous as a general purpose tool, IMHO. It's also a
+slight pain in that you have to keep track of the tree sha1 for each
+exported path somehow.
+
+A safer and more convenient (but slightly less efficient) solution would
+be to keep a git index file for each exported tree. Then we can just
+refresh that index, which would check that our sha1 for each path is up
+to date (and in the common case of nothing changed, would only be as
+expensive as stat()-ing each entry). And then we use that index as the
+sha1->path map.
+
+The simplest way to have an index for each export would be to actually
+give each one its own git repo (which does not have to use much space,
+if you use "-s" to share the objects with the master repo).
+
+That's more complex, and uses more disk than what your script does, but
+I do think the added safety would be worth it for a general-purpose
+tool.
+
+> I had to interrupt work on this and could not yet finish and test it. But I 
+> thought you might be interested. Maybe something like this might one day be 
+> rewritten in C and become part of git core?
+
+I think if we had a `git export` command (and we do not, but there has
+been discussion in a nearby thread about whether such a thing might be a
+good idea), having a `--hard-link-from` option to link with other
+checkouts would make sense. It could also potentially be an option to
+git-checkout-index, and you could script around it at that low level.
+
+-Peff
