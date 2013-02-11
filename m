@@ -1,92 +1,106 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: inotify to minimize stat() calls
-Date: Mon, 11 Feb 2013 10:21:33 +0700
-Message-ID: <CACsJy8BvN0xX_=fx78hVLw=2Wyk=RUHYs_x9r5RJ0TvBAoA83g@mail.gmail.com>
-References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
- <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org>
- <7vsj56w5y9.fsf@alter.siamese.dyndns.org> <9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
- <CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com>
- <7vliaxwa9p.fsf@alter.siamese.dyndns.org> <CAKXa9=qQwJqxZLxhAS35QeF1+dwH+ukod0NfFggVCuUZHz-USg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] shell: allow 'help' command to disable interactive
+ shell
+Date: Sun, 10 Feb 2013 19:44:58 -0800
+Message-ID: <7v7gmfqzt1.fsf@alter.siamese.dyndns.org>
+References: <CAE_TNikk-9sYVRQRwRecNpp3otQ+oc=uV9SPu+7pAkCUNbcUoQ@mail.gmail.com>
+ <20130210212538.GA11720@elie.Belkin>
+ <20130210224345.GA32318@sigill.intra.peff.net>
+ <7vfw13rd9x.fsf@alter.siamese.dyndns.org>
+ <CAMK1S_jFUXiHM6teVwoxO9gv77B1KBQoSi-B32dwVKemXnDx9w@mail.gmail.com>
+ <20130211012016.GA13243@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Sitaram Chamarty <sitaramc@gmail.com>, Jeff King <peff@peff.net>,
+	Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Robert Zeh <robert.allan.zeh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 04:22:32 2013
+	Greg Brockman <gdb@mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 04:45:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4jyR-0003rf-7A
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 04:22:31 +0100
+	id 1U4kKg-0006C2-HT
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 04:45:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751367Ab3BKDWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Feb 2013 22:22:07 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:44881 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751238Ab3BKDWG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Feb 2013 22:22:06 -0500
-Received: by mail-ob0-f171.google.com with SMTP id x4so5526717obh.2
-        for <git@vger.kernel.org>; Sun, 10 Feb 2013 19:22:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=kbcZRfwKBBxrVMaBUO1998B/V+UCXBYxygUd/Z6ax2k=;
-        b=mVBysHWlNpCQjWJ/IZ3Qo/xYwbDht9ecXDHxL5GRBgbq/AYZKGf/wxewuev1SYy6C/
-         dtdj+LDHCKP80mAAXGoRH83qd72C46qOp2OroBkPRS7U3qxjaKw3/PjLBoDdJ/fMvUW2
-         7HOmn/tPyF2opy2IDR22IIWsjD9NUD+eCAhtse5mqEQonSnTUUhI9Q/ZZry6ByyiS0uF
-         AWo35HWUZ1ec3ZNmQoRzohXrrcHCYnGpkKx62Ju/VIXNccxo4FZQrC87G+jKa5I1z6Pw
-         1TxXjC0Q+YAdmsdloceJdWQQW6U+cA05zdRNeNe3cDX14KYTpmMRBqcB53dbtKQyi2O/
-         EQSg==
-X-Received: by 10.182.89.36 with SMTP id bl4mr9739918obb.22.1360552923913;
- Sun, 10 Feb 2013 19:22:03 -0800 (PST)
-Received: by 10.76.154.197 with HTTP; Sun, 10 Feb 2013 19:21:33 -0800 (PST)
-In-Reply-To: <CAKXa9=qQwJqxZLxhAS35QeF1+dwH+ukod0NfFggVCuUZHz-USg@mail.gmail.com>
+	id S1751952Ab3BKDpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Feb 2013 22:45:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50934 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751715Ab3BKDpE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Feb 2013 22:45:04 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4F7EC5A2;
+	Sun, 10 Feb 2013 22:45:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TH9i/4bWzT6dgQC3oUMfPI3XFpI=; b=gCpxKH
+	J19hKsyjioXsRAW6ruQ8Lw1kaoVCmnDkTVjEVt2e+R+3qgP8cyX/trpUB3BFsySm
+	+e96K4OtDlWtkXB7qFzPiJKyIJTEPUDrJ4rhdZonmbihs5z6QVW1TKyxMLD9OfZ9
+	keaM+SvR16OBkzvU4Girjc7NvnxQvnKmoSLlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=l9b6FFljLdgLxZ3f+OpJFXlTE+rvn4rr
+	YcAxjXB5LNe9j2fi52+Xv4lkIxN7BGF4Xgm5qOhRdr9Afj5Kg4sDtPbbPN4PGzOG
+	CIdY4T77s18T3MWfgvVMmKJCTmTzBXN3IroWrZAMDCKf9+qZjAkRkX70pVMcetTr
+	4nge2+lWcI4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98831C5A1;
+	Sun, 10 Feb 2013 22:45:02 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E755C59D; Sun, 10 Feb 2013
+ 22:45:01 -0500 (EST)
+In-Reply-To: <20130211012016.GA13243@elie.Belkin> (Jonathan Nieder's message
+ of "Sun, 10 Feb 2013 17:20:16 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6A3A9638-73FD-11E2-99D6-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/215980>
 
-On Mon, Feb 11, 2013 at 2:03 AM, Robert Zeh <robert.allan.zeh@gmail.com> wrote:
-> On Sat, Feb 9, 2013 at 1:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->>
->>> This is much better than Junio's suggestion to study possible
->>> implementations on all platforms and designing a generic daemon/
->>> communication channel.  That's no weekend project.
->>
->> It appears that you misunderstood what I wrote.  That was not "here
->> is a design; I want it in my system.  Go implemment it".
->>
->> It was "If somebody wants to discuss it but does not know where to
->> begin, doing a small experiment like this and reporting how well it
->> worked here may be one way to do so.", nothing more.
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> How about this?
 >
-> What if instead of communicating over a socket, the daemon
-> dumped a file containing all of the lstat information after git
-> wrote a file? By definition the daemon should know about file writes.
->
-> There would be no network communication, which I think would make
-> things more secure. It would simplify the rendezvous by insisting on
-> well known locations in $GIT_DIR.
+> A patch on top could change the default "git-shell-commands is not
+> present" message if that seems worthwhile.
 
-We need some sort of interactive communication to the daemon anyway,
-to validate that the information is uptodate. Assume that a user makes
-some changes to his worktree before starting the daemon, git needs to
-know that what the daemon provides does not represent a complete
-file-change picture and it better refreshes the index the old way
-once, then trust the daemon.
+Hmph.
 
-I think we could solve that by storing a "session id", provided by the
-daemon, in .git/index. If the session id is not present (or does not
-match what the current daemon gives), refresh the old way. After
-refreshing, it may ask the daemon for new session id and store it.
-Next time if the session id is still valid, trust the daemon's data.
-This session id should be different every time the daemon restarts for
-this to work.
--- 
-Duy
+I wonder if rewording the message when git-shell-commmands directory
+is not there may be a better first step (which actually could be the
+last step)?
+
+That is, showing something like this,
+
+> +printf '%s\n' "Hi $USER! You've successfully authenticated, but I do not"
+> +printf '%s\n' "provide interactive shell access."
+
+but rephrased with a reference to "git help shell" for people
+preparing their own server when ~/git-shell-commands/ in good order?
+
+Something like
+
+diff --git a/shell.c b/shell.c
+index 84b237f..71ff04f 100644
+--- a/shell.c
++++ b/shell.c
+@@ -162,9 +162,11 @@ int main(int argc, char **argv)
+ 		/* Allow the user to run an interactive shell */
+ 		cd_to_homedir();
+ 		if (access(COMMAND_DIR, R_OK | X_OK) == -1) {
+-			die("Interactive git shell is not enabled.\n"
++			die("The user has been recognized as '%s' but "
++			    "interactive git shell is not enabled.\n"
+ 			    "hint: ~/" COMMAND_DIR " should exist "
+-			    "and have read and execute access.");
++			    "and have read and execute access.",
++			    get_user_name());
+ 		}
+ 		run_shell();
+ 		exit(0);
