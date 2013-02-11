@@ -1,92 +1,113 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] fixup! graph: output padding for merge subsequent parents
-Date: Mon, 11 Feb 2013 10:54:33 +0000
-Message-ID: <20130211105433.GA3245@farnsworth.metanate.com>
-References: <7vtxplt5u2.fsf@alter.siamese.dyndns.org>
- <20130210131647.GA2270@serenity.lan>
- <7vliawt19c.fsf@alter.siamese.dyndns.org>
- <20130210210229.GB2270@serenity.lan>
- <7vwqufrdzd.fsf@alter.siamese.dyndns.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: inotify to minimize stat() calls
+Date: Mon, 11 Feb 2013 18:12:38 +0700
+Message-ID: <CACsJy8B3rOROJ2HoQ0iLjfvxfcEGjJgP7MH0yhq+8Gjnm-EGAg@mail.gmail.com>
+References: <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org>
+ <7vsj56w5y9.fsf@alter.siamese.dyndns.org> <9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
+ <CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com>
+ <CALkWK0nQVjKpyef8MDYMs0D9HJGCL8egypT3YWSdU8EYTO7Y+w@mail.gmail.com>
+ <CACsJy8CEHzqH1X=v4yau0SyZwrZp1r6hNp=yXD+eZh1q_BS-0g@mail.gmail.com>
+ <CALkWK0=6_n4rf6AWci6J+uhGHpjTUmK7YFdVHuSJedN2zLWtMA@mail.gmail.com>
+ <CACsJy8DeM5--WVXg3b65RxLBS7Jho-7KmcGwWk7B5uAx77yOEw@mail.gmail.com>
+ <20130210111732.GA24377@lanh> <20130210112205.GA28434@lanh>
+ <7vhaljudos.fsf@alter.siamese.dyndns.org> <CACsJy8DnvAjQPL4aP_LRC7aqx6OC4M5dMtj-OUot76qET2z08Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	=?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Git List <git@vger.kernel.org>, finnag@pvv.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 11:55:03 2013
+X-From: git-owner@vger.kernel.org Mon Feb 11 12:13:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4r2M-0004PZ-QF
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 11:55:03 +0100
+	id 1U4rKL-0005nQ-4H
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 12:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754179Ab3BKKyj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Feb 2013 05:54:39 -0500
-Received: from dougal.metanate.com ([90.155.101.14]:37881 "EHLO metanate.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753839Ab3BKKyi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 05:54:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=simple/simple; d=metanate.com; s=stronger;
-	h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=4eHbRIxOZUznXFaOcG60i2wIQ48rF1xBjoThaLjeJJE=;
-	b=HbvN+lykz7zyi4Gd4a3iFRnOpchio4U1kCp+/bzL46UiR3TNmC9uf8npbsc5ZH0ICPo49GBEoMg27HGrq9yf6S6IulmoqtiENwbJ8vy0DsZgMXJUd77SJqvUaNeXo0t6i4iEE+lhqhhWiAhi1Qy+Q0Gk8BmX8coC75HViB/yoLGgbD7kk5xwZGOJc8O5LfxYO2JjQTmjqr74mOUTw4S6btwvkXo1mFJikQSaYxsUM7osL8l7E2N1WHz/IgGzrScZgU2VvMolppW5Kr8Dh245DAZDEu5I987gJVsDrSkl9LSUUs3rhD61+TUh4DfJWI8Ix7M5Qegi7M4i13m+f/atyg==;
-Received: from brian.metanate.com ([192.168.88.1] helo=farnsworth.metanate.com)
-	by shrek.metanate.com with esmtps (TLSv1:DHE-RSA-AES128-SHA:128)
-	(Exim 4.80.1)
-	(envelope-from <john@keeping.me.uk>)
-	id 1U4r1u-0001aO-6t; Mon, 11 Feb 2013 10:54:34 +0000
-Content-Disposition: inline
-In-Reply-To: <7vwqufrdzd.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755430Ab3BKLNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 06:13:11 -0500
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:48595 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755237Ab3BKLNJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 06:13:09 -0500
+Received: by mail-ob0-f169.google.com with SMTP id ta14so6005782obb.0
+        for <git@vger.kernel.org>; Mon, 11 Feb 2013 03:13:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=oOOunbvLGy3ndJSw9q+3PO6JvnH2dAnXSumCQp28q2c=;
+        b=JFmk9z00MipnC+tqjbXknB7MNA5wkDjp3wDTPXe1uZmGt3rX3j9pAhVLB2arPwK8sk
+         yvjZw2OKLg+pvCG/bD7DrA0ft3H5WdA6kP2+4XBHj1TzRdyxKoU2yRz177/BJKbL6IR4
+         dXrs/E9sUj4GSbCCZXVpIEFOwBIdPf4PFXr30vJZbvIR9iYhbags4xEnphoWr4+K42V/
+         R5neGJWrITwUr+s0Mtlt375/mrrW8Sb1Ipq/DLHaxF84KDp2vP+Tjm7H4yi+K+YFYFBS
+         1LrVAiaRhKvc9vsvSSGkRYAxOTTIqcwi6K6ow5Vo4Fg9gtJUS/1jqBa18qX1Kp+458sJ
+         /LiQ==
+X-Received: by 10.182.89.36 with SMTP id bl4mr10441189obb.22.1360581188959;
+ Mon, 11 Feb 2013 03:13:08 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Mon, 11 Feb 2013 03:12:38 -0800 (PST)
+In-Reply-To: <CACsJy8DnvAjQPL4aP_LRC7aqx6OC4M5dMtj-OUot76qET2z08Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216029>
 
-On Sun, Feb 10, 2013 at 02:38:46PM -0800, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> > On Sun, Feb 10, 2013 at 11:30:39AM -0800, Junio C Hamano wrote:
-> > ...
-> >> Is it correct to say that this essentially re-does 656197ad3805
-> >> (graph.c: infinite loop in git whatchanged --graph -m, 2009-07-25)
-> >> in a slightly different way, in that Micha=C5=82's original fix al=
-so
-> >> protected against the case where graph->state is flipped to
-> >> GRAPH_PADDING by graph_next_line() that returns false, but with yo=
-ur
-> >> fixup, the code knows it never happens (i.e. when graph_next_line(=
-)
-> >> returns false, graph->state is always in the GRAPH_PADDING state),
-> >> and the only thing we need to be careful about is when graph->stat=
-e
-> >> is already in the PADDING state upon entry to this function?
-> >
-> > Yes, although I wonder if we can end up in POST_MERGE or COLLAPSING
-> > state here as well.  The check in the loop guards against that beca=
-use
-> > those will eventually end up as PADDING.
-> >
-> > As far as I can see, this is okay because we have called
-> > graph_show_remainder() at the end of outputting a commit, even when=
- we
-> > end up outputting the same (merge) commit more than once.  But some=
-one
-> > more familiar with the graph code might want to comment here.
->=20
-> More importantly, that kind of thought process needs to be
-> documented in the log message; that will help people to diagnose the
-> cause of the problem if they later find that this patch made an
-> incorrect assumption while simplifying the code.
+On Mon, Feb 11, 2013 at 9:56 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> Yeah, it did not cut out syscall cost, I also cut a lot of user-space
+> processing (plus .gitignore content access). From the timings I posted
+> earlier,
+>
+>>         unmodified  dir.c
+>> real    0m0.550s    0m0.287s
+>> user    0m0.305s    0m0.201s
+>> sys     0m0.240s    0m0.084s
+>
+> sys time is reduced from 0.24s to 0.08s, so readdir+opendir definitely
+> has something to do with it (and perhaps reading .gitignore). But it
+> also reduces user time from 0.305 to 0.201s. I don't think avoiding
+> readdir+openddir will bring us this gain. It's probably the cost of
+> matching .gitignore. I'll try to replace opendir+readdir with a
+> no-syscall version. At this point "untracked caching" sounds more
+> feasible (and less complex) than ".gitignore cachine".
 
-Perhaps it's best to leave the patch as it originally was to guarantee
-that we can't get stuck in graph_show_commit(), even when it's called a=
-t
-an unexpected time, but I see you've already squashed this change in.
+And this is read_directory's timing breakdown (again, "git status" on
+gentoo-x86,git, built with -O2 on x86-64 if I did not mention before)
 
-Would you prefer me to resend the original patch or send an update with
-this change and the above reasoning in the commit message?
+opendir   = 0.030s
+readdir   = 0.083s
+closedir  = 0.020s
+{open,read,close}dir = 0.132s
+treat_path           = 0.094s (172534 times)
+dir_add_name         = 0.050s (101917 times)
+read_directory       = 0.292s
+# On branch master
+nothing to commit, working directory clean
 
+real    0m0.511s
+user    0m0.347s
+sys     0m0.157s
 
-John
+Instrumentation is done with gettimeofday. Without gettimeofday calls
+inside read_directory_recursive, read_directory takes 0.267s (iow,
+gettimeofday cost is about 0.30s). {open,read,close}dir + treat_path +
+dir_add_name + gettimeofday add up quite close to 0.292s (strbuf_*
+takes just about 0.005s)
+
+Eliminating xxxdir syscalls may save us 0.132s (or less, we need to
+pay to get the information elsewhere).
+
+Because my worktree is clean, dir_add_name spends all 0.05s in
+cache_name_exists(). If we somehow know the input path is not a
+tracked entry, we could avoid cache_name_exists() and save 0.05s.
+
+If we do the "untracked cache", the number of treat_path calls should
+be much lower. In this particular case of gentoo-x86, I'd expect no
+more than a dozen of untracked files, which cuts down treat_path and
+dir_add_name's time to near zero. On a normal repository like git.git,
+untracked files are about 1075 files with 2552 tracked files, we
+should be able to save 2/3 to 1/2 of treat_path calls.
+-- 
+Duy
