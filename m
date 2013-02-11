@@ -1,170 +1,243 @@
 From: Michal Nazarewicz <mpn@google.com>
-Subject: [PATCHv3 5/5] git-send-email: use git credential to obtain password
-Date: Mon, 11 Feb 2013 17:23:39 +0100
-Message-ID: <fd7997960cad569d57f5330f2416f702db414169.1360599712.git.mina86@mina86.com>
+Subject: [PATCHv3 4/5] Git.pm: add interface for git credential command
+Date: Mon, 11 Feb 2013 17:23:38 +0100
+Message-ID: <2ec5dd694878055e9ce9d650889ee85369073568.1360599712.git.mina86@mina86.com>
 References: <cover.1360599057.git.mina86@mina86.com>
 Cc: git@vger.kernel.org, Michal Nazarewicz <mina86@mina86.com>
 To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 11 17:24:40 2013
+X-From: git-owner@vger.kernel.org Mon Feb 11 17:24:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4wBK-0002EW-Dw
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 17:24:38 +0100
+	id 1U4wBP-0002HU-6J
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 17:24:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757915Ab3BKQYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 11:24:12 -0500
-Received: from mail-ee0-f50.google.com ([74.125.83.50]:51407 "EHLO
-	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757919Ab3BKQYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 11:24:06 -0500
-Received: by mail-ee0-f50.google.com with SMTP id e51so3457829eek.9
-        for <git@vger.kernel.org>; Mon, 11 Feb 2013 08:24:04 -0800 (PST)
+	id S1757928Ab3BKQYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 11:24:18 -0500
+Received: from mail-ea0-f180.google.com ([209.85.215.180]:45606 "EHLO
+	mail-ea0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757914Ab3BKQYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 11:24:04 -0500
+Received: by mail-ea0-f180.google.com with SMTP id c1so2730798eaa.39
+        for <git@vger.kernel.org>; Mon, 11 Feb 2013 08:24:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:in-reply-to:references;
-        bh=Qe5TrP60MeIJzp0GN6mLevZeGmd1pXkyYR/xiBH1iDg=;
-        b=cv2w6z9D1QgLRGS6a6t9lQ/sVgiehG+94r8nKSGy4VMJFna5E6jx5U+4PQ7aFZ47oj
-         xQN++QV7q1Zzqjrm77fR6Te+LQ7oKUwmdCHNeWrMTjsKUS1Ba7U6qmsWPpKGCl8yluAg
-         4e/WWhHO8DzP3iJXWH9ihZu+2hui38PsbBrQpmD5/j66OAgE8Ee/lO9VihBQ3iqBX0SY
-         iSdEwH2BhDAujP1a7dhazXivWPU9cooWQNkkb9v31Lh0dqO6vTUzw+Y4OWtfXwIUFY7b
-         C0IWdQ9/Qroynim+ZjaApIbOg6Pd9ihvCDqvxnN3Fi8FokQiDkKk9R0pJq1j/QTu7Qlc
-         t6rQ==
+        bh=ZVudROll/qjCAujPVeK5rP0nw6xpuSZuWBQqyoKnnIA=;
+        b=V65aOr5TPLhyGHWLR2ynK4KLb6Zc90RGqHIq0Qp2m75j+rPFZDFiEw3oEJ401SA5wH
+         w5MMGH8lHKY/cRQJAobWhxMnI/BPKWVX3ahiT0WPq8WPVU3Se7Lf1FWYzyPlWQJiU8Ia
+         +oZPWnBSu2HKr0cvUaCfz2o1w0Lc+HzuclS1sBGvZ0bRu6sVlFqNhrbejUI9dK89LMfF
+         NZoDbWQcw7/bvprenpabKtOxcGng+mBNuBTUZlCBLHoPW/iNJcF26x6gROI9s9AcF0VI
+         4r3fLv/zlKTlCkMqtFCBhpMrDtpvFGmajjWXWbOr7TfLCkdKKaM9JIe+zbalE2TtDBwO
+         lK7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:in-reply-to:references:x-gm-message-state;
-        bh=Qe5TrP60MeIJzp0GN6mLevZeGmd1pXkyYR/xiBH1iDg=;
-        b=kJaxEXmGWqqTdnZ+U7Ji2IsYOMT395q+GOBI+JKfkFdZQSqkZ3qrHd4IpeTVbfDUDZ
-         TlRcdnLGa0QxtmGZqTUNgLM5/Ec4fr7eurzgsG+ZMTH6Y2BUdL1Zok8OhoJJgfzovInb
-         wzvzPDzMyHnc/nRi5Ds8fvLIeI3T2cn/Vu5D/UN9EepPBSOeZuFg8QlkqItUaTleDgLM
-         y/lzFUDQmveQRSUE5hrJSmFBFQf/1D3sQGUTD/VK7XVSkkVHr7qn7GcMXB+B5oVPIAyT
-         Vsg595jp9uYoeH1CiXOlGD4jQd0yxkUqd9AxdaRrljhAiWK0XC4szReDRyQkRJRG8zOM
-         hTjQ==
-X-Received: by 10.14.194.8 with SMTP id l8mr51800718een.31.1360599844604;
-        Mon, 11 Feb 2013 08:24:04 -0800 (PST)
+        bh=ZVudROll/qjCAujPVeK5rP0nw6xpuSZuWBQqyoKnnIA=;
+        b=lDtLsrtVaZNkg19SP2KVQuzc88hqeRV/ZtMSAs2I6ly3qLQVTeSe6ER++80KqqTb00
+         h8Z1Ct71Idb8K/sPGy/MMs4SgwKugiacmcf701IzbMLVBkznQyJxEi512adYnfnPhanm
+         zZQcVvLCjNjveWHNZLIivih55oPPjufX+DIuA5+qVXb+QlLB4Qy8I9GwIMJANXG7LyN3
+         sV15FoxHkuOImjzbp495h/AQ9MhBUs+2gFBiIw2kMHkPYxbtN4+ikHEZN9TXUtbPzeXi
+         TMxbpYCwoRpezhvbZZf9fehQSGJF/X1g5z23ojNPNgjNj83O9J8YzwFnSRxZUMMLsxYs
+         esSw==
+X-Received: by 10.14.213.131 with SMTP id a3mr51950671eep.24.1360599842785;
+        Mon, 11 Feb 2013 08:24:02 -0800 (PST)
 Received: from mpn-glaptop.corp.google.com ([2620:0:105f:5:1d0a:8048:51b4:44a9])
-        by mx.google.com with ESMTPS id 3sm63347527eej.6.2013.02.11.08.24.02
+        by mx.google.com with ESMTPS id 3sm63347527eej.6.2013.02.11.08.24.01
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 11 Feb 2013 08:24:03 -0800 (PST)
+        Mon, 11 Feb 2013 08:24:01 -0800 (PST)
 X-Mailer: git-send-email 1.8.1.3.571.g3f8bed7.dirty
 In-Reply-To: <cover.1360599057.git.mina86@mina86.com>
 In-Reply-To: <cover.1360599057.git.mina86@mina86.com>
 References: <cover.1360599057.git.mina86@mina86.com>
-X-Gm-Message-State: ALoCoQlF4UwWDuoEo/9RfQnSSiD8x1hdhjrKfkUVhWXqb9/KChptRCr9+B2dxee/iZh1knSv+KYl8yx3dkBo1r/ESYCHQ1Jmkr4JAA4GQkGLD7Y0+V7F7cOWF/9o/Tu5Bj9uKwT/19zECgQcwjwtZ5C14cZMS9ML04l1A0DWEtoXWXHnJRKUsQgnUd6FpeeUPdFzlb7EpCpU
+X-Gm-Message-State: ALoCoQn4/sZhA0JAy87uP/1zVG68vbpaKQoNT8FcIw3afthc9oUi8q1fW6TUqiRIRHVWAXBdN/npipy7e9xBemocWbQZunMHYKPW8V8Ni59oW5+ANcq011vhh0mbZtWukwDd8PxK/0Jz6rPd6JWjRfaPHtubyIRj0emoM0JGEx0LntiaPsQbRlEe9k177mOn2HrlkOqDVnIf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216045>
 
 From: Michal Nazarewicz <mina86@mina86.com>
 
-If smtp_user is provided but smtp_pass is not, instead of
-prompting for password, make git-send-email use git
-credential command instead.
+Add a credential() function which is an interface to the git
+credential command.  The code is heavily based on credential_*
+functions in <contrib/mw-to-git/git-remote-mediawiki>.
 
 Signed-off-by: Michal Nazarewicz <mina86@mina86.com>
 ---
- Documentation/git-send-email.txt |  4 +--
- git-send-email.perl              | 59 +++++++++++++++++++++++-----------------
- 2 files changed, 36 insertions(+), 27 deletions(-)
+ perl/Git.pm | 148 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 147 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 44a1f7c..0cffef8 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -164,8 +164,8 @@ Sending
- Furthermore, passwords need not be specified in configuration files
- or on the command line. If a username has been specified (with
- '--smtp-user' or a 'sendemail.smtpuser'), but no password has been
--specified (with '--smtp-pass' or 'sendemail.smtppass'), then the
--user is prompted for a password while the input is masked for privacy.
-+specified (with '--smtp-pass' or 'sendemail.smtppass'), then
-+a password is obtained using 'git-credential'.
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 9dded54..0e6fcf9 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -59,7 +59,8 @@ require Exporter;
+                 command_bidi_pipe command_close_bidi_pipe
+                 version exec_path html_path hash_object git_cmd_try
+                 remote_refs prompt
+-                temp_acquire temp_release temp_reset temp_path);
++                temp_acquire temp_release temp_reset temp_path
++                credential credential_read credential_write);
  
- --smtp-server=<host>::
- 	If set, specifies the outgoing SMTP server to use (e.g.
-diff --git a/git-send-email.perl b/git-send-email.perl
-index be809e5..76bbfc3 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1045,6 +1045,39 @@ sub maildomain {
- 	return maildomain_net() || maildomain_mta() || 'localhost.localdomain';
+ 
+ =head1 DESCRIPTION
+@@ -1013,6 +1014,151 @@ sub _close_cat_blob {
  }
  
-+# Returns 1 if authentication succeeded or was not necessary
-+# (smtp_user was not specified), and 0 otherwise.
+ 
++=item credential_read( FILE_HANDLE )
 +
-+sub smtp_auth_maybe {
-+	if (!defined $smtp_authuser || $auth) {
-+		return 1;
++Reads credential key-value pairs from C<FILE_HANDLE>.  Reading stops at EOF or
++when an empty line is encountered.  Each line must be of the form C<key=value>
++with a non-empty key.  Function returns a hash with all read values.  Any
++white space (other then new-line character) is preserved.
++
++=cut
++
++sub credential_read {
++	my ($self, $reader) = _maybe_self(@_);
++	my %credential;
++	while (<$reader>) {
++		chomp;
++		if ($_ eq '') {
++			last;
++		} elsif (!/^([^=]+)=(.*)$/) {
++			throw Error::Simple("unable to parse git credential data:\n$_");
++		}
++		$credential{$1} = $2;
 +	}
-+
-+	# Workaround AUTH PLAIN/LOGIN interaction defect
-+	# with Authen::SASL::Cyrus
-+	eval {
-+		require Authen::SASL;
-+		Authen::SASL->import(qw(Perl));
-+	};
-+
-+	# TODO: Authentication may fail not because credentials were
-+	# invalid but due to other reasons, in which we should not
-+	# reject credentials.
-+	$auth = Git::credential({
-+		'protocol' => 'smtp',
-+		'host' => join(':', $smtp_server, $smtp_server_port),
-+		'username' => $smtp_authuser,
-+		# if there's no password, "git credential fill" will
-+		# give us one, otherwise it'll just pass this one.
-+		'password' => $smtp_authpass
-+	}, sub {
-+		my $cred = shift;
-+		return !!$smtp->auth($cred->{'username'}, $cred->{'password'});
-+	});
-+
-+	return $auth;
++	return %credential;
 +}
 +
- # Returns 1 if the message was sent, and 0 otherwise.
- # In actuality, the whole program dies when there
- # is an error sending a message.
-@@ -1185,31 +1218,7 @@ X-Mailer: git-send-email $gitversion
- 			    defined $smtp_server_port ? " port=$smtp_server_port" : "";
- 		}
++=item credential_read( FILE_HANDLE, CREDENTIAL_HASH )
++
++Writes credential key-value pairs from hash referenced by C<CREDENTIAL_HASH>
++to C<FILE_HANDLE>.  Keys and values cannot contain new-line or NUL byte
++characters, and key cannot contain equal sign nor be empty (if they do
++Error::Simple is thrown).  Any white space is preserved.  If value for a key
++is C<undef>, it will be skipped.
++
++If C<'url'> key exists it will be written first.  (All the other key-value
++pairs are written in sorted order but you should not depend on that).  Once
++all lines are written, an empty line is printed.
++
++=cut
++
++sub credential_write {
++	my ($self, $writer, $credential) = _maybe_self(@_);
++	my ($key, $value);
++
++	# Check if $credential is valid prior to writing anything
++	while (($key, $value) = each %$credential) {
++		if (!defined $key || !length $key) {
++			throw Error::Simple("credential key empty or undefined");
++		} elsif ($key =~ /[=\n\0]/) {
++			throw Error::Simple("credential key contains invalid characters: $key");
++		} elsif (defined $value && $value =~ /[\n\0]/) {
++			throw Error::Simple("credential value for key=$key contains invalid characters: $value");
++		}
++	}
++
++	for $key (sort {
++		# url overwrites other fields, so it must come first
++		return -1 if $a eq 'url';
++		return  1 if $b eq 'url';
++		return $a cmp $b;
++	} keys %$credential) {
++		if (defined $credential->{$key}) {
++			print $writer $key, '=', $credential->{$key}, "\n";
++		}
++	}
++	print $writer "\n";
++}
++
++sub _credential_run {
++	my ($self, $credential, $op) = _maybe_self(@_);
++
++	my ($pid, $reader, $writer, $ctx) = command_bidi_pipe('credential', $op);
++
++	credential_write $writer, $credential;
++	close $writer;
++
++	if ($op eq "fill") {
++		%$credential = credential_read $reader;
++	} elsif (<$reader>) {
++		throw Error::Simple("unexpected output from git credential $op response:\n$_\n");
++	}
++
++	command_close_bidi_pipe($pid, $reader, undef, $ctx);
++}
++
++=item credential( CREDENTIAL_HASH [, OPERATION ] )
++
++=item credential( CREDENTIAL_HASH, CODE )
++
++Executes C<git credential> for a given set of credentials and
++specified operation.  In both form C<CREDENTIAL_HASH> needs to be
++a reference to a hash which stores credentials.  Under certain
++conditions the hash can change.
++
++In the first form, C<OPERATION> can be C<'fill'> (or omitted),
++C<'approve'> or C<'reject'>, and function will execute corresponding
++C<git credential> sub-command.  In case of C<'fill'> the values stored
++in C<CREDENTIAL_HASH> will be changed to the ones returned by the
++C<git credential> command.  The usual usage would look something like:
++
++	my %cred = (
++		'protocol' => 'https',
++		'host' => 'example.com',
++		'username' => 'bob'
++	);
++	Git::credential \%cred;
++	if (try_to_authenticate($cred{'username'}, $cred{'password'})) {
++		Git::credential \%cred, 'approve';
++		... do more stuff ...
++	} else {
++		Git::credential \%cred, 'reject';
++	}
++
++In the second form, C<CODE> needs to be a reference to a subroutine.
++The function will execute C<git credential fill> to fill provided
++credential hash, than call C<CODE> with C<CREDENTIAL> as the sole
++argument, and finally depending on C<CODE>'s return value execute
++C<git credential approve> (if return value yields true) or C<git
++credential reject> (otherwise).  The return value is the same as what
++C<CODE> returned.  With this form, the usage might look as follows:
++
++	if (Git::credential {
++		'protocol' => 'https',
++		'host' => 'example.com',
++		'username' => 'bob'
++	}, sub {
++		my $cred = shift;
++		return try_to_authenticate($cred->{'username'}, $cred->{'password'});
++	}) {
++		... do more stuff ...
++	}
++
++=cut
++
++sub credential {
++	my ($self, $credential, $op_or_code) = (_maybe_self(@_), 'fill');
++
++	if ('CODE' eq ref $op_or_code) {
++		_credential_run $credential, 'fill';
++		my $ret = $op_or_code->($credential);
++		_credential_run $credential, $ret ? 'approve' : 'reject';
++		return $ret;
++	} else {
++		_credential_run $credential, $op_or_code;
++	}
++}
++
+ { # %TEMP_* Lexical Context
  
--		if (defined $smtp_authuser) {
--			# Workaround AUTH PLAIN/LOGIN interaction defect
--			# with Authen::SASL::Cyrus
--			eval {
--				require Authen::SASL;
--				Authen::SASL->import(qw(Perl));
--			};
--
--			if (!defined $smtp_authpass) {
--
--				system "stty -echo";
--
--				do {
--					print "Password: ";
--					$_ = <STDIN>;
--					print "\n";
--				} while (!defined $_);
--
--				chomp($smtp_authpass = $_);
--
--				system "stty echo";
--			}
--
--			$auth ||= $smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
--		}
-+		smtp_auth_maybe or die $smtp->message;
- 
- 		$smtp->mail( $raw_from ) or die $smtp->message;
- 		$smtp->to( @recipients ) or die $smtp->message;
+ my (%TEMP_FILEMAP, %TEMP_FILES);
 -- 
 1.8.1.3.571.g3f8bed7.dirty
