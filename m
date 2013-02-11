@@ -1,89 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 11/11] Unify appending signoff in format-patch, commit
- and sequencer
-Date: Mon, 11 Feb 2013 01:00:09 -0800
-Message-ID: <20130211090009.GR15329@elie.Belkin>
-References: <1359335515-13818-1-git-send-email-drafnel@gmail.com>
- <1359335515-13818-12-git-send-email-drafnel@gmail.com>
- <20130128033921.GP8206@elie.Belkin>
- <CA+sFfMduqEJPtDQyTe2n7QiLmDpTN7MzLGrUNf1hWf-h0rGzvA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: What's cooking in git.git (Feb 2013, #04; Sat, 9)
+Date: Mon, 11 Feb 2013 10:14:06 +0100
+Message-ID: <vpqliavxlep.fsf@grenoble-inp.fr>
+References: <7vtxplt5u2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
-	Brandon Casey <bcasey@nvidia.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 10:00:48 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 10:14:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4pFj-0005cs-Ug
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 10:00:44 +0100
+	id 1U4pTC-00043D-DY
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 10:14:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754020Ab3BKJAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 04:00:19 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:35895 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753779Ab3BKJAS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 04:00:18 -0500
-Received: by mail-pa0-f46.google.com with SMTP id kp14so2971573pab.5
-        for <git@vger.kernel.org>; Mon, 11 Feb 2013 01:00:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=o2AFVM2mJm/mZRqMMM/WIbRsC2Y1EbXiYuY2ddE+4AY=;
-        b=rG9+dtK0/Hm+m/9coHzvK9TJrLfmRiWtJNw+T8UkkTR++EJmOosJKu12xsRhLQmF/W
-         jR6Kj534gUMTZ3/uNunPnWberbejryN+U8QfoMH/llR54LniaVleQxwrvX9pVQMP5O4u
-         AJ46Y9JllrfcDk/2EumJ1tyEepQP5fXplx+tQVExeg4c4ovdepOZilHUDi3AeGk6V+ZZ
-         jk1my78qmVKtDnddyqcM96+LwWZy2dN82+BqsbLqL8EkuFchtWAnwtz5h0Ak1lLZPodC
-         MqZrIbjnW0kFicuYYhYsjR8CPB1X4vLVJLzt7kMD8VnV8YGVyY+QCG1BLLc7ZieT3z/t
-         uedQ==
-X-Received: by 10.68.132.193 with SMTP id ow1mr16662282pbb.96.1360573217524;
-        Mon, 11 Feb 2013 01:00:17 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id wx2sm7042406pbc.42.2013.02.11.01.00.14
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 11 Feb 2013 01:00:15 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CA+sFfMduqEJPtDQyTe2n7QiLmDpTN7MzLGrUNf1hWf-h0rGzvA@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1754523Ab3BKJOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 04:14:15 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:39650 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754446Ab3BKJOO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 04:14:14 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r1B9E6mD009492
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 11 Feb 2013 10:14:06 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1U4pSh-00034i-B0; Mon, 11 Feb 2013 10:14:07 +0100
+In-Reply-To: <7vtxplt5u2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 09 Feb 2013 15:39:33 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 11 Feb 2013 10:14:07 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r1B9E6mD009492
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1361178849.28264@PligiwY83nPcwL2a8L6aDA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216027>
 
-Brandon Casey wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
->                            We want to be able to support lines that do
-> not have email addresses on the right-hand side like:
+> * mm/allow-contrib-build (2013-02-07) 2 commits
+>  - perl.mak: introduce $(GIT_ROOT_DIR) to allow inclusion from other directories
+>  - Makefile: extract perl-related rules to make them available from other dirs
 >
->    Bug: XXX
->    Change-Id: XXX
+>  Will merge to 'next'.
 
-Good call.
+These two patches do not make much sense without the 3rd one:
 
-By the way, regarding what the right "--signoff" behavior is for
-commit, cherry-pick, am, and format-patch:
+  [PATCH 3/4] Makefile: factor common configuration in git-default-config.mak
 
-I think the best behavior would be to check if the last signed-off-by
-line (ignoring acked-by, bug, change-id, and so on lines that follow
-it) matches the one to be added, and if it doesn't, add a new
-sign-off.  That way, the sign-off list still would accurately describe
-the path of the patch, without silliness like
+because perl.mak uses $(pathsep) that is defined in Makefile, hence
+unreachable from external callers.
 
-	Signed-off-by: me
-	Reviewed-by: someone
-	Signed-off-by: me
+You can either drop the series (I still think it's a good thing to make
+the toplevel Makefile more modular, but I have no longer a personal
+interest in it since the original goal is already reached by
+mm/remote-mediawiki-build), or continue the discussion on [PATCH 3/4].
 
-that you mentioned.
-
-I agree that that's orthogonal to this series and just mostly
-preserving behavior (as you already do) is the right thing to do.
-
-Thanks for noticing the edge cases.
-
-Jonathan
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
