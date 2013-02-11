@@ -1,120 +1,147 @@
-From: Michal Nazarewicz <mina86@mina86.com>
-Subject: Re: [PATCHv3 0/5] Add git-credential support to git-send-email
-Date: Mon, 11 Feb 2013 18:18:04 +0100
-Organization: http://mina86.com/
-Message-ID: <xa1tk3qeg46r.fsf@mina86.com>
-References: <cover.1360599057.git.mina86@mina86.com> <20130211165136.GC16402@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] shell: allow 'help' command to disable interactive
+ shell
+Date: Mon, 11 Feb 2013 09:18:18 -0800
+Message-ID: <7v38x2ojl1.fsf@alter.siamese.dyndns.org>
+References: <20130211012016.GA13243@elie.Belkin>
+ <7v7gmfqzt1.fsf@alter.siamese.dyndns.org>
+ <20130211041706.GB15329@elie.Belkin>
+ <7vwqufpj50.fsf@alter.siamese.dyndns.org>
+ <20130211043247.GD15329@elie.Belkin>
+ <7vpq07pgpy.fsf@alter.siamese.dyndns.org>
+ <20130211061442.GI15329@elie.Belkin>
+ <7vliavpc4q.fsf@alter.siamese.dyndns.org>
+ <20130211071235.GL15329@elie.Belkin>
+ <7v8v6vpbej.fsf@alter.siamese.dyndns.org>
+ <20130211160057.GA16402@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Greg Brockman <gdb@mit.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 11 18:18:42 2013
+X-From: git-owner@vger.kernel.org Mon Feb 11 18:18:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4x1Z-0002tC-Hc
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 18:18:37 +0100
+	id 1U4x1j-0003AT-IV
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 18:18:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758136Ab3BKRSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 12:18:14 -0500
-Received: from mail-ea0-f180.google.com ([209.85.215.180]:41971 "EHLO
-	mail-ea0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757838Ab3BKRSN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 12:18:13 -0500
-Received: by mail-ea0-f180.google.com with SMTP id c1so2756111eaa.39
-        for <git@vger.kernel.org>; Mon, 11 Feb 2013 09:18:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:in-reply-to:organization
-         :references:user-agent:x-face:face:x-pgp:x-pgp-fp:date:message-id
-         :mime-version:content-type;
-        bh=pNDMEqqZZVuYqCCixdiHBkY73KabaMSv5SZE4+pmvWw=;
-        b=AhqyzjI6vsVl9PVmniV5jh+xrFqIY0QBC99CI9cC17HNRw8bBD8djTDDr0cYP/RauU
-         byDAXKPcaqQPnywo1sVlXhKgmIAyA4AYoWmKtV4Z31KxGuZhuT5tCiiMO8Dt3Q1OngVz
-         2/XXG1TpfG0rQ+G/9WIiKlVUwWCYK3SK/+Tg8F1FUGrj1m9m3xoPlYSvF5amdhhAVfwa
-         Z3hM2ZEbNkViSSWzkXQufLHNkyYFEL3FOsQSEv4Pz81aKIMkhZcsTqJRnO4iluKg+qKV
-         uOOOOKkacjwH0zW1pMM2PI7VzgStuKj/KM28AUqNO3I+JE0DEnQZ1PDwFm2AbympKwip
-         qcBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:in-reply-to:organization
-         :references:user-agent:x-face:face:x-pgp:x-pgp-fp:date:message-id
-         :mime-version:content-type:x-gm-message-state;
-        bh=pNDMEqqZZVuYqCCixdiHBkY73KabaMSv5SZE4+pmvWw=;
-        b=nbeZ0bt1NuL7WMb0Fdgw6zcD9HuVaaW6pQh7jDvDIgyprzlfnJpHb84n5wzp9tUQ2v
-         7n4chK4kh5jueQnRdOZ85aIf0XqamNtdmEZyOTKIqcEvVgoTcDVBt5hZYU5Zhh4ahlXQ
-         aPEKjguXL29A9Xg55gVwBxP8c5GM7Oadut0T1oO9ovki0uxuSptDaH3MXYiUdIBapEar
-         2YM0+GSfSgFK0fNN5fEqR+u9OWHXjev0GNu8UmCM6y1j6RXDraS8WNAo9xWqRJmb2gBJ
-         lDuVBTy46VvHVpJzu9xDqG52vv9J/zuenchCvfIFTMnuPxb1EAza1BNKcWOSaN9Ot3L5
-         vyng==
-X-Received: by 10.14.175.70 with SMTP id y46mr51896578eel.6.1360603091365;
-        Mon, 11 Feb 2013 09:18:11 -0800 (PST)
-Received: from mpn-glaptop ([2620:0:105f:5:1d0a:8048:51b4:44a9])
-        by mx.google.com with ESMTPS id 3sm63600133eej.6.2013.02.11.09.18.09
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 11 Feb 2013 09:18:10 -0800 (PST)
-In-Reply-To: <20130211165136.GC16402@sigill.intra.peff.net>
-User-Agent: Notmuch/ (http://notmuchmail.org) Emacs/24.3.50.5 (x86_64-unknown-linux-gnu)
-X-Face: PbkBB1w#)bOqd`iCe"Ds{e+!C7`pkC9a|f)Qo^BMQvy\q5x3?vDQJeN(DS?|-^$uMti[3D*#^_Ts"pU$jBQLq~Ud6iNwAw_r_o_4]|JO?]}P_}Nc&"p#D(ZgUb4uCNPe7~a[DbPG0T~!&c.y$Ur,=N4RT>]dNpd;KFrfMCylc}gc??'U2j,!8%xdD
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAJFBMVEWbfGlUPDDHgE57V0jUupKjgIObY0PLrom9mH4dFRK4gmjPs41MxjOgAAACQElEQVQ4jW3TMWvbQBQHcBk1xE6WyALX1069oZBMlq+ouUwpEQQ6uRjttkWP4CmBgGM0BQLBdPFZYPsyFUo6uEtKDQ7oy/U96XR2Ux8ehH/89Z6enqxBcS7Lg81jmSuujrfCZcLI/TYYvbGj+jbgFpHJ/bqQAUISj8iLyu4LuFHJTosxsucO4jSDNE0Hq3hwK/ceQ5sx97b8LcUDsILfk+ovHkOIsMbBfg43VuQ5Ln9YAGCkUdKJoXR9EclFBhixy3EGVz1K6eEkhxCAkeMMnqoAhAKwhoUJkDrCqvbecaYINlFKSRS1i12VKH1XpUd4qxL876EkMcDvHj3s5RBajHHMlA5iK32e0C7VgG0RlzFPvoYHZLRmAC0BmNcBruhkE0KsMsbEc62ZwUJDxWUdMsMhVqovoT96i/DnX/ASvz/6hbCabELLk/6FF/8PNpPCGqcZTGFcBhhAaZZDbQPaAB3+KrWWy2XgbYDNIinkdWAFcCpraDE/knwe5DBqGmgzESl1p2E4MWAz0VUPgYYzmfWb9yS4vCvgsxJriNTHoIBz5YteBvg+VGISQWUqhMiByPIPpygeDBE6elD973xWwKkEiHZAHKjhuPsFnBuArrzxtakRcISv+XMIPl4aGBUJm8Emk7qBYU8IlgNEIpiJhk/No24jHwkKTFHDWfPniR
- 4iw5vJaw2nzSjfq2zffcE/GDjRC2dn0J0XwPAbDL84TvaFCJEU4Oml9pRyEUhR3Cl2t01AoEjRbs0sYugp14/4X5n4pU4EHHnMAAAAAElFTkSuQmCC
-X-PGP: 50751FF4
-X-PGP-FP: AC1F 5F5C D418 88F8 CC84 5858 2060 4012 5075 1FF4
-X-Gm-Message-State: ALoCoQmHbKuFbROIS9AjaiKtEa328nZjT7nfX6VfhJdu+D+hOG8ctnPdm4+NK0hmlSW1L9+lHa34Yc4xOf2ezH3hhyxrV9Xe9vaZnsTU2Ukg0744mKzJcAqM/0a0JajTglWhE3eK9IyEpBpmtGU/Wc+loqIVTEZw1moUCS7nOTv45Sh1HNbrqBJQgNjjnvAWiZ55QsR+yBFMZxV3BsmUB96+QiB+SK8LIg==
+	id S1758144Ab3BKRSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 12:18:24 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63706 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757838Ab3BKRSX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 12:18:23 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F3E7CFD6;
+	Mon, 11 Feb 2013 12:18:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TlmF9kYp2vbkGmcRkpzXiAhm7SI=; b=GJVKBp
+	/Y8bk63pr4+Lnu89Wg7hXRkW2LxtgX29MLbodfbWpg8vABv1bBy70JOcur6mOM1J
+	MVlZ8m845bG+mjmEVu6u0H9txNLoeljDeWpA+I90Daqy/DPyqRFz54/sL6fWv+Fp
+	Uuao+bWU4Z9EF1Y532gQr6sy9ar2OrmmD2hg0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KneR8yi+l9NPrt26Yx+dbZIx2XvzT48E
+	gI6EHuM7HDsnYftx/28qF50JH6A+wcdWWc1ZDXoUG6yfotqK5Y+h5R+N65DFgaav
+	V2zTEyNbqWgfoDbLWUsIaGJUAKYopVv1FqpJ36+X5TKgB4eyzxrfaAaIfF5gCItZ
+	8Fc/8ZUOc8M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53037CFD4;
+	Mon, 11 Feb 2013 12:18:20 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 91871CFCD; Mon, 11 Feb 2013
+ 12:18:19 -0500 (EST)
+In-Reply-To: <20130211160057.GA16402@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 11 Feb 2013 11:00:57 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 07D3F9E0-746F-11E2-81C1-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216061>
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Jeff King <peff@peff.net> writes:
 
-On Mon, Feb 11 2013, Jeff King wrote:
-> I have two minor comments, which I'll reply inline with. But even with
-> those comments, I think this would be OK to merge.
+> On Sun, Feb 10, 2013 at 11:17:24PM -0800, Junio C Hamano wrote:
+>
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> 
+>> > Isn't that a criticism of the git-shell-commands facility in general?
+>> > If it is common to have a lot of users with distinct home directories
+>> > but all with git-shell as their login shell, then the
+>> > git-shell-commands should not go in their home directory to begin
+>> > with, no?
+>> 
+>> You can give one set of commands to some users while restricting
+>> others, no?
+>
+> But that seems to me to argue against /etc/git/shell-disabled or
+> similar, which would apply to every user. Or are you proposing that the
+> check be:
+>
+>   if -d ~/git-shell-commands; then
+>           : ok, interactive
+>   elif -x /etc/git/shell-disabled; then
+>           exec /etc/git/shell-disabled
+>   else
+>           echo >&2 'go away'
+>           exit 1
+>   fi
 
-I'll send a new patchset tomorrow with.
+That "shell-disabled" thing was to allow customizing the existing
+die() that triggers here:
 
---=20
-Best regards,                                         _     _
-.o. | Liege of Serenely Enlightened Majesty of      o' \,=3D./ `o
-..o | Computer Science,  Micha=C5=82 =E2=80=9Cmina86=E2=80=9D Nazarewicz   =
- (o o)
-ooo +----<email/xmpp: mpn@google.com>--------------ooO--(_)--Ooo--
---=-=-=
-Content-Type: multipart/signed; boundary="==-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
+	} else if (argc == 1) {
+		/* Allow the user to run an interactive shell */
+		cd_to_homedir();
+		if (access(COMMAND_DIR, R_OK | X_OK) == -1) {
+			die("Interactive git shell is not enabled.\n"
+			    "hint: ~/" COMMAND_DIR " should exist "
+			    "and have read and execute access.");
+		}
+		run_shell();
+		exit(0);
 
---==-=-=
-Content-Type: text/plain
+so it is more like
+
+	if ! test -d $HOME/git-shell-commands
+	then
+		if test -x /etc/git/shell-disabled
+                then
+			exec /etc/git/shell-disabled
+		else
+			die Interactive is not enabled
+		fi
+	fi
+        ... do whatever in run_shell() ...
 
 
---==-=-=
-Content-Type: application/pgp-signature
+> That at least means you can apply _whether_ to disable the shell
+> selectively for each user (by providing or not a git-shell-commands
+> directory), but you cannot individually select the script that runs for
+> that user.  But it's probably still flexible enough;...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Such a flexibility is not a goal of /etc/git/shell-disabled.  The
+sole goal is to make the life easier for those site owners that do
+not want any interactive shell access to give more friendly and
+customized error message.
 
-iQIcBAEBAgAGBQJRGSfMAAoJECBgQBJQdR/0V6AP/0pQFqOlgnNtYRyDxjBsFxu4
-26Za4rGFHDqC3TfM0oYNywmFUO1GwG7nn1PgAwX0ahJZWeNQefS6BBv0IFEt++i/
-KZCDpg9rViHQ9PdknHf/Ih84HkWnemPwSiJ2B0z830cK6uHrB7m82wx/QuHbvDfi
-G/l30c//b2Jtd3gelgdLo9+xuiv35jUBermsKw7miHys0WbsxJKWM7VXhdBfdqxj
-zhIG9hEI5Ilc1X64+EwWWzymh872ejrz+MqiiiGuqNbNpfU8KzqvaeFpQDn7esb+
-RfO0JWqBsjOPmnFr7EKajOrU36BxDDiM202alttxqUxHHYc5uduoAGQHGOJfW9Ax
-crdUx8vMCRGm65SIMNA8ZJubpX1f28f+NQFddYifdVqd2aKjxFrDvYouKTqnhXHD
-SSjmNbr2qVCR+Xq4DdOb9c/5fHBo1dBTX3qiAAX8kFqe446jEG6uFqQhU04yZPbM
-EIbTksh3F5OP/TVXPjePXUxxEx0zIqwDxXfQZpl5UO48cIT/7TuN2/2w5dLops7c
-pse8JiOR0PwVHHGZr3xVA2ZQ+hx7OuqcB+f2HGNz1E7zKJZznBB61RzdsDa6MWCL
-D6XyL2JBwIFajJI0CUdcEwkgkOigNO81qTQiNwm/dCRDCJyP5Pd0czygS32Usefs
-VGqvTra1+T+s/VAuPfcJ
-=HVto
------END PGP SIGNATURE-----
---==-=-=--
+Those who want further flexibility can exit with non-zero from the
+"help" (which is still a misnomer for a hook to disable interactive
+for the user).
 
---=-=-=--
+My primary objection is that implementing only that "more flexible
+but requires more configuration work" solution without giving
+simpler solution (i.e. just one thing to configure) to the majory of
+site owners who only have simpler problem to solve (i.e. just want
+to customize "no interactive here"), and saying that the latter can
+be done on top.  It is backwards mentality.
