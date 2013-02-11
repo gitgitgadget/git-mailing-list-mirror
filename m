@@ -1,98 +1,151 @@
-From: Ethan Reesor <firelizzard@gmail.com>
-Subject: Re: Pushing a git repository to a new server
-Date: Mon, 11 Feb 2013 02:57:51 -0500
-Message-ID: <CAE_TNin6-weutRDToZ7-BBGJTCcf0dwJn0ChUbFcACRU=SbjzA@mail.gmail.com>
-References: <CAE_TNin0Kb_38gnx9W36VZ8CTxYBZ9T1Dkhar1DUFHyQUq7ebg@mail.gmail.com>
- <20130211075040.GJ5210@localhost.localdomain>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] git-bisect.txt: clarify that reset finishes bisect
+Date: Mon, 11 Feb 2013 09:04:02 +0100
+Message-ID: <5118A5F2.6000007@drmicha.warpmail.net>
+References: <5e23d4c420f150b700dd5100bffb38d32f874200.1360439176.git.git@drmicha.warpmail.net> <20130210014900.GA7682@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=KOI8-R
-Cc: git <git@vger.kernel.org>
-To: Konstantin Khomoutov <kostix+git@007spb.ru>
-X-From: git-owner@vger.kernel.org Mon Feb 11 08:58:38 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Andreas Mohr <andi@lisas.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 09:04:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4oHc-0001wZ-6m
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 08:58:36 +0100
+	id 1U4oNW-0004V6-GF
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 09:04:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752817Ab3BKH6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 02:58:13 -0500
-Received: from mail-qc0-f169.google.com ([209.85.216.169]:60908 "EHLO
-	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752654Ab3BKH6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 02:58:12 -0500
-Received: by mail-qc0-f169.google.com with SMTP id t2so2144578qcq.0
-        for <git@vger.kernel.org>; Sun, 10 Feb 2013 23:58:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=qgWxfwogHKabQScP69OOu7KemaHH9599d/hjFEi9tkw=;
-        b=C5de/6UF7jmFXAOwVSk8JtBQ6LvOqA274QkwLenoGb1ySxaXPOmaTVkyvplwXUtUPK
-         5cgm+9UjVouIdPVkq9F+//ycCizINgBfp1+PtV6ihzfSe0k833NDM1eeVVJDMC/H8H+7
-         jXhanHH4lqOJt7clqcDUCrCLff4yrm7DZX+ce3fzFuLK8t1e9EB7y6HZqSDuUqbDAE90
-         PbFWJXApdpiXhpz/tmgC4p/gXA763nlM0X9xDZYamETOSnPTUwJnO3GLDxBlek9tomq0
-         bW7Jguv1r3aL+nagr6NIeQ22AxbtCMucB27RaO7GES4Y/SKvgfB+iMMUzRTEot/d+tLh
-         GvMA==
-X-Received: by 10.229.178.232 with SMTP id bn40mr1226705qcb.44.1360569491327;
- Sun, 10 Feb 2013 23:58:11 -0800 (PST)
-Received: by 10.49.95.225 with HTTP; Sun, 10 Feb 2013 23:57:51 -0800 (PST)
-In-Reply-To: <20130211075040.GJ5210@localhost.localdomain>
+	id S1753192Ab3BKIEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 03:04:06 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:52799 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753181Ab3BKIEC (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2013 03:04:02 -0500
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 782C720B1B;
+	Mon, 11 Feb 2013 03:04:01 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute5.internal (MEProxy); Mon, 11 Feb 2013 03:04:01 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=V37EXmjj68BLmEfiAdGv30
+	AYOUg=; b=ZXZ1PROJFZsa7ZMDY9dmyTUgG8UoRuBpBC5/4OPY1a/I6KSyDAqGaT
+	Kp60sd8akQfDo+KAu3Wk8u1iw87aITm5mQPPpqE4o/8IdNQverxdtngBzK00CxZ3
+	MI/e0tXIbSQW8eItzF+UZjtgrOnJk2DTVV3exoOIp0dJlVkxKyN6I=
+X-Sasl-enc: qMrgN0K2YZNvBGaHnWyrrZRnEOee3LqGq2XCA6tpmEtL 1360569841
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id C0AA98E097E;
+	Mon, 11 Feb 2013 03:04:00 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <20130210014900.GA7682@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216022>
 
-On Mon, Feb 11, 2013 at 2:50 AM, Konstantin Khomoutov
-<kostix+git@007spb.ru> wrote:
-> What's wrong with
-> $ ssh myuser@remotehost 'mkdir /path/to/MyRepo.git; cd $_; git init --bare'
-> $ git push --all git@remotehost:MyOtherRepo.git
-> ?
+Jonathan Nieder venit, vidit, dixit 10.02.2013 02:49:
+> Hi,
+> 
+> Michael J Gruber wrote:
+> 
+>> "reset" can be easily misunderstood as resetting a bisect session to its
+>> start without finishing it. Clarify that it actually finishes the bisect
+>> session.
+> 
+> FWIW,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> 
+> Addressing Andreas's original concern about the discoverability of
+> 'git bisect reset' would presumably require doing two more things:
+> 
+>  1. adding an example of the normal bisection workflow to the EXAMPLES
+>     section
+> 
+>  2. training users to look to the EXAMPLES section
+> 
+> That is, something like the below.  But I'm not happy with it, because
+> it just runs over the same material as the current Description
+> section.  Maybe the current tutorial material could be moved to
+> examples and replaced with something terser that fleshes out the
+> descriptions in "git bisect -h" output.  What do you think?
+> 
+> diff --git i/Documentation/git-bisect.txt w/Documentation/git-bisect.txt
+> index e4f46bc1..b89abd78 100644
+> --- i/Documentation/git-bisect.txt
+> +++ w/Documentation/git-bisect.txt
+> @@ -356,6 +356,54 @@ $ git bisect run sh -c "make || exit 125; ~/check_test_case.sh"
+>  This shows that you can do without a run script if you write the test
+>  on a single line.
+>  
+> +* Bisect to find which patch caused a boot failure:
+> ++
+> +Install a recent kernel:
+> ++
+> +------------
+> +$ cd ~/src/linux
+> +$ git checkout origin/master
+> +$ make deb-pkg # or binrpm-pkg, or tar-pkg
+> +$ dpkg -i ../<name of package> # as root (or rpm -i, or tar -C / -xf)
+> +$ reboot # as root
+> +------------
+> ++
+> +Hopefully it fails to boot, so tell git so and begin bisection:
+> ++
+> +------------
+> +$ cd ~/src/linux
+> +$ git bisect start HEAD v3.2 # assuming 3.2 works fine
+> +-------------
+> ++
+> +A candidate revision to test is automatically checked out.
+> +Test it:
+> ++
+> +-------------
+> +$ make deb-pkg # or binrpm-pkg, or tar-pkg
+> +$ dpkg -i ../<name of package> # as root (or rpm -i, or tar -C / -xf)
+> +$ reboot # as root
+> +-------------
+> ++
+> +Record the result:
+> ++
+> +-------------
+> +$ cd ~/src/linux
+> +$ git bisect good # if it booted correctly
+> +$ git bisect bad # if it failed to boot
+> +$ git bisect skip # if some other bug made it hard to test
+> +-------------
+> ++
+> +Repeat until bored or git prints the "first bad commit".  When
+> +done:
+> ++
+> +-------------
+> +$ git bisect log >log # let others pick up where you left off
+> +$ git bisect reset HEAD # exit the bisecting state
+> +-------------
+> ++
+> +At any step, you can run `git bisect visualize` to watch the
+> +regression range narrowing.
+> +
+>  * Locate a good region of the object graph in a damaged repository
+>  +
+>  ------------
+> 
 
-Nothing, I just wanted to make myself a command to do that for me.
+[BTW, sorry for failing to set --in-reply-to in the patch e-mail. Need
+to get that automated somehow.]
 
->> The reason I had to use my user is the git user's shell is git-prompt
->
-> There's no such thing as git-prompt.  The restricted login shell for
-> SSH-only access typically used for such a "virtual" Git user is
-> git-shell.
+I did not use "stop" for the exact reasons that Junio mentioned. Just
+throw in a third alternative: "quit" may convey that it's not possible
+to ressume, without sounding as "exceptional" as "abort" does. After
+all, it's the normal end to a bisect session much unlike "--abort" for
+rebase, for example.
 
-Sorry, git-prompt is something I made for myself. I meant git-shell.
+As for the example, we have an example section, and we could simply
+throw in "git reset" lines there. I would even amend my patch with that;
+the great git-bisect.txt refactoring I'd definitely leave to someone else.
 
-> It's not really clear what do you want to achieve.
-> The reason the git-shell shell is *restricted* (read its manual page)
-> is to shrink the surface of possible attacks in the case the shell
-> account used for accessing Git repos over SSH is compromized (the key or
-> password stolen, for instance).  This is achieved by only allowing
-> commands like git-upload-pack etc in the shell (no general file
-> manipulation commands etc).  So what creating "git command that can
-> talk to the server using git-prompt ..." would really buy you?
-
-I want to create a git-command that 1) creates a bare version of the
-current repo, 2) and uploads it to the specified path on my server
-(using tar, but that's not the point).
-
-My problem is that I have no idea how things like git-push works via a
-user with git-shell. Can you only run certain git commands, like
-git-upload-pack? Because I tried running 'ssh git@server git status'
-and that failed.
-
-> I think the way to go is to start using gitolite [1] or implement by
-> hand a subset of what it does (a custom login shell which is allowed to
-> do certain things in a special area of the filesystem designated to keep
-> Git repositories) or just set up a special account on the server
-> ("git-admin", for instance) which would have a regular login shell set
-> for it and would be in the same group as the user "git" (or even have
-> the same UID) so that they could share the files they create (subject to
-> active umasks of processes run as both users though).
-
-I thought about the secondary user idea. I decided that trying to make
-my own command would be more fun.
-
-
--- 
-Ethan Reesor (Gmail)
+Michael
