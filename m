@@ -1,9 +1,13 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC/PATCH] shell: allow 'help' command to disable interactive
  shell
-Date: Sun, 10 Feb 2013 23:21:54 -0800
-Message-ID: <20130211072154.GN15329@elie.Belkin>
-References: <20130211012016.GA13243@elie.Belkin>
+Date: Sun, 10 Feb 2013 23:22:22 -0800
+Message-ID: <7v4nhjpb69.fsf@alter.siamese.dyndns.org>
+References: <20130210212538.GA11720@elie.Belkin>
+ <20130210224345.GA32318@sigill.intra.peff.net>
+ <7vfw13rd9x.fsf@alter.siamese.dyndns.org>
+ <CAMK1S_jFUXiHM6teVwoxO9gv77B1KBQoSi-B32dwVKemXnDx9w@mail.gmail.com>
+ <20130211012016.GA13243@elie.Belkin>
  <7v7gmfqzt1.fsf@alter.siamese.dyndns.org>
  <20130211041706.GB15329@elie.Belkin>
  <7vwqufpj50.fsf@alter.siamese.dyndns.org>
@@ -11,70 +15,84 @@ References: <20130211012016.GA13243@elie.Belkin>
  <7vpq07pgpy.fsf@alter.siamese.dyndns.org>
  <20130211061442.GI15329@elie.Belkin>
  <7vliavpc4q.fsf@alter.siamese.dyndns.org>
- <20130211071235.GL15329@elie.Belkin>
- <7v8v6vpbej.fsf@alter.siamese.dyndns.org>
+ <CAE_TNi=EG6vziVObJ-a__smeOv7RgZ5R146eonD6M828H7ziNQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sitaram Chamarty <sitaramc@gmail.com>, Jeff King <peff@peff.net>,
-	Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Greg Brockman <gdb@mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 08:22:32 2013
+To: Ethan Reesor <firelizzard@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 08:22:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4nid-0002ce-Me
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 08:22:28 +0100
+	id 1U4niz-0002nP-GP
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 08:22:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697Ab3BKHWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 02:22:04 -0500
-Received: from mail-da0-f46.google.com ([209.85.210.46]:56417 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752677Ab3BKHWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 02:22:03 -0500
-Received: by mail-da0-f46.google.com with SMTP id p5so2595091dak.19
-        for <git@vger.kernel.org>; Sun, 10 Feb 2013 23:22:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=lADLCKKZQ74GPTwOShk5/ZKjpvzQuc2tJABgfSiL3xw=;
-        b=uLXwbpNleXo8dc8J53FZkTh+cEXyKmf1ll/oZ3SzhQpOrAhzfgBkG6m/XgXDZvye2R
-         HeG0omsIW83ueJxxTyq5z+h7qXu0SJMb8TrZaM3wzYNu7LFTIrPypnG309hG1Pn2JZFI
-         Q1oocKWUMq8kIqi6bFSf4thzDEC7oeKh65WSEYyNp4NKJhHSk9EBtF6p8NVOAJdnOzT1
-         rENrssF/krHcyZ+WEEtHdHCK93FwHi7Zry983+LAOtLtX8sjJ5odaGJxAdzmpLYVOsDP
-         Wi/7M2lpioThxSf+U2XNsbsv9tPl+TzcN2W839ED5N/rvf9l4vtl9AhmiOfXpbj4JWLL
-         QPhQ==
-X-Received: by 10.68.23.194 with SMTP id o2mr16358051pbf.41.1360567322133;
-        Sun, 10 Feb 2013 23:22:02 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id z10sm66055212pay.7.2013.02.10.23.21.59
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 10 Feb 2013 23:22:00 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7v8v6vpbej.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1752708Ab3BKHW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 02:22:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37110 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752677Ab3BKHW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 02:22:26 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA658617D;
+	Mon, 11 Feb 2013 02:22:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NAo7/c9IGxDDF7KRurjngXL8h0A=; b=vWyc+A
+	ZzILMBVnnGTqX9dEj8Klf2MGqZI7DlbjKFmpesawMvjGpyA8zeRcmQ/awVjtoRfF
+	o+DreAadBtPAiKAYlEeYhQJYpS7rSCRtivMIfzrxQeotnkbOTv6T4Jf3B8kZU4WH
+	kJRgeFMMGiqXx58mGzURaaFyBdojmA7+NUojI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=guQS/Y/KsZGCkg9+TlQ63XVcKKlU6otc
+	+3eaNToc2Hfc2BVr7SzJvwvh4oGS9AV0xtzmvLOZc4bev+NBaF6q/Jii02RzavmO
+	hQPgK2xO+ZWRyQ6pJBzPWWubKPQBEc9NImMdehxXSE91f/EnB6J7f3k2ynXN0VTF
+	5Ul5yY9/vG8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE28E617B;
+	Mon, 11 Feb 2013 02:22:25 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2ACF26170; Mon, 11 Feb 2013
+ 02:22:24 -0500 (EST)
+In-Reply-To: <CAE_TNi=EG6vziVObJ-a__smeOv7RgZ5R146eonD6M828H7ziNQ@mail.gmail.com> (Ethan
+ Reesor's message of "Mon, 11 Feb 2013 02:15:51 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C7EFAC28-741B-11E2-AE27-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216015>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Ethan Reesor <firelizzard@gmail.com> writes:
 
->> Isn't that a criticism of the git-shell-commands facility in general?
->> If it is common to have a lot of users with distinct home directories
->> but all with git-shell as their login shell, then the
->> git-shell-commands should not go in their home directory to begin
->> with, no?
+>> For those who _do_ want to give customized commands to their users,
+>> they can already have "help" script to give a friendly message.  It
+>> just felt silly to force sites to create the directory only to
+>> refuse an access to the "custom commands" feature, especially when
+>> the existence of that directory is a signal that the site may want
+>> to give its users an acess to that feature.
 >
-> You can give one set of commands to some users while restricting
-> others, no?
+> Again, would it not be more elegant and powerful to A) have the
+> shell-disabled message/hook/etc specified by git-config on some level,
+> be it /etc/gitconfig or ~/.gitconfig, and B) have Jonathan's patch
+> whereby ~/git-shell-commands/help returning non-zero closes the
+> connection?
 
-Yes, I assume one goal of the current design was to let you set up
-multiple configurations by making multiple home directories.
+Isn't that what I have essentially been saying?
+
+For sites that do not want per-user customizable "other commands",
+have a single site-wide hook instead of having to create otherwise
+empty shell-commands directories for all users.  For users a site
+wants to allow customized commands, have the directory and custom
+"help" message.  I do not care too deeply if "help" exiting non-zero
+caused the connection closed, but I care about not forcing a lot of
+effort to customize messages to people who do *not* need
+customizability.
