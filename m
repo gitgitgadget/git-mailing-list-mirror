@@ -1,95 +1,58 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCHv2] parse-options: report uncorrupted multi-byte options
-Date: Tue, 12 Feb 2013 00:13:48 +0100
-Message-ID: <1360624428-4728-1-git-send-email-kusmabite@gmail.com>
-Cc: gitster@pobox.com, peff@peff.net, matthieu.moy@grenoble-inp.fr,
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] parse-options: report uncorrupted multi-byte options
+Date: Mon, 11 Feb 2013 15:51:42 -0800
+Message-ID: <7vliaujto1.fsf@alter.siamese.dyndns.org>
+References: <1360624428-4728-1-git-send-email-kusmabite@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, peff@peff.net, matthieu.moy@grenoble-inp.fr,
 	tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 12 00:14:14 2013
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 00:52:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U52Zg-0002xG-53
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 00:14:12 +0100
+	id 1U53AP-0006Bz-Qh
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 00:52:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759982Ab3BKXNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 18:13:49 -0500
-Received: from mail-ee0-f50.google.com ([74.125.83.50]:59745 "EHLO
-	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757154Ab3BKXNs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 18:13:48 -0500
-Received: by mail-ee0-f50.google.com with SMTP id e51so3506508eek.23
-        for <git@vger.kernel.org>; Mon, 11 Feb 2013 15:13:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=FKbLcAXf4SL2O3YzswHYJrsuRwXf3GoNaREGRdnIsOo=;
-        b=ZiteIAwQUlsnZV0Lk7pd8fuUYw1Dpy+XEormQs8JSv7EV/QlWbiCFG9HIeC7EffjOR
-         hNZAksd7FI9v60Py0OnrYc3Ni6/KosvbTR/2XPl751oC3ujgS0Kl5hExS+4NuiLJdfNZ
-         8aps3HHulS7RfjqRSVtkCvMozQWgBM1Km7uOpoFBiYZBJlISrMSd9IxR+zFvm9j0XLJZ
-         IR7OZmgKz58sYVKj8EYOssCJB0Gp/R97nNteaJ8nqghzWpUIeVJxAktoLZzJcfMjHDji
-         FT23aKvvdrIuj9OrdufDAK2P+a/JDZdWbmUhGU10qd43AX1YNrfjTl20jXcwoSH0CxiR
-         P/yw==
-X-Received: by 10.14.210.132 with SMTP id u4mr54958614eeo.19.1360624424622;
-        Mon, 11 Feb 2013 15:13:44 -0800 (PST)
-Received: from localhost (cm-84.215.107.111.getinternet.no. [84.215.107.111])
-        by mx.google.com with ESMTPS id o3sm65007042eem.15.2013.02.11.15.13.42
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 11 Feb 2013 15:13:43 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1
+	id S1760086Ab3BKXvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 18:51:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59253 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758467Ab3BKXvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 18:51:46 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EC73C966;
+	Mon, 11 Feb 2013 18:51:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=Vr9Yq/
+	CLX65bobRsHmJx/z2KyXxZNqtRaCOuXwptdd4ITH2IWxFMQiYGxYf/8MiNDVZ6W6
+	iIrrE5QSNiEj+b60UHjNCyR22AGh9s5WqAPrIUB2hV9+I9twnMguU8r4THP3Jgq3
+	2klxHGB21/fb9mIVM9TDqpUb+11l9Suyqjmdg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JCvvLhbQkTf/RkaejkM2raWUiXoY7DK9
+	rzzSYRRJYQQQHQdFZfGNl0OqKMlTdXLnx5zvDD9/W7cxZBjzPCHlKuKDBX74JquQ
+	45AleKP4akaC9D9HQjzL4pxCUhxJTw+LSrIZIsly9oyvWsc8nQdm0mhjir6pNyoB
+	rcZ0ScsCIH8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52F6EC965;
+	Mon, 11 Feb 2013 18:51:45 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA7ACC961; Mon, 11 Feb 2013
+ 18:51:44 -0500 (EST)
+In-Reply-To: <1360624428-4728-1-git-send-email-kusmabite@gmail.com> (Erik
+ Faye-Lund's message of "Tue, 12 Feb 2013 00:13:48 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FDA48534-74A5-11E2-95EA-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216105>
 
-Because our command-line parser considers only one byte at the time
-for short-options, we incorrectly report only the first byte when
-multi-byte input was provided. This makes user-erros slightly
-awkward to diagnose for instance under UTF-8 locale and non-English
-keyboard layouts.
-
-Make the reporting code report the whole argument-string when a
-non-ASCII short-option is detected.
-
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-Improved-by: Jeff King <peff@peff.net>
----
-
-Here's a second attempt at fixing error-reporting with UTF-8 encoded
-input, this time without corrupting other non-ascii multi-byte
-encodings.
-
-I decided to change the text from what Jeff suggested; all we know is
-that it's non-ASCII. It might be Latin-1 or some other non-ASCII,
-single byte encoding. And since we're trying not to care, let's also
-try to not be overly specific :)
-
-I wasn't entirely sure who to attribute for the improvement, so I just
-picked Jeff; he provided some code. That decision might not be correct,
-feel free to change it.
-
- parse-options.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/parse-options.c b/parse-options.c
-index 67e98a6..6a39446 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -461,8 +461,11 @@ int parse_options(int argc, const char **argv, const char *prefix,
- 	default: /* PARSE_OPT_UNKNOWN */
- 		if (ctx.argv[0][1] == '-') {
- 			error("unknown option `%s'", ctx.argv[0] + 2);
--		} else {
-+		} else if (isascii(*ctx.opt)) {
- 			error("unknown switch `%c'", *ctx.opt);
-+		} else {
-+			error("unknown non-ascii option in string: `%s'",
-+			    ctx.argv[0]);
- 		}
- 		usage_with_options(usagestr, options);
- 	}
--- 
-1.8.1.1
+Thanks.
