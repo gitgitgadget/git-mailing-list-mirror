@@ -1,102 +1,111 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] shell: allow 'help' command to disable interactive
- shell
-Date: Mon, 11 Feb 2013 00:13:46 -0800
-Message-ID: <20130211081346.GP15329@elie.Belkin>
-References: <20130211041706.GB15329@elie.Belkin>
- <7vwqufpj50.fsf@alter.siamese.dyndns.org>
- <20130211043247.GD15329@elie.Belkin>
- <7vpq07pgpy.fsf@alter.siamese.dyndns.org>
- <20130211061442.GI15329@elie.Belkin>
- <7vliavpc4q.fsf@alter.siamese.dyndns.org>
- <20130211071235.GL15329@elie.Belkin>
- <7v8v6vpbej.fsf@alter.siamese.dyndns.org>
- <20130211072154.GN15329@elie.Belkin>
- <7vvc9znvk6.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sitaram Chamarty <sitaramc@gmail.com>, Jeff King <peff@peff.net>,
-	Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Greg Brockman <gdb@mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 09:14:24 2013
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2] git-bisect.txt: clarify that reset quits bisect
+Date: Mon, 11 Feb 2013 09:35:04 +0100
+Message-ID: <d679f620f10ad7afc044c9f5dadcf433b388ad10.1360571552.git.git@drmicha.warpmail.net>
+References: <5118A5F2.6000007@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Andreas Mohr <andi@lisas.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 11 09:35:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4oWo-0000bG-5j
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 09:14:18 +0100
+	id 1U4orL-0002Dm-3z
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 09:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753017Ab3BKINz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 03:13:55 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:59595 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752934Ab3BKINy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 03:13:54 -0500
-Received: by mail-pa0-f49.google.com with SMTP id kp6so2944461pab.22
-        for <git@vger.kernel.org>; Mon, 11 Feb 2013 00:13:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=GTicpQbZc2PzGCespXmgoo8DcsH31L/PndG+VAFW7PM=;
-        b=s9/4V85/yi40HLRrbMnAXXLMkE1Uj2lBRMoEe3oxLsYrcrzldIxzOIxjkcHdEZQUT4
-         At26Ybt9a3P8v0TSGLWiBTXlCtE7QzD+uYWIx8B5vYdpC5r80mbSAxiNOWZ40m2wSfdN
-         YoqYb3XVU6wscgsvpPhe12zoHACatZYzOl3w86wQ+2pz9y/5OGAgnz75pgG4HsAhhTrN
-         oHI+SCnJ8x4GtjjXgYe6gFi3xde0PISpY1wCOUGRkewAOZ7F1sHF3qyOkmYllcQqVudt
-         THIRd9cA4wdLETsmYq1bpcNV5fx+Pd/+AIbLT1cGGUySwjsNBjHw7KE2LWFujEeRl8gL
-         r71g==
-X-Received: by 10.68.231.226 with SMTP id tj2mr11200308pbc.88.1360570434197;
-        Mon, 11 Feb 2013 00:13:54 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id kr9sm6934292pbc.2.2013.02.11.00.13.51
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 11 Feb 2013 00:13:52 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vvc9znvk6.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1753708Ab3BKIfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 03:35:06 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:43256 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753396Ab3BKIfE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2013 03:35:04 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 4733920BBA;
+	Mon, 11 Feb 2013 03:35:03 -0500 (EST)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 11 Feb 2013 03:35:03 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:cc:subject:date:message-id
+	:in-reply-to:references; s=smtpout; bh=79QCDsmsZHb22zD725POzdcw5
+	NU=; b=bNjTQQRp3k9xJbnMAUPOiVspQ5s1/9PefTN3PQhoq1jWO5HVBPdSsk6MK
+	+/+8qq0cBfoQeo0LuCiWN1WFSPWA4kmN/GTsGqxFbgcKFpUs0+e/GOY/Bajao72B
+	2TV8eDGFQ79N3vj42GYqhwXu9fia/x3kLmhAi4sjEru6Z/WznM=
+X-Sasl-enc: NTuBfBG4y3Ker2W3FaFF9vm2X/oRd07qngPOKvQ5wMiD 1360571702
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id B79078E00B1;
+	Mon, 11 Feb 2013 03:35:02 -0500 (EST)
+X-Mailer: git-send-email 1.8.1.2.752.g32d147e
+In-Reply-To: <5118A5F2.6000007@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216024>
 
-Junio C Hamano wrote:
+"reset" can be easily misunderstood as resetting a bisect session to its
+start without finishing it. Clarify that it actually quits the bisect
+session.
 
-> The purpose of the directory is to keep custom commands that are
-> allowed.  If the site administrator does not want any command, it
-> would be more natural to expect that the way to disable them would
-> be _not_ to have that directory which is a collection of allowed
-> commands.  Adding that directory and add a "help" that exits with
-> non-zero feels quite a roundabout and counter-intuitive way, no?
+Reported-by: Andreas Mohr <andi@lisas.de>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ Documentation/git-bisect.txt | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-I think it comes down to the reason the site admin doesn't want to
-allow interactive logins.  That reason seems to be mostly that
-presenting a
-
-	git>
-
-prompt at which you can only ask for "help" or "exit" is a bit
-confusing and pointless.  I have sympathy for that, which is why I
-looked for a way for the admin to ask to avoid the prompt altogether
-in that case.
-
-I do not think the reason is "because I don't want a
-git-shell-commands directory".  I think it's good to have basically
-one kind of setup instead of significantly different ones with and
-without that special directory --- and it means that starting from a
-setup like this, one can easily drop in additional commands like
-set-head or create-repo without changing anything basic.  It's making
-the admin's later life easier.
-
-Maybe a better test than "help exits with special exit code" is "there
-are no other custom commands than help".  Would that be more sensible?
-
->From a "make it possible to emulate gitolite" point of view, that
-doesn't permit disabling the interactive mode when there are other
-commands available, so my hunch is that it wouldn't.
-
-Jonathan
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index b4831bb..f986c5c 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -83,7 +83,7 @@ Bisect reset
+ ~~~~~~~~~~~~
+ 
+ After a bisect session, to clean up the bisection state and return to
+-the original HEAD, issue the following command:
++the original HEAD (i.e., to quit bisecting), issue the following command:
+ 
+ ------------------------------------------------
+ $ git bisect reset
+@@ -284,6 +284,7 @@ EXAMPLES
+ ------------
+ $ git bisect start HEAD v1.2 --      # HEAD is bad, v1.2 is good
+ $ git bisect run make                # "make" builds the app
++$ git bisect reset                   # quit the bisect session
+ ------------
+ 
+ * Automatically bisect a test failure between origin and HEAD:
+@@ -291,6 +292,7 @@ $ git bisect run make                # "make" builds the app
+ ------------
+ $ git bisect start HEAD origin --    # HEAD is bad, origin is good
+ $ git bisect run make test           # "make test" builds and tests
++$ git bisect reset                   # quit the bisect session
+ ------------
+ 
+ * Automatically bisect a broken test case:
+@@ -302,6 +304,7 @@ make || exit 125                     # this skips broken builds
+ ~/check_test_case.sh                 # does the test case pass?
+ $ git bisect start HEAD HEAD~10 --   # culprit is among the last 10
+ $ git bisect run ~/test.sh
++$ git bisect reset                   # quit the bisect session
+ ------------
+ +
+ Here we use a "test.sh" custom script. In this script, if "make"
+@@ -351,6 +354,7 @@ use `git cherry-pick` instead of `git merge`.)
+ ------------
+ $ git bisect start HEAD HEAD~10 --   # culprit is among the last 10
+ $ git bisect run sh -c "make || exit 125; ~/check_test_case.sh"
++$ git bisect reset                   # quit the bisect session
+ ------------
+ +
+ This shows that you can do without a run script if you write the test
+@@ -368,6 +372,7 @@ $ git bisect run sh -c '
+ 	rm -f tmp.$$
+ 	test $rc = 0'
+ 
++$ git bisect reset                   # quit the bisect session
+ ------------
+ +
+ In this case, when 'git bisect run' finishes, bisect/bad will refer to a commit that
+-- 
+1.8.1.2.752.g32d147e
