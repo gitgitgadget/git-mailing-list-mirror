@@ -1,66 +1,100 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH v3 11/11] Unify appending signoff in format-patch, commit
- and sequencer
-Date: Mon, 11 Feb 2013 10:49:29 -0800
-Message-ID: <CA+sFfMdBTmu8JsqZaJTUeA8x8Mb15R90v4w3fMQmUgkCDP5Qjw@mail.gmail.com>
-References: <1359335515-13818-1-git-send-email-drafnel@gmail.com>
-	<1359335515-13818-12-git-send-email-drafnel@gmail.com>
-	<20130128033921.GP8206@elie.Belkin>
-	<CA+sFfMduqEJPtDQyTe2n7QiLmDpTN7MzLGrUNf1hWf-h0rGzvA@mail.gmail.com>
-	<20130211090009.GR15329@elie.Belkin>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] sha1_file.c: Fix a sparse warning
+Date: Mon, 11 Feb 2013 19:02:17 +0000
+Message-ID: <51194039.4010407@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
-	Brandon Casey <bcasey@nvidia.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 19:50:00 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 20:04:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4yRv-0000s3-Ci
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 19:49:55 +0100
+	id 1U4ygD-000196-Q7
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 20:04:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758870Ab3BKStb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 13:49:31 -0500
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:33711 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758821Ab3BKStb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 13:49:31 -0500
-Received: by mail-wi0-f169.google.com with SMTP id l13so3662588wie.2
-        for <git@vger.kernel.org>; Mon, 11 Feb 2013 10:49:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=GjzM54lXzh/XudfQwsNsS704zABjEjBM5ICI1D5eVU4=;
-        b=N9YTck9QuItRGwtT82AT6Yha7hgRKnDFkbaGO13J34NOP6mLg0Wux12JFm4/tbXKWU
-         G8yg9MZ3EL5BaULiwjeK0Oyh9WPkzrydQOvB5VoSaKuYyHQMIpxNSM9QE5XYR8KLRxDT
-         Z4IjR9gPcguTeT1hdjdO2gXs+2i+dweaG1iwJ4UaqqSc93LBTupCXl8L2M+Qu5/pT4XJ
-         KZxbXu2gpceW3TqpO7XHr8tj7kpL2ctS76i15YOHOY7c21KtTfV5tvEJVIIPqofKns0q
-         AdN6u6pz5kJwyv+4EenK+mkgE81GgZOiK6hZW9S01dfljSkhsyrDSA3WEfSrsGLhkHUk
-         RCFg==
-X-Received: by 10.180.109.82 with SMTP id hq18mr18287392wib.0.1360608569666;
- Mon, 11 Feb 2013 10:49:29 -0800 (PST)
-Received: by 10.194.63.46 with HTTP; Mon, 11 Feb 2013 10:49:29 -0800 (PST)
-In-Reply-To: <20130211090009.GR15329@elie.Belkin>
+	id S1758358Ab3BKTES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 14:04:18 -0500
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:56511 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758289Ab3BKTER (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 14:04:17 -0500
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 3DC6C400575;
+	Mon, 11 Feb 2013 19:04:15 +0000 (GMT)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 55BB74000EA;	Mon, 11 Feb 2013 19:04:14 +0000 (GMT)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Mon, 11 Feb 2013 19:04:13 +0000 (GMT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216075>
 
-On Mon, Feb 11, 2013 at 1:00 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> By the way, regarding what the right "--signoff" behavior is for
-> commit, cherry-pick, am, and format-patch:
->
-> I think the best behavior would be to check if the last signed-off-by
-> line (ignoring acked-by, bug, change-id, and so on lines that follow
-> it) matches the one to be added, and if it doesn't, add a new
-> sign-off.
+Sparse issues an "... was not declared. Should it be static?" warning
+against the 'report_pack_garbage' symbol. In order to suppress the
+warning, since this symbol requires more than file scope, we add an
+extern declaration to the cache.h header file (and remove the now
+redundant extern declaration in builtin/count-objects.c).
 
-This makes a lot of sense.
+[As an alternative solution, make the variable a (static) file scope
+variable and add an extern function set_report_pack_garbage(), which
+would take a function pointer, to set the local variable ... etc.]
 
--Brandon
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Hi Nguyen,
+
+If you need to re-roll your 'nd/count-garbage' patches, could you
+please squash this (or something like it) into commit c2071d7a
+("count-objects: report garbage files in pack directory too",
+08-02-2013).
+
+Thanks! 
+
+[BTW, I have an unsettling feeling that the above salutation should
+read "Hi Duy," and I'm being (unintentionally) offensive. If so,
+please let me know and accept my apologies. ;-) ]
+
+ATB,
+Ramsay Jones
+
+ builtin/count-objects.c | 1 -
+ cache.h                 | 3 +++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+index 118b2ae..605c215 100644
+--- a/builtin/count-objects.c
++++ b/builtin/count-objects.c
+@@ -11,7 +11,6 @@
+ 
+ static unsigned long garbage;
+ 
+-extern void (*report_pack_garbage)(const char *path, int len, const char *name);
+ static void real_report_pack_garbage(const char *path, int len, const char *name)
+ {
+ 	if (len && name)
+diff --git a/cache.h b/cache.h
+index 6818d87..0d687b4 100644
+--- a/cache.h
++++ b/cache.h
+@@ -779,6 +779,9 @@ extern int has_pack_index(const unsigned char *sha1);
+ 
+ extern void assert_sha1_type(const unsigned char *sha1, enum object_type expect);
+ 
++/* A hook for count-objects to report invalid files in pack directory */
++extern void (*report_pack_garbage)(const char *path, int len, const char *name);
++
+ extern const signed char hexval_table[256];
+ static inline unsigned int hexval(unsigned char c)
+ {
+-- 
+1.8.1
