@@ -1,104 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] shell doc: emphasize purpose and security model
-Date: Mon, 11 Feb 2013 10:32:47 -0800
-Message-ID: <7vliaun1kg.fsf@alter.siamese.dyndns.org>
-References: <20130210224345.GA32318@sigill.intra.peff.net>
- <7vfw13rd9x.fsf@alter.siamese.dyndns.org>
- <CAMK1S_jFUXiHM6teVwoxO9gv77B1KBQoSi-B32dwVKemXnDx9w@mail.gmail.com>
- <20130211012016.GA13243@elie.Belkin>
- <20130211035908.GA4543@sigill.intra.peff.net>
- <20130211041404.GA15329@elie.Belkin>
- <20130211041714.GA12281@sigill.intra.peff.net>
- <20130211042609.GC15329@elie.Belkin>
- <20130211043322.GA12735@sigill.intra.peff.net>
- <20130211055604.GE15329@elie.Belkin> <20130211055752.GF15329@elie.Belkin>
+From: Michal Nazarewicz <mina86@mina86.com>
+Subject: Re: [PATCHv3 0/5] Add git-credential support to git-send-email
+Date: Mon, 11 Feb 2013 19:40:07 +0100
+Organization: http://mina86.com/
+Message-ID: <xa1td2w6g0e0.fsf@mina86.com>
+References: <cover.1360599057.git.mina86@mina86.com> <20130211165136.GC16402@sigill.intra.peff.net> <xa1tk3qeg46r.fsf@mina86.com> <20130211174811.GK16402@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Sitaram Chamarty <sitaramc@gmail.com>,
-	Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Greg Brockman <gdb@mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 11 19:33:16 2013
+Content-Type: multipart/mixed; boundary="=-=-="
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 11 19:40:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4yBn-0008JX-3g
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 19:33:15 +0100
+	id 1U4yJ0-00031C-C1
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 19:40:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758800Ab3BKScw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 13:32:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50913 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758620Ab3BKScv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 13:32:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84AF0BDFA;
-	Mon, 11 Feb 2013 13:32:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lrKRxSb1QcFWKWZ4ESDryGFBJaw=; b=NXBFUK
-	RKFfDg9kf/CoOSkNzUksXZkQVmOnsevLBpS2Z/TCZ6Ny0MCZhDeEfDqMlblrg0ea
-	xIGqkF9wrblGDR6Erukwjta/rcAz82DDMj/C7kBJKNvvMFBVTIMUeNP/Aro3nhjE
-	2TCYzyQ3/amFMrOD6nTqQGtHQiFVfjD97xG9A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qtOCRWY99Byj1fn/NtVZ5O6y9sgmR6om
-	mGz33fSGmU0AwBgrh1hcXNfDZLAVkF8VbffuskCMwyP56JemdjZj1Pe0enEdx1Nd
-	MylzruuEqsNyWEm7PHUTSrJ+MFko4k+SwHqLOni7VcuZMBGRQD/9PGMiVe17oLyt
-	jJ17trV+xKI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77203BDF9;
-	Mon, 11 Feb 2013 13:32:50 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E27B8BDF7; Mon, 11 Feb 2013
- 13:32:49 -0500 (EST)
-In-Reply-To: <20130211055752.GF15329@elie.Belkin> (Jonathan Nieder's message
- of "Sun, 10 Feb 2013 21:57:52 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 705A5180-7479-11E2-BAD7-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758805Ab3BKSkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 13:40:19 -0500
+Received: from mail-ee0-f50.google.com ([74.125.83.50]:32770 "EHLO
+	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758777Ab3BKSkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 13:40:17 -0500
+Received: by mail-ee0-f50.google.com with SMTP id e51so3394895eek.23
+        for <git@vger.kernel.org>; Mon, 11 Feb 2013 10:40:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:in-reply-to:organization
+         :references:user-agent:x-face:face:x-pgp:x-pgp-fp:date:message-id
+         :mime-version:content-type;
+        bh=U52M71bfvRR+VVLf6TRSiPreMYPlZjxEZNaF9GPNlk0=;
+        b=mvD1dl9oLmL3HSZnYH9ZXklRW8b52YRFKa8HwueO44o2WKH/JeErzR9VpYkltjmn1Y
+         k2Qsf9eIl6nE2BoGdR4Qpe8GpT9eeZeFwY/zE5hd1bgiXPdl4pZOhiEXSoCULBEypv8c
+         /pyjM8y+dRw9z1EOG2bgWiaxjyzqaYEcH7w6Ghoc8G/u08deRt3NdxDCsQHJLWbGGbov
+         8MsGvbiPTAiBBmT/3DkYn/DR/eBYpRo6DORKAow1Z6Op+XTmsmZOM8yNbqOtodBMm/BY
+         gAyF3NwWHaICpdLN9AagLCJD/di2VEX60NYdz1umykhBEwS+cY1DS5qalcCX7BQN0qe9
+         3q3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:in-reply-to:organization
+         :references:user-agent:x-face:face:x-pgp:x-pgp-fp:date:message-id
+         :mime-version:content-type:x-gm-message-state;
+        bh=U52M71bfvRR+VVLf6TRSiPreMYPlZjxEZNaF9GPNlk0=;
+        b=TbSt8gS1LS8u59f5puI9fxbY4epjHrWvKqwBYNeM+3Rnusd1omF0uDXhnJOoEbvEit
+         E0cLfAg8/lLIiX+vuTjiBz81CIhkwC0zeE6YmLd6hJCXGhpeNySjj5XLm4IqArNG2nzm
+         EFc3TqdD5461CecLQ9ALNv61vaUId3+hvVWODBqjsTWGSsAW9sPQllgfdJFl6QSbJ/mG
+         +epi/BXSFdAFUzvehJUEmz6cNu8O6e6wPgl4xbTKl6wvaHnDLGfb8Z5k7I45SjQV44hH
+         cNts/gxIxwOnbqhYO96z8DmW9v7FXqYCi+fliPmXwLyGIaAFPGXlOU/0fLeI0zL20EPo
+         T0AA==
+X-Received: by 10.14.206.132 with SMTP id l4mr52609319eeo.38.1360608016220;
+        Mon, 11 Feb 2013 10:40:16 -0800 (PST)
+Received: from mpn-glaptop ([2620:0:105f:5:1d0a:8048:51b4:44a9])
+        by mx.google.com with ESMTPS id l8sm29939195een.10.2013.02.11.10.40.14
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 11 Feb 2013 10:40:14 -0800 (PST)
+In-Reply-To: <20130211174811.GK16402@sigill.intra.peff.net>
+User-Agent: Notmuch/ (http://notmuchmail.org) Emacs/24.3.50.5 (x86_64-unknown-linux-gnu)
+X-Face: PbkBB1w#)bOqd`iCe"Ds{e+!C7`pkC9a|f)Qo^BMQvy\q5x3?vDQJeN(DS?|-^$uMti[3D*#^_Ts"pU$jBQLq~Ud6iNwAw_r_o_4]|JO?]}P_}Nc&"p#D(ZgUb4uCNPe7~a[DbPG0T~!&c.y$Ur,=N4RT>]dNpd;KFrfMCylc}gc??'U2j,!8%xdD
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAJFBMVEWbfGlUPDDHgE57V0jUupKjgIObY0PLrom9mH4dFRK4gmjPs41MxjOgAAACQElEQVQ4jW3TMWvbQBQHcBk1xE6WyALX1069oZBMlq+ouUwpEQQ6uRjttkWP4CmBgGM0BQLBdPFZYPsyFUo6uEtKDQ7oy/U96XR2Ux8ehH/89Z6enqxBcS7Lg81jmSuujrfCZcLI/TYYvbGj+jbgFpHJ/bqQAUISj8iLyu4LuFHJTosxsucO4jSDNE0Hq3hwK/ceQ5sx97b8LcUDsILfk+ovHkOIsMbBfg43VuQ5Ln9YAGCkUdKJoXR9EclFBhixy3EGVz1K6eEkhxCAkeMMnqoAhAKwhoUJkDrCqvbecaYINlFKSRS1i12VKH1XpUd4qxL876EkMcDvHj3s5RBajHHMlA5iK32e0C7VgG0RlzFPvoYHZLRmAC0BmNcBruhkE0KsMsbEc62ZwUJDxWUdMsMhVqovoT96i/DnX/ASvz/6hbCabELLk/6FF/8PNpPCGqcZTGFcBhhAaZZDbQPaAB3+KrWWy2XgbYDNIinkdWAFcCpraDE/knwe5DBqGmgzESl1p2E4MWAz0VUPgYYzmfWb9yS4vCvgsxJriNTHoIBz5YteBvg+VGISQWUqhMiByPIPpygeDBE6elD973xWwKkEiHZAHKjhuPsFnBuArrzxtakRcISv+XMIPl4aGBUJm8Emk7qBYU8IlgNEIpiJhk/No24jHwkKTFHDWfPniR
+ 4iw5vJaw2nzSjfq2zffcE/GDjRC2dn0J0XwPAbDL84TvaFCJEU4Oml9pRyEUhR3Cl2t01AoEjRbs0sYugp14/4X5n4pU4EHHnMAAAAAElFTkSuQmCC
+X-PGP: 50751FF4
+X-PGP-FP: AC1F 5F5C D418 88F8 CC84 5858 2060 4012 5075 1FF4
+X-Gm-Message-State: ALoCoQkQo9MHMDn3t5KIY9o7ZFHhh6rFThmJdDx0YT4yvJevEogezHOH8P7nQT97hZEMKwjxGtDdMS5uXgeVRsPUr0Zl0X/ueD3KuP0gWZys3n3LqBXtn9kDPAMKbVeesZi/0jinJ/PPh+7M/A5ClM1U7Na+Ov8qwls0+GAZdSk3uuszg4T9Hy+JZAUFdHQ3ego0CHbe0mzA6hmlpvHeKca8WrN2TWzt2w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216073>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> diff --git a/Documentation/git-shell.txt b/Documentation/git-shell.txt
-> index 9b925060..4fe93203 100644
-> --- a/Documentation/git-shell.txt
-> +++ b/Documentation/git-shell.txt
-> @@ -9,25 +9,61 @@ git-shell - Restricted login shell for Git-only SSH access
->  SYNOPSIS
->  --------
->  [verse]
-> -'git shell' [-c <command> <argument>]
-> +'chsh' -s $(which git-shell) git
-> +'git clone' `git@localhost:/path/to/repo.git`
-> +'ssh' `git@localhost`
+On Mon, Feb 11 2013, Jeff King wrote:
+> Based on our discussion, I think it would just need the patch below
+> squashed into your 4/5 (this handles the "undef" thing, and I also fixed
+> a few typos in the API documentation):
 
-I am wondering if we want to do the following instead of/in addition
-to fixing the $(which git-shell).  It is not like we only allow a
-single user and its name has to be 'git'.
+> @@ -1152,7 +1155,9 @@ sub credential {
+>  	if ('CODE' eq ref $op_or_code) {
+>  		_credential_run $credential, 'fill';
+>  		my $ret =3D $op_or_code->($credential);
+> -		_credential_run $credential, $ret ? 'approve' : 'reject';
+> +		if (defined $ret) {
+> +			_credential_run $credential, $ret ? 'approve' : 'reject';
+> +		}
+>  		return $ret;
+>  	} else {
+>  		_credential_run $credential, $op_or_code;
 
-diff --git a/Documentation/git-shell.txt b/Documentation/git-shell.txt
-index 4fe9320..6829ea9 100644
---- a/Documentation/git-shell.txt
-+++ b/Documentation/git-shell.txt
-@@ -9,9 +9,9 @@ git-shell - Restricted login shell for Git-only SSH access
- SYNOPSIS
- --------
- [verse]
--'chsh' -s $(which git-shell) git
--'git clone' `git@localhost:/path/to/repo.git`
--'ssh' `git@localhost`
-+'chsh' -s /path/to/git-shell <user>
-+'git clone' `<user>@localhost:/path/to/repo.git`
-+'ssh' `<user>@localhost`
- 
- DESCRIPTION
- -----------
+Yep, that's what I did as well.  Thanks for spotting the typos,
+I actually changed some other wording as well (most notably
+CREDENTIAL_HASH -> CREDENTIAL_HASHREF), and also added some unrelated
+patch in the middle: <https://github.com/mina86/git/commits/master>.
+
+--=20
+Best regards,                                         _     _
+.o. | Liege of Serenely Enlightened Majesty of      o' \,=3D./ `o
+..o | Computer Science,  Micha=C5=82 =E2=80=9Cmina86=E2=80=9D Nazarewicz   =
+ (o o)
+ooo +----<email/xmpp: mpn@google.com>--------------ooO--(_)--Ooo--
+--=-=-=
+Content-Type: multipart/signed; boundary="==-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+
+--==-=-=
+Content-Type: text/plain
+
+
+--==-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRGTsIAAoJECBgQBJQdR/0hq0P+gLfGHGcSFRyCGP+EbWGkgG2
+6znNXq+huqJsztcPUdMj0QbTjKMXqk/qbwlM0z1hZ7mc9C8fpvwnsYbYt4TY+Bm2
+78+8EPkEkd7Mm+8a7y52aHZsELwWd6U4nYG3dWBJ8ZbnOmzNKZ7s0f/sPNTbpOTp
+Va8Qnahven551MUfrqS5Y51Itt2PGbRgyDpmCMomCGFeTJTAZCoyOA9ttVN1J4Px
+UuUzI9bNzpascxb7Eszp+6eUJk+5hCEv4S3n3PPJ4E0B+4gHVr71R5FRc9QugCt8
+GeIQEL4WKX4lm3lI9h/npkIPQhYF4h8esgkmYuw/SqSOhe/meW/v1CnIIhnMd7mZ
+/IDlf0fRdmrA1vMm6GNjLwOXYyoUio7BQWv0g/AgyxBbbUqG26oFmTeuv5vXSVPD
+8GE7wI5xxKkchGUlOlBALxo9jECncy6sfK+GyLnlRta5eP/484j974xwCEQWbVda
+IMZPNYhRzufYYYg6hgukUrodlm4fPzQhJfavfvlSChUeffr+Juu+9Vz2h18AGDgw
+VbgXTl0Apr+uu5v1o3yLlWqlSS0y0CsUi/reSqD/9e6C9vKnJhuqxVUvWzoUvy9o
+OOCki5tJf9vg0s8pzpev6Tc6OzRYcPStvMNY2DYA2yL+w5iODNVhHmd/5QY3BjIM
+1mOarnroFV7MLbaDVZOs
+=bev6
+-----END PGP SIGNATURE-----
+--==-=-=--
+
+--=-=-=--
