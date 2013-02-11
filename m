@@ -1,84 +1,126 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATH/RFC] parse-options: report invalid UTF-8 switches
-Date: Mon, 11 Feb 2013 18:21:58 +0100
-Message-ID: <CABPQNSYtvXED_uj6m02N1-RWEdz3iMUUXUaNZquzy8GqQ2BnLw@mail.gmail.com>
-References: <1360589687-9233-1-git-send-email-kusmabite@gmail.com>
- <7v7gmeok2e.fsf@alter.siamese.dyndns.org> <20130211171957.GG16402@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] shell: allow 'help' command to disable interactive
+ shell
+Date: Mon, 11 Feb 2013 12:27:52 -0500
+Message-ID: <20130211172752.GH16402@sigill.intra.peff.net>
+References: <20130211041706.GB15329@elie.Belkin>
+ <7vwqufpj50.fsf@alter.siamese.dyndns.org>
+ <20130211043247.GD15329@elie.Belkin>
+ <7vpq07pgpy.fsf@alter.siamese.dyndns.org>
+ <20130211061442.GI15329@elie.Belkin>
+ <7vliavpc4q.fsf@alter.siamese.dyndns.org>
+ <20130211071235.GL15329@elie.Belkin>
+ <7v8v6vpbej.fsf@alter.siamese.dyndns.org>
+ <20130211160057.GA16402@sigill.intra.peff.net>
+ <7v38x2ojl1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 11 18:23:12 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Greg Brockman <gdb@mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 11 18:28:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U4x5r-00018Z-NG
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 18:23:04 +0100
+	id 1U4xB1-0000VQ-E6
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 18:28:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758189Ab3BKRWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 12:22:40 -0500
-Received: from mail-ia0-f171.google.com ([209.85.210.171]:49164 "EHLO
-	mail-ia0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758004Ab3BKRWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 12:22:40 -0500
-Received: by mail-ia0-f171.google.com with SMTP id z13so6680863iaz.30
-        for <git@vger.kernel.org>; Mon, 11 Feb 2013 09:22:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:reply-to:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=566Dp3Gbet0FP16UmyEI31J7yTmF5SJxO7IGWj4CPIg=;
-        b=L9SCe6vwZYJrjV3zmvOgVccOTS/rSEf6LK7oHpbnkhQh2RoMC1lY8tJRa6arjJCXCw
-         ZZQ+yFLL9rgUfLc7cwbjR9JoPIc2+rx2P58GiWBaFvDmpsnOU41qsCurmIFXvul0lExd
-         wd/Hi+l5Fkd5lI3xaY99EF7RWypDRxIHvE9f/np5YG2kMsnOvShr5nFrjCYNpNYbCsUO
-         QFGvmYnCOhJDlBFkbQEmCL2JYnfQTH4IgZpX6t02jlVl3APdc+dduwf3JDHpe+MTp4mE
-         4oOyeQnkX0tmJw2JqhFdvIacUesOgFUOw8AOxhTGOgNn8HlDLHT8WAVGfJuyHeLY84Cj
-         uS6A==
-X-Received: by 10.50.151.176 with SMTP id ur16mr13021373igb.30.1360603359542;
- Mon, 11 Feb 2013 09:22:39 -0800 (PST)
-Received: by 10.64.164.139 with HTTP; Mon, 11 Feb 2013 09:21:58 -0800 (PST)
-In-Reply-To: <20130211171957.GG16402@sigill.intra.peff.net>
+	id S1758177Ab3BKR15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 12:27:57 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44390 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758357Ab3BKR1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 12:27:54 -0500
+Received: (qmail 24247 invoked by uid 107); 11 Feb 2013 17:29:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Feb 2013 12:29:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Feb 2013 12:27:52 -0500
+Content-Disposition: inline
+In-Reply-To: <7v38x2ojl1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216065>
 
-On Mon, Feb 11, 2013 at 6:19 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Feb 11, 2013 at 09:07:53AM -0800, Junio C Hamano wrote:
->
->> Erik Faye-Lund <kusmabite@gmail.com> writes:
->>
->> > However, since git only looks at one byte at the time for
->> > short-options, it ends up reporting a partial UTF-8 sequence
->> > in such cases, leading to corruption of the output.
->>
->> Isn't it a workable, easier and more robust alternative to punt and
->> use the entire ctx.argv[0] as unrecognized?
->
-> Yes, but it regresses the usability:
->
->   [before]
->   $ git foobar -qrxs
->   unknown switch: x
->
->   [after]
->   $ git foobar -qrxs
->   unknown switch: -qrxs
->
-> One is much more informative than the other, and you are punishing the
-> common ascii case for the extremely uncommon case of utf-8. Maybe:
->
->   if (isascii(*ctx.opt))
->           error("unknown option `%c'", *ctx.opt);
->   else
->           error("unknown multi-byte short option in string: `%s'", ctx.argv[0]);
->
-> which only kicks in in the uncommon case (and extends the error message
-> to make it more clear why we are showing the whole string).
+On Mon, Feb 11, 2013 at 09:18:18AM -0800, Junio C Hamano wrote:
 
-Yes. This is IMO a much better approach, and it doesn't involve trying
-to figure out what encoding the string is. Thanks!
+> That "shell-disabled" thing was to allow customizing the existing
+> die() that triggers here:
+> [...]
+> so it is more like
+> 
+> 	if ! test -d $HOME/git-shell-commands
+> 	then
+> 		if test -x /etc/git/shell-disabled
+>                 then
+> 			exec /etc/git/shell-disabled
+> 		else
+> 			die Interactive is not enabled
+> 		fi
+> 	fi
+>         ... do whatever in run_shell() ...
+
+OK, that is equivalent to what I said (or at least what I was trying to
+say :) ).
+
+> > That at least means you can apply _whether_ to disable the shell
+> > selectively for each user (by providing or not a git-shell-commands
+> > directory), but you cannot individually select the script that runs for
+> > that user.  But it's probably still flexible enough;...
+> 
+> Such a flexibility is not a goal of /etc/git/shell-disabled.  The
+> sole goal is to make the life easier for those site owners that do
+> not want any interactive shell access to give more friendly and
+> customized error message.
+> 
+> Those who want further flexibility can exit with non-zero from the
+> "help" (which is still a misnomer for a hook to disable interactive
+> for the user).
+
+Ah, I thought you were proposing shell-disabled _instead_ of Jonathan's
+patch, not in addition to.
+
+> My primary objection is that implementing only that "more flexible
+> but requires more configuration work" solution without giving
+> simpler solution (i.e. just one thing to configure) to the majory of
+> site owners who only have simpler problem to solve (i.e. just want
+> to customize "no interactive here"), and saying that the latter can
+> be done on top.  It is backwards mentality.
+
+Oh, absolutely. The easy case should be easy, and the hard case
+possible. But another way of doing that (which would also make life
+easier for admins who want to share config besides shell-disabled) would
+be:
+
+  1. Give Jonathan's magic meaning to ~/git-shell-commands/help's exit
+     code.
+
+  2. Make /etc/git/shell-commands a fallback if ~/git-shell-commands
+     does not exist.
+
+That turns your /etc/git/shell-disabled into /etc/git/shell-commands/help.
+It is just as simple to do a site-wide change, still allows per-user
+overrides, and additionally gives people who _do_ want the interactive
+commands the ability to configure them site-wide instead of symlinking a
+directory into everybody's homedir.
+
+The only downside is that it has the confusing "create this directory to
+turn on interactivity, then create a file in it to turn it back off"
+feature.
+
+I admit I don't care too much, though. I have never actually used
+git-shell, as my systems are all either too small (i.e., users are
+trusted and have shell access) or too big (grown well beyond a single
+server that connects users straight to git-shell). In fact, there seems
+to be a lot of guessing in this thread about what people would want, as
+it seems none of us actually uses the feature. Maybe that is a sign it
+is being over-engineered. :)
+
+-Peff
