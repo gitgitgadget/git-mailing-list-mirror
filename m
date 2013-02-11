@@ -1,90 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Include xmlparse.h instead of expat.h on QNX
-Date: Mon, 11 Feb 2013 13:41:48 -0800
-Message-ID: <7vehgmle8z.fsf@alter.siamese.dyndns.org>
-References: <1360616395-18912-1-git-send-email-kraai@ftbfs.org>
- <20130211210621.GC32740@sigill.intra.peff.net>
+Subject: Re: [PATCH] rebase -i: respect core.commentchar
+Date: Mon, 11 Feb 2013 13:49:27 -0800
+Message-ID: <7va9raldw8.fsf@alter.siamese.dyndns.org>
+References: <aa1deab1de2e0f998b9ac0bc8c2d76557429a46b.1360610368.git.john@keeping.me.uk>
+ <7vzjzali6a.fsf@alter.siamese.dyndns.org>
+ <20130211213900.GE2270@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matt Kraai <kraai@ftbfs.org>, git@vger.kernel.org,
-	Matt Kraai <matt.kraai@amo.abbott.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 11 22:42:16 2013
+Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Feb 11 22:50:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U518h-0007Zl-7I
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 22:42:15 +0100
+	id 1U51G6-0006OT-Ak
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Feb 2013 22:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932620Ab3BKVlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 16:41:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45494 "EHLO
+	id S932686Ab3BKVtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 16:49:31 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53539 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932219Ab3BKVlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 16:41:51 -0500
+	id S932674Ab3BKVta (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 16:49:30 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0352C949;
-	Mon, 11 Feb 2013 16:41:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E59EBB0AC;
+	Mon, 11 Feb 2013 16:49:29 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wsaZVMrB+mNdwY/5VmrBCo7GX1g=; b=ao7NKQ
-	Dghtj+7Y0+5sr63MYnEkMx6ega19+ToFANPWE1toHUhRHd7fBrazvgzEMnfhkrg1
-	/bJkoqOU3MyhVZrMV1jRwNLruuKvbDa5Y9pJTrDLx+HBVPhCn1wUyN6hU4wQrFe4
-	4I5HHSpai3jaR/F0fOygmuNOyS506/qq0iDQk=
+	:content-type; s=sasl; bh=yu/lNqm6cGZYjfWuqsqEuxOJ4V8=; b=j1bL+o
+	4VzNCC5Ir6ps8Jp4xBLf6d56BhOtmWxg/rk5o2EhynJ+W9ld+sBtclrqIfaYqn5U
+	51Kquk6QzKQAHaCdfxHE3tO4RVNpS4IGCeDcjQMxNUNm9vawkhjAc1Kz/1lSC5wu
+	gNhzUvLiR4aHx/Q02axr7gADmgqWWhjZYbQJU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BcBBDh3E09ZliMhGlvzJb/2+YgzLrycM
-	qRdlnvN3/UucuiQJwKaBJOLCZUW6pNE3vwIcFXcjW2ti3Ude/I8ZX463PtsGp/Fe
-	UsKenfEPmEEBkdD9v9OWDIpq39447dcIR/2YhWC8Y9/a2ri1K1T97NZjxpRy8YX+
-	Cj4xT+c36rM=
+	:content-type; q=dns; s=sasl; b=nBIk/kUox3xunOSVrPjghjHPrv0Qr77N
+	QYBNp4hUsX7aKFJJrT1PeYmrs5Z5lfB2Mq3+iMhoi6KkXmqXBkdMDkBljrG7uwou
+	CNYSNcegQmiVD5scSoMUNa6E58V4U2UDPzUVTDycUvilPy16kztDmcqSG+XKELyx
+	OZEuhYZfW9k=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5957C948;
-	Mon, 11 Feb 2013 16:41:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA0C5B0AB;
+	Mon, 11 Feb 2013 16:49:29 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 49212C944; Mon, 11 Feb 2013
- 16:41:50 -0500 (EST)
-In-Reply-To: <20130211210621.GC32740@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 11 Feb 2013 16:06:21 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6D4C4B0A7; Mon, 11 Feb 2013
+ 16:49:29 -0500 (EST)
+In-Reply-To: <20130211213900.GE2270@serenity.lan> (John Keeping's message of
+ "Mon, 11 Feb 2013 21:39:00 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D7BD8B48-7493-11E2-9F1B-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E969F588-7494-11E2-A9A1-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216096>
 
-Jeff King <peff@peff.net> writes:
+John Keeping <john@keeping.me.uk> writes:
 
-> On Mon, Feb 11, 2013 at 12:59:55PM -0800, Matt Kraai wrote:
+>> I do not think we would want to worry about comment_char being a
+>> funny character that can possibly interfere with regexp.  Can't we
+>> do this with "git stripspace" piped to "wc -l" or something?
 >
->> From: Matt Kraai <matt.kraai@amo.abbott.com>
+> I didn't know about "git stripspace",...
+>> > -# If you remove a line here THAT COMMIT WILL BE LOST.
+>> > +	sed -e "s/^/$comment_char /" >>"$todo" <<EOF
 >> 
->> QNX 6.3.2 through 6.5.0 include Expat 1.1, which provides xmlparse.h
->> instead of expat.h, so include the former on QNX systems.
+>> When $comment_char is slash or backslash this will break.
+>> Perhaps "stripspace --comment-lines" can be used here.
 >
-> So it is not just QNX, but rather older versions of expat?
+> Not in this case - this is adding the comment char in front of each
+> line.  Is there a better option than this?
 >
->> diff --git a/http-push.c b/http-push.c
->> index 9923441..55c575e 100644
->> --- a/http-push.c
->> +++ b/http-push.c
->> @@ -11,7 +11,11 @@
->>  #include "list-objects.h"
->>  #include "sigchain.h"
->>  
->> +#ifndef __QNX__
->>  #include <expat.h>
->> +#else
->> +#include <xmlparse.h>
->> +#endif
->
-> If that is the case, should this #ifdef look for EXPAT_NEEDS_XMLPARSE_H,
-> and that macro triggered externally?
+> 	while read -r line
+> 	do
+> 		printf '%s %s\n' "$comment_char" "$line"
+> 	done >> "$todo" <<EOF
+> 	...
+> 	EOF
 
-Heh, our mails crossed.  Another thing neither of us mentioned is
-how compatible the subset of libexpat our codebase uses to what was
-offered by the older versions of expat.  I would not be surprised if
-nobody has tried running the resulting binary linked with expat 1.
+Perhaps
+
+	git stripspace --comment-lines <<EOF
+        ...
+        EOF
+
+is a better option that that loop.
