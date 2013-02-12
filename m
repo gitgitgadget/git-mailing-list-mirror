@@ -1,79 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/3] Documentation/Makefile: move infodir to be with
- other '*dir's
-Date: Tue, 12 Feb 2013 13:01:38 -0800
-Message-ID: <20130212210138.GE12240@google.com>
-References: <cover.1360700102.git.john@keeping.me.uk>
- <dcc4f597f26531b79bd9f097c73f6f186b73c81d.1360700102.git.john@keeping.me.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] completion: support 'git config --local'
+Date: Tue, 12 Feb 2013 16:11:40 -0500
+Message-ID: <20130212211140.GA29358@sigill.intra.peff.net>
+References: <85E0E68E8961D64E9200C534AC5E1B240A443EDC@RED-INF-EXMB-P1.esri.com>
+ <1360671642-10272-1-git-send-email-Matthieu.Moy@imag.fr>
+ <7vzjz9h1w0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
-	Jakub Narebski <jnareb@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Feb 12 22:02:18 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	Dasa Paddock <dpaddock@esri.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 22:12:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5MzS-0000D2-JT
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 22:02:10 +0100
+	id 1U5N9L-00056T-9i
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 22:12:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759468Ab3BLVBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 16:01:46 -0500
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:44799 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754630Ab3BLVBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 16:01:43 -0500
-Received: by mail-ie0-f179.google.com with SMTP id k11so738966iea.10
-        for <git@vger.kernel.org>; Tue, 12 Feb 2013 13:01:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=pZXgH1JtPywsGSCDYUAUSzQ9Gmvos9WDIqBcndUTsi8=;
-        b=hc0TVgmKGlUbBn19VUq74dtcRn1XLfDrdYCMLmeveH5/tIdlBH6ChO308/AL5OXoU2
-         I3+e/1nOZyz0PzdVGJR0XKnPUho3rxQb37OgnXQEIaygwGA4NLg/vygPeYReZ8L5a3fx
-         yhkbCCupljAbPcc3/+bY8TXOU8Jw+76yNpQlzn1RrimuS9s6lwZREVPMALdjp0KEZvEM
-         D8TQK9h1ddBEq784l0SFxqHuwLmOdEKLpZtt4joifzOfjF8jzqTGrJUrLwjZLH4em5wv
-         Kcx6hN9AOAjDvLXlfA5xRfJVZKpprOnWc6U17fX2trRSqd/PEwdeazlUDIAy+sp9rqf2
-         9zHA==
-X-Received: by 10.50.222.232 with SMTP id qp8mr6458385igc.25.1360702902957;
-        Tue, 12 Feb 2013 13:01:42 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id nh1sm15970046igc.4.2013.02.12.13.01.40
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 12 Feb 2013 13:01:41 -0800 (PST)
+	id S1759316Ab3BLVLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 16:11:44 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45505 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759427Ab3BLVLn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 16:11:43 -0500
+Received: (qmail 5834 invoked by uid 107); 12 Feb 2013 21:13:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Feb 2013 16:13:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Feb 2013 16:11:40 -0500
 Content-Disposition: inline
-In-Reply-To: <dcc4f597f26531b79bd9f097c73f6f186b73c81d.1360700102.git.john@keeping.me.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7vzjz9h1w0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216199>
 
-John Keeping wrote:
+On Tue, Feb 12, 2013 at 09:34:39AM -0800, Junio C Hamano wrote:
 
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-[...]
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -81,6 +81,7 @@ DOC_MAN7 = $(patsubst %.txt,%.7,$(MAN7_TXT))
->  prefix ?= $(HOME)
->  bindir ?= $(prefix)/bin
->  htmldir ?= $(prefix)/share/doc/git-doc
-> +infodir ?= $(prefix)/share/info
->  pdfdir ?= $(prefix)/share/doc/git-doc
->  mandir ?= $(prefix)/share/man
->  man1dir = $(mandir)/man1
-> @@ -98,7 +99,6 @@ RM ?= rm -f
->  MAN_REPO = ../../git-manpages
->  HTML_REPO = ../../git-htmldocs
->  
-> -infodir ?= $(prefix)/share/info
->  MAKEINFO = makeinfo
+> I see the second hunk is new.  Comments?
+> [...]
+> > @@ -1676,7 +1676,7 @@ _git_config ()
+> >  	case "$cur" in
+> >  	--*)
+> >  		__gitcomp "
+> > -			--global --system --file=
+> > +			--system --global --local --file=
+> >  			--list --replace-all
+> >  			--get --get-all --get-regexp
+> >  			--add --unset --unset-all
 
-Is this another stylefix or is there a functional reason for this
-change?
+It makes sense to me. It just means that "--local" itself gets completed
+(while the other hunk is about using the presence of "--local" impacting
+other completion). It's an orthogonal issue, but I don't mind them in
+the same patch.
+
+> How would this interract with the writing side of "git config"?
+> "git config --local foo.bar value" and "git config foo.bar value"
+> are the same, no?
+> 
+> Is it "yes they are the same but it does not hurt?"
+
+It doesn't affect writing at all. The change is in
+__git_config_get_set_variables, which is used only here:
+
+  --get|--get-all|--unset|--unset-all)
+        __gitcomp_nl "$(__git_config_get_set_variables)"
+
+So it is purely about completing existing variables, and it's right to
+limit itself to a particular file if we know that is what has been
+given.
+
+I'm not sure I understand the original poster's point about "git config
+-l --local". "-l" does not take a limiter, does it?
+
+-Peff
