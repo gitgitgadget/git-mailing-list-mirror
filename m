@@ -1,54 +1,49 @@
-From: "Olsen, Alan R" <alan.r.olsen@intel.com>
-Subject: Fetch and -t
-Date: Tue, 12 Feb 2013 00:41:49 +0000
-Message-ID: <4B2793BF110AAB47AB0EE7B9089703854FEE40B6@fmsmsx110.amr.corp.intel.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2] parse-options: report uncorrupted multi-byte options
+Date: Mon, 11 Feb 2013 20:00:32 -0500
+Message-ID: <20130212010032.GA4895@sigill.intra.peff.net>
+References: <1360624428-4728-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 12 01:42:16 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	matthieu.moy@grenoble-inp.fr, tboegi@web.de
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 02:00:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U53wt-0007gz-PR
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 01:42:16 +0100
+	id 1U54F0-00047U-CR
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 02:00:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761087Ab3BLAlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 19:41:52 -0500
-Received: from mga03.intel.com ([143.182.124.21]:55866 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760962Ab3BLAlv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Feb 2013 19:41:51 -0500
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga101.ch.intel.com with ESMTP; 11 Feb 2013 16:41:50 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.84,646,1355126400"; 
-   d="scan'208";a="255669042"
-Received: from fmsmsx108.amr.corp.intel.com ([10.19.9.228])
-  by azsmga001.ch.intel.com with ESMTP; 11 Feb 2013 16:41:50 -0800
-Received: from fmsmsx153.amr.corp.intel.com (10.19.17.7) by
- FMSMSX108.amr.corp.intel.com (10.19.9.228) with Microsoft SMTP Server (TLS)
- id 14.1.355.2; Mon, 11 Feb 2013 16:41:49 -0800
-Received: from FMSMSX110.amr.corp.intel.com ([169.254.12.199]) by
- FMSMSX153.amr.corp.intel.com ([169.254.11.105]) with mapi id 14.01.0355.002;
- Mon, 11 Feb 2013 16:41:49 -0800
-Thread-Topic: Fetch and -t
-Thread-Index: Ac4Iub3zTrxaYZv+T/CwQ9/5TEcQRA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.1.200.106]
+	id S932866Ab3BLBAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 20:00:35 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44763 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932674Ab3BLBAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 20:00:34 -0500
+Received: (qmail 28973 invoked by uid 107); 12 Feb 2013 01:02:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Feb 2013 20:02:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Feb 2013 20:00:32 -0500
+Content-Disposition: inline
+In-Reply-To: <1360624428-4728-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216108>
 
-I have found that if I add a remote and do a "git fetch -t -f remote_name" that it *only* pulls tags.
+On Tue, Feb 12, 2013 at 12:13:48AM +0100, Erik Faye-Lund wrote:
 
-Reading the man page it seems like it should pull all the remotes and all the tags and the commits only reachable by tags.
+> I decided to change the text from what Jeff suggested; all we know is
+> that it's non-ASCII. It might be Latin-1 or some other non-ASCII,
+> single byte encoding. And since we're trying not to care, let's also
+> try to not be overly specific :)
 
-Am I misreading this or it supposed to work this way.  I don't mind doing two fetches to get everything, but the documentation needs to be a little clearer.
+Yeah, that makes more sense (I did not put too much thought into the
+original wording). Thanks.
+
+-Peff
