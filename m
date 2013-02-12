@@ -1,390 +1,220 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH v4] submodule: add 'deinit' command
-Date: Tue, 12 Feb 2013 12:11:48 -0500
-Message-ID: <CABURp0oQcPotK20QcqCG1pGQPVoa4RnN2nDA=iQoKS99gnPEAQ@mail.gmail.com>
-References: <5112C6F6.4030607@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 3/4] count-objects: report garbage files in pack
+ directory too
+Date: Tue, 12 Feb 2013 09:23:17 -0800
+Message-ID: <7va9r9igze.fsf@alter.siamese.dyndns.org>
+References: <1360661277-17273-1-git-send-email-pclouds@gmail.com>
+ <1360661277-17273-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 12 18:12:57 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 18:23:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5JPX-00047Y-3Z
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 18:12:51 +0100
+	id 1U5Ja5-0005K6-Hf
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 18:23:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933464Ab3BLRM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 12:12:29 -0500
-Received: from mail-vb0-f44.google.com ([209.85.212.44]:56568 "EHLO
-	mail-vb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933370Ab3BLRMW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 12:12:22 -0500
-Received: by mail-vb0-f44.google.com with SMTP id fr13so196405vbb.3
-        for <git@vger.kernel.org>; Tue, 12 Feb 2013 09:12:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=1k6e6cnf6F9MSSyeRy/cz7AvB141JGyW3VHDK7hGKI8=;
-        b=jZxizfPpHXT53xtHdfWQu+4nDE6OrNNSMdYyXciPHbPDXHAC51C6G51xzhbxA0uFGD
-         xGKzyYJNaPohzGZslRsjiJy903ArsaGL7Cj8xn3BPkQGQwlvS4cGhjPyiYI3I06Dd7Cd
-         SjDi3ixqDLB0MEWWUI5Vt/76QuvI9UIOgAT1ZZWVJ8Rykkvry18DtRcUEFrQozvhhHbH
-         T6edJexXD1fUj0idsBL7K+boZr+Vm3Ya2IAHUI6CNNalKXF70MWqnB2VhyrWKBtGGdve
-         cxrFZH/ih3mLNHZZG6SsmClyNj/g5xqVtNmCAFrDvDZ3i0mavX1u+ENRtdSii7FO7cKg
-         Ywjg==
-X-Received: by 10.220.228.74 with SMTP id jd10mr24918430vcb.65.1360689128317;
- Tue, 12 Feb 2013 09:12:08 -0800 (PST)
-Received: by 10.58.201.103 with HTTP; Tue, 12 Feb 2013 09:11:48 -0800 (PST)
-In-Reply-To: <5112C6F6.4030607@web.de>
+	id S932915Ab3BLRXV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2013 12:23:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42105 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933304Ab3BLRXU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2013 12:23:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B58CAC1DC;
+	Tue, 12 Feb 2013 12:23:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=WvHryJ5lYxHY
+	VB6+DGCYHz2aFOY=; b=oNir7/8kvmZXqey0txb8y/GSf7ycJPkhGAsi1n+ArQww
+	r6TBcRr8UOURxJwwvxp1OkuOcOUV9y/triNIl1L7srUdbPHpJ4nvp8YjYAsnEip4
+	ZTBH2V+bDstsIzDA8mKXpd/ntAAmf+TMEaXzFbKY5D6+TSOXrZVeZ2pAQFRIZwY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MM6/TZ
+	QS0DIvR0qowNlLqr7nDEMZ0HiIEI+9e19tBMlauknBSTKVol8xYKPg3LJzlppeKp
+	/q4oiXuqb3crN5iNnJhYYqUelfVP7cN87NCYoLgw9QZ2bwFL5f+I87WydwvLP2iS
+	RG2ffRKUUwgKdUPcG47jM0vfBTaasFjlE1OO8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8C53C1DB;
+	Tue, 12 Feb 2013 12:23:19 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BE5CDC1D7; Tue, 12 Feb 2013
+ 12:23:18 -0500 (EST)
+In-Reply-To: <1360661277-17273-4-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 12 Feb
+ 2013 16:27:56 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E49144F4-7538-11E2-9A7A-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216163>
 
-I haven't tried it yet, but I have some comments.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-On Wed, Feb 6, 2013 at 4:11 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> With "git submodule init" the user is able to tell git he cares about one
-> or more submodules and wants to have it populated on the next call to "git
-> submodule update". But currently there is no easy way he could tell git he
-> does not care about a submodule anymore and wants to get rid of his local
-> work tree (except he knows a lot about submodule internals and removes the
-> "submodule.$name.url" setting from .git/config together with the work tree
-> himself).
->
-> Help those users by providing a 'deinit' command. This removes the whole
-> submodule.<name> section from .git/config either for the given
-> submodule(s) or for all those which have been initialized if '.' is
-> given. Fail if the current work tree contains modifications unless
-> forced. Complain when for a submodule given on the command line the url
-> setting can't be found in .git/config, but nonetheless don't fail.
->
-> Add tests and link the man pages of "git submodule deinit" and "git rm"
-> to assist the user in deciding whether removing or unregistering the
-> submodule is the right thing to do for him.
->
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
->
-> Changes since v3:
-> - Add deinit to the --force documentation of "git submodule"
-> - Never remove submodules containing a .git dir, even when forced
-> - Diagnostic output when "rm -rf" or "mkdir" fails
-> - More test cases
->
->
->  Documentation/git-rm.txt        |   4 ++
->  Documentation/git-submodule.txt |  18 +++++++-
->  git-submodule.sh                |  78 ++++++++++++++++++++++++++++++-
->  t/t7400-submodule-basic.sh      | 100 ++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 198 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-> index 92bac27..1d876c2 100644
-> --- a/Documentation/git-rm.txt
-> +++ b/Documentation/git-rm.txt
-> @@ -149,6 +149,10 @@ files that aren't ignored are present in the submodules work tree.
->  Ignored files are deemed expendable and won't stop a submodule's work
->  tree from being removed.
->
-> +If you only want to remove the local checkout of a submodule from your
-> +work tree without committing the removal,
-> +use linkgit:git-submodule[1] `deinit` instead.
-> +
->  EXAMPLES
->  --------
->  `git rm Documentation/\*.txt`::
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index a0c9df8..bc06159 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -13,6 +13,7 @@ SYNOPSIS
->               [--reference <repository>] [--] <repository> [<path>]
->  'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
->  'git submodule' [--quiet] init [--] [<path>...]
-> +'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
->  'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch] [--rebase]
->               [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
->  'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
-> @@ -134,6 +135,19 @@ init::
->         the explicit 'init' step if you do not intend to customize
->         any submodule locations.
->
-> +deinit::
-> +       Unregister the given submodules, i.e. remove the whole
-> +       `submodule.$name` section from .git/config together with their work
-> +       tree. Further calls to `git submodule update`, `git submodule foreach`
-> +       and `git submodule sync` will skip any unregistered submodules until
-> +       they are initialized again, so use this command if you don't want to
-> +       have a local checkout of the submodule in your work tree anymore. If
-> +       you really want to remove a submodule from the repository and commit
-> +       that use linkgit:git-rm[1] instead.
-> ++
-> +If `--force` is specified, the submodule's work tree will be removed even if
-> +it contains local modifications.
-> +
->  update::
->         Update the registered submodules, i.e. clone missing submodules and
->         checkout the commit specified in the index of the containing repository.
-> @@ -213,8 +227,10 @@ OPTIONS
->
->  -f::
->  --force::
-> -       This option is only valid for add and update commands.
-> +       This option is only valid for add, deinit and update commands.
->         When running add, allow adding an otherwise ignored submodule path.
-> +       When running deinit the submodule work trees will be removed even if
-> +       they contain local changes.
->         When running update, throw away local changes in submodules when
->         switching to a different commit; and always run a checkout operation
->         in the submodule, even if the commit listed in the index of the
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 004c034..f1b552f 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -8,6 +8,7 @@ dashless=$(basename "$0" | sed -e 's/-/ /')
->  USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
->     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
->     or: $dashless [--quiet] init [--] [<path>...]
-> +   or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
->     or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
->     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
->     or: $dashless [--quiet] foreach [--recursive] <command>
-> @@ -547,6 +548,81 @@ cmd_init()
->  }
->
->  #
-> +# Unregister submodules from .git/config and remove their work tree
-> +#
-> +# $@ = requested paths (use '.' to deinit all submodules)
-> +#
-> +cmd_deinit()
-> +{
-> +       # parse $args after "submodule ... init".
-> +       while test $# -ne 0
-> +       do
-> +               case "$1" in
-> +               -f|--force)
-> +                       force=$1
-> +                       ;;
-> +               -q|--quiet)
-> +                       GIT_QUIET=1
-> +                       ;;
-> +               --)
-> +                       shift
-> +                       break
-> +                       ;;
-> +               -*)
-> +                       usage
-> +                       ;;
-> +               *)
-> +                       break
-> +                       ;;
-> +               esac
-> +               shift
-> +       done
-> +
-> +       if test $# = 0
-> +       then
-> +               die "$(eval_gettext "Use '.' if you really want to deinitialize all submodules")"
-> +       fi
-> +
-> +       module_list "$@" |
-> +       while read mode sha1 stage sm_path
-> +       do
-> +               die_if_unmatched "$mode"
-> +               name=$(module_name "$sm_path") || exit
-> +               url=$(git config submodule."$name".url)
-> +               if test -z "$url"
-> +               then
-> +                       say "$(eval_gettext "No url found for submodule path '\$sm_path' in .git/config")"
+> +/* A hook for count-objects to report invalid files in pack director=
+y */
+> +extern void (*report_garbage)(const char *desc, const char *path, in=
+t len, const char *name);
 
-Is it safe to shelter the user a little bit more from the git
-internals here and say instead:
+We may want to document the strange way the last three parameters
+are used somewhere.  e.g.
 
-   Submodule '\$sm_path' is not initialized.
+	shows "path" (if "name" is NULL), or prepends "path" in
+	front of name (otherwise); only for the latter, "path" can
+	be a string that is not NUL-terminated but its length
+	specified with "len" and in that case a slash is inserted
+	between the path and the "name".
 
+When described clearly, it sounds somewhat ugly and incoherent API,
+even though it covers the immediate need X-<.
 
-Also, I think this code will show this message for each submodule on
-'git submodule deinit .'  But I think I would prefer to suppress it in
-that case.  If I have not explicitly stated which submodules to
-deinit, then I do not think git should complain that some of them are
-not initialized.
+> +	sort_string_list(list);
+> +
+> +	for (p =3D packed_git; p; p =3D p->next) {
+> +		struct string_list_item *item;
+> +		if (!p->pack_local)
+> +			continue;
+> +		strbuf_reset(&sb);
+> +		strbuf_add(&sb, p->pack_name,
+> +			   strlen(p->pack_name) - 5); /* ".pack" */
+> +		item =3D string_list_lookup(list, sb.buf);
+> +		if (!item)
+> +			continue;
+> +		/*
+> +		 * string_list_lookup does not guarantee to return the
+> +		 * first matched string if it's duplicated.
+> +		 */
 
-> +                       continue
-> +               fi
-> +
-> +               # Remove the submodule work tree (unless the user already did it)
-> +               if test -d "$sm_path"
-> +               then
-> +                       # Protect submodules containing a .git directory
-> +                       if test -d "$sm_path/.git"
-> +                       then
-> +                               echo >&2 "$(eval_gettext "Submodule work tree $sm_path contains a .git directory")"
-> +                               die "$(eval_gettext "(use 'rm -rf' if you really want to remove it including all of its history)")"
+Do we need to even allow duplication?  Why does prepare_packed_git_one(=
+)
+below have to split the pathname into the base and extension in the fir=
+st
+place?
 
-I expect this is the right thing to do for now.  But I wonder if we
-can also move $sm_path/.git to $GIT_DIR/modules/$sm_path in this case
-(though I think I am not spelling this path correctly).  Would that be
-ok?  What extra work is needed to relocate the .git dir like this?
+If you collect all pathnames that end with known extensions (".idx",
+".pack" and ".keep") in the sorted "garbage" list as separate entries i=
+n
+prepare_packed_git_one(), report_pack_garbage() can do the right thing
+without trusting or iterating over packed_git list at all, I think.  As
+the entries are sorted, .pack, .idx and all other valid .ext are groupe=
+d
+together for the same basename.  If you see a group that have both .pac=
+k
+and .idx, the group is good.  Otherwise, everybody in the group is bad
+(e.g. a lonely .pack file without .idx is an unusable garbage).
 
-> +                       fi
-> +
-> +                       if test -z "$force"
-> +                       then
-> +                               git rm -n "$sm_path" ||
-> +                               die "$(eval_gettext "Submodule work tree $sm_path contains local modifications, use '-f' to discard them")"
+How about doing it something along this line, perhaps?
 
-Nit, grammar: use a semicolon instead of a comma.
+	int i;
+	int beginning_of_this_name =3D -1;
+        int seen_bits =3D 0; /* 01 for .idx, 02 for .pack */
+	for (i =3D 0; i < list->nr; i++) {
+        	if (beginning_of_this_name < 0)
+                	beginning_of_this_name =3D i;
+		else if (list->items[i] and list->items[beginning_of_this_name]
+                	 share the same basename)
+			; /* keep scanning */
+		else {
+                	/* one name ended at (i-1) */
+			if (seen_bits =3D=3D 3)
+				; /* both .idx and .pack exist; good */
+			else
+			        report_garbage_for_one_name(list, beginning_of_this_name, i,
+                                		seen_bits);
+			seen_bits =3D 0;
+                        beginning_of_this_name =3D i;
+		}
+                if (list->items[i] is ".idx")
+			seen_bits |=3D 1;
+                if (list->items[i] is ".pack")
+			seen_bits |=3D 2;
 
-> +                       fi
-> +                       rm -rf "$sm_path" || say "$(eval_gettext "Could not remove submodule work tree '\$sm_path'")"
-> +               fi
-> +
-> +               mkdir "$sm_path" || say "$(eval_gettext "Could not create empty submodule directory '\$sm_path'")"
-> +
-> +               # Remove the whole section so we have a clean state when the
-> +               # user later decides to init this submodule again
-> +               git config --remove-section submodule."$name" &&
-> +               say "$(eval_gettext "Submodule '\$name' (\$url) unregistered for path '\$sm_path'")"
-> +       done
-> +}
-> +
-> +#
->  # Update each submodule path to correct revision, using clone and checkout as needed
->  #
->  # $@ = requested paths (default to all)
-> @@ -1157,7 +1233,7 @@ cmd_sync()
->  while test $# != 0 && test -z "$command"
->  do
->         case "$1" in
-> -       add | foreach | init | update | status | summary | sync)
-> +       add | foreach | init | deinit | update | status | summary | sync)
->                 command=$1
->                 ;;
->         -q|--quiet)
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index 2683cba..f54a40d 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -757,4 +757,104 @@ test_expect_success 'submodule add with an existing name fails unless forced' '
->         )
->  '
->
-> +test_expect_success 'set up a second submodule' '
-> +       git submodule add ./init2 example2 &&
-> +       git commit -m "submodle example2 added"
+	}
+	if (0 <=3D beginning_of_this_name && seen_bits !=3D 3)
+	        report_garbages_for_one_name(list, beginning_of_this_name, lis=
+t->nr, seen_bits);
 
-Nit: submodule is misspelled
+with a helper function report_garbage_for_one_name() that would look li=
+ke this:
 
-> +'
-> +
-> +test_expect_success 'submodule deinit should remove the whole submodule section from .git/config' '
-> +       git config submodule.example.foo bar &&
-> +       git config submodule.example2.frotz nitfol &&
-> +       git submodule deinit init &&
-> +       test -z "$(git config submodule.example.url)" &&
-> +       test -z "$(git config submodule.example.foo)" &&
-> +       test -n "$(git config submodule.example2.url)" &&
-> +       test -n "$(git config submodule.example2.frotz)" &&
-> +       test -f example2/.git &&
-> +       rmdir init
-> +'
-> +
-> +test_expect_success 'submodule deinit . deinits all initialized submodules' '
-> +       git submodule update --init &&
-> +       git config submodule.example.foo bar &&
-> +       git config submodule.example2.frotz nitfol &&
-> +       test_must_fail git submodule deinit &&
-> +       git submodule deinit . &&
-> +       test -z "$(git config submodule.example.url)" &&
-> +       test -z "$(git config submodule.example.foo)" &&
-> +       test -z "$(git config submodule.example2.url)" &&
-> +       test -z "$(git config submodule.example2.frotz)" &&
-> +       rmdir init example2
-> +'
-> +
-> +test_expect_success 'submodule deinit deinits a submodule when its work tree is missing or empty' '
-> +       git submodule update --init &&
-> +       rm -rf init example2/* example2/.git &&
-> +       git submodule deinit init example2 &&
-> +       test -z "$(git config submodule.example.url)" &&
-> +       test -z "$(git config submodule.example2.url)" &&
-> +       rmdir init
-> +'
-> +
-> +test_expect_success 'submodule deinit fails when the submodule contains modifications unless forced' '
-> +       git submodule update --init &&
-> +       echo X >>init/s &&
-> +       test_must_fail git submodule deinit init &&
-> +       test -n "$(git config submodule.example.url)" &&
-> +       test -f example2/.git &&
-> +       git submodule deinit -f init &&
-> +       test -z "$(git config submodule.example.url)" &&
-> +       rmdir init
-> +'
-> +
-> +test_expect_success 'submodule deinit fails when the submodule contains untracked files unless forced' '
-> +       git submodule update --init &&
-> +       echo X >>init/untracked &&
-> +       test_must_fail git submodule deinit init &&
-> +       test -n "$(git config submodule.example.url)" &&
-> +       test -f example2/.git &&
-> +       git submodule deinit -f init &&
-> +       test -z "$(git config submodule.example.url)" &&
-> +       rmdir init
-> +'
-> +
-> +test_expect_success 'submodule deinit fails when the submodule HEAD does not match unless forced' '
-> +       git submodule update --init &&
-> +       (
-> +               cd init &&
-> +               git checkout HEAD^
-> +       ) &&
-> +       test_must_fail git submodule deinit init &&
-> +       test -n "$(git config submodule.example.url)" &&
-> +       test -f example2/.git &&
-> +       git submodule deinit -f init &&
-> +       test -z "$(git config submodule.example.url)" &&
-> +       rmdir init
-> +'
-> +
-> +test_expect_success 'submodule deinit complains but does not fail when used on an uninitialized submodule' '
-> +       git submodule update --init &&
-> +       git submodule deinit init >actual &&
-> +       test_i18ngrep "Submodule .example. (.*) unregistered for path .init" actual
-> +       git submodule deinit init >actual &&
-> +       test_i18ngrep "No url found for submodule path .init. in .git/config" actual &&
-> +       git submodule deinit . >actual &&
-> +       test_i18ngrep "Submodule .example2. (.*) unregistered for path .example2" actual
-> +       rmdir init example2
-> +'
-> +
-> +test_expect_success 'submodule deinit fails when submodule has a .git directory even when forced' '
-> +       git submodule update --init &&
-> +       (
-> +               cd init &&
-> +               rm .git &&
-> +               cp -R ../.git/modules/example .git &&
-> +               GIT_WORK_TREE=. git config --unset core.worktree
-> +       ) &&
-> +       test_must_fail git submodule deinit init &&
-> +       test_must_fail git submodule deinit -f init &&
-> +       test -d init/.git &&
-> +       test -n "$(git config submodule.example.url)"
-> +'
-> +
->  test_done
-> --
-> 1.8.1.2.546.gea155c0
->
->
+	report_garbage_for_one_name(...) {
+                int j;
+                const char *msg;
+                switch (seen_bits) {
+                case 0: msg =3D "no corresponding .idx nor .pack"; brea=
+k;
+                case 1: msg =3D "no corresponding .pack"; break;
+                case 2: msg =3D "no corresponding .idx; break;
+                }
+                for (j =3D beginning_of_this_name; j < i; j++)
+                        report_garbage(msg, list->items[j]);
+	}
+
+=46or the above to work, prepare_packed_git_one() needs to retain only =
+the
+paths with known extensions in garbage list. "pack-deadbeef.unk" can an=
+d
+should be reported as a garbage immediately when it is seen without bei=
+ng
+placed in the list.
+
+> @@ -1045,9 +1100,33 @@ static void prepare_packed_git_one(char *objdi=
+r, int local)
+>  			if (!p)
+>  				continue;
+>  			install_packed_git(p);
+> -		}
+> +		} else if (!report_garbage) {
+> +			/*
+> +			 * the rest of this if-chain requires
+> +			 * report_garbage !=3D NULL. Stop the chain if
+> +			 * report_garbage is NULL.
+> +			 */
+> +			;
+> +		} else if (has_extension(de->d_name, ".pack")) {
+> +			struct string_list_item *item;
+> +			int n =3D strlen(path) - 5;
+> +			item =3D string_list_append_nodup(&garbage,
+> +							 xstrndup(path, n));
+> +			item->util =3D ".pack";
+> +			continue;
+> +		} else if (has_extension(de->d_name, ".idx")) {
+> +			struct string_list_item *item;
+> +			int n =3D strlen(path) - 4;
+> +			item =3D string_list_append_nodup(&garbage,
+> +							xstrndup(path, n));
+> +			item->util =3D ".idx";
+> +			continue;
+> +		} else
+> +			report_garbage("garbage found", path, 0, NULL);
+
+Hmm, where is a ".keep" file handled in this flow?
+
+The structure of the if/else cascade is much nicer than the earlier
+iterations, but wouldn't it be even more clear to do this?
+
+	if (is .idx file) {
+		... do that .idx thing ...
+	}
+
+	if (!report_garbage)
+        	continue; /* it does not matter what the file is */
+
+	if (is .pack) {
+		... remember that we saw this .pack ...
+	} else if (is .idx) {
+		... remember that we saw this .idx ...
+	} else if (is .keep) {
+		... remember that we saw this .keep ...
+        } else {
+        	... all else --- report as garbage immediately ...
+	}
