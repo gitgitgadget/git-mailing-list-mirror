@@ -1,112 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] rebase -i: respect core.commentchar
-Date: Tue, 12 Feb 2013 10:00:26 -0800
-Message-ID: <7vvc9xh0p1.fsf@alter.siamese.dyndns.org>
-References: <aa1deab1de2e0f998b9ac0bc8c2d76557429a46b.1360610368.git.john@keeping.me.uk>
- <7vzjzali6a.fsf@alter.siamese.dyndns.org>
- <20130211213900.GE2270@serenity.lan>
- <7va9raldw8.fsf@alter.siamese.dyndns.org>
- <20130211230804.GF2270@serenity.lan>
- <7vehgmjsno.fsf@alter.siamese.dyndns.org>
- <20130212095340.GG2270@serenity.lan>
- <7v4nhhigp5.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v4] submodule: add 'deinit' command
+Date: Tue, 12 Feb 2013 10:03:20 -0800
+Message-ID: <7vr4klh0k7.fsf@alter.siamese.dyndns.org>
+References: <5112C6F6.4030607@web.de>
+ <CABURp0oQcPotK20QcqCG1pGQPVoa4RnN2nDA=iQoKS99gnPEAQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Feb 12 19:01:00 2013
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 19:03:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5KA0-0001x9-Sk
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 19:00:53 +0100
+	id 1U5KCy-0000ew-VR
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 19:03:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933608Ab3BLSA3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 13:00:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58525 "EHLO
+	id S933659Ab3BLSDX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 13:03:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60335 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932300Ab3BLSA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 13:00:28 -0500
+	id S933628Ab3BLSDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 13:03:22 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34B0DC404;
-	Tue, 12 Feb 2013 13:00:28 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1302CC59A;
+	Tue, 12 Feb 2013 13:03:22 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yqZ9HAljalXp7ZLq+PtgBc99Cl8=; b=ZATgtt
-	gnxxyO4VnWNzptHOclU8dOYWfHZH3KUc948FR7B4Ihk7cgSstoLo+djXv4sxvy4/
-	pQk+FDlddrIMoWz4n793Rcvg/r84lgOE1treu3IoFSAqnJXB/sbAniSduIz83B88
-	M2HtutUydvzlz6eb38PQZvoaY0XNUfxH8v+68=
+	:content-type; s=sasl; bh=y38I3q5Yhk4RQMApyPMbumF+3oM=; b=BR2RCA
+	exGkv1/SmTFpPXHKmnXmqSaK59TdhHHA5390064HJo80pBgqq9xO+ExVxOSn/RfG
+	ZBhh8B0HTC87L2qRetQzXk+fQGbMvr/U5l/Ke+fpm5ndesValCgi/5858NIb06hl
+	TCpBC55M+Uqrl3XLEOvbKZdoockToqIRB0eNg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rlFc80AIxJKM2dZnjtm4kNyqZWjnJTRs
-	apkIJwY69Okh4Ad3EyLdH95bZoEd+hWXfT0Zzivp6oaLhLB4S7FY4/HozFgi9PME
-	DnHdnKTt9H6e5K9QFym4B7Y5X+3cziQVtl5b8V48GSSHCUYcpDdz04GzscHTAY2j
-	Bf4AWhwh2PE=
+	:content-type; q=dns; s=sasl; b=JX5pRtIX9jBNGJYwGpZwaC720A5L5q2l
+	sHkLjrMpAPMZ3o2NkG0k0OWvG7OtiemZNiV7tga/SqjYSBi63Lhg6p4YA4gOCLEF
+	bLgbgZJh25XnPGUQvsg58lqSkF60IKmdZo3GRPFCe+qWqJcp220BNkNCmi9u1CNW
+	lBQaQLE8CqQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27C74C402;
-	Tue, 12 Feb 2013 13:00:28 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 075BDC598;
+	Tue, 12 Feb 2013 13:03:22 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 91719C3FC; Tue, 12 Feb 2013
- 13:00:27 -0500 (EST)
-In-Reply-To: <7v4nhhigp5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 12 Feb 2013 09:29:26 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6A43AC597; Tue, 12 Feb 2013
+ 13:03:21 -0500 (EST)
+In-Reply-To: <CABURp0oQcPotK20QcqCG1pGQPVoa4RnN2nDA=iQoKS99gnPEAQ@mail.gmail.com> (Phil
+ Hord's message of "Tue, 12 Feb 2013 12:11:48 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 150CC6B2-753E-11E2-86F1-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7CA9978C-753E-11E2-95EE-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216168>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Phil Hord <phil.hord@gmail.com> writes:
 
->>  	cat >comment-lines.sh <<EOF &&
->>  #!$SHELL_PATH
->> -sed -e "2,\$ s/^/\\\\\\/" "\$1" >"\$1".tmp
->> +sed -e "2,\$ s/^/\\\\\\\\/" "\$1" >"\$1".tmp
->>  mv "\$1".tmp "\$1"
->>  EOF
->>  	chmod a+x comment-lines.sh &&
+>> +       if test $# = 0
+>> +       then
+>> +               die "$(eval_gettext "Use '.' if you really want to deinitialize all submodules")"
+>> +       fi
+>> +
+>> +       module_list "$@" |
+>> +       while read mode sha1 stage sm_path
+>> +       do
+>> +               die_if_unmatched "$mode"
+>> +               name=$(module_name "$sm_path") || exit
+>> +               url=$(git config submodule."$name".url)
+>> +               if test -z "$url"
+>> +               then
+>> +                       say "$(eval_gettext "No url found for submodule path '\$sm_path' in .git/config")"
 >
-> Yeek.  If you used write_script with here-text that does not
-> interpolate,
+> Is it safe to shelter the user a little bit more from the git
+> internals here and say instead:
 >
-> 	write_script remove-all-but-the-first.sh <<\EOF
-> 	sed -e '2,$s/^/\\/'  <"$1" >"$1.tmp" &&
->         mv "$1.tmp" "$1"
-> 	EOF
->
-> the above would be much more readable.
+>    Submodule '\$sm_path' is not initialized.
 
-As this is already inside a pair of '', we cannot use single quote
-around sed expression without doing the ugly '\''.
+Sounds like a sensible suggestion.
 
-So it needs to be more like this, and I think it still is more
-readable.
+> Also, I think this code will show this message for each submodule on
+> 'git submodule deinit .'  But I think I would prefer to suppress it in
+> that case.  If I have not explicitly stated which submodules to
+> deinit,...
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index cbe36bf..8b3e2cd 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -945,13 +945,11 @@ test_expect_success 'rebase -i respects core.commentchar' '
- 	git checkout E^0 &&
- 	git config core.commentchar "\\" &&
- 	test_when_finished "git config --unset core.commentchar" &&
--	cat >comment-lines.sh <<EOF &&
--#!$SHELL_PATH
--sed -e "2,\$ s/^/\\\\\\/" "\$1" >"\$1".tmp
--mv "\$1".tmp "\$1"
--EOF
--	chmod a+x comment-lines.sh &&
--	test_set_editor "$(pwd)/comment-lines.sh" &&
-+	write_script remove-all-but-first.sh <<-\EOF &&
-+	sed -e "2,\$s/^/\\\\/" "$1" >"$1.tmp" &&
-+	mv "$1.tmp" "$1"
-+	EOF
-+	test_set_editor "$(pwd)/remove-all-but-first.sh" &&
- 	git rebase -i B &&
- 	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
- '
+But isn't it the way to explicitly say "everything under the sun"?
+After all, what does the message say to "git submodule deinit"?
