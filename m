@@ -1,111 +1,196 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/FYI v4 13/12] fixup! t/t3511: add some tests of
- 'cherry-pick -s' functionality
-Date: Tue, 12 Feb 2013 12:20:24 -0800
-Message-ID: <7vliatffnb.fsf@alter.siamese.dyndns.org>
-References: <1360664260-11803-1-git-send-email-drafnel@gmail.com>
- <1360664260-11803-14-git-send-email-drafnel@gmail.com>
- <20130212195620.GB12240@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
-	pclouds@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 21:20:53 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 3/3] Documentation/Makefile: fix inherited {html,info,man}dir
+Date: Tue, 12 Feb 2013 20:17:50 +0000
+Message-ID: <60caa0f956179b0396614afd83e133198e9b4430.1360700102.git.john@keeping.me.uk>
+References: <cover.1360700102.git.john@keeping.me.uk>
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Jakub Narebski <jnareb@gmail.com>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 12 21:24:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5MLT-000835-Su
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 21:20:52 +0100
+	id 1U5MPE-0000Ma-PV
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 21:24:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751062Ab3BLUU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 15:20:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57051 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750756Ab3BLUU1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 15:20:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F4B7B137;
-	Tue, 12 Feb 2013 15:20:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=K4fU5Kr4fSMfjoAfOdaJXE80T6E=; b=bZL+8E
-	puRLW25JcoDj3tpZBZa0mhSyvQBNAezmhiZbWy9ygmbM8wfvsMBo2sqY7WLO+cnK
-	iIeSvdov/4hXULYyMwEBdukFPZT6rjvvCrXiYvAFzsYrD/eAMqaykrj/nbX6b+CB
-	1vg5ud8TE3jGm9xMC7WdYaMPcUx60n7Zo8xiw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OrtZTxQqisUTMlV6TVnAJVGFb3hHSlMZ
-	EjWc1E+sK+7GqgOVWeS4jjuthK2rCaFM/EddyfLw/PanL8NBNYz2elWc3/cBuSfE
-	d6oqYTrEtXlmm1fpyBiCsmgRGzXqamYBzMMbL+5jrftTh7oywQLI9yQ/T5wn4QiA
-	QBVvDX2U43k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 022B2B135;
-	Tue, 12 Feb 2013 15:20:27 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63A83B130; Tue, 12 Feb 2013
- 15:20:26 -0500 (EST)
-In-Reply-To: <20130212195620.GB12240@google.com> (Jonathan Nieder's message
- of "Tue, 12 Feb 2013 11:56:20 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A320A06E-7551-11E2-B768-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751781Ab3BLUYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 15:24:21 -0500
+Received: from pichi.aluminati.org ([72.9.246.58]:47154 "EHLO
+	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751404Ab3BLUYS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 15:24:18 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 0E7E1161E4EA;
+	Tue, 12 Feb 2013 20:18:40 +0000 (GMT)
+X-Quarantine-ID: <ICbCN+YvEA7c>
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ICbCN+YvEA7c; Tue, 12 Feb 2013 20:18:38 +0000 (GMT)
+Received: from river.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 2AC70161E3D3;
+	Tue, 12 Feb 2013 20:18:31 +0000 (GMT)
+X-Mailer: git-send-email 1.8.1.2
+In-Reply-To: <cover.1360700102.git.john@keeping.me.uk>
+In-Reply-To: <cover.1360700102.git.john@keeping.me.uk>
+References: <cover.1360700102.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216188>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Commit e14421b (Allow INSTALL, bindir, mandir to be set in main Makefile
+- 2006-06-29) changed Documentation/Makefile to inherit the value of
+mandir from the top-level Makefile when invoked as "make install-doc" at
+the top-level.  This was inherited by infodir and htmldir when they were
+added.
 
-> Brandon Casey wrote:
->
->> I'm not sure we should apply this though.  I'm leaning towards saying that
->> the 'cherry-pick -s' behavior with respect to a commit with an empty message
->> body should be undefined.  If we want it to be undefined then we probably
->> shouldn't introduce a test which would have the effect of defining it.
->
-> Maybe it would make sense to just check that cherry-pick doesn't
-> segfault in this case?
+This was broken by commit 026fa0d (Move computation of absolute paths
+from Makefile to runtime (in preparation for RUNTIME_PREFIX) -
+2009-01-18) which changed these variables to have relative paths in the
+top-level Makefile, causing the documentation to be installed into the
+path without $(prefix) prepended.
 
-;-)
+Fix this by changing the defaults to be paths relative to $(prefix) and
+introducing new variables {html,info,man}_instdir which contain the full
+installation paths.
 
->
-> That is, compute the output but don't compare it to expected output, as
-> in:
->
-> 	test_expect_success 'adding signoff to empty message does something sane' '
-> 		git reset --hard HEAD^ &&
-> 		git cherry-pick --allow-empty-message -s empty-branch &&
-> 		git show --pretty=format:%B -s empty-branch >actual &&
->
-> 		# sign-off is included *somewhere*
-> 		grep "^Signed-off-by:.*>\$" actual
-> 	'
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+I'm not sure if this is the best approach - the alternative would be to
+change the top-level Makefile to use {html,info,man}dir_relative and
+derive the {html,info,man}dir variables from that.
 
-Isn't what the current code happens to do is the best we could do?
-We would end up showing one entry whose title appears to be
-"Signed-off-by: ..." in the shortlog output if we did so.  If we
-added an empty line, then the shortlog output will have a single
-empty line that is equally unsightly.
+The top-level Makefile is inconsistent in the approach it takes - bindir
+is derived from bindir_relative but gitexecdir and template_dir have
+gitexec_instdir and template_instdir derived from them.
 
-We could force a message like this:
+ Documentation/Makefile | 56 +++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 40 insertions(+), 16 deletions(-)
 
-	tree d7f87518a26e9f00714675706f165b94f3625177
-        parent f459a4b602c0f4d371e1717572de6d0c4d39c6b1
-        author Junio C Hamano <gitster@pobox.com> 1360699963 -0800
-        committer Junio C Hamano <gitster@pobox.com> 1360699980 -0800
-
-	!!cherry-picked from a commit without any message!!
-
-        Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-but I do not think that buys us much; it only replaces a totally
-uninformative empty line with another totally uninformative junk.
-
-That ugliness is a price the insane person, who is cherry picking a
-commit without any justification made by another insane person,
-indicates that he is willing to pay by doing so.  At that point I do
-not think we should care.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 0cfdc36..34cd9f2 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -78,15 +78,21 @@ DOC_MAN1 = $(patsubst %.txt,%.1,$(MAN1_TXT))
+ DOC_MAN5 = $(patsubst %.txt,%.5,$(MAN5_TXT))
+ DOC_MAN7 = $(patsubst %.txt,%.7,$(MAN7_TXT))
+ 
++# The following variables can be relative paths due to the way they can be
++# inherited from the top-level Makefile:
++#   htmldir
++#   infodir
++#   mandir
++# Note that pdfdir is an exception to this since it is not used by git-help.
+ prefix ?= $(HOME)
+ bindir ?= $(prefix)/bin
+-htmldir ?= $(prefix)/share/doc/git-doc
+-infodir ?= $(prefix)/share/info
+ pdfdir ?= $(prefix)/share/doc/git-doc
+-mandir ?= $(prefix)/share/man
+-man1dir = $(mandir)/man1
+-man5dir = $(mandir)/man5
+-man7dir = $(mandir)/man7
++htmldir ?= share/doc/git-doc
++infodir ?= share/info
++mandir ?= share/man
++man1dir = $(man_instdir)/man1
++man5dir = $(man_instdir)/man5
++man7dir = $(man_instdir)/man7
+ # DESTDIR =
+ 
+ ASCIIDOC = asciidoc
+@@ -110,6 +116,24 @@ endif
+ -include ../config.mak.autogen
+ -include ../config.mak
+ 
++ifneq ($(filter /%,$(firstword $(htmldir))),)
++html_instdir = $(htmldir)
++else
++html_instdir = $(prefix)/$(htmldir)
++endif
++
++ifneq ($(filter /%,$(firstword $(infodir))),)
++info_instdir = $(infodir)
++else
++info_instdir = $(prefix)/$(infodir)
++endif
++
++ifneq ($(filter /%,$(firstword $(mandir))),)
++man_instdir = $(mandir)
++else
++man_instdir = $(prefix)/$(mandir)
++endif
++
+ #
+ # For docbook-xsl ...
+ #	-1.68.1,	no extra settings are needed?
+@@ -144,7 +168,7 @@ endif
+ # Distros may want to use MAN_BASE_URL=file:///path/to/git/docs/
+ # or similar.
+ ifndef MAN_BASE_URL
+-MAN_BASE_URL = file://$(htmldir)/
++MAN_BASE_URL = file://$(html_instdir)/
+ endif
+ XMLTO_EXTRA += -m manpage-base-url.xsl
+ 
+@@ -220,13 +244,13 @@ install-man: man
+ 	$(INSTALL) -m 644 $(DOC_MAN7) $(DESTDIR)$(man7dir)
+ 
+ install-info: info
+-	$(INSTALL) -d -m 755 $(DESTDIR)$(infodir)
+-	$(INSTALL) -m 644 git.info gitman.info $(DESTDIR)$(infodir)
+-	if test -r $(DESTDIR)$(infodir)/dir; then \
+-	  $(INSTALL_INFO) --info-dir=$(DESTDIR)$(infodir) git.info ;\
+-	  $(INSTALL_INFO) --info-dir=$(DESTDIR)$(infodir) gitman.info ;\
++	$(INSTALL) -d -m 755 $(DESTDIR)$(info_instdir)
++	$(INSTALL) -m 644 git.info gitman.info $(DESTDIR)$(info_instdir)
++	if test -r $(DESTDIR)$(info_instdir)/dir; then \
++	  $(INSTALL_INFO) --info-dir=$(DESTDIR)$(info_instdir) git.info ;\
++	  $(INSTALL_INFO) --info-dir=$(DESTDIR)$(info_instdir) gitman.info ;\
+ 	else \
+-	  echo "No directory found in $(DESTDIR)$(infodir)" >&2 ; \
++	  echo "No directory found in $(DESTDIR)$(info_instdir)" >&2 ; \
+ 	fi
+ 
+ install-pdf: pdf
+@@ -234,7 +258,7 @@ install-pdf: pdf
+ 	$(INSTALL) -m 644 user-manual.pdf $(DESTDIR)$(pdfdir)
+ 
+ install-html: html
+-	'$(SHELL_PATH_SQ)' ./install-webdoc.sh $(DESTDIR)$(htmldir)
++	'$(SHELL_PATH_SQ)' ./install-webdoc.sh $(DESTDIR)$(html_instdir)
+ 
+ ../GIT-VERSION-FILE: FORCE
+ 	$(QUIET_SUBDIR0)../ $(QUIET_SUBDIR1) GIT-VERSION-FILE
+@@ -402,14 +426,14 @@ require-manrepo::
+ 	then echo "git-manpages repository must exist at $(MAN_REPO)"; exit 1; fi
+ 
+ quick-install-man: require-manrepo
+-	'$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(MAN_REPO) $(DESTDIR)$(mandir)
++	'$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(MAN_REPO) $(DESTDIR)$(man_instdir)
+ 
+ require-htmlrepo::
+ 	@if test ! -d $(HTML_REPO); \
+ 	then echo "git-htmldocs repository must exist at $(HTML_REPO)"; exit 1; fi
+ 
+ quick-install-html: require-htmlrepo
+-	'$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(HTML_REPO) $(DESTDIR)$(htmldir)
++	'$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(HTML_REPO) $(DESTDIR)$(html_instdir)
+ 
+ print-man1:
+ 	@for i in $(MAN1_TXT); do echo $$i; done
+-- 
+1.8.1.2
