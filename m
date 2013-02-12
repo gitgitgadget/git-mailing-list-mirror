@@ -1,72 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Reuben Thomas <rrt@sc3d.org>
 Subject: Re: git-diff(1) appears to contradict itself
-Date: Mon, 11 Feb 2013 18:54:46 -0800
-Message-ID: <7v1ucmjl6x.fsf@alter.siamese.dyndns.org>
+Date: Tue, 12 Feb 2013 03:09:03 +0000
+Message-ID: <CAOnWdohn-NhTqOzdNbqmUPkJz2+TyikPbnxnVD0rC7Rfnm-o5w@mail.gmail.com>
 References: <CAOnWdojOT61XOY6JxL-3sR4W8N0katShsSLsOsuJ0-PuM9Vemg@mail.gmail.com>
+	<7v1ucmjl6x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Reuben Thomas <rrt@sc3d.org>
-X-From: git-owner@vger.kernel.org Tue Feb 12 03:55:16 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 04:16:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U561a-00042T-Gw
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 03:55:14 +0100
+	id 1U56MT-0007BV-Vb
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 04:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752661Ab3BLCyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 21:54:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50493 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751456Ab3BLCyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 21:54:50 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00AD3CB24;
-	Mon, 11 Feb 2013 21:54:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bOCaxtFxitv8ibZvN7LiTLn8res=; b=EreEvd
-	focYAXzuYXaPqiIC0xUWfD4vHwcz/oUGXtxpAwTDj0MHf2yXQWOG/JkCdArcAEbV
-	wZ97Wy60DMeZcU3r8VF19P9UerN5ySJI6GLbwSxrAtlg5AUj1jdnh/iNVm6MlLTE
-	j1YkXXR/3oOc9dGOP18AlOZdPlt5T8LrGzUfM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p3TwQ8P8GBoEC6vPGAwS/hTMeAZtDBgj
-	/QT7EnINPT/UFYnVsdflfoAEkBhO5fa7Hmsp+jNrq+ko++Si3KbbvGbcqQIc6mpk
-	InIBkcT/mQjpP6/9i3sS4XKoxxASznDHK/j9bJ4Uqut6noiSsD/9Mqepj3Ql4Hrc
-	DFICgPs5E8s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E9BEDCB21;
-	Mon, 11 Feb 2013 21:54:49 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 60C75CB1E; Mon, 11 Feb 2013
- 21:54:49 -0500 (EST)
-In-Reply-To: <CAOnWdojOT61XOY6JxL-3sR4W8N0katShsSLsOsuJ0-PuM9Vemg@mail.gmail.com> (Reuben
- Thomas's message of "Tue, 12 Feb 2013 02:49:35 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 90F43622-74BF-11E2-8EC3-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752710Ab3BLDQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 22:16:26 -0500
+Received: from exprod7og114.obsmtp.com ([64.18.2.215]:44611 "HELO
+	exprod7og114.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751425Ab3BLDQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 22:16:26 -0500
+Received: from mail-ee0-f72.google.com ([74.125.83.72]) (using TLSv1) by exprod7ob114.postini.com ([64.18.6.12]) with SMTP
+	ID DSNKURm0CV3kjMDbwlzjskmbwMN1XoKlLFcu@postini.com; Mon, 11 Feb 2013 19:16:25 PST
+Received: by mail-ee0-f72.google.com with SMTP id b15so7897828eek.7
+        for <git@vger.kernel.org>; Mon, 11 Feb 2013 19:16:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:mime-version:x-received:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type:x-gm-message-state;
+        bh=3LxWN3nmIOjLnXZw3kkDnczJsWNXIBrDqZalmHG6RG8=;
+        b=KIJjrovfOwp1QuckVvEXeKsStH6TApLOwgASCqcmB1ZYJRiqICwxMKBvnCyFnbPigd
+         FKCT8n1kGkQZVdqJD37VWCKnyL1aSdvNaLDIFS0yBOGkzTAiQE3oRX7yUCbcQ3C0pz5c
+         NHcD36lbSa5x4KWvXR3dByDuAlaOTFmZolT4LyR7e9C00R1QUt3ZnM8lHjYOAe4FAbwz
+         v5Yw362Ye+vgHmTOIZguWRxTBjwkE77Dxl5cixJoW4FE8qogpxyu4iwGIAh6bNEc/PW/
+         pi2JwMU2YtVZygUGXkkiNORNXjWQFhIjbVckgnYIoBz35q3Kv1Rogxe57LJV8xxSdLiu
+         aDwQ==
+X-Received: by 10.112.88.5 with SMTP id bc5mr6593603lbb.50.1360638543290;
+        Mon, 11 Feb 2013 19:09:03 -0800 (PST)
+X-Received: by 10.112.88.5 with SMTP id bc5mr6593601lbb.50.1360638543147; Mon,
+ 11 Feb 2013 19:09:03 -0800 (PST)
+Received: by 10.152.135.36 with HTTP; Mon, 11 Feb 2013 19:09:03 -0800 (PST)
+In-Reply-To: <7v1ucmjl6x.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQmrcXnZP0B5PpHh44EGnuuj5xgrNWmR1AVgmRKitoOSCGrpb6PIgasdsPsJxkzXYHOg0flDAjxr3XQ+zLaR8I8PQLYixUdBp06fz/AHmDWF3Kqob6kGHrT71JdD+rUqCjZrmjrSXhFD3vOS2jCd5FmPUjPdBA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216115>
 
-Reuben Thomas <rrt@sc3d.org> writes:
-
-> Under the --color=<when> option, it says:
+On 12 February 2013 02:54, Junio C Hamano <gitster@pobox.com> wrote:
+> Reuben Thomas <rrt@sc3d.org> writes:
 >
-> Show colored diff. The value must be always (the default for <when>),
-> never, or auto. The default value is never.
+>> Under the --color=<when> option, it says:
+>>
+>> Show colored diff. The value must be always (the default for <when>),
+>> never, or auto. The default value is never.
+>
+> I think it wants to say this:
+>
+>     You can say "diff --color" without saying "when".  That is the
+>     same as saying "diff --color=always".
+>
+>     If you do not say "--color" at all, that is exactly the same as
+>     saying "diff --color=never".
+>
+> Patches welcome.
 
-I think it wants to say this:
+Thanks for the explanation. Something like this, then:
 
-    You can say "diff --color" without saying "when".  That is the
-    same as saying "diff --color=always".
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 7a87473..9a02992 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -174,9 +174,9 @@ any of those replacements occurred.
+     `diff.submodule` configuration variable.
 
-    If you do not say "--color" at all, that is exactly the same as
-    saying "diff --color=never".
+ --color[=<when>]::
+-    Show colored diff.
+-    The value must be `always` (the default for `<when>`), `never`, or `auto`.
+-    The default value is `never`.
++    Show colored diff (off by default).
++    The value must be `always`, `never`, or `auto`.
++    `--color` is the same as `--color=always`.
+ ifdef::git-diff[]
+     It can be changed by the `color.ui` and `color.diff`
+     configuration settings.
 
-Patches welcome.
+? I guess other commands that work the same, such as git-grep, could
+do with a similar patch (indeed, I based my wording on that in the
+git-grep page, but that has different problems.) Or you could use the
+same fragment twice if that is possible in your system?
+
+--
+http://rrt.sc3d.org
