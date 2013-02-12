@@ -1,94 +1,99 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Improve 'git help' with basic user guide linkss
-Date: Tue, 12 Feb 2013 11:11:17 -0000
-Organization: OPDS
-Message-ID: <2DFA2C4F62AE484681753EBC3774D222@PhilipOakley>
-References: <6D91D31A093D46869F43DD8D1012F0FB@PhilipOakley> <7vr4kqzfw5.fsf@alter.siamese.dyndns.org> <6BC280F5827C4098BCB6276232DDE8E4@PhilipOakley> <7v6222za9x.fsf@alter.siamese.dyndns.org> <27C7EA38DDD345F994F01E5B8FB6D278@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Pushing a git repository to a new server
+Date: Tue, 12 Feb 2013 12:28:53 +0100
+Message-ID: <511A2775.9050209@drmicha.warpmail.net>
+References: <CAE_TNin0Kb_38gnx9W36VZ8CTxYBZ9T1Dkhar1DUFHyQUq7ebg@mail.gmail.com> <20130211075040.GJ5210@localhost.localdomain> <CAE_TNin6-weutRDToZ7-BBGJTCcf0dwJn0ChUbFcACRU=SbjzA@mail.gmail.com> <20130211162714.GB16402@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=response
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 12:11:44 2013
+Cc: Ethan Reesor <firelizzard@gmail.com>,
+	Konstantin Khomoutov <kostix+git@007spb.ru>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 12 12:29:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5Dm0-0004Q6-Cx
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 12:11:40 +0100
+	id 1U5E32-0002az-Uq
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 12:29:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758826Ab3BLLLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 06:11:17 -0500
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:57943 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758734Ab3BLLLQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2013 06:11:16 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhQKADwDGlFcHls+/2dsb2JhbABEjAq0HQOBBBdzghoFAQEFCAEBLh4BASELAgMFAgEDFQELJRQBBBoGBxcGEwgCAQIDAYgFCLAbkAqNRm0BgnJhA4gwhVeJOo82gwaBag
-X-IronPort-AV: E=Sophos;i="4.84,648,1355097600"; 
-   d="scan'208";a="418910132"
-Received: from host-92-30-91-62.as13285.net (HELO PhilipOakley) ([92.30.91.62])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 12 Feb 2013 11:11:14 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S932843Ab3BLL2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 06:28:53 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:33035 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932303Ab3BLL2w (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2013 06:28:52 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 0DE6320D6C;
+	Tue, 12 Feb 2013 06:28:52 -0500 (EST)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 12 Feb 2013 06:28:52 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=qEfDF05Mkn3IDYMWrc9Rdu
+	8QK/g=; b=oQ5N83EojxRspXifvpwIkaoJ1QjIebpWiDim2mT5wZmF5K5Eag64vd
+	/ys0NkVYSmLbBVUGbt/Xt+PQwBY7gouQcQsNNcgu65YAkasC0lmHw8+ZqLB6XMjI
+	/JSZE3Sxs6lKtPmMN737isL4uAbisidhzOfrk9YIFWLOos/A6A3M8=
+X-Sasl-enc: 0RTr3Mn5ulSupcU9xZlgUwAI14nfjU5AdEMrpAc1omNW 1360668531
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 5694B4827A6;
+	Tue, 12 Feb 2013 06:28:51 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <20130211162714.GB16402@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216147>
 
-From: "Philip Oakley" <philipoakley@iee.org>
-Sent: Friday, February 08, 2013 11:16 PM
-> From: "Junio C Hamano" <gitster@pobox.com>
-> Sent: Friday, February 08, 2013 10:54 PM
->> "Philip Oakley" <philipoakley@iee.org> writes:
+Jeff King venit, vidit, dixit 11.02.2013 17:27:
+> On Mon, Feb 11, 2013 at 02:57:51AM -0500, Ethan Reesor wrote:
+> 
+>> On Mon, Feb 11, 2013 at 2:50 AM, Konstantin Khomoutov
+>> <kostix+git@007spb.ru> wrote:
+>>> What's wrong with
+>>> $ ssh myuser@remotehost 'mkdir /path/to/MyRepo.git; cd $_; git init --bare'
+>>> $ git push --all git@remotehost:MyOtherRepo.git
+>>> ?
 >>
->>> My initial https://github.com/PhilipOakley/git/commit/e6217d simply
->>> updates
->>> -  N_("See 'git help <command>' for more information on a specific
->>> command.");
->>> +  N_("See 'git help <command>' for more information on a specific
->>> command.\n"
->>> +     "Or 'git help <guide>', such as 'tutorial' for an introduction
->>> to Git.");
->>> as a starter for the new users.
->>
->> Yeah, that would be a good change to make to "git help<RETURN>"
->> output.
+>> Nothing, I just wanted to make myself a command to do that for me.
+> 
+> We talked about this a long time ago. One problem is that it's
+> inherently unportable, as the procedure to make a repo is potentially
+> different on every server (and certainly that is the case between a
+> regular user running stock git and something like GitHub or Google Code;
+> I imagine even gitolite has some special procedures for creating repos,
+> too).
+> 
+> One proposal made in the previous discussion was to define a microformat
+> for repository administration commands. So that you could connect and
+> say "git admin-create-repo /path/to/MyRepo.git", and the server-provided
+> admin-create-repo command would take care of the details. Then stock git
+> could forward it to "git init --bare", GitHub could do the same and
+> create the necessary database records, etc.
 >
-> I'll sort some patches early next week (the weekend's committed 
-> elsewhere)
->
->>
->>> My view is that help --all (-a) is essentially incomplete as it
->>> currently doesn't provide all the help.
->>
->> It has always been about "tell me all subcommands", not about "give
->> me all the help you could give me".  You are not adding a "help"
->> subcommand to a system you wrote last week.  Changing the semantics
->> this late feels, eh, too late.
->
-> OK, I'll limit the the follow-ons to just an extra --guides option 
-> (probably just a list of the common guides initially), and 
-> leave --all(-a) for just the commands.
->
-The Git man page includes the different command types listed by category 
-(Main porcelain, Ancillary {manipulators, interrogators}, Interacting 
-with others, etc.).
+> And once that standardized method was in place, it would be easy to add
+> a "--create" option to "git push" to request an "admin-create-repo"
+> before pushing.
+> 
+> I still think that's a reasonable way forward, but nobody was interested
+> enough to start writing code for it.
+> 
+> -Peff
+> 
 
-Obviously (?) this is generated from the command-list.txt file, though I 
-don't see a shell script that would generate the 
-'cmds-mainporcelain.txt' (etc.) files 
-(//github.com/gitster/git-htmldocs). They are also part of the msysgit 
-install.
+I'm not sure providers like GitHub would fancy an interface which allows
+the programmatic creation of repos (giving a new meaning to "fork
+bomb"). But I bet you know better ;-)
 
-Where should I be looking to see how they are generated?
+An alternative would be to teach git (the client) about repo types and
+how to create them. After all, a repo URL "ssh://host/path" gives a
+clear indication that "ssh host git init path" will create a repo. I'm
+wondering whether it's more likely to convince providers (the server
+side) or more is gained by covering the simpler cases client-side (our
+side).
 
-Philip 
+Michael
