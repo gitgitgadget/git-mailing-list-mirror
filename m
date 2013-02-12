@@ -1,83 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fetch and -t
-Date: Mon, 11 Feb 2013 18:24:33 -0800
-Message-ID: <7v621yjmla.fsf@alter.siamese.dyndns.org>
-References: <4B2793BF110AAB47AB0EE7B9089703854FEE40B6@fmsmsx110.amr.corp.intel.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCHv2] parse-options: report uncorrupted multi-byte options
+Date: Tue, 12 Feb 2013 09:30:36 +0700
+Message-ID: <CACsJy8DZy0_1RyeNtuobzABUD0rr6oE6RB=rXdqbG72SK4kNUw@mail.gmail.com>
+References: <1360624428-4728-1-git-send-email-kusmabite@gmail.com>
+ <CACsJy8BByNnEhhE3TieM_kOy65t75rmB45ZzjJJ8AtL2N4-UFA@mail.gmail.com> <7va9rajn99.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: "Olsen\, Alan R" <alan.r.olsen@intel.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 03:25:05 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org,
+	peff@peff.net, matthieu.moy@grenoble-inp.fr, tboegi@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 03:31:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U55YM-0000pj-VN
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 03:25:03 +0100
+	id 1U55ef-0005wa-7f
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 03:31:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752041Ab3BLCYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Feb 2013 21:24:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36325 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751076Ab3BLCYg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Feb 2013 21:24:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13693C139;
-	Mon, 11 Feb 2013 21:24:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IwIrTCquRcd82JMFgxpGvtBqBT8=; b=M0I4QW
-	gl97FGlkCpC8+aVi/46O1zbYoLIl5v2AUyAO5eYzlyAYWhGdQD8akU4aDfvO9hIJ
-	5B3D1IJcMGmzYPhNm1JeCu5y88RzvDZDNyJZklc8ELAe0VDzBYcS1gefP0p5EJhH
-	+T0BqclKq4NRuIaHz2cicMJLDyP+XYsd1Mjlo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZJRHQGURcdbRXww/DhnchUGhCieAdk/p
-	/goPK2l+m4trCZWR5oF9Xj+a1QAUC1umTS0jDMMs1O+oOexeYfcqzkVeoUfsi1A2
-	V0SxMpN9uhbVpye3ThFQY8OnBxlCf/rYQTYMErZIHeKU6g1KZbRoMM0/VJsGgXHw
-	APruV3CA1fg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 08788C138;
-	Mon, 11 Feb 2013 21:24:36 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C92DC136; Mon, 11 Feb 2013
- 21:24:35 -0500 (EST)
-In-Reply-To: <4B2793BF110AAB47AB0EE7B9089703854FEE40B6@fmsmsx110.amr.corp.intel.com> (Alan
- R. Olsen's message of "Tue, 12 Feb 2013 00:41:49 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 57CB2710-74BB-11E2-9209-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751489Ab3BLCbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Feb 2013 21:31:08 -0500
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:48319 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751367Ab3BLCbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Feb 2013 21:31:07 -0500
+Received: by mail-oa0-f53.google.com with SMTP id m1so7128061oag.12
+        for <git@vger.kernel.org>; Mon, 11 Feb 2013 18:31:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=gb+qrc3eNfBF1CR7Ov/cJA//fUEmYM1T85+TVvgyMhs=;
+        b=VQAr9gAc3yIqWbydxco8WZ+oPpw3nD9mcQteRbvlfsUtde/9PBC2MMOam1oYoaEkJ1
+         NZ4N5aEYVcXnOo5IVyTjQy6CZHEwMwgH5SDLmbqivKZtU0ko3HG8Zfz7RrhLpCFYGlPf
+         +1iTMjyiOoUqFvg5ZeL8bxzi2TC88ifK2DSOGXdGSzScHdjDtJ7mnhRpeNIdlTJTS9/H
+         trOWodSjAlNWSepG/fQ5FZap+SLkoi9HYuJCiPpOXmgQjoPtz57mxoYv4bqSz6vaSiUA
+         VV+iUmDIzEg7qIk7S3DSmiZse89XJqnqq8RpmbdJxb8rUG/HjYpfotmJPtesbgBy6BOb
+         dtUw==
+X-Received: by 10.182.43.103 with SMTP id v7mr12169185obl.17.1360636266448;
+ Mon, 11 Feb 2013 18:31:06 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Mon, 11 Feb 2013 18:30:36 -0800 (PST)
+In-Reply-To: <7va9rajn99.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216112>
 
-"Olsen, Alan R" <alan.r.olsen@intel.com> writes:
-
-> I have found that if I add a remote and do a "git fetch -t -f
-> remote_name" that it *only* pulls tags.
+On Tue, Feb 12, 2013 at 9:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Similar cases:
+>>
+>> config.c:git_default_core_config() assumes core.commentchar is ascii.
+>> We should catch and report non-ascii chars, or simply accept it as a
+>> string.
 >
-> Reading the man page it seems like it should pull all the remotes
-> and all the tags and the commits only reachable by tags.
+> That one is just an uninterpreted byte.  core.commentString might be
+> a nice extension to the concept, but it is an entirely different
+> category.
 
-This is what appears in the documentation we ship these days.
+My point is not to output broken utf-8 if we can. If someone
+accidentally puts a UTF-8 character in core.commentChar, it will
+produce broken utf-8 templates that editors might react, but hard to
+see by eye. Something like this may give sufficient protection:
 
-    -t::
-    --tags::
-            This is a short-hand for giving "refs/tags/*:refs/tags/*"
-            refspec from the command line, to ask all tags to be fetched
-            and stored locally.  Because this acts as an explicit
-            refspec, the default refspecs (configured with the
-            remote.$name.fetch variable) are overridden and not used.
-
-http://git-htmldocs.googlecode.com/git/git-fetch.html
-
-Previous discussion:
-
-    http://thread.gmane.org/gmane.comp.version-control.git/180636
-
-A more recent one:
-
-    http://thread.gmane.org/gmane.comp.version-control.git/211439/focus=211464
+diff --git a/config.c b/config.c
+index aefd80b..b6f73e0 100644
+--- a/config.c
++++ b/config.c
+@@ -726,8 +726,11 @@ static int git_default_core_config(const char
+*var, const char *value)
+        if (!strcmp(var, "core.commentchar")) {
+                const char *comment;
+                int ret = git_config_string(&comment, var, value);
+-               if (!ret)
++               if (!ret) {
++                       if (comment[1])
++                               return error("core.commentchar must be
+one ASCII character");
+                        comment_line_char = comment[0];
++               }
+                return ret;
+        }
+-- 
+Duy
