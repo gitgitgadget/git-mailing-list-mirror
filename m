@@ -1,81 +1,73 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 2/3] Documentation/Makefile: move infodir to be with
- other '*dir's
-Date: Tue, 12 Feb 2013 21:18:05 +0000
-Message-ID: <20130212211804.GI2270@serenity.lan>
-References: <cover.1360700102.git.john@keeping.me.uk>
- <dcc4f597f26531b79bd9f097c73f6f186b73c81d.1360700102.git.john@keeping.me.uk>
- <20130212210138.GE12240@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv4 4/6] Git.pm: allow pipes to be closed prior to calling
+ command_close_bidi_pipe
+Date: Tue, 12 Feb 2013 16:17:59 -0500
+Message-ID: <20130212211759.GA30329@sigill.intra.peff.net>
+References: <cover.1360677646.git.mina86@mina86.com>
+ <3bb6b7736eb4b0a958469be13d8c646faec1208a.1360677646.git.mina86@mina86.com>
+ <20130212205141.GC25330@sigill.intra.peff.net>
+ <7va9r9fd4e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 22:18:45 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Michal Nazarewicz <mpn@google.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 22:18:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5NFT-0002FS-KV
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 22:18:43 +0100
+	id 1U5NFa-0002LI-Qp
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 22:18:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759847Ab3BLVSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 16:18:16 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:35131 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759486Ab3BLVSP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 16:18:15 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 3C1FB606531;
-	Tue, 12 Feb 2013 21:18:14 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -11
-X-Spam-Level: 
-X-Spam-Status: No, score=-11 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id E4+woT8SjVLV; Tue, 12 Feb 2013 21:18:13 +0000 (GMT)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id EC4A460651E;
-	Tue, 12 Feb 2013 21:18:07 +0000 (GMT)
+	id S1758982Ab3BLVSD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 16:18:03 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45524 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754037Ab3BLVSC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 16:18:02 -0500
+Received: (qmail 6206 invoked by uid 107); 12 Feb 2013 21:19:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Feb 2013 16:19:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Feb 2013 16:17:59 -0500
 Content-Disposition: inline
-In-Reply-To: <20130212210138.GE12240@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7va9r9fd4e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216205>
 
-On Tue, Feb 12, 2013 at 01:01:38PM -0800, Jonathan Nieder wrote:
-> John Keeping wrote:
-> 
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> [...]
-> > --- a/Documentation/Makefile
-> > +++ b/Documentation/Makefile
-> > @@ -81,6 +81,7 @@ DOC_MAN7 = $(patsubst %.txt,%.7,$(MAN7_TXT))
-> >  prefix ?= $(HOME)
-> >  bindir ?= $(prefix)/bin
-> >  htmldir ?= $(prefix)/share/doc/git-doc
-> > +infodir ?= $(prefix)/share/info
-> >  pdfdir ?= $(prefix)/share/doc/git-doc
-> >  mandir ?= $(prefix)/share/man
-> >  man1dir = $(mandir)/man1
-> > @@ -98,7 +99,6 @@ RM ?= rm -f
-> >  MAN_REPO = ../../git-manpages
-> >  HTML_REPO = ../../git-htmldocs
-> >  
-> > -infodir ?= $(prefix)/share/info
-> >  MAKEINFO = makeinfo
-> 
-> Is this another stylefix or is there a functional reason for this
-> change?
+On Tue, Feb 12, 2013 at 01:14:57PM -0800, Junio C Hamano wrote:
 
-Another stylefix - this arrangement seems more logical to me and makes
-the comment in the next patch simpler.
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Tue, Feb 12, 2013 at 03:02:31PM +0100, Michal Nazarewicz wrote:
+> >
+> >>  sub command_close_bidi_pipe {
+> >>  	local $?;
+> >>  	my ($self, $pid, $in, $out, $ctx) = _maybe_self(@_);
+> >> -	_cmd_close($ctx, $in, $out);
+> >> +	_cmd_close($ctx, grep defined, $in, $out);
+> >
+> > Maybe it is just me, but I find the "grep EXPR" form a little subtle
+> > inside an argument list. Either:
+> >
+> >   _cmd_close($ctx, grep { defined } $in, $out);
+> >
+> > or
+> >
+> >   _cmd_close($ctx, grep(defined, $in, $out));
+> >
+> > is a little more obvious to me.
+> 
+> I would actually vote for the most explicit:
+> 
+> 	_cmd_close($ctx, (grep { defined } ($in, $out)));
+
+Gross. My perl spider-sense tingles at seeing that many optional
+punctuation characters, but it should at least be obvious to a casual or
+new perl programmer what is going on. I'm fine with it.
+
+-Peff
