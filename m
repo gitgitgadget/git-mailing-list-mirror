@@ -1,93 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Makefile: do not export mandir/htmldir/infodir
-Date: Tue, 12 Feb 2013 15:09:53 -0800
-Message-ID: <7vehgldt8e.fsf_-_@alter.siamese.dyndns.org>
-References: <cover.1360700102.git.john@keeping.me.uk>
- <20130212222508.GG12240@google.com> <7vmwv9ducx.fsf@alter.siamese.dyndns.org>
- <7vip5xdtt6.fsf@alter.siamese.dyndns.org>
+From: Paul Campbell <pcampbell@kemitix.net>
+Subject: Re: A good Git technique for referring back to original files
+Date: Tue, 12 Feb 2013 23:13:07 +0000
+Message-ID: <CALeLG_nFgApPT1B+6sPy7P+jrtjB4KQOBpPO9bEd0rsWKqWi8A@mail.gmail.com>
+References: <loom.20130212T085620-989@post.gmane.org>
+	<vpq1ucl9agt.fsf@grenoble-inp.fr>
+	<loom.20130212T110458-119@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Steffen Prohaska <prohaska@zib.de>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 00:10:37 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: MikeW <mw_phil@yahoo.co.uk>
+X-From: git-owner@vger.kernel.org Wed Feb 13 00:13:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5Ozk-00006J-Si
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 00:10:37 +0100
+	id 1U5P2c-0006wq-3I
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 00:13:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758849Ab3BLXKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 18:10:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60194 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758831Ab3BLXKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 18:10:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9A8EC2B5;
-	Tue, 12 Feb 2013 18:10:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aHIeg8L/a/GkAHC22+NAg+zQJWQ=; b=TDgnRc
-	QmfqPsy8kugtgCRbPXgmHzDk3pweVMMUy+gXV7Shaxldvf5n3ZBkGe6IkI9WkPJa
-	JU00OBMw5L7ej5YBPm4+LrsJy4pZ1qnV8UfcBCBi1Gvl5TlPkJ5iwaSTq/dPEFPl
-	o1CbabnZVOAgx3L/mack7IAf3TBmEeI9BWDGA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s2lB0QPtMDA82m/R8ChtTNHIOkh5wIMl
-	qC/o1jggSUpebvolbdCDGaqt03lAsUL2m5nkep0NG7o9X3cqyiiU8TKc7C257KQE
-	e547+vBKQmOqleqa3aZu3tLAyZUKkNdv1draOAnj3z6BzhzKBUUFwrrnLxsiBMyl
-	2rYJdqmKFxM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3377BC2AE;
-	Tue, 12 Feb 2013 18:10:07 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4456BC29C; Tue, 12 Feb 2013
- 18:10:02 -0500 (EST)
-In-Reply-To: <7vip5xdtt6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 12 Feb 2013 14:57:25 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 56DE166A-7569-11E2-A032-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755964Ab3BLXNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 18:13:09 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:52409 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751990Ab3BLXNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 18:13:08 -0500
+Received: by mail-oa0-f46.google.com with SMTP id k1so688684oag.19
+        for <git@vger.kernel.org>; Tue, 12 Feb 2013 15:13:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:x-originating-ip:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type:x-gm-message-state;
+        bh=VYUNzB5RnQz/IhgnSYEOOxmznmu7tu2zz/+pTYu3YdE=;
+        b=LdEh4fj0Alwa7uTHr0VRd6aV78AW5QppQ9/xqEtcHHF3pwJJF37CfwHKBMnbQ9mA9L
+         2lbLuOBV0UtWRTzqfJdsOfwcyKmmHgEb7kDNxq0MTUIKH/967S/TNgF1Eo6/J9MIJS9s
+         6jSUOgmY/6fqZZINFL1+/2e65GzNl2uCNIcmpvLHIuQktoL+LZlSsqVTHlLSDleHoLLk
+         MZmZmWRWmsGLBIRmuuaBb8KiJ96TOtpGZM6eVO0Fn7uES7jkB8NukbpAXmHI+zIibcZo
+         xKHInboT5A3c85YgPTe0BuSnq3WCsR/4FzqCJRYM1vdRJisucFYOUd70m2bF9oJ1qFbK
+         K07g==
+X-Received: by 10.182.51.98 with SMTP id j2mr9647040obo.77.1360710787782; Tue,
+ 12 Feb 2013 15:13:07 -0800 (PST)
+Received: by 10.76.143.67 with HTTP; Tue, 12 Feb 2013 15:13:07 -0800 (PST)
+X-Originating-IP: [2.102.85.14]
+In-Reply-To: <loom.20130212T110458-119@post.gmane.org>
+X-Gm-Message-State: ALoCoQlyTgk1GdIZXozSiej+Rp0UWJ6xRaOg6NNRwgSaxhzzTnlrHxzad9WAjuUXuk+3a8F40Ppa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216219>
 
-These are defined in the main Makefile to be funny values that are
-optionally relative to an unspecified location that is determined at
-runtime.  They are only suitable for hardcoding in the binary via
-the -DGIT_{MAN,HTML,INFO}_PATH=<value> C preprocessor options, and
-are not real paths, contrary to what any sane person, and more
-importantly, the Makefile in the documentation directory, would
-expect.
+Hi Mike,
 
-A longer term fix is to introduce runtime_{man,html,info}dir variables
-to hold these funny values, and make {man,html,info}dir variables
-to have real paths whose default values begin with $(prefix), but
-as a first step, stop exporting them from the top-level Makefile.
+I think git-cvsimport and git-subtree could help you here.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Roughly:
 
-diff --git a/Makefile b/Makefile
-index 1dae2c5..26b697d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -359,7 +359,7 @@ lib = lib
- # DESTDIR=
- pathsep = :
- 
--export prefix bindir sharedir mandir htmldir sysconfdir gitwebdir localedir
-+export prefix bindir sharedir sysconfdir gitwebdir localedir
- 
- CC = cc
- AR = ar
--- 
-1.8.1.3.675.g524d3b9
+# Create a git version of each SDK_subproj
+git cvsimport -r upstream -d $CVSREPO1 $CVSMODULE1 -C SDK_subproj1
+git cvsimport -r upstream -d $CVSREPO2 $CVSMODULE2 -C SDK_subproj2
+
+# Create your Working_SDK
+git init Working_SDK
+cd Working_SDK
+
+# Import the SDK_subprojN repos
+git subtree add --prefix=subproj1 ../SDK_subproj1 upstream/master
+git subtree add --prefix=subproj2 ../SDK_subproj2 upstream/master
+
+# Edit and commit your files
+# N.B. when committing don't commit to more than one subproj in a single commit
+
+# Update from the upstream CVS as needed
+git cvsimport -r upstream -d $CVSREPO1 $CVSMODULE1 -C ../SDK_subproj1
+git subtree pull --prefix=subproj1 ../SDK_subproj1 upstream/master
+git cvsimport -r upstream -d $CVSREPO2 $CVSMODULE2 -C ../SDK_subproj2
+git subtree pull --prefix=subproj2 ../SDK_subproj2 upstream/master
+
+# Push your changes back to SDK_subproj repos into a branch other than master
+git subtree push --prefix=subproj1 ../SDK_subproj1 new-branch
+git subtree push --prefix=subproj1 ../SDK_subproj2 new-branch
+
+# Prepare patches to apply to a real CVS copy or submit upstream
+(cd ../SDK_subproj1 && git format-patch upstream/master..new-branch)
+(cd ../SDK_subproj2 && git format-patch upstream/master..new-branch)
+
+Hope that helps.
+
+--
+Paul
+
+On Tue, Feb 12, 2013 at 10:19 AM, MikeW <mw_phil@yahoo.co.uk> wrote:
+> Matthieu Moy <Matthieu.Moy <at> grenoble-inp.fr> writes:
+>
+>>
+>> MikeW <mw_phil <at> yahoo.co.uk> writes:
+>>
+>> > Since git is so good at tracking file content, I wondered whether
+> there was any
+>> > technique using git that would simplify the back-referencing task.
+>>
+>> I'm not sure I understand the question, but if you want to add meta-data
+>> to Git commits (e.g. "this Git commit is revision 42 in CVS repository
+>> foo"), then have a look at git-notes. It won't give you directly
+>> "reference to other VCS", but at least can be used as a storage
+>> mechanism to store these references.
+>>
+> Thanks for the reply.
+>
+> In my work environment both the SDK and the original files are available
+> (in an enclosing directory).
+>
+> --SDK_content
+>   |
+>   SDK_subproj1-- ...
+>   |            |
+>   |            content
+>   |
+>   SDK_subproj2- ...
+>   |            |
+>   |            content
+>   |
+>   SDK_subprojN- ...
+>   |            |
+>   |            content
+>   |
+>   Working_SDK ... (under git, baseline generated from subproj1..N)
+>                |
+>                content derived from subproj1..N
+>
+>
+> What I had in mind was something I could run over, say, SDK_content
+> (alternatively, from within Working_SDK, referring back to SDK_content)
+> which would note the changed files in Working_SDK and locate the
+> original files in SDK_subproj1..N letting me merge the changes back.
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
+--
+Paul [W] Campbell
