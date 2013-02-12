@@ -1,89 +1,97 @@
-From: MikeW <mw_phil@yahoo.co.uk>
-Subject: Re: A good Git technique for referring back to original files
-Date: Tue, 12 Feb 2013 10:19:54 +0000 (UTC)
-Message-ID: <loom.20130212T110458-119@post.gmane.org>
-References: <loom.20130212T085620-989@post.gmane.org> <vpq1ucl9agt.fsf@grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH v4.1 09/12] sequencer.c: teach append_signoff to avoid adding a duplicate newline
+Date: Tue, 12 Feb 2013 02:33:42 -0800
+Message-ID: <1360665222-3166-1-git-send-email-drafnel@gmail.com>
+References: <1360664260-11803-10-git-send-email-drafnel@gmail.com>
+Cc: gitster@pobox.com, pclouds@gmail.com, jrnieder@gmail.com,
+	Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <bcasey@nvidia.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 12 11:20:45 2013
+X-From: git-owner@vger.kernel.org Tue Feb 12 11:34:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5Cyh-0006pN-9E
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 11:20:43 +0100
+	id 1U5DC1-0003zx-43
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 11:34:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756434Ab3BLKUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 05:20:17 -0500
-Received: from plane.gmane.org ([80.91.229.3]:39790 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755527Ab3BLKUQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 05:20:16 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1U5CyW-0006N1-2j
-	for git@vger.kernel.org; Tue, 12 Feb 2013 11:20:32 +0100
-Received: from static.kpn.net ([static.kpn.net])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Feb 2013 11:20:32 +0100
-Received: from mw_phil by static.kpn.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Feb 2013 11:20:32 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.204.2.113 (Mozilla/5.0 (Windows NT 5.1; rv:18.0) Gecko/20100101 Firefox/18.0)
+	id S1758399Ab3BLKeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 05:34:05 -0500
+Received: from mail-da0-f51.google.com ([209.85.210.51]:39183 "EHLO
+	mail-da0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755527Ab3BLKeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 05:34:04 -0500
+Received: by mail-da0-f51.google.com with SMTP id n15so3101993dad.38
+        for <git@vger.kernel.org>; Tue, 12 Feb 2013 02:34:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=bAgxodrQ570wCm3ud/ty9AKoKb8nENCWTohJ8LYHlP8=;
+        b=BiJVatICiTOVUZYrgiTLfuMR5lNNA42lXnwvx9YbRMRe/xBJQK0Qj+cvi2Px3goqc1
+         HuRqB52qE8aMykbQfPyXehsaHP+xyofa4I5h1TYtM8nKIt7Y3mgdwtTAkpoDkYYvSyuj
+         64hlapCcHv7rXSMDBFpmc7XXjc1B2NTcf7gSaxZTYAZQvhwPg4e41YeR8F58goh6UtGW
+         0J9Q9s1WohxhD+5YCjBX+HKCkx2MCgWwy00lJ9h15RL7q9fRMIBVjKpf9B6KekxC/4LV
+         qltuV+q2hRuLuGmV2zAT19A/f1qkOVJZaOE3OHcKLvq/ao2vHN5+2n80PiVLQUdSXCNL
+         uovA==
+X-Received: by 10.66.88.133 with SMTP id bg5mr30187802pab.21.1360665242984;
+        Tue, 12 Feb 2013 02:34:02 -0800 (PST)
+Received: from charliebrown.hsd1.ca.comcast.net (c-98-248-42-122.hsd1.ca.comcast.net. [98.248.42.122])
+        by mx.google.com with ESMTPS id y9sm73947620paw.1.2013.02.12.02.34.00
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 12 Feb 2013 02:34:01 -0800 (PST)
+X-Mailer: git-send-email 1.8.1.1.252.gdb33759
+In-Reply-To: <1360664260-11803-10-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216145>
 
-Matthieu Moy <Matthieu.Moy <at> grenoble-inp.fr> writes:
+Teach append_signoff to detect whether a blank line exists at the position
+that the signed-off-by line will be added, and refrain from adding an
+additional one if one already exists.  Or, add an additional line if one
+is needed to make sure the new footer is separated from the message body
+by a blank line.
 
-> 
-> MikeW <mw_phil <at> yahoo.co.uk> writes:
-> 
-> > Since git is so good at tracking file content, I wondered whether
-there was any
-> > technique using git that would simplify the back-referencing task.
-> 
-> I'm not sure I understand the question, but if you want to add meta-data
-> to Git commits (e.g. "this Git commit is revision 42 in CVS repository
-> foo"), then have a look at git-notes. It won't give you directly
-> "reference to other VCS", but at least can be used as a storage
-> mechanism to store these references.
-> 
-Thanks for the reply.
-
-In my work environment both the SDK and the original files are available
-(in an enclosing directory).
-
---SDK_content
-  |
-  SDK_subproj1-- ...
-  |            |
-  |            content
-  |
-  SDK_subproj2- ...
-  |            |
-  |            content
-  |
-  SDK_subprojN- ...
-  |            |
-  |            content
-  |
-  Working_SDK ... (under git, baseline generated from subproj1..N)
-               |
-               content derived from subproj1..N
+Signed-off-by: Brandon Casey <bcasey@nvidia.com>
+---
 
 
-What I had in mind was something I could run over, say, SDK_content
-(alternatively, from within Working_SDK, referring back to SDK_content)
-which would note the changed files in Working_SDK and locate the
-original files in SDK_subproj1..N letting me merge the changes back.
+A slight tweak.  And I promise, no more are coming.
+
+-Brandon
+
+
+ sequencer.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 3364faa..084573b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1127,8 +1127,19 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+ 	else
+ 		has_footer = has_conforming_footer(msgbuf, &sob, ignore_footer);
+ 
+-	if (!has_footer)
+-		strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0, "\n", 1);
++	if (!has_footer) {
++		const char *append_newlines = NULL;
++		size_t len = msgbuf->len - ignore_footer;
++
++		if (len && msgbuf->buf[len - 1] != '\n')
++			append_newlines = "\n\n";
++		else if (len > 1 && msgbuf->buf[len - 2] != '\n')
++			append_newlines = "\n";
++
++		if (append_newlines)
++			strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0,
++				append_newlines, strlen(append_newlines));
++	}
+ 
+ 	if (has_footer != 3 && (!no_dup_sob || has_footer != 2))
+ 		strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0,
+-- 
+1.8.1.1.252.gdb33759
