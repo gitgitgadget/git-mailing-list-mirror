@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2] rebase -i: respect core.commentchar
-Date: Tue, 12 Feb 2013 10:21:57 -0800
-Message-ID: <7vip5xgzp6.fsf@alter.siamese.dyndns.org>
+Date: Tue, 12 Feb 2013 10:23:16 -0800
+Message-ID: <7vehglgzmz.fsf@alter.siamese.dyndns.org>
 References: <aa1deab1de2e0f998b9ac0bc8c2d76557429a46b.1360610368.git.john@keeping.me.uk>
  <7vzjzali6a.fsf@alter.siamese.dyndns.org>
  <20130211213900.GE2270@serenity.lan>
@@ -10,85 +10,92 @@ References: <aa1deab1de2e0f998b9ac0bc8c2d76557429a46b.1360610368.git.john@keepin
  <7vehgmjsno.fsf@alter.siamese.dyndns.org>
  <20130212095340.GG2270@serenity.lan>
  <7v4nhhigp5.fsf@alter.siamese.dyndns.org>
- <20130212175322.GC13501@farnsworth.metanate.com>
+ <7vvc9xh0p1.fsf@alter.siamese.dyndns.org>
+ <20130212180917.GD13501@farnsworth.metanate.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
 To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Feb 12 19:22:34 2013
+X-From: git-owner@vger.kernel.org Tue Feb 12 19:23:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5KUv-00032X-Ey
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 19:22:29 +0100
+	id 1U5KW7-0005ql-2C
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 19:23:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933566Ab3BLSWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 13:22:00 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41290 "EHLO
+	id S933541Ab3BLSXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 13:23:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42514 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933476Ab3BLSV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 13:21:59 -0500
+	id S933484Ab3BLSXS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 13:23:18 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AE4EB041;
-	Tue, 12 Feb 2013 13:21:59 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36B9EB146;
+	Tue, 12 Feb 2013 13:23:18 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QGOfjt0xWh0oCiuKbvwUx7kl8TY=; b=XylRJR
-	31ZU236ZBaH2cBKRJuw1yGaAfs3rtB828+FsXLLuLQNlkGP/dwBBg+Swlo5IXoas
-	H56ayr2m6WchQLGlsGfO5Le2r9ilID1PqS3ug2jFoo5S5AeGGdpaZzCbjc9YWXwu
-	JhBOB4EKM9R7KZnp1jrzdjU3mHBRxEptNg1yw=
+	:content-type; s=sasl; bh=PEDjZoMrNmy8PxWuCUz53uOXZMY=; b=R/DCQf
+	an0q+M6lk94YmcG0wpMOpxj38CrjVxr6Tvb6NfmUZT6/UpQBanWP2/IRoXfWas1c
+	B3cybWy4sw9VtchbxPfPtuxvFN4lEz65mKG6px4Y6n44gBqdzqMyktkPFmMrDda/
+	W+d1JposzLFbMjG9kBljz8Wq9tFK8SSwCmCpo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PJfhKRbixcppR+ifc/ADIANTjz1knv3N
-	iiHIVoljxXj7njDuUFqkNa2zuugkdw+TstwA4ew3++0ib9iexfpqH5wjCvbIvqYx
-	XEiRrFGnHN9BYgUaAOSsKndLQM20T2lEzeus95856DzENRxh+ot1t1ZKapeoW/5H
-	l6vwsc7FljQ=
+	:content-type; q=dns; s=sasl; b=yMsXZZ5BO7hJVEYQaZ1Ex+680uHmJweq
+	E+R+UteGpJ3IXg7QnvtplPZKEjLuKCZxa+9aLdTwSZVym3n57soNlAF32mOCCpiA
+	9L7b0uzHmGNfhOsmx4dksk2bE/tCFRjTZV4TJZldBeFAg5JJP1YUUk+5kwbs9pwy
+	fk0g3A3HS7U=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5AC73B03E;
-	Tue, 12 Feb 2013 13:21:59 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B7BAB145;
+	Tue, 12 Feb 2013 13:23:18 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C29A3B03A; Tue, 12 Feb 2013
- 13:21:58 -0500 (EST)
-In-Reply-To: <20130212175322.GC13501@farnsworth.metanate.com> (John Keeping's
- message of "Tue, 12 Feb 2013 17:53:22 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B787B142; Tue, 12 Feb 2013
+ 13:23:17 -0500 (EST)
+In-Reply-To: <20130212180917.GD13501@farnsworth.metanate.com> (John Keeping's
+ message of "Tue, 12 Feb 2013 18:09:17 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 16A9448E-7541-11E2-89BD-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 459D546A-7541-11E2-86E9-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216172>
 
 John Keeping <john@keeping.me.uk> writes:
 
->> I am not sure if I understand what you meant by "literal backslash
->> blah blah", though.
+> On Tue, Feb 12, 2013 at 10:00:26AM -0800, Junio C Hamano wrote:
+>>
+>> So it needs to be more like this, and I think it still is more
+>> readable.
 >
-> It turns out that having this in the script works (in bash and dash
-> although I haven't checked what Posix has to say about it):
->
->     sed -e "2,$ s/^/\\\/"
->
-> and is equivalent to:
->
->     sed -e '2,$ s/^/\\/'
->
-> because backslashes that aren't recognised as part of an escape sequence
-> are not treated specially.
+> Agreed.  Will you squash this in or do you want a re-roll?
 
-That's POSIX.  Inside a dq pair:
+I can squash this and the previous one into your original to a
+single commit.  Thanks.
 
-        \
-        The <backslash> shall retain its special meaning as an escape
-        character (see Escape Character (Backslash)) only when followed by
-        one of the following characters when considered special:
-        $   `   "   \   <newline>
-
-So in your example "\\\/", the first backslash escapes the second
-backslash and together they produce a single backslash, the third
-backslash is followed by a slash that is not special at all, so it
-produces a second backslash, and the slash stands for itself,
-resulting in "\\/".
+>
+>> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+>> index cbe36bf..8b3e2cd 100755
+>> --- a/t/t3404-rebase-interactive.sh
+>> +++ b/t/t3404-rebase-interactive.sh
+>> @@ -945,13 +945,11 @@ test_expect_success 'rebase -i respects core.commentchar' '
+>>  	git checkout E^0 &&
+>>  	git config core.commentchar "\\" &&
+>>  	test_when_finished "git config --unset core.commentchar" &&
+>> -	cat >comment-lines.sh <<EOF &&
+>> -#!$SHELL_PATH
+>> -sed -e "2,\$ s/^/\\\\\\/" "\$1" >"\$1".tmp
+>> -mv "\$1".tmp "\$1"
+>> -EOF
+>> -	chmod a+x comment-lines.sh &&
+>> -	test_set_editor "$(pwd)/comment-lines.sh" &&
+>> +	write_script remove-all-but-first.sh <<-\EOF &&
+>> +	sed -e "2,\$s/^/\\\\/" "$1" >"$1.tmp" &&
+>> +	mv "$1.tmp" "$1"
+>> +	EOF
+>> +	test_set_editor "$(pwd)/remove-all-but-first.sh" &&
+>>  	git rebase -i B &&
+>>  	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
+>>  '
