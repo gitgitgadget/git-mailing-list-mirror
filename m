@@ -1,80 +1,123 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v3 0/4] count-objects improvements
-Date: Tue, 12 Feb 2013 16:27:53 +0700
-Message-ID: <1360661277-17273-1-git-send-email-pclouds@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2] rebase -i: respect core.commentchar
+Date: Tue, 12 Feb 2013 09:53:40 +0000
+Message-ID: <20130212095340.GG2270@serenity.lan>
+References: <aa1deab1de2e0f998b9ac0bc8c2d76557429a46b.1360610368.git.john@keeping.me.uk>
+ <7vzjzali6a.fsf@alter.siamese.dyndns.org>
+ <20130211213900.GE2270@serenity.lan>
+ <7va9raldw8.fsf@alter.siamese.dyndns.org>
+ <20130211230804.GF2270@serenity.lan>
+ <7vehgmjsno.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 12 10:28:17 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 10:54:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5C9t-0002Yv-T0
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 10:28:14 +0100
+	id 1U5CZ6-0006xh-Cw
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 10:54:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932993Ab3BLJ1t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2013 04:27:49 -0500
-Received: from mail-da0-f50.google.com ([209.85.210.50]:50851 "EHLO
-	mail-da0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758640Ab3BLJ1N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 04:27:13 -0500
-Received: by mail-da0-f50.google.com with SMTP id h15so3184796dan.9
-        for <git@vger.kernel.org>; Tue, 12 Feb 2013 01:27:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=2zKUqM1YKqcuAsa0FbikKYyaPYlXjaLns42Hgwibuc4=;
-        b=vKzrxqsw25MfU/A85YbZHggrzt354gNTHujqvxKrzRuuXAWJf12fIGubOwTxoIGToU
-         vEMJBCX2ijTLgZmKpMKjQkDjiILydsj35KBbNwJPIo3DA9TTvF11Y71K4Ry8Qv74yNwm
-         P9ZNVxx0Na+AlIgVmhsnVECrcQU9U1LhM8ui21a99ZrdysgZ6B95gG0niQTKUHTneX41
-         3v/l01lahu1huft4RvqyoU5QgDjqbUf1b9BwvuW7uVtx/5AeEBtltuHHw/kTO/eTy76T
-         BmiDIzIe8eiNXhZIm4zh5CXdj8IS9S+5CgwTYAcKLXv97hFKdhebhp0GVD4l4uR79AZR
-         a2sA==
-X-Received: by 10.66.81.231 with SMTP id d7mr50166524pay.27.1360661232332;
-        Tue, 12 Feb 2013 01:27:12 -0800 (PST)
-Received: from lanh ([115.74.60.127])
-        by mx.google.com with ESMTPS id k7sm60177484paz.13.2013.02.12.01.27.08
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 12 Feb 2013 01:27:11 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 12 Feb 2013 16:27:59 +0700
-X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
+	id S1755850Ab3BLJxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 04:53:52 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:58251 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753801Ab3BLJxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 04:53:51 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id A3798CDA330;
+	Tue, 12 Feb 2013 09:53:50 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tuHQ7jXZPTIZ; Tue, 12 Feb 2013 09:53:48 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 63625CDA5D2;
+	Tue, 12 Feb 2013 09:53:42 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vehgmjsno.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216128>
 
-Compared to v2 [1], this version
- - fixes sparse warning
- - restructures 2/3 (now 3/4) to make it easier to read
- - report "path too long" instead of "garbage found" in
-   .git/path/too/long/pack-xxx.pack case
- - changes output prefix "error:" to "warning:"
+On Mon, Feb 11, 2013 at 04:13:31PM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > @@ -179,7 +182,9 @@ die_abort () {
+> >  }
+> >  
+> >  has_action () {
+> > -	sane_grep '^[^#]' "$1" >/dev/null
+> > +	echo "space stripped actions:" >&2
+> > +	git stripspace --strip-comments <"$1" >&2
+> > +	test -n "$(git stripspace --strip-comments <"$1")"
+> >  }
+> 
+> I'll remove the debugging remnants while queuing.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/215378/focus=
-=3D215744
+Thanks.  I don't think I was fully awake when I finished this last
+night - the following fixup is also needed to avoid relying on the shell
+emitting a literal backslash when a backslash isn't followed by a known
+escape character.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
-  git-count-objects.txt: describe each line in -v output
-  sha1_file: reorder code in prepare_packed_git_one()
-  count-objects: report garbage files in pack directory too
-  count-objects: report how much disk space taken by garbage files
+-- >8 --
 
- Documentation/git-count-objects.txt |  22 ++++++--
- builtin/count-objects.c             |  43 +++++++++++---
- cache.h                             |   3 +
- sha1_file.c                         | 108 ++++++++++++++++++++++++++++=
-+++-----
- 4 files changed, 148 insertions(+), 28 deletions(-)
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index cbe36bf..84bd525 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -947,7 +947,7 @@ test_expect_success 'rebase -i respects core.commentchar' '
+ 	test_when_finished "git config --unset core.commentchar" &&
+ 	cat >comment-lines.sh <<EOF &&
+ #!$SHELL_PATH
+-sed -e "2,\$ s/^/\\\\\\/" "\$1" >"\$1".tmp
++sed -e "2,\$ s/^/\\\\\\\\/" "\$1" >"\$1".tmp
+ mv "\$1".tmp "\$1"
+ EOF
+ 	chmod a+x comment-lines.sh &&
 
---=20
-1.8.1.2.536.gf441e6d
+-- >8 --
+
+> > @@ -942,20 +948,18 @@ test -s "$todo" || echo noop >> "$todo"
+> >  test -n "$autosquash" && rearrange_squash "$todo"
+> >  test -n "$cmd" && add_exec_commands "$todo"
+> >  
+> > -cat >> "$todo" << EOF
+> > -
+> > -# Rebase $shortrevisions onto $shortonto
+> > -EOF
+> > +echo >>"$todo"
+> > +printf '%s\n' "$comment_char Rebase $shortrevisions onto $shortonto" >>"$todo"
+> 
+> I think you can still do
+> 
+> 	cat >>"$todo" <<EOF
+> 
+> 	$comment_char Rebase $shortrevisions onto...
+> 	EOF
+> 
+> here with any funny comment character.  Doing this with two separate
+> I/O does not hurt very much, but the resulting code may be easier to
+> scan if left as here-text with a single cat.
+> 
+> Please eyeball what is in 'pu' (I have a separate squashable fixup
+> on top of your patch) and let me know if I made mistakes.
+
+The fixup commit looks good to me.
+
+
+John
