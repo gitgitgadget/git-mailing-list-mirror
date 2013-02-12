@@ -1,97 +1,94 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH v4.1 09/12] sequencer.c: teach append_signoff to avoid adding a duplicate newline
-Date: Tue, 12 Feb 2013 02:33:42 -0800
-Message-ID: <1360665222-3166-1-git-send-email-drafnel@gmail.com>
-References: <1360664260-11803-10-git-send-email-drafnel@gmail.com>
-Cc: gitster@pobox.com, pclouds@gmail.com, jrnieder@gmail.com,
-	Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <bcasey@nvidia.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 12 11:34:34 2013
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Improve 'git help' with basic user guide linkss
+Date: Tue, 12 Feb 2013 11:11:17 -0000
+Organization: OPDS
+Message-ID: <2DFA2C4F62AE484681753EBC3774D222@PhilipOakley>
+References: <6D91D31A093D46869F43DD8D1012F0FB@PhilipOakley> <7vr4kqzfw5.fsf@alter.siamese.dyndns.org> <6BC280F5827C4098BCB6276232DDE8E4@PhilipOakley> <7v6222za9x.fsf@alter.siamese.dyndns.org> <27C7EA38DDD345F994F01E5B8FB6D278@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=response
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 12:11:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5DC1-0003zx-43
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 11:34:29 +0100
+	id 1U5Dm0-0004Q6-Cx
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 12:11:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758399Ab3BLKeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 05:34:05 -0500
-Received: from mail-da0-f51.google.com ([209.85.210.51]:39183 "EHLO
-	mail-da0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755527Ab3BLKeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 05:34:04 -0500
-Received: by mail-da0-f51.google.com with SMTP id n15so3101993dad.38
-        for <git@vger.kernel.org>; Tue, 12 Feb 2013 02:34:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=bAgxodrQ570wCm3ud/ty9AKoKb8nENCWTohJ8LYHlP8=;
-        b=BiJVatICiTOVUZYrgiTLfuMR5lNNA42lXnwvx9YbRMRe/xBJQK0Qj+cvi2Px3goqc1
-         HuRqB52qE8aMykbQfPyXehsaHP+xyofa4I5h1TYtM8nKIt7Y3mgdwtTAkpoDkYYvSyuj
-         64hlapCcHv7rXSMDBFpmc7XXjc1B2NTcf7gSaxZTYAZQvhwPg4e41YeR8F58goh6UtGW
-         0J9Q9s1WohxhD+5YCjBX+HKCkx2MCgWwy00lJ9h15RL7q9fRMIBVjKpf9B6KekxC/4LV
-         qltuV+q2hRuLuGmV2zAT19A/f1qkOVJZaOE3OHcKLvq/ao2vHN5+2n80PiVLQUdSXCNL
-         uovA==
-X-Received: by 10.66.88.133 with SMTP id bg5mr30187802pab.21.1360665242984;
-        Tue, 12 Feb 2013 02:34:02 -0800 (PST)
-Received: from charliebrown.hsd1.ca.comcast.net (c-98-248-42-122.hsd1.ca.comcast.net. [98.248.42.122])
-        by mx.google.com with ESMTPS id y9sm73947620paw.1.2013.02.12.02.34.00
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 12 Feb 2013 02:34:01 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1.252.gdb33759
-In-Reply-To: <1360664260-11803-10-git-send-email-drafnel@gmail.com>
+	id S1758826Ab3BLLLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 06:11:17 -0500
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:57943 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758734Ab3BLLLQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Feb 2013 06:11:16 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AhQKADwDGlFcHls+/2dsb2JhbABEjAq0HQOBBBdzghoFAQEFCAEBLh4BASELAgMFAgEDFQELJRQBBBoGBxcGEwgCAQIDAYgFCLAbkAqNRm0BgnJhA4gwhVeJOo82gwaBag
+X-IronPort-AV: E=Sophos;i="4.84,648,1355097600"; 
+   d="scan'208";a="418910132"
+Received: from host-92-30-91-62.as13285.net (HELO PhilipOakley) ([92.30.91.62])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 12 Feb 2013 11:11:14 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216146>
 
-Teach append_signoff to detect whether a blank line exists at the position
-that the signed-off-by line will be added, and refrain from adding an
-additional one if one already exists.  Or, add an additional line if one
-is needed to make sure the new footer is separated from the message body
-by a blank line.
+From: "Philip Oakley" <philipoakley@iee.org>
+Sent: Friday, February 08, 2013 11:16 PM
+> From: "Junio C Hamano" <gitster@pobox.com>
+> Sent: Friday, February 08, 2013 10:54 PM
+>> "Philip Oakley" <philipoakley@iee.org> writes:
+>>
+>>> My initial https://github.com/PhilipOakley/git/commit/e6217d simply
+>>> updates
+>>> -  N_("See 'git help <command>' for more information on a specific
+>>> command.");
+>>> +  N_("See 'git help <command>' for more information on a specific
+>>> command.\n"
+>>> +     "Or 'git help <guide>', such as 'tutorial' for an introduction
+>>> to Git.");
+>>> as a starter for the new users.
+>>
+>> Yeah, that would be a good change to make to "git help<RETURN>"
+>> output.
+>
+> I'll sort some patches early next week (the weekend's committed 
+> elsewhere)
+>
+>>
+>>> My view is that help --all (-a) is essentially incomplete as it
+>>> currently doesn't provide all the help.
+>>
+>> It has always been about "tell me all subcommands", not about "give
+>> me all the help you could give me".  You are not adding a "help"
+>> subcommand to a system you wrote last week.  Changing the semantics
+>> this late feels, eh, too late.
+>
+> OK, I'll limit the the follow-ons to just an extra --guides option 
+> (probably just a list of the common guides initially), and 
+> leave --all(-a) for just the commands.
+>
+The Git man page includes the different command types listed by category 
+(Main porcelain, Ancillary {manipulators, interrogators}, Interacting 
+with others, etc.).
 
-Signed-off-by: Brandon Casey <bcasey@nvidia.com>
----
+Obviously (?) this is generated from the command-list.txt file, though I 
+don't see a shell script that would generate the 
+'cmds-mainporcelain.txt' (etc.) files 
+(//github.com/gitster/git-htmldocs). They are also part of the msysgit 
+install.
 
+Where should I be looking to see how they are generated?
 
-A slight tweak.  And I promise, no more are coming.
-
--Brandon
-
-
- sequencer.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 3364faa..084573b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1127,8 +1127,19 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
- 	else
- 		has_footer = has_conforming_footer(msgbuf, &sob, ignore_footer);
- 
--	if (!has_footer)
--		strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0, "\n", 1);
-+	if (!has_footer) {
-+		const char *append_newlines = NULL;
-+		size_t len = msgbuf->len - ignore_footer;
-+
-+		if (len && msgbuf->buf[len - 1] != '\n')
-+			append_newlines = "\n\n";
-+		else if (len > 1 && msgbuf->buf[len - 2] != '\n')
-+			append_newlines = "\n";
-+
-+		if (append_newlines)
-+			strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0,
-+				append_newlines, strlen(append_newlines));
-+	}
- 
- 	if (has_footer != 3 && (!no_dup_sob || has_footer != 2))
- 		strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0,
--- 
-1.8.1.1.252.gdb33759
+Philip 
