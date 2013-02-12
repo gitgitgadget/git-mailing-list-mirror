@@ -1,299 +1,101 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [RFC/PATCH] Replace filepattern with pathspec for consistency
-Date: Tue, 12 Feb 2013 10:24:44 +0100
-Message-ID: <1360661084-8678-1-git-send-email-Matthieu.Moy@imag.fr>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v3 1/4] git-count-objects.txt: describe each line in -v output
+Date: Tue, 12 Feb 2013 16:27:54 +0700
+Message-ID: <1360661277-17273-2-git-send-email-pclouds@gmail.com>
+References: <1360661277-17273-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Feb 12 10:25:47 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 12 10:27:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5C7Q-0005hR-Ol
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 10:25:41 +0100
+	id 1U5C9a-0001qA-If
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 10:27:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932960Ab3BLJZP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2013 04:25:15 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:38137 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758445Ab3BLJZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 04:25:12 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r1C9P4Lm001557
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 12 Feb 2013 10:25:04 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1U5C6q-0002an-Rp; Tue, 12 Feb 2013 10:25:04 +0100
-Received: from moy by anie with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1U5C6q-0002HS-Nb; Tue, 12 Feb 2013 10:25:04 +0100
-X-Mailer: git-send-email 1.8.1.2.548.g956380a.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 12 Feb 2013 10:25:06 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r1C9P4Lm001557
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1361265907.12365@mq/MdlHa2ZC18nc/6mEgMA
+	id S933020Ab3BLJ1X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Feb 2013 04:27:23 -0500
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35030 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933012Ab3BLJ1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 04:27:19 -0500
+Received: by mail-pa0-f42.google.com with SMTP id kq12so3581099pab.1
+        for <git@vger.kernel.org>; Tue, 12 Feb 2013 01:27:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=Bf20TpSU0Hj2447q2x+qvHE3XWwE5y1PsvxXIHNd3ck=;
+        b=RD/+cze7KsQwCWhqMyK4EaGuGKKsGgbCOuRQg1HfGK2W7tl1uGMiXU6N5DrVMbIplu
+         Kb6y8qXXQYPgKYx1A6HoAyZi+9fqyKiR/qosHIKt9GatyKj8xLpA03Pv3AeV3LC7VNb0
+         76EjsHqVsFW48Lww0O4bUYAZc3kYnIISiQldgrdf4miA16UZxGk2KGntTaZaXUf4iG7n
+         uCoxhbEorf9V333Ji039/vGFxQSRRIiG1gTVnhhSp0+ppAFUT7Jxcunnqzy6a94+VQdc
+         FJSLgldfgj6ghkL2WGGisxbH6YAZPrc7x40Av+QN6hVdQIcYJR/zMkkNAVgQikoxf9d0
+         DPRQ==
+X-Received: by 10.66.146.72 with SMTP id ta8mr7491245pab.24.1360661238858;
+        Tue, 12 Feb 2013 01:27:18 -0800 (PST)
+Received: from lanh ([115.74.60.127])
+        by mx.google.com with ESMTPS id d1sm37053387paz.17.2013.02.12.01.27.15
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 12 Feb 2013 01:27:18 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 12 Feb 2013 16:28:06 +0700
+X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
+In-Reply-To: <1360661277-17273-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216123>
 
-pathspec is the most widely used term, and is the one defined in
-gitglossary.txt. <filepattern> was used only in the synopsys for git-ad=
-d
-and git-commit, and in git-add.txt. Get rid of it.
+The current description requires a bit of guessing (what clause
+corresponds to what printed line?) and lacks information, such as
+the unit of size and size-pack.
 
-This patch is obtained with by running:
-
-  perl -pi -e 's/filepattern/pathspec/' `git grep -l filepattern`
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
-I'm a bit unsure about the changes to the .po files, but I guess doing
-the substitution there too does the right thing.
+ Documentation/git-count-objects.txt | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
- Documentation/git-add.txt | 12 ++++++------
- builtin/add.c             |  2 +-
- builtin/commit.c          |  4 ++--
- po/de.po                  |  6 +++---
- po/git.pot                |  6 +++---
- po/sv.po                  |  6 +++---
- po/vi.po                  |  6 +++---
- po/zh_CN.po               |  6 +++---
- 8 files changed, 24 insertions(+), 24 deletions(-)
-
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 5333559..388a225 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- 'git add' [-n] [-v] [--force | -f] [--interactive | -i] [--patch | -p]
- 	  [--edit | -e] [--all | [--update | -u]] [--intent-to-add | -N]
- 	  [--refresh] [--ignore-errors] [--ignore-missing] [--]
--	  [<filepattern>...]
-+	  [<pathspec>...]
-=20
- DESCRIPTION
- -----------
-@@ -49,7 +49,7 @@ commit.
-=20
- OPTIONS
+diff --git a/Documentation/git-count-objects.txt b/Documentation/git-co=
+unt-objects.txt
+index 23c80ce..e816823 100644
+--- a/Documentation/git-count-objects.txt
++++ b/Documentation/git-count-objects.txt
+@@ -20,11 +20,21 @@ OPTIONS
  -------
--<filepattern>...::
-+<pathspec>...::
- 	Files to add content from.  Fileglobs (e.g. `*.c`) can
- 	be given to add all matching files.  Also a
- 	leading directory name (e.g. `dir` to add `dir/file1`
-@@ -100,21 +100,21 @@ apply to the index. See EDITING PATCHES below.
+ -v::
+ --verbose::
+-	In addition to the number of loose objects and disk
+-	space consumed, it reports the number of in-pack
+-	objects, number of packs, disk space consumed by those packs,
+-	and number of objects that can be removed by running
+-	`git prune-packed`.
++	Report in more detail:
+++
++count: the number of loose objects
+++
++size: disk space consumed by loose objects, in KiB
+++
++in-pack: the number of in-pack objects
+++
++size-pack: disk space consumed by the packs, in KiB
+++
++prune-packable: the number of loose objects that are also present in
++the packs. These objects could be pruned using `git prune-packed`.
+++
++garbage: the number of files in loose object database that are not
++valid loose objects
 =20
- -u::
- --update::
--	Only match <filepattern> against already tracked files in
-+	Only match <pathspec> against already tracked files in
- 	the index rather than the working tree. That means that it
- 	will never stage new files, but that it will stage modified
- 	new contents of tracked files and that it will remove files
- 	from the index if the corresponding files in the working tree
- 	have been removed.
- +
--If no <filepattern> is given, the current version of Git defaults to
-+If no <pathspec> is given, the current version of Git defaults to
- "."; in other words, update all tracked files in the current directory
- and its subdirectories. This default will change in a future version
--of Git, hence the form without <filepattern> should not be used.
-+of Git, hence the form without <pathspec> should not be used.
-=20
- -A::
- --all::
--	Like `-u`, but match <filepattern> against files in the
-+	Like `-u`, but match <pathspec> against files in the
- 	working tree in addition to the index. That means that it
- 	will find new files as well as staging modified content and
- 	removing files that are no longer in the working tree.
-diff --git a/builtin/add.c b/builtin/add.c
-index 7738025..0dd014e 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -17,7 +17,7 @@
- #include "bulk-checkin.h"
-=20
- static const char * const builtin_add_usage[] =3D {
--	N_("git add [options] [--] <filepattern>..."),
-+	N_("git add [options] [--] <pathspec>..."),
- 	NULL
- };
- static int patch_interactive, add_interactive, edit_interactive;
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 1a0e5f1..3348aa1 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -31,12 +31,12 @@
- #include "sequencer.h"
-=20
- static const char * const builtin_commit_usage[] =3D {
--	N_("git commit [options] [--] <filepattern>..."),
-+	N_("git commit [options] [--] <pathspec>..."),
- 	NULL
- };
-=20
- static const char * const builtin_status_usage[] =3D {
--	N_("git status [options] [--] <filepattern>..."),
-+	N_("git status [options] [--] <pathspec>..."),
- 	NULL
- };
-=20
-diff --git a/po/de.po b/po/de.po
-index c8ad2f0..0183c28 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -1410,7 +1410,7 @@ msgid "failed to unlink '%s'"
- msgstr "Konnte '%s' nicht entfernen"
-=20
- #: builtin/add.c:19
--msgid "git add [options] [--] <filepattern>..."
-+msgid "git add [options] [--] <pathspec>..."
- msgstr "git add [Optionen] [--] [<Dateimuster>...]"
-=20
- #: builtin/add.c:62
-@@ -3296,11 +3296,11 @@ msgid "--command must be the first argument"
- msgstr "Option --command muss zuerst angegeben werden"
-=20
- #: builtin/commit.c:34
--msgid "git commit [options] [--] <filepattern>..."
-+msgid "git commit [options] [--] <pathspec>..."
- msgstr "git commit [Optionen] [--] <Dateimuster>..."
-=20
- #: builtin/commit.c:39
--msgid "git status [options] [--] <filepattern>..."
-+msgid "git status [options] [--] <pathspec>..."
- msgstr "git status [Optionen] [--] <Dateimuster>..."
-=20
- #: builtin/commit.c:44
-diff --git a/po/git.pot b/po/git.pot
-index 430d033..4941fd7 100644
---- a/po/git.pot
-+++ b/po/git.pot
-@@ -1328,7 +1328,7 @@ msgid "failed to unlink '%s'"
- msgstr ""
-=20
- #: builtin/add.c:19
--msgid "git add [options] [--] <filepattern>..."
-+msgid "git add [options] [--] <pathspec>..."
- msgstr ""
-=20
- #: builtin/add.c:62
-@@ -3128,11 +3128,11 @@ msgid "--command must be the first argument"
- msgstr ""
-=20
- #: builtin/commit.c:34
--msgid "git commit [options] [--] <filepattern>..."
-+msgid "git commit [options] [--] <pathspec>..."
- msgstr ""
-=20
- #: builtin/commit.c:39
--msgid "git status [options] [--] <filepattern>..."
-+msgid "git status [options] [--] <pathspec>..."
- msgstr ""
-=20
- #: builtin/commit.c:44
-diff --git a/po/sv.po b/po/sv.po
-index ee6b0fc..c0ef050 100644
---- a/po/sv.po
-+++ b/po/sv.po
-@@ -1379,7 +1379,7 @@ msgid "failed to unlink '%s'"
- msgstr "misslyckades ta bort l=C3=A4nken \"%s\""
-=20
- #: builtin/add.c:19
--msgid "git add [options] [--] <filepattern>..."
-+msgid "git add [options] [--] <pathspec>..."
- msgstr "git add [flaggor] [--] <film=C3=B6nster>..."
-=20
- #: builtin/add.c:62
-@@ -3223,11 +3223,11 @@ msgid "--command must be the first argument"
- msgstr "--command m=C3=A5ste vara f=C3=B6rsta argument"
-=20
- #: builtin/commit.c:34
--msgid "git commit [options] [--] <filepattern>..."
-+msgid "git commit [options] [--] <pathspec>..."
- msgstr "git commit [flaggor] [--] <film=C3=B6ster>..."
-=20
- #: builtin/commit.c:39
--msgid "git status [options] [--] <filepattern>..."
-+msgid "git status [options] [--] <pathspec>..."
- msgstr "git status [flaggor] [--] <film=C3=B6nster>..."
-=20
- #: builtin/commit.c:44
-diff --git a/po/vi.po b/po/vi.po
-index 2ccdf86..78c6326 100644
---- a/po/vi.po
-+++ b/po/vi.po
-@@ -1412,7 +1412,7 @@ msgid "failed to unlink '%s'"
- msgstr "b=E1=BB=8F li=C3=AAn k=E1=BA=BFt (unlink) %s kh=C3=B4ng th=C3=A0=
-nh c=C3=B4ng"
-=20
- #: builtin/add.c:19
--msgid "git add [options] [--] <filepattern>..."
-+msgid "git add [options] [--] <pathspec>..."
- msgstr "git add [c=C3=A1c-t=C3=B9y-ch=E1=BB=8Dn] [--] <m=E1=BA=ABu-t=E1=
-=BA=ADp-tin>..."
-=20
- #: builtin/add.c:62
-@@ -3281,11 +3281,11 @@ msgid "--command must be the first argument"
- msgstr "--command ph=E1=BA=A3i l=C3=A0 =C4=91=E1=BB=91i s=E1=BB=91 =C4=
-=91=E1=BA=A7u ti=C3=AAn"
-=20
- #: builtin/commit.c:34
--msgid "git commit [options] [--] <filepattern>..."
-+msgid "git commit [options] [--] <pathspec>..."
- msgstr "git commit [c=C3=A1c-t=C3=B9y-ch=E1=BB=8Dn] [--] <m=E1=BA=ABu-=
-t=E1=BA=ADp-tin>..."
-=20
- #: builtin/commit.c:39
--msgid "git status [options] [--] <filepattern>..."
-+msgid "git status [options] [--] <pathspec>..."
- msgstr "git status [c=C3=A1c-t=C3=B9y-ch=E1=BB=8Dn] [--] <m=E1=BA=ABu-=
-t=E1=BA=ADp-tin>..."
-=20
- #: builtin/commit.c:44
-diff --git a/po/zh_CN.po b/po/zh_CN.po
-index 46d158f..79cce0e 100644
---- a/po/zh_CN.po
-+++ b/po/zh_CN.po
-@@ -1405,7 +1405,7 @@ msgstr "=E6=97=A0=E6=B3=95=E5=88=A0=E9=99=A4 '%s'=
-"
-=20
- #: builtin/add.c:19
- #, fuzzy
--msgid "git add [options] [--] <filepattern>..."
-+msgid "git add [options] [--] <pathspec>..."
- msgstr "git apply [=E9=80=89=E9=A1=B9] [<=E8=A1=A5=E4=B8=81>...]"
-=20
- #: builtin/add.c:62
-@@ -3278,12 +3278,12 @@ msgstr "--command =E5=BF=85=E9=A1=BB=E6=98=AF=E7=
-=AC=AC=E4=B8=80=E4=B8=AA=E5=8F=82=E6=95=B0"
-=20
- #: builtin/commit.c:33
- #, fuzzy
--msgid "git commit [options] [--] <filepattern>..."
-+msgid "git commit [options] [--] <pathspec>..."
- msgstr "git apply [=E9=80=89=E9=A1=B9] [<=E8=A1=A5=E4=B8=81>...]"
-=20
- #: builtin/commit.c:38
- #, fuzzy
--msgid "git status [options] [--] <filepattern>..."
-+msgid "git status [options] [--] <pathspec>..."
- msgstr "git apply [=E9=80=89=E9=A1=B9] [<=E8=A1=A5=E4=B8=81>...]"
-=20
- #: builtin/commit.c:43
+ GIT
+ ---
 --=20
-1.8.1.2.548.g956380a.dirty
+1.8.1.2.536.gf441e6d
