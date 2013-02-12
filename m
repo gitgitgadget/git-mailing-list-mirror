@@ -1,108 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 05/12] sequencer.c: recognize "(cherry picked from
- ..." as part of s-o-b footer
-Date: Tue, 12 Feb 2013 11:58:55 -0800
-Message-ID: <7vpq05fgn4.fsf@alter.siamese.dyndns.org>
-References: <1360664260-11803-1-git-send-email-drafnel@gmail.com>
- <1360664260-11803-6-git-send-email-drafnel@gmail.com>
- <7v621xgxax.fsf@alter.siamese.dyndns.org> <511A98C0.70201@nvidia.com>
- <7vtxphfhoq.fsf@alter.siamese.dyndns.org> <511A9CDB.9060008@nvidia.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <drafnel@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	"pclouds\@gmail.com" <pclouds@gmail.com>,
-	"jrnieder\@gmail.com" <jrnieder@gmail.com>
-To: Brandon Casey <bcasey@nvidia.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 20:59:26 2013
+From: Martin Erik Werner <martinerikwerner@gmail.com>
+Subject: [PATCH 0/2] Add bash.showUntrackedFiles config option
+Date: Tue, 12 Feb 2013 21:12:14 +0100
+Message-ID: <1360699936-28688-1-git-send-email-martinerikwerner@gmail.com>
+Cc: trsten@science-computing.de,
+	Martin Erik Werner <martinerikwerner@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 12 21:13:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5M0g-0007MT-8i
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 20:59:22 +0100
+	id 1U5MEH-0007NQ-4o
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 21:13:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933425Ab3BLT67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 14:58:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41214 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933153Ab3BLT66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 14:58:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FC22C5E3;
-	Tue, 12 Feb 2013 14:58:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XduoPE+NR+ufCBSMD3LKoNLKtUI=; b=ZS++D2
-	0nSNx83AR28EcddleoQffMfNvvWMSrlGKgGDrfyH9NlaAVhk+jxFrR9a0f3mko8O
-	7e4PZgi77OE4mIJ0a8K7bGcTNsVbzvWqhTLx/tI+V8T9jxqJvmNOBE6FmJpIptQS
-	4nd0Y7bkuy8dMDNo0JKboLb9yIIx/pt6XXM68=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PRQr/3212DnT5b8QUw8HIPJSr9dkYvCv
-	AU8PAiMObs1/Qzw3SYFKLBcA7zIjF0gygwPHd/WkmOfQo6IhddpaqE4kACBpEQ2V
-	lq7ReZYeT4ZN0xE0DCvz0D09s7HJduoDZjEZDRA17kbyh8QkkiDg1GXhyrZ9P06l
-	govxhKmr+as=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDB35C5E2;
-	Tue, 12 Feb 2013 14:58:57 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4706BC5DC; Tue, 12 Feb 2013
- 14:58:57 -0500 (EST)
-In-Reply-To: <511A9CDB.9060008@nvidia.com> (Brandon Casey's message of "Tue,
- 12 Feb 2013 11:49:47 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A2C14C52-754E-11E2-A960-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751173Ab3BLUNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 15:13:00 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:58833 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750987Ab3BLUM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 15:12:59 -0500
+Received: by mail-lb0-f174.google.com with SMTP id l12so409866lbo.19
+        for <git@vger.kernel.org>; Tue, 12 Feb 2013 12:12:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=xdJ/1hWAyL01h4MqrMAYMsUXT9ydQ788r073ai8ha7A=;
+        b=fZ+kIeMysmjMdh4pEafW1rCWl52ckimW0FkIUPn0Rw3gAFDiXfGU/yDmdbCtZpCT00
+         udrBEizSrDxw56nRGmeerdom8oqTk0aEUmVtw4O6W/Egn73GFai7zZIP3vumHkaefMgA
+         bcJV8yxZXaVSE9wD666pIEF+mjbOxpu23z6FAkS6DnirNZgXOKWhO5lip0qPzotioHQG
+         grt2dA4r2Ka9ofhoWa4/jLLkpc55SRQ7z1ac6MPbnJN708c55HjnyyHPDwWBJ1bj9uYz
+         s2Az/NQpU2LvXypJavHO2hVQdf/1rYTVEoIQiYOeaaw+H3FQAXHVlH6NqhNw7YDKHe2K
+         po/g==
+X-Received: by 10.152.134.164 with SMTP id pl4mr8424366lab.54.1360699978150;
+        Tue, 12 Feb 2013 12:12:58 -0800 (PST)
+Received: from mas (nl107-187-0.student.uu.se. [130.243.187.0])
+        by mx.google.com with ESMTPS id xw14sm8927784lab.6.2013.02.12.12.12.55
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 12 Feb 2013 12:12:56 -0800 (PST)
+Received: from arand by mas with local (Exim 4.80)
+	(envelope-from <arand@mas>)
+	id 1U5MDk-0007UV-Kb; Tue, 12 Feb 2013 21:12:52 +0100
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216183>
 
-Brandon Casey <bcasey@nvidia.com> writes:
+Hi,
 
-> On 2/12/2013 11:36 AM, Junio C Hamano wrote:
->> Brandon Casey <bcasey@nvidia.com> writes:
->> 
->>>>> +	return len > strlen(cherry_picked_prefix) + 1 &&
->>>>> +		!prefixcmp(buf, cherry_picked_prefix) && buf[len - 1] == ')';
->>>>> +}
->>>>
->>>> Does the first "is it longer than the prefix?" check matter?  If it
->>>> is not, prefixcmp() would not match anyway, no?
->>>
->>> Probably not in practice, but technically we should only be accessing
->>> len characters in buf even though buf may be longer than len.  So the
->>> check is just making sure the function doesn't access chars it's not
->>> supposed to.
->> 
->> Sorry, I do not follow.  Isn't caller's buf terminated with LF at buf[len],
->> which would never match cherry_picked_prefix even if len is shorter
->> than the prefix?
->
-> Heh, I almost pointed that out in my reply.  Yes, buf will be terminated
-> with LF at buf[len].  And yes, that means that we will never get a false
-> positive from prefixcmp even if the comparison overruns buf+len while
-> doing its comparison.  That's why the check doesn't matter in practice,
-> i.e. based on the way that is_cherry_picked_from_line is being called
-> right now and the content of cherry_picked_prefix.
->
-> But, hasn't is_cherry_picked_from_line entered into a contract with the
-> caller and said "I will not access more than len characters"?
->
-> It's ok with me if you think it reads better without the check.
+Here is a patch adding a config option for showing untracked files in
+the shell prompt, I've noticed having it enabled tends to make the
+prompt act very sluggish in some cases (large repos / unfriendly
+filesystems). So it would be nice to have a more fine-grained control
+over it, similar to what exists for bash.showDirtyState.
 
-As Jonathan says, if you rewrite it to
+Martin Erik Werner (2):
+  bash completion: add bash.showUntrackedFiles option
+  t9903: add test case for bash.showUntrackedFiles
 
-	return buf[len - 1] == ')' && !prefixcmp(buf, cherry_picked_prefix);
+ contrib/completion/git-prompt.sh |   11 ++++++++---
+ t/t9903-bash-prompt.sh           |   11 +++++++++++
+ 2 files changed, 19 insertions(+), 3 deletions(-)
 
-then the code can keep its promise without the length check, because
-it knows there is no ')' in cherry-picked-prefix, and it also knows
-prefixcmp() stops at the first difference.
-
-It is not a huge deal; I was primarily reacting to the ugly multi-line
-boolean expresion that is not inside a pair of parentheses (and because
-this is a "return" statement, there is no good reason to have parentheses
-except that this is a multi-line expression), which looked odd.
+-- 
+1.7.10.4
