@@ -1,74 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: John Keeping <john@keeping.me.uk>
 Subject: Re: [PATCH] Makefile: do not export mandir/htmldir/infodir
-Date: Tue, 12 Feb 2013 15:16:51 -0800
-Message-ID: <20130212231651.GI12240@google.com>
+Date: Tue, 12 Feb 2013 23:20:41 +0000
+Message-ID: <20130212232041.GA23861@river>
 References: <cover.1360700102.git.john@keeping.me.uk>
  <20130212222508.GG12240@google.com>
  <7vmwv9ducx.fsf@alter.siamese.dyndns.org>
  <7vip5xdtt6.fsf@alter.siamese.dyndns.org>
  <7vehgldt8e.fsf_-_@alter.siamese.dyndns.org>
+ <20130212231651.GI12240@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Steffen Prohaska <prohaska@zib.de>,
 	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 00:17:21 2013
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 13 00:21:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5P6G-0006wp-3V
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 00:17:20 +0100
+	id 1U5PAH-0007it-Lf
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 00:21:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758451Ab3BLXQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 18:16:57 -0500
-Received: from mail-da0-f52.google.com ([209.85.210.52]:43169 "EHLO
-	mail-da0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756723Ab3BLXQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 18:16:56 -0500
-Received: by mail-da0-f52.google.com with SMTP id f10so262312dak.39
-        for <git@vger.kernel.org>; Tue, 12 Feb 2013 15:16:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=pd4PV+OfmIMLKyQUNCrQVswJbL8Pvj/SryiBWuVRBrw=;
-        b=vPGWJg+TW47E0XiaHCf6g2Rg7dtMceUeXN+6TAU2cEtmq91eI2/s3dTSZN+xg/ctoP
-         jSV33RL19h5uaMxYwMBR4uJisQeQ1k3BlwWmmhYuYuxN/0vrQAlUi0iz+ICXRIDYGER1
-         BWGFaJhtM912u8F0s6+eEEXPmU0TP28KzUPXAbK6aH8jlPygQXhIinmnv00HNhsCtE43
-         Q0uixxGEqcJl+N3KC2HOy39iD34372ebgVY4H+r/DaoT8TO7rNsB2LEJeUkWITpq4d32
-         ppuyKm8ctFHicfv5k4tkvyhdb0i2DnDI/N04wamJWDggEnC9fkNuO/jeZ8FuGclkBXbj
-         WbRA==
-X-Received: by 10.67.22.33 with SMTP id hp1mr20124868pad.3.1360711016039;
-        Tue, 12 Feb 2013 15:16:56 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id y9sm78419314paw.1.2013.02.12.15.16.53
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 12 Feb 2013 15:16:54 -0800 (PST)
+	id S1758964Ab3BLXVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 18:21:05 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:51642 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758954Ab3BLXVA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 18:21:00 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 01B1BCDA5A5;
+	Tue, 12 Feb 2013 23:21:00 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id d34K+DeaCchF; Tue, 12 Feb 2013 23:20:58 +0000 (GMT)
+Received: from river (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id C9968CDA330;
+	Tue, 12 Feb 2013 23:20:49 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <7vehgldt8e.fsf_-_@alter.siamese.dyndns.org>
+In-Reply-To: <20130212231651.GI12240@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216222>
 
-Junio C Hamano wrote:
+On Tue, Feb 12, 2013 at 03:16:51PM -0800, Jonathan Nieder wrote:
+> Junio C Hamano wrote:
+> 
+> > These are defined in the main Makefile to be funny values that are
+> > optionally relative to an unspecified location that is determined at
+> > runtime.
+> [...]
+> > A longer term fix is to introduce runtime_{man,html,info}dir variables
+> > to hold these funny values, and make {man,html,info}dir variables
+> > to have real paths whose default values begin with $(prefix), but
+> > as a first step, stop exporting them from the top-level Makefile.
+> 
+> Makes sense.
+> 
+> Reported-by: John Keeping <john@keeping.me.uk>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-> These are defined in the main Makefile to be funny values that are
-> optionally relative to an unspecified location that is determined at
-> runtime.
-[...]
-> A longer term fix is to introduce runtime_{man,html,info}dir variables
-> to hold these funny values, and make {man,html,info}dir variables
-> to have real paths whose default values begin with $(prefix), but
-> as a first step, stop exporting them from the top-level Makefile.
+Fixes my original problem, so FWIW:
 
-Makes sense.
-
-Reported-by: John Keeping <john@keeping.me.uk>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Tested-by: John Keeping <john@keeping.me.uk>
