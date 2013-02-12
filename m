@@ -1,72 +1,63 @@
-From: MikeW <mw_phil@yahoo.co.uk>
-Subject: A good Git technique for referring back to original files
-Date: Tue, 12 Feb 2013 08:11:27 +0000 (UTC)
-Message-ID: <loom.20130212T085620-989@post.gmane.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: A good Git technique for referring back to original files
+Date: Tue, 12 Feb 2013 09:56:34 +0100
+Message-ID: <vpq1ucl9agt.fsf@grenoble-inp.fr>
+References: <loom.20130212T085620-989@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 12 09:12:08 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: MikeW <mw_phil@yahoo.co.uk>
+X-From: git-owner@vger.kernel.org Tue Feb 12 09:57:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5AyD-0003Td-8O
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 09:12:05 +0100
+	id 1U5Bfi-0004jF-UU
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 09:57:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758132Ab3BLILl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 03:11:41 -0500
-Received: from plane.gmane.org ([80.91.229.3]:34612 "EHLO plane.gmane.org"
+	id S932277Ab3BLI4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 03:56:39 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:46613 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757989Ab3BLILk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 03:11:40 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1U5Ay6-00037a-8l
-	for git@vger.kernel.org; Tue, 12 Feb 2013 09:11:58 +0100
-Received: from static.kpn.net ([static.kpn.net])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Feb 2013 09:11:58 +0100
-Received: from mw_phil by static.kpn.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Feb 2013 09:11:58 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.204.2.113 (Mozilla/5.0 (Windows NT 5.1; rv:18.0) Gecko/20100101 Firefox/18.0)
+	id S932089Ab3BLI4i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 03:56:38 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r1C8uYw1027090
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 12 Feb 2013 09:56:34 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1U5BfG-0001o4-Vd; Tue, 12 Feb 2013 09:56:34 +0100
+In-Reply-To: <loom.20130212T085620-989@post.gmane.org> (MikeW's message of
+	"Tue, 12 Feb 2013 08:11:27 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 12 Feb 2013 09:56:34 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r1C8uYw1027090
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1361264196.08996@/SIY2C8yS1P8r09poHNnhg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216121>
 
-Hi,
+MikeW <mw_phil@yahoo.co.uk> writes:
 
-I have a client with an SDK product. Normally the SDK is used in its unpackaged
-form by the end-user, and that is the directory structure and set of files in
-which development work on the SDK functionality is performed.
+> Since git is so good at tracking file content, I wondered whether there was any
+> technique using git that would simplify the back-referencing task.
 
-However the SDK directory and content is generated from a packager which first
-runs on numerous other version controlled projects (currently CVS projects -
-this is unlikely to change).
+I'm not sure I understand the question, but if you want to add meta-data
+to Git commits (e.g. "this Git commit is revision 42 in CVS repository
+foo"), then have a look at git-notes. It won't give you directly
+"reference to other VCS", but at least can be used as a storage
+mechanism to store these references.
 
-This means that once changes to the unpackaged SDK have been tested, they have
-to be cross-referred back to the original projects and the changes ported back.
-
-I have found it most convenient to control my in-SDK changes with git.
-
-However it's still a royal pain to cross-refer and diff the changes back to the
-originals, especially since duplicate file names exist across the original
-projects which get filtered down to one relevant instance by the packager.
-
-Since git is so good at tracking file content, I wondered whether there was any
-technique using git that would simplify the back-referencing task.
-
-Failing a method using git 'normally', perhaps building a script on top of the
-git file system might be a possibility - if that is feasible ...
-
-Thanks,
-MikeW
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
