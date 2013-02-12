@@ -1,83 +1,108 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/FYI v4 13/12] fixup! t/t3511: add some tests of
- 'cherry-pick -s' functionality
-Date: Tue, 12 Feb 2013 11:56:20 -0800
-Message-ID: <20130212195620.GB12240@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 05/12] sequencer.c: recognize "(cherry picked from
+ ..." as part of s-o-b footer
+Date: Tue, 12 Feb 2013 11:58:55 -0800
+Message-ID: <7vpq05fgn4.fsf@alter.siamese.dyndns.org>
 References: <1360664260-11803-1-git-send-email-drafnel@gmail.com>
- <1360664260-11803-14-git-send-email-drafnel@gmail.com>
+ <1360664260-11803-6-git-send-email-drafnel@gmail.com>
+ <7v621xgxax.fsf@alter.siamese.dyndns.org> <511A98C0.70201@nvidia.com>
+ <7vtxphfhoq.fsf@alter.siamese.dyndns.org> <511A9CDB.9060008@nvidia.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 20:56:52 2013
+Cc: Brandon Casey <drafnel@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	"pclouds\@gmail.com" <pclouds@gmail.com>,
+	"jrnieder\@gmail.com" <jrnieder@gmail.com>
+To: Brandon Casey <bcasey@nvidia.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 20:59:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5LyD-00013w-Qo
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 20:56:50 +0100
+	id 1U5M0g-0007MT-8i
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 20:59:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933637Ab3BLT40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 14:56:26 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:45993 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933530Ab3BLT4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 14:56:25 -0500
-Received: by mail-pa0-f43.google.com with SMTP id bh2so280791pad.30
-        for <git@vger.kernel.org>; Tue, 12 Feb 2013 11:56:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=tb8Y/rmHC6ZbuY0ySKO5av+MOOIm2Mn0P7gQGp+v3Uc=;
-        b=TSWfYWEzyf/1iC4WGTheLBOMvAKt1s92gBIxrIOMgTK8sEemRLM9RWEPlDhMedhLip
-         TJOykaXqHDpjUBKO9gl1qHEz/pxZIUrvU1QIwlZuB7oo2rZbDPD6YCRmyEYAWUhZIdNK
-         ayP13CEFHXCMom7yBg9/JiP0Ua5hDCfRmL+G/0akAxqX0JQtsktBEUJv8QOn330AQhc3
-         SIxQtCKiAx+tBw8F74OZLla+Hya+25X4jKhk1oEdlnzYG4ZBB0vY8lnqqTlmw3of+LRP
-         YIE1VsSEVSvpKRJ07z4J+hbbp9SRpJ39Nr7tcQSGqCFXkwHidSKXBTKsyghkZjmN4o09
-         uQlQ==
-X-Received: by 10.66.222.35 with SMTP id qj3mr35750637pac.69.1360698984889;
-        Tue, 12 Feb 2013 11:56:24 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id m3sm77351646pav.4.2013.02.12.11.56.22
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 12 Feb 2013 11:56:23 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1360664260-11803-14-git-send-email-drafnel@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933425Ab3BLT67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 14:58:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41214 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933153Ab3BLT66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 14:58:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FC22C5E3;
+	Tue, 12 Feb 2013 14:58:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XduoPE+NR+ufCBSMD3LKoNLKtUI=; b=ZS++D2
+	0nSNx83AR28EcddleoQffMfNvvWMSrlGKgGDrfyH9NlaAVhk+jxFrR9a0f3mko8O
+	7e4PZgi77OE4mIJ0a8K7bGcTNsVbzvWqhTLx/tI+V8T9jxqJvmNOBE6FmJpIptQS
+	4nd0Y7bkuy8dMDNo0JKboLb9yIIx/pt6XXM68=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PRQr/3212DnT5b8QUw8HIPJSr9dkYvCv
+	AU8PAiMObs1/Qzw3SYFKLBcA7zIjF0gygwPHd/WkmOfQo6IhddpaqE4kACBpEQ2V
+	lq7ReZYeT4ZN0xE0DCvz0D09s7HJduoDZjEZDRA17kbyh8QkkiDg1GXhyrZ9P06l
+	govxhKmr+as=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDB35C5E2;
+	Tue, 12 Feb 2013 14:58:57 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4706BC5DC; Tue, 12 Feb 2013
+ 14:58:57 -0500 (EST)
+In-Reply-To: <511A9CDB.9060008@nvidia.com> (Brandon Casey's message of "Tue,
+ 12 Feb 2013 11:49:47 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A2C14C52-754E-11E2-A960-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216182>
 
-Brandon Casey wrote:
+Brandon Casey <bcasey@nvidia.com> writes:
 
-> I'm not sure we should apply this though.  I'm leaning towards saying that
-> the 'cherry-pick -s' behavior with respect to a commit with an empty message
-> body should be undefined.  If we want it to be undefined then we probably
-> shouldn't introduce a test which would have the effect of defining it.
+> On 2/12/2013 11:36 AM, Junio C Hamano wrote:
+>> Brandon Casey <bcasey@nvidia.com> writes:
+>> 
+>>>>> +	return len > strlen(cherry_picked_prefix) + 1 &&
+>>>>> +		!prefixcmp(buf, cherry_picked_prefix) && buf[len - 1] == ')';
+>>>>> +}
+>>>>
+>>>> Does the first "is it longer than the prefix?" check matter?  If it
+>>>> is not, prefixcmp() would not match anyway, no?
+>>>
+>>> Probably not in practice, but technically we should only be accessing
+>>> len characters in buf even though buf may be longer than len.  So the
+>>> check is just making sure the function doesn't access chars it's not
+>>> supposed to.
+>> 
+>> Sorry, I do not follow.  Isn't caller's buf terminated with LF at buf[len],
+>> which would never match cherry_picked_prefix even if len is shorter
+>> than the prefix?
+>
+> Heh, I almost pointed that out in my reply.  Yes, buf will be terminated
+> with LF at buf[len].  And yes, that means that we will never get a false
+> positive from prefixcmp even if the comparison overruns buf+len while
+> doing its comparison.  That's why the check doesn't matter in practice,
+> i.e. based on the way that is_cherry_picked_from_line is being called
+> right now and the content of cherry_picked_prefix.
+>
+> But, hasn't is_cherry_picked_from_line entered into a contract with the
+> caller and said "I will not access more than len characters"?
+>
+> It's ok with me if you think it reads better without the check.
 
-Maybe it would make sense to just check that cherry-pick doesn't
-segfault in this case?
+As Jonathan says, if you rewrite it to
 
-That is, compute the output but don't compare it to expected output, as
-in:
+	return buf[len - 1] == ')' && !prefixcmp(buf, cherry_picked_prefix);
 
-	test_expect_success 'adding signoff to empty message does something sane' '
-		git reset --hard HEAD^ &&
-		git cherry-pick --allow-empty-message -s empty-branch &&
-		git show --pretty=format:%B -s empty-branch >actual &&
+then the code can keep its promise without the length check, because
+it knows there is no ')' in cherry-picked-prefix, and it also knows
+prefixcmp() stops at the first difference.
 
-		# sign-off is included *somewhere*
-		grep "^Signed-off-by:.*>\$" actual
-	'
-
-Alternatively, if there are only a few sane behaviors, a test can check
-for all of them and pass as long as git follows one.  I haven't thought
-carefully enough about this example to suggest doing that.
-
-Thanks,
-Jonathan
+It is not a huge deal; I was primarily reacting to the ugly multi-line
+boolean expresion that is not inside a pair of parentheses (and because
+this is a "return" statement, there is no good reason to have parentheses
+except that this is a multi-line expression), which looked odd.
