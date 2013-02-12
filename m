@@ -1,88 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Pushing a git repository to a new server
-Date: Tue, 12 Feb 2013 15:42:10 -0500
-Message-ID: <20130212204210.GA25330@sigill.intra.peff.net>
-References: <CAE_TNin0Kb_38gnx9W36VZ8CTxYBZ9T1Dkhar1DUFHyQUq7ebg@mail.gmail.com>
- <20130211075040.GJ5210@localhost.localdomain>
- <CAE_TNin6-weutRDToZ7-BBGJTCcf0dwJn0ChUbFcACRU=SbjzA@mail.gmail.com>
- <20130211162714.GB16402@sigill.intra.peff.net>
- <511A2775.9050209@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 00/12] unify appending of sob
+Date: Tue, 12 Feb 2013 12:45:08 -0800
+Message-ID: <7vehglfei3.fsf@alter.siamese.dyndns.org>
+References: <1360664260-11803-1-git-send-email-drafnel@gmail.com>
+ <20130212201613.GC12240@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ethan Reesor <firelizzard@gmail.com>,
-	Konstantin Khomoutov <kostix+git@007spb.ru>,
-	git <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Feb 12 21:43:06 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
+	pclouds@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 12 21:46:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5Mgr-0008Fi-88
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 21:42:57 +0100
+	id 1U5Mk0-0006s2-Tv
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 21:46:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756979Ab3BLUmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 15:42:16 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45463 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755324Ab3BLUmN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 15:42:13 -0500
-Received: (qmail 5426 invoked by uid 107); 12 Feb 2013 20:43:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Feb 2013 15:43:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Feb 2013 15:42:10 -0500
-Content-Disposition: inline
-In-Reply-To: <511A2775.9050209@drmicha.warpmail.net>
+	id S1758945Ab3BLUpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 15:45:41 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47608 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756451Ab3BLUpL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 15:45:11 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9A81C38A;
+	Tue, 12 Feb 2013 15:45:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nBuobbU6/A7JqQahdW00JeevyXI=; b=c2GAjk
+	IhqqmFOzfOteZ8yCzAOoCegjKkx74oeyNTxwb05bianqXvyzTM56J7z9HbehZbhn
+	vdtfa6/L9BGMPsqEgI8/sPCSMr5t2yJsGOuONaJL1BtUQ7aJMLI0r34dzq0AvJkW
+	x1W/2m0IGOLmqpnnhlpQrnI3pvAoeyW5sCMyo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H+9qobdPIjzDgGBJ2/1FS1IyPxnIN8qq
+	8DhPgF2TSCuCGdNQsOv/GjY5YIp7aN5rlR8N9zsCfcoVeO86kBEUwpDhXpBuS9B6
+	RwVhHoI9tTpVyXX0ujOC7Td7dbtc/yMQiZaLrjH8PxYrX1HIyqBMuRrbw3gx2GNm
+	fDVoQ6qm148=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF110C389;
+	Tue, 12 Feb 2013 15:45:10 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 31EC7C386; Tue, 12 Feb 2013
+ 15:45:10 -0500 (EST)
+In-Reply-To: <20130212201613.GC12240@google.com> (Jonathan Nieder's message
+ of "Tue, 12 Feb 2013 12:16:13 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1789F13C-7555-11E2-AED9-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216193>
 
-On Tue, Feb 12, 2013 at 12:28:53PM +0100, Michael J Gruber wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> I'm not sure providers like GitHub would fancy an interface which allows
-> the programmatic creation of repos (giving a new meaning to "fork
-> bomb"). But I bet you know better ;-)
+> Brandon Casey wrote:
+>
+>> Round 4.
+>
+> Yay.  I think this is cooked now and a good foundation for later
+> changes on top.
+>
+> For what it's worth, with or without the two tweaks Junio suggested
+> (simplifying "(cherry picked from" detection, deferring introduction
+> of no_dup_sob variable until it is used),
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-You can already do that:
+Yeah, I am inclined to merge this to 'next' without any tweak, and
+let it cook and get polished incrementally.  I am not sure if we
+have enough time to graduate it to 'master' for the upcoming
+release, though.
 
-  http://developer.github.com/v3/repos/#create
-
-We rate-limit API requests, and I imagine we might do something similar
-with create-over-git. But that is exactly the kind of implementation
-detail that can go into a custom create-repo script.
-
-> An alternative would be to teach git (the client) about repo types and
-> how to create them. After all, a repo URL "ssh://host/path" gives a
-> clear indication that "ssh host git init path" will create a repo.
-
-But that's the point of a microformat. It _doesn't_ always work, because
-the server may not allow arbitrary commands, or may have special
-requirements on top of the "init". You can make the microformat be "git
-init path", and servers can intercept calls to "git init" and translate
-them into custom magic. But I think the world is a little simpler if we
-define a new service type (alongside git-upload-pack, git-receive-pack,
-etc), and let clients request it. Then it's clear what the client is
-trying to do, it's easy for servers to hook into it, we can request it
-over http, etc. And it can be extended over time to take more fields
-(like repo description, etc).
-
-I'm really not suggesting anything drastic. The wrapper case for ssh
-would be as simple as a 3-line shell script which calls "git init" under
-the hood, but it provides one level of indirection that makes
-replacing/hooking it much simpler for servers. So the parts that are in
-stock git would not be much work (most of the work would be on _calling_
-it, but that is the same for adding a call to "git init").
-
-I think the main reason the idea hasn't gone anywhere is that nobody
-really cares _that_ much. People just don't create repositories that
-often. I feel like this is one of those topics that comes up once a
-year, and then nothing happens on it, because people just make their
-repo manually and then stop caring about it.
-
-Just my two cents, of course. :)
-
--Peff
+Thanks.
