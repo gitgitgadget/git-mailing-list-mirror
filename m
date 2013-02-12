@@ -1,97 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Fix installation paths with "make install-doc"
-Date: Tue, 12 Feb 2013 14:45:34 -0800
-Message-ID: <7vmwv9ducx.fsf@alter.siamese.dyndns.org>
-References: <cover.1360700102.git.john@keeping.me.uk>
- <20130212222508.GG12240@google.com>
+From: Michal Nazarewicz <mina86@mina86.com>
+Subject: Re: [PATCHv4 4/6] Git.pm: allow pipes to be closed prior to calling command_close_bidi_pipe
+Date: Tue, 12 Feb 2013 23:50:27 +0100
+Organization: http://mina86.com/
+Message-ID: <xa1tehgl9mfg.fsf@mina86.com>
+References: <cover.1360677646.git.mina86@mina86.com> <3bb6b7736eb4b0a958469be13d8c646faec1208a.1360677646.git.mina86@mina86.com> <20130212205141.GC25330@sigill.intra.peff.net> <7va9r9fd4e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Steffen Prohaska <prohaska@zib.de>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 12 23:46:12 2013
+Content-Type: multipart/mixed; boundary="=-=-="
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 12 23:51:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5Oc0-0002y3-Jn
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 23:46:04 +0100
+	id 1U5Ogp-0006E8-9e
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Feb 2013 23:51:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677Ab3BLWpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 17:45:39 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44101 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752423Ab3BLWpi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 17:45:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BA86C051;
-	Tue, 12 Feb 2013 17:45:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vqzqs4iVLVs/gUj2QhJtN+FWiwY=; b=QXUoTb
-	VHsDuMFwY6CfCma2gCpAWceOwCmZ23UsVWeLAppukcmFhlESN0dw1hMw3fGM4a47
-	OGCcPmwjp2Hu+ylWTW3WQHWnuh80+s7W7oJNKv4IVWPfXHc7hiclVaY5OVAIzq6d
-	MmPgsQypn5Fek2a62EauAUeU/CNuOapJ6/nWk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TvoQ8Zf+Kh8F/rMPg83UAqFbZYgggSC4
-	9/EOQzexEjaBwcTi0Wp/YOTnMAOdzVLJ8WushmfwnTBKA5sjx4XZX5P7BUCpRwyu
-	4lyeTThtuGF2R0mAydxVjkT44DPnRTZMxFENqD2YFlpkAcEdzGI1/vF792iixiCV
-	oqNIFjJpLhU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C12DC050;
-	Tue, 12 Feb 2013 17:45:37 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB6C5C04A; Tue, 12 Feb 2013
- 17:45:36 -0500 (EST)
-In-Reply-To: <20130212222508.GG12240@google.com> (Jonathan Nieder's message
- of "Tue, 12 Feb 2013 14:25:08 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EB018218-7565-11E2-8E4C-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752423Ab3BLWug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 17:50:36 -0500
+Received: from mail-ee0-f42.google.com ([74.125.83.42]:36240 "EHLO
+	mail-ee0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751963Ab3BLWuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 17:50:35 -0500
+Received: by mail-ee0-f42.google.com with SMTP id b47so322780eek.1
+        for <git@vger.kernel.org>; Tue, 12 Feb 2013 14:50:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:in-reply-to:organization
+         :references:user-agent:x-face:face:x-pgp:x-pgp-fp:date:message-id
+         :mime-version:content-type;
+        bh=lC54Pe4PNxyVtDgnvRLYZq/O8bKcvsOFiEre6uCBx1A=;
+        b=bfEk2jJVDHFH/jjR2qvvJcBAnP4eur1PFQhGnVDJaLJo661GuvAd0kx8XGdY+anyKV
+         I2rzxevVdHJIy0UMnfi3xrT6s1UNDUWQzsw+7xvfhqq46Sz8IlJ11x8rgLXqu60vhmLa
+         9X/gHpUqkDP1YI6E4uw/JUc45uXI+3SS2sD2LwFJIJNCgB8XwnX7WxIYLy6pmY7Mdhzo
+         hduKYnWGfhyJqbdjdbZNrpmIR/wwzqda7idKVpCEFSTIq7G8Yxx4NFkfh7Rr6NbaYXR2
+         U8B4yWY7M7S80gG9n6cY+uDM13iZxXWIrNXhGtJSEhsL/5jdpRpxu2BCo28gMCCOkpJH
+         XWjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:in-reply-to:organization
+         :references:user-agent:x-face:face:x-pgp:x-pgp-fp:date:message-id
+         :mime-version:content-type:x-gm-message-state;
+        bh=lC54Pe4PNxyVtDgnvRLYZq/O8bKcvsOFiEre6uCBx1A=;
+        b=mWQmttlKaZDGCwDnvsHrOf6xAEi5gpXG1jXkfvuSwrFbNPSwIozZgLATlPcxvhE98g
+         8GpUPFiX9FrjGp3TNtDu0FIP7icVVkdUlFyCH8Ewz031a5ki/Wa2krg+CaVIlpC4u0SJ
+         DYKeDK9tq9WR7RDI3dUUFb+EkAidAO3onixUdIKultoZ1Y2nZBW0lsCwuEsPFoKLWKam
+         xL0cInhBfVTTwXgzJsVgWL8RtmwXTCTtQc9QuQs7ZMU6YO+V3aLu9NeGoJVIst/uohoH
+         Pfx+pVtM/kgM71HMoUiX910hI4qlDOisCcI6G8wetgVbRXHJ125bfDG6v5XJuT8sV40J
+         k6hA==
+X-Received: by 10.14.223.137 with SMTP id v9mr68691203eep.22.1360709434080;
+        Tue, 12 Feb 2013 14:50:34 -0800 (PST)
+Received: from mpn-glaptop ([2620:0:105f:5:6552:be17:7596:e60d])
+        by mx.google.com with ESMTPS id q42sm60943420eem.14.2013.02.12.14.50.32
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 12 Feb 2013 14:50:33 -0800 (PST)
+In-Reply-To: <7va9r9fd4e.fsf@alter.siamese.dyndns.org>
+User-Agent: Notmuch/ (http://notmuchmail.org) Emacs/24.3.50.5 (x86_64-unknown-linux-gnu)
+X-Face: PbkBB1w#)bOqd`iCe"Ds{e+!C7`pkC9a|f)Qo^BMQvy\q5x3?vDQJeN(DS?|-^$uMti[3D*#^_Ts"pU$jBQLq~Ud6iNwAw_r_o_4]|JO?]}P_}Nc&"p#D(ZgUb4uCNPe7~a[DbPG0T~!&c.y$Ur,=N4RT>]dNpd;KFrfMCylc}gc??'U2j,!8%xdD
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAJFBMVEWbfGlUPDDHgE57V0jUupKjgIObY0PLrom9mH4dFRK4gmjPs41MxjOgAAACQElEQVQ4jW3TMWvbQBQHcBk1xE6WyALX1069oZBMlq+ouUwpEQQ6uRjttkWP4CmBgGM0BQLBdPFZYPsyFUo6uEtKDQ7oy/U96XR2Ux8ehH/89Z6enqxBcS7Lg81jmSuujrfCZcLI/TYYvbGj+jbgFpHJ/bqQAUISj8iLyu4LuFHJTosxsucO4jSDNE0Hq3hwK/ceQ5sx97b8LcUDsILfk+ovHkOIsMbBfg43VuQ5Ln9YAGCkUdKJoXR9EclFBhixy3EGVz1K6eEkhxCAkeMMnqoAhAKwhoUJkDrCqvbecaYINlFKSRS1i12VKH1XpUd4qxL876EkMcDvHj3s5RBajHHMlA5iK32e0C7VgG0RlzFPvoYHZLRmAC0BmNcBruhkE0KsMsbEc62ZwUJDxWUdMsMhVqovoT96i/DnX/ASvz/6hbCabELLk/6FF/8PNpPCGqcZTGFcBhhAaZZDbQPaAB3+KrWWy2XgbYDNIinkdWAFcCpraDE/knwe5DBqGmgzESl1p2E4MWAz0VUPgYYzmfWb9yS4vCvgsxJriNTHoIBz5YteBvg+VGISQWUqhMiByPIPpygeDBE6elD973xWwKkEiHZAHKjhuPsFnBuArrzxtakRcISv+XMIPl4aGBUJm8Emk7qBYU8IlgNEIpiJhk/No24jHwkKTFHDWfPniR
+ 4iw5vJaw2nzSjfq2zffcE/GDjRC2dn0J0XwPAbDL84TvaFCJEU4Oml9pRyEUhR3Cl2t01AoEjRbs0sYugp14/4X5n4pU4EHHnMAAAAAElFTkSuQmCC
+X-PGP: 50751FF4
+X-PGP-FP: AC1F 5F5C D418 88F8 CC84 5858 2060 4012 5075 1FF4
+X-Gm-Message-State: ALoCoQkoc6kYUrcWh+OGJQE/zVjuFt0KN+Vhyx47Ot15V2+f3ZkMnyRZSTcnH2+f5SE1gx2U4ZqabFRMMUaK8dKfU5XRV4DokkTMREwt0adVYYHh8LlQWK1VnLyqguEJjvxgXwtUU4LdnvWvjYU3wXc2NFVpkq3DR8Ln1Ej/bEbiKdmwdbFeBIw0yAQ4MYVeUekiv5zSwW4E6LBkEExPPcI6AuqeumaxLw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216213>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> John Keeping wrote:
+On Tue, Feb 12 2013, Junio C Hamano wrote:
+> I would actually vote for the most explicit:
 >
->>   Documentation/Makefile: fix inherited {html,info,man}dir
->
-> This doesn't seem to have hit the list.
+> 	_cmd_close($ctx, (grep { defined } ($in, $out)));
 
-More importantly, 
+To me that looks weird at best, but I don't have strong opinions on that
+matter.
 
->> When using the top-level install-doc target the html, info and man
->> target directories are inherited from the top-level Makefile by the
->> documentation Makefile as relative paths, which is not expected and
->> results in the files being installed in an unexpected location.
+--=20
+Best regards,                                         _     _
+.o. | Liege of Serenely Enlightened Majesty of      o' \,=3D./ `o
+..o | Computer Science,  Micha=C5=82 =E2=80=9Cmina86=E2=80=9D Nazarewicz   =
+ (o o)
+ooo +----<email/xmpp: mpn@google.com>--------------ooO--(_)--Ooo--
+--=-=-=
+Content-Type: multipart/signed; boundary="==-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
 
-I am not sure what problem it is trying to address.  During every
-cycle "make doc && make install-man install-html" is run for all
-integration branches and it didn't cause any problems.
+--==-=-=
+Content-Type: text/plain
 
-A wild guess.  John, are you using config.mak.autogen?
 
-I _think_ exporting mandir/html/infodir from the top-level Makefile
-is wrong to begin with.  We should drop the "export mandir" from
-there.
+--==-=-=
+Content-Type: application/pgp-signature
 
-Giving them unusual meaning (e.g. "mandir = share/man") is already
-bad and that needs to be fixed by limiting this "oh, on some
-platforms we compile-in GIT_MAN_PATH as a relative path to an
-unspecified place" insanity only to where -DGIT_MAN_PATH=<path> is
-defined.  The path used there does not help the building and
-installation of the documentation at all, so the variable used for
-the purpose of giving that <path> should not be named the same way
-as the variable used on Documentation/Makefile to name the real path
-in the first place.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-Perhaps rename these to runtime_{man,html,info}dir or something and
-make sure {man,html,info}dir are defined as the real paths whose
-default values begin with $(prefix)?
+iQIcBAEBAgAGBQJRGsczAAoJECBgQBJQdR/0Wn4P+wYI1i5kBrI0U/mocgY1ypd/
+UcN9uIQ3Z8z5LyqiCvse2Ll1kJWqi53S8dE2FMtQy0WucaTcP39Jk1vVg/eVupTn
+fdN3Ab2ykRDwK1CavHPxYTqMcMrwQQqKQ3NSwLoVpDz+Yf8pM95Va7zd4WiFCwx1
+IU5XVmDO0AV/BvP6VKAsH9S/0W62oQv44kRCO39Fhwon1Oh3EFDyoP1eec9GzRZH
+63jE7wgSf+mmZgH5+cGKG+fSP0jrLxCLqNYYrmJTV0CiP7lrjXCaR9DJKpNWnfQU
+wUxui37AyEOApSMiYZOEOYROpqniJRlPaisrLhrGChtbfJrsTJNtSAyzR/LKWRCu
+t348zCrP5goNFJWuOOlzcC1QdXJYnOoxoRoSCghlS5FbsXhvjXfL2TlIwLuUoRKP
+VjHfZjG1c+dmgei+JEW74hsVtHrJ7tHKO8TIl45UaOytajqxLhLQXcGGihHvgQAi
+7m+7+J24H10iSrpnpL7LbNfYWGmgNyPc0soCgV3cYY5IZG6oCJ/SgY8MoSGIZnwN
+5N4TmmajddXSp5E4Pyjjxfjblnuc+Rxz89xKrpmvJYMdET4OeO5o8KPG3LxZXell
+pPBWJUgrpErnvC7/x5MVbBgsF3sgAdtWYcmDO8fGoPHBGs63pIGsrxwm+wWeCi2l
+UklQSmF8e28M02nEQX6b
+=jqjF
+-----END PGP SIGNATURE-----
+--==-=-=--
+
+--=-=-=--
