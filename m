@@ -1,123 +1,94 @@
 From: Martin Erik Werner <martinerikwerner@gmail.com>
-Subject: [PATCH v2 0/3] Add bash.showUntrackedFiles config option
-Date: Wed, 13 Feb 2013 11:58:58 +0100
-Message-ID: <1360753138.25490.10.camel@mas>
-References: <1360699936-28688-1-git-send-email-martinerikwerner@gmail.com>
-	 <1360699936-28688-3-git-send-email-martinerikwerner@gmail.com>
-	 <7vr4kldv2x.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, trsten@science-computing.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 11:59:32 2013
+Subject: [PATCH v2 1/3] shell prompt: add bash.showUntrackedFiles option
+Date: Wed, 13 Feb 2013 12:01:58 +0100
+Message-ID: <1360753321-5002-1-git-send-email-martinerikwerner@gmail.com>
+References: <1360753138.25490.10.camel@mas>
+Cc: git@vger.kernel.org, trsten@science-computing.de,
+	Martin Erik Werner <martinerikwerner@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Feb 13 12:02:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5a3l-0003cd-KC
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 11:59:29 +0100
+	id 1U5a70-0000dU-Fe
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 12:02:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933655Ab3BMK7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2013 05:59:06 -0500
-Received: from mail-la0-f43.google.com ([209.85.215.43]:55462 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932451Ab3BMK7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2013 05:59:04 -0500
-Received: by mail-la0-f43.google.com with SMTP id ek20so1032237lab.30
-        for <git@vger.kernel.org>; Wed, 13 Feb 2013 02:59:02 -0800 (PST)
+	id S933785Ab3BMLCY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2013 06:02:24 -0500
+Received: from mail-la0-f50.google.com ([209.85.215.50]:39089 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932451Ab3BMLCW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2013 06:02:22 -0500
+Received: by mail-la0-f50.google.com with SMTP id ec20so1038413lab.9
+        for <git@vger.kernel.org>; Wed, 13 Feb 2013 03:02:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-type:x-mailer:mime-version
-         :content-transfer-encoding;
-        bh=DfT1JzmE0lZQY2YV3y00MRiIZkXt0hhvF0tcbRAeDt8=;
-        b=lmZmv3aQMxsIcqjq70nz5JpQa1B++ugLt38Qt35izH5D3fJ/b8fUjGuT61K4pn0PeO
-         dapWgWut1wby4+C/rfTE8YQlg4p9mLv7Oh9HAyOohe/gt33lGBB0mwtjH0fkS1RLWYca
-         yEPFkvpM071K6t/Ov1AzO9eQ9STHtWn5r2lBuxpMU+M5DqyfQFvnRM57euFwVAqmL/xp
-         ISHZlXo6iWIsx3UPnV4ddjUDQjneGMlM9W8T7iFcoADCJkrACVtXeTLLDqSGksTn5szc
-         yBmXhcTnY3QOTqiofEDpGFT05Q4gJmXqaBeNlBJMmqxxI7Mw+shkFdPkjYorzzkRBnC3
-         JeVQ==
-X-Received: by 10.152.123.194 with SMTP id mc2mr19792673lab.7.1360753141997;
-        Wed, 13 Feb 2013 02:59:01 -0800 (PST)
-Received: from [192.168.1.2] (nl107-187-0.student.uu.se. [130.243.187.0])
-        by mx.google.com with ESMTPS id pk1sm25506324lab.0.2013.02.13.02.58.59
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Wed, 13 Feb 2013 02:59:00 -0800 (PST)
-In-Reply-To: <7vr4kldv2x.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 3.6.1-1 
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=fTf+pzankhhziSF+Tdp9tPBADaXxbxBysjQ8v9wXDnM=;
+        b=e+JscGWgOdsmaOIKRVubS3BHtzmLru4MW3uIlUDvFWHLPQWKmboeE52doapRWQv3rM
+         6rX3sol2QxeAONSklfaQlQv0iotCP+IyXlPHaJg2kHyxVWhy3klm8tYUwpZ3V9EDXKLz
+         5/hAdm7ViweH/n7GzDxEsQ+721fWt4/BEc6Sgwf8oz/njRTCFYjCDxwUdrxI6gXJNXK2
+         2fcbXP7GqFE3bUrgPaEWlACCPwCF7AB6U2VLS3zIhc0hTzqitueupr9UOsDjvlf3dMvP
+         EUvM3wE9nItIUDGi2c3qc4aaDXxETbPd85LQ5fVfs7gOyvSBbNCWOZ3RA7bpuIgZoGLe
+         uV5w==
+X-Received: by 10.112.9.134 with SMTP id z6mr1254765lba.72.1360753341050;
+        Wed, 13 Feb 2013 03:02:21 -0800 (PST)
+Received: from mas (nl107-187-0.student.uu.se. [130.243.187.0])
+        by mx.google.com with ESMTPS id t7sm15251208lbf.12.2013.02.13.03.02.18
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 13 Feb 2013 03:02:19 -0800 (PST)
+Received: from arand by mas with local (Exim 4.80)
+	(envelope-from <arand@mas>)
+	id 1U5a6T-0001Jr-K5; Wed, 13 Feb 2013 12:02:17 +0100
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1360753138.25490.10.camel@mas>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216246>
 
-On Tue, 2013-02-12 at 14:29 -0800, Junio C Hamano wrote:
-> Martin Erik Werner <martinerikwerner@gmail.com> writes:
-> 
-> > Add a test case for the bash.showUntrackedFiles config option, which
-> > checks that the config option can disable the global effect of the
-> > GIT_PS1_SHOWUNTRACKEDFILES environmant variable.
-> >
-> > Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
-> > ---
-> >  t/t9903-bash-prompt.sh |   11 +++++++++++
-> >  1 file changed, 11 insertions(+)
-> >
-> > diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-> > index f17c1f8..c9417b9 100755
-> > --- a/t/t9903-bash-prompt.sh
-> > +++ b/t/t9903-bash-prompt.sh
-> > @@ -447,6 +447,17 @@ test_expect_success 'prompt - untracked files status indicator - not shown insid
-> >  	test_cmp expected "$actual"
-> >  '
-> >  
-> > +test_expect_success 'prompt - untracked files status indicator - disabled by config' '
-> > +	printf " (master)" > expected &&
-> > +	echo "untracked" > file_untracked &&
-> > +	test_config bash.showUntrackedFiles false &&
-> > +	(
-> > +		GIT_PS1_SHOWUNTRACKEDFILES=y &&
-> > +		__git_ps1 > "$actual"
-> > +	) &&
-> > +	test_cmp expected "$actual"
-> > +'
-> 
-> All six combinations need checking:
-> 
->  * not having the configuration at all and not having the shell
->    variable should not show the untracked indicator (already tested).
-> 
->  * not having the configuration at all and having the shell variable
->    should show the untracked indicator (already tested).
-> 
->  * setting configuration to true without having the shell variable
->    should not show the untracked indicator.
-> 
->  * setting configuration to true and having the shell variable
->    should show the unttracked indicator.
-> 
->  * setting configuration to false and having the shell variable
->    should not show the untracked indicator (the above test checks
->    this).
-> 
->  * setting configuration to false without having the shell variable
->    should not show the untracked indicator.
-> 
-> to prevent others from breaking the code you wrote for [PATCH 1/2],
-> so you need three more tests, I guess?
+Add a config option 'bash.showUntrackedFiles' which allows enabling
+the prompt showing untracked files on a per-repository basis. This is
+useful for some repositories where the 'git ls-files ...' command may
+take a long time.
 
-Ah, yes, I was mimicing what the test did for bash.showDirtyState, I've
-now added the three extra tests for bash.showUntrackedFiles, which
-should cover all of the above cases, hopefully?
+Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
+---
+ contrib/completion/git-prompt.sh |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-I've also added in the three extra tests for bash.showDirtyState,
-equivalently. These only cover the case of dirty files and not
-combinations with content in index, which I felt was a bit overkill, is
-that reasonable?
-
-Thanks for the review :)
-
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 9bef053..9b2eec2 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -43,7 +43,10 @@
+ #
+ # If you would like to see if there're untracked files, then you can set
+ # GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're untracked
+-# files, then a '%' will be shown next to the branch name.
++# files, then a '%' will be shown next to the branch name.  You can
++# configure this per-repository with the bash.showUntrackedFiles
++# variable, which defaults to true once GIT_PS1_SHOWUNTRACKEDFILES is
++# enabled.
+ #
+ # If you would like to see the difference between HEAD and its upstream,
+ # set GIT_PS1_SHOWUPSTREAM="auto".  A "<" indicates you are behind, ">"
+@@ -332,8 +335,10 @@ __git_ps1 ()
+ 			fi
+ 
+ 			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ]; then
+-				if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+-					u="%"
++				if [ "$(git config --bool bash.showUntrackedFiles)" != "false" ]; then
++					if [ -n "$(git ls-files --others --exclude-standard)" ]; then
++						u="%"
++					fi
+ 				fi
+ 			fi
+ 
 -- 
-Martin Erik Werner <martinerikwerner@gmail.com>
+1.7.10.4
