@@ -1,74 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: jn/shell-disable-interactive (Re: What's cooking in git.git (Feb
- 2013, #05; Tue, 12))
-Date: Tue, 12 Feb 2013 16:15:33 -0800
-Message-ID: <7v1ucldq6y.fsf@alter.siamese.dyndns.org>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: What's cooking in git.git (Feb 2013, #05; Tue, 12)
+Date: Wed, 13 Feb 2013 11:21:03 +1100
+Message-ID: <CAH5451nPKq8DKwo+Bkxh08N-wqrYCY4BihbvaE14z5iGVA1iZw@mail.gmail.com>
 References: <7v621xdql8.fsf@alter.siamese.dyndns.org>
- <20130213001213.GA15246@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 01:16:03 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 13 01:21:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5Q12-0005G1-EF
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 01:16:00 +0100
+	id 1U5Q6g-0001gK-1u
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 01:21:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755249Ab3BMAPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Feb 2013 19:15:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40114 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753817Ab3BMAPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Feb 2013 19:15:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C3333B121;
-	Tue, 12 Feb 2013 19:15:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DOx3PkIubEX+DvB94b1k0ZMztA4=; b=W7NSPz
-	LgApoAwmLR2mH+02Jf9/jRT20QNsK8NQmPJ+NnwWqNoqBfU1CUzrw2aK2chQET2a
-	kBnVmzCDskgc3NHrskDZH/FwXbD4qkATbWROJYhCp1+dRwRNSelc4wMPOyZPPQRo
-	FnvnXjUTkUSR1d2XwbrGyQ43kV8XdJ1wua2b4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mOL/vLLPGkxCdGwbpWZpdLaWZFnZfLXE
-	PAhqfRSTjY3CbhAInscJCDLKGJiNAe5X+8Be1u1KEcy/gn/hV80htZZobBIwuTHx
-	d0Miz2SeJDbHA5fbcKG2Ta8/YtQOluFElsCw8ztS/gzhfTvgtUoNvIvC89Pr5f+l
-	fKuGtZe9oH4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B88C6B120;
-	Tue, 12 Feb 2013 19:15:35 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 360C4B11F; Tue, 12 Feb 2013
- 19:15:35 -0500 (EST)
-In-Reply-To: <20130213001213.GA15246@google.com> (Jonathan Nieder's message
- of "Tue, 12 Feb 2013 16:12:13 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7CA29C14-7572-11E2-8123-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759221Ab3BMAV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Feb 2013 19:21:26 -0500
+Received: from mail-vb0-f42.google.com ([209.85.212.42]:32850 "EHLO
+	mail-vb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754460Ab3BMAVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Feb 2013 19:21:25 -0500
+Received: by mail-vb0-f42.google.com with SMTP id ff1so437851vbb.15
+        for <git@vger.kernel.org>; Tue, 12 Feb 2013 16:21:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=qUGWKmgCs389GBFkLnlvHQEgWd8J5t7wN84RYeI2Clw=;
+        b=zd9ZrWXMr89LJipYEY+fIbymsH4APaA19UJgRG68XRCzF0mg+rUHhAxsW7pyOQJWkM
+         MW1RrdLvTikrA0ZDiJm3VFUydx4xoRd7tfAqGafKY+eLQgifu34gHrC4tKFBUC9pjnYL
+         HLhdaAWZbo2xcK9EBZpkTm0xRNAaUCzV4hLYO0whr6+BwaljgHNSfK2l3A31MHk7a6N7
+         ZJnBE/9qrqcgOPdHmE3ZQuvha6LC3mDhp6KNIrJbRkq5iDVOmYepn1j4o3GTD7O5j/pa
+         gBdJ3XCLHTxlNTY5bkbG/qxnObLh+tUb1XRAjZlKvaGCVxDVRfgeATJFIPDTPg8nmJrV
+         lAUA==
+X-Received: by 10.220.156.75 with SMTP id v11mr26854664vcw.1.1360714884726;
+ Tue, 12 Feb 2013 16:21:24 -0800 (PST)
+Received: by 10.220.107.82 with HTTP; Tue, 12 Feb 2013 16:21:03 -0800 (PST)
+In-Reply-To: <7v621xdql8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216231>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Junio C Hamano wrote:
+On 13 February 2013 11:06, Junio C Hamano <gitster@pobox.com> wrote:
+> * jc/add-delete-default (2012-08-13) 1 commit
+>  - git add: notice removal of tracked paths by default
 >
->> * jn/shell-disable-interactive (2013-02-11) 2 commits
->>  - shell: pay attention to exit status from 'help' command
->>  - shell doc: emphasize purpose and security model
->>
->>  Will merge to 'next'.
+>  "git add dir/" updated modified files and added new files, but does
+>  not notice removed files, which may be "Huh?" to some users.  They
+>  can of course use "git add -A dir/", but why should they?
 >
-> Please hold off on merging the second patch.  I'd like to reroll
-> renaming the command to 'no-interactive-login' or some such, which
-> would be less disruptive to existing setups and should be easier to
-> explain.
+>  Resurrected from graveyard, as I thought it was a worthwhile thing
+>  to do in the longer term.
+>
+>  Stalled mostly due to lack of responses.
 
-Thanks; that sounds like a sensible and safer change.
+What do you need to progress this?
+
+I have been bitten by this before (the 'huh?' reaction) and think the
+previous discussions and patch look reasonable. Does it need testing?
+Further input??
+
+Regards,
+
+Andrew Ardill
