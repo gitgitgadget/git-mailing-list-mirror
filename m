@@ -1,87 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] Makefile: don't run rm without any files
-Date: Wed, 13 Feb 2013 12:01:14 -0800
-Message-ID: <7vehgk6l11.fsf@alter.siamese.dyndns.org>
+Date: Wed, 13 Feb 2013 12:12:44 -0800
+Message-ID: <20130213201244.GD3381@google.com>
 References: <1360771068-505-1-git-send-email-kraai@ftbfs.org>
- <7vtxpg9mxq.fsf@alter.siamese.dyndns.org> <20130213170028.GA410@ftbfs.org>
+ <7vtxpg9mxq.fsf@alter.siamese.dyndns.org>
+ <20130213170028.GA410@ftbfs.org>
+ <7vehgk6l11.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matt Kraai <kraai@ftbfs.org>, git@vger.kernel.org,
 	Matt Kraai <matt.kraai@amo.abbott.com>
-To: Matt Kraai <kraai@ftbfs.org>
-X-From: git-owner@vger.kernel.org Wed Feb 13 21:01:42 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 13 21:13:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5iWT-00022y-CC
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 21:01:41 +0100
+	id 1U5ihf-0001Zt-Q9
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 21:13:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756720Ab3BMUBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2013 15:01:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40737 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756093Ab3BMUBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2013 15:01:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DC7EC024;
-	Wed, 13 Feb 2013 15:01:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JenO7MYRhYKFjQYiE8zEAaFWmEg=; b=P3qcCA
-	wJrPsL6MdNv7Rh2AteqkCAqbFi7ooR10zkg0RpYKXvFblUosCphuTCgAMGaSRbaz
-	dIPHGeTCGxSy8U6HegkNRipEklaQo1cj1w+u7Jh6csMKibyG7LVQIdn/TGWUtsVh
-	pmgOcWgLG1l7RrUR4k+lKpxaYR0+fR/jz7Lgg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ruDSqkxStLNin1gng2qdZhWJMhuure1U
-	ZA8obhH8aA1PRYn3ZYf4jih3YVtrff52yr5Fa3jng4qRKBuoICfotCkQ7pRTJs+9
-	c6haBka5Oj1rI28xMLF1RORuI8y9zyulWg64yWpfihQNl8yPmmckNt4uZN+tA2fu
-	IJXwIuqXuSs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7272CC022;
-	Wed, 13 Feb 2013 15:01:16 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB562C01F; Wed, 13 Feb 2013
- 15:01:15 -0500 (EST)
-In-Reply-To: <20130213170028.GA410@ftbfs.org> (Matt Kraai's message of "Wed,
- 13 Feb 2013 09:00:28 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1FBE9C72-7618-11E2-922B-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760302Ab3BMUMv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2013 15:12:51 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:55514 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751498Ab3BMUMv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2013 15:12:51 -0500
+Received: by mail-pa0-f43.google.com with SMTP id bh2so891247pad.2
+        for <git@vger.kernel.org>; Wed, 13 Feb 2013 12:12:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ommfaD3ulj2CdMk4OYfs1D2i3FKbsDBF3cMBMU0YWrc=;
+        b=hOcNDHSBXuE0Q2Uv3D6TVCQuYQP0luhqbS/+fjMHOak4ItWl3PemHVbaVElGr+izR8
+         6LXFwOFpf53gpzSLnmi2sBeHaMltEc2WNQoNA8ERz1OfTaTSbXP5D+/KynJNgOv86BtA
+         ejUCGZPvQ0ZxWHfS0UyDC+rjUEk87T66se+l61FR6lxAV/a5EdbWHQHp5C/zN/kFr4Lp
+         SJmOsuG2xHxl4cVlpNlAnKcE4D95Q4q0nqOzexQl/RR8q2UNqOYyVS4NikYibk7eQWhX
+         hTg0dOvbRzlYlCojP4GIz0Yvr4FvG1UVTKMdSw+QMEPoTiCzW/+/rYCkgSGyJlS5Lt2I
+         d3Xg==
+X-Received: by 10.66.87.8 with SMTP id t8mr67360722paz.28.1360786369289;
+        Wed, 13 Feb 2013 12:12:49 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id l5sm85961547pax.10.2013.02.13.12.12.46
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 13 Feb 2013 12:12:47 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vehgk6l11.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216282>
 
-Matt Kraai <kraai@ftbfs.org> writes:
+Junio C Hamano wrote:
 
-> I don't set COMPUTE_HEADER_DEPENDENCIES, so it defaults to "auto".
-> The automatic detection determines that the compiler doesn't support
-> it, so it's then set to "no".  CHECK_HEADER_DEPENDENCIES isn't set
-> either, so about 20 lines below the dep_dirs assignment you quoted,
-> dep_dirs is cleared:
+> I amended the log message like so:
 >
->  ifneq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
->  ifndef CHECK_HEADER_DEPENDENCIES
->  dep_dirs =
->  ...
+> commit bd9df384b16077337fffe9836c9255976b0e7b91
+> Author: Matt Kraai <matt.kraai@amo.abbott.com>
+> Date:   Wed Feb 13 07:57:48 2013 -0800
 >
-> Should I submit an updated patch with a different commit message?
+>     Makefile: don't run rm without any files
+>
+>     When COMPUTE_HEADER_DEPENDENCIES is set to "auto" and the compile=
+r
+>     does not support it, $(dep_dirs) becomes empty.  "make clean" run=
+s
+>     "rm -rf $(dep_dirs)", which fails in such a case.
 
-I amended the log message like so:
+To pedantic, that only fails on some platforms.  The autoconf manual
+explains:
 
-commit bd9df384b16077337fffe9836c9255976b0e7b91
-Author: Matt Kraai <matt.kraai@amo.abbott.com>
-Date:   Wed Feb 13 07:57:48 2013 -0800
+	It is not portable to invoke rm without options or operands. On the
+	other hand, Posix now requires rm -f to silently succeed when there ar=
+e
+	no operands (useful for constructs like rm -rf $filelist without first
+	checking if =E2=80=98$filelist=E2=80=99 was empty). But this was not a=
+lways portable; at
+	least NetBSD rm built before 2008 would fail with a diagnostic.
 
-    Makefile: don't run rm without any files
-    
-    When COMPUTE_HEADER_DEPENDENCIES is set to "auto" and the compiler
-    does not support it, $(dep_dirs) becomes empty.  "make clean" runs
-    "rm -rf $(dep_dirs)", which fails in such a case.
-    
-    Signed-off-by: Matt Kraai <matt.kraai@amo.abbott.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Anyway, looks like a good fix.  Thanks.
