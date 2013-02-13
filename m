@@ -1,86 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Feb 2013, #05; Tue, 12)
-Date: Wed, 13 Feb 2013 07:27:49 -0800
-Message-ID: <7vpq04b5e2.fsf@alter.siamese.dyndns.org>
-References: <7v621xdql8.fsf@alter.siamese.dyndns.org>
- <CAH5451nPKq8DKwo+Bkxh08N-wqrYCY4BihbvaE14z5iGVA1iZw@mail.gmail.com>
- <7vsj51caqb.fsf@alter.siamese.dyndns.org>
- <CAH5451mmXg=xvb-gW0qNvp7f8M5Jk5_ZS+UHAzMaGhJ677zWmw@mail.gmail.com>
+Subject: Re: Git-aware HTTP transport docs
+Date: Wed, 13 Feb 2013 07:29:03 -0800
+Message-ID: <7vliasb5c0.fsf@alter.siamese.dyndns.org>
+References: <20080826012643.GD26523@spearce.org> <511AED98.5070809@zytor.com>
+ <CAP2yMaLz=vpOVgpxG0CwVwWD_sq+T9px3w0KXE7doUFhKqNZWQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 16:28:26 2013
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 13 16:29:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5eFv-0006hZ-Gg
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 16:28:19 +0100
+	id 1U5eHC-000086-5Q
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 16:29:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934122Ab3BMP14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2013 10:27:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42381 "EHLO
+	id S934172Ab3BMP3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2013 10:29:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43592 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758942Ab3BMP1z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2013 10:27:55 -0500
+	id S1759742Ab3BMP3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2013 10:29:06 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9512FBAFE;
-	Wed, 13 Feb 2013 10:27:52 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E263BC30;
+	Wed, 13 Feb 2013 10:29:05 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+3LMaHvqbX2v2V/i4NO4CFYfTLY=; b=llIX41
-	ytQi+MN1cMbE9z7Ef7r8O3wVVxOad9vz4wGP3Fl7Xa2xpABSV9WcaDYaJLD3Zn2u
-	WEAR/ILR4clbdIzkHGF8tVetGg4yTKrabumn04J5CkEnDuqyFQjOwFhq/glIOwPa
-	UtU2m0Fg6LnJvBOzPGCcgjB3/QRkb+h3eG7yQ=
+	:content-type; s=sasl; bh=7KUX0bBq7RsUEkCgsczGNhuQrB4=; b=eLPsbb
+	x7zxR7tiOfFsDFHaUVNSKgV1qhdOkXW7BH2GqrcEg4I7zh4GAn/zawZwOTXLNQ1p
+	yVKknHYPHlaJrjn7LMmWuAlT1NKrWzUHOHnyhykv8gOQnXrDeRr5AiV7qnGkIgkd
+	1QsIVIiWyAPoYGdfh/gg2E3APjemrSvn7HXu4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UJG5TDmZLS8Qy3nK9P6kO3YhPZ0QuF5g
-	FZd1d1d7NgaarWSvIxo8x//ndRdChzFXOhIyzn2bBxUcCBWWu9Qkr1iWSX14wglA
-	uMol+uSNq8inYwWTpPwqqnIeJMtjD94MBiyHmSehGeSBaOovffD64Z7mX2PWMMdS
-	0TUq8FBGKoo=
+	:content-type; q=dns; s=sasl; b=ycHZgpvENgn+HKd0lxBVPnmbTBVmVvN+
+	TJKv9djh3H6UoqLKznKT5EKfERIn4ueaGhaqLUpHOhbfKIC9lZ8TcTO/qwIss9hw
+	eZYXjPLTH7fwGjkzkhNap4F/Rlj3CZocio3NSaAoact0vPBrKjhLNJ7/6jWBKQbA
+	kZ+2iuJq1qQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8884ABAFD;
-	Wed, 13 Feb 2013 10:27:52 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81C83BC2E;
+	Wed, 13 Feb 2013 10:29:05 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1AFBBBAF7; Wed, 13 Feb 2013
- 10:27:51 -0500 (EST)
-In-Reply-To: <CAH5451mmXg=xvb-gW0qNvp7f8M5Jk5_ZS+UHAzMaGhJ677zWmw@mail.gmail.com> (Andrew
- Ardill's message of "Wed, 13 Feb 2013 11:42:06 +1100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DBD48BC2B; Wed, 13 Feb 2013
+ 10:29:04 -0500 (EST)
+In-Reply-To: <CAP2yMaLz=vpOVgpxG0CwVwWD_sq+T9px3w0KXE7doUFhKqNZWQ@mail.gmail.com> (Scott
+ Chacon's message of "Tue, 12 Feb 2013 18:23:02 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EDC46CAE-75F1-11E2-A0EE-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 19BFF896-75F2-11E2-99CA-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216262>
 
-Andrew Ardill <andrew.ardill@gmail.com> writes:
+Scott Chacon <schacon@gmail.com> writes:
 
-> On 13 February 2013 11:34, Junio C Hamano <gitster@pobox.com> wrote:
->> The change could negatively affect people who expect that removing
->> files that are not used for their purpose (e.g. a large file that is
->> unnecessary for their build) will _not_ affect what they get from
->> "git add .";
+> I don't believe it was ever merged into the Git docs.  I have a copy of it here:
 >
-> How big a problem is this?
+> https://www.dropbox.com/s/pwawp8kmwgyc3w2/http-protocol.txt
 
-As you said below, it could be fairly big, if you expect a lot of
-people do not use "git add -u".
+Thanks for a pointer.  It seems that it wasn't in a shape ready to
+be "merged" yet.
 
-> If we need to support this behaviour than I would suppose a config
-> option is required. A default config transition path similar to git
-> push defaults would probably work well, in the case where breaking
-> these expectations is unacceptable.
-
-We've discussed that before.
-
-http://thread.gmane.org/gmane.comp.version-control.git/171811/focus=171818
-
->> obviously they must have trained themselves not to do
->> "git add -u" or "git commit -a".
->
-> Many people use git add -p by default, so I would not be surprised
-> about people not using -u or -a.
+Does somebody want to pick it up and polish it further?
