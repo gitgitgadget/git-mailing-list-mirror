@@ -1,106 +1,107 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [git-multimail] License unknown (#1)
-Date: Wed, 13 Feb 2013 13:10:26 +0100
-Message-ID: <511B82B2.8030803@alum.mit.edu>
-References: <mhagger/git-multimail/issues/1@github.com> <mhagger/git-multimail/issues/1/12754195@github.com> <5105778A.1040401@alum.mit.edu> <201302121528.07961.andyparkins@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: inotify to minimize stat() calls
+Date: Wed, 13 Feb 2013 19:15:47 +0700
+Message-ID: <CACsJy8C=2xKcsby048WWCFNhgKObGwrzeCOJPVVqgj88AfSHQw@mail.gmail.com>
+References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
+ <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org>
+ <7vsj56w5y9.fsf@alter.siamese.dyndns.org> <9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
+ <CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com>
+ <CALkWK0nQVjKpyef8MDYMs0D9HJGCL8egypT3YWSdU8EYTO7Y+w@mail.gmail.com>
+ <CACsJy8CEHzqH1X=v4yau0SyZwrZp1r6hNp=yXD+eZh1q_BS-0g@mail.gmail.com>
+ <CALkWK0=6_n4rf6AWci6J+uhGHpjTUmK7YFdVHuSJedN2zLWtMA@mail.gmail.com>
+ <CACsJy8DeM5--WVXg3b65RxLBS7Jho-7KmcGwWk7B5uAx77yOEw@mail.gmail.com>
+ <20130210111732.GA24377@lanh> <CABPQNSZ282Lre=sy-+ZQdJA9JnGqQguq2bQDOwvjb0fP+1-w8Q@mail.gmail.com>
+ <CACsJy8AWyJ=dW5f44huWyPPe4X62xyi+R9CNM5Tg6u6TYf+thQ@mail.gmail.com> <511AAA92.4030508@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git discussion list <git@vger.kernel.org>,
-	Michiel Holtkamp <notifications@github.com>,
-	mhagger/git-multimail 
-	<reply+i-10159725-60cb2c338c594bd09d77fe2f8d628aa55114a3f6-119718@reply.github.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 13:10:59 2013
+Content-Transfer-Encoding: 8BIT
+Cc: kusmabite@gmail.com, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>, finnag@pvv.org,
+	Jeff King <peff@peff.net>
+To: blees@dcon.de
+X-From: git-owner@vger.kernel.org Wed Feb 13 13:16:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5bAu-00052G-64
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 13:10:56 +0100
+	id 1U5bGU-0005j6-WE
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 13:16:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755499Ab3BMMKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2013 07:10:32 -0500
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:59183 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754658Ab3BMMKb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Feb 2013 07:10:31 -0500
-X-AuditID: 1207440d-b7f306d0000008b7-4a-511b82b6a536
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id CC.64.02231.6B28B115; Wed, 13 Feb 2013 07:10:30 -0500 (EST)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r1DCAStw022710
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 13 Feb 2013 07:10:29 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <201302121528.07961.andyparkins@gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqLutSTrQ4Fe7mcXxp9dZLLqudDNZ
-	dC4qtpiwaBmjA4vHwlnPWTx2zrrL7tE4dyGrx+dNcgEsUdw2SYklZcGZ6Xn6dgncGRdvT2Mt
-	aBWouN2xgL2B8TFPFyMnh4SAicTvqyeYIGwxiQv31rN1MXJxCAlcZpSYs+8XO4RznEliQUcT
-	M0gVr4C2xN/XV9lAbBYBVYm3U96xgthsAroSi3qawSaJCoRJ9L4+xwhRLyhxcuYTFhBbREBD
-	4lXbTrANzALXGSVe3j8ItIGDQ1jAUKL1lDbEsu2MEuc2/mcFiXMKmEu8nJsIYjILqEusnycE
-	MoZZQF5i+9s5zBMYBWYh2TALoWoWkqoFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9HIz
-	S/RSU0o3MUKCmXcH4/91MocYBTgYlXh4Z4dJBQqxJpYVV+YeYpTkYFIS5d3bIB0oxJeUn1KZ
-	kVicEV9UmpNafIhRgoNZSYTX0R8ox5uSWFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoE
-	k5Xh4FCS4O1tBGoULEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB8VpfDEwUkFSPEB7
-	O0DaeYsLEnOBohCtpxiNOWb8aH/OyLH9N5AUYsnLz0uVEuetACkVACnNKM2DWwRLY68YxYH+
-	FuadDFLFA0yBcPNeAa1iAlrFuFYKZFVJIkJKqoFxAsu5svQFN6TMFuS4Nj3U7GiN0nRYV5bX
-	yjfXfmlxf1PhiyVsu1UcPz2RalThcFGZNLc1mG/iv8PV2ZKch75LnL+0WLPdl/1J 
+	id S933887Ab3BMMQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2013 07:16:19 -0500
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:33540 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754310Ab3BMMQS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Feb 2013 07:16:18 -0500
+Received: by mail-ob0-f176.google.com with SMTP id v19so1149248obq.21
+        for <git@vger.kernel.org>; Wed, 13 Feb 2013 04:16:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=mREsyeGHhniqRCdwL70PiPzDDgPf7kdjFLa1XCdHL7Y=;
+        b=PDcI2x7ElSAI4j4BwYaFtczKrsC12fx5AbWVU3lNUDwlIwQyPVWG6zzvC7j0CbHjUB
+         tpIE4b5uczdzNuXecvy9c2zkJWGSW7o4bJa1GZ3HkNAo+Zja4nq5jyUTBV63YX+VjTW0
+         qX9YZek09VeDUhUEBayt4eA/pHlZoxQjeARCGQJiby0/3X3f4QQ4PGYJUKAK6L6U4fyB
+         WzEf3zjdVK+Ywgy9iEF45rUwftlXI36Blnk0QZKbnmiRmSsyp2cnskcOF6GHVJzCxWYH
+         vzLbyzrU1ve6CYssvfSCwMT/sjiu7FMiL1DmV68i3eRpjMG8+p8jCwJPreeGo7v2fgcr
+         ZyRA==
+X-Received: by 10.60.1.129 with SMTP id 1mr15931325oem.93.1360757777308; Wed,
+ 13 Feb 2013 04:16:17 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Wed, 13 Feb 2013 04:15:47 -0800 (PST)
+In-Reply-To: <511AAA92.4030508@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216251>
 
-On 02/12/2013 04:28 PM, Andy Parkins wrote:
-> On Sunday 27 January 2013 18:52:58 Michael Haggerty wrote:
->> I have a question about the license of contrib/hooks/post-commit-email.
->> [...]
-> 
-> Keeping up with the git mailing list got a bit much, [...]
+On Wed, Feb 13, 2013 at 3:48 AM, Karsten Blees <karsten.blees@gmail.com> wrote:
+> 2.) 0.135 s is spent in name-hash.c/hash_index_entry_directories, reindexing the same directories over and over again. In the end, the hashtable contains 939k directory entries, even though the WebKit test repo only has 7k directories. Checking if a directory entry already exists could reduce that, i.e.:
 
-Very understandable :-)
+This function is only used when core.ignorecase = true. I probably
+won't be able to test this, so I'll leave this to other people who
+care about ignorecase.
 
-> My apologies to everyone; I've been lax supporting the script -- I never 
-> really expected it to be as widely used as it has been, I was always expecting 
-> someone would come along and replace it so I'm pleased that Michael has done 
-> so (although it's a little disheartening to read of it being called "hacky", 
-> when I tried very hard to make it as clear and modular as I could).
+This function used to have lookup_hash, but it was removed by Jeff in
+2548183 (fix phantom untracked files when core.ignorecase is set -
+2011-10-06). There's a looong commit message which I'm too lazy to
+read. Anybody who works on this should though.
 
-FWIW I think the script was quite well-structured (within the
-limitations of shell scripting anyway) and I had no problem
-understanding it and translating it to Python.
 
->> If somebody can explain what license the code is under and how they come
->> to that conclusion, I would be very grateful.
->>
->> And if Andy Parkins (the original author) is listening, please indicate
->> whether you had any intent *other* than GPLv2.
-> 
-> I intended it to be under the same license as Git.  I had read in one of the 
-> patch submission files (which I can't seem to find now) that all submissions 
-> were considered part of git.
-
-Thanks.  Given that you submitted the original version under GPLv2, and
-later contributors certainly had no reason to assume any *other*
-license, I think any reasonable person will be satisfied that the whole
-script in its current form is under GPLv2.
-
-> If an explicit declaration is needed, I am happy to give it.  Let me know what 
-> form this should take and I'll supply it.
-
-Personally, I am satisfied by your email statement.  I will leave the
-derived work, git-multimail, also under GPLv2.  Assuming that
-git-multimail supersedes yours, its explicit choice of license will make
-the situation clear for future users.
-
-Thanks!
-Michael
-
+> @@ -53,14 +55,23 @@ static void hash_index_entry_directories(struct index_state *istate, struct cach
+>         unsigned int hash;
+>         void **pos;
+>         double t = ticks();
+> +       struct cache_entry *ce2;
+> +       int len = ce_namelen(ce);
+>
+> -       const char *ptr = ce->name;
+> -       while (*ptr) {
+> -               while (*ptr && *ptr != '/')
+> -                       ++ptr;
+> -               if (*ptr == '/') {
+> -                       ++ptr;
+> -                       hash = hash_name(ce->name, ptr - ce->name);
+> +       while (len > 0) {
+> +               while (len > 0 && ce->name[len - 1] != '/')
+> +                       len--;
+> +               if (len > 0) {
+> +                       hash = hash_name(ce->name, len);
+> +                       ce2 = lookup_hash(hash, &istate->name_hash);
+> +                       while (ce2) {
+> +                               if (same_name(ce2, ce->name, len, ignore_case)) {
+> +                                       add_since(t, &hash_dirs);
+> +                                       return;
+> +                               }
+> +                               ce2 = ce2->dir_next;
+> +                       }
+> +                       len--;
+>                         pos = insert_hash(hash, ce, &istate->name_hash);
+>                         if (pos) {
+>                                 ce->dir_next = *pos;
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Duy
