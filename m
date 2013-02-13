@@ -1,81 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] t9903: add extra tests for bash.showDirtyState
-Date: Wed, 13 Feb 2013 11:53:19 -0800
-Message-ID: <7vmwv86le8.fsf@alter.siamese.dyndns.org>
-References: <1360753138.25490.10.camel@mas>
- <1360753321-5002-1-git-send-email-martinerikwerner@gmail.com>
- <1360753321-5002-3-git-send-email-martinerikwerner@gmail.com>
- <7vy5es9o0g.fsf@alter.siamese.dyndns.org> <1360777065.13768.17.camel@mas>
+Subject: Re: [PATCH v4] submodule: add 'deinit' command
+Date: Wed, 13 Feb 2013 11:56:35 -0800
+Message-ID: <7vip5w6l8s.fsf@alter.siamese.dyndns.org>
+References: <5112C6F6.4030607@web.de>
+ <CABURp0oQcPotK20QcqCG1pGQPVoa4RnN2nDA=iQoKS99gnPEAQ@mail.gmail.com>
+ <511BEA75.6000002@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trsten@science-computing.de
-To: Martin Erik Werner <martinerikwerner@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 20:53:49 2013
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Feb 13 20:57:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5iOp-000866-Bx
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 20:53:47 +0100
+	id 1U5iRy-0004FQ-DM
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 20:57:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756996Ab3BMTxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2013 14:53:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63682 "EHLO
+	id S932631Ab3BMT4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2013 14:56:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34761 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757196Ab3BMTxV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2013 14:53:21 -0500
+	id S932354Ab3BMT4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2013 14:56:37 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30BABB777;
-	Wed, 13 Feb 2013 14:53:21 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8197BBAF8;
+	Wed, 13 Feb 2013 14:56:37 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7DdcJ1oUMEQo04vFyCWxO9KC7/w=; b=CQqzPJ
-	teAbrNlatP24GnkP8pkeSGcvakyphtqszwxODp7GktXVgN8hq48FBj04HEzVqkYG
-	d9ErhOh2zEMMh5T91krdYfARHB7Ljkx3pLFmRbymeQlGrrC+homAE3F/pFPtQQft
-	1fTHcC5HQGwdWm1WTEIS+O+n/MFofF2XiCHXs=
+	:content-type; s=sasl; bh=7GE0kOZyWEjLpV0OHftOQy9az3c=; b=xQ1Rlr
+	lQIY7zS4gm3IkiXk+oG+EmsO66/VK7QyEFseG/Dv7X+mDPnQobEthi1+iIKbIfG1
+	N6IyOzdyMx0dD6R+g1wHrQByhhTG1eo6Y7BS+pNA9sLA86aqPLX3kHVjQxHnY+3d
+	6xSJPXPtYaGZrB7S8wumd8+B9CNhjdeMJ+gHE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Isov4cztkHEbd3qUrcjDJTDTZfsk2byL
-	ETywgVALrjPPXZir44BwdPdGP7qiqEBydop7n8Rmqk+Q4rq0cLaGA1m7FAhPQjyt
-	f/q9ESzYyOGHJ5E1jmfFJeP91nEMcYdgnC9vXa40vCU+j18BrwVTt+YfHcR5qjcu
-	xYSxEDLpZLI=
+	:content-type; q=dns; s=sasl; b=didASQ8CWa+j454gW5gU0DpqruqSXwPv
+	SKYvE40KccQclNJD7HXDD/Z+kw6fJ54f4ukLriUOA+57UgniwO+J0Z2cJDdY5pqJ
+	QqC739xL2YNMIauBWwqah/3ADe6NccC6jzoGXK+ePVF4j9ciu3mSKNKNoy+RxRMT
+	2PTgpLzSeJ0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DD83B776;
-	Wed, 13 Feb 2013 14:53:21 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75838BAF6;
+	Wed, 13 Feb 2013 14:56:37 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94EB1B773; Wed, 13 Feb 2013
- 14:53:20 -0500 (EST)
-In-Reply-To: <1360777065.13768.17.camel@mas> (Martin Erik Werner's message of
- "Wed, 13 Feb 2013 18:37:45 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E441EBAF4; Wed, 13 Feb 2013
+ 14:56:36 -0500 (EST)
+In-Reply-To: <511BEA75.6000002@web.de> (Jens Lehmann's message of "Wed, 13
+ Feb 2013 20:33:09 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 047D5774-7617-11E2-ADA8-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 79863194-7617-11E2-9F5A-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216280>
 
-Martin Erik Werner <martinerikwerner@gmail.com> writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
->> Strictly speaking, you have 6 not 4 combinations (shell variable
->> set/unset * config missing/set to false/set to true).  I think these
->> additional tests cover should all 6 because "config missing" case
->> should already have had tests before bash.showDirtyState was added.
->> 
->
-> Indeed, I only mentioned 4 since the other ones existed already, and I
-> didn't change them, but maybe it should be mentioned as "combined with
-> previous tests (...) cover all 6 combinations (...)" then?
+> Junio, this looks like a we have v5 as soon as we decide what to do
+> with the "not initialized" messages when '.' is used, right?
 
-It should be sufficient to change the third line of your original to
-say "the config option being missing/enabled/disabled, given a dirty
-file." and nothing else, I think.
+OK.  I myself do not deeply care if we end up special casing "." or
+not; I'll leave it up to you and other submodule folks.
 
->> Sign-off?
->
-> Ah, just forgot the -s flag on that commit, yes it should be Signed-off
-> by me.
-
-OK, I'll locally amend the patch.  Thanks.
+Thanks.
