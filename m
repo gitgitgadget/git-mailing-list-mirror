@@ -1,94 +1,86 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [RFC v2] git-multimail: a replacement for post-receive-email
-Date: Wed, 13 Feb 2013 15:26:57 +0000
-Message-ID: <201302131526.57342.andyparkins@gmail.com>
-References: <5104E738.602@alum.mit.edu> <vpqtxpgb6ue.fsf@grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Feb 2013, #05; Tue, 12)
+Date: Wed, 13 Feb 2013 07:27:49 -0800
+Message-ID: <7vpq04b5e2.fsf@alter.siamese.dyndns.org>
+References: <7v621xdql8.fsf@alter.siamese.dyndns.org>
+ <CAH5451nPKq8DKwo+Bkxh08N-wqrYCY4BihbvaE14z5iGVA1iZw@mail.gmail.com>
+ <7vsj51caqb.fsf@alter.siamese.dyndns.org>
+ <CAH5451mmXg=xvb-gW0qNvp7f8M5Jk5_ZS+UHAzMaGhJ677zWmw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <mbranchaud@xiplink.com>,
-	=?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Chris Hiestand <chiestand@salk.edu>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 13 16:27:30 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 13 16:28:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5eF7-0005QA-Ve
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 16:27:30 +0100
+	id 1U5eFv-0006hZ-Gg
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 16:28:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934109Ab3BMP1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2013 10:27:05 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:60211 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758942Ab3BMP1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2013 10:27:03 -0500
-Received: by mail-wi0-f174.google.com with SMTP id hi8so5849259wib.1
-        for <git@vger.kernel.org>; Wed, 13 Feb 2013 07:27:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :message-id;
-        bh=7hpLzOB+y1suyhmA+1JjG3canVxa5qG9OmeZMMxD3ps=;
-        b=Qyyms13L2RACU6ahHv2Qu8sbqd/3YxtalN3TYcTtDk+89SMG7l0HS0S8mG6jZtpxfS
-         aWWn4rczYmU7WE+QkKQ3TN/nled0p6NLsuAMcPSCTZTyrsxcDlEFciQbU3MsNFTUed9J
-         y9k9W9rQqTl0yHOQ3WpaLJphIFOUQfobtw49VMA4mmSSPfTEP5vB/xIb2TJieua6fwCA
-         Fa8oSbWmVAe6/eH7Hu0WS2FskCbcBKtkhaR1mf3ivcA0uTxxZOzv/0JO8/K3Ve1lGdr3
-         wMc5kV9ayhEFAiFsV4Xtf9TQLwQGwD935lmpKv8B3EWpE0SAFkF0T6A1B6XFqaQTu4OP
-         vKYw==
-X-Received: by 10.194.108.101 with SMTP id hj5mr38902505wjb.6.1360769220236;
-        Wed, 13 Feb 2013 07:27:00 -0800 (PST)
-Received: from momentum.localnet ([91.84.15.31])
-        by mx.google.com with ESMTPS id ek4sm8514312wib.11.2013.02.13.07.26.57
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 13 Feb 2013 07:26:59 -0800 (PST)
-User-Agent: KMail/1.13.7 (Linux/3.2.0-3-686-pae; KDE/4.8.4; i686; ; )
-In-Reply-To: <vpqtxpgb6ue.fsf@grenoble-inp.fr>
+	id S934122Ab3BMP14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2013 10:27:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42381 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758942Ab3BMP1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2013 10:27:55 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9512FBAFE;
+	Wed, 13 Feb 2013 10:27:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+3LMaHvqbX2v2V/i4NO4CFYfTLY=; b=llIX41
+	ytQi+MN1cMbE9z7Ef7r8O3wVVxOad9vz4wGP3Fl7Xa2xpABSV9WcaDYaJLD3Zn2u
+	WEAR/ILR4clbdIzkHGF8tVetGg4yTKrabumn04J5CkEnDuqyFQjOwFhq/glIOwPa
+	UtU2m0Fg6LnJvBOzPGCcgjB3/QRkb+h3eG7yQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UJG5TDmZLS8Qy3nK9P6kO3YhPZ0QuF5g
+	FZd1d1d7NgaarWSvIxo8x//ndRdChzFXOhIyzn2bBxUcCBWWu9Qkr1iWSX14wglA
+	uMol+uSNq8inYwWTpPwqqnIeJMtjD94MBiyHmSehGeSBaOovffD64Z7mX2PWMMdS
+	0TUq8FBGKoo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8884ABAFD;
+	Wed, 13 Feb 2013 10:27:52 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1AFBBBAF7; Wed, 13 Feb 2013
+ 10:27:51 -0500 (EST)
+In-Reply-To: <CAH5451mmXg=xvb-gW0qNvp7f8M5Jk5_ZS+UHAzMaGhJ677zWmw@mail.gmail.com> (Andrew
+ Ardill's message of "Wed, 13 Feb 2013 11:42:06 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EDC46CAE-75F1-11E2-A0EE-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216261>
 
-On Wednesday 13 February 2013 14:56:25 Matthieu Moy wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
+Andrew Ardill <andrew.ardill@gmail.com> writes:
 
-> I think adding a short "dependencies" section in the README (or in an
-> INSTALL file) saying which Python version works could save new users the
-> trouble (I see the sheebang inside the scripts says python2 but since I
-> couldn't use my system's python and called
-> "path/to/python git_multimail.py", this didn't help). Making the script
-> portable with python 2 and 3 would be awesome ;-).
+> On 13 February 2013 11:34, Junio C Hamano <gitster@pobox.com> wrote:
+>> The change could negatively affect people who expect that removing
+>> files that are not used for their purpose (e.g. a large file that is
+>> unnecessary for their build) will _not_ affect what they get from
+>> "git add .";
+>
+> How big a problem is this?
 
-For my 2p worth, I don't like seeing hooks called like this.  Particular those 
-that come as part of the standard installation.
+As you said below, it could be fairly big, if you expect a lot of
+people do not use "git add -u".
 
-I call mine by installing little scripts like this (on Debian):
+> If we need to support this behaviour than I would suppose a config
+> option is required. A default config transition path similar to git
+> push defaults would probably work well, in the case where breaking
+> these expectations is unacceptable.
 
-  #!/bin/sh
-  # stored as $GIT_WORK_DIR/.git/hooks/post-receive-email
-  exec /bin/sh /usr/share/git-core/contrib/hooks/post-receive-email
+We've discussed that before.
 
-This means I don't have to make the sample script executable, it gets upgraded 
-automatically as git gets upgraded, and the interpreter is easily changed by 
-changing a file in my work directory, rather than altering a packaged file.
+http://thread.gmane.org/gmane.comp.version-control.git/171811/focus=171818
 
-I'd prefer to see the /usr/share/git-core/templates/hooks/ using a similar 
-technique, as to my mind, installing a full copy of the sample script in every 
-new repository is wasteful and leaves you with potentially out-of-date scripts 
-when you update git.
-
-
-Andy
-
--- 
-Dr Andy Parkins
-andyparkins@gmail.com
+>> obviously they must have trained themselves not to do
+>> "git add -u" or "git commit -a".
+>
+> Many people use git add -p by default, so I would not be surprised
+> about people not using -u or -a.
