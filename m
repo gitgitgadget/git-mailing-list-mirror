@@ -1,124 +1,200 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Pushing a git repository to a new server
-Date: Wed, 13 Feb 2013 09:08:36 +0100
-Message-ID: <511B4A04.1000104@drmicha.warpmail.net>
-References: <CAE_TNin0Kb_38gnx9W36VZ8CTxYBZ9T1Dkhar1DUFHyQUq7ebg@mail.gmail.com> <20130211075040.GJ5210@localhost.localdomain> <CAE_TNin6-weutRDToZ7-BBGJTCcf0dwJn0ChUbFcACRU=SbjzA@mail.gmail.com> <20130211162714.GB16402@sigill.intra.peff.net> <511A2775.9050209@drmicha.warpmail.net> <20130212204210.GA25330@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v4 0/4] count-objects improvements
+Date: Wed, 13 Feb 2013 16:13:15 +0700
+Message-ID: <1360746799-3668-1-git-send-email-pclouds@gmail.com>
+References: <7va9r9igze.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Ethan Reesor <firelizzard@gmail.com>,
-	Konstantin Khomoutov <kostix+git@007spb.ru>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 13 09:16:33 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 13 10:13:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5XW4-0002x6-Pj
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 09:16:33 +0100
+	id 1U5YOl-0004MU-Rs
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 10:13:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758122Ab3BMIQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2013 03:16:09 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:49668 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754588Ab3BMIQH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Feb 2013 03:16:07 -0500
-X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Feb 2013 03:16:07 EST
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id CFE81209DD;
-	Wed, 13 Feb 2013 03:08:34 -0500 (EST)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 13 Feb 2013 03:08:34 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=HoYps12cnfkXbYVCXJ0Xy2
-	eJzTM=; b=K3oqQYI0Np/bQKMM0fgETjDNDGdAaTW0VHL3gM8+rs3eN7lEvKHOAk
-	VNpz4BugE3A46Em9d2V6mYpfApkfJMpHGHc5akTqdkFuWGDuiNtgBeMTCULskMiG
-	Mr8iajS/hYUG1cntPPg+T2Sq36aQg4eAOHoTKBs2Pzw7Yu+ka4DOM=
-X-Sasl-enc: BwoaAsn73AOrlyYzmKVRIH0QSiqg2hDvMEE2OosyWbbm 1360742914
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 170A88E04E8;
-	Wed, 13 Feb 2013 03:08:33 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
-In-Reply-To: <20130212204210.GA25330@sigill.intra.peff.net>
+	id S1752975Ab3BMJMj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Feb 2013 04:12:39 -0500
+Received: from mail-da0-f43.google.com ([209.85.210.43]:43858 "EHLO
+	mail-da0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752861Ab3BMJMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2013 04:12:36 -0500
+Received: by mail-da0-f43.google.com with SMTP id u36so454740dak.2
+        for <git@vger.kernel.org>; Wed, 13 Feb 2013 01:12:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=bB2obkdM5B07NgJwDhYG4vHKM6bOle+hgczxV5BYEq8=;
+        b=lDbi9Jobv9BSLIzYoquYLJWnIWEdvHahHotpQrUGpWRAppMDZYF6jArPCk+O8i7iCb
+         NrjLlYFtrbfrkEwZtpRWamxU3gHFVZ/7cdNdJ3MjWb0xfkUdps4Hafqaw06qvKjQsa3H
+         0TOBctErjdYjxN+6OQ8Z9n9z4BlGszyGHoUPoGVhVM2tzwYfpLYhrlm7yk0g2oQ0nxdI
+         kdpfpyq37JPgnDsQwikXH4138mRN5EMQAkIV8WsBZ/QMcw/cmefcAWYklD/d6udHL+Z2
+         TA29uNXjQ4ERZNErEvNBe7pG7yYWLubXUy56xiu1b/Osb8O3lFc1ypoFqLoxQE2igTrz
+         IAqQ==
+X-Received: by 10.67.22.33 with SMTP id hp1mr24962275pad.3.1360746755291;
+        Wed, 13 Feb 2013 01:12:35 -0800 (PST)
+Received: from lanh ([115.74.60.127])
+        by mx.google.com with ESMTPS id l5sm81949166pax.10.2013.02.13.01.12.31
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 13 Feb 2013 01:12:33 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Wed, 13 Feb 2013 16:13:20 +0700
+X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
+In-Reply-To: <7va9r9igze.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216239>
 
-Jeff King venit, vidit, dixit 12.02.2013 21:42:
-> On Tue, Feb 12, 2013 at 12:28:53PM +0100, Michael J Gruber wrote:
-> 
->> I'm not sure providers like GitHub would fancy an interface which allows
->> the programmatic creation of repos (giving a new meaning to "fork
->> bomb"). But I bet you know better ;-)
-> 
-> You can already do that:
-> 
->   http://developer.github.com/v3/repos/#create
+On Wed, Feb 13, 2013 at 12:23 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+>
+>> +/* A hook for count-objects to report invalid files in pack directo=
+ry */
+>> +extern void (*report_garbage)(const char *desc, const char *path, i=
+nt len, const char *name);
+>
+> We may want to document the strange way the last three parameters
+> are used somewhere.  e.g.
+>
+>         shows "path" (if "name" is NULL), or prepends "path" in
+>         front of name (otherwise); only for the latter, "path" can
+>         be a string that is not NUL-terminated but its length
+>         specified with "len" and in that case a slash is inserted
+>         between the path and the "name".
+>
+> When described clearly, it sounds somewhat ugly and incoherent API,
+> even though it covers the immediate need X-<.
 
-Nice.
+One of the reasons why I did not export it explicitly. Changed it to
 
-I knew you knew ;)
+void (*report_garbage)(const char *desc, const char *path);
 
-> We rate-limit API requests, and I imagine we might do something similar
-> with create-over-git. But that is exactly the kind of implementation
-> detail that can go into a custom create-repo script.
-> 
->> An alternative would be to teach git (the client) about repo types and
->> how to create them. After all, a repo URL "ssh://host/path" gives a
->> clear indication that "ssh host git init path" will create a repo.
-> 
-> But that's the point of a microformat. It _doesn't_ always work, because
-> the server may not allow arbitrary commands, or may have special
-> requirements on top of the "init". You can make the microformat be "git
-> init path", and servers can intercept calls to "git init" and translate
-> them into custom magic. But I think the world is a little simpler if we
-> define a new service type (alongside git-upload-pack, git-receive-pack,
-> etc), and let clients request it. Then it's clear what the client is
-> trying to do, it's easy for servers to hook into it, we can request it
-> over http, etc. And it can be extended over time to take more fields
-> (like repo description, etc).
-> 
-> I'm really not suggesting anything drastic. The wrapper case for ssh
-> would be as simple as a 3-line shell script which calls "git init" under
-> the hood, but it provides one level of indirection that makes
-> replacing/hooking it much simpler for servers. So the parts that are in
-> stock git would not be much work (most of the work would be on _calling_
-> it, but that is the same for adding a call to "git init").
-> 
-> I think the main reason the idea hasn't gone anywhere is that nobody
-> really cares _that_ much. People just don't create repositories that
-> often. I feel like this is one of those topics that comes up once a
-> year, and then nothing happens on it, because people just make their
-> repo manually and then stop caring about it.
-> 
-> Just my two cents, of course. :)
+and pushed the ugly part back to callers.
 
-Most repos are probably created by a local "git init" or "git clone", or
-by clicking a button on a provider's web interface. The need for
-git-create-repo seems to be restricted to:
+> How about doing it something along this line, perhaps?
+>
+>         int i;
+>         int beginning_of_this_name =3D -1;
+>         int seen_bits =3D 0; /* 01 for .idx, 02 for .pack */
+>         for (i =3D 0; i < list->nr; i++) {
+>                 if (beginning_of_this_name < 0)
+>                         beginning_of_this_name =3D i;
+>                 else if (list->items[i] and list->items[beginning_of_=
+this_name]
+>                          share the same basename)
+>                         ; /* keep scanning */
+>                 else {
+>                         /* one name ended at (i-1) */
+>                         if (seen_bits =3D=3D 3)
+>                                 ; /* both .idx and .pack exist; good =
+*/
+>                         else
+>                                 report_garbage_for_one_name(list, beg=
+inning_of_this_name, i,
+>                                                 seen_bits);
+>                         seen_bits =3D 0;
+>                         beginning_of_this_name =3D i;
+>                 }
+>                 if (list->items[i] is ".idx")
+>                         seen_bits |=3D 1;
+>                 if (list->items[i] is ".pack")
+>                         seen_bits |=3D 2;
+>
+>         }
+>         if (0 <=3D beginning_of_this_name && seen_bits !=3D 3)
+>                 report_garbages_for_one_name(list, beginning_of_this_=
+name, list->nr, seen_bits);
+>
+> with a helper function report_garbage_for_one_name() that would look =
+like this:
+>
+>         report_garbage_for_one_name(...) {
+>                 int j;
+>                 const char *msg;
+>                 switch (seen_bits) {
+>                 case 0: msg =3D "no corresponding .idx nor .pack"; br=
+eak;
+>                 case 1: msg =3D "no corresponding .pack"; break;
+>                 case 2: msg =3D "no corresponding .idx; break;
+>                 }
+>                 for (j =3D beginning_of_this_name; j < i; j++)
+>                         report_garbage(msg, list->items[j]);
+>         }
+>
+> For the above to work, prepare_packed_git_one() needs to retain only =
+the
+> paths with known extensions in garbage list. "pack-deadbeef.unk" can =
+and
+> should be reported as a garbage immediately when it is seen without b=
+eing
+> placed in the list.
 
-- "command line folks" who use a provider for it's hosting service and
-don't fancy a web interface for repo creation
+Yup. Looks good.
 
-- noobs who need to get their head wrapped around local, remote,
-push/pull 'n' stuff...
+>> +             } else if (has_extension(de->d_name, ".idx")) {
+>> +                     struct string_list_item *item;
+>> +                     int n =3D strlen(path) - 4;
+>> +                     item =3D string_list_append_nodup(&garbage,
+>> +                                                     xstrndup(path,=
+ n));
+>> +                     item->util =3D ".idx";
+>> +                     continue;
+>> +             } else
+>> +                     report_garbage("garbage found", path, 0, NULL)=
+;
+>
+> Hmm, where is a ".keep" file handled in this flow?
 
-For the server side git-create-repo to take off we would probably need
-two things (besides the client support):
+Apparently I smoked/drank while coding or something. .idx is supposed
+to be .keep. This calls for a test to guard my code (part of this v4).
 
-- Implement and ship a git-create-repo which makes this work for git
-over ssh seamlessly. (Will take some to trickle down to servers in the
-wild.)
+> The structure of the if/else cascade is much nicer than the earlier
+> iterations, but wouldn't it be even more clear to do this?
+>
+>         if (is .idx file) {
+>                 ... do that .idx thing ...
+>         }
+>
+>         if (!report_garbage)
+>                 continue; /* it does not matter what the file is */
+>
+>         if (is .pack) {
+>                 ... remember that we saw this .pack ...
+>         } else if (is .idx) {
+>                 ... remember that we saw this .idx ...
+>         } else if (is .keep) {
+>                 ... remember that we saw this .keep ...
+>         } else {
+>                 ... all else --- report as garbage immediately ...
+>         }
 
-- Get a large provider to offer this.
+Done. 2/4 is updated to make sure the "if (is .idx file)" block does
+not shortcut the loop with "continue;" so that we always get .idx
+file in the end of the loop.
 
-Gitosis/Gitolite are probably to follow easily. I'm beginning to like
-idea ;)
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
+  git-count-objects.txt: describe each line in -v output
+  sha1_file: reorder code in prepare_packed_git_one()
+  count-objects: report garbage files in pack directory too
+  count-objects: report how much disk space taken by garbage files
 
-Michael
+ Documentation/git-count-objects.txt |  22 ++++++--
+ builtin/count-objects.c             |  30 ++++++++---
+ cache.h                             |   3 ++
+ sha1_file.c                         | 101 ++++++++++++++++++++++++++++=
++++-----
+ t/t5304-prune.sh                    |  26 ++++++++++
+ 5 files changed, 156 insertions(+), 26 deletions(-)
+
+--=20
+1.8.1.2.536.gf441e6d
