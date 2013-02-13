@@ -1,113 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/3] shell prompt: add bash.showUntrackedFiles option
-Date: Wed, 13 Feb 2013 08:12:18 -0800
-Message-ID: <7va9r8b3bx.fsf@alter.siamese.dyndns.org>
-References: <1360753138.25490.10.camel@mas>
- <1360753321-5002-1-git-send-email-martinerikwerner@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC v2] git-multimail: a replacement for post-receive-email
+Date: Wed, 13 Feb 2013 17:12:09 +0100
+Message-ID: <vpqbobo5h2e.fsf@grenoble-inp.fr>
+References: <5104E738.602@alum.mit.edu> <vpqtxpgb6ue.fsf@grenoble-inp.fr>
+	<201302131526.57342.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trsten@science-computing.de
-To: Martin Erik Werner <martinerikwerner@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 13 17:12:48 2013
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Chris Hiestand <chiestand@salk.edu>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 13 17:12:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5ewv-0001T2-Qz
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 17:12:46 +0100
+	id 1U5ewv-0001T2-Al
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Feb 2013 17:12:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934194Ab3BMQMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2013 11:12:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50269 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756055Ab3BMQMV (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1759926Ab3BMQMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 13 Feb 2013 11:12:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF2A5C009;
-	Wed, 13 Feb 2013 11:12:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NSWEgX+5RQBDyqp54X0KSE6/bsc=; b=f5HDXE
-	OtUfaRR3m9YH2M8+vH9YI8W/dA3sGTMnTDzbBkiDnzeNnuw5bwG6gU0bfI0dnnWp
-	Jw3YNa8d4Bbs/Q0+YmyUpv3sFep+G+VyR4vE/3PA9aQf3lPryy6mTZ8Yf8DhSb/l
-	skD8Rh/y0EF9jlEm9l3mTuDV3UzU1ieW059KI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IMCHIb+i+P0Y5KKh4gcsh8pJAR+D8u77
-	qbmopD7CpH5NQ9KXfOu61gMcr4F5iwl4CeXxCq+K86I00MgYJKFXTLHo1sl8oS/4
-	muBuABfhkpQG0xWUPs7HxRY2d3w23k11h0It8XQdL73/Z1XbGK52cv9URp5QIZpJ
-	78xQNVvqq14=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D300AC008;
-	Wed, 13 Feb 2013 11:12:20 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4185AC007; Wed, 13 Feb 2013
- 11:12:20 -0500 (EST)
-In-Reply-To: <1360753321-5002-1-git-send-email-martinerikwerner@gmail.com>
- (Martin Erik Werner's message of "Wed, 13 Feb 2013 12:01:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 24B5A470-75F8-11E2-B0E2-BCD12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Received: from mx1.imag.fr ([129.88.30.5]:33408 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756055Ab3BMQMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2013 11:12:20 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r1DGC8UI007981
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 13 Feb 2013 17:12:08 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1U5ewL-0002iV-Ru; Wed, 13 Feb 2013 17:12:09 +0100
+In-Reply-To: <201302131526.57342.andyparkins@gmail.com> (Andy Parkins's
+	message of "Wed, 13 Feb 2013 15:26:57 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 13 Feb 2013 17:12:09 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r1DGC8UI007981
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1361376730.09214@z3NsIEbRNqb6oFZKDbFrFg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216266>
 
-Martin Erik Werner <martinerikwerner@gmail.com> writes:
+Andy Parkins <andyparkins@gmail.com> writes:
 
-> Add a config option 'bash.showUntrackedFiles' which allows enabling
-> the prompt showing untracked files on a per-repository basis. This is
-> useful for some repositories where the 'git ls-files ...' command may
-> take a long time.
+> On Wednesday 13 February 2013 14:56:25 Matthieu Moy wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
 >
-> Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
-> ---
->  contrib/completion/git-prompt.sh |   11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
+>> I think adding a short "dependencies" section in the README (or in an
+>> INSTALL file) saying which Python version works could save new users the
+>> trouble (I see the sheebang inside the scripts says python2 but since I
+>> couldn't use my system's python and called
+>> "path/to/python git_multimail.py", this didn't help). Making the script
+>> portable with python 2 and 3 would be awesome ;-).
 >
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index 9bef053..9b2eec2 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -43,7 +43,10 @@
->  #
->  # If you would like to see if there're untracked files, then you can set
->  # GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're untracked
-> -# files, then a '%' will be shown next to the branch name.
-> +# files, then a '%' will be shown next to the branch name.  You can
-> +# configure this per-repository with the bash.showUntrackedFiles
-> +# variable, which defaults to true once GIT_PS1_SHOWUNTRACKEDFILES is
-> +# enabled.
->  #
->  # If you would like to see the difference between HEAD and its upstream,
->  # set GIT_PS1_SHOWUPSTREAM="auto".  A "<" indicates you are behind, ">"
-> @@ -332,8 +335,10 @@ __git_ps1 ()
->  			fi
->  
->  			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ]; then
-> -				if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-> -					u="%"
-> +				if [ "$(git config --bool bash.showUntrackedFiles)" != "false" ]; then
-> +					if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-> +						u="%"
-> +					fi
->  				fi
->  			fi
+> For my 2p worth, I don't like seeing hooks called like this.  Particular those 
+> that come as part of the standard installation.
 
-Somebody should simplify this deeply nested "if/then/if/then/fi/fi"
-sequence to a single if/then/fi statement, i.e. something like:
+What do you mean by "like this" ?
 
-	if test -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" &&
-           test "$(git config --bool bash.showUntrackedFiles)" != false
-        then
-		u='%'
-	fi
+> I call mine by installing little scripts like this (on Debian):
+>
+>   #!/bin/sh
+>   # stored as $GIT_WORK_DIR/.git/hooks/post-receive-email
+>   exec /bin/sh /usr/share/git-core/contrib/hooks/post-receive-email
 
-And do the same for the other one this patch copies the above from.
+Yes, this is what I was doing (with path/to/python instead of /bin/sh,
+and git_multimail.py, or more precisely path/to/git_multimail.py,
+instead of post-receive-email).
 
-No need to re-roll this patch, though.  It is a separate clean-up to
-be done on top, once this series is settles.
-
-Thanks.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
