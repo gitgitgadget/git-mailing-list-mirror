@@ -1,121 +1,77 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@google.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Subject: Re: inotify to minimize stat() calls
-Date: Thu, 14 Feb 2013 09:36:01 -0500
-Message-ID: <20130214143558.GA671@google.com>
-References: <7va9rezaoy.fsf@alter.siamese.dyndns.org>
- <7vsj56w5y9.fsf@alter.siamese.dyndns.org>
- <9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
- <CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com>
- <CALkWK0nQVjKpyef8MDYMs0D9HJGCL8egypT3YWSdU8EYTO7Y+w@mail.gmail.com>
- <CACsJy8CEHzqH1X=v4yau0SyZwrZp1r6hNp=yXD+eZh1q_BS-0g@mail.gmail.com>
- <CALkWK0=6_n4rf6AWci6J+uhGHpjTUmK7YFdVHuSJedN2zLWtMA@mail.gmail.com>
- <CACsJy8DeM5--WVXg3b65RxLBS7Jho-7KmcGwWk7B5uAx77yOEw@mail.gmail.com>
- <20130210111732.GA24377@lanh>
- <CANgJU+WYSD8RHb19EP0M89=Y_XskfjDtFWf51qjg4ur+rDb3ug@mail.gmail.com>
+Date: Thu, 14 Feb 2013 16:16:24 +0100
+Message-ID: <CACBZZX6BVuQWtrLuTVXZo+77sT4yZQ3pvN=_fMma24-zd0NNqA@mail.gmail.com>
+References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Robert Zeh <robert.allan.zeh@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>, finnag@pvv.org
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 14 15:44:38 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 14 16:17:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U6037-0002tG-G5
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 15:44:33 +0100
+	id 1U60Yg-0002qM-IS
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 16:17:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934730Ab3BNOoI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Feb 2013 09:44:08 -0500
-Received: from mail-qe0-f73.google.com ([209.85.128.73]:47923 "EHLO
-	mail-qe0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934172Ab3BNOoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2013 09:44:06 -0500
-X-Greylist: delayed 482 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Feb 2013 09:44:06 EST
-Received: by mail-qe0-f73.google.com with SMTP id 7so243787qeb.0
-        for <git@vger.kernel.org>; Thu, 14 Feb 2013 06:44:04 -0800 (PST)
+	id S932377Ab3BNPQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2013 10:16:47 -0500
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:41707 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758007Ab3BNPQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2013 10:16:46 -0500
+Received: by mail-oa0-f50.google.com with SMTP id l20so2582636oag.23
+        for <git@vger.kernel.org>; Thu, 14 Feb 2013 07:16:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=s0hyGoYBS+kGzst6vsTt0lN+8JcRB+po8q0Mh+wnRcs=;
-        b=FW7HZOPeS2TAkwAcD68FToDmukOMkkQuWTG/KpFTJsks1sPSNne47LeJzSobBPtlsa
-         xk/9BiXKw/4LhmFsqe2rm5NmFAyxD4/BJtUIutfbeE8Rw0xV5BCLzig8+8O8g/uRNqCY
-         +7vgP87HeJC+mBg0uxDgX1shzS9W4jRGu/nF8FDyXQ2KLb7s1ezOHHB4g7RZlaClrNpb
-         +KeZAPDdqX79nximrTCDVS/0JuxYaFzs0CS1BOjsMZAVgAQo19WnO/GaMe8y0RvuQ0pU
-         zk6S43HhZqpzYK7u1Klu3PV4avllcKaereZkA13pJe5K8F9o9pNfplq4PA64fq9bcmlI
-         rpMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent:x-gm-message-state;
-        bh=s0hyGoYBS+kGzst6vsTt0lN+8JcRB+po8q0Mh+wnRcs=;
-        b=bYTANQvqsYWjKlyfOsPtJM/TygKtUdnQpB6ytB+yXrULj98Ghvr0g/OcM03DL1Vq8+
-         RfY09VMhzfvPKHUA0OT19XmPgEeaMlXttn9pTX5E6LHLfL6HLKd/luXwY7RbCuBN8Y+Y
-         woTL3RhkVk1lO3XtWtukcuRx2L1Nc6VY8B57gxLFcBEgvPeznhKVrdG+piSbiTCTNV23
-         WPgTl2E4ZBej3/th5jZ0maiZaIrrTRUh8C7vkv4485ksA0zsd/zttntwb4xtVYJMWN7E
-         gXVKkfG6GxRxsZP8MVLCNRpAfGrMxsx2llc9TNykOH7UPJbu3ecTa8oyW3l5jQvUPX+Z
-         HdQA==
-X-Received: by 10.236.76.73 with SMTP id a49mr9698728yhe.30.1360852561810;
-        Thu, 14 Feb 2013 06:36:01 -0800 (PST)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id e7si2124603yhk.3.2013.02.14.06.36.01
-        (version=TLSv1.1 cipher=AES128-SHA bits=128/128);
-        Thu, 14 Feb 2013 06:36:01 -0800 (PST)
-Received: from valle.nyc.corp.google.com (valle.nyc.corp.google.com [172.26.78.170])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id A67F05A4267;
-	Thu, 14 Feb 2013 06:36:01 -0800 (PST)
-Received: by valle.nyc.corp.google.com (Postfix, from userid 159662)
-	id 42D5D40906; Thu, 14 Feb 2013 09:36:01 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CANgJU+WYSD8RHb19EP0M89=Y_XskfjDtFWf51qjg4ur+rDb3ug@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Gm-Message-State: ALoCoQldfM5vMoEUWGP87kWKLUka0E++v+2P8ges0kNeHjb9iaybaCVzS2CUcTGtaDKCNUaq166QiZcNTPwrkOf8k4BsDsYraMvQ77M2taSURMxx+hii54Rmlck4s2LgibFiLNKwGsLP2R0F45Ex0Q7SXPfHgdllhcM0uvHPElk0hPC1AdH0DTkPts/ETcsayhA713orABL3
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=vh79mwBNcKEq/DIGanIpqSed4YaaYonpmQ0kB3ZgDE0=;
+        b=F3GttklITsoED1yp7K5XK2sMi8HxcHD/lQ+2/padg6mUk3qt+XS0Mk0ZjUt0VHTDT0
+         PPTn1rZb3+zpi8LB4C5mt2Wkv0oCc9Kt/08eMBTwqLTTnjv1D06U186R6p55tgDdDins
+         uY7v5jTS/os3ZpcVAg9WfBqqRzwRZLK3D8J1F5zfIlWVOnlAq2f1xVjK26jUoqrxvwkb
+         l0j8dQaF5gcXgrcJ5oaGcFmk/QEPgDfMauS/FZsX+8NygRZ0zyiMxX/zpS7rTqXLokI/
+         G8Az0/SLmYj7KAahaEwnMu3O3lsGuUWTSvWMY5sdkApjCmTMt+USbd4jF0X9Sbaubyst
+         UrHA==
+X-Received: by 10.182.69.71 with SMTP id c7mr19408228obu.92.1360855005741;
+ Thu, 14 Feb 2013 07:16:45 -0800 (PST)
+Received: by 10.76.86.6 with HTTP; Thu, 14 Feb 2013 07:16:24 -0800 (PST)
+In-Reply-To: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216309>
 
-On Sunday, February 10, 2013 at 08:26 EST,
-     demerphq <demerphq@gmail.com> wrote:
+On Fri, Feb 8, 2013 at 10:10 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> For large repositories, many simple git commands like `git status`
+> take a while to respond.  I understand that this is because of large
+> number of stat() calls to figure out which files were changed.  I
+> overheard that Mercurial wants to solve this problem using itnotify,
+> but the idea bothers me because it's not portable.  Will Git ever
+> consider using inotify on Linux?  What is the downside?
 
-> Is windows stat really so slow?
+There's one relatively easy sub-task of this that I haven't seen
+mentioned: Improving the speed of interactive rebase on large (as in
+lots of checked out files) repositories.
 
-Well, the problem is that there is no such thing as "Windows stat" :-)
+That's the single biggest thing that bothers me when I use Git with
+large repos, not the speed of "git status". When you "git rebase -i
+HEAD~100" re-arrange some patches and save the TODO list it takes say
+0.5-1s for each patch to be applied, but at least 10x less than that
+on a small repository. E.g. try this on linux-2.6.git v.s. some small
+project with a few dozen files.
 
-> I encountered this perception in windows Perl in the past, and I know
-> that on windows Perl stat *appears* slow compared to *nix, because in
-> order to satisfy the full *nix stat interface, specifically the nlink
-> field, it must open and close the file*. As of 5.10 this can be
-> disabled by setting a magic var ${^WIN32_SLOPPY_STAT} to a true value=
-,
-> which makes a significant improvement to the performance of the Perl
-> level stat implementation.  I would not be surprised if the cygwin
-> implementation of stat() has the same issue as Perl did, and that sta=
-t
-> appears much slower than it actually need be if you don't care about
-> the nlink field.
+I looked into this a long while ago and remembered that rebase was
+doing something like a git status for every commit that it made to
+check the dirtyness.
 
-I suggested a few years ago that FindFirstFile() be used to implement
-stat() since it's way faster than opening and closing the file, but
-=46indFirstFile() apparently produces unreliable mtime results when DST
-shifts are involved.
-
-http://thread.gmane.org/gmane.comp.version-control.git/114041
-(The reference link in Johannes Sixt's first email is broken, but I'm
-sure the information can be dug up.)
-
-Based on a quick look it seems GetFileAttributesEx() is still used for
-mingw and cygwin Git.
-
---=20
-Magnus B=E4ck
-baeck@google.com
+This could be vastly improved by having an unsafe option to git-rebase
+where it just assumes that the starting state + whatever it wrote out
+is the current state, i.e. it would break if someone stuck up on your
+checkout during an interactive rebase and changed a file, but the
+common case of the user having exclusive access to the repo and
+waiting for the rebase would be much faster.
