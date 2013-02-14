@@ -1,73 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Cumulative "git read-tree -m" rejected with overwriting warning
-Date: Wed, 13 Feb 2013 15:40:24 -0800
-Message-ID: <7v1ucj4wbb.fsf@alter.siamese.dyndns.org>
-References: <20130213230213.GT20333@localhost>
+From: XANi <xani666@gmail.com>
+Subject: [BUG] Veryfing signatures in git log fails when language is not
+ english
+Date: Thu, 14 Feb 2013 01:18:37 +0100
+Message-ID: <20130214011837.04880b3e@hydra.devrandom.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marcin Owsiany <marcin@owsiany.pl>
-X-From: git-owner@vger.kernel.org Thu Feb 14 00:40:59 2013
+Content-Type: multipart/signed; micalg=PGP-SHA1;
+ boundary="Sig_/IafX5ms1Wl3YfNANkX/YIu/"; protocol="application/pgp-signature"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 14 01:19:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5lwd-0001dd-VZ
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 00:40:56 +0100
+	id 1U5mXy-0002An-5D
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 01:19:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965247Ab3BMXkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Feb 2013 18:40:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64688 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965136Ab3BMXkb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Feb 2013 18:40:31 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9929D8ED5;
-	Wed, 13 Feb 2013 18:40:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ktZqO/gS9xVsFywzeqcGCQ/wKnU=; b=xn1Dfn
-	X01TWePVNmch/yEyrjxX/vYL2BRKcL0d7g+CMZLXaRH+Q/IaKZh8QJqLEjrHD9tN
-	nAFlEdPkJssJXdk2n3ycQlJs9c0Hm4/sOffVbjJwcITeZILrwMG36DnuOBZ3Z24y
-	5HcXXYMzmaTrpQ5UEL+Tki7ssSZXjJJLyre7E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ei4vpbowElH30Mwc4VN6AibmsBoPGpNZ
-	W+BXumIOnVGCqMRwnS6alofeiHJbFYRsqhaCUDpDf4eu0wNPrd+VIIN+mq4X+cwQ
-	c5HmXqLpxefN6ASzCk0VV55mcadI6ULP+SRUZMSblP06aaBrrSplUjrIJVF+VASQ
-	pWUXKJCrLnE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B07AB8ECD;
-	Wed, 13 Feb 2013 18:40:28 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D7048EA8; Wed, 13 Feb 2013
- 18:40:27 -0500 (EST)
-In-Reply-To: <20130213230213.GT20333@localhost> (Marcin Owsiany's message of
- "Wed, 13 Feb 2013 23:02:13 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BF024A18-7636-11E2-8880-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1761306Ab3BNATA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Feb 2013 19:19:00 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:46175 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752887Ab3BNAS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Feb 2013 19:18:59 -0500
+Received: by mail-ee0-f46.google.com with SMTP id e49so968675eek.19
+        for <git@vger.kernel.org>; Wed, 13 Feb 2013 16:18:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:subject:message-id:x-mailer:mime-version
+         :content-type;
+        bh=dzwcUAVWgC90i8D6hyBTFpKrOpvtuIZRowX1jxrTfio=;
+        b=lIzfQqJ8ORzGZeBFwAApdPmHj1RE4GVXI5IuzhLTP/DLeiPa6Br0D+f/V2HYw06P4K
+         Kk9XajZqFLIWyzlOwpjUYnk98YpMLMEfY7piDRvOX9GI1EiQ6HbKuDLAGE12aH1qaCOl
+         4mOLR4AyCQ8qOolNqjKSXWtPaU/n98Fc/Tr9Iw5M82TC04kjiKG8PE7wQ4jxeFeFjqVA
+         y6sdmOkR/mL8GZRO3t8fw2EufDgopQecmlLPFMwk8B6jGlVDihj7gEfleCvsREZ67OKi
+         Xy0qLEZRhtwi2PLjE1m+h+cMOFAI0n0HUAsdXiakQQYXro0919aMLWVAb+IiOMMLl+nJ
+         BurQ==
+X-Received: by 10.14.179.5 with SMTP id g5mr80602351eem.41.1360801137738;
+        Wed, 13 Feb 2013 16:18:57 -0800 (PST)
+Received: from hydra.devrandom.pl (aeqx143.neoplus.adsl.tpnet.pl. [79.191.179.143])
+        by mx.google.com with ESMTPS id q5sm75869670eep.11.2013.02.13.16.18.56
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 13 Feb 2013 16:18:57 -0800 (PST)
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216294>
 
-Marcin Owsiany <marcin@owsiany.pl> writes:
+--Sig_/IafX5ms1Wl3YfNANkX/YIu/
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
->  "the index file saves and restores with all this information, so you
->  can merge things incrementally,"
->
-> which I took to mean that I can read from multiple trees one by one
-> before writing the tree.
+Hi,
 
-That "incrementally" refers to "after a three-way merge stops with
-conflicts in multiple files, you can start from file A, concentrate
-only on that file, resolve it, and then go on to resolve conflicts
-in the next file B, continue, until you resolve the conflicts in the
-last file Z".  Until you resolve a single tree-way merge fully and
-write the results out as a tree, you cannot merge in the next tree.
+any functionality that depends on exact exit msg of program
+ can potentially fail because of that
+=E1=9B=AF export |grep LANG
+declare -x LANG=3D"pl_PL.UTF-8"
 
-That is why N-way octopus is internally implemented as a series of
-three-way merges.
+=E1=9B=AF ~/src/os/git/git log --format=3D"%G? %h" |head -2=20
+ 0d19377
+ 5b9d7f8
+
+=E1=9B=AF unset LANG
+=E1=9B=AF ~/src/os/git/git log --format=3D"%G? %h" |head -2
+G 0d19377
+G 5b9d7f8
+
+tested against maint (d32805d) and master (5bf72ed)
+
+maybe git should set up some output-changing variables before calling
+external programs? I think setting LC_ALL=3DC should be enougth.
+
+--=20
+Mariusz Gronczewski (XANi) <xani666@gmail.com>
+GnuPG: 0xEA8ACE64
+
+
+
+--Sig_/IafX5ms1Wl3YfNANkX/YIu/
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRHC1eAAoJEK6jAYnqis5kursQAJRQp82aPiSSwdz9PMtS+Ffi
+B9YWcVaFuRagK1QvKfItNDBIRFLcy4nksD6CZdabzeIWPcIbg7WCm1SKCWtwsCLC
+TikZqshWIj55Ow3cDAKy3oeNlEeTTHR8RJZsZO/cfD880eqXsHD34tTtotGL4HQ3
+lXQ1eyrC8m4S+cuQotPeNdB1Fgx+PRgnYJ4mJ3iVfa/WIqfHuzGHXS1vOVHIQGQw
+i/S/ziCDVm3mlWg1M0cTSqP3fJDwCqp9eRMMWAb1+jrmzhBIaHUvOpDxG8b3JoL3
+dDD2VwSHm4rOhYcBSW3DnqXjyiu7EOCHMnKn3u0E+ISRdF2EdtWwXwrB0ynpQytD
+s8iYLVQ4RUFfRJEwM7t8efgMCZy3pTPw0Q/ssF7yxEINwIR5AUQeX9Q0Jk/56FyA
+ADS7uN+aEU7gZmDs0lfJEeFgknysz2sNc83VF3CrS4YwNg1qQMbNX0e298D2XhqM
+yQNs/tWbK0J1bsmSSh7s6JCDNIuWfMZeaPqFgjgJTnBF49Y24ex79p7sNaCTZ6O3
+0PW3LdwtI0chS8yg++BoPp+4OWcfdeDHdJLi4Ry4RkmlaAQF7Arer93fCv7Abf5u
+YAJsN6Q129FRfPmAVPS5yQm0gIlOZ3b1zsm90aFa2YdwR/StSBtASKOPpm8SxSLq
+LJzusLaRUdhAPQch8sGY
+=vGhM
+-----END PGP SIGNATURE-----
+
+--Sig_/IafX5ms1Wl3YfNANkX/YIu/--
