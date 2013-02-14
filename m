@@ -1,109 +1,90 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] git.txt: update description of the configuration mechanism
-Date: Thu, 14 Feb 2013 17:15:04 +0100
-Message-ID: <511D0D88.6010302@drmicha.warpmail.net>
+Date: Thu, 14 Feb 2013 17:23:33 +0100
+Message-ID: <vpqzjz6ampm.fsf@grenoble-inp.fr>
 References: <1360856214-934-1-git-send-email-Matthieu.Moy@imag.fr>
+	<511D0D88.6010302@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Feb 14 17:15:32 2013
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Feb 14 17:24:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U61TA-0001AA-2D
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 17:15:32 +0100
+	id 1U61bS-00058N-0O
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 17:24:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758151Ab3BNQPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2013 11:15:05 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:52346 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757979Ab3BNQPE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Feb 2013 11:15:04 -0500
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 4183B209B0;
-	Thu, 14 Feb 2013 11:15:03 -0500 (EST)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute6.internal (MEProxy); Thu, 14 Feb 2013 11:15:03 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=FY4bs/NrIaWLncvzNWOfes
-	/CKFA=; b=oR45oQAo5kbB+rjx7qSxS/GVi38W7zPeJnY3DYyY100HDieuYKp+c9
-	8Gegs9ga2hik3VFvWQnvN1wSvRejZBVRcpAyplRrRs1eHuiZSrAIhHDkEi/ETtZD
-	UJFq49qtEWl25k4q5tBQvis34zP5CynES5sBmA6g1Dm1kzALpZlnc=
-X-Sasl-enc: zzpoeIlLX+W86+QD3ZMpbFTp33jSde9E4kbijJ0dTJOB 1360858502
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 7645B4824CD;
-	Thu, 14 Feb 2013 11:15:02 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
-In-Reply-To: <1360856214-934-1-git-send-email-Matthieu.Moy@imag.fr>
+	id S934673Ab3BNQXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2013 11:23:43 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:48878 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758097Ab3BNQXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2013 11:23:42 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r1EGNWwC019913
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 14 Feb 2013 17:23:32 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1U61av-0000Yp-Mi; Thu, 14 Feb 2013 17:23:33 +0100
+In-Reply-To: <511D0D88.6010302@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Thu, 14 Feb 2013 17:15:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 14 Feb 2013 17:23:32 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r1EGNWwC019913
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1361463813.39367@K8Z4siz8nAmlhXEuoWhIcA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216318>
 
-Matthieu Moy venit, vidit, dixit 14.02.2013 16:36:
-> The old Git version where it appeared is not useful only to historians,
-> not to normal users. Also, the text was mentioning only the per-repo
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-I do not think you meant to not remove so many nots ;)
+> Matthieu Moy venit, vidit, dixit 14.02.2013 16:36:
+>> The old Git version where it appeared is not useful only to historians,
+>> not to normal users. Also, the text was mentioning only the per-repo
+>
+> I do not think you meant to not remove so many nots ;)
 
-Besides, if history is uninteresting, then so is sociology: "familiar to
-some people" can go, too.
+The first was meant to be "now", indeed.
 
-> config file, so add a mention of ~/.gitconfig. Describing in details the
-> system-wide, XDG and all would be counter-productive here, so reword the
+> Besides, if history is uninteresting, then so is sociology: "familiar to
+> some people" can go, too.
 
-Hmpf, I think this gives a way too prominent role to "~/.gitconfig". The
-config files most people will have to deal with are:
+It can, but I'm fine with keeping it too. It may help some users to
+realize "ah, OK, the same ini file I'm used to". And it doesn't really
+harm.
 
-- the repo config file
-- the one set by "config --global"
+>> config file, so add a mention of ~/.gitconfig. Describing in details the
+>> system-wide, XDG and all would be counter-productive here, so reword the
+>
+> Hmpf, I think this gives a way too prominent role to "~/.gitconfig". The
+> config files most people will have to deal with are:
+>
+> - the repo config file
+> - the one set by "config --global"
+>
+> And really, it would often be best if the latter was the XDG thing.
 
-And really, it would often be best if the latter was the XDG thing.
+That's a different question. For now, ~/.gitconfig is the default
+destination of "config --global" and we should wait for XDG-aware Gits
+to be widely deployed before reconsidering that.
 
-So, I'm all for improving git.txt, but somewhat differently ;)
+If the XDG config file ever become the default, then sure, it will have
+to be promoted instead of ~/.gitconfig in git.txt (and I'll be all for
+it when it's time, even though I can foresee a few flamewars ;-) ), but
+I don't think we should do that now.
 
-> description of the link to git-config to make it clear that it is not
-> only a list of configuration options.
-> 
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
->  Documentation/git.txt | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index 0b681d9..e332947 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -535,10 +535,11 @@ include::cmds-purehelpers.txt[]
->  Configuration Mechanism
->  -----------------------
->  
-> -Starting from 0.99.9 (actually mid 0.99.8.GIT), `.git/config` file
-> -is used to hold per-repository configuration options.  It is a
-> -simple text file modeled after `.ini` format familiar to some
-> -people.  Here is an example:
-> +Git uses a simple text file format modeled after `.ini` format
-> +familiar to some people to store its configuration. The `.git/config`
-> +file is used to hold per-repository configuration options, and
-> +per-user configuration can be stored in a `~/.gitconfig` file.
-> +Here is an example:
->  
->  ------------
->  #
-> @@ -559,7 +560,7 @@ people.  Here is an example:
->  
->  Various commands read from the configuration file and adjust
->  their operation accordingly.  See linkgit:git-config[1] for a
-> -list.
-> +list and more details about the configuration mechanism.
->  
->  
->  Identifier Terminology
-> 
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
