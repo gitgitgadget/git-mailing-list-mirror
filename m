@@ -1,90 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git.txt: update description of the configuration mechanism
-Date: Thu, 14 Feb 2013 17:23:33 +0100
-Message-ID: <vpqzjz6ampm.fsf@grenoble-inp.fr>
-References: <1360856214-934-1-git-send-email-Matthieu.Moy@imag.fr>
-	<511D0D88.6010302@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: inotify to minimize stat() calls
+Date: Thu, 14 Feb 2013 08:31:58 -0800
+Message-ID: <7vpq023lhd.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
+ <CACBZZX6BVuQWtrLuTVXZo+77sT4yZQ3pvN=_fMma24-zd0NNqA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Feb 14 17:24:07 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 14 17:32:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U61bS-00058N-0O
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 17:24:06 +0100
+	id 1U61jZ-00017t-8p
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 17:32:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934673Ab3BNQXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2013 11:23:43 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:48878 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758097Ab3BNQXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2013 11:23:42 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r1EGNWwC019913
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 14 Feb 2013 17:23:32 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1U61av-0000Yp-Mi; Thu, 14 Feb 2013 17:23:33 +0100
-In-Reply-To: <511D0D88.6010302@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Thu, 14 Feb 2013 17:15:04 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 14 Feb 2013 17:23:32 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r1EGNWwC019913
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1361463813.39367@K8Z4siz8nAmlhXEuoWhIcA
+	id S1757580Ab3BNQcF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Feb 2013 11:32:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56127 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750797Ab3BNQcE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Feb 2013 11:32:04 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 757C1B0DC;
+	Thu, 14 Feb 2013 11:32:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=bxHYUdxkA8Ih
+	lt7JemnRIq6SLME=; b=T4BcFAahP1hki+1QuoqYtZ4BuF3n7FKMjwnyLX5E9bFK
+	R6CF2CVI/HXDB8EqOB9kjmFj3l7W816/Wgs7M/2QRqmdi2nEUyvOR+BRzJEXnJOs
+	SegmxrzdTb86g3a8kNhV/Keq1jccAZtcCPe4M4oGGfRbv/9CoVIXyj0WrpzDUvg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cC8n4X
+	DRoJatxDL0istdNn8IlhADBQlAR2RLqawYGOOPtEd16NM6fw0fF0Pt96y9AswJaY
+	2Nmvtpj8uGgqXIZawGeXsl8iSe2nPx33LiAhUvdtcMzvnFn8pHANn3ZC74dGrQ3S
+	SNbXW7i76sm3rKs0fRSixExgY9b54QqWxuqUU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68E51B0DB;
+	Thu, 14 Feb 2013 11:32:00 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E0D75B0DA; Thu, 14 Feb 2013
+ 11:31:59 -0500 (EST)
+In-Reply-To: <CACBZZX6BVuQWtrLuTVXZo+77sT4yZQ3pvN=_fMma24-zd0NNqA@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 14 Feb
+ 2013 16:16:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0E402D24-76C4-11E2-898B-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216319>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Matthieu Moy venit, vidit, dixit 14.02.2013 16:36:
->> The old Git version where it appeared is not useful only to historians,
->> not to normal users. Also, the text was mentioning only the per-repo
+> I looked into this a long while ago and remembered that rebase was
+> doing something like a git status for every commit that it made to
+> check the dirtyness.
 >
-> I do not think you meant to not remove so many nots ;)
+> This could be vastly improved by having an unsafe option to git-rebas=
+e
+> where it just assumes that the starting state + whatever it wrote out
+> is the current state, i.e. it would break if someone stuck up on your
+> checkout during an interactive rebase and changed a file,...
 
-The first was meant to be "now", indeed.
-
-> Besides, if history is uninteresting, then so is sociology: "familiar to
-> some people" can go, too.
-
-It can, but I'm fine with keeping it too. It may help some users to
-realize "ah, OK, the same ini file I'm used to". And it doesn't really
-harm.
-
->> config file, so add a mention of ~/.gitconfig. Describing in details the
->> system-wide, XDG and all would be counter-productive here, so reword the
->
-> Hmpf, I think this gives a way too prominent role to "~/.gitconfig". The
-> config files most people will have to deal with are:
->
-> - the repo config file
-> - the one set by "config --global"
->
-> And really, it would often be best if the latter was the XDG thing.
-
-That's a different question. For now, ~/.gitconfig is the default
-destination of "config --global" and we should wait for XDG-aware Gits
-to be widely deployed before reconsidering that.
-
-If the XDG config file ever become the default, then sure, it will have
-to be promoted instead of ~/.gitconfig in git.txt (and I'll be all for
-it when it's time, even though I can foresee a few flamewars ;-) ), but
-I don't think we should do that now.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+You could make it a lot safer than "just assumes", and the result
+may become generally usable, I think.  For example, you can set a
+"magic" bit somewhere in $GIT_DIR/rebase-i while you are in "I am
+doing pick/pick/pick and the user will not interfere me" mode, and
+clear that bit upon "rebase --continue".  And you cheat only while
+that "magic" bit is set.
