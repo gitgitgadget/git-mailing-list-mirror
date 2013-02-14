@@ -1,110 +1,139 @@
-From: Mariusz Gronczewski <xani666@gmail.com>
-Subject: Re: [BUG] Veryfing signatures in git log fails when language is not english
-Date: Thu, 14 Feb 2013 13:42:41 +0100
-Message-ID: <CAJ9Ak2pLqUesOWKNtjwG7P_BW7-EqJP4Kaj0FF_+72Wn=oGoew@mail.gmail.com>
-References: <20130214011837.04880b3e@hydra.devrandom.pl>
-	<511CC288.30607@drmicha.warpmail.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC v2] git-multimail: a replacement for post-receive-email
+Date: Thu, 14 Feb 2013 13:55:01 +0100
+Message-ID: <vpq7gmbdpi2.fsf@grenoble-inp.fr>
+References: <5104E738.602@alum.mit.edu> <vpqtxpgb6ue.fsf@grenoble-inp.fr>
+	<511C08AF.7090502@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Feb 14 13:43:10 2013
+Content-Type: text/plain
+Cc: git discussion list <git@vger.kernel.org>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Chris Hiestand <chiestand@salk.edu>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Feb 14 13:55:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5y9b-000768-8Y
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 13:43:07 +0100
+	id 1U5yLo-0006Wb-2h
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 13:55:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759740Ab3BNMmo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Feb 2013 07:42:44 -0500
-Received: from mail-vb0-f48.google.com ([209.85.212.48]:35351 "EHLO
-	mail-vb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755302Ab3BNMmn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Feb 2013 07:42:43 -0500
-Received: by mail-vb0-f48.google.com with SMTP id fc21so1407279vbb.7
-        for <git@vger.kernel.org>; Thu, 14 Feb 2013 04:42:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=/0BDtO6knDK7Hr1/K1NtvaxsxyWGMB2ioK5HBxqPTAg=;
-        b=d/Idd6GK7VaeLGAzdi+uY9U2XlnwHlWMxunxFcWqSAWRQNCcFAc+wYAnbdT8Ia/aW7
-         lZkEiDnjiGkJHBeg+xQs2Q4NwJptMV9KO70R+T1tu08+WLUY+Y7tjJLD0eZzzTj9ahRu
-         vVNT/23sm23qfP1rzGOEbqyPGw6Uh2mkVEexI2jHgdpX3s5FuzNGwQFfRblPoinMPAJt
-         McP2VeSH8g8MTx/NJqVFXRovumdBMdbXXD61/mBHMtilUMzMjCeH2o7pZeTspUG1GPMt
-         dBxCoHiDi0kjwUxNjNmH/KuMYhvaj5F8w68+hrGjTIjRTFx0jVnD9oZ8v4XGbFQm22p0
-         2ZAg==
-X-Received: by 10.220.119.147 with SMTP id z19mr34993577vcq.69.1360845761462;
- Thu, 14 Feb 2013 04:42:41 -0800 (PST)
-Received: by 10.58.235.199 with HTTP; Thu, 14 Feb 2013 04:42:41 -0800 (PST)
-In-Reply-To: <511CC288.30607@drmicha.warpmail.net>
+	id S1760157Ab3BNMzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2013 07:55:20 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:58122 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759807Ab3BNMzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2013 07:55:18 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r1ECt02g005757
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 14 Feb 2013 13:55:00 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1U5yL7-0003ie-Pt; Thu, 14 Feb 2013 13:55:01 +0100
+In-Reply-To: <511C08AF.7090502@alum.mit.edu> (Michael Haggerty's message of
+	"Wed, 13 Feb 2013 22:42:07 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 14 Feb 2013 13:55:04 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r1ECt02g005757
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1361451308.19658@xsFOGWFy4l8KwyWz+3zZ5g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216306>
 
-2013/2/14 Michael J Gruber <git@drmicha.warpmail.net>:
-> XANi venit, vidit, dixit 14.02.2013 01:18:
->> Hi,
->>
->> any functionality that depends on exact exit msg of program
->>  can potentially fail because of that
->> =E1=9B=AF export |grep LANG
->> declare -x LANG=3D"pl_PL.UTF-8"
->>
->> =E1=9B=AF ~/src/os/git/git log --format=3D"%G? %h" |head -2
->>  0d19377
->>  5b9d7f8
->>
->> =E1=9B=AF unset LANG
->> =E1=9B=AF ~/src/os/git/git log --format=3D"%G? %h" |head -2
->> G 0d19377
->> G 5b9d7f8
->>
->> tested against maint (d32805d) and master (5bf72ed)
->>
->> maybe git should set up some output-changing variables before callin=
-g
->> external programs? I think setting LC_ALL=3DC should be enougth.
->>
->
-> There are really multiple problems here:
->
-> 1. git calls gpg without setting LANG but expects output in LANG=3DC
->
-> 2. git looks at the textual output from gpg to check the validity.
->
-> 3. In fact, it does so only for %G and the display of signed merge
-> commits, in all other cases it checks the return code only.
->
-> gpg is not supposed to be used like that.
->
-> Since the callers of verify_signed_buffer do that craziness there is
-> some refactoring to be done.
->
-> A false hotfix would be to set LANG=3DC when calling gpg from git, bu=
-t
-> that wouldn't solve the real problem. Besides, we do want LANG depend=
-ent
-> output for the user.
->
-> I'll have a closer look.
->
-> BTW: Thanks for the clear report :)
->
-> Michael
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-What is really missing is an ability to display used key ID without
-hammering git log output with regexps, it would be much easier to
-validate incoming commits if there was format option to just display
-key ID instead of signer name. %GS isn't really good solution for that
-because it will show only one of email addresses used in the key and
-script checking signatures would have to always pick "right" one.
+> On 02/13/2013 03:56 PM, Matthieu Moy wrote:
+>
+>> Installation troubles:
+>> 
+>> I had an old python installation (Red Hat package, and I'm not root),
+>> that did not include the email.utils package, so I couldn't use my
+>> system's python. I found no indication about python version in README,
+>> so I installed the latest python by hand, just to find out that
+>> git-multimail wasn't compatible with Python 3.x. 2to3 can fix
+>> automatically a number of 3.x compatibility issues, but not all of them
+>> so I gave up and installed Python 2.7.
+>
+> What version of Python was it that caused problems?
 
---=20
-Mariusz Gronczewski (XANi) <xani666@gmail.com>
-GnuPG: 0xEA8ACE64
+Python 2.4.3, installed with RHEL 5.9.
+
+> I just discovered that the script wouldn't have worked with Python
+> 2.4, where "email.utils" used to be called "email.Utils".
+
+Indeed, "import email.Utils" works with this Python.
+
+> But I pushed a fix to GitHub:
+>
+>     ddb1796660 Accommodate older versions of Python's email module.
+
+Not sufficient, but I added a pull request that works for me with 2.4.
+
+>> @@ -835,6 +837,17 @@ class ReferenceChange(Change):
+>>                  for line in self.expand_lines(NO_NEW_REVISIONS_TEMPLATE):
+>>                      yield line
+>>  
+>> +            if adds and self.showlog:
+>> +                yield '\n'
+>> +                yield 'Detailed log of added commits:\n\n'
+>> +                for line in read_lines(
+>> +                        ['git', 'log']
+>> +                        + self.logopts
+>> +                        + ['%s..%s' % (self.old.commit, self.new.commit,)],
+>> +                        keepends=True,
+>> +                        ):
+>> +                    yield line
+>> +
+>>              # The diffstat is shown from the old revision to the new
+>>              # revision.  This is to show the truth of what happened in
+>>              # this change.  There's no point showing the stat from the
+>> 
+>
+> Thanks for the patch.  I like the idea, but I think the implementation
+> is incorrect.  Your code will not only list new commits but will also
+> list commits that were already in the repository on another branch
+> (e.g., if an existing feature branch is merged into master, all of the
+> commits on the feature branch will be listed).  (Or was that your
+> intention?)
+
+I did not think very carefully about this case, but the behavior of my
+code seems sensible (although not uncontroversial): it's just showing
+the detailed log for the same commits as the summary at the top of the
+email. I have no personnal preferences.
+
+> But even worse, it will fail to list commits that were
+> added at the same time that a branch was created (e.g., if I create a
+> feature branch with a number of commits on it and then push it for the
+> first time).
+
+Right.
+
+> Probably the Push object has to negotiate with its constituent
+> ReferenceChange objects to figure out which one is responsible for
+> summarizing each of the commits newly added by the push (i.e., the ones
+> returned by push.get_new_commits(None)).
+
+I updated the pull request with a version that works for new branches,
+and takes the list of commits to display from the call to
+get_new_commits (which were already there for other purpose). Then, it
+essentially calls "git log --no-walk $list_of_sha1s".
+
+This should be better.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
