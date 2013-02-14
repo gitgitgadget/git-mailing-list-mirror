@@ -1,90 +1,72 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Documentation: filter-branch env-filter example
-Date: Thu, 14 Feb 2013 07:49:55 +0100
-Message-ID: <511C8913.9090203@viscovery.net>
-References: <511BEDDF.7010800@hell.org.pl>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Git 1.8.2 l10n round 2
+Date: Thu, 14 Feb 2013 15:36:56 +0800
+Message-ID: <CANYiYbH0cmKVEC=JXX2Ze+_f7OWChBw04EP8j3bbMwdQHL0DcQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Tade <yess@hell.org.pl>
-X-From: git-owner@vger.kernel.org Thu Feb 14 07:50:31 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Byrial Jensen <byrial@vip.cybercity.dk>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	=?UTF-8?B?RGF2aWQgSHJiw6HEjQ==?= <david@hrbac.cz>
+X-From: git-owner@vger.kernel.org Thu Feb 14 08:37:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U5seK-000829-To
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 07:50:29 +0100
+	id 1U5tNv-0007nL-FS
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Feb 2013 08:37:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755528Ab3BNGuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Feb 2013 01:50:03 -0500
-Received: from so.liwest.at ([212.33.55.24]:34049 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755352Ab3BNGuC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Feb 2013 01:50:02 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1U5sdo-00046a-HX; Thu, 14 Feb 2013 07:49:56 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 2DA1B1660F;
-	Thu, 14 Feb 2013 07:49:56 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <511BEDDF.7010800@hell.org.pl>
-X-Spam-Score: -1.0 (-)
+	id S1756033Ab3BNHg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Feb 2013 02:36:58 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:50933 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752176Ab3BNHg6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Feb 2013 02:36:58 -0500
+Received: by mail-we0-f174.google.com with SMTP id r6so1686568wey.5
+        for <git@vger.kernel.org>; Wed, 13 Feb 2013 23:36:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=OoHhWnz1Or597mNwyXsOcqSAmO8F9Zac5zmNCoJcRPc=;
+        b=pJb/xx10PG4KeDLkM8WEwo1kxgTeUQJpxLiO+PbFFLEPTPVXQ9PgniXAtVzR79y4cJ
+         sNnSfKAKANn18hyJwhSaEq9xtbMDiKKCQbNpvFAc6bpBTg6fbWkGpaG/Lk5mmeoIaSE1
+         Vl704ZQm59B7JJCKxm7ljtRFhc803iG9GdnwApeUin622WD+SHygzYuqzwkExPTJfo1P
+         ujzBIZbq4fGRIN0XwVSHvD0OL7rQ/uhdvdxqjLTwJ9M3klJtX3eKWOSBrXmM+r0ljwv7
+         lred2w8gRmiGA6WWA49wwXECELq523MGxoHSThfepjY6+C013FWHJcpAiZq8gA+XoLKb
+         rqjg==
+X-Received: by 10.194.216.5 with SMTP id om5mr43254487wjc.27.1360827416324;
+ Wed, 13 Feb 2013 23:36:56 -0800 (PST)
+Received: by 10.194.82.170 with HTTP; Wed, 13 Feb 2013 23:36:56 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216301>
 
-Am 2/13/2013 20:47, schrieb Tade:
-> filter-branch --env-filter example that shows how to change the email address
-> in all commits by a certain developer.
-> ---
+Hi,
 
-You should sign off your patch. Use a full real name, please.
+Leaders of Git language teams please note that a new "git.pot" is
+generated from v1.8.1.3-568-g5bf72 in the master branch. See
+commit:
 
->  Documentation/git-filter-branch.txt | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/Documentation/git-filter-branch.txt
-> b/Documentation/git-filter-branch.txt
-> index dfd12c9..2664cec 100644
-> --- a/Documentation/git-filter-branch.txt
-> +++ b/Documentation/git-filter-branch.txt
-> @@ -329,6 +329,19 @@ git filter-branch --msg-filter '
->  ' HEAD~10..HEAD
->  --------------------------------------------------------
->  
-> +You can modify committer/author personal information using `--env-filter`.
-> +For example, to update some developer's email address use this command:
-> +
-> +--------------------------------------------------------
-> +git filter-branch --env-filter '
-> +    if [ $GIT_AUTHOR_EMAIL =john@old.example.com  ]
+    l10n: Update git.pot (35 new, 14 removed messages)
 
-This should read
+    L10n for git 1.8.2 round 2: Generate po/git.pot from v1.8.1.3-568-g5bf72.
 
-	if [ "$GIT_AUTHOR_EMAIL" = john@old.example.com  ]
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-(double quotes, spaces around '='). The paragraph before the example talks
-about both author and committer, but the example handles only the author;
-it should handle the committer as well.
+This update is for the l10n of the upcoming git 1.8.2. You can get it
+from the usual place:
 
-> +    then
-> +        GIT_AUTHOR_EMAIL=john@new.example.com
-> +    fi
-> +    export GIT_AUTHOR_EMAIL
-> +' -- --all
-> +--------------------------------------------------------
-> +
+    https://github.com/git-l10n/git-po/
 
-The place where you inserted the example is reasonable, IMO.
-
->  To restrict rewriting to only part of the history, specify a revision
->  range in addition to the new branch name.  The new branch name will
->  point to the top-most revision that a 'git rev-list' of this range
-
--- Hannes
+--
+Jiang Xin
