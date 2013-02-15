@@ -1,79 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4+ 3/4] count-objects: report garbage files in pack
- directory too
-Date: Fri, 15 Feb 2013 15:20:51 -0800
-Message-ID: <7vliapf9kc.fsf@alter.siamese.dyndns.org>
-References: <7vehgkb43v.fsf@alter.siamese.dyndns.org>
- <1360930030-21211-1-git-send-email-pclouds@gmail.com>
+From: =?Big5?B?pEG7xL5Z?= <ch3cooli@gmail.com>
+Subject: supports diff.context config for git-diff-tree
+Date: Sat, 16 Feb 2013 07:52:23 +0800
+Message-ID: <CAHtLG6TPs=Z2i8s3_dd_igztuvuqE5L93cTtBM4q1zDCzpU55w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 00:21:18 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 16 00:52:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U6Uak-0007Id-AE
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Feb 2013 00:21:18 +0100
+	id 1U6V5G-0001qJ-Mn
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Feb 2013 00:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752290Ab3BOXUz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Feb 2013 18:20:55 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37375 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752256Ab3BOXUy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Feb 2013 18:20:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC1C8A485;
-	Fri, 15 Feb 2013 18:20:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=hQ5FjBZL7oWA
-	7NBbBAPxSl+3l0A=; b=rgbv+c6VY6J6WabgUsrDVPlN2RHcqYaN/xE2oHpYH/5n
-	YMbGU5AL4wPWx/Gb8ZfYkuYYaGzeKAeP+12IC1qwOzmNXwu0RHZ4Q8nlb3e3vmLI
-	uTO7rh8FchU6q4PS9etYRq6KIxCCyuGO33cC//RiBnZPPuZ8W2mIlzNf0UIkaj4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KrSgJF
-	1C8wLXE1vUbRIRsQJ+vmP3G77iENWG8I/+18ZGC7Zf8YQS2Avv+A1tAWteZpzLlo
-	MpNcFlPz1WV75f6D5q2/VkVBihpLgGTNxuSoMEApy5ZohUYdZyWwFe5+n/CpvOzF
-	QJ6K9xK53sRZZBCY6DDmXsj801lmLm9GF81UM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0A71A484;
-	Fri, 15 Feb 2013 18:20:53 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33DC6A483; Fri, 15 Feb 2013
- 18:20:53 -0500 (EST)
-In-Reply-To: <1360930030-21211-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 15 Feb
- 2013 19:07:10 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 57A51B34-77C6-11E2-9982-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751071Ab3BOXwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2013 18:52:25 -0500
+Received: from mail-vb0-f48.google.com ([209.85.212.48]:52499 "EHLO
+	mail-vb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750961Ab3BOXwY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2013 18:52:24 -0500
+Received: by mail-vb0-f48.google.com with SMTP id fc21so2484530vbb.35
+        for <git@vger.kernel.org>; Fri, 15 Feb 2013 15:52:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=dLZ+6cAtJiWWjVdo6DhTtwE1jzsxboVeVtgFy5oMh2o=;
+        b=noIZ1bJup1KlKzFQd2QpXwvbGLDqQPQuOStd+XEIa1s/Hs0gQbsaN6WAVPzJl06vIQ
+         OuFvjmwNrN+PhXBA0cbVzI86b+UlFS4PtmNL95kHMBdf59aJRKZgharbEYL445Ye6FFj
+         Oqtqr2PguYCTi1ekYPPIRAfImXGmhZBjItuNDiKuwWXLa6TRva8z/bpI0YgqYjcMPGFe
+         M0MSULFOOepXfQbRbpB+gE6mUyhJSdldRNGz+Lye836Mf8+Jucx0dqT2eGUEvT4ydtUF
+         oGkvmHXXqRKIo895m7/YRZcipdI9CovgU8as6rekyguUF8ituKj+ybu56c1uhhwxlkjm
+         reMg==
+X-Received: by 10.52.19.51 with SMTP id b19mr4864237vde.131.1360972343581;
+ Fri, 15 Feb 2013 15:52:23 -0800 (PST)
+Received: by 10.221.6.201 with HTTP; Fri, 15 Feb 2013 15:52:23 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216366>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Dear Sir,
 
-> prepare_packed_git_one() is modified to allow count-objects to hook a
-> report function to so we don't need to duplicate the pack searching
-> logic in count-objects.c. When report_pack_garbage is NULL, the
-> overhead is insignificant.
->
-> The garbage is reported with warning() instead of error() in packed
-> garbage case because it's not an error to have garbage. Loose garbage
-> is still reported as errors and will be converted to warnings later.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
+In git 1.8.1, git-diff supports diff.context config.
+However, git-diff-tree does not support this.
+Could you also add this to git-diff-tree?
 
-Will replace the one from the other day and advance the topic to 'next'=
-=2E
-
-Thanks.
+Regards,
+ch3cooli
