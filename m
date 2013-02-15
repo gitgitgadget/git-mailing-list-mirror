@@ -1,122 +1,79 @@
-From: Paul Campbell <pcampbell@kemitix.net>
-Subject: Re: [PATCH] contrib/subtree: remove contradicting use options on echo wrapper
-Date: Fri, 15 Feb 2013 23:18:42 +0000
-Message-ID: <CALeLG_mzBj7q2Vd6vLPTQWexKQB2bEDvh2NT9i9_m8atuiZFcA@mail.gmail.com>
-References: <CALeLG_=p9k2B6AmTG0iKf9GpGB=_6kcECmCdDV1nmruJ4bdGcw@mail.gmail.com>
-	<7vtxpdfbhx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4+ 3/4] count-objects: report garbage files in pack
+ directory too
+Date: Fri, 15 Feb 2013 15:20:51 -0800
+Message-ID: <7vliapf9kc.fsf@alter.siamese.dyndns.org>
+References: <7vehgkb43v.fsf@alter.siamese.dyndns.org>
+ <1360930030-21211-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Adam Tkac <atkac@redhat.com>,
-	"David A. Greene" <greened@obbligato.org>,
-	"Jesper L. Nielsen" <lyager@gmail.com>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Techlive Zheng <techlivezheng@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 00:19:16 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 16 00:21:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U6UYf-0006ZX-HV
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Feb 2013 00:19:09 +0100
+	id 1U6Uak-0007Id-AE
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Feb 2013 00:21:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752439Ab3BOXSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2013 18:18:47 -0500
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:33645 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752341Ab3BOXSn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2013 18:18:43 -0500
-Received: by mail-ob0-f176.google.com with SMTP id v19so4044911obq.7
-        for <git@vger.kernel.org>; Fri, 15 Feb 2013 15:18:42 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:x-originating-ip:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type:x-gm-message-state;
-        bh=AVtyeY/sfpLmWmpyLAaz25u60khC7E5ejktsQIWKUds=;
-        b=lze12ghSams4gFt/7ihZTcbtWIrTZbeljdFfKZqFWeRy77eCNItk8f8uN0GCCRAeH0
-         88YSuP+ZNnTpeRDP8ufXb50RLr6H4MjX8iG31DUCXXaLMX6iZWOVSqKP8bsaIWnIBNSx
-         S3ZJgI/f+MJhyzc9wVZfFGe6n8/yHN8PBch4V0nRqYJdqU5jL/iuBYjD4xYDHfEoWlKr
-         oZnwWlfFIkki3O4praz5Gj4IpL/Q9i5EOFi4Abtd5HsAJgs2Y7TRjI5oztvqcQl0Sq0L
-         WlVgR7zmWMe0R1waodl87xaKYz1N8qy5DyfM7OUKsAbQV/uZe1cMKnd6XOTJhjtg4978
-         lPUw==
-X-Received: by 10.182.64.74 with SMTP id m10mr2910827obs.61.1360970322831;
- Fri, 15 Feb 2013 15:18:42 -0800 (PST)
-Received: by 10.76.143.67 with HTTP; Fri, 15 Feb 2013 15:18:42 -0800 (PST)
-X-Originating-IP: [2.102.85.14]
-In-Reply-To: <7vtxpdfbhx.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQl/rix3YmYo3ALRN/QV1tHJ2E5m1ykdE7qQ0PRc9ez6caU7PLpD3wz7YkWs3tlCWS95y46q
+	id S1752290Ab3BOXUz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Feb 2013 18:20:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37375 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752256Ab3BOXUy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Feb 2013 18:20:54 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC1C8A485;
+	Fri, 15 Feb 2013 18:20:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=hQ5FjBZL7oWA
+	7NBbBAPxSl+3l0A=; b=rgbv+c6VY6J6WabgUsrDVPlN2RHcqYaN/xE2oHpYH/5n
+	YMbGU5AL4wPWx/Gb8ZfYkuYYaGzeKAeP+12IC1qwOzmNXwu0RHZ4Q8nlb3e3vmLI
+	uTO7rh8FchU6q4PS9etYRq6KIxCCyuGO33cC//RiBnZPPuZ8W2mIlzNf0UIkaj4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KrSgJF
+	1C8wLXE1vUbRIRsQJ+vmP3G77iENWG8I/+18ZGC7Zf8YQS2Avv+A1tAWteZpzLlo
+	MpNcFlPz1WV75f6D5q2/VkVBihpLgGTNxuSoMEApy5ZohUYdZyWwFe5+n/CpvOzF
+	QJ6K9xK53sRZZBCY6DDmXsj801lmLm9GF81UM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0A71A484;
+	Fri, 15 Feb 2013 18:20:53 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33DC6A483; Fri, 15 Feb 2013
+ 18:20:53 -0500 (EST)
+In-Reply-To: <1360930030-21211-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 15 Feb
+ 2013 19:07:10 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 57A51B34-77C6-11E2-9982-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216365>
 
-On Fri, Feb 15, 2013 at 10:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Paul Campbell <pcampbell@kemitix.net> writes:
->
->> Remove redundant -n option and raw ^M in call to echo.
->>
->> Call to 'say' function, a wrapper of 'echo', passed the parameter -n, then
->> included a raw ^M newline in the end of the last parameter. Yet the -n option
->> is meant to suppress the addition of new line by echo.
->>
->> Signed-off-by: Paul Campbell <pcampbell@kemitix.net>
->
-> I generally do not comment on comment on contrib/ material, and I am
-> not familiar with subtree myself, but
->
->         for count in $(seq 0 $total)
->         do
->                 echo -n "$count/$total^M"
->                 ... do heavy lifting ...
->         done
->         echo "Done                  "
->
-> is an idiomatic way to implement a progress meter without scrolling
-> more important message you gave earlier to the user before entering
-> the loop away.  The message appears, carrige-return moves the cursor
-> to the beginning of the line without going to the next line, and the
-> next iteration overwrites the previous count.  Finally, the progress
-> meter is overwritten with the "Done" message.  Alternatively you can
-> wrap it up with
->
->         echo
->         echo Done
->
-> if you want to leave the final progress "100/100" before saying "Done."
->
-> Isn't that what this piece of code trying to do?
->
->> ---
->>  contrib/subtree/git-subtree.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
->> index 8a23f58..51146bd 100755
->> --- a/contrib/subtree/git-subtree.sh
->> +++ b/contrib/subtree/git-subtree.sh
->> @@ -592,7 +592,7 @@ cmd_split()
->>       eval "$grl" |
->>       while read rev parents; do
->>               revcount=$(($revcount + 1))
->> -             say -n "$revcount/$revmax ($createcount)
->> "
->> +             say "$revcount/$revmax ($createcount)"
->>               debug "Processing commit: $rev"
->>               exists=$(cache_get $rev)
->>               if [ -n "$exists" ]; then
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-[Apologies for resending this Junio. Forgot to hit reply all.]
+> prepare_packed_git_one() is modified to allow count-objects to hook a
+> report function to so we don't need to duplicate the pack searching
+> logic in count-objects.c. When report_pack_garbage is NULL, the
+> overhead is insignificant.
+>
+> The garbage is reported with warning() instead of error() in packed
+> garbage case because it's not an error to have garbage. Loose garbage
+> is still reported as errors and will be converted to warnings later.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
 
-Ah. I've not seen that done in shell before. In other languages I've
-seen and used '\r'  for this purpose, rather than a raw ^M.
+Will replace the one from the other day and advance the topic to 'next'=
+=2E
 
-I was getting frustrated with it as my apparently braindead text
-editor was converting it to a normal unix newline, which would then
-keep getting picked up by git diff.
-
-Please ignore my patch.
-
--- 
-Paul [W] Campbell
+Thanks.
