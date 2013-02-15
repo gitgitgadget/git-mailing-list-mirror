@@ -1,114 +1,205 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib/subtree: remove contradicting use options on
- echo wrapper
-Date: Fri, 15 Feb 2013 14:39:06 -0800
-Message-ID: <7vtxpdfbhx.fsf@alter.siamese.dyndns.org>
-References: <CALeLG_=p9k2B6AmTG0iKf9GpGB=_6kcECmCdDV1nmruJ4bdGcw@mail.gmail.com>
+From: Paul Campbell <pcampbell@kemitix.net>
+Subject: [PATCH v2 1/3] contrib/subtree: Store subtree sources in .gitsubtree
+ and use for push/pull
+Date: Fri, 15 Feb 2013 22:42:13 +0000
+Message-ID: <CALeLG_kgyGHYAc+5Hac2XSud95G3Xc2uxeG9sB3mC8qnPib3og@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Adam Tkac <atkac@redhat.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Adam Tkac <atkac@redhat.com>,
 	"David A. Greene" <greened@obbligato.org>,
 	"Jesper L. Nielsen" <lyager@gmail.com>,
 	Michael Schubert <mschub@elegosoft.com>,
 	Techlive Zheng <techlivezheng@gmail.com>
-To: Paul Campbell <pcampbell@kemitix.net>
-X-From: git-owner@vger.kernel.org Fri Feb 15 23:39:35 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 15 23:42:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U6TwM-0007BX-F6
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Feb 2013 23:39:34 +0100
+	id 1U6TzK-0008PE-K3
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Feb 2013 23:42:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751588Ab3BOWjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2013 17:39:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43564 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751154Ab3BOWjJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2013 17:39:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17B67AD9A;
-	Fri, 15 Feb 2013 17:39:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Mh9P43AHNblydgKr6ufA0FtGHHY=; b=lMIywP
-	1Aq9kD38NYwdHWSANb2LE1h8w4JTLl5aIgd2IWDyFaovL3vTcR+nROH5cRrSDD08
-	pOTQrZeypJ7PW80+6bRlNsHaM7VjHo3yY8VM7O4rOcVl/XGXyvPPAgV3+VsewiQk
-	RWFzl9sztjxtT29Lifp58nob1bqd09S8d0JEM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f4B09682tHqPXWVeEOT11Q8Qaz1DnKYg
-	LCSTDL/QykZkmfXg8fQshbYmhE5U8eZynLDc5vLpLtqahKyAVJ/Rawc1TPNDpwz0
-	leJho35YW6dUqx/73Cr9ggloMibokI1cQu8eCbOPKDtAq+MSmnjjA3zpBQXKMjZv
-	GJg5apyfnRk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A44BAD99;
-	Fri, 15 Feb 2013 17:39:08 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76CD9AD98; Fri, 15 Feb 2013
- 17:39:07 -0500 (EST)
-In-Reply-To: <CALeLG_=p9k2B6AmTG0iKf9GpGB=_6kcECmCdDV1nmruJ4bdGcw@mail.gmail.com> (Paul
- Campbell's message of "Fri, 15 Feb 2013 22:20:13 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 822983B4-77C0-11E2-B2F8-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751898Ab3BOWmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2013 17:42:15 -0500
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:59498 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751154Ab3BOWmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2013 17:42:14 -0500
+Received: by mail-ob0-f175.google.com with SMTP id uz6so4056136obc.20
+        for <git@vger.kernel.org>; Fri, 15 Feb 2013 14:42:13 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:x-originating-ip:date:message-id:subject
+         :from:to:cc:content-type:x-gm-message-state;
+        bh=UanMqnFjRD9VP5Hb9TLRDSdafZWgD38wBKB4nrkvaD0=;
+        b=Bh1iaRkDxVAHOSu0E2UObTijQst7Q1Zpe3OCd9NB+79SzRIpuab82GJNUMBOXBcIMm
+         pE32eUx+PZ1WlQnHz4mB7o5Z2xleF7TyY6RCQqCjeUxwyDBvoviqZ1z39nD/9z6WVKRf
+         OXZXk5gnzFO4N7T1IOsm56SVR8sQHyKijQ0Asn1cBJECg32CBd1Mqy64/Ofw6pnzKoyd
+         T4bgjQMcRvKk8KtETiATD6EDNJnlXQsTgpyw7HbM/9lTkbCGNWzRLjQB+BToLuqkYWCU
+         fyMNPg+hQqdu7Kqr9nTFc8syDi657779MLGwhkg9SRqTP6F3uiv9B7imhU+xrYoVMeOo
+         1Mvw==
+X-Received: by 10.60.12.226 with SMTP id b2mr2978595oec.32.1360968133498; Fri,
+ 15 Feb 2013 14:42:13 -0800 (PST)
+Received: by 10.76.143.67 with HTTP; Fri, 15 Feb 2013 14:42:13 -0800 (PST)
+X-Originating-IP: [2.102.85.14]
+X-Gm-Message-State: ALoCoQlnGHT2lv9lLaCC8SRUs8MxSc6KZOEzaigXvuy9anTKS2t0+I2ePuQmHMV+UsNwUubJ6Vu9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216359>
 
-Paul Campbell <pcampbell@kemitix.net> writes:
+Add the prefix, repository and refspec in the file .gitsubtree when
+git subtree add is used. Then when a git subtree push or pull is needed
+the repository and refspec from .gitsubtree are used as the default
+values.
 
-> Remove redundant -n option and raw ^M in call to echo.
->
-> Call to 'say' function, a wrapper of 'echo', passed the parameter -n, then
-> included a raw ^M newline in the end of the last parameter. Yet the -n option
-> is meant to suppress the addition of new line by echo.
->
-> Signed-off-by: Paul Campbell <pcampbell@kemitix.net>
+Having to remember what subtree came from what source is a waste of
+developer memory and doesn't transfer easily to other developers.
 
-I generally do not comment on comment on contrib/ material, and I am
-not familiar with subtree myself, but
+git subtree push/pull operations would typically be to/from the same
+source that the original subtree was cloned from with git subtree add.
 
-	for count in $(seq 0 $total)
-        do
-		echo -n "$count/$total^M"
-                ... do heavy lifting ...
-	done
-        echo "Done                  "
+The <repository> and <refspec>, or <commit>, used in the git subtree add
+operation are stored in .gitsubtree. One line each, delimited by a space:
+"<prefix> <repository> <refspec>" or "<prefix> . <commit>".
 
-is an idiomatic way to implement a progress meter without scrolling
-more important message you gave earlier to the user before entering
-the loop away.  The message appears, carrige-return moves the cursor
-to the beginning of the line without going to the next line, and the
-next iteration overwrites the previous count.  Finally, the progress
-meter is overwritten with the "Done" message.  Alternatively you can
-wrap it up with
+Subsequent git subtree push/pull operations now default to the values
+stored in .gitsubtree, unless overridden from the command line.
 
-	echo
-        echo Done
+The .gitsubtree file should be tracked as part of the repo as it
+describes where parts of the tree came from and can be used to update
+to and from that source.
 
-if you want to leave the final progress "100/100" before saying "Done."
+Signed-off-by: Paul Campbell <pcampbell@kemitix.net>
+---
 
-Isn't that what this piece of code trying to do?
+Reworked my previous patch paying closer attention to the coding style
+documentation and renamed my new functions to make more sense.
 
-> ---
->  contrib/subtree/git-subtree.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index 8a23f58..51146bd 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -592,7 +592,7 @@ cmd_split()
->  	eval "$grl" |
->  	while read rev parents; do
->  		revcount=$(($revcount + 1))
-> -		say -n "$revcount/$revmax ($createcount)
-> "
-> +		say "$revcount/$revmax ($createcount)"
->  		debug "Processing commit: $rev"
->  		exists=$(cache_get $rev)
->  		if [ -n "$exists" ]; then
+ contrib/subtree/git-subtree.sh | 75 +++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 64 insertions(+), 11 deletions(-)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 51146bd..6dc8999 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -11,8 +11,8 @@ OPTS_SPEC="\
+ git subtree add   --prefix=<prefix> <commit>
+ git subtree add   --prefix=<prefix> <repository> <commit>
+ git subtree merge --prefix=<prefix> <commit>
+-git subtree pull  --prefix=<prefix> <repository> <refspec...>
+-git subtree push  --prefix=<prefix> <repository> <refspec...>
++git subtree pull  --prefix=<prefix> [<repository> <refspec...>]
++git subtree push  --prefix=<prefix> [<repository> <refspec...>]
+ git subtree split --prefix=<prefix> <commit...>
+ --
+ h,help        show the help
+@@ -489,6 +489,28 @@ ensure_clean()
+ 	fi
+ }
+
++add_subtree () {
++	if ( grep "^$dir " .gitsubtree )
++	then
++		# remove $dir from .gitsubtree - there's probably a clever way to
+do this with sed
++		grep -v "^$dir " .gitsubtree > .gitsubtree.temp
++		rm .gitsubtree
++		mv .gitsubtree.temp .gitsubtree
++	fi
++	if test $# -eq 1
++	then
++		# Only a commit provided, thus use the current repository
++		echo "$dir . $@" >> .gitsubtree
++	elif test $# -eq 2
++	then
++		echo "$dir $@" >> .gitsubtree
++	fi
++}
++
++get_subtree () {
++	grep "^$dir " .gitsubtree || die "Subtree not found in .gitsubtree: " "$dir"
++}
++
+ cmd_add()
+ {
+ 	if [ -e "$dir" ]; then
+@@ -497,6 +519,8 @@ cmd_add()
+
+ 	ensure_clean
+ 	
++	add_subtree "$@"
++
+ 	if [ $# -eq 1 ]; then
+ 	    git rev-parse -q --verify "$1^{commit}" >/dev/null ||
+ 	    die "'$1' does not refer to a commit"
+@@ -700,7 +724,23 @@ cmd_merge()
+ cmd_pull()
+ {
+ 	ensure_clean
+-	git fetch "$@" || exit $?
++	if test $# -eq 0
++	then
++		subtree=($(get_subtree))
++		repository=${subtree[1]}
++		refspec=${subtree[2]}
++		if test "$repository" == "."
++		then
++			echo "Pulling into $dir from branch $refspec"
++		else
++			echo "Pulling into '$dir' from '$repository' '$refspec'"
++		fi
++		echo "git fetch using: " $repository $refspec
++		git fetch "$repository" "$refspec" || exit $?
++	else
++		echo "git fetch using: $@"
++		git fetch "$@" || exit $?
++	fi
+ 	revs=FETCH_HEAD
+ 	set -- $revs
+ 	cmd_merge "$@"
+@@ -708,16 +748,29 @@ cmd_pull()
+
+ cmd_push()
+ {
+-	if [ $# -ne 2 ]; then
+-	    die "You must provide <repository> <refspec>"
++	repository=$1
++	refspec=$2
++	if test $# -eq 0
++	then
++		subtree=($(get_subtree))
++		repository=${subtree[1]}
++		refspec=${subtree[2]}
++		if test "$repository" == "."
++		then
++			echo "Pushing from $dir into branch $refspec"
++		else
++			echo "Pushing from $dir into $repository $refspec"
++		fi
++	elif test $# -ne 2
++	then
++		die "You must provide <repository> <refspec>, or a <prefix> listed
+in .gitsubtree"
+ 	fi
+-	if [ -e "$dir" ]; then
+-	    repository=$1
+-	    refspec=$2
+-	    echo "git push using: " $repository $refspec
+-	    git push $repository $(git subtree split
+--prefix=$prefix):refs/heads/$refspec
++	if test -e "$dir"
++	then
++		echo "git push using: " $repository $refspec
++		git push $repository $(git subtree split
+--prefix=$prefix):refs/heads/$refspec
+ 	else
+-	    die "'$dir' must already exist. Try 'git subtree add'."
++		die "'$dir' must already exist. Try 'git subtree add'."
+ 	fi
+ }
+
+-- 
+1.8.1.3.605.g02339dd
