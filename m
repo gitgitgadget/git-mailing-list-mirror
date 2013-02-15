@@ -1,188 +1,183 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH v4.1 09/12] sequencer.c: teach append_signoff to avoid
- adding a duplicate newline
-Date: Fri, 15 Feb 2013 10:58:38 -0800
-Message-ID: <CA+sFfMecyfD7x_8Jk-hUDceL_nS5kuKq5nF0vRBqLROWFgdypA@mail.gmail.com>
-References: <1360664260-11803-10-git-send-email-drafnel@gmail.com>
-	<1360665222-3166-1-git-send-email-drafnel@gmail.com>
-	<20130214175849.GA27958@farnsworth.metanate.com>
+From: Alain Kalker <a.c.kalker@gmail.com>
+Subject: [BUG] Git clone of a bundle fails, but works (somewhat) when run
+ with strace
+Date: Fri, 15 Feb 2013 20:33:24 +0100
+Message-ID: <511E8D84.6060601@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-	jrnieder@gmail.com, Brandon Casey <bcasey@nvidia.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Feb 15 19:59:06 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 15 20:33:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U6QUy-0005aH-PG
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Feb 2013 19:59:05 +0100
+	id 1U6R2h-0004yz-Ji
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Feb 2013 20:33:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751039Ab3BOS6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2013 13:58:41 -0500
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:60205 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750967Ab3BOS6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2013 13:58:40 -0500
-Received: by mail-wi0-f180.google.com with SMTP id hi8so1557315wib.1
-        for <git@vger.kernel.org>; Fri, 15 Feb 2013 10:58:39 -0800 (PST)
+	id S1751529Ab3BOTdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2013 14:33:31 -0500
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:64747 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751426Ab3BOTd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2013 14:33:29 -0500
+Received: by mail-wi0-f173.google.com with SMTP id hq4so1575524wib.6
+        for <git@vger.kernel.org>; Fri, 15 Feb 2013 11:33:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=yrs9S3f1PhiXTAgVgRoTJXTtp1c3Nz2A3JaoUOnrcEU=;
-        b=hQwaBJ0Ju3q78747NSUhP6eznomexN5SGArA3BvY6TktFV4TTsv6peLGkHciFM89Zp
-         lpoCrKe2h9AL1hDVhvKncMIc0K1ZcO9ZJmC4yl38+6jzIqsl2XtDNSWBfxfjzCt0e37K
-         A62amtoevNPPsasY8udb7sXDcmeKguvC4TZl7fXuQ/DbRXA+ehrPU3fWKGjPyXR1UYgn
-         MaOa5cdeaUql1UPBBUCoeT/18f/ZEcCjZIPEeEvPOR3agxFbb2wbc5DIqbH7ugDIp7Zd
-         zbU/gmJz6DnrxN4Omd1pdsEUDVGcMrKq/3s7vpp2dXxPtg/vhbVenswebvv61hcscEtn
-         evag==
-X-Received: by 10.180.109.82 with SMTP id hq18mr6290738wib.0.1360954718955;
- Fri, 15 Feb 2013 10:58:38 -0800 (PST)
-Received: by 10.194.63.46 with HTTP; Fri, 15 Feb 2013 10:58:38 -0800 (PST)
-In-Reply-To: <20130214175849.GA27958@farnsworth.metanate.com>
+        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=W09RRpLDlpjxGtlLQGLWmptiQHQSsNsWBCC0fEh5e30=;
+        b=SWowFHbaRn4lAtGcw57WUSGqF047Zg2JX2plxxJQg8wlzyeeCgTf8rxnp1m/QcfmfV
+         pjhA8TGwtnFwXrTPuaoq/MEDmK2WiaV0QE3ZG02kwHbFYBrada3UjM547ixCBbatSkWl
+         P91CwTqlgBFCo8v66ZPGVqo0bmyceWZ7m6ZSYZ2SgfbErdE66tFqQpxPGXGruPYt7PVY
+         HVd2kmkEdUe4A8Jjo+kEE5b19647X2DsypxBK7S/Ep3apwmxYXKnLNJWX96sJcnZ6Woy
+         x+M+71bcsnbeSmhrkUdIhaZXlXmefDfOrqb1J/RInhw+76FugmmR2iJYroiNsW9+3FHU
+         LMEw==
+X-Received: by 10.180.84.199 with SMTP id b7mr6343660wiz.22.1360956807517;
+        Fri, 15 Feb 2013 11:33:27 -0800 (PST)
+Received: from [192.168.1.157] (524A7994.cm-4-3b.dynamic.ziggo.nl. [82.74.121.148])
+        by mx.google.com with ESMTPS id ex1sm7186057wib.7.2013.02.15.11.33.25
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 15 Feb 2013 11:33:26 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130109 Thunderbird/17.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216352>
 
-On Thu, Feb 14, 2013 at 9:58 AM, John Keeping <john@keeping.me.uk> wrote:
-> On Tue, Feb 12, 2013 at 02:33:42AM -0800, Brandon Casey wrote:
->> Teach append_signoff to detect whether a blank line exists at the position
->> that the signed-off-by line will be added, and refrain from adding an
->> additional one if one already exists.  Or, add an additional line if one
->> is needed to make sure the new footer is separated from the message body
->> by a blank line.
->>
->> Signed-off-by: Brandon Casey <bcasey@nvidia.com>
->> ---
->
-> As Jonathan Nieder wondered before [1], this changes the behaviour when
-> the commit message is empty.  Before this commit, there is an empty line
-> followed by the S-O-B line; now the S-O-B is on the first line of the
-> commit.
->
-> The previous behaviour seems better to me since the empty line is
-> hinting that the user should fill something in.  It looks particularly
-> strange if your editor has syntax highlighting for commit messages such
-> that the first line is in a different colour.
->
-> [1] http://article.gmane.org/gmane.comp.version-control.git/214796
->
->> diff --git a/sequencer.c b/sequencer.c
->> index 3364faa..084573b 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -1127,8 +1127,19 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
->>       else
->>               has_footer = has_conforming_footer(msgbuf, &sob, ignore_footer);
->>
->> -     if (!has_footer)
->> -             strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0, "\n", 1);
->> +     if (!has_footer) {
->> +             const char *append_newlines = NULL;
->> +             size_t len = msgbuf->len - ignore_footer;
->> +
->> +             if (len && msgbuf->buf[len - 1] != '\n')
->> +                     append_newlines = "\n\n";
->> +             else if (len > 1 && msgbuf->buf[len - 2] != '\n')
->> +                     append_newlines = "\n";
->
-> To restore the old behaviour this needs something like this:
->
->                 else if (!len)
->                         append_newlines = "\n";
->
->> +             if (append_newlines)
->> +                     strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0,
->> +                             append_newlines, strlen(append_newlines));
->> +     }
->>
->>       if (has_footer != 3 && (!no_dup_sob || has_footer != 2))
->>               strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0,
+tl;dr:
 
-Are you talking about the output produced by format-patch?  Or are you
-talking about what happens when you do 'commit --amend -s' for a
-commit with an empty commit message. (The email that you referenced
-was about the behavior of format-patch).
+- `git bundle create` without <git-rev-list-args> gives git rev-list 
+help, then dies.
+   Should point out missing <git-rev-list-args> instead.
+- `git clone <bundle> <dir> gives "ERROR: Repository not found."
+- `strace ... git clone <bundle> <dir>` (magically) appears to work but
+   cannot checkout files b/c of nonexistent ref.
+- Heisenbug? Race condition?
+- Zaphod Beeblebrox has left the building, sulking.
 
-I'm thinking you must be talking about the 'commit --amend -s'
-behavior since you mentioned your editor.  Is there another case that
-is affected by this?  Normally, any extra blank lines that precede or
-follow a commit message are removed before the commit object is
-created.  So, I guess it wouldn't hurt to insert a newline (or maybe
-it should be two?) before the signoff in this case.  Would this
-provide an improvement or change for any other commands than 'commit
---amend -s'?
+Full description:
 
-If we want to do this, then I'd probably do it like this:
+When I try to clone from a bundle created from a local repository, `git 
+clone <bundle> <dir>` fails with: "ERROR: Repository not found. fatal: 
+Could not read from remote repository." unless I run it with strace.
 
--               if (len && msgbuf->buf[len - 1] != '\n')
-+               if (!len || msgbuf->buf[len - 1] != '\n')
-                        append_newlines = "\n\n";
--               else if (len > 1 && msgbuf->buf[len - 2] != '\n')
-+               else if (len == 1 || msgbuf->buf[len - 2] != '\n')
-                        append_newlines = "\n";
+OS: Arch Linux (rolling release)
+Git versions: 1.8.1.3 and git://github.com/git.git master@02339dd
 
-This would ensure there were two newlines preceding the sob.  The
-editor would place its cursor on the top line where the user should
-begin typing in a commit message.  If an editor was not opened up
-(e.g. if 'git cherry-pick -s --allow-empty-message ...' was used) then
-the normal mechanism that removes extra blank lines would trigger to
-remove the extra blank lines.
+Steps to reproduce:
 
-I think that's reasonable.
+$ # Clone the Linux kernel repository
+$ git clone git://github.com/torvalds/linux.git
+Cloning into 'linux'...
+remote: Counting objects: 2841147, done.
+remote: Compressing objects: 100% (670736/670736), done.
+remote: Total 2841147 (delta 2308339), reused 2657487 (delta 2143012)
+Receiving objects: 100% (2841147/2841147), 797.62 MiB | 2.59 MiB/s, done.
+Resolving deltas: 100% (2308339/2308339), done.
+Checking out files: 100% (41521/41521), done.
+$ cd linux
+$ git branch -av
+* master                323a72d Merge 
+git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
+   remotes/origin/HEAD   -> origin/master
+   remotes/origin/master 323a72d Merge 
+git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
 
-It seems 'git cherry-pick -s --edit' follows a different code path,
-and the commit message is stripped of newlines by 'git commit' before
-it is passed to the editor.  'cherry-pick -s --edit' and 'commit
---amend -s' should probably have the same behavior and present the
-same buffer to the user for editing when they encounter a commit with
-an empty message.
+$ # Try to create a bundle
+$ git bundle create ../linux.bundle
+usage: git rev-list [OPTION] <commit-id>... [ -- paths... ]
+   limiting output:
+     --max-count=<n>
+     --max-age=<epoch>
+     --min-age=<epoch>
+     --sparse
+     --no-merges
+     --min-parents=<n>
+     --no-min-parents
+     --max-parents=<n>
+     --no-max-parents
+     --remove-empty
+     --all
+     --branches
+     --tags
+     --remotes
+     --stdin
+     --quiet
+   ordering output:
+     --topo-order
+     --date-order
+     --reverse
+   formatting output:
+     --parents
+     --children
+     --objects | --objects-edge
+     --unpacked
+     --header | --pretty
+     --abbrev=<n> | --no-abbrev
+     --abbrev-commit
+     --left-right
+   special purpose:
+     --bisect
+     --bisect-vars
+     --bisect-all
+error: rev-list died
+$ # IMHO the error should refer to the usage of `git bundle` with a 
+proper basis, not `git rev-list`.
+$ # Also nothing should die loudly because of a missing parameter.
+$ git bundle create ../linux.bundle master
+Counting objects: 2836191, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (505627/505627), done.
+Writing objects: 100% (2836191/2836191), 796.59 MiB | 16.23 MiB/s, done.
+Total 2836191 (delta 2304454), reused 2834391 (delta 2303193)
 
-Maybe something like this is enough(?):
+$ # Try to clone a new repository from the bundle
+$ cd ..
+$ git clone linux.bundle linuxfrombundle
+Cloning into 'linuxfrombundle'...
+ERROR: Repository not found.
+fatal: Could not read from remote repository.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 7b9e2ac..0796412 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -124,8 +124,10 @@ static int opt_parse_m(const struct option *opt, const char
-        if (unset)
-                strbuf_setlen(buf, 0);
-        else {
-+               if (buf->len)
-+                       strbuf_addch(buf, '\n');
-                strbuf_addstr(buf, arg);
--               strbuf_addstr(buf, "\n\n");
-+               strbuf_complete_line(buf);
-        }
-        return 0;
- }
-@@ -673,9 +675,6 @@ static int prepare_to_commit(const char *index_file, const c
-        if (s->fp == NULL)
-                die_errno(_("could not open '%s'"), git_path(commit_editmsg));
+Please make sure you have the correct access rights
+and the repository exists.
+$ git clone linux.bundle -b master linuxfrombundle
+Cloning into 'linuxfrombundle'...
+ERROR: Repository not found.
+fatal: Could not read from remote repository.
 
--       if (clean_message_contents)
--               stripspace(&sb, 0);
--
-        if (signoff) {
-                /*
-                 * See if we have a Conflicts: block at the end. If yes, count
-@@ -703,6 +702,9 @@ static int prepare_to_commit(const char *index_file, const c
-                append_signoff(&sb, ignore_footer, 0);
-        }
+Please make sure you have the correct access rights
+and the repository exists.
 
-+       if (clean_message_contents)
-+               stripspace(&sb, 0);
-+
-        if (fwrite(sb.buf, 1, sb.len, s->fp) < sb.len)
-                die_errno(_("could not write commit template"));
+# Try again using strace
+$ # (Replace /dev/null with a filename if you really want to try and 
+debug this, or if you just want to torture your hard drive ;) )
+$ strace -o /dev/null git clone linux.bundle linuxfrombundle
+Cloning into 'linuxfrombundle'...
+Receiving objects: 100% (2836191/2836191), 796.59 MiB | 24.64 MiB/s, done.
+Resolving deltas: 100% (2304454/2304454), done.
+warning: remote HEAD refers to nonexistent ref, unable to checkout.
 
-I suspect we have a broken test at t7502.15 though that happened to
-work because opt_parse_m() was appending two newlines that the test
-expected to be there.
+$ # Let's have a look at what we cloned
+$ cd linuxfrombundle
+$ ls
+$ git branch -av
+   remotes/origin/master 323a72d Merge 
+git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
+$ git checkout master
+Checking out files: 100% (41521/41521), done.
+Branch master set up to track remote branch master from origin.
+Already on 'master'
+$ git branch -av
+* master                323a72d Merge 
+git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
+   remotes/origin/master 323a72d Merge 
+git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
+$ # Where's my HEAD?
 
--Brandon
+Kind regards,
+
+Alain Kalker
