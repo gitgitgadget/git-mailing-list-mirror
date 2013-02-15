@@ -1,183 +1,112 @@
-From: Alain Kalker <a.c.kalker@gmail.com>
-Subject: [BUG] Git clone of a bundle fails, but works (somewhat) when run
- with strace
-Date: Fri, 15 Feb 2013 20:33:24 +0100
-Message-ID: <511E8D84.6060601@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] read_directory: avoid invoking exclude machinery on
+ tracked files
+Date: Fri, 15 Feb 2013 11:32:59 -0800
+Message-ID: <7vd2w1gyok.fsf@alter.siamese.dyndns.org>
+References: <1360937848-4426-1-git-send-email-pclouds@gmail.com>
+ <7vd2w1wmdo.fsf@alter.siamese.dyndns.org>
+ <CACsJy8A6oBjbaX=3iQcSxcwed28KLTk_tN+iuWDLsC512Z2V1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 15 20:33:59 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Karsten Blees <karsten.blees@gmail.com>,
+	kusmabite@gmail.com, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Robert Zeh <robert.allan.zeh@gmail.com>, finnag@pvv.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 15 20:34:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U6R2h-0004yz-Ji
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Feb 2013 20:33:55 +0100
+	id 1U6R36-0005Al-3w
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Feb 2013 20:34:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751529Ab3BOTdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2013 14:33:31 -0500
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:64747 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751426Ab3BOTd3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2013 14:33:29 -0500
-Received: by mail-wi0-f173.google.com with SMTP id hq4so1575524wib.6
-        for <git@vger.kernel.org>; Fri, 15 Feb 2013 11:33:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=W09RRpLDlpjxGtlLQGLWmptiQHQSsNsWBCC0fEh5e30=;
-        b=SWowFHbaRn4lAtGcw57WUSGqF047Zg2JX2plxxJQg8wlzyeeCgTf8rxnp1m/QcfmfV
-         pjhA8TGwtnFwXrTPuaoq/MEDmK2WiaV0QE3ZG02kwHbFYBrada3UjM547ixCBbatSkWl
-         P91CwTqlgBFCo8v66ZPGVqo0bmyceWZ7m6ZSYZ2SgfbErdE66tFqQpxPGXGruPYt7PVY
-         HVd2kmkEdUe4A8Jjo+kEE5b19647X2DsypxBK7S/Ep3apwmxYXKnLNJWX96sJcnZ6Woy
-         x+M+71bcsnbeSmhrkUdIhaZXlXmefDfOrqb1J/RInhw+76FugmmR2iJYroiNsW9+3FHU
-         LMEw==
-X-Received: by 10.180.84.199 with SMTP id b7mr6343660wiz.22.1360956807517;
-        Fri, 15 Feb 2013 11:33:27 -0800 (PST)
-Received: from [192.168.1.157] (524A7994.cm-4-3b.dynamic.ziggo.nl. [82.74.121.148])
-        by mx.google.com with ESMTPS id ex1sm7186057wib.7.2013.02.15.11.33.25
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 15 Feb 2013 11:33:26 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130109 Thunderbird/17.0.2
+	id S1751774Ab3BOTdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2013 14:33:13 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60943 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751397Ab3BOTdL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2013 14:33:11 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34F17AE3E;
+	Fri, 15 Feb 2013 14:33:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jw10fkdLCUneNif6rQYymU9DhD4=; b=BWY+CY
+	SwgZRvGGagrQf0rsc6eiuhGy7HiIspJ+WUvyN80T3m0yZVsRD9ALBBW+ajSaqaFV
+	7aMeranliIIqtkXBfyhBtDIg/g4rmddlVLetTinXdHiL0h/Xds7I13cURecJxOAR
+	llAmIISJJjDGVhSCVYlCvhBGr7yo/iDvdgaww=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u9t9dgIE4TGMlzRMukYXCSVRDiEtywsf
+	cAnVyZqwq38Gr7/NMwp4Fhsaoy2uPDag89XNNvixJD0nA9pvLQCH0TYOfE8R5xLi
+	kfEfdF4vs74Nmc93wpTZYT5aekhGaKV5V5RlsI5G+9uOlIvw00eNbn/yDanMwoH2
+	HMgxWgU/TCc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26E66AE3D;
+	Fri, 15 Feb 2013 14:33:08 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C9C0ADFC; Fri, 15 Feb 2013
+ 14:33:00 -0500 (EST)
+In-Reply-To: <CACsJy8A6oBjbaX=3iQcSxcwed28KLTk_tN+iuWDLsC512Z2V1Q@mail.gmail.com> (Duy
+ Nguyen's message of "Sat, 16 Feb 2013 01:30:58 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 82216914-77A6-11E2-83CD-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216353>
 
-tl;dr:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-- `git bundle create` without <git-rev-list-args> gives git rev-list 
-help, then dies.
-   Should point out missing <git-rev-list-args> instead.
-- `git clone <bundle> <dir> gives "ERROR: Repository not found."
-- `strace ... git clone <bundle> <dir>` (magically) appears to work but
-   cannot checkout files b/c of nonexistent ref.
-- Heisenbug? Race condition?
-- Zaphod Beeblebrox has left the building, sulking.
+> On Fri, Feb 15, 2013 at 11:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> In the current code, we always check if a path is excluded, and when
+>> dealing with DT_REG/DT_LNK, we call treat_file():
+>>
+>>  * When such a path is excluded, treat_file() returns true when we
+>>    are not showing ignored directories. This causes treat_one_path()
+>>    to return path_ignored, so for excluded DT_REG/DT_LNK paths when
+>>    no DIR_*_IGNORED is in effect, this change is a correct
+>>    optimization.
+>>
+>>  * When such a path is not excluded, on the ther hand, and when we
+>>    are not showing ignored directories, treat_file() just returns
+>>    the value of exclude_file, which is initialized to false and is
+>>    not changed in the function.  This causes treat_one_path() to
+>>    return path_handled.  However, the new code returns path_ignored
+>>    in this case.
+>>
+>> What guarantees that this change is regression free?
+>
+> If you consider read_directory_recursive alone, there is a regression.
+> The return value of r_d_r depends on path_handled/path_ignored. With
+> this patch, the return value will be different.
 
-Full description:
+That is exactly what was missing from the proposed log message, and
+made me ask "Do all the callers that reach this function in their
+callgraph, when they get path_ignored for a path in the index,
+behave as if the difference between path_ignored and path_handled
+does not matter?"  Your answer seems to be
 
-When I try to clone from a bundle created from a local repository, `git 
-clone <bundle> <dir>` fails with: "ERROR: Repository not found. fatal: 
-Could not read from remote repository." unless I run it with strace.
+ - r-d-r returns 'how many paths in this directory match the
+   criteria we are looking for', unless check_only is true.  Now in
+   some cases we return path_ignored not path_handled, so we may
+   return a number that is greater than we used to return.
 
-OS: Arch Linux (rolling release)
-Git versions: 1.8.1.3 and git://github.com/git.git master@02339dd
+ - treat_directory, the only user of that return value, cares if
+   r-d-r returned 0 or non-zero; and
 
-Steps to reproduce:
+ - As long as we keep returning 0 from r-d-r in cases we used to
+   return 0 and non-zero in cases we used to return non-zero, exact
+   number does not matter.  Overall we get the same result.
 
-$ # Clone the Linux kernel repository
-$ git clone git://github.com/torvalds/linux.git
-Cloning into 'linux'...
-remote: Counting objects: 2841147, done.
-remote: Compressing objects: 100% (670736/670736), done.
-remote: Total 2841147 (delta 2308339), reused 2657487 (delta 2143012)
-Receiving objects: 100% (2841147/2841147), 797.62 MiB | 2.59 MiB/s, done.
-Resolving deltas: 100% (2308339/2308339), done.
-Checking out files: 100% (41521/41521), done.
-$ cd linux
-$ git branch -av
-* master                323a72d Merge 
-git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
-   remotes/origin/HEAD   -> origin/master
-   remotes/origin/master 323a72d Merge 
-git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
+I think all of the above is true, but I have not convinced myself
+that r-d-r with the new code never returns 0 when we used to return
+non-zero.
 
-$ # Try to create a bundle
-$ git bundle create ../linux.bundle
-usage: git rev-list [OPTION] <commit-id>... [ -- paths... ]
-   limiting output:
-     --max-count=<n>
-     --max-age=<epoch>
-     --min-age=<epoch>
-     --sparse
-     --no-merges
-     --min-parents=<n>
-     --no-min-parents
-     --max-parents=<n>
-     --no-max-parents
-     --remove-empty
-     --all
-     --branches
-     --tags
-     --remotes
-     --stdin
-     --quiet
-   ordering output:
-     --topo-order
-     --date-order
-     --reverse
-   formatting output:
-     --parents
-     --children
-     --objects | --objects-edge
-     --unpacked
-     --header | --pretty
-     --abbrev=<n> | --no-abbrev
-     --abbrev-commit
-     --left-right
-   special purpose:
-     --bisect
-     --bisect-vars
-     --bisect-all
-error: rev-list died
-$ # IMHO the error should refer to the usage of `git bundle` with a 
-proper basis, not `git rev-list`.
-$ # Also nothing should die loudly because of a missing parameter.
-$ git bundle create ../linux.bundle master
-Counting objects: 2836191, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (505627/505627), done.
-Writing objects: 100% (2836191/2836191), 796.59 MiB | 16.23 MiB/s, done.
-Total 2836191 (delta 2304454), reused 2834391 (delta 2303193)
+> ...
+> It's a bit tricky. I'm not sure if I miss anything else.
 
-$ # Try to clone a new repository from the bundle
-$ cd ..
-$ git clone linux.bundle linuxfrombundle
-Cloning into 'linuxfrombundle'...
-ERROR: Repository not found.
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-$ git clone linux.bundle -b master linuxfrombundle
-Cloning into 'linuxfrombundle'...
-ERROR: Repository not found.
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-
-# Try again using strace
-$ # (Replace /dev/null with a filename if you really want to try and 
-debug this, or if you just want to torture your hard drive ;) )
-$ strace -o /dev/null git clone linux.bundle linuxfrombundle
-Cloning into 'linuxfrombundle'...
-Receiving objects: 100% (2836191/2836191), 796.59 MiB | 24.64 MiB/s, done.
-Resolving deltas: 100% (2304454/2304454), done.
-warning: remote HEAD refers to nonexistent ref, unable to checkout.
-
-$ # Let's have a look at what we cloned
-$ cd linuxfrombundle
-$ ls
-$ git branch -av
-   remotes/origin/master 323a72d Merge 
-git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
-$ git checkout master
-Checking out files: 100% (41521/41521), done.
-Branch master set up to track remote branch master from origin.
-Already on 'master'
-$ git branch -av
-* master                323a72d Merge 
-git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
-   remotes/origin/master 323a72d Merge 
-git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
-$ # Where's my HEAD?
-
-Kind regards,
-
-Alain Kalker
+Hrm...
