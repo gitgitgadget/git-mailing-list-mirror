@@ -1,68 +1,115 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] read_directory: avoid invoking exclude machinery on
- tracked files
-Date: Sat, 16 Feb 2013 10:31:36 +0700
-Message-ID: <CACsJy8BgDZCfWLZT4kNa+Qt5n7YZJ_wemh9gKbrtimbjcmj+sg@mail.gmail.com>
-References: <1360937848-4426-1-git-send-email-pclouds@gmail.com>
- <7vd2w1wmdo.fsf@alter.siamese.dyndns.org> <CACsJy8A6oBjbaX=3iQcSxcwed28KLTk_tN+iuWDLsC512Z2V1Q@mail.gmail.com>
- <7vd2w1gyok.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] Git clone of a bundle fails, but works (somewhat) when run
+ with strace
+Date: Fri, 15 Feb 2013 23:01:09 -0500
+Message-ID: <20130216040109.GA31630@sigill.intra.peff.net>
+References: <511E8D84.6060601@gmail.com>
+ <kfmclb$4ro$2@ger.gmane.org>
+ <kfmide$4ro$3@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Karsten Blees <karsten.blees@gmail.com>,
-	kusmabite@gmail.com, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Robert Zeh <robert.allan.zeh@gmail.com>, finnag@pvv.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 04:32:34 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Alain Kalker <a.c.kalker@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 16 05:01:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U6YVt-0006Rn-GJ
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Feb 2013 04:32:33 +0100
+	id 1U6Yy0-00085A-38
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Feb 2013 05:01:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027Ab3BPDcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2013 22:32:08 -0500
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:64843 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750907Ab3BPDcH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2013 22:32:07 -0500
-Received: by mail-ob0-f175.google.com with SMTP id uz6so4292626obc.34
-        for <git@vger.kernel.org>; Fri, 15 Feb 2013 19:32:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=6FGhOjYPc3rWqO2GzF+ps/78AFLSbaVyMbcJV7M9QWs=;
-        b=K9u5WVQkfa9PWPp4uFOUaq8IMqfdGtdohwLOztX8wBRSjZws6CPl+q5BhRHi+ok/wx
-         QWAKorMjhIJcK9p6kIc44bS08CKaGtx5RpbEyYf+ALkBcTghUNHcOGhDLZQ1Tu4m2IAv
-         DTGkwxSusbLe/Oo0vzUcoZIGYyXHcwwmkUIPFdgN2bhQL9IBMKCPqV3EA5ME4vWFTCo5
-         0j5e9rdTwAvuE/LLn7G8oxLL4uliWysGI4rFjMJPJHqaGFum+Zvg3ZAqyF+N7pXU7r3N
-         GqCZh+4kKTjCYTuYacomabGsjkTu/YaQV0Det2FGY+vNK7QOB+1vyMyJDPFrYt0EAaLY
-         GN+A==
-X-Received: by 10.182.12.39 with SMTP id v7mr3172306obb.47.1360985526838; Fri,
- 15 Feb 2013 19:32:06 -0800 (PST)
-Received: by 10.76.154.197 with HTTP; Fri, 15 Feb 2013 19:31:36 -0800 (PST)
-In-Reply-To: <7vd2w1gyok.fsf@alter.siamese.dyndns.org>
+	id S1751027Ab3BPEBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2013 23:01:12 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49696 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750797Ab3BPEBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2013 23:01:12 -0500
+Received: (qmail 1513 invoked by uid 107); 16 Feb 2013 04:02:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Feb 2013 23:02:41 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Feb 2013 23:01:09 -0500
+Content-Disposition: inline
+In-Reply-To: <kfmide$4ro$3@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216371>
 
-On Sat, Feb 16, 2013 at 2:32 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> If you consider read_directory_recursive alone, there is a regression.
->> The return value of r_d_r depends on path_handled/path_ignored. With
->> this patch, the return value will be different.
->
-> That is exactly what was missing from the proposed log message, and
-> made me ask "Do all the callers that reach this function in their
-> callgraph, when they get path_ignored for a path in the index,
-> behave as if the difference between path_ignored and path_handled
-> does not matter?"
+On Sat, Feb 16, 2013 at 12:03:58AM +0000, Alain Kalker wrote:
 
-I'll add it the the log message. Although I'm thinking some
-restructuring to separate tracked file handling from the rest may make
-it clearer (and less error prone in future).
--- 
-Duy
+> ---test.sh---
+> #!/bin/sh
+> 
+> make clean
+> make || return 125
+> GIT=$(pwd)/git
+> 
+> cd /tmp
+> rm -rf testrepo
+> mkdir testrepo
+> cd testrepo
+> $GIT init
+> echo test > test.txt
+> $GIT add test.txt
+> $GIT commit -m "Add test.txt"
+> $GIT bundle create ../testrepo.bundle master || return 125
+> cd ..
+> 
+> rm -rf testrepofrombundle
+> $GIT clone testrepo.bundle testrepofrombundle || return 1
+> ---
+> I was unable to find a bad revision.
+> After a lot more searching I found that I had `git` aliased to `hub`, a 
+> tool used to make Github actions easier.
+> Eliminating `hub` from the equation resolved most problems.
+
+Great.
+
+> The only ones remaining are the confusing error message from `git bundle 
+> create` and the "missing HEAD" (you can interpret that in different 
+> ways) ;-)
+
+I do not see any odd message from "bundle create" in the recipe above.
+Mine says:
+
+$ git bundle create ../repo.bundle master
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 209 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+
+What you _might_ be seeing is the fact that the invocation above is
+likely to be running two different versions of git under the hood. "git
+bundle" will invoke "git rev-list", and it will use the first git in
+your PATH, even if it is not $GIT. The proper way to test an un-installed
+version of git is to use $YOUR_GIT_BUILD/bin-wrappers/git, which will
+set up environment variables sufficient to make sure all sub-gits are
+from the same version. Sometimes mixing versions can have weird results
+(e.g., the new "git bundle" expects "rev-list" to have a particular
+option, but the older version does not have it).
+
+Secondly, I do get the same warning about HEAD:
+
+  $ git clone repo.bundle repofrombundle
+  Cloning into 'repofrombundle'...
+  Receiving objects: 100% (3/3), done.
+  warning: remote HEAD refers to nonexistent ref, unable to checkout.
+
+but that warning makes sense. You did not create a bundle that contains
+HEAD, therefore when we clone it, we do not know what to point HEAD to.
+You probably wanted "git bundle create ../repo.bundle --all" which
+includes both "master" and "HEAD".
+
+It would be slightly more accurate to say "the remote HEAD does not
+exist", rather than "refers to nonexistent ref".  It would perhaps be
+nicer still for "git clone" to make a guess about the correct HEAD when
+one is not present (especially in the single-branch case, it is easy to
+make the right guess).
+
+Patches welcome. In the meantime, you can clone with "-b master" to tell
+it explicitly, or you can "git checkout master" inside the newly-cloned
+repository.
+
+-Peff
