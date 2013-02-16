@@ -1,73 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Git clone of a bundle fails, but works (somewhat) when run
- with strace
-Date: Fri, 15 Feb 2013 16:09:27 -0800
-Message-ID: <7vd2w1f7bc.fsf@alter.siamese.dyndns.org>
-References: <511E8D84.6060601@gmail.com> <kfmclb$4ro$2@ger.gmane.org>
- <kfmide$4ro$3@ger.gmane.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] read_directory: avoid invoking exclude machinery on
+ tracked files
+Date: Sat, 16 Feb 2013 10:31:36 +0700
+Message-ID: <CACsJy8BgDZCfWLZT4kNa+Qt5n7YZJ_wemh9gKbrtimbjcmj+sg@mail.gmail.com>
+References: <1360937848-4426-1-git-send-email-pclouds@gmail.com>
+ <7vd2w1wmdo.fsf@alter.siamese.dyndns.org> <CACsJy8A6oBjbaX=3iQcSxcwed28KLTk_tN+iuWDLsC512Z2V1Q@mail.gmail.com>
+ <7vd2w1gyok.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alain Kalker <a.c.kalker@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 16 01:09:55 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Karsten Blees <karsten.blees@gmail.com>,
+	kusmabite@gmail.com, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Robert Zeh <robert.allan.zeh@gmail.com>, finnag@pvv.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 16 04:32:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U6VLm-00089y-Bq
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Feb 2013 01:09:54 +0100
+	id 1U6YVt-0006Rn-GJ
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Feb 2013 04:32:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751100Ab3BPAJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Feb 2013 19:09:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34283 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751034Ab3BPAJa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Feb 2013 19:09:30 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0A56BC55;
-	Fri, 15 Feb 2013 19:09:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2btg0tGr11LdCmmSnL4tvEW+ywY=; b=h3iXXn
-	RwNgSrSsrF/XUt4PJZFHoH8kwZ5rPyNSLH3jhT0+spNDVX2frsxcPOg05ZiELfKP
-	7nsD7DffDeUGEBhZYCVsI4ZKHdOuDQrkRaiHhWF9lIwAtUuqlMFNpxUFoF8ObQKp
-	8TqZMBB32ErXLIe0hBqXIFWBbyvPXyKOcJJTY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iiU38Skrdns5/x3xeskqOKoNA0f7OCVY
-	02ZEYxv+YpdYUnFLlDJ5fsb50M448OMwGSQ1Y1Rc1f6OyOPNiREWRb5EdLux9Oaf
-	uAgzvyu1Lqwa58sNN9fSsL5yEs2gWXh6jY0Ex1aCuQLwXNDLE4z3zbpNa2FFyBgv
-	ve2Gc/3gCf0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C58CABC54;
-	Fri, 15 Feb 2013 19:09:29 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D51CBC53; Fri, 15 Feb 2013
- 19:09:29 -0500 (EST)
-In-Reply-To: <kfmide$4ro$3@ger.gmane.org> (Alain Kalker's message of "Sat, 16
- Feb 2013 00:03:58 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 21C73D24-77CD-11E2-8FEF-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751027Ab3BPDcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Feb 2013 22:32:08 -0500
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:64843 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750907Ab3BPDcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Feb 2013 22:32:07 -0500
+Received: by mail-ob0-f175.google.com with SMTP id uz6so4292626obc.34
+        for <git@vger.kernel.org>; Fri, 15 Feb 2013 19:32:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=6FGhOjYPc3rWqO2GzF+ps/78AFLSbaVyMbcJV7M9QWs=;
+        b=K9u5WVQkfa9PWPp4uFOUaq8IMqfdGtdohwLOztX8wBRSjZws6CPl+q5BhRHi+ok/wx
+         QWAKorMjhIJcK9p6kIc44bS08CKaGtx5RpbEyYf+ALkBcTghUNHcOGhDLZQ1Tu4m2IAv
+         DTGkwxSusbLe/Oo0vzUcoZIGYyXHcwwmkUIPFdgN2bhQL9IBMKCPqV3EA5ME4vWFTCo5
+         0j5e9rdTwAvuE/LLn7G8oxLL4uliWysGI4rFjMJPJHqaGFum+Zvg3ZAqyF+N7pXU7r3N
+         GqCZh+4kKTjCYTuYacomabGsjkTu/YaQV0Det2FGY+vNK7QOB+1vyMyJDPFrYt0EAaLY
+         GN+A==
+X-Received: by 10.182.12.39 with SMTP id v7mr3172306obb.47.1360985526838; Fri,
+ 15 Feb 2013 19:32:06 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Fri, 15 Feb 2013 19:31:36 -0800 (PST)
+In-Reply-To: <7vd2w1gyok.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216370>
 
-Alain Kalker <a.c.kalker@gmail.com> writes:
-
-> P.S. I hereby promise to _never_ _ever_ alias `git` to something else and 
-> then post a Git bug about that "something else" on this ML.
+On Sat, Feb 16, 2013 at 2:32 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> If you consider read_directory_recursive alone, there is a regression.
+>> The return value of r_d_r depends on path_handled/path_ignored. With
+>> this patch, the return value will be different.
 >
-> Sorry to have wasted your time,
+> That is exactly what was missing from the proposed log message, and
+> made me ask "Do all the callers that reach this function in their
+> callgraph, when they get path_ignored for a path in the index,
+> behave as if the difference between path_ignored and path_handled
+> does not matter?"
 
-Thanks.
-
-People around here tend to be quiet until they sufficiently have dug
-the issue themselves; unless the initial report grossly lack
-necessary level of details, you may not hear "does not reproduce for
-me" for some time, so some may still have been scratching their
-head, and your honestly following-up on your message will save time
-for them.  Thanks again, and happy Gitting ;-)
+I'll add it the the log message. Although I'm thinking some
+restructuring to separate tracked file handling from the rest may make
+it clearer (and less error prone in future).
+-- 
+Duy
