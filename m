@@ -1,130 +1,94 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: Anybody know a website with up-to-date git documentation?
-Date: Sun, 17 Feb 2013 08:21:25 -0500
-Message-ID: <CAM9Z-nmoCQ-uXwMCxCn4iRjUrxDf1r9Rb1ap_PQSra-FneECAA@mail.gmail.com>
-References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
-	<20130130115439.GH1342@serenity.lan>
-	<71A3AA8C-DBA2-44F7-9B69-AEDB81BB0906@quendi.de>
-	<CAMK1S_i+ML+HuTRuox5rU4bsV0+xoFLWpK63WrdXuzhgyHJbrA@mail.gmail.com>
-	<6BE76AE4-254E-43DD-A3FF-88B5486029A5@quendi.de>
-	<7vlibalhcv.fsf@alter.siamese.dyndns.org>
-	<20130130230709.GA7787@sita-lt.atc.tcs.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git clone combined with --depth, --branch and --single-branch
+Date: Sun, 17 Feb 2013 21:32:55 +0700
+Message-ID: <CACsJy8C5G7yy=KDtdsE-9aYTdSEO3v=-25WKtGnLALshXnE+uQ@mail.gmail.com>
+References: <CAByu6UWNZLrtwo+FUeq2OELoX3jo1Qng9amko36JGa5pq+y11A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Max Horn <max@quendi.de>,
-	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 17 14:21:52 2013
+Cc: git@vger.kernel.org
+To: Thibault Kruse <tibokruse@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 17 15:33:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U74Bi-0003JW-Tz
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 14:21:51 +0100
+	id 1U75JP-0000yw-7g
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 15:33:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756157Ab3BQNV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2013 08:21:27 -0500
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:34726 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755870Ab3BQNV0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2013 08:21:26 -0500
-Received: by mail-ie0-f173.google.com with SMTP id 9so6342863iec.32
-        for <git@vger.kernel.org>; Sun, 17 Feb 2013 05:21:25 -0800 (PST)
+	id S1754818Ab3BQOd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2013 09:33:27 -0500
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:36403 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754184Ab3BQOd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2013 09:33:26 -0500
+Received: by mail-oa0-f47.google.com with SMTP id o17so5069016oag.20
+        for <git@vger.kernel.org>; Sun, 17 Feb 2013 06:33:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=InSrWtE3+mPtQJy9dLNMWnpONCKSLRIs7oAxeVTfS88=;
-        b=CMFI+v+xk80SqncKvQ90vCwnARdjLmT9f9lRe0YS4RGDHXoJqOU5qnkxGnqwpy8pSh
-         VBoWF1rcp9J2UeHUxat2QexGiue0r0+hm05DmODPT9AakStAjrbHGn8milS77fr7JOl0
-         NBqeLQ+vaT/H5dTm2We4r5bL6rCGr8QDtgrNx7A6qvGJSQ2PCAGln+GcmCYlytzV/tWw
-         vbUrRyXd/N4g79a5TwnCU/NBXMTy5zZ4ud8t6fm56kgmkZj+DSUgv9iyEAgwevjnMjAu
-         r5iGfBpWsA+XOrQ08EgPXVp7YLq/4kgHUyeivAc/G3bM2YglO3wvdvbOAb9/XUk5iZGL
-         83qg==
-X-Received: by 10.50.190.138 with SMTP id gq10mr5234724igc.38.1361107285820;
- Sun, 17 Feb 2013 05:21:25 -0800 (PST)
-Received: by 10.42.173.70 with HTTP; Sun, 17 Feb 2013 05:21:25 -0800 (PST)
-In-Reply-To: <20130130230709.GA7787@sita-lt.atc.tcs.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=irG/UrS6pQSH5+bPNc1utqE4jdDsBTqaxTTuZogEGb4=;
+        b=FLwkln6NnEGj8mPImuRi80r1N00GfB3le2JtgdYoHH0F4943eU4GsIEblg9xGGpVgW
+         hXLT+XUW5pCBg5KiYUsHINeso5VuP2bDzc2xWF/sW36UhgKIg4VwtkaIb4DKG+Xqemch
+         6xK82lkPd4ilpp+Rjvd8T3Evu8LJMXp/gnnHNjrnbJgBmUCjMyK6LhQVnPvnNR8SYPj0
+         M1ytWEBumFJvojN3/cM/haUuYM/hGOjTFW3CEEL9PczSdKOpO4+V2xn2Gm9U5usCDJAJ
+         aRm+v8TQ/DPJF1zBxWAY0VAr1Hq0LnRYXxKzxKZ3X/bvxi/MOZkqIDbCBnCp2+4PDPXy
+         pJvQ==
+X-Received: by 10.182.12.39 with SMTP id v7mr4797820obb.47.1361111605761; Sun,
+ 17 Feb 2013 06:33:25 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Sun, 17 Feb 2013 06:32:55 -0800 (PST)
+In-Reply-To: <CAByu6UWNZLrtwo+FUeq2OELoX3jo1Qng9amko36JGa5pq+y11A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216396>
 
-On Wed, Jan 30, 2013 at 6:07 PM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
-> On Wed, Jan 30, 2013 at 09:18:24AM -0800, Junio C Hamano wrote:
->> Max Horn <max@quendi.de> writes:
->> > On 30.01.2013, at 16:59, Sitaram Chamarty wrote:
->> >
->> >> I'm curious... what's wrong with 'git checkout html' from the git repo
->> >> and just browsing them using a web browser?
-
->> Armed with that knowledge, I think Sitaram may have something like
->> this:
->>
->>       [remote "htmldocs"]
-
-> Hmm; I don't recall ever doing that.  But I just realised that
-> my "html" branch is stuck at 1.7.7:
+On Sun, Feb 17, 2013 at 7:29 PM, Thibault Kruse
+<tibokruse@googlemail.com> wrote:
+> git log --pretty=format:'%h-%s %d' --graph --decorate  --all
+> * 4565162-5  (foo)
+> * 20ce846-4
+> * a0615eb-3
+> * fa4131d-2
+> * f0683bd-1  (bar)
+> | * 432b5ec-m1  (HEAD, master)
+> |/
+> * 39df203-0
 >
->     $ git branch -v -v | grep html
->       html   8fb66e5 [origin/html] Autogenerated HTML docs for v1.7.7-138-g7f41b6
+> git clone repo1 repo2 --depth 1
+> cd repo2
+> git log --pretty=format:'%h-%s %d' --graph --decorate  --all
+> * 432b5ec-m1  (HEAD, origin/master, origin/HEAD, master)
+> * 39df203-0
 >
-> Is it possible that upto that point, the main git.git repo did
-> carry this branch also?
+> # Why are branches "foo" and "bar" missing?
 
-Yes.
+--depth implies --single-branch. Without explicit --branch,
+--single-branch will fetch HEAD. You need --no-single-branch to get
+foo and bar.
 
-n1xim@atom:~/tmp/git_dev/git$ git branch -a
-  dn/utf16_check
-* master
-  remotes/origin/HEAD -> origin/master
-  remotes/origin/html
-  remotes/origin/maint
-  remotes/origin/man
-  remotes/origin/master
-  remotes/origin/next
-  remotes/origin/pu
-  remotes/origin/todo
-n1xim@atom:~/tmp/git_dev/git$ git remote show origin
-* remote origin
-  Fetch URL: git://git.kernel.org/pub/scm/git/git.git
-  Push  URL: git://git.kernel.org/pub/scm/git/git.git
-  HEAD branch: master
-  Remote branches:
-    maint                    tracked
-    master                   tracked
-    next                     tracked
-    pu                       tracked
-    refs/remotes/origin/html stale (use 'git remote prune' to remove)
-    refs/remotes/origin/man  stale (use 'git remote prune' to remove)
-    todo                     tracked
-  Local branch configured for 'git pull':
-    master merges with remote master
-  Local ref configured for 'git push':
-    master pushes to master (local out of date)
+> cd ..
+> git clone repo1 repo3 --depth 1 --branch foo
+> git log --pretty=format:'%h-%s %d' --graph --decorate  --all
+> * 4565162-5  (HEAD, origin/foo, foo)
+> * 20ce846-4
+> * a0615eb-3
+> * fa4131d-2
+> * f0683bd-1
+> | * 432b5ec-m1  (origin/master, origin/HEAD)
+> |/
+> * 39df203-0
+>
+> # Why is --depth not having effect, and why is branch bar not there,
+> yet master is?
 
-n1xim@atom:~/tmp/git_dev/git$ git log refs/remotes/origin/html
-commit 5723afaf3a61cef537e1f4dfa88f8faf31060ef0
-Author: Junio C Hamano <junio@kernel.org>
-Date:   Wed Aug 31 00:49:23 2011 +0000
+I'm not sure, but I can't reproduce it. There's an unreleased fix in
+depth calculation (682c7d2 (upload-pack: fix off-by-one depth
+calculation in shallow clone - 2013-01-11) that might affect this. You
+may want to try again with "master". I got this with the same command
 
-    Autogenerated HTML docs for v1.7.7-rc0-72-g4b5ea
-
-n1xim@atom:~/tmp/git_dev/git$ git log refs/remotes/origin/man
-commit e193e4189407968b3c46992e3eac60d38424286e
-Author: Junio C Hamano <junio@kernel.org>
-Date:   Wed Aug 31 00:49:25 2011 +0000
-
-    Autogenerated manpages for v1.7.7-rc0-72-g4b5ea
-
-....I haven't bothered to plunge and expunge my local repo yet as I
-never actually made use of those branches.
-
+* edbd6cb (grafted, HEAD, origin/foo, foo) 5
 -- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Duy
