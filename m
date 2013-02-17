@@ -1,126 +1,130 @@
-From: Alain Kalker <a.c.kalker@gmail.com>
-Subject: Re: [BUG] Git clone of a bundle fails, but works (somewhat) when
- run with strace
-Date: Sun, 17 Feb 2013 13:01:08 +0000 (UTC)
-Message-ID: <kfqkak$ugv$1@ger.gmane.org>
-References: <511E8D84.6060601@gmail.com> <kfmclb$4ro$2@ger.gmane.org>
-	<kfmide$4ro$3@ger.gmane.org> <20130216040109.GA31630@sigill.intra.peff.net>
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: Anybody know a website with up-to-date git documentation?
+Date: Sun, 17 Feb 2013 08:21:25 -0500
+Message-ID: <CAM9Z-nmoCQ-uXwMCxCn4iRjUrxDf1r9Rb1ap_PQSra-FneECAA@mail.gmail.com>
+References: <D6EAC791-63E2-4B0E-92AA-676112039BD9@quendi.de>
+	<20130130115439.GH1342@serenity.lan>
+	<71A3AA8C-DBA2-44F7-9B69-AEDB81BB0906@quendi.de>
+	<CAMK1S_i+ML+HuTRuox5rU4bsV0+xoFLWpK63WrdXuzhgyHJbrA@mail.gmail.com>
+	<6BE76AE4-254E-43DD-A3FF-88B5486029A5@quendi.de>
+	<7vlibalhcv.fsf@alter.siamese.dyndns.org>
+	<20130130230709.GA7787@sita-lt.atc.tcs.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 17 14:01:49 2013
+Cc: Junio C Hamano <gitster@pobox.com>, Max Horn <max@quendi.de>,
+	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 17 14:21:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U73sL-0005aW-EB
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 14:01:49 +0100
+	id 1U74Bi-0003JW-Tz
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 14:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756110Ab3BQNBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2013 08:01:22 -0500
-Received: from plane.gmane.org ([80.91.229.3]:40017 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755531Ab3BQNBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2013 08:01:21 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1U73sC-0005Z3-Fc
-	for git@vger.kernel.org; Sun, 17 Feb 2013 14:01:40 +0100
-Received: from 524a7994.cm-4-3b.dynamic.ziggo.nl ([82.74.121.148])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 17 Feb 2013 14:01:40 +0100
-Received: from a.c.kalker by 524a7994.cm-4-3b.dynamic.ziggo.nl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 17 Feb 2013 14:01:40 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 524a7994.cm-4-3b.dynamic.ziggo.nl
-User-Agent: Pan/0.139 (Sexual Chocolate; GIT bf56508
-	git://git.gnome.org/pan2)
+	id S1756157Ab3BQNV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2013 08:21:27 -0500
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:34726 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755870Ab3BQNV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2013 08:21:26 -0500
+Received: by mail-ie0-f173.google.com with SMTP id 9so6342863iec.32
+        for <git@vger.kernel.org>; Sun, 17 Feb 2013 05:21:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=InSrWtE3+mPtQJy9dLNMWnpONCKSLRIs7oAxeVTfS88=;
+        b=CMFI+v+xk80SqncKvQ90vCwnARdjLmT9f9lRe0YS4RGDHXoJqOU5qnkxGnqwpy8pSh
+         VBoWF1rcp9J2UeHUxat2QexGiue0r0+hm05DmODPT9AakStAjrbHGn8milS77fr7JOl0
+         NBqeLQ+vaT/H5dTm2We4r5bL6rCGr8QDtgrNx7A6qvGJSQ2PCAGln+GcmCYlytzV/tWw
+         vbUrRyXd/N4g79a5TwnCU/NBXMTy5zZ4ud8t6fm56kgmkZj+DSUgv9iyEAgwevjnMjAu
+         r5iGfBpWsA+XOrQ08EgPXVp7YLq/4kgHUyeivAc/G3bM2YglO3wvdvbOAb9/XUk5iZGL
+         83qg==
+X-Received: by 10.50.190.138 with SMTP id gq10mr5234724igc.38.1361107285820;
+ Sun, 17 Feb 2013 05:21:25 -0800 (PST)
+Received: by 10.42.173.70 with HTTP; Sun, 17 Feb 2013 05:21:25 -0800 (PST)
+In-Reply-To: <20130130230709.GA7787@sita-lt.atc.tcs.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216395>
 
-On Fri, 15 Feb 2013 23:01:09 -0500, Jeff King wrote:
+On Wed, Jan 30, 2013 at 6:07 PM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+> On Wed, Jan 30, 2013 at 09:18:24AM -0800, Junio C Hamano wrote:
+>> Max Horn <max@quendi.de> writes:
+>> > On 30.01.2013, at 16:59, Sitaram Chamarty wrote:
+>> >
+>> >> I'm curious... what's wrong with 'git checkout html' from the git repo
+>> >> and just browsing them using a web browser?
 
-> On Sat, Feb 16, 2013 at 12:03:58AM +0000, Alain Kalker wrote:
-> 
->> ---test.sh---
->> #!/bin/sh
->> 
->> make clean make || return 125 GIT=$(pwd)/git
->> 
->> cd /tmp rm -rf testrepo mkdir testrepo cd testrepo $GIT init echo test
->> > test.txt $GIT add test.txt $GIT commit -m "Add test.txt"
->> $GIT bundle create ../testrepo.bundle master || return 125 cd ..
->> 
->> rm -rf testrepofrombundle $GIT clone testrepo.bundle testrepofrombundle
->> || return 1 ---
->> I was unable to find a bad revision.
->> After a lot more searching I found that I had `git` aliased to `hub`, a
->> tool used to make Github actions easier.
->> Eliminating `hub` from the equation resolved most problems.
-> 
-> Great.
-> 
->> The only ones remaining are the confusing error message from `git
->> bundle create` and the "missing HEAD" (you can interpret that in
->> different ways) ;-)
-> 
-> I do not see any odd message from "bundle create" in the recipe above.
-> Mine says:
-> 
-> $ git bundle create ../repo.bundle master Counting objects: 3, done.
-> Writing objects: 100% (3/3), 209 bytes, done.
-> Total 3 (delta 0), reused 0 (delta 0)
-> 
-> What you _might_ be seeing is the fact that the invocation above is
-> likely to be running two different versions of git under the hood. "git
-> bundle" will invoke "git rev-list", and it will use the first git in
-> your PATH, even if it is not $GIT. The proper way to test an
-> un-installed version of git is to use $YOUR_GIT_BUILD/bin-wrappers/git,
-> which will set up environment variables sufficient to make sure all
-> sub-gits are from the same version. Sometimes mixing versions can have
-> weird results (e.g., the new "git bundle" expects "rev-list" to have a
-> particular option, but the older version does not have it).
+>> Armed with that knowledge, I think Sitaram may have something like
+>> this:
+>>
+>>       [remote "htmldocs"]
 
-Thanks for the very useful tip! I will try to remember to use this for 
-any future testing.
+> Hmm; I don't recall ever doing that.  But I just realised that
+> my "html" branch is stuck at 1.7.7:
+>
+>     $ git branch -v -v | grep html
+>       html   8fb66e5 [origin/html] Autogenerated HTML docs for v1.7.7-138-g7f41b6
+>
+> Is it possible that upto that point, the main git.git repo did
+> carry this branch also?
 
-> Secondly, I do get the same warning about HEAD:
-> 
->   $ git clone repo.bundle repofrombundle Cloning into
->   'repofrombundle'...
->   Receiving objects: 100% (3/3), done.
->   warning: remote HEAD refers to nonexistent ref, unable to checkout.
-> 
-> but that warning makes sense. You did not create a bundle that contains
-> HEAD, therefore when we clone it, we do not know what to point HEAD to.
-> You probably wanted "git bundle create ../repo.bundle --all" which
-> includes both "master" and "HEAD".
+Yes.
 
-That explains it, thanks! Maybe this could be added as an example to the 
-documentation for `git bundle`? People looking at `man git-bundle` hoping 
-to use it as one possible way to make a backup of a Git repository might 
-not realize right away that --all is the way to specify all refs, like 
-with `git log`.
+n1xim@atom:~/tmp/git_dev/git$ git branch -a
+  dn/utf16_check
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/html
+  remotes/origin/maint
+  remotes/origin/man
+  remotes/origin/master
+  remotes/origin/next
+  remotes/origin/pu
+  remotes/origin/todo
+n1xim@atom:~/tmp/git_dev/git$ git remote show origin
+* remote origin
+  Fetch URL: git://git.kernel.org/pub/scm/git/git.git
+  Push  URL: git://git.kernel.org/pub/scm/git/git.git
+  HEAD branch: master
+  Remote branches:
+    maint                    tracked
+    master                   tracked
+    next                     tracked
+    pu                       tracked
+    refs/remotes/origin/html stale (use 'git remote prune' to remove)
+    refs/remotes/origin/man  stale (use 'git remote prune' to remove)
+    todo                     tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (local out of date)
 
-> 
-> It would be slightly more accurate to say "the remote HEAD does not
-> exist", rather than "refers to nonexistent ref".  It would perhaps be
-> nicer still for "git clone" to make a guess about the correct HEAD when
-> one is not present (especially in the single-branch case, it is easy to
-> make the right guess).
-> 
-> Patches welcome. In the meantime, you can clone with "-b master" to tell
-> it explicitly, or you can "git checkout master" inside the newly-cloned
-> repository.
+n1xim@atom:~/tmp/git_dev/git$ git log refs/remotes/origin/html
+commit 5723afaf3a61cef537e1f4dfa88f8faf31060ef0
+Author: Junio C Hamano <junio@kernel.org>
+Date:   Wed Aug 31 00:49:23 2011 +0000
 
-Thanks again for your help, very welcome :-)
+    Autogenerated HTML docs for v1.7.7-rc0-72-g4b5ea
 
-Alain
+n1xim@atom:~/tmp/git_dev/git$ git log refs/remotes/origin/man
+commit e193e4189407968b3c46992e3eac60d38424286e
+Author: Junio C Hamano <junio@kernel.org>
+Date:   Wed Aug 31 00:49:25 2011 +0000
+
+    Autogenerated manpages for v1.7.7-rc0-72-g4b5ea
+
+....I haven't bothered to plunge and expunge my local repo yet as I
+never actually made use of those branches.
+
+-- 
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
