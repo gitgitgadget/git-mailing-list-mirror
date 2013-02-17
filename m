@@ -1,129 +1,82 @@
-From: Paul Campbell <pcampbell@kemitix.net>
-Subject: Re: [PATCH 2/3] contrib/subtree/t: Added tests for .gitsubtree support
-Date: Sun, 17 Feb 2013 15:26:30 +0000
-Message-ID: <CALeLG_n-WocsMTvRZHm6v-+wrCNVvCh6O2baVDALSE3JB8ibng@mail.gmail.com>
-References: <CALeLG_=ir-kBTYpsRr_Hf8q2UY2ZtjShbTkO_tH=YiWSskfPOw@mail.gmail.com>
-	<20130215225624.GB21165@google.com>
-	<CALeLG_nLz9Gfqcfk4EcWixRXbWC0x0GUVFDAKD20DGbkhRNWvQ@mail.gmail.com>
-	<20130217113723.GA9882@elie.Belkin>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH v2] read_directory: avoid invoking exclude machinery on
+ tracked files
+Date: Sun, 17 Feb 2013 10:49:56 -0500
+Message-ID: <20130217154956.GA2395@padd.com>
+References: <1360937848-4426-1-git-send-email-pclouds@gmail.com>
+ <1360999078-27196-1-git-send-email-pclouds@gmail.com>
+ <20130216181110.GA27233@padd.com>
+ <CACsJy8C9SGJxwnm1E2N_KyEMg5-MzDt2B+SrX7rygn8X1qq4Wg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Adam Tkac <atkac@redhat.com>,
-	"David A. Greene" <greened@obbligato.org>,
-	"Jesper L. Nielsen" <lyager@gmail.com>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Techlive Zheng <techlivezheng@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 17 16:26:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Karsten Blees <karsten.blees@gmail.com>, kusmabite@gmail.com,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Robert Zeh <robert.allan.zeh@gmail.com>, finnag@pvv.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 17 16:50:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U768m-00032m-Aa
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 16:26:56 +0100
+	id 1U76VY-0002du-Gz
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 16:50:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756591Ab3BQP0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2013 10:26:32 -0500
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:64248 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756483Ab3BQP0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2013 10:26:32 -0500
-Received: by mail-ob0-f175.google.com with SMTP id uz6so5004385obc.34
-        for <git@vger.kernel.org>; Sun, 17 Feb 2013 07:26:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:x-originating-ip:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type:x-gm-message-state;
-        bh=AKqx+epYeCnPKDA5wnlq7hYJbiFFCT9YnXDTiRl3f2M=;
-        b=fijsm1meHIfYSkLzP0z0My07doUhcaBtiFSZBUXEU0dPBmOznslnChn02JwYrHXBc4
-         1z85Gt9T1SqRqUpVldlya3Qb/0gCQLFEcHb1PlKO6BdmdT7dy+A7xGTMI2U6zNmghe9j
-         SKk/+bq45L4hLY/Oljyo/fRKvhEbWPld6+uEBmwxkf/CTDxKiELC06Gfa7EGaKesyabv
-         IdV+iKWINZEBo0fKq8z5zXsE2QHjq7UFupFk9tS1dsKqDVVC+6y1jamKwmyi/z4qUD4E
-         XbmhqT9I+O4h8FXbGavE1t7boosMMHJCgHM7O/oOw62NbjyOiB5ah2hl3RBicQKRw63+
-         1pVQ==
-X-Received: by 10.182.190.97 with SMTP id gp1mr4923226obc.19.1361114790413;
- Sun, 17 Feb 2013 07:26:30 -0800 (PST)
-Received: by 10.76.143.67 with HTTP; Sun, 17 Feb 2013 07:26:30 -0800 (PST)
-X-Originating-IP: [2.102.85.14]
-In-Reply-To: <20130217113723.GA9882@elie.Belkin>
-X-Gm-Message-State: ALoCoQknyROCYtg5Knt6Ffan8eErSuSi5sU5w+OxCWf+kFh70LGJAe15so3c5g1F7FPxOlgLQnYA
+	id S1753617Ab3BQPuC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2013 10:50:02 -0500
+Received: from honk.padd.com ([74.3.171.149]:53414 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753264Ab3BQPuB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2013 10:50:01 -0500
+Received: from arf.padd.com (unknown [50.124.137.41])
+	by honk.padd.com (Postfix) with ESMTPSA id 8828260E6;
+	Sun, 17 Feb 2013 07:50:00 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 0488A225F6; Sun, 17 Feb 2013 10:49:56 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8C9SGJxwnm1E2N_KyEMg5-MzDt2B+SrX7rygn8X1qq4Wg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216398>
 
-On Sun, Feb 17, 2013 at 11:37 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Paul Campbell wrote:
->
->> Is there was a better way to verify that the push operation succeeds
->> then grepping for a SHA1?
->
-> IIRC then when a push fails, it will exit with nonzero status (so the
-> usual &&-chaining would propagate the error).
->
-> Alternatively, one can fetch, ls-remote, or enter the target repo and
-> use history inspection tools to check that the result is as expected.
->
-> Hope that helps,
-> Jonathan
+pclouds@gmail.com wrote on Sun, 17 Feb 2013 11:39 +0700:
+> On Sun, Feb 17, 2013 at 1:11 AM, Pete Wyckoff <pw@padd.com> wrote:
+> > pclouds@gmail.com wrote on Sat, 16 Feb 2013 14:17 +0700:
+> >> Finally some numbers (best of 20 runs) that shows why it's worth all
+> >> the hassle:
+> >>
+> >> git status   | webkit linux-2.6 libreoffice-core gentoo-x86
+> >> -------------+----------------------------------------------
+> >> before       | 1.097s    0.208s           0.399s     0.539s
+> >> after        | 0.736s    0.159s           0.248s     0.501s
+> >> nr. patterns |    89       376               19          0
+> >> nr. tracked  |   182k       40k              63k       101k
+> >
+> > Thanks for this work.  I repeated some of the tests across NFS,
+> > where I'd expect to see bigger differences.
+> 
+> This is about reducing CPU processing time, not I/O time. So no bigger
+> differences is expected. I/O time can be reduced with inotify, or fam
+> in nfs case because inotify does not support nfs.
 
-Thanks Jonathan.
+Numbers from the last mail were core.preloadindex=true.  Here's
+"time" output from average runs:
 
-Here's the updated version of the tests:
+    stock = 0m2.28s user 0m4.18s sys 0m11.28s elapsed 57.39 %CPU
+    duy   = 0m1.25s user 0m4.43s sys 0m7.45s elapsed 76.41 %CPU
 
- contrib/subtree/t/t7900-subtree.sh | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+With this huge repo, preloadindex may be stressing directory
+cache behavior on the NFS server or client.  Your patch helps
+both CPU and wait time by avoiding the 6000-odd open() of
+non-existent .gitignore.
 
-diff --git a/contrib/subtree/t/t7900-subtree.sh
-b/contrib/subtree/t/t7900-subtree.sh
-index 80d3399..e7bb911 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -465,4 +465,37 @@ test_expect_success 'verify one file change per commit' '
-         ))
- '
+With core.preloadindex=false, it's a 1 sec speedup, all from CPU:
 
-+# return to mainline
-+cd ../..
-+
-+# .gitsubtree
-+test_expect_success 'added repository appears in .gitsubtree' '
-+	git subtree add --prefix=copy0 sub1 &&
-+	grep "^copy0 \. sub1$" .gitsubtree
-+'
-+
-+test_expect_success 'change in subtree is pushed okay' '
-+	(cd copy0 && create new_file && git commit -m"Added new_file") &&
-+	git ls-tree refs/heads/sub1 >output &&
-+	! grep "new_file$" output &&
-+	git subtree push --prefix=copy0 &&
-+	git ls-tree refs/heads/sub1 >output &&
-+	grep "new_file$" output
-+'
-+
-+test_expect_success 'pull into subtree okay' '
-+	git subtree add --prefix=copy1 sub1 &&
-+	git subtree add --prefix=copy2 sub1 &&
-+	(cd copy1 && create new_file_in_copy1 && git commit -m"Added
-new_file_in_copy1") &&
-+	git subtree push --prefix=copy1 &&
-+	git subtree pull --prefix=copy2 | grep "^ create mode 100644
-copy2/new_file_in_copy1$"
-+'
-+
-+test_expect_success 'replace outdated entry in .gitsubtree' '
-+	echo "copy3 . sub2" >>.gitsubtree &&
-+	git subtree add --prefix=copy3 sub1 &&
-+	! grep "^copy3 . sub2$" .gitsubtree &&
-+	grep "^copy3 . sub1$" .gitsubtree
-+'
-+
- test_done
--- 
-1.8.1.3.605.g02339dd
+    stock = 0m2.18s user 0m1.59s sys 0m7.78s elapsed 48.45 %CPU
+    duy   = 0m1.17s user 0m1.63s sys 0m6.91s elapsed 40.59 %CPU
 
 
--- 
-Paul [W] Campbell
+		-- Pete
