@@ -1,156 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5] submodule: add 'deinit' command
-Date: Sun, 17 Feb 2013 14:32:46 -0800
-Message-ID: <7v38wufu5t.fsf@alter.siamese.dyndns.org>
-References: <5112C6F6.4030607@web.de>
- <CABURp0oQcPotK20QcqCG1pGQPVoa4RnN2nDA=iQoKS99gnPEAQ@mail.gmail.com>
- <511BEA75.6000002@web.de> <7vip5w6l8s.fsf@alter.siamese.dyndns.org>
- <5121384B.10009@web.de>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v4.1 09/12] sequencer.c: teach append_signoff to avoid
+ adding a duplicate newline
+Date: Sun, 17 Feb 2013 22:49:20 +0000
+Message-ID: <20130217224919.GA5011@serenity.lan>
+References: <1360664260-11803-10-git-send-email-drafnel@gmail.com>
+ <1360665222-3166-1-git-send-email-drafnel@gmail.com>
+ <20130214175849.GA27958@farnsworth.metanate.com>
+ <CA+sFfMecyfD7x_8Jk-hUDceL_nS5kuKq5nF0vRBqLROWFgdypA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Phil Hord <phil.hord@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Feb 17 23:33:14 2013
+Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
+	jrnieder@gmail.com, Brandon Casey <bcasey@nvidia.com>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 17 23:50:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7CnK-0004ey-4L
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 23:33:14 +0100
+	id 1U7D3h-0002HU-CZ
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 23:50:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753388Ab3BQWcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2013 17:32:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51181 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753112Ab3BQWct (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2013 17:32:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F0B8BC27;
-	Sun, 17 Feb 2013 17:32:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E2sdaIwDBVBCw4w2u+dI0enxe8s=; b=kv9CD+
-	u5Z6nD7skb7+4R13zz6vkQ+mHXrOPJQjc51EP8tAa8RTTnjgcc4KeyeM7bGDnJBl
-	iRgWbRJSgBFk202mFqn+BnIxgM8bQAEFlYpHJCi4vxcmAqg8pxNEAnTlkrzKabRB
-	5w3uvvZgA6NV0zSwmvNZ5SVMB5qCQUH0ubXMI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EsHxVONL4ysJn5Dommhwxi1oeSwAzp/S
-	YeHVbv2c04mrltPCH+DogplWjXVJnlwOPk6sgCYshbPhkB8Nihm/Jx5L8cwG9tYL
-	fnELOWSsjQXWDmjfUvko5RP0XGIkEzvq3v4MAbHamjfwO7qFiinDwWPjPr20p6Tj
-	UtNIZaTfUEo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92440BC25;
-	Sun, 17 Feb 2013 17:32:48 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE19ABC21; Sun, 17 Feb 2013
- 17:32:47 -0500 (EST)
-In-Reply-To: <5121384B.10009@web.de> (Jens Lehmann's message of "Sun, 17 Feb
- 2013 21:06:35 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F4AC161C-7951-11E2-ADB8-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753530Ab3BQWtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2013 17:49:39 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:43107 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753260Ab3BQWti (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2013 17:49:38 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 9B3E8CDA5B9;
+	Sun, 17 Feb 2013 22:49:37 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 06fHSLsLhiqa; Sun, 17 Feb 2013 22:49:36 +0000 (GMT)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 5067FCDA590;
+	Sun, 17 Feb 2013 22:49:27 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <CA+sFfMecyfD7x_8Jk-hUDceL_nS5kuKq5nF0vRBqLROWFgdypA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216410>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Fri, Feb 15, 2013 at 10:58:38AM -0800, Brandon Casey wrote:
+> On Thu, Feb 14, 2013 at 9:58 AM, John Keeping <john@keeping.me.uk> wrote:
+> > As Jonathan Nieder wondered before [1], this changes the behaviour when
+> > the commit message is empty.  Before this commit, there is an empty line
+> > followed by the S-O-B line; now the S-O-B is on the first line of the
+> > commit.
+> >
+> > The previous behaviour seems better to me since the empty line is
+> > hinting that the user should fill something in.  It looks particularly
+> > strange if your editor has syntax highlighting for commit messages such
+> > that the first line is in a different colour.
+> 
+> Are you talking about the output produced by format-patch?  Or are you
+> talking about what happens when you do 'commit --amend -s' for a
+> commit with an empty commit message. (The email that you referenced
+> was about the behavior of format-patch).
 
-> Here we go, changes to v4 are:
->
-> - I decided to do the proposed special casing for "."; no messages
->   about uninitialized submodules will show up anymore (this is also
->   tested)
-> - The spelling fixes and better 'uninitialized' message Phil proposed
-> - Added the missing quotation for $sm_path in output strings
-> - "deinit" is added to the submodule completion list
-> - Added two missing "&&" in t7400
+I'm talking about plain 'commit -s' which seems to use the same code
+path.
 
-Thanks for being thorough. I honestly did not expect this topic to
-take this many cycles before becoming 'next-ready'.
+> I'm thinking you must be talking about the 'commit --amend -s'
+> behavior since you mentioned your editor.  Is there another case that
+> is affected by this?  Normally, any extra blank lines that precede or
+> follow a commit message are removed before the commit object is
+> created.  So, I guess it wouldn't hurt to insert a newline (or maybe
+> it should be two?) before the signoff in this case.  Would this
+> provide an improvement or change for any other commands than 'commit
+> --amend -s'?
+> 
+> If we want to do this, then I'd probably do it like this:
+> 
+> -               if (len && msgbuf->buf[len - 1] != '\n')
+> +               if (!len || msgbuf->buf[len - 1] != '\n')
+>                         append_newlines = "\n\n";
+> -               else if (len > 1 && msgbuf->buf[len - 2] != '\n')
+> +               else if (len == 1 || msgbuf->buf[len - 2] != '\n')
+>                         append_newlines = "\n";
+> 
+> This would ensure there were two newlines preceding the sob.  The
+> editor would place its cursor on the top line where the user should
+> begin typing in a commit message.  If an editor was not opened up
+> (e.g. if 'git cherry-pick -s --allow-empty-message ...' was used) then
+> the normal mechanism that removes extra blank lines would trigger to
+> remove the extra blank lines.
+> 
+> I think that's reasonable.
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 004c034..0fb6ee0 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -547,6 +548,82 @@ cmd_init()
->  }
->
->  #
-> +# Unregister submodules from .git/config and remove their work tree
-> +#
-> +# $@ = requested paths (use '.' to deinit all submodules)
-> +#
-> +cmd_deinit()
-> +{
-> +	# parse $args after "submodule ... init".
-> +	while test $# -ne 0
-> +	do
-> ..
-> +	done
-> +
-> +	if test $# = 0
-> +	then
-> +		die "$(eval_gettext "Use '.' if you really want to deinitialize all submodules")"
+Two blank lines seems like an improvement to me, FWIW.
 
-I do not think I saw anybody mentioned this so far, but how is
-"deinit" supposed to work inside a subdirectory of a superproject?
-If the answer is to work on submodules appear in that subdirectory,
-'.' should probably not mean "all in the superproject" I think?
 
-> +	module_list "$@" |
-> +	while read mode sha1 stage sm_path
-> +	do
-> +		die_if_unmatched "$mode"
-> +		name=$(module_name "$sm_path") || exit
-> +		url=$(git config submodule."$name".url)
-> +		if test -z "$url"
-> +		then
-> +			test $# -ne 1 || test "$@" = "." ||
-> +			say "$(eval_gettext "Submodule '\$name' is not initialized for path '\$sm_path'")"
-> +			continue
-> +		fi
-
-This 'test "$@" = "."' makes readers feel uneasy.  This particular
-invocation happens to be safe only because it is protected with
-"test $# -ne 1 ||", but for all other values of $# this will result
-in a syntax error.  'test "$1" = "."' would make the intention of
-the check more clear.
-
-But stepping back a bit, is the condition this test is trying to
-warn against really worth warning?
-
-It seems that this "warn if user told us to deinitialize a submodule
-that hasn't been initialized" is from the very initial round of this
-series, and not something other people asked for during the review.
-If somebody did
-
-	git submodule deinit foo bar
-
-and then later said:
-
-	git submodule deinit foo
-
-would it a mistake that the user wants to be warned about?
-
-Perhaps the user did not mean to deinitialize foo (e.g. wanted to
-*initialize* foo instead, or wanted to deinitialize *foz* instead)
-and that is worth warning about?  I am not sure, but I have a
-feeling that we can do without this check.
-
-Also the value of submodule.$name.url is not used in the later
-codepath to ensure that the named submodule is in the pristine state
-in the superproject's working tree (i.e. no submodule.$name section
-in the local configuration, no working tree for that submodule), so
-it may be even a good change to remove the "does submodule.$name.url
-exist" check and always do the "deinitialize" process.  That would
-give the users a way to recover from a state where a submodule is
-only half initialized for some reason safely, no?
+John
