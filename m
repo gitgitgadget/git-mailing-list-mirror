@@ -1,97 +1,386 @@
-From: Alain Kalker <a.c.kalker@gmail.com>
-Subject: Re: Git bundles for backup and cloning: the Zaphod Beeblebrox
- thread
-Date: Sun, 17 Feb 2013 19:51:10 +0000 (UTC)
-Message-ID: <kfrcbe$ugv$3@ger.gmane.org>
-References: <kfrb11$ugv$2@ger.gmane.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH v5] submodule: add 'deinit' command
+Date: Sun, 17 Feb 2013 21:06:35 +0100
+Message-ID: <5121384B.10009@web.de>
+References: <5112C6F6.4030607@web.de> <CABURp0oQcPotK20QcqCG1pGQPVoa4RnN2nDA=iQoKS99gnPEAQ@mail.gmail.com> <511BEA75.6000002@web.de> <7vip5w6l8s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 17 20:52:02 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 17 21:07:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7AHJ-0003Hx-L8
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 20:52:01 +0100
+	id 1U7AW9-0000Qb-97
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 21:07:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752614Ab3BQTvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2013 14:51:32 -0500
-Received: from plane.gmane.org ([80.91.229.3]:42750 "EHLO plane.gmane.org"
+	id S1752792Ab3BQUG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2013 15:06:57 -0500
+Received: from mout.web.de ([212.227.15.3]:51081 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752547Ab3BQTvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2013 14:51:31 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1U7AH0-0003Cp-Ng
-	for git@vger.kernel.org; Sun, 17 Feb 2013 20:51:42 +0100
-Received: from 524a7994.cm-4-3b.dynamic.ziggo.nl ([82.74.121.148])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 17 Feb 2013 20:51:42 +0100
-Received: from a.c.kalker by 524a7994.cm-4-3b.dynamic.ziggo.nl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 17 Feb 2013 20:51:42 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 524a7994.cm-4-3b.dynamic.ziggo.nl
-User-Agent: Pan/0.139 (Sexual Chocolate; GIT bf56508
-	git://git.gnome.org/pan2)
+	id S1752783Ab3BQUG4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2013 15:06:56 -0500
+Received: from [192.168.178.41] ([91.3.180.125]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0MDxCN-1U6I6c3iRT-00H7zz; Sun, 17 Feb 2013 21:06:39
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <7vip5w6l8s.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5
+X-Provags-ID: V02:K0:tbSSj5VRR0RHlrDtJO822LE7ZCaUjRswEDQWqYNYooS
+ vvvBe+h7d5xJM+VD/xgGJTuFC/YYyjGhkDwzKnbKdiZCbyoTi4
+ OMcJxgWwQztjmbk6JSPXGGUxyClZXKBAgiqjzap8FX6xSrtera
+ TdcKnqhFez2jsw8GZX8VmvKnZybntPH2VAM4cdq1mm3urjwv9a
+ vTd/V++W05ciE2yqwvhtw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216408>
 
-On Sun, 17 Feb 2013 19:28:33 +0000, Alain Kalker wrote:
+With "git submodule init" the user is able to tell git he cares about one
+or more submodules and wants to have it populated on the next call to "git
+submodule update". But currently there is no easy way he could tell git he
+does not care about a submodule anymore and wants to get rid of his local
+work tree (except he knows a lot about submodule internals and removes the
+"submodule.$name.url" setting from .git/config together with the work tree
+himself).
 
-> From the current documentation for git-bundle(1), it may not be clear
-> for users unfamilliar with Git, how to create a bundle which can be used
-> for backup purposes, or, more generally, to clone to a completely new
-> repository.
+Help those users by providing a 'deinit' command. This removes the whole
+submodule.<name> section from .git/config either for the given
+submodule(s) or for all those which have been initialized if '.' is
+given. Fail if the current work tree contains modifications unless
+forced. Complain when for a submodule given on the command line the url
+setting can't be found in .git/config, but nonetheless don't fail.
+
+Add tests and link the man pages of "git submodule deinit" and "git rm"
+to assist the user in deciding whether removing or unregistering the
+submodule is the right thing to do for him. Also add the deinit subcommand
+to the completion list.
+
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+
+Am 13.02.2013 20:56, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
 > 
-> Philip Oakley has posted a documentation patch some time ago, but Junio
-> has pointed out several concerns.
-> Ref: http://thread.gmane.org/gmane.comp.version-control.git/205887/
-> focus=205897
+>> Junio, this looks like a we have v5 as soon as we decide what to do
+>> with the "not initialized" messages when '.' is used, right?
 > 
-> Here's my attempt to summarize the concerns, adding some of my own, and
-> a possible solution.
-> 
-> 1. "Missing HEAD syndrome"
-> $ git bundle create <bundle> master -or-
-> $ git bundle create <bundle> <branchname...>
-> -or-
-> $ git bundle create <bundle> --branches -then-
-> $ git clone <bundle> <dir>
-> 
-> will be unable to checkout any files due to a missing ref for HEAD.
-> Though this can be fixed by going into <dir> and doing `git checkout
-> <ref>`, this is not very user-friendly.
-> 
-> 2. "Detached HEAD syndrome"
-> $ git bundle create <bundle> HEAD $ git clone <bundle> <dir>
-> will checkout files alright, but leaves one in a "detached HEAD" state.
->  
-> 3. "Exploding HEAD syndrome"
-> $ git bundle create <bundle> --all will add the HEAD, but will add refs
-from refs/*, including all remotes,
-> which is not desirable when cloning, unless one
-> sets up all the remotes 
-as well.
-> 
-> Finally, my solution for backing up only the local branches of a
-> repository:
-$ git bundle create <bundle> --branches HEAD # for backup purposes
--or-
-$ git bundle create <bundle> master HEAD # for hosting or redistribution
-> but this may not be very
-> easy for new users to figure out on their own unless well documented
-> (perhaps a new flag?)
-> 
-> Any comments or suggestions (including HHGTTG references!) are very
-> welcome.
-> 
-> -Alain
+> OK.  I myself do not deeply care if we end up special casing "." or
+> not; I'll leave it up to you and other submodule folks.
+
+Here we go, changes to v4 are:
+
+- I decided to do the proposed special casing for "."; no messages
+  about uninitialized submodules will show up anymore (this is also
+  tested)
+- The spelling fixes and better 'uninitialized' message Phil proposed
+- Added the missing quotation for $sm_path in output strings
+- "deinit" is added to the submodule completion list
+- Added two missing "&&" in t7400
+
+
+
+ Documentation/git-rm.txt               |   4 ++
+ Documentation/git-submodule.txt        |  18 +++++-
+ contrib/completion/git-completion.bash |   2 +-
+ git-submodule.sh                       |  79 +++++++++++++++++++++++++-
+ t/t7400-submodule-basic.sh             | 101 +++++++++++++++++++++++++++++++++
+ 5 files changed, 201 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index 92bac27..1d876c2 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -149,6 +149,10 @@ files that aren't ignored are present in the submodules work tree.
+ Ignored files are deemed expendable and won't stop a submodule's work
+ tree from being removed.
+
++If you only want to remove the local checkout of a submodule from your
++work tree without committing the removal,
++use linkgit:git-submodule[1] `deinit` instead.
++
+ EXAMPLES
+ --------
+ `git rm Documentation/\*.txt`::
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index a0c9df8..bc06159 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -13,6 +13,7 @@ SYNOPSIS
+ 	      [--reference <repository>] [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
++'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
+ 'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch] [--rebase]
+ 	      [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+@@ -134,6 +135,19 @@ init::
+ 	the explicit 'init' step if you do not intend to customize
+ 	any submodule locations.
+
++deinit::
++	Unregister the given submodules, i.e. remove the whole
++	`submodule.$name` section from .git/config together with their work
++	tree. Further calls to `git submodule update`, `git submodule foreach`
++	and `git submodule sync` will skip any unregistered submodules until
++	they are initialized again, so use this command if you don't want to
++	have a local checkout of the submodule in your work tree anymore. If
++	you really want to remove a submodule from the repository and commit
++	that use linkgit:git-rm[1] instead.
+++
++If `--force` is specified, the submodule's work tree will be removed even if
++it contains local modifications.
++
+ update::
+ 	Update the registered submodules, i.e. clone missing submodules and
+ 	checkout the commit specified in the index of the containing repository.
+@@ -213,8 +227,10 @@ OPTIONS
+
+ -f::
+ --force::
+-	This option is only valid for add and update commands.
++	This option is only valid for add, deinit and update commands.
+ 	When running add, allow adding an otherwise ignored submodule path.
++	When running deinit the submodule work trees will be removed even if
++	they contain local changes.
+ 	When running update, throw away local changes in submodules when
+ 	switching to a different commit; and always run a checkout operation
+ 	in the submodule, even if the commit listed in the index of the
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 059ba9d..7cee9bd 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2401,7 +2401,7 @@ _git_submodule ()
+ {
+ 	__git_has_doubledash && return
+
+-	local subcommands="add status init update summary foreach sync"
++	local subcommands="add status init deinit update summary foreach sync"
+ 	if [ -z "$(__git_find_on_cmdline "$subcommands")" ]; then
+ 		case "$cur" in
+ 		--*)
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 004c034..0fb6ee0 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -8,6 +8,7 @@ dashless=$(basename "$0" | sed -e 's/-/ /')
+ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
++   or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
+    or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+@@ -547,6 +548,82 @@ cmd_init()
+ }
+
+ #
++# Unregister submodules from .git/config and remove their work tree
++#
++# $@ = requested paths (use '.' to deinit all submodules)
++#
++cmd_deinit()
++{
++	# parse $args after "submodule ... init".
++	while test $# -ne 0
++	do
++		case "$1" in
++		-f|--force)
++			force=$1
++			;;
++		-q|--quiet)
++			GIT_QUIET=1
++			;;
++		--)
++			shift
++			break
++			;;
++		-*)
++			usage
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done
++
++	if test $# = 0
++	then
++		die "$(eval_gettext "Use '.' if you really want to deinitialize all submodules")"
++	fi
++
++	module_list "$@" |
++	while read mode sha1 stage sm_path
++	do
++		die_if_unmatched "$mode"
++		name=$(module_name "$sm_path") || exit
++		url=$(git config submodule."$name".url)
++		if test -z "$url"
++		then
++			test $# -ne 1 || test "$@" = "." ||
++			say "$(eval_gettext "Submodule '\$name' is not initialized for path '\$sm_path'")"
++			continue
++		fi
++
++		# Remove the submodule work tree (unless the user already did it)
++		if test -d "$sm_path"
++		then
++			# Protect submodules containing a .git directory
++			if test -d "$sm_path/.git"
++			then
++				echo >&2 "$(eval_gettext "Submodule work tree '\$sm_path' contains a .git directory")"
++				die "$(eval_gettext "(use 'rm -rf' if you really want to remove it including all of its history)")"
++			fi
++
++			if test -z "$force"
++			then
++				git rm -n "$sm_path" ||
++				die "$(eval_gettext "Submodule work tree '\$sm_path' contains local modifications; use '-f' to discard them")"
++			fi
++			rm -rf "$sm_path" || say "$(eval_gettext "Could not remove submodule work tree '\$sm_path'")"
++		fi
++
++		mkdir "$sm_path" || say "$(eval_gettext "Could not create empty submodule directory '\$sm_path'")"
++
++		# Remove the whole section so we have a clean state when the
++		# user later decides to init this submodule again
++		git config --remove-section submodule."$name" &&
++		say "$(eval_gettext "Submodule '\$name' (\$url) unregistered for path '\$sm_path'")"
++	done
++}
++
++#
+ # Update each submodule path to correct revision, using clone and checkout as needed
+ #
+ # $@ = requested paths (default to all)
+@@ -1157,7 +1234,7 @@ cmd_sync()
+ while test $# != 0 && test -z "$command"
+ do
+ 	case "$1" in
+-	add | foreach | init | update | status | summary | sync)
++	add | foreach | init | deinit | update | status | summary | sync)
+ 		command=$1
+ 		;;
+ 	-q|--quiet)
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 2683cba..e32b62b 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -757,4 +757,105 @@ test_expect_success 'submodule add with an existing name fails unless forced' '
+ 	)
+ '
+
++test_expect_success 'set up a second submodule' '
++	git submodule add ./init2 example2 &&
++	git commit -m "submodule example2 added"
++'
++
++test_expect_success 'submodule deinit should remove the whole submodule section from .git/config' '
++	git config submodule.example.foo bar &&
++	git config submodule.example2.frotz nitfol &&
++	git submodule deinit init &&
++	test -z "$(git config submodule.example.url)" &&
++	test -z "$(git config submodule.example.foo)" &&
++	test -n "$(git config submodule.example2.url)" &&
++	test -n "$(git config submodule.example2.frotz)" &&
++	test -f example2/.git &&
++	rmdir init
++'
++
++test_expect_success 'submodule deinit . deinits all initialized submodules' '
++	git submodule update --init &&
++	git config submodule.example.foo bar &&
++	git config submodule.example2.frotz nitfol &&
++	test_must_fail git submodule deinit &&
++	git submodule deinit . &&
++	test -z "$(git config submodule.example.url)" &&
++	test -z "$(git config submodule.example.foo)" &&
++	test -z "$(git config submodule.example2.url)" &&
++	test -z "$(git config submodule.example2.frotz)" &&
++	rmdir init example2
++'
++
++test_expect_success 'submodule deinit deinits a submodule when its work tree is missing or empty' '
++	git submodule update --init &&
++	rm -rf init example2/* example2/.git &&
++	git submodule deinit init example2 &&
++	test -z "$(git config submodule.example.url)" &&
++	test -z "$(git config submodule.example2.url)" &&
++	rmdir init
++'
++
++test_expect_success 'submodule deinit fails when the submodule contains modifications unless forced' '
++	git submodule update --init &&
++	echo X >>init/s &&
++	test_must_fail git submodule deinit init &&
++	test -n "$(git config submodule.example.url)" &&
++	test -f example2/.git &&
++	git submodule deinit -f init &&
++	test -z "$(git config submodule.example.url)" &&
++	rmdir init
++'
++
++test_expect_success 'submodule deinit fails when the submodule contains untracked files unless forced' '
++	git submodule update --init &&
++	echo X >>init/untracked &&
++	test_must_fail git submodule deinit init &&
++	test -n "$(git config submodule.example.url)" &&
++	test -f example2/.git &&
++	git submodule deinit -f init &&
++	test -z "$(git config submodule.example.url)" &&
++	rmdir init
++'
++
++test_expect_success 'submodule deinit fails when the submodule HEAD does not match unless forced' '
++	git submodule update --init &&
++	(
++		cd init &&
++		git checkout HEAD^
++	) &&
++	test_must_fail git submodule deinit init &&
++	test -n "$(git config submodule.example.url)" &&
++	test -f example2/.git &&
++	git submodule deinit -f init &&
++	test -z "$(git config submodule.example.url)" &&
++	rmdir init
++'
++
++test_expect_success 'submodule deinit complains but does not fail when used on an uninitialized submodule' '
++	git submodule update --init &&
++	git submodule deinit init >actual &&
++	test_i18ngrep "Submodule .example. (.*) unregistered for path .init" actual &&
++	git submodule deinit init >actual &&
++	test_i18ngrep "Submodule .example. is not initialized for path .init" actual &&
++	git submodule deinit . >actual &&
++	test_i18ngrep "Submodule .example2. (.*) unregistered for path .example2" actual &&
++	test_i18ngrep ! "Submodule .example. is not initialized for path .init" actual &&
++	rmdir init example2
++'
++
++test_expect_success 'submodule deinit fails when submodule has a .git directory even when forced' '
++	git submodule update --init &&
++	(
++		cd init &&
++		rm .git &&
++		cp -R ../.git/modules/example .git &&
++		GIT_WORK_TREE=. git config --unset core.worktree
++	) &&
++	test_must_fail git submodule deinit init &&
++	test_must_fail git submodule deinit -f init &&
++	test -d init/.git &&
++	test -n "$(git config submodule.example.url)"
++'
++
+ test_done
+-- 
+1.8.1.2.677.ga1bd48d
