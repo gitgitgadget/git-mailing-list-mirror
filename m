@@ -1,105 +1,186 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] remote-curl: sanity check ref advertisement from
- server
-Date: Sun, 17 Feb 2013 03:05:34 -0800
-Message-ID: <20130217110533.GF6759@elie.Belkin>
-References: <20130216064455.GA27063@sigill.intra.peff.net>
- <20130216064929.GC22626@sigill.intra.peff.net>
+Subject: Re: [PATCH 3/4] t7800: modernize tests
+Date: Sun, 17 Feb 2013 03:21:40 -0800
+Message-ID: <20130217112139.GG6759@elie.Belkin>
+References: <1360993666-81308-1-git-send-email-davvid@gmail.com>
+ <1360993666-81308-2-git-send-email-davvid@gmail.com>
+ <1360993666-81308-3-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 17 12:06:19 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 17 12:22:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U724Z-0004pg-Ac
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 12:06:19 +0100
+	id 1U72K4-0002rj-Ph
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Feb 2013 12:22:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755903Ab3BQLFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2013 06:05:41 -0500
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:59158 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755891Ab3BQLFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2013 06:05:40 -0500
-Received: by mail-pb0-f47.google.com with SMTP id rp2so1223352pbb.34
-        for <git@vger.kernel.org>; Sun, 17 Feb 2013 03:05:39 -0800 (PST)
+	id S1755990Ab3BQLVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2013 06:21:48 -0500
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:60134 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755960Ab3BQLVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2013 06:21:47 -0500
+Received: by mail-pa0-f42.google.com with SMTP id kq12so2394644pab.29
+        for <git@vger.kernel.org>; Sun, 17 Feb 2013 03:21:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=rQVnGY80bD1NS0dWSqBk55TK2ql9XEhEdy69yREp72k=;
-        b=QGnYQxbf5GljOfCnU2HoRaQFvmGZCIP9tSAnqM/1tY3YGQ95XgC4pzKDOWVaDkY6qv
-         mYj53d8WBI24ydvYVYap+y3ZpruxgS16mazbx/7E/5RNapUhHxef4lmtwnagojUnwI8K
-         CglSPrJn9q8IPhU7YdCI3x5r2jVI/9555OnWZNJlKiPi/l5vkuuSy35coF5sIvIsJLAL
-         y3ltjB8oFsS9WA1Jb/4e02A7A6mFNwQDJPALJxMHvdRqQoxuF7PruujsjU15NsmJn3/n
-         6O0X7fuBeXQy5VOx7Q7mGKMUw/uxDxhwF2l7dQxhnaa1W/cxl0WzOKsLfFbT1VSUBm5U
-         Ik3A==
-X-Received: by 10.66.252.38 with SMTP id zp6mr17320955pac.12.1361099139864;
-        Sun, 17 Feb 2013 03:05:39 -0800 (PST)
+        bh=+UDRBjaZIYVI1c3jwdSofWC6wtnas4mE/8AFtfSuNMU=;
+        b=PGDgwINQa5/IFvb1xkXx5VWR0VjFH9eJK4uxb/5oByBjCt2xtTCmQABAkKL2RyGC8l
+         +Q0uXEMpMDjnuv5MLO9u14ljXpZ9F9/V1xtI9PEznXIpR3elctcILtrrcmSa5ynKtbeZ
+         kkl+sRTRoKcF7agsm4IkkfyBplEjqKQAK7+5ItKfgK28pepKHmc4F2YqCmYeXlymmejd
+         Erq8LoUGqHggJvM9hQWowWljmZ8gFEm5vBpUa20VQIdMhFhYRyApqv0UynAGRW0v1U0g
+         GrIAouIpJCVIvC+1oHh0mBNgJORQ2j58wxnO/ntIpCstWByZB69i5bofSaBk/LSoX4Fv
+         zgSQ==
+X-Received: by 10.66.147.234 with SMTP id tn10mr8663075pab.21.1361100105930;
+        Sun, 17 Feb 2013 03:21:45 -0800 (PST)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id in5sm10848603pbc.20.2013.02.17.03.05.37
+        by mx.google.com with ESMTPS id ab1sm10881965pbd.37.2013.02.17.03.21.43
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 17 Feb 2013 03:05:38 -0800 (PST)
+        Sun, 17 Feb 2013 03:21:44 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20130216064929.GC22626@sigill.intra.peff.net>
+In-Reply-To: <1360993666-81308-3-git-send-email-davvid@gmail.com>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216390>
 
-Jeff King wrote:
+David Aguilar wrote:
 
-> If the smart HTTP response from the server is truncated for
-> any reason, we will get an incomplete ref advertisement. If
-> we then feed this incomplete list to "fetch-pack", one of a
-> few things may happen:
->
->   1. If the truncation is in a packet header, fetch-pack
->      will notice the bogus line and complain.
->
->   2. If the truncation is inside a packet, fetch-pack will
->      keep waiting for us to send the rest of the packet,
->      which we never will.
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -10,29 +10,11 @@ Testing basic diff tool invocation
+[...]
+> -restore_test_defaults()
+> -{
+> -	# Restores the test defaults used by several tests
+> -	remove_config_vars
+> -	unset GIT_DIFF_TOOL
+> -	unset GIT_DIFFTOOL_PROMPT
+> -	unset GIT_DIFFTOOL_NO_PROMPT
+> -	git config diff.tool test-tool &&
+> -	git config difftool.test-tool.cmd 'cat $LOCAL'
+> -	git config difftool.bogus-tool.cmd false
 
-Mostly harmless since the operator could hit ^C, but still unpleasant.
+Yay. :)
 
 [...]
-> This fortunately doesn't happen in the normal fetching
-> workflow, because git-fetch first uses the "list" command,
-> which feeds the refs to get_remote_heads, which does notice
-> the error. However, you can trigger it by sending a direct
-> "fetch" to the remote-curl helper.
+>  # Ensures that git-difftool ignores bogus --tool values
+>  test_expect_success PERL 'difftool ignores bad --tool values' '
+>  	diff=$(git difftool --no-prompt --tool=bad-tool branch)
+>  	test "$?" = 1 &&
+> -	test "$diff" = ""
+> +	test -z "$diff"
+>  '
 
-Ah.  Would a test for this make sense?
+Not about this patch: if I add more commands before that "diff",
+their exit status would be ignored.  Could this be made more resilient
+using test_expect_code?  Something like
+
+	test_expect_code 1 git diff --no-prompt --tool=bad-tool branch >actual &&
+	>expect &&
+	test_cmp expect actual
 
 [...]
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-[...]
-> @@ -174,6 +183,9 @@ static struct discovery* discover_refs(const char *service)
->  			die("smart-http metadata lines are invalid at %s",
->  			    refs_url);
+>  # Specify the diff tool using $GIT_DIFF_TOOL
+>  test_expect_success PERL 'GIT_DIFF_TOOL variable' '
+> -	test_might_fail git config --unset diff.tool &&
+> +	difftool_test_setup &&
+> +	git config --unset diff.tool &&
+> +
+>  	GIT_DIFF_TOOL=test-tool &&
+>  	export GIT_DIFF_TOOL &&
 >  
-> +		if (verify_ref_advertisement(last->buf, last->len) < 0)
-> +			die("ref advertisement is invalid at %s", refs_url);
+>  	diff=$(git difftool --no-prompt branch) &&
+>  	test "$diff" = "branch" &&
+> -
+> -	restore_test_defaults
+> +	sane_unset GIT_DIFF_TOOL
 
-Won't this error out with
+If this test fails, GIT_DIFF_TOOL would remain set which could take
+down later tests, too.  Could it be set in a subprocess (e.g., a
+subshell) to avoid that?
 
-	protocol error: bad line length character: ERR
+	difftool_test_setup &&
+	git config --unset diff.tool &&
 
-instead of the current more helpful behavior for ERR lines?
+	echo branch >expect &&
+	GIT_DIFF_TOOL=test-tool git difftool --no-prompt branch >actual &&
+	test_cmp expect actual
 
-Same stylistic comment about "what would it mean for the return value
-to be positive?" as in patch 2/3.
+[...]
+>  test_expect_success PERL 'GIT_DIFF_TOOL overrides' '
+> -	git config diff.tool bogus-tool &&
+> -	git config merge.tool bogus-tool &&
+> -
+> +	difftool_test_setup &&
+> +	test_config diff.tool bogus-tool &&
+> +	test_config merge.tool bogus-tool &&
+>  	GIT_DIFF_TOOL=test-tool &&
+>  	export GIT_DIFF_TOOL &&
+>  
+>  	diff=$(git difftool --no-prompt branch) &&
 
-Aside from those two details, the idea looks sane, though.  Good
-catch, and thanks for a pleasant read.
+Likewise.
 
-Good night,
+[...]
+>  	GIT_DIFF_TOOL=bogus-tool &&
+>  	export GIT_DIFF_TOOL &&
+>  
+>  	diff=$(git difftool --no-prompt --tool=test-tool branch) &&
+
+Likewise.
+
+[...]
+>  test_expect_success PERL 'GIT_DIFFTOOL_NO_PROMPT variable' '
+> +	difftool_test_setup &&
+>  	GIT_DIFFTOOL_NO_PROMPT=true &&
+>  	export GIT_DIFFTOOL_NO_PROMPT &&
+>  
+>  	diff=$(git difftool branch) &&
+
+Likewise.
+
+[...]
+>  test_expect_success PERL 'GIT_DIFFTOOL_PROMPT variable' '
+> -	git config difftool.prompt false &&
+> +	difftool_test_setup &&
+> +	test_config difftool.prompt false &&
+>  	GIT_DIFFTOOL_PROMPT=true &&
+>  	export GIT_DIFFTOOL_PROMPT &&
+>  
+>  	prompt=$(echo | git difftool branch | tail -1) &&
+
+Likewise.  This one loses the exit status from 'git difftool',
+which could be avoided by writing to temporary files:
+
+	echo >input &&
+	GIT_DIFFTOOL_PROMPT=true git difftool branch <input >output &&
+	prompt=$(tail -1 <output) &&
+
+[...]
+>  test_expect_success PERL 'difftool last flag wins' '
+> +	difftool_test_setup &&
+>  	diff=$(git difftool --prompt --no-prompt branch) &&
+>  	test "$diff" = "branch" &&
+>  
+> -	restore_test_defaults &&
+> -
+>  	prompt=$(echo | git difftool --no-prompt --prompt branch | tail -1) &&
+[...]
+
+Likewise.
+
+Thanks for cleaning up, and sorry I don't have anything more
+substantial to offer.
+
+Hope that helps,
 Jonathan
