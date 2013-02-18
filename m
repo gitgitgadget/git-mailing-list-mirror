@@ -1,92 +1,93 @@
-From: greened@obbligato.org
-Subject: Re: [PATCH 13/13] contrib/subtree: Remove --annotate
-Date: Mon, 18 Feb 2013 12:39:56 -0600
-Message-ID: <87sj4t4gar.fsf@waller.obbligato.org>
-References: <1360037173-23291-1-git-send-email-greened@obbligato.org>
-	<1360037173-23291-14-git-send-email-greened@obbligato.org>
-	<7vobfzwd8g.fsf@alter.siamese.dyndns.org>
-	<87pq0frnmb.fsf@waller.obbligato.org>
-	<CABVa4NiyVksEn4+NqBPXpaWGYnP6FeUqeacLOnAOHtw9FgMJdA@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Google Summer of Code 2013 (GSoC13)
+Date: Tue, 19 Feb 2013 00:14:19 +0530
+Message-ID: <CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch> <20130218174239.GB22832@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: James Nylen <jnylen@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 19:41:25 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Paul Mackerras <paulus@samba.org>,
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	David Barr <b@rr-dav.id.au>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 18 19:45:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7VeQ-0002V8-8W
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 19:41:18 +0100
+	id 1U7Vi5-0004Qf-9o
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 19:45:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753828Ab3BRSkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 13:40:47 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:45134 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753710Ab3BRSkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 13:40:45 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <greened@obbligato.org>)
-	id 1U7Vfl-00087s-Th; Mon, 18 Feb 2013 12:42:42 -0600
-In-Reply-To: <CABVa4NiyVksEn4+NqBPXpaWGYnP6FeUqeacLOnAOHtw9FgMJdA@mail.gmail.com>
-	(James Nylen's message of "Tue, 5 Feb 2013 08:27:34 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  James Nylen <jnylen@gmail.com> writes: > I don't agree that
-    removing `--annotate` obviates the need for `--unannotate`. > > I responded
-    on 1/17 with what I think is a typical and normal use case > for that option:
-    [...] 
- Content analysis details:   (-2.9 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
- -1.9 BAYES_00               BODY: Bayes spam probability is 0 to 
+	id S1753010Ab3BRSol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 13:44:41 -0500
+Received: from mail-bk0-f45.google.com ([209.85.214.45]:47953 "EHLO
+	mail-bk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751580Ab3BRSol (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 13:44:41 -0500
+Received: by mail-bk0-f45.google.com with SMTP id i18so2681869bkv.32
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 10:44:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=UQHZoVR8QrezfOXp1KZztUgMSXlkcLx3kDjO954Lt+w=;
+        b=n8Kpuopq959iGJewCJSdkeAEAauDnrIuFik77zfAyWyfj5sSTPHaywr4ivHdee/cED
+         lJ6ADC4m40GFDpeQ9Svq6Y5/4f5Lf3jKlb3LIXXKcLzStmillIOEInFN1G2cYmRZE6x0
+         ln5ldPc/JyzFVEwVFvBQKe8LhzB29GFZYH9RWCRvBgw76Ioqu15yIhvH+Ki38MtvTu8j
+         /esXyRmjvNifzZLn53KH43uFLr4ljdD6mpHKhEsbtOoboUPoHnEEpH1hd69eSC60i9Wf
+         ObHQGE59/uKH2YctxzAyi+lyQEBUMOx398MaMDDEg2dcECrSatEYUHhLU0FxWjf5hPjC
+         Q4iQ==
+X-Received: by 10.204.146.91 with SMTP id g27mr5123825bkv.124.1361213079763;
+ Mon, 18 Feb 2013 10:44:39 -0800 (PST)
+Received: by 10.205.81.202 with HTTP; Mon, 18 Feb 2013 10:44:19 -0800 (PST)
+In-Reply-To: <20130218174239.GB22832@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216494>
 
-James Nylen <jnylen@gmail.com> writes:
+[corrected David Barr's email address]
 
-> I don't agree that removing `--annotate` obviates the need for `--unannotate`.
+Jeff King wrote:
+> And I do not want to blame the students here (some of whom are on the cc
+> list :) ). They are certainly under no obligation to stick around after
+> GSoC ends, and I know they have many demands on their time. But I am
+> also thinking about what Git wants to get out of GSoC (and to my mind,
+> the most important thing is contributors).
 >
-> I responded on 1/17 with what I think is a typical and normal use case
-> for that option:
+> As far as merged code, I think part of the problem is that git is fairly
+> mature at this point. The most interesting projects are of a bigger
+> scope than a student with no experience in the code base can do in a
+> summer project. Maybe that means we need to do a better job of breaking
+> projects down into reasonably sized sub-components. Or maybe it means
+> the project is hitting a point of diminishing returns for GSoC. I don't
+> know.
 
-Sorry, I must have missed that reply.
+I'll be frank here.  I think the main reason for a student to stick
+around is to see more of his code hit `master`.  I think it is
+absolutely essential to get students constantly post iteration after
+iteration on the list. It would be nice to get them connected with 2~3
+people in the community who will follow their progress and pitch in
+everytime they post an iteration.  It might also make sense to stage
+their work in the main tree (a gsoc/ namespace?), so we can just
+checkout to their branch to demo what they've done.
 
->  - add "fancylib" as a subtree of "myprog"
->  - commit to "myprog" repo: "fancylib: don't crash as much"
->  - split these commits back out to "fancylib" main repo, and remove
-> the "fancylib: " prefix
+Also, we need more projects that will scratch everyday itches.  A
+collection of related tiny features might not be a bad idea.  Often,
+we risk erring on the side of too-big-for-one-summer when it comes to
+specifying projects.  What's the harm of including something estimated
+to take 80% of a summer?
 
-I can see how that would be useful.
-
-> `--unannotate` is a clunky name, but I think this functionality is
-> worth taking another look at.  Maybe it could be called
-> `--remove-prefix` ?
-
-Should this really be a function of git-subtree?  It seems like it would
-fit better in a history-rewriting command.  Wouldn't rebase -i or even
-filter-branch be a better way to do this?
-
-If there's no --annotate I don't see why git-subtree should have the
---unannotate functionality.
-
-Again, I agree that your example is relevant, maybe even common, but I
-don't necessarily think git-subtree should be in the business of
-rewriting commit messages at all.
-
-I'd appreciate more thoughts from you on this.  I want to make sure we
-can support your use case.
-
-                         -David
+On a related note, I don't like our Wiki.  It's down half the time,
+and it's very badly maintained.  I want to write content for our Wiki
+from the comfort of my editor, with version control aiding me.  And I
+can't stand archaic WikiText.
