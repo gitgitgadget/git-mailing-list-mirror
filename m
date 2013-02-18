@@ -1,87 +1,77 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 04/10] pkt-line: change error message for oversized
- packet
-Date: Mon, 18 Feb 2013 04:49:59 -0500
-Message-ID: <20130218094959.GA16408@sigill.intra.peff.net>
-References: <20130218091203.GB17003@sigill.intra.peff.net>
- <20130218092221.GD5096@sigill.intra.peff.net>
- <7vd2vyarjy.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCHv2 0/10] pkt-line and remote-curl cleanups server
+Date: Mon, 18 Feb 2013 04:55:37 -0500
+Message-ID: <20130218095537.GL5096@sigill.intra.peff.net>
+References: <20130216064455.GA27063@sigill.intra.peff.net>
+ <20130216064929.GC22626@sigill.intra.peff.net>
+ <20130217110533.GF6759@elie.Belkin>
+ <20130217192830.GB25096@sigill.intra.peff.net>
+ <20130218014113.GC3221@elie.Belkin>
+ <20130218091203.GB17003@sigill.intra.peff.net>
+ <7vhalaas2b.fsf@alter.siamese.dyndns.org>
+ <20130218093335.GK5096@sigill.intra.peff.net>
+ <7v8v6mar4e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
 	"Shawn O. Pearce" <spearce@spearce.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 10:50:38 2013
+X-From: git-owner@vger.kernel.org Mon Feb 18 10:56:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7NMr-0004GM-JT
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 10:50:37 +0100
+	id 1U7NS8-0006La-Rj
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 10:56:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757009Ab3BRJuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 04:50:12 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51728 "EHLO
+	id S1757454Ab3BRJzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 04:55:40 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51740 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754445Ab3BRJuK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 04:50:10 -0500
-Received: (qmail 18003 invoked by uid 107); 18 Feb 2013 09:51:40 -0000
+	id S1753976Ab3BRJzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 04:55:39 -0500
+Received: (qmail 18077 invoked by uid 107); 18 Feb 2013 09:57:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Feb 2013 04:51:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Feb 2013 04:49:59 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Feb 2013 04:57:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Feb 2013 04:55:37 -0500
 Content-Disposition: inline
-In-Reply-To: <7vd2vyarjy.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7v8v6mar4e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216462>
 
-On Mon, Feb 18, 2013 at 01:40:17AM -0800, Junio C Hamano wrote:
+On Mon, Feb 18, 2013 at 01:49:37AM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> The logic behind the comment "we do not buffer, but we should" is
+> that flush tells the receiver that the sending end is "done" feeding
+> it a class of data, and the data before flush do not have to reach
+> the receiver immediately, hence we can afford to buffer on the
+> sending end if we can measure that doing so would give us better
+> performance. We haven't measure and turned buffering on yet.
 > 
-> > I'm really tempted to bump all of our 1000-byte buffers to just use
-> > LARGE_PACKET_MAX. If we provided a packet_read variant that used a
-> > static buffer (which is fine for all but one or two callers), then it
-> > would not take much memory...
-> 
-> I thought that 1000-byte limit was kept when we introduced the 64k
-> interface to interoperate with other side that does not yet support
-> the 64k interface. Is your justification that such an old version of
-> Git no longer matters in the real world (which is true, I think), or
-> we use 1000-byte limit in some codepaths even when we know that we
-> are talking with a 64k-capable version of Git on the other side?
+> But when dying, we may of course have data before flushing. We may
+> disconnect (by dying) without showing flush (or preceding ERR) to
+> the other side, and for that reason, not relying on the flush packet
+> on the receiving end is a good change. Once we turn buffering on, we
+> probably need to be careful when sending an ERR indicator by making
+> it always drain any buffered data and show the ERR indicator without
+> buffering, or something.
 
-I should have been more clear that I want to bump only the _reading_
-side, not the writing.
+Yeah, I'd agree. An ERR packet should always be accompanied by a flush
+(whether an actual flush packet or not doesn't really matter, but
+definitely a buffer flush on the sender). But I think that is really the
+sender's problem, and we can deal with it there if and when we buffer.
 
-The sideband-64k capability bumps the sideband chunk size. But the size
-for packetized ref advertisement lines has remained at 1000. Which it
-must, since we start outputting them before doing capability
-negotiation. The sender will die before writing a longer ref line (see
-pkg-line.c:format_packet), and most of the reading callsites feed a
-1000-byte buffer to packet_read_line (which will die if we get a larger
-packet). So the upgrade path for that would be:
-
-  1. Git bumps up all reading buffers to LARGE_PACKET_MAX, just in case.
-     This immediately covers us for any alternate implementations that
-     send larger ref packets (I do not know if any exist, but the
-     documentation does not mention this limitation at all, so I would
-     not be surprised if other implementations just use LARGE_PACKET_MAX
-     as a maximum).
-
-  2. Many years pass. We decide that Git v1.8.2 and older are ancient
-     history and not worth caring about.
-
-  3. We bump the 1000-byte limit for format_packet to LARGE_PACKET_MAX.
-
-This is not pressing at all; I wouldn't have even noticed it if I hadn't
-been wondering how large to make the new buffer I was adding in a later
-patch. I have not heard of anyone running up against this limit in
-practice. But it's easy to do (1), and it starts the clock ticking for
-the 1000-byte readers to become obsolete.
+>From the receiver's end, they simply want to be liberal in interpreting
+an ERR as the end of the data stream. They do not have to be picky about
+whether it is followed by more data, or by a flush packet, or whatever.
+But that is not a change I am introducing; that is how get_remote_heads
+has always worked. I am merely correcting the proposed change from v1 of
+the series that did not correctly take that into account (and therefore
+regressed the error message in the ERR case).
 
 -Peff
