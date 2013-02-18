@@ -1,110 +1,127 @@
-From: martinerikwerner@gmail.com
-Subject: [PATCH v2] shell-prompt: clean up nested if-then
-Date: Mon, 18 Feb 2013 23:59:03 +0100
-Message-ID: <5122b23b.512e980a.32b9.ffffa580@mx.google.com>
-References: <1361228206.17734.4.camel@mas>
-Cc: git@vger.kernel.org, trsten@science-computing.de,
-	felipe.contreras@gmail.com,
-	Martin Erik Werner <martinerikwerner@gmail.com>
-To: s.oosthoek@xs4all.nl, jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Mon Feb 18 23:59:37 2013
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Google Summer of Code 2013 (GSoC13)
+Date: Mon, 18 Feb 2013 15:03:03 -0800
+Message-ID: <20130218230303.GC4022@elie.Belkin>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
+ <20130218174239.GB22832@sigill.intra.peff.net>
+ <20130218193424.GC3234@elie.Belkin>
+ <20130218205532.GB27308@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Paul Mackerras <paulus@samba.org>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	David Michael Barr <davidbarr@google.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 19 00:03:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7ZgM-0005n6-Ji
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 23:59:34 +0100
+	id 1U7ZkF-0007iw-Cd
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 00:03:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757551Ab3BRW7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 17:59:10 -0500
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:44295 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757512Ab3BRW7J (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 17:59:09 -0500
-Received: by mail-lb0-f182.google.com with SMTP id gg6so4693438lbb.13
-        for <git@vger.kernel.org>; Mon, 18 Feb 2013 14:59:08 -0800 (PST)
+	id S1757535Ab3BRXDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 18:03:11 -0500
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:37901 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752354Ab3BRXDK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 18:03:10 -0500
+Received: by mail-pb0-f54.google.com with SMTP id rr4so1875797pbb.13
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 15:03:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=grfV9d0uy0pDBPb1aM3LBm/XF8r47fiUMLsGT+U7F7Y=;
-        b=PDO2muanvXuqtPa/oa5vO+Lr2QLORoYicXbMYE2P3s3b6xTOGFlRvEqAber8LAjEMg
-         YfernxBmN9O3k43Glbg+ooTIipppTlYM1lT4HPHTXQEWI6XoXTs/qQMXdhe78T0eIp2k
-         N3UeGE5l05vTjejQQhGFSxQYzb6nQNVGZ2M3DtWO188oCrTg3aAv2s51iGHT0p5SnRJK
-         SOHFwUnfF17WF9DULddKYgcotJtw0zO9fAZOIqHsGy0Bzbyk4a7Aj8dUoU81N/jxWEN7
-         duuDqMUfRUq1NDEAw7w7IrMJ6lPXVybF8BEwKfHISHtawTYM/ocOJhEeUJm7FHGhDfIx
-         1VoA==
-X-Received: by 10.152.105.17 with SMTP id gi17mr12027774lab.46.1361228347999;
-        Mon, 18 Feb 2013 14:59:07 -0800 (PST)
-Received: from mas (student-247-62.eduroam.uu.se. [130.238.247.62])
-        by mx.google.com with ESMTPS id t17sm15640512lam.9.2013.02.18.14.59.06
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 18 Feb 2013 14:59:07 -0800 (PST)
-Received: from arand by mas with local (Exim 4.80)
-	(envelope-from <arand@mas>)
-	id 1U7Zfs-0005h0-Sp; Mon, 18 Feb 2013 23:59:04 +0100
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1361228206.17734.4.camel@mas>
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=/euKEzm0pPJh7Re80QdVDtF74dqYYkhSpeJMeZDcN84=;
+        b=Q2k/5phDey0Mw31RG33i4SWtRMcqbU1iG+A0Db6NyvArCRNobOe4bmO5BLZLFJVYxW
+         DyqgBfTyB39QDKvlYx3FruTDnU+OSbABVjXZX+phEYzY4yO1R6adM0ojbmOGgsDjKVal
+         ffqao/FaQtGeav5XF8D27YARYoSCShSR/kKwSSY1tEJIIJM2K9bnZ2xcJzInMGlhvaFU
+         0G6CTYXf2x++fSiSyex2TnLE+sXoglTVyY/LfYz11dps1+kYIHr/B9SyGgaHb+rWsM2L
+         Li3S4KdpmW3Bc74vKG91HbGXsikxAc5udIcBW+iGjsDOP+dSZ4usDNw9SCDEYti8tSHD
+         Ro4w==
+X-Received: by 10.66.243.169 with SMTP id wz9mr40140137pac.34.1361228589027;
+        Mon, 18 Feb 2013 15:03:09 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id b9sm15753602pba.6.2013.02.18.15.03.06
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 18 Feb 2013 15:03:07 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20130218205532.GB27308@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216547>
 
-From: Martin Erik Werner <martinerikwerner@gmail.com>
+Jeff King wrote:
+> On Mon, Feb 18, 2013 at 11:34:24AM -0800, Jonathan Nieder wrote:
 
-Minor clean up of if-then nesting in checks for environment variables
-and config options. No functional changes.
+>> Some potential projects (unfiltered --- please take them with a grain
+>> of salt):
+>> [...]
+>>  - collaborative notes editing: fix the default notes refspec,
+>>    make sure the "notes pull" workflow works well and is documented
+>>    well, offer an easy way to hide private notes after the fact
+>>    without disrupting public history
+>
+> I know you said a grain of salt, so please don't feel like I'm beating
+> up on your idea. I'm picking this one because I think it has some
+> characteristics of projects that have not gone well in the past, so it's
+> a good illustrative example.
+>
+> IMHO, this is the type of project that is likely to fail, because most
+> of the work is not technical at all, but political. Changing the default
+> refspecs is a few lines of code. But the hard part is figuring out where
+> they should go, the implications of doing so, and how people are going
+> to react.
 
-Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
----
- contrib/completion/git-prompt.sh |   27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+I think I agree, if by "likely to fail" you mean "easy to underestimate
+the difficulty of".  I actually think it would be a pretty good summer
+student project, for a few related reasons:
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 9b2eec2..341422a 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -320,26 +320,25 @@ __git_ps1 ()
- 				b="GIT_DIR!"
- 			fi
- 		elif [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
--			if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ]; then
--				if [ "$(git config --bool bash.showDirtyState)" != "false" ]; then
--					git diff --no-ext-diff --quiet --exit-code || w="*"
--					if git rev-parse --quiet --verify HEAD >/dev/null; then
--						git diff-index --cached --quiet HEAD -- || i="+"
--					else
--						i="#"
--					fi
-+			if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
-+			   [ "$(git config --bool bash.showDirtyState)" != "false" ]
-+			then
-+				git diff --no-ext-diff --quiet --exit-code || w="*"
-+				if git rev-parse --quiet --verify HEAD >/dev/null; then
-+					git diff-index --cached --quiet HEAD -- || i="+"
-+				else
-+					i="#"
- 				fi
- 			fi
- 			if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
- 				git rev-parse --verify refs/stash >/dev/null 2>&1 && s="$"
- 			fi
- 
--			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ]; then
--				if [ "$(git config --bool bash.showUntrackedFiles)" != "false" ]; then
--					if [ -n "$(git ls-files --others --exclude-standard)" ]; then
--						u="%"
--					fi
--				fi
-+			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
-+			   [ "$(git config --bool bash.showUntrackedFiles)" != "false" ] &&
-+			   [ -n "$(git ls-files --others --exclude-standard)" ]
-+			then
-+				u="%"
- 			fi
- 
- 			if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
--- 
-1.7.10.4
+ * Years of evidence show it is a hard problem.  It would be a good
+   notch in the belt of whoever takes the project on.
+
+ * It does not require a deep understanding of git internals.  A good
+   familiarity with the git user interface, on the other hand, would
+   be essential, but I hope that is becoming more common among
+   students these days.
+
+ * It requires good taste and design sense, which are something it
+   would be nice to cultivate and encourage.
+
+ * The change is necessary and the satisfaction of helping a student
+   through the process might be enough to finally get it done.
+
+ * If an amazing candidate finishes the "make collaboration possible"
+   task early, there's plenty of valuable, interesting, and technically
+   complicated follow-on work regarding the related "share some notes
+   while hiding others" to fill the rest of the summer.
+
+The code change for the most basic subset of "make collaboration
+possible" would presumably be a changed refspec, some documentation,
+and some tests.  On top of that there is presumably some automagic
+incorporation of upstream notes to be cooked into "git pull".  Some
+better conflict-resolution magic.  Example scripts to generate notes.
+Support for the format-patch / am workflow.  gitweb support for
+showing notes.
+
+It's a good example of when it's useful to not be afraid of failing to
+please everybody and just get something done.
+
+I also can't think of any examples of such technically straightforward
+student projects being tried before.
+
+Jonathan
