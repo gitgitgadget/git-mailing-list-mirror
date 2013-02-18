@@ -1,74 +1,84 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv2 06/10] pkt-line: share buffer/descriptor reading
- implementation
-Date: Mon, 18 Feb 2013 02:54:41 -0800
-Message-ID: <20130218105440.GI7049@elie.Belkin>
+Subject: Re: [PATCHv2 05/10] pkt-line: rename s/packet_read_line/packet_read/
+Date: Mon, 18 Feb 2013 03:05:56 -0800
+Message-ID: <20130218110556.GA9294@elie.Belkin>
 References: <20130218091203.GB17003@sigill.intra.peff.net>
- <20130218092612.GF5096@sigill.intra.peff.net>
- <20130218104350.GF7049@elie.Belkin>
- <20130218104804.GB16408@sigill.intra.peff.net>
+ <20130218092252.GE5096@sigill.intra.peff.net>
+ <20130218101915.GE7049@elie.Belkin>
+ <20130218102931.GP5096@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 18 11:55:12 2013
+X-From: git-owner@vger.kernel.org Mon Feb 18 12:06:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7ONL-0003y0-Sk
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 11:55:12 +0100
+	id 1U7OYK-0008Rp-BR
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 12:06:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751771Ab3BRKys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 05:54:48 -0500
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:46673 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751598Ab3BRKyq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 05:54:46 -0500
-Received: by mail-pa0-f44.google.com with SMTP id kp1so2804302pab.17
-        for <git@vger.kernel.org>; Mon, 18 Feb 2013 02:54:46 -0800 (PST)
+	id S1751710Ab3BRLGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 06:06:07 -0500
+Received: from mail-da0-f46.google.com ([209.85.210.46]:64281 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751045Ab3BRLGG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 06:06:06 -0500
+Received: by mail-da0-f46.google.com with SMTP id p5so2439320dak.5
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 03:06:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=hJC5zzMHscR3vPG6aGZ9vzluhJtO7od2P8qG9pyMr78=;
-        b=knirDGFdSAx8DOC8vRbtpp+PqjFb3/jQ7mDmp/VOvX3oa6wGeQh9OXqreOmmZCpsEz
-         Vn98mwB9O9werTwwkkNQe0Kv95a8prs9WvzYT+Qb4yj/YykeWsstc0cift5IC3SjGOXS
-         jmDRZ56jzfneII7GRLEVFPNW16CMGTEDxeiG7rkx8zR3K1I7lTXkkAhFxinjn5Ye1wbH
-         wYprve1U/T3hlAkiPMmmvdlI4VT2IKdQFHiyTGGmZuOXfLpuOLeSL5Wq4Fgh1R2wk2ha
-         qdk1NODcjHJuMSgWNBSUGr4IatkpcVbt213MbiJHuO+a0KPPrDjSae/oe5b2iY8b665i
-         8P1Q==
-X-Received: by 10.68.83.38 with SMTP id n6mr28730197pby.28.1361184886426;
-        Mon, 18 Feb 2013 02:54:46 -0800 (PST)
+        bh=sqmQdIfKIuIjCN/LX7YY0AWiM2J/IfqDuTIr4Qi5nbs=;
+        b=0PY0IRQyVCPV5lSLK3F6SclyIIO0g1EGC63r6XM5qW5xXiIzAcyj11iV7sMqekUrR+
+         IUzACviH/17l1qbhSeO8Y+bzpkH6a1litXoBcKXCDC57DtTnrsAOysjGliVZGqCO0t3D
+         QN8JTPfXgCEA5tj4hB0GYJKS3aHg+vkH7qtR1LsmjvMLoKYQaKxYjcLcmMxDoLhs9ZEu
+         DnOvI0/1EapUz9Bq7hrsfw3sj9xMU88ZblEmSusTkW4VZ5XFJ8saDuugmQjx6f3W4ygn
+         YJ3AjvBhlAe+9m8EJDLD8I7hU2AMvolrj/fKYR74OSSgOSE7otX64t/6l5sjuO7jQDLv
+         2zxA==
+X-Received: by 10.68.227.202 with SMTP id sc10mr29049923pbc.109.1361185564937;
+        Mon, 18 Feb 2013 03:06:04 -0800 (PST)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id y10sm14127778pbf.39.2013.02.18.02.54.44
+        by mx.google.com with ESMTPS id qb10sm14155347pbb.43.2013.02.18.03.06.02
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Feb 2013 02:54:45 -0800 (PST)
+        Mon, 18 Feb 2013 03:06:03 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20130218104804.GB16408@sigill.intra.peff.net>
+In-Reply-To: <20130218102931.GP5096@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216477>
 
 Jeff King wrote:
+> On Mon, Feb 18, 2013 at 02:19:15AM -0800, Jonathan Nieder wrote:
 
-> But is it noisy about a missing pipe? We do not get EPIPE for reading.
-
-Ah, that makes more sense.
-
-[...]
->>> +		len = packet_read_from_buf(line, sizeof(line), &last->buf, &last->len);
->>> +		if (len && line[len - 1] == '\n')
->>> +			len--;
+>> In combination with patch 3, this changes the meaning of packet_read()
+>> without changing its signature, which could make other patches
+>> cherry-picked on top change behavior in unpredictable ways. :(
 >>
->> Was anything guaranteeing that buffer.len < 1000 before this change?
+>> So I'd be all for this if the signature changes (for example to put
+>> the fd at the end or something), but not so if not.
 >
-> No. That's discussed in point (3) of the "implications" in the commit
-> message.
+> True. Though packet_read has only existed since last June, only had one
+> callsite (which would now conflict, since I'm touching it in this
+> series), and has no new calls in origin..origin/pu. So it's relatively
+> low risk for such a problem. I don't know how careful we want to be.
 
-Thanks.  Sorry I missed it the first time.
+I was unclear.  What I am worried about is that someone using a
+version of git without this patch will try some yet-to-be-written
+patch using packet_read from the mailing list and not notice that they
+are using the wrong function.  For example, if someone is using
+1.7.12.y or 1.8.1.y and wants to try a patch from after the above,
+they would get subtly different and wrong results.
+
+The rule "change the name or signature when breaking the ABI of a
+global function" is easy to remember and follow.  I think we want not
+to have to be careful at all, and such rules can help with that. :)
+
+Thanks,
+Jonathan
