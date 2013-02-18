@@ -1,113 +1,140 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: feature request
-Date: Mon, 18 Feb 2013 15:45:11 -0500
-Message-ID: <20130218204511.GA27308@sigill.intra.peff.net>
-References: <BLU0-SMTP2753D5BFC50D7334EDDE278E1F40@phx.gbl>
- <CABVa4NgsbeNGS2F2jQJ5d9bDcFb4=oEVrBg_-n2eYjwnfQzMqA@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Google Summer of Code 2013 (GSoC13)
+Date: Tue, 19 Feb 2013 02:14:54 +0530
+Message-ID: <CALkWK0mKZLotuu7pEM_3Of3i6JzU12QV_pHxOZTUr22TOq3PeQ@mail.gmail.com>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch> <20130218174239.GB22832@sigill.intra.peff.net>
+ <20130218193424.GC3234@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Jay Townsend <townsend891@hotmail.com>, git@vger.kernel.org
-To: James Nylen <jnylen@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
+	git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Paul Mackerras <paulus@samba.org>,
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	David Barr <b@rr-dav.id.au>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
 X-From: git-owner@vger.kernel.org Mon Feb 18 21:45:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7Xat-0007fR-Ek
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 21:45:47 +0100
+	id 1U7Xat-0007fR-UU
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 21:45:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755686Ab3BRUpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 15:45:15 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52242 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753494Ab3BRUpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 15:45:14 -0500
-Received: (qmail 24283 invoked by uid 107); 18 Feb 2013 20:46:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Feb 2013 15:46:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Feb 2013 15:45:11 -0500
-Content-Disposition: inline
-In-Reply-To: <CABVa4NgsbeNGS2F2jQJ5d9bDcFb4=oEVrBg_-n2eYjwnfQzMqA@mail.gmail.com>
+	id S1757317Ab3BRUpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 15:45:19 -0500
+Received: from mail-bk0-f52.google.com ([209.85.214.52]:48113 "EHLO
+	mail-bk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753494Ab3BRUpQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 15:45:16 -0500
+Received: by mail-bk0-f52.google.com with SMTP id jk13so2678477bkc.25
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 12:45:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=IRQyvFF4nW4ZfQ0nwcFlOzgv6zuwYeneBYriPOep/Uc=;
+        b=Gb3CKO9tx/ZHE0Ajnnjlx+q2kVxikGbKQvuK+gQtFN2f1sFxeYBnSix4CaAH4jnxzv
+         xgAo2L+TcXc9FZZYnUexKZMegi53nCJOIJ1UN+yDDqyKv8UpUYDgMaNG6TNh4i90vUAB
+         Z+08onbimItTMa7Mpsw/NAyEJTtAHrLimZl+QKAQQE4y0wgzX1TT978pXyCVmuCeTgum
+         VJ4BTimxaHDyP3vrNt0aixocThNki17Z5NNMjlc13i724EdxwxELm1jEIA8nGjXId82j
+         INkOqcAO6eMK86dmWsu+4PxRP2uhjwzhvyhqviIdT5Y85HicxbOtoTHQj7gAUdhWOCPy
+         PDAw==
+X-Received: by 10.204.150.134 with SMTP id y6mr5365392bkv.15.1361220314442;
+ Mon, 18 Feb 2013 12:45:14 -0800 (PST)
+Received: by 10.205.81.202 with HTTP; Mon, 18 Feb 2013 12:44:54 -0800 (PST)
+In-Reply-To: <20130218193424.GC3234@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216517>
 
-On Mon, Feb 18, 2013 at 02:54:30PM -0500, James Nylen wrote:
+Jonathan Nieder wrote:
+> Hi,
+>
+> Jeff King wrote:
+>
+>> I will do it again, if people feel strongly about Git being a part of
+>> it. However, I have gotten a little soured on the GSoC experience. Not
+>> because of anything Google has done; it's a good idea, and I think they
+>> do a fine of administering the program. But I have noticed that the work
+>> that comes out of GSoC the last few years has quite often not been
+>> merged, or not made a big impact in the codebase, and nor have the
+>> participants necessarily stuck around.
+>
+> I think that if we can commit enough time to mentor well it's
+> worthwhile.  Even such a negative result is useful, since it can teach
+> us how good or poor we are at bringing new contributors in and what
+> parts of that process need more work.
 
-> > Just would like to request a security feature to help secure peoples github
-> > accounts more by supporting 2 factor authentication like the yubikey more
-> > information can be found from this link www.yubico.com/develop/ and googles
-> > 2 factor authentication. Hope it gets implemented as I think it would make a
-> > great feature
-> 
-> This would most likely be something that users would set up with their
-> SSH client, and GitHub would have to provide support for it on their
-> servers as well.  It shouldn't require any changes to git.  Here is an
-> example of how this could be done:
-> 
-> http://www.howtogeek.com/121650/how-to-secure-ssh-with-google-authenticators-two-factor-authentication/
-> 
-> I like the idea, and I would probably use it if it were available.
-> Jeff, what do you think?
+The point is that we must be willing to spend time learning what went
+wrong the previous summer, and how to improve upon it.  There's no
+point in doing a lather-rinse-repeat after many consecutive failures.
 
-When you are talking about something like GitHub, there are a lot of
-times and methods to authenticate: logging into the web service, using
-an ssh key for git-over-ssh, using a password for git-over-http, tokens
-for API access, and probably more that I can't think of right now.
+> Some potential projects (unfiltered --- please take them with a grain
+> of salt):
+>
+>  - cross-compilable git
 
-Logging into the web page can add 2-factor auth pretty easily, since
-it's a web form.
+Why, exactly?  Git for embedded devices?
 
-Git over ssh can also do so without changes to git, because we rely on
-ssh to do all of the interactive authentication.  However, I wonder how
-many people would be that interested in it, as key auth already provides
-some degree of two factor protection, assuming you protect your key with
-a passphrase (the threat model is different, of course, because the two
-factors are happening on the client, and do not involve the server at
-all).
+>  - incorporation of the cgit web interface, or formalizing a subset of
+>    libgit.a to export as a stable library to it
 
-Git over http _would_ need git client support, since it asks the user
-for the password directly. Or at the very least some clever encoding
-scheme where your password becomes "<real_password>:<2FA_pass>" or
-something. But I'm not sure that people want raw two-factor
-authentication for pushes. It's a giant pain, and people were recently
-happy to move to password-less pushes via credential helpers; this would
-move in the opposite direction.
+I didn't understand this: you want cgit in-tree?
 
-The thing that makes 2FA usable in the web browser setting is that you
-authenticate only occasionally, and get a token (i.e., a cookie) from
-the server that lets you have a longer session without re-authenticating.
-I suspect a usable 2FA scheme for http pushes would involve a special
-credential helper that did the 2FA auth to receive a cookie on the first
-use, cached the cookie, and then provided it for subsequent auth
-requests. That would not necessarily involve changing git, but it would
-mean writing the appropriate helper (and the server side to match). I
-seem to recall Shawn mentioning that Google does something like this
-internally, but I don't know the details[1].
+>  - moving forward on a project that was the subject of a previous
+>    gsoc project: line-level logging, "rebase --interactive" on top of
+>    sequencer, usable svn remote helper
 
-So yes. It's an interesting direction to go, but I think there's a fair
-bit of work, and it needs to be broken down into how specific services
-will interact with it. The first step would probably be securing the web
-login with it, since that is the easiest one to do, and also the most
-powerful interface (the other ones just let you push or fetch code; the
-web interface lets you delete repos, change passwords, access billing,
-etc).
+I can't see a roadmap for gradually phasing out `rebase -i` as more
+and more of its functionality is built into the sequencer.  Would you
+start by using `cherry-pick --continue` in the special case of
+consecutive `pick` or `revert` operations (yuck)?  The sequencer
+currently has a continuation logic that we can leverage, but how will
+it call out to shell functions to do specific tasks (like `fixup`,
+which is not yet implemented)?  Really, the only way I see is to
+duplicate the functionality of `rebase -i` in C, and throw away the
+shell script when we're sure we're done.
 
-But that first step is something that would happen entirely at GitHub,
-with no client support necessary. We don't have schedules or plans, and
-we don't promise features. So I can neither confirm nor deny that people
-are working on it right now.
+For usable svn remote helper, the major TODO is a git -> svn bridge.
+My previous effort (which was a long time) was stalled because we
+needed a way to persist blobs of text referenced by marks, and
+retrieve them on demand.  Building this bridge is hard enough already,
+and I think we should just focus on an independent git -> svn bridge
+to put into contrib/svn-fi as a deliverable.  It doesn't have to have
+anything to do with remote helpers at all.
 
--Peff
+>  - drag-and-drop cherry-pick in gitk
 
-[1] I don't know if Google's system is based on the Google Authenticator
-    system. But it would be great if there could be an open,
-    standards-based system for doing 2FA+cookie authentication like
-    this. I'd hate to have "the GitHub credential helper" and "the
-    Google credential helper". I'm not well-versed enough in the area to
-    know what's feasible and what the standards are.
+You expect someone to write Tcl/Tk today?  Do a `git log gitk-git/`
+and tell me how many people are writing it.
+
+>  - a sub-library of code shared with libgit2 (might be hard because
+>    our notions of strings are different :().
+>
+>  - assimilating the distro builds: "make deb-pkg", "make rpm-pkg",
+>    etc along the same lines as the linux kernel's script/package/,
+>    to help people get recent git installed when they want it
+
+Overkill.  I just symlink to bin-wrapper/git from a place high up in
+my $PATH.  If anything, we should be making it easier for ourselves to
+run different versions of git right from $HOME, much like rbenv.
+System-wide installs are taken care of by the distribution package
+managers, and I doubt they need any help from us.
+
+>  - collaborative notes editing: fix the default notes refspec,
+>    make sure the "notes pull" workflow works well and is documented
+>    well, offer an easy way to hide private notes after the fact
+>    without disrupting public history
+
+I personally don't care for notes much, because I can't see practical
+usecases.  I'd much rather fix something that's much more widely used
+and broken: submodules.
