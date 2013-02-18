@@ -1,59 +1,81 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git clone tag shallow
-Date: Mon, 18 Feb 2013 13:49:52 +0700
-Message-ID: <CACsJy8Dso-g7foyJhpY20DNrY11PA8ZZUmP6JXxsiJ_Ggbt_KA@mail.gmail.com>
-References: <CAByu6UWEF48XvTmRnVDb2Bqxy1dNdUSXpTuy804215Vgs_KJxw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Please pull l10n updates for 1.8.2 round 2
+Date: Mon, 18 Feb 2013 00:02:10 -0800
+Message-ID: <7vwqu6aw3h.fsf@alter.siamese.dyndns.org>
+References: <CANYiYbHRzS6EUgRBekc+m0Sf3nYDcb9108xk1goH+=QDw36EDA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Thibault Kruse <tibokruse@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 07:50:56 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Byrial Jensen <byrial@vip.cybercity.dk>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	David =?utf-8?B?SHJiw6HEjQ==?= <david@hrbac.cz>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 09:02:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7KYw-0007Os-Uu
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 07:50:55 +0100
+	id 1U7LgM-0004BE-I8
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 09:02:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751735Ab3BRGu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 01:50:26 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:64337 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484Ab3BRGu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 01:50:26 -0500
-Received: by mail-ob0-f171.google.com with SMTP id x4so5300965obh.30
-        for <git@vger.kernel.org>; Sun, 17 Feb 2013 22:50:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=DJeNpIQF/y/UBgNcTTMYWA0+WtGIF+h1arqHGcueM80=;
-        b=fHKAeOtXg6oPnb2LlAnN5fkDrgezdMQnoLar0DbOqAfHVmuw9nOrgF4lDgbaRJkKj1
-         Rg06yZahFSD7SNS7eZ5vXmNvnL9RGPV1o+DKNia0DoZPxYCouD6IKAXxEBcYiw2WfoVR
-         kA/UfZCuHbu83M9f9GBIhZWCd6p2b37/1z+bZuPhlhGk+3TdDlYcTsb5NsEIJo5vUc4P
-         877ctvCge1cxyNsyiI7Cs3k+5zUUt54k7cZYpA0QCM9yDZOxZJIt9GDUwBKU/QX7sSGr
-         FadsTPisRDAZXindsgK6EM/Sm/oDnHXPKEmMD35XxyCuNfvPTKrL+xHkuB1fVT/6p/Od
-         Yvtg==
-X-Received: by 10.60.32.67 with SMTP id g3mr5496543oei.77.1361170224396; Sun,
- 17 Feb 2013 22:50:24 -0800 (PST)
-Received: by 10.76.154.197 with HTTP; Sun, 17 Feb 2013 22:49:52 -0800 (PST)
-In-Reply-To: <CAByu6UWEF48XvTmRnVDb2Bqxy1dNdUSXpTuy804215Vgs_KJxw@mail.gmail.com>
+	id S1751937Ab3BRICO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 03:02:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43182 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751788Ab3BRICN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 03:02:13 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4B13A0C3;
+	Mon, 18 Feb 2013 03:02:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ijdgWpF1+kGduXblaGU4Pe4zzjw=; b=ocXhCo
+	9/zkaH3guu+RcaVt7v3X3EQkKzWbCnPIYTQhmtZdptqCvR3qrTePZWMSyOFytLin
+	X2Af7oT9BU7RNLsUQ1+7O3Lsal9SVpMPz8FzNX5GkHlfYPj5BQFRtsX8d67Xj2DT
+	2tno+t5TbKPcZK0kaN2+VG1IDhtAmpPvhgN0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sKu+/pFCEDe+0aSk0CvPWnqiEQaUeMr/
+	PKXNMhNLuV6u82PI9F03wZr0CVvDVlwAH2pSmPQ+Eu2YLglQVHe2zsfuOj9+hFyK
+	eF+jgREwdkrbkRIOXTjqO7wo+24yDcuFcI7s3Wke5qCVpHX+8X/xbQRQWEJOvg/i
+	OpVxZWg8ymc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9A65A0C2;
+	Mon, 18 Feb 2013 03:02:12 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 651C3A0C1; Mon, 18 Feb 2013
+ 03:02:12 -0500 (EST)
+In-Reply-To: <CANYiYbHRzS6EUgRBekc+m0Sf3nYDcb9108xk1goH+=QDw36EDA@mail.gmail.com> (Jiang
+ Xin's message of "Mon, 18 Feb 2013 14:41:19 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 805C902A-79A1-11E2-B6F6-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216441>
 
-On Mon, Feb 18, 2013 at 2:13 AM, Thibault Kruse
-<tibokruse@googlemail.com> wrote:
-> Hi all,
+Jiang Xin <worldhello.net@gmail.com> writes:
+
+> Please pull l10n updates for git 1.8.2 round 2.
 >
-> I notice that using git 1.8.3, I can call
-> git clone repo1 repo2 --branch tagname
-> with a tag, not a branch. Is this going to be a stable and documented feature?
+> BTW, I find there are new updates in master branch and next branch:
+>
+>     $ po-helper.sh check update
+>     New l10n updates found in "master" branch of remote "<kernel>":
+>         5 new messages.
+>
+>     New l10n updates found in "next" branch of remote "<kernel>":
+>         6 new, 2 removed messages.
+>
+> So there will be another 1 or 2 rounds of translations.
 
-There is a test for --branch=tag in t5601, so I say it's supported. If
-the document is not clear, patches are welcome.
--- 
-Duy
+Thanks.
