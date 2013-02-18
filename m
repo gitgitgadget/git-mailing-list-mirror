@@ -1,86 +1,178 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 1/9] user-manual: Use 'remote add' to setup push URLs
-Date: Sun, 17 Feb 2013 18:15:43 -0800
-Message-ID: <20130218021543.GA4626@elie.Belkin>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/9] user-manual: Reorganize the reroll sections,
+ adding 'git rebase -i'
+Date: Sun, 17 Feb 2013 18:23:11 -0800
+Message-ID: <7v621qe4xc.fsf@alter.siamese.dyndns.org>
 References: <20130217170606.GA3432@odin.tremily.us>
  <cover.1361146398.git.wking@tremily.us>
- <0016ba69f4157996dfbe66938056c4192bed62c1.1361146398.git.wking@tremily.us>
- <7vbobie62v.fsf@alter.siamese.dyndns.org>
+ <31c45d95acaf062428f171c33c4c164d80b4becb.1361146398.git.wking@tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 03:16:19 2013
+Cc: Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Mon Feb 18 03:23:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7GHC-0002Jj-9U
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 03:16:18 +0100
+	id 1U7GOQ-0004gP-PT
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 03:23:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756799Ab3BRCPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2013 21:15:52 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:45706 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755872Ab3BRCPw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2013 21:15:52 -0500
-Received: by mail-pa0-f49.google.com with SMTP id kp6so2536869pab.8
-        for <git@vger.kernel.org>; Sun, 17 Feb 2013 18:15:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=FtWJyLierw3n9Tk2QiRnU7qKpqSq/UgUtqA77jviz+g=;
-        b=LEhH0peYCloc7jvyMOZSeuFefMApNt/HWXeMg+uPkKQP/tKUtjME06yaZBWpwgv6A5
-         Q1BwwcSsOjfGNxB0CsQncFcrNqoBtRqElcKr4eRA7vFTeATGn0IcUSgoElwI0NRANmQd
-         8RrB3E2W1zerq0XQxOmG4OraKmjPYqzxT4rm5RSiOjxd5pqdO5HtbX46BZInHzedlSZ7
-         CGES6JQ+2DTNc+LZw59zoDh9eP5Yb5CdgYVFVi7rrhgLTnXvadFYpBKrpodMDtyiHVPq
-         bKKLPAj2qVr4HA4g0u7xA8QKNXEuq96ot23KQjZ9PdUnk4eGQYgDdFBXU6Qk/CW7T/6/
-         noxA==
-X-Received: by 10.68.135.3 with SMTP id po3mr25920300pbb.33.1361153751565;
-        Sun, 17 Feb 2013 18:15:51 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id mw8sm12713316pbc.21.2013.02.17.18.15.49
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 17 Feb 2013 18:15:50 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vbobie62v.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1757459Ab3BRCXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2013 21:23:15 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63876 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757456Ab3BRCXO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2013 21:23:14 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D958B0F8;
+	Sun, 17 Feb 2013 21:23:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=T+9hmPBFTbBHr3jEwvY3Kz0ReB0=; b=SjhR26
+	GLckTQ2UeKJGp4H22KZQ3J0wFVrUAd2OiKlp3XxvCKy6YoR5FbmC30aWfF5NXHES
+	mLDHlLTpprCGYvgQhecBD5AvOVIx95T/wTguRTJ+6oFzI8Hs9QcMDjncHZSJkr6t
+	er+qMU6JGD+d1SzwXMdSttqnEA7eu+lGeS3bQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wuBxCoyqk14472BMtC1jF4rB8h2HOGfF
+	17XzKpx4amTQ56FM/7AvsGEdUpT4fe/qjsF5nBio/lcku7XaNgU44Inhp9Dmw86z
+	LFJDRfrgauivR2hQniqidfKKtEJ4r9Ez8FZzFjocfbUUaQ7HdwHGGeawb4iY9RCN
+	3tiMpcTkiZ8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21D81B0F7;
+	Sun, 17 Feb 2013 21:23:14 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 500A2B0E6; Sun, 17 Feb 2013
+ 21:23:13 -0500 (EST)
+In-Reply-To: <31c45d95acaf062428f171c33c4c164d80b4becb.1361146398.git.wking@tremily.us>
+ (W. Trevor King's message of "Sun, 17 Feb 2013 19:15:54 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2549D3D4-7972-11E2-8E3D-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216429>
 
-Junio C Hamano wrote:
-> "W. Trevor King" <wking@tremily.us> writes:
+"W. Trevor King" <wking@tremily.us> writes:
 
->> There is no need to use here documents to setup this configuration.
->> It is easier, less confusing, and more robust to use `git remote add`
->> directly.
-[...]
-> This looks like a good 'maint' material that can be applied straight
-> away there in preparation for 1.8.1.4 to me; reviewers watching from
-> the sideline, please stop me if you see issues.
+> From: "W. Trevor King" <wking@tremily.us>
+>
+> I think this interface is often more convenient than extended cherry
+> picking or using 'git format-patch'.  In fact, I removed the
+> cherry-pick section entirely.  The entry-level suggestions for
+> rerolling are now:
+>
+> 1. git commit --amend
+> 2. git format-patch origin
+>    git reset --hard origin
+>    ...edit and reorder patches...
+>    git am *.patch
+> 3. git rebase -i origin
+>
+> Signed-off-by: W. Trevor King <wking@tremily.us>
+> ---
+>  Documentation/user-manual.txt | 110 ++++++++++++++++++++++++------------------
+>  1 file changed, 63 insertions(+), 47 deletions(-)
+>
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index a060eb6..dbffd0a 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -2538,6 +2538,12 @@ return mywork to the state it had before you started the rebase:
+>  $ git rebase --abort
+>  -------------------------------------------------
+>  
+> +If you need to reorder or edit a number of commits in a branch, it may
+> +be easier to use `git rebase -i`, which allows you to reorder and
+> +squash commits, as well as marking them for individual editing during
+> +the rebase.  See <<interactive-rebase>> for details, and
+> +<<reordering-patch-series>> for alternatives.
+> +
+>  [[rewriting-one-commit]]
+>  Rewriting a single commit
+>  -------------------------
+> @@ -2552,71 +2558,81 @@ $ git commit --amend
+>  which will replace the old commit by a new commit incorporating your
+>  changes, giving you a chance to edit the old commit message first.
+>  
 
-Agreed --- this looks good.
+... A lot of lines removed here ...
 
-[...]
-> As the additional "remote.public-repo.fetch" line hints, this does
-> more than "lets you do the same push with just [lazily]"; it also
-> starts pretending to have run a fetch from there immediately after
-> you pushed and update the remote tracking branches.  I couldn't
-> decide if it is a good idea to point it out in this point of the
-> flow as well, or it is too much detail that is not exactly relevant
-> while teaching "git push".  I tend to think it would be the latter.
+> +[[reordering-patch-series]]
 
-I think it's possible to improve the text here to hint that there's
-more to learn (maybe a forward-reference to a section about the
-remotes/* hierarchy) without getting lost in the details.  But that
-problem was already there, and I don't think it should block this
-improvement.
+This change makes the [[rewriting-one-commit]] section say "We
+already saw you can do 'commit --amend'" and nothing else.  It makes
+me wonder if the remaining section is worth keeping if we go this
+route.
 
-Thanks.
-Jonathan
+
+> +[[reordering-patch-series]]
+> +Reordering or selecting from a patch series
+> +-------------------------------------------
+>  
+> +Sometimes you want to edit a commit deeper in your history.  One
+> +approach is to use `git format-patch` to create a series of patches,
+> +then reset the state to before the patches:
+>  
+>  -------------------------------------------------
+> +$ git format-patch origin
+> +$ git reset --hard origin
+>  -------------------------------------------------
+>  
+> +Then modify, reorder, or eliminate patches as preferred before applying
+> +them again with linkgit:git-am[1]:
+>  
+>  -------------------------------------------------
+> +$ git am *.patch
+>  -------------------------------------------------
+
+It may be just me, but s/preferred/needed/, perhaps?
+
+> +This will open your editor with a list of the commits you're rebasing
+>  
+>  -------------------------------------------------
+> +pick deadbee The oneline of this commit
+> +pick fa1afe1 The oneline of the next commit
+> +...
+>  
+> +# Rebase c0ffeee..deadbee onto c0ffeee
+> +#
+> +# Commands:
+> ...
+> +# Note that empty commits are commented out
+> +-------------------------------------------------
+> +
+> +As explained in the comments, you can reorder commits, squash them
+> +together, edit commit messages, etc. by editing the list.  Once you
+> +are satisfied, save the list and close your editor, and the rebase
+> +will begin.
+> +
+> +The rebase will stop when `pick` has been replaced with `edit` or when
+> +a command fails due to merge errors. When you are done editing and/or
+> +resolving conflicts...
+
+I am afraid that "due to merge errors" and "resolving conflicts" do
+not look corresponding to each other for a new reader.  Also here we
+say "when a command fails", but the explanation before this part
+never says "list of commands".  Besides, "command" itself is not a
+very good word to use as "pick" is not really a "command" (we do not
+have "git pick" or "git squash"---that is why I almost always call
+this "insn sheet" myself, by the way).
+
+A way to reword the above to reduce possible confusion may be to
+start with:
+
+	This will open your editor with a list of steps to be taken
+        to perform your rebase.
+
+and then say
+
+	... with `edit` or when a step in the list fails to
+	mechanically resolve conflicts and needs your help.  When
+	you are done editing ...
+
+or something.
