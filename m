@@ -1,71 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/9] User manual updates
-Date: Mon, 18 Feb 2013 00:56:07 -0800
-Message-ID: <7vr4keatlk.fsf@alter.siamese.dyndns.org>
-References: <20130217170606.GA3432@odin.tremily.us>
- <cover.1361146398.git.wking@tremily.us>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] remote-curl: verify smart-http metadata lines
+Date: Mon, 18 Feb 2013 03:59:36 -0500
+Message-ID: <20130218085936.GA17003@sigill.intra.peff.net>
+References: <20130216064455.GA27063@sigill.intra.peff.net>
+ <20130216064707.GB22626@sigill.intra.peff.net>
+ <20130217104939.GE6759@elie.Belkin>
+ <20130217191422.GA25096@sigill.intra.peff.net>
+ <20130218005443.GB3221@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Mon Feb 18 09:56:36 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 10:00:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7MWZ-0007UX-I6
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 09:56:35 +0100
+	id 1U7MZv-0000Js-QU
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 10:00:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752218Ab3BRI4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 03:56:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33214 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751870Ab3BRI4K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 03:56:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7906FAE9A;
-	Mon, 18 Feb 2013 03:56:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=l4n5FzFzFYB0YvyM0IrikjdDAvU=; b=g7xSbX
-	edbomhnFgb4ADIG3GkYzVMCYrGG8NU4R84AXEq1ufnbZdTFTtbalVD2s1PfUSki1
-	BFBahj/Vsd0XePTWx1HM0pU7XEus11N7s+3Bi5oJPjTxTXUkWF4YaVELdcH8OxQD
-	1UJ6pMHV1nePcITzALgMS+cB6F0N6nKgBKt5k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N296vuMo+g4I2xrxtQ7krS37vjs0tt0a
-	AP5hqHERlb8B23yKDycZxl9SoxTHCGxmpUx7DijOaKNiucJtg+CFI1aYqnPIXBXu
-	8w39f75vBoN8DGLi/8HYiK6kBKCtIlv09No8VwDVczfeBDDed44ET2JHetWzn9YD
-	MkRY1zYqRso=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D7FCAE99;
-	Mon, 18 Feb 2013 03:56:09 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E4F1BAE96; Mon, 18 Feb 2013
- 03:56:08 -0500 (EST)
-In-Reply-To: <cover.1361146398.git.wking@tremily.us> (W. Trevor King's
- message of "Sun, 17 Feb 2013 19:15:52 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 09725884-79A9-11E2-8B53-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751870Ab3BRI7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 03:59:39 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51637 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751339Ab3BRI7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 03:59:39 -0500
+Received: (qmail 17435 invoked by uid 107); 18 Feb 2013 09:01:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Feb 2013 04:01:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Feb 2013 03:59:36 -0500
+Content-Disposition: inline
+In-Reply-To: <20130218005443.GB3221@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216444>
 
-I've taken the following to 'maint', some with minor and obvious
-fix-ups:
+On Sun, Feb 17, 2013 at 04:54:43PM -0800, Jonathan Nieder wrote:
 
-  user-manual: use 'remote add' to setup push URLs
-  user-manual: give 'git push -f' as an alternative to +master
-  user-manual: mention 'git remote add' for remote branch config
-  user-manual: use 'git config --global user.*' for setup
-  user-manual: use -o latest.tar.gz to create a gzipped tarball
+> > My intent was that it followed the error convention of "negative is
+> > error, 0 is success, and positive is not used, but reserved for
+> > future use".
+> 
+> From a maintainability perspective, that kind of contract would be
+> dangerous, since some *other* caller could arrive and use the function
+> without a "< 0" without knowing it is doing anything wrong.  When new
+> return values appear, the function should be renamed to help the patch
+> author and reviewers remember to check all callers.
 
-I think I've sent reviews for all others, except for the `backtick`
-one.  I think it is more efficient to do that one _after_ we are
-done with all the others.
+True. That's why I always write "< 0". :)
 
-Thanks.
+> That is, from the point of view of maintainability, there is no
+> distinction between "if (read_packets_until_... < 0)" and
+> "if (read_packets_until_...)" and either form is fine.
+> 
+> My comment was just to say the "< 0" forced me to pause a moment and
+> check out the implementation.  This is basically a stylistic thing and
+> if you prefer to keep the "< 0", that's fine with me.
+
+Interesting. To me, "foo() < 0" just reads idiomatically as "error-check
+the foo call".
+
+Anyway, I've redone the patch series to just re-use get_remote_heads,
+which is more robust. So this function has gone away in the new version.
+
+-Peff
