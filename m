@@ -1,68 +1,111 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] shell-prompt: clean up nested if-then
-Date: Mon, 18 Feb 2013 15:28:16 -0800
-Message-ID: <20130218232816.GE4022@elie.Belkin>
-References: <1361228206.17734.4.camel@mas>
- <5122b23b.512e980a.32b9.ffffa580@mx.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] Git v1.8.2-rc0
+Date: Mon, 18 Feb 2013 15:59:04 -0800
+Message-ID: <7vk3q58987.fsf@alter.siamese.dyndns.org>
+References: <7vk3q6e94s.fsf@alter.siamese.dyndns.org>
+ <vpq4nh9v5an.fsf@grenoble-inp.fr> <7vobfh8bjc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: s.oosthoek@xs4all.nl, git@vger.kernel.org,
-	trsten@science-computing.de, felipe.contreras@gmail.com
-To: martinerikwerner@gmail.com
-X-From: git-owner@vger.kernel.org Tue Feb 19 00:28:47 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: linux-kernel-owner@vger.kernel.org Tue Feb 19 00:59:38 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7a8c-0002VR-UW
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 00:28:47 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1U7acT-00087M-1W
+	for glk-linux-kernel-3@plane.gmane.org; Tue, 19 Feb 2013 00:59:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755869Ab3BRX2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 18:28:22 -0500
-Received: from mail-da0-f48.google.com ([209.85.210.48]:33658 "EHLO
-	mail-da0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754975Ab3BRX2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 18:28:22 -0500
-Received: by mail-da0-f48.google.com with SMTP id v40so2698848dad.7
-        for <git@vger.kernel.org>; Mon, 18 Feb 2013 15:28:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=IGeWtTzESW5RGl3aDWcqa3m8TUu5Wd7NRTr7TcQVvfA=;
-        b=IRKVF+v7Z6TH3d220ZCenbm0SA8ryg75uQmqfqCcuDi/x8D7uPZXX2Hge8M/g2ZWFD
-         QforfIxGgc49ir3ZFDgayVzkB2i1bFJrIF4alAVnJQVFHzq3gf0usfh9Isv3BN1xtttT
-         y3rHy6mdYmZ9cLrheACXtW1nP1Qc3TgoUTe0InB3FJNuq60zujS0SK1x6hD5nY8GHfSj
-         /js7G8i8dLEJ/KFOb36QrxvzIRYyg04OZNSOEsILqG3toYCRBXAi4HG9u40lQem/jF/k
-         d8MHdSane8ZiYnL7Opny/DaCiZsxYz4Mcpk65dvBNVHLouykwkF0u0xMORrknyZ3UvSK
-         /1SQ==
-X-Received: by 10.68.48.165 with SMTP id m5mr35167508pbn.40.1361230101834;
-        Mon, 18 Feb 2013 15:28:21 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id f9sm105162634paz.12.2013.02.18.15.28.19
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Feb 2013 15:28:20 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <5122b23b.512e980a.32b9.ffffa580@mx.google.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
-Sender: git-owner@vger.kernel.org
+	id S1757770Ab3BRX7J (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 18 Feb 2013 18:59:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63258 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757617Ab3BRX7H (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 18 Feb 2013 18:59:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96D63B13A;
+	Mon, 18 Feb 2013 18:59:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EXU1+5Md70c1sWYI1aVDT+llQFU=; b=tkBINo
+	BvhfHhQWD3SXMkrkSx5OT2ypWs07At/1nc6xkzp5LBLLvLeos/27h7Jl16JGv7Wf
+	VqaUSq1LncPpmmXbeJwRSd4bQZ007u6avKV+KMKm73z44zYtclLYSM+DJgNmAqoN
+	UmCmRvzoftPBGoHIJo4sZheDlMfvt4aHGQ9wI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HGil6fmmUsrCv6xBL/dDek5MKcLCm9YN
+	1Clj+eOz0BvBkxL5uD+Q9/g9/Cer9SCkIAs0K4TK6q4oaeZFMyN1+v32TAcoPIui
+	zze2Z7L6iBIypYwo9WcyYmUnKACM+qY/42nwKWo2uu26jInVtxO0WndEhH9OGsXw
+	FE97ODMnZyw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AA23B139;
+	Mon, 18 Feb 2013 18:59:06 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF42CB135; Mon, 18 Feb 2013
+ 18:59:05 -0500 (EST)
+In-Reply-To: <7vobfh8bjc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 18 Feb 2013 15:09:11 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2D70F6A4-7A27-11E2-89BA-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216550>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216551>
 
-Martin Erik Werner wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Minor clean up of if-then nesting in checks for environment variables
-> and config options. No functional changes.
+>> I don't understand: wasn't this supposed to happen in Git 2.0? Did you
+>> mean "In the upcoming major release (tentatively called *2.0*)"?
 >
-> Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
-> ---
->  contrib/completion/git-prompt.sh |   27 +++++++++++++--------------
->  1 file changed, 13 insertions(+), 14 deletions(-)
+> Thanks.  I am not sure what I was thinking.  Perhaps when we started
+> this cycle we did want to merge the push-2.0-default-to-simple series
+>
+> Will update.
+>
+>> Also, you may want to mention the argumentless "git add -u" change too.
+>> It currently has an item below, but this is a future
+>> backward-incompatible change so it may deserve to appear in this section
+>> too.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+OK, let's do this.  Thanks for sharp eyes.
 
-Thanks for the quick turnaround.
+ Documentation/RelNotes/1.8.2.txt | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/RelNotes/1.8.2.txt b/Documentation/RelNotes/1.8.2.txt
+index a5a1d4e..a287f24 100644
+--- a/Documentation/RelNotes/1.8.2.txt
++++ b/Documentation/RelNotes/1.8.2.txt
+@@ -4,8 +4,8 @@ Git v1.8.2 Release Notes
+ Backward compatibility notes
+ ----------------------------
+ 
+-In the upcoming major release (tentatively called 1.8.2), we will
+-change the behavior of the "git push" command.
++In the next major release Git 2.0 (not *this* one), we will change the
++behavior of the "git push" command.
+ 
+ When "git push [$there]" does not say what to push, we have used the
+ traditional "matching" semantics so far (all your branches were sent
+@@ -22,6 +22,18 @@ that the old tag v1.2.3 points at.  This was found to be error prone
+ and starting with this release, any attempt to update an existing
+ ref under refs/tags/ hierarchy will fail, without "--force".
+ 
++When "git add -u" and "git add -A", that does not specify what paths
++to add on the command line, is run from inside a subdirectory, the
++scope of the operation has always been limited to the subirectory.
++Many users found this counter-intuitive, given that "git commit -a"
++and other commands operate on the entire tree regardless of where you
++are. In this release, these commands give warning in such a case and
++encourage the user to say "git add -u/-A ." instead when restricting
++the scope to the current directory. At Git 2.0 (not *this* one), we
++plan to change these commands without pathspec to operate on the
++entire tree, and training your fingers to type "." will protect you
++against the future change.
++
+ 
+ Updates since v1.8.1
+ --------------------
