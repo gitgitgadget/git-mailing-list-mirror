@@ -1,60 +1,74 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv2 10/10] remote-curl: always parse incoming refs
-Date: Mon, 18 Feb 2013 02:50:33 -0800
-Message-ID: <20130218105033.GH7049@elie.Belkin>
+Subject: Re: [PATCHv2 06/10] pkt-line: share buffer/descriptor reading
+ implementation
+Date: Mon, 18 Feb 2013 02:54:41 -0800
+Message-ID: <20130218105440.GI7049@elie.Belkin>
 References: <20130218091203.GB17003@sigill.intra.peff.net>
- <20130218093056.GJ5096@sigill.intra.peff.net>
+ <20130218092612.GF5096@sigill.intra.peff.net>
+ <20130218104350.GF7049@elie.Belkin>
+ <20130218104804.GB16408@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 18 11:51:05 2013
+X-From: git-owner@vger.kernel.org Mon Feb 18 11:55:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7OJK-0002E8-Lq
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 11:51:02 +0100
+	id 1U7ONL-0003y0-Sk
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 11:55:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750921Ab3BRKuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 05:50:39 -0500
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:44376 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750764Ab3BRKui (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 05:50:38 -0500
-Received: by mail-pb0-f49.google.com with SMTP id xa12so1603861pbc.22
-        for <git@vger.kernel.org>; Mon, 18 Feb 2013 02:50:38 -0800 (PST)
+	id S1751771Ab3BRKys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 05:54:48 -0500
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:46673 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751598Ab3BRKyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 05:54:46 -0500
+Received: by mail-pa0-f44.google.com with SMTP id kp1so2804302pab.17
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 02:54:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=gaAsE9kUSQyCWeOxcp+jfjtMsQWpkMtdMRLAMyRjaNw=;
-        b=OrkAfwwBE1G5WGuEn/wCbcUeeTR3REaeUuG5fU/+OCUQdEKV8kowpOOGwLxaGAObJV
-         bTaYG2+VEZWmVgalnBbJuQdtUtV27X1Ucuv01RgvU0dQYVPkCdwLNgleOFdgA7zvVqw7
-         297UlKgAE69+ScT7BUu5kueuCNRSReeOD9WVffhG9VK6ix9GL/GFfnhQ4N2XSWijPc+O
-         5V6/Ii5u6qajpXeA5jp7jX+ZJga8HyztHU6phMCUlUIFqVIRNQxYxkymhhgUmuOgMloR
-         d5cQHBpsWccQSI034pH4XrtIIL1rp63C+kN/eRCsuAYZ4k14RuTOhsYuvSUuqURKO/OY
-         1s+w==
-X-Received: by 10.68.213.66 with SMTP id nq2mr28664005pbc.29.1361184637989;
-        Mon, 18 Feb 2013 02:50:37 -0800 (PST)
+        bh=hJC5zzMHscR3vPG6aGZ9vzluhJtO7od2P8qG9pyMr78=;
+        b=knirDGFdSAx8DOC8vRbtpp+PqjFb3/jQ7mDmp/VOvX3oa6wGeQh9OXqreOmmZCpsEz
+         Vn98mwB9O9werTwwkkNQe0Kv95a8prs9WvzYT+Qb4yj/YykeWsstc0cift5IC3SjGOXS
+         jmDRZ56jzfneII7GRLEVFPNW16CMGTEDxeiG7rkx8zR3K1I7lTXkkAhFxinjn5Ye1wbH
+         wYprve1U/T3hlAkiPMmmvdlI4VT2IKdQFHiyTGGmZuOXfLpuOLeSL5Wq4Fgh1R2wk2ha
+         qdk1NODcjHJuMSgWNBSUGr4IatkpcVbt213MbiJHuO+a0KPPrDjSae/oe5b2iY8b665i
+         8P1Q==
+X-Received: by 10.68.83.38 with SMTP id n6mr28730197pby.28.1361184886426;
+        Mon, 18 Feb 2013 02:54:46 -0800 (PST)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id wm3sm14117479pbc.4.2013.02.18.02.50.35
+        by mx.google.com with ESMTPS id y10sm14127778pbf.39.2013.02.18.02.54.44
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Feb 2013 02:50:36 -0800 (PST)
+        Mon, 18 Feb 2013 02:54:45 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20130218093056.GJ5096@sigill.intra.peff.net>
+In-Reply-To: <20130218104804.GB16408@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216476>
 
 Jeff King wrote:
 
->  remote-curl.c | 23 +++++++++++++----------
->  1 file changed, 13 insertions(+), 10 deletions(-)
+> But is it noisy about a missing pipe? We do not get EPIPE for reading.
 
-I like.
+Ah, that makes more sense.
+
+[...]
+>>> +		len = packet_read_from_buf(line, sizeof(line), &last->buf, &last->len);
+>>> +		if (len && line[len - 1] == '\n')
+>>> +			len--;
+>>
+>> Was anything guaranteeing that buffer.len < 1000 before this change?
+>
+> No. That's discussed in point (3) of the "implications" in the commit
+> message.
+
+Thanks.  Sorry I missed it the first time.
