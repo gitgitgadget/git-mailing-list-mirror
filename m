@@ -1,111 +1,117 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Google Summer of Code 2013 (GSoC13)
-Date: Mon, 18 Feb 2013 18:23:01 +0100
-Message-ID: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: Google Summer of Code 2013 (GSoC13)
+Date: Mon, 18 Feb 2013 12:42:39 -0500
+Message-ID: <20130218174239.GB22832@sigill.intra.peff.net>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	"Jakub Narebski" <jnareb@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Pat Thoyts <patthoyts@users.sourceforge.net>,
 	Paul Mackerras <paulus@samba.org>,
-	=?utf-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
 	Thomas Gummerer <t.gummerer@gmail.com>,
 	David Michael Barr <davidbarr@google.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"Jens Lehmann" <Jens.Lehmann@web.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 18 18:23:34 2013
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Feb 18 18:43:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7UR8-0002YE-TG
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 18:23:31 +0100
+	id 1U7Uk9-00053P-6O
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 18:43:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756236Ab3BRRXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 12:23:06 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:14835 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756033Ab3BRRXE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 12:23:04 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 18 Feb
- 2013 18:22:58 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
- CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Mon, 18 Feb 2013 18:23:00 +0100
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1756424Ab3BRRmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 12:42:43 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52026 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756339Ab3BRRmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 12:42:42 -0500
+Received: (qmail 22169 invoked by uid 107); 18 Feb 2013 17:44:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Feb 2013 12:44:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Feb 2013 12:42:39 -0500
+Content-Disposition: inline
+In-Reply-To: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216486>
 
-Hi,
+On Mon, Feb 18, 2013 at 06:23:01PM +0100, Thomas Rast wrote:
 
-Google announced the 2013 incarnation of the Google Summer of Code
-program on Feb 11:
+> * We need an org admin.  AFAIK this was done by Peff and Shawn in
+>   tandem last year.  Would you do it again?
 
-  http://www.google-melange.com/gsoc/homepage/google/gsoc2013
+I will do it again, if people feel strongly about Git being a part of
+it. However, I have gotten a little soured on the GSoC experience. Not
+because of anything Google has done; it's a good idea, and I think they
+do a fine of administering the program. But I have noticed that the work
+that comes out of GSoC the last few years has quite often not been
+merged, or not made a big impact in the codebase, and nor have the
+participants necessarily stuck around.
 
-Git has taken part in previous years, so I figure somebody should get
-the ball rolling again!  The following items need to be sorted out:
+And I do not want to blame the students here (some of whom are on the cc
+list :) ). They are certainly under no obligation to stick around after
+GSoC ends, and I know they have many demands on their time. But I am
+also thinking about what Git wants to get out of GSoC (and to my mind,
+the most important thing is contributors).
 
-* We need an org admin.  AFAIK this was done by Peff and Shawn in
-  tandem last year.  Would you do it again?
+As far as merged code, I think part of the problem is that git is fairly
+mature at this point. The most interesting projects are of a bigger
+scope than a student with no experience in the code base can do in a
+summer project. Maybe that means we need to do a better job of breaking
+projects down into reasonably sized sub-components. Or maybe it means
+the project is hitting a point of diminishing returns for GSoC. I don't
+know.
 
-* We should prepare an "ideas page".  Last year, Peff made one on
+There are a few counterpoints I can think of:
 
-    https://github.com/peff/git/wiki/SoC-2012-Ideas
+  - Even though not all projects are winners, _some_ are. I see Carlos
+    and Ram on the cc list, two people who started as GSoC students and
+    stuck around.
 
-  I couldn't edit it there over git access[1], so I made a clone in "my"
-  github wiki:
+  - There is also the angle that even if _Git_ doesn't benefit directly
+    from people sticking around, those people may float into other open
+    source projects and work on them. Which makes the world a better
+    place on the whole.
 
-    https://github.com/trast/git/wiki/SoC-2013-Ideas
+So I don't know. Those are just some things that have been floating
+around in my head. Feel free to ignore or discuss.
 
-  I'll volunteer to manage that wiki[2].  Please either edit it
-  directly, or send me patches or pull requests.  I won't really have
-  time to properly review them, but I'll do my best to merge everything.
+But thanks for getting the ball rolling, Thomas. If we are going to do
+it, sooner is better, and if we aren't, then we should probably do so
+consciously, and not just miss the deadline accidentally. :)
 
-* Naturally that ideas page is a bit stale now, and three projects
-  shorter.  Please propose new ideas and refresh or delete the old ones!
-  In particular some projects spawned long discussions on the list, and
-  the results of those discussions should be integrated to avoid deja
-  vus.
+> * We should prepare an "ideas page".  Last year, Peff made one on
+> 
+>     https://github.com/peff/git/wiki/SoC-2012-Ideas
+> 
+>   I couldn't edit it there over git access[1], so I made a clone in "my"
+>   github wiki:
+> [...]
+> [1]  That's a bit silly really, since I *can* edit it via the web
+> interface.  Peff, perhaps you can get that fixed?
 
-* We should have a pool of mentors and rough mentor-project matchings.
-  I gathered a -- certainly incomplete -- list of previous mentors and
-  students in the Cc field; maybe some of you are interested again?  If
-  so, propose your own ideas and/or list yourself in the "proposed
-  mentors" for some existing projects.  (I cleared all those fields for
-  now.)
+Ugh, I would have to write ruby code to fix that. I'll try to trick
+somebody else here into fixing it. :)
 
-* Even if you don't want to mentor, you can still contribute by helping
-  with discussing and ranking proposals, especially immediately before
-  and after the project submission deadline (May 3).
+> [2]  Unless Peff wants to take it over again?  You could just pull it
+> from the git version, it's based on your history.
 
-If we want to participate again, we need to get together an org
-application until *March 29* 19:00 UTC, and it won't exactly hurt to
-have the ideas page settled until then too.
+I think it is as good on your repo as on mine. The kernel.org wiki is
+also up, and the github/peff/git one was supposed to be temporary. But I
+really hate any wiki that I cannot edit with vim. I guess we need to
+have a discussion as a group about where the "official" wiki should
+live, and it should go there (I can also put it at github/git/git, which
+is a more sane place; but I do not want to compete with kernel.org's
+wiki unless there is community consensus that we are moving).
 
-It would be really nice if we could do this again, I think GSoC is a
-great opportunity both for Git and the involved students.
-
-Cheers
-Thomas
-
-
-Footnotes: 
-[1]  That's a bit silly really, since I *can* edit it via the web
-interface.  Peff, perhaps you can get that fixed?
-
-[2]  Unless Peff wants to take it over again?  You could just pull it
-from the git version, it's based on your history.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-Peff
