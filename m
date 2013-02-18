@@ -1,126 +1,94 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Google Summer of Code 2013 (GSoC13)
-Date: Tue, 19 Feb 2013 01:15:49 +0530
-Message-ID: <CALkWK0kFYP4k5=237PZ3XHhxkzF-RWwwe=3+Thb_xU2Jw5tg2g@mail.gmail.com>
-References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch> <20130218174239.GB22832@sigill.intra.peff.net>
- <CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com> <20130218185801.GA25673@sigill.intra.peff.net>
+From: James Nylen <jnylen@gmail.com>
+Subject: Re: [PATCH 13/13] contrib/subtree: Remove --annotate
+Date: Mon, 18 Feb 2013 14:46:56 -0500
+Message-ID: <CABVa4NhyJ0FtYoFf9ZMnVt1eR9ezoCnd0oM5xGg1fgk0RwBUKg@mail.gmail.com>
+References: <1360037173-23291-1-git-send-email-greened@obbligato.org>
+	<1360037173-23291-14-git-send-email-greened@obbligato.org>
+	<7vobfzwd8g.fsf@alter.siamese.dyndns.org>
+	<87pq0frnmb.fsf@waller.obbligato.org>
+	<CABVa4NiyVksEn4+NqBPXpaWGYnP6FeUqeacLOnAOHtw9FgMJdA@mail.gmail.com>
+	<87sj4t4gar.fsf@waller.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Paul Mackerras <paulus@samba.org>,
-	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	David Barr <b@rr-dav.id.au>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 18 20:46:45 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: greened@obbligato.org
+X-From: git-owner@vger.kernel.org Mon Feb 18 20:47:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7Wfj-0002fn-Kg
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 20:46:43 +0100
+	id 1U7WgM-00030B-17
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 20:47:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757154Ab3BRTqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 14:46:13 -0500
-Received: from mail-bk0-f43.google.com ([209.85.214.43]:60259 "EHLO
-	mail-bk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757023Ab3BRTqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 14:46:11 -0500
-Received: by mail-bk0-f43.google.com with SMTP id jm19so2756948bkc.30
-        for <git@vger.kernel.org>; Mon, 18 Feb 2013 11:46:09 -0800 (PST)
+	id S1757096Ab3BRTq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 14:46:58 -0500
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:54283 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754341Ab3BRTq5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 14:46:57 -0500
+Received: by mail-vc0-f170.google.com with SMTP id p16so3829362vcq.15
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 11:46:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=fkg7/GILZf34SWXKRfiDT3l7qa1OmhWapzY7vqDGiCo=;
-        b=DN/8GjlYyNJlpmFEzwm1tUbOSzF9rVu7HeAMSFhr0LQqRynCjidlII/Y8vAgsZfck5
-         e+wH101w3fqBxxGwZ4ORQYryoNfYUdv4wlyFQj4CzSA3zUbajo1c6SNZbcHmkBXLmap8
-         /PSwr8dpQSlhpSnREmJ0nIVMOpF6WEKMe2NyHgQ055sQkrbfA9/mz0PZ3+tzHx4UL9R6
-         NxmD2tkGn6NhBij6ErC/hMinB2wbh4AMy1rLZmFxfIP3Y7JlHQ48vwJlzbLjKFUIVR5q
-         eaXQTgdFNKtBjvj9mJWb/qRfxTvNmJPaosieJHfUtCT2XmVM/mamx1hcBC6BcKJUeQLX
-         Md2A==
-X-Received: by 10.204.150.134 with SMTP id y6mr5294752bkv.15.1361216769675;
- Mon, 18 Feb 2013 11:46:09 -0800 (PST)
-Received: by 10.205.81.202 with HTTP; Mon, 18 Feb 2013 11:45:49 -0800 (PST)
-In-Reply-To: <20130218185801.GA25673@sigill.intra.peff.net>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=PogFmtCuGXfDFwg082/zsYFdjVGc/d/5uIGfmchCuFQ=;
+        b=U0ErzruwPVfakTMIqJ68MsIj3RJZOr2SJsXk95L7g1gtOPpuWyTvEOtgUZsGbYq/T1
+         f1DfTVhlyfPpK5BP6XTjjd39VXtlrW6Y5o3RGEmj/y+cHmR6zUzx85czSpNVrQgPJQFf
+         PfZ2nIw4FlHeiQdNNZr37vt2ax+5j7quMD6YuF4uQsrQPP91V6xRAUxCkaHlmxOMugIe
+         6DT0Z3Mck0yanH6CHoCb9ZquK8cn/BnjMivZTgEwB5bb2nyWCZ7TgiZfINGzRLKdpSye
+         JUBMBf2mIE9oT1v9g8v12YtKFZiCNAAG8tiZlAJscd5l5IYQdVMz/6I0oc3apCarvpcB
+         R/vQ==
+X-Received: by 10.220.219.73 with SMTP id ht9mr16910854vcb.47.1361216816758;
+ Mon, 18 Feb 2013 11:46:56 -0800 (PST)
+Received: by 10.220.125.65 with HTTP; Mon, 18 Feb 2013 11:46:56 -0800 (PST)
+In-Reply-To: <87sj4t4gar.fsf@waller.obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216504>
 
-Jeff King wrote:
-> On Tue, Feb 19, 2013 at 12:14:19AM +0530, Ramkumar Ramachandra wrote:
->
->> I'll be frank here.  I think the main reason for a student to stick
->> around is to see more of his code hit `master`.  I think it is
->> absolutely essential to get students constantly post iteration after
->> iteration on the list. It would be nice to get them connected with 2~3
->> people in the community who will follow their progress and pitch in
->> everytime they post an iteration.  It might also make sense to stage
->> their work in the main tree (a gsoc/ namespace?), so we can just
->> checkout to their branch to demo what they've done.
->
-> I agree. One of the main problems with GSoC projects is that the student
-> goes away and works for a while, and then at the end does not
-> necessarily have something mergeable. That is not how regular
-> contributors work. They post works in progress, get feedback, and
-> iterate on ideas. They break work into easily digestable and reviewable
-> chunks.
+On Mon, Feb 18, 2013 at 1:39 PM,  <greened@obbligato.org> wrote:
+> James Nylen <jnylen@gmail.com> writes:
+>>  - add "fancylib" as a subtree of "myprog"
+>>  - commit to "myprog" repo: "fancylib: don't crash as much"
+>>  - split these commits back out to "fancylib" main repo, and remove
+>> the "fancylib: " prefix
 
-> So maybe the mentors should be focusing more on that than on
-> actual code problems.
+> Should this really be a function of git-subtree?  It seems like it would
+> fit better in a history-rewriting command.  Wouldn't rebase -i or even
+> filter-branch be a better way to do this?
 
-Take what I'm about to say with a pinch of salt, because I've never mentored.
+I'm not a git guru by any stretch, so I'm sure there are other ways to
+accommodate the example use case above.  I really just want to be able
+to split and merge repositories while keeping meaningful commit
+messages with an appropriate level of detail.  Can you suggest an
+alternative workflow?
 
-Mentors often don't provide much technical assistance: students should
-just post to the list with queries, or ask on #git-devel.  Mentors
-serve a different purpose; their primary responsibility, in my
-opinion, is to teach the student a sustainable productive workflow.
-This means: profiling them to figure out where they're losing out.  Do
-they have the habit of:
-- posting to the list regularly?
-- CC'ing the right people?
-- iterating quickly after reviews?
-- using gdb efficiently to quickly understand parts?
-- using git efficiently for the rebase/ patch workflow?
+> If there's no --annotate I don't see why git-subtree should have the
+> --unannotate functionality.
 
->> Also, we need more projects that will scratch everyday itches.  A
->> collection of related tiny features might not be a bad idea.  Often,
->> we risk erring on the side of too-big-for-one-summer when it comes to
->> specifying projects.  What's the harm of including something estimated
->> to take 80% of a summer?
->
-> I very much agree with you here. One problem is that those smaller
-> projects often do not sound as grand or as interesting, and so students
-> do not propose them. We have to work with the applicants we get.
+Because they are not inverse operations - they both apply to `git
+subtree split`.  I think that `--annotate` would only be useful as an
+option to `git subtree merge`.  In that case it would be the inverse
+operation of `git subtree split --unannotate`, and then I would agree
+that if you remove one, you can/should remove the other.
 
-We have to post well-crafted proposals like this to pique their interest.
+> Again, I agree that your example is relevant, maybe even common, but I
+> don't necessarily think git-subtree should be in the business of
+> rewriting commit messages at all.
 
->> On a related note, I don't like our Wiki.  It's down half the time,
->> and it's very badly maintained.  I want to write content for our Wiki
->> from the comfort of my editor, with version control aiding me.  And I
->> can't stand archaic WikiText.
->
-> Agreed on all of those points. Putting the Wiki on GitHub fixes that.
-> But it means contributors need to have a GitHub account. On the other
-> hand, I think kernel.org wiki contributors need an account these days?
-> And GitHub is putting some active effort into finding and killing spammy
-> accounts, which might keep wiki spam down (I do not pay too much
-> attention to those efforts, but on kernel.org, it is mostly up to the
-> Git community to do it ourselves).
+I'm willing to accept that.  Junio seemed to be leaning that way too
+in earlier emails.
 
-No, I'm against using the GitHub Wiki for neutrality reasons.  There
-is one easy way to fight spam: don't expose a web-based editing
-interface at all.  It's mainly going to be maintained by the
-community, and we're all much more comfortable in our editors and git.
- We can give the regulars direct commit access and ask the rest to
-submit pull requests.  Make it cost pennies, so any of us can easily
-afford it: just a cheap domain, DNS, and static HTML hosting.
+> I'd appreciate more thoughts from you on this.  I want to make sure we
+> can support your use case.
+
+I currently need to enable `git subtree` manually anyway, since it's
+not part of the main distribution.  So it's not a burden for me to
+support this feature with a customized script, or learn a new way to
+do it.
+
+Thanks for your consideration of this small and nit-picky issue.
