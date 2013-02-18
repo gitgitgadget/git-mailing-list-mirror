@@ -1,127 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Google Summer of Code 2013 (GSoC13)
-Date: Mon, 18 Feb 2013 15:03:03 -0800
-Message-ID: <20130218230303.GC4022@elie.Belkin>
-References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
- <20130218174239.GB22832@sigill.intra.peff.net>
- <20130218193424.GC3234@elie.Belkin>
- <20130218205532.GB27308@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] shell-prompt: clean up nested if-then
+Date: Mon, 18 Feb 2013 15:07:02 -0800
+Message-ID: <7vtxp98bmx.fsf@alter.siamese.dyndns.org>
+References: <1361204512.4758.10.camel@mas>
+ <1361204601-4573-1-git-send-email-martinerikwerner@gmail.com>
+ <20130218191040.GB3234@elie.Belkin>
+ <0c94f24b-f7ee-4699-87a7-6861b927cea4@email.android.com>
+ <1361228206.17734.4.camel@mas>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Paul Mackerras <paulus@samba.org>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	David Michael Barr <davidbarr@google.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 19 00:03:37 2013
+Cc: Simon vanaf Telefoon <s.oosthoek@xs4all.nl>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	trsten@science-computing.de,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Martin Erik Werner <martinerikwerner@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 00:07:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7ZkF-0007iw-Cd
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 00:03:35 +0100
+	id 1U7Zo4-0001IU-2i
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 00:07:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757535Ab3BRXDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 18:03:11 -0500
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:37901 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752354Ab3BRXDK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 18:03:10 -0500
-Received: by mail-pb0-f54.google.com with SMTP id rr4so1875797pbb.13
-        for <git@vger.kernel.org>; Mon, 18 Feb 2013 15:03:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=/euKEzm0pPJh7Re80QdVDtF74dqYYkhSpeJMeZDcN84=;
-        b=Q2k/5phDey0Mw31RG33i4SWtRMcqbU1iG+A0Db6NyvArCRNobOe4bmO5BLZLFJVYxW
-         DyqgBfTyB39QDKvlYx3FruTDnU+OSbABVjXZX+phEYzY4yO1R6adM0ojbmOGgsDjKVal
-         ffqao/FaQtGeav5XF8D27YARYoSCShSR/kKwSSY1tEJIIJM2K9bnZ2xcJzInMGlhvaFU
-         0G6CTYXf2x++fSiSyex2TnLE+sXoglTVyY/LfYz11dps1+kYIHr/B9SyGgaHb+rWsM2L
-         Li3S4KdpmW3Bc74vKG91HbGXsikxAc5udIcBW+iGjsDOP+dSZ4usDNw9SCDEYti8tSHD
-         Ro4w==
-X-Received: by 10.66.243.169 with SMTP id wz9mr40140137pac.34.1361228589027;
-        Mon, 18 Feb 2013 15:03:09 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id b9sm15753602pba.6.2013.02.18.15.03.06
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Feb 2013 15:03:07 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20130218205532.GB27308@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1753460Ab3BRXHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 18:07:06 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35952 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752627Ab3BRXHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 18:07:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BEF71BE75;
+	Mon, 18 Feb 2013 18:07:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=e383igwRQK+rRWbtTP4J4VdDr6c=; b=OIclSa
+	QLgovmBMxXnE6ljuk2vaZ0v/SombZF6ra8UOJcLuXgTgOmmtoSZXcEY0PsEjZmsW
+	lHxvaTADNh6Q/AH3zLjN/keAmBFhcpK2lsBZy0VIaahNH/bqq5W1rBIFLDBgUUwm
+	Q2Dyn9Fz8uyZq2h6GK9msRkUIH3PQTVqkev1I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GWbt1NSLjMZ6Bhks8ZZLh0hsAnk/I8AG
+	7WXQU+SsRJ3owPWhpXYU544DIoWueniO7LWN2ZmKBOqRCY+fQ36xupXZsOoy1/k7
+	KqZ4/T1N/ZAk+heXhXG8QV9Rfu9TcwR59bEhM2wUl45ppIJ4uLAvlJI9dgtzzI8x
+	LOAJQV/f9F8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B399BBE74;
+	Mon, 18 Feb 2013 18:07:04 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 170FBBE71; Mon, 18 Feb 2013
+ 18:07:04 -0500 (EST)
+In-Reply-To: <1361228206.17734.4.camel@mas> (Martin Erik Werner's message of
+ "Mon, 18 Feb 2013 23:56:46 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8B12D10-7A1F-11E2-9D2D-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216548>
 
-Jeff King wrote:
-> On Mon, Feb 18, 2013 at 11:34:24AM -0800, Jonathan Nieder wrote:
+Martin Erik Werner <martinerikwerner@gmail.com> writes:
 
->> Some potential projects (unfiltered --- please take them with a grain
->> of salt):
->> [...]
->>  - collaborative notes editing: fix the default notes refspec,
->>    make sure the "notes pull" workflow works well and is documented
->>    well, offer an easy way to hide private notes after the fact
->>    without disrupting public history
+> On Mon, 2013-02-18 at 21:31 +0100, Simon vanaf Telefoon wrote:
+>> Hi all, sorry for top posting :-( blame the phone and k9
+>> 
+>> I have a small issue with the use of test instead of [
+>> If that only applies to this section of the entire file. 
+>> Coding style has some value.
+>> 
+>> Combining nested ifs with && seems harmless enough, though should be
+>> well tested.
+>> 
+>> Cheers
+>> Simon 
+>> 
 >
-> I know you said a grain of salt, so please don't feel like I'm beating
-> up on your idea. I'm picking this one because I think it has some
-> characteristics of projects that have not gone well in the past, so it's
-> a good illustrative example.
->
-> IMHO, this is the type of project that is likely to fail, because most
-> of the work is not technical at all, but political. Changing the default
-> refspecs is a few lines of code. But the hard part is figuring out where
-> they should go, the implications of doing so, and how people are going
-> to react.
+> Ah, indeed, I looked around a bit more, and as per
+> http://mywiki.wooledge.org/BashPitfalls it seems like 'test' is bad to use with multiple &&'s anyways.
 
-I think I agree, if by "likely to fail" you mean "easy to underestimate
-the difficulty of".  I actually think it would be a pretty good summer
-student project, for a few related reasons:
+I think you are misreading a suggestion that is somewhat misguided
+(yes "[ <condition> && <another> ]" does not make sense, but that is
+not applicable to "test <conditon> && test <another>"); ignore it.
 
- * Years of evidence show it is a hard problem.  It would be a good
-   notch in the belt of whoever takes the project on.
+It is fine to write "test <condition> && test <another>" and that
+works portably to even pre-posix systems.
 
- * It does not require a deep understanding of git internals.  A good
-   familiarity with the git user interface, on the other hand, would
-   be essential, but I hope that is becoming more common among
-   students these days.
-
- * It requires good taste and design sense, which are something it
-   would be nice to cultivate and encourage.
-
- * The change is necessary and the satisfaction of helping a student
-   through the process might be enough to finally get it done.
-
- * If an amazing candidate finishes the "make collaboration possible"
-   task early, there's plenty of valuable, interesting, and technically
-   complicated follow-on work regarding the related "share some notes
-   while hiding others" to fill the rest of the summer.
-
-The code change for the most basic subset of "make collaboration
-possible" would presumably be a changed refspec, some documentation,
-and some tests.  On top of that there is presumably some automagic
-incorporation of upstream notes to be cooked into "git pull".  Some
-better conflict-resolution magic.  Example scripts to generate notes.
-Support for the format-patch / am workflow.  gitweb support for
-showing notes.
-
-It's a good example of when it's useful to not be afraid of failing to
-please everybody and just get something done.
-
-I also can't think of any examples of such technically straightforward
-student projects being tried before.
-
-Jonathan
+But the existing code the patch touches favors [] over test
+consistently; that alone is a good reason to stick with [] in _this_
+script, even though it is against Git's overall shell script style.
