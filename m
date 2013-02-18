@@ -1,103 +1,108 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 0/10] pkt-line and remote-curl cleanups server
-Date: Mon, 18 Feb 2013 04:12:03 -0500
-Message-ID: <20130218091203.GB17003@sigill.intra.peff.net>
-References: <20130216064455.GA27063@sigill.intra.peff.net>
- <20130216064929.GC22626@sigill.intra.peff.net>
- <20130217110533.GF6759@elie.Belkin>
- <20130217192830.GB25096@sigill.intra.peff.net>
- <20130218014113.GC3221@elie.Belkin>
+Subject: [PATCHv2 01/10] pkt-line: move a misplaced comment
+Date: Mon, 18 Feb 2013 04:14:30 -0500
+Message-ID: <20130218091430.GA5096@sigill.intra.peff.net>
+References: <20130218091203.GB17003@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 10:12:36 2013
+X-From: git-owner@vger.kernel.org Mon Feb 18 10:15:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7Mm1-0005Qd-HA
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 10:12:33 +0100
+	id 1U7MoN-0006LP-QK
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 10:15:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754844Ab3BRJMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 04:12:08 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51647 "EHLO
+	id S1757035Ab3BRJOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 04:14:34 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51657 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753642Ab3BRJMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 04:12:06 -0500
-Received: (qmail 17488 invoked by uid 107); 18 Feb 2013 09:13:36 -0000
+	id S1756751Ab3BRJOd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 04:14:33 -0500
+Received: (qmail 17557 invoked by uid 107); 18 Feb 2013 09:16:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Feb 2013 04:13:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Feb 2013 04:12:03 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Feb 2013 04:16:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Feb 2013 04:14:30 -0500
 Content-Disposition: inline
-In-Reply-To: <20130218014113.GC3221@elie.Belkin>
+In-Reply-To: <20130218091203.GB17003@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216446>
 
-On Sun, Feb 17, 2013 at 05:41:13PM -0800, Jonathan Nieder wrote:
+The comment describing the packet writing interface was
+originally written above packet_write, but migrated to be
+above safe_write in f3a3214, probably because it is meant to
+generally describe the packet writing interface and not a
+single function. Let's move it into the header file, where
+users of the interface are more likely to see it.
 
-> > I don't think so. Don't ERR lines appear inside their own packets?
-> 
-> Yes, I misread get_remote_heads for some reason.  Thanks for checking.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I just left the comment intact as I moved it. It kind of implies to me
+that you hand a big buffer to these functions and they would packetize
+it for you, which is not true. I don't know if anybody else sees that;
+it might be worth tweaking the text.
 
-Thanks for bringing it up. I had not even thought about ERR at all. So
-it was luck rather than skill that I was right. :)
+ pkt-line.c | 15 ---------------
+ pkt-line.h | 14 +++++++++++++-
+ 2 files changed, 13 insertions(+), 16 deletions(-)
 
-> I'm not sure whether servers are expected to send a flush after an
-> ERR packet.  The only codepath I know of in git itself that sends
-> such packets is git-daemon, which does not flush after the error (but
-> is not used in the stateless-rpc case).  http-backend uses HTTP error
-> codes for its errors.
-
-I just checked, and GitHub also does not send flush packets after ERR.
-Which makes sense; ERR is supposed to end the conversation. I can change
-GitHub, of course, but who knows what other implementations exist (e.g.,
-I do not know off-hand whether gitolite has custom ERR responses). So it
-seems pretty clear that just checking for a flush packet is not the
-right thing, and we need to actually parse the packet contents (at least
-to some degree).
-
-> If I am reading get_remote_heads correctly, calling it with the
-> following tweak should work ok.  The extra thread is just to feed a
-> string into a fd-based interface and could be avoided for "list", too,
-> if it costs too much.
-
-Yeah, your patch does work, though we miss out on some of the refname
-checks.  I think what I'd rather do is just teach get_remote_heads to
-read from a buffer (to avoid the extra thread and pipe), and then just
-run (and cache) the ref parsing unconditionally once we've read from the
-server.  It shouldn't make a difference in the normal case, as we would
-usually do a "list" anyway (and by caching, "list" can just feed out the
-cached copy).
-
-While looking into this, I noticed a bunch of other possible cleanups.
-Patches to follow:
-
-  [01/10]: pkt-line: move a misplaced comment
-  [02/10]: pkt-line: drop safe_write function
-  [03/10]: pkt-line: clean up "gentle" reading function
-  [04/10]: pkt-line: change error message for oversized packet
-  [05/10]: pkt-line: rename s/packet_read_line/packet_read/
-
-These are all just cleanups I noticed while looking at pkt-line. Any of
-them can be dropped, though there would be some textual conflicts for
-the later patches.
-
-  [06/10]: pkt-line: share buffer/descriptor reading implementation
-  [07/10]: teach get_remote_heads to read from a memory buffer
-  [08/10]: remote-curl: pass buffer straight to get_remote_heads
-
-These all build on each other to get rid of the extra thread/pipe, which
-I think is worth doing even without the rest of the series.
-
-  [09/10]: remote-curl: move ref-parsing code up in file
-  [10/10]: remote-curl: always parse incoming refs
-
-And these ones actually fix the problem I noticed.
-
--Peff
+diff --git a/pkt-line.c b/pkt-line.c
+index eaba15f..5138f47 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -46,21 +46,6 @@ static void packet_trace(const char *buf, unsigned int len, int write)
+ 	strbuf_release(&out);
+ }
+ 
+-/*
+- * Write a packetized stream, where each line is preceded by
+- * its length (including the header) as a 4-byte hex number.
+- * A length of 'zero' means end of stream (and a length of 1-3
+- * would be an error).
+- *
+- * This is all pretty stupid, but we use this packetized line
+- * format to make a streaming format possible without ever
+- * over-running the read buffers. That way we'll never read
+- * into what might be the pack data (which should go to another
+- * process entirely).
+- *
+- * The writing side could use stdio, but since the reading
+- * side can't, we stay with pure read/write interfaces.
+- */
+ ssize_t safe_write(int fd, const void *buf, ssize_t n)
+ {
+ 	ssize_t nn = n;
+diff --git a/pkt-line.h b/pkt-line.h
+index 8cfeb0c..7a67e9c 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -5,7 +5,19 @@
+ #include "strbuf.h"
+ 
+ /*
+- * Silly packetized line writing interface
++ * Write a packetized stream, where each line is preceded by
++ * its length (including the header) as a 4-byte hex number.
++ * A length of 'zero' means end of stream (and a length of 1-3
++ * would be an error).
++ *
++ * This is all pretty stupid, but we use this packetized line
++ * format to make a streaming format possible without ever
++ * over-running the read buffers. That way we'll never read
++ * into what might be the pack data (which should go to another
++ * process entirely).
++ *
++ * The writing side could use stdio, but since the reading
++ * side can't, we stay with pure read/write interfaces.
+  */
+ void packet_flush(int fd);
+ void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+-- 
+1.8.1.20.g7078b03
