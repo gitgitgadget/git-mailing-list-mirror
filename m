@@ -1,79 +1,107 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Recursive submodule confusing output (bug?)
-Date: Mon, 18 Feb 2013 20:35:35 +0100
-Message-ID: <51228287.1070202@web.de>
-References: <CAFwrLX6EWPureNoyjuMVy13kgwyAgDBcd1Eoet7hQ1CB9OhLxQ@mail.gmail.com> <CAFwrLX5nPvySfA05CLgdfoNt-pzQbCq0o+LtGJxZyVwP0EyHcg@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Google Summer of Code 2013 (GSoC13)
+Date: Mon, 18 Feb 2013 20:45:32 +0100
+Message-ID: <87fw0txv6r.fsf@pctrast.inf.ethz.ch>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
+	<20130218174239.GB22832@sigill.intra.peff.net>
+	<CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Will Entriken <fulldecent@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 20:36:09 2013
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, <git@vger.kernel.org>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Paul Mackerras <paulus@samba.org>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	David Barr <b@rr-dav.id.au>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 20:46:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7WVR-0005bV-1L
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 20:36:05 +0100
+	id 1U7Wf2-0002IF-QL
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 20:46:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756899Ab3BRTfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 14:35:38 -0500
-Received: from mout.web.de ([212.227.17.11]:53671 "EHLO mout.web.de"
+	id S1757033Ab3BRTpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 14:45:36 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:25571 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755025Ab3BRTfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 14:35:37 -0500
-Received: from [192.168.178.41] ([91.3.158.27]) by smtp.web.de (mrweb103) with
- ESMTPA (Nemesis) id 0MGA7n-1U40Gm43cN-00Evb3; Mon, 18 Feb 2013 20:35:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <CAFwrLX5nPvySfA05CLgdfoNt-pzQbCq0o+LtGJxZyVwP0EyHcg@mail.gmail.com>
-X-Enigmail-Version: 1.5
-X-Provags-ID: V02:K0:2ygUx/RlbzUxZIsLAWjwDckyurX1ij7f9qmNfBIIyce
- v5JAb4mQ+bqKMn7gj+u8uhMPBFqdt2mPB7FnBEzUtqhk6+rXMT
- uMtQjiq+jd0hHWKeCdol+VZ7n+VTzW6A6ZGHZUJHSgAfbhAyp6
- 27MS1ZtUtuebgKBn+WdK1ffHOho7M5J/uLeupeAVXTkaF1beC0
- ob5mAw5B5MWmPahZWFS2g==
+	id S1756872Ab3BRTpg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 14:45:36 -0500
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 18 Feb
+ 2013 20:45:30 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (46.126.8.85) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 18 Feb
+ 2013 20:45:32 +0100
+In-Reply-To: <CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 19 Feb 2013 00:14:19 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216502>
 
-Am 18.02.2013 16:58, schrieb Will Entriken:
-> I am running:
-> 
->     git submodule update --recursive
-> 
-> And get the output:
-> 
->     Submodule path 'Submodules/evernote-ios-sdk': checked out
-> '391ca643c5b1cd02e9fa869a6b0760436ea452ed'
->     Submodule path 'Submodules/facebook-ios-sdk': checked out
-> 'ada467f754febd4f2871d15943e9be16b323f114'
->     Submodule path 'Submodules/objectiveflickr': checked out
-> 'f474a78c807b5fa0c887bf8efaead5be1da637ec'
->     Submodule path 'Submodules/sskeychain': checked out
-> '8252a69cdfea562223d4dc2e2ccaf01b752d2cc6'
-> 
-> This is a little confusing to me, would this be more appropriate?
-> 
->     Submodule path 'Submodules/ShareKit/Submodules/evernote-ios-sdk':
-> checked out '391ca643c5b1cd02e9fa869a6b0760436ea452ed'
->     Submodule path 'Submodules/ShareKit/Submodules/facebook-ios-sdk':
-> checked out 'ada467f754febd4f2871d15943e9be16b323f114'
->     Submodule path 'Submodules/ShareKit/Submodules/objectiveflickr':
-> checked out 'f474a78c807b5fa0c887bf8efaead5be1da637ec'
->     Submodule path 'Submodules/ShareKit/Submodules/sskeychain':
-> checked out '8252a69cdfea562223d4dc2e2ccaf01b752d2cc6'
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Yes. (I assume from the output that you have a submodule named
-"Submodules/ShareKit/" in the superproject which itself contains
-those four submodules inside another "Submodules" directory)
+> [corrected David Barr's email address]
+>
+> Jeff King wrote:
+>> And I do not want to blame the students here (some of whom are on the cc
+>> list :) ). They are certainly under no obligation to stick around after
+>> GSoC ends, and I know they have many demands on their time. But I am
+>> also thinking about what Git wants to get out of GSoC (and to my mind,
+>> the most important thing is contributors).
+>>
+>> As far as merged code, I think part of the problem is that git is fairly
+>> mature at this point. The most interesting projects are of a bigger
+>> scope than a student with no experience in the code base can do in a
+>> summer project. Maybe that means we need to do a better job of breaking
+>> projects down into reasonably sized sub-components. Or maybe it means
+>> the project is hitting a point of diminishing returns for GSoC. I don't
+>> know.
+>
+> I'll be frank here.  I think the main reason for a student to stick
+> around is to see more of his code hit `master`.  I think it is
+> absolutely essential to get students constantly post iteration after
+> iteration on the list. It would be nice to get them connected with 2~3
+> people in the community who will follow their progress and pitch in
+> everytime they post an iteration.  It might also make sense to stage
+> their work in the main tree (a gsoc/ namespace?), so we can just
+> checkout to their branch to demo what they've done.
 
-> Please let me know if this is something I may fix.
+I agree, but I think there's an additional component.  Consider the 'log
+-L' feature.  It's fairly workable, and I merge it in my own builds and
+use it, but there were and are two main issues:
 
-Sure, go ahead! (I just checked, cmd_update() is the only function
-in git-submodule.sh without prefix handling; see cmd_foreach() for
-an example of how to do that). And - if you're not already familiar
-with it - you'll find a detailed description on how to prepare your
-fix in "Documentation/SubmittingPatches".
+* The initial work by Bo was not in shape to be included, mostly because
+  the code was too convoluted in the parts that process line ranges.
+
+* The last version I posted was held up because there's _in principle_ a
+  better way to do things, but it requires major refactorings of
+  existing code.
+
+I'm not going to try to discuss away the first one; it's also a failure
+of myself as mentor.  However, as far as incomplete work goes, I think
+the latter item is fairly symptomatic.  We underestimate the amount of
+work required to polish and reroll a submission that a student would
+deem "sufficiently working for inclusion", fixes to be done later.
+
+So I agree with your suggestion:
+
+> What's the harm of including something estimated to take 80% of a
+> summer?
+
+Maybe even less than 80%.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
