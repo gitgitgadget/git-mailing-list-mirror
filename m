@@ -1,117 +1,112 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] remote-curl: sanity check ref advertisement from
- server
-Date: Sun, 17 Feb 2013 17:41:13 -0800
-Message-ID: <20130218014113.GC3221@elie.Belkin>
-References: <20130216064455.GA27063@sigill.intra.peff.net>
- <20130216064929.GC22626@sigill.intra.peff.net>
- <20130217110533.GF6759@elie.Belkin>
- <20130217192830.GB25096@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/9] user-manual: Use 'remote add' to setup push URLs
+Date: Sun, 17 Feb 2013 17:58:16 -0800
+Message-ID: <7vbobie62v.fsf@alter.siamese.dyndns.org>
+References: <20130217170606.GA3432@odin.tremily.us>
+ <cover.1361146398.git.wking@tremily.us>
+ <0016ba69f4157996dfbe66938056c4192bed62c1.1361146398.git.wking@tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 18 02:41:44 2013
+Cc: Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Mon Feb 18 02:59:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7Fjj-0000gu-IL
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 02:41:43 +0100
+	id 1U7G1G-0005e6-E5
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 02:59:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755519Ab3BRBlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Feb 2013 20:41:19 -0500
-Received: from mail-da0-f47.google.com ([209.85.210.47]:54343 "EHLO
-	mail-da0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754030Ab3BRBlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Feb 2013 20:41:19 -0500
-Received: by mail-da0-f47.google.com with SMTP id s35so2259804dak.34
-        for <git@vger.kernel.org>; Sun, 17 Feb 2013 17:41:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=WzcmzNd/p8oTCDxbSU+dC766htKIyxQr+n4AGnHtI9s=;
-        b=IDfXAoKlXmQmMROTEC6YnvcxgTADH7EOTIsPW7/RfTEYG9gLzzeAGbQedu8WVHyz1S
-         jUI9WE4jEK4+0PBw1hk+V9uxH9u5VK1z2SGP9hLPl54iogsRKrJSmF9+UL0zShyyWN97
-         l2awbfpmpsJKMjgHCD492YNF3XKnxTqoaks57RN5GTgS2kW5fyCbzYM8H+OMxHdEu365
-         cPjI9LGO3EtKYwjzNeAv0Q+T4VHBDIPwANKDBavVTHmpEKToCtGjJfLjEuwqMZClWX1Z
-         oWlDH3LPeoW/L9Bnkv1BRrYdhvS2+HVgSIyfqtMDnce9ouhknWZrko2u/coEZSDJrIK/
-         Ke9Q==
-X-Received: by 10.68.244.1 with SMTP id xc1mr25213905pbc.165.1361151678621;
-        Sun, 17 Feb 2013 17:41:18 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id hs8sm12627624pbc.27.2013.02.17.17.41.16
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 17 Feb 2013 17:41:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20130217192830.GB25096@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1757393Ab3BRB6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Feb 2013 20:58:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34338 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757385Ab3BRB6V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Feb 2013 20:58:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CF84B83C;
+	Sun, 17 Feb 2013 20:58:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=S9LicXqtqMFlFHqyH3+K4mA83I4=; b=Dos7z4
+	tSu8mODopEb9uWrQPJJJ1OCGohiC1zsATl6hpf6AssxrWF2IDAnilrsguyb82AJf
+	DDVuUWAz0oJB9M29lWoUsY1TrG3LwPb0/2f/PqpiZm68XYcGnTXCzNKEAWZZKqv5
+	ESxSUXiWZDFcfD672pjlB2BNasDr6OCZx6+Hs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Fe7oB+45SdmCtf91XYK/C9sevCMEewWZ
+	63dWjZbiyurP4u/1/bCOghXJ9Me8xilflmvGaAMBcGQU4BbXJW662hI/NkMeYzQH
+	nQs0/RGvzc8CM/Mbm8UVynb7VsswzPtRQE+JVUBIYIJ4wz5acb78PKWCK2/yqn+K
+	2bz3JrgY3FA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 213B7B83B;
+	Sun, 17 Feb 2013 20:58:19 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D377B838; Sun, 17 Feb 2013
+ 20:58:18 -0500 (EST)
+In-Reply-To: <0016ba69f4157996dfbe66938056c4192bed62c1.1361146398.git.wking@tremily.us>
+ (W. Trevor King's message of "Sun, 17 Feb 2013 19:15:53 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AA4F3FF0-796E-11E2-A7CC-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216427>
 
-Jeff King wrote:
-> On Sun, Feb 17, 2013 at 03:05:34AM -0800, Jonathan Nieder wrote:
->> Jeff King wrote:
+"W. Trevor King" <wking@tremily.us> writes:
 
->>> +		if (verify_ref_advertisement(last->buf, last->len) < 0)
->>> +			die("ref advertisement is invalid at %s", refs_url);
->>
->> Won't this error out with
->>
->> 	protocol error: bad line length character: ERR
->>
->> instead of the current more helpful behavior for ERR lines?
+> From: "W. Trevor King" <wking@tremily.us>
 >
-> I don't think so. Don't ERR lines appear inside their own packets?
-
-Yes, I misread get_remote_heads for some reason.  Thanks for checking.
-
-[...]
-> The one thing we do also check, though, is that we end with a flush
-> packet. So depending on what servers produce, it may mean we trigger
-> this complaint instead of passing the ERR along to fetch-pack.
+> There is no need to use here documents to setup this configuration.
+> It is easier, less confusing, and more robust to use `git remote add`
+> directly.
 >
-> Rather than doing this fake syntactic verification, I wonder if we
-> should simply call get_remote_heads, which does a more thorough check
+> Signed-off-by: W. Trevor King <wking@tremily.us>
+> ---
 
-I'm not sure whether servers are expected to send a flush after an
-ERR packet.  The only codepath I know of in git itself that sends
-such packets is git-daemon, which does not flush after the error (but
-is not used in the stateless-rpc case).  http-backend uses HTTP error
-codes for its errors.
+This looks like a good 'maint' material that can be applied straight
+away there in preparation for 1.8.1.4 to me; reviewers watching from
+the sideline, please stop me if you see issues.
 
-If I am reading get_remote_heads correctly, calling it with the
-following tweak should work ok.  The extra thread is just to feed a
-string into a fd-based interface and could be avoided for "list", too,
-if it costs too much.
+>  Documentation/user-manual.txt | 15 ++++++++++-----
+>  1 file changed, 10 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index 5077e7c..a060eb6 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -1998,16 +1998,21 @@ will not be updated by the push.  This may lead to unexpected results if
+>  the branch you push to is the currently checked-out branch!
+>  
+>  As with `git fetch`, you may also set up configuration options to
+> -save typing; so, for example, after
+> +save typing; so, for example:
+> +
+> +-------------------------------------------------
+> +$ git remote add public-repo ssh://yourserver.com/~you/proj.git
+> +-------------------------------------------------
+> +
+> +adds the following to `.git/config`:
+>  
+>  -------------------------------------------------
+> -$ cat >>.git/config <<EOF
+>  [remote "public-repo"]
+> -	url = ssh://yourserver.com/~you/proj.git
+> -EOF
+> +	url = yourserver.com:proj.git
+> +	fetch = +refs/heads/*:refs/remotes/example/*
+>  -------------------------------------------------
+>  
+> -you should be able to perform the above push with just
+> +which lets you do the same push with just
 
-diff --git i/connect.c w/connect.c
-index 49e56ba3..55ee7de7 100644
---- i/connect.c
-+++ w/connect.c
-@@ -68,7 +68,8 @@ struct ref **get_remote_heads(int in, struct ref **list,
- {
- 	int got_at_least_one_head = 0;
- 
--	*list = NULL;
-+	if (list)
-+		*list = NULL;
- 	for (;;) {
- 		struct ref *ref;
- 		unsigned char old_sha1[20];
-@@ -92,6 +93,9 @@ struct ref **get_remote_heads(int in, struct ref **list,
- 			die("protocol error: expected sha/ref, got '%s'", buffer);
- 		name = buffer + 41;
- 
-+		if (!list)
-+			continue;
-+
- 		name_len = strlen(name);
- 		if (len != name_len + 41) {
- 			free(server_capabilities);
+As the additional "remote.public-repo.fetch" line hints, this does
+more than "lets you do the same push with just [lazily]"; it also
+starts pretending to have run a fetch from there immediately after
+you pushed and update the remote tracking branches.  I couldn't
+decide if it is a good idea to point it out in this point of the
+flow as well, or it is too much detail that is not exactly relevant
+while teaching "git push".  I tend to think it would be the latter.
