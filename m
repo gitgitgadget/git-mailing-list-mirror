@@ -1,91 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git clone tag shallow
-Date: Mon, 18 Feb 2013 13:49:24 -0800
-Message-ID: <7vobfh9tsr.fsf@alter.siamese.dyndns.org>
-References: <CAByu6UWEF48XvTmRnVDb2Bqxy1dNdUSXpTuy804215Vgs_KJxw@mail.gmail.com>
- <CACsJy8Dso-g7foyJhpY20DNrY11PA8ZZUmP6JXxsiJ_Ggbt_KA@mail.gmail.com>
- <CAByu6UWO=kUOvJ_YcPG9bo+XVZ5hSxRQpyEaUMcVxa=sXt_EMw@mail.gmail.com>
- <7vliamascv.fsf@alter.siamese.dyndns.org>
- <CAByu6UVfArRXGLTKgM=nw0fzij1urcVdzxx6xdoHihODD-LtRA@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Git bundles for backup and cloning: the Zaphod Beeblebrox thread
+Date: Mon, 18 Feb 2013 22:30:04 -0000
+Organization: OPDS
+Message-ID: <E937CF00A75848FA900526903E5B9834@PhilipOakley>
+References: <kfrb11$ugv$2@ger.gmane.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org
-To: Thibault Kruse <tibokruse@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 22:49:52 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="utf-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Alain Kalker" <a.c.kalker@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 18 23:30:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7Yat-0005eR-MH
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 22:49:52 +0100
+	id 1U7ZE4-0000HA-Vw
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 23:30:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756551Ab3BRVt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 16:49:27 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55714 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756402Ab3BRVt0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 16:49:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 716D3B09B;
-	Mon, 18 Feb 2013 16:49:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XjPxnn7I/YE4rqdHYFa7su5VODo=; b=ae3izg
-	c2X39vwTva/Z5CjSgOMzUbU20ubTE5LPPPoMXjphLdZ12yX45gDZiXF7tNbseYUO
-	1wEuzFGpfQNMc6vU/Vi8OU0N8ELudSyFWxm1acMS2NnI1nd/oQFWiSvkblDqWoEu
-	QzlgAt44Y+dHNBXqE6WMF6RNFKYFvtVMCRyh0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZcpCmV+RgLmXeMYjhkKU6Ekxp5WU0R+1
-	7nC3sotppOf2lG9+WBmnDsyVU/uNmc8ryBS6rl1Z8+oeAzJy8m77H1EsQW6GCk8R
-	YHIrXcqI3BgkPvkAc8P2jE3mwwn4kqDz68AP7fzlwQ4PnwxZKCljCl68lH7RUMn3
-	tsnsV1lpfbk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66968B099;
-	Mon, 18 Feb 2013 16:49:26 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDA7DB097; Mon, 18 Feb 2013
- 16:49:25 -0500 (EST)
-In-Reply-To: <CAByu6UVfArRXGLTKgM=nw0fzij1urcVdzxx6xdoHihODD-LtRA@mail.gmail.com>
- (Thibault Kruse's message of "Mon, 18 Feb 2013 11:11:25 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 103221A6-7A15-11E2-B888-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757390Ab3BRW35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 17:29:57 -0500
+Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:18935 "EHLO
+	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757108Ab3BRW34 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Feb 2013 17:29:56 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgUFACSqIlFZ8rgm/2dsb2JhbABEhkmFPLQfgQQXc4IaBQEBBAEIAQEZFR4BASELAgMFAgEDDgcBBAIFIQICFAEECBIGBxcGEwgCAQIDAQqHZQMJCgiuZ4hHDYlagSOLNoEEe1QLaoFKMmEDjgqGR4J4iiaFFYJ6DQ
+X-IronPort-AV: E=Sophos;i="4.84,690,1355097600"; 
+   d="scan'208";a="63118239"
+Received: from host-89-242-184-38.as13285.net (HELO PhilipOakley) ([89.242.184.38])
+  by out1.ip07ir2.opaltelecom.net with SMTP; 18 Feb 2013 22:29:54 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216539>
 
-Thibault Kruse <tibokruse@googlemail.com> writes:
-
->> I am not sure why you meant to treat (2) and (3) differently,
->> though.  Care to elaborate?
+From: "Alain Kalker" <a.c.kalker@gmail.com>
+Sent: Sunday, February 17, 2013 7:28 PM
+> From the current documentation for git-bundle(1), it may not be clear
+> for
+> users unfamilliar with Git, how to create a bundle which can be used
+> for
+> backup purposes, or, more generally, to clone to a completely new
+> repository.
 >
-> As in my example, git clone --branch <branch> does not accept all of (3).
+> Philip Oakley has posted a documentation patch some time ago, but
+> Junio
+> has pointed out several concerns.
+> Ref: http://thread.gmane.org/gmane.comp.version-control.git/205887/
+> focus=205897
+>
+> Here's my attempt to summarize the concerns, adding some of my own,
+> and a
+> possible solution.
+>
+> 1. "Missing HEAD syndrome"
+> $ git bundle create <bundle> master
+> -or-
+> $ git bundle create <bundle> <branchname...>
+> -or-
+> $ git bundle create <bundle> --branches
+> -then-
+> $ git clone <bundle> <dir>
+>
+> will be unable to checkout any files due to a missing ref for HEAD.
+> Though this can be fixed by going into <dir> and doing `git checkout
+> <ref>`, this is not very user-friendly.
+>
+> 2. "Detached HEAD syndrome"
+> $ git bundle create <bundle> HEAD
+> $ git clone <bundle> <dir>
+> will checkout files alright, but leaves one in a "detached HEAD"
+> state.
+>
+> 3. "Exploding HEAD syndrome"
+> $ git bundle create <bundle> --all
+> will add the HEAD, but will add refs from refs/remotes/* too, which is
+> not desirable when cloning, unless one sets up all the remotes (e.g.
+> by
+> restoring .git/config) as well.
+>
+> Finally, my solution for backing up only the local branches of a
+> repository:
+> $ git bundle create <bundle> --branches HEAD
+> but this may not be very easy for new users to figure out on their own
+> unless well documented (perhaps a new flag?)
 
-That is a prime example of outside "checkout" we give a white lie to
-show the most common <branch> to help beginners, I think.
+Perhaps if you draft up a documentation patch that would fit in the
+Examples section it could be discussed. The Example section allows that
+the various caveats can stated and be covered.
 
-> That's fair enough, I guess, I am not sure either. If I understand you
-> right, the Synopsis and
-> description are supposed to explain the non-hackish usage of commands,
-> whereas documentation after the OPTIONS headline is supposed to be
-> more of a complete description.
+It would also be worth linking to 'git rev-parse' under the
+<git-rev-list-args> so folk would actually look it up.
 
-It would go more like
+It may be that the example(s) needs to include
+    --branches[=pattern]
+    --tags[=pattern]
+rather than --all. to cover Junio's points.
 
-	SYNOPSIS
-        	git foo <branch>
-	DESCRIPTION
-        	"git foo" distims doshes in <branch>.
-	ARGUMENTS
-		* <branch>: the branch to distim doshes in.
-		  While it is most common to name a branch, you
-                  can give any <committ-ish> to it.
+The --all 'question/solution' has come up a number of times so it does 
+look worth having something in the documentation. This would be 
+something ;-)
 
-if and only if use is <branch> is the most common and using
-arbitrary commit is a rare case.  In other cases, we would be better
-to say <committish> on the SYNOPSIS part.  That commonness/rareness
-is a case-by-case matter, I would think.
+>
+> Any comments or suggestions (including HHGTTG references!) are very
+> welcome.
+>
+> -Alain
+Do use Reply-All - include any Cc's in replies.
