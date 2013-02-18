@@ -1,13 +1,16 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Google Summer of Code 2013 (GSoC13)
-Date: Mon, 18 Feb 2013 14:32:05 -0800
-Message-ID: <7vip5p9rtm.fsf@alter.siamese.dyndns.org>
+Date: Mon, 18 Feb 2013 14:37:35 -0800
+Message-ID: <7vehgd9rkg.fsf@alter.siamese.dyndns.org>
 References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
  <20130218174239.GB22832@sigill.intra.peff.net>
- <CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com>
+ <20130218193424.GC3234@elie.Belkin>
+ <CALkWK0mKZLotuu7pEM_3Of3i6JzU12QV_pHxOZTUr22TOq3PeQ@mail.gmail.com>
+ <20130218210709.GC27308@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, Jeff King <peff@peff.net>,
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
 	Shawn Pearce <spearce@spearce.org>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -19,117 +22,127 @@ Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, Jeff King <peff@peff.net>,
 	David Barr <b@rr-dav.id.au>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 23:32:35 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 18 23:38:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7ZGE-0001L0-FF
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 23:32:34 +0100
+	id 1U7ZLW-0003v5-QO
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 23:38:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757252Ab3BRWcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 17:32:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47976 "EHLO
+	id S1757439Ab3BRWhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 17:37:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51204 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757027Ab3BRWcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 17:32:08 -0500
+	id S1757240Ab3BRWhi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 17:37:38 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A435B14C;
-	Mon, 18 Feb 2013 17:32:07 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84FD5B372;
+	Mon, 18 Feb 2013 17:37:37 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=V4RhfuTSUJ6ZjQD0Hz3sS1LSBqw=; b=hv+e0/
-	gmNs4qDjv4foKRXYsLftKYSNMFbHaEShEhpRanatWMtAug2W4oSn/1hWRrD1PDu+
-	eJ0vY+WL4vkHF3P9s9qInpNCI2AMaNLIe5FZG1n636DwcpzQ/ZoAgSmk1hVzdQQa
-	qtj7M5qbhIQrxyLz8phsiP6iy4eNVYCYoEcUA=
+	:content-type; s=sasl; bh=vN3qiH+5E39go3AQM3Zd3VyC4do=; b=xvws8/
+	861iluBuCmSjKIWelT/RWiS5tJC1G6g89HZbbnpC0lLJTGyZH0h7bn6Wb9LTdIsp
+	QeZqK5iQ6om0cGf9NmAEYh6XRttBqjQ5RLkFwgObKjSrwxChsBh3G1tdDmleydLN
+	mWKpemzSj1IXLi/c12Baw6zIzvHfpYAH6W8Qs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ucfV7SvhgEUNARTxKwQ8i7ptYMMtrxcP
-	0DSgGTkdY7AN9IFdPyY/fhVmkcs5dFU+5T02a82oo3oSTx1hsUJziYIk3TChVg0e
-	rJPsMQo6u7QeFudR0HY1VvHijDx4TpcYRejBgzsjtb7R6hAW4gIYTtb7PImGaPag
-	Lv2oFylGB7Q=
+	:content-type; q=dns; s=sasl; b=volUXbTjKWeTHUCdeev4GvLHUpJZ5ofY
+	Z+ltvkC0eo0HZnTVtf7UZiU3XAOMaLUQvK2yNrUN77i1tuWlFpdKZvzI/4LoHXJb
+	GUfLaTVULjasEBnHkCCBTZumLAHhEzSTb/dEYfRb4/dPFhE4BBhBySQpk597DfDW
+	7G8iEU2IcBI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EC79B14A;
-	Mon, 18 Feb 2013 17:32:07 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77EEEB371;
+	Mon, 18 Feb 2013 17:37:37 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C512B148; Mon, 18 Feb 2013
- 17:32:06 -0500 (EST)
-In-Reply-To: <CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Tue, 19 Feb 2013 00:14:19 +0530")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB61CB370; Mon, 18 Feb 2013
+ 17:37:36 -0500 (EST)
+In-Reply-To: <20130218210709.GC27308@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 18 Feb 2013 16:07:09 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 067CC566-7A1B-11E2-9581-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CB57CE3A-7A1B-11E2-B579-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216541>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> [corrected David Barr's email address]
+> This is not related to GSoC anymore, but I think handling multiple
+> versions is already pretty easy. You can just install to
+> "$HOME/local/git/$TAGNAME" or similar, and then symlink the "bin/git"
+> binary from there into your PATH as git.$TAGNAME (e.g., git.v1.7.8). Git
+> already takes care of the messy bits, like making sure sub-programs are
+> invoked from the same git version.
 >
-> Jeff King wrote:
->> And I do not want to blame the students here (some of whom are on the cc
->> list :) ). They are certainly under no obligation to stick around after
->> GSoC ends, and I know they have many demands on their time. But I am
->> also thinking about what Git wants to get out of GSoC (and to my mind,
->> the most important thing is contributors).
->>
->> As far as merged code, I think part of the problem is that git is fairly
->> mature at this point. The most interesting projects are of a bigger
->> scope than a student with no experience in the code base can do in a
->> summer project. Maybe that means we need to do a better job of breaking
->> projects down into reasonably sized sub-components. Or maybe it means
->> the project is hitting a point of diminishing returns for GSoC. I don't
->> know.
+> I already do this automagically with this script:
 >
-> Also, we need more projects that will scratch everyday itches.  A
-> collection of related tiny features might not be a bad idea.  Often,
-> we risk erring on the side of too-big-for-one-summer when it comes to
-> specifying projects.  What's the harm of including something estimated
-> to take 80% of a summer?
+>   https://github.com/peff/git/blob/meta/install/prefix
+>
+> I just set "prefix" in the Makefile based on the script, and when I
+> "make install" tags or topic branches, they go to the right place (and
+> the "links" script in the same directory maintains the symlinks for me).
+>
+> I never bothered to even submit those scripts to contrib, because I
+> figured they were so specific to my setup, and to keeping dozens of git
+> versions around (when debugging, it's nice to be able to check an old
+> version's behavior without even having to build it).
 
-I think the real issue is everybody in the GSoC mentor candidate
-pool grossly underestimates the scope of suggested projects, does
-not encourage students to send early drafts to the public from the
-beginning, and perhaps overestimates the ability of total beginners.
-After seeing my "index-thing is too big in scope" warning repeatedly
-ignored for the last year's GSoC, I am not very hopeful unless the
-attitude towards GSoC and its students drastically changes on our
-mentors' end.
+Yeah, I have been using the Make (in the todo branch, to be checked
+out in Meta/ subdirectory of the working tree) script for exactly
+this.  After tagging a release, I'd do
 
-We have solicited "suggested projects" entries via wiki in the past,
-letting anybody to put anything there, and I think that was a major
-source of our past failures.  The practice lets irresponsive people
-who think they know what they are talking about to place unrealistic
-pie-in-the-sky there.  I wonder if we can somehow come up with a way
-to limit them to realisitic ones in a sane way.  One possibility may
-be to require the proposer to already have an 80% answer, not to be
-shared with students.  A project that a GSoC student who is not
-familiar with our codebase and culture (e.g. our no regressions
-policy and requiring solid transition plan for disruptive changes)
-is expected to finish in a summer should not be bigger than what a
-mentor familiar with our project can do a rough outline design and
-implementation as a two-weekend hack at most, I think.
+	git checkout -B snap v1.8.1.3
+        Meta/Make install install-doc
 
-Such a requirement on the proposer's end may be a reasonable sanity
-check to make sure we do not suggest sure-to-fail projects to the
-students.
+to install them in $inst_prefix/git-snap-v1.8.1.3.  A "rungit"
+script can then be used like:
 
-It is ironic that I have to point out that the best "let's get
-students exposed to the OSS process using Git community's reviewing
-bandwidth" last year from my point of view happened outside the
-GSoC.  Matthieu's school projects were not structured to the GSoC
-standard (they assigned multiple students working together on each
-topic), but the size of the projects seemed more manageable.  It was
-a joy to work with these students during the term of the project. We
-had a meaningful number of review iterations, unlike a typical GSoC
-project where a student and her mentors sit in a dark cave for a
-long time, send out the first draft too late, and the participant do
-not get enough time to do meaningful iterations of reviews (it was
-also a huge plus from our project's point of view that there were
-even responsible post-program follow up to complete the unfinished
-bits).
+	rungit v1.7.0 checkout blah
+
+-- rungit script -- >8 -- rungit script --
+#!/bin/sh
+# Run various vintage of git
+
+variant="${0##*/}" &&
+: ${RUNGIT_BASE=$HOME/g/$(getarch)} &&
+case "$variant" in
+rungit)
+	case $# in 
+	0)
+		echo >&2 "which version?"
+		exit 1
+		;;
+	esac
+	variant=$1
+	shift
+	;;
+esac &&
+case "$variant" in
+-l)
+	for d in "$RUNGIT_BASE/"git-*/bin/git
+	do
+		d=$(basename ${d%/bin/git})
+		d=${d#git-}
+		d=${d#snap-}
+		echo "$d"
+	done
+	exit
+	;;
+git-*)
+	variant=${variant#git-} ;;
+v[0-9]*)
+	variant=snap-$variant ;;
+esac &&
+d="$RUNGIT_BASE/git-$variant" &&
+if test -f "$d/bin/git"
+then
+	exec "$d/bin/git" "$@"
+else
+	echo >&2 "$variant: No such variant for $a"
+	exit 1
+fi
