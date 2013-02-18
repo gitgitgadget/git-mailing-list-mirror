@@ -1,70 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 02/15] user-manual: Update for
- receive.denyCurrentBranch=refuse
-Date: Mon, 18 Feb 2013 13:26:29 -0800
-Message-ID: <7vwqu59uuy.fsf@alter.siamese.dyndns.org>
-References: <7vzjzexv8l.fsf@alter.siamese.dyndns.org>
- <cover.1360508415.git.wking@tremily.us>
- <ba62167be6df7a6ba666373913bfd235bcc29c9d.1360508415.git.wking@tremily.us>
- <7vd2w7uajk.fsf@alter.siamese.dyndns.org>
- <20130210214621.GA8000@odin.tremily.us>
- <7v1ucnssnw.fsf@alter.siamese.dyndns.org>
- <7v4nhezpta.fsf@alter.siamese.dyndns.org>
- <CAM9Z-nm1WbJ0ZCVGuSuuC8kJADXUD3e-tjB51kAEerSfFxVVLQ@mail.gmail.com>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: Git Merge 2013 Conference, Berlin
+Date: Mon, 18 Feb 2013 13:29:19 -0800
+Message-ID: <CAP2yMaKwdwBiE0q6Cqmjf-g3iV269+UvOS+DaKtaXNOfQLkpeg@mail.gmail.com>
+References: <CAP2yMaJyCi5tvFZ5hVpVULR=oKgfc-b0zb8baxFDhNqmu+W_Bg@mail.gmail.com>
+ <87mwv1uyy5.fsf@pctrast.inf.ethz.ch> <20130218211703.GE27308@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 22:26:56 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Rast <trast@student.ethz.ch>, git list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 18 22:30:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7YEi-0002ug-FI
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 22:26:56 +0100
+	id 1U7YHm-0004OL-G6
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 22:30:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755688Ab3BRV0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 16:26:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42662 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754508Ab3BRV0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 16:26:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BDB7AB89E;
-	Mon, 18 Feb 2013 16:26:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=btjPMJ51BNV3+Hx2s4UZ/KVMK24=; b=J90YUU
-	iX9W3f01kJ5oed3f7etuEKWvffk5A3hakqy7//0Dj13Utws0XOlV4hgfYqLwJTGw
-	6S/GxGAYDiN2i9ni7gpXRcOJLXEs/E4ELvGO1r7h4mfclCOWL637drfWfAXR2oT8
-	Mpi3/rtIiDHU31bgTghpvKZb5nYr4m7YUgrJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Pz0kiFWcWR088s98GwRbbenfziDyG5Hp
-	24uHGxCds4+8THFKqz9VSivdNYIRBw3YwtNFS3E+OlKAlMYxqwGOWKuTPWsKnBwO
-	11CazzMcwwGXDDWW3QXV8ZpI8ignUCxs/gR5ww6D6XkzE+WL67i1yPH8SIxXOZta
-	0fojF+0yI8Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE23AB89D;
-	Mon, 18 Feb 2013 16:26:31 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FA58B89C; Mon, 18 Feb 2013
- 16:26:31 -0500 (EST)
-In-Reply-To: <CAM9Z-nm1WbJ0ZCVGuSuuC8kJADXUD3e-tjB51kAEerSfFxVVLQ@mail.gmail.com> (Drew
- Northup's message of "Mon, 18 Feb 2013 08:00:59 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DCCD98B6-7A11-11E2-B9C1-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756053Ab3BRV3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 16:29:42 -0500
+Received: from mail-ia0-f177.google.com ([209.85.210.177]:36259 "EHLO
+	mail-ia0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755908Ab3BRV3l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 16:29:41 -0500
+Received: by mail-ia0-f177.google.com with SMTP id o25so731108iad.36
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 13:29:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=5Lb+VFvv4nao70nweCyx97PkA+Dp8I/z70IH36qblew=;
+        b=sptJx1ZnCkUivZiQfDFWu6JHhHiasLEAo8GT9m5CCxlc0Fzpoot2nE9MAF+WfRKgwy
+         T4u5mROc4fMImsasarODwzQoPWTG3O4nJN7gA/c0LPEgx7MFZuCvF7Tgnjno/v2qv1sJ
+         lvCIWmxaL8C/ld3gH1qfa2GIKO3rpQ/ogJvz8knGaWCTbeHjL2YRwkGPJBrr9WhWUdGB
+         7fGu7l44oTtkKPaXcLnEDcRumleBVBh7h8pX4CEhr4grbv9AE4jk3KIGTwZtIBU+Yr9f
+         gr5JOwosU/SbvAOTdn0QbADmTczFhQc6Grltwmy/qx9D18ilwazxHd/d0ZO2Kni5DBF+
+         RUXw==
+X-Received: by 10.50.187.197 with SMTP id fu5mr7115149igc.95.1361222979371;
+ Mon, 18 Feb 2013 13:29:39 -0800 (PST)
+Received: by 10.231.55.200 with HTTP; Mon, 18 Feb 2013 13:29:19 -0800 (PST)
+In-Reply-To: <20130218211703.GE27308@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216536>
 
-Drew Northup <n1xim.email@gmail.com> writes:
+Right now we have:
 
-> This looks safe to me, with the minor nit that "ofthe" ("of the")
-> isn't one word.
+Dev day: 50
+User day: 295
+Hack day: 200
 
-Thanks; typo corrected.
+I'm not sure what the actual turnout will be, but it looks like it's
+going to be pretty massive.  I wanted to go through the Dev day
+signups and figure out if everyone really belongs there (is an actual
+contributor to a core git project) but it's basically on the honor
+system now.
+
+If anyone on this list that should be there (Junio, Shawn, etc) wants
+to attend and would like sponsorship for the flight/lodging, please
+let me know.  We would love to have as many of the core people there
+as possible.  I will also try to record everything and summarize as
+much as I can after the fact, so if you can't attend it should still
+be possible to get the general idea of what occurred and was
+discussed.
+
+I'm going to try doing something similar in the SF area in maybe 6-8
+months from this, assuming it's a success.
+
+Scott
+
+On Mon, Feb 18, 2013 at 1:17 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Feb 18, 2013 at 09:52:34PM +0100, Thomas Rast wrote:
+>
+>> Scott Chacon <schacon@gmail.com> writes:
+>>
+>> > We're starting off in Berlin, May 9-11th.  GitHub has secured
+>> > conference space at the Radisson Blu Berlin for those days.  I have a
+>> > smaller room for the first day so we can get 30-40 Git implementors
+>> > together to talk about the future of Git and whatnot.
+>> [...]
+>> > http://git-merge.com/
+>>
+>> So this has been fairly quiet -- is anyone else coming? :-)
+>
+> I am. I think Scott may have actual numbers, but my third-hand
+> impression was that there have been a lot of signups.
+>
+> -Peff
