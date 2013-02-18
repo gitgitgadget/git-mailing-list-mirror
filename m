@@ -1,311 +1,281 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 05/10] pkt-line: rename s/packet_read_line/packet_read/
-Date: Mon, 18 Feb 2013 04:22:52 -0500
-Message-ID: <20130218092252.GE5096@sigill.intra.peff.net>
+Subject: [PATCHv2 06/10] pkt-line: share buffer/descriptor reading
+ implementation
+Date: Mon, 18 Feb 2013 04:26:12 -0500
+Message-ID: <20130218092612.GF5096@sigill.intra.peff.net>
 References: <20130218091203.GB17003@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 10:23:27 2013
+X-From: git-owner@vger.kernel.org Mon Feb 18 10:26:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7MwR-0001dW-UL
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 10:23:20 +0100
+	id 1U7Mzf-00033P-Lz
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 10:26:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756717Ab3BRJWz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 04:22:55 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51674 "EHLO
+	id S1753976Ab3BRJ0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 04:26:15 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51685 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753609Ab3BRJWy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 04:22:54 -0500
-Received: (qmail 17641 invoked by uid 107); 18 Feb 2013 09:24:25 -0000
+	id S1752357Ab3BRJ0O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 04:26:14 -0500
+Received: (qmail 17683 invoked by uid 107); 18 Feb 2013 09:27:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Feb 2013 04:24:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Feb 2013 04:22:52 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Feb 2013 04:27:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Feb 2013 04:26:12 -0500
 Content-Disposition: inline
 In-Reply-To: <20130218091203.GB17003@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216452>
 
-Originally packets were used just for the line-oriented ref
-advertisement and negotiation. These days, we also stuff
-packfiles and sidebands into them, and they do not
-necessarily represent a line. Drop the "_line" suffix, as it
-is not informative and makes the function names quite long
-(especially as we add "_gently" and other variants).
+The packet_read function reads from a descriptor. The
+packet_get_line function is similar, but reads from an
+in-memory buffer, and uses a completely separate
+implementation. This patch teaches the internal function
+backing packet_read to accept either source, and use the
+appropriate one. As a result:
+
+  1. The function has been renamed to packet_read_from_buf,
+     which more clearly indicates its relationship to the
+     packet_read function.
+
+  2. The original packet_get_line wrote to a strbuf; the new
+     function, like its descriptor counterpart, reads into a
+     buffer provided by the caller.
+
+  3. The original function did not die on any errors, but
+     instead returned an error code. Now we have the usual
+     "normal" and "gently" forms.
+
+There are only two existing calls to packet_get_line which
+have to be converted, and both are in remote-curl. The first
+reads and checks the "# service=git-foo" line from a smart
+http server.  The second just reads past any additional
+smart headers, without bothering to look at them.
+
+This patch converts both to the new form, with a few
+implications:
+
+  1. Because we use the non-gentle form, the first caller
+     can drop its own error checking. As a result, we will get
+     more accurate error reporting about protocol breakage,
+     since the errors come from inside the protocol code. We
+     will no longer print the URL as part of the error, but
+     that's OK. Protocol breakages should be rare (and we
+     are pretty sure at this point in the code that it is a
+     real smart server, so we won't be confused by dumb
+     servers), and the first debugging step would probably
+     be GIT_CURL_VERBOSE, anyway.
+
+  2. The second caller did not error check at all, and now
+     does. This can help us catch broken or truncated input
+     close to the source.
+
+  3. Since we are no longer using a strbuf, we now have a
+     1000-byte limit on the smart-http headers. That should
+     be fine, as the only header that has ever been sent
+     here is the short "service=git-foo" header.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Again, this is a taste issue. Can be optional.
+The diffstat shows more lines appearing, but it is mainly from comments
+and from the various parse_line{_from_buf,}{,_gently} variants; we
+really do get rid of a duplicate parsing implementation, and we
+harmonize all of the error conditions and messages.
 
- builtin/archive.c        | 4 ++--
- builtin/fetch-pack.c     | 2 +-
- builtin/receive-pack.c   | 2 +-
- builtin/upload-archive.c | 2 +-
- connect.c                | 2 +-
- daemon.c                 | 2 +-
- fetch-pack.c             | 6 +++---
- pkt-line.c               | 4 ++--
- pkt-line.h               | 6 +++---
- remote-curl.c            | 6 +++---
- send-pack.c              | 4 ++--
- sideband.c               | 2 +-
- upload-pack.c            | 4 ++--
- 13 files changed, 23 insertions(+), 23 deletions(-)
+We can also make "gently" a parameter to avoid the proliferation of
+related functions, but would mean all but one callsite would have to
+pass an extra "0". Choose your poison, I guess.
 
-diff --git a/builtin/archive.c b/builtin/archive.c
-index 9a1cfd3..bf600f5 100644
---- a/builtin/archive.c
-+++ b/builtin/archive.c
-@@ -53,7 +53,7 @@ static int run_remote_archiver(int argc, const char **argv,
- 		packet_write(fd[1], "argument %s\n", argv[i]);
- 	packet_flush(fd[1]);
- 
--	len = packet_read_line(fd[0], buf, sizeof(buf));
-+	len = packet_read(fd[0], buf, sizeof(buf));
- 	if (!len)
- 		die(_("git archive: expected ACK/NAK, got EOF"));
- 	if (buf[len-1] == '\n')
-@@ -66,7 +66,7 @@ static int run_remote_archiver(int argc, const char **argv,
- 		die(_("git archive: protocol error"));
- 	}
- 
--	len = packet_read_line(fd[0], buf, sizeof(buf));
-+	len = packet_read(fd[0], buf, sizeof(buf));
- 	if (len)
- 		die(_("git archive: expected a flush"));
- 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 940ae35..b59e60e 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -102,7 +102,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 			 */
- 			static char line[1000];
- 			for (;;) {
--				int n = packet_read_line(0, line, sizeof(line));
-+				int n = packet_read(0, line, sizeof(line));
- 				if (!n)
- 					break;
- 				if (line[n-1] == '\n')
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 48cd5dc..3f58ce8 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -736,7 +736,7 @@ static struct command *read_head_info(void)
- 		char *refname;
- 		int len, reflen;
- 
--		len = packet_read_line(0, line, sizeof(line));
-+		len = packet_read(0, line, sizeof(line));
- 		if (!len)
- 			break;
- 		if (line[len-1] == '\n')
-diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-index b928beb..2ecf461 100644
---- a/builtin/upload-archive.c
-+++ b/builtin/upload-archive.c
-@@ -40,7 +40,7 @@ int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
- 	sent_argv[0] = "git-upload-archive";
- 	for (p = buf;;) {
- 		/* This will die if not enough free space in buf */
--		len = packet_read_line(0, p, (buf + sizeof buf) - p);
-+		len = packet_read(0, p, (buf + sizeof buf) - p);
- 		if (len == 0)
- 			break;	/* got a flush */
- 		if (sent_argc > MAX_ARGS - 2)
-diff --git a/connect.c b/connect.c
-index 7e0920d..59266b1 100644
---- a/connect.c
-+++ b/connect.c
-@@ -76,7 +76,7 @@ struct ref **get_remote_heads(int in, struct ref **list,
- 		char *name;
- 		int len, name_len;
- 
--		len = packet_read_line_gently(in, buffer, sizeof(buffer));
-+		len = packet_read_gently(in, buffer, sizeof(buffer));
- 		if (len < 0)
- 			die_initial_contact(got_at_least_one_head);
- 
-diff --git a/daemon.c b/daemon.c
-index 4602b46..ac26b93 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -612,7 +612,7 @@ static int execute(void)
- 		loginfo("Connection from %s:%s", addr, port);
- 
- 	alarm(init_timeout ? init_timeout : timeout);
--	pktlen = packet_read_line(0, line, sizeof(line));
-+	pktlen = packet_read(0, line, sizeof(line));
- 	alarm(0);
- 
- 	len = strlen(line);
-diff --git a/fetch-pack.c b/fetch-pack.c
-index b90dadf..d89c9d0 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -173,7 +173,7 @@ static void consume_shallow_list(struct fetch_pack_args *args, int fd)
- 		 * is a block of have lines exchanged.
- 		 */
- 		char line[1000];
--		while (packet_read_line(fd, line, sizeof(line))) {
-+		while (packet_read(fd, line, sizeof(line))) {
- 			if (!prefixcmp(line, "shallow "))
- 				continue;
- 			if (!prefixcmp(line, "unshallow "))
-@@ -216,7 +216,7 @@ static enum ack_type get_ack(int fd, unsigned char *result_sha1)
- static enum ack_type get_ack(int fd, unsigned char *result_sha1)
- {
- 	static char line[1000];
--	int len = packet_read_line(fd, line, sizeof(line));
-+	int len = packet_read(fd, line, sizeof(line));
- 
- 	if (!len)
- 		die("git fetch-pack: expected ACK/NAK, got EOF");
-@@ -350,7 +350,7 @@ static int find_common(struct fetch_pack_args *args,
- 		unsigned char sha1[20];
- 
- 		send_request(args, fd[1], &req_buf);
--		while (packet_read_line(fd[0], line, sizeof(line))) {
-+		while (packet_read(fd[0], line, sizeof(line))) {
- 			if (!prefixcmp(line, "shallow ")) {
- 				if (get_sha1_hex(line + 8, sha1))
- 					die("invalid shallow line: %s", line);
+ pkt-line.c    | 69 ++++++++++++++++++++++++++++-------------------------------
+ pkt-line.h    | 11 +++++++++-
+ remote-curl.c | 19 ++++++++--------
+ 3 files changed, 53 insertions(+), 46 deletions(-)
+
 diff --git a/pkt-line.c b/pkt-line.c
-index f2a7575..85faf73 100644
+index 85faf73..7ee91e0 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -170,12 +170,12 @@ int packet_read_line_gently(int fd, char *buffer, unsigned size)
+@@ -103,12 +103,26 @@ static int safe_read(int fd, void *buffer, unsigned size, int gently)
+ 	strbuf_add(buf, buffer, n);
+ }
+ 
+-static int safe_read(int fd, void *buffer, unsigned size, int gently)
++static int get_packet_data(int fd, char **src_buf, size_t *src_size,
++			   void *dst, unsigned size, int gently)
+ {
+-	ssize_t ret = read_in_full(fd, buffer, size);
+-	if (ret < 0)
+-		die_errno("read error");
+-	else if (ret < size) {
++	ssize_t ret;
++
++	/* Read up to "size" bytes from our source, whatever it is. */
++	if (src_buf) {
++		ret = size < *src_size ? size : *src_size;
++		memcpy(dst, *src_buf, ret);
++		*src_buf += size;
++		*src_size -= size;
++	}
++	else {
++		ret = read_in_full(fd, dst, size);
++		if (ret < 0)
++			die_errno("read error");
++	}
++
++	/* And complain if we didn't get enough bytes to satisfy the read. */
++	if (ret < size) {
+ 		if (gently)
+ 			return -1;
+ 
+@@ -143,12 +157,13 @@ static int packet_read_internal(int fd, char *buffer, unsigned size, int gently)
  	return len;
  }
  
--int packet_read_line_gently(int fd, char *buffer, unsigned size)
-+int packet_read_gently(int fd, char *buffer, unsigned size)
+-static int packet_read_internal(int fd, char *buffer, unsigned size, int gently)
++static int packet_read_internal(int fd, char **src_buf, size_t *src_len,
++				char *buffer, unsigned size, int gently)
  {
- 	return packet_read_internal(fd, buffer, size, 1);
+ 	int len, ret;
+ 	char linelen[4];
+ 
+-	ret = safe_read(fd, linelen, 4, gently);
++	ret = get_packet_data(fd, src_buf, src_len, linelen, 4, gently);
+ 	if (ret < 0)
+ 		return ret;
+ 	len = packet_length(linelen);
+@@ -162,7 +177,7 @@ static int packet_read_internal(int fd, char *buffer, unsigned size, int gently)
+ 	if (len >= size)
+ 		die("protocol error: line too large: (expected %u, got %d)",
+ 		    size, len);
+-	ret = safe_read(fd, buffer, len, gently);
++	ret = get_packet_data(fd, src_buf, src_len, buffer, len, gently);
+ 	if (ret < 0)
+ 		return ret;
+ 	buffer[len] = 0;
+@@ -172,40 +187,22 @@ int packet_get_line(struct strbuf *out,
+ 
+ int packet_read_gently(int fd, char *buffer, unsigned size)
+ {
+-	return packet_read_internal(fd, buffer, size, 1);
++	return packet_read_internal(fd, NULL, 0, buffer, size, 1);
  }
  
--int packet_read_line(int fd, char *buffer, unsigned size)
-+int packet_read(int fd, char *buffer, unsigned size)
+ int packet_read(int fd, char *buffer, unsigned size)
  {
- 	return packet_read_internal(fd, buffer, size, 0);
+-	return packet_read_internal(fd, buffer, size, 0);
++	return packet_read_internal(fd, NULL, 0, buffer, size, 0);
+ }
+ 
+-int packet_get_line(struct strbuf *out,
+-	char **src_buf, size_t *src_len)
++int packet_read_from_buf(char *dst, unsigned dst_len,
++			 char **src_buf, size_t *src_len)
+ {
+-	int len;
+-
+-	if (*src_len < 4)
+-		return -1;
+-	len = packet_length(*src_buf);
+-	if (len < 0)
+-		return -1;
+-	if (!len) {
+-		*src_buf += 4;
+-		*src_len -= 4;
+-		packet_trace("0000", 4, 0);
+-		return 0;
+-	}
+-	if (*src_len < len)
+-		return -2;
+-
+-	*src_buf += 4;
+-	*src_len -= 4;
+-	len -= 4;
++	return packet_read_internal(-1, src_buf, src_len, dst, dst_len, 0);
++}
+ 
+-	strbuf_add(out, *src_buf, len);
+-	*src_buf += len;
+-	*src_len -= len;
+-	packet_trace(out->buf, out->len, 0);
+-	return len;
++int packet_read_from_buf_gently(char *dst, unsigned dst_len,
++				char **src_buf, size_t *src_len)
++{
++	return packet_read_internal(-1, src_buf, src_len, dst, dst_len, 1);
  }
 diff --git a/pkt-line.h b/pkt-line.h
-index 31bd069..2dc4941 100644
+index 2dc4941..287a391 100644
 --- a/pkt-line.h
 +++ b/pkt-line.h
-@@ -37,13 +37,13 @@ int packet_read_line(int fd, char *buffer, unsigned size);
-  *   4. Truncated output from the remote (e.g., we expected a packet but got
-  *      EOF, or we got a partial packet followed by EOF).
+@@ -45,7 +45,16 @@ int packet_read_gently(int fd, char *buffer, unsigned size);
   */
--int packet_read_line(int fd, char *buffer, unsigned size);
-+int packet_read(int fd, char *buffer, unsigned size);
+ int packet_read_gently(int fd, char *buffer, unsigned size);
  
- /*
-- * Same as packet_read_line, but do not die on condition 4 (truncated input);
-+ * Same as packet_read, but do not die on condition 4 (truncated input);
-  * instead return -1.  We still die for the other conditions.
-  */
--int packet_read_line_gently(int fd, char *buffer, unsigned size);
-+int packet_read_gently(int fd, char *buffer, unsigned size);
- 
- int packet_get_line(struct strbuf *out, char **src_buf, size_t *src_len);
+-int packet_get_line(struct strbuf *out, char **src_buf, size_t *src_len);
++/*
++ * Same as packet_read above, but read from an in-memory buffer
++ * instead of a file descriptor. The src_buf and src_len are modified
++ * to iterate past the consumed data.
++ */
++int packet_read_from_buf(char *dst, unsigned dst_len,
++			 char **src_buf, size_t *src_len);
++int packet_read_from_buf_gently(char *dst, unsigned dst_len,
++				char **src_buf, size_t *src_len);
++
  ssize_t safe_write(int, const void *, ssize_t);
+ 
+ #endif
 diff --git a/remote-curl.c b/remote-curl.c
-index 7be4b53..99cc016 100644
+index 99cc016..2ec5854 100644
 --- a/remote-curl.c
 +++ b/remote-curl.c
-@@ -308,7 +308,7 @@ static size_t rpc_out(void *ptr, size_t eltsize,
+@@ -138,28 +138,29 @@ static struct discovery* discover_refs(const char *service)
+ 	if (maybe_smart &&
+ 	    (5 <= last->len && last->buf[4] == '#') &&
+ 	    !strbuf_cmp(&exp, &type)) {
++		char line[1000];
++		int len;
++
+ 		/*
+ 		 * smart HTTP response; validate that the service
+ 		 * pkt-line matches our request.
+ 		 */
+-		if (packet_get_line(&buffer, &last->buf, &last->len) <= 0)
+-			die("%s has invalid packet header", refs_url);
+-		if (buffer.len && buffer.buf[buffer.len - 1] == '\n')
+-			strbuf_setlen(&buffer, buffer.len - 1);
++		len = packet_read_from_buf(line, sizeof(line), &last->buf, &last->len);
++		if (len && line[len - 1] == '\n')
++			len--;
  
- 	if (!avail) {
- 		rpc->initial_buffer = 0;
--		avail = packet_read_line(rpc->out, rpc->buf, rpc->alloc);
-+		avail = packet_read(rpc->out, rpc->buf, rpc->alloc);
- 		if (!avail)
- 			return 0;
- 		rpc->pos = 0;
-@@ -425,7 +425,7 @@ static int post_rpc(struct rpc_state *rpc)
- 			break;
- 		}
+ 		strbuf_reset(&exp);
+ 		strbuf_addf(&exp, "# service=%s", service);
+-		if (strbuf_cmp(&exp, &buffer))
+-			die("invalid server response; got '%s'", buffer.buf);
++		if (len != exp.len || memcmp(exp.buf, line, len))
++			die("invalid server response; got '%s'", line);
+ 		strbuf_release(&exp);
  
--		n = packet_read_line(rpc->out, buf, left);
-+		n = packet_read(rpc->out, buf, left);
- 		if (!n)
- 			break;
- 		rpc->len += n;
-@@ -579,7 +579,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
- 	rpc->hdr_accept = strbuf_detach(&buf, NULL);
+ 		/* The header can include additional metadata lines, up
+ 		 * until a packet flush marker.  Ignore these now, but
+ 		 * in the future we might start to scan them.
+ 		 */
+-		strbuf_reset(&buffer);
+-		while (packet_get_line(&buffer, &last->buf, &last->len) > 0)
+-			strbuf_reset(&buffer);
++		while (packet_read_from_buf(line, sizeof(line), &last->buf, &last->len) > 0)
++			;
  
- 	while (!err) {
--		int n = packet_read_line(rpc->out, rpc->buf, rpc->alloc);
-+		int n = packet_read(rpc->out, rpc->buf, rpc->alloc);
- 		if (!n)
- 			break;
- 		rpc->pos = 0;
-diff --git a/send-pack.c b/send-pack.c
-index a99a1e4..7b22235 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -108,7 +108,7 @@ static int receive_status(int in, struct ref *refs)
- 	struct ref *hint;
- 	char line[1000];
- 	int ret = 0;
--	int len = packet_read_line(in, line, sizeof(line));
-+	int len = packet_read(in, line, sizeof(line));
- 	if (len < 10 || memcmp(line, "unpack ", 7))
- 		return error("did not receive remote status");
- 	if (memcmp(line, "unpack ok\n", 10)) {
-@@ -122,7 +122,7 @@ static int receive_status(int in, struct ref *refs)
- 	while (1) {
- 		char *refname;
- 		char *msg;
--		len = packet_read_line(in, line, sizeof(line));
-+		len = packet_read(in, line, sizeof(line));
- 		if (!len)
- 			break;
- 		if (len < 3 ||
-diff --git a/sideband.c b/sideband.c
-index 8f7b25b..4a6446d 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -38,7 +38,7 @@ int recv_sideband(const char *me, int in_stream, int out)
- 
- 	while (1) {
- 		int band, len;
--		len = packet_read_line(in_stream, buf + pf, LARGE_PACKET_MAX);
-+		len = packet_read(in_stream, buf + pf, LARGE_PACKET_MAX);
- 		if (len == 0)
- 			break;
- 		if (len < 1) {
-diff --git a/upload-pack.c b/upload-pack.c
-index 04d6bd7..04231d7 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -428,7 +428,7 @@ static int get_common_commits(void)
- 	save_commit_buffer = 0;
- 
- 	for (;;) {
--		int len = packet_read_line(0, line, sizeof(line));
-+		int len = packet_read(0, line, sizeof(line));
- 		reset_timeout();
- 
- 		if (!len) {
-@@ -589,7 +589,7 @@ static void receive_needs(void)
- 		struct object *o;
- 		const char *features;
- 		unsigned char sha1_buf[20];
--		len = packet_read_line(0, line, sizeof(line));
-+		len = packet_read(0, line, sizeof(line));
- 		reset_timeout();
- 		if (!len)
- 			break;
+ 		last->proto_git = 1;
+ 	}
 -- 
 1.8.1.20.g7078b03
