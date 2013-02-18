@@ -1,90 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git v1.8.2-rc0
-Date: Mon, 18 Feb 2013 15:09:11 -0800
-Message-ID: <7vobfh8bjc.fsf@alter.siamese.dyndns.org>
-References: <7vk3q6e94s.fsf@alter.siamese.dyndns.org>
- <vpq4nh9v5an.fsf@grenoble-inp.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] shell-prompt: clean up nested if-then
+Date: Mon, 18 Feb 2013 15:28:16 -0800
+Message-ID: <20130218232816.GE4022@elie.Belkin>
+References: <1361228206.17734.4.camel@mas>
+ <5122b23b.512e980a.32b9.ffffa580@mx.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: linux-kernel-owner@vger.kernel.org Tue Feb 19 00:09:48 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Cc: s.oosthoek@xs4all.nl, git@vger.kernel.org,
+	trsten@science-computing.de, felipe.contreras@gmail.com
+To: martinerikwerner@gmail.com
+X-From: git-owner@vger.kernel.org Tue Feb 19 00:28:47 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1U7ZqF-0002LV-MU
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 19 Feb 2013 00:09:48 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1U7a8c-0002VR-UW
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 00:28:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757600Ab3BRXJQ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 18 Feb 2013 18:09:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37212 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753601Ab3BRXJP (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 18 Feb 2013 18:09:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C951BBF52;
-	Mon, 18 Feb 2013 18:09:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/DKBmTlEH60JG7tUC3MlZJAhm0U=; b=FKlZ4S
-	1jaQzopXOdBDqM6kk0d/BK3Uu1BfHIHYWf0stxkdUuBDjxJ3HG8z8cF4bB8MOr4s
-	yDx1mnhuVYP1HiFIdjhFeOXp8ilzd5bvZbXdTIQ97lyE8lPUI8ck0HrcS/7awezk
-	qKP1pA89SG7ENPTAh94kP4vE4HdH4wMoLk05c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yT55V2ZHwO8EhvwJUom/HFBBxXBs27ON
-	9CjLoq1NNOeZdrayBnmosTsqlPqoESCR3mLYF9nM+VbZ6gPAwExioZBGPunpwbk6
-	N+j5Gw7K9n/FTu6zWGp18qiZloYIr6gCBBbf2TfluKHHf4D/K/9McsVrCFTo49Ck
-	r7QahefA0nY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BDE69BF51;
-	Mon, 18 Feb 2013 18:09:14 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36D22BF4F; Mon, 18 Feb 2013
- 18:09:13 -0500 (EST)
-In-Reply-To: <vpq4nh9v5an.fsf@grenoble-inp.fr> (Matthieu Moy's message of
- "Mon, 18 Feb 2013 19:35:28 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3641256C-7A20-11E2-9827-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1755869Ab3BRX2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 18:28:22 -0500
+Received: from mail-da0-f48.google.com ([209.85.210.48]:33658 "EHLO
+	mail-da0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754975Ab3BRX2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 18:28:22 -0500
+Received: by mail-da0-f48.google.com with SMTP id v40so2698848dad.7
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 15:28:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=IGeWtTzESW5RGl3aDWcqa3m8TUu5Wd7NRTr7TcQVvfA=;
+        b=IRKVF+v7Z6TH3d220ZCenbm0SA8ryg75uQmqfqCcuDi/x8D7uPZXX2Hge8M/g2ZWFD
+         QforfIxGgc49ir3ZFDgayVzkB2i1bFJrIF4alAVnJQVFHzq3gf0usfh9Isv3BN1xtttT
+         y3rHy6mdYmZ9cLrheACXtW1nP1Qc3TgoUTe0InB3FJNuq60zujS0SK1x6hD5nY8GHfSj
+         /js7G8i8dLEJ/KFOb36QrxvzIRYyg04OZNSOEsILqG3toYCRBXAi4HG9u40lQem/jF/k
+         d8MHdSane8ZiYnL7Opny/DaCiZsxYz4Mcpk65dvBNVHLouykwkF0u0xMORrknyZ3UvSK
+         /1SQ==
+X-Received: by 10.68.48.165 with SMTP id m5mr35167508pbn.40.1361230101834;
+        Mon, 18 Feb 2013 15:28:21 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id f9sm105162634paz.12.2013.02.18.15.28.19
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 18 Feb 2013 15:28:20 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <5122b23b.512e980a.32b9.ffffa580@mx.google.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216549>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216550>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Martin Erik Werner wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Minor clean up of if-then nesting in checks for environment variables
+> and config options. No functional changes.
 >
->> Git v1.8.2 Release Notes (draft)
->> ========================
->>
->> Backward compatibility notes
->> ----------------------------
->>
->> In the upcoming major release (tentatively called 1.8.2), we will
->> change the behavior of the "git push" command.
->>
->> When "git push [$there]" does not say what to push, we have used the
->> traditional "matching" semantics so far (all your branches were sent
->> to the remote as long as there already are branches of the same name
->> over there).  We will use the "simple" semantics
->
-> I don't understand: wasn't this supposed to happen in Git 2.0? Did you
-> mean "In the upcoming major release (tentatively called *2.0*)"?
+> Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
+> ---
+>  contrib/completion/git-prompt.sh |   27 +++++++++++++--------------
+>  1 file changed, 13 insertions(+), 14 deletions(-)
 
-Thanks.  I am not sure what I was thinking.  Perhaps when we started
-this cycle we did want to merge the push-2.0-default-to-simple series
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Will update.
-
-> Also, you may want to mention the argumentless "git add -u" change too.
-> It currently has an item below, but this is a future
-> backward-incompatible change so it may deserve to appear in this section
-> too.
-
-Quite right.  Care to do the honors as the proposer to the new
-direction?
+Thanks for the quick turnaround.
