@@ -1,109 +1,71 @@
-From: Thibault Kruse <tibokruse@googlemail.com>
-Subject: Re: git clone tag shallow
-Date: Mon, 18 Feb 2013 09:26:43 +0100
-Message-ID: <CAByu6UWO=kUOvJ_YcPG9bo+XVZ5hSxRQpyEaUMcVxa=sXt_EMw@mail.gmail.com>
-References: <CAByu6UWEF48XvTmRnVDb2Bqxy1dNdUSXpTuy804215Vgs_KJxw@mail.gmail.com>
-	<CACsJy8Dso-g7foyJhpY20DNrY11PA8ZZUmP6JXxsiJ_Ggbt_KA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/9] User manual updates
+Date: Mon, 18 Feb 2013 00:56:07 -0800
+Message-ID: <7vr4keatlk.fsf@alter.siamese.dyndns.org>
+References: <20130217170606.GA3432@odin.tremily.us>
+ <cover.1361146398.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 18 09:27:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Mon Feb 18 09:56:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7M44-0004E9-T8
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 09:27:09 +0100
+	id 1U7MWZ-0007UX-I6
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Feb 2013 09:56:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756589Ab3BRI0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 03:26:45 -0500
-Received: from mail-oa0-f49.google.com ([209.85.219.49]:40101 "EHLO
-	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752614Ab3BRI0n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 03:26:43 -0500
-Received: by mail-oa0-f49.google.com with SMTP id j6so5506917oag.22
-        for <git@vger.kernel.org>; Mon, 18 Feb 2013 00:26:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=kdPY5CxFLUoSc/cgQYFxEjeEQhNs24xylVfFJL06NAY=;
-        b=Ho8+e721pzZtRzCqoFkptXdlXksZcGUXFt3JFwQc3GOyc49lTRVx2bM/+1U+FE82Cp
-         gYff8uBbPzkAiRV6CEPItYcG/dVZt2o+SjNV8/JQG4Gg0XcbXo6ByMYSh887iNAHpqEZ
-         xGTGcs4EdNfMenNXYyvAJfzORq4i3husXFhdv+j6cN0L4k4AAldiNy+uH5rRcJw1JPc3
-         QFwrWoikKo/3Hvt1iqAI1pOHqg6x+3f2eskCGuaztNjN6oA4HPOVCCkFUdCtjiEQAuyE
-         KyVSobwujRCvogSS5R+4YufxgozfJVhaAmiHjD6hn8U+0X8Qi1Ga5hPZQ4ouYqNUnEuk
-         UxCA==
-X-Received: by 10.60.21.101 with SMTP id u5mr5859508oee.71.1361176003259; Mon,
- 18 Feb 2013 00:26:43 -0800 (PST)
-Received: by 10.182.251.165 with HTTP; Mon, 18 Feb 2013 00:26:43 -0800 (PST)
-In-Reply-To: <CACsJy8Dso-g7foyJhpY20DNrY11PA8ZZUmP6JXxsiJ_Ggbt_KA@mail.gmail.com>
+	id S1752218Ab3BRI4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 03:56:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33214 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751870Ab3BRI4K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 03:56:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7906FAE9A;
+	Mon, 18 Feb 2013 03:56:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=l4n5FzFzFYB0YvyM0IrikjdDAvU=; b=g7xSbX
+	edbomhnFgb4ADIG3GkYzVMCYrGG8NU4R84AXEq1ufnbZdTFTtbalVD2s1PfUSki1
+	BFBahj/Vsd0XePTWx1HM0pU7XEus11N7s+3Bi5oJPjTxTXUkWF4YaVELdcH8OxQD
+	1UJ6pMHV1nePcITzALgMS+cB6F0N6nKgBKt5k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=N296vuMo+g4I2xrxtQ7krS37vjs0tt0a
+	AP5hqHERlb8B23yKDycZxl9SoxTHCGxmpUx7DijOaKNiucJtg+CFI1aYqnPIXBXu
+	8w39f75vBoN8DGLi/8HYiK6kBKCtIlv09No8VwDVczfeBDDed44ET2JHetWzn9YD
+	MkRY1zYqRso=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D7FCAE99;
+	Mon, 18 Feb 2013 03:56:09 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E4F1BAE96; Mon, 18 Feb 2013
+ 03:56:08 -0500 (EST)
+In-Reply-To: <cover.1361146398.git.wking@tremily.us> (W. Trevor King's
+ message of "Sun, 17 Feb 2013 19:15:52 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 09725884-79A9-11E2-8B53-ACA62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216443>
 
-Hi Duy,
+I've taken the following to 'maint', some with minor and obvious
+fix-ups:
 
-Looking closer at the rest of the docs, I guess it is consistent, but
-not terribly helpful.
-Throughout the docs (--help and man), it is never very clear what
-objects a command
-may accept or not. here is what I get from it:
+  user-manual: use 'remote add' to setup push URLs
+  user-manual: give 'git push -f' as an alternative to +master
+  user-manual: mention 'git remote add' for remote branch config
+  user-manual: use 'git config --global user.*' for setup
+  user-manual: use -o latest.tar.gz to create a gzipped tarball
 
-Whenever a command description involves "<branch>" this can, depending
-on the command, refer to
-1) a name that, when prepended with "refs/heads/", is a valid ref,
-2) a name that, when prepended with "refs/heads/" or "refs/tags", is a
-valid ref,
-3) a name that, when prepended with "refs/[heads|tags]/", or unique in
-"refs/remotes/*/" is a valid ref
+I think I've sent reviews for all others, except for the `backtick`
+one.  I think it is more efficient to do that one _after_ we are
+done with all the others.
 
-Now in the docu I don't see a nice distinction between 1), 2) and 3).
-I could work on a patch if someone
-tells me how to clearly distinguish those cases.
-
-Example for 1)
-git clone --branch <branch>    in git 1.7.x
-Example for 2)
-git clone --branch <branch>    in git 1.8.x
-Example for 3)
-git checkout <branch>    in git 1.8.x
-
-I would like the docs to relate to those e.g. as
-1) git clone --branch <local-branch>
-2) git clone --branch <local-branch-or-tag>
-3) git checkout <commit-label>
-or something similar, in the future. But I wont create a patch before
-having some blessing on the labels to use.
-
-
-On a related note, what would help my use-case would be an extension
-to git clone such
-that git clone [--deep] accepted also most other kinds of commit
-references, such as SHA-IDs.
-
-Such that
-git clone --deep --branch 2h134vjvbc
-would work. Is there a plan to introduce that as well?
-
-cheers,
-  Thibault
-
-
-On Mon, Feb 18, 2013 at 7:49 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Feb 18, 2013 at 2:13 AM, Thibault Kruse
-> <tibokruse@googlemail.com> wrote:
->> Hi all,
->>
->> I notice that using git 1.8.3, I can call
->> git clone repo1 repo2 --branch tagname
->> with a tag, not a branch. Is this going to be a stable and documented feature?
->
-> There is a test for --branch=tag in t5601, so I say it's supported. If
-> the document is not clear, patches are welcome.
-> --
-> Duy
+Thanks.
