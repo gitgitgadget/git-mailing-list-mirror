@@ -1,110 +1,116 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/4] git-commit: only append a newline to -m mesg if
- necessary
-Date: Mon, 18 Feb 2013 22:31:21 -0800
-Message-ID: <20130219063121.GF19757@elie.Belkin>
+Subject: Re: [PATCH 4/4] Documentation/git-commit.txt: correct a few minor
+ grammatical mistakes
+Date: Mon, 18 Feb 2013 22:43:04 -0800
+Message-ID: <20130219064304.GG19757@elie.Belkin>
 References: <1361247427-438-1-git-send-email-drafnel@gmail.com>
- <1361247427-438-3-git-send-email-drafnel@gmail.com>
+ <1361247427-438-4-git-send-email-drafnel@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
 To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 07:32:00 2013
+X-From: git-owner@vger.kernel.org Tue Feb 19 07:43:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7gkB-0007w9-KP
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 07:31:59 +0100
+	id 1U7gvS-0004Iu-3q
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 07:43:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757313Ab3BSGb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 01:31:28 -0500
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:43180 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757183Ab3BSGb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 01:31:27 -0500
-Received: by mail-pa0-f44.google.com with SMTP id kp1so3266905pab.17
-        for <git@vger.kernel.org>; Mon, 18 Feb 2013 22:31:27 -0800 (PST)
+	id S1757695Ab3BSGnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 01:43:11 -0500
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:62727 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756409Ab3BSGnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 01:43:10 -0500
+Received: by mail-pb0-f53.google.com with SMTP id un1so2066232pbc.12
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 22:43:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=OtHEUwgaTs+gnHpEEr4CtLFSfFm8mPcLfHc76bauqs0=;
-        b=gbwDZKTE6xDgvz46Mbt4a05Orfn8wZS1V5C4wXUNrxgBnh21TD04Dek3FKFjuWs62z
-         61tojF9AnR78ENBg6rmQq6rWgE8wz+QXLu6hdI1V2ab/PMS995JbmjTneri8ltXHZrMT
-         jCm/6y+82yAOcA1u8jAHFYASk3WLdWT7zVT9hSUdRh+nIltq35qqe+u5mGoAiipAIydA
-         uPeiJLi35aJSxuqdmhwHkKIIIlB+E7547NACEB5KvDb2ir6vHMojC/heZoegyStgbtzj
-         k/07W19H0sFY7lF/OCxCpgFMSP8KzWqHQgGnWnkPmuFH4LoGBWtFNgSYTPgzbTcM/Roi
-         UGFQ==
-X-Received: by 10.68.63.194 with SMTP id i2mr37872600pbs.4.1361255487278;
-        Mon, 18 Feb 2013 22:31:27 -0800 (PST)
+        bh=j9IuSypGDVVs9CeGUwQg87ZGw8EIx9H5uxFSQTa6aY8=;
+        b=XwRo5YDu7CwHSUBLmtpwLDLNSRiqvT0NgRWiNzwOWdM6adAbbPHtEvqi0yY4jlitW9
+         FZzpImrXlHHI/Ng84VXawP1+83r0afGBVQ5fqmQ5qsWXgdxdxjQduYelhsScq5BxcgHJ
+         v1SpTEQ0OKYNUfomHCbv41Sro2WtastXNm5hfjRTIwjkoQgj4r79KOWmgeQ7XTWXmKH3
+         cZwiHk2inVOzwcIaAyaKaevq4QuTVmYCN8jtmPWcZgdYPcOWDey3TZF+aLcbsgETOosZ
+         OhP59l6p0kKID0i5d63i7+1C0RMXoKe3mCoJNs80x3Z5spR5Z1RCv50dX8elfY853I42
+         41Eg==
+X-Received: by 10.68.189.234 with SMTP id gl10mr36772477pbc.148.1361256190219;
+        Mon, 18 Feb 2013 22:43:10 -0800 (PST)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id kl4sm2733299pbc.31.2013.02.18.22.31.24
+        by mx.google.com with ESMTPS id q4sm106396504paz.20.2013.02.18.22.43.07
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Feb 2013 22:31:25 -0800 (PST)
+        Mon, 18 Feb 2013 22:43:08 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1361247427-438-3-git-send-email-drafnel@gmail.com>
+In-Reply-To: <1361247427-438-4-git-send-email-drafnel@gmail.com>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216566>
 
 Brandon Casey wrote:
 
-> Currently, git will append two newlines to every message supplied via
-> the -m switch.  The purpose of this is to allow -m to be supplied
-> multiple times and have each supplied string become a paragraph in the
-> resulting commit message.
->
-> Normally, this does not cause a problem since any trailing newlines will
-> be removed by the cleanup operation.  If cleanup=verbatim for example,
-> then the trailing newlines will not be removed and will survive into the
-> resulting commit message.
->
-> Instead, let's ensure that the string supplied to -m is newline terminated,
-> but only append a second newline when appending additional messages.
-[...]
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -124,8 +124,10 @@ static int opt_parse_m(const struct option *opt, const char *arg, int unset)
->  	if (unset)
->  		strbuf_setlen(buf, 0);
->  	else {
-> +		if (buf->len)
-> +			strbuf_addch(buf, '\n');
->  		strbuf_addstr(buf, arg);
-> -		strbuf_addstr(buf, "\n\n");
-> +		strbuf_complete_line(buf);
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -174,10 +174,10 @@ OPTIONS
+>  --cleanup=<mode>::
+>  	This option sets how the commit message is cleaned up.
+>  	The  '<mode>' can be one of 'verbatim', 'whitespace', 'strip',
+> -	and 'default'. The 'default' mode will strip leading and
+> +	or 'default'. The 'default' mode will strip leading and
+>  	trailing empty lines and #commentary from the commit message
+> -	only if the message is to be edited. Otherwise only whitespace
+> -	removed. The 'verbatim' mode does not change message at all,
+> +	only if the message is to be edited. Otherwise only whitespace is
+> +	removed. The 'verbatim' mode does not change the message at all,
+>  	'whitespace' removes just leading/trailing whitespace lines
+>  	and 'strip' removes both whitespace and commentary. The default
+>  	can be changed by the 'commit.cleanup' configuration variable
 
-As long as 'message' always consists of complete lines, this will
-append 'arg' as a new paragraph, as desired.  And no other code path
-touches 'message', so it always consists of complete lines.
+Yeah, the current text is a bit choppy.  How about this?
 
-Thanks for a clear patch and explanation.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-(rest of patch kept unsnipped for reference)
-
->  	}
->  	return 0;
->  }
-> diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-> index 39e55f8..292bc08 100755
-> --- a/t/t7502-commit.sh
-> +++ b/t/t7502-commit.sh
-> @@ -204,7 +204,7 @@ test_expect_success 'cleanup commit messages (verbatim option,-F)' '
->  
->  '
->  
-> -test_expect_failure 'cleanup commit messages (verbatim option,-m)' '
-> +test_expect_success 'cleanup commit messages (verbatim option,-m)' '
->  
->  	echo >>negative &&
->  	git commit --cleanup=verbatim -m "$mesg_with_comment_and_newlines" -a &&
-> -- 
+--- i/Documentation/git-commit.txt
++++ w/Documentation/git-commit.txt
+@@ -172,16 +172,25 @@ OPTIONS
+        linkgit:git-commit-tree[1].
+ 
+ --cleanup=<mode>::
+-	This option sets how the commit message is cleaned up.
+-	The  '<mode>' can be one of 'verbatim', 'whitespace', 'strip',
+-	and 'default'. The 'default' mode will strip leading and
+-	trailing empty lines and #commentary from the commit message
+-	only if the message is to be edited. Otherwise only whitespace
+-	removed. The 'verbatim' mode does not change message at all,
+-	'whitespace' removes just leading/trailing whitespace lines
+-	and 'strip' removes both whitespace and commentary. The default
+-	can be changed by the 'commit.cleanup' configuration variable
+-	(see linkgit:git-config[1]).
++	This option determines how the supplied commit message should be
++	cleaned up before committing. The '<mode>' can be `verbatim`,
++	`whitespace`, `strip`, or `default`.
+++
++--
++default::
++	Strip leading and trailing empty lines and #commentary from
++	the commit message only if the message is to be edited.
++	Otherwise only remove whitespace.
++verbatim::
++	Do not change the message at all.
++whitespace::
++	Remove only leading and trailing whitespace lines.
++strip::
++	Remove both whitespace and commentary.
++--
+++
++The default can be changed using the 'commit.cleanup' configuration
++variable (see linkgit:git-config[1]).
+ 
+ -e::
+ --edit::
