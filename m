@@ -1,102 +1,73 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: inotify to minimize stat() calls
-Date: Tue, 19 Feb 2013 08:16:58 -0500
-Message-ID: <CAM9Z-nnWE9LeHaefKdju_p=_he7aJcOunGf1Ms6K=vEXgxS25w@mail.gmail.com>
-References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
-	<7vehgqzc2p.fsf@alter.siamese.dyndns.org>
-	<7va9rezaoy.fsf@alter.siamese.dyndns.org>
-	<7vsj56w5y9.fsf@alter.siamese.dyndns.org>
-	<9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
-	<CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com>
-	<CALkWK0nQVjKpyef8MDYMs0D9HJGCL8egypT3YWSdU8EYTO7Y+w@mail.gmail.com>
-	<CACsJy8CEHzqH1X=v4yau0SyZwrZp1r6hNp=yXD+eZh1q_BS-0g@mail.gmail.com>
-	<CALkWK0=6_n4rf6AWci6J+uhGHpjTUmK7YFdVHuSJedN2zLWtMA@mail.gmail.com>
-	<CACsJy8DeM5--WVXg3b65RxLBS7Jho-7KmcGwWk7B5uAx77yOEw@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] Documentation/githooks: Explain pre-rebase parameters
+Date: Tue, 19 Feb 2013 14:17:43 +0100
+Message-ID: <878v6ksars.fsf@pctrast.inf.ethz.ch>
+References: <c19c03f51d71a58fa3795f665fe4a4c0461fa58f.1361271116.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Robert Zeh <robert.allan.zeh@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>, finnag@pvv.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 14:17:27 2013
+Content-Type: text/plain
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Tue Feb 19 14:18:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7n4V-00032E-W5
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 14:17:24 +0100
+	id 1U7n5G-0003WY-VP
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 14:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758164Ab3BSNQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 08:16:59 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:48117 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757410Ab3BSNQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 08:16:58 -0500
-Received: by mail-ie0-f178.google.com with SMTP id c13so8228997ieb.23
-        for <git@vger.kernel.org>; Tue, 19 Feb 2013 05:16:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=469ubzNFkm3TCP1cQpEs4nIBgtXxQONqzH6UgZj0BiA=;
-        b=hqrb9d/cfiJj+vGFE2Ac9v/B/mGmuOyuXKpMBdEj/zateaamWihUtVAMHxt9EXURJO
-         NLk0N98p5/AcgAZXGr4SVGl4WCojlnutPpl1r4h+Bzf3+1p4XvDKhxEI56cNRjIplrWU
-         dur4hcF2V9p66jwZEaO/gQsgJnnAymGPcgc55BVDHaxLqJV+0wkSc4sBLlzsv4TNEVff
-         /dnGEwbSPZR4vHnZTQcJjvG67cCFPQBDefyaxx1JNyoQipRRZvkxCtS4RU+c3jQxLu4Q
-         j+pAlHKrf4adc1oInLYkqlzb+lc1a9C8fTGRAatjGtW9w8T6MRZGx5e1Sd9x3w+8PnJv
-         ig0w==
-X-Received: by 10.50.37.164 with SMTP id z4mr861680igj.38.1361279818537; Tue,
- 19 Feb 2013 05:16:58 -0800 (PST)
-Received: by 10.42.173.70 with HTTP; Tue, 19 Feb 2013 05:16:58 -0800 (PST)
-In-Reply-To: <CACsJy8DeM5--WVXg3b65RxLBS7Jho-7KmcGwWk7B5uAx77yOEw@mail.gmail.com>
+	id S1757618Ab3BSNRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 08:17:47 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:56885 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756631Ab3BSNRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 08:17:46 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Feb
+ 2013 14:17:40 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Tue, 19 Feb 2013 14:17:43 +0100
+In-Reply-To: <c19c03f51d71a58fa3795f665fe4a4c0461fa58f.1361271116.git.wking@tremily.us>
+	(W. Trevor King's message of "Tue, 19 Feb 2013 06:03:24 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216614>
 
-On Sun, Feb 10, 2013 at 12:24 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Feb 10, 2013 at 12:10 AM, Ramkumar Ramachandra
-> <artagnon@gmail.com> wrote:
->> Finn notes in the commit message that it offers no speedup, because
->> .gitignore files in every directory still have to be read.  I think
->> this is silly: we really should be caching .gitignore, and touching it
->> only when lstat() reports that the file has changed.
->> ...
->> Really, the elephant in the room right now seems to be .gitignore.
->> Until that is fixed, there is really no use of writing this inotify
->> daemon, no?  Can someone enlighten me on how exactly .gitignore files
->> are processed?
+"W. Trevor King" <wking@tremily.us> writes:
+
+> I'm not 100% convinced about this, because the git-rebase.sh uses:
 >
-> .gitignore is a different issue. I think it's mainly used with
-> read_directory/fill_directory to collect ignored files (or not-ignored
-> files). And it's not always used (well, status and add does, but diff
-> should not). I think wee need to measure how much mass lstat
-> elimination gains us (especially on big repos) and how much
-> .gitignore/.gitattributes caching does. I don't think .gitignore has
-> such a big impact though. strace on git.git tells me "git status"
-> issues about 2500 lstat calls, and just 740 open+getdents calls (on
-> total 3800 syscalls). I will think if we can do something about
-> .gitignore/.gitattributes.
-> --
-> Duy
+>   "$GIT_DIR/hooks/pre-rebase" ${1+"$@"}
+>
+> I haven't been able to find documentation for the ${1+"$@"} syntax.
+> Is it in POSIX?  It's not in the Bash manual:
+[...]
+> In my local tests, it seems equivalent to "$@".
 
-Duy,
-Did your testing turn up anything about the amount of time spent
-parsing the .gitignore/.gitattributes files? Not the syscall count,
-but the actual time spent running the parser (which I presume is
-largely CPU-bound). The other notable bit of information to know would
-be how much time is spent applying what has been parsed out of those
-files to the content of the tree. Both will give a clear signal of the
-prominence of those segments of code versus others elsewhere in the
-"git stat" flow path. That information will tell us more clearly what,
-if anything, it is worth keeping a cache of and what form that cache
-should take.
+It's definitely in the bash manual and POSIX[1]: it's a special case of
+the ${parameter+word} expansion.
+
+   ${parameter:+word}
+      Use Alternate Value.  If parameter is null or unset, nothing is
+      substituted, otherwise the expansion of word is substituted.
+
+plus
+
+   ... bash tests for a parameter that is unset or null.  Omitting the
+   colon results in a test only for a parameter that is unset.
+
+IIRC this particular usage was designed to suppress warnings about unset
+variables.
+
+
+Footnotes: 
+[1]  http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
 
 -- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Thomas Rast
+trast@{inf,student}.ethz.ch
