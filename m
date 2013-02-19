@@ -1,116 +1,109 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/githooks: Explain pre-rebase parameters
-Date: Tue, 19 Feb 2013 11:08:29 -0800
-Message-ID: <7vk3q45dg2.fsf@alter.siamese.dyndns.org>
-References: <c19c03f51d71a58fa3795f665fe4a4c0461fa58f.1361271116.git.wking@tremily.us>
+Subject: Re: [PATCH] Bugfix: undefined htmldir in config.mak.autogen
+Date: Tue, 19 Feb 2013 11:11:00 -0800
+Message-ID: <7vfw0s5dbv.fsf@alter.siamese.dyndns.org>
+References: <1be0a520b99fbfecd7255c1d26753015612856b3.1361272864.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Tue Feb 19 20:09:00 2013
+Cc: "Christoph J. Thompson" <cjsthompson@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 20:11:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7sYl-0004Kb-32
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 20:08:59 +0100
+	id 1U7sbO-0005wC-Ub
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 20:11:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934212Ab3BSTIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 14:08:34 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61746 "EHLO
+	id S934572Ab3BSTLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 14:11:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63350 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933446Ab3BSTIb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 14:08:31 -0500
+	id S934569Ab3BSTLE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 14:11:04 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E732A629;
-	Tue, 19 Feb 2013 14:08:31 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E0693A754;
+	Tue, 19 Feb 2013 14:11:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Niu1NTtEFFUbYBlrTO3Tfv/MTM8=; b=SO/133
-	40/wCZlD0GEUmxOzg5Q/xvwoGKPwJAWAHjsmc8VEkG/FRw+4oqr0LieyvThRAvL3
-	EqyZe6t06Z8z1C783wv4+auhd5aY+NYdaTjn3vzXK+wMhGd/WXMywI07gSK/TJgi
-	NY8lCdFWIlCGzjNeAyh9a0slinvzuLTDUfV54=
+	:content-type; s=sasl; bh=VK9/S0Ns6ZNkf1IkShBB3ZWj7ug=; b=iWPv/8
+	V9KCN6ZxoECzZLOkHL8Uj7tn4VGkQR7lADGZigGVU6OMRR1mGQcOWz/d8xMjCQlh
+	PQEjswP33IBmO3QB84JmajV/pK32bEdPeDF1hHbaDouF7NCFYSwU9T729ylscUXu
+	HRz2Y7ut14iWGvW1GUKqnfBT/hNFoSwU7cHoY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VOkxwxtqY2MbIenG+5J0qwTGWZ+Iu9k0
-	PAUUmDMrMIglStxuIOi7jngbx3FwMPyKOrRpXDpR1H+FIObWTZE6DlUNT/6wYRga
-	VZd5LpqpZx1MBvJZsLpVmjtp9Cb6+hL9eZ8kl3b9PCCUPIJbuU1qd8Amz7DesSB+
-	34cfD0t0GHw=
+	:content-type; q=dns; s=sasl; b=ECHYlXd7WDoVgg5INEaAU59zxq7d50+R
+	gSGSmY5QM1i+tCbU+trwIeDPkIM9GN/0j6JtGY39auLHkVIv68EBxb/DurETzc5m
+	dLrVeTKR+ZqznGPL63Tp01fwh4MP2U4o90AomFtCVlA5Fwy/rtU7F3NTje+TxHrO
+	/Hiyk1Mak1k=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 433B8A628;
-	Tue, 19 Feb 2013 14:08:31 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5455A753;
+	Tue, 19 Feb 2013 14:11:02 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ABE97A625; Tue, 19 Feb 2013
- 14:08:30 -0500 (EST)
-In-Reply-To: <c19c03f51d71a58fa3795f665fe4a4c0461fa58f.1361271116.git.wking@tremily.us>
- (W. Trevor King's message of "Tue, 19 Feb 2013 06:03:24 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 358BEA752; Tue, 19 Feb 2013
+ 14:11:02 -0500 (EST)
+In-Reply-To: <1be0a520b99fbfecd7255c1d26753015612856b3.1361272864.git.worldhello.net@gmail.com> (Jiang Xin's message of "Tue, 19 Feb 2013 19:23:29 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BFA8BBF6-7AC7-11E2-A799-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 19F800EE-7AC8-11E2-9EC9-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216650>
 
-"W. Trevor King" <wking@tremily.us> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> From: "W. Trevor King" <wking@tremily.us>
+> Html documents will be installed to root dir (/) no matter what prefix
+> is set, if run these commands before `make` and `make install-html`:
 >
-> Descriptions borrowed from templates/hooks--pre-rebase.sample.
+>     $ make configure
+>     $ ./configure --prefix=<PREFIX>
 >
-> Signed-off-by: W. Trevor King <wking@tremily.us>
+> After the installation, all the html documents will copy to rootdir (/),
+> and:
+>
+>     $ git --html-path
+>     <PREFIX>
+>
+>     $ git help -w something
+>     fatal: '<PREFIX>': not a documentation directory.
+>
+> This is because the variable "htmldir" points to a undefined variable
+> "$(docdir)" in file "config.mak.autogen", which is generated by running
+> `./configure`. This bug comes from commit fc1c541 (Honor configure's
+> htmldir switch), since v1.8.1.3-537-g1d321.
+>
+> Add the required two variables "PACKAGE_TARNAME" and "docdir" to file
+> "config.mak.in" will resolve this problem.
+>
+> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 > ---
-> I'm not 100% convinced about this, because the git-rebase.sh uses:
->
->   "$GIT_DIR/hooks/pre-rebase" ${1+"$@"}
->
-> I haven't been able to find documentation for the ${1+"$@"} syntax.
-> Is it in POSIX?  It's not in the Bash manual:
->
->   $ man bash | grep '\${.*[+]'
->               (${BASH_SOURCE[$i+1]})  where  ${FUNCNAME[$i]}  was  called  (or
->               ${BASH_SOURCE[$i+1]}.
->               ${BASH_SOURCE[$i+1]}  at  line  number  ${BASH_LINENO[$i]}.  The
->        ${parameter:+word}
->
-> In my local tests, it seems equivalent to "$@".
->
-> Also, it appears that the `git-rebase--*.sh` handlers don't use the
-> pre-rebase hook.  Is this intentional?
 
-The codeflow of git-rebase front-end, when you start rebasing, will
-call run_pre_rebase_hook before calling run_specific_rebase.  It
-will be redundant for handlers to then call it again, no?
+Who references PACKAGE_TARNAME and how is the symbol used?
 
-In "rebase --continue" and later steps, you would not want to see
-the hook trigger.
-
->  Documentation/githooks.txt | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
+>  config.mak.in | 2 ++
+>  1 file changed, 2 insertions(+)
 >
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index b9003fe..bc837c6 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -140,9 +140,10 @@ the outcome of 'git commit'.
->  pre-rebase
->  ~~~~~~~~~~
+> diff --git a/config.mak.in b/config.mak.in
+> index d7c49..fa02bd 100644
+> --- a/config.mak.in
+> +++ b/config.mak.in
+> @@ -8,6 +8,7 @@ LDFLAGS = @LDFLAGS@
+>  AR = @AR@
+>  TAR = @TAR@
+>  DIFF = @DIFF@
+> +PACKAGE_TARNAME = @PACKAGE_TARNAME@
+>  #INSTALL = @INSTALL@		# needs install-sh or install.sh in sources
 >  
-> -This hook is called by 'git rebase' and can be used to prevent a branch
-> -from getting rebased.
-> -
-> +This hook is called by 'git rebase' and can be used to prevent a
-> +branch from getting rebased.  The hook takes two parameters: the
-> +upstream the series was forked from and the branch being rebased.  The
-> +second parameter will be empty when rebasing the current branch.
-
-Technically this is incorrect.
-
-We call it with one or two parameters, and sometimes the second
-parameter is _missing_, which is different from calling with an
-empty string.  For a script written in some scripting languages like
-shell and perl, the distinction may not matter (i.e. $2 and $ARGV[1]
-will be an empty string when stringified) but not all (accessing
-sys.argv[2] may give you an IndexError in Python).
+>  prefix = @prefix@
+> @@ -17,6 +18,7 @@ gitexecdir = @libexecdir@/git-core
+>  datarootdir = @datarootdir@
+>  template_dir = @datadir@/git-core/templates
+>  sysconfdir = @sysconfdir@
+> +docdir = @docdir@
+>  
+>  mandir = @mandir@
+>  htmldir = @htmldir@
