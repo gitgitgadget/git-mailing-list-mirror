@@ -1,112 +1,96 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v4 1/3] user-manual: Reorganize the reroll sections,
- adding 'git rebase -i'
-Date: Tue, 19 Feb 2013 13:51:19 -0500
-Message-ID: <20130219185119.GD8170@odin.tremily.us>
-References: <20130219093429.GA4024@odin.tremily.us>
- <cover.1361267945.git.wking@tremily.us>
- <e9f8a25c05f9cfe89c6bcbefb69f40cd629f9925.1361267945.git.wking@tremily.us>
- <7vwqu45efr.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Feature idea : notes to track status of a commit, which remotes
+ it is shared to
+Date: Tue, 19 Feb 2013 10:55:15 -0800
+Message-ID: <7vsj4s5e24.fsf@alter.siamese.dyndns.org>
+References: <51234801.5050208@mildred.fr>
+ <87bobgtxvk.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=0H629O+sVkh21xTi
-Cc: Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 19:52:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Mildred Ki'Lya <mildred-ml@mildred.fr>, <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 19 19:57:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7sIq-0001tv-Ns
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 19:52:33 +0100
+	id 1U7sNd-0005Fp-KJ
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 19:57:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934071Ab3BSSv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 13:51:29 -0500
-Received: from vms173011pub.verizon.net ([206.46.173.11]:40997 "EHLO
-	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933985Ab3BSSv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 13:51:27 -0500
-Received: from odin.tremily.us ([unknown] [72.68.84.219])
- by vms173011.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MIH008BQDPJWS10@vms173011.mailsrvcs.net> for
- git@vger.kernel.org; Tue, 19 Feb 2013 12:51:20 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 395508AC35F; Tue,
- 19 Feb 2013 13:51:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1361299879; bh=0euXdI7Xusg+6XZQ5fkmHxmjIMFPUe+PBrIHTCIkvqA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=c/WmhhXNnmCYU8a+9hnD9XwsMUVKvw3ykMFySF8dsBmNLmoKv3OS+Lgl2PKozf5HM
- m4Olfadl80sPA3zEgzVQEWE9QlCilSSP6ZREg/qiSnN1oCB/T6DQfEYb+EQvgkWdD7
- DzH7pyN5GDwQ1iXq79avZ9r77q7lLzk/t3mqXbVE=
-Content-disposition: inline
-In-reply-to: <7vwqu45efr.fsf@alter.siamese.dyndns.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S934461Ab3BSSzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 13:55:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47142 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934458Ab3BSSzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 13:55:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B87E5B8DB;
+	Tue, 19 Feb 2013 13:55:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kTbkGHtY0dVfPVn77o1tfB1hh88=; b=K/mX/v
+	GL538E3VeDFOK0ZJGXBK1ENuZ3ckR6FhFxvyWxr7b7hAk4XOZ05Bb7BCFgwaUQjB
+	zZQz+PM4V0v7odzj3xh2zT0YCiBMIa8TMmeSRVgmlwJZOQ+6bdTLbYmZOAJ71vYQ
+	EMAV1y3an7cm0Cjh2Aad+mlEJaZd9mHTyMqBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ruIndkPe5AtzluxHPR2X0ecsQstE33DR
+	OHNakC0jHMxcxzlD/TQ67j8QS55GGrdtAeYcPAIrJdfw+eOLGRvo1wIcbfCZ0Zk9
+	5RrmNcM5bvGwQKLt57VzeA631bJB3yiZRa19yISKWKfqYHqv/GIxaij0WkNBhz+K
+	QNkwAGLnz74=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAE61B8DA;
+	Tue, 19 Feb 2013 13:55:17 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1490AB8D7; Tue, 19 Feb 2013
+ 13:55:16 -0500 (EST)
+In-Reply-To: <87bobgtxvk.fsf@pctrast.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 19 Feb 2013 11:13:19 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E6A50CDE-7AC5-11E2-9CBD-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216646>
 
+Thomas Rast <trast@student.ethz.ch> writes:
 
---0H629O+sVkh21xTi
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Mildred Ki'Lya <mildred-ml@mildred.fr> writes:
+>
+>> The idea is to basically track automatically (in notes, either in the
+>> notes namespace or in another namespace) which repository/remote
+>> contains a commit. When doing git log, we'd see lines with each
+>> commit, something like:
+>>
+>> commit b044e6d0f1a1782820b052348ab0db314e2db3ca
+>> Author: Myself <myself@localhost.localdomain>
+>> Date:   Tue Nov 20 16:46:38 2012 +0100
+>>
+>>     This is the commit description
+>>
+>> Published on:
+>>     origin
+>>     git@git.host.com:pub/repo.git
+>
+> The problem here is that doing this in notes is unreliable: you'd have
+> to identify all places where the set of "publishes" can change for any
+> commit, and update them there.
 
-On Tue, Feb 19, 2013 at 10:47:04AM -0800, Junio C Hamano wrote:
-> "W. Trevor King" <wking@tremily.us> writes:
-> > +Sometimes you want to edit a commit deeper in your history.  One
-> > +approach is to use `git format-patch` to create a series of patches,
-> > +then reset the state to before the patches:
-> > =20
-> >  -------------------------------------------------
-> > +$ git format-patch origin
-> > +$ git reset --hard origin
-> >  -------------------------------------------------
->=20
-> Technically speaking, this does not "reset to before the patches".
-> You would need "git reset --hard $(git merge-base origin HEAD)" or
-> something like that.
+Unreliable you can fix with effort.
 
-They'll be fine if they haven't fetched since they started their
-branch ;).
+But I think a bigger problem is that it is a pointless "false
+economy" to attempt to record and try to maintain this note for each
+and every commit.
 
-It does look like I've got an extra comma an a missing =E2=80=9Cand=E2=80=
-=9D.  What
-about:
+When you push out a tip of the branch to a new location, you would
+have to update notes to all commits from that tip down to where in
+the history to record that new location?  To the root?  Also your
+upstream may fetch from your published place and you may fetch it
+back (you will notice that now the commit appears in your 'origin').
+Would you do the traversal and update all notes?
 
-  =E2=80=A6create series of patches and then reset=E2=80=A6
-
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---0H629O+sVkh21xTi
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRI8mmAAoJEEUbTsx0l5OMg6gP/jcZ7FIWFZfN8wl98a2m+GaL
-orVpunV8Zk6asbPASXVpJ8EUPM+9rMvjrV1IaU+ueD3z9/p0KEKHMBukmX0neuDd
-gxDbXIqZDlYfvq2xO5cKvwyy2SMFleTTqdC8JhUDzRGPbKuNGzsVugh/8/mx7joM
-hmCEm0Cu4IOzD+tqMMWMkwJQ9MQvY3Jh+4tR1D5FCBi3EHPktEzr+Pf2AAS6r9+F
-hIAhwpEmDcktoO5DCIKo8OXRAdw1PJT0vLZgtU+uUbSOWK7t7zTplBfQZU3INShZ
-SBgsnQv5ZX/GiAmnWTTqMh3gDG7msLQjygEyZRzU9ZVYQAd8U3IKXDQNGOcAt0Jf
-5Rc/I060dvAOwGZ1MCXwLYhNqGU7e9G1mYbyIjS53310QetEEVjMZpyeaHTfIdfP
-3enIRHb+z2WZbURTcHFbYYOSSz/yyIFANnx7nbVFeZJlX5M0E9zqmrw98KyaxKY5
-bCT3dWxgMFjk8eWYVU4ewjU/zYOrmGaIzoD45gvgPpfGytmrxRafKP54eAZr/b7K
-XVYa+ja/tgFv7MXI9imPB8peclSDi9wStBtVuWk8WU6pa8E0XvA/BuiVPQ7Bet1p
-YKM1Dy3nYsbQ6PUY5IPst8HqQWtGckhL4fVT2qzVh+zBF4t5GbOtwmwE50ika1BH
-WjSPguXo0JNi7B/d3n/5
-=aCzJ
------END PGP SIGNATURE-----
-
---0H629O+sVkh21xTi--
+It is both much easier and cheaper to compute this on demand as you
+pointed out.
