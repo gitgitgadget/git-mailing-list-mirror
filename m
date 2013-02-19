@@ -1,170 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] check-ignore.c, dir.c: fix segfault with '.'
- argument from repo root
-Date: Tue, 19 Feb 2013 14:03:01 -0800
-Message-ID: <7vfw0s3qsq.fsf@alter.siamese.dyndns.org>
-References: <CAOkDyE9VVuFn6B=Fe4XHxGCEW0MFgndx1X0+9hO36Soxb37YQw@mail.gmail.com>
- <1361301696-11307-1-git-send-email-git@adamspiers.org>
- <7vzjz03wid.fsf@alter.siamese.dyndns.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: feature request
+Date: Tue, 19 Feb 2013 14:27:19 -0800
+Message-ID: <CAJo=hJvmaj4Yn6ACDxQvnetfU+ay1hbfwsnCNN+tGG9MNoovkA@mail.gmail.com>
+References: <BLU0-SMTP2753D5BFC50D7334EDDE278E1F40@phx.gbl>
+ <CABVa4NgsbeNGS2F2jQJ5d9bDcFb4=oEVrBg_-n2eYjwnfQzMqA@mail.gmail.com> <20130218204511.GA27308@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>,
-	Zoltan Klinger <zoltan.klinger@gmail.com>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Tue Feb 19 23:03:32 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: James Nylen <jnylen@gmail.com>,
+	Jay Townsend <townsend891@hotmail.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 19 23:28:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7vHg-0006yi-A4
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 23:03:32 +0100
+	id 1U7vfR-0003GW-T3
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 23:28:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934576Ab3BSWDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 17:03:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50519 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934567Ab3BSWDE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 17:03:04 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B45C0A86C;
-	Tue, 19 Feb 2013 17:03:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fvfvKJuGnDqC7EldSeokOJ8hWdU=; b=Fkmjs+
-	xBNUc/sceYGEsJ0+HjBJZ66qOeED/StykjlBlPSKjVOZn3feuDZi+cxnQ8lJ6vpB
-	P5FquQsutlZpeWGQofyWj542ZcBx7rr12oQ44HGLW4V8IubstIVozIg1v+MxmVlg
-	P/BcEK6CoXkZwwwOUshIDb3bFFd2HPVneFasg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lk92ye/siearHy1rsVTURLRx7hNUIPUW
-	KU6yiqu6q9XCQwj1y1R3RAdhHt0Y8nCW41YQMVBwBI3tS7m4eknaXbDNIuySxay0
-	Sg5T9APg3omIhDr12QFd0O21E1tvWOrtEYqtCEu3gfPaJZqUMOYcAQtK1OLZYCg9
-	5CrXiiTF6Uw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A85BFA86B;
-	Tue, 19 Feb 2013 17:03:03 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CEF71A865; Tue, 19 Feb 2013
- 17:03:02 -0500 (EST)
-In-Reply-To: <7vzjz03wid.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 19 Feb 2013 11:59:38 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 218B0B9A-7AE0-11E2-92A3-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933913Ab3BSW1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 17:27:41 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:42308 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933886Ab3BSW1k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 17:27:40 -0500
+Received: by mail-ie0-f174.google.com with SMTP id k10so9041081iea.19
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 14:27:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=X6OBhVmibxRW8lpw7nqpJv55Fm90NiFskCW/MGRs/IU=;
+        b=bl+GWOh6HmY+JK0E/Zu10z7hEz9MiBABofVWxI58CZSUGpqqy/B1/Ekva4EuW/04uX
+         +kz7PUCS/RojSZBuEiD/oPRXiIU8/uGHG8jv8xQ7JixUxMRH26DQsqVR4kAn4WHrTB4D
+         NCzEmeEmBqwDghPyAJhL/4ycSoDZDhJUFONQ8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:x-gm-message-state;
+        bh=X6OBhVmibxRW8lpw7nqpJv55Fm90NiFskCW/MGRs/IU=;
+        b=hTAGbn9vlTxMDSbKqIDga0ZFGNMjnD7HAdKoemlED/5/hEuvcMmqJSbwHg2GqWVE9V
+         gmkvP1Opf3/n4ETdMbP3FqbQD6jZDnqy0jOVNWxYksGN22crzH90Uzoz55p93CdT9LCQ
+         J/w+Q2IqH0gXoEfggBxWX80uezn/DadkvI04cH0LaCc5PzoozYMQnMF+kiLQWwqhTzqM
+         WGuknwEekY1pVnDr0M2Ombfm407howFE+7Kjx2zzJBERzi4t1+GbhJ2rSf+YY1n4kW7u
+         2UftpWeXeReOtq2RWInXHvIS2mPBUmAOF7AT04iqmdOZOCDbF/nmYsZeaGEWtYmGeSwD
+         5k4w==
+X-Received: by 10.50.170.102 with SMTP id al6mr10344249igc.20.1361312860041;
+ Tue, 19 Feb 2013 14:27:40 -0800 (PST)
+Received: by 10.64.89.99 with HTTP; Tue, 19 Feb 2013 14:27:19 -0800 (PST)
+In-Reply-To: <20130218204511.GA27308@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQmZdPObumJ5RxdoMBTuOkYwEG1/n/1fzRn9ZSa5qd1hnTNBJ5Xp+k7JqrgJiA5kJ0mkqu3q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216664>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> And this sounds like a really bad excuse.  If it were "it does not
-> make *any* sense ... because the top level is *never* ignored", then
-> the patch is a perfectly fine optimization that happens to work
-> around the problem, but the use of "much" and "typically" is a sure
-> sign that the design of the fix is iffy.  It also shows that the
-> patch is not a fix, but is sweeping the problem under the rug, if
-> there were a valid use case to set the top level to be ignored.
+On Mon, Feb 18, 2013 at 12:45 PM, Jeff King <peff@peff.net> wrote:
 >
-> I wonder what would happen if we removed that "&& path[0]" check
-> from the caller, not add the "assume the top is never ignored"
-> workaround, and do something like this to the location that causes
-> segv, so that it can give an answer when asked to hash an empty
-> string?
->
-> Does the callchain that goes down to this function have other places
-> that assume they will never see an empty string, like this function
-> does, which I _think_ is the real issue?
+> The thing that makes 2FA usable in the web browser setting is that you
+> authenticate only occasionally, and get a token (i.e., a cookie) from
+> the server that lets you have a longer session without re-authenticating.
 
-I started to suspect that may be the right approach.  Why not do this?
+Right, otherwise you spend all day typing in your credentials and
+syncing with the 2nd factor device.
 
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Tue, 19 Feb 2013 11:56:44 -0800
-Subject: [PATCH] name-hash: allow hashing an empty string
+> I suspect a usable 2FA scheme for http pushes would involve a special
+> credential helper that did the 2FA auth to receive a cookie on the first
+> use, cached the cookie, and then provided it for subsequent auth
+> requests. That would not necessarily involve changing git, but it would
+> mean writing the appropriate helper (and the server side to match). I
+> seem to recall Shawn mentioning that Google does something like this
+> internally, but I don't know the details[1].
+...
+> [1] I don't know if Google's system is based on the Google Authenticator
+>     system. But it would be great if there could be an open,
+>     standards-based system for doing 2FA+cookie authentication like
+>     this. I'd hate to have "the GitHub credential helper" and "the
+>     Google credential helper". I'm not well-versed enough in the area to
+>     know what's feasible and what the standards are.
 
-Usually we do not pass an empty string to the function hash_name()
-because we almost always ask for hash values for a path that is a
-candidate to be added to the index. However, check-ignore (and most
-likely check-attr, but I didn't check) apparently has a callchain
-to ask the hash value for an empty path when it was given a "." from
-the top-level directory to ask "Is the path . excluded by default?"
+Yes, it is based on the Google Authenticator system, but that's not
+relevant to how Git works with it. :-)
 
-Make sure that hash_name() does not overrun the end of the given
-pathname even when it is empty.
+We have a special "git-remote-sso" helper we install onto corporate
+workstations. This allows Git to understand the "sso://" protocol.
+git-remote-sso is a small application that:
 
-Remove a sweep-the-issue-under-the-rug conditional in check-ignore
-that avoided to pass an empty string to the callchain while at it.
-It is a valid question to ask for check-ignore if the top-level is
-set to be ignored by default, even though the answer is most likely
-no, if only because there is currently no way to specify such an
-entry in the .gitignore file. But it is an unusual thing to ask and
-it is not worth optimizing for it by special casing at the top level
-of the call chain.
+- reads the URL from the command line,
+- makes sure a Netscape style cookies file has a current cookie for
+the named host,
+   - acquires or updates cookie if necessary
+- rewrites the URL to be https://
+- execs `git -c http.cookiefile=$cookiefile remote-https $URL`
 
-Signed-off-by: Adam Spiers <git@adamspiers.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/check-ignore.c | 2 +-
- name-hash.c            | 4 ++--
- t/t0008-ignores.sh     | 5 +++++
- 3 files changed, 8 insertions(+), 3 deletions(-)
+The way 2FA works is the user authenticates to a special internal SSO
+management point in their web browser once per period (I decline to
+say how often but its tolerable). Users typically are presented this
+SSO page anyway by other applications they visit, or they bookmark the
+main entry point. A Chrome or Firefox extension has been installed and
+authorized to steal cookies from this host. The extension writes the
+user's cookie to a local file on disk. Our git-remote-sso tool uses
+this cookie file to setup per-host cookies on demand within the
+authentication period.
 
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index 709535c..0240f99 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -89,7 +89,7 @@ static int check_ignore(const char *prefix, const char **pathspec)
- 					? strlen(prefix) : 0, path);
- 		full_path = check_path_for_gitlink(full_path);
- 		die_if_path_beyond_symlink(full_path, prefix);
--		if (!seen[i] && path[0]) {
-+		if (!seen[i]) {
- 			exclude = last_exclude_matching_path(&check, full_path,
- 							     -1, &dtype);
- 			if (exclude) {
-diff --git a/name-hash.c b/name-hash.c
-index d8d25c2..942c459 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -24,11 +24,11 @@ static unsigned int hash_name(const char *name, int namelen)
- {
- 	unsigned int hash = 0x123;
- 
--	do {
-+	while (namelen--) {
- 		unsigned char c = *name++;
- 		c = icase_hash(c);
- 		hash = hash*101 + c;
--	} while (--namelen);
-+	}
- 	return hash;
- }
- 
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index ebe7c70..9c1bde1 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -138,6 +138,7 @@ test_expect_success 'setup' '
- 	cat <<-\EOF >.gitignore &&
- 		one
- 		ignored-*
-+		top-level-dir/
- 	EOF
- 	for dir in . a
- 	do
-@@ -177,6 +178,10 @@ test_expect_success 'setup' '
- #
- # test invalid inputs
- 
-+test_expect_success_multi '. corner-case' '' '
-+	test_check_ignore . 1
-+'
-+
- test_expect_success_multi 'empty command line' '' '
- 	test_check_ignore "" 128 &&
- 	stderr_contains "fatal: no path specified"
--- 
-1.8.2.rc0.89.g6e4b41d
+Horrifically hacky. It would be nice if this was more integrated into
+Git itself, where the cookies could be acquired/refreshed through the
+credential helper system rather than wrapping git-remote-https with a
+magical URL. I am a fan of the way our extension manages to get the
+token conveyed automatically for me. Much easier than the OAuth
+flows[2], but harder to replicate in the wild. Our IT group makes sure
+the extension is installed on workstations as part of the base OS
+image.
+
+[2] https://developers.google.com/storage/docs/gsutil_install#authenticate
