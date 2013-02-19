@@ -1,75 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] clone: suggest index version 4 when the index is
- bigger than 512 KiB
-Date: Tue, 19 Feb 2013 10:59:47 -0800
-Message-ID: <7vobfg5duk.fsf@alter.siamese.dyndns.org>
-References: <1360848843-12092-1-git-send-email-pclouds@gmail.com>
- <loom.20130219T113730-546@post.gmane.org>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH 2/2] check-ignore.c: fix segfault with '.' argument from
+ repo root
+Date: Tue, 19 Feb 2013 19:07:13 +0000
+Message-ID: <CAOkDyE9VVuFn6B=Fe4XHxGCEW0MFgndx1X0+9hO36Soxb37YQw@mail.gmail.com>
+References: <CAOkDyE_96Ef5CjoxNk3mbsNi+ZAuv6XeHcO7r8RQ-Of5ELsuKw@mail.gmail.com>
+	<1361282783-1413-1-git-send-email-git@adamspiers.org>
+	<1361282783-1413-2-git-send-email-git@adamspiers.org>
+	<7v1ucc6vgd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Tue Feb 19 20:00:39 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git list <git@vger.kernel.org>,
+	Zoltan Klinger <zoltan.klinger@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 20:07:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7sQf-0007Ua-07
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 20:00:37 +0100
+	id 1U7sXX-0003YN-Os
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 20:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934185Ab3BSS7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 13:59:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53721 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933921Ab3BSS7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 13:59:50 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF632BF71;
-	Tue, 19 Feb 2013 13:59:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VuB3M1vmc7YEHxyNm8pwtVI3wIc=; b=npFdE4
-	wT6pZSRGglrInJrLMia2u+cXma7PaUGi06/StOVbHgliaaYmjG26rcL195p4kGzv
-	pFFvLyA3RQZv6Xm7iZ0ymA3dNr9XoA+77ddBXMOfcJbBQhrz70XrJb514CrKETN+
-	/fnMq3U7P7NaYci8RpNLLqPoojakBIXRsZkV8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OfRrOFeCo3zgYo4Rxd9eCRd0M7VVIcTE
-	bIQZ0xxq9U17u20cXgX0SD9ud7wBAT2wO7bUKOVxdxhvkp7pgxtyfzxDek17qP2U
-	zGiI0dA1TaZHxNF2PRLMcnVUXeRg2wIInCTt+j56eo7P4te6MBLy9f0XtoYMsszs
-	J82hOkQ1Vfo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D2C50BF6E;
-	Tue, 19 Feb 2013 13:59:49 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 56EC4BF60; Tue, 19 Feb 2013
- 13:59:49 -0500 (EST)
-In-Reply-To: <loom.20130219T113730-546@post.gmane.org> (Thomas Ackermann's
- message of "Tue, 19 Feb 2013 10:45:04 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 88E9474E-7AC6-11E2-8D8B-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S934208Ab3BSTHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 14:07:16 -0500
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:49699 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933459Ab3BSTHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 14:07:13 -0500
+Received: by mail-oa0-f41.google.com with SMTP id i10so7245825oag.28
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 11:07:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=sP2Kw5gH02ksvRM9C1wz55a3KsijLdzfbwW0YPe0k1M=;
+        b=uTHnxi7D/JXdg5stN3DyuJwnWM2DtoRJurDU0+YukKS2l/a0gGIHVaMXjoG79huZEF
+         +WUm9YJxicHacI+jRREd7zNMqu9MWAUu/EXyNp3KqXK6Rf7rRTWf9TDUVJ7PmsGTmlJW
+         GjtfCYw9TueeUekvqua2Ygs+KmokDGu/XVnVbvhN2xb5NoRK0mfkaM9OxL99KZeHyU4M
+         oDiDAcMKdeFV6ZO3Y0+tB5Gv5eYKYDjF957cC7aZNCil0MHyC5wetKEOa9gz1rGJVzLP
+         PdVmsW+k/Muzj5UFxVVxJElZnyS1fGuzCIin7mWTCGQjk3SYGcEaDeNLpI1NUw1HVHIR
+         e32A==
+X-Received: by 10.182.190.19 with SMTP id gm19mr8006128obc.34.1361300833169;
+ Tue, 19 Feb 2013 11:07:13 -0800 (PST)
+Received: by 10.182.122.106 with HTTP; Tue, 19 Feb 2013 11:07:13 -0800 (PST)
+In-Reply-To: <7v1ucc6vgd.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: gsZlegB-u_gBnTmKkhPdgFqA7nU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216648>
 
-Thomas Ackermann <th.acker@arcor.de> writes:
+On Tue, Feb 19, 2013 at 5:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Adam Spiers <git@adamspiers.org> writes:
+>
+>> Fix a corner case where check-ignore would segfault when run with the
+>> '.' argument from the top level of a repository, due to prefix_path()
+>> converting '.' into the empty string.  It doesn't make much sense to
+>> call check-ignore from the top level with '.' as a parameter, since
+>> the top-level directory would never typically be ignored, but of
+>> course it should not segfault in this case.
+>>
+>> Signed-off-by: Adam Spiers <git@adamspiers.org>
+>> ---
+>
+> Please step back a bit and explain why the original had check for
+> path[0] in the first place?
 
-> Is V4 really recommended for general use?
+I can't remember to be honest.
 
-If you stick to C-git, I do not think there is any reason to avoid
-it.  It is already a mature technology, the difference between 2 and
-4 are so trivial that it is very unlikely for a latent bug to be
-hiding in corner cases.
+> If the answer is "the code wanted to special case the question 'is
+> the top-level excluded?',
 
-It is a different matter if various reimplementations already
-support the format.  You can try it out, and if you find that other
-tools based on reimplementations of Git you use do not understand
-the format, you can safely go back with
+Yes, I think that's the most likely explanation.  Maybe it got missed
+in a variable renaming refactoring.
 
-	git update-index --index-version 2
+> but used a wrong variable to implement the
+> check, and this patch is a fix to that", then the proposed commit
+> log message looks incomplete.  The cause of the segv is not that
+> prefix_path() returns an empty string, but because the function
+> called inside the "if" block was written without expecting to be fed
+> the path that refers to the top-level of the working tree, no?
+>
+> While this change certainly will prevent the "check the top-level"
+> request to last-exclude-matching-path, I have to wonder if it is a
+> good idea to force the caller of the l-e-m-p function to even care.
+>
+> In other words, would it be a cleaner approach to fix the l-e-m-p
+> function so that the caller can ask "check the top-level" and give a
+> sensible answer (perhaps the answer may be "nothing matches"), and
+> remove the "&& path[0]" (or "&& full_path[0]") special case from
+> this call site?
 
-after you upgraded to version 4.
+Yes, that did cross my mind.  I also wondered whether hash_name()
+should do stricter input validation, but I guess that could have an
+impact on performance.
+
+> The last sentence "It doesn't make much sense..." in the proposed
+> log message would become a good justification for such a special
+> case at the beginning of l-e-m-p function, I would think.
+
+Fair enough.  I'll reply to this with a new version.[0]
+
+[0] I wish there was a clean way to include the new version inline,
+    but as I've noted before, there doesn't seem to be:
+
+    http://article.gmane.org/gmane.comp.version-control.git/146110
