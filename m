@@ -1,137 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] check-ignore.c: fix segfault with '.' argument from
- repo root
-Date: Tue, 19 Feb 2013 09:54:10 -0800
-Message-ID: <7v1ucc6vgd.fsf@alter.siamese.dyndns.org>
-References: <CAOkDyE_96Ef5CjoxNk3mbsNi+ZAuv6XeHcO7r8RQ-Of5ELsuKw@mail.gmail.com>
- <1361282783-1413-1-git-send-email-git@adamspiers.org>
- <1361282783-1413-2-git-send-email-git@adamspiers.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Can git restrict source files ?
+Date: Tue, 19 Feb 2013 18:55:20 +0100
+Message-ID: <CACBZZX7tHpUzW8pKjLi_4qm8w-n=FjResyRwZPK9qsyUzqpsMw@mail.gmail.com>
+References: <DE551AEA-5C7D-4A2D-8AB4-33195EF351F8@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>,
-	Zoltan Klinger <zoltan.klinger@gmail.com>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Tue Feb 19 18:54:43 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Juan Pablo <juanpablo8517@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 18:56:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7rOp-0003Ua-RM
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 18:54:40 +0100
+	id 1U7rQD-0004KY-Jc
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 18:56:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758744Ab3BSRyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 12:54:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43050 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757885Ab3BSRyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 12:54:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97C0DBB51;
-	Tue, 19 Feb 2013 12:54:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R49oFfYeoOfKrYkxxGNzxxpC2qU=; b=GZTZ9x
-	+nvBFLyay0MtDu7C6kehRQ6JtcnhRI3QRD3U/yTklHCUNO7mswE1QyJ1XCKR7/49
-	x1lrGsiG44hktwmyNRqDllb0HJBfyLiIx25NoTarhTknXovFuIJfHjwS4rB4Bngl
-	dJZdXrNbmkXcKW8RWlWyEViW7oyAu5FWA/EII=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UhY6l62jfldyO4lF3lJCt/+eJqPMq613
-	3DS/oortIIHHbS93Z76RveaeHXJcRq0AfDLftVf/fvJYx9Jr9g9Jm7aC7qYkd7Bm
-	bwfnXsl4OXVLHKdf6pdKURttVLfFTFkfeBM97gngnWuCRHtBwpi65H95rhl4X8x1
-	sq+LlJw8du0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88E86BB50;
-	Tue, 19 Feb 2013 12:54:14 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DCB9BB34; Tue, 19 Feb 2013
- 12:54:13 -0500 (EST)
-In-Reply-To: <1361282783-1413-2-git-send-email-git@adamspiers.org> (Adam
- Spiers's message of "Tue, 19 Feb 2013 14:06:23 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5EFB80AE-7ABD-11E2-AA4E-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758741Ab3BSRzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 12:55:41 -0500
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:45579 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752238Ab3BSRzk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 12:55:40 -0500
+Received: by mail-ob0-f179.google.com with SMTP id un3so6907195obb.10
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 09:55:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=TITR7pLx02oqFS1RJOvHNCr6KCchFVQb7zZlszRtZQo=;
+        b=v+mDkmnKyrPHd2cYgEDAluvyxDte35KYpTi08aMxQR5ZoVt27eFBOklmZ64GbOyxo7
+         sS5QjkazmAv6I4Df747+fbkfflsQkpscGdYP0jMTijjEvMQiNlkWe2p12ei9kN8WCm5g
+         gm6cK9Do+j4yyJKI1OtoTRC02xnIF/57kI3L6Y+Jy8HTdjyshThq1U4NfWyIDcAJWB8j
+         96x7wlZG7sW1591HcjBdTi9Fkxy+vjoiFC6s9imdCWpc00JIbarM2I/a+Uwn7v1AJBAa
+         M7LD/Y6Y+TbgsO18MvhrBdBBRLwf/POgrhQvA7AxW80eyRUrUaUlnulsXuuMLlin58h3
+         SQgg==
+X-Received: by 10.60.21.101 with SMTP id u5mr8224358oee.71.1361296540369; Tue,
+ 19 Feb 2013 09:55:40 -0800 (PST)
+Received: by 10.76.167.34 with HTTP; Tue, 19 Feb 2013 09:55:20 -0800 (PST)
+In-Reply-To: <DE551AEA-5C7D-4A2D-8AB4-33195EF351F8@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216640>
 
-Adam Spiers <git@adamspiers.org> writes:
+On Tue, Feb 19, 2013 at 5:06 PM, Juan Pablo <juanpablo8517@gmail.com> wrote:
+> I have a question, can i control the access to specific files or folders ?? I need that some developers can't see some source files, thank you very much for your time
 
-> Fix a corner case where check-ignore would segfault when run with the
-> '.' argument from the top level of a repository, due to prefix_path()
-> converting '.' into the empty string.  It doesn't make much sense to
-> call check-ignore from the top level with '.' as a parameter, since
-> the top-level directory would never typically be ignored, but of
-> course it should not segfault in this case.
->
-> Signed-off-by: Adam Spiers <git@adamspiers.org>
-> ---
-
-Please step back a bit and explain why the original had check for
-path[0] in the first place?
-
-If the answer is "the code wanted to special case the question 'is
-the top-level excluded?', but used a wrong variable to implement the
-check, and this patch is a fix to that", then the proposed commit
-log message looks incomplete.  The cause of the segv is not that
-prefix_path() returns an empty string, but because the function
-called inside the "if" block was written without expecting to be fed
-the path that refers to the top-level of the working tree, no?
-
-While this change certainly will prevent the "check the top-level"
-request to last-exclude-matching-path, I have to wonder if it is a
-good idea to force the caller of the l-e-m-p function to even care.
-
-In other words, would it be a cleaner approach to fix the l-e-m-p
-function so that the caller can ask "check the top-level" and give a
-sensible answer (perhaps the answer may be "nothing matches"), and
-remove the "&& path[0]" (or "&& full_path[0]") special case from
-this call site?
-
-The last sentence "It doesn't make much sense..." in the proposed
-log message would become a good justification for such a special
-case at the beginning of l-e-m-p function, I would think.
-
->  builtin/check-ignore.c | 2 +-
->  t/t0008-ignores.sh     | 5 +++++
->  2 files changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-> index 709535c..b0dd7c2 100644
-> --- a/builtin/check-ignore.c
-> +++ b/builtin/check-ignore.c
-> @@ -89,7 +89,7 @@ static int check_ignore(const char *prefix, const char **pathspec)
->  					? strlen(prefix) : 0, path);
->  		full_path = check_path_for_gitlink(full_path);
->  		die_if_path_beyond_symlink(full_path, prefix);
-> -		if (!seen[i] && path[0]) {
-> +		if (!seen[i] && full_path[0]) {
->  			exclude = last_exclude_matching_path(&check, full_path,
->  							     -1, &dtype);
->  			if (exclude) {
-> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-> index ebe7c70..9c1bde1 100755
-> --- a/t/t0008-ignores.sh
-> +++ b/t/t0008-ignores.sh
-> @@ -138,6 +138,7 @@ test_expect_success 'setup' '
->  	cat <<-\EOF >.gitignore &&
->  		one
->  		ignored-*
-> +		top-level-dir/
->  	EOF
->  	for dir in . a
->  	do
-> @@ -177,6 +178,10 @@ test_expect_success 'setup' '
->  #
->  # test invalid inputs
->  
-> +test_expect_success_multi '. corner-case' '' '
-> +	test_check_ignore . 1
-> +'
-> +
->  test_expect_success_multi 'empty command line' '' '
->  	test_check_ignore "" 128 &&
->  	stderr_contains "fatal: no path specified"
+No, but what you can do is to split these up into different
+repositories. E.g. where I work we have a puppet.git and a
+secrets.git, the latter contains passwords and other secret data, the
+former just uses macros to include that and is accessible to everyone.
