@@ -1,60 +1,98 @@
-From: Blind <stoycho.sleptsov@gmail.com>
-Subject: Re: [RFC/PATCH] Introduce branch.<name>.pushremote
-Date: Tue, 19 Feb 2013 13:18:10 +0200
-Message-ID: <CAGL0X-qLikj3bKervpASEixnEVLjBGDN=8QX8K6SG-A2Z_dVUg@mail.gmail.com>
-References: <1360307982-20027-1-git-send-email-artagnon@gmail.com>
-	<CAGL0X-rKnWBy-Ff=YmEdqgo8RFb40FXTxvUM5X77YaQvhAGHYg@mail.gmail.com>
-	<CALkWK0kBjsHtK1_7imJx-7CATSKFzpUgGzH6Hs9DAQ8c7jRUPw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 12:18:38 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] Bugfix: undefined htmldir in config.mak.autogen
+Date: Tue, 19 Feb 2013 19:23:29 +0800
+Message-ID: <1be0a520b99fbfecd7255c1d26753015612856b3.1361272864.git.worldhello.net@gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	"Christoph J. Thompson" <cjsthompson@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 12:24:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7lDX-0004T6-RW
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 12:18:36 +0100
+	id 1U7lJD-0007Uz-ML
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 12:24:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932714Ab3BSLSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 06:18:12 -0500
-Received: from mail-vc0-f170.google.com ([209.85.220.170]:47857 "EHLO
-	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932354Ab3BSLSL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 06:18:11 -0500
-Received: by mail-vc0-f170.google.com with SMTP id p16so4271821vcq.29
-        for <git@vger.kernel.org>; Tue, 19 Feb 2013 03:18:10 -0800 (PST)
+	id S932440Ab3BSLXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 06:23:51 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:46720 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932303Ab3BSLXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 06:23:50 -0500
+Received: by mail-pa0-f45.google.com with SMTP id kl14so3320076pab.18
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 03:23:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=oeVpf7lkIU4/jLYXRb5MUbnbs9ThbrjWAMlGKFomlCc=;
-        b=Zkkf5UffhNxymwfld6cAfiCd70AiDJFK66Spk8+F66vvKkfQwB9MU/GapbW+JFQ1vc
-         AipYJ8Mvg7epGMMZvXRUIROGIm98zIJXxYtAEyHvjHK83tKdLrstQoDdpoTUm/rvpAee
-         MQK1hXVHiB2XyDRlXHPV63JUUMHQtKvPglfTl/YDFziOGJVw4TYFki7xv1BZWJlzjb2H
-         fIViGgAR4yOOKqYlmjzNF06UkTbGYzQYogfH8Ks8sLiKz214u+nm/qwfWgW9FUEraVno
-         OSx3bWwDqcngfZCQzZ/5WCzU8ErojoLSBW4aR2kvD8X/1wXtU5DnzEJAvxzDoJcsHvAg
-         8l3g==
-X-Received: by 10.52.175.66 with SMTP id by2mr18002095vdc.53.1361272690493;
- Tue, 19 Feb 2013 03:18:10 -0800 (PST)
-Received: by 10.58.55.228 with HTTP; Tue, 19 Feb 2013 03:18:10 -0800 (PST)
-In-Reply-To: <CALkWK0kBjsHtK1_7imJx-7CATSKFzpUgGzH6Hs9DAQ8c7jRUPw@mail.gmail.com>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=u4YnpjIklZCeTKFG50hrenNH9HWex3QMcv2ZJpaqT9s=;
+        b=Sp6i751bM/GC7Et3LSUTi88MYGvRpF53ELpQfBp559MA13rrqv+NGLkSit4OaOLxvC
+         T/zh/wo1IANbQzpzS02zmTg1y3O1/YpVgu/ivB3CxdOVRUxcquNCPAAdudND2MKSiRW4
+         PXgbpGxfcnimKgtp6aVrBbBGLSMlJRwHJAK4gRXxDODLNx3Fx9MLzUGEZquIcUKCBH1V
+         Bx/QDB1x9adk35Mvt/qe8+morfE/BIMbljvRcrcNlxtDZouq0fc3J8szyWOjGbKK8V3i
+         r6VwPH9A2c7bngc8nH7/jBSc72CJBNtzO8kcRL2aEnvk3V2JhJeg286izCldm7dsBNdn
+         bt8w==
+X-Received: by 10.66.82.163 with SMTP id j3mr44817795pay.31.1361273030417;
+        Tue, 19 Feb 2013 03:23:50 -0800 (PST)
+Received: from localhost.localdomain ([124.207.10.6])
+        by mx.google.com with ESMTPS id f9sm107149356paz.12.2013.02.19.03.23.45
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 19 Feb 2013 03:23:49 -0800 (PST)
+X-Mailer: git-send-email 1.8.2.rc0.18.g63af42f.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216606>
 
-2013/2/19 Ramkumar Ramachandra:
-> No.  I don't see why push.default is limiting.
+Html documents will be installed to root dir (/) no matter what prefix
+is set, if run these commands before `make` and `make install-html`:
 
-I just want to find a way to exclude a branch (or infact a group of
-branches) from $git push --all.
-so when I read your thing, I thought for a second that it could be a
-possibility... But seems its not the case.
+    $ make configure
+    $ ./configure --prefix=<PREFIX>
 
-... or branch.<name>.pushremote can support some kind of a "none" value?
+After the installation, all the html documents will copy to rootdir (/),
+and:
 
-Blind.
+    $ git --html-path
+    <PREFIX>
+
+    $ git help -w something
+    fatal: '<PREFIX>': not a documentation directory.
+
+This is because the variable "htmldir" points to a undefined variable
+"$(docdir)" in file "config.mak.autogen", which is generated by running
+`./configure`. This bug comes from commit fc1c541 (Honor configure's
+htmldir switch), since v1.8.1.3-537-g1d321.
+
+Add the required two variables "PACKAGE_TARNAME" and "docdir" to file
+"config.mak.in" will resolve this problem.
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ config.mak.in | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/config.mak.in b/config.mak.in
+index d7c49..fa02bd 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -8,6 +8,7 @@ LDFLAGS = @LDFLAGS@
+ AR = @AR@
+ TAR = @TAR@
+ DIFF = @DIFF@
++PACKAGE_TARNAME = @PACKAGE_TARNAME@
+ #INSTALL = @INSTALL@		# needs install-sh or install.sh in sources
+ 
+ prefix = @prefix@
+@@ -17,6 +18,7 @@ gitexecdir = @libexecdir@/git-core
+ datarootdir = @datarootdir@
+ template_dir = @datadir@/git-core/templates
+ sysconfdir = @sysconfdir@
++docdir = @docdir@
+ 
+ mandir = @mandir@
+ htmldir = @htmldir@
+-- 
+1.8.2.rc0.18.g63af42f.dirty
