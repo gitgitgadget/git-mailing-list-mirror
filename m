@@ -1,87 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git Merge 2013 Conference, Berlin
-Date: Tue, 19 Feb 2013 13:26:13 -0800
-Message-ID: <7vk3q43si2.fsf@alter.siamese.dyndns.org>
-References: <CAP2yMaJyCi5tvFZ5hVpVULR=oKgfc-b0zb8baxFDhNqmu+W_Bg@mail.gmail.com>
- <87mwv1uyy5.fsf@pctrast.inf.ethz.ch>
- <20130218211703.GE27308@sigill.intra.peff.net>
- <CAP2yMaKwdwBiE0q6Cqmjf-g3iV269+UvOS+DaKtaXNOfQLkpeg@mail.gmail.com>
- <51239840.9080605@drmicha.warpmail.net>
- <51239D45.3000501@drmicha.warpmail.net>
- <CAP2yMa+O19iZUD33PZkdz61xWEjfKEvUoNWBztoyH2YeSkyD+w@mail.gmail.com>
- <7vbobg5cy4.fsf@alter.siamese.dyndns.org>
- <CAP2yMaKF7P8J5VCA8ODo2gdHj=FRfjki1xoRv-L4shfOExSX2w@mail.gmail.com>
+From: Thomas Berg <merlin66b@gmail.com>
+Subject: Re: git-p4: Importing a Git repository into Perforce without rebasing
+Date: Tue, 19 Feb 2013 22:29:47 +0100
+Message-ID: <CABYiQpnv6U2BVDB0v2Q3ia1x9FmYhNERDpE41TjE2qD5Y9L50A@mail.gmail.com>
+References: <CAA5tD2sZiYcH+edbuO2Uh43zNUOyDYUO_JHpRhrLOjSqV-PfpA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
-	git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 22:26:41 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Russell Myers <mezner@russellmyers.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 22:30:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7ui0-0003og-Rb
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 22:26:41 +0100
+	id 1U7ulR-0005dR-Up
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 22:30:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933776Ab3BSV0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 16:26:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57171 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933764Ab3BSV0Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 16:26:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BB09B67B;
-	Tue, 19 Feb 2013 16:26:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Zi1tCjGEEFDsgw0c37RgRY6sALc=; b=xX+LTN
-	Fv07GBuf0QzVxKHvwn3xmEdY+VfiH9t2OOzYiNt95trEuOh6pb16uGT11ZRFUCe2
-	vfh8c0olMut8pg7vDW35/jsKROLqN2EVeN5DuRQQUJvyam2v52OSdmD9waGBoiXH
-	LKjPaIARYQ3LXYaCq29e7dj+brpBSrOlB1xi4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h1kqt2il0pmU9Q4QzdXlgFIdAqAQZvqz
-	ya7FPYfcY0nIfMuhM+RhAhA+MsDBmWgthrnU5re68Jr4n4fUYVC9/GcjyCx2K+K+
-	YjfUMVC3LSijV8I/T8m/YUvFzuW8pxcu9+p9KtQDnkVIFr4zKtx6sBeMXecnMamk
-	jfWIUW2ZiTQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F5F5B67A;
-	Tue, 19 Feb 2013 16:26:15 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8EAAB679; Tue, 19 Feb 2013
- 16:26:14 -0500 (EST)
-In-Reply-To: <CAP2yMaKF7P8J5VCA8ODo2gdHj=FRfjki1xoRv-L4shfOExSX2w@mail.gmail.com> (Scott
- Chacon's message of "Tue, 19 Feb 2013 11:23:58 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FD6143C4-7ADA-11E2-BA7A-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933763Ab3BSV3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 16:29:50 -0500
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:56118 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757933Ab3BSV3t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 16:29:49 -0500
+Received: by mail-vc0-f171.google.com with SMTP id p1so4562569vcq.16
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 13:29:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=i3qS0Q2W/Xuk4BqPrRUC8hzh1iYmO8EAQcrJUAVn57U=;
+        b=Hkdkib5fyqR9+8ausPZNq93H3m5X8P1UmMCr/qk4GdZH1a5bkPJFtXLggkD+laQihX
+         kLpVEYWgMx4x64+aFKK3y+W4+g1m/WIbeqTKyHm/U46c+p0Po98iu5dlUljAeu45uZy2
+         uNlma38X4uQPNfGa3lRGJbIy94b19ZOrbdcHZ9AIvY3mpmk3gNd184g69/+yNI2qlY2s
+         3fAXBQqzvkpUPzGOPijFUNu1411LWjRDRYzmIwUr8WvEKCxFIxnnmqje51nmTa5agSfC
+         1tWz7vsJ4gtpRroD3dfo6W8z18FqoEZSG0ksSluvtoqRLjCIqRDvdhUDdg1xjD4cu+zG
+         cbPw==
+X-Received: by 10.52.94.17 with SMTP id cy17mr19870052vdb.68.1361309387649;
+ Tue, 19 Feb 2013 13:29:47 -0800 (PST)
+Received: by 10.58.135.132 with HTTP; Tue, 19 Feb 2013 13:29:47 -0800 (PST)
+In-Reply-To: <CAA5tD2sZiYcH+edbuO2Uh43zNUOyDYUO_JHpRhrLOjSqV-PfpA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216662>
 
-Scott Chacon <schacon@gmail.com> writes:
+Hi,
 
-> On Tue, Feb 19, 2013 at 11:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Scott Chacon <schacon@gmail.com> writes:
->>
->>> On Tue, Feb 19, 2013 at 7:41 AM, Michael J Gruber
->>> <git@drmicha.warpmail.net> wrote:
->>>> Michael J Gruber venit, vidit, dixit 19.02.2013 16:20:
->>>>> Well, all days are listed as "sold out" on the eventbrite site. Maybe
->>>>> it's because eventbrite has "trouble connecting to facebook" because I
->>>>> "don't have facebook"?
->>>
->>> No, it's because 300 people signed up and that's all the venue has
->>> room for.  I'm sure we can fit one more if you come.
->> ...
-> 300 is the number of people signed up for the User Day.  There is a
-> Dev Day, for contributors, which has 50 signed up.
+On Tue, Feb 19, 2013 at 3:40 AM, Russell Myers <mezner@russellmyers.com> wrote:
+> I'm trying to take a Git repository which has never been in Perforce
+> and push it to Perforce and having difficulty.
+[...]
+> I know that I could create another Git repository that has some
+> commits in it cloned from Perforce and rebase on top of that; however,
+> the repository I'm trying to import is rather large and rebasing would
+> require me to change many merge commits. I'd like to avoid doing this.
+> The repository has many thousands of commits in it.
 
-Ah, sorry I misunderstood.  So your 300 above was about the user
-day, and Dev day has different capacity but has already sold out at
-50 seats.
+So your history is not linear and contains merges.
+
+> In short my question is this: Using git-p4, is there a way to push a
+> Git repository into Perforce without rebasing on top of commits coming
+> from Perforce?
+
+No, this is not supported. Non-linear history would be a problem for
+git-p4 too, so that alone wouldn't solve your problem. git-p4 does not
+have the logic needed to submit merges back to Perforce.
+
+- Thomas
