@@ -1,90 +1,125 @@
-From: Thomas Rast <trast@inf.ethz.ch>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: Google Summer of Code 2013 (GSoC13)
-Date: Tue, 19 Feb 2013 09:41:43 +0100
-Message-ID: <874nh8vgoo.fsf@pctrast.inf.ethz.ch>
-References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
-	<20130218174239.GB22832@sigill.intra.peff.net>
-	<CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com>
-	<7vip5p9rtm.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=s4XX0mmUTAcNBHyqdrryhMYvhtrNZCFFccJJBUUVdUg@mail.gmail.com>
-	<20130219072512.GI19757@elie.Belkin>
-	<CALkWK0nnkfrHi-0=c-bXdBHaOeBsCdccZDJZX5LDs0dT=SsReg@mail.gmail.com>
+Date: Tue, 19 Feb 2013 14:30:11 +0530
+Message-ID: <CALkWK0kdjKXAiOz6k-Anfb3Xut5apZbQ-rqYhkA73YRu83tLcw@mail.gmail.com>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch> <20130218174239.GB22832@sigill.intra.peff.net>
+ <CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com>
+ <20130218185801.GA25673@sigill.intra.peff.net> <CALkWK0kFYP4k5=237PZ3XHhxkzF-RWwwe=3+Thb_xU2Jw5tg2g@mail.gmail.com>
+ <20130218211321.GD27308@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, Jeff King <peff@peff.net>,
-	<git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
-	"Pat Thoyts" <patthoyts@users.sourceforge.net>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
 	Paul Mackerras <paulus@samba.org>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
 	Thomas Gummerer <t.gummerer@gmail.com>,
 	David Barr <b@rr-dav.id.au>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 09:42:12 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 19 10:00:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7imC-0002mj-4n
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 09:42:12 +0100
+	id 1U7j4K-0003pE-QT
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 10:00:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932411Ab3BSIls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 03:41:48 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:57599 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932394Ab3BSIlr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 03:41:47 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Feb
- 2013 09:41:40 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
- CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Tue, 19 Feb 2013 09:41:43 +0100
-In-Reply-To: <CALkWK0nnkfrHi-0=c-bXdBHaOeBsCdccZDJZX5LDs0dT=SsReg@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 19 Feb 2013 13:42:35 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1757532Ab3BSJAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 04:00:32 -0500
+Received: from mail-ia0-f179.google.com ([209.85.210.179]:55274 "EHLO
+	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755561Ab3BSJAb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 04:00:31 -0500
+Received: by mail-ia0-f179.google.com with SMTP id x24so5832964iak.24
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 01:00:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=uz9mmh7GQ1tUKB1G/zHMGUGQGaQzoZejuEPbkkgAL+k=;
+        b=w4OL22qO1Ivf6wtPcGia4KV7WIndFS+eHgiIBX9qY5Eho8kE1nr6YT28sHOLBCtL1o
+         q3ZKl7qGliLd9EO7k9kQ66tZhu8G+AWRDWBRwBws9nlNdvW/Cnn2NfXSDzfAcnpN6Ur5
+         4EjDls6Q25a+uve96s8ILLGKGfkOLOyCe0gTVCzrZ3rZLakxBSp+mf0PvimHrE8Ka/VB
+         X3C6l0SGu32STdQanZzssPQidINe1+gGAoyyzIV11ton9+akUNqGBycSZfzka5ix2DA6
+         eLSskPrvxHUYr7f/g+wdm0XixpsBLnmeR+zkhmK6HDfTJGadGiA9UU6BM0vRw/iL/ACq
+         GDIA==
+X-Received: by 10.50.189.163 with SMTP id gj3mr8873808igc.14.1361264431191;
+ Tue, 19 Feb 2013 01:00:31 -0800 (PST)
+Received: by 10.64.166.33 with HTTP; Tue, 19 Feb 2013 01:00:11 -0800 (PST)
+In-Reply-To: <20130218211321.GD27308@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216578>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
-> Jonathan Nieder wrote:
->> Ramkumar Ramachandra wrote:
->>
->>> The short undiplomatic version of that is that our mentors suck (I'm
->>> not pointing fingers, but that's what I infer from failing projects).
->>
->> Hold on a second.  I'm not remembering such a grim outcome with 100%
->> failure from prior summers of code as you're describing.  Before I
->> start beating myself up, I guess I'd like a little more information
->> --- is there some specific project or statistic that you're thinking
->> of that brings you to that conclusion?
+Jeff King wrote:
+> On Tue, Feb 19, 2013 at 01:15:49AM +0530, Ramkumar Ramachandra wrote:
 >
-> In retrospect, I might have been unnecessarily harsh there.
+>> Take what I'm about to say with a pinch of salt, because I've never mentored.
+>>
+>> Mentors often don't provide much technical assistance: students should
+>> just post to the list with queries, or ask on #git-devel.  Mentors
+>> serve a different purpose; their primary responsibility, in my
+>> opinion, is to teach the student a sustainable productive workflow.
+>> This means: profiling them to figure out where they're losing out.  Do
+>> they have the habit of:
+>> - posting to the list regularly?
+>> - CC'ing the right people?
+>> - iterating quickly after reviews?
+>> - using gdb efficiently to quickly understand parts?
+>> - using git efficiently for the rebase/ patch workflow?
 >
-> One of the main measures of a mentor's success, in my opinion, is
-> having his student stick around after the Summer of Code: the mentor
-> is the student's primary link to the community.  There have been 4~5
-> students every year, times 6 years (is that how long we've been
-> participating?).  How many of those students have felt part of the
-> community?
+> I think you are spot-on. Those are the things that students need to
+> learn to do, and what mentors should be pushing them towards. But it
+> seems like we have the same problems with it year after year, and I know
+> mentors have worked on it. I'm not sure where the problem is.
 
-In defense of Thomas, whose project was mentioned earlier as a prime
-example of something that is "too big":
+I essentially have a couple of suggestions:
+- Be more thorough about discussing proposals; pick mentors from those
+who are deeply involved in the discussion, and are interested in the
+student.
+- Increase the visibility of every GSoC project in the community.
+Like I suggested earlier, a set of GSoC branches in-tree would be a
+great start: it's easy to go through the `log`, and tell if the
+student has been idle for a while.  We can put up links to the GitHub
+graphs for each of these branches.
 
-He's in fact still working on the index-API angle, as part of a thesis
-at university.
+>> > I very much agree with you here. One problem is that those smaller
+>> > projects often do not sound as grand or as interesting, and so students
+>> > do not propose them. We have to work with the applicants we get.
+>>
+>> We have to post well-crafted proposals like this to pique their interest.
+>
+> True. I think we can bear some of the blame in the proposal writing. But
+> if you look at the applications each year, they tend to cluster around
+> one or two projects, and most projects get no hits at all. It could be
+> because they're badly written. But I think it is also that they are not
+> in areas that are as flashy (and the flashiness often correlates with
+> complexity).
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+We need to collaborate on proposal writing, I think (which is why I
+suggested one-thread-per-proposal in a different email).  In the past,
+it has mostly been one person writing the entire thing.
+
+>> There is one easy way to fight spam: don't expose a web-based editing
+>> interface at all.  It's mainly going to be maintained by the
+>> community, and we're all much more comfortable in our editors and git.
+>> We can give the regulars direct commit access and ask the rest to
+>> submit pull requests.  Make it cost pennies, so any of us can easily
+>> afford it: just a cheap domain, DNS, and static HTML hosting.
+>
+> I'd be totally fine with that. You'd need to pick a static generator
+> framework (I don't think it is a good idea for everybody to be writing
+> raw html). I suspect kernel.org would be happy to host the static pages,
+> but if not, GitHub can pick up the hosting tab (and we could probably do
+> it as a subdomain under git-scm.com, too, if people want).
+
+Ofcourse.  Nobody wants to write raw HTML.  Additionally, I'd love it
+if we could post new posts via email, since we already have the habit
+of writing emails.
