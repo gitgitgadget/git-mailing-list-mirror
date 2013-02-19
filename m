@@ -1,74 +1,54 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: Git Merge 2013 Conference, Berlin
-Date: Tue, 19 Feb 2013 07:46:37 -0800
-Message-ID: <CAP2yMa+O19iZUD33PZkdz61xWEjfKEvUoNWBztoyH2YeSkyD+w@mail.gmail.com>
-References: <CAP2yMaJyCi5tvFZ5hVpVULR=oKgfc-b0zb8baxFDhNqmu+W_Bg@mail.gmail.com>
- <87mwv1uyy5.fsf@pctrast.inf.ethz.ch> <20130218211703.GE27308@sigill.intra.peff.net>
- <CAP2yMaKwdwBiE0q6Cqmjf-g3iV269+UvOS+DaKtaXNOfQLkpeg@mail.gmail.com>
- <51239840.9080605@drmicha.warpmail.net> <51239D45.3000501@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
-	git list <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Feb 19 16:47:39 2013
+From: Juan Pablo <juanpablo8517@gmail.com>
+Subject: Can git restrict source files ?
+Date: Tue, 19 Feb 2013 11:06:07 -0500
+Message-ID: <DE551AEA-5C7D-4A2D-8AB4-33195EF351F8@gmail.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 19 17:06:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7pPs-0005as-0b
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 16:47:36 +0100
+	id 1U7piI-0008PV-93
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 17:06:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933149Ab3BSPrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 10:47:11 -0500
-Received: from mail-ia0-f182.google.com ([209.85.210.182]:52105 "EHLO
-	mail-ia0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758410Ab3BSPrK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 10:47:10 -0500
-Received: by mail-ia0-f182.google.com with SMTP id w33so6231922iag.13
-        for <git@vger.kernel.org>; Tue, 19 Feb 2013 07:47:08 -0800 (PST)
+	id S932691Ab3BSQGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 11:06:14 -0500
+Received: from mail-qc0-f177.google.com ([209.85.216.177]:59993 "EHLO
+	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932491Ab3BSQGN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Feb 2013 11:06:13 -0500
+Received: by mail-qc0-f177.google.com with SMTP id u28so2594247qcs.22
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 08:06:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=b8eTGGzdUJa2Qm3adRztqdvW6CPaEiYqb1pj3y/O0Gg=;
-        b=sMoe9fcD+Hdk2bUUEHhwgdc5lssQfxvxugPPCMP+yyfDNe6KPCMiAocyXtaEGijfEc
-         omiHOv7zIOrqcz7PAVxT0jDozu2ifT6AmXznzLlpxL1IvbM0ZugQ+HQ7ykA6nq0ERvV3
-         nEbaYNqoOvkzn70WYhvyjZ1zD2uCKvpJhxhuEM7zAebQjmX3jEf5PpvPjfBCfV/5ko+N
-         oP0W8rcZDZWKzjEYBNUnaJUDYk5QT3Ye0jVlGSdjhLqVrvReGr8WxgJkGPyiLs6kHwc/
-         MCnOTWuh9ygUC+BeJpG6vWUybyEY660oP/Y2CxqCkZM3PmOGR01XqXhKosqQeKfu5biu
-         OzEQ==
-X-Received: by 10.50.187.197 with SMTP id fu5mr8460122igc.95.1361288817207;
- Tue, 19 Feb 2013 07:46:57 -0800 (PST)
-Received: by 10.231.55.200 with HTTP; Tue, 19 Feb 2013 07:46:37 -0800 (PST)
-In-Reply-To: <51239D45.3000501@drmicha.warpmail.net>
+        h=x-received:content-type:content-transfer-encoding:subject:from
+         :message-id:date:to:mime-version:x-mailer;
+        bh=8D1x+261bxGHZVbhf2yTIHi0ZLugT0ihZp5a6+N19TU=;
+        b=KFMgP2aq7GaJevUiX7SjsEL3FNvdeb51KCPKOctwlVlIHGNkWY9dbL3OPN5yICNojm
+         q09u0ycSiXCtwOvpJiH2d19YXMaXr6WG7nidZ1+DZ16G59ySTTFaI0p8dz5G8LxK8dPc
+         TY+tDbLEN3pDkqEy2oBW9o6mmGjUEnTZuhhL9XiQFVgIbOSL5OaaZk3+TYdVWhyXRolE
+         VLIS00oGE42bkw/6Zjuit/B+91xI+AFQW9vEfaVv+FMgCx0fWfW53COkmYa4SdIbmIRa
+         YJSOZliVGzUTKbg/U8t8h6FiXoky5LGiCnlnjCgwyyqkVjDmCDnfzJT0EDh3ZrDmOQkY
+         SGbg==
+X-Received: by 10.229.76.37 with SMTP id a37mr1577455qck.130.1361289970644;
+        Tue, 19 Feb 2013 08:06:10 -0800 (PST)
+Received: from [181.69.167.210] ([181.69.167.210])
+        by mx.google.com with ESMTPS id hr3sm27984474qab.4.2013.02.19.08.06.08
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 19 Feb 2013 08:06:09 -0800 (PST)
+X-Mailer: iPhone Mail (10B143)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216627>
 
-Hey,
+Hi, 
 
-On Tue, Feb 19, 2013 at 7:41 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Michael J Gruber venit, vidit, dixit 19.02.2013 16:20:
->> Well, all days are listed as "sold out" on the eventbrite site. Maybe
->> it's because eventbrite has "trouble connecting to facebook" because I
->> "don't have facebook"?
+I have a question, can i control the access to specific files or folders ?? I need that some developers can't see some source files, thank you very much for your time
 
-No, it's because 300 people signed up and that's all the venue has
-room for.  I'm sure we can fit one more if you come.
-
->>
->> I do plan to come (unless I'm out due to lack of an eventbrite ticket)
->> but will stay with family rather than at the Radisson Blu.
->>
-
-> BTW: Is it OK to add that event as an "event" on our Git community page?
-> Just wanted to ask Scott and Junio before doing it myself.
-
-Yes, this is fine.
-
-Scott
+Enviado desde mi iPhone
