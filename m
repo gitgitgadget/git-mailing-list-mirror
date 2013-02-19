@@ -1,80 +1,75 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH/RFC] clone: suggest index version 4 when the index is
- bigger than 512 KiB
-Date: Tue, 19 Feb 2013 17:54:55 +0700
-Message-ID: <CACsJy8CA8N1Hiz4JAXx++5BGEyYa6JnP3bhh++vtxb+6-ah-vA@mail.gmail.com>
-References: <1360848843-12092-1-git-send-email-pclouds@gmail.com> <loom.20130219T113730-546@post.gmane.org>
+Subject: Re: Is this a bug?
+Date: Tue, 19 Feb 2013 18:02:12 +0700
+Message-ID: <CACsJy8DjatRbL=J-MZmQFnd+_7i-WwYHSnkY_ga++fx1R5Whmw@mail.gmail.com>
+References: <937BB05095F39E46B969256AA776205322B2CF15C7@ST-EXCL29.statoil.net> <CABPQNSY4ordHh2ee8mk-2kCD40+sMf_SxrjfzGbkyGGTNW1TzA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Tue Feb 19 11:55:57 2013
+Cc: David Wade <DAWAD@statoil.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Tue Feb 19 12:03:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7krd-0008Fz-5b
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 11:55:57 +0100
+	id 1U7kyZ-0004Et-2K
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 12:03:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758665Ab3BSKz3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Feb 2013 05:55:29 -0500
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:64527 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758647Ab3BSKz1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Feb 2013 05:55:27 -0500
-Received: by mail-ob0-f176.google.com with SMTP id v19so6455938obq.35
-        for <git@vger.kernel.org>; Tue, 19 Feb 2013 02:55:25 -0800 (PST)
+	id S932688Ab3BSLCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 06:02:43 -0500
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:42471 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932339Ab3BSLCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 06:02:42 -0500
+Received: by mail-ob0-f180.google.com with SMTP id ef5so6322665obb.25
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 03:02:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=08uo3wOw2qz7shsKuaqtRpimn3NyHTmVFZf7FxTDqYQ=;
-        b=e8LHOTKGx4xhoXZI3UDfxIAwV+z/l7aK0ACGnu6n4coBwbsTqyy08eFwWHU72A7kIk
-         zFq5/JfGSc7Hf5sGYooFVcQA99OfL0zJEKfOe2x03oQZSoSQbKgKhejXazZJ4a11eMH2
-         knz55F8vw9wBzqQfe37MXhSm45+36x3f4GgxSTiSRvnCraMT7gws9FcwE3xkoIteMKxJ
-         H0Ose5xkZnx6gaosKC9y8YRrx42X7/EGCRQYPGxipYtSG2++tYn/AEjJRn9mye2bfH29
-         jiTSWzoHkbEfl3O1bd5z1lDtamZKEfoLhxY6AX9uF6KRpgn+O7Ibse3bi5GiqY0hT3UW
-         sLWg==
-X-Received: by 10.182.235.49 with SMTP id uj17mr7383872obc.18.1361271325495;
- Tue, 19 Feb 2013 02:55:25 -0800 (PST)
-Received: by 10.76.154.197 with HTTP; Tue, 19 Feb 2013 02:54:55 -0800 (PST)
-In-Reply-To: <loom.20130219T113730-546@post.gmane.org>
+         :subject:to:cc:content-type;
+        bh=N3Mr+fjflkteqC3CKq8oqMev0kytaQwrZuW78ra7yT4=;
+        b=zUskNDNUcfYk78QIh/sdIvddVQpZldBKoMq/yXfMNiEFSePSs7iOydu7O3NNihm+iO
+         cQXtaiPOnXxfmQwUCiU+z5CZ66GFilewADqvC5O0RVJUHEoOpIWGxIz6m8XdZ3TkgqQ0
+         pRonkLoLWXW8dRzxWzhNSb7ys4VHztKEcvb6Sl+89U9ZZuVtd3OZzWtd46gADPmP5sC+
+         dDrTN5MTKyNOoXuqaBeaByZ/NGTmE7/rT0X2X2tnqwXeXWCZGN4GVW+YPmmmn4Lk0e2U
+         QOsolsxUctBUZ5KQ78TehR3YcyGVOXnP0uOva4L1QertZtPPqyZoMB2OvyVFnYVtQpKg
+         dd1w==
+X-Received: by 10.60.5.231 with SMTP id v7mr7378258oev.62.1361271762133; Tue,
+ 19 Feb 2013 03:02:42 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Tue, 19 Feb 2013 03:02:12 -0800 (PST)
+In-Reply-To: <CABPQNSY4ordHh2ee8mk-2kCD40+sMf_SxrjfzGbkyGGTNW1TzA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216603>
 
-On Tue, Feb 19, 2013 at 5:45 PM, Thomas Ackermann <th.acker@arcor.de> w=
-rote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds <at> gmail.com> wr=
-ites:
->
+On Tue, Feb 19, 2013 at 4:47 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> On Tue, Feb 19, 2013 at 10:32 AM, David Wade <DAWAD@statoil.com> wrote:
+>> Hi,
 >>
->> I just realized that many of my big repos are still on index v2 whil=
-e
->> v4 should reduce its size significantly (3.8M -> 2.9M for linux-2.6
->> and 25M -> 14M for webkit, for example). I wanted to propose index v=
-4
->> as the new default version, because I guess that not many people
->> outside git <at> vger are aware of it, but perhaps this approach is =
-less
->> drastic. It only suggest index v4 when the index size after clone hi=
-ts
->> 512K limit.
+>> I wrote a commit message beginning with a hash (#) character, like this: 'git commit -m "#ifdef ...." '
 >>
+>> Everything went okay when committing, but then I tried 'git commit -amend' and without editing the commit message I was told I had an empty commit message.
+>>
+>> Is this a problem with my text editor (vim 7.2) or git itself? (git version 1.7.2.2 under RedHat 5.8) Or something I'm not supposed to do ;-) ?
 >
-> Is V4 really recommended for general use?
-> Default seems to be V3 and all I found in the docs is
-> the coresponding release not describing V4 as "experimental".
-> (I have repos with index files > 40MiB (!) which will shrink to
-> approx. 20MiB with V4 so using V4 would be an interessting option for=
- me.)
+> The problem is that when doing interactive editing of messages (like
+> 'git commit --amend' does), git considers '#' as a comment-character.
+> You can disable this by using the --cleanup=verbatim switch (or some
+> other suiting cleanup-setting, see 'git help commit').
 
-The default could be either v2 or v3, depending on whether you use
-some extra features. v4 is basically v3 with pathname compression.
-Yes, I think it's ok for general use.
---=20
+Nobody is always conscious about the leading # in commit message to do
+that. I once edited a commit message and the auto-wrap feature put '#'
+at the beginning of the line. I saved and went on without noticing one
+line was lost until much later :( Perhaps we should change the comment
+signature a bit to reduce accidents, like only recognize '#' lines as
+comments after a special line like
+
+# this is not a comment
+### START OF COMMENT ###
+# this is a comment
+-- 
 Duy
