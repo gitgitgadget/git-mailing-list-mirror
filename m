@@ -1,77 +1,58 @@
-From: Mildred Ki'Lya <mildred-ml@mildred.fr>
-Subject: Feature idea : notes to track status of a commit, which remotes it
- is shared to
-Date: Tue, 19 Feb 2013 10:38:09 +0100
-Message-ID: <51234801.5050208@mildred.fr>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Proposal: sharing .git/config
+Date: Tue, 19 Feb 2013 11:03:38 +0100
+Message-ID: <87ip5otybp.fsf@pctrast.inf.ethz.ch>
+References: <CALkWK0npW6TLdMNd5_zw-RAB0bjF9DDoyAVSx4Zx=7AmvdEo3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 19 10:59:49 2013
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 11:04:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7jzG-0001Xn-FT
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 10:59:46 +0100
+	id 1U7k3V-0003wT-8O
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 11:04:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758236Ab3BSJ7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 04:59:22 -0500
-Received: from fon38-4-88-185-152-87.fbx.proxad.net ([88.185.152.87]:44924
-	"EHLO ashley.mildred.fr" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757087Ab3BSJ7V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 04:59:21 -0500
-X-Greylist: delayed 1264 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Feb 2013 04:59:21 EST
-Received: from [2a01:e35:2f7b:8350:51ad:4eea:5ada:9b61]
-	by ashley.mildred.fr with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.77)
-	(envelope-from <mildred@mildred.fr>)
-	id 1U7jeQ-0006nX-GF
-	for git@vger.kernel.org; Tue, 19 Feb 2013 10:38:14 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+	id S1758247Ab3BSKDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 05:03:44 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:40736 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757087Ab3BSKDn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 05:03:43 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Feb
+ 2013 11:03:36 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
+ cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Tue, 19 Feb 2013 11:03:39 +0100
+In-Reply-To: <CALkWK0npW6TLdMNd5_zw-RAB0bjF9DDoyAVSx4Zx=7AmvdEo3w@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 19 Feb 2013 14:55:23 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216590>
 
-Hi,
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-This is my first time on this list (and by the way, I'm not subscribed, 
-so please Cc me to the replies). I have an idea that could be useful to 
-make rewriting history safer and easier to new users (I'm training some 
-of them). I thought I could share this idea, but perhaps someone already 
-thought about it. And I'm not providing code.
+> I have this itch where I want to share my remotes config between
+> machines.  In my fork, I should be able to specify where my upstream
+> sources are, so remotes get set up automatically when I clone.
 
-The idea is to basically track automatically (in notes, either in the 
-notes namespace or in another namespace) which repository/remote 
-contains a commit. When doing git log, we'd see lines with each commit, 
-something like:
+Note that you need to carefully pick only certain bits of the config, as
+otherwise there are big security headaches.
 
+> There are also other things in .git/config that would be nice to
+> share, like whether to do a --word-diff (why isn't it a configuration
+> variable yet?)
 
+Because that would break pretty much every script that uses git-diff?
 
-commit b044e6d0f1a1782820b052348ab0db314e2db3ca
-Author: Myself <myself@localhost.localdomain>
-Date:   Tue Nov 20 16:46:38 2012 +0100
-
-     This is the commit description
-
-Published on:
-     origin
-     git@git.host.com:pub/repo.git
-
-
-Then, we could have all the history rewriting commands (such as rebase 
-or pull --rebase) die when rewriting commits that are already published 
-anywhere. We could make an exception for a --force/-f flag or 
-configuration option, or commits published in another local repository 
-owned by the same user.
-
-In most setups, it could be useful to tell users they can safely rebase 
-without worrying about published commits as Git is tracking it for them. 
-Of course this is not an absolute security, but it's a good start.
-
-What do you think?
-
-Mildred
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
