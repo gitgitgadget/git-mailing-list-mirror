@@ -1,90 +1,112 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: inotify to minimize stat() calls
-Date: Tue, 19 Feb 2013 15:19:07 +0530
-Message-ID: <CALkWK0=XFBfZjO3oCJ8Jxya1ud79MQcQFm6pmZpOU8c3MxVtqQ@mail.gmail.com>
+Date: Tue, 19 Feb 2013 15:27:56 +0530
+Message-ID: <CALkWK0mgzzGTqjMxaEm1t+f69X=U7R203BiVugnnXE_MN2zFZw@mail.gmail.com>
 References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
  <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org>
  <7vsj56w5y9.fsf@alter.siamese.dyndns.org> <9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com>
  <CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com>
- <CALkWK0nQVjKpyef8MDYMs0D9HJGCL8egypT3YWSdU8EYTO7Y+w@mail.gmail.com>
- <CACsJy8CEHzqH1X=v4yau0SyZwrZp1r6hNp=yXD+eZh1q_BS-0g@mail.gmail.com>
- <CALkWK0=6_n4rf6AWci6J+uhGHpjTUmK7YFdVHuSJedN2zLWtMA@mail.gmail.com>
- <CACsJy8DeM5--WVXg3b65RxLBS7Jho-7KmcGwWk7B5uAx77yOEw@mail.gmail.com>
- <20130210111732.GA24377@lanh> <CABPQNSZ282Lre=sy-+ZQdJA9JnGqQguq2bQDOwvjb0fP+1-w8Q@mail.gmail.com>
- <CACsJy8AWyJ=dW5f44huWyPPe4X62xyi+R9CNM5Tg6u6TYf+thQ@mail.gmail.com> <511AAA92.4030508@gmail.com>
+ <7vliaxwa9p.fsf@alter.siamese.dyndns.org> <CAKXa9=qQwJqxZLxhAS35QeF1+dwH+ukod0NfFggVCuUZHz-USg@mail.gmail.com>
+ <CACsJy8BvN0xX_=fx78hVLw=2Wyk=RUHYs_x9r5RJ0TvBAoA83g@mail.gmail.com> <CAKXa9=pCSWtXq+5x_LcZ9gsSpa1yT0QD5DsBguTqosoH0cj-nw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Duy Nguyen <pclouds@gmail.com>, kusmabite@gmail.com,
-	Robert Zeh <robert.allan.zeh@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>, finnag@pvv.org
-To: blees@dcon.de
-X-From: git-owner@vger.kernel.org Tue Feb 19 10:49:55 2013
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Robert Zeh <robert.allan.zeh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 10:58:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7jph-0004ks-NL
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 10:49:54 +0100
+	id 1U7jyL-00011g-Lg
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 10:58:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758167Ab3BSJt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 04:49:29 -0500
-Received: from mail-ia0-f173.google.com ([209.85.210.173]:55350 "EHLO
-	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756851Ab3BSJt1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Feb 2013 04:49:27 -0500
-Received: by mail-ia0-f173.google.com with SMTP id h37so5932137iak.4
-        for <git@vger.kernel.org>; Tue, 19 Feb 2013 01:49:27 -0800 (PST)
+	id S1758453Ab3BSJ6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 04:58:22 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:45512 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758388Ab3BSJ6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 04:58:17 -0500
+Received: by mail-ie0-f170.google.com with SMTP id c11so8371418ieb.29
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 01:58:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=O/v3rLOi1qmbEfmoY2ilHL06EuzuO6pGVKTUx8pFB5A=;
-        b=BUjLVXcXKKvYlOtU7f4umWgk4cu1Yb4aEf6Va5MknjDaccPxMuKaQ/ij6kb0aX0eW3
-         xN0FM2KRMdk0nhEtqO1zVGKDGW9kknL4W2SMBW7/r65RAX/h+2EnqGyRrsE7X8Q/vkju
-         sHjQizVlNIjeRQKX/5B9sU4/NDqhLnOUwY6S2svDerM+zF7PDrGp3L4bUWdIAj6NBkg+
-         s1BYUSG5Wl+v8oiq/AUEdPAxyIeq0oqLpNIqq/Qt04C0IWQDeveVlwcThbWek0JpNnFJ
-         UeXS8G+njk9wj8ILboIOicdC6N/cK6U+6J8BQp/wb4az+87d4xRLP23UTCzOZ22FBKxN
-         KPQQ==
-X-Received: by 10.50.108.235 with SMTP id hn11mr7804057igb.107.1361267367483;
- Tue, 19 Feb 2013 01:49:27 -0800 (PST)
-Received: by 10.64.166.33 with HTTP; Tue, 19 Feb 2013 01:49:07 -0800 (PST)
-In-Reply-To: <511AAA92.4030508@gmail.com>
+         :subject:to:cc:content-type;
+        bh=93XPH+bdcpxAXsfBzoLrTIboO7f1vmbqXQPwVsd8tzk=;
+        b=k862vmQQRTohMcjOOUowgbhmdtRiSJITxMZVe1ku6zKOBMB4Ou6+19avj0clGl3AmU
+         77RU+PIFcXljEkeSsQinrXa4xP1PN+l4WlGlwwg8iG3WBqf3JMZ2lL9Wo5jO0/jfXFwd
+         ovxp+ndRNcRkfbIMIBfa45W7l+sDCh4+Qam0YYm08U3YzjPZRUQcCnofn7jXPYw1ljjb
+         5XuBBlb+9LZ3Dqf7gibAUtFzTNfOq3lJki8ooeGYlO5RMnfqQm7kLlqAv50S8MUC7WNk
+         9U03sV7AwH1mLMNr4Yb7ErRgPfMwSpcEoKvYrEqU2Pwot16TZ1wnBQSnYOocnyaJTMcW
+         fbSA==
+X-Received: by 10.50.181.167 with SMTP id dx7mr3200067igc.12.1361267896097;
+ Tue, 19 Feb 2013 01:58:16 -0800 (PST)
+Received: by 10.64.166.33 with HTTP; Tue, 19 Feb 2013 01:57:56 -0800 (PST)
+In-Reply-To: <CAKXa9=pCSWtXq+5x_LcZ9gsSpa1yT0QD5DsBguTqosoH0cj-nw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216588>
 
-Karsten Blees wrote:
-> Am 11.02.2013 04:53, schrieb Duy Nguyen:
->> On Sun, Feb 10, 2013 at 11:58 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->>> Karsten Blees has done something similar-ish on Windows, and he posted
->>> the results here:
+Robert Zeh wrote:
+> On Sun, Feb 10, 2013 at 9:21 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Mon, Feb 11, 2013 at 2:03 AM, Robert Zeh <robert.allan.zeh@gmail.com> wrote:
+>>> On Sat, Feb 9, 2013 at 1:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>>>
+>>>>> This is much better than Junio's suggestion to study possible
+>>>>> implementations on all platforms and designing a generic daemon/
+>>>>> communication channel.  That's no weekend project.
+>>>>
+>>>> It appears that you misunderstood what I wrote.  That was not "here
+>>>> is a design; I want it in my system.  Go implemment it".
+>>>>
+>>>> It was "If somebody wants to discuss it but does not know where to
+>>>> begin, doing a small experiment like this and reporting how well it
+>>>> worked here may be one way to do so.", nothing more.
 >>>
->>> https://groups.google.com/forum/#!topic/msysgit/fL_jykUmUNE/discussion
+>>> What if instead of communicating over a socket, the daemon
+>>> dumped a file containing all of the lstat information after git
+>>> wrote a file? By definition the daemon should know about file writes.
 >>>
->
-> The new hashtable implementation in fscache [1] supports O(1) removal and has no mingw dependencies - might come in handy for anyone trying to implement an inotify daemon.
->
-> [1] https://github.com/kblees/git/commit/f7eb85c2
-
-Thanks!  I'm cherry-picking this.  Why didn't you propose replacing
-hash.{c,h} with this in git.git though?
-
->>> I also seem to remember he doing a ReadDirectoryChangesW version, but
->>> I don't remember what happened with that.
+>>> There would be no network communication, which I think would make
+>>> things more secure. It would simplify the rendezvous by insisting on
+>>> well known locations in $GIT_DIR.
 >>
->> Thanks. I came across that but did not remember. For one thing, we
->> know the inotify alternative for Windows: ReadDirectoryChangesW.
+>> We need some sort of interactive communication to the daemon anyway,
+>> to validate that the information is uptodate. Assume that a user makes
+>> some changes to his worktree before starting the daemon, git needs to
+>> know that what the daemon provides does not represent a complete
+>> file-change picture and it better refreshes the index the old way
+>> once, then trust the daemon.
 >>
+>> I think we could solve that by storing a "session id", provided by the
+>> daemon, in .git/index. If the session id is not present (or does not
+>> match what the current daemon gives), refresh the old way. After
+>> refreshing, it may ask the daemon for new session id and store it.
+>> Next time if the session id is still valid, trust the daemon's data.
+>> This session id should be different every time the daemon restarts for
+>> this to work.
 >
-> I dropped ReadDirectoryChangesW because maintaining a 'live' file system cache became more and more complicated. For example, according to MSDN docs, ReadDirectoryChangesW *may* report short DOS 8.3 names (i.e. "PROGRA~1" instead of "Program Files"), so a correct and fast cache implementation would have to be indexed by long *and* short names...
+> I think we could do this without interactive communication,
+> if we did the following:
+>    1) The Daemon waits to see $GIT_DIR/lstat_request, and atomically
+>        writes out $GIT_DIR/lstat_cache.  By atomically I mean that it writes
+>        things out to a temporary file, and then does a rename.
 >
-> Another problem was that the 'live' cache had quite negative performance impact on mutating git commands (checkout, reset...). An inotify daemon running as a background process (not in-process as fscache) will probably affect everyone that modifies the working copy, e.g. running 'make' or the test-suite. This should be considered in the design.
+>    2) The client erases $GIT_DIR/lstat_cache, and writes
+>       $GIT_DIR/lstat_request
+>
+> I think this is better than socket based communication because there
+> are fewer places to check
+> for failures.
 
-Yes, an external daemon would report creation of *.o files, from the
-compile, for instance.  We need a way for it to be filtered at the
-daemon itself, so git isn't burdened with the filtering.
+My main problem with file-based solutions is this: how will the daemon
+accumulate inotify change events over time, and report it in a batch
+to a git application that is spawned?  Will it append to the
+.git/inotify_changes file everytime there's a change?  Wouldn't you
+prefer to accumulate the events in-memory and report it over a socket
+upon explicit request, to minimize IO?
