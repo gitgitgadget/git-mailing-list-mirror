@@ -1,101 +1,114 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 3/4] git-commit: only append a newline to -m mesg if necessary
-Date: Mon, 18 Feb 2013 20:17:06 -0800
-Message-ID: <1361247427-438-3-git-send-email-drafnel@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/4] t/t7502: compare entire commit message with what was
+ expected
+Date: Mon, 18 Feb 2013 21:08:13 -0800
+Message-ID: <20130219050813.GC19757@elie.Belkin>
 References: <1361247427-438-1-git-send-email-drafnel@gmail.com>
-Cc: Brandon Casey <drafnel@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 19 05:17:53 2013
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 06:08:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7eeO-0002Zh-DV
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 05:17:52 +0100
+	id 1U7fRh-0005wa-2y
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 06:08:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932344Ab3BSERX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Feb 2013 23:17:23 -0500
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:38484 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932103Ab3BSERW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Feb 2013 23:17:22 -0500
-Received: by mail-pb0-f54.google.com with SMTP id rr4so2015892pbb.27
-        for <git@vger.kernel.org>; Mon, 18 Feb 2013 20:17:21 -0800 (PST)
+	id S1751444Ab3BSFIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 00:08:20 -0500
+Received: from mail-da0-f50.google.com ([209.85.210.50]:38464 "EHLO
+	mail-da0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751161Ab3BSFIT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 00:08:19 -0500
+Received: by mail-da0-f50.google.com with SMTP id h15so2784131dan.23
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 21:08:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=fH26G4nIq+rdlB9HYzRo8pXRNnCr6Bc9YqLC5VJ4r8o=;
-        b=wmS/C3xyLARnvIh0fYG6ey5Jp9WN+7CSHQEbW+VsnvLd3Vx/rxpU3g8uFqQiDQaXyZ
-         3fuLCuElf9Mvsoit4eZP8C7peeW7OypQLqoHGPHdI8GhJHYIy/2qKyqzo9mE/OrObEUN
-         4q2xa4yng5b+IzTyAIy4RGd73Qc9kgICTDZnsmGGDlCJAkbVwipFhFhq5NSHsQTxxNPs
-         6yw0mnXlxnfQh5KPI7HW38yEJrSupNVvRomsktb9n0ESr68/CwoBj6CwN2DIxq9yo9cc
-         MNFCLjFNE7PzJnWtytwgKARhJEDd7bpmHNeuVPSC56vEMoDodstCrJwlVHaMqzOW0CZl
-         ALXw==
-X-Received: by 10.68.41.229 with SMTP id i5mr36391280pbl.62.1361247441458;
-        Mon, 18 Feb 2013 20:17:21 -0800 (PST)
-Received: from charliebrown.hsd1.ca.comcast.net (c-98-248-42-122.hsd1.ca.comcast.net. [98.248.42.122])
-        by mx.google.com with ESMTPS id ax3sm16558271pbd.42.2013.02.18.20.17.19
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Feb 2013 20:17:20 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.3.638.g372f416.dirty
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=eFGXx77qWdt6fCjkNBQVI0yxGzX9rMemejDCFAmyskQ=;
+        b=XDWvTPKcdn/5CM4fb32znRf3UYDgbtDMb2nRaO7cVEbpYMXVtEtfus6kJw+Z6DpBMQ
+         TwB5T3yddjk4ynJsbSO3k6sfQYsod6X9N3zbod82kEbzqNQSASPto5oHvKaXqX52ccCz
+         94kMHXt0gM2bNFRFPgtcS9hCeyhIptsgJyriWTTHhEgSA9aLXA198bQG/Xd0MtVpvkGm
+         5N/lGCc8gB+Ot0YTniSDluYdOTiPBOog+TcUy11FYka4ElcGOZvZivXc/xF8kQDQvtHr
+         XcFnkShN4h32BRC5uByFsmc/Acczbxbh+XW9hLrEoK4GN5i3m4I3hiWvGP8zIxIUtYmZ
+         6vNA==
+X-Received: by 10.68.202.3 with SMTP id ke3mr12979357pbc.98.1361250498924;
+        Mon, 18 Feb 2013 21:08:18 -0800 (PST)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id vq9sm16710124pbc.36.2013.02.18.21.08.16
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 18 Feb 2013 21:08:17 -0800 (PST)
+Content-Disposition: inline
 In-Reply-To: <1361247427-438-1-git-send-email-drafnel@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216560>
 
-Currently, git will append two newlines to every message supplied via
-the -m switch.  The purpose of this is to allow -m to be supplied
-multiple times and have each supplied string become a paragraph in the
-resulting commit message.
+Brandon Casey wrote:
 
-Normally, this does not cause a problem since any trailing newlines will
-be removed by the cleanup operation.  If cleanup=verbatim for example,
-then the trailing newlines will not be removed and will survive into the
-resulting commit message.
+> So, let's use the --no-status option to 'git commit' which will cause
+> git to refrain from appending the lines of instructional text to the
+> commit message.  This will allow the entire resulting commit message to
+> be compared against the expected value.
 
-Instead, let's ensure that the string supplied to -m is newline terminated,
-but only append a second newline when appending additional messages.
+The downside (not a new problem, but a downside nonetheless) is that
+it means the test doesn't demonstrate what --cleanup=verbatim --status
+will do.
 
-Fixes the test in t7502.
+How about something like this?
 
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
- builtin/commit.c  | 4 +++-
- t/t7502-commit.sh | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 3348aa1..d21d07a 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -124,8 +124,10 @@ static int opt_parse_m(const struct option *opt, const char *arg, int unset)
- 	if (unset)
- 		strbuf_setlen(buf, 0);
- 	else {
-+		if (buf->len)
-+			strbuf_addch(buf, '\n');
- 		strbuf_addstr(buf, arg);
--		strbuf_addstr(buf, "\n\n");
-+		strbuf_complete_line(buf);
- 	}
- 	return 0;
- }
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index 39e55f8..292bc08 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -204,7 +204,7 @@ test_expect_success 'cleanup commit messages (verbatim option,-F)' '
+diff --git i/t/t7502-commit.sh w/t/t7502-commit.sh
+index cbd7a459..64162fce 100755
+--- i/t/t7502-commit.sh
++++ w/t/t7502-commit.sh
+@@ -180,15 +180,37 @@ test_expect_success 'verbose respects diff config' '
+ test_expect_success 'cleanup commit messages (verbatim option,-t)' '
+ 
+ 	echo >>negative &&
+-	{ echo;echo "# text";echo; } >expect &&
+-	git commit --cleanup=verbatim -t expect -a &&
+-	git cat-file -p HEAD |sed -e "1,/^\$/d" |head -n 3 >actual &&
++	{
++		echo &&
++		echo "# text" &&
++		echo
++	} >template &&
++	{
++		cat template &&
++		cat <<-\EOF &&
++
++		# Please enter the commit message for your changes. Lines starting
++		# with '\''#'\'' will be kept; you may remove them yourself if you want to.
++		# An empty message aborts the commit.
++		#
++		# Author:    A U Thor <author@example.com>
++		#
++		EOF
++		git commit -a --dry-run
++	} >expect &&
++	git commit --cleanup=verbatim -t template -a &&
++	git cat-file -p HEAD |sed -e "1,/^\$/d" >actual &&
+ 	test_cmp expect actual
  
  '
  
--test_expect_failure 'cleanup commit messages (verbatim option,-m)' '
-+test_expect_success 'cleanup commit messages (verbatim option,-m)' '
+ test_expect_success 'cleanup commit messages (verbatim option,-F)' '
  
++	{
++		echo &&
++		echo "# text" &&
++		echo
++	} >expect &&
  	echo >>negative &&
- 	git commit --cleanup=verbatim -m "$mesg_with_comment_and_newlines" -a &&
--- 
-1.8.1.3.638.g372f416.dirty
+ 	git commit --cleanup=verbatim -F expect -a &&
+ 	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
