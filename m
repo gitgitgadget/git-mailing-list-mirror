@@ -1,65 +1,67 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: Proposal: sharing .git/config
-Date: Tue, 19 Feb 2013 17:34:43 +0700
-Message-ID: <CACsJy8Ch70gZMkT7ScY3R-FNQU4QjtUe8UhoGRzE27cH9mu0HA@mail.gmail.com>
+Date: Tue, 19 Feb 2013 11:39:17 +0100
+Message-ID: <87vc9osi3u.fsf@pctrast.inf.ethz.ch>
 References: <CALkWK0npW6TLdMNd5_zw-RAB0bjF9DDoyAVSx4Zx=7AmvdEo3w@mail.gmail.com>
+	<87ip5otybp.fsf@pctrast.inf.ethz.ch>
+	<CALkWK0m--MbtNzGH9hNPCCLJWhv6rjF9Y=WQ4qnHUFnE61p6kw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain
+Cc: Thomas Rast <trast@student.ethz.ch>, Git List <git@vger.kernel.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 11:35:50 2013
+X-From: git-owner@vger.kernel.org Tue Feb 19 11:39:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7kYA-0005q2-9l
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 11:35:50 +0100
+	id 1U7kbx-000833-TZ
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 11:39:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932655Ab3BSKfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 05:35:18 -0500
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:58490 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932662Ab3BSKfP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 05:35:15 -0500
-Received: by mail-oa0-f54.google.com with SMTP id n12so6699264oag.27
-        for <git@vger.kernel.org>; Tue, 19 Feb 2013 02:35:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=rXqUkWSuioYSOH8h4060HMDYWm/NV2dTw4HmCla9wVE=;
-        b=KHvfWCDDwEbA8nyeBh0MhnDQ62oCtcrtT/qpdi9/iyFX8Nx3z3HXjbO2fg8Hi5H0sS
-         EU19p5cgIL+tqA2o97Ra+KnCvPPoBn0RhflCKryJe7wFw4BsA7BMf7pqEpW+VPbHVvHB
-         dDPCxbhBkMV2H41iJUEQ1q3gD/vsSFLKDp8oghUvEyDkEdq+IhIuPiQox49b1ADJ+B6c
-         ymKQCikEG0EYFsXGxFvqzJ6Spf77OtYBiUouj1/3cgrz7rVGcQkr3ld6qx4xNWDLMLxY
-         OcMiSmFZrg6M2xuHIwD9rHsO0LN5BijC/N8BPJaXHMol0BdyCPBE8D47mRyH487lpaLU
-         /eKg==
-X-Received: by 10.60.5.231 with SMTP id v7mr7347619oev.62.1361270113399; Tue,
- 19 Feb 2013 02:35:13 -0800 (PST)
-Received: by 10.76.154.197 with HTTP; Tue, 19 Feb 2013 02:34:43 -0800 (PST)
-In-Reply-To: <CALkWK0npW6TLdMNd5_zw-RAB0bjF9DDoyAVSx4Zx=7AmvdEo3w@mail.gmail.com>
+	id S932544Ab3BSKjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 05:39:21 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:43925 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932404Ab3BSKjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 05:39:21 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Feb
+ 2013 11:39:15 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
+ CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Tue, 19 Feb 2013 11:39:17 +0100
+In-Reply-To: <CALkWK0m--MbtNzGH9hNPCCLJWhv6rjF9Y=WQ4qnHUFnE61p6kw@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 19 Feb 2013 15:54:32 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216600>
 
-On Tue, Feb 19, 2013 at 4:25 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Hi,
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> Thomas Rast wrote:
+>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>> There are also other things in .git/config that would be nice to
+>>> share, like whether to do a --word-diff (why isn't it a configuration
+>>> variable yet?)
+>>
+>> Because that would break pretty much every script that uses git-diff?
 >
-> I have this itch where I want to share my remotes config between
-> machines.  In my fork, I should be able to specify where my upstream
-> sources are, so remotes get set up automatically when I clone.  There
-> are also other things in .git/config that would be nice to share, like
-> whether to do a --word-diff (why isn't it a configuration variable
-> yet?) on the repository.  The only problem is that I have no clue how
-> to implement this: I'm currently thinking a special remote ref?
+> diff.c already makes a differentiation between git_diff_ui_config()
+> and git_diff_basic_config(); there are  configuration options that
+> should only be applied when the command is called interactively.
 
-If you check out the config file, then include.path should work. You
-could add include.ref to point to a ref, but you need to deal with the
-attached security implications. This has been proposed before (and
-turned down, I think).
+It still breaks every other use of diff unless you make the diff output
+depend on whether the user runs directly at the terminal (possibly using
+git's own paging).
+
+For example, if you just say something like 'git diff >file' for
+inclusion in an email, you expect that to be a git-apply compatible
+diff.
+
 -- 
-Duy
+Thomas Rast
+trast@{inf,student}.ethz.ch
