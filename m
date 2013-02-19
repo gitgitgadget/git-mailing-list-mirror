@@ -1,77 +1,95 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: inotify to minimize stat() calls
-Date: Tue, 19 Feb 2013 15:10:21 +0530
-Message-ID: <CALkWK0=_AoWwAd8FN+GGvogT+p7PmTsm+KHNk0F09ymi2Snywg@mail.gmail.com>
-References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
- <CACBZZX6BVuQWtrLuTVXZo+77sT4yZQ3pvN=_fMma24-zd0NNqA@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Is this a bug?
+Date: Tue, 19 Feb 2013 10:42:59 +0100
+Message-ID: <51234923.7090807@op5.se>
+References: <937BB05095F39E46B969256AA776205322B2CF15C7@ST-EXCL29.statoil.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 10:41:08 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: David Wade <DAWAD@statoil.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 10:43:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7jhE-0008Mh-7x
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 10:41:08 +0100
+	id 1U7jjb-0001Cg-7v
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 10:43:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758556Ab3BSJkn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Feb 2013 04:40:43 -0500
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:45697 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757464Ab3BSJkm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Feb 2013 04:40:42 -0500
-Received: by mail-ie0-f173.google.com with SMTP id 9so8240451iec.18
-        for <git@vger.kernel.org>; Tue, 19 Feb 2013 01:40:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=FMvDyWw/bcSY/lzAhOUQ60Ig8DUo40lwyOuxXp+B9pE=;
-        b=RPDZPn+27FhA8PuRpHc+nRhBWnrvgfEjB/YdkCei6XydKM74YE2kR2MO8YXaM6iozb
-         lCeFmjzvOAkqRxXIfU8BdBJO1ezu1EQqm9Q39cyF3Sl6GI/cJVRai11umgO0opGAyASm
-         56y2ShfexGkwtmY3Jkbzm1rMBf2c5cnm0eWuUSe9KqcTWG29b/5wba2k4vBECokfqf60
-         DqZv77Vjsv7yiklhNy0a5x/3qdBT6wY+eITzi4njPDou1HfJp+nxupRLhptqI0M0M7M8
-         SNtBGIc0JGuGLKO8tUP2+88Zx4/NZkxPGL6FmkFCMnQHquH5JmmuGENX4HY4HmiMx2oT
-         ZFew==
-X-Received: by 10.42.67.10 with SMTP id r10mr7266611ici.7.1361266841617; Tue,
- 19 Feb 2013 01:40:41 -0800 (PST)
-Received: by 10.64.166.33 with HTTP; Tue, 19 Feb 2013 01:40:21 -0800 (PST)
-In-Reply-To: <CACBZZX6BVuQWtrLuTVXZo+77sT4yZQ3pvN=_fMma24-zd0NNqA@mail.gmail.com>
+	id S932451Ab3BSJnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 04:43:08 -0500
+Received: from mail-la0-f48.google.com ([209.85.215.48]:46890 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932441Ab3BSJnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 04:43:06 -0500
+Received: by mail-la0-f48.google.com with SMTP id fq13so6201136lab.7
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 01:43:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=3R6UKvVjWGUJUAmMELVHEgfseH2J0gryJZ0uuStseBI=;
+        b=Z1szvNvv16OFdv7V9JpPa1+ekPrV0VPkVBclJlgH+KzoGe0+mQIrDYuII0ypjbDrAY
+         GHaEKmOMqY8LURZf5JbOuJArpdDk5fEGUhfxuCXniFXwNef9THPn6wySy6WHLvTYu+7p
+         yPCVvtstbCzWEL6xxOb50mGRtEANYSXXbKVZ26zsvGBnsDBXlh+yPSRwtkHUkx9FrBRB
+         6ZHarMWggqLhIfKuHm1N2w0+jyC9unPeBqjAfT5fJa3ouY+r1Gc7MYh420+2XLnYAgPu
+         6IfF5tq/5v0tSPaZADAgireC+7PAZOYFwegepif4niM9LcPIDEuOy207FoPGw9I9ccL1
+         n9ig==
+X-Received: by 10.112.38.98 with SMTP id f2mr6886643lbk.61.1361266982442;
+        Tue, 19 Feb 2013 01:43:02 -0800 (PST)
+Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
+        by mx.google.com with ESMTPS id mq7sm19188927lab.1.2013.02.19.01.43.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 19 Feb 2013 01:43:01 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <937BB05095F39E46B969256AA776205322B2CF15C7@ST-EXCL29.statoil.net>
+X-Gm-Message-State: ALoCoQnO1oQcbYsB4BXlshTS5WJSzCSs1bcUgumEO+C8uKT5VMtVNUyCJt1n3o1kRk2ivOFTh0dX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216585>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Fri, Feb 8, 2013 at 10:10 PM, Ramkumar Ramachandra
-> <artagnon@gmail.com> wrote:
->> For large repositories, many simple git commands like `git status`
->> take a while to respond.  I understand that this is because of large
->> number of stat() calls to figure out which files were changed.  I
->> overheard that Mercurial wants to solve this problem using itnotify,
->> but the idea bothers me because it's not portable.  Will Git ever
->> consider using inotify on Linux?  What is the downside?
->
-> There's one relatively easy sub-task of this that I haven't seen
-> mentioned: Improving the speed of interactive rebase on large (as in
-> lots of checked out files) repositories.
->
-> That's the single biggest thing that bothers me when I use Git with
-> large repos, not the speed of "git status". When you "git rebase -i
-> HEAD~100" re-arrange some patches and save the TODO list it takes say
-> 0.5-1s for each patch to be applied, but at least 10x less than that
-> on a small repository. E.g. try this on linux-2.6.git v.s. some small
-> project with a few dozen files.
->
-> I looked into this a long while ago and remembered that rebase was
-> doing something like a git status for every commit that it made to
-> check the dirtyness.
+On 02/19/2013 10:32 AM, David Wade wrote:
+> Hi,
+> 
+> I wrote a commit message beginning with a hash (#) character, like
+> this: 'git commit -m "#ifdef ...." '
+> 
+> Everything went okay when committing, but then I tried 'git commit
+> -amend' and without editing the commit message I was told I had an
+> empty commit message.
+> 
+> Is this a problem with my text editor (vim 7.2) or git itself? (git
+> version 1.7.2.2 under RedHat 5.8) Or something I'm not supposed to do
+> ;-) ?
+> 
 
-What is it really doing?  I think the main culprit is
-require_clean_work_tree() from git-sh-setup.sh, and that is only run
-in the `--continue` and `exec` codepaths.
+Lines starting with a hash sign are considered comments by git commit.
+If you fire it up without '-m' you'll see that git puts all its own
+notes about the commit in commented-out lines.
+
+While empty commit messages aren't really unacceptable by git's model,
+they're considered "almost certainly user errors". I expect the -m
+flag being present when running 'git commit' causes the check for empty
+message to be skipped, which isn't the case when amending the commit.
+
+
+Btw, when I write messages probably similar to the one you just did, I
+tend to write:
+  Use compat-layer __builtin_clz() #ifndef __GNUC__
+precisely to avoid this issue. It also puts the imperative first,
+which I find makes for smoother reading. Putting the condition first
+screams for a comma and a slight stagger in reading flow, like so:
+  Unless built with gcc, use compat-layer __builtin_clz()
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
