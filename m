@@ -1,111 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git v1.8.2-rc0
-Date: Mon, 18 Feb 2013 15:59:04 -0800
-Message-ID: <7vk3q58987.fsf@alter.siamese.dyndns.org>
-References: <7vk3q6e94s.fsf@alter.siamese.dyndns.org>
- <vpq4nh9v5an.fsf@grenoble-inp.fr> <7vobfh8bjc.fsf@alter.siamese.dyndns.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Google Summer of Code 2013 (GSoC13)
+Date: Tue, 19 Feb 2013 08:17:42 +0700
+Message-ID: <CACsJy8CCotnPo0C_o_0721O2w3dqXUWAYjCjgeEYQzq-CdX14g@mail.gmail.com>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: linux-kernel-owner@vger.kernel.org Tue Feb 19 00:59:38 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Paul Mackerras <paulus@samba.org>,
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	David Michael Barr <davidbarr@google.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 19 02:18:39 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1U7acT-00087M-1W
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 19 Feb 2013 00:59:37 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1U7bqv-0000kM-Pk
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 02:18:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757770Ab3BRX7J (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 18 Feb 2013 18:59:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63258 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757617Ab3BRX7H (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 18 Feb 2013 18:59:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96D63B13A;
-	Mon, 18 Feb 2013 18:59:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EXU1+5Md70c1sWYI1aVDT+llQFU=; b=tkBINo
-	BvhfHhQWD3SXMkrkSx5OT2ypWs07At/1nc6xkzp5LBLLvLeos/27h7Jl16JGv7Wf
-	VqaUSq1LncPpmmXbeJwRSd4bQZ007u6avKV+KMKm73z44zYtclLYSM+DJgNmAqoN
-	UmCmRvzoftPBGoHIJo4sZheDlMfvt4aHGQ9wI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HGil6fmmUsrCv6xBL/dDek5MKcLCm9YN
-	1Clj+eOz0BvBkxL5uD+Q9/g9/Cer9SCkIAs0K4TK6q4oaeZFMyN1+v32TAcoPIui
-	zze2Z7L6iBIypYwo9WcyYmUnKACM+qY/42nwKWo2uu26jInVtxO0WndEhH9OGsXw
-	FE97ODMnZyw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AA23B139;
-	Mon, 18 Feb 2013 18:59:06 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF42CB135; Mon, 18 Feb 2013
- 18:59:05 -0500 (EST)
-In-Reply-To: <7vobfh8bjc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 18 Feb 2013 15:09:11 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2D70F6A4-7A27-11E2-89BA-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1757854Ab3BSBSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Feb 2013 20:18:13 -0500
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:53303 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757526Ab3BSBSM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Feb 2013 20:18:12 -0500
+Received: by mail-ob0-f180.google.com with SMTP id ef5so5999436obb.25
+        for <git@vger.kernel.org>; Mon, 18 Feb 2013 17:18:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=q2/SREYeMLcafcMBHsn1zVwOsMFwgEVLNe4hlLyYa2M=;
+        b=VH4uG6Zh7jfVy9cPTOHl3Ry397bq9YN+ohuySlt5Oa5peby0qbxPdgdMTRAXzI47ug
+         OszU3NQA7l8X4ROn0QM9IvZ6685qk+cN0gdk2yY3lbkcIiif0to9PtmArX5iVnH0hOZC
+         RH0ThCzKUGXUxJjqHNAQ+EVZZTx8aOPEJe+lfavOgk6iKm+sI1rKMaxxVA7ILkigPhqY
+         2kDXW5Cz9x1qbGJqFdhCmMqRf0JgnkBnXa87yk/Z9liNBE6SalBLAmA2lxwGavmhP3CS
+         vt5evPI/Q+19nGuACwqbj7JcMPmQGX4XH0Le7Tq1RhNE97ygwlT8w+WgZYFkc7FUGndH
+         Cgaw==
+X-Received: by 10.60.32.67 with SMTP id g3mr6746749oei.77.1361236692415; Mon,
+ 18 Feb 2013 17:18:12 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Mon, 18 Feb 2013 17:17:42 -0800 (PST)
+In-Reply-To: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216551>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216552>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Feb 19, 2013 at 12:23 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> * Naturally that ideas page is a bit stale now, and three projects
+>   shorter.  Please propose new ideas and refresh or delete the old ones!
+>   In particular some projects spawned long discussions on the list, and
+>   the results of those discussions should be integrated to avoid deja
+>   vus.
 
->> I don't understand: wasn't this supposed to happen in Git 2.0? Did you
->> mean "In the upcoming major release (tentatively called *2.0*)"?
->
-> Thanks.  I am not sure what I was thinking.  Perhaps when we started
-> this cycle we did want to merge the push-2.0-default-to-simple series
->
-> Will update.
->
->> Also, you may want to mention the argumentless "git add -u" change too.
->> It currently has an item below, but this is a future
->> backward-incompatible change so it may deserve to appear in this section
->> too.
-
-OK, let's do this.  Thanks for sharp eyes.
-
- Documentation/RelNotes/1.8.2.txt | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/RelNotes/1.8.2.txt b/Documentation/RelNotes/1.8.2.txt
-index a5a1d4e..a287f24 100644
---- a/Documentation/RelNotes/1.8.2.txt
-+++ b/Documentation/RelNotes/1.8.2.txt
-@@ -4,8 +4,8 @@ Git v1.8.2 Release Notes
- Backward compatibility notes
- ----------------------------
- 
--In the upcoming major release (tentatively called 1.8.2), we will
--change the behavior of the "git push" command.
-+In the next major release Git 2.0 (not *this* one), we will change the
-+behavior of the "git push" command.
- 
- When "git push [$there]" does not say what to push, we have used the
- traditional "matching" semantics so far (all your branches were sent
-@@ -22,6 +22,18 @@ that the old tag v1.2.3 points at.  This was found to be error prone
- and starting with this release, any attempt to update an existing
- ref under refs/tags/ hierarchy will fail, without "--force".
- 
-+When "git add -u" and "git add -A", that does not specify what paths
-+to add on the command line, is run from inside a subdirectory, the
-+scope of the operation has always been limited to the subirectory.
-+Many users found this counter-intuitive, given that "git commit -a"
-+and other commands operate on the entire tree regardless of where you
-+are. In this release, these commands give warning in such a case and
-+encourage the user to say "git add -u/-A ." instead when restricting
-+the scope to the current directory. At Git 2.0 (not *this* one), we
-+plan to change these commands without pathspec to operate on the
-+entire tree, and training your fingers to type "." will protect you
-+against the future change.
-+
- 
- Updates since v1.8.1
- --------------------
+A proposal from what I've been involved lately: inotify support to
+eliminate lstat and readdir syscalls. The scope may be small. But we
+could aim to get it merged in master or at least next by the end of
+GSoC. Or extend to another platform besides Linux, it helps ensure we
+have good abstraction. My free time goes up and down unexpectedly, not
+sure if I can commit to be a mentor. But I'm definitely interested and
+will support whenever I can.
+-- 
+Duy
