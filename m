@@ -1,54 +1,98 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Can git restrict source files ?
-Date: Tue, 19 Feb 2013 18:55:20 +0100
-Message-ID: <CACBZZX7tHpUzW8pKjLi_4qm8w-n=FjResyRwZPK9qsyUzqpsMw@mail.gmail.com>
-References: <DE551AEA-5C7D-4A2D-8AB4-33195EF351F8@gmail.com>
+From: Brandon Casey <bcasey@nvidia.com>
+Subject: [PATCH v2 4/4] Documentation/git-commit.txt: rework the --cleanup section
+Date: Tue, 19 Feb 2013 10:14:13 -0800
+Message-ID: <1361297653-1315-1-git-send-email-bcasey@nvidia.com>
+References: <7va9r06we2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Juan Pablo <juanpablo8517@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 18:56:07 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, <jrnieder@gmail.com>,
+	<ralf.thielow@gmail.com>, Brandon Casey <drafnel@gmail.com>
+To: <gitster@pobox.org>
+X-From: git-owner@vger.kernel.org Tue Feb 19 19:14:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7rQD-0004KY-Jc
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 18:56:05 +0100
+	id 1U7riJ-00065J-7f
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 19:14:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758741Ab3BSRzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 12:55:41 -0500
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:45579 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752238Ab3BSRzk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 12:55:40 -0500
-Received: by mail-ob0-f179.google.com with SMTP id un3so6907195obb.10
-        for <git@vger.kernel.org>; Tue, 19 Feb 2013 09:55:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=TITR7pLx02oqFS1RJOvHNCr6KCchFVQb7zZlszRtZQo=;
-        b=v+mDkmnKyrPHd2cYgEDAluvyxDte35KYpTi08aMxQR5ZoVt27eFBOklmZ64GbOyxo7
-         sS5QjkazmAv6I4Df747+fbkfflsQkpscGdYP0jMTijjEvMQiNlkWe2p12ei9kN8WCm5g
-         gm6cK9Do+j4yyJKI1OtoTRC02xnIF/57kI3L6Y+Jy8HTdjyshThq1U4NfWyIDcAJWB8j
-         96x7wlZG7sW1591HcjBdTi9Fkxy+vjoiFC6s9imdCWpc00JIbarM2I/a+Uwn7v1AJBAa
-         M7LD/Y6Y+TbgsO18MvhrBdBBRLwf/POgrhQvA7AxW80eyRUrUaUlnulsXuuMLlin58h3
-         SQgg==
-X-Received: by 10.60.21.101 with SMTP id u5mr8224358oee.71.1361296540369; Tue,
- 19 Feb 2013 09:55:40 -0800 (PST)
-Received: by 10.76.167.34 with HTTP; Tue, 19 Feb 2013 09:55:20 -0800 (PST)
-In-Reply-To: <DE551AEA-5C7D-4A2D-8AB4-33195EF351F8@gmail.com>
+	id S933264Ab3BSSOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 13:14:23 -0500
+Received: from hqemgate04.nvidia.com ([216.228.121.35]:13535 "EHLO
+	hqemgate04.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932858Ab3BSSOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 13:14:21 -0500
+Received: from hqnvupgp07.nvidia.com (Not Verified[216.228.121.13]) by hqemgate04.nvidia.com
+	id <B5123c0f00004>; Tue, 19 Feb 2013 10:14:09 -0800
+Received: from hqemhub03.nvidia.com ([172.17.108.22])
+  by hqnvupgp07.nvidia.com (PGP Universal service);
+  Tue, 19 Feb 2013 10:13:37 -0800
+X-PGP-Universal: processed;
+	by hqnvupgp07.nvidia.com on Tue, 19 Feb 2013 10:13:37 -0800
+Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub03.nvidia.com
+ (172.20.150.15) with Microsoft SMTP Server id 8.3.297.1; Tue, 19 Feb 2013
+ 10:14:16 -0800
+X-Mailer: git-send-email 1.8.1.3.566.gaa39828
+In-Reply-To: <7va9r06we2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216641>
 
-On Tue, Feb 19, 2013 at 5:06 PM, Juan Pablo <juanpablo8517@gmail.com> wrote:
-> I have a question, can i control the access to specific files or folders ?? I need that some developers can't see some source files, thank you very much for your time
+From: Brandon Casey <drafnel@gmail.com>
 
-No, but what you can do is to split these up into different
-repositories. E.g. where I work we have a puppet.git and a
-secrets.git, the latter contains passwords and other secret data, the
-former just uses macros to include that and is accessible to everyone.
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
+
+Ok, here's the updated text.  I am not set up to build the documentation,
+so I hope someone will test, but looks right to me.
+
+-Brandon
+
+
+ Documentation/git-commit.txt | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 0eb79cc..992c219 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -172,16 +172,24 @@ OPTIONS
+        linkgit:git-commit-tree[1].
+ 
+ --cleanup=<mode>::
+-	This option sets how the commit message is cleaned up.
+-	The  '<mode>' can be one of 'verbatim', 'whitespace', 'strip',
+-	and 'default'. The 'default' mode will strip leading and
+-	trailing empty lines and #commentary from the commit message
+-	only if the message is to be edited. Otherwise only whitespace
+-	removed. The 'verbatim' mode does not change message at all,
+-	'whitespace' removes just leading/trailing whitespace lines
+-	and 'strip' removes both whitespace and commentary. The default
+-	can be changed by the 'commit.cleanup' configuration variable
+-	(see linkgit:git-config[1]).
++	This option determines how the supplied commit message should be
++	cleaned up before committing.  The '<mode>' can be `strip`,
++	`whitespace`, `verbatim`, or `default`.
+++
++--
++strip::
++	Strip leading and trailing empty lines, trailing whitespace, and
++	#commentary and collapse consecutive empty lines.
++whitespace::
++	Same as `strip` except #commentary is not removed.
++verbatim::
++	Do not change the message at all.
++default::
++	`strip` if the message is to be edited.  Otherwise `whitespace`.
++--
+++
++	The default can be changed by the 'commit.cleanup' configuration
++	variable (see linkgit:git-config[1]).
+ 
+ -e::
+ --edit::
+-- 
+1.8.1.3.566.gaa39828
