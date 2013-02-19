@@ -1,81 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] shell-prompt: clean up nested if-then
-Date: Tue, 19 Feb 2013 08:28:35 -0800
-Message-ID: <7vy5ek6zf0.fsf@alter.siamese.dyndns.org>
-References: <1361204512.4758.10.camel@mas>
- <1361204601-4573-1-git-send-email-martinerikwerner@gmail.com>
- <20130218191040.GB3234@elie.Belkin>
- <0c94f24b-f7ee-4699-87a7-6861b927cea4@email.android.com>
- <1361228206.17734.4.camel@mas> <7vtxp98bmx.fsf@alter.siamese.dyndns.org>
- <5123350D.4010802@xs4all.nl>
+Subject: Re: Google Summer of Code 2013 (GSoC13)
+Date: Tue, 19 Feb 2013 08:29:55 -0800
+Message-ID: <7vtxp86zcs.fsf@alter.siamese.dyndns.org>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
+ <20130218174239.GB22832@sigill.intra.peff.net>
+ <CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com>
+ <7vip5p9rtm.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=s4XX0mmUTAcNBHyqdrryhMYvhtrNZCFFccJJBUUVdUg@mail.gmail.com>
+ <20130219072512.GI19757@elie.Belkin>
+ <CALkWK0nnkfrHi-0=c-bXdBHaOeBsCdccZDJZX5LDs0dT=SsReg@mail.gmail.com>
+ <874nh8vgoo.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Erik Werner <martinerikwerner@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	trsten@science-computing.de,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Simon Oosthoek <s.oosthoek@xs4all.nl>
-X-From: git-owner@vger.kernel.org Tue Feb 19 17:29:04 2013
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, Jeff King <peff@peff.net>,
+	<git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	"Pat Thoyts" <patthoyts@users.sourceforge.net>,
+	Paul Mackerras <paulus@samba.org>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	David Barr <b@rr-dav.id.au>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 19 17:30:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7q3z-0006KQ-Rl
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 17:29:04 +0100
+	id 1U7q5H-00073r-12
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 17:30:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932573Ab3BSQ2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 11:28:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45099 "EHLO
+	id S1758571Ab3BSQ37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 11:29:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45936 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758451Ab3BSQ2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 11:28:39 -0500
+	id S1758451Ab3BSQ36 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 11:29:58 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61BFCB696;
-	Tue, 19 Feb 2013 11:28:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC4BCB707;
+	Tue, 19 Feb 2013 11:29:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BzWMyPVzXYNxhpt8ylzYZaGbolE=; b=p6+82h
-	C7r/dMLQgtIfaWRwRvu3DRp/89qkw5DsKEuTJfkYovAmBAs+nv8+P+8u4hCFUm+F
-	+Z7WOu1z+B3ApQ+Nf5kQ+2U0+NVDmi+VVFuuJecJ3dqUv112pQI+f/zQlJRSw+6e
-	ZrVP0AuGQECPQWFh9izI+My5DQ6B2DZrIv9Ow=
+	:content-type; s=sasl; bh=1YKLx5sjBSDaXJ9ivblEOK/V7M4=; b=KhY8k9
+	VJKzP+7nnXvGMmq0+Ac9ByL+f/XeOxMeUzN/QRe0TM2YBqAeQdPY7Hkiiaf/Ocd6
+	tYMyUb+BImILCOHt9XM+SNFe6w52C7Mw5DI6JPRwslnp3duypwGUh3DQVfzeLqTW
+	U4DAUAk6eOuou8DcQI9AS04XSOTSO0ZtJEqMA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=D8bLb5prDq77WJizxvsGj0P35N39gt+A
-	TslvTBf54qgqpL8hcX6lanhMZTM+UUdcDxeTts/7wq2QABtUzABDm64+mYV12YY1
-	8p6wsdx8ycthPbqGOcyXgAy/4pI4Nrfw+780lQTD8+BvK0/TsBpj3BjdaS7hR19p
-	ca1ct8E3Kl0=
+	:content-type; q=dns; s=sasl; b=wRquOpdk5ogIsxVkTSqekRlmXcxpipOz
+	b+XU3getkBDQe8RPT5SuMFRwGddMMbPXOLJDlqZSD6BhcRSaN63UaZhRhvXoXNrF
+	GF0T6Q9p8a4Yi85KuWy4aLPPxRpk1FigVNzOCyzLKUalRfVqSulhMH8Q7SizZ9Sy
+	0sF+WG4g/pQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53FFEB695;
-	Tue, 19 Feb 2013 11:28:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADC5FB706;
+	Tue, 19 Feb 2013 11:29:57 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA102B694; Tue, 19 Feb 2013
- 11:28:37 -0500 (EST)
-In-Reply-To: <5123350D.4010802@xs4all.nl> (Simon Oosthoek's message of "Tue,
- 19 Feb 2013 09:17:17 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2CC25B703; Tue, 19 Feb 2013
+ 11:29:57 -0500 (EST)
+In-Reply-To: <874nh8vgoo.fsf@pctrast.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 19 Feb 2013 09:41:43 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 69DC1508-7AB1-11E2-BFFC-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 992B5774-7AB1-11E2-BBD8-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216630>
 
-Simon Oosthoek <s.oosthoek@xs4all.nl> writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> I suppose it would be fine if a patch was sent to update the entire
-> git-prompt.sh code to be more in line with the Git shell script style...
+> In defense of Thomas, whose project was mentioned earlier as a prime
+> example of something that is "too big":
+>
+> He's in fact still working on the index-API angle, as part of a thesis
+> at university.
 
-Please don't.  We do not want a "style conversion" for the sole
-purpose of conversion, especially when a subsystem is already
-internally consistent.
-
-Besides, the git-prompt.sh thing needs to be fairly bash specific so
-the usual "Git Porcelain scripts targetted for POSIX/Bourne shells"
-rules does not apply there.
-
-> My original gripe was just with doing it in one place while leaving all
-> the others unchanged. It makes for messy reading and leads to confusion.
-
-Yes, it is always preferred to match the _local_ convention.
+That is probably a good indicator that it was too big for a summer
+student.  It also is good to hear that the topic is being looked at
+;-).
