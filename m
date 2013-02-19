@@ -1,70 +1,90 @@
-From: Simon Oosthoek <s.oosthoek@xs4all.nl>
-Subject: Re: [PATCH] shell-prompt: clean up nested if-then
-Date: Tue, 19 Feb 2013 09:17:17 +0100
-Message-ID: <5123350D.4010802@xs4all.nl>
-References: <1361204512.4758.10.camel@mas> <1361204601-4573-1-git-send-email-martinerikwerner@gmail.com> <20130218191040.GB3234@elie.Belkin> <0c94f24b-f7ee-4699-87a7-6861b927cea4@email.android.com> <1361228206.17734.4.camel@mas> <7vtxp98bmx.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Google Summer of Code 2013 (GSoC13)
+Date: Tue, 19 Feb 2013 09:41:43 +0100
+Message-ID: <874nh8vgoo.fsf@pctrast.inf.ethz.ch>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
+	<20130218174239.GB22832@sigill.intra.peff.net>
+	<CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com>
+	<7vip5p9rtm.fsf@alter.siamese.dyndns.org>
+	<CALkWK0=s4XX0mmUTAcNBHyqdrryhMYvhtrNZCFFccJJBUUVdUg@mail.gmail.com>
+	<20130219072512.GI19757@elie.Belkin>
+	<CALkWK0nnkfrHi-0=c-bXdBHaOeBsCdccZDJZX5LDs0dT=SsReg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin Erik Werner <martinerikwerner@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	trsten@science-computing.de,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 09:25:35 2013
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, Jeff King <peff@peff.net>,
+	<git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	"Pat Thoyts" <patthoyts@users.sourceforge.net>,
+	Paul Mackerras <paulus@samba.org>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	David Barr <b@rr-dav.id.au>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 09:42:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7iW2-0002qE-Cg
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 09:25:30 +0100
+	id 1U7imC-0002mj-4n
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 09:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932371Ab3BSIZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 03:25:03 -0500
-Received: from smtp-vbr19.xs4all.nl ([194.109.24.39]:1308 "EHLO
-	smtp-vbr19.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932223Ab3BSIZC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 03:25:02 -0500
-X-Greylist: delayed 456 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Feb 2013 03:25:02 EST
-Received: from [192.168.178.21] (simaj.xs4all.nl [83.160.71.26])
-	(authenticated bits=0)
-	by smtp-vbr19.xs4all.nl (8.13.8/8.13.8) with ESMTP id r1J8HHgv048863
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 19 Feb 2013 09:17:18 +0100 (CET)
-	(envelope-from s.oosthoek@xs4all.nl)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <7vtxp98bmx.fsf@alter.siamese.dyndns.org>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S932411Ab3BSIls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 03:41:48 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:57599 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932394Ab3BSIlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 03:41:47 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Feb
+ 2013 09:41:40 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Tue, 19 Feb 2013 09:41:43 +0100
+In-Reply-To: <CALkWK0nnkfrHi-0=c-bXdBHaOeBsCdccZDJZX5LDs0dT=SsReg@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 19 Feb 2013 13:42:35 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216577>
 
-On 19/02/13 00:07, Junio C Hamano wrote:
-> 
-> I think you are misreading a suggestion that is somewhat misguided
-> (yes "[ <condition> && <another> ]" does not make sense, but that is
-> not applicable to "test <conditon> && test <another>"); ignore it.
-> 
-> It is fine to write "test <condition> && test <another>" and that
-> works portably to even pre-posix systems.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-(that's like doing "ls file && rm file" )
+> Jonathan Nieder wrote:
+>> Ramkumar Ramachandra wrote:
+>>
+>>> The short undiplomatic version of that is that our mentors suck (I'm
+>>> not pointing fingers, but that's what I infer from failing projects).
+>>
+>> Hold on a second.  I'm not remembering such a grim outcome with 100%
+>> failure from prior summers of code as you're describing.  Before I
+>> start beating myself up, I guess I'd like a little more information
+>> --- is there some specific project or statistic that you're thinking
+>> of that brings you to that conclusion?
+>
+> In retrospect, I might have been unnecessarily harsh there.
+>
+> One of the main measures of a mentor's success, in my opinion, is
+> having his student stick around after the Summer of Code: the mentor
+> is the student's primary link to the community.  There have been 4~5
+> students every year, times 6 years (is that how long we've been
+> participating?).  How many of those students have felt part of the
+> community?
 
-> 
-> But the existing code the patch touches favors [] over test
-> consistently; that alone is a good reason to stick with [] in _this_
-> script, even though it is against Git's overall shell script style.
-> 
+In defense of Thomas, whose project was mentioned earlier as a prime
+example of something that is "too big":
 
-I suppose it would be fine if a patch was sent to update the entire
-git-prompt.sh code to be more in line with the Git shell script style...
+He's in fact still working on the index-API angle, as part of a thesis
+at university.
 
-My original gripe was just with doing it in one place while leaving all
-the others unchanged. It makes for messy reading and leads to confusion.
-
-Cheers
-
-Simon
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
