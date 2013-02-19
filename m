@@ -1,58 +1,89 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Proposal: sharing .git/config
-Date: Tue, 19 Feb 2013 11:03:38 +0100
-Message-ID: <87ip5otybp.fsf@pctrast.inf.ethz.ch>
-References: <CALkWK0npW6TLdMNd5_zw-RAB0bjF9DDoyAVSx4Zx=7AmvdEo3w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 11:04:12 2013
+From: "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH v4 2/3] user-manual: Use request-pull to generate "please pull"
+ text
+Date: Tue, 19 Feb 2013 05:05:01 -0500
+Message-ID: <ad7727d728227c788007ad1f6f19d37c75835f97.1361267945.git.wking@tremily.us>
+References: <20130219093429.GA4024@odin.tremily.us>
+ <cover.1361267945.git.wking@tremily.us>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 19 11:05:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7k3V-0003wT-8O
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 11:04:09 +0100
+	id 1U7k4x-0004li-Cg
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 11:05:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758247Ab3BSKDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 05:03:44 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:40736 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757087Ab3BSKDn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 05:03:43 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Feb
- 2013 11:03:36 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
- cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Tue, 19 Feb 2013 11:03:39 +0100
-In-Reply-To: <CALkWK0npW6TLdMNd5_zw-RAB0bjF9DDoyAVSx4Zx=7AmvdEo3w@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 19 Feb 2013 14:55:23 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1758600Ab3BSKFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 05:05:13 -0500
+Received: from vms173011pub.verizon.net ([206.46.173.11]:43175 "EHLO
+	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758445Ab3BSKFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 05:05:11 -0500
+Received: from odin.tremily.us ([unknown] [72.68.84.219])
+ by vms173011.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MIG00EBYPCLHMB0@vms173011.mailsrvcs.net> for
+ git@vger.kernel.org; Tue, 19 Feb 2013 04:05:10 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 70AE68ABA0C; Tue,
+ 19 Feb 2013 05:05:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1361268309; bh=q6V2/J0ogoq9MeIbyEjiQ+i0Gt0LtneLQAUQGs3ne5k=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:	 References;
+	b=hlE+ImUxygcBGB18UdC8KWIW2SpOkZM92YLh6LtYojY2MYW/lCrv7ZzofKBxIXgoW
+ AJ/rFk2zP2g1UiMBFuJt5rJU0yEW0wouAsCaZ7aaqZypN/FGLaOR9ZrVKrbGnPeki9
+ Cin2qxRoCROdv7Xe1yKWxn2V/GfRO9uhs4xmTagM=
+X-Mailer: git-send-email 1.7.12.4
+In-reply-to: <cover.1361267945.git.wking@tremily.us>
+In-reply-to: <cover.1361267945.git.wking@tremily.us>
+References: <cover.1361267945.git.wking@tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216591>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+From: "W. Trevor King" <wking@tremily.us>
 
-> I have this itch where I want to share my remotes config between
-> machines.  In my fork, I should be able to specify where my upstream
-> sources are, so remotes get set up automatically when I clone.
+Less work and more error checking (e.g. does a merge base exist?).
+Add an explicit push before request-pull to satisfy request-pull,
+which checks to make sure the references are publically available.
 
-Note that you need to carefully pick only certain bits of the config, as
-otherwise there are big security headaches.
+Signed-off-by: W. Trevor King <wking@tremily.us>
+---
+ Documentation/user-manual.txt | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-> There are also other things in .git/config that would be nice to
-> share, like whether to do a --word-diff (why isn't it a configuration
-> variable yet?)
-
-Because that would break pretty much every script that uses git-diff?
-
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index a4dbd9e..3aab106 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -2305,17 +2305,13 @@ branch and then merge into each of the test and release branches.  For
+ these changes, just apply directly to the "release" branch, and then
+ merge that into the "test" branch.
+ 
+-To create diffstat and shortlog summaries of changes to include in a "please
+-pull" request to Linus you can use:
++After pushing your work to `mytree`, you can use
++linkgit:git-request-pull[1] to prepare a "please pull" request message
++to send to Linus:
+ 
+ -------------------------------------------------
+-$ git diff --stat origin..release
+--------------------------------------------------
+-
+-and
+-
+--------------------------------------------------
+-$ git log -p origin..release | git shortlog
++$ git push mytree
++$ git request-pull origin mytree release
+ -------------------------------------------------
+ 
+ Here are some of the scripts that simplify all this even further.
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.8.1.336.g94702dd
