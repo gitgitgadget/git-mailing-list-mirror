@@ -1,107 +1,87 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v2 2/2] check-ignore.c, dir.c: fix segfault with '.' argument from repo root
-Date: Tue, 19 Feb 2013 19:21:36 +0000
-Message-ID: <1361301696-11307-1-git-send-email-git@adamspiers.org>
-References: <CAOkDyE9VVuFn6B=Fe4XHxGCEW0MFgndx1X0+9hO36Soxb37YQw@mail.gmail.com>
-Cc: Zoltan Klinger <zoltan.klinger@gmail.com>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 19 20:22:03 2013
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: Git Merge 2013 Conference, Berlin
+Date: Tue, 19 Feb 2013 11:23:58 -0800
+Message-ID: <CAP2yMaKF7P8J5VCA8ODo2gdHj=FRfjki1xoRv-L4shfOExSX2w@mail.gmail.com>
+References: <CAP2yMaJyCi5tvFZ5hVpVULR=oKgfc-b0zb8baxFDhNqmu+W_Bg@mail.gmail.com>
+ <87mwv1uyy5.fsf@pctrast.inf.ethz.ch> <20130218211703.GE27308@sigill.intra.peff.net>
+ <CAP2yMaKwdwBiE0q6Cqmjf-g3iV269+UvOS+DaKtaXNOfQLkpeg@mail.gmail.com>
+ <51239840.9080605@drmicha.warpmail.net> <51239D45.3000501@drmicha.warpmail.net>
+ <CAP2yMa+O19iZUD33PZkdz61xWEjfKEvUoNWBztoyH2YeSkyD+w@mail.gmail.com> <7vbobg5cy4.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
+	git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 20:24:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7slO-0003hC-WA
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 20:22:03 +0100
+	id 1U7snz-00057q-8R
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 20:24:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933100Ab3BSTVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 14:21:39 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:33376 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933020Ab3BSTVi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 14:21:38 -0500
-Received: from localhost (b.e.0.d.8.7.e.f.e.2.f.0.b.1.1.d.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:d11b:f2e:fe78:d0eb])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 55BA455AFA;
-	Tue, 19 Feb 2013 19:21:37 +0000 (GMT)
-X-Mailer: git-send-email 1.8.2.rc0.18.g543d1e4
-In-Reply-To: <CAOkDyE9VVuFn6B=Fe4XHxGCEW0MFgndx1X0+9hO36Soxb37YQw@mail.gmail.com>
+	id S933197Ab3BSTYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 14:24:19 -0500
+Received: from mail-ia0-f179.google.com ([209.85.210.179]:46011 "EHLO
+	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932897Ab3BSTYT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 14:24:19 -0500
+Received: by mail-ia0-f179.google.com with SMTP id x24so6476971iak.10
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 11:24:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=ID0O1z5B6k54u7ys/yaPv70cuBvXPjce2m3mXYMvTv4=;
+        b=kgqQGALhHTrdq/NV+kNn6K/vPQ7jQmdpc+5gnxsIaaQx6pPxghSAI83Gfin7eLRmb3
+         Xj+LfpR7/RA1btrAOHsTD6hVvqLXfKccTrbW25io/8S2cu6LNlhQawjPlFBG6E8fOBCS
+         irYAWCaTwo/UQEo3DZLbe5K/4giO/OuaxYdX6qex+4ry0o3Bhf9BZXPeM4UPJKrPxHTU
+         arfuMSellNj5/V5SJ+2RHTBorPo19dts28AkfvgngSkCU3nvthCxhMQxSmxS9RU4LVz3
+         zeeJYv/VJid2CXsemp2HLoaupJumJ4dbgYsYBj4lIqoze7CdBZ4Hia08slHFy+mdfxb3
+         12GA==
+X-Received: by 10.50.17.234 with SMTP id r10mr7828885igd.102.1361301858595;
+ Tue, 19 Feb 2013 11:24:18 -0800 (PST)
+Received: by 10.231.55.200 with HTTP; Tue, 19 Feb 2013 11:23:58 -0800 (PST)
+In-Reply-To: <7vbobg5cy4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216653>
 
-Fix a corner case where check-ignore would segfault when run with the
-'.' argument from the top level of a repository, due to prefix_path()
-converting '.' into the empty string.  It doesn't make much sense to
-call check-ignore from the top level with '.' as a parameter, since
-the top-level directory would never typically be ignored, but of
-course it should not segfault in this case.  The existing code
-attempted to check for this case but failed due to using the wrong
-variable.  Instead we move the check to last_exclude_matching_path(),
-in case other callers present or future have a similar issue.
+Hey,
 
-Signed-off-by: Adam Spiers <git@adamspiers.org>
----
- builtin/check-ignore.c | 2 +-
- dir.c                  | 8 ++++++++
- t/t0008-ignores.sh     | 5 +++++
- 3 files changed, 14 insertions(+), 1 deletion(-)
+On Tue, Feb 19, 2013 at 11:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Scott Chacon <schacon@gmail.com> writes:
+>
+>> On Tue, Feb 19, 2013 at 7:41 AM, Michael J Gruber
+>> <git@drmicha.warpmail.net> wrote:
+>>> Michael J Gruber venit, vidit, dixit 19.02.2013 16:20:
+>>>> Well, all days are listed as "sold out" on the eventbrite site. Maybe
+>>>> it's because eventbrite has "trouble connecting to facebook" because I
+>>>> "don't have facebook"?
+>>
+>> No, it's because 300 people signed up and that's all the venue has
+>> room for.  I'm sure we can fit one more if you come.
+>
+> Hmph.  "git shortlog -s -n --since=18.months master" tells me that
+> we have 284 contributors to my tree during the said period.
+>
+> I do not remember if I signed-up for the dev-day or any other days
+> myself.
+>
 
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index 709535c..0240f99 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -89,7 +89,7 @@ static int check_ignore(const char *prefix, const char **pathspec)
- 					? strlen(prefix) : 0, path);
- 		full_path = check_path_for_gitlink(full_path);
- 		die_if_path_beyond_symlink(full_path, prefix);
--		if (!seen[i] && path[0]) {
-+		if (!seen[i]) {
- 			exclude = last_exclude_matching_path(&check, full_path,
- 							     -1, &dtype);
- 			if (exclude) {
-diff --git a/dir.c b/dir.c
-index 57394e4..1ae0b90 100644
---- a/dir.c
-+++ b/dir.c
-@@ -828,6 +828,14 @@ struct exclude *last_exclude_matching_path(struct path_exclude_check *check,
- 	struct exclude *exclude;
- 
- 	/*
-+	 * name could be the empty string, e.g. if check-ignore was
-+	 * invoked from the top level with '.', prefix_path() will
-+	 * convert it into "".
-+	 */
-+	if (!*name)
-+		return NULL;
-+
-+	/*
- 	 * we allow the caller to pass namelen as an optimization; it
- 	 * must match the length of the name, as we eventually call
- 	 * is_excluded() on the whole name string.
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index ebe7c70..9c1bde1 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -138,6 +138,7 @@ test_expect_success 'setup' '
- 	cat <<-\EOF >.gitignore &&
- 		one
- 		ignored-*
-+		top-level-dir/
- 	EOF
- 	for dir in . a
- 	do
-@@ -177,6 +178,10 @@ test_expect_success 'setup' '
- #
- # test invalid inputs
- 
-+test_expect_success_multi '. corner-case' '' '
-+	test_check_ignore . 1
-+'
-+
- test_expect_success_multi 'empty command line' '' '
- 	test_check_ignore "" 128 &&
- 	stderr_contains "fatal: no path specified"
--- 
-1.8.2.rc0.18.g543d1e4
+300 is the number of people signed up for the User Day.  There is a
+Dev Day, for contributors, which has 50 signed up.  If anyone on this
+list or any other core Git devs want to attend and did not sign up, or
+would like financial assistance getting to or staying in Germany,
+please let me know.
+
+The second day is a User Day, which is when 300 people will be there.
+This is a day for short talks, idea generation and feedback.  The
+third day is Hack Day, which will have about 200.  This is a day for
+working on stuff.
+
+Scott
