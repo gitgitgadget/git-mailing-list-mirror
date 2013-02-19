@@ -1,102 +1,95 @@
-From: Brandon Casey <bcasey@nvidia.com>
-Subject: [PATCH v2 4/4] Documentation/git-commit.txt: rework the --cleanup section
-Date: Tue, 19 Feb 2013 10:29:30 -0800
-Message-ID: <1361298570-19738-1-git-send-email-bcasey@nvidia.com>
-References: <7va9r06we2.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 1/3] user-manual: Reorganize the reroll sections,
+ adding 'git rebase -i'
+Date: Tue, 19 Feb 2013 10:47:04 -0800
+Message-ID: <7vwqu45efr.fsf@alter.siamese.dyndns.org>
+References: <20130219093429.GA4024@odin.tremily.us>
+ <cover.1361267945.git.wking@tremily.us>
+ <e9f8a25c05f9cfe89c6bcbefb69f40cd629f9925.1361267945.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, <jrnieder@gmail.com>,
-	<ralf.thielow@gmail.com>, Brandon Casey <drafnel@gmail.com>
-To: <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 19:30:19 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Tue Feb 19 19:47:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7rxL-00069K-Cc
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 19:30:19 +0100
+	id 1U7sE2-0007Qo-LE
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 19:47:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933513Ab3BSS3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 13:29:55 -0500
-Received: from hqemgate04.nvidia.com ([216.228.121.35]:15655 "EHLO
-	hqemgate04.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933152Ab3BSS3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 13:29:55 -0500
-Received: from hqnvupgp08.nvidia.com (Not Verified[216.228.121.13]) by hqemgate04.nvidia.com
-	id <B5123c4850000>; Tue, 19 Feb 2013 10:29:26 -0800
-Received: from hqemhub03.nvidia.com ([172.17.108.22])
-  by hqnvupgp08.nvidia.com (PGP Universal service);
-  Tue, 19 Feb 2013 10:25:03 -0800
-X-PGP-Universal: processed;
-	by hqnvupgp08.nvidia.com on Tue, 19 Feb 2013 10:25:03 -0800
-Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub03.nvidia.com
- (172.20.150.15) with Microsoft SMTP Server id 8.3.297.1; Tue, 19 Feb 2013
- 10:29:32 -0800
-X-Mailer: git-send-email 1.8.1.3.566.gaa39828
-In-Reply-To: <7va9r06we2.fsf@alter.siamese.dyndns.org>
+	id S933295Ab3BSSrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 13:47:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35922 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933193Ab3BSSrI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 13:47:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C058ADFD;
+	Tue, 19 Feb 2013 13:47:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=U+21gjOuhHiDosAZl8cofaudeN8=; b=DOa8iV
+	2JIhTjN6ptJWuP12fhqbM59dPw3Ys3pt+NE7x1s8xfyIqOyrkwWiCtAkvXiF4YWg
+	Vd6pocGg+yvrO8BjpkBp0GrYV0Jjxdofx3zI8BPVV9lr8u+WLCm0NaSry/VDR13U
+	KOykbgljlHduJIVZ84LVkeCKvj+WG2gYRaT8A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NTyKekW4phjIXQ5DGb3hch4vVon8U4+L
+	p0Ur2/f9DBU3cI75O8jMNdEGYj1a2+hiZNOIRTPgI4lvawYWAgKQRNfR/LPBB49F
+	vNHynqGR6akLkKEaT+en391O5LgNrZtv41AkAJCnAxfy5cO2+Oa+X9Ydc+t+kSty
+	EEYA3If8T8k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3D31ADFB;
+	Tue, 19 Feb 2013 13:47:06 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61FCDADFA; Tue, 19 Feb 2013
+ 13:47:06 -0500 (EST)
+In-Reply-To: <e9f8a25c05f9cfe89c6bcbefb69f40cd629f9925.1361267945.git.wking@tremily.us>
+ (W. Trevor King's message of "Tue, 19 Feb 2013 05:05:00 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C227AFA2-7AC4-11E2-90E6-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216644>
 
-From: Brandon Casey <drafnel@gmail.com>
+"W. Trevor King" <wking@tremily.us> writes:
 
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
+> From: "W. Trevor King" <wking@tremily.us>
+>
+> I think this interface is often more convenient than extended cherry
+> picking or using 'git format-patch'.  In fact, I removed the
+> cherry-pick section entirely.  The entry-level suggestions for
+> rerolling are now:
+>
+> 1. git commit --amend
+> 2. git format-patch origin
+>    git reset --hard origin
+>    ...edit and reorder patches...
+>    git am *.patch
+> 3. git rebase -i origin
+>
+> Signed-off-by: W. Trevor King <wking@tremily.us>
+> ---
 
+Thanks.
 
-[RESEND] I originally specified Junio's address as gitster@pobox.org.
-[RESEND] Sorry, now with the correct address.
+> +Sometimes you want to edit a commit deeper in your history.  One
+> +approach is to use `git format-patch` to create a series of patches,
+> +then reset the state to before the patches:
+>  
+>  -------------------------------------------------
+> +$ git format-patch origin
+> +$ git reset --hard origin
+>  -------------------------------------------------
 
-Ok, here's the updated text.  I am not set up to build the documentation,
-so I hope someone will test, but looks right to me.
+Technically speaking, this does not "reset to before the patches".
+You would need "git reset --hard $(git merge-base origin HEAD)" or
+something like that.
 
--Brandon
-
-
- Documentation/git-commit.txt | 28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 0eb79cc..992c219 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -172,16 +172,24 @@ OPTIONS
-        linkgit:git-commit-tree[1].
- 
- --cleanup=<mode>::
--	This option sets how the commit message is cleaned up.
--	The  '<mode>' can be one of 'verbatim', 'whitespace', 'strip',
--	and 'default'. The 'default' mode will strip leading and
--	trailing empty lines and #commentary from the commit message
--	only if the message is to be edited. Otherwise only whitespace
--	removed. The 'verbatim' mode does not change message at all,
--	'whitespace' removes just leading/trailing whitespace lines
--	and 'strip' removes both whitespace and commentary. The default
--	can be changed by the 'commit.cleanup' configuration variable
--	(see linkgit:git-config[1]).
-+	This option determines how the supplied commit message should be
-+	cleaned up before committing.  The '<mode>' can be `strip`,
-+	`whitespace`, `verbatim`, or `default`.
-++
-+--
-+strip::
-+	Strip leading and trailing empty lines, trailing whitespace, and
-+	#commentary and collapse consecutive empty lines.
-+whitespace::
-+	Same as `strip` except #commentary is not removed.
-+verbatim::
-+	Do not change the message at all.
-+default::
-+	`strip` if the message is to be edited.  Otherwise `whitespace`.
-+--
-++
-+	The default can be changed by the 'commit.cleanup' configuration
-+	variable (see linkgit:git-config[1]).
- 
- -e::
- --edit::
--- 
-1.8.1.3.566.gaa39828
+I think this is fine as-is in the flow of text, where we haven't
+taught the readers the use of merge-base to find the fork point.
