@@ -1,104 +1,77 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Re: [PATCH v3 8/9] user-manual: Flesh out uncommitted
- changes and submodule updates
-Date: Tue, 19 Feb 2013 04:35:24 -0500
-Message-ID: <20130219093524.GB4024@odin.tremily.us>
-References: <20130217170606.GA3432@odin.tremily.us>
- <cover.1361146398.git.wking@tremily.us>
- <6219cb47a0a5b7428ae6c729e9a1a55344f47428.1361146398.git.wking@tremily.us>
- <7vfw0ucoxk.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: inotify to minimize stat() calls
+Date: Tue, 19 Feb 2013 15:10:21 +0530
+Message-ID: <CALkWK0=_AoWwAd8FN+GGvogT+p7PmTsm+KHNk0F09ymi2Snywg@mail.gmail.com>
+References: <CALkWK0=EP0Lv1F_BArub7SpL9rgFhmPtpMOCgwFqfJmVE=oa=A@mail.gmail.com>
+ <CACBZZX6BVuQWtrLuTVXZo+77sT4yZQ3pvN=_fMma24-zd0NNqA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary="QKdGvSO+nmPlgiQ/"
-Cc: Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 10:36:11 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 10:41:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7jcK-0005YG-P9
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 10:36:05 +0100
+	id 1U7jhE-0008Mh-7x
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 10:41:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758447Ab3BSJfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 04:35:41 -0500
-Received: from vms173001pub.verizon.net ([206.46.173.1]:41077 "EHLO
-	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756669Ab3BSJfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 04:35:39 -0500
-Received: from odin.tremily.us ([unknown] [72.68.84.219])
- by vms173001.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MIG007OTNZ01Q60@vms173001.mailsrvcs.net> for
- git@vger.kernel.org; Tue, 19 Feb 2013 03:35:25 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 3D69E8AB931; Tue,
- 19 Feb 2013 04:35:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1361266524; bh=oq4yLIeJQPdHlkKvy2StES2+BDCFQlHt8CpRJUEYMJ4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=KtWwATGEESfhsyZK0VKj7f98xBAajGHU1sY46YG4s45XzFyHqNnDv5IQ1cVpemtf4
- gmWYdTpQgZ1eBoqgZFyaACsEuLhQwrzotFdRiVk/QMAG7AzD8gy6IcqCs+rHCEGtjx
- /PzP5sbJPRk0u/UwWzUI+c6Lr/yBTeAeQD0iskaE=
-Content-disposition: inline
-In-reply-to: <7vfw0ucoxk.fsf@alter.siamese.dyndns.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758556Ab3BSJkn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Feb 2013 04:40:43 -0500
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:45697 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757464Ab3BSJkm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Feb 2013 04:40:42 -0500
+Received: by mail-ie0-f173.google.com with SMTP id 9so8240451iec.18
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 01:40:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=FMvDyWw/bcSY/lzAhOUQ60Ig8DUo40lwyOuxXp+B9pE=;
+        b=RPDZPn+27FhA8PuRpHc+nRhBWnrvgfEjB/YdkCei6XydKM74YE2kR2MO8YXaM6iozb
+         lCeFmjzvOAkqRxXIfU8BdBJO1ezu1EQqm9Q39cyF3Sl6GI/cJVRai11umgO0opGAyASm
+         56y2ShfexGkwtmY3Jkbzm1rMBf2c5cnm0eWuUSe9KqcTWG29b/5wba2k4vBECokfqf60
+         DqZv77Vjsv7yiklhNy0a5x/3qdBT6wY+eITzi4njPDou1HfJp+nxupRLhptqI0M0M7M8
+         SNtBGIc0JGuGLKO8tUP2+88Zx4/NZkxPGL6FmkFCMnQHquH5JmmuGENX4HY4HmiMx2oT
+         ZFew==
+X-Received: by 10.42.67.10 with SMTP id r10mr7266611ici.7.1361266841617; Tue,
+ 19 Feb 2013 01:40:41 -0800 (PST)
+Received: by 10.64.166.33 with HTTP; Tue, 19 Feb 2013 01:40:21 -0800 (PST)
+In-Reply-To: <CACBZZX6BVuQWtrLuTVXZo+77sT4yZQ3pvN=_fMma24-zd0NNqA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216584>
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Fri, Feb 8, 2013 at 10:10 PM, Ramkumar Ramachandra
+> <artagnon@gmail.com> wrote:
+>> For large repositories, many simple git commands like `git status`
+>> take a while to respond.  I understand that this is because of large
+>> number of stat() calls to figure out which files were changed.  I
+>> overheard that Mercurial wants to solve this problem using itnotify,
+>> but the idea bothers me because it's not portable.  Will Git ever
+>> consider using inotify on Linux?  What is the downside?
+>
+> There's one relatively easy sub-task of this that I haven't seen
+> mentioned: Improving the speed of interactive rebase on large (as in
+> lots of checked out files) repositories.
+>
+> That's the single biggest thing that bothers me when I use Git with
+> large repos, not the speed of "git status". When you "git rebase -i
+> HEAD~100" re-arrange some patches and save the TODO list it takes say
+> 0.5-1s for each patch to be applied, but at least 10x less than that
+> on a small repository. E.g. try this on linux-2.6.git v.s. some small
+> project with a few dozen files.
+>
+> I looked into this a long while ago and remembered that rebase was
+> doing something like a git status for every commit that it made to
+> check the dirtyness.
 
---QKdGvSO+nmPlgiQ/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sun, Feb 17, 2013 at 06:53:59PM -0800, Junio C Hamano wrote:
-> > +If you did not commit your submodule changes, the changes will *not*
-> > +be silently overwritten.  Instead, you get the usual warning about not
-> > +being able switch from a dirty branch.
->=20
-> The scenario this talks about is to commit changes in the
-> superproject and then to run "submodule update".  I think the above
-> clarification is still incomplete.  You may have committed in the
-> submodule some changes but not all.
->=20
-> 	If you have uncommitted changes in your submodule working
-> 	tree, "git submodule update" will not overwrite them.
-> 	Instead...
->=20
-> would be an improvement, I think.
-
-Will do in v4.
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---QKdGvSO+nmPlgiQ/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRI0dbAAoJEEUbTsx0l5OMN8YP/1L+EqI3LfiT67w6HLipCnnq
-5H4CifZIQXavpbR6nGUl/jFRdPs53Z5X3fSaq6fEY3asvPO9GpI9uy3PvP2J8BnD
-YmxyOUb3hiHKzRDv4m7kDbnm4oGvi4yOv89Y+ZS3ofJrLTs94CWltHoJtoeVrG+l
-CsPTJn8GX+K9JleoOXWO4gv1ZSRIgdLM4b7A9IvFiZGixlEPYKtaPDgiypnwQCPs
-ueauijdSrdOJ+vPMSPTKHwaeWFjp75n+5Wpwz2h08yROogC6Yi/J/jvRXD+qlUOQ
-to5ClhN2GCSRYE/H6ElSS3nyuKrA/j3NpXQhKKKgwZWjJgL35R1xqoep4dEBQa9M
-Bg+aXxsqQzTINs3qPkfC/vpam+dqbpwdQ0CvwLxZZqZzUy8MX4Ahc/ZCtVvrSAkg
-YTOnOUNc0VUatKswDbtut+RZrK88PY1I1S6zLahRtewifAj9BNHCXRtX9GyUl7pY
-1k2GnkjUzJypQ7ZR2X7Yvct0jqUzKIzvTxtAWrHtj/uJ9rI3egLFnk1T+PrhdYJM
-p+QjExJmlLOV7+VpbaK6zuBjRlOyas81v/ISnmRX9J45Zk0js0oZXuBRLdjhpD2C
-dL/Cfme+ej5ogoWP1RTxmQkVJaeR5zDpy0lsJSh/76V4dUg8ILUNYlcqcHZV1Ebs
-Xqx9TGH8RfF0VCiEGjM+
-=WZhS
------END PGP SIGNATURE-----
-
---QKdGvSO+nmPlgiQ/--
+What is it really doing?  I think the main culprit is
+require_clean_work_tree() from git-sh-setup.sh, and that is only run
+in the `--continue` and `exec` codepaths.
