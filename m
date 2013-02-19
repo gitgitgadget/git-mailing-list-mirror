@@ -1,65 +1,118 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/4] Documentation/git-commit.txt: correct a few minor
- grammatical mistakes
-Date: Mon, 18 Feb 2013 23:29:24 -0800
-Message-ID: <20130219072924.GJ19757@elie.Belkin>
-References: <1361247427-438-1-git-send-email-drafnel@gmail.com>
- <1361247427-438-4-git-send-email-drafnel@gmail.com>
- <20130219064304.GG19757@elie.Belkin>
- <CA+sFfMf8juf0rQh6S2sW=_LmsbhPc=c+erVppsZbAw-+h-4CqQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Google Summer of Code 2013 (GSoC13)
+Date: Mon, 18 Feb 2013 23:31:53 -0800
+Message-ID: <7v7gm492ty.fsf@alter.siamese.dyndns.org>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
+ <20130218174239.GB22832@sigill.intra.peff.net>
+ <CALkWK0nDEwgDwnVktmM8abv3ZgQmJCOm8LBe25UKR485PZMPfA@mail.gmail.com>
+ <7vip5p9rtm.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=s4XX0mmUTAcNBHyqdrryhMYvhtrNZCFFccJJBUUVdUg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 19 08:30:04 2013
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, Jeff King <peff@peff.net>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Paul Mackerras <paulus@samba.org>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	David Barr <b@rr-dav.id.au>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 19 08:32:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7heH-0008RL-Qx
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 08:29:58 +0100
+	id 1U7hga-0001D7-PL
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Feb 2013 08:32:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757478Ab3BSH3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 02:29:31 -0500
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:38163 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757437Ab3BSH3a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 02:29:30 -0500
-Received: by mail-pa0-f48.google.com with SMTP id hz10so3278053pad.7
-        for <git@vger.kernel.org>; Mon, 18 Feb 2013 23:29:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=4arT9XXplWfAzDCiU56/6EFXAJzulQ1r+zN6xSL1xnw=;
-        b=D/Su1Gba7X+9+k34t4A1v3E0CaTAs/4lgF0Ey+btdjnfL9XUjCKgwx15AmDKIQIMA9
-         era4NtEOdBwZGMJZFFVBSpuar8jNYS+15Ita1jmsHmbRq6HpJsRSrs3la6LOo/jOCKgz
-         kyMzGHmjBfc2pL6SopofB5eslmVozsih6KEOEjzkjsLHS9Fbc00HtU41jQZ+sct7j1Yh
-         ihCbpawiNpZ7eswT4bghajisDheTNqKRdWjasTR6ZpNa0lTwF1GgC57ENOC1Xwl8Z6dZ
-         o/bHvvG1Wid8bpSOKJvkDzWo+Rn9pOgaByxmFWJf+o/tB4x1R3D0syK5FsnbWyIQmAJz
-         mRFA==
-X-Received: by 10.68.47.39 with SMTP id a7mr37361476pbn.155.1361258970146;
-        Mon, 18 Feb 2013 23:29:30 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id ab1sm17127680pbd.37.2013.02.18.23.29.27
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Feb 2013 23:29:28 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CA+sFfMf8juf0rQh6S2sW=_LmsbhPc=c+erVppsZbAw-+h-4CqQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1756967Ab3BSHb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Feb 2013 02:31:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43658 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756846Ab3BSHb4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Feb 2013 02:31:56 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22418A842;
+	Tue, 19 Feb 2013 02:31:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UNfioMAJ+9JgtKtTlxzmfy5poSc=; b=XFxBoD
+	pWTVFnvj5G+aANxrlT5xM48SK9d6LrVe5S5566ysXpKv+7k2NLRc42s5kLKntJ2T
+	U7PUEMAzWxhzb/60pxektu9WQ74Fr+VEOPe1aLKqT5/zbWxAYI0xxWCIYgRKbyX6
+	SUhkr4fdyDEJX5bTvHhW7VFbAd2XVRslsm44s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OHchPgKvra8TwVRYYLzhgtHfJQWLJMy5
+	MK7HJxIZ4MH1Gk57ztFVwqidizqnOhRk5Nvazf/iT98FjWhrgmm0xsKZqL8AQZjw
+	a3xTA5AROP0bICGMZ8GCSaj7TqocuOPTxFk/dmr5oGmBVvOttzZFzJJ/BtOC7RnD
+	avXrTo6da4Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 163D7A841;
+	Tue, 19 Feb 2013 02:31:55 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7FCD5A840; Tue, 19 Feb 2013
+ 02:31:54 -0500 (EST)
+In-Reply-To: <CALkWK0=s4XX0mmUTAcNBHyqdrryhMYvhtrNZCFFccJJBUUVdUg@mail.gmail.com>
+ (Ramkumar Ramachandra's message of "Tue, 19 Feb 2013 12:38:51 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6F337A82-7A66-11E2-81B7-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216571>
 
-Brandon Casey wrote:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> Hmm, I think the original text was more confusing than I realized.  I
-> think we should reorder the cleanup modes, placing "default" last, and
-> then describe default in terms of either strip or whitespace depending
-> on whether an editor will be spawned.
+> Junio C Hamano wrote:
+> ...
+>> I think the real issue is everybody in the GSoC mentor candidate
+>> pool grossly underestimates the scope of suggested projects, does
+>> not encourage students to send early drafts to the public from the
+>> beginning, and perhaps overestimates the ability of total beginners.
+>> After seeing my "index-thing is too big in scope" warning repeatedly
+>> ignored for the last year's GSoC, I am not very hopeful unless the
+>> attitude towards GSoC and its students drastically changes on our
+>> mentors' end.
+>
+> The short undiplomatic version of that is that our mentors suck (I'm
+> not pointing fingers, but that's what I infer from failing projects).
 
-Sounds good to me. :)
+I was conflating between people who add "suggested project" and who
+act as mentors.  I do not think mentors are primarily responsible
+for bad suggested projects.
+
+Our mentors may be wonderful but I do not have enough evidence to
+judge either way.  They are mostly student-facing and I as a
+bystander to GSoC process didn't see much of their involvement in
+their students' work---maybe that is how it is supposed to work,
+maybe not.  The only failing of them observable from my point of
+view was that we repeatedly saw the initial round of patches come
+very late.
+
+But my complaints were primarily about those sure-to-fail project
+suggestions.
+
+> I propose that we have one thread for every proposal where we can all
+> discuss the implementation outline- this will serve as authoritative
+> source of information for students, and for picking mentors (the
+> people who contribute most to the discussion).  Students should be
+> matched with mentors on an individual basis.
+
+You are being unreasonable and/or unrealistic. A topic that needs a
+large discussion thread to pre-discuss design and outline by many
+existing members of community and mentor candidates is a sure sign
+that the topic is too big for a beginner. A topic that needs only a
+small enough discussion thread on the other hand will come to a
+polished conclusion before even the student shows up.  
+
+This is exactly why I suggested "doable as a private, at most
+two-weekend hack by an experienced" as a quick and dirty way to
+measure the size of a project.
