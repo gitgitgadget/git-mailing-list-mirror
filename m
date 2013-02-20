@@ -1,8 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 07/19] upload-archive: use argv_array to store client
- arguments
-Date: Wed, 20 Feb 2013 15:01:26 -0500
-Message-ID: <20130220200126.GG25647@sigill.intra.peff.net>
+Subject: [PATCH v3 08/19] write_or_die: raise SIGPIPE when we get EPIPE
+Date: Wed, 20 Feb 2013 15:01:36 -0500
+Message-ID: <20130220200136.GH25647@sigill.intra.peff.net>
 References: <20130220195147.GA25332@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,130 +9,117 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 20 21:01:56 2013
+X-From: git-owner@vger.kernel.org Wed Feb 20 21:02:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8FrX-0004Gj-8J
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 21:01:55 +0100
+	id 1U8Frh-0004N8-4y
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 21:02:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934926Ab3BTUB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2013 15:01:29 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54582 "EHLO
+	id S935103Ab3BTUBj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 15:01:39 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54587 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934553Ab3BTUB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2013 15:01:29 -0500
-Received: (qmail 17696 invoked by uid 107); 20 Feb 2013 20:03:00 -0000
+	id S935098Ab3BTUBi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 15:01:38 -0500
+Received: (qmail 17715 invoked by uid 107); 20 Feb 2013 20:03:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Feb 2013 15:03:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2013 15:01:26 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Feb 2013 15:03:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2013 15:01:36 -0500
 Content-Disposition: inline
 In-Reply-To: <20130220195147.GA25332@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216722>
 
-The current parsing scheme for upload-archive is to pack
-arguments into a fixed-size buffer, separated by NULs, and
-put a pointer to each argument in the buffer into a
-fixed-size argv array.
+The write_or_die function will always die on an error,
+including EPIPE. However, it currently treats EPIPE
+specially by suppressing any error message, and by exiting
+with exit code 0.
 
-This works fine, and the limits are high enough that nobody
-reasonable is going to hit them, but it makes the code hard
-to follow.  Instead, let's just stuff the arguments into an
-argv_array, which is much simpler. That lifts the "all
-arguments must fit inside 4K together" limit.
+Suppressing the error message makes some sense; a pipe death
+may just be a sign that the other side is not interested in
+what we have to say. However, exiting with a successful
+error code is not a good idea, as write_or_die is frequently
+used in cases where we want to be careful about having
+written all of the output, and we may need to signal to our
+caller that we have done so (e.g., you would not want a push
+whose other end has hung up to report success).
 
-We could also trivially lift the MAX_ARGS limitation (in
-fact, we have to keep extra code to enforce it). But that
-would mean a client could force us to allocate an arbitrary
-amount of memory simply by sending us "argument" lines. By
-limiting the MAX_ARGS, we limit an attacker to about 4
-megabytes (64 times a maximum 64K packet buffer). That may
-sound like a lot compared to the 4K limit, but it's not a
-big deal compared to what git-archive will actually allocate
-while working (e.g., to load blobs into memory). The
-important thing is that it is bounded.
+This distinction doesn't typically matter in git, because we
+do not ignore SIGPIPE in the first place. Which means that
+we will not get EPIPE, but instead will just die when we get
+a SIGPIPE. But it's possible for a default handler to be set
+by a parent process, or for us to add a callsite inside one
+of our few SIGPIPE-ignoring blocks of code.
+
+This patch converts write_or_die to actually raise SIGPIPE
+when we see EPIPE, rather than exiting with zero. This
+brings the behavior in line with the "normal" case that we
+die from SIGPIPE (and any callers who want to check why we
+died will see the same thing). We also give the same
+treatment to other related functions, including
+write_or_whine_pipe and maybe_flush_or_die.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/upload-archive.c | 35 ++++++++++++++---------------------
- 1 file changed, 14 insertions(+), 21 deletions(-)
+ write_or_die.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-index c3d134e..3393cef 100644
---- a/builtin/upload-archive.c
-+++ b/builtin/upload-archive.c
-@@ -7,6 +7,7 @@
- #include "pkt-line.h"
- #include "sideband.h"
- #include "run-command.h"
-+#include "argv-array.h"
+diff --git a/write_or_die.c b/write_or_die.c
+index 960f448..b50f99a 100644
+--- a/write_or_die.c
++++ b/write_or_die.c
+@@ -1,5 +1,15 @@
+ #include "cache.h"
  
- static const char upload_archive_usage[] =
- 	"git upload-archive <repo>";
-@@ -18,10 +19,9 @@ int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
- 
- int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
- {
--	const char *sent_argv[MAX_ARGS];
-+	struct argv_array sent_argv = ARGV_ARRAY_INIT;
- 	const char *arg_cmd = "argument ";
--	char *p, buf[4096];
--	int sent_argc;
-+	char buf[4096];
- 	int len;
- 
- 	if (argc != 2)
-@@ -31,33 +31,26 @@ int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
- 		die("'%s' does not appear to be a git repository", argv[1]);
- 
- 	/* put received options in sent_argv[] */
--	sent_argc = 1;
--	sent_argv[0] = "git-upload-archive";
--	for (p = buf;;) {
-+	argv_array_push(&sent_argv, "git-upload-archive");
-+	for (;;) {
- 		/* This will die if not enough free space in buf */
--		len = packet_read_line(0, p, (buf + sizeof buf) - p);
-+		len = packet_read_line(0, buf, sizeof(buf));
- 		if (len == 0)
- 			break;	/* got a flush */
--		if (sent_argc > MAX_ARGS - 2)
--			die("Too many options (>%d)", MAX_ARGS - 2);
-+		if (sent_argv.argc > MAX_ARGS)
-+		    die("Too many options (>%d)", MAX_ARGS - 1);
- 
--		if (p[len-1] == '\n') {
--			p[--len] = 0;
-+		if (buf[len-1] == '\n') {
-+			buf[--len] = 0;
- 		}
--		if (len < strlen(arg_cmd) ||
--		    strncmp(arg_cmd, p, strlen(arg_cmd)))
--			die("'argument' token or flush expected");
- 
--		len -= strlen(arg_cmd);
--		memmove(p, p + strlen(arg_cmd), len);
--		sent_argv[sent_argc++] = p;
--		p += len;
--		*p++ = 0;
-+		if (prefixcmp(buf, arg_cmd))
-+			die("'argument' token or flush expected");
-+		argv_array_push(&sent_argv, buf + strlen(arg_cmd));
++static void check_pipe(int err)
++{
++	if (err == EPIPE) {
++		signal(SIGPIPE, SIG_DFL);
++		raise(SIGPIPE);
++		/* Should never happen, but just in case... */
++		exit(141);
++	}
++}
++
+ /*
+  * Some cases use stdio, but want to flush after the write
+  * to get error handling (and to get better interactive
+@@ -34,8 +44,7 @@ void maybe_flush_or_die(FILE *f, const char *desc)
+ 			return;
  	}
--	sent_argv[sent_argc] = NULL;
- 
- 	/* parse all options sent by the client */
--	return write_archive(sent_argc, sent_argv, prefix, 0, NULL, 1);
-+	return write_archive(sent_argv.argc, sent_argv.argv, prefix, 0, NULL, 1);
+ 	if (fflush(f)) {
+-		if (errno == EPIPE)
+-			exit(0);
++		check_pipe(errno);
+ 		die_errno("write failure on '%s'", desc);
+ 	}
  }
- 
- __attribute__((format (printf, 1, 2)))
+@@ -50,8 +59,7 @@ void write_or_die(int fd, const void *buf, size_t count)
+ void write_or_die(int fd, const void *buf, size_t count)
+ {
+ 	if (write_in_full(fd, buf, count) < 0) {
+-		if (errno == EPIPE)
+-			exit(0);
++		check_pipe(errno);
+ 		die_errno("write error");
+ 	}
+ }
+@@ -59,8 +67,7 @@ int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
+ int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
+ {
+ 	if (write_in_full(fd, buf, count) < 0) {
+-		if (errno == EPIPE)
+-			exit(0);
++		check_pipe(errno);
+ 		fprintf(stderr, "%s: write error (%s)\n",
+ 			msg, strerror(errno));
+ 		return 0;
 -- 
 1.8.2.rc0.9.g352092c
