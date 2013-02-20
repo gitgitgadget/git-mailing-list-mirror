@@ -1,120 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/4] t7800: modernize tests
-Date: Tue, 19 Feb 2013 23:05:44 -0800
-Message-ID: <7vip5nzcqf.fsf@alter.siamese.dyndns.org>
-References: <1361338528-17835-1-git-send-email-davvid@gmail.com>
- <1361338528-17835-2-git-send-email-davvid@gmail.com>
- <1361338528-17835-3-git-send-email-davvid@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCHv2 0/10] pkt-line and remote-curl cleanups server
+Date: Tue, 19 Feb 2013 23:05:36 -0800
+Message-ID: <CAJo=hJvrc3EUfzr2BDZ3i68rwZVeHFGHmKwrvhhMMV45DLaWzw@mail.gmail.com>
+References: <20130216064455.GA27063@sigill.intra.peff.net> <20130216064929.GC22626@sigill.intra.peff.net>
+ <20130217110533.GF6759@elie.Belkin> <20130217192830.GB25096@sigill.intra.peff.net>
+ <20130218014113.GC3221@elie.Belkin> <20130218091203.GB17003@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 08:06:17 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 20 08:06:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U83kq-0000Aq-LT
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 08:06:12 +0100
+	id 1U83l1-0000Fy-Ux
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 08:06:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933252Ab3BTHFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2013 02:05:47 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53109 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933074Ab3BTHFq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2013 02:05:46 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1EA0B8A18;
-	Wed, 20 Feb 2013 02:05:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aZwsEOeGJhsb7qooIoZsABHKSwM=; b=kmpqFV
-	DAfzazXk6uYnQ/W8jNwVpHd2WxYi67iYjfBYb7PYVE0PIiUEvHX08JY5+N7mnnQh
-	tNo17MUHflZ6qYl1btRi/iLrvZ2zY19d8h+en9KBifv4urgIQLWw/ZY9GkYVh3hg
-	Wml7pGFxob9RBAfBQ5RHAUEPJZpBUHVYrBl/s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RBUKJmZ/ycyDbY9Kv7m6jsoOhgitLuvo
-	u7Hu/HBIjuvwtesYKcSdb1Sd0RL+zJTGQuEEQnpYy8rs0MFK05wLiMkzK73RCFOh
-	otPcAH7naNnLjRGKMjZUCLlykZU8BjnZG5UsvJ13pEacPqO9nCqLZUnYwnIv5+9U
-	/4dT6bDrvFg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C1CB8A17;
-	Wed, 20 Feb 2013 02:05:46 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 85A748A16; Wed, 20 Feb 2013
- 02:05:45 -0500 (EST)
-In-Reply-To: <1361338528-17835-3-git-send-email-davvid@gmail.com> (David
- Aguilar's message of "Tue, 19 Feb 2013 21:35:27 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F26CA0FC-7B2B-11E2-8FD2-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933273Ab3BTHF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 02:05:58 -0500
+Received: from mail-ia0-f173.google.com ([209.85.210.173]:45496 "EHLO
+	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933074Ab3BTHF5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 02:05:57 -0500
+Received: by mail-ia0-f173.google.com with SMTP id h37so6921423iak.4
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 23:05:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=aI3K5XLkgobGDNklAa0ogHzer84eLo8l5qeMZtwAwsk=;
+        b=fMNpFaA57Gf13aXMjiZjbIjLJ0x/tZZS0tVVG++LIyu+L7vVoeQ9vwrwc9ehMQosNI
+         UPdK7ERBFNKzOphEh6SGEoKyI12ACy+jgLXq444GY54bnpujEdbZfX7LNJSxarqh0C16
+         kYoDGk1FeawCNCMFMDV4BFck++L0YAMetkVPo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:x-gm-message-state;
+        bh=aI3K5XLkgobGDNklAa0ogHzer84eLo8l5qeMZtwAwsk=;
+        b=iAl+/1/ie9512rk4AaZZkwaEa0AWhS3sCQqPU1ZH4LbvU9hBOiKIROmyZl1YcKIbQ8
+         zFcUrm5UVexm400bJm2Yx7vM51pvW0qeaYhXyx47UfudoRxxw5Wya6WP61ydDtDOI59O
+         6w2GyxL680pHUAiDkkI5O0DwEY7WH69i4qOI2VI331mFQ9WBp27bwV1i51wRqW6g9UtG
+         syKm9xUJbim8vY8vr0SNBlK/dczGUtVDATSsOosXF6N+7zR3HSViWCAWTfFBjHlBtjdx
+         Nze8V77wawWK0UVDZhVI0xVYFAQ/K7MOPIU8p1ZA0psk3n0VRxknhzVfWPaeagnlqsus
+         mPNw==
+X-Received: by 10.50.170.102 with SMTP id al6mr10918915igc.20.1361343956578;
+ Tue, 19 Feb 2013 23:05:56 -0800 (PST)
+Received: by 10.64.89.99 with HTTP; Tue, 19 Feb 2013 23:05:36 -0800 (PST)
+In-Reply-To: <20130218091203.GB17003@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQlG/FQ2w87t0FLs5O9URsPmfufQx0jqAQpa78n1AuDPhewI65Lx47f7D4waaMgHoo0G7dTb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216686>
 
-David Aguilar <davvid@gmail.com> writes:
-
-> Eliminate a lot of redundant work by using test_config().
-> Catch more return codes by more use of temporary files
-> and test_cmp.
+On Mon, Feb 18, 2013 at 1:12 AM, Jeff King <peff@peff.net> wrote:
+> On Sun, Feb 17, 2013 at 05:41:13PM -0800, Jonathan Nieder wrote:
 >
-> The original tests relied upon restore_test_defaults()
-> from the previous test to provide the next test with a sane
-> environment.  Make the tests do their own setup so that they
-> are not dependent on the success of the previous test.
-> The end result is shorter tests and better test isolation.
+>> > I don't think so. Don't ERR lines appear inside their own packets?
+>>
+>> Yes, I misread get_remote_heads for some reason.  Thanks for checking.
 >
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
-> We no longer export variables into the environment per Jonathan's
-> suggestion.  This covers all of the review notes.
+> Thanks for bringing it up. I had not even thought about ERR at all. So
+> it was luck rather than skill that I was right. :)
 >
->  t/t7800-difftool.sh | 360 ++++++++++++++++++++++++----------------------------
->  1 file changed, 165 insertions(+), 195 deletions(-)
+>> I'm not sure whether servers are expected to send a flush after an
+>> ERR packet.  The only codepath I know of in git itself that sends
+>> such packets is git-daemon, which does not flush after the error (but
+>> is not used in the stateless-rpc case).  http-backend uses HTTP error
+>> codes for its errors.
 >
-> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> index 5b5939b..b577c01 100755
-> --- a/t/t7800-difftool.sh
-> +++ b/t/t7800-difftool.sh
-> @@ -10,29 +10,11 @@ Testing basic diff tool invocation
->  
->  . ./test-lib.sh
->  
-> +difftool_test_setup()
->  {
-> +	test_config diff.tool test-tool &&
-> +	test_config difftool.test-tool.cmd 'cat $LOCAL' &&
-> +	test_config difftool.bogus-tool.cmd false
->  }
+> I just checked, and GitHub also does not send flush packets after ERR.
+> Which makes sense; ERR is supposed to end the conversation. I can change
+> GitHub, of course, but who knows what other implementations exist (e.g.,
+> I do not know off-hand whether gitolite has custom ERR responses). So it
+> seems pretty clear that just checking for a flush packet is not the
+> right thing, and we need to actually parse the packet contents (at least
+> to some degree).
 
-Cute.
-
-Are we sure that $LOCAL is free of $IFS, or is it safer to say 'cat
-"$LOCAL"' or something?
-
-> @@ -324,26 +294,26 @@ test_expect_success PERL 'setup with 2 files different' '
->  '
->  
->  test_expect_success PERL 'say no to the first file' '
-> -	diff=$( (echo n; echo) | git difftool -x cat branch ) &&
-> -
-> -	echo "$diff" | stdin_contains m2 &&
-> -	echo "$diff" | stdin_contains br2 &&
-> -	echo "$diff" | stdin_doesnot_contain master &&
-> -	echo "$diff" | stdin_doesnot_contain branch
-> +	(echo n && echo) >input &&
-> +	git difftool -x cat branch <input >output &&
-> +	cat output | stdin_contains m2 &&
-> +	cat output | stdin_contains br2 &&
-> +	cat output | stdin_doesnot_contain master &&
-> +	cat output | stdin_doesnot_contain branch
-
-Do you need these pipes?  In other words, wouldn't
-
-	stdin_contains whatever <output
-
-be more straight-forward way to say these?
+JGit (and by extension Gerrit Code Review, android.googlesource.com)
+sends ERR with no flush-pkt. I would like to sort of keep the protocol
+this way, given how many servers in the wild are running Gerrit and
+currently use ERR with no flush-pkt. IMHO its a little late to be
+closing that door and stuffing a flush-pkt after the ERR that ends the
+conversation.
