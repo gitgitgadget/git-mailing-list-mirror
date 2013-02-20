@@ -1,81 +1,108 @@
-From: Edward Thomson <ethomson@microsoft.com>
-Subject: Re: Merge with staged and unstaged changes
-Date: Wed, 20 Feb 2013 21:46:08 +0000
-Message-ID: <A54CE3E330039942B33B670D971F85740396C4F8@TK5EX14MBXC254.redmond.corp.microsoft.com>
-References: <7vobfeybwt.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 08/19] write_or_die: raise SIGPIPE when we get EPIPE
+Date: Wed, 20 Feb 2013 13:51:11 -0800
+Message-ID: <20130220215043.GA24236@google.com>
+References: <20130220195147.GA25332@sigill.intra.peff.net>
+ <20130220200136.GH25647@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 22:47:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 20 22:51:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8HVL-0001Cb-OE
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 22:47:08 +0100
+	id 1U8HZo-0004HY-U2
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 22:51:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751138Ab3BTVqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2013 16:46:43 -0500
-Received: from na01-by2-obe.ptr.protection.outlook.com ([207.46.100.27]:2355
-	"EHLO na01-by2-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750765Ab3BTVqm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Feb 2013 16:46:42 -0500
-Received: from BL2FFO11FD006.protection.gbl (10.173.161.203) by
- BL2FFO11HUB016.protection.gbl (10.173.160.108) with Microsoft SMTP Server
- (TLS) id 15.0.620.12; Wed, 20 Feb 2013 21:46:39 +0000
-Received: from TK5EX14MLTC102.redmond.corp.microsoft.com (131.107.125.37) by
- BL2FFO11FD006.mail.protection.outlook.com (10.173.161.2) with Microsoft SMTP
- Server (TLS) id 15.0.620.12 via Frontend Transport; Wed, 20 Feb 2013 21:46:38
- +0000
-Received: from TK5EX14MBXC254.redmond.corp.microsoft.com ([169.254.2.84]) by
- TK5EX14MLTC102.redmond.corp.microsoft.com ([157.54.79.180]) with mapi id
- 14.02.0318.003; Wed, 20 Feb 2013 21:46:09 +0000
-Thread-Topic: Merge with staged and unstaged changes
-Thread-Index: AQHOD576PkYsSA9sEkyCP3OW/l2NPJiDMHeK//+zFoA=
-In-Reply-To: <7vobfeybwt.fsf@alter.siamese.dyndns.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/14.3.0.121105
-x-originating-ip: [157.54.51.36]
-Content-ID: <065E92E12BA9C6428CB401E7BF0F8B0E@microsoft.com>
-X-Forefront-Antispam-Report: CIP:131.107.125.37;CTRY:US;IPV:CAL;IPV:NLI;EFV:NLI;SFV:NSPM;SFS:(189002)(199002)(24454001)(43784002)(377454001)(479174001)(52034002)(54356001)(5343635001)(80022001)(53806001)(44976002)(47446002)(79102001)(16406001)(31966008)(23726001)(46406002)(59766001)(47776003)(65816001)(77982001)(33656001)(76482001)(63696002)(20776003)(74662001)(56776001)(66066001)(51856001)(54316002)(49866001)(74502001)(47736001)(4396001)(46102001)(47976001)(50466001)(55846006)(50986001)(56816002);DIR:OUT;SFP:;SCL:1;SRVR:BL2FFO11HUB016;H:TK5EX14MLTC102.redmond.corp.microsoft.com;RD:InfoDomainNonexistent;MX:1;A:1;LANG:en;
-X-OriginatorOrg: microsoft.onmicrosoft.com
-X-Forefront-PRVS: 07630F72AD
+	id S1751739Ab3BTVvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 16:51:20 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:50043 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751727Ab3BTVvT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 16:51:19 -0500
+Received: by mail-pa0-f52.google.com with SMTP id fb1so4248292pad.25
+        for <git@vger.kernel.org>; Wed, 20 Feb 2013 13:51:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=5VuXgyPeY/CpxzXWjRbeXZJHJzBcsefhb76ImDDd7vo=;
+        b=s004PTmofd/nhYGqNPZ9bP42pW6T+XGU02acM0DTAS71hD5sdrc5+u8HAHqjUipT8F
+         1/OAJZP9OBXOnqAsxtQ1AGotgfFXB1EWDnUQxmIrsZX2DJV49uDz11skn0yEiRgAcy8P
+         2oh0TDh8StQYu5a0xTh0dI+V3vzlqfAQwKLiOM0IOsKdd5yUCQ4/IJa8gTb5xtSzySLm
+         jZyeFMPzncH8q5BEIy9Pg6IITyDAglmCy70U8S8FEueVN5jgrvNGYKp36k6bTUovn7VR
+         nNkC2W050N9ZEYybPcibMBIa/UIy3vqETYEHLuSp+P3g52xHBHQ2ZHsBqRuDVEmNROJ6
+         +5Jg==
+X-Received: by 10.68.211.69 with SMTP id na5mr50849439pbc.71.1361397079237;
+        Wed, 20 Feb 2013 13:51:19 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id gf6sm22849025pbc.24.2013.02.20.13.51.16
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 20 Feb 2013 13:51:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20130220200136.GH25647@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216737>
 
-On 2/20/13 2:21 PM, "Junio C Hamano" <gitster@pobox.com> wrote:
+Jeff King wrote:
 
->Both are very much on purpose. The integrator may have seen the
->patch on the list, ran "git apply [--index]" on it to contemplate on
->it, and before commiting the result, saw a pull request for a branch
->that contains the change.  The above two allow the pull from such a
->state to succeed without losing any information.
+> The write_or_die function will always die on an error,
+> including EPIPE. However, it currently treats EPIPE
+> specially by suppressing any error message, and by exiting
+> with exit code 0.
+>
+> Suppressing the error message makes some sense; a pipe death
+> may just be a sign that the other side is not interested in
+> what we have to say. However, exiting with a successful
+> error code is not a good idea, as write_or_die is frequently
+> used in cases where we want to be careful about having
+> written all of the output, and we may need to signal to our
+> caller that we have done so (e.g., you would not want a push
+> whose other end has hung up to report success).
+>
+> This distinction doesn't typically matter in git, because we
+> do not ignore SIGPIPE in the first place. Which means that
+> we will not get EPIPE, but instead will just die when we get
+> a SIGPIPE. But it's possible for a default handler to be set
+> by a parent process,
 
->I think we have a similar table in Documentation/technical area that
->explains these things, by the way.
+Not so much "default" as "insane inherited", as in the example
+of old versions of Python's subprocess.Popen.
 
-I believe you are referring to trivial-merge.txt which has been
-exceptionally helpful in understanding "what" unpack trees does.
-I appreciate this detailed explanation in providing the "why".
+I suspect this used exit(0) instead of raise(SIGPIPE) in the first
+place to work around a bash bug (too much verbosity about SIGPIPE).
+If any programs still have that kind of bug, I'd rather put pressure
+on them to fix it by *not* working around it.  So the basic idea here
+looks good to me.
 
-I also appreciate your explanation of the affect of the workdir,
-and that makes sense.  I would have expected that the default was
-to presume the workdir files were existent, rather than the
-other way around, but we can agree that is an implementation detail.
+[...]
+> --- a/write_or_die.c
+> +++ b/write_or_die.c
+> @@ -1,5 +1,15 @@
+>  #include "cache.h"
+>  
+> +static void check_pipe(int err)
+> +{
+> +	if (err == EPIPE) {
+> +		signal(SIGPIPE, SIG_DFL);
+> +		raise(SIGPIPE);
+> +		/* Should never happen, but just in case... */
+> +		exit(141);
 
-My biggest concern, of course, was having the unstaged files in my
-workdir overwritten or deleted.
+How about
 
-Thanks again-
+		die("BUG: another thread changed SIGPIPE handling behind my back!");
 
--ed
+to make it easier to find and fix such problems?
+
+Thanks,
+Jonathan
