@@ -1,84 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH v3 08/19] write_or_die: raise SIGPIPE when we get EPIPE
-Date: Wed, 20 Feb 2013 14:06:37 -0800
-Message-ID: <20130220220637.GC24236@google.com>
+Date: Wed, 20 Feb 2013 17:12:48 -0500
+Message-ID: <20130220221248.GC817@sigill.intra.peff.net>
 References: <20130220195147.GA25332@sigill.intra.peff.net>
  <20130220200136.GH25647@sigill.intra.peff.net>
  <20130220215043.GA24236@google.com>
  <20130220215845.GB817@sigill.intra.peff.net>
  <20130220220114.GB24236@google.com>
  <20130220220359.GA1417@sigill.intra.peff.net>
+ <20130220220637.GC24236@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 20 23:07:08 2013
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 23:13:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8Hog-0005qh-JZ
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 23:07:06 +0100
+	id 1U8Hui-0001PY-8T
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 23:13:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751397Ab3BTWGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2013 17:06:42 -0500
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:63902 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750784Ab3BTWGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2013 17:06:41 -0500
-Received: by mail-pa0-f41.google.com with SMTP id fb11so4285504pad.14
-        for <git@vger.kernel.org>; Wed, 20 Feb 2013 14:06:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=NN/s3LLVNk0Blkdnkk0hhFPULl2R7bFbY8/bz9rQNiM=;
-        b=e347ab6sAh1ycoUrgrVOoaw2ygaYLASGa2ZPAK6nwuL3v5Pyv7IAFNL8u7X0M8YB0K
-         OCXp/hLO7gkUe/hC18Ps5PYYoMc/AxUXkZJPcKNssKjhc75OH5sPvKVueLyVJ5WAjTOS
-         eob2mRCVQjAOJWRKcULD/let2FntSb7Qonwkd9nyGAumLX4kahjsJM/PgqCFcPhWjH6K
-         ot5vwizPsjxgDgwC+Gz+N7RuNqwgMCBvJsDxLRc0uV9wsmJUBlY3mHkhZBj4xzYKXaay
-         72BdItNdKAv61yKqiQp/Hay8p8awvNym8BE5HwAeqbBwAAiMF//0tJZEhUV8QkryL8yn
-         usPA==
-X-Received: by 10.68.195.197 with SMTP id ig5mr4769743pbc.178.1361398001347;
-        Wed, 20 Feb 2013 14:06:41 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id d1sm112455779pav.6.2013.02.20.14.06.39
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 20 Feb 2013 14:06:40 -0800 (PST)
+	id S1751040Ab3BTWMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 17:12:51 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54849 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751022Ab3BTWMv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 17:12:51 -0500
+Received: (qmail 19452 invoked by uid 107); 20 Feb 2013 22:14:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Feb 2013 17:14:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2013 17:12:48 -0500
 Content-Disposition: inline
-In-Reply-To: <20130220220359.GA1417@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20130220220637.GC24236@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216742>
 
-Jeff King wrote:
-> On Wed, Feb 20, 2013 at 02:01:14PM -0800, Jonathan Nieder wrote:
+On Wed, Feb 20, 2013 at 02:06:37PM -0800, Jonathan Nieder wrote:
 
->>>> How about
->>>>
->>>> 		die("BUG: another thread changed SIGPIPE handling behind my back!");
->>>>
->>>> to make it easier to find and fix such problems?
->>>
->>> You mean for the "should never happen" bit, not the first part, right? I
->>> actually wonder if we should simply exit(141) in the first place. That
->>> is shell exit-code for SIGPIPE death already (so it's what our
->>> run_command would show us, and what anybody running us through shell
->>> would see).
->>
->> Yes, for the "should never happen" part.
-[...]
-> I don't mind adding a "BUG: " message like you described, but we should
-> still try to exit(141) as the backup, since that is the shell-equivalent
-> code to the SIGPIPE signal death.
+> > I don't mind adding a "BUG: " message like you described, but we should
+> > still try to exit(141) as the backup, since that is the shell-equivalent
+> > code to the SIGPIPE signal death.
+> 
+> If you want. :)
+> 
+> I think caring about graceful degradation of behavior in the case of
+> an assertion failure is overengineering, but it's mostly harmless.
 
-If you want. :)
+I am more concerned that the assertion is not "oops, another thread is
+doing something crazy, and it is a bug", but rather that there is some
+weird platform where SIG_DFL does not kill the program under SIGPIPE.
+That seems pretty crazy, though. I think I'd squash in something like
+this:
 
-I think caring about graceful degradation of behavior in the case of
-an assertion failure is overengineering, but it's mostly harmless.
+diff --git a/write_or_die.c b/write_or_die.c
+index b50f99a..abb64db 100644
+--- a/write_or_die.c
++++ b/write_or_die.c
+@@ -5,7 +5,9 @@ static void check_pipe(int err)
+ 	if (err == EPIPE) {
+ 		signal(SIGPIPE, SIG_DFL);
+ 		raise(SIGPIPE);
++
+ 		/* Should never happen, but just in case... */
++		error("BUG: SIGPIPE on SIG_DFL handler did not kill us.");
+ 		exit(141);
+ 	}
+ }
+
+which more directly reports the assertion that failed, and degrades
+reasonably gracefully. Yeah, it's probably overengineering, but it's
+easy enough to do.
+
+-Peff
