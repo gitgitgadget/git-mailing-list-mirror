@@ -1,81 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 08/19] write_or_die: raise SIGPIPE when we get EPIPE
-Date: Wed, 20 Feb 2013 17:12:48 -0500
-Message-ID: <20130220221248.GC817@sigill.intra.peff.net>
-References: <20130220195147.GA25332@sigill.intra.peff.net>
- <20130220200136.GH25647@sigill.intra.peff.net>
- <20130220215043.GA24236@google.com>
- <20130220215845.GB817@sigill.intra.peff.net>
- <20130220220114.GB24236@google.com>
- <20130220220359.GA1417@sigill.intra.peff.net>
- <20130220220637.GC24236@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Merge with staged and unstaged changes
+Date: Wed, 20 Feb 2013 14:17:25 -0800
+Message-ID: <7vk3q2y6iy.fsf@alter.siamese.dyndns.org>
+References: <7vobfeybwt.fsf@alter.siamese.dyndns.org>
+ <A54CE3E330039942B33B670D971F85740396C4F8@TK5EX14MBXC254.redmond.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 20 23:13:21 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Edward Thomson <ethomson@microsoft.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 23:17:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8Hui-0001PY-8T
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 23:13:20 +0100
+	id 1U8Hz7-0004OB-NF
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 23:17:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751040Ab3BTWMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2013 17:12:51 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54849 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751022Ab3BTWMv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2013 17:12:51 -0500
-Received: (qmail 19452 invoked by uid 107); 20 Feb 2013 22:14:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Feb 2013 17:14:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2013 17:12:48 -0500
-Content-Disposition: inline
-In-Reply-To: <20130220220637.GC24236@google.com>
+	id S1751066Ab3BTWR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 17:17:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63664 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750798Ab3BTWR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 17:17:28 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C9F0BEB9;
+	Wed, 20 Feb 2013 17:17:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MfhZsG057m/NBSZxpq3zAkC4mCc=; b=Gxs/MP
+	XITPaBeF4eMxWy0wjEMyVJFnxb9EUV20ukr5RNlEBISBJ7vFDzsURltmEVKIW4ks
+	yeLsKYwcxEiOteRWYv17juM209HnNXgdVUIIYRnWyfnDdYx5ElVZlm0jRR+3hcLP
+	raPtB3XPZ4TrGu88fve1ghhp8KUpNKDHNEzL8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hcGuGibpiLFcs8Ebn8//FUal5+Iqp553
+	MMgqKwTjwXJrhe7vSxUvadiF8BD3tnUd7FLGw4RjuUgodDEKEm2TdxVnDwY2W09W
+	xXODt+ctqGiPX/Y4VQNgbq6ihGwkeyI7LM45aeA4cqOftEYBxgUQgHxsLPWiRmky
+	KEBdA8pOJqw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12A34BEB7;
+	Wed, 20 Feb 2013 17:17:28 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 86AB3BEB4; Wed, 20 Feb 2013
+ 17:17:27 -0500 (EST)
+In-Reply-To: <A54CE3E330039942B33B670D971F85740396C4F8@TK5EX14MBXC254.redmond.corp.microsoft.com> (Edward Thomson's message of "Wed, 20 Feb 2013 21:46:08 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4F5C00EE-7BAB-11E2-ADD8-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216743>
 
-On Wed, Feb 20, 2013 at 02:06:37PM -0800, Jonathan Nieder wrote:
+Edward Thomson <ethomson@microsoft.com> writes:
 
-> > I don't mind adding a "BUG: " message like you described, but we should
-> > still try to exit(141) as the backup, since that is the shell-equivalent
-> > code to the SIGPIPE signal death.
-> 
-> If you want. :)
-> 
-> I think caring about graceful degradation of behavior in the case of
-> an assertion failure is overengineering, but it's mostly harmless.
+> I also appreciate your explanation of the affect of the workdir,
+> and that makes sense.  I would have expected that the default was
+> to presume the workdir files were existent, rather than the
+> other way around, but we can agree that is an implementation detail.
+>
+> My biggest concern, of course, was having the unstaged files in my
+> workdir overwritten or deleted.
 
-I am more concerned that the assertion is not "oops, another thread is
-doing something crazy, and it is a bug", but rather that there is some
-weird platform where SIG_DFL does not kill the program under SIGPIPE.
-That seems pretty crazy, though. I think I'd squash in something like
-this:
+Oh, no question about that part.  You concluded your original
+message with:
 
-diff --git a/write_or_die.c b/write_or_die.c
-index b50f99a..abb64db 100644
---- a/write_or_die.c
-+++ b/write_or_die.c
-@@ -5,7 +5,9 @@ static void check_pipe(int err)
- 	if (err == EPIPE) {
- 		signal(SIGPIPE, SIG_DFL);
- 		raise(SIGPIPE);
-+
- 		/* Should never happen, but just in case... */
-+		error("BUG: SIGPIPE on SIG_DFL handler did not kill us.");
- 		exit(141);
- 	}
- }
+>> I trust the last two cases, where data is lost, are bugs to
+>> report, but could I get clarification on the other situations?
 
-which more directly reports the assertion that failed, and degrades
-reasonably gracefully. Yeah, it's probably overengineering, but it's
-easy enough to do.
+and I was responding to the part after the "but could I get...".
 
--Peff
+I am fairly familiar with the "read-tree -m -u O A B" three-way
+merge codepath (after all I designed that with Linus in the very
+early days of Git), but I am not as familar with the merge-recursive
+backend as merge-resolve, and I was hoping to see the "bug" part
+triaged by other people.
