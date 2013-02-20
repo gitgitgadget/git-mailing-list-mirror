@@ -1,88 +1,77 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: translate 5 new messages
-Date: Wed, 20 Feb 2013 06:51:28 +0100
-Message-ID: <CAN0XMOLjkrZ-a0DWXJzDfcbOgMPetRBmQHVSVn8ju4+W32C2KQ@mail.gmail.com>
-References: <1361293966-3975-1-git-send-email-ralf.thielow@gmail.com>
-	<87ehgcoyxm.fsf@pctrast.inf.ethz.ch>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Google Summer of Code 2013 (GSoC13)
+Date: Wed, 20 Feb 2013 07:17:48 +0100
+Message-ID: <CAP8UFD1cUmefNPL65dj1KOxzaPsoZ3XTNT9XDuUm3ABAm5rCzQ@mail.gmail.com>
+References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch>
+	<20130218174239.GB22832@sigill.intra.peff.net>
+	<20130218193424.GC3234@elie.Belkin>
+	<512288B9.6010108@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jk@jk.gs, stimming@tuhh.de, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Feb 20 06:52:13 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Paul Mackerras <paulus@samba.org>,
+	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	David Michael Barr <davidbarr@google.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Feb 20 07:18:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U82bF-0007yQ-E7
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 06:52:13 +0100
+	id 1U830Q-0002eA-Km
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 07:18:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757662Ab3BTFvg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Feb 2013 00:51:36 -0500
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:61481 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757582Ab3BTFva convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Feb 2013 00:51:30 -0500
-Received: by mail-wi0-f169.google.com with SMTP id l13so5980243wie.4
-        for <git@vger.kernel.org>; Tue, 19 Feb 2013 21:51:29 -0800 (PST)
+	id S933917Ab3BTGRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 01:17:50 -0500
+Received: from mail-ve0-f178.google.com ([209.85.128.178]:61706 "EHLO
+	mail-ve0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933841Ab3BTGRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 01:17:49 -0500
+Received: by mail-ve0-f178.google.com with SMTP id db10so6514344veb.23
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 22:17:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=ZgubKno8johivEv/2FQyzL7aWFLy9hynBNmXG8oiibw=;
-        b=VVOVkDre5CgD6UuGxwfBNFMYkyUuR4tkFTwayOOzlkA44N9pCKpqx52iCGWRfg7plQ
-         K7B3PmKWXGJbZtmcRfbr1a/hQqnO5Ai5kbD9npuhMHMqLnlcRU08Q6TGKWyUXcAPwljM
-         aVuFEU6myEEdbrRVVOYTi66o3vzAWUiS2YH6Ykx3uqBzKOrDx+A8w826Isa65H5+JwrC
-         iVNtLqklaCCY1c0DH5U+o1a3GTDEIvhLRBnj+/UHQIzdUWIeDPX2VETnDTZ2uhO+hxdF
-         vMmWcbVtnQrYN9gZ67Ye1qKGef8nqotE20d8TD+EA8Q7yrSAVzRwg3p0+MlSApLAFeYo
-         qUCA==
-X-Received: by 10.180.79.6 with SMTP id f6mr31590670wix.26.1361339488947; Tue,
- 19 Feb 2013 21:51:28 -0800 (PST)
-Received: by 10.195.12.199 with HTTP; Tue, 19 Feb 2013 21:51:28 -0800 (PST)
-In-Reply-To: <87ehgcoyxm.fsf@pctrast.inf.ethz.ch>
+         :subject:from:to:cc:content-type;
+        bh=zJNb8FhPztLn+2cjHKYtTk+JvJzWj3ar4O3f+i/2Oiw=;
+        b=Z9lCfST1aClKEvaotCSqfmJU+bf98V8lztUYTmU95ZwE18rTG2WwbBxxqsjtHnAkBA
+         WnDW96Uw5jbBiab9IGx4DWzSyTc0RiMkndnGQtW1B90lC8TWAflI4TINpWdXQ7MudGHg
+         QtXL4rBCw4JPB0XYqXSSBS0xmk8W+mMjs3/6WsAKjuDYpXj8lQ2B/uD7h8m864DK/6Dl
+         j5Am6ddukPMJVugYQi0btup6DPWm5T7TZRaErfo8cg6BPjNrpqNgXIYOWQLN0qE7tKA2
+         YTnFFjRy3OTsSnQc8UnH0upnenrpcigXDjcqH+uCqiBhferbntKFaRb9rH/CRF/N+488
+         9tvA==
+X-Received: by 10.52.34.170 with SMTP id a10mr21843414vdj.54.1361341068296;
+ Tue, 19 Feb 2013 22:17:48 -0800 (PST)
+Received: by 10.58.251.244 with HTTP; Tue, 19 Feb 2013 22:17:48 -0800 (PST)
+In-Reply-To: <512288B9.6010108@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216681>
 
-Hi,
+On Mon, Feb 18, 2013 at 9:02 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Am 18.02.2013 20:34, schrieb Jonathan Nieder:
+>> That said, I won't have time to mentor a project on my own.  It takes
+>> a lot of time (or luck, to get the student that doesn't need
+>> mentoring).
+>
+> That's my experience too. Also I think it really makes sense to have a
+> co-mentor so you can balance the load a bit.
+>
+>> I'd be happy to help on a project with 1 or 2 co-mentors.
+>
+> Same here.
 
-2013/2/19 Thomas Rast <trast@inf.ethz.ch>:
-> Ralf Thielow <ralf.thielow@gmail.com> writes:
->
->>  msgid "You are currently bisecting branch '%s'."
->> -msgstr "Sie sind gerade beim Halbieren."
->> +msgstr "Sie sind gerade beim Halbieren in Zweig '%s'."
->
-> I know this one is already in other messages (and also in the Glossar=
-y),
-> but I still find it iffy and I might finally have a better idea:
->
->   Sie sind gerade an einer bin=C3=A4ren Suche in Zweig '%s'.
->
-> [note to English speakers: I'm just using "binary search" instead of
-> "bisect"]
->
-> That makes it quite a bit harder to use it in a verbed[1] form, but I
-> think it gets the concept across much better.  (And in all the usage =
-I
-> know in CS, the two things refer to the same.)
->
+I am ok to be mentor or co-mentor.
 
-Very good idea! Thank you. I'll create a patch on top and update the
-glossary.
-
-> ACK on the rest.
->
-
-Thanks for review.
-
->
-> Footnotes:
-> [1]  Verbing weirds language. -- Calvin
->
-> --
-> Thomas Rast
-> trast@{inf,student}.ethz.ch
+Thanks,
+Christian.
