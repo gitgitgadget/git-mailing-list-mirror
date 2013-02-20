@@ -1,81 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* [PATCH 2/2] check-ignore.c: fix segfault with '.' argument
- from repo root
-Date: Tue, 19 Feb 2013 18:53:07 -0800
-Message-ID: <7vppzv3dd8.fsf@alter.siamese.dyndns.org>
-References: <CAOkDyE_96Ef5CjoxNk3mbsNi+ZAuv6XeHcO7r8RQ-Of5ELsuKw@mail.gmail.com>
- <1361282783-1413-1-git-send-email-git@adamspiers.org>
- <1361282783-1413-2-git-send-email-git@adamspiers.org>
- <7v1ucc6vgd.fsf@alter.siamese.dyndns.org>
- <CAOkDyE9VVuFn6B=Fe4XHxGCEW0MFgndx1X0+9hO36Soxb37YQw@mail.gmail.com>
- <7v1ucc5b7n.fsf_-_@alter.siamese.dyndns.org>
- <20130220020046.GC7860@pacific.linksys.moosehall>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Wed Feb 20 03:53:39 2013
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v2 1/4] difftool: silence uninitialized variable warning
+Date: Tue, 19 Feb 2013 21:35:25 -0800
+Message-ID: <1361338528-17835-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 20 06:35:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U7zoO-0004Xr-0Q
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 03:53:36 +0100
+	id 1U82LX-0000sC-2K
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 06:35:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933914Ab3BTCxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Feb 2013 21:53:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43788 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933341Ab3BTCxL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Feb 2013 21:53:11 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80E6AB62B;
-	Tue, 19 Feb 2013 21:53:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8/cvQrbHteRKC6GnB6omk2r9lT0=; b=Rt35PP
-	+fU0NozMxrHr3eehxDDrNpbuXx+kxpC0shT0vuXAUnSnxytpsCZWFtjfRIRvo47V
-	pqzhayWAYzoML2iKWLv7GGdCCYfyVhUvX03kA/oZ/+eyLJPOOt9li2gz9qoEPvDY
-	d6xPJyE9ii7VLjI99bXaFkrER3iDFnQCqRjyA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ij2h2AGpwx7sKfz23GbEENonTQAUwCjB
-	4hnLrDcaT0jHJBAP3NZMMXaLHrQByNMjni81fZmAU/x12JxSUsdENirKwD3lWhlt
-	v2eRmW/NuGtWIgFp/7EzRt6lrmdQ4gOPlnsbynX2m6afZ+Rzjn3DYZxMsbznpCKI
-	/pUotGNRQ/M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 517EEB62A;
-	Tue, 19 Feb 2013 21:53:10 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9635BB622; Tue, 19 Feb 2013
- 21:53:09 -0500 (EST)
-In-Reply-To: <20130220020046.GC7860@pacific.linksys.moosehall> (Adam Spiers's
- message of "Wed, 20 Feb 2013 02:00:46 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A8C9565C-7B08-11E2-B2CD-21622E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756254Ab3BTFff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 00:35:35 -0500
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:53845 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756225Ab3BTFfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 00:35:34 -0500
+Received: by mail-pb0-f51.google.com with SMTP id un15so2657102pbc.24
+        for <git@vger.kernel.org>; Tue, 19 Feb 2013 21:35:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=8kSYeB5awJmvJRGKH/uOQ2Ksm5Sg5yTNP4slOKXW5F8=;
+        b=L03OToKX4oTalJYbGSHxd9qrZlMhq642I7+kUJkzXkqn3RmeU7UlIQ2k4vM9j/E3yx
+         45lcMwOsJQRjEtuU4oQGAKg9rBAKU3bbClyS+suPV1hQ23yLiFi7gTDNkqFqhIC3+1sf
+         1bK/nApvnt85adcbE87FUw3LZP0yHfD+4zt35euTu/1eClN9kdTWnTv1mmTB/eZocWtH
+         gROi5K1WYmzRsxwHYAjScpUgEOvMIOvf3lQc+ZnvRIZrHcCWWCJhPa8Ometh8C78iquF
+         Ddc4ZOlHhEZjk9ixuPPKpA312ynul2a3RMpxWVrksp52W0G1LH3eAsQjW0hrGVWCbK13
+         pEkQ==
+X-Received: by 10.68.138.197 with SMTP id qs5mr46647842pbb.121.1361338534011;
+        Tue, 19 Feb 2013 21:35:34 -0800 (PST)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPS id s9sm26625100pav.7.2013.02.19.21.35.31
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 19 Feb 2013 21:35:32 -0800 (PST)
+X-Mailer: git-send-email 1.8.2.rc0.20.gf548dd7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216676>
 
-Adam Spiers <git@adamspiers.org> writes:
+Git::config() returns `undef` when given keys that do not exist.
+Check that the $guitool value is defined to prevent a noisy
+"Use of uninitialized variable $guitool in length" warning.
 
-> OK, thanks for the information.  IMHO it would be nice if 'git
-> format-patch' and 'git am' supported this style of inline patch
-> inclusion, but maybe there are good reasons to discourage it?
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+Unchanged from last time but included in the series for convenience.
 
-"git am --scissors" is a way to process such e-mail where the patch
-submitter continues discussion in the top part of a message,
-concludes the message with:
+ git-difftool.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-	A patch to do so is attached.
-	-- >8 --
-
-and then tells the MUA to read in an output from format-patch into
-the e-mail buffer.  You still need to strip out unneeded headers
-like the "From ", "From: " and "Date: " lines when you add the
-scissors anyway, and this is applicable only for a single-patch
-series, so the "feature" does not fit well as a format-patch option.
+diff --git a/git-difftool.perl b/git-difftool.perl
+index 0a90de4..12231fb 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -336,7 +336,7 @@ sub main
+ 	}
+ 	if ($opts{gui}) {
+ 		my $guitool = Git::config('diff.guitool');
+-		if (length($guitool) > 0) {
++		if (defined($guitool) && length($guitool) > 0) {
+ 			$ENV{GIT_DIFF_TOOL} = $guitool;
+ 		}
+ 	}
+-- 
+1.8.2.rc0.20.gf548dd7
