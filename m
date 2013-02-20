@@ -1,139 +1,149 @@
-From: Edward Thomson <ethomson@microsoft.com>
-Subject: Merge with staged and unstaged changes
-Date: Wed, 20 Feb 2013 19:17:52 +0000
-Message-ID: <A54CE3E330039942B33B670D971F85740396B267@TK5EX14MBXC254.redmond.corp.microsoft.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCHv3 0/19] pkt-line cleanups and fixes
+Date: Wed, 20 Feb 2013 14:51:47 -0500
+Message-ID: <20130220195147.GA25332@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 20 20:24:28 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 20 20:52:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8FHG-0003s1-Ec
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 20:24:26 +0100
+	id 1U8FiC-0006L3-9C
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 20:52:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758862Ab3BTTYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2013 14:24:01 -0500
-Received: from na01-by2-obe.ptr.protection.outlook.com ([207.46.100.28]:56085
-	"EHLO na01-by2-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758718Ab3BTTYA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Feb 2013 14:24:00 -0500
-X-Greylist: delayed 328 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Feb 2013 14:24:00 EST
-Received: from BL2FFO11FD008.protection.gbl (10.173.161.200) by
- BL2FFO11HUB004.protection.gbl (10.173.161.22) with Microsoft SMTP Server
- (TLS) id 15.0.620.12; Wed, 20 Feb 2013 19:18:28 +0000
-Received: from TK5EX14HUBC101.redmond.corp.microsoft.com (131.107.125.37) by
- BL2FFO11FD008.mail.protection.outlook.com (10.173.161.4) with Microsoft SMTP
- Server (TLS) id 15.0.620.12 via Frontend Transport; Wed, 20 Feb 2013 19:18:28
- +0000
-Received: from TK5EX14MBXC254.redmond.corp.microsoft.com ([169.254.2.84]) by
- TK5EX14HUBC101.redmond.corp.microsoft.com ([157.54.7.153]) with mapi id
- 14.02.0318.003; Wed, 20 Feb 2013 19:17:52 +0000
-Thread-Topic: Merge with staged and unstaged changes
-Thread-Index: AQHOD576PkYsSA9sEkyCP3OW/l2NPA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/14.3.0.121105
-x-originating-ip: [157.54.51.35]
-Content-ID: <9D619F869789D54DA411F94FD8380CD5@microsoft.com>
-X-Forefront-Antispam-Report: CIP:131.107.125.37;CTRY:US;IPV:CAL;IPV:NLI;EFV:NLI;SFV:NSPM;SFS:(189002)(199002)(20264002)(46102001)(74502001)(20776003)(77982001)(74662001)(55846006)(44976002)(46406002)(76482001)(33656001)(56816002)(80022001)(47446002)(66066001)(16406001)(65816001)(63696002)(79102001)(59766001)(23726001)(51856001)(54316002)(53806001)(47976001)(49866001)(50986001)(31966008)(4396001)(47736001)(47776003)(56776001)(54356001)(50466001)(550254004);DIR:OUT;SFP:;SCL:1;SRVR:BL2FFO11HUB004;H:TK5EX14HUBC101.redmond.corp.microsoft.com;RD:InfoDomainNonexistent;MX:1;A:1;LANG:en;
-X-OriginatorOrg: microsoft.onmicrosoft.com
-X-Forefront-PRVS: 07630F72AD
+	id S934674Ab3BTTvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 14:51:50 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54538 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934361Ab3BTTvt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 14:51:49 -0500
+Received: (qmail 17433 invoked by uid 107); 20 Feb 2013 19:53:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Feb 2013 14:53:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2013 14:51:47 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216714>
 
-Hi-
+Here's another round of my pkt-line fixes. The more I dug, the more
+interesting corners I found. :)
 
-I've been investigating the cases where merge is allowed to proceed when
-there are staged changes in the index or unstaged files in the working
-directory.  There are cases where I find the behavior surprising and I
-hope I can get clarification.  There are also two cases that I will report
-as bugs, where it appears that the unstaged file contents are deleted.
+There are really several potentially independent topics rolled together
+here. There are dependencies between some of them, so I tried to float
+the most independent and non-controversial bits to the beginning. We may
+want those as a separate topic to merge sooner, and have the rest as a
+topic build on top.
 
-For these cases below, please consider the contents of a single path.
-In the tables below, we will show the contents of a file across each input
-and output of the merge - consider that we're merging a single file in
-some branch "theirs" into the current branch "ours" and that these two
-branches have a common ancestor "anc".  The state of that file in our
-index and workdir are represented by "idx" and "wd", respectively.
-Unless otherwise noted, these cases are true for both git-merge-resolve
-and git-merge-recursive.
+Overall, the diffstat shows a reduction in lines (and I even added a few
+dozen lines of comments), which is nice. The intent was to fix some bugs
+and corner cases, but I found a lot of cleanup opportunities in the
+middle.
 
+ builtin/archive.c          |  17 ++--
+ builtin/fetch-pack.c       |  11 +-
+ builtin/receive-pack.c     |  10 +-
+ builtin/send-pack.c        |   4 +-
+ builtin/upload-archive.c   |  45 +++------
+ cache.h                    |   4 +-
+ connect.c                  |  13 +--
+ daemon.c                   |   4 +-
+ fetch-pack.c               |  18 ++--
+ http-backend.c             |   8 +-
+ http.c                     |   1 +
+ pkt-line.c                 | 126 ++++++++++-------------
+ pkt-line.h                 |  72 +++++++++++++-
+ remote-curl.c              | 188 ++++++++++++++++-------------------
+ send-pack.c                |  22 ++--
+ sideband.c                 |  11 +-
+ sideband.h                 |   3 -
+ t/t5503-tagfollow.sh       |  38 ++++---
+ t/t5700-clone-reference.sh |  10 +-
+ transport.c                |   6 +-
+ upload-pack.c              |  40 +++-----
+ write_or_die.c             |  19 ++--
+ 22 files changed, 321 insertions(+), 349 deletions(-)
 
-For completeness and illustration purposes, I'll included the cases where
-there are no changes staged or unstaged.  These succeed, as expected:
+The patches are:
 
-   input                                 result
-   anc ours theirs idx wd  merge result  idx wd
-1  A   A    B      A   A   take B        B   B
-2  A   B    A      B   B   take A        A   A
+  [01/19]: upload-pack: use get_sha1_hex to parse "shallow" lines
 
-Merge is also expected to proceed if the contents of our branch are the
-merge result, and there are unstaged changes for that file in the workdir.
-In this case, the file remains unstaged:
+    New in this round; fixes a potential interoperability problem.
 
-   input                                 result
-   anc ours theirs idx wd  merge result  idx wd
-3  A   B    A      B   C   take B        B   C
+  [02/19]: upload-pack: do not add duplicate objects to shallow list
 
+    New. Fixes a potential memory-consumption denial-of-service.
 
-What was surprising to me was that my merge can proceed if I stage a change
-that is identical to the merge result.  That is, if my merge result would
-be to take the contents from "theirs", then my merge can proceed if I've
-already staged the same contents:
+  [03/19]: upload-pack: remove packet debugging harness
 
-   input                                 result
-   anc ours theirs idx wd  merge result  idx wd
-4  A   A    B      B   B   take B        B   B
-5  A   A    B      B   C   take B        B   C
+    New. Optional cleanup, but later patches textually depend on it.
 
-This seems unexpected - is there a use-case that this enables or is
-this accidental?
+  [04/19]: fetch-pack: fix out-of-bounds buffer offset in get_ack
 
+    New. Fixes a potential interoperability problem.
 
-Another surprising result was that if I have deleted a file (and staged
-the deletion or not) then the merge will proceed and the file in question
-will be recreated.  Consider "X" to be a missing file:
+  [05/19]: send-pack: prefer prefixcmp over memcmp in receive_status
 
-   input                                 result
-   anc ours theirs idx wd  merge result  idx wd
-6  A   A    B      A   X   take B        B   B
-7  A   A    B      X   X   take B        B   B
+    New. Optional cleanup.
 
-I wouldn't have expected a file I deleted to be recreated with the other
-branch's contents.  Is this behavior also intentional?
+  [06/19]: upload-archive: do not copy repo name
+  [07/19]: upload-archive: use argv_array to store client arguments
 
+    New. Optional cleanup.
 
-Finally, there are cases when you have staged a deletion of the file and
-you have unstaged changes in your workdir where the merge will silently
-delete the unstaged data.  If there is a conflict, the xdiff output will
-overwrite the unstaged file:
+  [08/19]: write_or_die: raise SIGPIPE when we get EPIPE
+  [09/19]: pkt-line: move a misplaced comment
+  [10/19]: pkt-line: drop safe_write function
 
-   input                                 result
-   anc ours theirs idx wd  merge result  idx wd
-8  A   B    C      X   D   conflict      X   diff3_file
+    The latter two were in the last round; but it's 08/19 that makes
+    doing 10/19 safe. I think it's also a sane thing to be doing in
+    general for existing callers of write_or_die.
 
-And similarly, while git-merge-recursive (only) will also remove my
-untracked file when there are no changes in our branch but the file was
-deleted in their branch:
+    These can really be pulled into a separate topic if we want, as
+    there isn't even a lot of textual dependency.
 
-   input                                 result
-   anc ours theirs idx wd  merge result  idx wd
-9  A   A    X      X   B   delete file   X   X
+  [11/19]: pkt-line: provide a generic reading function with options
 
+    This is an alternative to the proliferation of different reading
+    functions that round 2 had. I think it ends up cleaner.  It also
+    addresses Jonathan's function-signature concerns.
 
-I trust the last two cases, where data is lost, are bugs to report, but
-could I get clarification on the other situations?
+  [12/19]: pkt-line: teach packet_read_line to chomp newlines
 
-Thanks-
+    New. A convenience cleanup that drops a lot of lines. Technically
+    optional, but later patches depend heavily on it (textually, and for
+    splitting line-readers from binary-readers).
 
--ed
+  [13/19]: pkt-line: move LARGE_PACKET_MAX definition from sideband
+  [14/19]: pkt-line: provide a LARGE_PACKET_MAX static buffer
+
+    New. Another cleanup that makes packet_read_line callers a bit
+    simpler, and bumps the packet size limits throughout git, as we
+    discussed.
+
+  [15/19]: pkt-line: share buffer/descriptor reading implementation
+  [16/19]: teach get_remote_heads to read from a memory buffer
+  [17/19]: remote-curl: pass buffer straight to get_remote_heads
+
+    These are more or less ported from v2's patches 6-8, except that the
+    earlier pkt-line changes make the first one way more pleasant.
+
+  [18/19]: remote-curl: move ref-parsing code up in file
+  [19/19]: remote-curl: always parse incoming refs
+
+    ...and the yak is shaved. More or less a straight rebase of their v2
+    counterparts, and the thing that actually started me on this topic.
+
+I know it's a big series, but I tried hard to break it down into
+bite-sized chunks. Thanks for your reviewing patience.
+
+-Peff
