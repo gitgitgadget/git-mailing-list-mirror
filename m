@@ -1,8 +1,8 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 01/19] upload-pack: use get_sha1_hex to parse "shallow"
- lines
-Date: Wed, 20 Feb 2013 14:53:33 -0500
-Message-ID: <20130220195333.GA25647@sigill.intra.peff.net>
+Subject: [PATCH v3 02/19] upload-pack: do not add duplicate objects to
+ shallow list
+Date: Wed, 20 Feb 2013 14:54:57 -0500
+Message-ID: <20130220195457.GB25647@sigill.intra.peff.net>
 References: <20130220195147.GA25332@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,94 +10,80 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 20 20:54:03 2013
+X-From: git-owner@vger.kernel.org Wed Feb 20 20:55:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8Fjs-0007UB-Tl
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 20:54:01 +0100
+	id 1U8FlD-0008M7-Qs
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 20:55:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934831Ab3BTTxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2013 14:53:36 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54544 "EHLO
+	id S934852Ab3BTTy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 14:54:59 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54550 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934450Ab3BTTxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2013 14:53:35 -0500
-Received: (qmail 17500 invoked by uid 107); 20 Feb 2013 19:55:07 -0000
+	id S934749Ab3BTTy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 14:54:59 -0500
+Received: (qmail 17545 invoked by uid 107); 20 Feb 2013 19:56:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Feb 2013 14:55:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2013 14:53:33 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Feb 2013 14:56:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2013 14:54:57 -0500
 Content-Disposition: inline
 In-Reply-To: <20130220195147.GA25332@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216716>
 
-When we receive a line like "shallow <sha1>" from the
-client, we feed the <sha1> part to get_sha1. This is a
-mistake, as the argument on a shallow line is defined by
-Documentation/technical/pack-protocol.txt to contain an
-"obj-id".  This is never defined in the BNF, but it is clear
-from the text and from the other uses that it is meant to be
-a hex sha1, not an arbitrary identifier (and that is what
-fetch-pack has always sent).
+When the client tells us it has a shallow object via
+"shallow <sha1>", we make sure we have the object, mark it
+with a flag, then add it to a dynamic array of shallow
+objects. This means that a client can get us to allocate
+arbitrary amounts of memory just by flooding us with shallow
+lines (whether they have the objects or not). You can
+demonstrate it easily with:
 
-We should be using get_sha1_hex instead, which doesn't allow
-the client to request arbitrary junk like "HEAD@{yesterday}".
-Because this is just marking shallow objects, the client
-couldn't actually do anything interesting (like fetching
-objects from unreachable reflog entries), but we should keep
-our parsing tight to be on the safe side.
+  yes '0035shallow e83c5163316f89bfbde7d9ab23ca2e25604af290' |
+  git-upload-pack git.git
 
-Because get_sha1 is for the most part a superset of
-get_sha1_hex, in theory the only behavior change should be
-disallowing non-hex object references. However, there is
-one interesting exception: get_sha1 will only parse
-a 40-character hex sha1 if the string has exactly 40
-characters, whereas get_sha1_hex will just eat the first 40
-characters, leaving the rest. That means that current
-versions of git-upload-pack will not accept a "shallow"
-packet that has a trailing newline, even though the protocol
-documentation is clear that newlines are allowed (even
-encouraged) in non-binary parts of the protocol.
-
-This never mattered in practice, though, because fetch-pack,
-contrary to the protocol documentation, does not include a
-newline in its shallow lines. JGit follows its lead (though
-it correctly is strict on the parsing end about wanting a
-hex object id).
-
-We do not adjust fetch-pack to send newlines here, as it
-would break communication with older versions of git (and
-there is no actual benefit to doing so, except for
-consistency with other parts of the protocol).
+We already protect against duplicates in want lines by
+checking if our flag is already set; let's do the same thing
+here. Note that a client can still get us to allocate some
+amount of memory by marking every object in the repo as
+"shallow" (or "want"). But this at least bounds it with the
+number of objects in the repository, which is not under the
+control of an upload-pack client.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I couldn't trigger anything interestingly malicious from this, but I
-didn't look very hard. Maybe somebody who knows the shallow protocol
-better could think of something clever (not that it matters much).
+Looking over upload-pack, I think this is the only "consume arbitrary
+memory" spot. Since you can convince git to go to quite a bit of work
+just processing a big repo, the distinction may not be important, but
+drawing the line between "large" and "arbitrarily large" seemed
+reasonable to me (and it's a trivial fix).
 
- upload-pack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ upload-pack.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index 30146a0..b058e8d 100644
+index b058e8d..1aee407 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -596,7 +596,7 @@ static void receive_needs(void)
- 		if (!prefixcmp(line, "shallow ")) {
- 			unsigned char sha1[20];
- 			struct object *object;
--			if (get_sha1(line + 8, sha1))
-+			if (get_sha1_hex(line + 8, sha1))
- 				die("invalid shallow line: %s", line);
- 			object = parse_object(sha1);
- 			if (!object)
+@@ -603,8 +603,10 @@ static void receive_needs(void)
+ 				die("did not find object for %s", line);
+ 			if (object->type != OBJ_COMMIT)
+ 				die("invalid shallow object %s", sha1_to_hex(sha1));
+-			object->flags |= CLIENT_SHALLOW;
+-			add_object_array(object, NULL, &shallows);
++			if (!(object->flags & CLIENT_SHALLOW)) {
++			    object->flags |= CLIENT_SHALLOW;
++			    add_object_array(object, NULL, &shallows);
++			}
+ 			continue;
+ 		}
+ 		if (!prefixcmp(line, "deepen ")) {
 -- 
 1.8.2.rc0.9.g352092c
