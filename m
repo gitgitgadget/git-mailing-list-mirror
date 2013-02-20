@@ -1,7 +1,8 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 10/19] pkt-line: drop safe_write function
-Date: Wed, 20 Feb 2013 15:01:56 -0500
-Message-ID: <20130220200156.GJ25647@sigill.intra.peff.net>
+Subject: [PATCH v3 11/19] pkt-line: provide a generic reading function with
+ options
+Date: Wed, 20 Feb 2013 15:02:10 -0500
+Message-ID: <20130220200210.GK25647@sigill.intra.peff.net>
 References: <20130220195147.GA25332@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,272 +10,185 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 20 21:02:26 2013
+X-From: git-owner@vger.kernel.org Wed Feb 20 21:02:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8Fs1-0004bE-9z
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 21:02:25 +0100
+	id 1U8FsD-0004iu-9N
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 21:02:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935116Ab3BTUB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2013 15:01:59 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54598 "EHLO
+	id S935123Ab3BTUCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 15:02:13 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54605 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935049Ab3BTUB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2013 15:01:59 -0500
-Received: (qmail 17753 invoked by uid 107); 20 Feb 2013 20:03:30 -0000
+	id S935071Ab3BTUCM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 15:02:12 -0500
+Received: (qmail 17773 invoked by uid 107); 20 Feb 2013 20:03:44 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Feb 2013 15:03:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2013 15:01:56 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Feb 2013 15:03:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Feb 2013 15:02:10 -0500
 Content-Disposition: inline
 In-Reply-To: <20130220195147.GA25332@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216725>
 
-This is just write_or_die by another name. The one
-distinction is that write_or_die will treat EPIPE specially
-by suppressing error messages. That's fine, as we die by
-SIGPIPE anyway (and in the off chance that it is disabled,
-write_or_die will simulate it).
+Originally we had a single function for reading packetized
+data: packet_read_line. Commit 46284dd grew a more "gentle"
+form, packet_read, that returns an error instead of dying
+upon reading a truncated input stream. However, it is not
+clear from the names which should be called, or what the
+difference is.
+
+Let's instead make packet_read be a generic public interface
+that can take option flags, and update the single callsite
+that uses it. This is less code, more clear, and paves the
+way for introducing more options into the generic interface
+later. The function signature is changed, so there should be
+no hidden conflicts with topics in flight.
+
+While we're at it, we'll document how error conditions are
+handled based on the options, and rename the confusing
+"return_line_fail" option to "gentle_on_eof".  While we are
+cleaning up the names, we can drop the "return_line_fail"
+checks in packet_read_internal entirely.  They look like
+this:
+
+  ret = safe_read(..., return_line_fail);
+  if (return_line_fail && ret < 0)
+	  ...
+
+The check for return_line_fail is a no-op; safe_read will
+only ever return an error value if return_line_fail was true
+in the first place.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/receive-pack.c |  2 +-
- builtin/send-pack.c    |  2 +-
- fetch-pack.c           |  2 +-
- http-backend.c         |  8 ++++----
- pkt-line.c             | 21 ++-------------------
- pkt-line.h             |  1 -
- remote-curl.c          |  4 ++--
- send-pack.c            |  2 +-
- sideband.c             |  9 +++++----
- upload-pack.c          |  3 ++-
- 10 files changed, 19 insertions(+), 35 deletions(-)
+ connect.c  |  3 ++-
+ pkt-line.c | 21 ++++++++-------------
+ pkt-line.h | 27 ++++++++++++++++++++++++++-
+ 3 files changed, 36 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 62ba6e7..9129563 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -932,7 +932,7 @@ static void report(struct command *commands, const char *unpack_status)
- 	if (use_sideband)
- 		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
- 	else
--		safe_write(1, buf.buf, buf.len);
-+		write_or_die(1, buf.buf, buf.len);
- 	strbuf_release(&buf);
- }
+diff --git a/connect.c b/connect.c
+index 49e56ba..0aa202f 100644
+--- a/connect.c
++++ b/connect.c
+@@ -76,7 +76,8 @@ struct ref **get_remote_heads(int in, struct ref **list,
+ 		char *name;
+ 		int len, name_len;
  
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 57a46b2..8778519 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -79,7 +79,7 @@ static void print_helper_status(struct ref *ref)
- 		}
- 		strbuf_addch(&buf, '\n');
+-		len = packet_read(in, buffer, sizeof(buffer));
++		len = packet_read(in, buffer, sizeof(buffer),
++				  PACKET_READ_GENTLE_ON_EOF);
+ 		if (len < 0)
+ 			die_initial_contact(got_at_least_one_head);
  
--		safe_write(1, buf.buf, buf.len);
-+		write_or_die(1, buf.buf, buf.len);
- 	}
- 	strbuf_release(&buf);
- }
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 27a3e80..b53a18f 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -247,7 +247,7 @@ static void send_request(struct fetch_pack_args *args,
- 		send_sideband(fd, -1, buf->buf, buf->len, LARGE_PACKET_MAX);
- 		packet_flush(fd);
- 	} else
--		safe_write(fd, buf->buf, buf->len);
-+		write_or_die(fd, buf->buf, buf->len);
- }
- 
- static void insert_one_alternate_ref(const struct ref *ref, void *unused)
-diff --git a/http-backend.c b/http-backend.c
-index f50e77f..8144f3a 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -70,7 +70,7 @@ static void format_write(int fd, const char *fmt, ...)
- 	if (n >= sizeof(buffer))
- 		die("protocol error: impossibly long line");
- 
--	safe_write(fd, buffer, n);
-+	write_or_die(fd, buffer, n);
- }
- 
- static void http_status(unsigned code, const char *msg)
-@@ -111,7 +111,7 @@ static void end_headers(void)
- 
- static void end_headers(void)
- {
--	safe_write(1, "\r\n", 2);
-+	write_or_die(1, "\r\n", 2);
- }
- 
- __attribute__((format (printf, 1, 2)))
-@@ -157,7 +157,7 @@ static void send_strbuf(const char *type, struct strbuf *buf)
- 	hdr_int(content_length, buf->len);
- 	hdr_str(content_type, type);
- 	end_headers();
--	safe_write(1, buf->buf, buf->len);
-+	write_or_die(1, buf->buf, buf->len);
- }
- 
- static void send_local_file(const char *the_type, const char *name)
-@@ -185,7 +185,7 @@ static void send_local_file(const char *the_type, const char *name)
- 			die_errno("Cannot read '%s'", p);
- 		if (!n)
- 			break;
--		safe_write(1, buf, n);
-+		write_or_die(1, buf, n);
- 	}
- 	close(fd);
- 	free(buf);
 diff --git a/pkt-line.c b/pkt-line.c
-index 5138f47..699c2dd 100644
+index 699c2dd..8700cf8 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -46,23 +46,6 @@ static void packet_trace(const char *buf, unsigned int len, int write)
- 	strbuf_release(&out);
+@@ -103,13 +103,13 @@ static int safe_read(int fd, void *buffer, unsigned size, int return_line_fail)
+ 	strbuf_add(buf, buffer, n);
  }
  
--ssize_t safe_write(int fd, const void *buf, ssize_t n)
+-static int safe_read(int fd, void *buffer, unsigned size, int return_line_fail)
++static int safe_read(int fd, void *buffer, unsigned size, int options)
+ {
+ 	ssize_t ret = read_in_full(fd, buffer, size);
+ 	if (ret < 0)
+ 		die_errno("read error");
+ 	else if (ret < size) {
+-		if (return_line_fail)
++		if (options & PACKET_READ_GENTLE_ON_EOF)
+ 			return -1;
+ 
+ 		die("The remote end hung up unexpectedly");
+@@ -143,13 +143,13 @@ static int packet_read_internal(int fd, char *buffer, unsigned size, int return_
+ 	return len;
+ }
+ 
+-static int packet_read_internal(int fd, char *buffer, unsigned size, int return_line_fail)
++int packet_read(int fd, char *buffer, unsigned size, int options)
+ {
+ 	int len, ret;
+ 	char linelen[4];
+ 
+-	ret = safe_read(fd, linelen, 4, return_line_fail);
+-	if (return_line_fail && ret < 0)
++	ret = safe_read(fd, linelen, 4, options);
++	if (ret < 0)
+ 		return ret;
+ 	len = packet_length(linelen);
+ 	if (len < 0)
+@@ -161,22 +161,17 @@ int packet_read_line(int fd, char *buffer, unsigned size)
+ 	len -= 4;
+ 	if (len >= size)
+ 		die("protocol error: bad line length %d", len);
+-	ret = safe_read(fd, buffer, len, return_line_fail);
+-	if (return_line_fail && ret < 0)
++	ret = safe_read(fd, buffer, len, options);
++	if (ret < 0)
+ 		return ret;
+ 	buffer[len] = 0;
+ 	packet_trace(buffer, len, 0);
+ 	return len;
+ }
+ 
+-int packet_read(int fd, char *buffer, unsigned size)
 -{
--	ssize_t nn = n;
--	while (n) {
--		int ret = xwrite(fd, buf, n);
--		if (ret > 0) {
--			buf = (char *) buf + ret;
--			n -= ret;
--			continue;
--		}
--		if (!ret)
--			die("write error (disk full?)");
--		die_errno("write error");
--	}
--	return nn;
+-	return packet_read_internal(fd, buffer, size, 1);
 -}
 -
- /*
-  * If we buffered things up above (we don't, but we should),
-  * we'd flush it here
-@@ -70,7 +53,7 @@ void packet_flush(int fd)
- void packet_flush(int fd)
+ int packet_read_line(int fd, char *buffer, unsigned size)
  {
- 	packet_trace("0000", 4, 1);
--	safe_write(fd, "0000", 4);
-+	write_or_die(fd, "0000", 4);
+-	return packet_read_internal(fd, buffer, size, 0);
++	return packet_read(fd, buffer, size, 0);
  }
  
- void packet_buf_flush(struct strbuf *buf)
-@@ -106,7 +89,7 @@ void packet_write(int fd, const char *fmt, ...)
- 	va_start(args, fmt);
- 	n = format_packet(fmt, args);
- 	va_end(args);
--	safe_write(fd, buffer, n);
-+	write_or_die(fd, buffer, n);
- }
- 
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ int packet_get_line(struct strbuf *out,
 diff --git a/pkt-line.h b/pkt-line.h
-index 7a67e9c..3b6c19c 100644
+index 3b6c19c..8cd326c 100644
 --- a/pkt-line.h
 +++ b/pkt-line.h
-@@ -27,6 +27,5 @@ int packet_get_line(struct strbuf *out, char **src_buf, size_t *src_len);
+@@ -24,8 +24,33 @@ int packet_read_line(int fd, char *buffer, unsigned size);
+ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ 
++/*
++ * Read a packetized line from the descriptor into the buffer, which must be at
++ * least size bytes long. The return value specifies the number of bytes read
++ * into the buffer.
++ *
++ * If options does not contain PACKET_READ_GENTLE_ON_EOF, we will die under any
++ * of the following conditions:
++ *
++ *   1. Read error from descriptor.
++ *
++ *   2. Protocol error from the remote (e.g., bogus length characters).
++ *
++ *   3. Receiving a packet larger than "size" bytes.
++ *
++ *   4. Truncated output from the remote (e.g., we expected a packet but got
++ *      EOF, or we got a partial packet followed by EOF).
++ *
++ * If options does contain PACKET_READ_GENTLE_ON_EOF, we will not die on
++ * condition 4 (truncated input), but instead return -1. However, we will still
++ * die for the other 3 conditions.
++ */
++#define PACKET_READ_GENTLE_ON_EOF (1u<<0)
++int packet_read(int fd, char *buffer, unsigned size, int options);
++
++/* Historical convenience wrapper for packet_read that sets no options */
  int packet_read_line(int fd, char *buffer, unsigned size);
- int packet_read(int fd, char *buffer, unsigned size);
+-int packet_read(int fd, char *buffer, unsigned size);
++
  int packet_get_line(struct strbuf *out, char **src_buf, size_t *src_len);
--ssize_t safe_write(int, const void *, ssize_t);
  
  #endif
-diff --git a/remote-curl.c b/remote-curl.c
-index 933c69a..7be4b53 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -685,7 +685,7 @@ static int fetch_git(struct discovery *heads,
- 
- 	err = rpc_service(&rpc, heads);
- 	if (rpc.result.len)
--		safe_write(1, rpc.result.buf, rpc.result.len);
-+		write_or_die(1, rpc.result.buf, rpc.result.len);
- 	strbuf_release(&rpc.result);
- 	strbuf_release(&preamble);
- 	free(depth_arg);
-@@ -805,7 +805,7 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
- 
- 	err = rpc_service(&rpc, heads);
- 	if (rpc.result.len)
--		safe_write(1, rpc.result.buf, rpc.result.len);
-+		write_or_die(1, rpc.result.buf, rpc.result.len);
- 	strbuf_release(&rpc.result);
- 	free(argv);
- 	return err;
-diff --git a/send-pack.c b/send-pack.c
-index e91cbe2..bde796b 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -280,7 +280,7 @@ int send_pack(struct send_pack_args *args,
- 			send_sideband(out, -1, req_buf.buf, req_buf.len, LARGE_PACKET_MAX);
- 		}
- 	} else {
--		safe_write(out, req_buf.buf, req_buf.len);
-+		write_or_die(out, req_buf.buf, req_buf.len);
- 		packet_flush(out);
- 	}
- 	strbuf_release(&req_buf);
-diff --git a/sideband.c b/sideband.c
-index d5ffa1c..8f7b25b 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -1,3 +1,4 @@
-+#include "cache.h"
- #include "pkt-line.h"
- #include "sideband.h"
- 
-@@ -108,7 +109,7 @@ int recv_sideband(const char *me, int in_stream, int out)
- 			} while (len);
- 			continue;
- 		case 1:
--			safe_write(out, buf + pf+1, len);
-+			write_or_die(out, buf + pf+1, len);
- 			continue;
- 		default:
- 			fprintf(stderr, "%s: protocol error: bad band #%d\n",
-@@ -138,12 +139,12 @@ ssize_t send_sideband(int fd, int band, const char *data, ssize_t sz, int packet
- 		if (0 <= band) {
- 			sprintf(hdr, "%04x", n + 5);
- 			hdr[4] = band;
--			safe_write(fd, hdr, 5);
-+			write_or_die(fd, hdr, 5);
- 		} else {
- 			sprintf(hdr, "%04x", n + 4);
--			safe_write(fd, hdr, 4);
-+			write_or_die(fd, hdr, 4);
- 		}
--		safe_write(fd, p, n);
-+		write_or_die(fd, p, n);
- 		p += n;
- 		sz -= n;
- 	}
-diff --git a/upload-pack.c b/upload-pack.c
-index 63cea91..c2b2c61 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -69,7 +69,8 @@ static ssize_t send_client_data(int fd, const char *data, ssize_t sz)
- 		xwrite(fd, data, sz);
- 		return sz;
- 	}
--	return safe_write(fd, data, sz);
-+	write_or_die(fd, data, sz);
-+	return sz;
- }
- 
- static FILE *pack_pipe = NULL;
 -- 
 1.8.2.rc0.9.g352092c
