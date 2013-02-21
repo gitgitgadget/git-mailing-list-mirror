@@ -1,118 +1,59 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: Re: "git branch HEAD" dumps core when on detached head (NULL pointer
- dereference)
-Date: Thu, 21 Feb 2013 14:24:09 +0100
-Message-ID: <51261FF9.2090304@opera.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: "git branch HEAD" dumps core when on detached head (NULL pointer dereference)
+Date: Thu, 21 Feb 2013 20:32:27 +0700
+Message-ID: <CACsJy8B_jfgvneRtF0u=G_bLbb_SKEi4s=T8OPUtcV9a3mK_vw@mail.gmail.com>
 References: <512612AD.4000609@opera.com> <CACsJy8CuRvwsbXbcKr7dHneEDF7UmoG4ioCxfDi_7qWDD-4wgQ@mail.gmail.com>
+ <51261FF9.2090304@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 14:24:39 2013
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 14:33:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8W8d-0006yd-6M
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 14:24:39 +0100
+	id 1U8WH5-0004sE-4B
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 14:33:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753589Ab3BUNYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2013 08:24:15 -0500
-Received: from smtp.opera.com ([213.236.208.81]:41603 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752920Ab3BUNYO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2013 08:24:14 -0500
-Received: from [10.30.2.116] (oslo.jvpn.opera.com [213.236.208.46])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id r1LDOATD022984
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 21 Feb 2013 13:24:11 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <CACsJy8CuRvwsbXbcKr7dHneEDF7UmoG4ioCxfDi_7qWDD-4wgQ@mail.gmail.com>
+	id S1752309Ab3BUNc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2013 08:32:58 -0500
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:46465 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751725Ab3BUNc5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2013 08:32:57 -0500
+Received: by mail-oa0-f53.google.com with SMTP id m1so9251408oag.12
+        for <git@vger.kernel.org>; Thu, 21 Feb 2013 05:32:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=li43Wi+aYmbxBksmF97M6p/IFaWVoIkITYTxZ+fGfc8=;
+        b=FKZuDmxbHjpQOJ/sk1XbLP1m3KrxO9kOA9P4XGhkRFdWIJDP9b85/xA8BX014Yb1Xn
+         8mOCDR7shMX350ad4qQZy/xpCMDmSGp52UyXzuw+nBAWilHIBVIK2RzzKvBqyGl0wZq3
+         WBdoDLsLMfGvwtbpbzz8iBRDD4R73dBmxZOjafmDaptKNfrk8DLozvfyx/Mlgu8gEx1Y
+         bE2LsLC6ndqJRwpQo3D+HPQd0xhplSdRbJ6tgAZNdg5Sg5XkOcgaGmJQNRqSqpegRbMm
+         s2ve3GGoqwOEBxhf51lsVftR8uPxf7F+sqq9R95IgQpvHK7VYIw86eDKiB22s8o1CsPJ
+         aPLQ==
+X-Received: by 10.60.1.129 with SMTP id 1mr10681920oem.93.1361453577066; Thu,
+ 21 Feb 2013 05:32:57 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Thu, 21 Feb 2013 05:32:27 -0800 (PST)
+In-Reply-To: <51261FF9.2090304@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216773>
 
-On 02/21/13 13:50, Duy Nguyen wrote:
-> On Thu, Feb 21, 2013 at 7:27 PM, Per Cederqvist <cederp@opera.com> wrote:
->> Running "git branch HEAD" may be a stupid thing to do. It actually
->> was a mistake on my part. Still, I don't think git should dereference
->> a NULL pointer.
->
-> We should not. Can you make a patch to fix it (with test cases)? You
-> may want to fix the two preceding blocks, "if (new_upstream)" and "if
-> (unset_upstream)", as well. They don't check for NULL branch either. I
-> think we can say something like "detached HEAD is not valid for this
-> operation" before exit.
+On Thu, Feb 21, 2013 at 8:24 PM, Per Cederqvist <cederp@opera.com> wrote:
+> Sorry, but isolating the issue reporting it here is about as much time
+> as I can spend on this issue. Learning the coding standard of Git and
+> how to write test cases is not something I'm prepared to do, at least
+> not at the moment. I hope there is a place for users and reporters of
+> bugs in the Git community.
 
-Sorry, but isolating the issue reporting it here is about as much time
-as I can spend on this issue. Learning the coding standard of Git and
-how to write test cases is not something I'm prepared to do, at least
-not at the moment. I hope there is a place for users and reporters of
-bugs in the Git community.
-
-     /ceder
-
->>
->> Tested using git 1.8.1.4 adn 1.8.1.1.
->>
->> Repeat by:
->>
->>      mkdir branchcrash || exit 1
->>      cd branchcrash
->>      git init
->>      touch a; git add a; git commit -m"Added a".
->>      touch b; git add b; git commit -m"Added b".
->>      git checkout HEAD^
->>      git branch HEAD
->>
->> The last command dumps core.  gdb session:
->>
->> gdb /usr/local/bin/git core
->> GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
->> Copyright (C) 2012 Free Software Foundation, Inc.
->> License GPLv3+: GNU GPL version 3 or later
->> <http://gnu.org/licenses/gpl.html>
->> This is free software: you are free to change and redistribute it.
->> There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
->> and "show warranty" for details.
->> This GDB was configured as "x86_64-linux-gnu".
->> For bug reporting instructions, please see:
->> <http://bugs.launchpad.net/gdb-linaro/>...
->> Reading symbols from /usr/local/bin/git...done.
->> [New LWP 7174]
->>
->> warning: Can't read pathname for load map: Input/output error.
->> [Thread debugging using libthread_db enabled]
->> Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
->> Core was generated by `git branch HEAD'.
->> Program terminated with signal 11, Segmentation fault.
->> #0  cmd_branch (argc=1, argv=0x7fffe6e2a0f0, prefix=<optimized out>)
->>      at builtin/branch.c:919
->> 919                     strbuf_addf(&buf, "refs/remotes/%s", branch->name);
->> (gdb) bt
->> #0  cmd_branch (argc=1, argv=0x7fffe6e2a0f0, prefix=<optimized out>)
->>      at builtin/branch.c:919
->> #1  0x00000000004046ac in run_builtin (argv=0x7fffe6e2a0f0, argc=2,
->>      p=<optimized out>) at git.c:273
->> #2  handle_internal_command (argc=2, argv=0x7fffe6e2a0f0) at git.c:434
->> #3  0x0000000000404df3 in run_argv (argv=0x7fffe6e29f90,
->> argcp=0x7fffe6e29f9c)
->>      at git.c:480
->> #4  main (argc=2, argv=0x7fffe6e2a0f0) at git.c:555
->> (gdb) p branch
->> $1 = (struct branch *) 0x0
->> (gdb) quit
->>
->>      /ceder
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
->
+Sure. No problem. I just thought you might want to finish it off. I'll
+look into it.
+-- 
+Duy
