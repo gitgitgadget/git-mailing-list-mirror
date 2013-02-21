@@ -1,93 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 08/19] write_or_die: raise SIGPIPE when we get EPIPE
-Date: Wed, 20 Feb 2013 14:19:04 -0800
-Message-ID: <7vfw0qy6g7.fsf@alter.siamese.dyndns.org>
-References: <20130220195147.GA25332@sigill.intra.peff.net>
- <20130220200136.GH25647@sigill.intra.peff.net>
- <20130220215043.GA24236@google.com>
- <20130220215845.GB817@sigill.intra.peff.net>
- <20130220220114.GB24236@google.com>
- <20130220220359.GA1417@sigill.intra.peff.net>
- <20130220220637.GC24236@google.com>
- <20130220221248.GC817@sigill.intra.peff.net>
+Subject: [RFH/PATCH] imap-send: support SNI (RFC4366)
+Date: Wed, 20 Feb 2013 16:18:04 -0800
+Message-ID: <7vbobey0xv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 20 23:19:36 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 21 01:18:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8I0m-0005VC-B6
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Feb 2013 23:19:36 +0100
+	id 1U8Jru-0005Mg-8R
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 01:18:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658Ab3BTWTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2013 17:19:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64642 "EHLO
+	id S1752861Ab3BUASJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 19:18:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35396 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751373Ab3BTWTH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2013 17:19:07 -0500
+	id S1752747Ab3BUASH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 19:18:07 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FEBEBF3E;
-	Wed, 20 Feb 2013 17:19:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p2IxBFPKBgMrjEMXyBUl8yl7sO4=; b=RMVJDI
-	FKge9MDubYmNgFm2PrhcWPPkXkWy7wVkYGSgSGCKzFYxA6GLFzECU8bJOC0bG4qK
-	5zEfscJ92oe17rXsamKGYTyAg+sRnYSrwCvjfl6ZsBnu6iXhIFd4KdMOSt0VO9Uj
-	wpkXCl11YXI31cXF2cHD0G/9Br/6kX8HUd6L0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wzKtQzVFoihprvTN/gy9bk8tSmTVp5qD
-	q8p0sShSWUID8ILPEX59TnFRBt/3HLTvcsH2JiNafs6z8lvOTA1W+WMeKUBUIbkp
-	wrBAOMflG2koPcILL09EdK6JfPpjl+YWCoVmpVhb+AxPDaqA4Xibhkbvbq11q40V
-	XY+ubHTPi8s=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8BD7B522;
+	Wed, 20 Feb 2013 19:18:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=a
+	SQmQXcW6aqXjdJYVsimTMOc1wE=; b=aWiRXZG1CCgTMi/b7VCgjW8FpAif/+iG2
+	s/gvriZve7v0f0mBZsOP5rzW9z3ocxfD6wZpcMt1387MwwZc1lj54zuJ+6flEaER
+	Ssn2RKHZD1QNXUed+Um2luNYdr5KYErXDufbUH7BnSmDw8kw8b8qmzY756VcCut0
+	afMnHdTtCs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=MPk
+	/OiQzKgNZ3HNyL3/NuEQ9xHFNOXJcgA8oHelwknC1nXhqjCmLjTX+ivI/PY2lPCZ
+	Qg33bOZCnK3rdUgzbHRFptZ8jG6yuM1EBMtrMcqFbqIs4VO4WE0Q/EPFayOHbExa
+	ot2vejE1eFEgsklNPt5gO53AxRwHWiEIL62uH0bA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84611BF3D;
-	Wed, 20 Feb 2013 17:19:06 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B40FEB521;
+	Wed, 20 Feb 2013 19:18:06 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F20DBBF3B; Wed, 20 Feb 2013
- 17:19:05 -0500 (EST)
-In-Reply-To: <20130220221248.GC817@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 20 Feb 2013 17:12:48 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 20643B51F; Wed, 20 Feb 2013
+ 19:18:06 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8A08FB84-7BAB-11E2-A2C1-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 29E3DA06-7BBC-11E2-8BD2-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216745>
 
-Jeff King <peff@peff.net> writes:
+To talk to a site that serves multiple names on a single IP address,
+the client needs to ask for the specific hostname it wants to talk
+to. Otherwise, the default certificate returned from the IP address
+may not match that of the host we wanted to talk to.
 
-> I am more concerned that the assertion is not "oops, another thread is
-> doing something crazy, and it is a bug", but rather that there is some
-> weird platform where SIG_DFL does not kill the program under SIGPIPE.
-> That seems pretty crazy, though. I think I'd squash in something like
-> this:
->
-> diff --git a/write_or_die.c b/write_or_die.c
-> index b50f99a..abb64db 100644
-> --- a/write_or_die.c
-> +++ b/write_or_die.c
-> @@ -5,7 +5,9 @@ static void check_pipe(int err)
->  	if (err == EPIPE) {
->  		signal(SIGPIPE, SIG_DFL);
->  		raise(SIGPIPE);
-> +
->  		/* Should never happen, but just in case... */
-> +		error("BUG: SIGPIPE on SIG_DFL handler did not kill us.");
->  		exit(141);
->  	}
->  }
->
-> which more directly reports the assertion that failed, and degrades
-> reasonably gracefully. Yeah, it's probably overengineering, but it's
-> easy enough to do.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Yeah, that sounds like a sensible thing to do, as it is cheap even
-though we do not expect it to trigger.
+ * I need help from people on this patch in two areas:
+
+ (1) I only tested this patch by connecting to https://googlemail.com/ 
+     with
+
+     $ git -c imap.host=imaps://googlemail.com -c imap.port=443 imap-send <this-patch.txt
+
+     as it is the only site I knew clients needs to talk SNI to get
+     the right certificate to verify; of course the port does not
+     talk imap, and the only thing that is tested by that approach is
+     we successfully establish an SSL/TLS connection.  Without the
+     patch, we fail to verify the certificate (we get a cert that is
+     for another hostname that is hosted at the same IP address), and
+     with the patch, we successfully get the right one.
+
+     I would appreciate it if somebody knows an imap server that
+     needs SNI and runs an end-to-end test against that server.
+
+ (2) I do not know if everybody has SSL_set_tslext_host_name() macro
+     defined, so this patch may be breaking build for people with
+     different versions of OpenSSL.
+
+ imap-send.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/imap-send.c b/imap-send.c
+index 171c887..d9abd8b 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -370,6 +370,15 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
+ 		return -1;
+ 	}
+ 
++	/*
++	 * SNI (RFC4366)
++	 * OpenSSL does not document this function, but the implementation
++	 * returns 1 on success, 0 on failure after calling SSLerr().
++	 */
++	ret = SSL_set_tlsext_host_name(sock->ssl, server.host);
++	if (ret != 1)
++		warning("SSL_set_tslext_host_name(%s) failed.\n", server.host);
++
+ 	ret = SSL_connect(sock->ssl);
+ 	if (ret <= 0) {
+ 		socket_perror("SSL_connect", sock, ret);
+-- 
+1.8.2.rc0.106.ga6e4a61
