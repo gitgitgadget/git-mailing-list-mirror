@@ -1,85 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git branch --contains x y" creates a branch instead of checking
- containment
-Date: Thu, 21 Feb 2013 09:48:14 -0800
-Message-ID: <7vr4k9v9r5.fsf@alter.siamese.dyndns.org>
-References: <51261A6B.5020909@opera.com>
- <20130221155827.GA20640@sigill.intra.peff.net> <512645D1.4040607@opera.com>
+Subject: Re: QNX support
+Date: Thu, 21 Feb 2013 09:49:37 -0800
+Message-ID: <7vmwuxv9ou.fsf@alter.siamese.dyndns.org>
+References: <430B4DD0-B796-4DB2-861D-C1F81302A4D1@aveco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 18:48:52 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?David_Ond=C5=99ich?= <david.ondrich@aveco.com>
+To: Matt Kraai <matt.kraai@amo.abbott.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 18:50:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8aGD-0001SA-OO
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 18:48:46 +0100
+	id 1U8aHV-0002WN-Q1
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 18:50:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756698Ab3BURsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2013 12:48:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57016 "EHLO
+	id S1756777Ab3BURtk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2013 12:49:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60153 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756604Ab3BURsR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2013 12:48:17 -0500
+	id S1756493Ab3BURtk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2013 12:49:40 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2F55AA69;
-	Thu, 21 Feb 2013 12:48:16 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5A34ADD4;
+	Thu, 21 Feb 2013 12:49:39 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MMPfx86UFqgf/4hia4an6MP/rBs=; b=C3O0Z7
-	hlZnMOdDhG8q+jF2zW3dEu0ZKicyYX0b0bYPdOdSsPbGWKj96+lh4opAN8vOdzia
-	NRs7VvanjzAVJ7j8I+coPN/3Udz1QYD9mGObV8ZGgegatew1OCOSnAVuIe27ZJUf
-	S0Tgp5zFGya0gK/eq+s0isj5EO+dac8VlKX6k=
+	:content-type:content-transfer-encoding; s=sasl; bh=k0VJrdozWtVA
+	ruKGSdJCybbRwF0=; b=Lc8e74+gkjslQaCgu0dPPXwOZ9HzfXcZoR/pfjchvXng
+	d0R2Na905aQ9di3BksZ6/SnIDHvgBE4VQC1fmfJNWiT/CFCdilsWCTDN4dJva+w9
+	2VlQedpMgwQ4gVTg+3nyi+lgXAZ4n3NUFkdVm6AtVKzxWcLTJ6NEJaLUUEbWpfs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xwVbXTMUNrnSoJ4pMkLC3vuQx7kL4pA7
-	t+gWTX7Gjz5sG6QreWVheienhtqFkL9UspyU6IBI0dHHlAw8GdB9jHD5Abb2vLMe
-	7m+9f20HaCU6kYXfayZjldLWz6vo7jAvrgIi+hq1pjq08dG/PiYQyiQsS+V+0a1o
-	kAo/AkRTMSc=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=GNtXM7
+	HKe0uvfGx9qF9AszrKBW34cgzNdkS2t2dpmE2bcebozsY5AWOFdcqEaz2rJPyhGG
+	Y4BXcQwtKoeCbXYVHOnixP6IIiy1eBlt2iEXb9wPKWPL4uAKYrmuoejUxjWgNbe9
+	n8xCL7Ki8uDgJCJvrVXHxJ3okmwwOR80JyjSs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5096AA68;
-	Thu, 21 Feb 2013 12:48:16 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5F65ADD2;
+	Thu, 21 Feb 2013 12:49:39 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 104FEAA5E; Thu, 21 Feb 2013
- 12:48:15 -0500 (EST)
-In-Reply-To: <512645D1.4040607@opera.com> (Per Cederqvist's message of "Thu,
- 21 Feb 2013 17:05:37 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 398BAADCE; Thu, 21 Feb 2013
+ 12:49:39 -0500 (EST)
+In-Reply-To: <430B4DD0-B796-4DB2-861D-C1F81302A4D1@aveco.com> ("David
+ =?utf-8?Q?Ond=C5=99ich=22's?= message of "Thu, 21 Feb 2013 14:05:21 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DEBE7822-7C4E-11E2-B48F-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 10532144-7C4F-11E2-A5EE-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216784>
 
-Per Cederqvist <cederp@opera.com> writes:
+"David Ond=C5=99ich" <david.ondrich@aveco.com> writes:
 
-> On 02/21/13 16:58, Jeff King wrote:
->> On Thu, Feb 21, 2013 at 02:00:27PM +0100, Per Cederqvist wrote:
->>
->>> That command does something completely different,
->>> though. The "--contains x" part is silently ignored,
->>> so it creates a branch named "y" pointing at HEAD.
->>>
->>> Tested in git 1.8.1.1 and 1.8.1.4.
->>>
->>> In my opinion, there are two ways to fix this:
->>>
->>>   - change the "git branch" implementation so
->>>     that --contains implies --list.
->>
->> I think that is the best option, too. In fact, I even wrote a patch. :)
->>
->> It's d040350 (branch: let branch filters imply --list, 2013-01-31), and
->> it's already in v1.8.2-rc0.
->>
->> -Peff
+jch: redirecting to the guilty party ;-)
+
+> I've read [1] recently, there's been some QNX port being
+> initiated. Does that involve also old versions of QNX 4?
 >
-> Great! Thanks for the quick fix of my bug report. Negative response
-> time... not bad. Not bad at all. :-)
-
-Yeah, Jeff has a time machine ;-)
+> Since we are using QNX both internally and for our customers we
+> started porting Git on QNX ourselves some time ago and we do have
+> some experiences. Basically, it's possible to get Git up and
+> running but there are some limitations, and some hacks have to be
+> applied.
+>
+> If some additional info wanted, please contact me.
