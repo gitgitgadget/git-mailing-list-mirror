@@ -1,71 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: running git from non-standard location on Mac
-Date: Thu, 21 Feb 2013 11:53:11 +0100
-Message-ID: <vpq8v6ix7jc.fsf@grenoble-inp.fr>
+From: James French <James.French@naturalmotion.com>
+Subject: RE: running git from non-standard location on Mac
+Date: Thu, 21 Feb 2013 11:48:39 +0000
+Message-ID: <1CE1BECC0915A6448EAE5D7080EDA905052078CA55@oxexc1>
 References: <1CE1BECC0915A6448EAE5D7080EDA905052078C95E@oxexc1>
-	<20130221143525.726f06827351376b59a02f4b@domain007.com>
+ <20130221143525.726f06827351376b59a02f4b@domain007.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: James French <James.French@naturalmotion.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Feb 21 11:54:02 2013
+X-From: git-owner@vger.kernel.org Thu Feb 21 12:49:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8Tmo-0005wM-37
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 11:53:58 +0100
+	id 1U8UeH-0008JD-SN
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 12:49:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753834Ab3BUKx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2013 05:53:29 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:42681 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753495Ab3BUKx2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2013 05:53:28 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r1LArAf6017135
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 21 Feb 2013 11:53:10 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1U8Tm3-0004EW-Rw; Thu, 21 Feb 2013 11:53:11 +0100
+	id S1753537Ab3BULsp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2013 06:48:45 -0500
+Received: from gwl205.naturalmotion.com ([86.12.140.205]:29177 "EHLO
+	mail1.naturalmotion.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753202Ab3BULsp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2013 06:48:45 -0500
+Thread-Topic: running git from non-standard location on Mac
+Thread-Index: Ac4QHypnbdXmL64ERfSCkf/OBYZ1JAACgipA
 In-Reply-To: <20130221143525.726f06827351376b59a02f4b@domain007.com>
-	(Konstantin Khomoutov's message of "Thu, 21 Feb 2013 14:35:25 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 21 Feb 2013 11:53:11 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r1LArAf6017135
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1362048794.98598@up0SHtsPq5Tec386PNBPeQ
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216765>
-
-Konstantin Khomoutov <flatworm@users.sourceforge.net> writes:
-
-> This [1] should help you get started with affecting @INC.
-
-In the particular case of Git, the Makefile hardcodes the path to the
-Git library. The script git-svn in Git's exec-path should start with:
-
-use lib (split(/:/, $ENV{GITPERLLIB} || "/some/hardcoded/path/to/perl/5.10.1"));
-
-Setting the $GITPERLLIB environment variable or editing the script to
-let the hardcoded path point to the place where the Git.pm file is
-should do it.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216766>
 
 
-But I still have to wonder why you didn't build Git with the right paths
-in the first place.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-----Original Message-----
+=46rom: Konstantin Khomoutov [mailto:flatworm@users.sourceforge.net]=20
+Sent: 21 February 2013 10:35
+To: James French
+Cc: git@vger.kernel.org
+Subject: Re: running git from non-standard location on Mac
+
+On Thu, 21 Feb 2013 09:48:36 +0000
+James French <James.French@naturalmotion.com> wrote:
+
+> I wonder if someone could help me. I installed git on a Mac and then =
+I=20
+> copied the install somewhere else (which I do want to do, trust me). =
+=A0
+> I'm now having trouble with git svn. I'm getting "Can't locate=20
+> Git/SVN.pm in @INC..."
+>=20
+> I've added the bin folder to PATH. What else do I need to do? Do I=20
+> need to use -exec-path=3D/MyPathToGit/libexec/git-core? How do I chan=
+ge=20
+> the content of @INC?
+>=20
+> Apologies if this is a dumb question, I'm not much of a unix man.
+
+`git svn` is implemented in Perl (which is supposedly bundled with your=
+ Git package, but I'm not sure), and "SVN.pm" is a Perl module (a libra=
+ry written in Perl, ".pm" stands for "Perl Module").
+
+@INC is an internal variable used by Perl to locate its modules.
+Its contents is partially inferred from the Perl's installation locatio=
+n and partially from the environment.
+
+This [1] should help you get started with affecting @INC.
+
+1. http://stackoverflow.com/a/2526809/720999
+
+
+
+Thanks for the help guys. I got it working using --exec-path and PERL5L=
+IB environment variable. But Matthieu is right, I should build it from =
+source to do it properly.
