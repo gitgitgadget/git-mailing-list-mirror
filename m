@@ -1,46 +1,118 @@
-From: "=?utf-8?Q?David_Ond=C5=99ich?=" <david.ondrich@aveco.com>
-Subject: QNX support
-Date: Thu, 21 Feb 2013 14:05:21 +0100
-Message-ID: <430B4DD0-B796-4DB2-861D-C1F81302A4D1@aveco.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 21 14:11:04 2013
+From: Per Cederqvist <cederp@opera.com>
+Subject: Re: "git branch HEAD" dumps core when on detached head (NULL pointer
+ dereference)
+Date: Thu, 21 Feb 2013 14:24:09 +0100
+Message-ID: <51261FF9.2090304@opera.com>
+References: <512612AD.4000609@opera.com> <CACsJy8CuRvwsbXbcKr7dHneEDF7UmoG4ioCxfDi_7qWDD-4wgQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 14:24:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8VvP-0005r0-MH
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 14:11:00 +0100
+	id 1U8W8d-0006yd-6M
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 14:24:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753487Ab3BUNKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2013 08:10:35 -0500
-Received: from debian.aveco.com ([194.149.122.58]:62678 "EHLO debian.aveco.com"
+	id S1753589Ab3BUNYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2013 08:24:15 -0500
+Received: from smtp.opera.com ([213.236.208.81]:41603 "EHLO smtp.opera.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752332Ab3BUNKe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2013 08:10:34 -0500
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Feb 2013 08:10:34 EST
-Received: from macbook-do-w.aveco.com (MacBook-DO-W.aveco.com [172.16.2.243])
-  (AUTH: PLAIN david.ondrich@aveco.com, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by debian.aveco.com with esmtp; Thu, 21 Feb 2013 14:05:31 +0100
-  id 00005C40.51261B9B.000177FD
-X-Mailer: Apple Mail (2.1499)
+	id S1752920Ab3BUNYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2013 08:24:14 -0500
+Received: from [10.30.2.116] (oslo.jvpn.opera.com [213.236.208.46])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id r1LDOATD022984
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 21 Feb 2013 13:24:11 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+In-Reply-To: <CACsJy8CuRvwsbXbcKr7dHneEDF7UmoG4ioCxfDi_7qWDD-4wgQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216772>
 
-Hi,
+On 02/21/13 13:50, Duy Nguyen wrote:
+> On Thu, Feb 21, 2013 at 7:27 PM, Per Cederqvist <cederp@opera.com> wrote:
+>> Running "git branch HEAD" may be a stupid thing to do. It actually
+>> was a mistake on my part. Still, I don't think git should dereference
+>> a NULL pointer.
+>
+> We should not. Can you make a patch to fix it (with test cases)? You
+> may want to fix the two preceding blocks, "if (new_upstream)" and "if
+> (unset_upstream)", as well. They don't check for NULL branch either. I
+> think we can say something like "detached HEAD is not valid for this
+> operation" before exit.
 
-I've read [1] recently, there's been some QNX port being initiated. Does that involve also old versions of QNX 4?
+Sorry, but isolating the issue reporting it here is about as much time
+as I can spend on this issue. Learning the coding standard of Git and
+how to write test cases is not something I'm prepared to do, at least
+not at the moment. I hope there is a place for users and reporters of
+bugs in the Git community.
 
-Since we are using QNX both internally and for our customers we started porting Git on QNX ourselves some time ago and we do have some experiences. Basically, it's possible to get Git up and running but there are some limitations, and some hacks have to be applied.
+     /ceder
 
-If some additional info wanted, please contact me.
-
-dond
-
-[1] http://lkml.indiana.edu/hypermail/linux/kernel/1302.2/00406.html
+>>
+>> Tested using git 1.8.1.4 adn 1.8.1.1.
+>>
+>> Repeat by:
+>>
+>>      mkdir branchcrash || exit 1
+>>      cd branchcrash
+>>      git init
+>>      touch a; git add a; git commit -m"Added a".
+>>      touch b; git add b; git commit -m"Added b".
+>>      git checkout HEAD^
+>>      git branch HEAD
+>>
+>> The last command dumps core.  gdb session:
+>>
+>> gdb /usr/local/bin/git core
+>> GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+>> Copyright (C) 2012 Free Software Foundation, Inc.
+>> License GPLv3+: GNU GPL version 3 or later
+>> <http://gnu.org/licenses/gpl.html>
+>> This is free software: you are free to change and redistribute it.
+>> There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+>> and "show warranty" for details.
+>> This GDB was configured as "x86_64-linux-gnu".
+>> For bug reporting instructions, please see:
+>> <http://bugs.launchpad.net/gdb-linaro/>...
+>> Reading symbols from /usr/local/bin/git...done.
+>> [New LWP 7174]
+>>
+>> warning: Can't read pathname for load map: Input/output error.
+>> [Thread debugging using libthread_db enabled]
+>> Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+>> Core was generated by `git branch HEAD'.
+>> Program terminated with signal 11, Segmentation fault.
+>> #0  cmd_branch (argc=1, argv=0x7fffe6e2a0f0, prefix=<optimized out>)
+>>      at builtin/branch.c:919
+>> 919                     strbuf_addf(&buf, "refs/remotes/%s", branch->name);
+>> (gdb) bt
+>> #0  cmd_branch (argc=1, argv=0x7fffe6e2a0f0, prefix=<optimized out>)
+>>      at builtin/branch.c:919
+>> #1  0x00000000004046ac in run_builtin (argv=0x7fffe6e2a0f0, argc=2,
+>>      p=<optimized out>) at git.c:273
+>> #2  handle_internal_command (argc=2, argv=0x7fffe6e2a0f0) at git.c:434
+>> #3  0x0000000000404df3 in run_argv (argv=0x7fffe6e29f90,
+>> argcp=0x7fffe6e29f9c)
+>>      at git.c:480
+>> #4  main (argc=2, argv=0x7fffe6e2a0f0) at git.c:555
+>> (gdb) p branch
+>> $1 = (struct branch *) 0x0
+>> (gdb) quit
+>>
+>>      /ceder
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
+>
