@@ -1,72 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: QNX support
-Date: Thu, 21 Feb 2013 09:49:37 -0800
-Message-ID: <7vmwuxv9ou.fsf@alter.siamese.dyndns.org>
-References: <430B4DD0-B796-4DB2-861D-C1F81302A4D1@aveco.com>
+From: "Kraai, Matt" <Matt.Kraai@amo.abbott.com>
+Subject: RE: QNX support
+Date: Thu, 21 Feb 2013 10:04:41 -0800
+Message-ID: <1B04D3EE58602B43B7D34ECC7F9E321E060FA821@SANMAIL04.corp.amo-inc.com>
+References: <430B4DD0-B796-4DB2-861D-C1F81302A4D1@aveco.com> <7vmwuxv9ou.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?David_Ond=C5=99ich?= <david.ondrich@aveco.com>
-To: Matt Kraai <matt.kraai@amo.abbott.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 18:50:06 2013
+Cc: <git@vger.kernel.org>,
+	=?iso-8859-2?Q?David_Ond=F8ich?= <david.ondrich@aveco.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 19:25:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8aHV-0002WN-Q1
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 18:50:06 +0100
+	id 1U8apP-0001RJ-79
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 19:25:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756777Ab3BURtk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2013 12:49:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60153 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756493Ab3BURtk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2013 12:49:40 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5A34ADD4;
-	Thu, 21 Feb 2013 12:49:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=k0VJrdozWtVA
-	ruKGSdJCybbRwF0=; b=Lc8e74+gkjslQaCgu0dPPXwOZ9HzfXcZoR/pfjchvXng
-	d0R2Na905aQ9di3BksZ6/SnIDHvgBE4VQC1fmfJNWiT/CFCdilsWCTDN4dJva+w9
-	2VlQedpMgwQ4gVTg+3nyi+lgXAZ4n3NUFkdVm6AtVKzxWcLTJ6NEJaLUUEbWpfs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=GNtXM7
-	HKe0uvfGx9qF9AszrKBW34cgzNdkS2t2dpmE2bcebozsY5AWOFdcqEaz2rJPyhGG
-	Y4BXcQwtKoeCbXYVHOnixP6IIiy1eBlt2iEXb9wPKWPL4uAKYrmuoejUxjWgNbe9
-	n8xCL7Ki8uDgJCJvrVXHxJ3okmwwOR80JyjSs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5F65ADD2;
-	Thu, 21 Feb 2013 12:49:39 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 398BAADCE; Thu, 21 Feb 2013
- 12:49:39 -0500 (EST)
-In-Reply-To: <430B4DD0-B796-4DB2-861D-C1F81302A4D1@aveco.com> ("David
- =?utf-8?Q?Ond=C5=99ich=22's?= message of "Thu, 21 Feb 2013 14:05:21 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 10532144-7C4F-11E2-A5EE-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755464Ab3BUSYm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2013 13:24:42 -0500
+Received: from cuda2.amo-inc.com ([129.33.114.232]:56145 "EHLO
+	cuda2.amo-inc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754598Ab3BUSYl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2013 13:24:41 -0500
+X-Greylist: delayed 1170 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Feb 2013 13:24:41 EST
+X-ASG-Debug-ID: 1361469905-0482093e8f6e9fce0001-QuoKaX
+Received: from AMOMAIL12.corp.amo-inc.com ([172.17.223.23]) by cuda2.amo-inc.com with ESMTP id UUZsZH30YYIVNbFV; Thu, 21 Feb 2013 10:05:05 -0800 (PST)
+X-Barracuda-Envelope-From: Matt.Kraai@amo.abbott.com
+Received: from SANMAIL04.corp.amo-inc.com ([172.17.10.200]) by AMOMAIL12.corp.amo-inc.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 21 Feb 2013 12:03:39 -0600
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: QNX support
+In-Reply-To: <7vmwuxv9ou.fsf@alter.siamese.dyndns.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: QNX support
+Thread-Index: Ac4QW6F8F3joD/YDR4uKPY46K3ZobQAAWTGA
+X-OriginalArrivalTime: 21 Feb 2013 18:03:39.0880 (UTC) FILETIME=[C71B9680:01CE105D]
+X-Barracuda-Connect: UNKNOWN[172.17.223.23]
+X-Barracuda-Start-Time: 1361469905
+X-Barracuda-URL: http://cuda2.amo-inc.com:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at amo-inc.com
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.5035 1.0000 0.7500
+X-Barracuda-Spam-Score: 0.77
+X-Barracuda-Spam-Status: No, SCORE=0.77 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=6.0 tests=BSF_SC0_MISMATCH_TO, THREAD_INDEX, THREAD_TOPIC
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.123215
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.01 THREAD_INDEX           thread-index: AcO7Y8iR61tzADqsRmmc5wNiFHEOig==
+	0.01 THREAD_TOPIC           Thread-Topic: ...(Japanese Subject)...
+	0.00 BSF_SC0_MISMATCH_TO    Envelope rcpt doesn't match header
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216786>
 
-"David Ond=C5=99ich" <david.ondrich@aveco.com> writes:
+Junio C Hamano writes:
+> "David Ond=F8ich" <david.ondrich@aveco.com> writes:
+> > I've read [1] recently, there's been some QNX port being
+> > initiated. Does that involve also old versions of QNX 4?
 
-jch: redirecting to the guilty party ;-)
+No, I haven't been working on QNX 4 support.  I've been targeting QNX 6=
+=2E3.2, with a little testing on QNX 6.5.0.  I doubt what I've done wou=
+ld work on QNX 4 since it's so different from QNX 6.
+=20
+> > Since we are using QNX both internally and for our customers we
+> > started porting Git on QNX ourselves some time ago and we do have
+> > some experiences. Basically, it's possible to get Git up and
+> > running but there are some limitations, and some hacks have to be
+> > applied.
+> >
+> > If some additional info wanted, please contact me.
 
-> I've read [1] recently, there's been some QNX port being
-> initiated. Does that involve also old versions of QNX 4?
->
-> Since we are using QNX both internally and for our customers we
-> started porting Git on QNX ourselves some time ago and we do have
-> some experiences. Basically, it's possible to get Git up and
-> running but there are some limitations, and some hacks have to be
-> applied.
->
-> If some additional info wanted, please contact me.
+Now that Git is building and usable, the next logical step is to invest=
+igate and fix the test suite failures.  If you have any information abo=
+ut these, that could be helpful.
+
+--=20
+Matt
