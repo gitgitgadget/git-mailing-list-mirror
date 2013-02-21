@@ -1,106 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFH/PATCH] imap-send: support SNI (RFC4366)
-Date: Wed, 20 Feb 2013 16:18:04 -0800
-Message-ID: <7vbobey0xv.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 21 01:18:38 2013
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v3 1/4] difftool: silence uninitialized variable warning
+Date: Wed, 20 Feb 2013 20:03:45 -0800
+Message-ID: <1361419428-22410-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 05:04:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8Jru-0005Mg-8R
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 01:18:34 +0100
+	id 1U8NOP-0000UR-00
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 05:04:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752861Ab3BUASJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Feb 2013 19:18:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35396 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752747Ab3BUASH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Feb 2013 19:18:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8BD7B522;
-	Wed, 20 Feb 2013 19:18:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=a
-	SQmQXcW6aqXjdJYVsimTMOc1wE=; b=aWiRXZG1CCgTMi/b7VCgjW8FpAif/+iG2
-	s/gvriZve7v0f0mBZsOP5rzW9z3ocxfD6wZpcMt1387MwwZc1lj54zuJ+6flEaER
-	Ssn2RKHZD1QNXUed+Um2luNYdr5KYErXDufbUH7BnSmDw8kw8b8qmzY756VcCut0
-	afMnHdTtCs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=MPk
-	/OiQzKgNZ3HNyL3/NuEQ9xHFNOXJcgA8oHelwknC1nXhqjCmLjTX+ivI/PY2lPCZ
-	Qg33bOZCnK3rdUgzbHRFptZ8jG6yuM1EBMtrMcqFbqIs4VO4WE0Q/EPFayOHbExa
-	ot2vejE1eFEgsklNPt5gO53AxRwHWiEIL62uH0bA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B40FEB521;
-	Wed, 20 Feb 2013 19:18:06 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 20643B51F; Wed, 20 Feb 2013
- 19:18:06 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 29E3DA06-7BBC-11E2-8BD2-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752160Ab3BUEDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Feb 2013 23:03:55 -0500
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:51773 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752055Ab3BUEDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Feb 2013 23:03:54 -0500
+Received: by mail-pb0-f45.google.com with SMTP id ro8so3271952pbb.18
+        for <git@vger.kernel.org>; Wed, 20 Feb 2013 20:03:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=DF/SCestHlPRqml+gjzEiZmFCm2n2+eKIzbb0aeU5D8=;
+        b=NEcGLC17/EDQI4bV+DX6ofjtnjAP7jY6xWc70T87xLAEqnG/Kokb2JmrrxLHadQanc
+         wmBF2G9+aqTfR+5Kukw3JMipKvTUFPVNSK7wNiTtT4wYgh/rVkn/cUYk930iA/mEPluk
+         GB+QHU+2YxHnYWmBQV0gqfgNyFVN7F6iJitedieO2KeAK/wzMPdGPmpmWZatNM2cbrrN
+         3AR+KECPGI1fh+nlOF4biFOAqgJGZKsLZBwgSlMsU0+V1UTm+mCF4UUY6T48ipN8qlXh
+         igGTJfq6gxnajrbljhz0hkXs8LoMJyPINh6whHCffIZgQyBfN0KJGNGwYatcB6hR1UcI
+         BiFA==
+X-Received: by 10.66.76.41 with SMTP id h9mr57716199paw.1.1361419433667;
+        Wed, 20 Feb 2013 20:03:53 -0800 (PST)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPS id qp13sm23808911pbb.3.2013.02.20.20.03.51
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 20 Feb 2013 20:03:52 -0800 (PST)
+X-Mailer: git-send-email 1.8.2.rc0.20.gf548dd7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216746>
 
-To talk to a site that serves multiple names on a single IP address,
-the client needs to ask for the specific hostname it wants to talk
-to. Otherwise, the default certificate returned from the IP address
-may not match that of the host we wanted to talk to.
+Git::config() returns `undef` when given keys that do not exist.
+Check that the $guitool value is defined to prevent a noisy
+"Use of uninitialized variable $guitool in length" warning.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
+Unchanged since v1.
 
- * I need help from people on this patch in two areas:
+ git-difftool.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- (1) I only tested this patch by connecting to https://googlemail.com/ 
-     with
-
-     $ git -c imap.host=imaps://googlemail.com -c imap.port=443 imap-send <this-patch.txt
-
-     as it is the only site I knew clients needs to talk SNI to get
-     the right certificate to verify; of course the port does not
-     talk imap, and the only thing that is tested by that approach is
-     we successfully establish an SSL/TLS connection.  Without the
-     patch, we fail to verify the certificate (we get a cert that is
-     for another hostname that is hosted at the same IP address), and
-     with the patch, we successfully get the right one.
-
-     I would appreciate it if somebody knows an imap server that
-     needs SNI and runs an end-to-end test against that server.
-
- (2) I do not know if everybody has SSL_set_tslext_host_name() macro
-     defined, so this patch may be breaking build for people with
-     different versions of OpenSSL.
-
- imap-send.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/imap-send.c b/imap-send.c
-index 171c887..d9abd8b 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -370,6 +370,15 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
- 		return -1;
+diff --git a/git-difftool.perl b/git-difftool.perl
+index 0a90de4..12231fb 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -336,7 +336,7 @@ sub main
  	}
- 
-+	/*
-+	 * SNI (RFC4366)
-+	 * OpenSSL does not document this function, but the implementation
-+	 * returns 1 on success, 0 on failure after calling SSLerr().
-+	 */
-+	ret = SSL_set_tlsext_host_name(sock->ssl, server.host);
-+	if (ret != 1)
-+		warning("SSL_set_tslext_host_name(%s) failed.\n", server.host);
-+
- 	ret = SSL_connect(sock->ssl);
- 	if (ret <= 0) {
- 		socket_perror("SSL_connect", sock, ret);
+ 	if ($opts{gui}) {
+ 		my $guitool = Git::config('diff.guitool');
+-		if (length($guitool) > 0) {
++		if (defined($guitool) && length($guitool) > 0) {
+ 			$ENV{GIT_DIFF_TOOL} = $guitool;
+ 		}
+ 	}
 -- 
-1.8.2.rc0.106.ga6e4a61
+1.8.2.rc0.20.gf548dd7
