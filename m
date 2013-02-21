@@ -1,120 +1,86 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [BUG] Infinite make recursion when configure.ac changes
-Date: Thu, 21 Feb 2013 01:04:02 -0500
-Message-ID: <20130221060401.GC25943@sigill.intra.peff.net>
+Date: Wed, 20 Feb 2013 22:10:42 -0800
+Message-ID: <7vk3q2w61p.fsf@alter.siamese.dyndns.org>
 References: <51248D0A.50603@gmail.com>
+ <20130221060401.GC25943@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Git List <git@vger.kernel.org>,
 	Martin von Zweigbergk <martinvonz@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 07:04:40 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 21 07:11:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8PGo-0000pN-ED
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 07:04:38 +0100
+	id 1U8PNB-0004gU-4J
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 07:11:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957Ab3BUGEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2013 01:04:06 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55200 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751716Ab3BUGEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2013 01:04:04 -0500
-Received: (qmail 24504 invoked by uid 107); 21 Feb 2013 06:05:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Feb 2013 01:05:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Feb 2013 01:04:02 -0500
-Content-Disposition: inline
-In-Reply-To: <51248D0A.50603@gmail.com>
+	id S1751927Ab3BUGKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2013 01:10:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45660 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751739Ab3BUGKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2013 01:10:45 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4B288E55;
+	Thu, 21 Feb 2013 01:10:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eHSoxAkk8BVH5lHme3vw6cGp9R0=; b=dDyDZI
+	L9sIuO5pg5tu6pF3hndIpiSlPjCMMMDMs0Ep16LqJH2y7+hxWvSRFg3tzUEqzLQq
+	4oJUDBMk6y4TywqO6Oj1WXKAzJmWRZ5OJNHPbOQ2R+N7IPBj4DtxJ59SEKbfkCQn
+	jITSURQDM4fDfXLsatUm7InAzGR0IrCFxI78Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lKkw9/G3uXhUG26MUD9k2acYV9wLR/bE
+	fXZj9PGYQNNhtpMi9I07aOfZwkZBwtT7TSPpvr7xgMHe6+8dOWdX2NhTvJQemSvS
+	wp+vP6iypgXhkaTmGsffgFU+UyyyW9A2IFmlFm/DXw0zuV8Z4Aeia5Va2r4JjOp6
+	qqbvENarTVU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A82708E54;
+	Thu, 21 Feb 2013 01:10:44 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 291628E53; Thu, 21 Feb 2013
+ 01:10:44 -0500 (EST)
+In-Reply-To: <20130221060401.GC25943@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 21 Feb 2013 01:04:02 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6D100BFC-7BED-11E2-90BE-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216756>
 
-On Wed, Feb 20, 2013 at 09:44:58AM +0100, Stefano Lattarini wrote:
+Jeff King <peff@peff.net> writes:
 
-> From a pristine master checkout:
-> 
->   $ make configure && ./configure make
->   ... # All successfull
->   $ touch configure.ac
->   $ make
->     GEN config.status
->   make[1]: Entering directory `/storage/home/stefano/git/src'
->     GEN config.status
->   make[2]: Entering directory `/storage/home/stefano/git/src'
->     GEN config.status
->   make[3]: Entering directory `/storage/home/stefano/git/src'
->     GEN config.status
->   make[4]: Entering directory `/storage/home/stefano/git/src'
->     GEN config.status
->   make[5]: Entering directory `/storage/home/stefano/git/src'
->     GEN config.status
->   ...
-> 
-> and I have to hit ^C to interrupt that recursion.
+> I can easily replicate it here.
+>
+>> This seems due to the change in commit v1.7.12.4-1-g1226504: the
+>> issue is still present there, but no longer is in the preceding
+>> commit 7e201053 (a.k.a. v1.7.12.4).
+>> 
+>> I haven't investigated this any further for the moment.
+>
+> Hmm. It looks like config.status depends on configure.ac. So make
+> rebuilds config.status, which runs "make configure", which includes
+> "config.mak.autogen", leading "make" to think that it should rebuild the
+> include file to make sure it is up to date. The include file depends on
+> "config.status", which needs to be rebuilt due to configure.ac, which
+> entails running "make configure", and so on.
 
-I can easily replicate it here.
+I noticed this while looking at the other autoconf patch yesterday,
+but I was otherwise occupied in the evening and did not pursue it
+further.  Thanks for looking into it.
 
-> This seems due to the change in commit v1.7.12.4-1-g1226504: the
-> issue is still present there, but no longer is in the preceding
-> commit 7e201053 (a.k.a. v1.7.12.4).
-> 
-> I haven't investigated this any further for the moment.
-
-Hmm. It looks like config.status depends on configure.ac. So make
-rebuilds config.status, which runs "make configure", which includes
-"config.mak.autogen", leading "make" to think that it should rebuild the
-include file to make sure it is up to date. The include file depends on
-"config.status", which needs to be rebuilt due to configure.ac, which
-entails running "make configure", and so on.
-
-So the real problem is that make things that "make configure" depends on
-"config.mak.autogen" being up to date, which isn't true at all; the
-whole point is to make a new configure script so we can write a new
-config.mak.autogen. The simplest thing is to just avoid re-running
-"make" to get the configure script; the only thing we are gaining is
-that we don't have to repeat the build recipe, but we can sneak around
-that by sticking it in a variable. Something like this seems to work:
-
-diff --git a/Makefile b/Makefile
-index 3b2c92c..ee1c0b0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1871,12 +1871,14 @@ configure: configure.ac GIT-VERSION-FILE
- 	mv $@+ $@
- endif # NO_PYTHON
- 
-+CONFIGURE_RECIPE = $(RM) configure configure.ac+ && \
-+		   sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-+			configure.ac >configure.ac+ && \
-+		   autoconf -o configure configure.ac+ && \
-+		   $(RM) configure.ac+
-+
- configure: configure.ac GIT-VERSION-FILE
--	$(QUIET_GEN)$(RM) $@ $<+ && \
--	sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
--	    $< > $<+ && \
--	autoconf -o $@ $<+ && \
--	$(RM) $<+
-+	$(QUIET_GEN)$(CONFIGURE_RECIPE)
- 
- ifdef AUTOCONFIGURED
- # We avoid depending on 'configure' here, because it gets rebuilt
-@@ -1885,7 +1887,7 @@ config.status: configure.ac
- # do want to recheck when the platform/environment detection logic
- # changes, hence this depends on configure.ac.
- config.status: configure.ac
--	$(QUIET_GEN)$(MAKE) configure && \
-+	$(QUIET_GEN)$(CONFIGURE_RECIPE) && \
- 	if test -f config.status; then \
- 	  ./config.status --recheck; \
- 	else \
-
--Peff
+This may be an unrelated issue, but I've always thought that it was
+strange and extremely unintuitive that running "make configure" once
+only creates config.mak.autogen, while running it once again after
+that (i.e. while having config.mak.autogen in the tree) seems to run
+the resulting "./configure" as well. Maybe it is just me.
