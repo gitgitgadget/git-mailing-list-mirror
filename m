@@ -1,70 +1,120 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [RFH/PATCH] imap-send: support SNI (RFC4366)
-Date: Thu, 21 Feb 2013 00:48:03 -0500
-Message-ID: <20130221054803.GB25943@sigill.intra.peff.net>
-References: <7vbobey0xv.fsf@alter.siamese.dyndns.org>
- <7vr4kaw7or.fsf@alter.siamese.dyndns.org>
+Subject: Re: [BUG] Infinite make recursion when configure.ac changes
+Date: Thu, 21 Feb 2013 01:04:02 -0500
+Message-ID: <20130221060401.GC25943@sigill.intra.peff.net>
+References: <51248D0A.50603@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 06:48:35 2013
+Cc: Git List <git@vger.kernel.org>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Stefano Lattarini <stefano.lattarini@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 07:04:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8P1E-0008SY-IZ
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 06:48:32 +0100
+	id 1U8PGo-0000pN-ED
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 07:04:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752001Ab3BUFsH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2013 00:48:07 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55186 "EHLO
+	id S1751957Ab3BUGEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2013 01:04:06 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55200 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751988Ab3BUFsG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2013 00:48:06 -0500
-Received: (qmail 24393 invoked by uid 107); 21 Feb 2013 05:49:38 -0000
+	id S1751716Ab3BUGEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2013 01:04:04 -0500
+Received: (qmail 24504 invoked by uid 107); 21 Feb 2013 06:05:36 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Feb 2013 00:49:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Feb 2013 00:48:03 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Feb 2013 01:05:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Feb 2013 01:04:02 -0500
 Content-Disposition: inline
-In-Reply-To: <7vr4kaw7or.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <51248D0A.50603@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216755>
 
-On Wed, Feb 20, 2013 at 09:35:16PM -0800, Junio C Hamano wrote:
+On Wed, Feb 20, 2013 at 09:44:58AM +0100, Stefano Lattarini wrote:
 
->>  (2) I do not know if everybody has SSL_set_tslext_host_name() macro
->>      defined, so this patch may be breaking build for people with
->>      different versions of OpenSSL.
-> [...]
->
-> +#ifdef SSL_CTRL_SET_TLSEXT_HOSTNAME
-> +	/*
-> +	 * SNI (RFC4366)
-> +	 * OpenSSL does not document this function, but the implementation
-> +	 * returns 1 on success, 0 on failure after calling SSLerr().
-> +	 */
-> +	ret = SSL_set_tlsext_host_name(sock->ssl, server.host);
-> +	if (ret != 1)
-> +		warning("SSL_set_tslext_host_name(%s) failed.\n", server.host);
-> +#endif
+> From a pristine master checkout:
+> 
+>   $ make configure && ./configure make
+>   ... # All successfull
+>   $ touch configure.ac
+>   $ make
+>     GEN config.status
+>   make[1]: Entering directory `/storage/home/stefano/git/src'
+>     GEN config.status
+>   make[2]: Entering directory `/storage/home/stefano/git/src'
+>     GEN config.status
+>   make[3]: Entering directory `/storage/home/stefano/git/src'
+>     GEN config.status
+>   make[4]: Entering directory `/storage/home/stefano/git/src'
+>     GEN config.status
+>   make[5]: Entering directory `/storage/home/stefano/git/src'
+>     GEN config.status
+>   ...
+> 
+> and I have to hit ^C to interrupt that recursion.
 
-Yes, I think this is the right macro to check. According to OpenSSL's
-CHANGES file, it was introduced between 0.9.8n and 1.0.0 (Mar 2010). But
-I note that the use of the same macro in libcurl dates to 2008. Curious.
+I can easily replicate it here.
 
-Note that you have a typo in your warning text (tslext) and an
-extra newline.
+> This seems due to the change in commit v1.7.12.4-1-g1226504: the
+> issue is still present there, but no longer is in the preceding
+> commit 7e201053 (a.k.a. v1.7.12.4).
+> 
+> I haven't investigated this any further for the moment.
 
-As far as testing goes, I don't have an SNI IMAP server handy, but I
-think you can simulate one with "openssl s_server". It may be a good
-long-term goal to test any ssl-specific code against that in our test
-suite (on the other hand, most of the interesting stuff is https, where
-the details are all handled by curl).
+Hmm. It looks like config.status depends on configure.ac. So make
+rebuilds config.status, which runs "make configure", which includes
+"config.mak.autogen", leading "make" to think that it should rebuild the
+include file to make sure it is up to date. The include file depends on
+"config.status", which needs to be rebuilt due to configure.ac, which
+entails running "make configure", and so on.
+
+So the real problem is that make things that "make configure" depends on
+"config.mak.autogen" being up to date, which isn't true at all; the
+whole point is to make a new configure script so we can write a new
+config.mak.autogen. The simplest thing is to just avoid re-running
+"make" to get the configure script; the only thing we are gaining is
+that we don't have to repeat the build recipe, but we can sneak around
+that by sticking it in a variable. Something like this seems to work:
+
+diff --git a/Makefile b/Makefile
+index 3b2c92c..ee1c0b0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1871,12 +1871,14 @@ configure: configure.ac GIT-VERSION-FILE
+ 	mv $@+ $@
+ endif # NO_PYTHON
+ 
++CONFIGURE_RECIPE = $(RM) configure configure.ac+ && \
++		   sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
++			configure.ac >configure.ac+ && \
++		   autoconf -o configure configure.ac+ && \
++		   $(RM) configure.ac+
++
+ configure: configure.ac GIT-VERSION-FILE
+-	$(QUIET_GEN)$(RM) $@ $<+ && \
+-	sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+-	    $< > $<+ && \
+-	autoconf -o $@ $<+ && \
+-	$(RM) $<+
++	$(QUIET_GEN)$(CONFIGURE_RECIPE)
+ 
+ ifdef AUTOCONFIGURED
+ # We avoid depending on 'configure' here, because it gets rebuilt
+@@ -1885,7 +1887,7 @@ config.status: configure.ac
+ # do want to recheck when the platform/environment detection logic
+ # changes, hence this depends on configure.ac.
+ config.status: configure.ac
+-	$(QUIET_GEN)$(MAKE) configure && \
++	$(QUIET_GEN)$(CONFIGURE_RECIPE) && \
+ 	if test -f config.status; then \
+ 	  ./config.status --recheck; \
+ 	else \
 
 -Peff
