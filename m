@@ -1,86 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4.1 09/12] sequencer.c: teach append_signoff to avoid
- adding a duplicate newline
-Date: Thu, 21 Feb 2013 10:51:24 -0800
-Message-ID: <7vip5lv6tv.fsf@alter.siamese.dyndns.org>
-References: <1360664260-11803-10-git-send-email-drafnel@gmail.com>
- <1360665222-3166-1-git-send-email-drafnel@gmail.com>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: Credentials and the Secrets API...
+Date: Thu, 21 Feb 2013 14:27:47 -0500
+Message-ID: <CAEBDL5UkCLwqn6JBkfu_sfWifh-7K9v6GfSAhhRzx7WaUaRovA@mail.gmail.com>
+References: <CAEBDL5Udooim_3Za76Q1Rt_aGXtsSv76nxRegGWRBE=WJQzfZA@mail.gmail.com>
+	<87halochci.fsf@lifelogs.com>
+	<CAEBDL5VQxhnL+wdkf_5=MmG4ptBr4TFyyAvbMWxRom9SRxJ6Lg@mail.gmail.com>
+	<87k3q2yl4y.fsf@lifelogs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, pclouds@gmail.com, jrnieder@gmail.com,
-	Brandon Casey <bcasey@nvidia.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 21 19:52:01 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Ted Zlatanov <tzz@lifelogs.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 20:28:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8bFI-0003LZ-Mf
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 19:51:53 +0100
+	id 1U8boU-00021H-WB
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 20:28:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755178Ab3BUSv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2013 13:51:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47996 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754363Ab3BUSv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2013 13:51:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 982A3BA90;
-	Thu, 21 Feb 2013 13:51:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ExEDIkhx5xyTR/cKF+I6LZTQ0uc=; b=d/eoP3
-	O4oJ8ZU9+u0fHHNKvtGoyX6bBs9xleFi/tLoN7UoiImxbkJvMko+zRiBdQsJ5vLJ
-	23H5lKE3PLYCLBwZnx13nVbNHkei6PV7b9nEpJ6av6lWFAWnD/T/QZ3uHgYaINAL
-	Sew0pJG6tSVLGvc93Cy7RU9WZgfjwxth0NBpE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vpRcIlznB4E+WP9C9llbHVov1oWj64Ae
-	jiLiBqR3ss3fizKriXlTyAXbkjQmvPG4lsvIS8hUks+rFzHlB0uIfcR88p1nkeR3
-	nTjAtKVjmnWRTLZVOZec34o1dfWAYo0zTG6oiZTx6h3QLRJ60s88bK3rxyx7e1/v
-	4goZlAHuqfM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D886BA8F;
-	Thu, 21 Feb 2013 13:51:26 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1845FBA8A; Thu, 21 Feb 2013
- 13:51:26 -0500 (EST)
-In-Reply-To: <1360665222-3166-1-git-send-email-drafnel@gmail.com> (Brandon
- Casey's message of "Tue, 12 Feb 2013 02:33:42 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B1C9469A-7C57-11E2-AA1F-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752890Ab3BUT1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2013 14:27:50 -0500
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:43456 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751678Ab3BUT1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2013 14:27:49 -0500
+Received: by mail-wi0-f173.google.com with SMTP id hq4so44044wib.12
+        for <git@vger.kernel.org>; Thu, 21 Feb 2013 11:27:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=ka/pFts/1FfFsI6Fu2lKCuMs35j02LpKwV0BX9nGuGU=;
+        b=Ikwt4ujFqa5AZ8dqjK9KO1tQxy+sRwlOIxboiQGyoYHzEuWPez0ixtfC6yBppOAxlg
+         CLlM31ZCr+m5fKdCLIltdIgpi7nZ0dSO8YZQE/g5c+LyBgULMMxMjxoxhIQLTrkQ+0gY
+         3OkNFrxUILbporBTo555OFF8p9sMqG2hpl6ZcEad75yS7NOr8C+ast0u/Jk3x7x695wN
+         sk39t/cgZ/Kk6O2r/wYyhDfR3Q2/cT+9dr3BybtZyp5XMBB3M16kZ7BN1+sOZiyCktjY
+         BSXFaATPpFlABNYh6WDofxDuQtpXFBHp1iy+4oKXsihWaZLhm7EeG/39XXCFKLy6pQAQ
+         nqlg==
+X-Received: by 10.180.84.165 with SMTP id a5mr44442946wiz.6.1361474867857;
+ Thu, 21 Feb 2013 11:27:47 -0800 (PST)
+Received: by 10.180.14.137 with HTTP; Thu, 21 Feb 2013 11:27:47 -0800 (PST)
+In-Reply-To: <87k3q2yl4y.fsf@lifelogs.com>
+X-Google-Sender-Auth: gPyQNQGi0ZHbHmb9UJ2Po18-vWk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216788>
 
-Brandon Casey <drafnel@gmail.com> writes:
-
-> Teach append_signoff to detect whether a blank line exists at the position
-> that the signed-off-by line will be added, and refrain from adding an
-> additional one if one already exists.  Or, add an additional line if one
-> is needed to make sure the new footer is separated from the message body
-> by a blank line.
+On Wed, Feb 20, 2013 at 12:01 PM, Ted Zlatanov <tzz@lifelogs.com> wrote:
+> On Sat, 9 Feb 2013 05:58:47 -0500 John Szakmeister <john@szakmeister.net> wrote:
+[snip]
 >
-> Signed-off-by: Brandon Casey <bcasey@nvidia.com>
-> ---
+> JS> Yes, I think it has.  Several other applications appear to be using
+> JS> it, including some things considered "core" in Fedora--which is a good
+> JS> sign.
 >
->
-> A slight tweak.  And I promise, no more are coming.
+> Wonderful.  Do you still have interest in working on this credential?
 
-When I do
+I do, but I'm a bit short on time right now.  So if you or someone
+else wants to pick up and run with it, please feel free.  If I get
+some cycles over the next couple of months, I'll give it a go though.
 
-	$ git commit -s
-
-it should start my editor with this in the buffer:
-
-	----------------------------------------------------------------
-
-        Signed-off-by: Junio C Hamano <gitster@pobox.com>
-	----------------------------------------------------------------
-
-and the cursor blinking at the beginning of the file.  Annoyingly
-this step breaks it by removing the leading blank line.
+-John
