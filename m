@@ -1,83 +1,91 @@
-From: James French <James.French@naturalmotion.com>
-Subject: RE: running git from non-standard location on Mac
-Date: Thu, 21 Feb 2013 11:48:39 +0000
-Message-ID: <1CE1BECC0915A6448EAE5D7080EDA905052078CA55@oxexc1>
-References: <1CE1BECC0915A6448EAE5D7080EDA905052078C95E@oxexc1>
- <20130221143525.726f06827351376b59a02f4b@domain007.com>
+From: Per Cederqvist <cederp@opera.com>
+Subject: "git branch HEAD" dumps core when on detached head (NULL pointer
+ dereference)
+Date: Thu, 21 Feb 2013 13:27:25 +0100
+Message-ID: <512612AD.4000609@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Feb 21 12:49:14 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 21 13:27:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8UeH-0008JD-SN
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 12:49:14 +0100
+	id 1U8VFi-0001Mc-Bt
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 13:27:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537Ab3BULsp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Feb 2013 06:48:45 -0500
-Received: from gwl205.naturalmotion.com ([86.12.140.205]:29177 "EHLO
-	mail1.naturalmotion.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753202Ab3BULsp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Feb 2013 06:48:45 -0500
-Thread-Topic: running git from non-standard location on Mac
-Thread-Index: Ac4QHypnbdXmL64ERfSCkf/OBYZ1JAACgipA
-In-Reply-To: <20130221143525.726f06827351376b59a02f4b@domain007.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, en-GB
+	id S1752890Ab3BUM1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2013 07:27:30 -0500
+Received: from smtp.opera.com ([213.236.208.81]:35701 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752313Ab3BUM13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2013 07:27:29 -0500
+Received: from [10.30.2.116] (oslo.jvpn.opera.com [213.236.208.46])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id r1LCRQJa003404
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 21 Feb 2013 12:27:27 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216767>
 
+Running "git branch HEAD" may be a stupid thing to do. It actually
+was a mistake on my part. Still, I don't think git should dereference
+a NULL pointer.
 
+Tested using git 1.8.1.4 adn 1.8.1.1.
 
------Original Message-----
-=46rom: Konstantin Khomoutov [mailto:flatworm@users.sourceforge.net]=20
-Sent: 21 February 2013 10:35
-To: James French
-Cc: git@vger.kernel.org
-Subject: Re: running git from non-standard location on Mac
+Repeat by:
 
-On Thu, 21 Feb 2013 09:48:36 +0000
-James French <James.French@naturalmotion.com> wrote:
+     mkdir branchcrash || exit 1
+     cd branchcrash
+     git init
+     touch a; git add a; git commit -m"Added a".
+     touch b; git add b; git commit -m"Added b".
+     git checkout HEAD^
+     git branch HEAD
 
-> I wonder if someone could help me. I installed git on a Mac and then =
-I=20
-> copied the install somewhere else (which I do want to do, trust me). =
-=A0
-> I'm now having trouble with git svn. I'm getting "Can't locate=20
-> Git/SVN.pm in @INC..."
->=20
-> I've added the bin folder to PATH. What else do I need to do? Do I=20
-> need to use -exec-path=3D/MyPathToGit/libexec/git-core? How do I chan=
-ge=20
-> the content of @INC?
->=20
-> Apologies if this is a dumb question, I'm not much of a unix man.
+The last command dumps core.  gdb session:
 
-`git svn` is implemented in Perl (which is supposedly bundled with your=
- Git package, but I'm not sure), and "SVN.pm" is a Perl module (a libra=
-ry written in Perl, ".pm" stands for "Perl Module").
+gdb /usr/local/bin/git core
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later 
+<http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /usr/local/bin/git...done.
+[New LWP 7174]
 
-@INC is an internal variable used by Perl to locate its modules.
-Its contents is partially inferred from the Perl's installation locatio=
-n and partially from the environment.
+warning: Can't read pathname for load map: Input/output error.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Core was generated by `git branch HEAD'.
+Program terminated with signal 11, Segmentation fault.
+#0  cmd_branch (argc=1, argv=0x7fffe6e2a0f0, prefix=<optimized out>)
+     at builtin/branch.c:919
+919			strbuf_addf(&buf, "refs/remotes/%s", branch->name);
+(gdb) bt
+#0  cmd_branch (argc=1, argv=0x7fffe6e2a0f0, prefix=<optimized out>)
+     at builtin/branch.c:919
+#1  0x00000000004046ac in run_builtin (argv=0x7fffe6e2a0f0, argc=2,
+     p=<optimized out>) at git.c:273
+#2  handle_internal_command (argc=2, argv=0x7fffe6e2a0f0) at git.c:434
+#3  0x0000000000404df3 in run_argv (argv=0x7fffe6e29f90, 
+argcp=0x7fffe6e29f9c)
+     at git.c:480
+#4  main (argc=2, argv=0x7fffe6e2a0f0) at git.c:555
+(gdb) p branch
+$1 = (struct branch *) 0x0
+(gdb) quit
 
-This [1] should help you get started with affecting @INC.
-
-1. http://stackoverflow.com/a/2526809/720999
-
-
-
-Thanks for the help guys. I got it working using --exec-path and PERL5L=
-IB environment variable. But Matthieu is right, I should build it from =
-source to do it properly.
+     /ceder
