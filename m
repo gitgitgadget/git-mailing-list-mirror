@@ -1,91 +1,119 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: "git branch HEAD" dumps core when on detached head (NULL pointer
- dereference)
-Date: Thu, 21 Feb 2013 13:27:25 +0100
-Message-ID: <512612AD.4000609@opera.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: "git branch HEAD" dumps core when on detached head (NULL pointer dereference)
+Date: Thu, 21 Feb 2013 19:50:19 +0700
+Message-ID: <CACsJy8CuRvwsbXbcKr7dHneEDF7UmoG4ioCxfDi_7qWDD-4wgQ@mail.gmail.com>
+References: <512612AD.4000609@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 21 13:27:56 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Thu Feb 21 13:51:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8VFi-0001Mc-Bt
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 13:27:54 +0100
+	id 1U8VcO-0000mr-SK
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Feb 2013 13:51:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752890Ab3BUM1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2013 07:27:30 -0500
-Received: from smtp.opera.com ([213.236.208.81]:35701 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752313Ab3BUM13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2013 07:27:29 -0500
-Received: from [10.30.2.116] (oslo.jvpn.opera.com [213.236.208.46])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id r1LCRQJa003404
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 21 Feb 2013 12:27:27 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+	id S1753064Ab3BUMuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Feb 2013 07:50:55 -0500
+Received: from mail-oa0-f54.google.com ([209.85.219.54]:35082 "EHLO
+	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752994Ab3BUMuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Feb 2013 07:50:50 -0500
+Received: by mail-oa0-f54.google.com with SMTP id n12so9101385oag.27
+        for <git@vger.kernel.org>; Thu, 21 Feb 2013 04:50:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=kA/ASFOAVv4iZ4vjwmS2YXTeSfxbD6Z+cXLRZiQqO8E=;
+        b=Yi2UonmB00JLJwvi9SaNh786Feu8Rk08Wd8OeLtHmKCqcDq4KWsiuDVjEOPs5ew8FF
+         Vh8pi+M1HJjYEcmOBKVV/nJZ43sr0uqSeQohywfcCrn6ZB3+3hcK44ahdLyPlTdDCDqT
+         mcnjoz9WWAAhjHb68BKX7MH9xGwtcweqEBOUdEBaZqBVAmS8ogktAVRqLcTkr//JSe4M
+         5pzWYEDGs+ipoMa6lIIGZ29RWmWcp+tMO07tKozit08Z0KC26dhf/1vecU0JYHjJOtyk
+         8F5DdSBnO4cR0MHteh4vHU4t5w50z+eDQteXMoumg/5Ba8Ei5D+8FTOLy18cfmz2U+r1
+         GOcA==
+X-Received: by 10.60.5.231 with SMTP id v7mr10756077oev.62.1361451049836; Thu,
+ 21 Feb 2013 04:50:49 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Thu, 21 Feb 2013 04:50:19 -0800 (PST)
+In-Reply-To: <512612AD.4000609@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216768>
 
-Running "git branch HEAD" may be a stupid thing to do. It actually
-was a mistake on my part. Still, I don't think git should dereference
-a NULL pointer.
+On Thu, Feb 21, 2013 at 7:27 PM, Per Cederqvist <cederp@opera.com> wrote:
+> Running "git branch HEAD" may be a stupid thing to do. It actually
+> was a mistake on my part. Still, I don't think git should dereference
+> a NULL pointer.
 
-Tested using git 1.8.1.4 adn 1.8.1.1.
+We should not. Can you make a patch to fix it (with test cases)? You
+may want to fix the two preceding blocks, "if (new_upstream)" and "if
+(unset_upstream)", as well. They don't check for NULL branch either. I
+think we can say something like "detached HEAD is not valid for this
+operation" before exit.
 
-Repeat by:
+>
+> Tested using git 1.8.1.4 adn 1.8.1.1.
+>
+> Repeat by:
+>
+>     mkdir branchcrash || exit 1
+>     cd branchcrash
+>     git init
+>     touch a; git add a; git commit -m"Added a".
+>     touch b; git add b; git commit -m"Added b".
+>     git checkout HEAD^
+>     git branch HEAD
+>
+> The last command dumps core.  gdb session:
+>
+> gdb /usr/local/bin/git core
+> GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+> Copyright (C) 2012 Free Software Foundation, Inc.
+> License GPLv3+: GNU GPL version 3 or later
+> <http://gnu.org/licenses/gpl.html>
+> This is free software: you are free to change and redistribute it.
+> There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+> and "show warranty" for details.
+> This GDB was configured as "x86_64-linux-gnu".
+> For bug reporting instructions, please see:
+> <http://bugs.launchpad.net/gdb-linaro/>...
+> Reading symbols from /usr/local/bin/git...done.
+> [New LWP 7174]
+>
+> warning: Can't read pathname for load map: Input/output error.
+> [Thread debugging using libthread_db enabled]
+> Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+> Core was generated by `git branch HEAD'.
+> Program terminated with signal 11, Segmentation fault.
+> #0  cmd_branch (argc=1, argv=0x7fffe6e2a0f0, prefix=<optimized out>)
+>     at builtin/branch.c:919
+> 919                     strbuf_addf(&buf, "refs/remotes/%s", branch->name);
+> (gdb) bt
+> #0  cmd_branch (argc=1, argv=0x7fffe6e2a0f0, prefix=<optimized out>)
+>     at builtin/branch.c:919
+> #1  0x00000000004046ac in run_builtin (argv=0x7fffe6e2a0f0, argc=2,
+>     p=<optimized out>) at git.c:273
+> #2  handle_internal_command (argc=2, argv=0x7fffe6e2a0f0) at git.c:434
+> #3  0x0000000000404df3 in run_argv (argv=0x7fffe6e29f90,
+> argcp=0x7fffe6e29f9c)
+>     at git.c:480
+> #4  main (argc=2, argv=0x7fffe6e2a0f0) at git.c:555
+> (gdb) p branch
+> $1 = (struct branch *) 0x0
+> (gdb) quit
+>
+>     /ceder
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-     mkdir branchcrash || exit 1
-     cd branchcrash
-     git init
-     touch a; git add a; git commit -m"Added a".
-     touch b; git add b; git commit -m"Added b".
-     git checkout HEAD^
-     git branch HEAD
 
-The last command dumps core.  gdb session:
 
-gdb /usr/local/bin/git core
-GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
-Copyright (C) 2012 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later 
-<http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "x86_64-linux-gnu".
-For bug reporting instructions, please see:
-<http://bugs.launchpad.net/gdb-linaro/>...
-Reading symbols from /usr/local/bin/git...done.
-[New LWP 7174]
-
-warning: Can't read pathname for load map: Input/output error.
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-Core was generated by `git branch HEAD'.
-Program terminated with signal 11, Segmentation fault.
-#0  cmd_branch (argc=1, argv=0x7fffe6e2a0f0, prefix=<optimized out>)
-     at builtin/branch.c:919
-919			strbuf_addf(&buf, "refs/remotes/%s", branch->name);
-(gdb) bt
-#0  cmd_branch (argc=1, argv=0x7fffe6e2a0f0, prefix=<optimized out>)
-     at builtin/branch.c:919
-#1  0x00000000004046ac in run_builtin (argv=0x7fffe6e2a0f0, argc=2,
-     p=<optimized out>) at git.c:273
-#2  handle_internal_command (argc=2, argv=0x7fffe6e2a0f0) at git.c:434
-#3  0x0000000000404df3 in run_argv (argv=0x7fffe6e29f90, 
-argcp=0x7fffe6e29f9c)
-     at git.c:480
-#4  main (argc=2, argv=0x7fffe6e2a0f0) at git.c:555
-(gdb) p branch
-$1 = (struct branch *) 0x0
-(gdb) quit
-
-     /ceder
+-- 
+Duy
