@@ -1,123 +1,119 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix in Git.pm cat_blob crashes on large files (resubmit
- with reviewed-by)
-Date: Fri, 22 Feb 2013 10:49:13 -0800
-Message-ID: <7v7gm0dw0m.fsf@alter.siamese.dyndns.org>
-References: <CAMB+bfLvpKNLaEUyUUYsO5n2y+9tyd_QcnPVzX0s2Z2t3Fr9=g@mail.gmail.com>
+Subject: Re: [PATCH] archive: let remote clients get reachable commits
+Date: Fri, 22 Feb 2013 11:15:34 -0800
+Message-ID: <7v38wodusp.fsf@alter.siamese.dyndns.org>
+References: <1361456643-51851-1-git-send-email-gurugray@yandex.ru>
+ <20130221155208.GA19943@sigill.intra.peff.net>
+ <995301361532360@web22h.yandex.ru> <7vehg8s295.fsf@alter.siamese.dyndns.org>
+ <20130222172710.GB17475@sigill.intra.peff.net>
+ <7vfw0odxz3.fsf@alter.siamese.dyndns.org>
+ <20130222182654.GA18934@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Joshua Clayton <stillcompiling@gmail.com>,
-	Adam Roben <aroben@apple.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 19:49:44 2013
+Cc: Sergey Sergeev <gurugray@yandex.ru>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 22 20:16:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8xgj-0003Ur-LP
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 19:49:41 +0100
+	id 1U8y6E-0004K6-C8
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 20:16:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754317Ab3BVStR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 13:49:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33787 "EHLO
+	id S1757040Ab3BVTPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 14:15:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52679 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753846Ab3BVStQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 13:49:16 -0500
+	id S1756892Ab3BVTPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 14:15:36 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAD96BCFC;
-	Fri, 22 Feb 2013 13:49:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 488CDA9E4;
+	Fri, 22 Feb 2013 14:15:36 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jp8nybqx9q3z1lmfM4qOS6PAxn4=; b=VDASIL
-	waPDz1ACLPzzNVhoRMqrlwN4PILcDa7QxP0EVgQme0hnb+0yuCN62Fn18G2qf0kI
-	2Rn6SB81x0YptW4ED4z4+H+su5bj1dP0qCmaZAxAoz7b0aRaBFo+VPd9lQHgVUrj
-	HTz+lN4mHGPFrlW/X81w60YdXa9+WM0kKkR04=
+	:content-type; s=sasl; bh=q1cV9E1gpSK9XbzhcKTS1v/RQaA=; b=t5bB50
+	x6o9O5spMJeGsXgvkpl5IZ8kKPXZxi6k4FbtpaYJoq6NLsDX94Um8vCzO/IPUmiP
+	uYDPv8bu6BqIW8kcYReam2TaM45Vr0DD651YfITKpbkYG/+q8BmaqeCl01vKRmUH
+	aoQA9IYWCE3hXJTwMZU/tho1PekHgFj6+xesM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HHweUqyDWT37L+IBBE0NJkgnS40tYkpi
-	Jx37jxPWRZhDYKcH2M0KRTzELBBUjrCSFAFFWyp/DvPO3KUoQ7UoiZmSD9zFB8ZV
-	X1yMegTYM4LR/58vBrjNpLXuEXZW2s4yr1M9Lq2df4PlEti7VW1sgM6/s99kSN5J
-	yTWDPW9dh8w=
+	:content-type; q=dns; s=sasl; b=n55bCr5zG4ZcwooKg6aD/ryByX4AuzZN
+	HEu/4PeRoWhXxqnwoqSpsbT7OjtuyaDL0j5Usjv2knC552Zt7VDjVpnooU82TTc0
+	2o2l/dQOX1LCdJztwGvbyp3X8GXibg7hn+SfUO+IPa9RZ6CE/RQ+H3P0537YyyVI
+	DDBIRnPgyUI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE806BCFB;
-	Fri, 22 Feb 2013 13:49:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D170A9E3;
+	Fri, 22 Feb 2013 14:15:36 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1543ABCFA; Fri, 22 Feb 2013
- 13:49:14 -0500 (EST)
-In-Reply-To: <CAMB+bfLvpKNLaEUyUUYsO5n2y+9tyd_QcnPVzX0s2Z2t3Fr9=g@mail.gmail.com> (Joshua
- Clayton's message of "Fri, 22 Feb 2013 09:30:57 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D795A9E1; Fri, 22 Feb 2013
+ 14:15:35 -0500 (EST)
+In-Reply-To: <20130222182654.GA18934@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 22 Feb 2013 13:26:54 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8E18ED80-7D20-11E2-85C1-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3C2ECB62-7D24-11E2-9279-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216854>
 
-Joshua Clayton <stillcompiling@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Read and write each 1024 byte buffer, rather than trying to buffer
-> the entire content of the file.
-> Previous code would crash on all files > 2 Gib, when the offset variable
-> became negative (perhaps below the level of perl), resulting in a crash.
-> On a 32 bit system, or a system with low memory it might crash before
-> reaching 2 GiB due to memory exhaustion.
+> On Fri, Feb 22, 2013 at 10:06:56AM -0800, Junio C Hamano wrote:
 >
-> Signed-off-by: Joshua Clayton <stillcompiling@gmail.com>
-> Reviewed-by: Jeff King <peff@peff.net>
-> ---
-
-Thanks.
-
->> Subject: Re: [PATCH] Fix in Git.pm cat_blob crashes on large files (resubmit with reviewed-by)
-
-Please drop the () part.  A rule of thumb is to make "git show"
-output understandable by people who read it 6 months from now.  They
-do not care if the commit is a re-submission.
-
-It seems that this issue was with us since the very beginning of
-this sub since it was introduced at 7182530d8cad (Git.pm: Add
-hash_and_insert_object and cat_blob, 2008-05-23).
-
->  perl/Git.pm |   12 +++++-------
->  1 file changed, 5 insertions(+), 7 deletions(-)
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > How are you proposing to verify master~12 in that example? Because
+>> > during parsing, it starts with "master", and we remember that?
+>> 
+>> By not cheating (i.e. using get_sha1()), but making sure you can
+>> parse "master" and the adornment on it "~12" is something sane.
 >
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> index 931047c..cc91288 100644
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -949,13 +949,16 @@ sub cat_blob {
->                 last unless $bytesLeft;
+> So, like these patches:
 >
->                 my $bytesToRead = $bytesLeft < 1024 ? $bytesLeft : 1024;
-> -               my $read = read($in, $blob, $bytesToRead, $bytesRead);
-> +               my $read = read($in, $blob, $bytesToRead);
->                 unless (defined($read)) {
->                         $self->_close_cat_blob();
->                         throw Error::Simple("in pipe went bad");
->                 }
-> -
->                 $bytesRead += $read;
-> +               unless (print $fh $blob) {
-> +                       $self->_close_cat_blob();
-> +                       throw Error::Simple("couldn't write to passed
-> in filehandle");
-> +               }
+>   http://article.gmane.org/gmane.comp.version-control.git/188386
+>
+>   http://article.gmane.org/gmane.comp.version-control.git/188387
+>
+> ? They do not allow arbitrary sha1s that happen to point to branch tips,
+> but I am not sure whether that is something people care about or not.
+>
+>> That is why I said "this is harder than one would naively think, but
+>> limiting will make it significantly easier".  I didn't say that it
+>> would become "trivial", did I?
+>
+> I'm not implying it would be trivial. It was an honest question, since
+> you did not seem to want to do the pass-more-information-out-of-get-sha1
+> approach last time this came up.
 
-Corrupt patch, line-wrapped by your MUA.
+That does not match my recollection ($gmane/188427).  In fact, I had
+those two patches you quoted earlier in mind when I wrote the "limit
+it and it will become easier" response.
 
-I wonder if we still need $bytesRead variable.  You have $size that
-is the size of the whole blob, so
+> Even though those patches above are from me, I've come to the conclusion
+> that the best thing to do is to harmonize with upload-pack. Then you
+> never have the "well, but I could fetch it, so why won't upload-archive
+> let me get it" argument.
 
-	my $bytesLeft = $size;
-	while (1) {
-		my $bytesToRead = $bytesLeft < 1024 ? $bytesLeft : 1024;
-		my $bytesRead = read($in, $blob, $bytesToRead);
-		... check errors and use the $blob ...
-                $bytesLeft -= $bytesRead;
-	}
+That sounds like a sensible yardstick.
 
-may be simpler and easier to read, no?
+>   1. split name at first colon (like we already do)
+>
+>   2. make sure the left-hand side is reachable according to the same
+>      rules that upload-pack uses.
+
+Well, "upload-pack" under the hood operates on a bare 40-hex.  If
+you mean to do "split name at first colon, run get_sha1() on the
+LHS" in step 1., I would agree this is a good direction to go.
+
+>      Right we just say "is it a ref". It should be:
+
+With s/should/could optionally/, I would agree.
+
+> That leaves the only inaccessible thing as direct-sha1s of trees and
+> blobs that are reachable from commits.
+
+Yes (with s/are reachable/are only reachable/).
