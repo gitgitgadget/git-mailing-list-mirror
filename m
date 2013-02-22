@@ -1,114 +1,124 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH] git-commit: populate the edit buffer with 2 blank lines before s-o-b
-Date: Fri, 22 Feb 2013 01:25:58 -0800
-Message-ID: <1361525158-3648-1-git-send-email-drafnel@gmail.com>
-References: <7vobfdtl1n.fsf@alter.siamese.dyndns.org>
-Cc: pclouds@gmail.com, jrnieder@gmail.com, john@keeping.me.uk,
-	git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 22 10:26:41 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] add: allow users to silence Git 2.0 warnings about "add -u"
+Date: Fri, 22 Feb 2013 10:32:20 +0100
+Message-ID: <vpqd2vssnh7.fsf@grenoble-inp.fr>
+References: <1361513224-34550-1-git-send-email-davvid@gmail.com>
+	<7vtxp4sw8e.fsf@alter.siamese.dyndns.org>
+	<CAJDDKr4dCJ3p9QBGr09kW4_0BsVJcpE7s83=eNxKE15pMznWCw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 10:33:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8otl-0002WC-HX
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 10:26:33 +0100
+	id 1U8p07-0007G8-3I
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 10:33:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754574Ab3BVJ0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 04:26:08 -0500
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:65512 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753282Ab3BVJ0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 04:26:06 -0500
-Received: by mail-pb0-f42.google.com with SMTP id xb4so307134pbc.15
-        for <git@vger.kernel.org>; Fri, 22 Feb 2013 01:26:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=KtlOpByhKnr1KD/f+1UEqMHzi99066/Xl24AOI+6gaE=;
-        b=buouiT74Btp1hrG9kBCDk9faP/PBcf0qDfajxHjYYYOb51Wk4svW6c5IG5Y0u6ARXc
-         cOfgSUDHS1e//X9mLAL2YJvRw2e1k9XvjOa8rLz18IJWIE//oPI0hJNp7VHyyIPNNMXY
-         io2cT2Q6YuF1Rg263qM0xw3ApIvTrjw8/Ww6AZZ2UoGKM9jCLGIIguzqu9utDaebPBqH
-         o3ANncIzYjCeEHyrXBKlzOeZ2GmJf3nxb4YNChaVc44Fnnu7x+7m2R/iVDQzTGV7+9Th
-         Bn5j561Y0Bf5niQbDUXcprlEDQVRpxxagRAQ9Ku9YYoBhf5wE8BLUGRqO662eXMR/+nQ
-         E2kg==
-X-Received: by 10.68.224.169 with SMTP id rd9mr1908713pbc.199.1361525165401;
-        Fri, 22 Feb 2013 01:26:05 -0800 (PST)
-Received: from charliebrown.hsd1.ca.comcast.net (c-98-248-42-122.hsd1.ca.comcast.net. [98.248.42.122])
-        by mx.google.com with ESMTPS id j7sm2361198pay.10.2013.02.22.01.26.02
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 22 Feb 2013 01:26:04 -0800 (PST)
-X-Mailer: git-send-email 1.8.1.1.252.gdb33759
-In-Reply-To: <7vobfdtl1n.fsf@alter.siamese.dyndns.org>
+	id S1756311Ab3BVJci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 04:32:38 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:38864 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755952Ab3BVJcf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 04:32:35 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r1M9WKEF012509
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 22 Feb 2013 10:32:20 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1U8ozN-0002LT-25; Fri, 22 Feb 2013 10:32:21 +0100
+In-Reply-To: <CAJDDKr4dCJ3p9QBGr09kW4_0BsVJcpE7s83=eNxKE15pMznWCw@mail.gmail.com>
+	(David Aguilar's message of "Thu, 21 Feb 2013 23:12:42 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 22 Feb 2013 10:32:20 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r1M9WKEF012509
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1362130343.00084@yshk7VNcP0H/DfXiAPRp3g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216827>
 
-Before commit 33f2f9ab, 'commit -s' would populate the edit buffer with
-a blank line before the Signed-off-by line.  This provided a nice
-hint to the user that something should be filled in.  Let's restore that
-behavior, but now let's ensure that the Signed-off-by line is preceded
-by two blank lines to hint that something should be filled in, and that
-a blank line should separate it from the Signed-off-by line.
+David Aguilar <davvid@gmail.com> writes:
 
-Plus, add a test for this behavior.
+> Please enlighten me.
+> Are we really getting rid of it and replacing it with ":/"?
+> That syntax looks like a meh face.. just sayin'
 
-Reported-by: John Keeping <john@keeping.me.uk>
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
+The current behavior is indeed replaced by "git add -u .", not ":/".
 
-Ok.  Here's a patch on top of 959a2623 bc/append-signed-off-by.  It
-implements the "2 blank lines preceding sob" behavior.
+> Unlike push.default, whose warning can be silenced with configuration,
+> git 1.x does not have a way to silence this warning without retraining
+> existing users.
 
--Brandon
+Yes, but push.default is really different: there is a config variable,
+and we want the behavior to be configurable. In the case of "git add",
+I don't think adding a configuration option would be the right thing.
+That would mean typing "git add -u" on an account which isn't yours will
+be unpredictable *forever*.
 
- sequencer.c       |  5 +++--
- t/t7502-commit.sh | 12 ++++++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+OTOH, "git add -u :/" and "git add -u ." will behave predictibly on any
+version of Git that accepts them, past present or future (:/ was added
+in 1.7.6, a year and a half ago).
 
-diff --git a/sequencer.c b/sequencer.c
-index 53ee49a..2dac106 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1127,9 +1127,10 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
- 		const char *append_newlines = NULL;
- 		size_t len = msgbuf->len - ignore_footer;
- 
--		if (len && msgbuf->buf[len - 1] != '\n')
-+		/* ensure a blank line precedes our signoff */
-+		if (!len || msgbuf->buf[len - 1] != '\n')
- 			append_newlines = "\n\n";
--		else if (len > 1 && msgbuf->buf[len - 2] != '\n')
-+		else if (len == 1 || msgbuf->buf[len - 2] != '\n')
- 			append_newlines = "\n";
- 
- 		if (append_newlines)
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index deb187e..a53a1e0 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -349,6 +349,18 @@ test_expect_success 'A single-liner subject with a token plus colon is not a foo
- 
- '
- 
-+test_expect_success 'commit -s places sob on third line after two empty lines' '
-+	git commit -s --allow-empty --allow-empty-message &&
-+	cat <<-EOF >expect &&
-+
-+
-+		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
-+
-+	EOF
-+	egrep -v '^#' .git/COMMIT_EDITMSG >actual &&
-+	test_cmp expect actual
-+'
-+
- write_script .git/FAKE_EDITOR <<\EOF
- mv "$1" "$1.orig"
- (
+> Another example...
+>
+> $ git grep 'stuff' :/
+>
+> would it be too much to teach it to do:
+>
+> $ git grep -u 'stuff'
+
+"git grep" is out of the scope of this change. Yes, it is inconsistant
+with the rest of Git, but doesn't seem to surprise users as much as "git
+add -u" (for which the inconsistancy appears within the "add" command).
+
+I don't understand what you mean by "git grep -u". "git add -u" is a
+shortcut for "git add --update", and "git grep --update" wouldn't make
+sense to me. Do you mean we should add a "--full-tree" to "git grep"?
+That seems really overkill to me since we already have the :/ pathspec.
+
+> but in 2.0 that -u would be a no-op because "grep" will be full tree, no?
+
+No it won't.
+
+> I need to read the old discussions.
+> Can someone tell me the magic google search syntax they use to dig them up?
+
+See the discussion here:
+
+http://thread.gmane.org/gmane.comp.version-control.git/213988/focus=214106
+
+(recursively, there's a pointer to an older discussion)
+
+> Would a better way be a method to make "git add -u" behave like 2.0 today?
+
+As I said, I think adding a configuration option that would remain after
+2.0 would do more harm than good. But after thinking about it, I'm not
+against an option like a boolean add.use2dot0Behavior that would:
+
+* Right now, adopt the future behavior and kill the warning
+
+* From 2.0, kill the warning without changing the bevavior
+
+* When we stop warning, disapear.
+
+This, or the add.silence-pathless-warnings (which BTW should be spelled
+add.silencePathlessWarnings) would not harm as long as they are not
+advertized in the warning. What we don't want is dumb users reading half
+the message and apply the quickest receipe they find to kill the warning
+without thinking about the consequences.
+
 -- 
-1.8.0.1.253.gfcb57d5.dirty
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
