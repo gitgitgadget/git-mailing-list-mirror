@@ -1,82 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: https_proxy and libcurl
-Date: Fri, 22 Feb 2013 13:55:08 -0800
-Message-ID: <7v7gm0c8ub.fsf@alter.siamese.dyndns.org>
-References: <CABURp0qQ6tO0B4Ya6OStX59SJqG-Jx1F4g6MUL7tVwR_6VgDhw@mail.gmail.com>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH] git-commit: populate the edit buffer with 2 blank lines
+ before s-o-b
+Date: Fri, 22 Feb 2013 14:03:42 -0800
+Message-ID: <CA+sFfMdok7wRDhgq7i=b3cu3LB+poExvxLBxYkg8L3pN92bEYg@mail.gmail.com>
+References: <7vobfdtl1n.fsf@alter.siamese.dyndns.org>
+	<1361525158-3648-1-git-send-email-drafnel@gmail.com>
+	<7vbobcdwo7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 22:55:42 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: pclouds@gmail.com, jrnieder@gmail.com, john@keeping.me.uk,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 23:04:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U90af-0004CM-GP
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 22:55:37 +0100
+	id 1U90iu-0003U3-Qc
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 23:04:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756979Ab3BVVzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 16:55:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63988 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756894Ab3BVVzL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 16:55:11 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2043B3BF;
-	Fri, 22 Feb 2013 16:55:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wOaGYJaIBhCDevuD4kKb2MMIjvQ=; b=J16Jz/
-	6hnw5dbSOltcod4Vk68kfnVcQnOoVapXaNswx/2AS8ym95/mDDU85Qy4VhTQunqI
-	lm/J3kwQPnAwYUctRwow0nJZgISkw1dTcF6aRWCJCeb4mICsdSNVcJ4iT4KYg8Xz
-	eELlbR6twNtk72V+vHMXlkaotunxtoh9T4fS0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KrWv2loMqaP6M6slmoBGdYiuY4Lyue2K
-	OFWMu45c//o/R/HKFBSL0cvZpfZ0+BbhArhFyZagYS4JnOA9jBjLRcT4+XUTZ30x
-	9/onPFu/a3wq8cIknRWA+KnG/s6Akp9fyb3DzoIJ/TuFy/unbdIhpcFQEPdH2MCk
-	rTWehBErYxg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9462AB3BD;
-	Fri, 22 Feb 2013 16:55:10 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F336EB3BC; Fri, 22 Feb 2013
- 16:55:09 -0500 (EST)
-In-Reply-To: <CABURp0qQ6tO0B4Ya6OStX59SJqG-Jx1F4g6MUL7tVwR_6VgDhw@mail.gmail.com> (Phil
- Hord's message of "Fri, 22 Feb 2013 16:19:10 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 86F0CD24-7D3A-11E2-8DD5-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757249Ab3BVWDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 17:03:44 -0500
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:59561 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756985Ab3BVWDn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 17:03:43 -0500
+Received: by mail-wi0-f182.google.com with SMTP id hi18so1299734wib.15
+        for <git@vger.kernel.org>; Fri, 22 Feb 2013 14:03:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=oRQ/RfUAoPMiT11Ups6BMxefd+M1fozS2NTlrLLKmaA=;
+        b=fRgrlyKQEWWlYxCLvxnfv3lM1VU6RjQsevjQSKKwrVLzzUUeaHOvJmO4NZe9yjjfx3
+         Tz/iMsbAgaVmvhKy7t7Hnueiv3TYTXg1crXZZKAfWu0cQK1fQiIqwanVbf7N2pRigphk
+         B2eBJQj47eVAacqsaLBz7uF0gKk8krU8ERhjAiPxKbN4WkbjO5cV71A5Gsrg5oZFbUXJ
+         7jxiW13FI7eVl9RhDyGiY0yY7Sao9abfOVxzLOzsZyTlJytYWb7mhaiE9LYgcXRtf7mD
+         VE+p0YJDUFwCgnnWegKtGVxYvZKf8l2w9C7oMuLKIQ47sTx1Km1a8gcf3NfZO8CDQ8pS
+         PUMA==
+X-Received: by 10.194.92.65 with SMTP id ck1mr6346120wjb.54.1361570622377;
+ Fri, 22 Feb 2013 14:03:42 -0800 (PST)
+Received: by 10.194.63.46 with HTTP; Fri, 22 Feb 2013 14:03:42 -0800 (PST)
+In-Reply-To: <7vbobcdwo7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216867>
 
-Phil Hord <phil.hord@gmail.com> writes:
+On Fri, Feb 22, 2013 at 10:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Brandon Casey <drafnel@gmail.com> writes:
 
-> I have been unable to clone via http proxy because of a wrongly
-> configured proxy setup in my lab.
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 53ee49a..2dac106 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -1127,9 +1127,10 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+>>               const char *append_newlines = NULL;
+>>               size_t len = msgbuf->len - ignore_footer;
+>>
+>> -             if (len && msgbuf->buf[len - 1] != '\n')
+>> +             /* ensure a blank line precedes our signoff */
+>> +             if (!len || msgbuf->buf[len - 1] != '\n')
+>>                       append_newlines = "\n\n";
+>> -             else if (len > 1 && msgbuf->buf[len - 2] != '\n')
+>> +             else if (len == 1 || msgbuf->buf[len - 2] != '\n')
+>>                       append_newlines = "\n";
 >
-> I had this env:
+> Maybe I am getting slower with age, but it took me 5 minutes of
+> staring the above to convince me that it is doing the right thing.
 >
->     http_proxy=http://proxy.myco.com
->     https_proxy=https://proxy.myco.com
+> The if/elseif cascade is dealing with three separate things and the
+> logic is a bit dense:
 >
-> The problem is that libcurl ignores the protocol part of the proxy
-> url, and it defaults to port 1080. wget honors the protocol specifier,
-> but it defaults to port 80 if none is given.
-
-IIRC, the historical norm is to set these to <host>:<port>.
-
-So many people mistakenly write them with <method>:// that some
-tools over time learned to strip and ignore that prefix, though.
-
-> The fix was to specify the port explicitly, like this:
+>  * Is the buffer completely empty?  We need to add two LFs to give a
+>    room for the title and body;
 >
->     http_proxy=proxy.myco.com:80
->     https_proxy=proxy.myco.com:443
+>  * Otherwise:
+>
+>    - Is the final line incomplete?  We need to add one LF to make it a
+>      complete line whatever we do.
+>
+>    - Is the final line an empty line?  We need to add one more LF to
+>      make sure we have a blank line before we add S-o-b.
+>
+> I wondered if we can rewrite it to make the logic clearer (that is
+> where I spent most of the 5 minutes), but I did not think of a
+> better way; probably the above is the best we could do.
 
-Yeah, that is the correct syntax to use.  Is there anything you want
-Git to do to be more helpful?
+We could unroll the conditionals into individual blocks and add your
+comments from above like:
+
+   if (!len) {
+      /* The buffer is completely empty.  Leave room for the title and body. */
+      append_newlines = "\n\n";
+   } else if (msgbuf->buf[len - 1] != '\n') {
+      /* Incomplete line.  Complete the line and add a blank one */
+      append_newlines = "\n\n";
+   } else if (len == 1) {
+      /*
+       * Buffer contains a single newline.  Add another so that we leave
+       * room for the title and body.
+       */
+      append_newlines = "\n";
+   } ...
+
+Not sure that it will reduce the amount of time needed to understand
+what's going on, but at least it describes the expectations made by
+each block.
+
+> Thanks.
+>
+> By the way, I think we would want to introduce a symbolic constants
+> for the possible return values from has_conforming_footer().  The
+> check that appears after this hunk
+>
+>         if (has_footer != 3 && (!no_dup_sob || has_footer != 2))
+>                 strbuf_splice(msgbuf, msgbuf->len - ignore_footer, 0,
+>                                 sob.buf, sob.len);
+>
+> is hard to grok without them.
+
+Yeah, Jonathan said the same thing and I agree.  I was hoping someone
+else would beat me to it.
+
+-Brandon
