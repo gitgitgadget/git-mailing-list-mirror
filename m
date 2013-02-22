@@ -1,125 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add: allow users to silence Git 2.0 warnings about "add
- -u"
-Date: Fri, 22 Feb 2013 09:30:24 -0800
-Message-ID: <7v621ks1cf.fsf@alter.siamese.dyndns.org>
-References: <1361513224-34550-1-git-send-email-davvid@gmail.com>
- <7vtxp4sw8e.fsf@alter.siamese.dyndns.org>
- <CAJDDKr4dCJ3p9QBGr09kW4_0BsVJcpE7s83=eNxKE15pMznWCw@mail.gmail.com>
- <vpqd2vssnh7.fsf@grenoble-inp.fr>
+From: Joshua Clayton <stillcompiling@gmail.com>
+Subject: [PATCH] Fix in Git.pm cat_blob crashes on large files (resubmit with reviewed-by)
+Date: Fri, 22 Feb 2013 09:30:57 -0800
+Message-ID: <CAMB+bfLvpKNLaEUyUUYsO5n2y+9tyd_QcnPVzX0s2Z2t3Fr9=g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Feb 22 18:31:01 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Erik Faye-Lund <kusmabite@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 22 18:31:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8wSU-0004e2-6G
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 18:30:54 +0100
+	id 1U8wSx-00059e-9b
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 18:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758171Ab3BVRa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 12:30:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44648 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757971Ab3BVRa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 12:30:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 370D9B7BA;
-	Fri, 22 Feb 2013 12:30:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+dtgin635RfJG95+yeSFQdKRsfY=; b=Zt2Oye
-	mSPlkJypas99bwCyPZ4cCO53So1T9SGUNQThrDKqEk47sMjg8fe04BFuOBU4HgJ4
-	BiOTPO9Q0L8Fd0NP+5XA0JF6roRPmKp6LFNc92Qrg9UeFIBvnxfhAJ1+m96R02v9
-	J98J3LqUD8MmxwXP9TkfWEh/YIHLpn2Np9eyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DXKBeXKBVmUOKSxffEhm8f3FFLOemXwe
-	fgt4vkz7WhAP6VjgzTdHtMOkx0wwS/+4rbsmpjXzVpqCUuwPXPmJf36FcipTQJTC
-	TsyrThMRxr8SMYSb66otzQvs0YNDT2bEsGCqE7aTAOricNxfXYalG7Y9G3x4a0ka
-	2mdYQq0GoLw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CC48B7B8;
-	Fri, 22 Feb 2013 12:30:27 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 721CAB7B7; Fri, 22 Feb 2013
- 12:30:26 -0500 (EST)
-In-Reply-To: <vpqd2vssnh7.fsf@grenoble-inp.fr> (Matthieu Moy's message of
- "Fri, 22 Feb 2013 10:32:20 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8B9EBF4A-7D15-11E2-A69E-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758211Ab3BVRa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 12:30:58 -0500
+Received: from mail-ia0-f176.google.com ([209.85.210.176]:43608 "EHLO
+	mail-ia0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757714Ab3BVRa5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 12:30:57 -0500
+Received: by mail-ia0-f176.google.com with SMTP id i18so735531iac.35
+        for <git@vger.kernel.org>; Fri, 22 Feb 2013 09:30:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=iAKefu0yx71Fa0bILHgahWs3fn+biJ2KneNLerwH928=;
+        b=uwA3XvaJ2D/HmWB5gHa8zHDXkxyGFogTR9q5yq93wx1FDtDuhw/snBTTq1YUGqXv6w
+         ZHxIRDKmdqswSVih/Ga9H+Tss2YhdEclERO8dH1R67qgqrdQEVvWoZ9mQnyD4Z+mXq2V
+         2jjqzP17SriJK5aeXOsmeaLLOuj2Ya+eHWp2dmt+drUucWSwVTuuFg2CcWJRa6TQ5qtG
+         sgB4Vsc+xivegdZSE1YG6QZ8Em4yvMCQsNA6LVxXu1hIhpSWvriQqqm+TouGdKC9FL58
+         jqBrwIPTp6yNMGnD8GLYr6+tEhNBkHd73iNGz6N+YMSAUtfZOkk1jLrYmf3u45D2tUr1
+         jgYg==
+X-Received: by 10.50.36.169 with SMTP id r9mr4738650igj.96.1361554257351; Fri,
+ 22 Feb 2013 09:30:57 -0800 (PST)
+Received: by 10.42.79.80 with HTTP; Fri, 22 Feb 2013 09:30:57 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216847>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Read and write each 1024 byte buffer, rather than trying to buffer
+the entire content of the file.
+Previous code would crash on all files > 2 Gib, when the offset variable
+became negative (perhaps below the level of perl), resulting in a crash.
+On a 32 bit system, or a system with low memory it might crash before
+reaching 2 GiB due to memory exhaustion.
 
-> Yes, but push.default is really different: there is a config variable,
-> and we want the behavior to be configurable. In the case of "git add",
-> I don't think adding a configuration option would be the right thing.
-> That would mean typing "git add -u" on an account which isn't yours will
-> be unpredictable *forever*.
+Signed-off-by: Joshua Clayton <stillcompiling@gmail.com>
+Reviewed-by: Jeff King <peff@peff.net>
+---
+ perl/Git.pm |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-Exactly.
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 931047c..cc91288 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -949,13 +949,16 @@ sub cat_blob {
+                last unless $bytesLeft;
 
->> $ git grep 'stuff' :/
->>
->> would it be too much to teach it to do:
->>
->> $ git grep -u 'stuff'
->
-> "git grep" is out of the scope of this change. Yes, it is inconsistant
-> with the rest of Git, but doesn't seem to surprise users as much as "git
-> add -u" (for which the inconsistancy appears within the "add" command).
+                my $bytesToRead = $bytesLeft < 1024 ? $bytesLeft : 1024;
+-               my $read = read($in, $blob, $bytesToRead, $bytesRead);
++               my $read = read($in, $blob, $bytesToRead);
+                unless (defined($read)) {
+                        $self->_close_cat_blob();
+                        throw Error::Simple("in pipe went bad");
+                }
+-
+                $bytesRead += $read;
++               unless (print $fh $blob) {
++                       $self->_close_cat_blob();
++                       throw Error::Simple("couldn't write to passed
+in filehandle");
++               }
+        }
 
-It is consistent with "grep", and the reason "git grep" behaves that
-way is because consistency with "grep" matters more. I do not think
-it is going to change.
+        # Skip past the trailing newline.
+@@ -970,11 +973,6 @@ sub cat_blob {
+                throw Error::Simple("didn't find newline after blob");
+        }
 
-Another is "clean", which I do not personally care too deeply about;
-it being a destructive operation that is only used interactively and
-occasionally), the current behaviour to limit it to the cwd is much
-more sensible than making it go and touch parts of the tree that is
-unrelated to cwd.
+-       unless (print $fh $blob) {
+-               $self->_close_cat_blob();
+-               throw Error::Simple("couldn't write to passed in filehandle");
+-       }
+-
+        return $size;
+ }
 
-> I don't understand what you mean by "git grep -u".
-
-I think he meant to add "git grep --full-tree" or something, and I
-do not think it is going to happen when we have ":/" magic pathspec.
-
-> As I said, I think adding a configuration option that would remain after
-> 2.0 would do more harm than good. But after thinking about it, I'm not
-> against an option like a boolean add.use2dot0Behavior that would:
->
-> * Right now, adopt the future behavior and kill the warning
->
-> * From 2.0, kill the warning without changing the bevavior
->
-> * When we stop warning, disapear.
-
-It is marginally better than David's "set once without thinking
-because I read it on stackoverflow without fully understanding the
-ramifications, and forget about it only to suffer when Git 2.0
-happens" configuration variable, but by not much.  You can easily
-imagine
-
-	Q. Help, Git 1.8.2 is giving me this warning. What to do?
-	A. Set this configuration variable. period.
-
-and many users setting it without realizing that they are making the
-operation tree-wide at the same time.  We'd want to see this answer
-instead:
-
-	A. Say "git add -u ."; you want to add changed paths in the
- 	   current directory.
-
-Another problem with use2dot0 configuration is that it would invite
-people to imagine that setting it to false will keep the old
-behaviour forever, which is against what you set out to do with the
-patch under discussion.
+--
+1.7.10.4
