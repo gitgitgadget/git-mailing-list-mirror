@@ -1,71 +1,123 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] hash-object doc: "git hash-object -w" can write
- invalid objects
-Date: Fri, 22 Feb 2013 18:09:10 -0500
-Message-ID: <20130222230910.GD21579@sigill.intra.peff.net>
-References: <kg8ri2$vjb$1@ger.gmane.org>
- <20130222230132.GB4514@google.com>
+From: Brandon Casey <bcasey@nvidia.com>
+Subject: [PATCH] t7502: perform commits using alternate editor in a subshell
+Date: Fri, 22 Feb 2013 15:13:00 -0800
+Message-ID: <1361574780-30067-1-git-send-email-bcasey@nvidia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Mantas =?utf-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>,
-	git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 23 00:09:47 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, <ralf.thielow@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 23 00:13:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U91kM-0002Sf-K8
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 00:09:42 +0100
+	id 1U91o5-00061y-Kk
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 00:13:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756324Ab3BVXJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 18:09:15 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57609 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755685Ab3BVXJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 18:09:13 -0500
-Received: (qmail 9561 invoked by uid 107); 22 Feb 2013 23:10:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Feb 2013 18:10:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Feb 2013 18:09:10 -0500
-Content-Disposition: inline
-In-Reply-To: <20130222230132.GB4514@google.com>
+	id S1758053Ab3BVXNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 18:13:09 -0500
+Received: from hqemgate04.nvidia.com ([216.228.121.35]:11873 "EHLO
+	hqemgate04.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753819Ab3BVXNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 18:13:07 -0500
+Received: from hqnvupgp07.nvidia.com (Not Verified[216.228.121.13]) by hqemgate04.nvidia.com
+	id <B5127fb770002>; Fri, 22 Feb 2013 15:12:55 -0800
+Received: from hqemhub01.nvidia.com ([172.17.108.22])
+  by hqnvupgp07.nvidia.com (PGP Universal service);
+  Fri, 22 Feb 2013 15:12:19 -0800
+X-PGP-Universal: processed;
+	by hqnvupgp07.nvidia.com on Fri, 22 Feb 2013 15:12:19 -0800
+Received: from sc-xterm-14.nvidia.com (172.20.144.16) by hqemhub01.nvidia.com
+ (172.20.150.30) with Microsoft SMTP Server id 8.3.297.1; Fri, 22 Feb 2013
+ 15:13:02 -0800
+X-Mailer: git-send-email 1.8.1.3.566.gaa39828
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216879>
 
-On Fri, Feb 22, 2013 at 03:01:32PM -0800, Jonathan Nieder wrote:
+From: Brandon Casey <drafnel@gmail.com>
 
-> > Git doesn't handle the resulting tag objects nicely at all. For example,
-> > running `git cat-file -p` on the new object outputs a really odd
-> > timestamp "Thu Jun Thu Jan 1 00:16:09 1970 +0016" (I'm guessing it
-> > parses the year as Unix time),
-> 
-> The usual rule is that with invalid objects (e.g. as detected by "git
-> fsck"), any non-crash result is acceptable.  Garbage in, garbage out.
+These tests call test_set_editor to set an alternate editor script, but
+they appear to presume that the assignment is of a temporary nature and
+will not have any effect outside of each individual test.  That is not
+the case.  All of the test functions within a test script share a single
+environment, so any variables modified in one, are visible in the ones
+that follow.
 
-Agreed, though I think a more consistent garbage would be good (e.g.,
-time=0, tz=0).
+So, let's protect the test functions that follow these, which set an
+alternate editor, by performing the test_set_editor and 'git commit'
+in a subshell.
 
-> I notice that git-hash-object(1) doesn't contain any reference to
-> git-fsck(1).  How about something like this, to start?
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
 
-I think it's a good change. Though note that this problem is not
-discovered by fsck (which I think we should also change).
 
-> Perhaps by default hash-object should automatically fsck the objects
-> it is asked to create.
+Before "git-commit: populate the edit buffer with 2 blank lines before s-o-b"
+is merged, this is needed on top of rt/commit-cleanup-config 51fb3a3d so that
+the default EDITOR remains in effect for the new test.
 
-Not unreasonable. In this case, we also have git-mktag. It would be nice
-if we could simply run the input through a type-specific sanity checker
-(optional, I hope; I use hash-object often to craft test cases like this
-:) ). The same need came up a month or two ago in a discussion of how to
-use "git replace" safely. But I guess fsck after-the-fact is just
-another form of the same solution.
+-Brandon
 
--Peff
+
+ t/t7502-commit.sh | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index b1c7648..520a5cd 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -255,32 +255,40 @@ test_expect_success 'cleanup commit message (fail on invalid cleanup mode config
+ test_expect_success 'cleanup commit message (no config and no option uses default)' '
+ 	echo content >>file &&
+ 	git add file &&
+-	test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
+-	git commit --no-status &&
++	(
++	  test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
++	  git commit --no-status
++	) &&
+ 	commit_msg_is "commit message"
+ '
+ 
+ test_expect_success 'cleanup commit message (option overrides default)' '
+ 	echo content >>file &&
+ 	git add file &&
+-	test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
+-	git commit --cleanup=whitespace --no-status &&
++	(
++	  test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
++	  git commit --cleanup=whitespace --no-status
++	) &&
+ 	commit_msg_is "commit message # comment"
+ '
+ 
+ test_expect_success 'cleanup commit message (config overrides default)' '
+ 	echo content >>file &&
+ 	git add file &&
+-	test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
+-	git -c commit.cleanup=whitespace commit --no-status &&
++	(
++	  test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
++	  git -c commit.cleanup=whitespace commit --no-status
++	) &&
+ 	commit_msg_is "commit message # comment"
+ '
+ 
+ test_expect_success 'cleanup commit message (option overrides config)' '
+ 	echo content >>file &&
+ 	git add file &&
+-	test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
+-	git -c commit.cleanup=whitespace commit --cleanup=default &&
++	(
++	  test_set_editor "$TEST_DIRECTORY"/t7500/add-content-and-comment &&
++	  git -c commit.cleanup=whitespace commit --cleanup=default
++	) &&
+ 	commit_msg_is "commit message"
+ '
+ 
+-- 
+1.8.1.3.566.gaa39828
