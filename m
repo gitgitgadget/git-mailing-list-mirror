@@ -1,176 +1,149 @@
-From: Will Entriken <fulldecent@gmail.com>
-Subject: [PATCH] submodule update: when using recursion, show full path
-Date: Thu, 21 Feb 2013 23:25:56 -0500
-Message-ID: <CAFwrLX7CroJ1Au-w0G7jo7F7DAu5=u2E6iVc9YUTLytVBuHVhw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Phil Hord <hordp@cisco.com>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Stefan Zager <szager@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 22 05:26:27 2013
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] add: allow users to silence Git 2.0 warnings about "add -u"
+Date: Thu, 21 Feb 2013 22:07:04 -0800
+Message-ID: <1361513224-34550-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 07:07:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8kDK-00068L-Jp
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 05:26:26 +0100
+	id 1U8lnQ-0000LN-3J
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 07:07:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754534Ab3BVEZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Feb 2013 23:25:58 -0500
-Received: from mail-qc0-f170.google.com ([209.85.216.170]:38196 "EHLO
-	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753625Ab3BVEZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Feb 2013 23:25:57 -0500
-Received: by mail-qc0-f170.google.com with SMTP id d42so120162qca.29
-        for <git@vger.kernel.org>; Thu, 21 Feb 2013 20:25:57 -0800 (PST)
+	id S1754019Ab3BVGHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 01:07:17 -0500
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:59924 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754011Ab3BVGHP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 01:07:15 -0500
+Received: by mail-pb0-f53.google.com with SMTP id un1so212049pbc.40
+        for <git@vger.kernel.org>; Thu, 21 Feb 2013 22:07:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=IHVvIfcJjJXggRfis1Qc6lNWxrnD3r7lqOm8cPEDx5I=;
-        b=fG6TVEhofooxC56eVuhmBFXKDIBLUh0puQ9DzSc2trbsjZu9diiFHgkDaYamq+qcx+
-         fR1IfYATSNcM23pLWBNtRCGTgpfy478JzzIiJ0KxRX+Q/H3DqRGWURC/qhv9decEYyvk
-         /uhfikkeMcA+i5+hinQdx+7Dj9JHQmtfc6aIDPsD8fmaE7MOaYC1QJ9223eUcW2GEuEa
-         0WRSWzu2HJ7RkJ3Mn++9wWVYE5TPR5++Kws7+cvE5XTVymg0fP8HumPfQqN2sicWKI7H
-         wvvbtT3Ll2+wu6HGu9HdTUs0F5fJPGIwxB9pfrawhpDURghuTTwVtgf3ly9Dzd24snio
-         7vsA==
-X-Received: by 10.224.192.197 with SMTP id dr5mr485974qab.68.1361507157009;
- Thu, 21 Feb 2013 20:25:57 -0800 (PST)
-Received: by 10.49.104.84 with HTTP; Thu, 21 Feb 2013 20:25:56 -0800 (PST)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=UYvFs+4a7MRSH5ZpGz6w+TcjjgUJ2X4+8zlulCod/AI=;
+        b=elOT9rJLy9TZ8XO7h1saweEZovrAX2sQ54plGlXP4guU5rtwPVEowlOeibfqdRHHIO
+         Pa9XcVsfs8aBwt/VEHOW/ZBMRMGr4cwQ78B5SqEShbT6f6LPJPiVg1oDKNPQTWw9rZ3P
+         JMFD+IiNEr6/bd4hSN5D0sCQ8xh167HVQ7rfyFLYiYtY8UIFtDgWvrhlq4Qsbjz2kUHy
+         JHpQWW8wYXXQ3Ap5K6F3PmOsf9rQzTDVCDAqPc8kYsGmbOatMCcRIRJYyj3GhOMhxeok
+         Zm1qcIg7mGiL2Q5Aw3XexaSVWBYIpTTPAbtLJFzp4XHbXxIKiFgxbf1G6OA9hVicaPT6
+         Hwdg==
+X-Received: by 10.66.163.166 with SMTP id yj6mr2201162pab.130.1361513235249;
+        Thu, 21 Feb 2013 22:07:15 -0800 (PST)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPS id ub1sm1376866pbc.5.2013.02.21.22.07.13
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 21 Feb 2013 22:07:14 -0800 (PST)
+X-Mailer: git-send-email 1.8.2.rc0.22.gb3600c3.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216818>
 
->From d3fe2c76e6fa53e4cfa6f81600685c21bdadd4e3 Mon Sep 17 00:00:00 2001
-From: William Entriken <github.com@phor.net>
-Date: Thu, 21 Feb 2013 23:10:07 -0500
-Subject: [PATCH] submodule update: when using recursion, show full path
+When "git add -u" is invoked from a subdirectory it prints a
+loud warning message about an upcoming Git 2.0 behavior change.
+Some users do not care to be warned.  Accomodate them.
 
-Previously when using update with recursion, only the path for the
-inner-most module was printed. Now the path is printed from GIT_DIR.
-This now matches the behavior of submodule foreach
+The "add.silence-pathless-warnings" configuration variable can
+now be used to silence this warning.
+
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
+I found the warning a informative but also a little annoying.
+I can imagine others might as well.
 
-First patch. Several tests failed, but they were failing before I
-started. This is against maint, I would consider this a (low priority)
-bug.
+I would also like to change the warning message to mention what the Git 2.0
+behavior will be (which it does not mention), but I realize that the string
+has already been translated.  That can be a follow-on patch if this is seen as
+a worthwhile change, but might not be worth the trouble since it's a problem
+which will go away in 2.0.
 
-How does it look? Please let me know next steps.
+ Documentation/config.txt |  7 +++++++
+ builtin/add.c            |  8 +++++++-
+ t/t2200-add-update.sh    | 11 +++++++++++
+ 3 files changed, 25 insertions(+), 1 deletion(-)
 
-Signed-off-by: William Entriken <github.com@phor.net>
-
- git-submodule.sh | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 2365149..f2c53c9 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -588,7 +588,7 @@ cmd_update()
-  die_if_unmatched "$mode"
-  if test "$stage" = U
-  then
-- echo >&2 "Skipping unmerged submodule $sm_path"
-+ echo >&2 "Skipping unmerged submodule $prefix$sm_path"
-  continue
-  fi
-  name=$(module_name "$sm_path") || exit
-@@ -602,7 +602,7 @@ cmd_update()
-
-  if test "$update_module" = "none"
-  then
-- echo "Skipping submodule '$sm_path'"
-+ echo "Skipping submodule '$prefix$sm_path'"
-  continue
-  fi
-
-@@ -611,7 +611,7 @@ cmd_update()
-  # Only mention uninitialized submodules when its
-  # path have been specified
-  test "$#" != "0" &&
-- say "$(eval_gettext "Submodule path '\$sm_path' not initialized
-+ say "$(eval_gettext "Submodule path '\$prefix\$sm_path' not initialized
- Maybe you want to use 'update --init'?")"
-  continue
-  fi
-@@ -624,7 +624,7 @@ Maybe you want to use 'update --init'?")"
-  else
-  subsha1=$(clear_local_git_env; cd "$sm_path" &&
-  git rev-parse --verify HEAD) ||
-- die "$(eval_gettext "Unable to find current revision in submodule
-path '\$sm_path'")"
-+ die "$(eval_gettext "Unable to find current revision in submodule
-path '\$prefix\$sm_path'")"
-  fi
-
-  if test "$subsha1" != "$sha1" -o -n "$force"
-@@ -643,7 +643,7 @@ Maybe you want to use 'update --init'?")"
-  (clear_local_git_env; cd "$sm_path" &&
-  ( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
-  test -z "$rev") || git-fetch)) ||
-- die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
-+ die "$(eval_gettext "Unable to fetch in submodule path '\$prefix\$sm_path'")"
-  fi
-
-  # Is this something we just cloned?
-@@ -657,20 +657,20 @@ Maybe you want to use 'update --init'?")"
-  case "$update_module" in
-  rebase)
-  command="git rebase"
-- die_msg="$(eval_gettext "Unable to rebase '\$sha1' in submodule path
-'\$sm_path'")"
-- say_msg="$(eval_gettext "Submodule path '\$sm_path': rebased into '\$sha1'")"
-+ die_msg="$(eval_gettext "Unable to rebase '\$sha1' in submodule path
-'\$prefix\$sm_path'")"
-+ say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': rebased
-into '\$sha1'")"
-  must_die_on_failure=yes
-  ;;
-  merge)
-  command="git merge"
-- die_msg="$(eval_gettext "Unable to merge '\$sha1' in submodule path
-'\$sm_path'")"
-- say_msg="$(eval_gettext "Submodule path '\$sm_path': merged in '\$sha1'")"
-+ die_msg="$(eval_gettext "Unable to merge '\$sha1' in submodule path
-'\$prefix\$sm_path'")"
-+ say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': merged
-in '\$sha1'")"
-  must_die_on_failure=yes
-  ;;
-  *)
-  command="git checkout $subforce -q"
-- die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule
-path '\$sm_path'")"
-- say_msg="$(eval_gettext "Submodule path '\$sm_path': checked out '\$sha1'")"
-+ die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule
-path '\$prefix\$sm_path'")"
-+ say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': checked
-out '\$sha1'")"
-  ;;
-  esac
-
-@@ -688,11 +688,16 @@ Maybe you want to use 'update --init'?")"
-
-  if test -n "$recursive"
-  then
-- (clear_local_git_env; cd "$sm_path" && eval cmd_update "$orig_flags")
-+ (
-+ prefix="$prefix$sm_path/"
-+ clear_local_git_env
-+ cd "$sm_path" &&
-+ eval cmd_update "$orig_flags"
-+ )
-  res=$?
-  if test $res -gt 0
-  then
-- die_msg="$(eval_gettext "Failed to recurse into submodule path '\$sm_path'")"
-+ die_msg="$(eval_gettext "Failed to recurse into submodule path
-'\$prefix\$sm_path'")"
-  if test $res -eq 1
-  then
-  err="${err};$die_msg"
---
-1.7.11.3
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3bb53da..b6ed859 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -648,6 +648,13 @@ core.abbrev::
+ 	for abbreviated object names to stay unique for sufficiently long
+ 	time.
+ 
++add.silence-pathless-warnings::
++	Tells 'git add' to silence warnings when 'git add -u' is used in
++	a subdirectory without specifying a path.  Git 2.0 updates the
++	whole tree.  Git 1.x updates the current directory only, and warns
++	about the upcoming change unless this variable is set to true.
++	False by default, and ignored by Git 2.0.
++
+ add.ignore-errors::
+ add.ignoreErrors::
+ 	Tells 'git add' to continue adding files when some files cannot be
+diff --git a/builtin/add.c b/builtin/add.c
+index 0dd014e..01b9cac 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -272,6 +272,7 @@ N_("The following paths are ignored by one of your .gitignore files:\n");
+ 
+ static int verbose = 0, show_only = 0, ignored_too = 0, refresh_only = 0;
+ static int ignore_add_errors, addremove, intent_to_add, ignore_missing = 0;
++static int silence_pathless_warnings;
+ 
+ static struct option builtin_add_options[] = {
+ 	OPT__DRY_RUN(&show_only, N_("dry run")),
+@@ -296,6 +297,8 @@ static int add_config(const char *var, const char *value, void *cb)
+ 	    !strcmp(var, "add.ignore-errors")) {
+ 		ignore_add_errors = git_config_bool(var, value);
+ 		return 0;
++	} else if (!strcmp(var, "add.silence-pathless-warnings")) {
++		silence_pathless_warnings = git_config_bool(var, value);
+ 	}
+ 	return git_default_config(var, value, cb);
+ }
+@@ -321,7 +324,8 @@ static int add_files(struct dir_struct *dir, int flags)
+ 	return exit_status;
+ }
+ 
+-static void warn_pathless_add(const char *option_name, const char *short_name) {
++static void warn_pathless_add(const char *option_name, const char *short_name)
++{
+ 	/*
+ 	 * To be consistent with "git add -p" and most Git
+ 	 * commands, we should default to being tree-wide, but
+@@ -332,6 +336,8 @@ static void warn_pathless_add(const char *option_name, const char *short_name) {
+ 	 * turned into a die(...), and eventually we may
+ 	 * reallow the command with a new behavior.
+ 	 */
++	if (silence_pathless_warnings)
++		return;
+ 	warning(_("The behavior of 'git add %s (or %s)' with no path argument from a\n"
+ 		  "subdirectory of the tree will change in Git 2.0 and should not be used anymore.\n"
+ 		  "To add content for the whole tree, run:\n"
+diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
+index 4cdebda..779dbe7 100755
+--- a/t/t2200-add-update.sh
++++ b/t/t2200-add-update.sh
+@@ -171,4 +171,15 @@ test_expect_success '"add -u non-existent" should fail' '
+ 	! (git ls-files | grep "non-existent")
+ '
+ 
++test_expect_success 'add.silence-pathless-warnings configuration variable' '
++	: >expect &&
++	test_config add.silence-pathless-warnings true &&
++	(
++		cd dir1 &&
++		echo more >>sub2 &&
++		git add -u
++	) >actual 2>&1 &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+1.8.2.rc0.22.gb3600c3.dirty
