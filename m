@@ -1,204 +1,80 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule update: when using recursion, show full path
-Date: Fri, 22 Feb 2013 20:17:48 +0100
-Message-ID: <5127C45C.2020204@web.de>
-References: <CAFwrLX7CroJ1Au-w0G7jo7F7DAu5=u2E6iVc9YUTLytVBuHVhw@mail.gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Is this a bug?
+Date: Fri, 22 Feb 2013 14:29:47 -0500
+Message-ID: <CABURp0rO5zJywFN16=Sn20b2DAVA7XBs4EC4GxGbxftXqUS6gA@mail.gmail.com>
+References: <937BB05095F39E46B969256AA776205322B2CF15C7@ST-EXCL29.statoil.net>
+ <CABPQNSY4ordHh2ee8mk-2kCD40+sMf_SxrjfzGbkyGGTNW1TzA@mail.gmail.com> <CACsJy8DjatRbL=J-MZmQFnd+_7i-WwYHSnkY_ga++fx1R5Whmw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Phil Hord <hordp@cisco.com>,
-	Stefan Zager <szager@google.com>
-To: Will Entriken <fulldecent@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 20:18:19 2013
+Cc: Erik Faye-Lund <kusmabite@gmail.com>,
+	David Wade <DAWAD@statoil.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 20:30:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8y8R-00069X-A5
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 20:18:19 +0100
+	id 1U8yKI-0007uH-KE
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 20:30:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757089Ab3BVTRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 14:17:54 -0500
-Received: from mout.web.de ([212.227.15.4]:65213 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757077Ab3BVTRx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 14:17:53 -0500
-Received: from [192.168.178.41] ([91.3.179.163]) by smtp.web.de (mrweb003)
- with ESMTPA (Nemesis) id 0M5x4z-1V5uX00gsT-00yKwW; Fri, 22 Feb 2013 20:17:51
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-In-Reply-To: <CAFwrLX7CroJ1Au-w0G7jo7F7DAu5=u2E6iVc9YUTLytVBuHVhw@mail.gmail.com>
-X-Enigmail-Version: 1.5
-X-Provags-ID: V02:K0:Db7u2FaND7L0ladt0iMIER6o+Rw5/ModoAmdRk3jsGC
- B+qkUMxZoRCHRC99WT9SNPCwKY6NELvIPzuQMm9G/V1JAdIKzU
- DcX0Va8ZDTEKLLLVmkac6XLlLPN46a+MflFMw40bAV0b135Qkz
- xh5Z9QdN+bFoerPk/0P1YE5t4cuDCIGsxPwAFblt1hrZGuH23+
- ErsWq4EqH7aQT1n207eZg==
+	id S1756539Ab3BVTaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 14:30:09 -0500
+Received: from mail-vc0-f179.google.com ([209.85.220.179]:33717 "EHLO
+	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753628Ab3BVTaJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 14:30:09 -0500
+Received: by mail-vc0-f179.google.com with SMTP id gb23so621258vcb.24
+        for <git@vger.kernel.org>; Fri, 22 Feb 2013 11:30:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=n5wcgxy+k3XF0iVSF8aZHCVgxbjveFoiG+24LQ2S6VM=;
+        b=hMr87+3+m3EsM082/Pib1KLxUgAVkM9nzpePbR6iqY9gWewh7iBsDihtCcdJ/twK0G
+         IqPkcmkE5ZfwxS9mpcZ1IBOk/tbHfJRtTLc674i0cC6Jcf+svynUTny9ETiLUxXEm81/
+         f3T3rW7X1SpZzE4PwCwlO1deRue3alcMPQFFpg1DdqUjaupppjRbQKMyQqzPdNp6xEU7
+         MHPZs8wpdcccbwcnJaxbSUF26HvCFzOkzMHii1Hxt2fo2tKvuOGlTOg/UTsFzCH82boi
+         Cjq7fSNA67y0QQHnPCGT01+47dllXpXByAcJFeBoEBaOyaiFtCpUgpJcjhUSZdFuqWnM
+         letA==
+X-Received: by 10.52.94.71 with SMTP id da7mr3752434vdb.13.1361561408108; Fri,
+ 22 Feb 2013 11:30:08 -0800 (PST)
+Received: by 10.58.201.103 with HTTP; Fri, 22 Feb 2013 11:29:47 -0800 (PST)
+In-Reply-To: <CACsJy8DjatRbL=J-MZmQFnd+_7i-WwYHSnkY_ga++fx1R5Whmw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216857>
 
-Thanks. Your code changes are looking good and the commit message
-explains what you did and why you did it. A few comments below.
-
-Am 22.02.2013 05:25, schrieb Will Entriken:
->>From d3fe2c76e6fa53e4cfa6f81600685c21bdadd4e3 Mon Sep 17 00:00:00 2001
-> From: William Entriken <github.com@phor.net>
-> Date: Thu, 21 Feb 2013 23:10:07 -0500
+On Tue, Feb 19, 2013 at 6:02 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Feb 19, 2013 at 4:47 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+>> On Tue, Feb 19, 2013 at 10:32 AM, David Wade <DAWAD@statoil.com> wrote:
+>>> Hi,
+>>>
+>>> I wrote a commit message beginning with a hash (#) character, like this: 'git commit -m "#ifdef ...." '
+>>>
+>>> Everything went okay when committing, but then I tried 'git commit -amend' and without editing the commit message I was told I had an empty commit message.
+>>>
+>>> Is this a problem with my text editor (vim 7.2) or git itself? (git version 1.7.2.2 under RedHat 5.8) Or something I'm not supposed to do ;-) ?
+>>
+>> The problem is that when doing interactive editing of messages (like
+>> 'git commit --amend' does), git considers '#' as a comment-character.
+>> You can disable this by using the --cleanup=verbatim switch (or some
+>> other suiting cleanup-setting, see 'git help commit').
 >
-> Subject: [PATCH] submodule update: when using recursion, show full path
+> Nobody is always conscious about the leading # in commit message to do
+> that. I once edited a commit message and the auto-wrap feature put '#'
+> at the beginning of the line. I saved and went on without noticing one
+> line was lost until much later :( Perhaps we should change the comment
+> signature a bit to reduce accidents, like only recognize '#' lines as
+> comments after a special line like
+>
+> # this is not a comment
+> ### START OF COMMENT ###
+> # this is a comment
 
-The lines above aren't necessary as they are taken from the mail header.
-
-> Previously when using update with recursion, only the path for the
-> inner-most module was printed. Now the path is printed from GIT_DIR.
-
-You should replace "from GIT_DIR" with something like "relative to the
-directory the recursion started in" here.
-
-> This now matches the behavior of submodule foreach
-
-Please add a '.' at the end of the sentence.
-
-> ---
-> 
-> First patch. Several tests failed, but they were failing before I
-> started. This is against maint, I would consider this a (low priority)
-> bug.
-
-Strange that you have failing tests, for me everything runs fine (With
-or without your patch). But I agree that this is a low priority bug.
-
-> How does it look? Please let me know next steps.
-
-This patch does not apply due to removed leading whitespaces and a
-few wrapped lines. Please see Documentation/git-format-patch.txt on
-how to convince the mailer of your choice to send the patch out
-unmangled.
-
-> Signed-off-by: William Entriken <github.com@phor.net>
-
-The Signed-off-by belongs just before the "---" line above, as
-everything between "---" and the line below won't make it into the
-commit message.
-
->  git-submodule.sh | 31 ++++++++++++++++++-------------
->  1 file changed, 18 insertions(+), 13 deletions(-)
-> 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 2365149..f2c53c9 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -588,7 +588,7 @@ cmd_update()
->   die_if_unmatched "$mode"
->   if test "$stage" = U
->   then
-> - echo >&2 "Skipping unmerged submodule $sm_path"
-> + echo >&2 "Skipping unmerged submodule $prefix$sm_path"
->   continue
->   fi
->   name=$(module_name "$sm_path") || exit
-> @@ -602,7 +602,7 @@ cmd_update()
-> 
->   if test "$update_module" = "none"
->   then
-> - echo "Skipping submodule '$sm_path'"
-> + echo "Skipping submodule '$prefix$sm_path'"
->   continue
->   fi
-> 
-> @@ -611,7 +611,7 @@ cmd_update()
->   # Only mention uninitialized submodules when its
->   # path have been specified
->   test "$#" != "0" &&
-> - say "$(eval_gettext "Submodule path '\$sm_path' not initialized
-> + say "$(eval_gettext "Submodule path '\$prefix\$sm_path' not initialized
->  Maybe you want to use 'update --init'?")"
->   continue
->   fi
-> @@ -624,7 +624,7 @@ Maybe you want to use 'update --init'?")"
->   else
->   subsha1=$(clear_local_git_env; cd "$sm_path" &&
->   git rev-parse --verify HEAD) ||
-> - die "$(eval_gettext "Unable to find current revision in submodule
-> path '\$sm_path'")"
-> + die "$(eval_gettext "Unable to find current revision in submodule
-> path '\$prefix\$sm_path'")"
->   fi
-> 
->   if test "$subsha1" != "$sha1" -o -n "$force"
-> @@ -643,7 +643,7 @@ Maybe you want to use 'update --init'?")"
->   (clear_local_git_env; cd "$sm_path" &&
->   ( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
->   test -z "$rev") || git-fetch)) ||
-> - die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
-> + die "$(eval_gettext "Unable to fetch in submodule path '\$prefix\$sm_path'")"
->   fi
-> 
->   # Is this something we just cloned?
-> @@ -657,20 +657,20 @@ Maybe you want to use 'update --init'?")"
->   case "$update_module" in
->   rebase)
->   command="git rebase"
-> - die_msg="$(eval_gettext "Unable to rebase '\$sha1' in submodule path
-> '\$sm_path'")"
-> - say_msg="$(eval_gettext "Submodule path '\$sm_path': rebased into '\$sha1'")"
-> + die_msg="$(eval_gettext "Unable to rebase '\$sha1' in submodule path
-> '\$prefix\$sm_path'")"
-> + say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': rebased
-> into '\$sha1'")"
->   must_die_on_failure=yes
->   ;;
->   merge)
->   command="git merge"
-> - die_msg="$(eval_gettext "Unable to merge '\$sha1' in submodule path
-> '\$sm_path'")"
-> - say_msg="$(eval_gettext "Submodule path '\$sm_path': merged in '\$sha1'")"
-> + die_msg="$(eval_gettext "Unable to merge '\$sha1' in submodule path
-> '\$prefix\$sm_path'")"
-> + say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': merged
-> in '\$sha1'")"
->   must_die_on_failure=yes
->   ;;
->   *)
->   command="git checkout $subforce -q"
-> - die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule
-> path '\$sm_path'")"
-> - say_msg="$(eval_gettext "Submodule path '\$sm_path': checked out '\$sha1'")"
-> + die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule
-> path '\$prefix\$sm_path'")"
-> + say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': checked
-> out '\$sha1'")"
->   ;;
->   esac
-> 
-> @@ -688,11 +688,16 @@ Maybe you want to use 'update --init'?")"
-> 
->   if test -n "$recursive"
->   then
-> - (clear_local_git_env; cd "$sm_path" && eval cmd_update "$orig_flags")
-> + (
-> + prefix="$prefix$sm_path/"
-> + clear_local_git_env
-> + cd "$sm_path" &&
-> + eval cmd_update "$orig_flags"
-> + )
->   res=$?
->   if test $res -gt 0
->   then
-> - die_msg="$(eval_gettext "Failed to recurse into submodule path '\$sm_path'")"
-> + die_msg="$(eval_gettext "Failed to recurse into submodule path
-> '\$prefix\$sm_path'")"
->   if test $res -eq 1
->   then
->   err="${err};$die_msg"
-> --
-> 1.7.11.3
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Or maybe --amend should imply --cleanup=whitespace.
+--
+Phil
