@@ -1,62 +1,73 @@
-From: Eckhard Maass <eckhard.maass@gmx.net>
-Subject: Re: -B option of git log
-Date: Fri, 22 Feb 2013 11:14:36 +0100
-Message-ID: <5127450C.5040908@gmx.net>
-References: <5126BF50.6020500@gmx.net> <20130222005704.GA24287@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 15/19] pkt-line: share buffer/descriptor reading implementation
+Date: Fri, 22 Feb 2013 06:22:02 -0500
+Message-ID: <CAPig+cQ0kxUpuXe3Pj01xnPmFX4T61hpROrUwCf7R9Y9e35M1A@mail.gmail.com>
+References: <20130220195147.GA25332@sigill.intra.peff.net>
+	<20130220200430.GO25647@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 22 11:20:14 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 22 12:22:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8pjg-0001CA-1h
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 11:20:12 +0100
+	id 1U8qhz-0006QB-Qa
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 12:22:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755703Ab3BVKTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 05:19:44 -0500
-Received: from mout.gmx.net ([212.227.15.19]:62330 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754780Ab3BVKTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 05:19:43 -0500
-Received: from mailout-de.gmx.net ([10.1.76.4]) by mrigmx.server.lan
- (mrigmx002) with ESMTP (Nemesis) id 0M38kj-1UxloX0sf1-00sz0A for
- <git@vger.kernel.org>; Fri, 22 Feb 2013 11:15:02 +0100
-Received: (qmail invoked by alias); 22 Feb 2013 10:14:39 -0000
-Received: from fire2.tngtech.com (EHLO [10.3.2.243]) [217.110.29.210]
-  by mail.gmx.net (mp004) with SMTP; 22 Feb 2013 11:14:39 +0100
-X-Authenticated: #1609611
-X-Provags-ID: V01U2FsdGVkX1/RAthVev/RFnn47ktQnYCL1nFZykDZiloMeigWbB
-	4Qg93a/xImsBFQ
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <20130222005704.GA24287@sigill.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1756215Ab3BVLWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 06:22:07 -0500
+Received: from mail-la0-f47.google.com ([209.85.215.47]:40626 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755897Ab3BVLWF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 06:22:05 -0500
+Received: by mail-la0-f47.google.com with SMTP id fj20so503761lab.34
+        for <git@vger.kernel.org>; Fri, 22 Feb 2013 03:22:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=24tu0hkPxB/hw4Ocv40SixIogHRW92mqz63L6AefhGk=;
+        b=T5zJtJm1VnsqIvEaQ1UjLfbbb8pph7zOXardnRQK/0i9RkGrBSjrVzs6ue+MH0qXbw
+         ZdIO744MWGCkRutT6zTJghS4SahzTzLeu2PEDmO2+0BOag4N+ZhtPCCNarz9D6zecyEz
+         rxhOgkc45wmrqGWhwW+oETK/zLBsffFkoshPeM+Msyw4P+7uxMESqdOada0P10t/YXtw
+         T0aD+tvfj/U+nWrj2P3aoPIbvs8VySxptCwynnrSkBpC9qijmIwT6XgKoXloocO9agyF
+         FmsHUhSa2RPaLotz8bGMmERwLqtQorV9t++k3Ae2xgM7qkC80FbTKuItJKG+KEeQU/PM
+         gkwg==
+X-Received: by 10.152.105.244 with SMTP id gp20mr1420417lab.34.1361532122637;
+ Fri, 22 Feb 2013 03:22:02 -0800 (PST)
+Received: by 10.114.1.43 with HTTP; Fri, 22 Feb 2013 03:22:02 -0800 (PST)
+In-Reply-To: <20130220200430.GO25647@sigill.intra.peff.net>
+X-Google-Sender-Auth: ijheR6OFFiaKeLImw6LcOSwA7pQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216829>
 
-On 02/22/2013 01:57 AM, Jeff King wrote:
-> I think the problem is that your test file is so tiny that it falls
-> afoul of git's MINIMUM_BREAK_SIZE heuristic of 400 bytes (which prevents
-> false positives on tiny files). Try replacing your "Lorem ipsum" echo
-> with something like "seq 1 150", and I think you will find the result
-> you are expecting.
-Thanks. Two points, though:
+On Wed, Feb 20, 2013 at 3:04 PM, Jeff King <peff@peff.net> wrote:
+> diff --git a/pkt-line.h b/pkt-line.h
+> index fa93e32..47361f5 100644
+> --- a/pkt-line.h
+> +++ b/pkt-line.h
+> @@ -25,9 +25,16 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((f
+>  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+>
+>  /*
+> - * Read a packetized line from the descriptor into the buffer, which must be at
+> - * least size bytes long. The return value specifies the number of bytes read
+> - * into the buffer.
+> + * Read a packetized line into the buffer, which must be at least size bytes
+> + * long. The return value specifies the number of bytes read into the buffer.
+> + *
+> + * If src_buffer is not NULL (and nor is *src_buffer), it should point to a
+> + * buffer containing the packet data to parse, of at least *src_len bytes.
+> + * After the function returns, src_buf will be increments and src_len
 
-With bigger files, I do get something like:
-| M100  d
-| R100  d       e
+s/increments/incremented/
 
-The rename is fine. But I am a bit puzzled mit the M - I, somehow,
-would have expected an A for add and not a M.
-
-Secondly, would it be a good idea to enhance the documentation on
-that point to clarify this minimum size?
-
-SEcki
+> + * decremented by the number of bytes consumed.
