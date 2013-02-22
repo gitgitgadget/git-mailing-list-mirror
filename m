@@ -1,69 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] archive: let remote clients get reachable commits
-Date: Fri, 22 Feb 2013 12:27:10 -0500
-Message-ID: <20130222172710.GB17475@sigill.intra.peff.net>
-References: <1361456643-51851-1-git-send-email-gurugray@yandex.ru>
- <20130221155208.GA19943@sigill.intra.peff.net>
- <995301361532360@web22h.yandex.ru>
- <7vehg8s295.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add: allow users to silence Git 2.0 warnings about "add
+ -u"
+Date: Fri, 22 Feb 2013 09:30:24 -0800
+Message-ID: <7v621ks1cf.fsf@alter.siamese.dyndns.org>
+References: <1361513224-34550-1-git-send-email-davvid@gmail.com>
+ <7vtxp4sw8e.fsf@alter.siamese.dyndns.org>
+ <CAJDDKr4dCJ3p9QBGr09kW4_0BsVJcpE7s83=eNxKE15pMznWCw@mail.gmail.com>
+ <vpqd2vssnh7.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sergey Sergeev <gurugray@yandex.ru>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 18:27:45 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Feb 22 18:31:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8wPJ-0001Gn-QP
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 18:27:38 +0100
+	id 1U8wSU-0004e2-6G
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 18:30:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758149Ab3BVR1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 12:27:13 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57188 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757929Ab3BVR1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 12:27:12 -0500
-Received: (qmail 6188 invoked by uid 107); 22 Feb 2013 17:28:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Feb 2013 12:28:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Feb 2013 12:27:10 -0500
-Content-Disposition: inline
-In-Reply-To: <7vehg8s295.fsf@alter.siamese.dyndns.org>
+	id S1758171Ab3BVRa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 12:30:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44648 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757971Ab3BVRa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 12:30:27 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 370D9B7BA;
+	Fri, 22 Feb 2013 12:30:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+dtgin635RfJG95+yeSFQdKRsfY=; b=Zt2Oye
+	mSPlkJypas99bwCyPZ4cCO53So1T9SGUNQThrDKqEk47sMjg8fe04BFuOBU4HgJ4
+	BiOTPO9Q0L8Fd0NP+5XA0JF6roRPmKp6LFNc92Qrg9UeFIBvnxfhAJ1+m96R02v9
+	J98J3LqUD8MmxwXP9TkfWEh/YIHLpn2Np9eyM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DXKBeXKBVmUOKSxffEhm8f3FFLOemXwe
+	fgt4vkz7WhAP6VjgzTdHtMOkx0wwS/+4rbsmpjXzVpqCUuwPXPmJf36FcipTQJTC
+	TsyrThMRxr8SMYSb66otzQvs0YNDT2bEsGCqE7aTAOricNxfXYalG7Y9G3x4a0ka
+	2mdYQq0GoLw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CC48B7B8;
+	Fri, 22 Feb 2013 12:30:27 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 721CAB7B7; Fri, 22 Feb 2013
+ 12:30:26 -0500 (EST)
+In-Reply-To: <vpqd2vssnh7.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+ "Fri, 22 Feb 2013 10:32:20 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8B9EBF4A-7D15-11E2-A69E-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216846>
 
-On Fri, Feb 22, 2013 at 09:10:46AM -0800, Junio C Hamano wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> I personally think that it is OK to limit the scope to expressions
-> that start from the tip of ref and expressions that start with the
-> SHA-1 at the tip of ref, e.g.
-> 
->     master~12:Documentation
->     v2.6.11:arch/alpha
->     5dc01c595e6c6ec9ccda	# tag v2.6.11
->     26791a8bcf0e6d33f43a:arch	# tag v2.6.12
->     26791a8bcf0~12:arch		# starting at 26791a8b and dig down
-> 
-> are OK, while forbidding the following:
-> 
->     c39ae07f393806ccf406        # tree of tag v2.6.11
->     9ee1c939d1cb936b1f98	# commit v2.6.12^0
->     9ee1c939d1cb936b1f98:	# tree of commit v2.6.12^0
->     9ee1c939d1cb936b1f98:arch	# subtree of commit v2.6.12^0
-> 
-> which will make it significantly easier to implement the necessary
-> validation in a robust way.
+> Yes, but push.default is really different: there is a config variable,
+> and we want the behavior to be configurable. In the case of "git add",
+> I don't think adding a configuration option would be the right thing.
+> That would mean typing "git add -u" on an account which isn't yours will
+> be unpredictable *forever*.
 
-How are you proposing to verify master~12 in that example? Because
-during parsing, it starts with "master", and we remember that? Or
-because you are doing a reachability traversal on all refs after we
-parse?
+Exactly.
 
--Peff
+>> $ git grep 'stuff' :/
+>>
+>> would it be too much to teach it to do:
+>>
+>> $ git grep -u 'stuff'
+>
+> "git grep" is out of the scope of this change. Yes, it is inconsistant
+> with the rest of Git, but doesn't seem to surprise users as much as "git
+> add -u" (for which the inconsistancy appears within the "add" command).
+
+It is consistent with "grep", and the reason "git grep" behaves that
+way is because consistency with "grep" matters more. I do not think
+it is going to change.
+
+Another is "clean", which I do not personally care too deeply about;
+it being a destructive operation that is only used interactively and
+occasionally), the current behaviour to limit it to the cwd is much
+more sensible than making it go and touch parts of the tree that is
+unrelated to cwd.
+
+> I don't understand what you mean by "git grep -u".
+
+I think he meant to add "git grep --full-tree" or something, and I
+do not think it is going to happen when we have ":/" magic pathspec.
+
+> As I said, I think adding a configuration option that would remain after
+> 2.0 would do more harm than good. But after thinking about it, I'm not
+> against an option like a boolean add.use2dot0Behavior that would:
+>
+> * Right now, adopt the future behavior and kill the warning
+>
+> * From 2.0, kill the warning without changing the bevavior
+>
+> * When we stop warning, disapear.
+
+It is marginally better than David's "set once without thinking
+because I read it on stackoverflow without fully understanding the
+ramifications, and forget about it only to suffer when Git 2.0
+happens" configuration variable, but by not much.  You can easily
+imagine
+
+	Q. Help, Git 1.8.2 is giving me this warning. What to do?
+	A. Set this configuration variable. period.
+
+and many users setting it without realizing that they are making the
+operation tree-wide at the same time.  We'd want to see this answer
+instead:
+
+	A. Say "git add -u ."; you want to add changed paths in the
+ 	   current directory.
+
+Another problem with use2dot0 configuration is that it would invite
+people to imagine that setting it to false will keep the old
+behaviour forever, which is against what you set out to do with the
+patch under discussion.
