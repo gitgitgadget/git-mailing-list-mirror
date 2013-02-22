@@ -1,102 +1,80 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] archive: let remote clients get reachable commits
-Date: Fri, 22 Feb 2013 13:26:54 -0500
-Message-ID: <20130222182654.GA18934@sigill.intra.peff.net>
-References: <1361456643-51851-1-git-send-email-gurugray@yandex.ru>
- <20130221155208.GA19943@sigill.intra.peff.net>
- <995301361532360@web22h.yandex.ru>
- <7vehg8s295.fsf@alter.siamese.dyndns.org>
- <20130222172710.GB17475@sigill.intra.peff.net>
- <7vfw0odxz3.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Fix in Git.pm cat_blob crashes on large files (resubmit
+ with reviewed-by)
+Date: Fri, 22 Feb 2013 13:34:19 -0500
+Message-ID: <20130222183419.GB18934@sigill.intra.peff.net>
+References: <CAMB+bfLvpKNLaEUyUUYsO5n2y+9tyd_QcnPVzX0s2Z2t3Fr9=g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Sergey Sergeev <gurugray@yandex.ru>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 22 19:27:24 2013
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>
+To: Joshua Clayton <stillcompiling@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 19:34:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8xL9-0004qI-AX
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 19:27:23 +0100
+	id 1U8xSJ-00041a-0r
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 19:34:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758223Ab3BVS05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 13:26:57 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57277 "EHLO
+	id S1758528Ab3BVSeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 13:34:21 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57291 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758184Ab3BVS04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 13:26:56 -0500
-Received: (qmail 7021 invoked by uid 107); 22 Feb 2013 18:28:29 -0000
+	id S1754722Ab3BVSeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 13:34:21 -0500
+Received: (qmail 7059 invoked by uid 107); 22 Feb 2013 18:35:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Feb 2013 13:28:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Feb 2013 13:26:54 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Feb 2013 13:35:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Feb 2013 13:34:19 -0500
 Content-Disposition: inline
-In-Reply-To: <7vfw0odxz3.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <CAMB+bfLvpKNLaEUyUUYsO5n2y+9tyd_QcnPVzX0s2Z2t3Fr9=g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216850>
 
-On Fri, Feb 22, 2013 at 10:06:56AM -0800, Junio C Hamano wrote:
+On Fri, Feb 22, 2013 at 09:30:57AM -0800, Joshua Clayton wrote:
 
-> Jeff King <peff@peff.net> writes:
+> Read and write each 1024 byte buffer, rather than trying to buffer
+> the entire content of the file.
+
+OK. Did you ever repeat your timing with a larger symmetric buffer? That
+should probably be a separate patch on top, but it might be worth doing
+while we are thinking about it.
+
+> Previous code would crash on all files > 2 Gib, when the offset variable
+> became negative (perhaps below the level of perl), resulting in a crash.
+
+I'm still slightly dubious of this, just because it doesn't match my
+knowledge of perl (which is admittedly imperfect). I'm curious how you
+diagnosed it?
+
+> On a 32 bit system, or a system with low memory it might crash before
+> reaching 2 GiB due to memory exhaustion.
 > 
-> > How are you proposing to verify master~12 in that example? Because
-> > during parsing, it starts with "master", and we remember that?
-> 
-> By not cheating (i.e. using get_sha1()), but making sure you can
-> parse "master" and the adornment on it "~12" is something sane.
+> Signed-off-by: Joshua Clayton <stillcompiling@gmail.com>
+> Reviewed-by: Jeff King <peff@peff.net>
 
-So, like these patches:
+The commit message is a good place to mention any side effects, and why
+they are not a problem. Something like:
 
-  http://article.gmane.org/gmane.comp.version-control.git/188386
+  The previous code buffered the whole blob before writing, so any error
+  reading from cat-file would result in zero bytes being written to the
+  output stream.  After this change, the output may be left in a
+  partially written state (or even fully written, if we fail when
+  parsing the final newline from cat-file). However, it's not reasonable
+  for callers to expect anything about the state of the output when we
+  return an error (after all, even with full buffering, we might fail
+  during the writing process).  So any caller which cares about this is
+  broken already, and we do not have to worry about them.
 
-  http://article.gmane.org/gmane.comp.version-control.git/188387
+> ---
+>  perl/Git.pm |   12 +++++-------
+>  1 file changed, 5 insertions(+), 7 deletions(-)
 
-? They do not allow arbitrary sha1s that happen to point to branch tips,
-but I am not sure whether that is something people care about or not.
-
-> That is why I said "this is harder than one would naively think, but
-> limiting will make it significantly easier".  I didn't say that it
-> would become "trivial", did I?
-
-I'm not implying it would be trivial. It was an honest question, since
-you did not seem to want to do the pass-more-information-out-of-get-sha1
-approach last time this came up.
-
-Even though those patches above are from me, I've come to the conclusion
-that the best thing to do is to harmonize with upload-pack. Then you
-never have the "well, but I could fetch it, so why won't upload-archive
-let me get it" argument. Something like:
-
-  1. split name at first colon (like we already do)
-
-  2. make sure the left-hand side is reachable according to the same
-     rules that upload-pack uses. Right we just say "is it a ref". It
-     should be:
-
-      2a. if it is a commit-ish, is it reachable from a ref?
-
-      2b. otherwise, is it pointed to directly by a ref?
-
-  3. Abort if it's not reachable. Abort if it's not a tree-ish. No
-     checks necessary on the right-hand side, because a path lookup in a
-     tree-ish is always reachable from the tree-ish. I.e., the same rule
-     we have now.
-
-I did not check if upload-pack will respect a "want" line for an object
-accessible only by peeling a tag. But an obvious 2c could be "is it
-accessible by peeling the refs?"
-
-That leaves the only inaccessible thing as direct-sha1s of trees and
-blobs that are reachable from commits. But you also cannot ask for those
-directly via upload-pack, and I do not think it's worth it to do the
-much more expensive reachability check to verify those (OTOH, it is no
-more expensive than the current "counting objects" for a clone, and we
-could do it only as a fallback when cheaper checks do not work).
+The patch itself looks fine to me.
 
 -Peff
