@@ -1,133 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [RFC/PATCH] hash-object doc: "git hash-object -w" can write invalid
- objects
-Date: Fri, 22 Feb 2013 15:01:32 -0800
-Message-ID: <20130222230132.GB4514@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Crashes while trying to show tag objects with bad timestamps
+Date: Fri, 22 Feb 2013 18:04:18 -0500
+Message-ID: <20130222230418.GC21579@sigill.intra.peff.net>
 References: <kg8ri2$vjb$1@ger.gmane.org>
+ <20130222224655.GB21579@sigill.intra.peff.net>
+ <7vy5egark3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Mantas =?utf-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 23 00:02:09 2013
+Cc: Mantas =?utf-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 23 00:04:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U91d1-0004H8-ON
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 00:02:08 +0100
+	id 1U91fa-0006eO-CU
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 00:04:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754051Ab3BVXBm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2013 18:01:42 -0500
-Received: from mail-da0-f42.google.com ([209.85.210.42]:56501 "EHLO
-	mail-da0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754044Ab3BVXBm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 18:01:42 -0500
-Received: by mail-da0-f42.google.com with SMTP id z17so575416dal.1
-        for <git@vger.kernel.org>; Fri, 22 Feb 2013 15:01:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=J/ryrjAEF0um2rUkIiVgQh/6fnBJNK5Hpobl1IzDPCA=;
-        b=yTZDVeUso9iiOgrVYdQkRGr52PV3ST1xRg/MxAGCDXHZDzgBpw00JyWoc+SBrc5Ycl
-         EPLdFobZg7BxZt2FO7vR0W3AlXvmKAgVvw+oywp4NUZN7G5maBANAxBHhblS8Gv/knML
-         jDyG467SoJDdG4Ato4/4UQqRWyF7fsOCFOgoGh+keEHhDMLdCu4evi9/1HQOwZ8a7Pja
-         oIybpzT978PyVk8Udidc/qJwLLEmHhzp+CNEdLrbRd8FOPReJSNqwoZm8maV55kKyS/o
-         c5bR28aYwZ9WAmgO4b1V3dVidn+cy/ux916CnxqrhgA1DRuwIJ8iarvxfPjjkPFxUCY+
-         aGIA==
-X-Received: by 10.66.162.196 with SMTP id yc4mr6672756pab.137.1361574101542;
-        Fri, 22 Feb 2013 15:01:41 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id d8sm4367562pax.23.2013.02.22.15.01.39
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 22 Feb 2013 15:01:40 -0800 (PST)
+	id S1754840Ab3BVXEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 18:04:21 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57596 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753416Ab3BVXEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 18:04:21 -0500
+Received: (qmail 9442 invoked by uid 107); 22 Feb 2013 23:05:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Feb 2013 18:05:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Feb 2013 18:04:18 -0500
 Content-Disposition: inline
-In-Reply-To: <kg8ri2$vjb$1@ger.gmane.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7vy5egark3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216876>
 
-When using "hash-object -w" to create non-blob objects, it is
-generally a good policy to run "git fsck" afterward to make sure the
-resulting object is valid.  Add a warning to the manpage.
+On Fri, Feb 22, 2013 at 02:53:48PM -0800, Junio C Hamano wrote:
 
-While it at, gently nudge the user of "hash-object -w" toward
-higher-level interfaces for creating or modifying trees, commits, and
-tags.
+> > I guess we should probably issue a warning, too. Also disappointingly,
+> > git-fsck does not seem to detect this breakage at all.
+> 
+> Yes for the warning, 
 
-Reported-by: Mantas Mikul=C4=97nas <grawity@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Hi Mantas,
+Unfortunately, a good warning is harder than I had hoped. At the point
+where we notice the problem, pp_user_info, we have very little context.
+We can say only something like:
 
-Mantas Mikul=C4=97nas wrote:
+  warning: malformed date in ident 'Jeff King <peff@peff.net> BOGUS'
 
-> When messing around with various repositories, I noticed that git 1.8
-> (currently using 1.8.2.rc0.22.gb3600c3) has problems parsing tag obje=
-cts
-> that have invalid timestamps.
-[...]
-> Git doesn't handle the resulting tag objects nicely at all. For examp=
-le,
-> running `git cat-file -p` on the new object outputs a really odd
-> timestamp "Thu Jun Thu Jan 1 00:16:09 1970 +0016" (I'm guessing it
-> parses the year as Unix time),
+but we cannot say in which object, or even that it was a "tagger" line
+(and in some cases we do not even have an object, as in
+make_cover_letter).
 
-The usual rule is that with invalid objects (e.g. as detected by "git
-fsck"), any non-crash result is acceptable.  Garbage in, garbage out.
+> and no for disappointing.  IIRC, in the very early implementations
+> allowed tag object without dates.
+> 
+> I _think_ we can start tightening fsck, though.
 
->                                and `git show` outright crashes
-> (backtrace included below.)
+Then I think it would make sense to allow the very specific no-date tag,
+but not allow arbitrary crud. I wonder if there's an example in the
+kernel or in git.git.
 
-Probably worth fixing.
+I also took a look at parsing routine of "cat-file -p". It's totally
+hand-rolled, separate from what "git show" does, and is not build on the
+pretty-print code at all. I wonder, though, if it actually makes sense
+to munge the date there. The commit-object pretty-printer for cat-file
+just shows the object intact. It seems weirdly inconsistent that we
+would munge tags just to rewrite the date. If you want a real
+pretty-printer, you should be using porcelain like "show".
 
-I notice that git-hash-object(1) doesn't contain any reference to
-git-fsck(1).  How about something like this, to start?
+It would be a regression, of course, for people relying on "cat-file -p"
+to have consistent output. But I am very tempted to call it a bug, and
+tempted to call "cat-file -p" inside a script a bad thing (you cannot,
+after all, tell what object type you have; you should figure out the
+type you expect and then use "cat-file <type> <obj>" to make sure you
+get the right one).
 
-Perhaps by default hash-object should automatically fsck the objects
-it is asked to create.
-
-Thanks,
-Jonathan
-
- Documentation/git-hash-object.txt | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash=
--object.txt
-index 02c1f12..8ed8c6e 100644
---- a/Documentation/git-hash-object.txt
-+++ b/Documentation/git-hash-object.txt
-@@ -30,6 +30,8 @@ OPTIONS
-=20
- -w::
- 	Actually write the object into the object database.
-+	This does not check that the resulting object is valid;
-+	for that, see linkgit:git-fsck[1].
-=20
- --stdin::
- 	Read the object from standard input instead of from a file.
-@@ -53,6 +55,14 @@ OPTIONS
- 	conversion. If the file is read from standard input then this
- 	is always implied, unless the --path option is given.
-=20
-+SEE ALSO
-+--------
-+linkgit:git-mktree[1],
-+linkgit:git-commit-tree[1],
-+linkgit:git-tag[1],
-+linkgit:git-filter-branch[1],
-+sha1sum(1)
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
---=20
-1.8.1.4
+-Peff
