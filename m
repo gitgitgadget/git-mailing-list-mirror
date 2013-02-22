@@ -1,93 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] archive: let remote clients get reachable commits
-Date: Fri, 22 Feb 2013 09:10:46 -0800
-Message-ID: <7vehg8s295.fsf@alter.siamese.dyndns.org>
-References: <1361456643-51851-1-git-send-email-gurugray@yandex.ru>
- <20130221155208.GA19943@sigill.intra.peff.net>
- <995301361532360@web22h.yandex.ru>
+Subject: Re: [PATCH] add: allow users to silence Git 2.0 warnings about "add
+ -u"
+Date: Fri, 22 Feb 2013 09:18:22 -0800
+Message-ID: <7va9qws1wh.fsf@alter.siamese.dyndns.org>
+References: <1361513224-34550-1-git-send-email-davvid@gmail.com>
+ <7vtxp4sw8e.fsf@alter.siamese.dyndns.org>
+ <CAJDDKr4dCJ3p9QBGr09kW4_0BsVJcpE7s83=eNxKE15pMznWCw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Sergey Sergeev <gurugray@yandex.ru>
-X-From: git-owner@vger.kernel.org Fri Feb 22 18:11:20 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 18:18:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8w9X-0008Ra-B4
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 18:11:19 +0100
+	id 1U8wGq-0008Np-SF
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 18:18:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758349Ab3BVRKv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2013 12:10:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61524 "EHLO
+	id S1758556Ab3BVRS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 12:18:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33796 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757720Ab3BVRKt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Feb 2013 12:10:49 -0500
+	id S1757899Ab3BVRSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 12:18:25 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 946E0AB63;
-	Fri, 22 Feb 2013 12:10:48 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDCC2AFAE;
+	Fri, 22 Feb 2013 12:18:24 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=3mlfTqXzLIJy
-	UbUeZFzi2qhyiG8=; b=EouOV6mspcqGaK2AcPvtGBbFKVy6nc7QQAbo6fIxszRk
-	77ubTGCIKeYHBaFl77fvrw94J2lcQuJ8R1qe4T9gCoCOwD58JPCubKDyKThz4DLb
-	8iMGjo8Cast5hnY5bu8gPldxgM2BFIYf1EL9rmIKozjvlWKumhHS2dCywL/FIAk=
+	:content-type; s=sasl; bh=IBmxAPLlrtFR4EQQ3byBoCN6vq8=; b=qU+P7x
+	7kfwX+4nUPOQ/3GT5jHKYSDgRtsnd5YIQ2X6cbTbY9jLvCK+WpvKf4p7bBQTm8kA
+	Yprxfev7Zarb7AQQcaz7Rc7hVo6DoIlF7EtGWr8EIRwRyD0i1GIzTU9ybwN2kyoR
+	Zfypq3btwjXgBD7rcVh3N+s+EoXe2+cpFfwcI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=HZR545
-	Aji1owp5kyQRtjFKjI6423DFIFFgEYNd+1xk7c/q/eIbNm1+x/kTR6krRmLu47l0
-	NZkpwbdsX5x8mIVYlIJtsb2MUIZSNqOfZEv2E0Sdc7cM6uMp0oxjw7Q7D8++dh4X
-	HK9pWVM5uhiEQjJVTA5/6rQrmMwiI0H8tTdNQ=
+	:content-type; q=dns; s=sasl; b=KkMsfzKi53376kWCApCszwKl99xJrPFu
+	kExOP7TjwZj+YYLJhe0lLeZ27NMTeKBs0XyMM+cgnJASFU8sb7SD1aAxERethTV0
+	1J9b8ZU74tzj7342CShei0Sfr79wVZgwIL9GrJ9yYVAEj/ojGcgGWN0F3mjeyR5u
+	XuF9PBt/0TU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 889B5AB62;
-	Fri, 22 Feb 2013 12:10:48 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D00F1AFAD;
+	Fri, 22 Feb 2013 12:18:24 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 08FACAB5E; Fri, 22 Feb 2013
- 12:10:47 -0500 (EST)
-In-Reply-To: <995301361532360@web22h.yandex.ru> (Sergey Sergeev's message of
- "Fri, 22 Feb 2013 13:26:00 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 533AAAFAC; Fri, 22 Feb 2013
+ 12:18:24 -0500 (EST)
+In-Reply-To: <CAJDDKr4dCJ3p9QBGr09kW4_0BsVJcpE7s83=eNxKE15pMznWCw@mail.gmail.com> (David
+ Aguilar's message of "Thu, 21 Feb 2013 23:12:42 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CD3876BA-7D12-11E2-8576-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DD32F74C-7D13-11E2-A36F-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216843>
 
-Sergey Sergeev <gurugray@yandex.ru> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-[jc: please do not top-post]
+> Please enlighten me.
 
-> You are right,
-> I'll rethink this patch and write some test for this cases.
-
-Thanks.
-
-Note that this is harder to implement than one would na=C3=AFvely think=
-,
-if one aims for a very generic solution, without walking the whole
-history.
-
-I personally think that it is OK to limit the scope to expressions
-that start from the tip of ref and expressions that start with the
-SHA-1 at the tip of ref, e.g.
-
-    master~12:Documentation
-    v2.6.11:arch/alpha
-    5dc01c595e6c6ec9ccda	# tag v2.6.11
-    26791a8bcf0e6d33f43a:arch	# tag v2.6.12
-    26791a8bcf0~12:arch		# starting at 26791a8b and dig down
-
-are OK, while forbidding the following:
-
-    c39ae07f393806ccf406        # tree of tag v2.6.11
-    9ee1c939d1cb936b1f98	# commit v2.6.12^0
-    9ee1c939d1cb936b1f98:	# tree of commit v2.6.12^0
-    9ee1c939d1cb936b1f98:arch	# subtree of commit v2.6.12^0
-
-which will make it significantly easier to implement the necessary
-validation in a robust way.
+As you lack the knowledge of previous discussion, I think you will
+be the best person to proofread the paragraph on this issue in the
+"backward compatibilty notes" section of the draft release notes to
+v1.8.2 to see if that is understandable to the end users and point
+out what are missing or confusing.
