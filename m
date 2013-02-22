@@ -1,89 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Feb 2013, #05; Tue, 12)
-Date: Fri, 22 Feb 2013 08:58:53 -0800
-Message-ID: <7vip5ks2sy.fsf@alter.siamese.dyndns.org>
-References: <7v621xdql8.fsf@alter.siamese.dyndns.org>
- <CAH5451nPKq8DKwo+Bkxh08N-wqrYCY4BihbvaE14z5iGVA1iZw@mail.gmail.com>
- <7vsj51caqb.fsf@alter.siamese.dyndns.org>
- <CAH5451mmXg=xvb-gW0qNvp7f8M5Jk5_ZS+UHAzMaGhJ677zWmw@mail.gmail.com>
- <7vpq04b5e2.fsf@alter.siamese.dyndns.org>
- <CAH5451kogwuzOs+BrHksDSdECbHrmW8DwTve0_kKq+-PTx+4bw@mail.gmail.com>
- <7vtxpf341w.fsf@alter.siamese.dyndns.org>
- <CAH5451mMG-U8qETAy_6pRJLbtOjtAPhbapVA9RLbrrS2yy7rCw@mail.gmail.com>
- <7vd2w23k7k.fsf@alter.siamese.dyndns.org>
- <7vvc9uwkmm.fsf@alter.siamese.dyndns.org> <87hal4n3z1.fsf@catnip.gol.com>
+From: Joshua Clayton <stillcompiling@gmail.com>
+Subject: [PATCH] Fix in Git.pm cat_blob crashes on large files (reviewed by
+ Jeff King)
+Date: Fri, 22 Feb 2013 09:03:56 -0800
+Message-ID: <CAMB+bfLjewgKjSN6WNHGkwpRx9OaWipi_-TDa0MnJMDN+6tPZA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Ardill <andrew.ardill@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Feb 22 17:59:21 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 22 18:04:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8vxw-00047I-Km
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 17:59:20 +0100
+	id 1U8w2s-0000po-JJ
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 18:04:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757984Ab3BVQ64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 11:58:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52452 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757926Ab3BVQ6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 11:58:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41ABFA5B0;
-	Fri, 22 Feb 2013 11:58:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IFY273SFbg5RAIi1l3QyGLOVNiI=; b=fJxnbm
-	WvhInEsBvoz+mdXsKdLMFPwRPTzBx9q8zeJj4ZMLC3v62Wxr90xZ0zlIFDhkPsKW
-	z6kNwoOjbiVZkNDL7d00S2KAgrj3Nqd3MDsZCATOl/QIm/tRgZsiWccULYa/Nxd5
-	yo/iz2MS4YhtJ0W4j1WLlmqMN4TbvjhqTzF0k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n0Qqbqz1taDIAtpNhuW2XlkWJAEHYIr0
-	FterJ28za7jWrtdY5/IUQb2OnOM0MEJJ30TOFyzeln0WeDUh3zQEiHpT4eeEY3PI
-	serMYzPLD7IccVTvPtE9nJH4U09f81VP6K7uS7y8C9OjwGR4McKwxzCD1AtMx+FK
-	oc/YTCWAPH8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36B65A5AF;
-	Fri, 22 Feb 2013 11:58:55 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC0D7A5AE; Fri, 22 Feb 2013
- 11:58:54 -0500 (EST)
-In-Reply-To: <87hal4n3z1.fsf@catnip.gol.com> (Miles Bader's message of "Fri,
- 22 Feb 2013 17:32:34 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 240A970E-7D11-11E2-B962-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758335Ab3BVRD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 12:03:59 -0500
+Received: from mail-ia0-f177.google.com ([209.85.210.177]:54960 "EHLO
+	mail-ia0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758324Ab3BVRD5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 12:03:57 -0500
+Received: by mail-ia0-f177.google.com with SMTP id o25so722089iad.36
+        for <git@vger.kernel.org>; Fri, 22 Feb 2013 09:03:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=FWTlFZQldNiMcb3sT/MLAn600QilGT9h8RTlB9C2Gvw=;
+        b=iFTzb6FZC1QNXf2X6MHDuBx3N318fE9+6WDtSrzxeMqVBdxftyNPAt8ejoeEHDfUnC
+         hslIz4YiETnjpQMi4f4NUn5BXyy3VleLVayWofhWhQNyagYzvfBgJAXnoje75WwL0VPn
+         yjcQIfW3a/kGwOUEj9Vf6nCgDMWzKR4M1pHT1hTXQb1ymyaAYOcOoQ2KZVRoOUUibXz1
+         20wt75ZPkf1/F2z57eXG7ctVWYR9CGhqWoGYbaqAaqN/1QYh8WLIf8hxZiYL3CKKf6qR
+         sZmzesyMK/Ffj66iK/4cWZICX1JpFxg+B7YtyLGr3hycDHXuFGukeihJflYofFh3cqp0
+         J8MA==
+X-Received: by 10.50.57.232 with SMTP id l8mr15557308igq.49.1361552636532;
+ Fri, 22 Feb 2013 09:03:56 -0800 (PST)
+Received: by 10.42.79.80 with HTTP; Fri, 22 Feb 2013 09:03:56 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216840>
 
-Miles Bader <miles@gnu.org> writes:
+Read and write each 1024 byte buffer, rather than trying to buffer
+the entire content of the file.
+Previous code would crash on all files > 2 Gib, when the offset variable
+became negative (perhaps below the level of perl), resulting in a crash.
+On a 32 bit system, or a system with low memory it might crash before
+reaching 2 GiB due to memory exhaustion.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->>  * Introduce "git add --ignore-removal" option in the release after
->>    the current cycle (a new feature is too late for this cycle):
->
-> Too late in the cycle even if the option is simply ignored ... ?
->
-> [To extend the range of git versions where it's not an error]
+Signed-off-by: Joshua Clayton <stillcompiling@gmail.com>
+---
+ perl/Git.pm |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-I'd feel safer to have enough time to cook the "alleged no-op"
-before merging it to 'master' and include it in a release.
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 931047c..cc91288 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -949,13 +949,16 @@ sub cat_blob {
+ 		last unless $bytesLeft;
 
-Possible implementation mistakes aside, "--ignore-removal" is
-probably too long to type, we haven't even discussed if it deserves
-a short-and-sweet single letter option, the obvious "-i" is not
-available, etc. etc.  I do not think we have a concensus that the
-transition plan outlined is a good way to go in the first place.
+ 		my $bytesToRead = $bytesLeft < 1024 ? $bytesLeft : 1024;
+-		my $read = read($in, $blob, $bytesToRead, $bytesRead);
++		my $read = read($in, $blob, $bytesToRead);
+ 		unless (defined($read)) {
+ 			$self->_close_cat_blob();
+ 			throw Error::Simple("in pipe went bad");
+ 		}
+-
+ 		$bytesRead += $read;
++		unless (print $fh $blob) {
++			$self->_close_cat_blob();
++			throw Error::Simple("couldn't write to passed in filehandle");
++		}
+ 	}
 
-So, I do think it is a bit too late for this cycle, especially when
-we still have doubts about the design. Actually it is *I* who have
-doubts; I do not even know if other people share the doubts or they
-support the direction wholeheartedly.
+ 	# Skip past the trailing newline.
+@@ -970,11 +973,6 @@ sub cat_blob {
+ 		throw Error::Simple("didn't find newline after blob");
+ 	}
+
+-	unless (print $fh $blob) {
+-		$self->_close_cat_blob();
+-		throw Error::Simple("couldn't write to passed in filehandle");
+-	}
+-
+ 	return $size;
+ }
+
+-- 
+1.7.10.4
