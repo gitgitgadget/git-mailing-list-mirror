@@ -1,98 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] format-patch: --inline-single
-Date: Fri, 22 Feb 2013 08:47:39 -0800
-Message-ID: <7vmwuws3bo.fsf@alter.siamese.dyndns.org>
-References: <1361282783-1413-1-git-send-email-git@adamspiers.org>
- <1361282783-1413-2-git-send-email-git@adamspiers.org>
- <7v1ucc6vgd.fsf@alter.siamese.dyndns.org>
- <CAOkDyE9VVuFn6B=Fe4XHxGCEW0MFgndx1X0+9hO36Soxb37YQw@mail.gmail.com>
- <7v1ucc5b7n.fsf_-_@alter.siamese.dyndns.org>
- <20130220020046.GC7860@pacific.linksys.moosehall>
- <7vppzv3dd8.fsf@alter.siamese.dyndns.org>
- <20130220104720.GD7860@pacific.linksys.moosehall>
- <7vehg9v2xj.fsf@alter.siamese.dyndns.org>
- <7v4nh5v2fl.fsf_-_@alter.siamese.dyndns.org>
- <20130221231328.GA19808@sigill.intra.peff.net>
+Subject: Re: What's cooking in git.git (Feb 2013, #05; Tue, 12)
+Date: Fri, 22 Feb 2013 08:58:53 -0800
+Message-ID: <7vip5ks2sy.fsf@alter.siamese.dyndns.org>
+References: <7v621xdql8.fsf@alter.siamese.dyndns.org>
+ <CAH5451nPKq8DKwo+Bkxh08N-wqrYCY4BihbvaE14z5iGVA1iZw@mail.gmail.com>
+ <7vsj51caqb.fsf@alter.siamese.dyndns.org>
+ <CAH5451mmXg=xvb-gW0qNvp7f8M5Jk5_ZS+UHAzMaGhJ677zWmw@mail.gmail.com>
+ <7vpq04b5e2.fsf@alter.siamese.dyndns.org>
+ <CAH5451kogwuzOs+BrHksDSdECbHrmW8DwTve0_kKq+-PTx+4bw@mail.gmail.com>
+ <7vtxpf341w.fsf@alter.siamese.dyndns.org>
+ <CAH5451mMG-U8qETAy_6pRJLbtOjtAPhbapVA9RLbrrS2yy7rCw@mail.gmail.com>
+ <7vd2w23k7k.fsf@alter.siamese.dyndns.org>
+ <7vvc9uwkmm.fsf@alter.siamese.dyndns.org> <87hal4n3z1.fsf@catnip.gol.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>, Adam Spiers <git@adamspiers.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 22 17:48:11 2013
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Feb 22 17:59:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8vn6-0001CV-0u
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 17:48:08 +0100
+	id 1U8vxw-00047I-Km
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 17:59:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758049Ab3BVQrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 11:47:43 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44516 "EHLO
+	id S1757984Ab3BVQ64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 11:58:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52452 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757921Ab3BVQrm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 11:47:42 -0500
+	id S1757926Ab3BVQ6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 11:58:55 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD0F9A0C5;
-	Fri, 22 Feb 2013 11:47:41 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41ABFA5B0;
+	Fri, 22 Feb 2013 11:58:55 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SMe7M2rk15wtk4VnGBvty8zuUvM=; b=W1upkW
-	hqxbCHt57fM6kllv+TaEsjz/d2ZwcTn/d6l+ER6cHV0DN3k+slupKCM3Slw6Tnwd
-	PmaFkNEGbXEtGpRYyvQYQHUPQh1rBTqBBJpk5UC7i2mOBrJTMebk4we2gJXsFQxT
-	WdMiJkXQ/UwMj/bvlupS8VysUIePoeKTFMjC4=
+	:content-type; s=sasl; bh=IFY273SFbg5RAIi1l3QyGLOVNiI=; b=fJxnbm
+	WvhInEsBvoz+mdXsKdLMFPwRPTzBx9q8zeJj4ZMLC3v62Wxr90xZ0zlIFDhkPsKW
+	z6kNwoOjbiVZkNDL7d00S2KAgrj3Nqd3MDsZCATOl/QIm/tRgZsiWccULYa/Nxd5
+	yo/iz2MS4YhtJ0W4j1WLlmqMN4TbvjhqTzF0k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=clTiCa/tvCPUryMPZmw20pUluItzBHWt
-	kw8Isw7MC2tY/iRJt/T9Rb2XmbvNQF9UUEeXvvd2lhAY8BZ1z5BU5CoNSPnqH5Y6
-	8mEeE4bAqOpqa83lVPRA5VoQ3KfpWC2NnMvbKu3ApWeBFwypZ9b8NcRShfHD2cCQ
-	HcqOR5zLfHU=
+	:content-type; q=dns; s=sasl; b=n0Qqbqz1taDIAtpNhuW2XlkWJAEHYIr0
+	FterJ28za7jWrtdY5/IUQb2OnOM0MEJJ30TOFyzeln0WeDUh3zQEiHpT4eeEY3PI
+	serMYzPLD7IccVTvPtE9nJH4U09f81VP6K7uS7y8C9OjwGR4McKwxzCD1AtMx+FK
+	oc/YTCWAPH8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1533A0C3;
-	Fri, 22 Feb 2013 11:47:41 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36B65A5AF;
+	Fri, 22 Feb 2013 11:58:55 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33F4AA0C2; Fri, 22 Feb 2013
- 11:47:41 -0500 (EST)
-In-Reply-To: <20130221231328.GA19808@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 21 Feb 2013 18:13:28 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC0D7A5AE; Fri, 22 Feb 2013
+ 11:58:54 -0500 (EST)
+In-Reply-To: <87hal4n3z1.fsf@catnip.gol.com> (Miles Bader's message of "Fri,
+ 22 Feb 2013 17:32:34 +0900")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 929BED50-7D0F-11E2-898D-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 240A970E-7D11-11E2-B962-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216839>
 
-Jeff King <peff@peff.net> writes:
+Miles Bader <miles@gnu.org> writes:
 
->> ... <helper function to see if the user is the author> ...
->> +}
+> Junio C Hamano <gitster@pobox.com> writes:
+>>  * Introduce "git add --ignore-removal" option in the release after
+>>    the current cycle (a new feature is too late for this cycle):
 >
-> Nice, I'm glad you handled this case properly. I've wondered if we
-> should have an option to do a similar test when writing out the "real"
-> message format. I.e., to put the extra "From" line in the body of the
-> message when !is_current_user(). Traditionally we have just said "that
-> is the responsibility of the MUA you use", and let send-email handle it.
-> But it means people who do not use send-email have to reimplement the
-> feature themselves.
+> Too late in the cycle even if the option is simply ignored ... ?
+>
+> [To extend the range of git versions where it's not an error]
 
-I am not sure if I follow.  Do you mean that you have to remove
-fewer lines if you omit Date/From when it is from you in the first
-place?  People who do not use send-email (like me) slurp the output
-0001-have-gostak-distim-doshes.patch into their MUA editor, tell the
-MUA to use the contents on the Subject: line as the subject, and
-remove what is redundant, including the Subject.  Because the output
-cannot be used as-is anyway, I do not think it is such a big deal.
+I'd feel safer to have enough time to cook the "alleged no-op"
+before merging it to 'master' and include it in a release.
 
-And those who have a custom mechanism to stuff our output in their
-MUA's outbox, similar to what imap-send does, would already have to
-have a trivial parser to read the first part of our output up to the
-first blank line (i.e. parsing out the header part) and formatting
-the information it finds into a form that is understood by their
-MUA.  Omitting From: or Date: lines would not help those people who
-already have established the procedure to handle the "Oh, this one
-is from me" case, or to send the output always with the Sender: and
-keeping the From: intact.  So,...
+Possible implementation mistakes aside, "--ignore-removal" is
+probably too long to type, we haven't even discussed if it deserves
+a short-and-sweet single letter option, the obvious "-i" is not
+available, etc. etc.  I do not think we have a concensus that the
+transition plan outlined is a good way to go in the first place.
 
- 
+So, I do think it is a bit too late for this cycle, especially when
+we still have doubts about the design. Actually it is *I* who have
+doubts; I do not even know if other people share the doubts or they
+support the direction wholeheartedly.
