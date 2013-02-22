@@ -1,66 +1,69 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH 2/2] format-patch: --inline-single
-Date: Fri, 22 Feb 2013 15:32:09 +0000
-Message-ID: <20130222153209.GF7860@pacific.linksys.moosehall>
-References: <1361282783-1413-2-git-send-email-git@adamspiers.org>
- <7v1ucc6vgd.fsf@alter.siamese.dyndns.org>
- <CAOkDyE9VVuFn6B=Fe4XHxGCEW0MFgndx1X0+9hO36Soxb37YQw@mail.gmail.com>
- <7v1ucc5b7n.fsf_-_@alter.siamese.dyndns.org>
- <20130220020046.GC7860@pacific.linksys.moosehall>
- <7vppzv3dd8.fsf@alter.siamese.dyndns.org>
- <20130220104720.GD7860@pacific.linksys.moosehall>
- <7vehg9v2xj.fsf@alter.siamese.dyndns.org>
- <7v4nh5v2fl.fsf_-_@alter.siamese.dyndns.org>
- <20130221231328.GA19808@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Fix in Git.pm cat_blob crashes on large files
+Date: Fri, 22 Feb 2013 10:38:01 -0500
+Message-ID: <20130222153801.GA15318@sigill.intra.peff.net>
+References: <CAMB+bfKYLjmDavcLaO7scBPfTLmzqAmH+k9uBj0WJ+dzj9vuyA@mail.gmail.com>
+ <20130221224319.GA19021@sigill.intra.peff.net>
+ <CAMB+bf+whVFD03neCh-gBORXOBoNjgaCbfP_mh8HgDy6UqGFZA@mail.gmail.com>
+ <20130221232448.GA23736@sigill.intra.peff.net>
+ <CAMB+bf+RyerXP3VP26KJM7wtVKOup15AeRpEewwKJx3=bL9+hQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 22 16:32:36 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Joshua Clayton <stillcompiling@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 22 16:38:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U8uc0-0000U3-97
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 16:32:36 +0100
+	id 1U8uhi-0007Cf-To
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Feb 2013 16:38:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757259Ab3BVPcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 10:32:12 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:36591 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756894Ab3BVPcL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 10:32:11 -0500
-Received: from localhost (2.2.4.e.5.6.e.2.e.c.5.5.b.c.d.e.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:edcb:55ce:2e65:e422])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 782D22E33A;
-	Fri, 22 Feb 2013 15:32:10 +0000 (GMT)
+	id S1757383Ab3BVPiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 10:38:07 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57099 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756996Ab3BVPiE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 10:38:04 -0500
+Received: (qmail 5356 invoked by uid 107); 22 Feb 2013 15:39:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Feb 2013 10:39:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Feb 2013 10:38:01 -0500
 Content-Disposition: inline
-In-Reply-To: <20130221231328.GA19808@sigill.intra.peff.net>
-X-OS: GNU/Linux
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAMB+bf+RyerXP3VP26KJM7wtVKOup15AeRpEewwKJx3=bL9+hQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216837>
 
-On Thu, Feb 21, 2013 at 06:13:28PM -0500, Jeff King wrote:
-> On Thu, Feb 21, 2013 at 12:26:22PM -0800, Junio C Hamano wrote:
-> 
-> > Some people may find it convenient to append a simple patch at the
-> > bottom of a discussion e-mail separated by a "scissors" mark, ready
-> > to be applied with "git am -c".  Introduce "--inline-single" option
-> > to format-patch to do so.  A typical usage example might be to start
-> > 'F'ollow-up to a discussion, write your message, conclude with "a
-> > patch to do so may look like this.", and
-> > 
-> >     \C-u M-! git format-patch --inline-single -1 HEAD <ENTER>
-> > 
-> > if you are an Emacs user.  Users of other MUA's may want to consult
-> > their manuals to find equivalent command to append output from an
-> > external command to the message being composed.
-> 
-> Interesting. I usually just do this by hand, but this could save a few
-> keystrokes in my workflow.
+On Fri, Feb 22, 2013 at 07:11:54AM -0800, Joshua Clayton wrote:
 
-Same here.  This is great; thanks a lot both for working on it!
+> running git svn fetch on a remote repository (yes I know there are a
+> lot of possible outside variables, including network latency)
+> Code with 1024 reads and 64k writes:
+> 
+> real    75m19.906s
+> user    16m43.919s
+> sys     29m16.326s
+> 
+> Code with 1024 reads and 1024 writes:
+> 
+> real    71m21.006s
+> user    12m36.275s
+> sys     24m26.112s
+> 
+> ...so the simpler code wins the trivial test.
+
+Interesting; I'd have expected no change or a slight win for your
+version, which makes me wonder if the outside variables are dominating.
+I wonder what 64K/64K would look like.
+
+> I would say go with it.
+> Should I resubmit?
+
+Yes, please.
+
+-Peff
