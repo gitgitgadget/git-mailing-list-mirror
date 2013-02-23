@@ -1,138 +1,207 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add: allow users to silence Git 2.0 warnings about "add
- -u"
-Date: Sat, 23 Feb 2013 00:44:47 -0800
-Message-ID: <7v621j8lmo.fsf@alter.siamese.dyndns.org>
-References: <1361513224-34550-1-git-send-email-davvid@gmail.com>
- <7vtxp4sw8e.fsf@alter.siamese.dyndns.org>
- <CAJDDKr4dCJ3p9QBGr09kW4_0BsVJcpE7s83=eNxKE15pMznWCw@mail.gmail.com>
- <vpqd2vssnh7.fsf@grenoble-inp.fr> <7v621ks1cf.fsf@alter.siamese.dyndns.org>
- <CAJDDKr7F-wunjT_SS0mw+WUgoM3-Lu9bA3JUKk4sQiWWK0N9Jw@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v3] branch: segfault fixes and validation
+Date: Sat, 23 Feb 2013 19:22:27 +0700
+Message-ID: <1361622147-20921-1-git-send-email-pclouds@gmail.com>
+References: <7vvc9kccwa.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 23 09:45:18 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Per Cederqvist <cederp@opera.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 23 13:22:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9AjM-0003wm-7X
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 09:45:16 +0100
+	id 1U9E7R-0006G1-PH
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 13:22:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754933Ab3BWIov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2013 03:44:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51596 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754575Ab3BWIov (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2013 03:44:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EE378D83;
-	Sat, 23 Feb 2013 03:44:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g9GcUhGIDBGnuKe44Rf6FzRN3K8=; b=PtdUNZ
-	SASTCBnJEZ4FlGawGDESLqLfkxJUbC/BxVD12ZDcLOvUYALVp2PAOer1LCdubgPQ
-	3VqnCPvAq1yFgnGlKC6UbLLBtSV83x4jbhFP4aNQHFavnRF/Mcv0jPGKDQhNnHJT
-	3BTO4G7Q7+0B48EzPZLikAV2HzC3V/bwxoaDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uMBJd+R+p17W+OK+2V6WM2FezVMA2PwS
-	9eBwJ6r0SdICYjAY3WACoujEWwJ08jWKQZ3RT3jHnIVWclzlPWbF4mlDrocErfFz
-	hpsJZK2UUBQP+rmKuCcMNuyoCxy7sUzc66tpgqBV8K925+Jlq9aoc+2f2cHlfrk3
-	pdgq2gJS25o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2336A8D81;
-	Sat, 23 Feb 2013 03:44:50 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 571378D77; Sat, 23 Feb 2013
- 03:44:49 -0500 (EST)
-In-Reply-To: <CAJDDKr7F-wunjT_SS0mw+WUgoM3-Lu9bA3JUKk4sQiWWK0N9Jw@mail.gmail.com> (David
- Aguilar's message of "Fri, 22 Feb 2013 23:59:06 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 48735B42-7D95-11E2-9819-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758781Ab3BWMVr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Feb 2013 07:21:47 -0500
+Received: from mail-da0-f49.google.com ([209.85.210.49]:52801 "EHLO
+	mail-da0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758756Ab3BWMVq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2013 07:21:46 -0500
+Received: by mail-da0-f49.google.com with SMTP id t11so772285daj.22
+        for <git@vger.kernel.org>; Sat, 23 Feb 2013 04:21:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=OtLP5WKMRmocb21zleVQADbdqDY1bC7bc5LChb5CNIU=;
+        b=aEfIaiX9IpXZlHpAsCE08pD+yoFwsx5PMqfgF0poOdg3Tx1uFY3Ti5vtDY/p4qpQ3w
+         SaIU00/BntVfTaE2g1fBETtOBVWTbmbrbszbJZykAAWCyJWyOH+0UiBaRnOJz0mU1fik
+         nJveaOUqx99CiNZZsHMNxMGDzm31tu5dZtEEk5WYgF+oMeeqTJNzY0ccdGT9rLkH26zz
+         6SnSXEimAuTeHKXWmDDDDtWJyKWRknlQ8lGu/Vyev5RcrQqTF64WBf3XpKnPCtMfbrfc
+         1yyOSpNaIgRHPMkbV8/iP7DV9uyS/JE5I21WOjdG+Q9GltQjWhq/w3FzHdpW8nOtRnHR
+         iE0A==
+X-Received: by 10.68.189.169 with SMTP id gj9mr8345968pbc.67.1361622105273;
+        Sat, 23 Feb 2013 04:21:45 -0800 (PST)
+Received: from lanh ([115.74.55.130])
+        by mx.google.com with ESMTPS id tp2sm5893380pbc.12.2013.02.23.04.21.41
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 23 Feb 2013 04:21:44 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 23 Feb 2013 19:22:40 +0700
+X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
+In-Reply-To: <7vvc9kccwa.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216894>
 
-David Aguilar <davvid@gmail.com> writes:
+branch_get() can return NULL (so far on detached HEAD only) but some
+code paths in builtin/branch.c cannot deal with that and cause
+segfaults.
 
-> I was originally concerned that "git add -u" was going to die()
-> and we would no longer be able to use it without pathspec.
-> My concerns were unfounded.
->
-> (If I am not understanding this correctly then it is a sign
->  that the draft release notes can be made more clear)
+While at there, make sure to bail out when the user gives 2 or more
+branches with --set-upstream-to or --unset-upstream, where only the
+first branch is processed and the rest silently dropped.
 
-Yes, that is exactly why I asked you to suggest improvements to that
-paragraph.
+Reported-by: Per Cederqvist <cederp@opera.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ On Sat, Feb 23, 2013 at 3:27 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+ > Instead of asking "Is it detached?", perhaps we can say something
+ > like "You told me to set the upstream of HEAD to branch X, but " in
+ > front?  At least, that will be a better explanation for the reason
+ > why the operation is failing.
 
->> Another problem with use2dot0 configuration is that it would invite
->> people to imagine that setting it to false will keep the old
->> behaviour forever, which is against what you set out to do with the
->> patch under discussion.
->
-> I agree with both sides.  There's the part of me that wants the 2.0
-> behavior now with a config switch for the same reasons as was
-> discussed earlier...
+ Fixed.
 
-If that is really the case and you want the full-tree behaviour, you
-would have been using "git add -u :/" already, and then you wouldn't
-have seen the warning.
+ > What you can do is to have a single helper function that can explain
+ > why branch_get() returned NULL (or extend branch_get() to serve that
+ > purpose as well); then you do not have to duplicate the logic twice
+ > on the caller's side (and there may be other callers that want to do
+ > the same).
 
-Why do we have this thread then?
+ The explanation mentions about the failed operation, which makes a
+ helper less useful. We could still do the helper, but it may lead to
+ i18n legos. So no helper in this version.
 
-The reason may well be "I've heard about the :/ magic pathspec, and
-I thought I understood what it does at the intellectual level, but
-it has not sunk in enough for me to use it regularly".
+ > The existing test might be wrong, by the way.  Your HEAD may point
+ > at a branch Y but you may not have any commit on it yet, and you may
+ > want to allow setting the upstream of that to-be-born branch to
+ > another branch X with "branch --set-upstream-to=3DX [Y|HEAD]".
 
-The warning, and "you can squelch with either :/ or ." to train the
-fingers (not "set once and forget"), is exactly to solve that
-problem now *and* *in* *the* *future* during the 2.0 transition
-period.
+ It sounds complicated. I think we can revisit it when a user actually
+ complains about it.
 
-You also said that it often is the case for you that you stay in a
-narrow subtree without touching other parts of the tree. If that is
-the case, you may *not* want 2.0 behaviour, which forces Git to run
-around the whole tree, trying to find modified paths outside of your
-corner that do not exist, wasting cycles.  You want "git add .", and
-you are better off starting to train your fingers so that they type
-that without thinking now.  I think the conclusion during the old
-discussion was not "we want configuration", but "this is not per
-user and configuration is a poor approach. Depending on what you are
-working on right now, you would want 'only here' sometimes and
-'whole tree' some other times".
+ builtin/branch.c  | 27 +++++++++++++++++++++++++++
+ t/t3200-branch.sh | 21 +++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
 
-> We would never want to go back to the old behavior when 2.0
-> roll around.  Jakub's "future.wholeTree" suggestion makes
-> sense in that context as the entire "future.*" namespace
-> could be designated as variables with these semantics.
-
-Not at all. Even you who visit this list often do not regularly use
-the ":/" to affect the whole tree and see the warning. What do you
-imagine other people, who do not even know about this list do and
-say, at sites like stackoverflow where uninformeds guide other
-uninformeds?
-
-  Q. Help, Git 1.8.2 is giving me this warning. What to do?
-  A. Set this configuration variable. No other explanation.
-
-Renaming use2dot0 to future does not solve anything.
-
-> OTOH a positive thing about adding configuration to get
-> the better behavior is that the code path materializes
-> sooner, and it will be better exercised before 2.0.
-
-That is not an argument for adding temporary configuration, as it is
-not the only or even the best way to do so.  It can be easily an
-cleanly achieved by cooking in next until 2.0.
-
-An ulterior motive for going that way is to encourage more people to
-run 'next' ;-). Recently we are seeing bugs discovered only after topics
-graduate to 'master', which is not a good sign X-<.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 6371bf9..00d17d2 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -889,6 +889,17 @@ int cmd_branch(int argc, const char **argv, const =
+char *prefix)
+ 	} else if (new_upstream) {
+ 		struct branch *branch =3D branch_get(argv[0]);
+=20
++		if (argc > 1)
++			die(_("too many branches to set new upstream"));
++
++		if (!branch) {
++			if (!argc || !strcmp(argv[0], "HEAD"))
++				die(_("could not set upstream of HEAD to %s when "
++				      "it does not point to any branch."),
++				    new_upstream);
++			die(_("no such branch '%s'"), argv[0]);
++		}
++
+ 		if (!ref_exists(branch->refname))
+ 			die(_("branch '%s' does not exist"), branch->name);
+=20
+@@ -901,6 +912,16 @@ int cmd_branch(int argc, const char **argv, const =
+char *prefix)
+ 		struct branch *branch =3D branch_get(argv[0]);
+ 		struct strbuf buf =3D STRBUF_INIT;
+=20
++		if (argc > 1)
++			die(_("too many branches to unset upstream"));
++
++		if (!branch) {
++			if (!argc || !strcmp(argv[0], "HEAD"))
++				die(_("could not unset upstream of HEAD when "
++				      "it does not point to any branch."));
++			die(_("no such branch '%s'"), argv[0]);
++		}
++
+ 		if (!branch_has_merge_config(branch)) {
+ 			die(_("Branch '%s' has no upstream information"), branch->name);
+ 		}
+@@ -916,6 +937,12 @@ int cmd_branch(int argc, const char **argv, const =
+char *prefix)
+ 		int branch_existed =3D 0, remote_tracking =3D 0;
+ 		struct strbuf buf =3D STRBUF_INIT;
+=20
++		if (!strcmp(argv[0], "HEAD"))
++			die(_("it does not make sense to create 'HEAD' manually"));
++
++		if (!branch)
++			die(_("no such branch '%s'"), argv[0]);
++
+ 		if (kinds !=3D REF_LOCAL_BRANCH)
+ 			die(_("-a and -r options to 'git branch' do not make sense with a b=
+ranch name"));
+=20
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index f3e0e4a..12f1e4a 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -42,6 +42,10 @@ test_expect_success \
+     'git branch a/b/c should create a branch' \
+     'git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c'
+=20
++test_expect_success \
++    'git branch HEAD should fail' \
++    'test_must_fail git branch HEAD'
++
+ cat >expect <<EOF
+ $_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +000=
+0	branch: Created from master
+ EOF
+@@ -388,6 +392,14 @@ test_expect_success \
+     'git tag foobar &&
+      test_must_fail git branch --track my11 foobar'
+=20
++test_expect_success '--set-upstream-to fails on multiple branches' \
++    'test_must_fail git branch --set-upstream-to master a b c'
++
++test_expect_success '--set-upstream-to fails on detached HEAD' \
++    'git checkout HEAD^{} &&
++     test_must_fail git branch --set-upstream-to master &&
++     git checkout -'
++
+ test_expect_success 'use --set-upstream-to modify HEAD' \
+     'test_config branch.master.remote foo &&
+      test_config branch.master.merge foo &&
+@@ -417,6 +429,15 @@ test_expect_success 'test --unset-upstream on HEAD=
+' \
+      test_must_fail git branch --unset-upstream
+ '
+=20
++test_expect_success '--unset-upstream should fail on multiple branches=
+' \
++    'test_must_fail git branch --unset-upstream a b c'
++
++test_expect_success '--unset-upstream should fail on detached HEAD' \
++    'git checkout HEAD^{} &&
++     test_must_fail git branch --unset-upstream &&
++     git checkout -
++'
++
+ test_expect_success 'test --unset-upstream on a particular branch' \
+     'git branch my15
+      git branch --set-upstream-to master my14 &&
+--=20
+1.8.1.2.536.gf441e6d
