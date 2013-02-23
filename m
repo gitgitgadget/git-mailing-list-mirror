@@ -1,81 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Suggested improvements to the git-p4 documentation
- (branch-related)
-Date: Fri, 22 Feb 2013 16:42:16 -0800
-Message-ID: <7va9qvc13r.fsf@alter.siamese.dyndns.org>
-References: <CAFXk4bqt_pMVDtVKF-JiQuGbSpy2+_rGOg5RTTE+0pNKFcZh3w@mail.gmail.com>
- <20130105212517.GA30315@padd.com>
- <CAFXk4bp0MBNxOD7w1zn7peN-ufWmV=DthMdHmjmj+Sci4MGneg@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 3/2] update-index: list supported idx versions and their features
+Date: Sat, 23 Feb 2013 08:54:28 +0700
+Message-ID: <1361584468-11820-1-git-send-email-pclouds@gmail.com>
+References: <1361534964-4232-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>, Olivier Delalleau <shish@keba.be>
-X-From: git-owner@vger.kernel.org Sat Feb 23 01:42:47 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 23 02:54:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U93CP-0006ZS-8D
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 01:42:45 +0100
+	id 1U94JO-0000Yl-DU
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 02:54:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758784Ab3BWAmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 19:42:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34788 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758025Ab3BWAmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 19:42:19 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59888B5E0;
-	Fri, 22 Feb 2013 19:42:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RDT4L2C1yXmMAUh3EAHW7d9k+yQ=; b=peUP4g
-	0MBCdAwYDhW0a7WudTOcb0yOpvDA0Gw4kRWpJt5WziNGCzyS3thiBmiXenLU6JJB
-	r7O/KLTV2hdC2oFgoheHgJFKAIxmMNuP74mEY0Ctv9mjlVvQhs4wHhmCinLJgvqr
-	OKCyg6KKcrUzxn4lYSaL0rWaAG0BawObxhUp0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Dk1BIMpG262TOq+mZZuK9Y5/Eeoi8GT/
-	NZqU1QcKLR1lYqeWxQJMOFtOOMXfU5Yib2N+6nr3a+9IFOLJ2SZ7DTNFKe03UIoD
-	DDOuk9XnWca/fDGOp2CW8Ddcx+9buWZdSThjpx6l02SmrXIDJq63vPW1lVlbzcO0
-	yZKDu0sprAE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E285B5DE;
-	Fri, 22 Feb 2013 19:42:18 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFA08B5DC; Fri, 22 Feb 2013
- 19:42:17 -0500 (EST)
-In-Reply-To: <CAFXk4bp0MBNxOD7w1zn7peN-ufWmV=DthMdHmjmj+Sci4MGneg@mail.gmail.com> (Olivier
- Delalleau's message of "Sun, 6 Jan 2013 21:00:42 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DFEDF64C-7D51-11E2-83DE-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757541Ab3BWBxh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Feb 2013 20:53:37 -0500
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:54231 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752254Ab3BWBxg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 20:53:36 -0500
+Received: by mail-pb0-f50.google.com with SMTP id up1so705109pbc.9
+        for <git@vger.kernel.org>; Fri, 22 Feb 2013 17:53:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=fbwbIjURXnN3Sva9s2L+UhgDzDOkSd6hKrrBsmRCpbg=;
+        b=HtLssq/ze5wlhrpggduyhtcW5yc+lV7YZqLeAfSViKMknQ/VdITqNDwp3azxcqEIAp
+         F+jj1Zf48q32+8257L+ePM5UnI1sHmMXUz5l1pA2UgysAY0qQoWWo77VNwV56UPQ1+5G
+         rAA/kFRsI5Wp/VAaI7oTnlSeRczspr5aeCJyr0jkHJGAFdFtnGRNCAR2qnaplx6mpAQk
+         CygVB5Caix9c7iz7BiK87JqFOKi27y2DNMqKf24fGjDrbjBHPqDlUN9HA9O8eMCR3P5p
+         FwJFESAeljRRwU+Or+BsfzaWrllzthrHN9eu5avXlUqQG+mCrGsTPSb8NMyujzRKz0kY
+         C9Dg==
+X-Received: by 10.66.227.137 with SMTP id sa9mr7264712pac.17.1361584416347;
+        Fri, 22 Feb 2013 17:53:36 -0800 (PST)
+Received: from lanh ([115.74.55.130])
+        by mx.google.com with ESMTPS id hu2sm4264745pbc.38.2013.02.22.17.53.32
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 22 Feb 2013 17:53:35 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 23 Feb 2013 08:54:31 +0700
+X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
+In-Reply-To: <1361534964-4232-2-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216887>
 
-Olivier Delalleau <shish@keba.be> writes:
 
-> 2013/1/5 Pete Wyckoff <pw@padd.com>:
->> shish@keba.be wrote on Thu, 03 Jan 2013 15:58 -0500:
-> ...
->> Please do feel welcome to to rearrange or expand the
->> documentation so it makes more sense, if you are so inspired.
->
-> I'm afraid I'm not familiar enough with git documentation to dig into
-> it myself, but anyway that's about what I had for now. I'll send more
-> comments to the mailing list if I have more suggestions in the future.
->
-> Thanks for a great tool! :)
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ .. and the user should know (briefly) the differences between index
+ versions too.
 
-Did anything come out of this thread?  If neither of you two are
-inclined to conclude the discussion with a final patch, I'd
-appreciate anybody else who does the honors ;-)
+ Documentation/git-update-index.txt | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-We'll be in deep pre-release freeze for a few weeks, so there is no
-need to rush.
-
-Thanks.
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-upd=
+ate-index.txt
+index 77a912d..e5aaba5 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -145,7 +145,15 @@ you will need to handle the situation manually.
+=20
+ --index-version <n>::
+ 	Write the resulting index out in the named on-disk format version.
+-	The current default version is 2.
++	Supported versions are 2, 3 and 4. The current default version is 2
++	or 3, depending on whether extra features are used, such as
++	`git add -N`.
+++
++	Version 4 performs a simple pathname compression that could
++	reduce index size by 30%-50% on large repositories, which
++	results in faster load time. Version 4 is relatively young
++	(first released in 1.8.0 in October 2012). Other Git
++	implementations may not support it yet.
+=20
+ -z::
+ 	Only meaningful with `--stdin` or `--index-info`; paths are
+--=20
+1.8.1.2.536.gf441e6d
