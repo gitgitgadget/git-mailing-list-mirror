@@ -1,83 +1,130 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 04/13] Help.c add --guide option
-Date: Sat, 23 Feb 2013 23:05:52 +0000
-Message-ID: <1361660761-1932-5-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 05/13] Help.c: add list_common_guides_help() function
+Date: Sat, 23 Feb 2013 23:05:53 +0000
+Message-ID: <1361660761-1932-6-git-send-email-philipoakley@iee.org>
 References: <1361660761-1932-1-git-send-email-philipoakley@iee.org>
 To: GitList <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 24 00:06:26 2013
+X-From: git-owner@vger.kernel.org Sun Feb 24 00:06:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9OAY-0002d7-Q7
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 00:06:15 +0100
+	id 1U9OAY-0002d7-8o
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 00:06:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759363Ab3BWXFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2013 18:05:40 -0500
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:58408 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758808Ab3BWXFf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Feb 2013 18:05:35 -0500
+	id S1759369Ab3BWXFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2013 18:05:42 -0500
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:3202 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759352Ab3BWXFg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Feb 2013 18:05:36 -0500
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av8EAJhKKVFZ8rke/2dsb2JhbABFwVGBCBdzgiABBVYzCEk5HgYTiBe+fo8Vg0ADpyKDBw
+X-IronPort-Anti-Spam-Result: Av8EABpKKVFZ8rke/2dsb2JhbABFwVGBCBdzgiABBVYzCEk5HgYTiBe+eY8Vg0ADoB6HBIMH
 X-IronPort-AV: E=Sophos;i="4.84,724,1355097600"; 
-   d="scan'208";a="420142111"
+   d="scan'208";a="400995028"
 Received: from host-89-242-185-30.as13285.net (HELO localhost) ([89.242.185.30])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 23 Feb 2013 23:05:33 +0000
+  by out1.ip04ir2.opaltelecom.net with ESMTP; 23 Feb 2013 23:05:34 +0000
 X-Mailer: git-send-email 1.8.1.msysgit.1
 In-Reply-To: <1361660761-1932-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216928>
 
-Logic, but no actions, included.
+Re-use list_common_cmds_help but simply change the array name.
+Candidate for future refactoring to pass a pointer to the array.
+
+Do not list User-manual and Everday Git which not follow the naming
+convention, nor gitrepository-layout which doesn't fit within the name field size
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- builtin/help.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ builtin/help.c  |  1 +
+ common-guides.h | 12 ++++++++++++
+ help.c          | 18 ++++++++++++++++++
+ help.h          |  1 +
+ 4 files changed, 32 insertions(+)
+ create mode 100644 common-guides.h
 
 diff --git a/builtin/help.c b/builtin/help.c
-index d10cbed..699e679 100644
+index 699e679..b0746af 100644
 --- a/builtin/help.c
 +++ b/builtin/help.c
-@@ -36,10 +36,12 @@ enum help_format {
- static const char *html_path;
- 
- static int show_all = 0;
-+static int show_guides = 0;
- static unsigned int colopts;
- static enum help_format help_format = HELP_FORMAT_NONE;
- static struct option builtin_help_options[] = {
- 	OPT_COUNTUP('a', "all", &show_all, N_("print all available commands")),
-+	OPT_COUNTUP('g', "guides", &show_guides, N_("print all available guides")),
- 	OPT_SET_INT('m', "man", &help_format, N_("show man page"), HELP_FORMAT_MAN),
- 	OPT_SET_INT('w', "web", &help_format, N_("show manual in web browser"),
- 			HELP_FORMAT_WEB),
-@@ -49,7 +51,7 @@ static struct option builtin_help_options[] = {
- };
- 
- static const char * const builtin_help_usage[] = {
--	N_("git help [--all] [--man|--web|--info] [command]"),
-+	N_("git help [--all] [--guides] [--man|--web|--info] [command]"),
- 	NULL
- };
- 
-@@ -429,9 +431,11 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
- 		list_commands(colopts, &main_cmds, &other_cmds);
- 		printf("%s\n", _(git_more_info_string));
-+		if (!show_guides) return 0;
-+	}
-+	if (show_guides) {
+@@ -434,6 +434,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 		if (!show_guides) return 0;
+ 	}
+ 	if (show_guides) {
++		list_common_guides_help();
  		return 0;
  	}
--
  	if (!argv[0]) {
- 		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
- 		list_common_cmds_help();
+diff --git a/common-guides.h b/common-guides.h
+new file mode 100644
+index 0000000..a8ad8d1
+--- /dev/null
++++ b/common-guides.h
+@@ -0,0 +1,12 @@
++/* Automatically generated by ./generate-guidelist.sh */
++/* re-use struct cmdname_help in common-commands.h */
++
++static struct cmdname_help common_guides[] = {
++  {"attributes", "defining attributes per path"},
++  {"glossary", "A GIT Glossary"},
++  {"ignore", "Specifies intentionally untracked files to ignore"},
++  {"modules", "defining submodule properties"},
++  {"revisions", "specifying revisions and ranges for git"},
++  {"tutorial", "A tutorial introduction to git (for version 1.5.1 or newer)"},
++  {"workflows", "An overview of recommended workflows with git"},
++};
+diff --git a/help.c b/help.c
+index 1c0e17d..94df446 100644
+--- a/help.c
++++ b/help.c
+@@ -4,6 +4,7 @@
+ #include "levenshtein.h"
+ #include "help.h"
+ #include "common-cmds.h"
++#include "common-guides.h"
+ #include "string-list.h"
+ #include "column.h"
+ #include "version.h"
+@@ -240,6 +241,23 @@ void list_common_cmds_help(void)
+ 	}
+ }
+ 
++void list_common_guides_help(void)
++{
++	int i, longest = 0;
++
++	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
++		if (longest < strlen(common_guides[i].name))
++			longest = strlen(common_guides[i].name);
++	}
++
++	puts(_("The common Git guides are:"));
++	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
++		printf("   %s   ", common_guides[i].name);
++		mput_char(' ', longest - strlen(common_guides[i].name));
++		puts(_(common_guides[i].help));
++	}
++}
++
+ int is_in_cmdlist(struct cmdnames *c, const char *s)
+ {
+ 	int i;
+diff --git a/help.h b/help.h
+index 0ae5a12..4ae1fd7 100644
+--- a/help.h
++++ b/help.h
+@@ -17,6 +17,7 @@ static inline void mput_char(char c, unsigned int num)
+ }
+ 
+ extern void list_common_cmds_help(void);
++extern void list_common_guides_help(void);
+ extern const char *help_unknown_cmd(const char *cmd);
+ extern void load_command_list(const char *prefix,
+ 			      struct cmdnames *main_cmds,
 -- 
 1.8.1.msysgit.1
