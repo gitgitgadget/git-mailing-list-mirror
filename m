@@ -1,142 +1,454 @@
-From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
-Subject: [PATCH] Improve QNX support in GIT
-Date: Sun, 24 Feb 2013 00:02:36 +0200
-Message-ID: <CAHXAxrMRxKKiEarSQ0fCLt6-zyS=52B+kmZMLDf8SQAGzGbjjQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pkt-line: Fix sparse errors and warnings
+Date: Sat, 23 Feb 2013 17:31:34 -0500
+Message-ID: <20130223223134.GA2504@sigill.intra.peff.net>
+References: <51290DF4.4040309@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=047d7bdc127236637604d66b778f
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 23 23:03:14 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sat Feb 23 23:32:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9NBP-0004GP-2r
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 23:03:03 +0100
+	id 1U9NdY-0004HK-JL
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 23:32:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759159Ab3BWWCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2013 17:02:38 -0500
-Received: from mail-qc0-f172.google.com ([209.85.216.172]:39894 "EHLO
-	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758502Ab3BWWCh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2013 17:02:37 -0500
-Received: by mail-qc0-f172.google.com with SMTP id b25so787746qca.31
-        for <git@vger.kernel.org>; Sat, 23 Feb 2013 14:02:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to
-         :content-type;
-        bh=95UzV4Awx8lUdIDQSNlPhl+IZ4Am1N38ZU2iaBzj2Oo=;
-        b=ppJT3BZ/CLSMGtlez2b33eCN6bOV+qRp1hdM4PDsAqEDVMCUZf4nYZg2+tVJIYP3mi
-         bugi9Cn3eEFiAPsUs9QMIuT+YxyjmSjxEyUd8fasMEAjlWu429+4UWRxo376X85Yv1CW
-         KktnGp+yq45cyWOAsNqUJIEdWeQqECNE15QZ8wHMX2gRqE9zSp+UCgs2ghWg4CroDBhl
-         isrERPsJUxforEs2tCRZY2CGUodWeXDepZY6ruGxOvENvHEPfucEtnYvxE7pBMX3d7sB
-         IJ4BSjdAI0zI3+clOfeSu9ltRHXbo3oZi4Eeo2GC1vA6UPSEtMXLLg4mpMgUqg11LdDp
-         sRIw==
-X-Received: by 10.49.74.10 with SMTP id p10mr4549570qev.35.1361656956656; Sat,
- 23 Feb 2013 14:02:36 -0800 (PST)
-Received: by 10.49.71.68 with HTTP; Sat, 23 Feb 2013 14:02:36 -0800 (PST)
+	id S1759202Ab3BWWbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2013 17:31:40 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58769 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759159Ab3BWWbh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2013 17:31:37 -0500
+Received: (qmail 25265 invoked by uid 107); 23 Feb 2013 22:33:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 23 Feb 2013 17:33:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Feb 2013 17:31:34 -0500
+Content-Disposition: inline
+In-Reply-To: <51290DF4.4040309@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216921>
 
---047d7bdc127236637604d66b778f
-Content-Type: text/plain; charset=ISO-8859-1
+On Sat, Feb 23, 2013 at 06:44:04PM +0000, Ramsay Jones wrote:
 
-Hi,
+> Sparse issues the following error and warnings:
+> 
+>     pkt-line.c:209:51: warning: Using plain integer as NULL pointer
+>     sideband.c:41:52: warning: Using plain integer as NULL pointer
+>     daemon.c:615:39: warning: Using plain integer as NULL pointer
+>     remote-curl.c:220:75: error: incompatible types for operation (>)
+>     remote-curl.c:220:75:    left side has type char *
+>     remote-curl.c:220:75:    right side has type int
+>     remote-curl.c:291:53: warning: Using plain integer as NULL pointer
+>     remote-curl.c:408:43: warning: Using plain integer as NULL pointer
+>     remote-curl.c:562:47: warning: Using plain integer as NULL pointer
+> 
+> All of these complaints "blame" to commit 17243606 ("pkt-line: share
+> buffer/descriptor reading implementation", 20-02-2013).
+> 
+> In order to suppress the warnings, we simply replace the integer
+> constant 0 with NULL.
 
-Here is a small patch with QNX build improvements:
+Thanks for catching. This was just a think-o on my part; we want to pass
+(NULL, 0) as the (buf, len) pair, but of course we are passing pointers
+to them, so it is actually (NULL, NULL). And yes, I made sure the
+function correctly handles both a NULL pointer-to-buf and a NULL
+pointer-to-pointer-to-buf (and we do not even care about the
+pointer-to-len unless the buf pointer is valid).
 
-1) Rename tar.h to tar_git.h. Latest QNX versions have system tar.h
-header according to
-http://pubs.opengroup.org/onlinepubs/009696699/basedefs/tar.h.html ,
-to avoid inclusion of another tar.h, original header was renamed.
-2) Rename fnmatch.h to fnmatch_gnu.h and fnmatch.c to fnmatch_gnu.c to
-avoid inclusion of system fnmatch.h header in case if -I/usr/include
-path is specified before -Icompat/fnmatch. Which is common situation.
-3) pager.c - default "less" invocation flags were changed for QNX 6,x
-platform, since QNX has incompatible with GNU coreutils version of
-"less" utility.
-4) config.mak.uname - a) do not override mkdtemp/mkstemps/strcasestr
-detection, since newer QNX version could contain such functions. Let
-to configure decide what is present in the system. b) getpagesize()
-function is existing under QNX, c) QNX has pthread functions in the
-libc, so do not define NO_PTHREAD macro.
+So no bug, but definitely a reasonable cleanup.
 
-Thanks in advance!
+Oddly, you seemed to miss the one in connect.c (which my sparse does
+detect).
 
---047d7bdc127236637604d66b778f
-Content-Type: application/octet-stream; name="git-qnx.diff"
-Content-Disposition: attachment; filename="git-qnx.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_hdjahwgx1
+> In order to suppress the error message, we simply remove the "> 0" from
+> the while loop controlling expression.
 
-ZGlmZiAtLWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUKaW5kZXggYmE4ZTI0My4uZjZkZDJlYiAx
-MDA2NDQKLS0tIGEvTWFrZWZpbGUKKysrIGIvTWFrZWZpbGUKQEAgLTcyNiw3ICs3MjYsNyBAQCBM
-SUJfSCArPSBzdHJlYW1pbmcuaAogTElCX0ggKz0gc3RyaW5nLWxpc3QuaAogTElCX0ggKz0gc3Vi
-bW9kdWxlLmgKIExJQl9IICs9IHRhZy5oCi1MSUJfSCArPSB0YXIuaAorTElCX0ggKz0gdGFyX2dp
-dC5oCiBMSUJfSCArPSB0aHJlYWQtdXRpbHMuaAogTElCX0ggKz0gdHJhbnNwb3J0LmgKIExJQl9I
-ICs9IHRyZWUtd2Fsay5oCkBAIC0xMjU2LDEyICsxMjU2LDEyIEBAIGVuZGlmCiBpZmRlZiBOT19G
-Tk1BVENICiAJQ09NUEFUX0NGTEFHUyArPSAtSWNvbXBhdC9mbm1hdGNoCiAJQ09NUEFUX0NGTEFH
-UyArPSAtRE5PX0ZOTUFUQ0gKLQlDT01QQVRfT0JKUyArPSBjb21wYXQvZm5tYXRjaC9mbm1hdGNo
-Lm8KKwlDT01QQVRfT0JKUyArPSBjb21wYXQvZm5tYXRjaC9mbm1hdGNoX2dudS5vCiBlbHNlCiBp
-ZmRlZiBOT19GTk1BVENIX0NBU0VGT0xECiAJQ09NUEFUX0NGTEFHUyArPSAtSWNvbXBhdC9mbm1h
-dGNoCiAJQ09NUEFUX0NGTEFHUyArPSAtRE5PX0ZOTUFUQ0hfQ0FTRUZPTEQKLQlDT01QQVRfT0JK
-UyArPSBjb21wYXQvZm5tYXRjaC9mbm1hdGNoLm8KKwlDT01QQVRfT0JKUyArPSBjb21wYXQvZm5t
-YXRjaC9mbm1hdGNoX2dudS5vCiBlbmRpZgogZW5kaWYKIGlmZGVmIFVTRV9XSUxETUFUQ0gKZGlm
-ZiAtLWdpdCBhL2FyY2hpdmUtdGFyLmMgYi9hcmNoaXZlLXRhci5jCmluZGV4IDcxOWI2MjkuLjhl
-MjQzMzYgMTAwNjQ0Ci0tLSBhL2FyY2hpdmUtdGFyLmMKKysrIGIvYXJjaGl2ZS10YXIuYwpAQCAt
-Miw3ICsyLDcgQEAKICAqIENvcHlyaWdodCAoYykgMjAwNSwgMjAwNiBSZW5lIFNjaGFyZmUKICAq
-LwogI2luY2x1ZGUgImNhY2hlLmgiCi0jaW5jbHVkZSAidGFyLmgiCisjaW5jbHVkZSAidGFyX2dp
-dC5oIgogI2luY2x1ZGUgImFyY2hpdmUuaCIKICNpbmNsdWRlICJzdHJlYW1pbmcuaCIKICNpbmNs
-dWRlICJydW4tY29tbWFuZC5oIgpkaWZmIC0tZ2l0IGEvYnVpbHRpbi90YXItdHJlZS5jIGIvYnVp
-bHRpbi90YXItdHJlZS5jCmluZGV4IDNmMWU3MDEuLmIwZTQ1NTEgMTAwNjQ0Ci0tLSBhL2J1aWx0
-aW4vdGFyLXRyZWUuYworKysgYi9idWlsdGluL3Rhci10cmVlLmMKQEAgLTMsNyArMyw3IEBACiAg
-Ki8KICNpbmNsdWRlICJjYWNoZS5oIgogI2luY2x1ZGUgImNvbW1pdC5oIgotI2luY2x1ZGUgInRh
-ci5oIgorI2luY2x1ZGUgInRhcl9naXQuaCIKICNpbmNsdWRlICJidWlsdGluLmgiCiAjaW5jbHVk
-ZSAicXVvdGUuaCIKIApkaWZmIC0tZ2l0IGEvY29tcGF0L2ZubWF0Y2gvZm5tYXRjaC5jIGIvY29t
-cGF0L2ZubWF0Y2gvZm5tYXRjaF9nbnUuYwpzaW1pbGFyaXR5IGluZGV4IDk5JQpyZW5hbWUgZnJv
-bSBjb21wYXQvZm5tYXRjaC9mbm1hdGNoLmMKcmVuYW1lIHRvIGNvbXBhdC9mbm1hdGNoL2ZubWF0
-Y2hfZ251LmMKaW5kZXggNWVmMDY4NS4uZjlhNWU1YiAxMDA2NDQKLS0tIGEvY29tcGF0L2ZubWF0
-Y2gvZm5tYXRjaC5jCisrKyBiL2NvbXBhdC9mbm1hdGNoL2ZubWF0Y2hfZ251LmMKQEAgLTI2LDcg
-KzI2LDcgQEAKICNlbmRpZgogCiAjaW5jbHVkZSA8ZXJybm8uaD4KLSNpbmNsdWRlIDxmbm1hdGNo
-Lmg+CisjaW5jbHVkZSA8Zm5tYXRjaF9nbnUuaD4KICNpbmNsdWRlIDxjdHlwZS5oPgogCiAjaWYg
-SEFWRV9TVFJJTkdfSCB8fCBkZWZpbmVkIF9MSUJDCmRpZmYgLS1naXQgYS9jb21wYXQvZm5tYXRj
-aC9mbm1hdGNoLmggYi9jb21wYXQvZm5tYXRjaC9mbm1hdGNoX2dudS5oCnNpbWlsYXJpdHkgaW5k
-ZXggMTAwJQpyZW5hbWUgZnJvbSBjb21wYXQvZm5tYXRjaC9mbm1hdGNoLmgKcmVuYW1lIHRvIGNv
-bXBhdC9mbm1hdGNoL2ZubWF0Y2hfZ251LmgKZGlmZiAtLWdpdCBhL2NvbmZpZy5tYWsudW5hbWUg
-Yi9jb25maWcubWFrLnVuYW1lCmluZGV4IDg3NDNhNmQuLjJkNDJmZmUgMTAwNjQ0Ci0tLSBhL2Nv
-bmZpZy5tYWsudW5hbWUKKysrIGIvY29uZmlnLm1hay51bmFtZQpAQCAtNTI3LDE0ICs1MjcsMjEg
-QEAgaWZlcSAoJCh1bmFtZV9TKSxRTlgpCiAJSEFWRV9TVFJJTkdTX0ggPSBZZXNQbGVhc2UKIAlO
-RUVEU19TT0NLRVQgPSBZZXNQbGVhc2UKIAlOT19GTk1BVENIX0NBU0VGT0xEID0gWWVzUGxlYXNl
-Ci0JTk9fR0VUUEFHRVNJWkUgPSBZZXNQbGVhc2UKIAlOT19JQ09OViA9IFllc1BsZWFzZQogCU5P
-X01FTU1FTSA9IFllc1BsZWFzZQotCU5PX01LRFRFTVAgPSBZZXNQbGVhc2UKLQlOT19NS1NURU1Q
-UyA9IFllc1BsZWFzZQogCU5PX05TRUMgPSBZZXNQbGVhc2UKLQlOT19QVEhSRUFEUyA9IFllc1Bs
-ZWFzZQogCU5PX1JfVE9fR0NDX0xJTktFUiA9IFllc1BsZWFzZQotCU5PX1NUUkNBU0VTVFIgPSBZ
-ZXNQbGVhc2UKIAlOT19TVFJMQ1BZID0gWWVzUGxlYXNlCisJIyBBbGwgUU5YIDYueCB2ZXJzaW9u
-cyBoYXZlIHB0aHJlYWQgZnVuY3Rpb25zIGluIGxpYmMKKwkjIGFuZCBnZXRwYWdlc2l6ZS4gTGVh
-dmUgbWtzdGVtcHMvbWtkdGVtcC9zdHJjYXNlc3RyIGZvcgorCSMgYXV0b2RldGVjdGlvbi4KKwlp
-ZmVxICgkKHNoZWxsIGV4cHIgIiQodW5hbWVfUikiIDogJzZcLlswLTldXC5bMC05XScpLDUpCisJ
-CVBUSFJFQURfTElCUyA9ICIiCisJZWxzZQorCQlOT19QVEhSRUFEUyA9IFllc1BsZWFzZQorCQlO
-T19HRVRQQUdFU0laRSA9IFllc1BsZWFzZQorCQlOT19TVFJDQVNFU1RSID0gWWVzUGxlYXNlCisJ
-CU5PX01LU1RFTVBTID0gWWVzUGxlYXNlCisJCU5PX01LRFRFTVAgPSBZZXNQbGVhc2UKKwllbmRp
-ZgogZW5kaWYKZGlmZiAtLWdpdCBhL2dpdC1jb21wYXQtdXRpbC5oIGIvZ2l0LWNvbXBhdC11dGls
-LmgKaW5kZXggYjdlYWFhOS4uZjU5ZDY5NiAxMDA2NDQKLS0tIGEvZ2l0LWNvbXBhdC11dGlsLmgK
-KysrIGIvZ2l0LWNvbXBhdC11dGlsLmgKQEAgLTExMyw3ICsxMTMsMTEgQEAKICNpbmNsdWRlIDx0
-aW1lLmg+CiAjaW5jbHVkZSA8c2lnbmFsLmg+CiAjaWZuZGVmIFVTRV9XSUxETUFUQ0gKKyNpZiBk
-ZWZpbmVkKE5PX0ZOTUFUQ0gpIHx8IGRlZmluZWQoTk9fRk5NQVRDSF9DQVNFRk9MRCkKKyNpbmNs
-dWRlIDxmbm1hdGNoX2dudS5oPgorI2Vsc2UKICNpbmNsdWRlIDxmbm1hdGNoLmg+CisjZW5kaWYg
-LyogTk9fRk5NQVRDSCAqLwogI2VuZGlmCiAjaW5jbHVkZSA8YXNzZXJ0Lmg+CiAjaW5jbHVkZSA8
-cmVnZXguaD4KZGlmZiAtLWdpdCBhL3BhZ2VyLmMgYi9wYWdlci5jCmluZGV4IGMxZWNmNjUuLmJl
-ZDYyN2EgMTAwNjQ0Ci0tLSBhL3BhZ2VyLmMKKysrIGIvcGFnZXIuYwpAQCAtODEsNyArODEsMTEg
-QEAgdm9pZCBzZXR1cF9wYWdlcih2b2lkKQogCXBhZ2VyX3Byb2Nlc3MuYXJndiA9IHBhZ2VyX2Fy
-Z3Y7CiAJcGFnZXJfcHJvY2Vzcy5pbiA9IC0xOwogCWlmICghZ2V0ZW52KCJMRVNTIikpIHsKKwkj
-aWYgIWRlZmluZWQoX19RTlhOVE9fXykKIAkJc3RhdGljIGNvbnN0IGNoYXIgKmVudltdID0geyAi
-TEVTUz1GUlNYIiwgTlVMTCB9OworCSNlbHNlCisJCXN0YXRpYyBjb25zdCBjaGFyICplbnZbXSA9
-IHsgIkxFU1M9clMiLCBOVUxMIH07CisJI2VuZGlmIC8qIF9fUU5YTlRPX18gKi8KIAkJcGFnZXJf
-cHJvY2Vzcy5lbnYgPSBlbnY7CiAJfQogCWlmIChzdGFydF9jb21tYW5kKCZwYWdlcl9wcm9jZXNz
-KSkKZGlmZiAtLWdpdCBhL3Rhci5oIGIvdGFyX2dpdC5oCnNpbWlsYXJpdHkgaW5kZXggMTAwJQpy
-ZW5hbWUgZnJvbSB0YXIuaApyZW5hbWUgdG8gdGFyX2dpdC5oCg==
---047d7bdc127236637604d66b778f--
+Yeah, that is the right thing to do. The code that's there isn't wrong,
+but I agree that checking "ptr != NULL" (i.e., just "ptr") is much more
+sane than "ptr > 0" (and is just a leftover that I missed during
+refactoring the patch).
+
+> When you next re-roll your 'jk/pkt-line-cleanup' patches, could you
+> please squash this (or something like it) into commit 17243606
+> ("pkt-line: share buffer/descriptor reading implementation", 20-02-2013).
+
+I don't think we otherwise need a re-roll. Junio hasn't merged the
+series to next yet, so I've included an updated patch 15 below with your
+changes (your patch, the missing connect.c fix, the commit message fix,
+and the size/ret thing below).
+
+> In addition, that commit adds the following code as part of function
+> get_packet_data():
+> 
+> +       /* Read up to "size" bytes from our source, whatever it is. */
+> +       if (src_buf && *src_buf) {
+> +               ret = size < *src_size ? size : *src_size;
+> +               memcpy(dst, *src_buf, ret);
+> +               *src_buf += size;
+> ............................^^^^^
+> +               *src_size -= size;
+> +       } else {
+> +
+> 
+> This could lead to the source buffer pointer being incremented past the
+> "one past the end" of the buffer; ie to undefined behaviour. That use
+> of 'size', along with the one on the following line, should be 'ret' no?
+
+Yeah, thanks for catching. We just die immediately afterwards anyway,
+and sane systems do not care what kind of junk you put into a pointer
+unless you dereference. But clearly it is supposed to be "ret".
+
+Thanks for the report. Clearly I should start running "make sparse" more
+often (the reason I don't is that it produces dozens of complaints about
+constants in /usr/include/bits/xopen_lim.h, which I could obviously care
+less about; I should look into suppressing that).
+
+Updated patch 15/19 is below.
+
+-- >8 --
+Subject: [PATCH] pkt-line: share buffer/descriptor reading implementation
+
+The packet_read function reads from a descriptor. The
+packet_get_line function is similar, but reads from an
+in-memory buffer, and uses a completely separate
+implementation. This patch teaches the generic packet_read
+function to accept either source, and we can do away with
+packet_get_line's implementation.
+
+There are two other differences to account for between the
+old and new functions. The first is that we used to read
+into a strbuf, but now read into a fixed size buffer. The
+only two callers are fine with that, and in fact it
+simplifies their code, since they can use the same
+static-buffer interface as the rest of the packet_read_line
+callers (and we provide a similar convenience wrapper for
+reading from a buffer rather than a descriptor).
+
+This is technically an externally-visible behavior change in
+that we used to accept arbitrary sized packets up to 65532
+bytes, and now cap out at LARGE_PACKET_MAX, 65520. In
+practice this doesn't matter, as we use it only for parsing
+smart-http headers (of which there is exactly one defined,
+and it is small and fixed-size). And any extension headers
+would be breaking the protocol to go over LARGE_PACKET_MAX
+anyway.
+
+The other difference is that packet_get_line would return
+on error rather than dying. However, both callers of
+packet_get_line are actually improved by dying.
+
+The first caller does its own error checking, but we can
+drop that; as a result, we'll actually get more specific
+reporting about protocol breakage when packet_read dies
+internally. The only downside is that packet_read will not
+print the smart-http URL that failed, but that's not a big
+deal; anybody not debugging can already see the remote's URL
+already, and anybody debugging would want to run with
+GIT_CURL_VERBOSE anyway to see way more information.
+
+The second caller, which is just trying to skip past any
+extra smart-http headers (of which there are none defined,
+but which we allow to keep room for future expansion), did
+not error check at all. As a result, it would treat an error
+just like a flush packet. The resulting mess would generally
+cause an error later in get_remote_heads, but now we get
+error reporting much closer to the source of the problem.
+
+Brown-paper-bag-fixes-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ connect.c     |  3 ++-
+ daemon.c      |  2 +-
+ pkt-line.c    | 76 +++++++++++++++++++++++++++++------------------------------
+ pkt-line.h    | 23 +++++++++++++-----
+ remote-curl.c | 22 ++++++++---------
+ sideband.c    |  2 +-
+ 6 files changed, 69 insertions(+), 59 deletions(-)
+
+diff --git a/connect.c b/connect.c
+index 611ffb4..3d99999 100644
+--- a/connect.c
++++ b/connect.c
+@@ -76,7 +76,8 @@ struct ref **get_remote_heads(int in, struct ref **list,
+ 		int len, name_len;
+ 		char *buffer = packet_buffer;
+ 
+-		len = packet_read(in, packet_buffer, sizeof(packet_buffer),
++		len = packet_read(in, NULL, NULL,
++				  packet_buffer, sizeof(packet_buffer),
+ 				  PACKET_READ_GENTLE_ON_EOF |
+ 				  PACKET_READ_CHOMP_NEWLINE);
+ 		if (len < 0)
+diff --git a/daemon.c b/daemon.c
+index 3f70e79..82d5bf5 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -612,7 +612,7 @@ static int execute(void)
+ 		loginfo("Connection from %s:%s", addr, port);
+ 
+ 	alarm(init_timeout ? init_timeout : timeout);
+-	pktlen = packet_read(0, packet_buffer, sizeof(packet_buffer), 0);
++	pktlen = packet_read(0, NULL, NULL, packet_buffer, sizeof(packet_buffer), 0);
+ 	alarm(0);
+ 
+ 	len = strlen(line);
+diff --git a/pkt-line.c b/pkt-line.c
+index 55fb688..70f1950 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -104,12 +104,28 @@ static int safe_read(int fd, void *buffer, unsigned size, int options)
+ 	strbuf_add(buf, buffer, n);
+ }
+ 
+-static int safe_read(int fd, void *buffer, unsigned size, int options)
++static int get_packet_data(int fd, char **src_buf, size_t *src_size,
++			   void *dst, unsigned size, int options)
+ {
+-	ssize_t ret = read_in_full(fd, buffer, size);
+-	if (ret < 0)
+-		die_errno("read error");
+-	else if (ret < size) {
++	ssize_t ret;
++
++	if (fd >= 0 && src_buf && *src_buf)
++		die("BUG: multiple sources given to packet_read");
++
++	/* Read up to "size" bytes from our source, whatever it is. */
++	if (src_buf && *src_buf) {
++		ret = size < *src_size ? size : *src_size;
++		memcpy(dst, *src_buf, ret);
++		*src_buf += ret;
++		*src_size -= ret;
++	} else {
++		ret = read_in_full(fd, dst, size);
++		if (ret < 0)
++			die_errno("read error");
++	}
++
++	/* And complain if we didn't get enough bytes to satisfy the read. */
++	if (ret < size) {
+ 		if (options & PACKET_READ_GENTLE_ON_EOF)
+ 			return -1;
+ 
+@@ -144,12 +160,13 @@ int packet_read(int fd, char *buffer, unsigned size, int options)
+ 	return len;
+ }
+ 
+-int packet_read(int fd, char *buffer, unsigned size, int options)
++int packet_read(int fd, char **src_buf, size_t *src_len,
++		char *buffer, unsigned size, int options)
+ {
+ 	int len, ret;
+ 	char linelen[4];
+ 
+-	ret = safe_read(fd, linelen, 4, options);
++	ret = get_packet_data(fd, src_buf, src_len, linelen, 4, options);
+ 	if (ret < 0)
+ 		return ret;
+ 	len = packet_length(linelen);
+@@ -162,7 +179,7 @@ int packet_read(int fd, char *buffer, unsigned size, int options)
+ 	len -= 4;
+ 	if (len >= size)
+ 		die("protocol error: bad line length %d", len);
+-	ret = safe_read(fd, buffer, len, options);
++	ret = get_packet_data(fd, src_buf, src_len, buffer, len, options);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -175,41 +192,24 @@ int packet_get_line(struct strbuf *out,
+ 	return len;
+ }
+ 
+-char *packet_read_line(int fd, int *len_p)
++static char *packet_read_line_generic(int fd,
++				      char **src, size_t *src_len,
++				      int *dst_len)
+ {
+-	int len = packet_read(fd, packet_buffer, sizeof(packet_buffer),
++	int len = packet_read(fd, src, src_len,
++			      packet_buffer, sizeof(packet_buffer),
+ 			      PACKET_READ_CHOMP_NEWLINE);
+-	if (len_p)
+-		*len_p = len;
++	if (dst_len)
++		*dst_len = len;
+ 	return len ? packet_buffer : NULL;
+ }
+ 
+-int packet_get_line(struct strbuf *out,
+-	char **src_buf, size_t *src_len)
++char *packet_read_line(int fd, int *len_p)
+ {
+-	int len;
+-
+-	if (*src_len < 4)
+-		return -1;
+-	len = packet_length(*src_buf);
+-	if (len < 0)
+-		return -1;
+-	if (!len) {
+-		*src_buf += 4;
+-		*src_len -= 4;
+-		packet_trace("0000", 4, 0);
+-		return 0;
+-	}
+-	if (*src_len < len)
+-		return -2;
+-
+-	*src_buf += 4;
+-	*src_len -= 4;
+-	len -= 4;
++	return packet_read_line_generic(fd, NULL, NULL, len_p);
++}
+ 
+-	strbuf_add(out, *src_buf, len);
+-	*src_buf += len;
+-	*src_len -= len;
+-	packet_trace(out->buf, out->len, 0);
+-	return len;
++char *packet_read_line_buf(char **src, size_t *src_len, int *dst_len)
++{
++	return packet_read_line_generic(-1, src, src_len, dst_len);
+ }
+diff --git a/pkt-line.h b/pkt-line.h
+index fa93e32..0a838d1 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -25,9 +25,16 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((f
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ 
+ /*
+- * Read a packetized line from the descriptor into the buffer, which must be at
+- * least size bytes long. The return value specifies the number of bytes read
+- * into the buffer.
++ * Read a packetized line into the buffer, which must be at least size bytes
++ * long. The return value specifies the number of bytes read into the buffer.
++ *
++ * If src_buffer is not NULL (and nor is *src_buffer), it should point to a
++ * buffer containing the packet data to parse, of at least *src_len bytes.
++ * After the function returns, src_buf will be incremented and src_len
++ * decremented by the number of bytes consumed.
++ *
++ * If src_buffer (or *src_buffer) is NULL, then data is read from the
++ * descriptor "fd".
+  *
+  * If options does not contain PACKET_READ_GENTLE_ON_EOF, we will die under any
+  * of the following conditions:
+@@ -50,7 +57,8 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((f
+  */
+ #define PACKET_READ_GENTLE_ON_EOF (1u<<0)
+ #define PACKET_READ_CHOMP_NEWLINE (1u<<1)
+-int packet_read(int fd, char *buffer, unsigned size, int options);
++int packet_read(int fd, char **src_buffer, size_t *src_len, char
++		*buffer, unsigned size, int options);
+ 
+ /*
+  * Convenience wrapper for packet_read that is not gentle, and sets the
+@@ -61,11 +69,14 @@ extern char packet_buffer[LARGE_PACKET_MAX];
+  */
+ char *packet_read_line(int fd, int *size);
+ 
++/*
++ * Same as packet_read_line, but read from a buf rather than a descriptor;
++ * see packet_read for details on how src_* is used.
++ */
++char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
+ 
+ #define DEFAULT_PACKET_MAX 1000
+ #define LARGE_PACKET_MAX 65520
+ extern char packet_buffer[LARGE_PACKET_MAX];
+ 
+-int packet_get_line(struct strbuf *out, char **src_buf, size_t *src_len);
+-
+ #endif
+diff --git a/remote-curl.c b/remote-curl.c
+index b28f965..c8379a5 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -138,28 +138,26 @@ static struct discovery* discover_refs(const char *service)
+ 	if (maybe_smart &&
+ 	    (5 <= last->len && last->buf[4] == '#') &&
+ 	    !strbuf_cmp(&exp, &type)) {
++		char *line;
++
+ 		/*
+ 		 * smart HTTP response; validate that the service
+ 		 * pkt-line matches our request.
+ 		 */
+-		if (packet_get_line(&buffer, &last->buf, &last->len) <= 0)
+-			die("%s has invalid packet header", refs_url);
+-		if (buffer.len && buffer.buf[buffer.len - 1] == '\n')
+-			strbuf_setlen(&buffer, buffer.len - 1);
++		line = packet_read_line_buf(&last->buf, &last->len, NULL);
+ 
+ 		strbuf_reset(&exp);
+ 		strbuf_addf(&exp, "# service=%s", service);
+-		if (strbuf_cmp(&exp, &buffer))
+-			die("invalid server response; got '%s'", buffer.buf);
++		if (strcmp(line, exp.buf))
++			die("invalid server response; got '%s'", line);
+ 		strbuf_release(&exp);
+ 
+ 		/* The header can include additional metadata lines, up
+ 		 * until a packet flush marker.  Ignore these now, but
+ 		 * in the future we might start to scan them.
+ 		 */
+-		strbuf_reset(&buffer);
+-		while (packet_get_line(&buffer, &last->buf, &last->len) > 0)
+-			strbuf_reset(&buffer);
++		while (packet_read_line_buf(&last->buf, &last->len, NULL))
++			;
+ 
+ 		last->proto_git = 1;
+ 	}
+@@ -308,7 +306,7 @@ static size_t rpc_out(void *ptr, size_t eltsize,
+ 
+ 	if (!avail) {
+ 		rpc->initial_buffer = 0;
+-		avail = packet_read(rpc->out, rpc->buf, rpc->alloc, 0);
++		avail = packet_read(rpc->out, NULL, NULL, rpc->buf, rpc->alloc, 0);
+ 		if (!avail)
+ 			return 0;
+ 		rpc->pos = 0;
+@@ -425,7 +423,7 @@ static int post_rpc(struct rpc_state *rpc)
+ 			break;
+ 		}
+ 
+-		n = packet_read(rpc->out, buf, left, 0);
++		n = packet_read(rpc->out, NULL, NULL, buf, left, 0);
+ 		if (!n)
+ 			break;
+ 		rpc->len += n;
+@@ -579,7 +577,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
+ 	rpc->hdr_accept = strbuf_detach(&buf, NULL);
+ 
+ 	while (!err) {
+-		int n = packet_read(rpc->out, rpc->buf, rpc->alloc, 0);
++		int n = packet_read(rpc->out, NULL, NULL, rpc->buf, rpc->alloc, 0);
+ 		if (!n)
+ 			break;
+ 		rpc->pos = 0;
+diff --git a/sideband.c b/sideband.c
+index 15cc1ae..d1125f5 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -38,7 +38,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 
+ 	while (1) {
+ 		int band, len;
+-		len = packet_read(in_stream, buf + pf, LARGE_PACKET_MAX, 0);
++		len = packet_read(in_stream, NULL, NULL, buf + pf, LARGE_PACKET_MAX, 0);
+ 		if (len == 0)
+ 			break;
+ 		if (len < 1) {
+-- 
+1.8.1.4.4.g265d2fa
