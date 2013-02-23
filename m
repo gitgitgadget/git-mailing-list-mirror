@@ -1,91 +1,87 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Fwd: Compiling git 1.8.1.4 on 64bit centos 5.6
-Date: Sat, 23 Feb 2013 10:44:48 -0500
-Message-ID: <20130223154448.GB32406@odin.tremily.us>
-References: <CA+B9=JLWASmrK_TNTkJxRH1cZrVjhXN8kKmCZcnHgKXwX9WUiA@mail.gmail.com>
- <CA+B9=JLaZ5P+H-b-A6Xo-TRMcQYwGawjD-G62m8asnC0qMwmdg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=wq9mPyueHGvFACwf
-Cc: git@vger.kernel.org
-To: Darren Oakey <you@darrenoakey.info>
-X-From: git-owner@vger.kernel.org Sat Feb 23 16:45:49 2013
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: [PATCH] diff: Fix rename pretty-print when suffix and prefix overlap
+Date: Sat, 23 Feb 2013 17:48:45 +0100
+Message-ID: <1361638125-11245-1-git-send-email-apelisse@gmail.com>
+Cc: Antoine Pelisse <apelisse@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 23 17:49:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9HIE-0000Vj-Cy
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 16:45:42 +0100
+	id 1U9II2-0008VA-Q1
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 17:49:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759220Ab3BWPpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2013 10:45:08 -0500
-Received: from vms173015pub.verizon.net ([206.46.173.15]:50946 "EHLO
-	vms173015pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759221Ab3BWPpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2013 10:45:06 -0500
-Received: from odin.tremily.us ([unknown] [72.68.84.219])
- by vms173015.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MIO006V9JQPHG30@vms173015.mailsrvcs.net> for
- git@vger.kernel.org; Sat, 23 Feb 2013 09:44:50 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id E6BD08C015E; Sat,
- 23 Feb 2013 10:44:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1361634288; bh=Iyep83quKQ+bkWGnrfmTfrlocqjPFXXPVM8aXAHT66Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LyOaVgs2r+m61ziDaThw8QNr0fUPrgSe/pw7v7IUDJRnel1aa4c+SC8FlUNhpoCzy
- aGqQGk3iZo18Y3lbTi3+HnJW0VI/9hPuksYYnJWb2n7JA/Fy1xYB6Aoi87TyChqQBm
- fehTXpkCU/GfhSUBtzgzx91ubv+nZ1MvzqySSqM4=
-Content-disposition: inline
-In-reply-to: <CA+B9=JLaZ5P+H-b-A6Xo-TRMcQYwGawjD-G62m8asnC0qMwmdg@mail.gmail.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759285Ab3BWQtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2013 11:49:01 -0500
+Received: from mail-wg0-f48.google.com ([74.125.82.48]:33943 "EHLO
+	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759275Ab3BWQs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Feb 2013 11:48:59 -0500
+Received: by mail-wg0-f48.google.com with SMTP id 16so1336070wgi.27
+        for <git@vger.kernel.org>; Sat, 23 Feb 2013 08:48:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=dZtJVKRbfOGzfEuMROwABi6vr3bjJVM/vLdfLUmkNio=;
+        b=ieeISgfWS9ZAxN5rbm4vU5X3xy+Du5DZO18QNOMAD1USrAd8XZ0ggtPo8DcsLxRnPT
+         84qmE08wDngDO3xVp4yaIQcsqA232lMKKnP4F5EADLB+ZA2lQTlw1pqVl6hqHrtXqqub
+         OLtlpA06d/SkNp6ITBZFiH0r4cvQNDzhTu4Q4WcXUhBGYuii0TzgbvGdAcmUrDxxG2QZ
+         TWmlHjeMiCh4zTfSl2C4iLjjdi8YJ0/if/51hJ58Zf0xQrFDBYw86fo2pX92J01KlrbG
+         Ka6hQJuSg0/Y4Lr5vsy7fREcHeQxY5DBGxLKjnpw4vAVlzGgNP/iYZl7DZh+kyNtnpzl
+         FAIQ==
+X-Received: by 10.180.74.228 with SMTP id x4mr3401736wiv.0.1361638138022;
+        Sat, 23 Feb 2013 08:48:58 -0800 (PST)
+Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
+        by mx.google.com with ESMTPS id n10sm5017745wia.0.2013.02.23.08.48.55
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 23 Feb 2013 08:48:56 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216901>
 
+When considering a rename for two files that have a suffix and a prefix
+that can overlap, a confusing line is shown. As an example, renaming
+"a/b/b/c" to "a/b/c" shows "a/b/{ => }/b/c".
 
---wq9mPyueHGvFACwf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Currently, what we do is calculate the common prefix ("a/b/"), and the
+common suffix ("/b/c"), but the same "/b/" is actually counted both in
+prefix and suffix. Then when calculating the size of the non-common part,
+we end-up with a negative value which is reset to 0, thus the "{ => }".
 
-On Sun, Feb 24, 2013 at 12:13:11AM +1100, Darren Oakey wrote:
-> If I compile without static, it works - but the shared libraries
-> aren't found when it's run from the web host.  If I try running the
-> 32bit version on the 64bit host, it doesn't find some library
+Do not allow the common suffix to overlap the common prefix and stop
+when reaching a "/" that would be in both.
 
-This is a shot in the dark, but are you sure you have static versions
-of the libraries in questions (*.a) installed?
+Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+---
+ diff.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---wq9mPyueHGvFACwf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRKOPuAAoJEEUbTsx0l5OMXm8P+wVa9yCjbCTilGI2XBUM8mAw
-xNXRO+2cd2mn6/a86l7j+ihTERUiypcIy5FJXszRDAtalwCXNYvTyRBEpXqZ3OmC
-yC/4KY/z3SBgVJTpvGhKn3skLhB8T5DQfAqdyC0dlD1mbDGN8E7N2cFH2STnao7N
-8ZSpSZXKSeZSLYMn2xfler27vvGyAcBlHJy6TWx3F+6oumiD/tH9naY1U+wFhI3M
-G95bwKMV21fEP+XFdp2k3MNYkrnKFytp9LwWuQYm4l0woqgQGzx/rlpdWGDoZoVk
-NQ41aQHb2/9QVImBN7+eaIM8gb8bt/dc4EIJhoqZsBHloSuJETEbb3KDJQPQ5q1z
-Uxtpg5NqO7bRGtSR8772IDTzWEcGMDCtucmTTIzlwlxZsp7jOMp+NVzZ/7lIKjon
-rDwisi02tfuEbCfqQjXyeZa2jRMFiwLBxh5hkM0Ww5GmBaq5GHur1oqqChEv0OAF
-9oB2DGOpgS7be6Jh7tF9b2BHlehGKhm4L4A+am1MBCIFHsV9LsvU2m4A2VRCLQgs
-BRjoAPmB9xvwUgesXuI7l51K3W2JjivjYT1qnJLorJB1Z9xlVGJdWPP54YBfkn8P
-W5f+ZdGryoj8wwHZCRSS1sDatcgrYeGQtyCX3szNwrfZzmVPAmRLEe9d/SppOxr5
-Dl7pXtgiUsM4kSAIJEkF
-=gPmX
------END PGP SIGNATURE-----
-
---wq9mPyueHGvFACwf--
+diff --git a/diff.c b/diff.c
+index 156fec4..80f4752 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1290,7 +1290,16 @@ static char *pprint_rename(const char *a, const char *b)
+ 	old = a + len_a;
+ 	new = b + len_b;
+ 	sfx_length = 0;
+-	while (a <= old && b <= new && *old == *new) {
++	/*
++	 * Note:
++	 * if pfx_length is 0, old/new will never reach a - 1 because it
++	 * would mean the whole string is common suffix. But then, the
++	 * whole string would also be a common prefix, and we would not
++	 * have pfx_length equals 0.
++	 */
++	while (a + pfx_length - 1 <= old &&
++	       b + pfx_length - 1 <= new &&
++	       *old == *new) {
+ 		if (*old == '/')
+ 			sfx_length = len_a - (old - a);
+ 		old--;
+--
+1.7.9.5
