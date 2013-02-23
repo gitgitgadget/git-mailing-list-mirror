@@ -1,70 +1,81 @@
-From: "J.V." <jvsrvcs@gmail.com>
-Subject: git checkout problem
-Date: Fri, 22 Feb 2013 17:30:29 -0700
-Message-ID: <51280DA5.800@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Suggested improvements to the git-p4 documentation
+ (branch-related)
+Date: Fri, 22 Feb 2013 16:42:16 -0800
+Message-ID: <7va9qvc13r.fsf@alter.siamese.dyndns.org>
+References: <CAFXk4bqt_pMVDtVKF-JiQuGbSpy2+_rGOg5RTTE+0pNKFcZh3w@mail.gmail.com>
+ <20130105212517.GA30315@padd.com>
+ <CAFXk4bp0MBNxOD7w1zn7peN-ufWmV=DthMdHmjmj+Sci4MGneg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 23 01:31:03 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>, Olivier Delalleau <shish@keba.be>
+X-From: git-owner@vger.kernel.org Sat Feb 23 01:42:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9310-00056S-6J
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 01:30:58 +0100
+	id 1U93CP-0006ZS-8D
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 01:42:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758781Ab3BWAad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 19:30:33 -0500
-Received: from mail-da0-f48.google.com ([209.85.210.48]:60843 "EHLO
-	mail-da0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755117Ab3BWAaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 19:30:30 -0500
-Received: by mail-da0-f48.google.com with SMTP id w4so597153dam.35
-        for <git@vger.kernel.org>; Fri, 22 Feb 2013 16:30:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=mMeMhNKQ4yxVDRGXLubRxiAsIZp8raRHsCA5T0PL2jY=;
-        b=Q9ClbqUhgL2m/Sm4DjW6JcIsgq9qgGtdm59djZCmyDLEmnmVIiXyj2X5Er4Ks/0n5v
-         yHaaHkaxqfuNP6IB1keuolIAp7W4yLapVi2nwBPziZCCOzKhm15SLtHCyujF84SIgQCC
-         CNQMJ/QfylIz51yRywad8HSrDr4LGD3pBmIFERSeH0tX7sAqcHkifdOmHC3ZIQ1luhAQ
-         Kr7/ghrpgCt5uy7eDse0pgHKCIogJp6HmUsuIBesTOg4HYJC3V96Nj0Kudli44JrmWZy
-         yQKmdKiYkCVtZVQ5pfmDRLfoiUjC6u5gu/cWK9UIA3BM5qayYXiAoYvU/EuwwyArS3fE
-         HT0w==
-X-Received: by 10.68.226.228 with SMTP id rv4mr5989119pbc.118.1361579430451;
-        Fri, 22 Feb 2013 16:30:30 -0800 (PST)
-Received: from [10.16.242.114] ([192.206.100.4])
-        by mx.google.com with ESMTPS id bi8sm4596614pab.15.2013.02.22.16.30.28
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 22 Feb 2013 16:30:29 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+	id S1758784Ab3BWAmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 19:42:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34788 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758025Ab3BWAmT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 19:42:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59888B5E0;
+	Fri, 22 Feb 2013 19:42:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RDT4L2C1yXmMAUh3EAHW7d9k+yQ=; b=peUP4g
+	0MBCdAwYDhW0a7WudTOcb0yOpvDA0Gw4kRWpJt5WziNGCzyS3thiBmiXenLU6JJB
+	r7O/KLTV2hdC2oFgoheHgJFKAIxmMNuP74mEY0Ctv9mjlVvQhs4wHhmCinLJgvqr
+	OKCyg6KKcrUzxn4lYSaL0rWaAG0BawObxhUp0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Dk1BIMpG262TOq+mZZuK9Y5/Eeoi8GT/
+	NZqU1QcKLR1lYqeWxQJMOFtOOMXfU5Yib2N+6nr3a+9IFOLJ2SZ7DTNFKe03UIoD
+	DDOuk9XnWca/fDGOp2CW8Ddcx+9buWZdSThjpx6l02SmrXIDJq63vPW1lVlbzcO0
+	yZKDu0sprAE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E285B5DE;
+	Fri, 22 Feb 2013 19:42:18 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFA08B5DC; Fri, 22 Feb 2013
+ 19:42:17 -0500 (EST)
+In-Reply-To: <CAFXk4bp0MBNxOD7w1zn7peN-ufWmV=DthMdHmjmj+Sci4MGneg@mail.gmail.com> (Olivier
+ Delalleau's message of "Sun, 6 Jan 2013 21:00:42 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DFEDF64C-7D51-11E2-83DE-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216886>
 
-I was on my master branch, I checked out a branch (origin/somebranch), 
-did nothing, made no updates
-but did a few git pulls over about a week; made a small change to one 
-file & comitted & pushed.
+Olivier Delalleau <shish@keba.be> writes:
 
-Now am trying to go back to my master branch and get:
+> 2013/1/5 Pete Wyckoff <pw@padd.com>:
+>> shish@keba.be wrote on Thu, 03 Jan 2013 15:58 -0500:
+> ...
+>> Please do feel welcome to to rearrange or expand the
+>> documentation so it makes more sense, if you are so inspired.
+>
+> I'm afraid I'm not familiar enough with git documentation to dig into
+> it myself, but anyway that's about what I had for now. I'll send more
+> comments to the mailing list if I have more suggestions in the future.
+>
+> Thanks for a great tool! :)
 
-error: The following untracked working tree files would be overwritten 
-by checkout:
-         lib/derbyclient.jar
-Please move or remove them before you can switch branches.
-Aborting
+Did anything come out of this thread?  If neither of you two are
+inclined to conclude the discussion with a final patch, I'd
+appreciate anybody else who does the honors ;-)
 
+We'll be in deep pre-release freeze for a few weeks, so there is no
+need to rush.
 
-I did not put that file there, how do I get back to my master branch?  I 
-do not want to muck up
-the branch that I am now one.  Obviously someone put derbyclient.jar 
-there, not sure, but it is
-supposed to be there so do not want to remove.
-
-any ideas?
+Thanks.
