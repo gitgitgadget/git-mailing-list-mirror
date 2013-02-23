@@ -1,76 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What will be in 1.8.2-rc1
-Date: Fri, 22 Feb 2013 15:35:17 -0800
-Message-ID: <7vhal3c47e.fsf@alter.siamese.dyndns.org>
-References: <7vd2vttfs9.fsf@alter.siamese.dyndns.org>
+From: Paul Campbell <pcampbell@kemitix.net>
+Subject: [RFD] subtree status - comparing subtree with a remote
+Date: Sat, 23 Feb 2013 00:19:08 +0000
+Message-ID: <CALeLG_mF2Fucf=A2Dzn_KFgim8Z3vFpdWR84FYpu5gqKv=S64g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Adam Tkac <atkac@redhat.com>,
+	"David A. Greene" <greened@obbligato.org>,
+	"Jesper L. Nielsen" <lyager@gmail.com>,
+	Michael Schubert <mschub@elegosoft.com>,
+	Techlive Zheng <techlivezheng@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 23 00:35:52 2013
+X-From: git-owner@vger.kernel.org Sat Feb 23 01:19:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U929d-0000Us-An
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 00:35:49 +0100
+	id 1U92q1-0003u5-7t
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Feb 2013 01:19:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758132Ab3BVXfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Feb 2013 18:35:21 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60621 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756443Ab3BVXfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Feb 2013 18:35:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8BE3BBB5;
-	Fri, 22 Feb 2013 18:35:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xuG3Aq1BVtDULOitmNgqpzFcbFI=; b=CY0Dx6
-	FFMErlKfOxYPT3grQLyXHoGREYL3oFo4JnV8oxkrUfaNXAkDM+jNtJA4yLrlO1ye
-	K/0bH8k8vTXvu5/a3kjjpAG5AwbuYS/RiocWDIb3tDYZ+nfzha/UqqvmNr8xJxSG
-	tL0MRxy2v6i8cuwzAJltG2TxvzJqw+Hu0mqeA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EAAzuvuIq82Cd0gwpcEc1wm+gEyC/krk
-	1ZeA9MRNCndO8Ctt7rs84h29aJcyKWnwuD2/w2Rw7tp1FaDZMEztZlq/+VoGYpb/
-	rtH8M/dRzqAbMTTqGxSQDhCAjw1SyHGMvIA7cjGkgWN/9eg7lQIYyosXCSvV4DM+
-	0RpFTcDGn4o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE285BBB4;
-	Fri, 22 Feb 2013 18:35:19 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C698BBB3; Fri, 22 Feb 2013
- 18:35:19 -0500 (EST)
-In-Reply-To: <7vd2vttfs9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 21 Feb 2013 15:20:54 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 84CFBEDE-7D48-11E2-A5C9-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757329Ab3BWATM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Feb 2013 19:19:12 -0500
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:45137 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755117Ab3BWATJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Feb 2013 19:19:09 -0500
+Received: by mail-ob0-f177.google.com with SMTP id wc18so1115391obb.36
+        for <git@vger.kernel.org>; Fri, 22 Feb 2013 16:19:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:x-originating-ip:date:message-id:subject
+         :from:to:cc:content-type:x-gm-message-state;
+        bh=2MCprYQAqUY+9VrW2UPImAAZ4J9UWnBdEPWF5loAg6Q=;
+        b=ISQ7OYUEaMtYl1zkKYFwvsu4F6UAEwetFwZ5pFtuzfaSEfrSANzt5+olFpgpFprNql
+         wQzijKFd+LXRV/032+3gyV8g2CXyq06Xw130mEB2HYU6WhUt8ytheq1ZLRCS/L1J7gdS
+         Et4wMdJ+SQ9m7FRETztqu0UyPqccb4N+H6dPw6JqHnGHRA9P4+xzrNn7X89YhKimOGQR
+         rn13ZyeJ5SCr78Snahin2qBzB1/8LjHuatZRfLGM9FzuB6J0VUvOaOKwwZ437Fkbt00w
+         eKUpAqGHRmele8pFrQ8BB45K+Zm1h/0/0B2UE124q+wTqehFD1JApXtuZyg+ZZYRgDkB
+         ZFDg==
+X-Received: by 10.60.172.18 with SMTP id ay18mr1528955oec.126.1361578748378;
+ Fri, 22 Feb 2013 16:19:08 -0800 (PST)
+Received: by 10.76.13.196 with HTTP; Fri, 22 Feb 2013 16:19:08 -0800 (PST)
+X-Originating-IP: [2.102.85.14]
+X-Gm-Message-State: ALoCoQmjcbdBjbTlXapQtqRMxLLFRnkXx7RvdbOdoeCOLcu/Th8Yoi2h54AXLztJHH/pxQSZBPBK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216884>
 
-Just a quick update.
+Hi,
 
-I am planning to merge the following to 'master':
+I'm looking at adding a "git subtree status" command that will tell if
+a subtree is up-to-date, ahead of, behind, divergant with or unrelated
+to a remote repo.
 
- * regression fixes and finishing touches to a new feature
+I just wanted to check that I'm working this out correctly before
+writing the code.
 
-   ct/autoconf-htmldir
-   jn/less-reconfigure
-   as/check-ignore
+1) perform a synthetic subtree split
 
- * documentation updates
+  mine=$(git subtree split --prefix=subtree/path)
 
-   wk/man-deny-current-branch-is-default-these-days
-   wk/user-manual
+This outputs the SHA1 for this subtree in isolation to the superproject.
 
-I'd also want to have this before the final as a regression fix.  I
-haven't decided if I should do so before -rc1:
+2) fetch latest branch HEAD from remote repository we're comparing with
 
-   mh/maint-ceil-absolute
+  git fetch $repo $branch
+  theirs=$(git rev-parse FETCH_HEAD)
 
-Thanks.
+3) Find common ancestor
+
+  base=$(git merge-base $mine $theirs)
+
+Where:
+
+* $base == $mine && $base == $theirs : up-to-date
+
+* $base == $mine && $base != $theirs : behind remote - can pull
+
+* $base != $mine && $base == $theirs : ahead of remote - can push
+
+* $base != $mine && $base != $theirs : divergent
+
+* $base == null : no common ancestor - wrong repo?
+
+Comments?
+
+-- 
+Paul [W] Campbell
