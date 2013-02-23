@@ -1,7 +1,7 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 10/13] Update Git(1) links to guides
-Date: Sat, 23 Feb 2013 23:05:58 +0000
-Message-ID: <1361660761-1932-11-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 09/13] Rename everyday to giteveryday
+Date: Sat, 23 Feb 2013 23:05:57 +0000
+Message-ID: <1361660761-1932-10-git-send-email-philipoakley@iee.org>
 References: <1361660761-1932-1-git-send-email-philipoakley@iee.org>
 To: GitList <git@vger.kernel.org>
 X-From: git-owner@vger.kernel.org Sun Feb 24 00:06:45 2013
@@ -10,80 +10,892 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9OAs-0004LJ-Ig
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 00:06:34 +0100
+	id 1U9OB1-0004hu-7l
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 00:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759302Ab3BWXGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2013 18:06:07 -0500
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:44386 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758938Ab3BWXGG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Feb 2013 18:06:06 -0500
+	id S1759353Ab3BWXGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Feb 2013 18:06:13 -0500
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:6948 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758769Ab3BWXGH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Feb 2013 18:06:07 -0500
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av8EAJhKKVFZ8rke/2dsb2JhbABFwVGBCBdzgiABBVYzCBU0ORAOBhOIF75+jxWDQAOnIoMH
+X-IronPort-Anti-Spam-Result: Av8EABpKKVFZ8rke/2dsb2JhbABDAsFRgQgXc4IgAQUaDS8zCDEBFzkeBgoJiBe+eY1IBYFIEgEKgyMDpyKDB4FqAQcX
 X-IronPort-AV: E=Sophos;i="4.84,724,1355097600"; 
-   d="scan'208";a="419579940"
+   d="scan'208";a="400995053"
 Received: from host-89-242-185-30.as13285.net (HELO localhost) ([89.242.185.30])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 23 Feb 2013 23:06:05 +0000
+  by out1.ip04ir2.opaltelecom.net with ESMTP; 23 Feb 2013 23:06:03 +0000
 X-Mailer: git-send-email 1.8.1.msysgit.1
 In-Reply-To: <1361660761-1932-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216934>
 
-to giteverday and gituser-manual
+and leave a 'page has moved' page.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- Documentation/git.txt | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ Documentation/everyday.txt    | 424 ++----------------------------------------
+ Documentation/giteveryday.txt | 413 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 431 insertions(+), 406 deletions(-)
+ create mode 100644 Documentation/giteveryday.txt
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 0b681d9..1830245 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -22,8 +22,8 @@ unusually rich command set that provides both high-level operations
- and full access to internals.
+diff --git a/Documentation/everyday.txt b/Documentation/everyday.txt
+index e1fba85..3fc69f6 100644
+--- a/Documentation/everyday.txt
++++ b/Documentation/everyday.txt
+@@ -1,413 +1,25 @@
+-Everyday Git With 20 Commands Or So
++Everyday GIT With 20 Commands Or So
+ ===================================
  
- See linkgit:gittutorial[7] to get started, then see
--link:everyday.html[Everyday Git] for a useful minimum set of
--commands.  The link:user-manual.html[Git User's Manual] has a more
-+linkgit:giteveryday[Everyday Git] for a useful minimum set of
-+commands.  The linkgit:gituser-manual[Git User's Manual] has a more
- in-depth introduction.
+-<<Individual Developer (Standalone)>> commands are essential for
+-anybody who makes a commit, even for somebody who works alone.
++NAME
++----
++everyday - obsoleted page
  
- After you mastered the basic concepts, you can come back to this
-@@ -826,7 +826,7 @@ Discussion[[Discussion]]
- ------------------------
+-If you work with other people, you will need commands listed in
+-the <<Individual Developer (Participant)>> section as well.
++SYNOPSIS
++--------
++See linkgit:giteveryday.
  
- More detail on the following is available from the
--link:user-manual.html#git-concepts[Git concepts chapter of the
-+linkgit:gituser-manual#git-concepts[git concepts chapter of the
- user-manual] and linkgit:gitcore-tutorial[7].
+-People who play the <<Integrator>> role need to learn some more
+-commands in addition to the above.
++DESCRIPTION
++-----------
++This document has been moved to linkgit:giteveryday.
  
- A Git project normally consists of a working directory with a ".git"
-@@ -882,7 +882,7 @@ See the references in the "description" section to get started
- using Git.  The following is probably more detail than necessary
- for a first-time user.
+-<<Repository Administration>> commands are for system
+-administrators who are responsible for the care and feeding
+-of Git repositories.
++Please let the owners of the referring site know so that they can update the
++link you clicked to get here.
  
--The link:user-manual.html#git-concepts[Git concepts chapter of the
-+The linkgit:gituser-manual#git-concepts[git concepts chapter of the
- user-manual] and linkgit:gitcore-tutorial[7] both provide
- introductions to the underlying Git architecture.
++SEE ALSO
++--------
++linkgit:giteveryday
  
-@@ -919,9 +919,9 @@ subscribed to the list to send a message there.
- SEE ALSO
- --------
- linkgit:gittutorial[7], linkgit:gittutorial-2[7],
--link:everyday.html[Everyday Git], linkgit:gitcvs-migration[7],
-+linkgit:giteveryday[Everyday Git], linkgit:gitcvs-migration[7],
- linkgit:gitglossary[7], linkgit:gitcore-tutorial[7],
--linkgit:gitcli[7], link:user-manual.html[The Git User's Manual],
-+linkgit:gitcli[7], linkgit:gituser-manual[The Git User's Manual],
- linkgit:gitworkflows[7]
- 
- GIT
+-Individual Developer (Standalone)[[Individual Developer (Standalone)]]
+-----------------------------------------------------------------------
+-
+-A standalone individual developer does not exchange patches with
+-other people, and works alone in a single repository, using the
+-following commands.
+-
+-  * linkgit:git-init[1] to create a new repository.
+-
+-  * linkgit:git-show-branch[1] to see where you are.
+-
+-  * linkgit:git-log[1] to see what happened.
+-
+-  * linkgit:git-checkout[1] and linkgit:git-branch[1] to switch
+-    branches.
+-
+-  * linkgit:git-add[1] to manage the index file.
+-
+-  * linkgit:git-diff[1] and linkgit:git-status[1] to see what
+-    you are in the middle of doing.
+-
+-  * linkgit:git-commit[1] to advance the current branch.
+-
+-  * linkgit:git-reset[1] and linkgit:git-checkout[1] (with
+-    pathname parameters) to undo changes.
+-
+-  * linkgit:git-merge[1] to merge between local branches.
+-
+-  * linkgit:git-rebase[1] to maintain topic branches.
+-
+-  * linkgit:git-tag[1] to mark known point.
+-
+-Examples
+-~~~~~~~~
+-
+-Use a tarball as a starting point for a new repository.::
+-+
+-------------
+-$ tar zxf frotz.tar.gz
+-$ cd frotz
+-$ git init
+-$ git add . <1>
+-$ git commit -m "import of frotz source tree."
+-$ git tag v2.43 <2>
+-------------
+-+
+-<1> add everything under the current directory.
+-<2> make a lightweight, unannotated tag.
+-
+-Create a topic branch and develop.::
+-+
+-------------
+-$ git checkout -b alsa-audio <1>
+-$ edit/compile/test
+-$ git checkout -- curses/ux_audio_oss.c <2>
+-$ git add curses/ux_audio_alsa.c <3>
+-$ edit/compile/test
+-$ git diff HEAD <4>
+-$ git commit -a -s <5>
+-$ edit/compile/test
+-$ git reset --soft HEAD^ <6>
+-$ edit/compile/test
+-$ git diff ORIG_HEAD <7>
+-$ git commit -a -c ORIG_HEAD <8>
+-$ git checkout master <9>
+-$ git merge alsa-audio <10>
+-$ git log --since='3 days ago' <11>
+-$ git log v2.43.. curses/ <12>
+-------------
+-+
+-<1> create a new topic branch.
+-<2> revert your botched changes in `curses/ux_audio_oss.c`.
+-<3> you need to tell Git if you added a new file; removal and
+-modification will be caught if you do `git commit -a` later.
+-<4> to see what changes you are committing.
+-<5> commit everything as you have tested, with your sign-off.
+-<6> take the last commit back, keeping what is in the working tree.
+-<7> look at the changes since the premature commit we took back.
+-<8> redo the commit undone in the previous step, using the message
+-you originally wrote.
+-<9> switch to the master branch.
+-<10> merge a topic branch into your master branch.
+-<11> review commit logs; other forms to limit output can be
+-combined and include `--max-count=10` (show 10 commits),
+-`--until=2005-12-10`, etc.
+-<12> view only the changes that touch what's in `curses/`
+-directory, since `v2.43` tag.
+-
+-
+-Individual Developer (Participant)[[Individual Developer (Participant)]]
+-------------------------------------------------------------------------
+-
+-A developer working as a participant in a group project needs to
+-learn how to communicate with others, and uses these commands in
+-addition to the ones needed by a standalone developer.
+-
+-  * linkgit:git-clone[1] from the upstream to prime your local
+-    repository.
+-
+-  * linkgit:git-pull[1] and linkgit:git-fetch[1] from "origin"
+-    to keep up-to-date with the upstream.
+-
+-  * linkgit:git-push[1] to shared repository, if you adopt CVS
+-    style shared repository workflow.
+-
+-  * linkgit:git-format-patch[1] to prepare e-mail submission, if
+-    you adopt Linux kernel-style public forum workflow.
+-
+-Examples
+-~~~~~~~~
+-
+-Clone the upstream and work on it.  Feed changes to upstream.::
+-+
+-------------
+-$ git clone git://git.kernel.org/pub/scm/.../torvalds/linux-2.6 my2.6
+-$ cd my2.6
+-$ edit/compile/test; git commit -a -s <1>
+-$ git format-patch origin <2>
+-$ git pull <3>
+-$ git log -p ORIG_HEAD.. arch/i386 include/asm-i386 <4>
+-$ git pull git://git.kernel.org/pub/.../jgarzik/libata-dev.git ALL <5>
+-$ git reset --hard ORIG_HEAD <6>
+-$ git gc <7>
+-$ git fetch --tags <8>
+-------------
+-+
+-<1> repeat as needed.
+-<2> extract patches from your branch for e-mail submission.
+-<3> `git pull` fetches from `origin` by default and merges into the
+-current branch.
+-<4> immediately after pulling, look at the changes done upstream
+-since last time we checked, only in the
+-area we are interested in.
+-<5> fetch from a specific branch from a specific repository and merge.
+-<6> revert the pull.
+-<7> garbage collect leftover objects from reverted pull.
+-<8> from time to time, obtain official tags from the `origin`
+-and store them under `.git/refs/tags/`.
+-
+-
+-Push into another repository.::
+-+
+-------------
+-satellite$ git clone mothership:frotz frotz <1>
+-satellite$ cd frotz
+-satellite$ git config --get-regexp '^(remote|branch)\.' <2>
+-remote.origin.url mothership:frotz
+-remote.origin.fetch refs/heads/*:refs/remotes/origin/*
+-branch.master.remote origin
+-branch.master.merge refs/heads/master
+-satellite$ git config remote.origin.push \
+-           master:refs/remotes/satellite/master <3>
+-satellite$ edit/compile/test/commit
+-satellite$ git push origin <4>
+-
+-mothership$ cd frotz
+-mothership$ git checkout master
+-mothership$ git merge satellite/master <5>
+-------------
+-+
+-<1> mothership machine has a frotz repository under your home
+-directory; clone from it to start a repository on the satellite
+-machine.
+-<2> clone sets these configuration variables by default.
+-It arranges `git pull` to fetch and store the branches of mothership
+-machine to local `remotes/origin/*` remote-tracking branches.
+-<3> arrange `git push` to push local `master` branch to
+-`remotes/satellite/master` branch of the mothership machine.
+-<4> push will stash our work away on `remotes/satellite/master`
+-remote-tracking branch on the mothership machine.  You could use this
+-as a back-up method.
+-<5> on mothership machine, merge the work done on the satellite
+-machine into the master branch.
+-
+-Branch off of a specific tag.::
+-+
+-------------
+-$ git checkout -b private2.6.14 v2.6.14 <1>
+-$ edit/compile/test; git commit -a
+-$ git checkout master
+-$ git format-patch -k -m --stdout v2.6.14..private2.6.14 |
+-  git am -3 -k <2>
+-------------
+-+
+-<1> create a private branch based on a well known (but somewhat behind)
+-tag.
+-<2> forward port all changes in `private2.6.14` branch to `master` branch
+-without a formal "merging".
+-
+-
+-Integrator[[Integrator]]
+-------------------------
+-
+-A fairly central person acting as the integrator in a group
+-project receives changes made by others, reviews and integrates
+-them and publishes the result for others to use, using these
+-commands in addition to the ones needed by participants.
+-
+-  * linkgit:git-am[1] to apply patches e-mailed in from your
+-    contributors.
+-
+-  * linkgit:git-pull[1] to merge from your trusted lieutenants.
+-
+-  * linkgit:git-format-patch[1] to prepare and send suggested
+-    alternative to contributors.
+-
+-  * linkgit:git-revert[1] to undo botched commits.
+-
+-  * linkgit:git-push[1] to publish the bleeding edge.
+-
+-
+-Examples
+-~~~~~~~~
+-
+-My typical Git day.::
+-+
+-------------
+-$ git status <1>
+-$ git show-branch <2>
+-$ mailx <3>
+-& s 2 3 4 5 ./+to-apply
+-& s 7 8 ./+hold-linus
+-& q
+-$ git checkout -b topic/one master
+-$ git am -3 -i -s -u ./+to-apply <4>
+-$ compile/test
+-$ git checkout -b hold/linus && git am -3 -i -s -u ./+hold-linus <5>
+-$ git checkout topic/one && git rebase master <6>
+-$ git checkout pu && git reset --hard next <7>
+-$ git merge topic/one topic/two && git merge hold/linus <8>
+-$ git checkout maint
+-$ git cherry-pick master~4 <9>
+-$ compile/test
+-$ git tag -s -m "GIT 0.99.9x" v0.99.9x <10>
+-$ git fetch ko && git show-branch master maint 'tags/ko-*' <11>
+-$ git push ko <12>
+-$ git push ko v0.99.9x <13>
+-------------
+-+
+-<1> see what I was in the middle of doing, if any.
+-<2> see what topic branches I have and think about how ready
+-they are.
+-<3> read mails, save ones that are applicable, and save others
+-that are not quite ready.
+-<4> apply them, interactively, with my sign-offs.
+-<5> create topic branch as needed and apply, again with my
+-sign-offs.
+-<6> rebase internal topic branch that has not been merged to the
+-master, nor exposed as a part of a stable branch.
+-<7> restart `pu` every time from the next.
+-<8> and bundle topic branches still cooking.
+-<9> backport a critical fix.
+-<10> create a signed tag.
+-<11> make sure I did not accidentally rewind master beyond what I
+-already pushed out.  `ko` shorthand points at the repository I have
+-at kernel.org, and looks like this:
+-+
+-------------
+-$ cat .git/remotes/ko
+-URL: kernel.org:/pub/scm/git/git.git
+-Pull: master:refs/tags/ko-master
+-Pull: next:refs/tags/ko-next
+-Pull: maint:refs/tags/ko-maint
+-Push: master
+-Push: next
+-Push: +pu
+-Push: maint
+-------------
+-+
+-In the output from `git show-branch`, `master` should have
+-everything `ko-master` has, and `next` should have
+-everything `ko-next` has.
+-
+-<12> push out the bleeding edge.
+-<13> push the tag out, too.
+-
+-
+-Repository Administration[[Repository Administration]]
+-------------------------------------------------------
+-
+-A repository administrator uses the following tools to set up
+-and maintain access to the repository by developers.
+-
+-  * linkgit:git-daemon[1] to allow anonymous download from
+-    repository.
+-
+-  * linkgit:git-shell[1] can be used as a 'restricted login shell'
+-    for shared central repository users.
+-
+-link:howto/update-hook-example.txt[update hook howto] has a good
+-example of managing a shared central repository.
+-
+-
+-Examples
+-~~~~~~~~
+-We assume the following in /etc/services::
+-+
+-------------
+-$ grep 9418 /etc/services
+-git		9418/tcp		# Git Version Control System
+-------------
+-
+-Run git-daemon to serve /pub/scm from inetd.::
+-+
+-------------
+-$ grep git /etc/inetd.conf
+-git	stream	tcp	nowait	nobody \
+-  /usr/bin/git-daemon git-daemon --inetd --export-all /pub/scm
+-------------
+-+
+-The actual configuration line should be on one line.
+-
+-Run git-daemon to serve /pub/scm from xinetd.::
+-+
+-------------
+-$ cat /etc/xinetd.d/git-daemon
+-# default: off
+-# description: The Git server offers access to Git repositories
+-service git
+-{
+-        disable = no
+-        type            = UNLISTED
+-        port            = 9418
+-        socket_type     = stream
+-        wait            = no
+-        user            = nobody
+-        server          = /usr/bin/git-daemon
+-        server_args     = --inetd --export-all --base-path=/pub/scm
+-        log_on_failure  += USERID
+-}
+-------------
+-+
+-Check your xinetd(8) documentation and setup, this is from a Fedora system.
+-Others might be different.
+-
+-Give push/pull only access to developers.::
+-+
+-------------
+-$ grep git /etc/passwd <1>
+-alice:x:1000:1000::/home/alice:/usr/bin/git-shell
+-bob:x:1001:1001::/home/bob:/usr/bin/git-shell
+-cindy:x:1002:1002::/home/cindy:/usr/bin/git-shell
+-david:x:1003:1003::/home/david:/usr/bin/git-shell
+-$ grep git /etc/shells <2>
+-/usr/bin/git-shell
+-------------
+-+
+-<1> log-in shell is set to /usr/bin/git-shell, which does not
+-allow anything but `git push` and `git pull`.  The users should
+-get an ssh access to the machine.
+-<2> in many distributions /etc/shells needs to list what is used
+-as the login shell.
+-
+-CVS-style shared repository.::
+-+
+-------------
+-$ grep git /etc/group <1>
+-git:x:9418:alice,bob,cindy,david
+-$ cd /home/devo.git
+-$ ls -l <2>
+-  lrwxrwxrwx   1 david git    17 Dec  4 22:40 HEAD -> refs/heads/master
+-  drwxrwsr-x   2 david git  4096 Dec  4 22:40 branches
+-  -rw-rw-r--   1 david git    84 Dec  4 22:40 config
+-  -rw-rw-r--   1 david git    58 Dec  4 22:40 description
+-  drwxrwsr-x   2 david git  4096 Dec  4 22:40 hooks
+-  -rw-rw-r--   1 david git 37504 Dec  4 22:40 index
+-  drwxrwsr-x   2 david git  4096 Dec  4 22:40 info
+-  drwxrwsr-x   4 david git  4096 Dec  4 22:40 objects
+-  drwxrwsr-x   4 david git  4096 Nov  7 14:58 refs
+-  drwxrwsr-x   2 david git  4096 Dec  4 22:40 remotes
+-$ ls -l hooks/update <3>
+-  -r-xr-xr-x   1 david git  3536 Dec  4 22:40 update
+-$ cat info/allowed-users <4>
+-refs/heads/master	alice\|cindy
+-refs/heads/doc-update	bob
+-refs/tags/v[0-9]*	david
+-------------
+-+
+-<1> place the developers into the same git group.
+-<2> and make the shared repository writable by the group.
+-<3> use update-hook example by Carl from Documentation/howto/
+-for branch policy control.
+-<4> alice and cindy can push into master, only bob can push into doc-update.
+-david is the release manager and is the only person who can
+-create and push version tags.
+-
+-HTTP server to support dumb protocol transfer.::
+-+
+-------------
+-dev$ git update-server-info <1>
+-dev$ ftp user@isp.example.com <2>
+-ftp> cp -r .git /home/user/myproject.git
+-------------
+-+
+-<1> make sure your info/refs and objects/info/packs are up-to-date
+-<2> upload to public HTTP server hosted by your ISP.
++GIT
++---
++This page location is no longer a part of the linkgit:git[1] suite
+diff --git a/Documentation/giteveryday.txt b/Documentation/giteveryday.txt
+new file mode 100644
+index 0000000..e1fba85
+--- /dev/null
++++ b/Documentation/giteveryday.txt
+@@ -0,0 +1,413 @@
++Everyday Git With 20 Commands Or So
++===================================
++
++<<Individual Developer (Standalone)>> commands are essential for
++anybody who makes a commit, even for somebody who works alone.
++
++If you work with other people, you will need commands listed in
++the <<Individual Developer (Participant)>> section as well.
++
++People who play the <<Integrator>> role need to learn some more
++commands in addition to the above.
++
++<<Repository Administration>> commands are for system
++administrators who are responsible for the care and feeding
++of Git repositories.
++
++
++Individual Developer (Standalone)[[Individual Developer (Standalone)]]
++----------------------------------------------------------------------
++
++A standalone individual developer does not exchange patches with
++other people, and works alone in a single repository, using the
++following commands.
++
++  * linkgit:git-init[1] to create a new repository.
++
++  * linkgit:git-show-branch[1] to see where you are.
++
++  * linkgit:git-log[1] to see what happened.
++
++  * linkgit:git-checkout[1] and linkgit:git-branch[1] to switch
++    branches.
++
++  * linkgit:git-add[1] to manage the index file.
++
++  * linkgit:git-diff[1] and linkgit:git-status[1] to see what
++    you are in the middle of doing.
++
++  * linkgit:git-commit[1] to advance the current branch.
++
++  * linkgit:git-reset[1] and linkgit:git-checkout[1] (with
++    pathname parameters) to undo changes.
++
++  * linkgit:git-merge[1] to merge between local branches.
++
++  * linkgit:git-rebase[1] to maintain topic branches.
++
++  * linkgit:git-tag[1] to mark known point.
++
++Examples
++~~~~~~~~
++
++Use a tarball as a starting point for a new repository.::
+++
++------------
++$ tar zxf frotz.tar.gz
++$ cd frotz
++$ git init
++$ git add . <1>
++$ git commit -m "import of frotz source tree."
++$ git tag v2.43 <2>
++------------
+++
++<1> add everything under the current directory.
++<2> make a lightweight, unannotated tag.
++
++Create a topic branch and develop.::
+++
++------------
++$ git checkout -b alsa-audio <1>
++$ edit/compile/test
++$ git checkout -- curses/ux_audio_oss.c <2>
++$ git add curses/ux_audio_alsa.c <3>
++$ edit/compile/test
++$ git diff HEAD <4>
++$ git commit -a -s <5>
++$ edit/compile/test
++$ git reset --soft HEAD^ <6>
++$ edit/compile/test
++$ git diff ORIG_HEAD <7>
++$ git commit -a -c ORIG_HEAD <8>
++$ git checkout master <9>
++$ git merge alsa-audio <10>
++$ git log --since='3 days ago' <11>
++$ git log v2.43.. curses/ <12>
++------------
+++
++<1> create a new topic branch.
++<2> revert your botched changes in `curses/ux_audio_oss.c`.
++<3> you need to tell Git if you added a new file; removal and
++modification will be caught if you do `git commit -a` later.
++<4> to see what changes you are committing.
++<5> commit everything as you have tested, with your sign-off.
++<6> take the last commit back, keeping what is in the working tree.
++<7> look at the changes since the premature commit we took back.
++<8> redo the commit undone in the previous step, using the message
++you originally wrote.
++<9> switch to the master branch.
++<10> merge a topic branch into your master branch.
++<11> review commit logs; other forms to limit output can be
++combined and include `--max-count=10` (show 10 commits),
++`--until=2005-12-10`, etc.
++<12> view only the changes that touch what's in `curses/`
++directory, since `v2.43` tag.
++
++
++Individual Developer (Participant)[[Individual Developer (Participant)]]
++------------------------------------------------------------------------
++
++A developer working as a participant in a group project needs to
++learn how to communicate with others, and uses these commands in
++addition to the ones needed by a standalone developer.
++
++  * linkgit:git-clone[1] from the upstream to prime your local
++    repository.
++
++  * linkgit:git-pull[1] and linkgit:git-fetch[1] from "origin"
++    to keep up-to-date with the upstream.
++
++  * linkgit:git-push[1] to shared repository, if you adopt CVS
++    style shared repository workflow.
++
++  * linkgit:git-format-patch[1] to prepare e-mail submission, if
++    you adopt Linux kernel-style public forum workflow.
++
++Examples
++~~~~~~~~
++
++Clone the upstream and work on it.  Feed changes to upstream.::
+++
++------------
++$ git clone git://git.kernel.org/pub/scm/.../torvalds/linux-2.6 my2.6
++$ cd my2.6
++$ edit/compile/test; git commit -a -s <1>
++$ git format-patch origin <2>
++$ git pull <3>
++$ git log -p ORIG_HEAD.. arch/i386 include/asm-i386 <4>
++$ git pull git://git.kernel.org/pub/.../jgarzik/libata-dev.git ALL <5>
++$ git reset --hard ORIG_HEAD <6>
++$ git gc <7>
++$ git fetch --tags <8>
++------------
+++
++<1> repeat as needed.
++<2> extract patches from your branch for e-mail submission.
++<3> `git pull` fetches from `origin` by default and merges into the
++current branch.
++<4> immediately after pulling, look at the changes done upstream
++since last time we checked, only in the
++area we are interested in.
++<5> fetch from a specific branch from a specific repository and merge.
++<6> revert the pull.
++<7> garbage collect leftover objects from reverted pull.
++<8> from time to time, obtain official tags from the `origin`
++and store them under `.git/refs/tags/`.
++
++
++Push into another repository.::
+++
++------------
++satellite$ git clone mothership:frotz frotz <1>
++satellite$ cd frotz
++satellite$ git config --get-regexp '^(remote|branch)\.' <2>
++remote.origin.url mothership:frotz
++remote.origin.fetch refs/heads/*:refs/remotes/origin/*
++branch.master.remote origin
++branch.master.merge refs/heads/master
++satellite$ git config remote.origin.push \
++           master:refs/remotes/satellite/master <3>
++satellite$ edit/compile/test/commit
++satellite$ git push origin <4>
++
++mothership$ cd frotz
++mothership$ git checkout master
++mothership$ git merge satellite/master <5>
++------------
+++
++<1> mothership machine has a frotz repository under your home
++directory; clone from it to start a repository on the satellite
++machine.
++<2> clone sets these configuration variables by default.
++It arranges `git pull` to fetch and store the branches of mothership
++machine to local `remotes/origin/*` remote-tracking branches.
++<3> arrange `git push` to push local `master` branch to
++`remotes/satellite/master` branch of the mothership machine.
++<4> push will stash our work away on `remotes/satellite/master`
++remote-tracking branch on the mothership machine.  You could use this
++as a back-up method.
++<5> on mothership machine, merge the work done on the satellite
++machine into the master branch.
++
++Branch off of a specific tag.::
+++
++------------
++$ git checkout -b private2.6.14 v2.6.14 <1>
++$ edit/compile/test; git commit -a
++$ git checkout master
++$ git format-patch -k -m --stdout v2.6.14..private2.6.14 |
++  git am -3 -k <2>
++------------
+++
++<1> create a private branch based on a well known (but somewhat behind)
++tag.
++<2> forward port all changes in `private2.6.14` branch to `master` branch
++without a formal "merging".
++
++
++Integrator[[Integrator]]
++------------------------
++
++A fairly central person acting as the integrator in a group
++project receives changes made by others, reviews and integrates
++them and publishes the result for others to use, using these
++commands in addition to the ones needed by participants.
++
++  * linkgit:git-am[1] to apply patches e-mailed in from your
++    contributors.
++
++  * linkgit:git-pull[1] to merge from your trusted lieutenants.
++
++  * linkgit:git-format-patch[1] to prepare and send suggested
++    alternative to contributors.
++
++  * linkgit:git-revert[1] to undo botched commits.
++
++  * linkgit:git-push[1] to publish the bleeding edge.
++
++
++Examples
++~~~~~~~~
++
++My typical Git day.::
+++
++------------
++$ git status <1>
++$ git show-branch <2>
++$ mailx <3>
++& s 2 3 4 5 ./+to-apply
++& s 7 8 ./+hold-linus
++& q
++$ git checkout -b topic/one master
++$ git am -3 -i -s -u ./+to-apply <4>
++$ compile/test
++$ git checkout -b hold/linus && git am -3 -i -s -u ./+hold-linus <5>
++$ git checkout topic/one && git rebase master <6>
++$ git checkout pu && git reset --hard next <7>
++$ git merge topic/one topic/two && git merge hold/linus <8>
++$ git checkout maint
++$ git cherry-pick master~4 <9>
++$ compile/test
++$ git tag -s -m "GIT 0.99.9x" v0.99.9x <10>
++$ git fetch ko && git show-branch master maint 'tags/ko-*' <11>
++$ git push ko <12>
++$ git push ko v0.99.9x <13>
++------------
+++
++<1> see what I was in the middle of doing, if any.
++<2> see what topic branches I have and think about how ready
++they are.
++<3> read mails, save ones that are applicable, and save others
++that are not quite ready.
++<4> apply them, interactively, with my sign-offs.
++<5> create topic branch as needed and apply, again with my
++sign-offs.
++<6> rebase internal topic branch that has not been merged to the
++master, nor exposed as a part of a stable branch.
++<7> restart `pu` every time from the next.
++<8> and bundle topic branches still cooking.
++<9> backport a critical fix.
++<10> create a signed tag.
++<11> make sure I did not accidentally rewind master beyond what I
++already pushed out.  `ko` shorthand points at the repository I have
++at kernel.org, and looks like this:
+++
++------------
++$ cat .git/remotes/ko
++URL: kernel.org:/pub/scm/git/git.git
++Pull: master:refs/tags/ko-master
++Pull: next:refs/tags/ko-next
++Pull: maint:refs/tags/ko-maint
++Push: master
++Push: next
++Push: +pu
++Push: maint
++------------
+++
++In the output from `git show-branch`, `master` should have
++everything `ko-master` has, and `next` should have
++everything `ko-next` has.
++
++<12> push out the bleeding edge.
++<13> push the tag out, too.
++
++
++Repository Administration[[Repository Administration]]
++------------------------------------------------------
++
++A repository administrator uses the following tools to set up
++and maintain access to the repository by developers.
++
++  * linkgit:git-daemon[1] to allow anonymous download from
++    repository.
++
++  * linkgit:git-shell[1] can be used as a 'restricted login shell'
++    for shared central repository users.
++
++link:howto/update-hook-example.txt[update hook howto] has a good
++example of managing a shared central repository.
++
++
++Examples
++~~~~~~~~
++We assume the following in /etc/services::
+++
++------------
++$ grep 9418 /etc/services
++git		9418/tcp		# Git Version Control System
++------------
++
++Run git-daemon to serve /pub/scm from inetd.::
+++
++------------
++$ grep git /etc/inetd.conf
++git	stream	tcp	nowait	nobody \
++  /usr/bin/git-daemon git-daemon --inetd --export-all /pub/scm
++------------
+++
++The actual configuration line should be on one line.
++
++Run git-daemon to serve /pub/scm from xinetd.::
+++
++------------
++$ cat /etc/xinetd.d/git-daemon
++# default: off
++# description: The Git server offers access to Git repositories
++service git
++{
++        disable = no
++        type            = UNLISTED
++        port            = 9418
++        socket_type     = stream
++        wait            = no
++        user            = nobody
++        server          = /usr/bin/git-daemon
++        server_args     = --inetd --export-all --base-path=/pub/scm
++        log_on_failure  += USERID
++}
++------------
+++
++Check your xinetd(8) documentation and setup, this is from a Fedora system.
++Others might be different.
++
++Give push/pull only access to developers.::
+++
++------------
++$ grep git /etc/passwd <1>
++alice:x:1000:1000::/home/alice:/usr/bin/git-shell
++bob:x:1001:1001::/home/bob:/usr/bin/git-shell
++cindy:x:1002:1002::/home/cindy:/usr/bin/git-shell
++david:x:1003:1003::/home/david:/usr/bin/git-shell
++$ grep git /etc/shells <2>
++/usr/bin/git-shell
++------------
+++
++<1> log-in shell is set to /usr/bin/git-shell, which does not
++allow anything but `git push` and `git pull`.  The users should
++get an ssh access to the machine.
++<2> in many distributions /etc/shells needs to list what is used
++as the login shell.
++
++CVS-style shared repository.::
+++
++------------
++$ grep git /etc/group <1>
++git:x:9418:alice,bob,cindy,david
++$ cd /home/devo.git
++$ ls -l <2>
++  lrwxrwxrwx   1 david git    17 Dec  4 22:40 HEAD -> refs/heads/master
++  drwxrwsr-x   2 david git  4096 Dec  4 22:40 branches
++  -rw-rw-r--   1 david git    84 Dec  4 22:40 config
++  -rw-rw-r--   1 david git    58 Dec  4 22:40 description
++  drwxrwsr-x   2 david git  4096 Dec  4 22:40 hooks
++  -rw-rw-r--   1 david git 37504 Dec  4 22:40 index
++  drwxrwsr-x   2 david git  4096 Dec  4 22:40 info
++  drwxrwsr-x   4 david git  4096 Dec  4 22:40 objects
++  drwxrwsr-x   4 david git  4096 Nov  7 14:58 refs
++  drwxrwsr-x   2 david git  4096 Dec  4 22:40 remotes
++$ ls -l hooks/update <3>
++  -r-xr-xr-x   1 david git  3536 Dec  4 22:40 update
++$ cat info/allowed-users <4>
++refs/heads/master	alice\|cindy
++refs/heads/doc-update	bob
++refs/tags/v[0-9]*	david
++------------
+++
++<1> place the developers into the same git group.
++<2> and make the shared repository writable by the group.
++<3> use update-hook example by Carl from Documentation/howto/
++for branch policy control.
++<4> alice and cindy can push into master, only bob can push into doc-update.
++david is the release manager and is the only person who can
++create and push version tags.
++
++HTTP server to support dumb protocol transfer.::
+++
++------------
++dev$ git update-server-info <1>
++dev$ ftp user@isp.example.com <2>
++ftp> cp -r .git /home/user/myproject.git
++------------
+++
++<1> make sure your info/refs and objects/info/packs are up-to-date
++<2> upload to public HTTP server hosted by your ISP.
 -- 
 1.8.1.msysgit.1
