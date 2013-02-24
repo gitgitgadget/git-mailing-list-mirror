@@ -1,85 +1,92 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 14/16] contrib/hooks/setgitperms.perl: use a lowercase "usage:" string
-Date: Sat, 23 Feb 2013 16:50:22 -0800
-Message-ID: <1361667024-49776-15-git-send-email-davvid@gmail.com>
-References: <1361667024-49776-1-git-send-email-davvid@gmail.com>
- <1361667024-49776-2-git-send-email-davvid@gmail.com>
- <1361667024-49776-3-git-send-email-davvid@gmail.com>
- <1361667024-49776-4-git-send-email-davvid@gmail.com>
- <1361667024-49776-5-git-send-email-davvid@gmail.com>
- <1361667024-49776-6-git-send-email-davvid@gmail.com>
- <1361667024-49776-7-git-send-email-davvid@gmail.com>
- <1361667024-49776-8-git-send-email-davvid@gmail.com>
- <1361667024-49776-9-git-send-email-davvid@gmail.com>
- <1361667024-49776-10-git-send-email-davvid@gmail.com>
- <1361667024-49776-11-git-send-email-davvid@gmail.com>
- <1361667024-49776-12-git-send-email-davvid@gmail.com>
- <1361667024-49776-13-git-send-email-davvid@gmail.com>
- <1361667024-49776-14-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 24 01:51:55 2013
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC v2] git-multimail: a replacement for post-receive-email
+Date: Sun, 24 Feb 2013 06:31:31 +0100
+Message-ID: <5129A5B3.7020807@alum.mit.edu>
+References: <5104E738.602@alum.mit.edu> <vpqfw0rb25c.fsf@grenoble-inp.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6?= =?ISO-8859-1?Q?r=F0_Bjarmason?= 
+	<avarab@gmail.com>, Chris Hiestand <chiestand@salk.edu>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Feb 24 06:32:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9PoX-0008WV-LH
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 01:51:38 +0100
+	id 1U9UBu-0001VE-F6
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 06:32:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759473Ab3BXAvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Feb 2013 19:51:11 -0500
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:41924 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759444Ab3BXAvK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Feb 2013 19:51:10 -0500
-Received: by mail-pa0-f52.google.com with SMTP id fb1so1129893pad.11
-        for <git@vger.kernel.org>; Sat, 23 Feb 2013 16:51:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=H1f29F/kEJBHrsixcKoVBiwevw3aXi2usUk3nLN35gM=;
-        b=GvStD6hb8g88DJqQoBcoLLy68Austr+AK6RjCVv1crSm8OdqbjNgrbsOOYqRvFqlCg
-         SYXjZnMScLrmjDVmDLLHGaA3c9gywFB42X8uGKAwjIxJny0X+hrqPIpO5p10BQ5m7H96
-         YImqGOVh4HKka3cguSodZ49IODh3G67hfKBMKpXw+wsZ0NMlQv4xDNWM5jR7eZHy1dlx
-         VWdG/3UeQLMBlKAyH24HHgHNuGPbJ3tB7P6AZjh2IJZDwyaCdx8IF5IFsBdVjc8yaq92
-         iVqOz2AgmEImcVohNIRAB2706Nw4HqogwWY3gZfVE00UFA1MCuex8Jkx7fMFOzD8bRhC
-         Ff6A==
-X-Received: by 10.68.189.71 with SMTP id gg7mr10859989pbc.15.1361667069999;
-        Sat, 23 Feb 2013 16:51:09 -0800 (PST)
-Received: from lustrous.fas.fa.disney.com (remote-11.disneyanimation.com. [198.187.190.11])
-        by mx.google.com with ESMTPS id a4sm8190345paw.21.2013.02.23.16.51.07
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 23 Feb 2013 16:51:08 -0800 (PST)
-X-Mailer: git-send-email 1.8.2.rc0.263.g20d9441
-In-Reply-To: <1361667024-49776-14-git-send-email-davvid@gmail.com>
+	id S1751309Ab3BXFbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2013 00:31:37 -0500
+Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:47592 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751152Ab3BXFbg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Feb 2013 00:31:36 -0500
+X-AuditID: 1207440e-b7fd36d000004e4f-70-5129a5b753a3
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 9B.7A.20047.7B5A9215; Sun, 24 Feb 2013 00:31:35 -0500 (EST)
+Received: from [192.168.69.140] (p57A25704.dip.t-dialin.net [87.162.87.4])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r1O5VVGF006285
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 24 Feb 2013 00:31:33 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+In-Reply-To: <vpqfw0rb25c.fsf@grenoble-inp.fr>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrMKsWRmVeSWpSXmKPExsUixO6iqLt9qWagwfpmU4vjT6+zWKx9dofJ
+	Yvv2LkaLrivdTBYNvVeYLS59Xs9q0fikyGL14zvsDhweO2fdZfeY+OU4q8fFS8oeN653M3p8
+	3iTnceDyY7YAtihum6TEkrLgzPQ8fbsE7owVU7cyFSzjrPj8VKSBcQd7FyMnh4SAicSNl1eZ
+	IWwxiQv31rN1MXJxCAlcZpRoOzSHCcI5xSSx4NMdNpAqXgFticP/3rKA2CwCqhJzzv0Ci7MJ
+	6Eos6mlmArFFBcIkel+fY4SoF5Q4OfMJUD0Hh4iAvsTPyWALmAV+Mkls2fYIrFdYwFNi4fUj
+	rCC2EJD9/1ob2HWcAnoSy7ZOB5vJLKAj8a7vATOELS+x/e0c5gmMArOQrJiFpGwWkrIFjMyr
+	GOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9XIzS/RSU0o3MUIigW8HY/t6mUOMAhyMSjy8q0I1
+	A4VYE8uKK3MPMUpyMCmJ8iotAArxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4bW6phEoxJuSWFmV
+	WpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4OVdDDRUsCg1PbUiLTOnBCHNxMEJ
+	MpxLSqQ4NS8ltSixtCQjHhSp8cXAWAVJ8QDt/bsEqJ23uCAxFygK0XqKUZdj97tHLxiFWPLy
+	81KlxHlPLAIqEgApyijNg1sBS3uvGMWBPhbmLQcZxQNMmXCTXgEtYQJa8lBHHWRJSSJCSqqB
+	kXO/5CL5iqClQdu9Cy1TZ7pPsThg/7++wvu12wT+c8vqj/GfVuvxc/FveyNzYc/d 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216975>
 
-Make the usage string consistent with Git.
+On 02/20/2013 01:28 PM, Matthieu Moy wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> A while ago, I submitted an RFC for adding a new email notification
+>> script to "contrib" [...]
+> 
+> We've discussed offline with Michael, a few patches have been merged,
+> and there are still a few pending pull requests. I liked the script
+> already, but it's getting even cooler ;-).
+> 
+> A few more random thoughts (not on my personal todo-list):
+> 
+> * It may make sense to add the short sha1 of the new reference in email
+>   titles (branch foo updated -> branch foo updated to $sha1), so that
+>   gmail users do not get a single huge thread "branch foo updated".
+> 
+>   (Yes, I do know about the Reference field, but gmail uses Subject: for
+>   threading).
+> [...]
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- contrib/hooks/setgitperms.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I just implemented this in branch sha1s-in-subject [1].  Please let me
+know if this works for you then I'll merge it to master.  (It depends on
+the header-handling branch, which also includes your patch for non-ASCII
+header fields.)
 
-diff --git a/contrib/hooks/setgitperms.perl b/contrib/hooks/setgitperms.perl
-index a577ad0..2770a1b 100644
---- a/contrib/hooks/setgitperms.perl
-+++ b/contrib/hooks/setgitperms.perl
-@@ -24,7 +24,7 @@ use File::Find;
- use File::Basename;
- 
- my $usage =
--"Usage: setgitperms.perl [OPTION]... <--read|--write>
-+"usage: setgitperms.perl [OPTION]... <--read|--write>
- This program uses a file `.gitmeta` to store/restore permissions and uid/gid
- info for all files/dirs tracked by git in the repository.
- 
+Michael
+
+[1] https://github.com/mhagger/git-multimail/tree/sha1s-in-subject
+
 -- 
-1.8.2.rc0.263.g20d9441
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
