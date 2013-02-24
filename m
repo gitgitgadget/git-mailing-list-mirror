@@ -1,59 +1,63 @@
-From: Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH 13/13] Fixup! doc: giteveryday and user-manual man
- format
-Date: Sun, 24 Feb 2013 22:32:19 +0000
-Message-ID: <512A94F3.9030607@iee.org>
-References: <1361660761-1932-1-git-send-email-philipoakley@iee.org> <1361660761-1932-14-git-send-email-philipoakley@iee.org> <20130224150140.GM1361@odin.tremily.us>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2 00/16] use a lowercase "usage:" string
+Date: Sun, 24 Feb 2013 14:32:53 -0800
+Message-ID: <CAJDDKr4+n3HgfWr-_eXSCOqUD1GpBVsU_2p5CfHj6kGs0OajYw@mail.gmail.com>
+References: <1361667024-49776-1-git-send-email-davvid@gmail.com>
+	<7vobf94c95.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: GitList <git@vger.kernel.org>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Sun Feb 24 23:32:53 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 24 23:33:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9k7j-0006om-TE
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 23:32:48 +0100
+	id 1U9k8G-0007Aa-KK
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 23:33:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759492Ab3BXWcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2013 17:32:23 -0500
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:48575 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758190Ab3BXWcW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Feb 2013 17:32:22 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApMBAM+QKlFZ8rke/2dsb2JhbAANOL52glqBJ4MSAQEBAQM4QAEQCxgJFg8JAwIBAgFFBg0BBwEBslKSLY5bMweDQAOqKQ
-X-IronPort-AV: E=Sophos;i="4.84,730,1355097600"; 
-   d="scan'208";a="566904382"
-Received: from host-89-242-185-30.as13285.net (HELO [192.168.0.7]) ([89.242.185.30])
-  by out1.ip06ir2.opaltelecom.net with ESMTP; 24 Feb 2013 22:32:20 +0000
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <20130224150140.GM1361@odin.tremily.us>
+	id S1759500Ab3BXWcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2013 17:32:55 -0500
+Received: from mail-wg0-f48.google.com ([74.125.82.48]:42210 "EHLO
+	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759494Ab3BXWcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2013 17:32:55 -0500
+Received: by mail-wg0-f48.google.com with SMTP id 16so1897555wgi.15
+        for <git@vger.kernel.org>; Sun, 24 Feb 2013 14:32:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=mVabIVK65mgFo+mAK/w9PVFoFVcnr6AMBLCTDeFbzqg=;
+        b=apsJwsuwRs3M8TK33lR+3veRsAp8JPwrkc6LQO1DhC9cXwQumSbSCNo7crGxK/+/CL
+         ZN7i3u5Hpd7b/pCcNqPsTblDDBrXrvo2j7AD8+FjkLJ1a/XziREYugJexUSJ1CM5Z1Yt
+         w1aARvo9jJEzxHViJqTw/ZaEhaaoeFTdDpFVpaF+ek/U6gLUylvdLZ0RboebaMM+QCbn
+         g0wxMRJ0zqLT9dksq6c2Q4rqeBPgC6bA1qreUX6/3pALbKu5kdh5I+J5Pwomb8rWP/1k
+         oZIoDS8LqIQ8greMPcsGB7JqotvXfLNc36Ne9LiX0OCi9lB1u4RyZlL5U7Dmx7aMa1He
+         5TDw==
+X-Received: by 10.180.83.227 with SMTP id t3mr8576522wiy.2.1361745173900; Sun,
+ 24 Feb 2013 14:32:53 -0800 (PST)
+Received: by 10.194.13.129 with HTTP; Sun, 24 Feb 2013 14:32:53 -0800 (PST)
+In-Reply-To: <7vobf94c95.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217013>
 
-On 24/02/13 15:01, W. Trevor King wrote:
-> On Sat, Feb 23, 2013 at 11:06:01PM +0000, Philip Oakley wrote:
->> diff --git a/Documentation/gituser-manual.txt b/Documentation/gituser-manual.txt
->> index a4778d7..e991b11 100644
->> --- a/Documentation/gituser-manual.txt
->> +++ b/Documentation/gituser-manual.txt
->> @@ -1,7 +1,12 @@
->>   Git User's Manual (for version 1.5.3 or newer)
->> -______________________________________________
->> +==============================================
+On Sun, Feb 24, 2013 at 1:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Thanks.
 >
-> I'd be happy dropping the parenthetical bit here.  It's hard to
-> imagine someone still running something earlier than 1.5.3.  It's even
-> harder to imagine them installing a modern user manual man page for
-> their old Git version ;).
->
-Sensible. Will do.
+> After applying these patches, "git grep '^[^#]*Usage:'" still shows
+> a handful more hits, such as contrib/examples/git-remote.perl that
+> are touched by this series.
 
-Philip
+Thanks, I'll take a look at these.
+
+I stayed away from tests and comments in the first round so that
+we could catch the user-facing strings.  That seems to have settled
+in well so I can make another pass and catch these last remaining
+stragglers.
+-- 
+David
