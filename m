@@ -1,209 +1,85 @@
-From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
-Subject: Re: [PATCH] Improve QNX support in GIT
-Date: Sun, 24 Feb 2013 09:36:27 +0200
-Message-ID: <CAHXAxrMgJf2C3dAe1O2DW5qFYFnCDhbQNmpnvK4ZOduJnqwQWg@mail.gmail.com>
-References: <CAHXAxrMRxKKiEarSQ0fCLt6-zyS=52B+kmZMLDf8SQAGzGbjjQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Documentation/githooks: Explain pre-rebase parameters
+Date: Sun, 24 Feb 2013 00:13:25 -0800
+Message-ID: <7v621i6sey.fsf@alter.siamese.dyndns.org>
+References: <20130220163621.GI14102@odin.tremily.us>
+ <c8b19dc074a81b009399ff1011102737761658ec.1361633106.git.wking@tremily.us>
+ <7vobfa7mko.fsf@alter.siamese.dyndns.org>
+ <20130223213513.GF1361@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 24 08:37:01 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>, Thomas Rast <trast@student.ethz.ch>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Sun Feb 24 09:13:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9W8o-0001Kc-9Y
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 08:36:58 +0100
+	id 1U9WiZ-0002ur-6W
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 09:13:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751286Ab3BXHga (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2013 02:36:30 -0500
-Received: from mail-qc0-f175.google.com ([209.85.216.175]:50197 "EHLO
-	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751276Ab3BXHg3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2013 02:36:29 -0500
-Received: by mail-qc0-f175.google.com with SMTP id j3so886518qcs.34
-        for <git@vger.kernel.org>; Sat, 23 Feb 2013 23:36:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:content-type;
-        bh=zBzNnmbEStXAzH4Okgf4IeHTd+qUVYGoH7Mb4IU15HA=;
-        b=DxDQLPKZyTuuOuNMvIx6sq6+wi6jj7G2gYMssjbvViSLw+nBzGpdWRN8NbP1SxjbKC
-         WTORzaY8ZTFJ2LCBBE+/My5lkQ6OUYLcAHqlE4sUCCyi7e0f5TUH/b/Mex/D8KlTzaFu
-         Nu6EDxWOvU8uPUmq20oOcurBSZrOa2gZo6LYcPSrjLS8Iv2dc3Fxw9GxolqHmQNlZd5i
-         5+g1gnTxhtOlfDLnJbwHYXvXCeD/a7LJ13A/UK5ZutIVND2IZMCFz+9LdV5CWLvlggxH
-         0XjPlsV3RWNS02XHyoVVwKMJNBdDsCeUlZAqFy3GzBGYE2f5sXHYA+ZlE9UcYU5AGC9T
-         DZxg==
-X-Received: by 10.229.171.3 with SMTP id f3mr1286344qcz.41.1361691387700; Sat,
- 23 Feb 2013 23:36:27 -0800 (PST)
-Received: by 10.49.71.68 with HTTP; Sat, 23 Feb 2013 23:36:27 -0800 (PST)
-In-Reply-To: <CAHXAxrMRxKKiEarSQ0fCLt6-zyS=52B+kmZMLDf8SQAGzGbjjQ@mail.gmail.com>
+	id S1753907Ab3BXIN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2013 03:13:28 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58065 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752921Ab3BXIN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2013 03:13:28 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F8ECA2EB;
+	Sun, 24 Feb 2013 03:13:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CgWg2TKg+brx6Zm/X7NJ2KhFkaQ=; b=IUSvtn
+	RELhimIkga+pbhTMwyCWpU8Hrml/9Z5ogV2Bv4iF4b2Y2Q9yYbbussGoNaoueZTN
+	2Nkj+tykFRxt3781xm4apodYICNgUWF+CzX6xGc09UDSP06GhXl13SUg9/R6o9Bs
+	IaA1PHStj2dsx5YHUTSgbUh8UlbPeVt2mBpRU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EylV0VrdHVuammmwuNAdfeektQABgn6r
+	m2X/r2a+lIAbUiLeq5pMFLrnA2Rda5r5Gp9M1cxlkjVvaxSHnDbBpddTDPkX391Z
+	eLwoi7QrPFLdEmyTrrjpn/7hnIebKeF1lYF7nXlm7/PUuiTCsnrktVoPHramXypb
+	IG14BlSHlUk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64315A2EA;
+	Sun, 24 Feb 2013 03:13:27 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C16F2A2E9; Sun, 24 Feb 2013
+ 03:13:26 -0500 (EST)
+In-Reply-To: <20130223213513.GF1361@odin.tremily.us> (W. Trevor King's
+ message of "Sat, 23 Feb 2013 16:35:13 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 10C4817E-7E5A-11E2-AD85-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216978>
 
-Hello,
+"W. Trevor King" <wking@tremily.us> writes:
 
-> Here is a small patch with QNX build improvements:
+> On Sat, Feb 23, 2013 at 01:21:59PM -0800, Junio C Hamano wrote:
+>> "W. Trevor King" <wking@tremily.us> writes:
+>> 
+>> > +This hook is called by 'git rebase' and can be used to prevent a
+>> > +branch from getting rebased.  The hook takes two parameters: the
+>> > +upstream the series was forked from and the branch being rebased.  The
+>> > +second parameter will be missing when rebasing the current branch.
+>> 
+>> takes one or two parameters?
+>>
+>> Other than that, looks good to me, but it took me two readings to
+>> notice where these two parameters are described.  I have a feeling
+>> that a comma s/forked from and/forked from, and/; might make them a
+>> bit more spottable, but others may have better suggestions to make
+>> them stand out more.
 >
-> 1) Rename tar.h to tar_git.h. Latest QNX versions have system tar.h
-> header according to
-> http://pubs.opengroup.org/onlinepubs/009696699/basedefs/tar.h.html ,
-> to avoid inclusion of another tar.h, original header was renamed.
-> 2) Rename fnmatch.h to fnmatch_gnu.h and fnmatch.c to fnmatch_gnu.c to
-> avoid inclusion of system fnmatch.h header in case if -I/usr/include
-> path is specified before -Icompat/fnmatch. Which is common situation.
-> 3) pager.c - default "less" invocation flags were changed for QNX 6,x
-> platform, since QNX has incompatible with GNU coreutils version of
-> "less" utility.
-> 4) config.mak.uname - a) do not override mkdtemp/mkstemps/strcasestr
-> detection, since newer QNX version could contain such functions. Let
-> to configure decide what is present in the system. b) getpagesize()
-> function is existing under QNX, c) QNX has pthread functions in the
-> libc, so do not define NO_PTHREAD macro.
+> How about:
+>
+>   The hook may be called with one or two parameters.  The first
+>   parameter is the upstream from which the series was forked.  The
+>   second parameter is the branch being rebased, and is not set when
+>   rebasing the current branch.
 
-Sorry, in the previous post the patch was not inlined.
-
-diff --git a/Makefile b/Makefile
-index ba8e243..f6dd2eb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -726,7 +726,7 @@ LIB_H += streaming.h
- LIB_H += string-list.h
- LIB_H += submodule.h
- LIB_H += tag.h
--LIB_H += tar.h
-+LIB_H += tar_git.h
- LIB_H += thread-utils.h
- LIB_H += transport.h
- LIB_H += tree-walk.h
-@@ -1256,12 +1256,12 @@ endif
- ifdef NO_FNMATCH
- 	COMPAT_CFLAGS += -Icompat/fnmatch
- 	COMPAT_CFLAGS += -DNO_FNMATCH
--	COMPAT_OBJS += compat/fnmatch/fnmatch.o
-+	COMPAT_OBJS += compat/fnmatch/fnmatch_gnu.o
- else
- ifdef NO_FNMATCH_CASEFOLD
- 	COMPAT_CFLAGS += -Icompat/fnmatch
- 	COMPAT_CFLAGS += -DNO_FNMATCH_CASEFOLD
--	COMPAT_OBJS += compat/fnmatch/fnmatch.o
-+	COMPAT_OBJS += compat/fnmatch/fnmatch_gnu.o
- endif
- endif
- ifdef USE_WILDMATCH
-diff --git a/archive-tar.c b/archive-tar.c
-index 719b629..8e24336 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -2,7 +2,7 @@
-  * Copyright (c) 2005, 2006 Rene Scharfe
-  */
- #include "cache.h"
--#include "tar.h"
-+#include "tar_git.h"
- #include "archive.h"
- #include "streaming.h"
- #include "run-command.h"
-diff --git a/builtin/tar-tree.c b/builtin/tar-tree.c
-index 3f1e701..b0e4551 100644
---- a/builtin/tar-tree.c
-+++ b/builtin/tar-tree.c
-@@ -3,7 +3,7 @@
-  */
- #include "cache.h"
- #include "commit.h"
--#include "tar.h"
-+#include "tar_git.h"
- #include "builtin.h"
- #include "quote.h"
-
-diff --git a/compat/fnmatch/fnmatch.c b/compat/fnmatch/fnmatch_gnu.c
-similarity index 99%
-rename from compat/fnmatch/fnmatch.c
-rename to compat/fnmatch/fnmatch_gnu.c
-index 5ef0685..f9a5e5b 100644
---- a/compat/fnmatch/fnmatch.c
-+++ b/compat/fnmatch/fnmatch_gnu.c
-@@ -26,7 +26,7 @@
- #endif
-
- #include <errno.h>
--#include <fnmatch.h>
-+#include <fnmatch_gnu.h>
- #include <ctype.h>
-
- #if HAVE_STRING_H || defined _LIBC
-diff --git a/compat/fnmatch/fnmatch.h b/compat/fnmatch/fnmatch_gnu.h
-similarity index 100%
-rename from compat/fnmatch/fnmatch.h
-rename to compat/fnmatch/fnmatch_gnu.h
-diff --git a/config.mak.uname b/config.mak.uname
-index 8743a6d..2d42ffe 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -527,14 +527,21 @@ ifeq ($(uname_S),QNX)
- 	HAVE_STRINGS_H = YesPlease
- 	NEEDS_SOCKET = YesPlease
- 	NO_FNMATCH_CASEFOLD = YesPlease
--	NO_GETPAGESIZE = YesPlease
- 	NO_ICONV = YesPlease
- 	NO_MEMMEM = YesPlease
--	NO_MKDTEMP = YesPlease
--	NO_MKSTEMPS = YesPlease
- 	NO_NSEC = YesPlease
--	NO_PTHREADS = YesPlease
- 	NO_R_TO_GCC_LINKER = YesPlease
--	NO_STRCASESTR = YesPlease
- 	NO_STRLCPY = YesPlease
-+	# All QNX 6.x versions have pthread functions in libc
-+	# and getpagesize. Leave mkstemps/mkdtemp/strcasestr for
-+	# autodetection.
-+	ifeq ($(shell expr "$(uname_R)" : '6\.[0-9]\.[0-9]'),5)
-+		PTHREAD_LIBS = ""
-+	else
-+		NO_PTHREADS = YesPlease
-+		NO_GETPAGESIZE = YesPlease
-+		NO_STRCASESTR = YesPlease
-+		NO_MKSTEMPS = YesPlease
-+		NO_MKDTEMP = YesPlease
-+	endif
- endif
-diff --git a/git-compat-util.h b/git-compat-util.h
-index b7eaaa9..f59d696 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -113,7 +113,11 @@
- #include <time.h>
- #include <signal.h>
- #ifndef USE_WILDMATCH
-+#if defined(NO_FNMATCH) || defined(NO_FNMATCH_CASEFOLD)
-+#include <fnmatch_gnu.h>
-+#else
- #include <fnmatch.h>
-+#endif /* NO_FNMATCH */
- #endif
- #include <assert.h>
- #include <regex.h>
-diff --git a/pager.c b/pager.c
-index c1ecf65..bed627a 100644
---- a/pager.c
-+++ b/pager.c
-@@ -81,7 +81,11 @@ void setup_pager(void)
- 	pager_process.argv = pager_argv;
- 	pager_process.in = -1;
- 	if (!getenv("LESS")) {
-+	#if !defined(__QNXNTO__)
- 		static const char *env[] = { "LESS=FRSX", NULL };
-+	#else
-+		static const char *env[] = { "LESS=rS", NULL };
-+	#endif /* __QNXNTO__ */
- 		pager_process.env = env;
- 	}
- 	if (start_command(&pager_process))
-diff --git a/tar.h b/tar_git.h
-similarity index 100%
-rename from tar.h
-rename to tar_git.h
+Much nicer.  Thanks.
