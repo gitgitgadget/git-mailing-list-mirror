@@ -1,46 +1,69 @@
-From: Jeff Epler <jepler@unpythonic.net>
-Subject: Re: Load testing of git
-Date: Sun, 24 Feb 2013 11:54:28 -0600
-Message-ID: <20130224175427.GA4691@unpythonic.net>
-References: <CAGjB8pR+uByiJJikBXbaxUZO4rDgyfvJ31agxaQuWrMwSS1N7Q@mail.gmail.com>
+From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
+Subject: [PATCH 1/1] Fix git compilation without libiconv
+Date: Sun, 24 Feb 2013 20:04:55 +0200
+Message-ID: <CAHXAxrPq0oEaY=GG4Nb4aDL0TGLsE3eWb0vKqvem-WikZZQiWA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Yuri Mikhailov <yuri.mikhaylov@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 24 18:54:58 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 24 19:10:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9fmq-0000Pa-HT
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 18:54:56 +0100
+	id 1U9g2B-0004Nv-Mt
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 19:10:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758486Ab3BXRyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2013 12:54:32 -0500
-Received: from dsl.unpythonic.net ([206.222.212.217]:43583 "EHLO
-	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758025Ab3BXRyb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2013 12:54:31 -0500
-Received: by unpythonic.net (Postfix, from userid 1000)
-	id 737BE114579; Sun, 24 Feb 2013 11:54:28 -0600 (CST)
-Content-Disposition: inline
-In-Reply-To: <CAGjB8pR+uByiJJikBXbaxUZO4rDgyfvJ31agxaQuWrMwSS1N7Q@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753314Ab3BXSKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2013 13:10:08 -0500
+Received: from mail-qc0-f175.google.com ([209.85.216.175]:47503 "EHLO
+	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751835Ab3BXSKH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2013 13:10:07 -0500
+Received: by mail-qc0-f175.google.com with SMTP id j3so989903qcs.6
+        for <git@vger.kernel.org>; Sun, 24 Feb 2013 10:10:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=0LCOS8xfxsYX8oRlNSBN8Xj4hKE9RL5TH6h/ZFiLc90=;
+        b=d6uYdtTcAh1vzcjd2C1rIPxdjNB2DR7IwQ+C0xcY5SPm8Rg1mOvi0t+75cPioImvQ/
+         8ylWRBAHlnCfzhcpIKENpD8rWaOxAIMHhZ/LIYIhIxKmEkrgLcsn9SjH8sI3DecG5TGD
+         gfuYKXxWuwtvloBb+6IgNtCDHcjGVljX73fVjs9OoRlOOLl88OT7sV9otSc9R/zDoBrf
+         w2WHBWH7qf7LTSX6awNIdPLan44e/dF/XiIgawbly0rQT4XNyiEmTDV0jNldE2pUeXZ2
+         nZXEED6Ric1VPL12WTN4OH0gR8IOEu7gf3Fxvh4m6FVwH8mbVrzMlqh/czIgZvx2H4Is
+         klmw==
+X-Received: by 10.229.179.23 with SMTP id bo23mr1768778qcb.104.1361729095139;
+ Sun, 24 Feb 2013 10:04:55 -0800 (PST)
+Received: by 10.49.71.68 with HTTP; Sun, 24 Feb 2013 10:04:55 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216997>
 
-In 2012 there was a thread about git's performance on large
-repositories.  One archive of the discussion begins here:
-http://mid.gmane.org/CB5074CF.3AD7A%25joshua.redstone%40fb.com
+Fix git compilation without available libiconv library.
 
-> The test repo has 4 million commits, linear history and about 1.3
-> million files.
+From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
+Signed-off-by: Mike Gorchak <mike.gorchak.qnx@gmail.com>
+---
+ configure.ac | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-I'm not sure to what extent git performance may have changed since then,
-e.g., by improving the index format.
+diff --git a/configure.ac b/configure.ac
+index 1991258..d0e82c1 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -566,7 +566,9 @@ for l in $lib_order; do
+ 	[AC_MSG_RESULT([yes])
+ 	NO_ICONV=
+ 	break],
+-	[AC_MSG_RESULT([no])])
++	[AC_MSG_RESULT([no])
++	NEEDS_LIBICONV=
++	])
+     LIBS="$old_LIBS"
+ done
 
-Jeff
+-- 
+1.8.2-rc0
