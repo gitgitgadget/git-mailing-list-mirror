@@ -1,115 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff: Fix rename pretty-print when suffix and prefix
- overlap
-Date: Sun, 24 Feb 2013 01:15:50 -0800
-Message-ID: <7vzjyu3we1.fsf@alter.siamese.dyndns.org>
-References: <1361638125-11245-1-git-send-email-apelisse@gmail.com>
+From: =?ISO-8859-1?Q?Andreas_F=E4rber?= <andreas.faerber@web.de>
+Subject: Re: patch for fix build git on Haiku
+Date: Sun, 24 Feb 2013 10:36:35 +0100
+Message-ID: <5129DF23.7050206@web.de>
+References: <254e4f8fb172cec1e547413e2828b642@freenet59.ru> <20130223204208.GB3222@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 24 10:16:24 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: diger <admin@freenet59.ru>, git@vger.kernel.org,
+	HaikuPorts developers discussion list 
+	<haikuports-devs@lists.ports.haiku-files.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 24 10:37:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9Xgy-0000ID-5U
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 10:16:20 +0100
+	id 1U9Y1F-00037V-5a
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 10:37:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755476Ab3BXJPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2013 04:15:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38105 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755448Ab3BXJPw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2013 04:15:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C675A412;
-	Sun, 24 Feb 2013 04:15:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=Vi1rUp3NbiGoJjWqWA3CTFV/O9g=; b=nfTnbRbiBUvYmtbuFbEB
-	4U4NimoOVy3yKcdPtYlQ68p80b4gRyS9ubYAeLikkdh32LwwjqHfzsEnHnlT5/cU
-	aZzuu5HTHVw1HYXfiOE7gidYpxyoJVPAOP7gPrQnQENrHQo4lX+CUJtDPAOIcSy6
-	S4ATXQO7XeUdZGdTANyNt+o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=phEVGRqsah7TpiZdrK7gxeSExayrWNq2h9V+QWnMR0IwxM
-	VRQWLVZTc2zpjd/xWzTHaP1uJY1OX/xKMh0FPyxBMMFYcRLvSNvJee+iDBfzPji8
-	B1kBInE34AHGfeK0KLknWZrKayI7B6OgSQrGBHPhP63uyBqsyqB1Kwfv1uzic=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20A15A40F;
-	Sun, 24 Feb 2013 04:15:52 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79E37A40D; Sun, 24 Feb 2013
- 04:15:51 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C8C93C6C-7E62-11E2-8395-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752088Ab3BXJgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2013 04:36:42 -0500
+Received: from mout.web.de ([212.227.15.4]:59240 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752048Ab3BXJgj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Feb 2013 04:36:39 -0500
+Received: from envy.site ([84.148.30.238]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0MTh2S-1UIJS000QK-00R0Pg; Sun, 24 Feb 2013 10:36:36
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+In-Reply-To: <20130223204208.GB3222@elie.Belkin>
+X-Provags-ID: V02:K0:ZBXbfVnI2fiAqTFp9TIYoZxKIJ+oOqoihTHGCcYDYqb
+ nXr8G71RToGTUJuyDxut09CW/3Z1qD5o2D4oxMoU2We7qgEMmk
+ n0kdLHZy4dma6+rToL/c/MdF7iaMsNiu934YusDWkmc/XUQtqh
+ AIUSYVsIINPKypZmws9nBXhMSa9IqxFW/1FodJyA8eOl1fGElF
+ he8FkzWY6U0wWxLqPOH9w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/216986>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+Hi,
 
-> When considering a rename for two files that have a suffix and a prefix
-> that can overlap, a confusing line is shown. As an example, renaming
-> "a/b/b/c" to "a/b/c" shows "a/b/{ => }/b/c".
+Am 23.02.2013 21:42, schrieb Jonathan Nieder:
+> diger wrote:
+> 
+>> This patch fixes build git on Haiku
+> 
+> Lovely.  May we have your sign-off?  (See
+> Documentation/SubmittingPatches for what this means.)  Does "make
+> test" pass?  (Just curious --- it's fine if it doesn't, though in that
+> case a list of test failures would be helpful.)
+> 
+> Thanks,
+> Jonathan
+> 
+> (patch left unsnipped for reference)
+> 
+>> --- Makefile.orig	2012-10-21 21:32:15.000000000 +0000
+>> +++ Makefile
+>> @@ -1211,6 +1204,16 @@ ifeq ($(uname_S),HP-UX)
+>>  	endif
+>>  	GIT_TEST_CMP = cmp
+>>  endif
+>> +ifeq ($(uname_S),Haiku)
+>> +    NO_R_TO_GCC_LINKER = YesPlease
+>> +    NO_LIBGEN_H = YesPlease
+>> +    NO_MEMMEM = YesPlease
+>> +    NO_MKSTEMPS = YesPlease
+>> +    NEEDS_LIBICONV = YesPlease
+>> +    DEFAULT_EDITOR = nano
 
-This would be vastly more readable if it had "It should show XXX
-instead" somewhere in the description, perhaps at the end of this
-sentence.  It can also be after "thus the { => }" below, but I think
-giving the expected output earlier would be more appropriate.
+Patch looks okay from what I have from my earlier ones in mind, but I
+believe nano is an Optional Package on Haiku and thus not guaranteed to
+be installed. CC'ing HaikuPorts.
 
-> Currently, what we do is calculate the common prefix ("a/b/"), and the
-> common suffix ("/b/c"), but the same "/b/" is actually counted both in
-> prefix and suffix. Then when calculating the size of the non-common part,
-> we end-up with a negative value which is reset to 0, thus the "{ => }".
+Regards,
+Andreas
 
-In this example, the common prefix would be "a/b/" and the common
-suffix that does not overlap with the prefix part would be "/c", so
-I am imagining that "a/b/{ => b}/c" would be the desired output?
-
-This is a really old thinko (dating back to June 2005).  I'll queue
-the patch on maint-1.7.6 (because 1.7.6.6 is slightly more than one
-year old while 1.7.5.4 is a lot older) to allow distros that issue
-incremental fixes on top of ancient versions of Git to pick up the
-fix if they wanted to.  Perhaps we would want to add a few tests?
-
-Thanks.
-
->
-> Do not allow the common suffix to overlap the common prefix and stop
-> when reaching a "/" that would be in both.
->
-> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
-> ---
->  diff.c |   11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
->
-> diff --git a/diff.c b/diff.c
-> index 156fec4..80f4752 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1290,7 +1290,16 @@ static char *pprint_rename(const char *a, const char *b)
->  	old = a + len_a;
->  	new = b + len_b;
->  	sfx_length = 0;
-> -	while (a <= old && b <= new && *old == *new) {
-> +	/*
-> +	 * Note:
-> +	 * if pfx_length is 0, old/new will never reach a - 1 because it
-> +	 * would mean the whole string is common suffix. But then, the
-> +	 * whole string would also be a common prefix, and we would not
-> +	 * have pfx_length equals 0.
-> +	 */
-> +	while (a + pfx_length - 1 <= old &&
-> +	       b + pfx_length - 1 <= new &&
-> +	       *old == *new) {
->  		if (*old == '/')
->  			sfx_length = len_a - (old - a);
->  		old--;
-> --
-> 1.7.9.5
+>> +    PTHREAD_LIBS =    -lroot
+>> +    NO_CROSS_DIRECTORY_HARDLINKS = YesPlease
+>> +endif
+>>  ifeq ($(uname_S),Windows)
+>>  	GIT_VERSION := $(GIT_VERSION).MSVC
+>>  	pathsep = ;
