@@ -1,55 +1,70 @@
-From: Tomas Carnecky <tomas.carnecky@gmail.com>
-Subject: Building git with NO_PERL=1 will install git-submodule, which
- depends on perl
-Date: Sun, 24 Feb 2013 22:12:19 +0000
-Message-ID: <1361743939-ner-9747@calvin>
+From: Philip Oakley <philipoakley@iee.org>
+Subject: Re: [PATCH 06/13] Add guide-list.txt and extraction shell
+Date: Sun, 24 Feb 2013 22:12:54 +0000
+Message-ID: <512A9066.3040204@iee.org>
+References: <1361660761-1932-1-git-send-email-philipoakley@iee.org> <1361660761-1932-7-git-send-email-philipoakley@iee.org> <20130224145113.GJ1361@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 24 23:12:54 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: GitList <git@vger.kernel.org>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Sun Feb 24 23:13:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9joR-0001Ut-RO
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 23:12:52 +0100
+	id 1U9jpB-0001zD-GC
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Feb 2013 23:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759316Ab3BXWM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Feb 2013 17:12:27 -0500
-Received: from mail-we0-f173.google.com ([74.125.82.173]:36601 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758023Ab3BXWM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Feb 2013 17:12:26 -0500
-Received: by mail-we0-f173.google.com with SMTP id r5so1946235wey.32
-        for <git@vger.kernel.org>; Sun, 24 Feb 2013 14:12:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:subject:to:cc:mime-version:date:message-id
-         :content-type;
-        bh=6JlHsV5eMEVv2h7UZcY/BXpJyrU4Oh3Qs+dUz8acYBM=;
-        b=TOH3FV1vo9SSEKqEA4snoqM9vVKD1OK+9Ls/+weVsPw4FNaqycmpip/qgnTZmxEw0y
-         J92IVleRODBy2JCIiTjshtohfI+VwjRStTBLRj9CYgynaDpN7KfI+5v1llgkxz/FiLlL
-         cY2n2lj4sInEIm23BAxP7JTD72dXNP3QOY7AFH4WW7zbl7l4YJVJN1zzPE1b5XPw189S
-         mJwxGkBeJMkjCBzEn0Wknuefv+ZX/1eEhSvZWkfebGMaimxMeC668au8jcDar1cCn73P
-         srSpZtv67lODtn8WEzinrmFSyuFdZs/gB9ve+cKkSXmSiPwxeZWKmrhJQw47HoCURrV1
-         3Bvg==
-X-Received: by 10.180.82.231 with SMTP id l7mr8355229wiy.15.1361743945204;
-        Sun, 24 Feb 2013 14:12:25 -0800 (PST)
-Received: from calvin.caurea.org (cust.static.46-14-151-191.swisscomdata.ch. [46.14.151.191])
-        by mx.google.com with ESMTPS id dw1sm12805542wib.5.2013.02.24.14.12.20
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 24 Feb 2013 14:12:21 -0800 (PST)
-Received: by calvin.caurea.org (Postfix, from userid 3301)
-	id 62484EB7B4; Sun, 24 Feb 2013 22:12:19 +0000 (UTC)
+	id S1759368Ab3BXWNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Feb 2013 17:13:11 -0500
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:53893 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758762Ab3BXWNK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Feb 2013 17:13:10 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApMBAEmQKlFZ8rke/2dsb2JhbAANOMFQgSeDEgEBAQECAThAAQULCxgJFg8JAwIBAgFFBg0BBwEBiAkSqjeSLY8OB4NAA5dakk8
+X-IronPort-AV: E=Sophos;i="4.84,730,1355097600"; 
+   d="scan'208";a="409998620"
+Received: from host-89-242-185-30.as13285.net (HELO [192.168.0.7]) ([89.242.185.30])
+  by out1.ip05ir2.opaltelecom.net with ESMTP; 24 Feb 2013 22:12:55 +0000
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+In-Reply-To: <20130224145113.GJ1361@odin.tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217009>
 
-Compare with git-instaweb which is replaced by as a small shell script which
-informs the user that the functionality is not implemented.
+On 24/02/13 14:51, W. Trevor King wrote:
+> On Sat, Feb 23, 2013 at 11:05:54PM +0000, Philip Oakley wrote:
+>> +# Usage: ./generate-guidelist.sh  >>common-guides.h
+>
+> Following David's recent series, it's probably better to use a
+> lowercase 'usage' [1].
+I prefer the Initial capital version to suggest the start of a sentence, 
+but I can go with either way.
 
-I've only checked git-submodule, other commands may also have an undocumented
-dependency on perl.
+>                     Also, I'd expect '>common-guides.h' would make
+> more sense than appending with '>>'.
+
+My mistake. Will correct.
+
+>
+>> +/* re-use struct cmdname_help in common-commands.h */
+>> +
+>> +static struct cmdname_help common_guides[] = {"
+>
+> This is probably just copied from generate-cmdlist.sh, but maybe it
+> would be a good idea to #include "common-commands.h" here?
+
+I was trying to avoid nested includes. Eventually, if the series is 
+accepted, I'd want to refactor the guide generation into the existing 
+command generation so that .h file would then disappear.
+>
+> Trevor
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/216961
+>
+Philip
