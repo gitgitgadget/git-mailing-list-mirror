@@ -1,92 +1,119 @@
-From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
-Subject: Re: Google Summer of Code 2013 (GSoC13)
-Date: Mon, 25 Feb 2013 10:12:18 +0100
-Message-ID: <453931856.Va6j4WpQCl@flomedio>
-References: <87ehgd1qq2.fsf@pctrast.inf.ethz.ch> <20130218174239.GB22832@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC v2] git-multimail: a replacement for post-receive-email
+Date: Mon, 25 Feb 2013 11:50:43 +0100
+Message-ID: <512B4203.3090802@alum.mit.edu>
+References: <5104E738.602@alum.mit.edu> <vpqfw0rb25c.fsf@grenoble-inp.fr> <5129A5B3.7020807@alum.mit.edu> <vpqd2vok9bv.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Paul Mackerras <paulus@samba.org>,
-	Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Barr <b@rr-dav.id.au>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 25 11:24:33 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6?= =?ISO-8859-1?Q?r=F0_Bjarmason?= 
+	<avarab@gmail.com>, Chris Hiestand <chiestand@salk.edu>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Feb 25 11:51:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9vEU-0004v0-F3
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 11:24:30 +0100
+	id 1U9veM-0001GI-7t
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 11:51:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758627Ab3BYKYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 05:24:04 -0500
-Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:58506 "EHLO
-	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758032Ab3BYKYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 05:24:03 -0500
-X-Greylist: delayed 3742 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Feb 2013 05:24:02 EST
-Received: from flomedio.localnet (91-115-84-62.adsl.highway.telekom.at [91.115.84.62])
+	id S1758197Ab3BYKut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 05:50:49 -0500
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:61245 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751860Ab3BYKus (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Feb 2013 05:50:48 -0500
+X-AuditID: 1207440c-b7fa46d0000024d7-54-512b4208045d
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 2B.76.09431.8024B215; Mon, 25 Feb 2013 05:50:48 -0500 (EST)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
 	(authenticated bits=0)
-	by mailrelay2.tugraz.at (8.14.4/8.14.4) with ESMTP id r1P9COH1024572
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 25 Feb 2013 10:12:26 +0100 (CET)
-User-Agent: KMail/4.9.4 (Linux/3.5.0-24-generic; KDE/4.9.4; x86_64; ; )
-In-Reply-To: <20130218174239.GB22832@sigill.intra.peff.net>
-X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
-X-Spam-Scanner: SpamAssassin 3.003000 
-X-Spam-Score-relay: 0.6
-X-Scanned-By: MIMEDefang 2.70 on 129.27.10.19
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r1PAoiTr005165
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 25 Feb 2013 05:50:45 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
+In-Reply-To: <vpqd2vok9bv.fsf@grenoble-inp.fr>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKKsWRmVeSWpSXmKPExsUixO6iqMvhpB1ocG0Du8Xxp9dZLNY+u8Nk
+	sX17F6NF15VuJouG3ivMFpc+r2e1aHxSZLH68R12Bw6PnbPusntM/HKc1ePiJWWPG9e7GT0+
+	b5LzOHD5MVsAWxS3TVJiSVlwZnqevl0Cd8axm9vZC14LVUzYO52pgfEfXxcjJ4eEgIlEw7KT
+	LBC2mMSFe+vZuhi5OIQELjNKzPt/Eso5ziSxrnsdE0gVr4C2xJnXzWwgNouAqkT730PsIDab
+	gK7Eop5msBpRgTCJ3tfnGCHqBSVOznwCtIGDQ0RAX+LnZLCZzAI/mSS2bHsENkdYwFNi4fUj
+	rBDLuhklNna8AUtwCuhJLNh2DmwBs4COxLu+B8wQtrzE9rdzmCcwCsxCsmMWkrJZSMoWMDKv
+	YpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI11MvNLNFLTSndxAiJBp4djN/WyRxiFOBgVOLhbVyp
+	FSjEmlhWXJl7iFGSg0lJlLfURjtQiC8pP6UyI7E4I76oNCe1+BCjBAezkghvkglQjjclsbIq
+	tSgfJiXNwaIkzqu6RN1PSCA9sSQ1OzW1ILUIJivDwaEkwfveAahRsCg1PbUiLTOnBCHNxMEJ
+	MpxLSqQ4NS8ltSixtCQjHhSt8cXAeAVJ8QDtfQPSzltckJgLFIVoPcWoy7H73aMXjEIsefl5
+	qVLivD9AigRAijJK8+BWwFLfK0ZxoI+FeR+DVPEA0ybcpFdAS5iAliwSAVtSkoiQkmpgdFCb
+	x51QqMlm/bZhs2vx722Kx01lOdt3b3/xLj4wotSmaOqk6cofnu9M+PbY+sQHvk36 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217055>
 
-[corrected David Barr's address]
-On Monday 18 February 2013 12:42:39 Jeff King wrote:
-> And I do not want to blame the students here (some of whom are on the cc
-> list  ). They are certainly under no obligation to stick around after
-> GSoC ends, and I know they have many demands on their time. But I am
-> also thinking about what Git wants to get out of GSoC (and to my mind,
-> the most important thing is contributors).
+On 02/25/2013 10:54 AM, Matthieu Moy wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> On 02/20/2013 01:28 PM, Matthieu Moy wrote:
+>>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>>>> A while ago, I submitted an RFC for adding a new email notification
+>>>> script to "contrib" [...]
+>>>
+>>> We've discussed offline with Michael, a few patches have been merged,
+>>> and there are still a few pending pull requests. I liked the script
+>>> already, but it's getting even cooler ;-).
+>>>
+>>> A few more random thoughts (not on my personal todo-list):
+>>>
+>>> * It may make sense to add the short sha1 of the new reference in email
+>>>   titles (branch foo updated -> branch foo updated to $sha1), so that
+>>>   gmail users do not get a single huge thread "branch foo updated".
+>>>
+>>>   (Yes, I do know about the Reference field, but gmail uses Subject: for
+>>>   threading).
+>>> [...]
+>>
+>> I just implemented this in branch sha1s-in-subject [1].  Please let me
+>> know if this works for you then I'll merge it to master.  (It depends on
+>> the header-handling branch, which also includes your patch for non-ASCII
+>> header fields.)
+> 
+> Works for me. One minor knit: you've included 10-characters sha1s (this
+> comes from
+> 
+>         self.short = read_output(['git', 'rev-parse', '--short=10', sha1])
+> 
+> ), I'd find it better with shorter sha1s. In the case of branch update,
+> if the branch name is a bit long, it could be nice to save a few
+> characters.
+> 
+> Why not just say "git rev-parse --short", without argument? This way,
+> the default is used, ie. AFAICT it uses 7 characters by default, but
+> will use more if needed to keep the unicity.
 
-Just a little comment from another student:
-Last year i worked on the 'remote helper for svn'. My official mentor was David 
-Barr, but I had most interaction with Jonathan Nieder.
+I did this intentionally because the SHA1s appear in columns within the
+refchange emails, and having varying-length SHA1s would cause subsequent
+columns to be misaligned.  I figured that a length of 10, aside from
+being a number that I can still count on my fingers, would be long
+enough that it would rarely have to be extended.
 
->From my point of view I wouldn't say the project was a fail. It was harder 
-than I originally thought, yes. That happens.
-But we have a remote helper in master now, although its far from complete and 
-it's development is quite stalled. (remote-testsvn)
+I guess I will change the code to use $(git rev-parse --short) (i.e.,
+shorter SHA1s) but reserving 10 columns in tables for them (which can be
+done via Python string formatting in the templates).  That should give
+the best of both worlds.
 
-About sticking around:
-As you can see I read the list (I was not on CC), but not very regularly, I 
-admit. Anyways, I'd respond to mails in CC or on IRC.
+Thanks for the feedback!
 
-During the summer I believe I learned git's development process quite well. I 
-rerolled my main patch series 8 times until 19th of September, which is well 
-beyond GSOC deadline. I tried to get it finished before concentrating on my 
-studies again.
+Michael
 
-If I would now continue to contribute, it would be a completely new topic 
-(like branch mapping) and take a lot of time that I don't have during the 
-year, where I have to push my studies forward. 
-For a student one aspect of  GSOC is also quite important: It is a cool and 
-demanding summer job during the holidays, but it has to ramp down when the new 
-semester starts.
-
-Anyways I think GSOC is a great idea and I enjoyed contributing to git  a lot, 
-would immediatly do it again. Keep it goin'!
-Thanks.
-
-Florian
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
