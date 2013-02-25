@@ -1,73 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 12/13] Documentation/Makefile: update git guide links
-Date: Sun, 24 Feb 2013 21:29:25 -0800
-Message-ID: <7vd2vp3qru.fsf@alter.siamese.dyndns.org>
-References: <1361660761-1932-1-git-send-email-philipoakley@iee.org>
- <1361660761-1932-13-git-send-email-philipoakley@iee.org>
+From: Greg Price <price@MIT.EDU>
+Subject: [PATCH] Small grammar fix
+Date: Mon, 25 Feb 2013 00:27:20 -0500
+Message-ID: <20130225052718.GG5688@biohazard-cafe.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GitList <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Feb 25 06:29:57 2013
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 25 06:32:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9qdP-0003Yg-RW
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 06:29:56 +0100
+	id 1U9qgD-0005Xr-6U
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 06:32:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751724Ab3BYF33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 00:29:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44436 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750825Ab3BYF32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 00:29:28 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FF7B86F2;
-	Mon, 25 Feb 2013 00:29:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bz8i0OBWzxkAD492I/AAeg1cwbs=; b=GiMbQd
-	eel522Mb0TeX2lI811c8NSa/yove6SAU7DBjX/mBZ8VBp+kD0kdjFdKss6iKYm+/
-	78EQ/KFkz5UqKEs6+ihQooAafR6ZvJwdPDHof0Y60usbZXmmWVH6wtwZwvlcodjc
-	7qvQFUqAziyEgheDwQyM1mlyKVXakzOX/d3gM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GgezrBhslDvipCj8MlyRzaVUC6i69CqN
-	3L6LdOQzfp6MKUePy54/yXx/+6RXhQ7FvR69fScbgA2FIhZzQNycECRLMAr8NPDN
-	bX0wl+rVMzAorUgPv4fozaZ/83Hkm5vHPykkDut8CntUGx5tUWjWE1A5TKbUd6IS
-	APt90U8Don8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5523886F0;
-	Mon, 25 Feb 2013 00:29:28 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ADEB186EE; Mon, 25 Feb 2013
- 00:29:27 -0500 (EST)
-In-Reply-To: <1361660761-1932-13-git-send-email-philipoakley@iee.org> (Philip
- Oakley's message of "Sat, 23 Feb 2013 23:06:00 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 52A1B398-7F0C-11E2-B679-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752203Ab3BYFcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 00:32:24 -0500
+Received: from DMZ-MAILSEC-SCANNER-1.MIT.EDU ([18.9.25.12]:55480 "EHLO
+	dmz-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751953Ab3BYFcY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Feb 2013 00:32:24 -0500
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Feb 2013 00:32:23 EST
+X-AuditID: 1209190c-b7f046d00000094c-c4-512af63a6145
+Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
+	by dmz-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 88.46.02380.A36FA215; Mon, 25 Feb 2013 00:27:22 -0500 (EST)
+Received: from outgoing.mit.edu (OUTGOING-AUTH-1.MIT.EDU [18.9.28.11])
+	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id r1P5RMeZ025635;
+	Mon, 25 Feb 2013 00:27:22 -0500
+Received: from localhost (BIOHAZARD-CAFE.MIT.EDU [18.9.64.18])
+	(authenticated bits=0)
+        (User authenticated as price@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id r1P5RKP8025265;
+	Mon, 25 Feb 2013 00:27:21 -0500
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsUixCmqrGv1TSvQYP50S4uuK91MFg29V5gd
+	mDwuXlL2+LxJLoApissmJTUnsyy1SN8ugStjzuGjbAX3uSo6enYyNzC+4+hi5OSQEDCR+Ni1
+	mQnCFpO4cG89G4gtJLCPUWLzH7suRi4geyOjxMFDl6ESnxklTnZygtgsAqoSu2dvAGtmE1CQ
+	+DF/HTOILSIgLvH2+Ex2EJtZQE2ifdMUVhBbWEBJYte224xdjBwcvAJWEvM++ICEeQUEJU7O
+	fMICUa4lcePfSyaQEmYBaYnl/8DOFBVQkbi2v51tAiP/LCQds5B0zELoWMDIvIpRNiW3Sjc3
+	MTOnODVZtzg5MS8vtUjXUC83s0QvNaV0EyM4CCV5djC+Oah0iFGAg1GJh7dhpVagEGtiWXFl
+	7iFGSQ4mJVFe2VdAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8mqFAOd6UxMqq1KJ8mJQ0B4uS
+	OO/llJv+QgLpiSWp2ampBalFMFkZDg4lCd68r0CNgkWp6akVaZk5JQhpJg5OkOE8QMMzQGp4
+	iwsSc4sz0yHypxh1OXr/PXvBKMSSl5+XKiXO2wlSJABSlFGaBzcHljxeMYoDvSXMWwZSxQNM
+	PHCTXgEtYQJa8lBHHWRJSSJCSqqBceEukTk/Klz3HDVwMrnBfq6IK/bRsplOe9df+L9p5YOW
+	wCv5n7bb7lSYmi6xtf7Nl1UzdVZb+1+b0zZXQKtKPcU1uPTP+qADVhzl+zgk9nw1qwyqW7mw
+	en/D2hjzWbe1nPYJTePi3aF29pdLYN3NbU9W7Am+JH7i0UfjQ3n9P8Vm3X0r7/xG 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217028>
 
-Philip Oakley <philipoakley@iee.org> writes:
+"Advice" is a mass noun, not a count noun; it's not
+ordinarily pluralized.
 
-> @@ -35,6 +37,8 @@ MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
->  MAN_HTML=$(patsubst %.txt,%.html,$(MAN_TXT))
->  
->  OBSOLETE_HTML = git-remote-helpers.html
-> +OBSOLETE_HTML = everyday.html
-> +OBSOLETE_HTML = user-manual.html
->  DOC_HTML=$(MAN_HTML) $(OBSOLETE_HTML)
+(I've never seen "advices" before, and to double-check that this isn't
+an idiosyncrasy of mine I checked the Google Ngram data:
+  http://books.google.com/ngrams/graph?content=advice%2Cadvices
+which shows "advices" is <1/100 as common as "advice".)
 
-If you are keeping track of inventory of "guides" in a new static
-array, do you still need to look up "giteveryday" or "gituser-manual"
-when the user asks for guide documents?
+Signed-off-by: Greg Price <price@mit.edu>
+---
+ Documentation/config.txt | 2 +-
+ t/t7512-status-help.sh   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-In other words, can't you change the side that launches the document
-viewer so that we do not have to rename anything in the first place?
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e452ff8..dbb2faf 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -168,7 +168,7 @@ advice.*::
+ 		Advice shown when linkgit:git-merge[1] refuses to
+ 		merge to avoid overwriting local changes.
+ 	resolveConflict::
+-		Advices shown by various commands when conflicts
++		Advice shown by various commands when conflicts
+ 		prevent the operation from being performed.
+ 	implicitIdentity::
+ 		Advice on how to set your identity configuration when
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index b3f6eb9..95d6510 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -5,7 +5,7 @@
+ #		     Grenoble INP Ensimag
+ #
+ 
+-test_description='git status advices'
++test_description='git status advice'
+ 
+ . ./test-lib.sh
+ 
+-- 
+1.7.11.3
