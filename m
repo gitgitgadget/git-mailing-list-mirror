@@ -1,118 +1,78 @@
-From: Greg Price <price@MIT.EDU>
-Subject: [PATCH] Fix ".git/refs" stragglers
-Date: Mon, 25 Feb 2013 00:34:14 -0500
-Message-ID: <20130225053414.GJ5688@biohazard-cafe.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Certificate validation vulnerability in Git
+Date: Sun, 24 Feb 2013 21:35:47 -0800
+Message-ID: <7v8v6d3qh8.fsf@alter.siamese.dyndns.org>
+References: <CAA5xPpmmZuMK7q3-pTOx4L6DxFtyw5HWYdH7kHEsK=96KM5kAQ@mail.gmail.com>
+ <512A601B.80807@op5.se> <20130225031847.GB31988@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 25 06:34:47 2013
+Cc: Andreas Ericsson <ae@op5.se>,
+	Zubin Mithra <zubin.mithra@gmail.com>, git@vger.kernel.org,
+	"Dhanesh K." <dhanesh1428@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 25 06:36:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9qi2-0006tC-8b
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 06:34:42 +0100
+	id 1U9qjX-00082s-B8
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 06:36:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751621Ab3BYFeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 00:34:18 -0500
-Received: from DMZ-MAILSEC-SCANNER-4.MIT.EDU ([18.9.25.15]:53455 "EHLO
-	dmz-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750824Ab3BYFeR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Feb 2013 00:34:17 -0500
-X-AuditID: 1209190f-b7f586d000000915-ab-512af7d8f030
-Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
-	by dmz-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id D9.5A.02325.8D7FA215; Mon, 25 Feb 2013 00:34:16 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH-1.MIT.EDU [18.9.28.11])
-	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id r1P5YGkH026153;
-	Mon, 25 Feb 2013 00:34:16 -0500
-Received: from localhost (BIOHAZARD-CAFE.MIT.EDU [18.9.64.18])
-	(authenticated bits=0)
-        (User authenticated as price@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id r1P5YFH7027433;
-	Mon, 25 Feb 2013 00:34:15 -0500
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsUixCmqrHvju1agwavLOhZdV7qZLBp6rzA7
-	MHlcvKTs8XmTXABTFJdNSmpOZllqkb5dAlfGqhe7mAr+i1Y823+QsYHxj0AXIyeHhICJxI2v
-	e5ggbDGJC/fWs3UxcnEICexjlPi2fSozhLORUaJz2RUmCOczo8SC06/BWlgEVCV2LJ7JDmKz
-	CShI/Ji/jhnEFhEQl3h7HCLOLKAm0b5pCiuILSygLTH/6nywXl4BK4mpt6+xQ9iCEidnPmGB
-	qNeSuPHvJVANB5AtLbH8HwdIWFRAReLa/na2CYz8s5B0zELSMQuhYwEj8ypG2ZTcKt3cxMyc
-	4tRk3eLkxLy81CJdE73czBK91JTSTYzgUJTk38H47aDSIUYBDkYlHt6GlVqBQqyJZcWVuYcY
-	JTmYlER5b38FCvEl5adUZiQWZ8QXleakFh9ilOBgVhLh1QwFyvGmJFZWpRblw6SkOViUxHmv
-	ptz0FxJITyxJzU5NLUgtgsnKcHAoSfDO/wbUKFiUmp5akZaZU4KQZuLgBBnOAzR8CkgNb3FB
-	Ym5xZjpE/hSjopQ4726QhABIIqM0D64XlipeMYoDvSLMuwikigeYZuC6XwENZgIa/FBHHWRw
-	SSJCSqqBUUAsIjqT59i0l5WBufoKsZrJDyNzJ29s670krfL1MDejVPpknTtm616wPpnB4DNP
-	NuubaGeIEtfyBeong28nPc2czmFU0aI1uc+53OR52obELartc/9uyBBsXPqHQcKfuWbNroYQ
-	3p7Qr2wKM7O/Pmu3Yd61bnmWhfninc4xNwJ/xPx3FTyrxFKckWioxVxUnAgA8Ktj 
+	id S1750825Ab3BYFfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 00:35:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47676 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750808Ab3BYFfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 00:35:50 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89E8B8954;
+	Mon, 25 Feb 2013 00:35:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rEo0EM4v8ddvZXkhKpJLnsL4Xy8=; b=skD5AM
+	4JgbKh2+wxDrpauA7EfF2M3r5SEP8j3toKfexwVD7oQaiQ7ZiSg8Gouw3M6ZNl8r
+	qkhaL8jtaBIQceX9cu3SWlmx7jKZRgvqpsfHdld33eyGPN/xWxnxJn7CjXJf11mg
+	copcou8xzD/iMdOItozeWpgbHhjoyAQEg/7Ys=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XYmoi/Vde1SIYmIMizMY82flhssumBUA
+	RAl7Ei0KRUVcQXTWLvdls7m4ExoEob6tcelcx4fSoB5ZbmLPZvfM57P3dHVDCTOR
+	iGUX54pvLxh15o+Or0030qMT4y5i1edL19aADNxsGbaGlBqdoRqtUi/DVE+Zw0Oq
+	G1PjNqIUdIw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F2458953;
+	Mon, 25 Feb 2013 00:35:49 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF56F8951; Mon, 25 Feb 2013
+ 00:35:48 -0500 (EST)
+In-Reply-To: <20130225031847.GB31988@sigill.intra.peff.net> (Jeff King's
+ message of "Sun, 24 Feb 2013 22:18:47 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 35E0E80E-7F0D-11E2-8299-27D12E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217031>
 
-A couple of references still survive to .git/refs as a tree
-of all refs.  Fix one in docs, one in a -h message, one in
-a -h message quoted in docs.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Greg Price <price@mit.edu>
----
- Documentation/config.txt | 2 +-
- Documentation/gitcli.txt | 9 +++++----
- builtin/describe.c       | 4 ++--
- 3 files changed, 8 insertions(+), 7 deletions(-)
+> On Sun, Feb 24, 2013 at 07:46:51PM +0100, Andreas Ericsson wrote:
+>
+>> The lack of certificate authority verification presents no attack vector
+>> for git imap-send. As such, it doesn't warrant a CVE. I'm sure you'll
+>> be credited with a "reported-by" line in the commit message if someone
+>> decides to fix it though. Personally, I'm not fussed.
+>
+> Sure it presents an attack vector. I can man-in-the-middle your
+> imap-send client and read your otherwise secret patches. Or your
+> otherwise secret imap password.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index dbb2faf..6eb013a 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -423,7 +423,7 @@ core.sharedRepository::
- 
- core.warnAmbiguousRefs::
- 	If true, git will warn you if the ref name you passed it is ambiguous
--	and might match multiple refs in the .git/refs/ tree. True by default.
-+	and might match multiple refs in the repository. True by default.
- 
- core.compression::
- 	An integer -1..9, indicating a default compression level.
-diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-index 3bc1500..d59a5ad 100644
---- a/Documentation/gitcli.txt
-+++ b/Documentation/gitcli.txt
-@@ -107,13 +107,14 @@ couple of magic command line options:
- ---------------------------------------------
- $ git describe -h
- usage: git describe [options] <committish>*
-+   or: git describe [options] --dirty
- 
-     --contains            find the tag that comes after the commit
-     --debug               debug search strategy on stderr
--    --all                 use any ref in .git/refs
--    --tags                use any tag in .git/refs/tags
--    --abbrev [<n>]        use <n> digits to display SHA-1s
--    --candidates <n>      consider <n> most recent tags (default: 10)
-+    --all                 use any ref
-+    --tags                use any tag, even unannotated
-+    --long                always use long format
-+    --abbrev[=<n>]        use <n> digits to display SHA-1s
- ---------------------------------------------
- 
- --help-all::
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 90a72af..2ef3f10 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -402,8 +402,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_BOOLEAN(0, "contains",   &contains, N_("find the tag that comes after the commit")),
- 		OPT_BOOLEAN(0, "debug",      &debug, N_("debug search strategy on stderr")),
--		OPT_BOOLEAN(0, "all",        &all, N_("use any ref in .git/refs")),
--		OPT_BOOLEAN(0, "tags",       &tags, N_("use any tag in .git/refs/tags")),
-+		OPT_BOOLEAN(0, "all",        &all, N_("use any ref")),
-+		OPT_BOOLEAN(0, "tags",       &tags, N_("use any tag, even unannotated")),
- 		OPT_BOOLEAN(0, "long",       &longformat, N_("always use long format")),
- 		OPT__ABBREV(&abbrev),
- 		OPT_SET_INT(0, "exact-match", &max_candidates,
--- 
-1.7.11.3
+Yes, the lack of verification alone will not hurt the victim; you
+would need to also be able to insert yourself in the middle, perhaps
+by poisoning the victim's DNS.  But one of the points of using
+SSL/TLS is to resist such an attack, and it certainly is an attack
+surfce, even though it may be of a lessor kind than other kinds of
+attacks.
