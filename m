@@ -1,66 +1,87 @@
 From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
-Subject: Re: [PATCH] Improve QNX support in GIT
-Date: Mon, 25 Feb 2013 10:30:43 +0200
-Message-ID: <CAHXAxrOADzLckUz70e9T7EU7aWnuGadSswCU21KV2rK=sjwosg@mail.gmail.com>
-References: <CAHXAxrMRxKKiEarSQ0fCLt6-zyS=52B+kmZMLDf8SQAGzGbjjQ@mail.gmail.com>
-	<CAHXAxrMgJf2C3dAe1O2DW5qFYFnCDhbQNmpnvK4ZOduJnqwQWg@mail.gmail.com>
-	<7vvc9i5cbw.fsf@alter.siamese.dyndns.org>
-	<CAHXAxrO_AeLoHw6TaVkDZsS=J6Ro+qEuMs4rbyCoFuHAGT+6vg@mail.gmail.com>
-	<7vvc9h4d7c.fsf@alter.siamese.dyndns.org>
-	<7vtxp0zwyn.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH 1/1] Fix date checking in case if time was not initialized.
+Date: Mon, 25 Feb 2013 10:36:29 +0200
+Message-ID: <CAHXAxrOOqn6ZSVT1AFyO3a3paD1tokBtcnaX68a+ddhodOvZ6Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 25 09:31:12 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 25 09:37:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9tSn-0006w7-6a
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 09:31:09 +0100
+	id 1U9tYR-00039Y-9t
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 09:36:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757316Ab3BYIao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 03:30:44 -0500
-Received: from mail-qa0-f43.google.com ([209.85.216.43]:51381 "EHLO
-	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754959Ab3BYIao (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 03:30:44 -0500
-Received: by mail-qa0-f43.google.com with SMTP id dx4so1430492qab.16
-        for <git@vger.kernel.org>; Mon, 25 Feb 2013 00:30:43 -0800 (PST)
+	id S1757487Ab3BYIgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 03:36:31 -0500
+Received: from mail-qa0-f49.google.com ([209.85.216.49]:45690 "EHLO
+	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753749Ab3BYIga (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 03:36:30 -0500
+Received: by mail-qa0-f49.google.com with SMTP id o13so1425718qaj.1
+        for <git@vger.kernel.org>; Mon, 25 Feb 2013 00:36:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=PAGRpxbBxi4OE11SCL5fLEoExVDgUCSBqqXOMtynXHg=;
-        b=gIHbjbXpdefJkeliwyAqr/NjazuVEqtc/ilbmoin7leyw2x3GH35R0Fbjc+cLjc6ij
-         dVgFNYaQK+7KE1roRM1O4oupUNsRpk9rPytB7yZS74JeB+OWkF/9AVCIuPNsh+2SxUxT
-         IkKpkMMft4P7Sqw/uT2vUGyyfzWRmO4+2N8ReLDo46XLZkTlLrGD1agm39uO0lZbapdu
-         N5XSc3CYzp1S8k2dNnhFp+TGwBYB5lMHPzEI1NBBD0dVVh+fKj+taGUzkKi8j7BO8ZkC
-         aL193O6wO8pQqZ/2oyymIX8Q5MGruUbOto+PG1oWb4/tqZ/Cw5eINvFgPmvXck61gHjg
-         b0uQ==
-X-Received: by 10.224.32.11 with SMTP id a11mr9992920qad.87.1361781043280;
- Mon, 25 Feb 2013 00:30:43 -0800 (PST)
-Received: by 10.49.71.68 with HTTP; Mon, 25 Feb 2013 00:30:43 -0800 (PST)
-In-Reply-To: <7vtxp0zwyn.fsf@alter.siamese.dyndns.org>
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=8L98lniCDy/8P8CvVideJ0fLAxcGiH6Gv8lCcH3bYyg=;
+        b=cRWCtepoC5FoWwDhrvFGaqHTOCk+LF9SSxBcgihwbK2TWcL9Dq7CU3jA1CmiH4Qqly
+         DQuBvEr+JK9WDWhiZzg0mf+GWla/r6Ox8S7J6FFuXqtgK53iv40ww4r79ktQ4FhxvXhF
+         MfO3xNGL/fEZ9rL7osLvVjMualpi2xWJup2cRKEf3MjBXd5s5cHwnwSEp3VhQ4Hip+2D
+         LILHQ+g/8t8445qKUKHg0+loHPNKKliyplfkzQCLpO+QNFjxCMOhy75F+x9pA7Cqd9cb
+         LXJm8J14k9DAiHVaBgfpyl7W0iHIhqp5elJSy0PRAbTK/7klZ84CEz4br43miuYHQ+CA
+         25Vg==
+X-Received: by 10.224.10.76 with SMTP id o12mr10153480qao.36.1361781389744;
+ Mon, 25 Feb 2013 00:36:29 -0800 (PST)
+Received: by 10.49.71.68 with HTTP; Mon, 25 Feb 2013 00:36:29 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217048>
 
-Hi Junio,
+Fix is_date() function failings in detection of correct date in case
+if time was not properly initialized.
 
-> Swapping the order between CFLAGS and BASIC_CFLAGS in ALL_CFLAGS may
-> be a good change for that reason as well.
+From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
+Signed-off-by: Mike Gorchak <mike.gorchak.qnx@gmail.com>
+---
+ date.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-This sounds very reasonable.
+diff --git a/date.c b/date.c
+index 57331ed..ec758f4 100644
+--- a/date.c
++++ b/date.c
+@@ -357,6 +357,7 @@ static int is_date(int year, int month, int day,
+struct tm *now_tm, time_t now,
+ 	if (month > 0 && month < 13 && day > 0 && day < 32) {
+ 		struct tm check = *tm;
+ 		struct tm *r = (now_tm ? &check : tm);
++		struct tm fixed_r;
+ 		time_t specified;
 
-> In any case, I won't take a patch to rename source files left and
-> right only to work around name collisions with random system header
-> files we do not even use ourselves, unless/until I know we have
-> tried all the other saner approaches first.  That's a workaround,
-> not a solution.
+ 		r->tm_mon = month - 1;
+@@ -377,7 +378,16 @@ static int is_date(int year, int month, int day,
+struct tm *now_tm, time_t now,
+ 		if (!now_tm)
+ 			return 1;
 
-Ok, no problem, I will create another patch which alter CFLAGS order.
+-		specified = tm_to_time_t(r);
++		/* Fix tm structure in case if time was not initialized */
++		fixed_r = *r;
++		if (fixed_r.tm_hour==-1)
++			fixed_r.tm_hour=0;
++		if (fixed_r.tm_min==-1)
++			fixed_r.tm_min=0;
++		if (fixed_r.tm_sec==-1)
++			fixed_r.tm_sec=0;
++
++		specified = tm_to_time_t(&fixed_r);
+
+ 		/* Be it commit time or author time, it does not make
+ 		 * sense to specify timestamp way into the future.  Make
+-- 
+1.8.2-rc0
