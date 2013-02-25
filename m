@@ -1,100 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH ] t4210-log-i18n: spell encoding name "UTF-8" correctly
-Date: Mon, 25 Feb 2013 11:06:37 -0800
-Message-ID: <7vmwusxlfm.fsf@alter.siamese.dyndns.org>
-References: <201302090052.22053.thom311@gmail.com>
- <7vsj56xsg5.fsf@alter.siamese.dyndns.org>
- <7vobfuxrns.fsf@alter.siamese.dyndns.org>
- <20130209002710.GA5570@sigill.intra.peff.net>
- <7vfw16xqvj.fsf@alter.siamese.dyndns.org>
- <7va9rexqii.fsf@alter.siamese.dyndns.org>
- <20130211191607.GA21269@sigill.intra.peff.net>
- <7v621ymxfv.fsf@alter.siamese.dyndns.org>
- <20130211205958.GA32740@sigill.intra.peff.net>
- <512B22DE.9070603@viscovery.net>
- <20130225151916.GA7725@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] git rm -u
+Date: Mon, 25 Feb 2013 20:07:03 +0100
+Message-ID: <vpq7glw5i20.fsf@grenoble-inp.fr>
+References: <50FB1196.2090309@gmail.com> <1358632037-ner-2564@calvin>
+	<CALWbr2zhxkZEGWc5iN-8MivzV7viEdfwV_Q-iH0xSUWkwnSmyQ@mail.gmail.com>
+	<50FB1673.8020808@gmail.com> <7vzjys28a0.fsf@alter.siamese.dyndns.org>
+	<CALWbr2x9=+PEaGTpGWoqGiiupGsPhLoPcGknPb1WtSgxdpBkdQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Thomas Haller <thom311@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 25 20:07:14 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>,
+	git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 20:07:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UA3OJ-0002uM-5L
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 20:07:11 +0100
+	id 1UA3Om-0003Jo-0R
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 20:07:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759348Ab3BYTGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 14:06:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35166 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759295Ab3BYTGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 14:06:46 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4BBCAD9C;
-	Mon, 25 Feb 2013 14:06:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Jg+/IxI0pHeQ8jByEdd2rQ0X8Rk=; b=Q5FD+b
-	yN8bKr27xqlNvJJen3dMwwt5OB/nIdxlIvqcrDvsDFc0ejgGIRbYYYFc+84TEtVE
-	2d1+KP8WdghURwkJGjtXO/9TZqRhXPmyp73I/025hIp6m0fupRqMgFHi1QgccfJy
-	I7bRVd78K5PaRG9mWujEbECDAYJ8A8rtzfbv8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jecFXsWf1WmkhK88S3h21gPu7Z7a4ExF
-	4i1qL1wZ57umfT7/M035yiicdWmCPE8uFOZzkfIMLff0WWNkcBnMtCXexMKDd6Z6
-	p5nilb9RoLrXlOlpxUANViYrXUz2Zjo/eaGvW7Z0plnBvJhtnyLjdrZyY4Ojto/A
-	FME70f/aGFw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9E7FAD9B;
-	Mon, 25 Feb 2013 14:06:45 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1854CAD80; Mon, 25 Feb 2013
- 14:06:43 -0500 (EST)
-In-Reply-To: <20130225151916.GA7725@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 25 Feb 2013 10:19:17 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7F31AC52-7F7E-11E2-88DA-F3C82E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759346Ab3BYTHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 14:07:15 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:51253 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758580Ab3BYTHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 14:07:14 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r1PJ72Wb017709
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 25 Feb 2013 20:07:02 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UA3OB-0001RE-Uj; Mon, 25 Feb 2013 20:07:04 +0100
+In-Reply-To: <CALWbr2x9=+PEaGTpGWoqGiiupGsPhLoPcGknPb1WtSgxdpBkdQ@mail.gmail.com>
+	(Antoine Pelisse's message of "Mon, 25 Feb 2013 19:54:36 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 25 Feb 2013 20:07:04 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r1PJ72Wb017709
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1362424027.9984@jmcwUpnX0m+qsAUXKrUNmg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217087>
 
-Jeff King <peff@peff.net> writes:
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-> ... I think the simplest thing would just be:
+> I must say that I'm not very interested in the feature. In my opinion,
+> there are already many different ways to stage changes.
+> Assuming that the feature would be needed, I would keep it under the
+> scope of git-add, as it's the reference for staging. I would suggest
+> something like:
 >
-> diff --git a/utf8.c b/utf8.c
-> index 1087870..8d42b50 100644
-> --- a/utf8.c
-> +++ b/utf8.c
-> @@ -507,6 +507,17 @@ char *reencode_string(const char *in, const char *out_encoding, const char *in_e
->  
->  	if (!in_encoding)
->  		return NULL;
-> +
-> +	/*
-> +	 * Some platforms do not have the variously spelled variants of
-> +	 * UTF-8, so let us feed iconv the most official spelling, which
-> +	 * should hopefully be accepted everywhere.
-> +	 */
-> +	if (is_encoding_utf8(in_encoding))
-> +		in_encoding = "UTF-8";
-> +	if (is_encoding_utf8(out_encoding))
-> +		out_encoding = "UTF-8";
-> +
->  	conv = iconv_open(out_encoding, in_encoding);
->  	if (conv == (iconv_t) -1)
->  		return NULL;
->
-> Does that fix the tests for you? It's a larger change, but I think it
-> makes git friendlier all around for people on Windows.
+>     git add -r   "Stage removal of deleted files."
 
-Yeah, if this is confirmed to work OK (from eyeballing I do not see
-a reason why not...) I agree this is the cleanest way forward.
+Would "add -r" stand for "add --remove"? That would be weird ...
+
+"git rm" really seems to be a better place for removing files from the
+index.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
