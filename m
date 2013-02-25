@@ -1,89 +1,148 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [RFC] git rm -u
-Date: Mon, 25 Feb 2013 19:54:36 +0100
-Message-ID: <CALWbr2x9=+PEaGTpGWoqGiiupGsPhLoPcGknPb1WtSgxdpBkdQ@mail.gmail.com>
-References: <50FB1196.2090309@gmail.com>
-	<1358632037-ner-2564@calvin>
-	<CALWbr2zhxkZEGWc5iN-8MivzV7viEdfwV_Q-iH0xSUWkwnSmyQ@mail.gmail.com>
-	<50FB1673.8020808@gmail.com>
-	<7vzjys28a0.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH ] t4210-log-i18n: spell encoding name "UTF-8" correctly
+Date: Mon, 25 Feb 2013 19:54:47 +0100
+Message-ID: <512BB377.2010403@web.de>
+References: <201302090052.22053.thom311@gmail.com> <7vsj56xsg5.fsf@alter.siamese.dyndns.org> <7vobfuxrns.fsf@alter.siamese.dyndns.org> <20130209002710.GA5570@sigill.intra.peff.net> <7vfw16xqvj.fsf@alter.siamese.dyndns.org> <7va9rexqii.fsf@alter.siamese.dyndns.org> <20130211191607.GA21269@sigill.intra.peff.net> <7v621ymxfv.fsf@alter.siamese.dyndns.org> <20130211205958.GA32740@sigill.intra.peff.net> <512B22DE.9070603@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric James Michael Ritz <lobbyjones@gmail.com>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 25 19:55:08 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Thomas Haller <thom311@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Feb 25 19:55:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UA3Cb-0001k1-7N
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 19:55:05 +0100
+	id 1UA3Cp-0001uI-J6
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 19:55:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758825Ab3BYSyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 13:54:40 -0500
-Received: from mail-qa0-f48.google.com ([209.85.216.48]:38943 "EHLO
-	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758108Ab3BYSyj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 13:54:39 -0500
-Received: by mail-qa0-f48.google.com with SMTP id j8so1784220qah.0
-        for <git@vger.kernel.org>; Mon, 25 Feb 2013 10:54:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=t7Gpr86NH3/qd3xY7iPwAOKrOMm7yHrEZuFqNLJUhJc=;
-        b=hcWkX/KYq9MHpBAMMRTN1PSCgLd3C008sh3E5I7IEJlzEF0Fo9HPM9ck78r3epC4xX
-         dcZd5pjoAOcQ1iFeqJhrY/8ngHP/jqy9ZebBgn37AnczZ2VgRwKVhdIW7+i2gnvO3HEp
-         QR9R/wy4QdZX+nH09TWPagFSOQdoRf9HS0XF2ugxBUHMtl9LepAoaoJ+u+N4USFD4T9G
-         k6qFG7Lruj2P+usWBWf1R8X9T6f8BQZYyk7cgN5pC9f3Pdmb6pJAFoOlkDjcvIYj++Hj
-         oOnwHxshS9+F4Dh0IPCKLZPxKvZuiO2JRl2jIKl7i/uUPF8EFdkrTs8bLOxlaw+wY3Zr
-         tNEg==
-X-Received: by 10.49.62.42 with SMTP id v10mr15196130qer.2.1361818476795; Mon,
- 25 Feb 2013 10:54:36 -0800 (PST)
-Received: by 10.49.70.163 with HTTP; Mon, 25 Feb 2013 10:54:36 -0800 (PST)
-In-Reply-To: <7vzjys28a0.fsf@alter.siamese.dyndns.org>
+	id S1758947Ab3BYSyz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Feb 2013 13:54:55 -0500
+Received: from mout.web.de ([212.227.15.4]:50420 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758108Ab3BYSyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 13:54:54 -0500
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb003)
+ with ESMTPA (Nemesis) id 0MCZfe-1U0fGM1dMw-008xRU; Mon, 25 Feb 2013 19:54:49
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130216 Thunderbird/17.0.3
+In-Reply-To: <512B22DE.9070603@viscovery.net>
+X-Provags-ID: V02:K0:+Cgb8EL7z6fq1Yb/8ntdc3we2hT7Ls475XkLsuGIPDL
+ cL7X/oV1vEybaxdAWFlhZRyqtPti9oEVOT3Q2yiX6T0PKs7n21
+ W2/rAskXJe22IXNmvobtKdmzTqgdPW9wvxrWadEol1+u/bDyPY
+ OrrDyO57FxdlxsZxhp6BDDmihrE0SXFHHgpzF0CFNiqnXs3M6/
+ HEmo/yiFzVlvPp4Z5Lfcw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217083>
 
-I must say that I'm not very interested in the feature. In my opinion,
-there are already many different ways to stage changes.
-Assuming that the feature would be needed, I would keep it under the
-scope of git-add, as it's the reference for staging. I would suggest
-something like:
+On 25.02.13 09:37, Johannes Sixt wrote:
+> From: Johannes Sixt <j6t@kdbg.org>
+>=20
+> iconv on Windows does not know the encoding name "utf8", and does not
+> re-encode log messages when this name is given. Request "UTF-8" encod=
+ing.
+>=20
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+>  I'm not sure whether I'm right to say that "UTF-8" is the correct
+>  spelling. Anyway, 'iconv -l' on my old Linux box lists "UTF8", but o=
+n
+>  Windows it does not.
+>=20
+>  A more correct fix would probably be to use is_encoding_utf8() in mo=
+re
+>  places, but it's outside my time budget look after it.
+>=20
+>  -- Hannes
+>=20
+>  t/t4210-log-i18n.sh | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/t/t4210-log-i18n.sh b/t/t4210-log-i18n.sh
+> index 52a7472..b1956e2 100755
+> --- a/t/t4210-log-i18n.sh
+> +++ b/t/t4210-log-i18n.sh
+> @@ -15,7 +15,7 @@ test_expect_success 'create commits in different en=
+codings' '
+>  	t${utf8_e}st
+>  	EOF
+>  	git add msg &&
+> -	git -c i18n.commitencoding=3Dutf8 commit -F msg &&
+> +	git -c i18n.commitencoding=3DUTF-8 commit -F msg &&
+>  	cat >msg <<-EOF &&
+>  	latin1
+> =20
+> @@ -30,7 +30,7 @@ test_expect_success 'log --grep searches in log out=
+put encoding (utf8)' '
+>  	latin1
+>  	utf8
+>  	EOF
+> -	git log --encoding=3Dutf8 --format=3D%s --grep=3D$utf8_e >actual &&
+> +	git log --encoding=3DUTF-8 --format=3D%s --grep=3D$utf8_e >actual &=
+&
+>  	test_cmp expect actual
+>  '
+> =20
+> @@ -45,7 +45,7 @@ test_expect_success 'log --grep searches in log out=
+put encoding (latin1)' '
+> =20
+>  test_expect_success 'log --grep does not find non-reencoded values (=
+utf8)' '
+>  	>expect &&
+> -	git log --encoding=3Dutf8 --format=3D%s --grep=3D$latin1_e >actual =
+&&
+> +	git log --encoding=3DUTF-8 --format=3D%s --grep=3D$latin1_e >actual=
+ &&
+>  	test_cmp expect actual
+>  '
+> =20
+>=20
+Hej,
+(beside that I couldn't find t4210 somewhere),
+is it something like the following you are tinking of?
 
-    git add -r   "Stage removal of deleted files."
+(Not sure if my cut-and-paste stuff applies, its's rather for review)
 
-On Mon, Feb 25, 2013 at 7:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric James Michael Ritz <lobbyjones@gmail.com> writes:
->
->> On 01/19/2013 04:49 PM, Antoine Pelisse wrote:
->>> I think `git add -u` would be closer. It would stage removal of
->>> files, but would not stage untracked files.  It would stage other
->>> type of changes though.
->>
->> On Sat, Jan 19, 2013 at 10:47 PM, Tomas Carnecky
->>> Does `git add -A` do what you want?
->>
->> Thank you Tomas and Antoine.  Both of these commands do what I want:
->> stage deleted files on the index.  But does the idea of a `git rm -u`
->> still sound useful since these commands also stage changes besides
->> deleted files?
->
-> Even though I am not sure how often I would use it myself, "reflect
-> only the removals in the working tree to the index, but exclude any
-> other kind of changes" might turn out to be a useful addition to the
-> toolchest in certain cases.
->
-> I however am not yet convinced that "git rm -u" is a good way to
-> express the feature at the UI.  "git add -u" is "update the index
-> with modification and removal but ignore new files because we won't
-> know if they are garbage or assets".  What the same "-u" option
-> means in the context of "git rm" is not very clear, at least to me.
->
->
+-- >8 --
+[PATCH] iconv_open(): Use UTF-8 if UTF8 failes
+
+When iconv_open() failes with EINVAL, it may be that "UTF-8"
+is spelled wrong by mistake.
+=46or example, "UTF8" is used instead of "UTF-8".
+Some iconv implementations tolerate "UTF8" or "utf8".
+If not, iconv_open() fails.
+If is_encoding_utf8() is true change the string to the
+offical string "UTF-8" with uppercase letters.
+
+Reported-By: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ utf8.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/utf8.c b/utf8.c
+index a4ee665..e9850d0 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -487,6 +487,10 @@ char *reencode_string(const char *in, const char *=
+out_encoding, const char *in_e
+ 	if (!in_encoding)
+ 		return NULL;
+ 	conv =3D iconv_open(out_encoding, in_encoding);
++	if (conv =3D=3D (iconv_t) -1 && errno =3D=3D EINVAL) {
++		conv =3D iconv_open(is_encoding_utf8(out_encoding) ? "UTF-8" : out_e=
+ncoding,
++											is_encoding_utf8(in_encoding) ? "UTF-8" : in_encoding);
++	}
+ 	if (conv =3D=3D (iconv_t) -1)
+ 		return NULL;
+ 	out =3D reencode_string_iconv(in, strlen(in), conv);
+--=20
+1.8.1.1
