@@ -1,78 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] Fix date checking in case if time was not
- initialized.
-Date: Mon, 25 Feb 2013 11:37:51 -0800
-Message-ID: <7va9qsxjzk.fsf@alter.siamese.dyndns.org>
-References: <CAHXAxrOOqn6ZSVT1AFyO3a3paD1tokBtcnaX68a+ddhodOvZ6Q@mail.gmail.com>
- <7vzjysxnb1.fsf@alter.siamese.dyndns.org>
- <CAHXAxrMaQRdBxSvNO+no_9d==v0tVnkpXtguTKyfvnm-VfR_xA@mail.gmail.com>
- <7vr4k4xlie.fsf@alter.siamese.dyndns.org>
- <CAHXAxrOjSS5jGLcCw4KTxP_F_uRQhi0cPSvzbx58jx9dP25XPA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] git rm -u
+Date: Mon, 25 Feb 2013 20:39:32 +0100
+Message-ID: <vpqliac41zf.fsf@grenoble-inp.fr>
+References: <50FB1196.2090309@gmail.com> <1358632037-ner-2564@calvin>
+	<CALWbr2zhxkZEGWc5iN-8MivzV7viEdfwV_Q-iH0xSUWkwnSmyQ@mail.gmail.com>
+	<50FB1673.8020808@gmail.com> <7vzjys28a0.fsf@alter.siamese.dyndns.org>
+	<CALWbr2x9=+PEaGTpGWoqGiiupGsPhLoPcGknPb1WtSgxdpBkdQ@mail.gmail.com>
+	<vpq7glw5i20.fsf@grenoble-inp.fr>
+	<CALWbr2y-CN9A346avc4AG+FN9NHgPXKvWuU-nbcyjt08DavVjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike Gorchak <mike.gorchak.qnx@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 25 20:38:20 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>,
+	git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 20:40:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UA3sS-0003NA-Ba
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 20:38:20 +0100
+	id 1UA3u8-0004qc-Bj
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 20:40:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759560Ab3BYThz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 14:37:55 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36257 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759348Ab3BYThy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 14:37:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F4DEAE48;
-	Mon, 25 Feb 2013 14:37:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BlOFaa7pepKWE0qQ0DtBn7xTSPY=; b=KowH+h
-	Tx1Otzi+oznqr01uZSdx8yxDOu6deWBQXuTDNuAJN2GId3AoJ4t/WcSnUTsSIDLn
-	1A/oDUnMgTJQkj2ciVhvujyjsYMI3nlQiAhi1gM8C376O/Oc/O06UjTQFA18ZZQO
-	51uZtAHPE6s0Mh/8jbaHVxO2l0VuQ6TFhWX7Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YP/92+s7uCt4X+LF1F8a88kz2xN7O+xz
-	EA2UZw6J8NcHQSCUFJwvuIHthyTexxq+iyFRMed7YjWYfx9BE2gnjBNEkIk8iTcG
-	i5AXpl6mzUQQDxIvkwHG6d+Z+XKvoe41FVxO5qE8nyOm7MWDdeTrfY2fEUUH2+5X
-	Dh7i1Y28j1M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 802C9AE47;
-	Mon, 25 Feb 2013 14:37:53 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04525AE44; Mon, 25 Feb 2013
- 14:37:52 -0500 (EST)
-In-Reply-To: <CAHXAxrOjSS5jGLcCw4KTxP_F_uRQhi0cPSvzbx58jx9dP25XPA@mail.gmail.com> (Mike
- Gorchak's message of "Mon, 25 Feb 2013 21:32:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D89073D8-7F82-11E2-8C61-F3C82E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759503Ab3BYTjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 14:39:40 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:36386 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759348Ab3BYTjj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 14:39:39 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r1PJdUxT005254
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 25 Feb 2013 20:39:30 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UA3tc-00022e-Qn; Mon, 25 Feb 2013 20:39:32 +0100
+In-Reply-To: <CALWbr2y-CN9A346avc4AG+FN9NHgPXKvWuU-nbcyjt08DavVjw@mail.gmail.com>
+	(Antoine Pelisse's message of "Mon, 25 Feb 2013 20:21:27 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 25 Feb 2013 20:39:31 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r1PJdUxT005254
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1362425971.24956@yOkDq/TUhQWHEHHvaRO3Zg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217096>
 
-Mike Gorchak <mike.gorchak.qnx@gmail.com> writes:
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-> 	if (tm->tm_hour < 0 || tm->tm_min < 0 || tm->tm_sec < 0)
-> 		return -1;
+>> "git rm" really seems to be a better place for removing files from the
+>> index.
 >
-> So is_date() always return negative result for the text string where
-> date is placed before time like '2008-02-14 20:30:45'.
+> Then, I don't exactly understand the meaning of git-rm but being a
+> _shortcut_ for "remove and stage".
 
-Yes, it returns this -1 on other platforms, but...
+"git rm --cached" is exactly "remove from index".
 
-> It must fail on
-> other platforms as well.
+And even without --cached, as you notice yourself, it does a "remove and
+stage [removal]", so why would it be inappropriate to stage a removal?
 
-... the input '2008-02-14 20:30:45' still parses fine for others
-(including me).  That is what is puzzling.
-
-A shot in the dark: perhaps your time_t is unsigned?
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
