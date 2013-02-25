@@ -1,189 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] cat-file: print tags raw for "cat-file -p"
-Date: Mon, 25 Feb 2013 13:50:58 -0500
-Message-ID: <20130225185058.GD14438@sigill.intra.peff.net>
-References: <20130225183009.GB13912@sigill.intra.peff.net>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [RFC] git rm -u
+Date: Mon, 25 Feb 2013 19:54:36 +0100
+Message-ID: <CALWbr2x9=+PEaGTpGWoqGiiupGsPhLoPcGknPb1WtSgxdpBkdQ@mail.gmail.com>
+References: <50FB1196.2090309@gmail.com>
+	<1358632037-ner-2564@calvin>
+	<CALWbr2zhxkZEGWc5iN-8MivzV7viEdfwV_Q-iH0xSUWkwnSmyQ@mail.gmail.com>
+	<50FB1673.8020808@gmail.com>
+	<7vzjys28a0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Mantas =?utf-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric James Michael Ritz <lobbyjones@gmail.com>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>,
+	git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 25 19:51:32 2013
+X-From: git-owner@vger.kernel.org Mon Feb 25 19:55:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UA399-0007Jw-4E
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 19:51:31 +0100
+	id 1UA3Cb-0001k1-7N
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 19:55:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759167Ab3BYSvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 13:51:04 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60104 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754529Ab3BYSvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 13:51:01 -0500
-Received: (qmail 25727 invoked by uid 107); 25 Feb 2013 18:52:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Feb 2013 13:52:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Feb 2013 13:50:58 -0500
-Content-Disposition: inline
-In-Reply-To: <20130225183009.GB13912@sigill.intra.peff.net>
+	id S1758825Ab3BYSyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 13:54:40 -0500
+Received: from mail-qa0-f48.google.com ([209.85.216.48]:38943 "EHLO
+	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758108Ab3BYSyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 13:54:39 -0500
+Received: by mail-qa0-f48.google.com with SMTP id j8so1784220qah.0
+        for <git@vger.kernel.org>; Mon, 25 Feb 2013 10:54:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=t7Gpr86NH3/qd3xY7iPwAOKrOMm7yHrEZuFqNLJUhJc=;
+        b=hcWkX/KYq9MHpBAMMRTN1PSCgLd3C008sh3E5I7IEJlzEF0Fo9HPM9ck78r3epC4xX
+         dcZd5pjoAOcQ1iFeqJhrY/8ngHP/jqy9ZebBgn37AnczZ2VgRwKVhdIW7+i2gnvO3HEp
+         QR9R/wy4QdZX+nH09TWPagFSOQdoRf9HS0XF2ugxBUHMtl9LepAoaoJ+u+N4USFD4T9G
+         k6qFG7Lruj2P+usWBWf1R8X9T6f8BQZYyk7cgN5pC9f3Pdmb6pJAFoOlkDjcvIYj++Hj
+         oOnwHxshS9+F4Dh0IPCKLZPxKvZuiO2JRl2jIKl7i/uUPF8EFdkrTs8bLOxlaw+wY3Zr
+         tNEg==
+X-Received: by 10.49.62.42 with SMTP id v10mr15196130qer.2.1361818476795; Mon,
+ 25 Feb 2013 10:54:36 -0800 (PST)
+Received: by 10.49.70.163 with HTTP; Mon, 25 Feb 2013 10:54:36 -0800 (PST)
+In-Reply-To: <7vzjys28a0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217082>
 
-When "cat-file -p" prints commits, it shows them in their
-raw format, since git's format is already human-readable.
-For tags, however, we print the whole thing raw except for
-one thing: we convert the timestamp on the tagger line into a
-human-readable date.
+I must say that I'm not very interested in the feature. In my opinion,
+there are already many different ways to stage changes.
+Assuming that the feature would be needed, I would keep it under the
+scope of git-add, as it's the reference for staging. I would suggest
+something like:
 
-This dates all the way back to a0f15fa (Pretty-print tagger
-dates, 2006-03-01). At that time there was no way to
-pretty-print a tag. These days "git show" does this already,
-and is the normal tool for showing a pretty-printed output
-("cat-file tag $tag" remains the preferred method for
-showing porcelain output).
+    git add -r   "Stage removal of deleted files."
 
-Let's drop this. It makes us more consistent with cat-file's
-commit pretty-printer, and it means we can drop a whole
-bunch of hand-rolled tag parsing code (which happened to
-behave inconsistently with the tag pretty-printing code
-elsewhere).
-
-Note that "git verify-tag" and "git tag -v" depend on
-"cat-file -p" to show the tag. This means they will start
-showing the raw timestamp. We may want to adjust them to
-use the pretty-printing code from "git show".
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I don't use "git tag -v" much, so I'm not sure what is sane there. But
-this seems like it would be a regression for people who want to check
-the human-readable date given by GPG against the date in the tag object.
-
-I still think dropping this hand-rolled parsing is a good thing. The
-most sane thing to me would be to move the parsing from "git show" into
-the pretty-print code, then have both it and "verify-tag" use it.
-Probably "for-each-ref" could stand to use it as well, as it has its own
-home-grown parser.
-
- builtin/cat-file.c  | 71 -----------------------------------------------------
- t/t1006-cat-file.sh |  5 +---
- 2 files changed, 1 insertion(+), 75 deletions(-)
-
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 00528dd..b195edf 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -16,73 +16,6 @@
- #define BATCH 1
- #define BATCH_CHECK 2
- 
--static void pprint_tag(const unsigned char *sha1, const char *buf, unsigned long size)
--{
--	/* the parser in tag.c is useless here. */
--	const char *endp = buf + size;
--	const char *cp = buf;
--
--	while (cp < endp) {
--		char c = *cp++;
--		if (c != '\n')
--			continue;
--		if (7 <= endp - cp && !memcmp("tagger ", cp, 7)) {
--			const char *tagger = cp;
--
--			/* Found the tagger line.  Copy out the contents
--			 * of the buffer so far.
--			 */
--			write_or_die(1, buf, cp - buf);
--
--			/*
--			 * Do something intelligent, like pretty-printing
--			 * the date.
--			 */
--			while (cp < endp) {
--				if (*cp++ == '\n') {
--					/* tagger to cp is a line
--					 * that has ident and time.
--					 */
--					const char *sp = tagger;
--					char *ep;
--					unsigned long date;
--					long tz;
--					while (sp < cp && *sp != '>')
--						sp++;
--					if (sp == cp) {
--						/* give up */
--						write_or_die(1, tagger,
--							     cp - tagger);
--						break;
--					}
--					while (sp < cp &&
--					       !('0' <= *sp && *sp <= '9'))
--						sp++;
--					write_or_die(1, tagger, sp - tagger);
--					date = strtoul(sp, &ep, 10);
--					tz = strtol(ep, NULL, 10);
--					sp = show_date(date, tz, 0);
--					write_or_die(1, sp, strlen(sp));
--					xwrite(1, "\n", 1);
--					break;
--				}
--			}
--			break;
--		}
--		if (cp < endp && *cp == '\n')
--			/* end of header */
--			break;
--	}
--	/* At this point, we have copied out the header up to the end of
--	 * the tagger line and cp points at one past \n.  It could be the
--	 * next header line after the tagger line, or it could be another
--	 * \n that marks the end of the headers.  We need to copy out the
--	 * remainder as is.
--	 */
--	if (cp < endp)
--		write_or_die(1, cp, endp - cp);
--}
--
- static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
- {
- 	unsigned char sha1[20];
-@@ -133,10 +66,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
- 		buf = read_sha1_file(sha1, &type, &size);
- 		if (!buf)
- 			die("Cannot read object %s", obj_name);
--		if (type == OBJ_TAG) {
--			pprint_tag(sha1, buf, size);
--			return 0;
--		}
- 
- 		/* otherwise just spit out the data */
- 		break;
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index d8b7f2f..da4ffbb 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -135,14 +135,11 @@ tag_size=$(strlen "$tag_content")
- tag_content="$tag_header_without_timestamp 0000000000 +0000
- 
- $tag_description"
--tag_pretty_content="$tag_header_without_timestamp Thu Jan 1 00:00:00 1970 +0000
--
--$tag_description"
- 
- tag_sha1=$(echo_without_newline "$tag_content" | git mktag)
- tag_size=$(strlen "$tag_content")
- 
--run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_pretty_content" 1
-+run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_content" 1
- 
- test_expect_success \
-     "Reach a blob from a tag pointing to it" \
--- 
-1.8.1.4.4.g265d2fa
+On Mon, Feb 25, 2013 at 7:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric James Michael Ritz <lobbyjones@gmail.com> writes:
+>
+>> On 01/19/2013 04:49 PM, Antoine Pelisse wrote:
+>>> I think `git add -u` would be closer. It would stage removal of
+>>> files, but would not stage untracked files.  It would stage other
+>>> type of changes though.
+>>
+>> On Sat, Jan 19, 2013 at 10:47 PM, Tomas Carnecky
+>>> Does `git add -A` do what you want?
+>>
+>> Thank you Tomas and Antoine.  Both of these commands do what I want:
+>> stage deleted files on the index.  But does the idea of a `git rm -u`
+>> still sound useful since these commands also stage changes besides
+>> deleted files?
+>
+> Even though I am not sure how often I would use it myself, "reflect
+> only the removals in the working tree to the index, but exclude any
+> other kind of changes" might turn out to be a useful addition to the
+> toolchest in certain cases.
+>
+> I however am not yet convinced that "git rm -u" is a good way to
+> express the feature at the UI.  "git add -u" is "update the index
+> with modification and removal but ignore new files because we won't
+> know if they are garbage or assets".  What the same "-u" option
+> means in the context of "git rm" is not very clear, at least to me.
+>
+>
