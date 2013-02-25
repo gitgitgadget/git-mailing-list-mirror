@@ -1,87 +1,96 @@
-From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
-Subject: [PATCH 1/1] Fix date checking in case if time was not initialized.
-Date: Mon, 25 Feb 2013 10:36:29 +0200
-Message-ID: <CAHXAxrOOqn6ZSVT1AFyO3a3paD1tokBtcnaX68a+ddhodOvZ6Q@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH ] t4210-log-i18n: spell encoding name "UTF-8" correctly
+Date: Mon, 25 Feb 2013 09:37:50 +0100
+Message-ID: <512B22DE.9070603@viscovery.net>
+References: <201302090052.22053.thom311@gmail.com> <7vsj56xsg5.fsf@alter.siamese.dyndns.org> <7vobfuxrns.fsf@alter.siamese.dyndns.org> <20130209002710.GA5570@sigill.intra.peff.net> <7vfw16xqvj.fsf@alter.siamese.dyndns.org> <7va9rexqii.fsf@alter.siamese.dyndns.org> <20130211191607.GA21269@sigill.intra.peff.net> <7v621ymxfv.fsf@alter.siamese.dyndns.org> <20130211205958.GA32740@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 25 09:37:02 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Haller <thom311@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 25 09:38:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9tYR-00039Y-9t
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 09:36:59 +0100
+	id 1U9tZj-0004Fv-Ne
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 09:38:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757487Ab3BYIgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 03:36:31 -0500
-Received: from mail-qa0-f49.google.com ([209.85.216.49]:45690 "EHLO
-	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753749Ab3BYIga (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 03:36:30 -0500
-Received: by mail-qa0-f49.google.com with SMTP id o13so1425718qaj.1
-        for <git@vger.kernel.org>; Mon, 25 Feb 2013 00:36:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to
-         :content-type;
-        bh=8L98lniCDy/8P8CvVideJ0fLAxcGiH6Gv8lCcH3bYyg=;
-        b=cRWCtepoC5FoWwDhrvFGaqHTOCk+LF9SSxBcgihwbK2TWcL9Dq7CU3jA1CmiH4Qqly
-         DQuBvEr+JK9WDWhiZzg0mf+GWla/r6Ox8S7J6FFuXqtgK53iv40ww4r79ktQ4FhxvXhF
-         MfO3xNGL/fEZ9rL7osLvVjMualpi2xWJup2cRKEf3MjBXd5s5cHwnwSEp3VhQ4Hip+2D
-         LILHQ+g/8t8445qKUKHg0+loHPNKKliyplfkzQCLpO+QNFjxCMOhy75F+x9pA7Cqd9cb
-         LXJm8J14k9DAiHVaBgfpyl7W0iHIhqp5elJSy0PRAbTK/7klZ84CEz4br43miuYHQ+CA
-         25Vg==
-X-Received: by 10.224.10.76 with SMTP id o12mr10153480qao.36.1361781389744;
- Mon, 25 Feb 2013 00:36:29 -0800 (PST)
-Received: by 10.49.71.68 with HTTP; Mon, 25 Feb 2013 00:36:29 -0800 (PST)
+	id S932167Ab3BYIhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 03:37:55 -0500
+Received: from so.liwest.at ([212.33.55.24]:50191 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754959Ab3BYIhy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 03:37:54 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1U9tZH-00072x-Im; Mon, 25 Feb 2013 09:37:51 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id C26631660F;
+	Mon, 25 Feb 2013 09:37:50 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+In-Reply-To: <20130211205958.GA32740@sigill.intra.peff.net>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217049>
 
-Fix is_date() function failings in detection of correct date in case
-if time was not properly initialized.
+From: Johannes Sixt <j6t@kdbg.org>
 
-From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
-Signed-off-by: Mike Gorchak <mike.gorchak.qnx@gmail.com>
+iconv on Windows does not know the encoding name "utf8", and does not
+re-encode log messages when this name is given. Request "UTF-8" encoding.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- date.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ I'm not sure whether I'm right to say that "UTF-8" is the correct
+ spelling. Anyway, 'iconv -l' on my old Linux box lists "UTF8", but on
+ Windows it does not.
 
-diff --git a/date.c b/date.c
-index 57331ed..ec758f4 100644
---- a/date.c
-+++ b/date.c
-@@ -357,6 +357,7 @@ static int is_date(int year, int month, int day,
-struct tm *now_tm, time_t now,
- 	if (month > 0 && month < 13 && day > 0 && day < 32) {
- 		struct tm check = *tm;
- 		struct tm *r = (now_tm ? &check : tm);
-+		struct tm fixed_r;
- 		time_t specified;
+ A more correct fix would probably be to use is_encoding_utf8() in more
+ places, but it's outside my time budget look after it.
 
- 		r->tm_mon = month - 1;
-@@ -377,7 +378,16 @@ static int is_date(int year, int month, int day,
-struct tm *now_tm, time_t now,
- 		if (!now_tm)
- 			return 1;
+ -- Hannes
 
--		specified = tm_to_time_t(r);
-+		/* Fix tm structure in case if time was not initialized */
-+		fixed_r = *r;
-+		if (fixed_r.tm_hour==-1)
-+			fixed_r.tm_hour=0;
-+		if (fixed_r.tm_min==-1)
-+			fixed_r.tm_min=0;
-+		if (fixed_r.tm_sec==-1)
-+			fixed_r.tm_sec=0;
-+
-+		specified = tm_to_time_t(&fixed_r);
+ t/t4210-log-i18n.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
- 		/* Be it commit time or author time, it does not make
- 		 * sense to specify timestamp way into the future.  Make
+diff --git a/t/t4210-log-i18n.sh b/t/t4210-log-i18n.sh
+index 52a7472..b1956e2 100755
+--- a/t/t4210-log-i18n.sh
++++ b/t/t4210-log-i18n.sh
+@@ -15,7 +15,7 @@ test_expect_success 'create commits in different encodings' '
+ 	t${utf8_e}st
+ 	EOF
+ 	git add msg &&
+-	git -c i18n.commitencoding=utf8 commit -F msg &&
++	git -c i18n.commitencoding=UTF-8 commit -F msg &&
+ 	cat >msg <<-EOF &&
+ 	latin1
+ 
+@@ -30,7 +30,7 @@ test_expect_success 'log --grep searches in log output encoding (utf8)' '
+ 	latin1
+ 	utf8
+ 	EOF
+-	git log --encoding=utf8 --format=%s --grep=$utf8_e >actual &&
++	git log --encoding=UTF-8 --format=%s --grep=$utf8_e >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -45,7 +45,7 @@ test_expect_success 'log --grep searches in log output encoding (latin1)' '
+ 
+ test_expect_success 'log --grep does not find non-reencoded values (utf8)' '
+ 	>expect &&
+-	git log --encoding=utf8 --format=%s --grep=$latin1_e >actual &&
++	git log --encoding=UTF-8 --format=%s --grep=$latin1_e >actual &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
-1.8.2-rc0
+"Atomic objects are neither active nor radioactive." --
+Programming Languages -- C++, Final Committee Draft (Doc.N3092)
