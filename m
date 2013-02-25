@@ -1,219 +1,189 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/4] fsck: check "tagger" lines
-Date: Mon, 25 Feb 2013 13:46:17 -0500
-Message-ID: <20130225184617.GC14438@sigill.intra.peff.net>
+Subject: [PATCH 4/4] cat-file: print tags raw for "cat-file -p"
+Date: Mon, 25 Feb 2013 13:50:58 -0500
+Message-ID: <20130225185058.GD14438@sigill.intra.peff.net>
 References: <20130225183009.GB13912@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Mantas =?utf-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>,
 	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 25 19:46:47 2013
+X-From: git-owner@vger.kernel.org Mon Feb 25 19:51:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UA34X-0003ay-SD
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 19:46:46 +0100
+	id 1UA399-0007Jw-4E
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 19:51:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758825Ab3BYSqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 13:46:20 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60097 "EHLO
+	id S1759167Ab3BYSvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 13:51:04 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60104 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753565Ab3BYSqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 13:46:20 -0500
-Received: (qmail 25694 invoked by uid 107); 25 Feb 2013 18:47:54 -0000
+	id S1754529Ab3BYSvB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 13:51:01 -0500
+Received: (qmail 25727 invoked by uid 107); 25 Feb 2013 18:52:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Feb 2013 13:47:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Feb 2013 13:46:17 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Feb 2013 13:52:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Feb 2013 13:50:58 -0500
 Content-Disposition: inline
 In-Reply-To: <20130225183009.GB13912@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217081>
 
-The fsck_tag function does not check very much about tags at
-all; it just makes sure that we were able to load the
-pointed-to object during the parse_tag phase. This does
-check some basic things (the "object" line is OK, and the
-pointed-to object exists with the expected type).
+When "cat-file -p" prints commits, it shows them in their
+raw format, since git's format is already human-readable.
+For tags, however, we print the whole thing raw except for
+one thing: we convert the timestamp on the tagger line into a
+human-readable date.
 
-We did not, however, check the "tagger" line at all; if they
-exist, we should feed them to fsck_ident (and it is OK if
-they do not, as early versions of git did not include them).
+This dates all the way back to a0f15fa (Pretty-print tagger
+dates, 2006-03-01). At that time there was no way to
+pretty-print a tag. These days "git show" does this already,
+and is the normal tool for showing a pretty-printed output
+("cat-file tag $tag" remains the preferred method for
+showing porcelain output).
 
-This patch runs through the whole tag object during
-fsck_tag, similar to what we do in fsck_commit. Some of
-these checks are technically redundant with just checking
-that parse_tag filled in the "tag->tagged" field. However:
+Let's drop this. It makes us more consistent with cat-file's
+commit pretty-printer, and it means we can drop a whole
+bunch of hand-rolled tag parsing code (which happened to
+behave inconsistently with the tag pretty-printing code
+elsewhere).
 
-  1. We have to parse through those lines anyway to get to
-     the tagger line, so we need to sanity check our
-     parsing.
-
-  2. We can give more specific errors (e.g., report a
-     malformed "object" line).
-
-  3. Previously we depended on implementation details of
-     parse_tag for our fsck (e.g., that it would never fill
-     in "tagged" if the types did not match). Now our
-     exhaustive checks are in one place, which makes it
-     easier to verify exactly what fsck is checking.
+Note that "git verify-tag" and "git tag -v" depend on
+"cat-file -p" to show the tag. This means they will start
+showing the raw timestamp. We may want to adjust them to
+use the pretty-printing code from "git show".
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Unfortunately, this causes t1050 to fail in an interesting way. It runs
-"index-pack --strict" while setting GIT_DIR=nonexistent. As a result,
-when we try to read the tag object from disk, we can't find it. We
-don't run into the same problem verifying commits and trees, because
-those objects leave the raw object data in their "buffer" field.
+I don't use "git tag -v" much, so I'm not sure what is sane there. But
+this seems like it would be a regression for people who want to check
+the human-readable date given by GPG against the date in the tag object.
 
-I'm tempted to call what that test is doing insane, but I wonder if
-there is another corner case with running "index-pack --strict" as part
-of an incoming push or fetch. I haven't investigated that yet.
+I still think dropping this hand-rolled parsing is a good thing. The
+most sane thing to me would be to move the parsing from "git show" into
+the pretty-print code, then have both it and "verify-tag" use it.
+Probably "for-each-ref" could stand to use it as well, as it has its own
+home-grown parser.
 
- fsck.c          | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- t/t1450-fsck.sh | 43 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 104 insertions(+), 1 deletion(-)
+ builtin/cat-file.c  | 71 -----------------------------------------------------
+ t/t1006-cat-file.sh |  5 +---
+ 2 files changed, 1 insertion(+), 75 deletions(-)
 
-diff --git a/fsck.c b/fsck.c
-index 99c0497..20d55c4 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -340,15 +340,75 @@ static int fsck_tag(struct tag *tag, fsck_error error_func)
- 	return 0;
- }
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 00528dd..b195edf 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -16,73 +16,6 @@
+ #define BATCH 1
+ #define BATCH_CHECK 2
  
--static int fsck_tag(struct tag *tag, fsck_error error_func)
-+static int fsck_tag_buffer(char *buf, struct tag *tag, fsck_error error_func)
+-static void pprint_tag(const unsigned char *sha1, const char *buf, unsigned long size)
+-{
+-	/* the parser in tag.c is useless here. */
+-	const char *endp = buf + size;
+-	const char *cp = buf;
+-
+-	while (cp < endp) {
+-		char c = *cp++;
+-		if (c != '\n')
+-			continue;
+-		if (7 <= endp - cp && !memcmp("tagger ", cp, 7)) {
+-			const char *tagger = cp;
+-
+-			/* Found the tagger line.  Copy out the contents
+-			 * of the buffer so far.
+-			 */
+-			write_or_die(1, buf, cp - buf);
+-
+-			/*
+-			 * Do something intelligent, like pretty-printing
+-			 * the date.
+-			 */
+-			while (cp < endp) {
+-				if (*cp++ == '\n') {
+-					/* tagger to cp is a line
+-					 * that has ident and time.
+-					 */
+-					const char *sp = tagger;
+-					char *ep;
+-					unsigned long date;
+-					long tz;
+-					while (sp < cp && *sp != '>')
+-						sp++;
+-					if (sp == cp) {
+-						/* give up */
+-						write_or_die(1, tagger,
+-							     cp - tagger);
+-						break;
+-					}
+-					while (sp < cp &&
+-					       !('0' <= *sp && *sp <= '9'))
+-						sp++;
+-					write_or_die(1, tagger, sp - tagger);
+-					date = strtoul(sp, &ep, 10);
+-					tz = strtol(ep, NULL, 10);
+-					sp = show_date(date, tz, 0);
+-					write_or_die(1, sp, strlen(sp));
+-					xwrite(1, "\n", 1);
+-					break;
+-				}
+-			}
+-			break;
+-		}
+-		if (cp < endp && *cp == '\n')
+-			/* end of header */
+-			break;
+-	}
+-	/* At this point, we have copied out the header up to the end of
+-	 * the tagger line and cp points at one past \n.  It could be the
+-	 * next header line after the tagger line, or it could be another
+-	 * \n that marks the end of the headers.  We need to copy out the
+-	 * remainder as is.
+-	 */
+-	if (cp < endp)
+-		write_or_die(1, cp, endp - cp);
+-}
+-
+ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
  {
- 	struct object *tagged = tag->tagged;
-+	unsigned char sha1[20];
-+	char *eol;
-+
-+	buf = skip_prefix(buf, "object ");
-+	if (!buf)
-+		return error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'object' line");
-+	if (get_sha1_hex(buf, sha1) || buf[40] != '\n')
-+		return error_func(&tag->object, FSCK_ERROR, "invalid 'object' line format - bad sha1");
-+	buf += 41;
+ 	unsigned char sha1[20];
+@@ -133,10 +66,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+ 		buf = read_sha1_file(sha1, &type, &size);
+ 		if (!buf)
+ 			die("Cannot read object %s", obj_name);
+-		if (type == OBJ_TAG) {
+-			pprint_tag(sha1, buf, size);
+-			return 0;
+-		}
  
-+	/*
-+	 * We already called parse_tag, so we don't have to bother looking up
-+	 * the sha1 again.
-+	 */
- 	if (!tagged)
- 		return error_func(&tag->object, FSCK_ERROR, "could not load tagged object");
-+
-+	buf = skip_prefix(buf, "type ");
-+	if (!buf)
-+		return error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'type' line");
-+	eol = strchr(buf, '\n');
-+	if (!eol)
-+		return error_func(&tag->object, FSCK_ERROR, "invalid format - truncation at 'type' line");
-+	*eol = '\0';
-+	if (type_from_string(buf) != tagged->type)
-+		return error_func(&tag->object, FSCK_ERROR, "'type' line does not match type of tagged object");
-+	*eol = '\n';
-+
-+	buf = skip_prefix(eol + 1, "tag ");
-+	if (!buf)
-+		return error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'tag' line");
-+	eol = strchr(buf, '\n');
-+	if (!eol)
-+		return error_func(&tag->object, FSCK_ERROR, "invalid format - truncation at 'tag' line");
-+
-+	/*
-+	 * A missing tagger is OK, as very old versions of git did not produce
-+	 * such a line. But if we do have it, we should verify its contents.
-+	 */
-+	buf = skip_prefix(eol + 1, "tagger ");
-+	if (buf) {
-+		int err = fsck_ident(&buf, &tag->object, error_func);
-+		if (err)
-+			return err;
-+	}
-+
- 	return 0;
- }
+ 		/* otherwise just spit out the data */
+ 		break;
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index d8b7f2f..da4ffbb 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -135,14 +135,11 @@ tag_size=$(strlen "$tag_content")
+ tag_content="$tag_header_without_timestamp 0000000000 +0000
  
-+static int fsck_tag(struct tag *tag, fsck_error error_func)
-+{
-+	char *buf;
-+	unsigned long size;
-+	enum object_type type;
-+	int err;
-+
-+	buf = read_sha1_file(tag->object.sha1, &type, &size);
-+	if (!buf)
-+		return error_func(&tag->object, FSCK_ERROR, "could not read tag object");
-+
-+	err = fsck_tag_buffer(buf, tag, error_func);
-+
-+	free(buf);
-+	return err;
-+}
-+
- int fsck_object(struct object *obj, int strict, fsck_error error_func)
- {
- 	if (!obj)
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index d730734..3a3bce6 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -180,6 +180,49 @@ test_expect_success 'tag pointing to something else than its type' '
- 	test_must_fail git fsck --tags
- '
+ $tag_description"
+-tag_pretty_content="$tag_header_without_timestamp Thu Jan 1 00:00:00 1970 +0000
+-
+-$tag_description"
  
-+test_expect_success 'tag with missing tagger is OK' '
-+	sha=$(echo blob | git hash-object -w --stdin) &&
-+	test_when_finished "remove_object $sha" &&
-+	cat >good-tag <<-EOF &&
-+	object $sha
-+	type blob
-+	tag missing-tagger-ok
-+
-+	This is totally fine.
-+	EOF
-+
-+	tag=$(git hash-object -t tag -w --stdin <good-tag) &&
-+	test_when_finished "remove_object $tag" &&
-+	git update-ref refs/tags/good $tag &&
-+	test_when_finished "git update-ref -d refs/tags/good" &&
-+	git fsck >out 2>&1 &&
-+	>expect &&
-+	test_cmp expect out
-+'
-+
-+test_expect_success 'tag with bogus tagger is not OK' '
-+	sha=$(echo blob | git hash-object -w --stdin) &&
-+	test_when_finished "remove_object $sha" &&
-+	cat >wrong-tag <<-EOF &&
-+	object $sha
-+	type blob
-+	tag bogus-tagger
-+	tagger T A Gger <tagger@example.com> Mon Feb 25 12:32:51 2013 -0500
-+
-+	That date is bogus (it should be an epoch + timezone). Any bogus ident
-+	line should trigger, but this was chosen to match a breakage seen in
-+	the wild.
-+	EOF
-+
-+	tag=$(git hash-object -t tag -w --stdin <wrong-tag) &&
-+	test_when_finished "remove_object $tag" &&
-+	git update-ref refs/tags/wrong $tag &&
-+	test_when_finished "git update-ref -d refs/tags/wrong" &&
-+	git fsck --tags >out 2>&1 &&
-+	cat out &&
-+	grep "error in tag $tag.* - bad date" out
-+'
-+
- test_expect_success 'cleaned up' '
- 	git fsck >actual 2>&1 &&
- 	test_cmp empty actual
+ tag_sha1=$(echo_without_newline "$tag_content" | git mktag)
+ tag_size=$(strlen "$tag_content")
+ 
+-run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_pretty_content" 1
++run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_content" 1
+ 
+ test_expect_success \
+     "Reach a blob from a tag pointing to it" \
 -- 
 1.8.1.4.4.g265d2fa
