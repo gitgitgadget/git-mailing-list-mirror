@@ -1,72 +1,78 @@
-From: =?UTF-8?Q?Mantas_Mikul=C4=97nas?= <grawity@gmail.com>
-Subject: Re: [PATCH 4/4] cat-file: print tags raw for "cat-file -p"
-Date: Mon, 25 Feb 2013 21:33:28 +0200
-Message-ID: <CAPWNY8V=OT_Rt0GfhrmEhf_bqqMhCSR4EDCiX0FOr8EZSPkAUA@mail.gmail.com>
-References: <20130225183009.GB13912@sigill.intra.peff.net> <20130225185058.GD14438@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] Fix date checking in case if time was not
+ initialized.
+Date: Mon, 25 Feb 2013 11:37:51 -0800
+Message-ID: <7va9qsxjzk.fsf@alter.siamese.dyndns.org>
+References: <CAHXAxrOOqn6ZSVT1AFyO3a3paD1tokBtcnaX68a+ddhodOvZ6Q@mail.gmail.com>
+ <7vzjysxnb1.fsf@alter.siamese.dyndns.org>
+ <CAHXAxrMaQRdBxSvNO+no_9d==v0tVnkpXtguTKyfvnm-VfR_xA@mail.gmail.com>
+ <7vr4k4xlie.fsf@alter.siamese.dyndns.org>
+ <CAHXAxrOjSS5jGLcCw4KTxP_F_uRQhi0cPSvzbx58jx9dP25XPA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 25 20:34:12 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mike Gorchak <mike.gorchak.qnx@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 20:38:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UA3oQ-0008HV-F0
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 20:34:10 +0100
+	id 1UA3sS-0003NA-Ba
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 20:38:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759448Ab3BYTdp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Feb 2013 14:33:45 -0500
-Received: from mail-la0-f46.google.com ([209.85.215.46]:59706 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759188Ab3BYTdp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Feb 2013 14:33:45 -0500
-Received: by mail-la0-f46.google.com with SMTP id fq12so3077098lab.19
-        for <git@vger.kernel.org>; Mon, 25 Feb 2013 11:33:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=Qu/edHcOzzcf+kJZd7NSzdTUFTQOV34q9FcZXUz25Cw=;
-        b=tCUqVuZwz/0+Jz+gyiyKaTlaW4KTPEJDdhs/5Aa9GkujDxm2HYZl99+q/7n7dcDmpO
-         2Bkblu0j9PcybWGsZyU943xM8HOTdmaRHDHy8kU2le8cj0x64XIY8bK8/YJvt/KGu0CD
-         5sX2K6OxgxkK8Z8VOkuwtnYw2bhH+fCUPabzomD82Eyl+wZVo3GRj5BqZwrqgYws7bIQ
-         NM8u/mzIMcgtVXCmGPi82M/GCJEZmHpu/5ZF1E/WMil6H/QNrdknCMZotthiwOLIKWJ1
-         eNDfmPTc4/iHoaz5diRglQe8XnSNIDZApRYIjvvWgGubZ4R4TNOZKi/fp9MD6mLW/L6U
-         n9xQ==
-X-Received: by 10.112.13.200 with SMTP id j8mr4847073lbc.68.1361820823525;
- Mon, 25 Feb 2013 11:33:43 -0800 (PST)
-Received: by 10.112.17.47 with HTTP; Mon, 25 Feb 2013 11:33:28 -0800 (PST)
-In-Reply-To: <20130225185058.GD14438@sigill.intra.peff.net>
+	id S1759560Ab3BYThz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 14:37:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36257 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759348Ab3BYThy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 14:37:54 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F4DEAE48;
+	Mon, 25 Feb 2013 14:37:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BlOFaa7pepKWE0qQ0DtBn7xTSPY=; b=KowH+h
+	Tx1Otzi+oznqr01uZSdx8yxDOu6deWBQXuTDNuAJN2GId3AoJ4t/WcSnUTsSIDLn
+	1A/oDUnMgTJQkj2ciVhvujyjsYMI3nlQiAhi1gM8C376O/Oc/O06UjTQFA18ZZQO
+	51uZtAHPE6s0Mh/8jbaHVxO2l0VuQ6TFhWX7Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YP/92+s7uCt4X+LF1F8a88kz2xN7O+xz
+	EA2UZw6J8NcHQSCUFJwvuIHthyTexxq+iyFRMed7YjWYfx9BE2gnjBNEkIk8iTcG
+	i5AXpl6mzUQQDxIvkwHG6d+Z+XKvoe41FVxO5qE8nyOm7MWDdeTrfY2fEUUH2+5X
+	Dh7i1Y28j1M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 802C9AE47;
+	Mon, 25 Feb 2013 14:37:53 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04525AE44; Mon, 25 Feb 2013
+ 14:37:52 -0500 (EST)
+In-Reply-To: <CAHXAxrOjSS5jGLcCw4KTxP_F_uRQhi0cPSvzbx58jx9dP25XPA@mail.gmail.com> (Mike
+ Gorchak's message of "Mon, 25 Feb 2013 21:32:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D89073D8-7F82-11E2-8C61-F3C82E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217095>
 
-On Mon, Feb 25, 2013 at 8:50 PM, Jeff King <peff@peff.net> wrote:
-> Note that "git verify-tag" and "git tag -v" depend on
-> "cat-file -p" to show the tag. This means they will start
-> showing the raw timestamp. We may want to adjust them to
-> use the pretty-printing code from "git show".
+Mike Gorchak <mike.gorchak.qnx@gmail.com> writes:
+
+> 	if (tm->tm_hour < 0 || tm->tm_min < 0 || tm->tm_sec < 0)
+> 		return -1;
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I don't use "git tag -v" much, so I'm not sure what is sane there. Bu=
-t
-> this seems like it would be a regression for people who want to check
-> the human-readable date given by GPG against the date in the tag obje=
-ct.
+> So is_date() always return negative result for the text string where
+> date is placed before time like '2008-02-14 20:30:45'.
 
-Personally, I've found it quite confusing that commits (incl. merged
-tags) can be verified with `git show --show-signature`, but for tags I
-must use `git tag -v`... took me a while to find the latter.
+Yes, it returns this -1 on other platforms, but...
 
+> It must fail on
+> other platforms as well.
 
+... the input '2008-02-14 20:30:45' still parses fine for others
+(including me).  That is what is puzzling.
 
-(`git show --verify` might be even better, but that's just me.)
-
---=20
-Mantas Mikul=C4=97nas <grawity@gmail.com>
+A shot in the dark: perhaps your time_t is unsigned?
