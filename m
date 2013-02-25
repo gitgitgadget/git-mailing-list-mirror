@@ -1,76 +1,77 @@
-From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
-Subject: Re: [PATCH 1/1] Add pthread support in QNX. Do not declare NO_ macros
- if they can be autodetected.
-Date: Mon, 25 Feb 2013 20:19:00 +0200
-Message-ID: <CAHXAxrO8c8=d+og7rJexY4MKyKMYrWAzFYLMLRKVqtoaB6DUdQ@mail.gmail.com>
-References: <CAHXAxrPTe6Q4BPtsGjiRnfFjZjUjwY6qXSAtZCzzAthODzA6EA@mail.gmail.com>
-	<7vhal0z4a5.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Crashes while trying to show tag objects with bad timestamps
+Date: Mon, 25 Feb 2013 13:21:01 -0500
+Message-ID: <20130225182101.GA13912@sigill.intra.peff.net>
+References: <kg8ri2$vjb$1@ger.gmane.org>
+ <20130222224655.GB21579@sigill.intra.peff.net>
+ <7vy5egark3.fsf@alter.siamese.dyndns.org>
+ <20130222230418.GC21579@sigill.intra.peff.net>
+ <CAPWNY8UMkxvLPk2TxCz+BAat1sNXitjhv=yqcdY0yZ1OLjgd0w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 25 19:19:35 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Mantas =?utf-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 25 19:21:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UA2eE-0008AF-LJ
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 19:19:34 +0100
+	id 1UA2g7-0001DX-RC
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 19:21:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758920Ab3BYSTD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 13:19:03 -0500
-Received: from mail-qe0-f52.google.com ([209.85.128.52]:62938 "EHLO
-	mail-qe0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756577Ab3BYSTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 13:19:01 -0500
-Received: by mail-qe0-f52.google.com with SMTP id i11so1113381qej.39
-        for <git@vger.kernel.org>; Mon, 25 Feb 2013 10:19:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=WzgR4MFbflbY0MVI2hzez5lwWolC/Omc7FtxzqcCbtI=;
-        b=AjHid6wgHfYNp0V5vHBbR+7m5FzFPrc+sJDdmn8H1+eZvibJ88jLKhaj21wF1RrPBa
-         5g6Lgc9RntG7CQyOg1jGRywYCSIvWKAQjnmX96o6YfCSann8AVnp9TPJ4gS1vzoKVIpl
-         24/xlPAf76/vFBbS/Ckdih/icJqY2WfvAf1TJIjKShUBYYxQ42bQhC5VrJVFlVtA4tv8
-         v8olRoUPjRbiqu0WDvIHXK0xKDx3MWWf2n2ZrRRtAhCjF5tvfkjhproKnWvjWWrJzXbl
-         kNlF3804+z4otWft/7+5b79FJGP6OWVjUaO++7epuIBg8yEYvyblDFdTEl6RSPVxqbO6
-         2HAw==
-X-Received: by 10.49.127.199 with SMTP id ni7mr14569947qeb.17.1361816340548;
- Mon, 25 Feb 2013 10:19:00 -0800 (PST)
-Received: by 10.49.71.68 with HTTP; Mon, 25 Feb 2013 10:19:00 -0800 (PST)
-In-Reply-To: <7vhal0z4a5.fsf@alter.siamese.dyndns.org>
+	id S1758627Ab3BYSVG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Feb 2013 13:21:06 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60055 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754529Ab3BYSVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 13:21:05 -0500
+Received: (qmail 25372 invoked by uid 107); 25 Feb 2013 18:22:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Feb 2013 13:22:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Feb 2013 13:21:01 -0500
+Content-Disposition: inline
+In-Reply-To: <CAPWNY8UMkxvLPk2TxCz+BAat1sNXitjhv=yqcdY0yZ1OLjgd0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217072>
 
-> Also, please leave the "autodetection" out.  If it is common to have
-> strcasestr (or any other) on a newer QNX, then not defining the
-> symbol NO_STRCASESTR in this file may still be the right thing to
-> do, but the justification for such a change should not be because we
-> rely on "autodetection".  The defaults given in config.mak.uname is
-> primarily for people who do not use the optional ./configure script,
-> so pick the default to help the most common configuration for the
-> platform.
+On Sat, Feb 23, 2013 at 01:14:40AM +0200, Mantas Mikul=C4=97nas wrote:
 
-I see. I thought configure is the only legal way to build the git and
-config.mak.uname is used to override settings produced by configure.
-But it works vice versa configure settings override config.mak.uname
-settings. Please do not commit this patch. This patch brokes QNX 6.3.2
-build.
+> > Then I think it would make sense to allow the very specific no-date=
+ tag,
+> > but not allow arbitrary crud. I wonder if there's an example in the
+> > kernel or in git.git.
+>=20
+> I couldn't find any such examples. However, I did find several tags
+> with no "tagger" line at all: git.git has "v0.99" and linux.git has
+> many such tags starting with "v2.6.11" ending with "v2.6.13-rc3".
 
-> I'd rewrite the patch like the attached, and tentatively queue the
-> patch to 'pu', but I do not use or have access to QNX myself, so you
-> may have to adjust the default set of symbols and the log message
-> and in such a case, please do re-submit a fixed version.
+Yes, I think Junio was mis-remembering the exact condition. It looks
+like we added tagger lines in c818566 ([PATCH] Update tags to record wh=
+o
+made them, 2005-07-14), which pulls the identity straight from "git var
+GIT_COMMITTER_IDENT". I double-checked to be sure that we included the
+date stamp at that time, and we did.
 
-I will re-do the patch.
+When parsing such a tag, we put a "0" in the date field of the "struct
+tag", and I suspect that is what caused the memory confusion.
 
-> Specifically, I do not know if "... and others are also supported"
-> is universally true with QNX 6; if not, we need to define NO_* for
-> them to help people who build without using the ./configure script.
+So I think we are fine to fsck tagger lines as we do ordinary
+author/committer ident lines; the only exception is that we should not
+complain if they do not exist.
 
-Ok.
+> It seems that `git cat-file -p` doesn't like such tags too =E2=80=93 =
+if there
+> is no "tagger", it doesn't display *any* header lines. More bugs?
+
+Yeah, I think we should just rid of that parser entirely. It is very
+inconsistent with the pretty-printer used by "git show", as well as the
+one used by "git for-each-ref", not to mention parse_tag (ugh, how many
+tag parsers do we have?).
+
+-Peff
