@@ -1,77 +1,66 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 0/5] Fix msvc build
-Date: Mon, 25 Feb 2013 09:25:39 +0100
-Message-ID: <512B2003.804@viscovery.net>
-References: <510AB766.4030806@ramsay1.demon.co.uk> <7vehg4288w.fsf@alter.siamese.dyndns.org>
+From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
+Subject: Re: [PATCH] Improve QNX support in GIT
+Date: Mon, 25 Feb 2013 10:30:43 +0200
+Message-ID: <CAHXAxrOADzLckUz70e9T7EU7aWnuGadSswCU21KV2rK=sjwosg@mail.gmail.com>
+References: <CAHXAxrMRxKKiEarSQ0fCLt6-zyS=52B+kmZMLDf8SQAGzGbjjQ@mail.gmail.com>
+	<CAHXAxrMgJf2C3dAe1O2DW5qFYFnCDhbQNmpnvK4ZOduJnqwQWg@mail.gmail.com>
+	<7vvc9i5cbw.fsf@alter.siamese.dyndns.org>
+	<CAHXAxrO_AeLoHw6TaVkDZsS=J6Ro+qEuMs4rbyCoFuHAGT+6vg@mail.gmail.com>
+	<7vvc9h4d7c.fsf@alter.siamese.dyndns.org>
+	<7vtxp0zwyn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 25 09:26:21 2013
+X-From: git-owner@vger.kernel.org Mon Feb 25 09:31:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1U9tO6-0003us-5J
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 09:26:18 +0100
+	id 1U9tSn-0006w7-6a
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Feb 2013 09:31:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757298Ab3BYIZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 03:25:46 -0500
-Received: from so.liwest.at ([212.33.55.24]:36429 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754959Ab3BYIZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 03:25:45 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1U9tNT-00065B-GY; Mon, 25 Feb 2013 09:25:39 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 2ED4E1660F;
-	Mon, 25 Feb 2013 09:25:39 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-In-Reply-To: <7vehg4288w.fsf@alter.siamese.dyndns.org>
-X-Spam-Score: -1.0 (-)
+	id S1757316Ab3BYIao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 03:30:44 -0500
+Received: from mail-qa0-f43.google.com ([209.85.216.43]:51381 "EHLO
+	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754959Ab3BYIao (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 03:30:44 -0500
+Received: by mail-qa0-f43.google.com with SMTP id dx4so1430492qab.16
+        for <git@vger.kernel.org>; Mon, 25 Feb 2013 00:30:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=PAGRpxbBxi4OE11SCL5fLEoExVDgUCSBqqXOMtynXHg=;
+        b=gIHbjbXpdefJkeliwyAqr/NjazuVEqtc/ilbmoin7leyw2x3GH35R0Fbjc+cLjc6ij
+         dVgFNYaQK+7KE1roRM1O4oupUNsRpk9rPytB7yZS74JeB+OWkF/9AVCIuPNsh+2SxUxT
+         IkKpkMMft4P7Sqw/uT2vUGyyfzWRmO4+2N8ReLDo46XLZkTlLrGD1agm39uO0lZbapdu
+         N5XSc3CYzp1S8k2dNnhFp+TGwBYB5lMHPzEI1NBBD0dVVh+fKj+taGUzkKi8j7BO8ZkC
+         aL193O6wO8pQqZ/2oyymIX8Q5MGruUbOto+PG1oWb4/tqZ/Cw5eINvFgPmvXck61gHjg
+         b0uQ==
+X-Received: by 10.224.32.11 with SMTP id a11mr9992920qad.87.1361781043280;
+ Mon, 25 Feb 2013 00:30:43 -0800 (PST)
+Received: by 10.49.71.68 with HTTP; Mon, 25 Feb 2013 00:30:43 -0800 (PST)
+In-Reply-To: <7vtxp0zwyn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217047>
 
-Am 2/25/2013 7:54, schrieb Junio C Hamano:
-> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
-> 
->> As I mentioned recently, while discussing a cygwin specific patch
->> (see "Version 1.8.1 does not compile on Cygwin 1.7.14" thread), the
->> MSVC build is broken for me.
->>
->> The first 4 patches fix the MSVC build for me. The final patch is
->> not really related to fixing the build, but it removed some make
->> warnings which were quite irritating ...
->>
->> Note that I used the Makefile, with the Visual C++ 2008 command
->> line compiler on Windows XP (SP3), to build a vanilla git on MinGW.
->> I'm not subscribed to the msysgit mailing list, nor do I follow the
->> msysgit fork of git, so these patches may conflict with commits in
->> their repository.
-> 
-> Did anything further happen to this topic in the Windows land?
+Hi Junio,
 
-I successfully built with MSVC with these patches (but I am not using the
-result anywhere nor did I attempt to run the test suite).
+> Swapping the order between CFLAGS and BASIC_CFLAGS in ALL_CFLAGS may
+> be a good change for that reason as well.
 
-More importantly, I'm using git on Windows ("MinGW flavor") with these
-patches in production, so there are no obvious regressions.
+This sounds very reasonable.
 
-Feel free to add my
+> In any case, I won't take a patch to rename source files left and
+> right only to work around name collisions with random system header
+> files we do not even use ourselves, unless/until I know we have
+> tried all the other saner approaches first.  That's a workaround,
+> not a solution.
 
-Tested-by: Johannes Sixt <j6t@kdbg.org>
-
-but if you don't have the patches around, I can resend them.
-
--- Hannes
+Ok, no problem, I will create another patch which alter CFLAGS order.
