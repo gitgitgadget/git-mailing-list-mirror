@@ -1,77 +1,95 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [msysGit] Re: [PATCH 0/5] Fix msvc build
-Date: Tue, 26 Feb 2013 20:48:09 +0100
-Message-ID: <512D1179.7030009@kdbg.org>
-References: <510AB766.4030806@ramsay1.demon.co.uk> <7vehg4288w.fsf@alter.siamese.dyndns.org> <512B2003.804@viscovery.net> <alpine.DEB.1.00.1302252000440.32206@s15462909.onlinehome-server.info>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/4] config: factor out config file stack management
+Date: Tue, 26 Feb 2013 14:54:49 -0500
+Message-ID: <20130226195449.GA13830@sigill.intra.peff.net>
+References: <cover.1361751905.git.hvoigt@hvoigt.net>
+ <6c69068b4e6a72a2cca5dc6eaffa9982032a7f2a.1361751905.git.hvoigt@hvoigt.net>
+ <7v4nh13plo.fsf@alter.siamese.dyndns.org>
+ <20130226193050.GA22756@sandbox-ub>
+ <20130226193850.GB22756@sandbox-ub>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 26 20:49:31 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jens Lehmann <jens.lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Feb 26 20:55:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAQWj-0006Pv-9F
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 20:49:25 +0100
+	id 1UAQcR-0001KV-GH
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 20:55:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759948Ab3BZTsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2013 14:48:16 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:35764 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1759922Ab3BZTsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2013 14:48:14 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9CBD013004E;
-	Tue, 26 Feb 2013 20:48:10 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id F31B719F486;
-	Tue, 26 Feb 2013 20:48:09 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-In-Reply-To: <alpine.DEB.1.00.1302252000440.32206@s15462909.onlinehome-server.info>
+	id S1759622Ab3BZTyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2013 14:54:54 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33164 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756577Ab3BZTyx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2013 14:54:53 -0500
+Received: (qmail 9760 invoked by uid 107); 26 Feb 2013 19:56:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Feb 2013 14:56:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Feb 2013 14:54:49 -0500
+Content-Disposition: inline
+In-Reply-To: <20130226193850.GB22756@sandbox-ub>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217170>
 
-Am 25.02.2013 20:01, schrieb Johannes Schindelin:
-> Can you please send a pull request on GitHub?
+On Tue, Feb 26, 2013 at 08:38:50PM +0100, Heiko Voigt wrote:
 
-It's not github, but hopefully useful for you:
+> Because a config callback may start parsing a new file, the
+> global context regarding the current config file is stored
+> as a stack. Currently we only need to manage that stack from
+> git_config_from_file. Let's factor it out to allow new
+> sources of config data.
+> 
+> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+> ---
+> 
+> Peff, I hope you do not mind that I totally copied your commit message
+> here.
 
-The following changes since commit bcd45b4085f9269a536c8fb1963ac8380bfac0e8:
+I don't mind at all.
 
-  Update draft release notes to 1.8.2 (2013-02-01 12:52:08 -0800)
+> The patch takes a different approach though. If you like we can add a
+> 
+> 	Commit-Message-by: Jeff King <peff@peff.net>
+> 
+> here :-)
 
-are available in the git repository at:
+I think my name is plastered all over "git log" enough as it is.
 
-  git://repo.or.cz/git/mingw/j6t.git rj/msvc
+> +static int do_config_from(struct config_file *top, config_fn_t fn, void *data)
+> +{
+> +	int ret;
+> +
+> +	/* push config-file parsing state stack */
+> +	top->prev = cf;
+> +	top->linenr = 1;
+> +	top->eof = 0;
+> +	strbuf_init(&top->value, 1024);
+> +	strbuf_init(&top->var, 1024);
+> +	cf = top;
+> +
+> +	ret = git_parse_file(fn, data);
+> +
+> +	/* pop config-file parsing state stack */
+> +	strbuf_release(&top->value);
+> +	strbuf_release(&top->var);
+> +	cf = top->prev;
+> +
+> +	return ret;
+> +}
 
-for you to fetch changes up to 4c3f0410bfc3f42f9c62c7a23a0ef78420967f84:
+This function name is a bit weird. I would have thought the "from" here
+was going to be a file, or a string, or whatever. But the filename setup
+happens outside this function (and yet this function depends on it being
+set up, as it calls git_parse_file). But maybe it will get less
+confusing with the other patches on top...
 
-  msvc: avoid collisions between "tags" and "TAGS" (2013-02-26 20:40:16
-+0100)
-
-----------------------------------------------------------------
-Ramsay Allan Jones (5):
-      msvc: Fix compilation errors caused by poll.h emulation
-      msvc: git-daemon: Fix linker "unresolved external" errors
-      msvc: Fix build by adding missing symbol defines
-      msvc: test-svn-fe: Fix linker "unresolved external" error
-      msvc: avoid collisions between "tags" and "TAGS"
-
- compat/msvc.h                     | 2 ++
- compat/vcbuild/include/sys/poll.h | 1 -
- compat/vcbuild/include/unistd.h   | 3 +++
- config.mak.uname                  | 4 +++-
- git-compat-util.h                 | 3 +++
- test-svn-fe.c                     | 2 +-
- 6 files changed, 12 insertions(+), 3 deletions(-)
- delete mode 100644 compat/vcbuild/include/sys/poll.h
+-Peff
