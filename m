@@ -1,8 +1,7 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH 3/4] config: make parsing stack struct independent from
- actual data source
-Date: Tue, 26 Feb 2013 20:42:03 +0100
-Message-ID: <20130226194203.GD22756@sandbox-ub>
+Subject: [PATCH 4/4] teach config parsing to read from strbuf
+Date: Tue, 26 Feb 2013 20:43:13 +0100
+Message-ID: <20130226194313.GE22756@sandbox-ub>
 References: <cover.1361751905.git.hvoigt@hvoigt.net>
  <6c69068b4e6a72a2cca5dc6eaffa9982032a7f2a.1361751905.git.hvoigt@hvoigt.net>
  <7v4nh13plo.fsf@alter.siamese.dyndns.org>
@@ -12,26 +11,27 @@ Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
 	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 20:42:42 2013
+X-From: git-owner@vger.kernel.org Tue Feb 26 20:46:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAQQB-0003qF-4x
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 20:42:39 +0100
+	id 1UAQTY-0005MO-Sv
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 20:46:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757815Ab3BZTmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2013 14:42:13 -0500
-Received: from smtprelay05.ispgateway.de ([80.67.31.97]:40619 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757750Ab3BZTmM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2013 14:42:12 -0500
+	id S1759884Ab3BZTpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2013 14:45:43 -0500
+Received: from smtprelay03.ispgateway.de ([80.67.29.7]:60554 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759849Ab3BZTpm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2013 14:45:42 -0500
+X-Greylist: delayed 310 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Feb 2013 14:45:42 EST
 Received: from [77.21.76.82] (helo=localhost)
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
 	(Exim 4.68)
 	(envelope-from <hvoigt@hvoigt.net>)
-	id 1UAQPc-0000nO-91; Tue, 26 Feb 2013 20:42:04 +0100
+	id 1UAQQk-0005TL-2S; Tue, 26 Feb 2013 20:43:14 +0100
 Content-Disposition: inline
 In-Reply-To: <20130226193050.GA22756@sandbox-ub>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -40,153 +40,182 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217166>
 
-To simplify adding other sources we extract all functions needed for
-parsing into a list of callbacks. We implement those callbacks for the
-current file parsing. A new source can implement its own set of callbacks.
-
-Instead of storing the concrete FILE pointer for parsing we store a void
-pointer. A new source can use this to store its custom data.
+This can be used to read configuration values directly from gits
+database.
 
 Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 ---
- config.c | 57 ++++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 40 insertions(+), 17 deletions(-)
+ .gitignore             |  1 +
+ Makefile               |  1 +
+ cache.h                |  1 +
+ config.c               | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ t/t1300-repo-config.sh |  4 ++++
+ test-config.c          | 41 +++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 95 insertions(+)
+ create mode 100644 test-config.c
 
+diff --git a/.gitignore b/.gitignore
+index 6669bf0..386b7f2 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -178,6 +178,7 @@
+ /gitweb/static/gitweb.min.*
+ /test-chmtime
+ /test-ctype
++/test-config
+ /test-date
+ /test-delta
+ /test-dump-cache-tree
+diff --git a/Makefile b/Makefile
+index ba8e243..98da708 100644
+--- a/Makefile
++++ b/Makefile
+@@ -543,6 +543,7 @@ PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+ 
+ TEST_PROGRAMS_NEED_X += test-chmtime
+ TEST_PROGRAMS_NEED_X += test-ctype
++TEST_PROGRAMS_NEED_X += test-config
+ TEST_PROGRAMS_NEED_X += test-date
+ TEST_PROGRAMS_NEED_X += test-delta
+ TEST_PROGRAMS_NEED_X += test-dump-cache-tree
+diff --git a/cache.h b/cache.h
+index e493563..ada2362 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1128,6 +1128,7 @@ extern int update_server_info(int);
+ typedef int (*config_fn_t)(const char *, const char *, void *);
+ extern int git_default_config(const char *, const char *, void *);
+ extern int git_config_from_file(config_fn_t fn, const char *, void *);
++extern int git_config_from_strbuf(config_fn_t fn, struct strbuf *strbuf, void *data);
+ extern void git_config_push_parameter(const char *text);
+ extern int git_config_from_parameters(config_fn_t fn, void *data);
+ extern int git_config(config_fn_t fn, void *);
 diff --git a/config.c b/config.c
-index f55c43d..19aa205 100644
+index 19aa205..492873a 100644
 --- a/config.c
 +++ b/config.c
-@@ -10,20 +10,42 @@
- #include "strbuf.h"
- #include "quote.h"
+@@ -46,6 +46,37 @@ static long config_file_ftell(struct config *conf)
+ 	return ftell(f);
+ }
  
--typedef struct config_file {
--	struct config_file *prev;
--	FILE *f;
-+struct config {
-+	struct config *prev;
-+	void *data;
- 	const char *name;
- 	int linenr;
- 	int eof;
- 	struct strbuf value;
- 	struct strbuf var;
--} config_file;
- 
--static config_file *cf;
-+	int (*fgetc)(struct config *c);
-+	int (*ungetc)(int c, struct config *conf);
-+	long (*ftell)(struct config *c);
++struct config_strbuf {
++	struct strbuf *strbuf;
++	int pos;
 +};
 +
-+static struct config *cf;
- 
- static int zlib_compression_seen;
- 
-+static int config_file_fgetc(struct config *conf)
++static int config_strbuf_fgetc(struct config *conf)
 +{
-+	FILE *f = conf->data;
-+	return fgetc(f);
++	struct config_strbuf *str = conf->data;
++
++	if (str->pos < str->strbuf->len)
++		return str->strbuf->buf[str->pos++];
++
++	return EOF;
 +}
 +
-+static int config_file_ungetc(int c, struct config *conf)
++static int config_strbuf_ungetc(int c, struct config *conf)
 +{
-+	FILE *f = conf->data;
-+	return ungetc(c, f);
++	struct config_strbuf *str = conf->data;
++
++	if (str->pos > 0)
++		return str->strbuf->buf[--str->pos];
++
++	return EOF;
 +}
 +
-+static long config_file_ftell(struct config *conf)
++static long config_strbuf_ftell(struct config *conf)
 +{
-+	FILE *f = conf->data;
-+	return ftell(f);
++	struct config_strbuf *str = conf->data;
++	return str->pos;
 +}
 +
  #define MAX_INCLUDE_DEPTH 10
  static const char include_depth_advice[] =
  "exceeded maximum include depth (%d) while including\n"
-@@ -172,13 +194,12 @@ static int get_next_char(void)
- 
- 	c = '\n';
- 	if (cf) {
--		FILE *f = cf->f;
--		c = fgetc(f);
-+		c = cf->fgetc(cf);
- 		if (c == '\r') {
- 			/* DOS like systems */
--			c = fgetc(f);
-+			c = cf->fgetc(cf);
- 			if (c != '\n') {
--				ungetc(c, f);
-+				cf->ungetc(c, cf);
- 				c = '\r';
- 			}
- 		}
-@@ -896,7 +917,7 @@ int git_default_config(const char *var, const char *value, void *dummy)
- 	return 0;
+@@ -961,6 +992,22 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
+ 	return ret;
  }
  
--static int do_config_from(struct config_file *top, config_fn_t fn, void *data)
-+static int do_config_from(struct config *top, config_fn_t fn, void *data)
++int git_config_from_strbuf(config_fn_t fn, struct strbuf *strbuf, void *data)
++{
++	struct config top;
++	struct config_strbuf str;
++
++	str.strbuf = strbuf;
++	str.pos = 0;
++
++	top.data = &str;
++	top.fgetc = config_strbuf_fgetc;
++	top.ungetc = config_strbuf_ungetc;
++	top.ftell = config_strbuf_ftell;
++
++	return do_config_from(&top, fn, data);
++}
++
+ const char *git_etc_gitconfig(void)
  {
- 	int ret;
+ 	static const char *system_wide;
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 3c96fda..3304bcd 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1087,4 +1087,8 @@ test_expect_success 'barf on incomplete string' '
+ 	grep " line 3 " error
+ '
  
-@@ -925,10 +946,13 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
- 
- 	ret = -1;
- 	if (f) {
--		config_file top;
-+		struct config top;
- 
--		top.f = f;
-+		top.data = f;
- 		top.name = filename;
-+		top.fgetc = config_file_fgetc;
-+		top.ungetc = config_file_ungetc;
-+		top.ftell = config_file_ftell;
- 
- 		ret = do_config_from(&top, fn, data);
- 
-@@ -1063,7 +1087,6 @@ static int store_aux(const char *key, const char *value, void *cb)
- {
- 	const char *ep;
- 	size_t section_len;
--	FILE *f = cf->f;
- 
- 	switch (store.state) {
- 	case KEY_SEEN:
-@@ -1075,7 +1098,7 @@ static int store_aux(const char *key, const char *value, void *cb)
- 				return 1;
- 			}
- 
--			store.offset[store.seen] = ftell(f);
-+			store.offset[store.seen] = cf->ftell(cf);
- 			store.seen++;
- 		}
- 		break;
-@@ -1102,19 +1125,19 @@ static int store_aux(const char *key, const char *value, void *cb)
- 		 * Do not increment matches: this is no match, but we
- 		 * just made sure we are in the desired section.
- 		 */
--		store.offset[store.seen] = ftell(f);
-+		store.offset[store.seen] = cf->ftell(cf);
- 		/* fallthru */
- 	case SECTION_END_SEEN:
- 	case START:
- 		if (matches(key, value)) {
--			store.offset[store.seen] = ftell(f);
-+			store.offset[store.seen] = cf->ftell(cf);
- 			store.state = KEY_SEEN;
- 			store.seen++;
- 		} else {
- 			if (strrchr(key, '.') - key == store.baselen &&
- 			      !strncmp(key, store.key, store.baselen)) {
- 					store.state = SECTION_SEEN;
--					store.offset[store.seen] = ftell(f);
-+					store.offset[store.seen] = cf->ftell(cf);
- 			}
- 		}
- 	}
++test_expect_success 'reading config from strbuf' '
++	test-config strbuf
++'
++
+ test_done
+diff --git a/test-config.c b/test-config.c
+new file mode 100644
+index 0000000..7a4103c
+--- /dev/null
++++ b/test-config.c
+@@ -0,0 +1,41 @@
++#include "cache.h"
++
++static const char *config_string = "[some]\n"
++			    "	value = content\n";
++
++static int config_strbuf(const char *var, const char *value, void *data)
++{
++	int *success = data;
++	if (!strcmp(var, "some.value") && !strcmp(value, "content"))
++		*success = 0;
++
++	printf("var: %s, value: %s\n", var, value);
++
++	return 1;
++}
++
++static void die_usage(int argc, char **argv)
++{
++	fprintf(stderr, "Usage: %s strbuf\n", argv[0]);
++	exit(1);
++}
++
++int main(int argc, char **argv)
++{
++	if (argc < 2)
++		die_usage(argc, argv);
++
++	if (!strcmp(argv[1], "strbuf")) {
++		int success = 1;
++		struct strbuf buf = STRBUF_INIT;
++
++		strbuf_addstr(&buf, config_string);
++		git_config_from_strbuf(config_strbuf, &buf, &success);
++
++		return success;
++	}
++
++	die_usage(argc, argv);
++
++	return 1;
++}
 -- 
 1.8.2.rc0.26.gf7384c5
