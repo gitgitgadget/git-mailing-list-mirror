@@ -1,59 +1,85 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH/RFC] mingw: rename WIN32 cpp macro to NATIVE_WINDOWS
-Date: Tue, 26 Feb 2013 17:40:21 +0100
-Message-ID: <512CE575.1000702@web.de>
-References: <50EB8EB5.6080204@gmail.com> <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com> <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com> <50F303D8.20709@gmail.com> <50F5A435.5090408@ramsay1.demon.co.uk> <20130120101007.GD16339@elie.Belkin> <50FEDB08.6030901@ramsay1.demon.co.uk> <51031C43.5030307@gmail.com> <7v38xo3irh.fsf@alter.siamese.dyndns.org> <51032481.4030707@redhat.com> <20130126010359.GH3341@elie.Belkin> <5106C382.20009@ramsay1.demon.co.uk> <7vliac3nbg.fsf@alter.siamese.dyndns.org> <512C3554.8020902@gmail.com>
+From: Gunnlaugur Thor Briem <gunnlaugur@gmail.com>
+Subject: Re: Better handling of erroneous git stash save "somemessage" --keep-index
+Date: Tue, 26 Feb 2013 16:46:49 +0000
+Message-ID: <CAPs+M8+5yXz59PiOKwFpkUZkOoR-LA+jt0CWEAPz9Eq9VnaAcQ@mail.gmail.com>
+References: <CAPs+M8JvcnTcZiySmpMBuOxek4THRnTx0jkZv7NHaSDNLhcOAQ@mail.gmail.com>
+ <7vwqtvm4yr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Eric Blake <eblake@redhat.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Jason Pyeron <jpyeron@pdinc.us>,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Stephen & Linda Smith <ischis2@cox.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 17:43:01 2013
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 26 17:47:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UANcJ-0001fy-OO
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 17:43:00 +0100
+	id 1UANgm-00042Z-A9
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 17:47:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759154Ab3BZQme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2013 11:42:34 -0500
-Received: from mout.web.de ([212.227.15.4]:51775 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758612Ab3BZQmd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2013 11:42:33 -0500
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0LtFEp-1Uqlqe0yjL-012UY8; Tue, 26 Feb 2013 17:40:23
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130216 Thunderbird/17.0.3
-In-Reply-To: <512C3554.8020902@gmail.com>
-X-Provags-ID: V02:K0:fh/COB5AN4lrNeDTQjNwsiL+NzXu0SxJj3gMD8INs2u
- NDXciFOseFubVZHlLo1DbN8Si+VIto6k69BY2V2t7bCLmNRYso
- KdKrGcspCSJwy/l2KtDzWoQAlzwDUAgZAZyVHR4kEGrLPTq+w/
- 2Xh2h2NPBYLJ1E0G3LZ2fZL1jJpvejwLtrTLCspAnY8jipti/E
- l7EzdF6U3+m6YCRqW+/OA==
+	id S1758829Ab3BZQrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2013 11:47:10 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:57369 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759130Ab3BZQrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2013 11:47:10 -0500
+Received: by mail-ie0-f181.google.com with SMTP id 17so4602002iea.40
+        for <git@vger.kernel.org>; Tue, 26 Feb 2013 08:47:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=FWLNgnHrwx+PaLblxkYQ4g9BZmuDq/YKh5w+QondyE4=;
+        b=SbyEyu7Essn6L5JSO5cvR4Xk+gP3cdpfVI4nN0sp8O8dBhMl/tNUCGxQO7bNWuui/I
+         7SLnWAqBKQmCpBqNMkc2Sgpz+xym2LWBFIXjpjnYBYY5LYUbUi9d96QA8pQe2s7hFRlF
+         SUVc8bTaTUZYvCItpKCUMPGbipxuDLjkKHT+HAY92ZmtWcW2KIt9Vu70FEf+xzi5bEyj
+         w5gZ4i5/b4+ykAhKyczi6RPwf9IBxkF7QIPrNX6BO8Doobs7hOeZn+f3aDYp2kTCThgx
+         ykFvgvHrWrDiflua2BG4xBfKVHEQO60h9rv7OyGY7SKhMOxPXSHx+Gzype2Y92BKBGCb
+         gGUA==
+X-Received: by 10.42.159.194 with SMTP id m2mr6464105icx.13.1361897229505;
+ Tue, 26 Feb 2013 08:47:09 -0800 (PST)
+Received: by 10.64.51.130 with HTTP; Tue, 26 Feb 2013 08:46:49 -0800 (PST)
+In-Reply-To: <7vwqtvm4yr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217145>
 
-On 26.02.13 05:08, Mark Levedahl wrote:
-> On 02/25/2013 01:44 AM, Junio C Hamano wrote:
->> I was in "find leftover bits" mode today and found this thread hanging. Has anything come out of this thread, or there is nothing to improve in this area? 
-> 
-> The patch passed my simple tests (build, run a few commands), but I didn't get around to a full test. And of course, I am testing on current Cygwin where git compiles and runs correctly anyway.
-> 
-> Mark
-I run the test suite, and there was 1301 failing (and t0070 ?) which have
-to do with POSIX permisions.
-They are on my TODO stack.
-/Torsten
+On Tue, Feb 26, 2013 at 4:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Then the user cannot say
+>
+>         git stash save some message that consists of multiple words
+>
+> no?  You may have a WIP to enhance the behaviour of one option and
+> you might want to say
+>
+>         git stash save wip: tweak behaviour of --keep-index
+>
+> to save it away when switching to higher priority task.
+
+In this case (which must be rarer than --keep-index intended as a
+parameter) the user gets the error message, the problem is pretty
+clear, and the workaround is very easy, quote the message:
+
+        git stash save "wip: tweak behaviour of --keep-index"
+
+... which also is more conventional on the command line.
+
+To minimize the behavior change, it could apply solely for the case of
+known parameters to this command (like --keep-index), so that:
+
+        git stash save wip: tweak behaviour of --froob-nob
+
+would still work like before. That's less consistent, but then again,
+this is just a matter of catching very likely errors to avoid lost
+work.
+
+Expressing a multi-word message without quotes on the command line is
+unconventional (in general, though maybe not in the use of git-stash)
+so it seems reasonable to let that usage be the one that gets
+inconvenienced.
+
+-Gulli
+
+(Sorry about the initial reply to you alone Junio)
