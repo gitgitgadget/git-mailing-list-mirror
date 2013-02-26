@@ -1,57 +1,69 @@
-From: Adam Mercer <ramercer@gmail.com>
-Subject: Re: post-receive-email hook with custom_showrev
-Date: Mon, 25 Feb 2013 19:39:44 -0600
-Message-ID: <CA+mfgz3j7sbqOHOZkBm+dH08+QmyerGeVLLPnF2LeYn=y_Qs1Q@mail.gmail.com>
-References: <CA+mfgz1jrSbbZc7+asxfZivemYSvbB3+UxYx4sm3BwLmR0ELEA@mail.gmail.com>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH/RFC] mingw: rename WIN32 cpp macro to NATIVE_WINDOWS
+Date: Mon, 25 Feb 2013 23:08:52 -0500
+Message-ID: <512C3554.8020902@gmail.com>
+References: <50EB8EB5.6080204@gmail.com> <CALxABCYHRp17rcoOca1xWG9S19fq2rotz8FEKo09jNdrgMLiyQ@mail.gmail.com> <CALxABCavvW77djKQnbQsjCBcahmMfrP24SDz609NG-94_ifZ9Q@mail.gmail.com> <50F303D8.20709@gmail.com> <50F5A435.5090408@ramsay1.demon.co.uk> <20130120101007.GD16339@elie.Belkin> <50FEDB08.6030901@ramsay1.demon.co.uk> <51031C43.5030307@gmail.com> <7v38xo3irh.fsf@alter.siamese.dyndns.org> <51032481.4030707@redhat.com> <20130126010359.GH3341@elie.Belkin> <5106C382.20009@ramsay1.demon.co.uk> <7vliac3nbg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 26 02:47:35 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Blake <eblake@redhat.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Jason Pyeron <jpyeron@pdinc.us>,
+	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Stephen & Linda Smith <ischis2@cox.net>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 26 05:16:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UA9dm-0001Fc-9y
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 02:47:34 +0100
+	id 1UABxs-0008MT-CM
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 05:16:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753276Ab3BZBrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Feb 2013 20:47:09 -0500
-Received: from mail-qe0-f46.google.com ([209.85.128.46]:33402 "EHLO
-	mail-qe0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751366Ab3BZBrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Feb 2013 20:47:07 -0500
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Feb 2013 20:47:07 EST
-Received: by mail-qe0-f46.google.com with SMTP id a11so809061qen.33
-        for <git@vger.kernel.org>; Mon, 25 Feb 2013 17:47:06 -0800 (PST)
+	id S1759714Ab3BZEQC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Feb 2013 23:16:02 -0500
+Received: from mail-qe0-f50.google.com ([209.85.128.50]:51189 "EHLO
+	mail-qe0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759275Ab3BZEQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Feb 2013 23:16:00 -0500
+Received: by mail-qe0-f50.google.com with SMTP id w7so2186178qeb.37
+        for <git@vger.kernel.org>; Mon, 25 Feb 2013 20:16:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:content-type;
-        bh=4+ISXvORz5IKMikZzyeQTrwL+aMv7fWPB6zzEiWfUgg=;
-        b=R09x0cfxCKO8y3JkgeJwJLO/2TBmJdo86CgZ3ahpOjhVBK3W7yhGkoXxrHvI4Mo8+7
-         5BZFoK2aETI+0oxin4z6ult9V4J3vz3/mvSW6MqwDS/kGMoBp4TuMoEjkDmnrobGWwSV
-         d74jbq1s1HaiGc71pub5cf/Wm+xJK1zOOahr2FuUMygYICrzVnHaY9JmbRcrthY6k1BW
-         RKmv3MH2k7bU6JT2DUzytG6dVcVYQGCg/r/IKFAILrtbxBBVn/sJLP7Yzgjy7HJzq4Ny
-         H5ACNnoi+FLRre/R1HnfqPZ0KPoS5zJ3wNV4Sevi8oq437i0HD/7DpCbBkl18q06QNLW
-         B7AA==
-X-Received: by 10.224.106.201 with SMTP id y9mr14641474qao.3.1361842824952;
- Mon, 25 Feb 2013 17:40:24 -0800 (PST)
-Received: by 10.49.63.136 with HTTP; Mon, 25 Feb 2013 17:39:44 -0800 (PST)
-In-Reply-To: <CA+mfgz1jrSbbZc7+asxfZivemYSvbB3+UxYx4sm3BwLmR0ELEA@mail.gmail.com>
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=s9BKSYQkOPKwedoEVIPbXPhUNW6AzvuCBZXe/8nlJq4=;
+        b=Dj3R/dcXjR1lttRIwHIzjpOstN41iUh76BKSPHrv3zVd2Xm9FKnZC82IsqxuKUDCpc
+         plrJqiSNt28bMPO9z2wvTDK0xncMqVqY6j0bqZus7mfalscLwaky4DRgP8LjppcFliAL
+         Bga58gubHtXioU+crb3Aq21ry/pHFe/vpI4JcNEpGAkB4oqnkAdDbz6gaVMu4VGEFqnV
+         /JKcWKlkKrI9m7PfbOiOLA4Q7EirNc0LNW4i7TOi3SsMsFqYByawlsKZAA6SceaEtFqQ
+         knkMZvXcA5/jqsCqQtTQDNuRhmy8Tpe0rvsTel1EOJyUyBvtwuz+zMZXZRrP7QXMwaip
+         sD7w==
+X-Received: by 10.229.179.84 with SMTP id bp20mr3485747qcb.117.1361851735971;
+        Mon, 25 Feb 2013 20:08:55 -0800 (PST)
+Received: from mark-laptop.lan (pool-173-79-125-63.washdc.fios.verizon.net. [173.79.125.63])
+        by mx.google.com with ESMTPS id g6sm20748209qav.6.2013.02.25.20.08.53
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 25 Feb 2013 20:08:54 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130110 Thunderbird/17.0.2
+In-Reply-To: <7vliac3nbg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217125>
 
-On Fri, Feb 22, 2013 at 2:57 PM, Adam Mercer <ramercer@gmail.com> wrote:
+On 02/25/2013 01:44 AM, Junio C Hamano wrote:
+> I was in "find leftover bits" mode today and found this thread 
+> hanging. Has anything come out of this thread, or there is nothing to 
+> improve in this area? 
 
-> So it seems as if showrev is being ignored? Can anyone see what I'm doing wrong?
+The patch passed my simple tests (build, run a few commands), but I 
+didn't get around to a full test. And of course, I am testing on current 
+Cygwin where git compiles and runs correctly anyway.
 
-Anyone? From looking at the documentation I can't see anything wrong
-but as it's not displaying anything something is clearly wrong.
-
-Cheers
-
-Adam
+Mark
