@@ -1,136 +1,210 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v2 0/2] improve-wincred-compatibility
-Date: Tue, 26 Feb 2013 17:55:20 +0100
-Message-ID: <CABPQNSZSv71_W6Y5rxo0nSBAemiiuTOyB=1Ag6txLy56BEbMFQ@mail.gmail.com>
-References: <50E73B80.4070105@gmail.com> <CABPQNSYcOrOZJd0vK=4ESC4qPpcj7RRdhVt3R0dAE-ouhOb5YA@mail.gmail.com>
- <50EC473A.6060203@gmail.com> <CABPQNSb7MjTKgmeB9TcUV0+-FfjPZ1sgKPsfVDg6+uaw2f_azQ@mail.gmail.com>
- <50EEAF9A.6020302@gmail.com> <CABPQNSaUizZPVOeeuEyb=o-Qmm4mYCRxV27qkmp62cSpFkinqA@mail.gmail.com>
- <7vsj4k3nbu.fsf@alter.siamese.dyndns.org> <512BF61B.4020708@dcon.de> <7vip5gne96.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Karsten Blees <karsten.blees@gmail.com>, git@vger.kernel.org, msysgit@googlegroups.com, 
-	Jeff King <peff@peff.net>, patthoyts@gmail.com, Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBDR53PPJ7YHRBIOSWOEQKGQEACD3BAI@googlegroups.com Tue Feb 26 17:56:26 2013
-Return-path: <msysgit+bncBDR53PPJ7YHRBIOSWOEQKGQEACD3BAI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qa0-f58.google.com ([209.85.216.58])
+Subject: [PATCH v2] Revert "compat: add strtok_r()"
+Date: Tue, 26 Feb 2013 17:58:38 +0100
+Message-ID: <1361897918-8824-1-git-send-email-kusmabite@gmail.com>
+Cc: git@vger.kernel.org, jrnieder@gmail.com, b@rr-dav.id.au,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Feb 26 17:59:10 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBIOSWOEQKGQEACD3BAI@googlegroups.com>)
-	id 1UANpH-0008Be-On
-	for gcvm-msysgit@m.gmane.org; Tue, 26 Feb 2013 17:56:24 +0100
-Received: by mail-qa0-f58.google.com with SMTP id g10sf2151638qah.3
-        for <gcvm-msysgit@m.gmane.org>; Tue, 26 Feb 2013 08:56:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:x-received:received-spf
-         :x-received:mime-version:reply-to:in-reply-to:references:from:date
-         :message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=RWiuYVld46+LLS7xgtPtV2txDitVG8Xr/QWZlqq/Fjs=;
-        b=evG4RC9nPaofZNKrEO+wONhRlhe1K6Eji4vtLK8xxQ/BDPVM0+QvAISrw7IF4PMJ65
-         v3Jd9dhFb5U/YMjGSzstJNcFHmz9+uLVVd2hwwWRglXfknr2w/kN6fjcGWzlvJbCX12u
-         TFjJK1F6oJCcCJ0piDCzzGUUNMTkrCRzhOw6QjMmnxH9q4apUB93qMcO52Jf+aCOx+BJ
-         D7lqGRDbkGGIpNu/dr/RF93/vbRadQvr8ix1r4yH/22nkJagSvzBk6K20F1kFZ5tQs4Y
-         nvYZtfWBxM++bpvEEU66f0To4XisdOZ2 
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UANrx-00014X-HC
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 17:59:10 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752159Ab3BZQ6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2013 11:58:43 -0500
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:50007 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751223Ab3BZQ6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2013 11:58:42 -0500
+Received: by mail-lb0-f169.google.com with SMTP id m4so3295611lbo.14
+        for <git@vger.kernel.org>; Tue, 26 Feb 2013 08:58:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:x-beenthere:x-received:x-received:received-spf
-         :x-received:mime-version:reply-to:in-reply-to:references:from:date
-         :message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=RWiuYVld46+LLS7xgtPtV2txDitVG8Xr/QWZlqq/Fjs=;
-        b=GJykaRh+BHvg9UdJLoYxAwO3ZQXqdDhEUEyUpdHxKrvyxWft+rBsK0VPn+/vhEV5xE
-         I6wxQz1uWiN0pQLXOlRlcuD0Jxc/qpTfXGxrFDUkBFdjI+GYDkB3wou2yqioBxzUSF6p
-         KX1/z9da5GXyVV/IMpH7/GqWZLS6PQyQIqg1A2UX1dzgevVOBiHC36ivb0rEThWqRsOp
-         wcO9USr2pDKr+OfE8ZIgV6IaYD4A1bgbOfAtMcTzH/EtspvgGAbomv0JXtD3SRUFxpeF
-         DiY9AtVvCAOlJBjTJjJ50summGYTZRqpdFEomlU 
-X-Received: by 10.50.87.198 with SMTP id ba6mr1705638igb.0.1361897762207;
-        Tue, 26 Feb 2013 08:56:02 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.135.67 with SMTP id pq3ls587784igb.25.canary; Tue, 26 Feb
- 2013 08:56:01 -0800 (PST)
-X-Received: by 10.42.38.76 with SMTP id b12mr11934870ice.30.1361897761138;
-        Tue, 26 Feb 2013 08:56:01 -0800 (PST)
-X-Received: by 10.42.38.76 with SMTP id b12mr11934869ice.30.1361897761125;
-        Tue, 26 Feb 2013 08:56:01 -0800 (PST)
-Received: from mail-ie0-x22d.google.com (mail-ie0-x22d.google.com [2607:f8b0:4001:c03::22d])
-        by gmr-mx.google.com with ESMTPS id m3si179135iga.2.2013.02.26.08.56.01
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 26 Feb 2013 08:56:01 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::22d as permitted sender) client-ip=2607:f8b0:4001:c03::22d;
-Received: by mail-ie0-x22d.google.com with SMTP id 9so4724889iec.18
-        for <msysgit@googlegroups.com>; Tue, 26 Feb 2013 08:56:01 -0800 (PST)
-X-Received: by 10.50.88.228 with SMTP id bj4mr5661384igb.85.1361897760943;
- Tue, 26 Feb 2013 08:56:00 -0800 (PST)
-Received: by 10.64.48.193 with HTTP; Tue, 26 Feb 2013 08:55:20 -0800 (PST)
-In-Reply-To: <7vip5gne96.fsf@alter.siamese.dyndns.org>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::22d
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217147>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=kcIPVk/2ccRBTUkhgRJDgbjsytWY36+cjgTqxKtV6B4=;
+        b=rWSgXFdQ/cw0NxnU6qk0kfxwRPeYJW7A/rLiHUqOXJ8qLwL5b73ILSVHADNTda61KW
+         V3C6UqQ+3/6RRlJMP+O3V6IvXL0V6QpUNYRrRqaaoI/rfQA2OcX+3+uvXpm8QruJoWxC
+         QOuzY3Zuinv3nlIljYjRJOS7sJrp5aYIHp45pOVxQt+OqR8ys5ahbAuL2+GzOGBsVzkf
+         jEGAJa+3/kLbbsqXj8yIB4rwZsF/00eiZ+kQGVGSG0cXfMWDjWCPHuVe0f59B8EgS8ZG
+         QJIPcYKpb0woCrjr6FreZMtH+HvQS+C0aQ/VFWF0GggEEPCO2I5F50P+nixyApxZJ3JJ
+         qALw==
+X-Received: by 10.152.47.242 with SMTP id g18mr14093219lan.42.1361897921044;
+        Tue, 26 Feb 2013 08:58:41 -0800 (PST)
+Received: from localhost ([77.40.159.131])
+        by mx.google.com with ESMTPS id m1sm729239lbh.5.2013.02.26.08.58.38
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 26 Feb 2013 08:58:39 -0800 (PST)
+X-Mailer: git-send-email 1.8.0.msysgit.0.3.gd0186ec
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217148>
 
-On Tue, Feb 26, 2013 at 12:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> My question was if msysgit folks
-> want me to take your patch (which I cannot test myself) and then
-> merge my tree to the msysgit tree as part of their regular updates
-> to catch up with 1.8.2 (and future releases), or they want to test
-> your patches in their tree first, and then either throw me a pull
-> request or send me a patch series with Acked-by:.
+This reverts commit 78457bc0ccc1af8b9eb776a0b17986ebd50442bc.
 
-The following changes since commit 4dac0679feaebbf6545daec14480cf6b94cb74ed:
+commit 28c5d9e ("vcs-svn: drop string_pool") previously removed
+the only call-site for strtok_r. So let's get rid of the compat
+implementation as well.
 
-  Git 1.8.2-rc1 (2013-02-25 09:03:26 -0800)
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Makefile          |  6 ------
+ compat/strtok_r.c | 61 -------------------------------------------------------
+ config.mak.uname  |  2 --
+ configure.ac      |  6 ------
+ git-compat-util.h |  5 -----
+ 5 files changed, 80 deletions(-)
+ delete mode 100644 compat/strtok_r.c
 
-are available in the git repository at:
-
-  git://github.com/kusma/git.git for-junio
-
-for you to fetch changes up to 8b2d219a3d6db49c8c3c0a5b620af33d6a40a974:
-
-  wincred: improve compatibility with windows versions (2013-02-26
-17:42:46 +0100)
-
-----------------------------------------------------------------
-Karsten Blees (2):
-      wincred: accept CRLF on stdin to simplify console usage
-      wincred: improve compatibility with windows versions
-
- .../credential/wincred/git-credential-wincred.c    | 206 ++++++++-------------
- 1 file changed, 75 insertions(+), 131 deletions(-)
-
+diff --git a/Makefile b/Makefile
+index 1b30d7b..6d16a52 100644
+--- a/Makefile
++++ b/Makefile
+@@ -98,8 +98,6 @@ all::
+ #
+ # Define NO_MKSTEMPS if you don't have mkstemps in the C library.
+ #
+-# Define NO_STRTOK_R if you don't have strtok_r in the C library.
+-#
+ # Define NO_FNMATCH if you don't have fnmatch in the C library.
+ #
+ # Define NO_FNMATCH_CASEFOLD if your fnmatch function doesn't have the
+@@ -1202,10 +1200,6 @@ endif
+ ifdef NO_STRTOULL
+ 	COMPAT_CFLAGS += -DNO_STRTOULL
+ endif
+-ifdef NO_STRTOK_R
+-	COMPAT_CFLAGS += -DNO_STRTOK_R
+-	COMPAT_OBJS += compat/strtok_r.o
+-endif
+ ifdef NO_FNMATCH
+ 	COMPAT_CFLAGS += -Icompat/fnmatch
+ 	COMPAT_CFLAGS += -DNO_FNMATCH
+diff --git a/compat/strtok_r.c b/compat/strtok_r.c
+deleted file mode 100644
+index 7b5d568..0000000
+--- a/compat/strtok_r.c
++++ /dev/null
+@@ -1,61 +0,0 @@
+-/* Reentrant string tokenizer.  Generic version.
+-   Copyright (C) 1991,1996-1999,2001,2004 Free Software Foundation, Inc.
+-   This file is part of the GNU C Library.
+-
+-   The GNU C Library is free software; you can redistribute it and/or
+-   modify it under the terms of the GNU Lesser General Public
+-   License as published by the Free Software Foundation; either
+-   version 2.1 of the License, or (at your option) any later version.
+-
+-   The GNU C Library is distributed in the hope that it will be useful,
+-   but WITHOUT ANY WARRANTY; without even the implied warranty of
+-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+-   Lesser General Public License for more details.
+-
+-   You should have received a copy of the GNU Lesser General Public
+-   License along with the GNU C Library; if not, write to the Free
+-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+-   02111-1307 USA.  */
+-
+-#include "../git-compat-util.h"
+-
+-/* Parse S into tokens separated by characters in DELIM.
+-   If S is NULL, the saved pointer in SAVE_PTR is used as
+-   the next starting point.  For example:
+-	char s[] = "-abc-=-def";
+-	char *sp;
+-	x = strtok_r(s, "-", &sp);	// x = "abc", sp = "=-def"
+-	x = strtok_r(NULL, "-=", &sp);	// x = "def", sp = NULL
+-	x = strtok_r(NULL, "=", &sp);	// x = NULL
+-		// s = "abc\0-def\0"
+-*/
+-char *
+-gitstrtok_r (char *s, const char *delim, char **save_ptr)
+-{
+-  char *token;
+-
+-  if (s == NULL)
+-    s = *save_ptr;
+-
+-  /* Scan leading delimiters.  */
+-  s += strspn (s, delim);
+-  if (*s == '\0')
+-    {
+-      *save_ptr = s;
+-      return NULL;
+-    }
+-
+-  /* Find the end of the token.  */
+-  token = s;
+-  s = strpbrk (token, delim);
+-  if (s == NULL)
+-    /* This token finishes the string.  */
+-    *save_ptr = token + strlen (token);
+-  else
+-    {
+-      /* Terminate the token and make *SAVE_PTR point past it.  */
+-      *s = '\0';
+-      *save_ptr = s + 1;
+-    }
+-  return token;
+-}
+diff --git a/config.mak.uname b/config.mak.uname
+index bea34f0..7f3018f 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -321,7 +321,6 @@ ifeq ($(uname_S),Windows)
+ 	NO_UNSETENV = YesPlease
+ 	NO_STRCASESTR = YesPlease
+ 	NO_STRLCPY = YesPlease
+-	NO_STRTOK_R = YesPlease
+ 	NO_FNMATCH = YesPlease
+ 	NO_MEMMEM = YesPlease
+ 	# NEEDS_LIBICONV = YesPlease
+@@ -476,7 +475,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_UNSETENV = YesPlease
+ 	NO_STRCASESTR = YesPlease
+ 	NO_STRLCPY = YesPlease
+-	NO_STRTOK_R = YesPlease
+ 	NO_FNMATCH = YesPlease
+ 	NO_MEMMEM = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+diff --git a/configure.ac b/configure.ac
+index 1991258..f3462d9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -901,12 +901,6 @@ GIT_CHECK_FUNC(strcasestr,
+ [NO_STRCASESTR=YesPlease])
+ GIT_CONF_SUBST([NO_STRCASESTR])
+ #
+-# Define NO_STRTOK_R if you don't have strtok_r
+-GIT_CHECK_FUNC(strtok_r,
+-[NO_STRTOK_R=],
+-[NO_STRTOK_R=YesPlease])
+-GIT_CONF_SUBST([NO_STRTOK_R])
+-#
+ # Define NO_FNMATCH if you don't have fnmatch
+ GIT_CHECK_FUNC(fnmatch,
+ [NO_FNMATCH=],
+diff --git a/git-compat-util.h b/git-compat-util.h
+index e5a4b74..89a44ab 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -408,11 +408,6 @@ extern uintmax_t gitstrtoumax(const char *, char **, int);
+ extern intmax_t gitstrtoimax(const char *, char **, int);
+ #endif
+ 
+-#ifdef NO_STRTOK_R
+-#define strtok_r gitstrtok_r
+-extern char *gitstrtok_r(char *s, const char *delim, char **save_ptr);
+-#endif
+-
+ #ifdef NO_HSTRERROR
+ #define hstrerror githstrerror
+ extern const char *githstrerror(int herror);
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+1.8.0.msysgit.0.3.gd0186ec
