@@ -1,108 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/2] improve-wincred-compatibility
-Date: Tue, 26 Feb 2013 09:29:14 -0800
-Message-ID: <7vfw0jm1at.fsf@alter.siamese.dyndns.org>
-References: <50E73B80.4070105@gmail.com>
- <CABPQNSYcOrOZJd0vK=4ESC4qPpcj7RRdhVt3R0dAE-ouhOb5YA@mail.gmail.com>
- <50EC473A.6060203@gmail.com>
- <CABPQNSb7MjTKgmeB9TcUV0+-FfjPZ1sgKPsfVDg6+uaw2f_azQ@mail.gmail.com>
- <50EEAF9A.6020302@gmail.com>
- <CABPQNSaUizZPVOeeuEyb=o-Qmm4mYCRxV27qkmp62cSpFkinqA@mail.gmail.com>
- <7vsj4k3nbu.fsf@alter.siamese.dyndns.org> <512BF61B.4020708@dcon.de>
- <7vip5gne96.fsf@alter.siamese.dyndns.org>
- <CABPQNSZSv71_W6Y5rxo0nSBAemiiuTOyB=1Ag6txLy56BEbMFQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] Add pthread support in QNX. Do not declare NO_
+ macros if they can be autodetected.
+Date: Tue, 26 Feb 2013 10:01:47 -0800
+Message-ID: <7vbob7lzsk.fsf@alter.siamese.dyndns.org>
+References: <CAHXAxrPTe6Q4BPtsGjiRnfFjZjUjwY6qXSAtZCzzAthODzA6EA@mail.gmail.com>
+ <7vhal0z4a5.fsf@alter.siamese.dyndns.org>
+ <CAHXAxrO8c8=d+og7rJexY4MKyKMYrWAzFYLMLRKVqtoaB6DUdQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Karsten Blees <karsten.blees@gmail.com>,  git@vger.kernel.org, 
- msysgit@googlegroups.com,  Jeff King <peff@peff.net>,  patthoyts@gmail.com, 
- Johannes.Schindelin@gmx.de
-To: kusmabite@gmail.com
-X-From: msysgit+bncBCG77UMM3EJRB3PBWOEQKGQEHVOE2TY@googlegroups.com Tue Feb 26 18:29:40 2013
-Return-path: <msysgit+bncBCG77UMM3EJRB3PBWOEQKGQEHVOE2TY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vb0-f55.google.com ([209.85.212.55])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matt Kraai <kraai@ftbfs.org>
+To: Mike Gorchak <mike.gorchak.qnx@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 26 19:02:40 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRB3PBWOEQKGQEHVOE2TY@googlegroups.com>)
-	id 1UAOLU-0007mv-8C
-	for gcvm-msysgit@m.gmane.org; Tue, 26 Feb 2013 18:29:40 +0100
-Received: by mail-vb0-f55.google.com with SMTP id fc21sf18876vbb.20
-        for <gcvm-msysgit@m.gmane.org>; Tue, 26 Feb 2013 09:29:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:x-received:received-spf:from:to
-         :cc:subject:references:date:in-reply-to:message-id:user-agent
-         :mime-version:x-pobox-relay-id:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=hu+hxrY9k9DMswcdiZws0W/v9Dg/6Zw872kZi3a5FMk=;
-        b=oc7f4JCRy+MrEpe61bScs9Se9VFoKnPGIAlgsvTy66u6bmDt7ojRuegjqVtVVTeq54
-         IMBPoa9eCoMgOOlqtFAvPKewI8x1zc11YFh4cQ43c16ikNJdZQ6mImW6jbWnlplzq789
-         xvJRB3WC21wXmh5snCubvDFEqC53vlwZ905arFcYe66T0ZLACcy1KSqSq2HHYv5fZD5O
-         nBblGhwCVngjMTziJHZmGlXtmQg/Ar314UpTnJ638eDwiC/UkGrP+Z9gFno+iiRPsTVb
-         AQfZL8lIEjmsa0cuBhoxP0ty 
-X-Received: by 10.49.96.196 with SMTP id du4mr1467182qeb.37.1361899758854;
-        Tue, 26 Feb 2013 09:29:18 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.49.76.67 with SMTP id i3ls1555808qew.92.gmail; Tue, 26 Feb
- 2013 09:29:17 -0800 (PST)
-X-Received: by 10.224.189.78 with SMTP id dd14mr1584084qab.0.1361899757481;
-        Tue, 26 Feb 2013 09:29:17 -0800 (PST)
-X-Received: by 10.224.189.78 with SMTP id dd14mr1584082qab.0.1361899757472;
-        Tue, 26 Feb 2013 09:29:17 -0800 (PST)
-Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id x1si411852qci.2.2013.02.26.09.29.17;
-        Tue, 26 Feb 2013 09:29:17 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of junio@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UAOrE-0006Ja-Jf
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 19:02:28 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932529Ab3BZSBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2013 13:01:54 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40569 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759619Ab3BZSBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2013 13:01:52 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 043BEBC8C;
-	Tue, 26 Feb 2013 12:29:17 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD2A6AD63;
+	Tue, 26 Feb 2013 13:01:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lm4V2Y8tpTB8f5cmg3Vzn3sA8r0=; b=QYnCPO
+	oQgyRFNTCLJDoHEriA3vvz0x0BBbq/d6+XISVkJ1z/NCAlH0KUVCQ2a8u2lbFT4/
+	m9Y/GMMNMJSNOPodiKcrcxey2NwZ8G3w1qNqu3s/nz1IdVBx4kYCLYK+/jlpwUe7
+	ujB/iDx3PkCkHebNB6SQQIjYm8/lHmOpSMhiQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LQFzjPPLqsZN5QRtQqWPXXCTqOGnIqFu
+	XePBCiRf9IQJDLiWXDbZRpnt2jgFpQrGu3cZ6p4ir4Dk2MVwlq+xIt55MfSPhTTN
+	ySSzAhq/g8gokAqpC6bKP66ggDX/MVugwwVOaCtNnz6cOe/+Fce9/V7axxnMaRgV
+	BZppzjqSorA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6625BC89;
-	Tue, 26 Feb 2013 12:29:16 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 435D6AD5D;
+	Tue, 26 Feb 2013 13:01:51 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B304BC86; Tue, 26 Feb 2013
- 12:29:16 -0500 (EST)
-In-Reply-To: <CABPQNSZSv71_W6Y5rxo0nSBAemiiuTOyB=1Ag6txLy56BEbMFQ@mail.gmail.com> (Erik
- Faye-Lund's message of "Tue, 26 Feb 2013 17:55:20 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8665BAD4A; Tue, 26 Feb 2013
+ 13:01:50 -0500 (EST)
+In-Reply-To: <CAHXAxrO8c8=d+og7rJexY4MKyKMYrWAzFYLMLRKVqtoaB6DUdQ@mail.gmail.com> (Mike
+ Gorchak's message of "Mon, 25 Feb 2013 20:19:00 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0B82D792-803A-11E2-AD2F-F3C82E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: best guess record for domain of junio@b-sasl-quonix.pobox.com
- designates 208.72.237.35 as permitted sender) smtp.mail=junio@b-sasl-quonix.pobox.com;
-       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217152>
+X-Pobox-Relay-ID: 984E9E5A-803E-11E2-ACE1-F3C82E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217153>
+
+Mike Gorchak <mike.gorchak.qnx@gmail.com> writes:
+
+>> Also, please leave the "autodetection" out.  If it is common to have
+>> strcasestr (or any other) on a newer QNX, then not defining the
+>> symbol NO_STRCASESTR in this file may still be the right thing to
+>> do, but the justification for such a change should not be because we
+>> rely on "autodetection".  The defaults given in config.mak.uname is
+>> primarily for people who do not use the optional ./configure script,
+>> so pick the default to help the most common configuration for the
+>> platform.
+>
+> I see. I thought configure is the only legal way to build the git and
+> config.mak.uname is used to override settings produced by configure.
+> But it works vice versa configure settings override config.mak.uname
+> settings. Please do not commit this patch. This patch brokes QNX 6.3.2
+> build.
+>
+>> I'd rewrite the patch like the attached, and tentatively queue the
+>> patch to 'pu', but I do not use or have access to QNX myself, so you
+>> may have to adjust the default set of symbols and the log message
+>> and in such a case, please do re-submit a fixed version.
+>
+> I will re-do the patch.
+>
+>> Specifically, I do not know if "... and others are also supported"
+>> is universally true with QNX 6; if not, we need to define NO_* for
+>> them to help people who build without using the ./configure script.
+>
+> Ok.
+
+I saw Matt has comment on this patch, so I'll keep the patch out of
+'next' for now and let you two figure it out.
 
 Thanks.
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
