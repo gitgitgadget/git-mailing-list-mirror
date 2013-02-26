@@ -1,72 +1,65 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH 2/4] config: drop file pointer validity check in
- get_next_char()
-Date: Tue, 26 Feb 2013 20:40:23 +0100
-Message-ID: <20130226194023.GC22756@sandbox-ub>
-References: <cover.1361751905.git.hvoigt@hvoigt.net>
- <6c69068b4e6a72a2cca5dc6eaffa9982032a7f2a.1361751905.git.hvoigt@hvoigt.net>
- <7v4nh13plo.fsf@alter.siamese.dyndns.org>
- <20130226193050.GA22756@sandbox-ub>
-Mime-Version: 1.0
+From: Preben Liland Madsen <prebenliland@gmail.com>
+Subject: Ignore version update changes on git show report?
+Date: Tue, 26 Feb 2013 20:53:34 +0100
+Message-ID: <DEC76CB0-9E35-40A8-9D73-77617CC605A3@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1085)
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 20:47:15 2013
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 26 20:49:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAQUc-0005oh-Cd
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 20:47:14 +0100
+	id 1UAQWL-0006Pv-8c
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 20:49:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759743Ab3BZTqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2013 14:46:49 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.29.28]:50349 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756577Ab3BZTqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2013 14:46:48 -0500
-Received: from [77.21.76.82] (helo=localhost)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1UAQO0-0001cH-ED; Tue, 26 Feb 2013 20:40:24 +0100
-Content-Disposition: inline
-In-Reply-To: <20130226193050.GA22756@sandbox-ub>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S932729Ab3BZTsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2013 14:48:36 -0500
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:46294 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759991Ab3BZTsc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Feb 2013 14:48:32 -0500
+Received: by mail-lb0-f175.google.com with SMTP id n3so3365947lbo.20
+        for <git@vger.kernel.org>; Tue, 26 Feb 2013 11:48:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:content-type:content-transfer-encoding:subject:date
+         :message-id:to:mime-version:x-mailer;
+        bh=8AO/dscYpmqQzbqO/FHegT2PYexEkOS3cGqO76Qd4/s=;
+        b=bbS6oCWY4WGNJAOKJaFlwzYr3wCKp+Sl2PPTBU+/deo5oDAZREwmn6uN5rpm06iw5Z
+         qsMhlerrALdhgjLu9CXP6bi6P1+3UO9iYhbENNiEHUYsNwBnMPkCzywIpLTuqJc3bUiw
+         s5bt0xGdCwcOVt4L7habdp2K0AsW/R1BXhOQhEhb5JPA6ARslYFzF6cKfYB8EwUDJrkV
+         Hz1h70r1T/upKpovvnkT7AAFUUgzsJOAF7ek0jfB4+sTg4hqrLdZUThKcb9GqrSldXoZ
+         iRI+Uy9BgLZjrz5IvLkwRunjzFzhzaMJWV+RdEWc0b8xk4uV5GWozLpQKPWU4PWtfll8
+         XArQ==
+X-Received: by 10.112.103.168 with SMTP id fx8mr1084716lbb.32.1361908110687;
+        Tue, 26 Feb 2013 11:48:30 -0800 (PST)
+Received: from [192.168.0.100] (ti0016a380-dhcp1358.bb.online.no. [83.109.133.81])
+        by mx.google.com with ESMTPS id xw14sm1254563lab.6.2013.02.26.11.48.28
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 26 Feb 2013 11:48:29 -0800 (PST)
+X-Mailer: Apple Mail (2.1085)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217168>
 
-The only location where cf is set in this file is in do_config_from().
-This function has only one callsite which is config_from_file(). In
-config_from_file() its ensured that the f member is set to non-zero.
+Hello, 
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- config.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I'm trying to investigate some what changes have been done between two versions of a software with the name IP.Board. 
 
-diff --git a/config.c b/config.c
-index 2c299dc..f55c43d 100644
---- a/config.c
-+++ b/config.c
-@@ -169,10 +169,10 @@ int git_config_from_parameters(config_fn_t fn, void *data)
- static int get_next_char(void)
- {
- 	int c;
--	FILE *f;
- 
- 	c = '\n';
--	if (cf && ((f = cf->f) != NULL)) {
-+	if (cf) {
-+		FILE *f = cf->f;
- 		c = fgetc(f);
- 		if (c == '\r') {
- 			/* DOS like systems */
--- 
-1.8.2.rc0.26.gf7384c5
+This proves more troublesome than I thought, since their release builder appearantly updates the version number automatically in all files. 
+
+This causes a lot of files to have this as the only change: 
+
+- * IP.Board v3.4.2
++ * IP.Board v3.4.3
+
+Which is quite annoying to have to go through and therefor is responsible for more than 800 files being changed. 
+
+Is there some sort of git command or command I can combine together with git show that will ignore files with only these changes? Something along the lines of ignoring files where the only change matches this change or ignore files that've only gotten 1 line removed and 1 line added? 
+
+Best regards, Preben
