@@ -1,77 +1,101 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 0/5] Fix msvc build
-Date: Tue, 26 Feb 2013 19:06:03 +0000
-Message-ID: <512D079B.2070404@ramsay1.demon.co.uk>
-References: <510AB766.4030806@ramsay1.demon.co.uk> <7vehg4288w.fsf@alter.siamese.dyndns.org> <512B2003.804@viscovery.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH 0/4] allow more sources for config values
+Date: Tue, 26 Feb 2013 20:30:50 +0100
+Message-ID: <20130226193050.GA22756@sandbox-ub>
+References: <cover.1361751905.git.hvoigt@hvoigt.net>
+ <6c69068b4e6a72a2cca5dc6eaffa9982032a7f2a.1361751905.git.hvoigt@hvoigt.net>
+ <7v4nh13plo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Feb 26 20:08:18 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 26 20:31:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAPsu-0004CI-N0
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 20:08:17 +0100
+	id 1UAQFL-0007Gv-PR
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 20:31:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932155Ab3BZTHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2013 14:07:49 -0500
-Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:46557 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758179Ab3BZTHr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2013 14:07:47 -0500
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 15595384088;
-	Tue, 26 Feb 2013 19:07:46 +0000 (GMT)
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 51F1B384081;	Tue, 26 Feb 2013 19:07:45 +0000 (GMT)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;	Tue, 26 Feb 2013 19:07:41 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
-In-Reply-To: <512B2003.804@viscovery.net>
-X-MDF-HostID: 4
+	id S1759902Ab3BZTa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2013 14:30:59 -0500
+Received: from smtprelay06.ispgateway.de ([80.67.31.104]:40680 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759779Ab3BZTa5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2013 14:30:57 -0500
+Received: from [77.21.76.82] (helo=localhost)
+	by smtprelay06.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1UAQEl-0000PC-4K; Tue, 26 Feb 2013 20:30:51 +0100
+Content-Disposition: inline
+In-Reply-To: <7v4nh13plo.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217163>
 
-Johannes Sixt wrote:
-> Am 2/25/2013 7:54, schrieb Junio C Hamano:
->> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
->>
->>> As I mentioned recently, while discussing a cygwin specific patch
->>> (see "Version 1.8.1 does not compile on Cygwin 1.7.14" thread), the
->>> MSVC build is broken for me.
->>>
->>> The first 4 patches fix the MSVC build for me. The final patch is
->>> not really related to fixing the build, but it removed some make
->>> warnings which were quite irritating ...
->>>
->>> Note that I used the Makefile, with the Visual C++ 2008 command
->>> line compiler on Windows XP (SP3), to build a vanilla git on MinGW.
->>> I'm not subscribed to the msysgit mailing list, nor do I follow the
->>> msysgit fork of git, so these patches may conflict with commits in
->>> their repository.
->>
->> Did anything further happen to this topic in the Windows land?
-> 
-> I successfully built with MSVC with these patches (but I am not using the
-> result anywhere nor did I attempt to run the test suite).
-> 
-> More importantly, I'm using git on Windows ("MinGW flavor") with these
-> patches in production, so there are no obvious regressions.
-> 
-> Feel free to add my
-> 
-> Tested-by: Johannes Sixt <j6t@kdbg.org>
+Hi,
 
-Johannes, thank you for taking the time to test these patches.
+On Sun, Feb 24, 2013 at 09:54:43PM -0800, Junio C Hamano wrote:
+> The idea to allow more kinds of sources specified for "config_file"
+> structure is not bad per-se, but whenever you design an enhancement
+> to something that currently supports only on thing to allow taking
+> another kind, please consider what needs to be done by the next
+> person who adds the third kind.  That would help catch design
+> mistakes early.  For example, will the "string-list" (I am not
+> saying use of string-list makes sense as the third kind; just as an
+> example off the top of my head) source patch add
+> 
+> 	int is_string_list;
+>         struct string_list *string_list_contents;
+> 
+> fields to this structure?  Sounds insane for at least two reasons:
+> 
+>  * if both is_strbuf and is_string_list are true, what should
+>    happen?
+> 
+>  * is there a good reason to waste storage for the three fields your
+>    patch adds when sring_list strage (or FILE * storage for that
+>    matter) is used?
+> 
+> The helper functions like config_fgetc() and config_ftell() sounds
+> like you are going in the right direction but may want to do the
+> OO-in-C in a similar way transport.c does, keeping a pointer to a
+> structure of methods, but I didn't read the remainder of this patch
+> very carefully enough to comment further.
 
-ATB,
-Ramsay Jones
+I split up my config-from-strings patch from the "fetch moved submodules
+on-demand" series[1] for nicer reviewability. Since Peff almost needed it
+and the recursive submodule checkout will definitely[2] need it: How
+about making it a seperate topic and implement this infrastructure
+first?
+
+Junio I incorporated your comments this seems like a result ready for
+inclusion.
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/217018
+[2] http://article.gmane.org/gmane.comp.version-control.git/217155
+
+Heiko Voigt (4):
+  config: factor out config file stack management
+  config: drop file pointer validity check in get_next_char()
+  config: make parsing stack struct independent from actual data source
+  teach config parsing to read from strbuf
+
+ .gitignore             |   1 +
+ Makefile               |   1 +
+ cache.h                |   1 +
+ config.c               | 140 ++++++++++++++++++++++++++++++++++++++-----------
+ t/t1300-repo-config.sh |   4 ++
+ test-config.c          |  41 +++++++++++++++
+ 6 files changed, 158 insertions(+), 30 deletions(-)
+ create mode 100644 test-config.c
+
+-- 
+1.8.2.rc0.26.gf7384c5
