@@ -1,96 +1,73 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 01/13] Use 'Git' in help messages
-Date: Tue, 26 Feb 2013 22:56:07 -0000
-Organization: OPDS
-Message-ID: <96C279DB1BA3478ABA712FF00EAB6C13@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: "J.V." <jvsrvcs@gmail.com>
+Subject: problem switching branches
+Date: Tue, 26 Feb 2013 16:08:55 -0700
+Message-ID: <512D4087.5070504@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=response
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"David Aguilar" <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 23:56:39 2013
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 27 00:09:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UATRt-0008Ai-G8
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 23:56:37 +0100
+	id 1UATeJ-0005nG-5x
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 00:09:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759604Ab3BZW4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2013 17:56:08 -0500
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:63392 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759102Ab3BZW4H (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Feb 2013 17:56:07 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgkFAK03LVFZ8rke/2dsb2JhbABFjAu1b4EAF3OCGgUBAQQJAQEuHgEBIQsCCAIBAxUBCzkBBAgSBgcdARIIAgECAwGHcAMJCqVDijuGIg2JWow8gXlUC4JmYQOINIVihk2NLoUXgwg
-X-IronPort-AV: E=Sophos;i="4.84,743,1355097600"; 
-   d="scan'208";a="420458260"
-Received: from host-89-242-185-30.as13285.net (HELO PhilipOakley) ([89.242.185.30])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 26 Feb 2013 22:56:04 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1759181Ab3BZXI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2013 18:08:58 -0500
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:37784 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758137Ab3BZXI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2013 18:08:57 -0500
+Received: by mail-pb0-f44.google.com with SMTP id wz12so2676193pbc.3
+        for <git@vger.kernel.org>; Tue, 26 Feb 2013 15:08:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=MsRBUsLKyfNqgpvERSxYu8AF855sKg1sQL1OiZ45gYU=;
+        b=a4KZra6trfkirmdE3K/99VOaRHfqTJgjoRFzOh1+Lr3MY2CMeCrFGpC7NHMtaqJbUs
+         D34+upzYrdhBXV5j3AZrgHmUrc88h3rQU6bfYViWrev9OZ0O98qdc4HA/25zJrTfjjs8
+         6boaiQm/v7meoZIYg4LEvRB8+Y5pdbtWDp4iTWAa5uyhpcXFELwkxX4bXAr97DGMa0T6
+         +U45v6lwx0LNbGzJ06g99R5MgK8y0KHa6PwCfrNEsg7k4zD+eW+nYYcAfQvaBQXUS68W
+         EIetO8g0qPxYXw3SuinHe/1Uhr1EBqE4wCa1E2NhQ3fi4XxYj15mbjio4i3MtTN2OQhU
+         T5MQ==
+X-Received: by 10.68.197.4 with SMTP id iq4mr81631pbc.96.1361920136995;
+        Tue, 26 Feb 2013 15:08:56 -0800 (PST)
+Received: from [10.16.242.114] ([192.206.100.4])
+        by mx.google.com with ESMTPS id dk1sm2316756pbc.15.2013.02.26.15.08.55
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 26 Feb 2013 15:08:56 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217190>
 
-From: "Philip Oakley" <philipoakley@iee.org>
-Sent: Sunday, February 24, 2013 9:50 PM
-> From: "Junio C Hamano" <gitster@pobox.com>
-> Sent: Sunday, February 24, 2013 8:59 AM
->> David Aguilar <davvid@gmail.com> writes:
->>
->>> This is referring to "git the command", not "git the system",
->>> so it should not be changed according to the rule that was
->>> applied when many "git" strings were changed to "Git".
->>
->> That sounds like a sensible objection.
->>
->
-> I'd read the messages in the tone 'commands of the Git system', but I 
-> can see that both views are equally plausible. Though the final 
-> _("git: '%s' is not a Git command. See 'git --help'.") can't be 
-> referring to a 'git-<cmd>', obviously ;-)
->
->>> There are scripts, etc. in the wild that parse this output.
->>> which is another reason we would not want to change this.
->>
->> Are there?  For what purpose?
->>
+I was on my master branch, I then checked out a branch ( 
+origin/somebranch ), made no updates
+but did a few git pulls on the branch over about a week; then made a 
+small change to only a single file & committed & pushed.
 
-Just found that Git Gui checks for the version number (line 936)
+Now am trying to go back to my master branch and get:
 
-    if {![regsub {^git version } $_git_version {} _git_version]} {
+error: The following untracked working tree files would be overwritten 
+by checkout:
+         lib/derbyclient.jar
+Please move or remove them before you can switch branches.
+Aborting
 
-and then parses for the dot separated digits etc.
 
-So looks like the version string change would be a problematic 
-regression.
+I did not put that jar file there (I edited a single config file), how 
+do I now get back to my master branch?
 
-Given the change elsewhere of 'Usage:' to 'usage:' it looks like I 
-should drop this patch.
+I do not want to muck up the branch that I am now on by deleting anything.
+Any ideas how this happened?
 
->> Especially when these are all _("l10n ready"), I find that somewhat
->> unlikely.
->>
->> The bash completion (in contrib/) does read from the command list
->> IIRC.  I do not think it relies on the messages, though.
->
-> I was aware of that bash completion used 'git help -a' so I avoided 
-> changing the response to that option. Initially I'd thought of making 
-> '-a' provide both commands and guides but knew I'd need to ensure the 
-> completion would still be sensible. I'd taken Juio's earlier advice to 
-> keep '-a' unchanged and simply add the -g|--guides option as a 
-> supplemental 'git help' response..
->
-> Philip 
+Obviously someone put derbyclient.jar there, not sure, but it is
+supposed to be there so do not want to remove as advised.
+
+any ideas on how I can get back to my master branch and get out of this?
