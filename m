@@ -1,82 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Better handling of erroneous git stash save "somemessage"
- --keep-index
-Date: Tue, 26 Feb 2013 08:10:04 -0800
-Message-ID: <7vwqtvm4yr.fsf@alter.siamese.dyndns.org>
-References: <CAPs+M8JvcnTcZiySmpMBuOxek4THRnTx0jkZv7NHaSDNLhcOAQ@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] improve-wincred-compatibility
+Date: Tue, 26 Feb 2013 17:19:49 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1302261718210.32206@s15462909.onlinehome-server.info>
+References: <50E73B80.4070105@gmail.com> <CABPQNSYcOrOZJd0vK=4ESC4qPpcj7RRdhVt3R0dAE-ouhOb5YA@mail.gmail.com> <50EC473A.6060203@gmail.com> <CABPQNSb7MjTKgmeB9TcUV0+-FfjPZ1sgKPsfVDg6+uaw2f_azQ@mail.gmail.com> <50EEAF9A.6020302@gmail.com>
+ <CABPQNSaUizZPVOeeuEyb=o-Qmm4mYCRxV27qkmp62cSpFkinqA@mail.gmail.com> <7vsj4k3nbu.fsf@alter.siamese.dyndns.org> <512BF61B.4020708@dcon.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Gunnlaugur Thor Briem <gunnlaugur@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 17:10:39 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, kusmabite@gmail.com, 
+    git@vger.kernel.org, msysgit@googlegroups.com, Jeff King <peff@peff.net>, 
+    patthoyts@gmail.com
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCZPH74Q5YNRBKOBWOEQKGQEL6LXQKY@googlegroups.com Tue Feb 26 17:20:16 2013
+Return-path: <msysgit+bncBCZPH74Q5YNRBKOBWOEQKGQEL6LXQKY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-fa0-f60.google.com ([209.85.161.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAN6y-00026z-Dz
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 17:10:36 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757904Ab3BZQKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2013 11:10:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47308 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757517Ab3BZQKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2013 11:10:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E74A4AEFE;
-	Tue, 26 Feb 2013 11:10:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J1/ChIY+Jz2cHmdGIaUw/QCOLXg=; b=vJVxCp
-	W+kgHh1O1wAS8cTjcrXczECNguHulwsgpGWCwpn/0BPqpMH063/xfCcblPbCbbux
-	wjZHvS1Z0ElEyeTUrmSTCk39ALEG10pmAPjZUdnxrWORqZhSYc56gD7wLdQj/OOa
-	YD7KVn/skbx2uBNaiPn/mZWMNZlPWyvNehtmE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MFmU3zmhqp31uPaewlhu555JrGsTovPG
-	bXGzgy6BUMBGDnyyYOtrfBS7ai2tU2dSTQ4mZNa0j6zP48JuYpuDGiW+SXch9Cdy
-	Xe2VjOpkmWmnPDssP9zib/qI4Y3NMKoJaHelgTWpKv0HT2EoNK2FP+kggg/Pdlrt
-	XmM61p76v7w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC307AEFD;
-	Tue, 26 Feb 2013 11:10:06 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CD9FAEFB; Tue, 26 Feb 2013
- 11:10:06 -0500 (EST)
-In-Reply-To: <CAPs+M8JvcnTcZiySmpMBuOxek4THRnTx0jkZv7NHaSDNLhcOAQ@mail.gmail.com>
- (Gunnlaugur Thor Briem's message of "Tue, 26 Feb 2013 15:59:47 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FC46C578-802E-11E2-A6A9-F3C82E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217141>
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBKOBWOEQKGQEL6LXQKY@googlegroups.com>)
+	id 1UANGJ-0007UR-3V
+	for gcvm-msysgit@m.gmane.org; Tue, 26 Feb 2013 17:20:15 +0100
+Received: by mail-fa0-f60.google.com with SMTP id x10sf1649647fax.25
+        for <gcvm-msysgit@m.gmane.org>; Tue, 26 Feb 2013 08:19:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-received:x-beenthere:x-received:x-received:received-spf
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :x-y-gmx-trusted:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:x-google-group-id:list-post
+         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
+         :content-type;
+        bh=CNSHcVWqWa4Y/MNxCJ1jJitbzM7MtINjJhI8EBnh+dk=;
+        b=QDNhipFF/6rTFMi6LptHaMU4VJPlEuFfRAUiY2lKzO/sA3LRdWr2I1d8XTE9EoZhi0
+         lXkrPVWiG6IWxLay5njwY+PKu4fe4mA21gRqS6bnq9YpIeyI+1sJ1oj/M1mue5V8/EKi
+         5zwpF7Phb+g3ebcQ2GYa+/qS+r8y7I89FKBzhdiEfPyXH6Is/WJhq7Rv/fNLMbRgV7x6
+         YQaFO/gcpBC1RS3wdYoc1xXctgWVQXreXX6iUaNeD45flufIh0jS5 
+X-Received: by 10.181.13.100 with SMTP id ex4mr1516790wid.0.1361895594022;
+        Tue, 26 Feb 2013 08:19:54 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.8.70 with SMTP id p6ls294644wia.27.gmail; Tue, 26 Feb 2013
+ 08:19:53 -0800 (PST)
+X-Received: by 10.14.220.131 with SMTP id o3mr17382512eep.3.1361895592948;
+        Tue, 26 Feb 2013 08:19:52 -0800 (PST)
+X-Received: by 10.14.220.131 with SMTP id o3mr17382511eep.3.1361895592941;
+        Tue, 26 Feb 2013 08:19:52 -0800 (PST)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
+        by gmr-mx.google.com with ESMTP id 47si426520eeh.1.2013.02.26.08.19.52;
+        Tue, 26 Feb 2013 08:19:52 -0800 (PST)
+Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
+Received: from mailout-de.gmx.net ([10.1.76.12]) by mrigmx.server.lan
+ (mrigmx002) with ESMTP (Nemesis) id 0LfUwx-1Ud6MT2NlB-00p1bT for
+ <msysgit@googlegroups.com>; Tue, 26 Feb 2013 17:19:52 +0100
+Received: (qmail invoked by alias); 26 Feb 2013 16:19:51 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp012) with SMTP; 26 Feb 2013 17:19:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19EWohL8qFEMn6koL/76/t4Ve5QIrxtaeUKn9CwRO
+	jVR+dDusN/MaGt
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <512BF61B.4020708@dcon.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of johannes.schindelin@gmx.de designates 212.227.17.21 as
+ permitted sender) smtp.mail=johannes.schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217142>
 
-Gunnlaugur Thor Briem <gunnlaugur@gmail.com> writes:
+Hi Karsten,
 
-> the command:
->
-> git stash save "some message" --keep-index
->
-> stashes everything, including the index, and adds the "--keep-index"
-> to the message. The manual labor of separating index hunks from hunks
-> to stash is lost. This is in version 1.8.1.3.
->
-> This is a user error, of course (per the man page, parameters are not
-> accepted after the message). But it would be better handled by
-> erroring out, with a message like "git stash save does not permit
-> parameters after the stash message".
+On Tue, 26 Feb 2013, Karsten Blees wrote:
 
-Then the user cannot say
+> @Pat, Dscho: the rebase-merge script should automatically drop patches
+> found in upstream, correct?
 
-	git stash save some message that consists of multiple words
+Yep, that's the idea. Under some circumstances, --cherry will fail to pick
+up on it and the commits will still be marked for 'pick', but when it
+comes to them, there will be no changes to be committed.
 
-no?  You may have a WIP to enhance the behaviour of one option and
-you might want to say
+Ciao,
+Dscho
 
-	git stash save wip: tweak behaviour of --keep-index
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-to save it away when switching to higher priority task.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
