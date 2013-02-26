@@ -1,65 +1,78 @@
-From: Ben McCann <ben@benmccann.com>
-Subject: git subtree workflow
-Date: Tue, 26 Feb 2013 01:04:28 -0800
-Message-ID: <CAH3cagOtcR3fgoXK-Xd8vm48q0GPQtYMkWiqQGgydb27HeO0wQ@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: Git 1.8.2 l10n round 3
+Date: Tue, 26 Feb 2013 18:24:47 +0800
+Message-ID: <CANYiYbGaO+gj0JAVyBa3bVdWacaE08o=uOFRBiiBfhrWa8HhEg@mail.gmail.com>
+References: <CANYiYbHF1MAEcbhhf+PfawTzTxC06LFuZuccyeQUmtf8xXE8ig@mail.gmail.com>
+	<CANYiYbHPtW0u80ojHt9xoADVS8S8mVkubb6dUDN_1uwkcTZTww@mail.gmail.com>
+	<7v4nh0z3nr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 26 10:05:00 2013
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 26 11:25:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAGT4-0008Qn-3h
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 10:04:58 +0100
+	id 1UAHim-00028a-5e
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 11:25:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759753Ab3BZJEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2013 04:04:31 -0500
-Received: from mail-ve0-f173.google.com ([209.85.128.173]:48127 "EHLO
-	mail-ve0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759465Ab3BZJE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2013 04:04:29 -0500
-Received: by mail-ve0-f173.google.com with SMTP id oz10so3122892veb.4
-        for <git@vger.kernel.org>; Tue, 26 Feb 2013 01:04:28 -0800 (PST)
+	id S1754362Ab3BZKYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2013 05:24:51 -0500
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:35405 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750926Ab3BZKYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2013 05:24:50 -0500
+Received: by mail-wi0-f173.google.com with SMTP id hq4so4614611wib.6
+        for <git@vger.kernel.org>; Tue, 26 Feb 2013 02:24:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:date:x-google-sender-auth:message-id
-         :subject:from:to:content-type;
-        bh=drSXzsN7ILfoO1xIsqumxIdhZMNiTjDpT1r2c1x6JZc=;
-        b=K3X4xmyHWPuz9mqXSUjAzxyabaiWkB3nvQol2a7OZxJIIPyK+T/8YT/C7M2fJ4yM0P
-         FU03bLBE1sM3wT7cL2eIBMwyA8HBIzA0olptIIPuNw0se5LH8g1o0dZWg8Azm/JWJk3r
-         zBUm/Y7/PhFkAiwZ/XGgE30K4LiJ2v33qrFNZYCPL0HcImuIEysEUli9/HA9sgXabRgJ
-         YnHaxNd4EEVoEJJUFSjkvcBumCP4OEuRTeSZQzNnMwlk/WiSCVwTPsHP3vXNOg5PQnMN
-         WLWj+zztvSNn0+2rQY4AjJkBj8q6w21Xw6yj29yWn0BO19FBi/5asiKygs7oQkW8RZQz
-         MHAw==
-X-Received: by 10.58.19.232 with SMTP id i8mr11299184vee.53.1361869468314;
- Tue, 26 Feb 2013 01:04:28 -0800 (PST)
-Received: by 10.58.116.201 with HTTP; Tue, 26 Feb 2013 01:04:28 -0800 (PST)
-X-Google-Sender-Auth: 4x7YzjC_AnO6tSE9-vFxpaeaEMI
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=3reIdR8hcUeE3HoIp9NsQY4DzzvNlggqmsdXjO0NWGI=;
+        b=C+gGFW/YanSG4omJIZiPgbEdp+DGyl6HexYFyJ/ARpTLGNhp2ADqcRQNJ4yZj8seV9
+         cJ7DbrnFsex/iom6EiHqMR5sdoOVGLmWcPqhgzWYGHlsHZ8W/I41O9haelAorHwHMgHA
+         Nv4ka6cdLraj2f2exKyiVfJzP4umEfu41cPeBqUGTlwpIgCC7JmDWP1OUSbq9By0y0Mh
+         QKAnKknyNNGAcw47tbAYumKbWg9HExq9iV4SVba3PR0EVCgi1D9GQiyg5++fTyuT/ipK
+         iFW4C6ODl/vIpmkXekAqvksZmvvXcmpiS+jxJT7d6foaeYY+itIKX7yKrrfHcjOIvrxR
+         +kjg==
+X-Received: by 10.194.76.237 with SMTP id n13mr25320386wjw.57.1361874288082;
+ Tue, 26 Feb 2013 02:24:48 -0800 (PST)
+Received: by 10.194.110.199 with HTTP; Tue, 26 Feb 2013 02:24:47 -0800 (PST)
+In-Reply-To: <7v4nh0z3nr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217132>
 
-I'm fairly new to git and am trying to determine if git subtree would
-be helpful for managing our company's codebase, which has several
-repos some of which depend on each other. All the examples I've seen
-make sense to me as a one-time operation to merge separate repos into
-one monolithic one or to split one monolithic repo into separate
-repos. I'm having a harder time understanding how this fits into a
-larger picture and what the workflow for working with subtree would
-be.
+Hi Junio,
 
-If I have a bunch of repos on GitHub and some depend on each other,
-how would I set them up to work with subtree? Would GitHub continue to
-host them as is, host a merged monolithic repo, or host both a
-monolithic repo and the splitted out repos? The exact answer probably
-varies, but I imagine there's basic workflow that would satisfy 80% of
-users.  If I have GitHub host both monolithic and splitted out repos,
-it seems unclear as to how I keep those repos in sync and make sure
-all the developers in our company push their changes to both repos.
+Additional pull request for git 1.8.2 l10n round 3, which has
+Germany translation updates.
 
-Thanks,
-Ben
+The following changes since commit 4dac0679feaebbf6545daec14480cf6b94cb74ed:
+
+  Git 1.8.2-rc1 (2013-02-25 09:03:26 -0800)
+
+are available in the git repository at:
+
+  git://github.com/git-l10n/git-po master
+
+for you to fetch changes up to 5e93cd307bdb98809bb0aa3bfb2c0306131f3654:
+
+  l10n: de.po: correct translation of "bisect" messages (2013-02-26
+07:38:34 +0100)
+
+----------------------------------------------------------------
+Ralf Thielow (3):
+      l10n: de.po: translate 35 new messages
+      l10n: de.po: translate 5 new messages
+      l10n: de.po: correct translation of "bisect" messages
+
+ po/de.po | 1457 +++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 821 insertions(+), 636 deletions(-)
+
+--
+Jiang Xin
