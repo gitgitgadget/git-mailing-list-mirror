@@ -1,67 +1,69 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [PATCH/RFC] Record original ref in detached HEAD
-Date: Tue, 26 Feb 2013 15:37:39 +0100
-Message-ID: <vpqsj4jqgy4.fsf@grenoble-inp.fr>
-References: <1361888897-1821-1-git-send-email-pclouds@gmail.com>
+Date: Tue, 26 Feb 2013 21:57:36 +0700
+Message-ID: <CACsJy8BJqoCVHm=jY+Y6LB_aKuyE5HsGA=eHmYur-Lfrp+PE4A@mail.gmail.com>
+References: <1361888897-1821-1-git-send-email-pclouds@gmail.com> <vpqsj4jqgy4.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 15:38:12 2013
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Tomas Carnecky <tomas.carnecky@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 26 15:58:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UALfX-0003qB-KU
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 15:38:11 +0100
+	id 1UALzF-0007KR-RI
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 15:58:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759186Ab3BZOho convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Feb 2013 09:37:44 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:46567 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758293Ab3BZOhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2013 09:37:43 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r1QEbclR007609
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 26 Feb 2013 15:37:38 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UALf1-0001gF-Kq; Tue, 26 Feb 2013 15:37:39 +0100
-In-Reply-To: <1361888897-1821-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 26
- Feb 2013 21:28:17 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 26 Feb 2013 15:37:38 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r1QEbclR007609
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1362494259.21605@6NcnvSJGqM4kXysCc2Hklg
+	id S1759361Ab3BZO6I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Feb 2013 09:58:08 -0500
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:42273 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759233Ab3BZO6H convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Feb 2013 09:58:07 -0500
+Received: by mail-oa0-f44.google.com with SMTP id h1so5337425oag.3
+        for <git@vger.kernel.org>; Tue, 26 Feb 2013 06:58:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=LtzWkaBNnlKByBjghmeYhCYJCqpcGqlvqrpKxyF8szE=;
+        b=bHCQpWgwY8rBxbOhM0yo1TxR2wRby+rbgfzqU+5xgmj80IFpVG2JSHnbtwjZ0WB22C
+         cPlw2+WIaIIxqxvp9CXByDNoKlyoZpuU4yrr9dyL6EZnGI4AGJ6it2fAuOQCCassy9gx
+         Dqq8zyW/5wcDgDFLM7SiOB2GmzNBfA5TBWB9RLZETkuLQM1eK1ccwWRIFZbP8unLOQ7f
+         XnrJEpYLmaVQPTn9Gz8br0wH3XNvReQXlI7bveuI2tWxWiztqyI81i7Edmzpf3sAWWmz
+         pojbNFeJI1t4Y0WtVtZ8nHmJ/0lavFp/WaJGAWvWZouS063XzZK+8XfOu7sAzy0UrYGf
+         4MKQ==
+X-Received: by 10.60.6.199 with SMTP id d7mr1572921oea.137.1361890686675; Tue,
+ 26 Feb 2013 06:58:06 -0800 (PST)
+Received: by 10.76.154.197 with HTTP; Tue, 26 Feb 2013 06:57:36 -0800 (PST)
+In-Reply-To: <vpqsj4jqgy4.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217135>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+On Tue, Feb 26, 2013 at 9:37 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+>
+>> Many times I checkout a remote branch, or a tag and after a while I
+>> forget remember what ref I checked it out from. Saving the original
+>> ref would help (or is it already saved somewhere?).
+>
+> It is :-). Try e.g.
+>
+>   git checkout --detach
+>   git checkout -
+>
+> (analogous to "cd -": return back to where you were before)
 
-> Many times I checkout a remote branch, or a tag and after a while I
-> forget remember what ref I checked it out from. Saving the original
-> ref would help (or is it already saved somewhere?).
-
-It is :-). Try e.g.
-
-  git checkout --detach
-  git checkout -
-
-(analogous to "cd -": return back to where you were before)
-
+Yeah. I always manage to forget reflog when I need it. Time to show
+the information in "git branch", oh wait I still have a wip about
+git-branch on pu..
 --=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Duy
