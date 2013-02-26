@@ -1,61 +1,84 @@
-From: Mike Gorchak <mike.gorchak.qnx@gmail.com>
-Subject: Re: [PATCH 1/1] Fix date checking in case if time was not initialized.
-Date: Tue, 26 Feb 2013 20:58:20 +0200
-Message-ID: <CAHXAxrM=X9q_65VcVkc+1JQk9QCjvGi1rFhEDcPN27S9ed7yMA@mail.gmail.com>
-References: <CAHXAxrOOqn6ZSVT1AFyO3a3paD1tokBtcnaX68a+ddhodOvZ6Q@mail.gmail.com>
-	<7vzjysxnb1.fsf@alter.siamese.dyndns.org>
-	<CAHXAxrMaQRdBxSvNO+no_9d==v0tVnkpXtguTKyfvnm-VfR_xA@mail.gmail.com>
-	<7vr4k4xlie.fsf@alter.siamese.dyndns.org>
-	<CAHXAxrOjSS5jGLcCw4KTxP_F_uRQhi0cPSvzbx58jx9dP25XPA@mail.gmail.com>
-	<7va9qsxjzk.fsf@alter.siamese.dyndns.org>
-	<CAHXAxrO4c=s0pjNpXK171HUbQT06jm-VAxNNK1DAqZEZfz6OtA@mail.gmail.com>
-	<7v4nh0oxnv.fsf@alter.siamese.dyndns.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH] pkt-line: Fix sparse errors and warnings
+Date: Tue, 26 Feb 2013 19:02:59 +0000
+Message-ID: <512D06E3.5020109@ramsay1.demon.co.uk>
+References: <51290DF4.4040309@ramsay1.demon.co.uk> <20130223223134.GA2504@sigill.intra.peff.net> <20130223223700.GB2504@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 26 19:58:48 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 26 20:08:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAPjj-0008Il-Hj
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 19:58:47 +0100
+	id 1UAPsu-0004CI-68
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Feb 2013 20:08:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756097Ab3BZS6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Feb 2013 13:58:22 -0500
-Received: from mail-qe0-f49.google.com ([209.85.128.49]:48389 "EHLO
-	mail-qe0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755163Ab3BZS6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Feb 2013 13:58:21 -0500
-Received: by mail-qe0-f49.google.com with SMTP id 1so966677qec.22
-        for <git@vger.kernel.org>; Tue, 26 Feb 2013 10:58:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=VcWxO5Ehl0lUF94sWf7aTcS7d58Wfbuu4SfW8fC0DaI=;
-        b=dqD45NUF5edE4EUsjsW2J2EzNOix2KJCiiWtz4yOpkdj8wDcPS3GKx2GqBtr7yPqc7
-         vOSGdQO8JAdkEePtuQiPNvZTyt5q3EJlEzQLpSJ80X0A2m9EpY2uNupCQB6+Mx6GqIlv
-         1YFKoLt+XxOyudqRCg3ftG0lsJDBAS1GwRJ6lttXgXQNMFLM+u0C25P7YvHF3JQ0zfxR
-         wnzgBT6lLHFRNcFZXstGCNp7txFnsM4vQ5HkprWZxb3jO90rxYpnYuE7fkmZGZt8xIVQ
-         w6Gykfh8j4Ps+qLyQvItdc2wWn0j2bC80LxvLQuLCyfLNfdbAWJEkX6MqP8j94goPwkT
-         vx4w==
-X-Received: by 10.224.27.136 with SMTP id i8mr3640780qac.63.1361905100084;
- Tue, 26 Feb 2013 10:58:20 -0800 (PST)
-Received: by 10.49.71.68 with HTTP; Tue, 26 Feb 2013 10:58:20 -0800 (PST)
-In-Reply-To: <7v4nh0oxnv.fsf@alter.siamese.dyndns.org>
+	id S1759602Ab3BZTHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Feb 2013 14:07:48 -0500
+Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:46534 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754791Ab3BZTHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Feb 2013 14:07:41 -0500
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 55152384086;
+	Tue, 26 Feb 2013 19:07:40 +0000 (GMT)
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 8774B384081;	Tue, 26 Feb 2013 19:07:39 +0000 (GMT)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;	Tue, 26 Feb 2013 19:07:38 +0000 (GMT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130107 Thunderbird/17.0.2
+In-Reply-To: <20130223223700.GB2504@sigill.intra.peff.net>
+X-MDF-HostID: 4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217160>
 
-> The test does _not_ fail.  That if condition does return -1 on Linux
-> and BSD, and making tm_to_time_t() return a failure, but the caller
-> goes on, ending up with the right values in year/month/date in the
-> tm struct, which is the primary thing the function is used for.
+Jeff King wrote:
+> On Sat, Feb 23, 2013 at 05:31:34PM -0500, Jeff King wrote:
+> 
+>> On Sat, Feb 23, 2013 at 06:44:04PM +0000, Ramsay Jones wrote:
+>>
+>>> Sparse issues the following error and warnings:
+>>>
+>>>     pkt-line.c:209:51: warning: Using plain integer as NULL pointer
+>>>     sideband.c:41:52: warning: Using plain integer as NULL pointer
+>>>     daemon.c:615:39: warning: Using plain integer as NULL pointer
+>>>     remote-curl.c:220:75: error: incompatible types for operation (>)
+>>>     remote-curl.c:220:75:    left side has type char *
+>>>     remote-curl.c:220:75:    right side has type int
+>>>     remote-curl.c:291:53: warning: Using plain integer as NULL pointer
+>>>     remote-curl.c:408:43: warning: Using plain integer as NULL pointer
+>>>     remote-curl.c:562:47: warning: Using plain integer as NULL pointer
+>>>
+>>> All of these complaints "blame" to commit 17243606 ("pkt-line: share
+>>> buffer/descriptor reading implementation", 20-02-2013).
+>>>
+>>> In order to suppress the warnings, we simply replace the integer
+>>> constant 0 with NULL.
+>> [...]
+>> Oddly, you seemed to miss the one in connect.c (which my sparse does
+>> detect).
+> 
+> Ah, I saw why as soon as I finished off the rebase: that (NULL, 0) goes
+> away in the very next patch, and you probably ran sparse just on the tip
+> of the topic (via pu). 
 
-I said it wrong, test itself is not failed, but numerous is_date()
-checks are failed due to incomplete time.
+Yes, sorry I should have mentioned that! Ahem, *blush* [Having created and
+tested the patch (including running "make test") on the tip of pu, I applied
+the patch directly to commit 17243606 (using git-am). Since it applied
+cleanly and git-show looked OK, I said to myself "yep, that's OK, send it" ;-) ]
+
+>                         I still think it's worth fixing since we are
+> squashing anyway. Junio, it will give you a trivial conflict on patch
+> 16, but you can just resolve in favor of what patch 16 does. If it's
+> easier, here's the revised patch 16:
+
+So, sorry for being a bit sloppy guys!
+
+ATB,
+Ramsay Jones
