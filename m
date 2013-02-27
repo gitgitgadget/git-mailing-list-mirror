@@ -1,81 +1,97 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: gc does not clean up after itself when not enough disk space
-Date: Wed, 27 Feb 2013 00:07:35 -0500
-Message-ID: <20130227050735.GA10976@sigill.intra.peff.net>
-References: <512CD689.4050705@gmail.com>
- <512CD703.4080302@gmail.com>
- <7v1uc3njnf.fsf@alter.siamese.dyndns.org>
- <512D1B8C.9070506@web.de>
- <CAMK1S_hxZZzi911s2QRpc67sNf_U7Ceo1fPT_hg1gO500pO=6A@mail.gmail.com>
+Subject: Re: problem switching branches
+Date: Wed, 27 Feb 2013 00:17:40 -0500
+Message-ID: <20130227051740.GB10976@sigill.intra.peff.net>
+References: <512D4087.5070504@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	"jones.noamle" <lenoam@gmail.com>, git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 27 06:08:07 2013
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "J.V." <jvsrvcs@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 27 06:18:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAZFO-0007B9-8n
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 06:08:06 +0100
+	id 1UAZP8-00022Q-GR
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 06:18:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749Ab3B0FHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2013 00:07:40 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33636 "EHLO
+	id S1751559Ab3B0FRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2013 00:17:45 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33644 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750699Ab3B0FHk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2013 00:07:40 -0500
-Received: (qmail 13504 invoked by uid 107); 27 Feb 2013 05:09:15 -0000
+	id S1750890Ab3B0FRo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2013 00:17:44 -0500
+Received: (qmail 13545 invoked by uid 107); 27 Feb 2013 05:19:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Feb 2013 00:09:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Feb 2013 00:07:35 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Feb 2013 00:19:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Feb 2013 00:17:40 -0500
 Content-Disposition: inline
-In-Reply-To: <CAMK1S_hxZZzi911s2QRpc67sNf_U7Ceo1fPT_hg1gO500pO=6A@mail.gmail.com>
+In-Reply-To: <512D4087.5070504@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217194>
 
-On Wed, Feb 27, 2013 at 05:58:20AM +0530, Sitaram Chamarty wrote:
+On Tue, Feb 26, 2013 at 04:08:55PM -0700, J.V. wrote:
 
-> > Ack. I just recently had to do
-> >
-> >    git gc || rm -f .git/objects/*/tmp_*
-> >
-> > as workaround in the nightly housekeeping script on our CI server.
+> I was on my master branch, I then checked out a branch (
+> origin/somebranch ), made no updates
+> but did a few git pulls on the branch over about a week; then made a
+> small change to only a single file & committed & pushed.
 > 
-> it's not just 'git gc'; a failed push of a large repo (failed due to,
-> say, network issues or whatever) also leave tmp_* lying around.  At
-> least as far as I can tell...
+> Now am trying to go back to my master branch and get:
+> 
+> error: The following untracked working tree files would be
+> overwritten by checkout:
+>         lib/derbyclient.jar
+> Please move or remove them before you can switch branches.
+> Aborting
+> 
+> 
+> I did not put that jar file there (I edited a single config file),
+> how do I now get back to my master branch?
 
-Yes, we used to run into problems with failed pushes sometimes at
-GitHub. A later `git gc` will clean up the tmp_* objects (via `git
-prune`), but of course we will not run the prune if the repack fails.
-Also note that a push will just keep receiving objects as long as the
-client wishes to send them, spooling straight to disk, before any
-enforcement hooks have a chance to run. So on stock git, you could in
-theory just fill up the receiver's disk, and then git will leave the
-file sitting around.
+Not knowing anything about your project, it's impossible to say for
+sure, but this often happens with something like:
 
-I have a patch to make index-pack just do a hard hangup after receiving
-`receive.maximumBytes` bytes (with an appropriate message to stderr).
-It's not an exact measure of the size of the push (since we need to
-complete thin packs, and we may also explode smaller packs), but it at
-least bounds the size that the sender can push. I'm happy to share the
-patch if others are interested (it's only a few lines).
+  1. lib/derbyclient.jar used to be generated by your project's build
+     procedure
 
-I've also considered a patch to have index-pack clean up tmp_pack_*
-automatically on exit, default to off (i.e., the current behavior). A
-busy site could turn it on globally, and then shut it off for a specific
-repo when trying to debug a push problem. I find that the leftover
-tmp_pack files are very seldom of interest for forensic debugging. I
-haven't bothered to write that patch, though; we dropped our prune
-expiration time well below the 2-week default, so the tmp files get
-cleaned up pretty regularly now.
+  2. You did a build of your project, generating the file in your
+     working tree.
+
+  3. Meanwhile, somebody upstream added and commited lib/derbyclient.jar
+     directly in the repository. This might have been intentional (it
+     used to be a generated file, but now is included as source), or it
+     may have been an accident (mistaken use of `git add`).
+
+  4. You try to switch to the master branch with the new commits from
+     (3). Git sees that the copy of the file in your working tree would
+     be overwritten and lost (since it was never committed by you), so
+     aborts.
+
+If you are sure that the file in the working tree does not contain
+anything interesting, you can use "git checkout -f master" to force the
+overwrite.
+
+> I do not want to muck up the branch that I am now on by deleting anything.
+> Any ideas how this happened?
+
+You won't hurt the branch you are on; you will just lose the contents in
+the untracked working tree file. That's probably fine if it is a
+generated file, as in the scenario I described above. We know that the
+file is not included in the branch you are on (otherwise, it would not
+be listed as untracked). And even if it were, you would only impact the
+branch by committing the changes, not by changing the working tree.
+
+> Obviously someone put derbyclient.jar there, not sure, but it is
+> supposed to be there so do not want to remove as advised.
+
+It won't be removed; it will be overwritten with the version of the file
+that is on "master". Which is probably what you want; you may want to
+look at `git log master -- lib/derbyclient.jar` to see why it was added.
 
 -Peff
