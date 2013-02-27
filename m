@@ -1,91 +1,56 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: clean/smudge filters on .zip/.tgz files
-Date: Wed, 27 Feb 2013 16:18:17 +0100
-Message-ID: <512E23B9.4070000@drmicha.warpmail.net>
-References: <20130226163800.454cd093@bigbox.christie.dr> <512DAA0E.9010401@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/submodule: Add --force to update synopsis
+Date: Wed, 27 Feb 2013 07:31:05 -0800
+Message-ID: <7vppzlkc3q.fsf@alter.siamese.dyndns.org>
+References: <7bf0424a37df48a59e4d45fb93f8518ff2db00f5.1361925124.git.brad.king@kitware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Tim Chase <git@tim.thechases.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Feb 27 16:18:43 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Wed Feb 27 16:31:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAimI-00017b-8o
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 16:18:42 +0100
+	id 1UAiym-00016a-2Z
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 16:31:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760252Ab3B0PSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2013 10:18:17 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:35901 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760239Ab3B0PSP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Feb 2013 10:18:15 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 52D3920BD3;
-	Wed, 27 Feb 2013 10:18:14 -0500 (EST)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute2.internal (MEProxy); Wed, 27 Feb 2013 10:18:14 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=/u4viXVJw5KFPQijkCE7ya
-	egcNc=; b=SszrqsX4yY8i7K/teO1IXXUosKwmT5YTF8Nlx5Sgr6MqQvuZbdZoUt
-	Zr/k7EF+Vx5a/2Vn82gT9QRkKSmeSzcy6DFiHmZJu7P94tQXprr+Cc7Cs1nXeNyT
-	4KGajR7raz2bnGsZLEtUO9gy3Sd6xJADEyCCjFdVjIaOVgw167/qA=
-X-Sasl-enc: oIffgegufo3pKjsllM+strXy1PB5b7hCyZv58esqOfwc 1361978294
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id B0E18C80E8B;
-	Wed, 27 Feb 2013 10:18:13 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130219 Thunderbird/17.0.3
-In-Reply-To: <512DAA0E.9010401@viscovery.net>
+	id S1758208Ab3B0PbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2013 10:31:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54493 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752592Ab3B0PbJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2013 10:31:09 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9138A43A;
+	Wed, 27 Feb 2013 10:31:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=XUOOXF
+	D2lKLFexgOrLRp43R12tyVpCQXdVT4ICqspxpiRfHXaeX6/Vcz4gRlWk4Kf3wfBQ
+	KQn0HMBN2iQ9RMcxwvz/ozQRZxph0mewPBDZEcPhn4sTM7WMKTn4zhlrknnBb+ex
+	f9U2DrZSIRmeExtXv5GQRm2gzcAlplOFJtfVw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eaHiW7cP2FkO6U4pWZxPwXOImHVXZvPS
+	5S6/GHFW8Q7dI62ao0robST6Sd2PUIPkcii1Dd+gEP9KuOWy+cJk8bJXbnjo8OcF
+	zyGvfnDBQAsMz4LmY61Xf8z5B8h5MMs4zb1z3XM2VUzkSwK/2NwWR07c9udnUDbe
+	q0/mnGcO1cA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BECBFA439;
+	Wed, 27 Feb 2013 10:31:07 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 481FFA436; Wed, 27 Feb 2013
+ 10:31:07 -0500 (EST)
+In-Reply-To: <7bf0424a37df48a59e4d45fb93f8518ff2db00f5.1361925124.git.brad.king@kitware.com> (Brad King's message of "Tue, 26 Feb 2013 19:41:34 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B47C7B42-80F2-11E2-A665-F3C82E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217209>
 
-Johannes Sixt venit, vidit, dixit 27.02.2013 07:39:
-> Am 2/26/2013 23:38, schrieb Tim Chase:
->> Various programs that I use ([Open|Libre]Office, Vym, etc) use a
->> zipped/.tgz'ed file format, usually containing multiple
->> (usually) plain-text files within.
->>
->> I'm trying to figure out a way for git to treat these as virtual
->> directories for purposes of merging/diffing.  
->>
->> Reading up on clean/smudge filters, it looks like they expect one
->> file coming in and one file going out, rather than one file
->> on one side and a directory-tree of files on the other side.
->>
->> I tried creating my own pair of clean/smudge filters that would
->> uncompress the files, but there's no good way put multiple files on
->> stdout.
->>
->> Has anybody else played with such a scheme for uncompressing files as
->> they go into git and recompressing them as they come back out?
-> 
-> I attempted to do something like this for OpenDocument files (I didn't get
-> very far) until I discovered that LibreOffice can save "flat open document
-> files". That combined with the option "save files optimized" switched off
-> results in fairly readable XML in a single file that can even be merged
-> under some circumstances.
-> 
-> You would still need a clean filter that normalizes the style numbers,
-> cross reference marks and other stuff that changes each time LibreOffice
-> saves the file.
-> 
-> -- Hannes
-> 
-
-In general, using "zip -0" is a good way of getting something that
-delta-compresses well and that can give a meaningful diff (and has no
-information loss).
-
-The (my) problem is that recompressing a zip archive (i.e. multi-file)
-is a pita, you can't just use a pipe "unzip | zip -0". You'd have to do
-that in a temp dir.
-
-Michael
+Thanks.
