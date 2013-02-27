@@ -1,59 +1,77 @@
-From: krishna chaitanya kurnala <kkc4al@gmail.com>
-Subject: Git Notes - Search Functionality
-Date: Wed, 27 Feb 2013 07:34:58 -0800
-Message-ID: <CAFZnXLJCiq4G+_ZStWmjAGePWCD6mhske7Y4=oe2h==F0BYVLQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] attr: allow pattern escape using backslashes
+Date: Wed, 27 Feb 2013 07:42:20 -0800
+Message-ID: <7vlia9kbkz.fsf@alter.siamese.dyndns.org>
+References: <1357310809-4771-1-git-send-email-pclouds@gmail.com>
+ <7v7gly5az0.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Ag8rJ4P6w6ZCB0vBp6Hzqr_G5vWS_Jt=RNQT8+hF_w_A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 27 16:35:55 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 27 16:42:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAj2t-00042R-K0
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 16:35:51 +0100
+	id 1UAj9f-0000mc-HP
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 16:42:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760203Ab3B0PfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2013 10:35:21 -0500
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:48506 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759785Ab3B0PfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2013 10:35:19 -0500
-Received: by mail-oa0-f47.google.com with SMTP id o17so1383893oag.20
-        for <git@vger.kernel.org>; Wed, 27 Feb 2013 07:35:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=7ObpLvece9IpvDdwO1ykyGIa0l70ZRobPcw8KyeQxVw=;
-        b=VJYJGkruE9I0Z84JNzFu+gONEHFbCRseb7dz/lcwHxn+Cu0v+vK5H0KBBDZ6y5a4uq
-         SrQKF2qFXWBHmMgDwaiA195LlK3nLwBcnqDTQoXzhlt8+uQ+4IYow+DsN6gZJdfGvKU4
-         0UphBpElxEukNq8e1CfLbiYkQOnfT4aMsbJCwwgRTvH7pcUpyf1SevCmkRFCRvlUmz2f
-         30j/CIZEvg5t34I7XPIFQk6jy57cX09MBibMX6CGr4whDrrfQHQcrqiV5U7byJJslrz3
-         FRvsT9EoDSvFqwiyLkHAHJAm+cr6KqrT3AtQP/LtrMsDCcDc6yfSmjYNGlGWYypA/fAC
-         +nXg==
-X-Received: by 10.182.2.132 with SMTP id 4mr2579880obu.42.1361979319228; Wed,
- 27 Feb 2013 07:35:19 -0800 (PST)
-Received: by 10.60.0.197 with HTTP; Wed, 27 Feb 2013 07:34:58 -0800 (PST)
+	id S1760281Ab3B0PmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2013 10:42:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61588 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760040Ab3B0PmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2013 10:42:23 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02CE8A8D5;
+	Wed, 27 Feb 2013 10:42:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sLAdW6OIL1uWctdcr99xbrxsQS0=; b=mh2gVe
+	fraBtgXT8PJrJpZe2HtrUU7BnKZJ5oRLqwENYxqTVPE0kFclvCCQja20ejVhlZsw
+	PVloQAtpdlPwHP/nTmTJX48yc7B4/kRyxHWwXip2KR/bHY082kd2mdyxCR9ekeXt
+	5KMKuNlzaEkwxPg6ie6AXH4x65Ov/T1uLtf0w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wEOfyYSNGl9ACTAvQhXuGtnSUYAKjgaG
+	+7scEy41QdOMD7pqpfzCoDkEIWoosHMaSVWutFkPMGihjK2++EmaW+yCu5nVM4YD
+	9Jfy78KIw9+OSCsNt5e5HTNd25Cq5K4jlYMGittKjYS75mLvZXdyFUE9aD2r6gUA
+	G0DVCQEw6pU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB3B1A8D4;
+	Wed, 27 Feb 2013 10:42:22 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CF44A8D3; Wed, 27 Feb 2013
+ 10:42:22 -0500 (EST)
+In-Reply-To: <CACsJy8Ag8rJ4P6w6ZCB0vBp6Hzqr_G5vWS_Jt=RNQT8+hF_w_A@mail.gmail.com> (Duy
+ Nguyen's message of "Wed, 27 Feb 2013 19:23:57 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 46E84492-80F4-11E2-AFC8-F3C82E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217212>
 
-Hello All
+Duy Nguyen <pclouds@gmail.com> writes:
 
-   I working on Git Notes. I want to know if there is an easy way to
-obtain a list of all "namespaces"(For eg., git notes --ref=namespace
-... ) with notes objects in a specific git repository. We can easily
-create, edit, merge git notes with commands if we know the namespaces
-and/or the sha. But, for example, Has anyone tried to search for a
-string in a git notes objects for that project etc?
-  The closest i can think of is using some options with git logs, for
-example, git log --show-notes=*  --format="%H %N" etc.
+> On Sun, Feb 24, 2013 at 4:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Speaking of .gitignore, I recall that there was a hanging discussion
+>> on allowing a pattern to name the directory that the .gitignore file
+>> appears in, which I do not think we currently support.  With such a
+>> feature, instead of listing "/junk" in the .gitignore file at the
+>> top-level to say that everything inside the "junk" directory is
+>> ignored by default, we could instead say "<this>" at the beginning
+>> of the .gitignore file in the "junk" directory.
+>
+> Shouldn't "/" alone in junk/.gitignore express that? It does not work,
+> but I think it's a natural interpretation of the syntax.
 
-Appreciate your time.
-
-thanks
-Krishna Chaitanya
+Yup, there is nothing that you can plug to the "<this>" in the above
+to make it mean "junk" directory is ignored.  A trailing "/" is
+removed after noting the fact that the entry is about a directory
+and leaves an empty string, and it would be OK to define that an
+empty string matches the directory the gitignore file appears in.
