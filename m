@@ -1,97 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: problem switching branches
-Date: Wed, 27 Feb 2013 00:17:40 -0500
-Message-ID: <20130227051740.GB10976@sigill.intra.peff.net>
-References: <512D4087.5070504@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: clean/smudge filters on .zip/.tgz files
+Date: Wed, 27 Feb 2013 07:39:10 +0100
+Message-ID: <512DAA0E.9010401@viscovery.net>
+References: <20130226163800.454cd093@bigbox.christie.dr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "J.V." <jvsrvcs@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 27 06:18:11 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tim Chase <git@tim.thechases.com>
+X-From: git-owner@vger.kernel.org Wed Feb 27 07:39:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAZP8-00022Q-GR
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 06:18:10 +0100
+	id 1UAag1-00042J-Ul
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 07:39:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559Ab3B0FRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2013 00:17:45 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33644 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750890Ab3B0FRo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2013 00:17:44 -0500
-Received: (qmail 13545 invoked by uid 107); 27 Feb 2013 05:19:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Feb 2013 00:19:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Feb 2013 00:17:40 -0500
-Content-Disposition: inline
-In-Reply-To: <512D4087.5070504@gmail.com>
+	id S1752292Ab3B0GjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2013 01:39:16 -0500
+Received: from so.liwest.at ([212.33.55.24]:44067 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752265Ab3B0GjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2013 01:39:15 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1UAafX-0000t7-90; Wed, 27 Feb 2013 07:39:11 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id D3C7F1660F;
+	Wed, 27 Feb 2013 07:39:10 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+In-Reply-To: <20130226163800.454cd093@bigbox.christie.dr>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217195>
 
-On Tue, Feb 26, 2013 at 04:08:55PM -0700, J.V. wrote:
-
-> I was on my master branch, I then checked out a branch (
-> origin/somebranch ), made no updates
-> but did a few git pulls on the branch over about a week; then made a
-> small change to only a single file & committed & pushed.
+Am 2/26/2013 23:38, schrieb Tim Chase:
+> Various programs that I use ([Open|Libre]Office, Vym, etc) use a
+> zipped/.tgz'ed file format, usually containing multiple
+> (usually) plain-text files within.
 > 
-> Now am trying to go back to my master branch and get:
+> I'm trying to figure out a way for git to treat these as virtual
+> directories for purposes of merging/diffing.  
 > 
-> error: The following untracked working tree files would be
-> overwritten by checkout:
->         lib/derbyclient.jar
-> Please move or remove them before you can switch branches.
-> Aborting
+> Reading up on clean/smudge filters, it looks like they expect one
+> file coming in and one file going out, rather than one file
+> on one side and a directory-tree of files on the other side.
 > 
+> I tried creating my own pair of clean/smudge filters that would
+> uncompress the files, but there's no good way put multiple files on
+> stdout.
 > 
-> I did not put that jar file there (I edited a single config file),
-> how do I now get back to my master branch?
+> Has anybody else played with such a scheme for uncompressing files as
+> they go into git and recompressing them as they come back out?
 
-Not knowing anything about your project, it's impossible to say for
-sure, but this often happens with something like:
+I attempted to do something like this for OpenDocument files (I didn't get
+very far) until I discovered that LibreOffice can save "flat open document
+files". That combined with the option "save files optimized" switched off
+results in fairly readable XML in a single file that can even be merged
+under some circumstances.
 
-  1. lib/derbyclient.jar used to be generated by your project's build
-     procedure
+You would still need a clean filter that normalizes the style numbers,
+cross reference marks and other stuff that changes each time LibreOffice
+saves the file.
 
-  2. You did a build of your project, generating the file in your
-     working tree.
-
-  3. Meanwhile, somebody upstream added and commited lib/derbyclient.jar
-     directly in the repository. This might have been intentional (it
-     used to be a generated file, but now is included as source), or it
-     may have been an accident (mistaken use of `git add`).
-
-  4. You try to switch to the master branch with the new commits from
-     (3). Git sees that the copy of the file in your working tree would
-     be overwritten and lost (since it was never committed by you), so
-     aborts.
-
-If you are sure that the file in the working tree does not contain
-anything interesting, you can use "git checkout -f master" to force the
-overwrite.
-
-> I do not want to muck up the branch that I am now on by deleting anything.
-> Any ideas how this happened?
-
-You won't hurt the branch you are on; you will just lose the contents in
-the untracked working tree file. That's probably fine if it is a
-generated file, as in the scenario I described above. We know that the
-file is not included in the branch you are on (otherwise, it would not
-be listed as untracked). And even if it were, you would only impact the
-branch by committing the changes, not by changing the working tree.
-
-> Obviously someone put derbyclient.jar there, not sure, but it is
-> supposed to be there so do not want to remove as advised.
-
-It won't be removed; it will be overwritten with the version of the file
-that is on "master". Which is probably what you want; you may want to
-look at `git log master -- lib/derbyclient.jar` to see why it was added.
-
--Peff
+-- Hannes
