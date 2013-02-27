@@ -1,126 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 6/6] git-send-email: use git credential to obtain
- password
-Date: Wed, 27 Feb 2013 07:54:46 -0800
-Message-ID: <7vehg1kb09.fsf@alter.siamese.dyndns.org>
-References: <cover.1360677646.git.mina86@mina86.com>
- <cover.1360677646.git.mina86@mina86.com>
- <32bae1f3c7159035ea3fb5f61ab622cbff30293a.1360677646.git.mina86@mina86.com>
- <vpqhakx4z4c.fsf@grenoble-inp.fr>
+From: "Sokolov, Konstantin (ext)" <konstantin.sokolov.ext@siemens.com>
+Subject: git blame -M seems not to work as expected
+Date: Wed, 27 Feb 2013 16:45:22 +0100
+Message-ID: <6AD84402EDEFAA4D833C4235C5F5CC8D31DA5830@DEFTHW99EF4MSX.ww902.siemens.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michal Nazarewicz <mpn@google.com>, peff@peff.net,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 27 16:55:18 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 27 16:56:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAjLf-0001L8-Lx
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 16:55:15 +0100
+	id 1UAjN7-0002RA-R3
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 16:56:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757833Ab3B0Pyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2013 10:54:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36556 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757487Ab3B0Pyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2013 10:54:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36115ADBF;
-	Wed, 27 Feb 2013 10:54:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=s3OAjfDUE3UqB/504xZsz3ktxYk=; b=XYXKhs
-	dKjFHHFgpRgT+AuNN52NbIZYKpcpegR/qWYY04X3vwUTbm4mZ6m9ecRISD2g5v+X
-	9Txs0Wz/5VmvG1/CoAPGRqxV6HnmgBkX0uTZpIcU6+CW5MDqJNyl4F5juvX2S61H
-	xtKCa+ysbqOEN4hcZOwzNI0rSgc7Zd7IXzk6A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r5pmtqxB4fni1RAMFNN42nShdddDbdhC
-	jegx3xGl/pv5Q3kAMSHCXAvfhT+rhFW9bULIH3FS50Z4e0EGZ8D51E5GDSohzxMF
-	fr+6AdKc+pzbzPFgxRU0xlrttexN2hQVPImMrY1fLy6IqEnNe7UWAhwO7q+9mD29
-	HCHv3RW0Ciw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A640ADBE;
-	Wed, 27 Feb 2013 10:54:49 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7EDC3ADBD; Wed, 27 Feb 2013
- 10:54:48 -0500 (EST)
-In-Reply-To: <vpqhakx4z4c.fsf@grenoble-inp.fr> (Matthieu Moy's message of
- "Wed, 27 Feb 2013 15:20:35 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 039A436E-80F6-11E2-A916-F3C82E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754926Ab3B0P4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2013 10:56:20 -0500
+Received: from gecko.sbs.de ([194.138.37.40]:21031 "EHLO gecko.sbs.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751993Ab3B0P4T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Feb 2013 10:56:19 -0500
+X-Greylist: delayed 651 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Feb 2013 10:56:19 EST
+Received: from mail1.sbs.de (localhost [127.0.0.1])
+	by gecko.sbs.de (8.13.6/8.13.6) with ESMTP id r1RFjPDG013579
+	for <git@vger.kernel.org>; Wed, 27 Feb 2013 16:45:25 +0100
+Received: from DEFTHW99ET9MSX.ww902.siemens.net ([157.163.148.60])
+	by mail1.sbs.de (8.13.6/8.13.6) with ESMTP id r1RFjPvj029780
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Wed, 27 Feb 2013 16:45:25 +0100
+Received: from DEFTHW99EF4MSX.ww902.siemens.net ([169.254.1.79]) by
+ DEFTHW99ET9MSX.ww902.siemens.net ([157.163.148.60]) with mapi; Wed, 27 Feb
+ 2013 16:45:25 +0100
+Thread-Topic: git blame -M seems not to work as expected 
+Thread-Index: Ac4VAXO5mUUUm+WLSPi01E5v5oWsUA==
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: de-DE, en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217214>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Hi Folks!
 
-> Michal Nazarewicz <mpn@google.com> writes:
->
->> +	$auth = Git::credential({
->> +		'protocol' => 'smtp',
->> +		'host' => join(':', $smtp_server, $smtp_server_port),
->
-> At this point, $smtp_server_port is not always defined. I just tested
-> and got
->
-> Use of uninitialized value $smtp_server_port in join or string at
-> git-send-email line 1077.
->
-> Other than that, the whole series looks good.
+I've posed this question already on stackoverflow and on Google Groups - without any (satisfying) answer. So maybe you can help me to understand the behavior of git blame -M.
 
-Given that there is another place that conditionally append ":$port"
-to the host string, I think we should follow suit here.  Perhaps
-like the attached diff?
+First I commit the following file(file.cpp):
 
-Thanks for a review.
+void func1(){return;}[CR][LF]
+int func2(){return 23;}[CR][LF]    
 
+Then I modify it by moving what was in the first line and adding something new instead:
 
- git-send-email.perl | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 76bbfc3..c3501d9 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1045,6 +1045,14 @@ sub maildomain {
- 	return maildomain_net() || maildomain_mta() || 'localhost.localdomain';
- }
+float newFunc(){return 23.0;}[CR][LF]
+int func2(){return 23;}[CR][LF]
+[CR][LF]
+[CR][LF]
+void func1(){return;}[CR][LF]
  
-+sub smtp_host_string {
-+	if (defined $smtp_server_port) {
-+		return "$smtp_server:$smtp_server_port";
-+	} else {
-+		return $smtp_server;
-+	}
-+}
-+
- # Returns 1 if authentication succeeded or was not necessary
- # (smtp_user was not specified), and 0 otherwise.
+The log now looks as follows:
+
+>git log --oneline -2
+18c670f modified file.cpp
+92b4186 added file.cpp
  
-@@ -1065,7 +1073,7 @@ sub smtp_auth_maybe {
- 	# reject credentials.
- 	$auth = Git::credential({
- 		'protocol' => 'smtp',
--		'host' => join(':', $smtp_server, $smtp_server_port),
-+		'host' => smtp_host_string(),
- 		'username' => $smtp_authuser,
- 		# if there's no password, "git credential fill" will
- 		# give us one, otherwise it'll just pass this one.
-@@ -1188,9 +1196,7 @@ sub send_message {
- 		else {
- 			require Net::SMTP;
- 			$smtp_domain ||= maildomain();
--			$smtp ||= Net::SMTP->new((defined $smtp_server_port)
--						 ? "$smtp_server:$smtp_server_port"
--						 : $smtp_server,
-+			$smtp ||= Net::SMTP->new(smtp_host_string(),
- 						 Hello => $smtp_domain,
- 						 Debug => $debug_net_smtp);
- 			if ($smtp_encryption eq 'tls' && $smtp) {
+Now I run blame:
+
+git blame -s -w -M file.cpp
+18c670fa 1) float newFunc(){return 23.0;}
+92b4186d 2) int func2(){return 23;}
+18c670fa 3)
+18c670fa 4)
+18c670fa 5) void func1(){return;}
+ 
+I wonder why the line containing func1() isn't recognized as moved. I've tried to reduce the number of required characters (i.e. -M4 etc.). Furthermore spaces should not matter because of the -w option.
+
+On the other hand, when I move float newFunc(){return 23.0;} from line 1 to line 6 (which was empty before) in the subsequent commit, git blame -M correctly recognizes that it originates from commit 18c670fa even though it firstly appeared in line 6 only in the current commit. 
+
+So what's the reason for this seemingly inconsequent behavior? As far as I understand the documentation, both movements should be recognized. It's very important for us to correctly understand the behavior of git blame -M since we are about to add some code analysis logic on top of git blame. 
+
+Thanks in advance
+Konstantin
