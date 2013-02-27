@@ -1,55 +1,59 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: [BUG] git gui alert dialogs interfere with each other
-Date: Wed, 27 Feb 2013 16:26:18 +0100
-Organization: Bertin Technologies
-Message-ID: <20130227162618.2a6762f0@chalon.bertin.fr>
+From: krishna chaitanya kurnala <kkc4al@gmail.com>
+Subject: Git Notes - Search Functionality
+Date: Wed, 27 Feb 2013 07:34:58 -0800
+Message-ID: <CAFZnXLJCiq4G+_ZStWmjAGePWCD6mhske7Y4=oe2h==F0BYVLQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "me@bt" <dirson@bertin.fr>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 27 16:35:39 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 27 16:35:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAj2f-0003rG-QT
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 16:35:38 +0100
+	id 1UAj2t-00042R-K0
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 16:35:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760148Ab3B0PfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2013 10:35:09 -0500
-Received: from cabourg.bertin.fr ([195.68.26.10]:47169 "EHLO cabourg.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759785Ab3B0PfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2013 10:35:08 -0500
-X-Greylist: delayed 527 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Feb 2013 10:35:07 EST
-Received: from cabourg.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 4FB25A0F91
-	for <git@vger.kernel.org>; Wed, 27 Feb 2013 16:26:16 +0100 (CET)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by cabourg.bertin.fr (Postfix) with ESMTP id 299B5A0F90
-	for <git@vger.kernel.org>; Wed, 27 Feb 2013 16:26:16 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MIV0059VXJRGE90@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Wed, 27 Feb 2013 16:26:16 +0100 (CET)
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-7.0.0.1014-19672.003
+	id S1760203Ab3B0PfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2013 10:35:21 -0500
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:48506 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759785Ab3B0PfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2013 10:35:19 -0500
+Received: by mail-oa0-f47.google.com with SMTP id o17so1383893oag.20
+        for <git@vger.kernel.org>; Wed, 27 Feb 2013 07:35:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=7ObpLvece9IpvDdwO1ykyGIa0l70ZRobPcw8KyeQxVw=;
+        b=VJYJGkruE9I0Z84JNzFu+gONEHFbCRseb7dz/lcwHxn+Cu0v+vK5H0KBBDZ6y5a4uq
+         SrQKF2qFXWBHmMgDwaiA195LlK3nLwBcnqDTQoXzhlt8+uQ+4IYow+DsN6gZJdfGvKU4
+         0UphBpElxEukNq8e1CfLbiYkQOnfT4aMsbJCwwgRTvH7pcUpyf1SevCmkRFCRvlUmz2f
+         30j/CIZEvg5t34I7XPIFQk6jy57cX09MBibMX6CGr4whDrrfQHQcrqiV5U7byJJslrz3
+         FRvsT9EoDSvFqwiyLkHAHJAm+cr6KqrT3AtQP/LtrMsDCcDc6yfSmjYNGlGWYypA/fAC
+         +nXg==
+X-Received: by 10.182.2.132 with SMTP id 4mr2579880obu.42.1361979319228; Wed,
+ 27 Feb 2013 07:35:19 -0800 (PST)
+Received: by 10.60.0.197 with HTTP; Wed, 27 Feb 2013 07:34:58 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217211>
 
-(Seen in 1.7.12.3)
+Hello All
 
-When launching git gui in a repo where there are 1. lots of (>5000) stashed changes
-(to do a tree move), and 2. many non-packed files, git gui throws 2 alert dialogs:
-one saying that it will only show 5000 changed files and ignore the others, which
-very quickly hidden by the offer to repack.  If I decline repacking, then both
-dialogs are discarded, and the first one, which is quite critical, may not have been
-seen at all by the user.
+   I working on Git Notes. I want to know if there is an easy way to
+obtain a list of all "namespaces"(For eg., git notes --ref=namespace
+... ) with notes objects in a specific git repository. We can easily
+create, edit, merge git notes with commands if we know the namespaces
+and/or the sha. But, for example, Has anyone tried to search for a
+string in a git notes objects for that project etc?
+  The closest i can think of is using some options with git logs, for
+example, git log --show-notes=*  --format="%H %N" etc.
 
--- 
-Yann Dirson - Bertin Technologies
+Appreciate your time.
+
+thanks
+Krishna Chaitanya
