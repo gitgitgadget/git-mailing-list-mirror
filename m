@@ -1,63 +1,106 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH 1/4] config: factor out config file stack management
-Date: Wed, 27 Feb 2013 08:56:28 +0100
-Message-ID: <20130227075627.GB4685@sandbox-ub>
-References: <cover.1361751905.git.hvoigt@hvoigt.net>
- <6c69068b4e6a72a2cca5dc6eaffa9982032a7f2a.1361751905.git.hvoigt@hvoigt.net>
- <7v4nh13plo.fsf@alter.siamese.dyndns.org>
- <20130226193050.GA22756@sandbox-ub>
- <20130226193850.GB22756@sandbox-ub>
- <20130226195449.GA13830@sigill.intra.peff.net>
- <20130226200940.GF22756@sandbox-ub>
- <7vk3pulo6w.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] archive-zip: fix compressed size for stored export-subst
+ files
+Date: Wed, 27 Feb 2013 11:20:21 +0100
+Message-ID: <512DDDE5.5070707@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Jens Lehmann <jens.lehmann@web.de>
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 27 08:57:05 2013
+X-From: git-owner@vger.kernel.org Wed Feb 27 11:20:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UAbsq-0007JA-7C
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 08:57:00 +0100
+	id 1UAe84-0007Q8-Nb
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Feb 2013 11:20:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753335Ab3B0H4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2013 02:56:35 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.31.39]:49387 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752719Ab3B0H4f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2013 02:56:35 -0500
-Received: from [77.21.76.82] (helo=localhost)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1UAbsK-0002Kj-Kh; Wed, 27 Feb 2013 08:56:28 +0100
-Content-Disposition: inline
-In-Reply-To: <7vk3pulo6w.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1751561Ab3B0KU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2013 05:20:28 -0500
+Received: from india601.server4you.de ([85.25.151.105]:40998 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750919Ab3B0KU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2013 05:20:27 -0500
+Received: from [192.168.2.105] (p4FFDBDD7.dip.t-dialin.net [79.253.189.215])
+	by india601.server4you.de (Postfix) with ESMTPSA id 0B267392;
+	Wed, 27 Feb 2013 11:20:24 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217200>
 
-On Tue, Feb 26, 2013 at 02:12:23PM -0800, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
-> > The "do_config_from" means "parse from whatever is in 'top'". Later in
-> > the series its type changes from config_file to struct config.
-> 
-> Yuck.  It would be nice to have it as struct config_src or
-> something. "struct config" sounds as if it represents the entire
-> configuration state and you can ask it to add new ones or enumerate
-> all known configuration variables, etc.
+Currently ZIP archive entries of files with export-subst attribute are
+broken if they are stored uncompressed.
 
-Will change it to struct config_source. I choose that name in lack of a
-better one. Since it can be considered the base for both sources I just
-removed the _file postfix.
+We get the size of a file from sha1_object_info(), but this number is
+likely wrong for files whose contents are changed due to export-subst
+placeholder expansion.  We use sha1_file_to_archive() to get the
+expanded file contents and size in that case.  We proceed to use that
+size for the uncompressed size field (good), but the compressed size
+field is set based on the size from sha1_object_info() (bad).
 
-Cheers Heiko
+This matters only for uncompressed files because for deflated files
+we use the correct value after compression is done.  And for files
+without export-subst expansion the sizes from sha1_object_info() and
+sha1_file_to_archive() are the same, so they are unaffected as well.
+
+This patch fixes the issue by setting the compressed size based on the
+uncompressed size only after we actually know the latter.
+
+Also make use of the test file substfile1 to check for the breakage;
+it was only stored verbatim so far.  For that purpose, set the
+attribute export-subst and replace its contents with the expected
+expansion after committing.
+
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+This bug was present even before 5ea2c847 (archive-zip: write
+uncompressed size into header even with streaming).
+
+ archive-zip.c          | 2 +-
+ t/t5003-archive-zip.sh | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/archive-zip.c b/archive-zip.c
+index d3aef53..a8d1193 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -240,7 +240,6 @@ static int write_zip_entry(struct archiver_args *args,
+ 			(mode & 0111) ? ((mode) << 16) : 0;
+ 		if (S_ISREG(mode) && args->compression_level != 0 && size > 0)
+ 			method = 8;
+-		compressed_size = (method == 0) ? size : 0;
+ 
+ 		if (S_ISREG(mode) && type == OBJ_BLOB && !args->convert &&
+ 		    size > big_file_threshold) {
+@@ -259,6 +258,7 @@ static int write_zip_entry(struct archiver_args *args,
+ 			crc = crc32(crc, buffer, size);
+ 			out = buffer;
+ 		}
++		compressed_size = (method == 0) ? size : 0;
+ 	} else {
+ 		return error("unsupported file mode: 0%o (SHA1: %s)", mode,
+ 				sha1_to_hex(sha1));
+diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+index 7cfe9ca..6a33606 100755
+--- a/t/t5003-archive-zip.sh
++++ b/t/t5003-archive-zip.sh
+@@ -76,6 +76,12 @@ test_expect_success \
+      git update-ref HEAD $(TZ=GMT GIT_COMMITTER_DATE="2005-05-27 22:00:00" \
+      git commit-tree $treeid </dev/null)'
+ 
++test_expect_success 'setup export-subst' '
++	echo "substfile?" export-subst >>.git/info/attributes &&
++	git log --max-count=1 "--pretty=format:A${SUBSTFORMAT}O" HEAD \
++		>a/substfile1
++'
++
+ test_expect_success \
+     'create bare clone' \
+     'git clone --bare . bare.git &&
+-- 
+1.8.0
