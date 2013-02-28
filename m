@@ -1,199 +1,109 @@
-From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [RFC] optimize set_shared_perm()
-Date: Thu, 28 Feb 2013 18:17:39 +0100
-Message-ID: <201302281817.40692.tboegi@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 2/5] blame: introduce $ as "end of file" in -L syntax
+Date: Thu, 28 Feb 2013 09:18:40 -0800
+Message-ID: <7vk3psicgf.fsf@alter.siamese.dyndns.org>
+References: <cover.1362069310.git.trast@student.ethz.ch>
+ <7973d90cfcd86a3c15776b8718ad6bd84ee7b4ac.1362069310.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 28 18:18:24 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	"Will Palmer" <wmpalmer@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Feb 28 18:19:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UB77b-0008O9-E2
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Feb 2013 18:18:19 +0100
+	id 1UB78O-0000rC-AE
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Feb 2013 18:19:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759545Ab3B1RRx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Feb 2013 12:17:53 -0500
-Received: from mout.web.de ([212.227.15.3]:61924 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755524Ab3B1RRx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Feb 2013 12:17:53 -0500
-Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0MZDga-1UPUjT0pQq-00LDEJ; Thu, 28 Feb 2013 18:17:51 +0100
-X-Provags-ID: V02:K0:O4Z5oELq24l5DoKXMPp4CZfXRvmuAWuMI31v8Z1LjHH
- a9h+xiUS4aJsVLYxczHZ/5eD4O0B5mHPYoiXIAvTYJ323QBKI/
- C3FtndDunlKI6J2xNvQ/UiWIFs0qbLEno7XfXagDhwd/iEXHr0
- nAsdMyiASVqF2uD8At+HzqFiI1FiVl8o72+TncNCpxuBa3B0z8
- 4riqscwu3JdjiQnamCiLg==
+	id S1759569Ab3B1RSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2013 12:18:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51920 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755524Ab3B1RSn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2013 12:18:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D674BD2C;
+	Thu, 28 Feb 2013 12:18:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EVD56BhdUQE5RcImeg5XLvarXUk=; b=d8acem
+	9YEZQD26E6sCaxS2rRrrlzXISbD+ui1KtmEvIHKj5RHIRXfI9NBZ+lPbr//ay+Vr
+	bSSZGxzAEiAtvSOk6QuwiQsxkPfaMqym1qbHkxmCoAvqQLrt6ScUhCGdgg+A369J
+	3u1DudSvsNH/n6tfTc4VF67k8k5H6RXKxxJgs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NPhxHu2L1K1/fd3Mmsrtzba8HJbaT4Yg
+	lwgw8Fe3p4ojDP69qh3fOojXKN2qKqcljtrnCOAjOmygYXFV23Q5KiNWrx1kkDP0
+	J6VyRQycZLU8REIktlh5Xgqrqc6IZtYFvhftq4eQIOf0iGi2o5ygUKQh4w4fTpx3
+	CRzQ8AyB9Gw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D54EBD2B;
+	Thu, 28 Feb 2013 12:18:42 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E48F8BD29; Thu, 28 Feb 2013
+ 12:18:41 -0500 (EST)
+In-Reply-To: <7973d90cfcd86a3c15776b8718ad6bd84ee7b4ac.1362069310.git.trast@student.ethz.ch> (Thomas Rast's message of "Thu, 28 Feb 2013 17:38:20 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E62A2DC8-81CA-11E2-B937-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217244>
 
-optimize set_shared_perm() in path.c:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-- sometimes the chown() function is called even when not needed.
-  (This can be provoced by running t1301, and adding some debug code)
+> To save the user a lookup of the last line number, introduce $ as a
+> shorthand for the last line.  This is mostly useful to spell "until
+> the end of the file" as '-L<begin>,$'.
 
-  Save a chmod from 400 to 400, or from 600->600 on these files:
-  .git/info/refs+
-  .git/objects/info/packs+
+Doesn't "-L <begin>" or "-L <begin>," do that already?  If it were
+to introduce "-L $-4," or "-L$-4,+2", I would understand why the
+addition may be useful, but otherwise I do not think it adds much
+value.
 
-  Save chmod on directories from 2770 to 2770:
-  .git/refs
-  .git/refs/heads
-  .git/refs/tags
-
-- as all callers use mode =3D=3D 0 when caling set_shared_perm(),
-  the function can be simplified.
-- all callers use the macro adjust_shared_perm(path) from cache.h
-  Convert adjust_shared_perm() from a macro into a function prototype
-
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- cache.h |  3 +--
- path.c  | 75 +++++++++++++++++++++++++++++++++++----------------------=
---------
- 2 files changed, 41 insertions(+), 37 deletions(-)
-
-While investigating why cygwin 1.7 failes in t1301, and cygwin 1.5 pass=
-es,
-I came across a small refactoring.
-
-My apologizes if the refactoring in line 431 is wrong:
-	if (((shared_repository < 0
-	      ? (orig_mode & (FORCE_DIR_SET_GID | 0777))
-	      : (orig_mode & mode)) !=3D mode) &&
-	    chmod(path, (mode & ~S_IFMT)) < 0)
-
-
-diff --git a/cache.h b/cache.h
-index 2b192d2..9ea9c70 100644
---- a/cache.h
-+++ b/cache.h
-@@ -700,8 +700,7 @@ enum sharedrepo {
- 	PERM_EVERYBODY      =3D 0664
- };
- int git_config_perm(const char *var, const char *value);
--int set_shared_perm(const char *path, int mode);
--#define adjust_shared_perm(path) set_shared_perm((path), 0)
-+int adjust_shared_perm(const char *path);
- int safe_create_leading_directories(char *path);
- int safe_create_leading_directories_const(const char *path);
- int mkdir_in_gitdir(const char *path);
-diff --git a/path.c b/path.c
-index d3d3f8b..8b7922b 100644
---- a/path.c
-+++ b/path.c
-@@ -1,14 +1,5 @@
- /*
-- * I'm tired of doing "vsnprintf()" etc just to open a
-- * file, so here's a "return static buffer with printf"
-- * interface for paths.
-- *
-- * It's obviously not thread-safe. Sue me. But it's quite
-- * useful for doing things like
-- *
-- *   f =3D open(mkpath("%s/%s.git", base, name), O_RDONLY);
-- *
-- * which is what it's designed for.
-+ * Different utilitiy functions for path and path names
-  */
- #include "cache.h"
- #include "strbuf.h"
-@@ -89,6 +80,13 @@ char *git_pathdup(const char *fmt, ...)
- 	return xstrdup(ret);
- }
-=20
-+/*
-+ * I'm tired of doing "vsnprintf()" etc just to open a
-+ * file, so here's an interface for paths.
-+ *
-+ * f =3D open(mkpath("%s/%s.git", base, name), O_RDONLY);
-+ *
-+ */
- char *mkpathdup(const char *fmt, ...)
- {
- 	char *path;
-@@ -389,24 +387,13 @@ const char *enter_repo(const char *path, int stri=
-ct)
- 	return NULL;
- }
-=20
--int set_shared_perm(const char *path, int mode)
-+static int calc_shared_perm(int mode)
- {
--	struct stat st;
--	int tweak, shared, orig_mode;
-+	int tweak, shared;
-=20
--	if (!shared_repository) {
--		if (mode)
--			return chmod(path, mode & ~S_IFMT);
--		return 0;
--	}
--	if (!mode) {
--		if (lstat(path, &st) < 0)
--			return -1;
--		mode =3D st.st_mode;
--		orig_mode =3D mode;
--	} else
--		orig_mode =3D 0;
--	if (shared_repository < 0)
-+	if (!shared_repository)
-+		return mode;
-+	else if (shared_repository < 0)
- 		shared =3D -shared_repository;
- 	else
- 		shared =3D shared_repository;
-@@ -422,16 +409,34 @@ int set_shared_perm(const char *path, int mode)
- 	else
- 		mode |=3D tweak;
-=20
--	if (S_ISDIR(mode)) {
--		/* Copy read bits to execute bits */
--		mode |=3D (shared & 0444) >> 2;
--		mode |=3D FORCE_DIR_SET_GID;
--	}
-+	return mode;
-+}
-+
-+static int calc_shared_perm_dir(int mode)
-+{
-+	mode =3D calc_shared_perm(mode);
-+
-+	/* Copy read bits to execute bits */
-+	mode |=3D (mode & 0444) >> 2;
-+	mode |=3D FORCE_DIR_SET_GID;
-+	return mode;
-+}
-+
-+int adjust_shared_perm(const char *path)
-+{
-+	struct stat st;
-+	int old_mode, new_mode;
-+	if (lstat(path, &st) < 0)
-+		return -1;
-+	old_mode =3D st.st_mode;
-+
-+	if (S_ISDIR(old_mode))
-+		new_mode =3D calc_shared_perm_dir(old_mode);
-+	else
-+		new_mode =3D calc_shared_perm(old_mode);
-=20
--	if (((shared_repository < 0
--	      ? (orig_mode & (FORCE_DIR_SET_GID | 0777))
--	      : (orig_mode & mode)) !=3D mode) &&
--	    chmod(path, (mode & ~S_IFMT)) < 0)
-+	if (((old_mode ^ new_mode) & ~S_IFMT) &&
-+			chmod(path, (new_mode & ~S_IFMT)) < 0)
- 		return -2;
- 	return 0;
- }
---=20
-1.8.1.1
+>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+>  Documentation/line-range-format.txt | 6 ++++++
+>  line-log.c                          | 8 ++++++++
+>  2 files changed, 14 insertions(+)
+>
+> diff --git a/Documentation/line-range-format.txt b/Documentation/line-range-format.txt
+> index 265bc23..9ce0688 100644
+> --- a/Documentation/line-range-format.txt
+> +++ b/Documentation/line-range-format.txt
+> @@ -16,3 +16,9 @@ starting at the line given by <start>.
+>  This is only valid for <end> and will specify a number
+>  of lines before or after the line given by <start>.
+>  +
+> +
+> +- `$`
+> ++
+> +A literal dollar sign can be used as a shorthand for the last line in
+> +the file.
+> ++
+> diff --git a/line-log.c b/line-log.c
+> index a24a86b..b167b00 100644
+> --- a/line-log.c
+> +++ b/line-log.c
+> @@ -15,6 +15,14 @@ const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
+>  	regmatch_t match[1];
+>  
+>  	/*
+> +	 * $ is a synonym for "the end of the file".
+> +	 */
+> +	if (spec[0] == '$') {
+> +		*ret = lines;
+> +		return spec + 1;
+> +	}
+> +
+> +	/*
+>  	 * Allow "-L <something>,+20" to mean starting at <something>
+>  	 * for 20 lines, or "-L <something>,-5" for 5 lines ending at
+>  	 * <something>.
