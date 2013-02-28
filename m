@@ -1,129 +1,143 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG/PATCH] contrib/subtree: allow addition of remote branch
- with name not locally present
-Date: Wed, 27 Feb 2013 16:20:07 -0800
-Message-ID: <7vwqtti91k.fsf@alter.siamese.dyndns.org>
-References: <CALeLG_ndDWyPWRBQtKV4WswZUKRpNQzCAXmB0f0yoKGsAYMUig@mail.gmail.com>
+Subject: Re: [PATCH v2] name-hash.c: fix endless loop with
+ core.ignorecase=true
+Date: Wed, 27 Feb 2013 16:27:24 -0800
+Message-ID: <7vsj4hi8pf.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8CEHzqH1X=v4yau0SyZwrZp1r6hNp=yXD+eZh1q_BS-0g@mail.gmail.com>
+ <CALkWK0=6_n4rf6AWci6J+uhGHpjTUmK7YFdVHuSJedN2zLWtMA@mail.gmail.com>
+ <CACsJy8DeM5--WVXg3b65RxLBS7Jho-7KmcGwWk7B5uAx77yOEw@mail.gmail.com>
+ <20130210111732.GA24377@lanh>
+ <CABPQNSZ282Lre=sy-+ZQdJA9JnGqQguq2bQDOwvjb0fP+1-w8Q@mail.gmail.com>
+ <CACsJy8AWyJ=dW5f44huWyPPe4X62xyi+R9CNM5Tg6u6TYf+thQ@mail.gmail.com>
+ <511AAA92.4030508@gmail.com>
+ <CACsJy8C=2xKcsby048WWCFNhgKObGwrzeCOJPVVqgj88AfSHQw@mail.gmail.com>
+ <20130213181851.GA5603@sigill.intra.peff.net> <511BF6D7.3030404@gmail.com>
+ <20130213225529.GA25353@sigill.intra.peff.net> <511C3454.6080204@gmail.com>
+ <512E1C0F.3050506@gmail.com> <7v621dk8aa.fsf@alter.siamese.dyndns.org>
+ <512E8014.3090107@gmail.com> <512E9D7C.2030803@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Adam Tkac <atkac@redhat.com>,
-	David Greene <greened@obbligato.org>,
-	Jesper Lyager Nielsen <lyager@gmail.com>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Techlive Zheng <techlivezheng@gmail.com>
-To: Paul Campbell <pcampbell@kemitix.net>
-X-From: git-owner@vger.kernel.org Thu Feb 28 01:21:01 2013
+Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+	kusmabite@gmail.com, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Git List <git@vger.kernel.org>, finnag@pvv.org
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 28 01:28:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UArEq-0001ke-JW
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Feb 2013 01:20:54 +0100
+	id 1UArLl-0007j4-2L
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Feb 2013 01:27:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751563Ab3B1AUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Feb 2013 19:20:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55971 "EHLO
+	id S1751962Ab3B1A12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Feb 2013 19:27:28 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61873 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750838Ab3B1AUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Feb 2013 19:20:10 -0500
+	id S1751813Ab3B1A11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Feb 2013 19:27:27 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30E0CC18C;
-	Wed, 27 Feb 2013 19:20:09 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2244C511;
+	Wed, 27 Feb 2013 19:27:26 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8iQInosn/6v8XzKTEoKiRSo+u3U=; b=pr0+Gl
-	4rIWdYKwL5MNp2ReE976clVWaAk4DMs26DlDJeAJsmofHzaCUYWVyHy3YZMx8YS2
-	SeTqyFNHIx7xAwd+3+tGcnhPGeOeEIDgvW9vVj+Oo0SNow62xdf2GPe73oi6mzoU
-	uJSSK2pbmsqy+v4H7IQNTiQ1i7+zJD6iozHiY=
+	:content-type; s=sasl; bh=VF4uNwIZJd0OSMVage/xtGNpw3s=; b=Czbjfz
+	bdI887VTRHINFF99gEyvDx9LhUQlWBXWxNRlz+BTLEdT2UfxuIqXSioMZujuXliY
+	icnhWpbSmvDB40ree2lWkrL71H6OoIskzZ52fke4UCLaEI/ADTJ8TKh2z0OXS27Y
+	Ku+hrMvr6Abflx+qvwHHfiteJ7DbXUhDMZQI4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CqAJ5K8Lx+4ipx6QkitsN9t0JK3lELZy
-	YJXvQQxUNKJcrlY9eLwXXzmQtAyyz3SjZufjXTCRmsACPBBho8MUBFjILc9E9QuN
-	BoW7pcrQnYzwR3pklDpUm3HPsxCjx3dBRhBghbJhzVHykw3ku1AcHBJF2K1tNYbC
-	L8ImnLBTBBk=
+	:content-type; q=dns; s=sasl; b=MtxOR3jQDICYdKCc4YM0zqs1jTTvIDYH
+	ITUiQpjvKP9dImeEqRb9vdLqh5GXaYJlNSAruW0470pLSG2LEmHe9LOi/cijsKoh
+	d4oPNz8hKxl5xzDbWdmD3LmPIg8aaMORQjAu31wK4lD607JFP1WDM8YYn1LhQRjh
+	oYOJADpQWbc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 255F6C18B;
-	Wed, 27 Feb 2013 19:20:09 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5513C50F;
+	Wed, 27 Feb 2013 19:27:26 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8E689C187; Wed, 27 Feb 2013
- 19:20:08 -0500 (EST)
-In-Reply-To: <CALeLG_ndDWyPWRBQtKV4WswZUKRpNQzCAXmB0f0yoKGsAYMUig@mail.gmail.com> (Paul
- Campbell's message of "Wed, 27 Feb 2013 23:51:13 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BD46C50E; Wed, 27 Feb 2013
+ 19:27:26 -0500 (EST)
+In-Reply-To: <512E9D7C.2030803@gmail.com> (Karsten Blees's message of "Thu,
+ 28 Feb 2013 00:57:48 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9BC77490-813C-11E2-84FA-2B642E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A094E646-813D-11E2-994A-2B642E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217230>
 
-Paul Campbell <pcampbell@kemitix.net> writes:
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-> cmd_add() attempts to check for the validity of refspec for the repository
-> it is about to add as a subtree. It tries to do so before contacting the
-> repository. If the refspec happens to exist locally (say 'master') then
-> the test passes and the repo is fetched. If the refspec doesn't exist
-> locally then the test fails and the remote repo is never contacted.
+> With core.ignorecase=true, name-hash.c builds a case insensitive index of
+> all tracked directories. Currently, the existing cache entry structures are
+> added multiple times to the same hashtable (with different name lengths and
+> hash codes). However, there's only one dir_next pointer, which gets
+> completely messed up in case of hash collisions. In the worst case, this
+> causes an endless loop if ce == ce->dir_next (see t7062).
 >
-> Removing the tests still works as the git fetch command fails with the
-> perfectly accurate error:
+> Use a separate hashtable and separate structures for the directory index
+> so that each directory entry has its own next pointer. Use reference
+> counting to track which directory entry contains files.
 >
->   fatal: Couldn't find remote ref <refspec>
+> There are only slight changes to the name-hash.c API:
+> - new free_name_hash() used by read_cache.c::discard_index()
+> - remove_name_hash() takes an additional index_state parameter
+> - index_name_exists() for a directory (trailing '/') may return a cache
+>   entry that has been removed (CE_UNHASHED). This is not a problem as the
+>   return value is only used to check if the directory exists (dir.c) or to
+>   normalize casing of directory names (read-cache.c).
 >
-> Signed-off-by: Paul Campbell <pcampbell@carnegiecollege.ac.uk>
+> Getting rid of cache_entry.dir_next reduces memory consumption, especially
+> with core.ignorecase=false (which doesn't use that member at all).
+>
+> With core.ignorecase=true, building the directory index is slightly faster
+> as we add / check the parent directory first (instead of going through all
+> directory levels for each file in the index). E.g. with WebKit (~200k
+> files, ~7k dirs), time spent in lazy_init_name_hash is reduced from 176ms
+> to 130ms.
+>
+> Signed-off-by: Karsten Blees <blees@dcon.de>
 > ---
->
-> I must confess to not understanding the comment preceding the
-> rev-parse test. Given that it is against the rev-parse and not the
-> cmd_add_repository call I'm assuming it can be removed.
 
-This is contrib/ material and I do not use the command, so anything
-I say should be taken with a moderate amount of salt, but I think
-the comment is talking about _not_ accepting a full storing refspec,
-or worse yet wildcard, e.g.
+One thing that still puzzles me is what guarantee we have on the
+liftime of these ce's that are borrowed by these dir_hash entries.
+There are a few places where we call free(ce) around "aliased"
+entries (only happens with ignore_case set).  I do not think it is a
+new issue (we used to borrow a ce to represent a directory in the
+name_hash by using the leading prefix of its name anyway, and this
+patch only changes which hash table is used to hold it), and I do
+not think it will be an issue for case sensitive systems, so I would
+stop being worried about it for now, though ;-)
 
-	refs/heads/topic:refs/remotes/origin/topic
-	refs/heads/*:refs/remotes/origin/*
+Thanks, will replace and queue.
 
-which will not make sense given that you are only adding a single
-commit via "cmd_add".  Also, if you have already fetched from the
-remote, "rev-parse $2^{commit}" at this point will protect against
-a typo by the end user.
 
-As you noticed, checking if $2 is a commit using rev-parse _before_
-fetching $2 from the remote repository is not a valid way to check
-against such errors.  So I tend to agree that removing the "die"
-will be a good idea.
-
-Typing "tipoc" when the user meant "topic" will error out at the
-"git fetch" done in cmd_add_repository, but that fetch will happily
-fetch and store whatever a refspec specifies, so you might want to
-replace the bogus "rev-parse before fetching" check to "reject
-refspec" with something else.
-
->  contrib/subtree/git-subtree.sh | 8 --------
->  1 file changed, 8 deletions(-)
->
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index 8a23f58..9a38b18 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -503,14 +503,6 @@ cmd_add()
->
->             "cmd_add_commit" "$@"
->         elif [ $# -eq 2 ]; then
-> -           # Technically we could accept a refspec here but we're
-> -           # just going to turn around and add FETCH_HEAD under the
-> -           # specified directory.  Allowing a refspec might be
-> -           # misleading because we won't do anything with any other
-> -           # branches fetched via the refspec.
-> -           git rev-parse -q --verify "$2^{commit}" >/dev/null ||
-> -           die "'$2' does not refer to a commit"
-> -
->             "cmd_add_repository" "$@"
->         else
->             say "error: parameters were '$@'"
-> --
-> 1.8.2.rc1
+> diff --git a/t/t7062-wtstatus-ignorecase.sh b/t/t7062-wtstatus-ignorecase.sh
+> new file mode 100755
+> index 0000000..73709db
+> --- /dev/null
+> +++ b/t/t7062-wtstatus-ignorecase.sh
+> @@ -0,0 +1,20 @@
+> +#!/bin/sh
+> +
+> +test_description='git-status with core.ignorecase=true'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'status with hash collisions' '
+> +	# note: "V/", "V/XQANY/" and "WURZAUP/" produce the same hash code
+> +	# in name-hash.c::hash_name
+> +	mkdir V &&
+> +	mkdir V/XQANY &&
+> +	mkdir WURZAUP &&
+> +	touch V/XQANY/test &&
+> +	git config core.ignorecase true &&
+> +	git add . &&
+> +	# test is successful if git status completes (no endless loop)
+> +	git status
+> +'
+> +
+> +test_done
