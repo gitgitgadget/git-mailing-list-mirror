@@ -1,122 +1,102 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: zsh completion broken for file completion
-Date: Thu, 28 Feb 2013 19:59:33 +0100
-Message-ID: <512FA915.4080203@gmail.com>
-References: <vpqtxowp9e2.fsf@grenoble-inp.fr>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v8 1/5] Refactor parse_loc
+Date: Thu, 28 Feb 2013 20:24:44 +0100
+Message-ID: <87lia86y2r.fsf@pctrast.inf.ethz.ch>
+References: <cover.1362069310.git.trast@student.ethz.ch>
+	<d22070b416a1787ece6f98a722614a54826b93ce.1362069310.git.trast@student.ethz.ch>
+	<7vobf4icjh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Feb 28 20:00:30 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Will Palmer <wmpalmer@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 28 20:25:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UB8iR-0003x5-Up
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Feb 2013 20:00:28 +0100
+	id 1UB96R-0007Sv-Gz
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Feb 2013 20:25:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933069Ab3B1TAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2013 14:00:01 -0500
-Received: from mail-ea0-f173.google.com ([209.85.215.173]:65390 "EHLO
-	mail-ea0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933067Ab3B1TAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2013 14:00:00 -0500
-Received: by mail-ea0-f173.google.com with SMTP id i1so206198eaa.18
-        for <git@vger.kernel.org>; Thu, 28 Feb 2013 10:59:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=vqQFuSHhWD+oV5Mb3sOedpEfgtD51zvOMB7KXN85jRg=;
-        b=oXLmQLoRVfZ1n3Q8F5qQOUB4BtFo1tnzeiDti1hu0hWzNH6rFPB8MYKrq0XSMLULSN
-         uaz90qQkBkMN2BEdodWSw0PniwhPqrTbN7aV7dAi5i4O/SjO0xTKBycUoXtiiDpntItt
-         8Qg4AnCD0bDSSICWkeH5b/Uu+kM9qAt0bL7C5FeI1EIj771wMZDbINsQbFt7vPSklMZx
-         bdHgMUicQsJOsub/+jG6fULGfy64fFFz7YG/do0w1M0K0yumv170qE3V0pkFoeRL241Z
-         vHJk1MhL9K2JaJrc3dX8pan+11Vhz4dZwzeIgV+K3rxskPiXwshtGYM8AHIc9Xn0kbwT
-         ZxFg==
-X-Received: by 10.15.101.204 with SMTP id bp52mr19262638eeb.31.1362077999142;
-        Thu, 28 Feb 2013 10:59:59 -0800 (PST)
-Received: from [192.168.0.3] ([151.70.216.108])
-        by mx.google.com with ESMTPS id s3sm13288491eem.4.2013.02.28.10.59.56
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 28 Feb 2013 10:59:58 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <vpqtxowp9e2.fsf@grenoble-inp.fr>
-X-Enigmail-Version: 1.0.1
+	id S1759725Ab3B1TYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2013 14:24:51 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:39971 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759677Ab3B1TYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2013 14:24:50 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 28 Feb
+ 2013 20:24:39 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.209.233) by
+ CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 28 Feb 2013 20:24:46 +0100
+In-Reply-To: <7vobf4icjh.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 28 Feb 2013 09:16:50 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.209.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217251>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Junio C Hamano <gitster@pobox.com> writes:
 
-Il 28/02/2013 19:43, Matthieu Moy ha scritto:
-> Hi,
-> 
-> The completion for e.g. "git add file<tab>" is broken in master. I get
-> the following result:
-> 
-> git add fo__gitcomp_file:8: command not found: compgen
-> 
-> The guilty commit is fea16b47b60 (Fri Jan 11 19:48:43 2013, Manlio
-> Perillo, git-completion.bash: add support for path completion), which
-> introduces a new __gitcomp_file function that uses the bash builtin
-> "compgen", without redefining the function in git-completion.zsh.
-> 
-> [...] 
-> diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-> index 4577502..0ba1dcf 100644
-> --- a/contrib/completion/git-completion.zsh
-> +++ b/contrib/completion/git-completion.zsh
-> @@ -60,6 +60,15 @@ __gitcomp_nl ()
->         compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
->  }
+> Thomas Rast <trast@student.ethz.ch> writes:
+>
+>> From: Bo Yang <struggleyb.nku@gmail.com>
+>>
+>> We want to use the same style of -L n,m argument for 'git log -L' as
+>> for git-blame.  Refactor the argument parsing of the range arguments
+>> from builtin/blame.c to the (new) file that will hold the 'git log -L'
+>> logic.
+>>
+>> To accommodate different data structures in blame and log -L, the file
+>> contents are abstracted away; parse_range_arg takes a callback that it
+>> uses to get the contents of a line of the (notional) file.
+>>
+>> The new test is for a case that made me pause during debugging: the
+>> 'blame -L with invalid end' test was the only one that noticed an
+>> outright failure to parse the end *at all*.  So make a more explicit
+>> test for that.
+>>
+>> Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
+>> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+>> ---
+>>  Documentation/blame-options.txt     |  19 +------
+>>  Documentation/line-range-format.txt |  18 +++++++
+>>  Makefile                            |   2 +
+>>  builtin/blame.c                     |  99 +++-------------------------------
+>>  line-log.c                          | 105 ++++++++++++++++++++++++++++++++++++
+>>  line-log.h                          |  23 ++++++++
+>
+> Was this churn necessary?  
+>
+> It is strange to move existing functions that will be tweaked to be
+> shared by two different codepaths (blame and line-log) to the new
+> user.
+>
+> The only effect this has, as opposed to tweaking the functions in
+> place and making them extern, is to make it harder to see the tweaks
+> made while moving the lines, and also make it more cumbersome to
+> determine the lineage of the code later.
 >  
-> +__gitcomp_file ()
-> +{
-> +       emulate -L zsh
-> +
-> +       local IFS=$'\n'
-> +       compset -P '*[=:]'
-> +       compadd -Q -p "${2-}" -- ${=1} && _ret=0
-> +}
-> +
+> It would have been understandable if they were moved to a new
+> library-ish file (perhaps "line-range.[ch]"); even though that
+> approach shares the same downsides, at least it would have a better
+> excuse "We will share this, so let's move it to a neutral third
+> place to allow us to hide the implementation details from both
+> users".  The arrangement this patch series makes does not even have
+> that excuse.  The final implementation still stay with one of the
+> users; the only difference is that it is away from the original user
+> and close to the new user.
 
-This patch is implemented in fea16b47b60, but only for the deprecated
-zsh compatibility code inside git-completion.bash.
+Even though I am moving from builtin/blame.c to line-log.c?  I would
+otherwise have to call from a rather lib-ish file into a "frontend"
+file.  I always figured I wasn't supposed to do that.
 
-The reason I did not provided a patch for git-completion.zsh was because
-there was a bug in this script [1].
-
-If any changes are made to git-completion.zsh, please update
-git-completion.bash, too.
-
-
-[1] Basically, on my system I need the following change at the end of
-    the file:
-
-	-_git
-	+autoload -U +X compinit && compinit
-	+compdef _git git gitk
-
-    I don't know the reason, however; and it seems that it is a problem
-    only for me
-
-> [...]
-
-
-Regards  Malio
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlEvqRUACgkQscQJ24LbaURASgCeILUTXAiZA6Ndf2DHByJfv4nT
-2bMAn1gPqSdfIBzb0cexwYNoAuD5j2+O
-=sKTR
------END PGP SIGNATURE-----
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
