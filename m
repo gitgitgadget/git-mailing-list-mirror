@@ -1,91 +1,80 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] diff: Fix rename pretty-print when suffix and prefix overlap
-Date: Thu, 28 Feb 2013 23:22:05 +0100
-Message-ID: <CALWbr2y7d5kGQpF=gBCkVx2ZgZR-9mmdhj17f2QcZZTaMPM_4w@mail.gmail.com>
-References: <CALWbr2yviqF68zF7mBbhaXW7oFar0YRqROBWXwqjo7UNgZNVBQ@mail.gmail.com>
-	<1362088540-14564-1-git-send-email-apelisse@gmail.com>
-	<874ngw2ii0.fsf@pctrast.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 4/5] Implement line-history search (git log -L)
+Date: Thu, 28 Feb 2013 14:23:05 -0800
+Message-ID: <7vmwuogjsm.fsf@alter.siamese.dyndns.org>
+References: <cover.1362069310.git.trast@student.ethz.ch>
+ <9af548b2a7e4a4da9eb30e99b0223f20788b4fc1.1362069310.git.trast@student.ethz.ch> <7vbob4iaxh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	"Will Palmer" <wmpalmer@gmail.com>
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Feb 28 23:22:40 2013
+X-From: git-owner@vger.kernel.org Thu Feb 28 23:23:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBBs2-00075K-Hw
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Feb 2013 23:22:34 +0100
+	id 1UBBt0-0007ow-P1
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Feb 2013 23:23:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752262Ab3B1WWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2013 17:22:10 -0500
-Received: from mail-qe0-f43.google.com ([209.85.128.43]:62341 "EHLO
-	mail-qe0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751700Ab3B1WWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2013 17:22:07 -0500
-Received: by mail-qe0-f43.google.com with SMTP id 1so1738524qee.30
-        for <git@vger.kernel.org>; Thu, 28 Feb 2013 14:22:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=aHT/eWI8ozUDH+iS6ulw2uQT1waPeO5kO7lO6ClWDDo=;
-        b=szvH3VQB5Kmj4PHfWcQpapFEVuF9dATnHFKOqswCXGqBb01lwqe1rkT/gsgG5sSIRw
-         ZXtb+gWlBEEu+uPgKIjrgGctm4gK5wgZBSahsM8HrnDZiItG7OivHfCrZnf5/94h8drz
-         2sWaHAnRkFAz2Xe6h6o+pmquue9aO7IjFjCBLIp53dBipPwXwKkOMiB6I4pcHNj4J890
-         jb6gzJ4FYzZAzgsO2o+3yASBsmFlJ7oNTbSJmBt3bSRTypQNb6BhmgZWLBkn+q71eNsH
-         7+KgUdmInkRterg9kpWs6Ph48xpGtHy022NFdplDMN9ZyYlwTK0UdDZt9KLDUcUxPzrV
-         44xQ==
-X-Received: by 10.49.59.48 with SMTP id w16mr13877546qeq.38.1362090125901;
- Thu, 28 Feb 2013 14:22:05 -0800 (PST)
-Received: by 10.49.70.163 with HTTP; Thu, 28 Feb 2013 14:22:05 -0800 (PST)
-In-Reply-To: <874ngw2ii0.fsf@pctrast.inf.ethz.ch>
+	id S1752275Ab3B1WXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Feb 2013 17:23:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49451 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751078Ab3B1WXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Feb 2013 17:23:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A003B1B1;
+	Thu, 28 Feb 2013 17:23:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GK6d8orgeuflNTuJhcTttdqWbeI=; b=ZLR2aE
+	PqH6/Sh80QjQqi+U5V5ht5kHCD9njTGO049f0Ixh9y5gnm2wZcRzGZ31AToVhXE5
+	BgUMpJebaT8PvRUXdIeat7ScQf68kgop/h0ReFHYII1SKkYQ8e3BDk0djWyQzLKx
+	4mR+udvcdrKRTswoj4XrVTzUM8rpGAHFzAfWQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HFW2ufH0cD6GmWSzFEhAULtudwUz+wr3
+	4Fnk7K5cd8g6csJy5bzJ9ZoR0IoyXtfntAFHdE3A47kjS6s5VmL/7dY7mUK3q0va
+	Wt1L91F3wYAIpodKCohVDa+JoA5UW4JAeBgVUFwDy9xXfEbp4aHswrmyD1bIZkWW
+	+zMrzLokg14=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DEC1B1B0;
+	Thu, 28 Feb 2013 17:23:07 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BEF5AB1AF; Thu, 28 Feb 2013
+ 17:23:06 -0500 (EST)
+In-Reply-To: <7vbob4iaxh.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 28 Feb 2013 09:51:38 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6CDEEF64-81F5-11E2-BBDD-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217262>
 
-On Thu, Feb 28, 2013 at 11:14 PM, Thomas Rast <trast@student.ethz.ch> wrote:
-> Antoine Pelisse <apelisse@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Overall, I like this better than the "log --follow" hack; as the
+> revision traversal is done without any pathspec when being "careful
+> and slow" (aka -M), you do not suffer from the "just use a singleton
+> pathspec globally regardless of what other history paths are being
+> traversed" limitation of "log --follow".
 >
->> diff --git a/diff.c b/diff.c
->> index 9038f19..e1d82c9 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -1177,7 +1177,16 @@ static char *pprint_rename(const char *a, const char *b)
->> -     while (a <= old && b <= new && *old == *new) {
->> +     /*
->> +      * Note:
->> +      * if pfx_length is 0, old/new will never reach a - 1 because it
->> +      * would mean the whole string is common suffix. But then, the
->> +      * whole string would also be a common prefix, and we would not
->> +      * have pfx_length equals 0.
->> +      */
->> +     while (a + pfx_length - 1 <= old &&
->> +            b + pfx_length - 1 <= new &&
->> +            *old == *new) {
->
-> Umm, you still have the broken version here, and the previous patch is
-> already in next.  I think you should decide for one thing ;-)
+> The patch series certainly is interesting.
 
-Thanks ! I had not paid enough attention to that.
+Having said that, I notice that "careful and slow" is just "too slow
+to be usable" even on a small tree like ours.  Try running
 
-> Either: consider this a reroll; Junio would have to revert the version
-> already in next (which isn't _so_ bad, because next will eventually be
-> rebuilt) and apply this new version.  But if you do that, you should
-> squash my change that deals with the underrun issue (I'd be fine with
-> that).
+    $ git log -M -L:get_name:builtin/describe.c
 
-I would not have done that without your consent (that's why I kept the
-buggy version)
+and see how long you have to wait until you hit the first line of
+output.
 
-> Or: consider it an incremental improvement on the series, in which case
-> you should send only the tests with a new commit message.
-
-That seems like the best solution to me. I will resend later with just
-the tests and a new commit message.
-
-Cheers,
-Antoine
+If some of the many NEEDSWORK in the code were fixed, this may
+become "very slow but tolerable", but in the current shape, I doubt
+it would be prudent to advance this to 'next' and further.
