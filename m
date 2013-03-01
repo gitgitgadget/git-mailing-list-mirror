@@ -1,201 +1,77 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v8 4/5] Implement line-history search (git log -L)
-Date: Fri, 1 Mar 2013 15:59:21 +0100
-Message-ID: <87ppzjxj1y.fsf@pctrast.inf.ethz.ch>
-References: <cover.1362069310.git.trast@student.ethz.ch>
-	<9af548b2a7e4a4da9eb30e99b0223f20788b4fc1.1362069310.git.trast@student.ethz.ch>
-	<7vbob4iaxh.fsf@alter.siamese.dyndns.org>
-	<7vmwuogjsm.fsf@alter.siamese.dyndns.org>
-	<87vc9b1p48.fsf@pctrast.inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Will Palmer <wmpalmer@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 01 15:59:51 2013
+From: Preben Liland Madsen <prebenliland@gmail.com>
+Subject: Re: Ignore version update changes on git show report?
+Date: Fri, 1 Mar 2013 16:12:16 +0100
+Message-ID: <BB9809E3-7698-48D6-A051-D1052506507A@gmail.com>
+References: <DEC76CB0-9E35-40A8-9D73-77617CC605A3@gmail.com> <5130AE23.4040303@drmicha.warpmail.net>
+Mime-Version: 1.0 (Apple Message framework v1085)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Mar 01 16:07:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBRR8-0001wV-3a
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 15:59:50 +0100
+	id 1UBRYf-00015O-9m
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 16:07:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750887Ab3CAO7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Mar 2013 09:59:24 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:38417 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750696Ab3CAO7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Mar 2013 09:59:23 -0500
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 1 Mar
- 2013 15:59:11 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
- CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Fri, 1 Mar 2013 15:59:20 +0100
-In-Reply-To: <87vc9b1p48.fsf@pctrast.inf.ethz.ch> (Thomas Rast's message of
-	"Fri, 1 Mar 2013 09:49:27 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1751543Ab3CAPHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Mar 2013 10:07:10 -0500
+Received: from mail-la0-f42.google.com ([209.85.215.42]:50988 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751043Ab3CAPHI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Mar 2013 10:07:08 -0500
+Received: by mail-la0-f42.google.com with SMTP id fe20so3055403lab.29
+        for <git@vger.kernel.org>; Fri, 01 Mar 2013 07:07:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:subject:mime-version:content-type:from:in-reply-to:date
+         :cc:content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=/ibw1nPkWF1w/KjBh63VtyqWW54WRinDSP64FODGCEI=;
+        b=ykCDvjYYcY5Lb1GyV4PlhwujQYimFOt55E9gZz06+Z+hYBVnPIuKRWhXOpUJlUjWUd
+         7nMXF/fjwkC2jmCw4BUnd6jn5xhHRWZN7bfxOUgHqLbGqhib4mbTOySoJ9AVQM2olkKX
+         StBOV8eXnDXapLn8R74q/6lTz9A7nMMv6p/c0qx77uyc/AlS/Ja7xykmDNH1tkYFBCKE
+         lt3droiaROnjnkDifuWdxx0A5VurBbYj3/jZybaeDHg8NyNoY0c+/trlGs9teGE8IpST
+         OmAFYHj8aLof45GWl7ZK1CmJC7jJ2N/FvCDKCeLAhxuJOJ8qm6yA7SadXZA3LV/Z01Qu
+         PUAQ==
+X-Received: by 10.112.16.102 with SMTP id f6mr904545lbd.3.1362150426855;
+        Fri, 01 Mar 2013 07:07:06 -0800 (PST)
+Received: from [192.168.0.100] (ti0016a380-dhcp1358.bb.online.no. [83.109.133.81])
+        by mx.google.com with ESMTPS id fl9sm4201433lbb.9.2013.03.01.07.07.05
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 01 Mar 2013 07:07:05 -0800 (PST)
+In-Reply-To: <5130AE23.4040303@drmicha.warpmail.net>
+X-Mailer: Apple Mail (2.1085)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217279>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Den 1. mars 2013 kl. 14.33 skrev Michael J Gruber:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I notice that "careful and slow" is just "too slow
->> to be usable" even on a small tree like ours.  Try running
->>
->>     $ git log -M -L:get_name:builtin/describe.c
->>
->> and see how long you have to wait until you hit the first line of
->> output.
->
-> I'll dig some more.  It *should* be essentially the following times
-> taken together:
->
->   $ time git log --raw -M --topo-order >/dev/null
->   real    0m5.448s
-[...]
->   $ time git log -L:get_name:builtin/describe.c >/dev/null
->   real    0m0.832s
-[...]
->   $ time git log -L:get_name:builtin-describe.c 81b50f3ce40^ >/dev/null
->   real    0m0.489s
-[...]
-> So I'm losing a factor of about 4 somewhere, which I can't explain right
-> now.
+> First of all, there is
+> 
+> git beat-with-stick
+> 
+> that you should apply to those responsible for that mess ;)
 
-It seems I still don't understand half of this code.
+Haha, yeah I should try that one ;-)
 
-log -M --raw in the above somehow appears to use and optimize for
--M100%, whereas the log -L code is currently written for general args.
+I wish they weren't included in their release, but what can you do... I'm sure they have their reason for including the updated version number. Maybe to ensure files have been updated or similar when doing support for their clients, I guess... Although for us it really is more a pain than gain that they update the version number in all their php files when we wish to review changes done in files we may have modified earlier or possibly investigate bugs that may suddenly crop up in newer versions.
 
-However, I couldn't pin down where this happens; I only know from call
-graph profiling[1] that log -M --raw never goes through diffcore_std().
-And indeed according to the same sort of profiling, log -M -L spends
-most of its time within diffcore_std() unpacking blobs to find renames.
 
-Even more confusingly, try_to_follow_renames() _does_ call into
-diffcore_std, so there seems to be some merit to calling it after all.
+> If you have to deal with that sort of situation then a textconv filter
+> might get you as close as possible. Use "grep -v '^\* IP.Board v*'" as a
+> textconv filter for those files, and those changes will disappear from
+> the diff. (I do something like that for tracking my gitk config, which
+> stores last window sizes.)
 
-With the hacky patch below,  I get something more reasonable:
+Thanks! I got a similar tips on stackoverflow: http://stackoverflow.com/questions/15097401/git-any-way-to-ignore-files-that-have-gotten-version-number-changed-only/
 
-  $ time ./git-log -M -L:get_name:builtin/describe.c  >/dev/null
+But unfortunately that doesn't work for --stat it seems, but I've written a small "sketchy" shell-script to just ignore all lines with 2+- in them...
 
-  real    0m3.794s
-  user    0m3.734s
-  sys     0m0.045s
 
-That's compared to about 35s on my machine without the patch.  It still
-calls diffcore_std(), but before that it discards all diff pairs except
-those affecting the path(s) we're interested in and any deletions (so
-that they can be used as rename sources).  After diffcore_std() it
-discards all pairs that we're not interested in.
-
-[1]  valgrind --tool=callgrind --trace-children=yes
-
--- >8 --
-Subject: [PATCH] WIP: speed up log -L... -M
-
----
- line-log.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 54 insertions(+), 4 deletions(-)
-
-diff --git a/line-log.c b/line-log.c
-index a74bbaf..b03cc0b 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -997,7 +997,52 @@ static void move_diff_queue(struct diff_queue_struct *dst,
- 	DIFF_QUEUE_CLEAR(src);
- }
- 
--static void queue_diffs(struct diff_options *opt,
-+static void filter_diffs_for_paths(struct line_log_data *range, int keep_deletions)
-+{
-+	int i;
-+	struct diff_queue_struct outq;
-+	DIFF_QUEUE_CLEAR(&outq);
-+
-+	/* fprintf(stderr, "-- filtering:\n"); */
-+
-+	for (i = 0; i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+		struct line_log_data *rg = NULL;
-+		/* fprintf(stderr, "%-38s\t%-38s\n", (p->one ? p->one->path : "<none>"), (p->two ? p->two->path : "<none>")); */
-+		if (!DIFF_FILE_VALID(p->two)) {
-+			if (keep_deletions)
-+				diff_q(&outq, p);
-+			else
-+				diff_free_filepair(p);
-+			continue;
-+		}
-+		for (rg = range; rg; rg = rg->next) {
-+			if (!strcmp(rg->spec->path, p->two->path))
-+				break;
-+		}
-+		if (rg)
-+			diff_q(&outq, p);
-+		else
-+			diff_free_filepair(p);
-+	}
-+	free(diff_queued_diff.queue);
-+	diff_queued_diff = outq;
-+}
-+
-+static inline int diff_might_be_rename(void)
-+{
-+	int i;
-+	for (i = 0; i < diff_queued_diff.nr; i++)
-+		if (!DIFF_FILE_VALID(diff_queued_diff.queue[i]->one)) {
-+			/* fprintf(stderr, "diff_might_be_rename found creation of: %s\n", */
-+			/* 	diff_queued_diff.queue[i]->two->path); */
-+			return 1;
-+		}
-+	return 0;
-+}
-+
-+static void queue_diffs(struct line_log_data *range,
-+			struct diff_options *opt,
- 			struct diff_queue_struct *queue,
- 			struct commit *commit, struct commit *parent)
- {
-@@ -1013,7 +1058,12 @@ static void queue_diffs(struct diff_options *opt,
- 
- 	DIFF_QUEUE_CLEAR(&diff_queued_diff);
- 	diff_tree(&desc1, &desc2, "", opt);
--	diffcore_std(opt);
-+	if (opt->detect_rename) {
-+		filter_diffs_for_paths(range, 1);
-+		if (diff_might_be_rename())
-+			diffcore_std(opt);
-+		filter_diffs_for_paths(range, 0);
-+	}
- 	move_diff_queue(queue, &diff_queued_diff);
- 
- 	if (tree1)
-@@ -1297,7 +1347,7 @@ static int process_ranges_ordinary_commit(struct rev_info *rev, struct commit *c
- 	if (commit->parents)
- 		parent = commit->parents->item;
- 
--	queue_diffs(&rev->diffopt, &queue, commit, parent);
-+	queue_diffs(range, &rev->diffopt, &queue, commit, parent);
- 	changed = process_all_files(&parent_range, rev, &queue, range);
- 	if (parent)
- 		add_line_range(rev, parent, parent_range);
-@@ -1322,7 +1372,7 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
- 	for (i = 0; i < nparents; i++) {
- 		parents[i] = p->item;
- 		p = p->next;
--		queue_diffs(&rev->diffopt, &diffqueues[i], commit, parents[i]);
-+		queue_diffs(range, &rev->diffopt, &diffqueues[i], commit, parents[i]);
- 	}
- 
- 	for (i = 0; i < nparents; i++) {
--- 
-1.8.2.rc1.391.g6a988e5.dirty
+Best regards, Preben
