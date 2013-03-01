@@ -1,77 +1,139 @@
-From: Preben Liland Madsen <prebenliland@gmail.com>
-Subject: Re: Ignore version update changes on git show report?
-Date: Fri, 1 Mar 2013 16:12:16 +0100
-Message-ID: <BB9809E3-7698-48D6-A051-D1052506507A@gmail.com>
-References: <DEC76CB0-9E35-40A8-9D73-77617CC605A3@gmail.com> <5130AE23.4040303@drmicha.warpmail.net>
-Mime-Version: 1.0 (Apple Message framework v1085)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Mar 01 16:07:40 2013
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Elegant subdirectory checkout of remote-tracking branch?
+Date: Fri, 01 Mar 2013 10:22:53 -0500
+Message-ID: <20130301152253.GA9312@odin.tremily.us>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=OgqxwSJOaUobr8KG
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 01 16:23:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBRYf-00015O-9m
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 16:07:37 +0100
+	id 1UBRoB-0000QQ-Jf
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 16:23:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751543Ab3CAPHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Mar 2013 10:07:10 -0500
-Received: from mail-la0-f42.google.com ([209.85.215.42]:50988 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751043Ab3CAPHI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Mar 2013 10:07:08 -0500
-Received: by mail-la0-f42.google.com with SMTP id fe20so3055403lab.29
-        for <git@vger.kernel.org>; Fri, 01 Mar 2013 07:07:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:subject:mime-version:content-type:from:in-reply-to:date
-         :cc:content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=/ibw1nPkWF1w/KjBh63VtyqWW54WRinDSP64FODGCEI=;
-        b=ykCDvjYYcY5Lb1GyV4PlhwujQYimFOt55E9gZz06+Z+hYBVnPIuKRWhXOpUJlUjWUd
-         7nMXF/fjwkC2jmCw4BUnd6jn5xhHRWZN7bfxOUgHqLbGqhib4mbTOySoJ9AVQM2olkKX
-         StBOV8eXnDXapLn8R74q/6lTz9A7nMMv6p/c0qx77uyc/AlS/Ja7xykmDNH1tkYFBCKE
-         lt3droiaROnjnkDifuWdxx0A5VurBbYj3/jZybaeDHg8NyNoY0c+/trlGs9teGE8IpST
-         OmAFYHj8aLof45GWl7ZK1CmJC7jJ2N/FvCDKCeLAhxuJOJ8qm6yA7SadXZA3LV/Z01Qu
-         PUAQ==
-X-Received: by 10.112.16.102 with SMTP id f6mr904545lbd.3.1362150426855;
-        Fri, 01 Mar 2013 07:07:06 -0800 (PST)
-Received: from [192.168.0.100] (ti0016a380-dhcp1358.bb.online.no. [83.109.133.81])
-        by mx.google.com with ESMTPS id fl9sm4201433lbb.9.2013.03.01.07.07.05
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 01 Mar 2013 07:07:05 -0800 (PST)
-In-Reply-To: <5130AE23.4040303@drmicha.warpmail.net>
-X-Mailer: Apple Mail (2.1085)
+	id S1751320Ab3CAPXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Mar 2013 10:23:14 -0500
+Received: from vms173003pub.verizon.net ([206.46.173.3]:57113 "EHLO
+	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071Ab3CAPXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Mar 2013 10:23:13 -0500
+Received: from odin.tremily.us ([unknown] [72.68.84.219])
+ by vms173003.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MIZ00CSYMQ62K40@vms173003.mailsrvcs.net> for
+ git@vger.kernel.org; Fri, 01 Mar 2013 09:22:55 -0600 (CST)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id E38128EA0E4; Fri,
+ 01 Mar 2013 10:22:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1362151373; bh=Cf1zDBY6SWuEcj6frt1I7W0QATVgAgW20EngU4FZ478=;
+	h=Date:From:To:Subject;
+	b=Wx5QgzUph++iMYTQMvH/+VFMrqlb0buRixsxd8vD7Q6jgt3dzKc+rV9TfuTBKAtPz
+ ZJm99bql+syPJm+GhfNJsUkAdK+StfN0XpiGomRbUyfENNa52IxREncNCdg0b5wlrx
+ jTwr1FnNDT6xLDaL4JGqaUJ3mnghQjwwK2NhpTnY=
+Content-disposition: inline
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217279>
-
-Den 1. mars 2013 kl. 14.33 skrev Michael J Gruber:
-
-> First of all, there is
-> 
-> git beat-with-stick
-> 
-> that you should apply to those responsible for that mess ;)
-
-Haha, yeah I should try that one ;-)
-
-I wish they weren't included in their release, but what can you do... I'm sure they have their reason for including the updated version number. Maybe to ensure files have been updated or similar when doing support for their clients, I guess... Although for us it really is more a pain than gain that they update the version number in all their php files when we wish to review changes done in files we may have modified earlier or possibly investigate bugs that may suddenly crop up in newer versions.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217280>
 
 
-> If you have to deal with that sort of situation then a textconv filter
-> might get you as close as possible. Use "grep -v '^\* IP.Board v*'" as a
-> textconv filter for those files, and those changes will disappear from
-> the diff. (I do something like that for tracking my gitk config, which
-> stores last window sizes.)
+--OgqxwSJOaUobr8KG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks! I got a similar tips on stackoverflow: http://stackoverflow.com/questions/15097401/git-any-way-to-ignore-files-that-have-gotten-version-number-changed-only/
+I'm trying to figure out the most efficient way to keep an up to
+date `todo` branch checked out in Meta [1].  I've tried a few
+things like:
 
-But unfortunately that doesn't work for --stat it seems, but I've written a small "sketchy" shell-script to just ignore all lines with 2+- in them...
+  $ git submodule add -b refs/remotes/origin/todo --reference ./ -- ./ Meta
 
+and:
 
-Best regards, Preben
+  $ git clone --single-branch --branch refs/remotes/origin/todo ./ Meta
+
+These fail because I can't use a remote tracking branch as a
+source for the clone.  It should be possible to do:
+
+  $ git clone --reference . --single-branch --branch todo git://git.kernel.=
+org/pub/scm/git/git.git Meta
+
+but that will require (I think) network access during a fetch.
+Since I'm already fetching `origin` from the superproject, I
+don't want to have to refetch them for the submodule (or whatever
+Meta ends up being).  Here's what I think happens with a
+submodule fetch:
+
+1. Query the remote URL to dereference its current `todo` branch.
+2. Check if we have that object in our local object share (which
+   we should, due to --reference and a recent superproject
+   fetch).
+3. Fetch any missing objects from the remote URL.
+
+I want to replace step 1 with:
+
+1b. Query the superproject to dereference its current
+    `origin/todo` branch.
+
+and step 3 with:
+
+3b. Access objects from the superproject directly (as with
+    --reference / --shared).
+
+Do I need to setup something like:
+
+  [remote "origin"]
+    url =3D ../.git
+    fetch =3D +refs/remotes/origin/todo:refs/remotes/origin/todo
+
+by hand, or is there an easier way?
+
+I can, of course, clone a local `todo` branch if I've set one up in my
+superproject.  However, then I'd have to update-ref that branch to
+sync with origin/todo after every fetch (that updates origin/todo).
+This could be handled with a `git fetch` wrapper, but=E2=80=A6 yuck :p.
+
+Any suggestions for an elegant solution would be appreciated :).
+Once we figure something out, I can write it up and stick it in
+howto/maintain-git.txt.
+
+Cheers,
+Trevor
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/144748
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--OgqxwSJOaUobr8KG
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRMMfMAAoJEEUbTsx0l5OM8vAP/RppvSAq+9jq2s+0fn9y44ZZ
+TKaZt6OvANDmP7VwOL9gPRQvq5CwDSEKnncMQvgJoHNs/aXG4K3ev6iOpEEvBCZI
+gZ2pbwavaiogX58E/CkkeQ4F8FErTSTHp4294dwQXclOqYq9yyJSWr+qUE5tjMfy
+z+ZTv40cWSVgi0SCZDiot9b0NOTMGD9ydAtnSxE4EV/1jYdb0BUrfp9okv9wKRq7
+0eF0dYe0HnUY20YIYIHLjZ+nKmGr6ApVnGOoiOzE+vLCuSLswohulphvPB7aankQ
+sfEBUX2yC8k/+hFT0hfe7tv4Ub1R55p1qlFyQv2EU/EOAJidarwFpLB+jTHVR+kB
+ZSFSz6tgzP9YdY01oG4RrIq6HZIcFc4TQIs06+Dk3xf58yq7/wEo5ByUVpak3aL4
+BjwVmOTxO9Ppg/RDmkgYWtJqMdkiFkFjZvwikZx9HT0aOvktApwtXlx12pw1mHSd
+aFIb9GmLuzehsjZjxKAoS72pWNW+zWXMW7+PT4aIUBiSQxAKpJhc9JjwzlGU8BAO
+LgMtBsHYnsYQTjLy3MSZ1mc6IZL+2lTuwYiEuUkRyCOOcajqF84YzCvChvYw4neV
+NGBpIN0ESHE1vY5AGo9Gq+BzuFZeJ8DGblKueAEz7VRegj4IVB6PcSiKRQIqWVDz
+mgZZeujFSsoMshISMmy3
+=RrT8
+-----END PGP SIGNATURE-----
+
+--OgqxwSJOaUobr8KG--
