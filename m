@@ -1,139 +1,81 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Elegant subdirectory checkout of remote-tracking branch?
-Date: Fri, 01 Mar 2013 10:22:53 -0500
-Message-ID: <20130301152253.GA9312@odin.tremily.us>
+From: <git-users@io7m.com>
+Subject: Debugging a bizarre problem: What can influence 'git fetch'?
+Date: Fri, 1 Mar 2013 14:39:40 +0000
+Message-ID: <20130301143940.7e31f0c2@copperhead.int.arc7.info>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=OgqxwSJOaUobr8KG
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 01 16:23:40 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 01 17:23:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBRoB-0000QQ-Jf
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 16:23:39 +0100
+	id 1UBSk1-0004iS-Gi
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 17:23:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751320Ab3CAPXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Mar 2013 10:23:14 -0500
-Received: from vms173003pub.verizon.net ([206.46.173.3]:57113 "EHLO
-	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751071Ab3CAPXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Mar 2013 10:23:13 -0500
-Received: from odin.tremily.us ([unknown] [72.68.84.219])
- by vms173003.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MIZ00CSYMQ62K40@vms173003.mailsrvcs.net> for
- git@vger.kernel.org; Fri, 01 Mar 2013 09:22:55 -0600 (CST)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id E38128EA0E4; Fri,
- 01 Mar 2013 10:22:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1362151373; bh=Cf1zDBY6SWuEcj6frt1I7W0QATVgAgW20EngU4FZ478=;
-	h=Date:From:To:Subject;
-	b=Wx5QgzUph++iMYTQMvH/+VFMrqlb0buRixsxd8vD7Q6jgt3dzKc+rV9TfuTBKAtPz
- ZJm99bql+syPJm+GhfNJsUkAdK+StfN0XpiGomRbUyfENNa52IxREncNCdg0b5wlrx
- jTwr1FnNDT6xLDaL4JGqaUJ3mnghQjwwK2NhpTnY=
-Content-disposition: inline
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751202Ab3CAQW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Mar 2013 11:22:59 -0500
+Received: from bs3-dallas.accountservergroup.com ([50.22.11.58]:36232 "EHLO
+	bs3-dallas.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750778Ab3CAQW7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Mar 2013 11:22:59 -0500
+X-Greylist: delayed 6195 seconds by postgrey-1.27 at vger.kernel.org; Fri, 01 Mar 2013 11:22:59 EST
+Received: from dsl78-143-199-137.in-addr.fast.co.uk ([78.143.199.137]:54417 helo=copperhead.int.arc7.info)
+	by bs3-dallas.accountservergroup.com with esmtpsa (TLSv1:DHE-RSA-AES128-SHA:128)
+	(Exim 4.80)
+	(envelope-from <git-users@io7m.com>)
+	id 1UBR7e-000DFu-Ok
+	for git@vger.kernel.org; Fri, 01 Mar 2013 08:39:43 -0600
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bs3-dallas.accountservergroup.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - io7m.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217281>
 
+Hello.
 
---OgqxwSJOaUobr8KG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm working on a small project that talks to external git and fossil
+repositories. I've run into a bizarre "this cannot happen" problem and
+am completely mystified as to what's causing it.
 
-I'm trying to figure out the most efficient way to keep an up to
-date `todo` branch checked out in Meta [1].  I've tried a few
-things like:
+Essentially, the problem is that a particular git command, run as part
+of the unit tests for the project, fails reliably when executed from
+the project's build system but works correctly when run directly from the
+command line or when the same unit tests are executed from the IDE).
 
-  $ git submodule add -b refs/remotes/origin/todo --reference ./ -- ./ Meta
+The unit test executes the following commands (where e5KbuUvD4Ps is a
+random string to ensure that each invocation of the test starts from a
+blank canvas):
 
-and:
+/usr/bin/git clone --mirror --bare http://git.io7m.com/io7m-jaux.git /tmp/test-e5KbuUvD4Ps/io7m-jaux.git
+/usr/bin/git --git-dir=/tmp/test-e5KbuUvD4Ps/io7m-jaux.git fetch -v
 
-  $ git clone --single-branch --branch refs/remotes/origin/todo ./ Meta
+The 'git fetch' command raises the following error:
 
-These fail because I can't use a remote tracking branch as a
-source for the clone.  It should be possible to do:
+error: Unable to find f981a2bb02c38f20c1e3a5a0fc37c2b4ef5b92ea under http://git.io7m.com/io7m-jaux.git
+Cannot obtain needed object f981a2bb02c38f20c1e3a5a0fc37c2b4ef5b92ea
+error: Fetch failed.
 
-  $ git clone --reference . --single-branch --branch todo git://git.kernel.=
-org/pub/scm/git/git.git Meta
+The f981a2bb02c38f20c1e3a5a0fc37c2b4ef5b92ea is the HEAD commit of the master
+branch in the above repos.
 
-but that will require (I think) network access during a fetch.
-Since I'm already fetching `origin` from the superproject, I
-don't want to have to refetch them for the submodule (or whatever
-Meta ends up being).  Here's what I think happens with a
-submodule fetch:
+I can execute the fetch command from the command line (on the same clones created
+by any past invocations of the unit test) and it works correctly. I can run the unit
+test from the IDE and it works correctly.
 
-1. Query the remote URL to dereference its current `todo` branch.
-2. Check if we have that object in our local object share (which
-   we should, due to --reference and a recent superproject
-   fetch).
-3. Fetch any missing objects from the remote URL.
+In desperation, I've replaced the git binary with a shell script that logs
+the current environment and command line arguments to a file before executing
+the real git binary and in all cases, they're completely identical.
 
-I want to replace step 1 with:
+I'm out of ideas. What bizarre invisible environment pollution could possibly
+be influencing 'git fetch' in this manner? Is there some way to get 'git fetch'
+to be more verbose?
 
-1b. Query the superproject to dereference its current
-    `origin/todo` branch.
-
-and step 3 with:
-
-3b. Access objects from the superproject directly (as with
-    --reference / --shared).
-
-Do I need to setup something like:
-
-  [remote "origin"]
-    url =3D ../.git
-    fetch =3D +refs/remotes/origin/todo:refs/remotes/origin/todo
-
-by hand, or is there an easier way?
-
-I can, of course, clone a local `todo` branch if I've set one up in my
-superproject.  However, then I'd have to update-ref that branch to
-sync with origin/todo after every fetch (that updates origin/todo).
-This could be handled with a `git fetch` wrapper, but=E2=80=A6 yuck :p.
-
-Any suggestions for an elegant solution would be appreciated :).
-Once we figure something out, I can write it up and stick it in
-howto/maintain-git.txt.
-
-Cheers,
-Trevor
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/144748
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---OgqxwSJOaUobr8KG
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRMMfMAAoJEEUbTsx0l5OM8vAP/RppvSAq+9jq2s+0fn9y44ZZ
-TKaZt6OvANDmP7VwOL9gPRQvq5CwDSEKnncMQvgJoHNs/aXG4K3ev6iOpEEvBCZI
-gZ2pbwavaiogX58E/CkkeQ4F8FErTSTHp4294dwQXclOqYq9yyJSWr+qUE5tjMfy
-z+ZTv40cWSVgi0SCZDiot9b0NOTMGD9ydAtnSxE4EV/1jYdb0BUrfp9okv9wKRq7
-0eF0dYe0HnUY20YIYIHLjZ+nKmGr6ApVnGOoiOzE+vLCuSLswohulphvPB7aankQ
-sfEBUX2yC8k/+hFT0hfe7tv4Ub1R55p1qlFyQv2EU/EOAJidarwFpLB+jTHVR+kB
-ZSFSz6tgzP9YdY01oG4RrIq6HZIcFc4TQIs06+Dk3xf58yq7/wEo5ByUVpak3aL4
-BjwVmOTxO9Ppg/RDmkgYWtJqMdkiFkFjZvwikZx9HT0aOvktApwtXlx12pw1mHSd
-aFIb9GmLuzehsjZjxKAoS72pWNW+zWXMW7+PT4aIUBiSQxAKpJhc9JjwzlGU8BAO
-LgMtBsHYnsYQTjLy3MSZ1mc6IZL+2lTuwYiEuUkRyCOOcajqF84YzCvChvYw4neV
-NGBpIN0ESHE1vY5AGo9Gq+BzuFZeJ8DGblKueAEz7VRegj4IVB6PcSiKRQIqWVDz
-mgZZeujFSsoMshISMmy3
-=RrT8
------END PGP SIGNATURE-----
-
---OgqxwSJOaUobr8KG--
+M
