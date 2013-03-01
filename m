@@ -1,101 +1,101 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: two-way merge corner case bug
-Date: Fri, 1 Mar 2013 17:36:12 -0500
-Message-ID: <20130301223612.GA862@sigill.intra.peff.net>
-References: <7v7glun8kt.fsf@alter.siamese.dyndns.org>
- <20130226201820.GD13830@sigill.intra.peff.net>
- <7vwqtulplp.fsf@alter.siamese.dyndns.org>
- <20130301092201.GA17254@sigill.intra.peff.net>
- <7va9qngisg.fsf@alter.siamese.dyndns.org>
+Subject: Re: [bug report] git-am applying maildir patches in reverse
+Date: Fri, 1 Mar 2013 17:52:31 -0500
+Message-ID: <20130301225231.GB862@sigill.intra.peff.net>
+References: <20130301222018.GA839@WST420>
+ <7vwqtqeox7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Cc: William Giokas <1007380@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 01 23:36:43 2013
+X-From: git-owner@vger.kernel.org Fri Mar 01 23:53:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBYZE-00072l-Ri
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 23:36:41 +0100
+	id 1UBYp1-0006G3-92
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 23:52:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751436Ab3CAWgP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Mar 2013 17:36:15 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39563 "EHLO
+	id S1751371Ab3CAWwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Mar 2013 17:52:34 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39581 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751340Ab3CAWgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Mar 2013 17:36:15 -0500
-Received: (qmail 4600 invoked by uid 107); 1 Mar 2013 22:37:50 -0000
+	id S1751140Ab3CAWwd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Mar 2013 17:52:33 -0500
+Received: (qmail 4727 invoked by uid 107); 1 Mar 2013 22:54:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Mar 2013 17:37:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Mar 2013 17:36:12 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Mar 2013 17:54:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Mar 2013 17:52:31 -0500
 Content-Disposition: inline
-In-Reply-To: <7va9qngisg.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vwqtqeox7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217301>
 
-On Fri, Mar 01, 2013 at 08:57:03AM -0800, Junio C Hamano wrote:
+On Fri, Mar 01, 2013 at 02:27:32PM -0800, Junio C Hamano wrote:
 
-> An initial checkout is *supposed* to happen in an empty working
-> tree, so if we code it not to overwrite an existing path in the
-> working tree, the user cannot lose possibly precious contents with
-> an mistaken initial checkout (they will instead appear as modified
-> relative to the index), while in the normal case we will write out
-> the contents from the HEAD through the index.  We could attempt "we
-> do not have to if the user behaves, but with this we could help
-> misbehaving users" if we used twoway merge for an initial checkout.
-
-That matches my thinking. It is probably not worth touching, though,
-since it is not causing any problems. I just found it curious that the
-exact same (and only, as far as I can see) exception we make for
-initial_checkout is the same thing we have to tweak here.
-
-> Having said that, I notice that in the normal codepath (e.g. "git
-> clone" without the "--no-checkout" option) we no longer use twoway
-> merge for the initial checkout.  Back when "git clone" was a
-> scripted Porcelain, I think we used to do a twoway read-tree.  It
-> may be that we broke it when "clone" was rewritten in C, but the
-> breakage is to the "we do not have to..." thing, so it may not be a
-> big deal.
-
-The one-way merge that we use now in clone makes a lot of sense to me.
-We do not have a "previous state" we were based on.
-
-> The only case that matters in today's code is "git checkout"
-> (without any option or argument) immediately after "git clone -n", I
-> think.  The special casing for this initial checkout in twoway merge
-> is needed because we go from HEAD to HEAD in that case, and we do
-> not want to keep the artificial local removals from the index; we
-> start from not even having the $GIT_INDEX_FILE, so without the
-> special case all paths appear to have been "rm --cached", which is
-> usually not what the user would want to see ;-)
-
-Right. I just wondered if such a checkout should instead be a "reset",
-in which case it would fall under the proposed patch. But "git checkout"
-never does a twoway_merge with o->reset; instead, it uses a one-way
-merge.
-
-Anyway, that is all tangential to the bug at hand.
-
-> > ... My worry would be that somebody is
-> > using "--reset" but expecting the removal to be carried through
-> > (technically, "--reset" is documented as "-m but discard unmerged
-> > entries", but we are not really treating it that way here).
+> > I've been using git for a while and this is the first time I've had to
+> > use `git am` and I've got a 16 patch patchset that I'm looking to apply.
+> > The files were copied to a separate maildir by mutt to keep things
+> > clean, and then I ran `git am -i /path/to/maildir/` expecting things to
+> > start from the patch with the subject 
+> >
+> >     [PATCH 01/16] refactor common code in query_search/sync_search
+> >
+> > But instead, it starts with the 16/16 patch and works backwards, which,
+> > obviously, breaks the application process as the patches depend on each
+>
+> Note to bystanders.  This is coming from populate_maildir_list() in
+> builtin/mailsplit.c; the function claims to know what "maildir"
+> should look like, so it should be enforcing the ordering as
+> necessary by sorting the list, _if_ the implicit ordering given by
+> string_list_insert() is insufficient.
 > 
-> I've checked all in-tree uses of "read-tree --reset -u".
-> 
-> Nobody seems to use that combination, either from scripts or from C
-> (i.e. when opts.update==1 and opts.merge==1, opts.reset is not set)
-> with a twoway merge, other than "git am --abort/--skip".
+> It also is likely that it is a user error to expect that patch
+> e-mails are received and stored in the maildir in the order they
+> were sent, or it could be "mutt" copying the mails in the order the
+> messages were originally received, or something silly like that.
 
-I can believe it. So do we want to do that fix, then? Did you want to
-roll up the two halves of it with a test and write a commit message? I
-feel like you could write a much more coherent one than I could on this
-subject.
+I think it is a property of the maildir format that it does not
+technically define the message order. The order of items you get from
+readdir is filesystem specific and not necessarily defined (and that is
+what we use now). On my ext4 system, I do not even get them in backwards
+order; it is jumbled.
+
+We could sort based on the mtime of the file, but in some cases that
+won't have sufficient resolution (e.g., with one second resolution,
+they'll all probably have the same timestamp).
+
+The maildir spec explicitly says that readers should not make
+assumptions about the content of the filenames. Mutt happens to write
+them as:
+
+  ${epoch_seconds}.${pid}_${seq}.${host}
+
+so in practice, sorting them kind of works. Except that a series written
+out at once will all have the same timestamp and pid, and because ${seq}
+is not zero-padded, you have to actually parse up to there and do a
+numeric instead of byte-wise comparison.  So we can add a mutt-specific
+hack, but that's the best we can do. Other maildir writers (including
+future versions of mutt) will not necessarily do the same thing.
+
+I think maildir's philosophy is that ordering is not important, and the
+contents of the messages themselves should define the order in which a
+MUA presents them, anyway. It would make sense to me if we actually
+parsed the '[PATCH n/m]' bit from the subject of each and sorted based
+on that. That is blurring the line between git-mailsplit and
+git-mailinfo, in that mailsplit would have to start parsing the files.
+
+We could also sort based on the rfc822 "Date" header, but I don't think
+that is a good idea. It represents the author timestamp, so patches
+moved via "rebase -i" will have out-of-sequence dates with respect to
+the actual history graph.  You can encounter this if you "format-patch
+--stdout" a series into a single mbox and load it into a MUA that sorts
+by date (like mutt). The patches appear jumbled until you switch to
+"unsorted" or "sort by subject".
 
 -Peff
