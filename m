@@ -1,169 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [bug report] git-am applying maildir patches in reverse
-Date: Fri, 1 Mar 2013 18:35:48 -0500
-Message-ID: <20130301233548.GA13422@sigill.intra.peff.net>
-References: <20130301222018.GA839@WST420>
- <7vwqtqeox7.fsf@alter.siamese.dyndns.org>
- <20130301225231.GB862@sigill.intra.peff.net>
- <20130301230508.GC862@sigill.intra.peff.net>
- <7vlia6em9x.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: two-way merge corner case bug
+Date: Fri, 01 Mar 2013 15:49:23 -0800
+Message-ID: <7va9qmel4s.fsf@alter.siamese.dyndns.org>
+References: <7v7glun8kt.fsf@alter.siamese.dyndns.org>
+ <20130226201820.GD13830@sigill.intra.peff.net>
+ <7vwqtulplp.fsf@alter.siamese.dyndns.org>
+ <20130301092201.GA17254@sigill.intra.peff.net>
+ <7va9qngisg.fsf@alter.siamese.dyndns.org>
+ <20130301223612.GA862@sigill.intra.peff.net>
+ <7vppzien3i.fsf@alter.siamese.dyndns.org>
+ <20130301230845.GA7317@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: William Giokas <1007380@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 02 00:36:26 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 02 00:49:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBZUz-0005Qi-RC
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Mar 2013 00:36:22 +0100
+	id 1UBZi4-00014O-EC
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Mar 2013 00:49:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957Ab3CAXfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Mar 2013 18:35:52 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39626 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751346Ab3CAXfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Mar 2013 18:35:51 -0500
-Received: (qmail 5135 invoked by uid 107); 1 Mar 2013 23:37:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Mar 2013 18:37:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Mar 2013 18:35:48 -0500
-Content-Disposition: inline
-In-Reply-To: <7vlia6em9x.fsf@alter.siamese.dyndns.org>
+	id S1751957Ab3CAXt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Mar 2013 18:49:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48240 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751448Ab3CAXt0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Mar 2013 18:49:26 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCD78A66C;
+	Fri,  1 Mar 2013 18:49:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+DJnkZP8wOxipismMF8l4I1Ne/I=; b=V7LdW/
+	j42bgaTcTbex/zw/o4y5bYr73konQl+29NQF9v4mh8DNgRjHeFXHVBGlm0xdlol/
+	kXi41PM+vPMfii4icSrB8SiyuubUDZsg9yJqBIMM5VDj19wJvhQmmHxWc5pdS/0c
+	JhIKvUjMMqXGg7aMCVgvXq2QVLlZZNi/4I2U8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JDU2AnhivNHcb+/sFTQFIeavd9202BXe
+	waI9MmMoxTSgoIMWdFw/JKqmLI4sIlpONnvGEdK67ppYb92fx4bEzOsSHCqlCcMY
+	QwUp+fwdTDJgaZiYGsnRXpHNINC2gb8elcNBWUg7VvpgdnNjj8pAGv78e2sQQ59z
+	XCOmPCGN1Jc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF000A66B;
+	Fri,  1 Mar 2013 18:49:25 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 25EE2A669; Fri,  1 Mar 2013
+ 18:49:25 -0500 (EST)
+In-Reply-To: <20130301230845.GA7317@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 1 Mar 2013 18:08:45 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A5D383A4-82CA-11E2-8EFC-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217309>
 
-On Fri, Mar 01, 2013 at 03:24:42PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Fri, Mar 01, 2013 at 05:52:31PM -0500, Jeff King wrote:
-> > ...
-> >> The maildir spec explicitly says that readers should not make
-> >> assumptions about the content of the filenames. Mutt happens to write
-> >> them as:
-> >> 
-> >>   ${epoch_seconds}.${pid}_${seq}.${host}
-> >> 
-> >> so in practice, sorting them kind of works. Except that ...
-> >> << it does not work >> ...
-> > That ordering is not necessarily useful.
-> > ...
-> > So it is somewhat against the maildir spec, but I think in practice it
-> > would help.
-> 
-> I do not think it would help, unless these epoch_seconds are the
-> sender timestamps.  And the number of digits in epoch-seconds for
-> recent messages would be the same, so ordering textually would be
-> sufficient if ordering by timestamp were.
+>> I actually was wondering if we can remove that sole uses of two-way
+>> merge with --reset -u from "git am" and replace them with something
+>> else.  But we do want to keep local change that existed before "am"
+>> started, so we cannot avoid use of two-way merge, I guess...
+>
+> Yeah, I think that is a case we definitely want to keep, as it means any
+> intermediate work done by the user in applying the patch is not lost.
 
-The epoch_seconds are the time of writing into the maildir. They will
-typically all be the same, unless your system is very slow, or you are
-writing a really long patch series. The PID likewise should be the same
-for a given series. It's the sequence number that is the interesting bit
-to sort numerically (for mutt, anyway; ditto for dovecot).
+I am not sure what you mean by "intermediate" here.  When the user
+attempts to resolve conflict in a path manually and gives up, we do
+want to revert changes to such a path to that of HEAD.
 
-The patch below seems to fix the issue for me with mutt. It's possible
-that it regresses another case (which has numbers, but really wants them
-sorted as byte strings), but I find that unlikely. If you're
-zero-padding your numbers this will still work, and if you're not, then
-you likely have no meaningful sort order at all.
+Clarifying the semantics of "--reset" needs to be done carefully.
 
--- >8 --
-Subject: [PATCH] mailsplit: sort maildir filenames more cleverly
+I think any difference "git diff --cached" shows are fair game to
+revert to HEAD.  In the earlier example, path "Z" that was created
+by recursive merge in an attempt to rename "A" should be removed,
+and path "A" should be recreated to that of HEAD, as we know at the
+point of "am --skip/--abort" that these two paths were involved in
+the recursive merge invoked by the patch application process (that
+is the only possible reason why these are different in the index
+from HEAD).  Also any conflicting entries can only come from
+three-way merge and they should be reverted to that of HEAD.
 
-A maildir does not technically record the order in which
-items were placed into it. That means that when applying a
-patch series from a maildir, we may get the patches in the
-wrong order. We try to work around this by sorting the
-filenames. Unfortunately, this may or may not work depending
-on the naming scheme used by the writer of the maildir.
+On the other hand, the paths that appear in "git diff" (except for
+those that appear in "git diff --cached", which we will revert to
+HEAD following the logic of the previous paragraph) must be kept.
+They are changes that were already present in the working tree
+before the user decided to accept a trivial patch via "am" that does
+not overlap with what the user was doing.  We allow a dirty working
+tree but disallow a dirty index when "git am" starts, exactly
+because we want to ensure this property.
 
-For instance, mutt will write:
-
-  ${epoch_seconds}.${pid}_${seq}.${host}
-
-where we have:
-
-  - epoch_seconds: timestamp at which entry was written
-  - pid: PID of writing process
-  - seq: a sequence number to ensure uniqueness of filenames
-  - host: hostname
-
-None of the numbers are zero-padded. Therefore, when we sort
-the names as byte strings, entries that cross a digit
-boundary (e.g., 10) will sort out of order.  In the case of
-timestamps, it almost never matters (because we do not cross
-a digit boundary in the epoch time very often these days).
-But for the sequence number, a 10-patch series would be
-ordered as 1, 10, 2, 3, etc.
-
-To fix this, we can use a custom sort comparison function
-which traverses each string, comparing chunks of digits
-numerically, and otherwise doing a byte-for-byte comparison.
-That would sort:
-
-  123.456_1.bar
-  123.456_2.bar
-  ...
-  123.456_10.bar
-
-according to the sequence number. Since maildir does not
-define a filename format, this is really just a heuristic.
-But it happens to work for mutt, and there is a reasonable
-chance that it will work for other writers, too (at least as
-well as a straight sort).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/mailsplit.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
-
-diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-index 2d43278..772c668 100644
---- a/builtin/mailsplit.c
-+++ b/builtin/mailsplit.c
-@@ -130,6 +130,26 @@ static int populate_maildir_list(struct string_list *list, const char *path)
- 	return 0;
- }
- 
-+static int maildir_filename_cmp(const char *a, const char *b)
-+{
-+	while (1) {
-+		if (isdigit(*a) && isdigit(*b)) {
-+			long int na, nb;
-+			na = strtol(a, (char **)&a, 10);
-+			nb = strtol(b, (char **)&b, 10);
-+			if (na != nb)
-+				return na - nb;
-+			/* strtol advanced our pointers */
-+		}
-+		else {
-+			if (*a != *b)
-+				return *a - *b;
-+			a++;
-+			b++;
-+		}
-+	}
-+}
-+
- static int split_maildir(const char *maildir, const char *dir,
- 	int nr_prec, int skip)
- {
-@@ -139,6 +159,8 @@ static int split_maildir(const char *maildir, const char *dir,
- 	int i;
- 	struct string_list list = STRING_LIST_INIT_DUP;
- 
-+	list.cmp = maildir_filename_cmp;
-+
- 	if (populate_maildir_list(&list, maildir) < 0)
- 		goto out;
- 
--- 
-1.8.1.39.gbb3bf60
+By doing both of the above, we should be able to satisfy the user
+who uses "am --abort/--skip", in order to restore paths that were
+involved in the failed attempt to three-way merge to revert back to
+that of HEAD, while keeping unrelated changes that were present
+before "am" started.
