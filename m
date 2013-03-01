@@ -1,59 +1,95 @@
-From: Kindjal <kindjal@gmail.com>
-Subject: Re: Subtree in Git
-Date: Fri, 1 Mar 2013 02:28:39 +0000 (UTC)
-Message-ID: <loom.20130301T032627-983@post.gmane.org>
-References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com> <nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl> <87fwbgbs0h.fsf@smith.obbligato.org> <7v8vh78dag.fsf@alter.siamese.dyndns.org> <4FA82799.1020400@initfour.nl> <nngzk9jvemb.fsf@transit.us.cray.com> <nngaa0z3p8b.fsf@transit.us.cray.com> <87bokpxqoq.fsf@smith.obbligato.org> <4FD89383.70003@initfour.nl> <nng4npe6zsj.fsf@transit.us.cray.com> <50830374.9090308@initfour.nl> <7vbofwgwso.fsf@alter.siamese.dyndns.org> <5084102A.2010006@initfour.nl> <nnga9vefu1v.fsf@transit.us.cray.com> <508A8BD3.9020901@initfour.nl> <2DDAA35052EA4F88A6EAC4FBDDF7FCCD@rr-dav.id.au>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v8 4/5] Implement line-history search (git log -L)
+Date: Fri, 1 Mar 2013 09:49:27 +0100
+Message-ID: <87vc9b1p48.fsf@pctrast.inf.ethz.ch>
+References: <cover.1362069310.git.trast@student.ethz.ch>
+	<9af548b2a7e4a4da9eb30e99b0223f20788b4fc1.1362069310.git.trast@student.ethz.ch>
+	<7vbob4iaxh.fsf@alter.siamese.dyndns.org>
+	<7vmwuogjsm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 01 03:35:29 2013
+Content-Type: text/plain
+Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>,
+	Bo Yang <struggleyb.nku@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Will Palmer <wmpalmer@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 01 09:49:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBFol-0002QI-19
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 03:35:27 +0100
+	id 1UBLfC-0003lt-Gw
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 09:49:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751993Ab3CACeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Feb 2013 21:34:46 -0500
-Received: from plane.gmane.org ([80.91.229.3]:35026 "EHLO plane.gmane.org"
+	id S1752207Ab3CAItd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Mar 2013 03:49:33 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:9583 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751332Ab3CACep (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Feb 2013 21:34:45 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UBFoO-00029L-Af
-	for git@vger.kernel.org; Fri, 01 Mar 2013 03:35:04 +0100
-Received: from vpn.genome.wustl.edu ([128.252.233.40])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Mar 2013 03:35:04 +0100
-Received: from kindjal by vpn.genome.wustl.edu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Mar 2013 03:35:04 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 128.252.233.40 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.99 Safari/537.22)
+	id S1750721Ab3CAItc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Mar 2013 03:49:32 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 1 Mar
+ 2013 09:49:18 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.211.86) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 1 Mar
+ 2013 09:49:27 +0100
+In-Reply-To: <7vmwuogjsm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 28 Feb 2013 14:23:05 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.211.86]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217266>
 
-David Michael Barr <b <at> rr-dav.id.au> writes:
- 
-> From a quick survey, it appears there are no more than 55 patches
-> squashed into the submitted patch.
-> As I have an interest in git-subtree for maintaining the out-of-tree
-> version of vcs-svn/ and a desire to improve my rebase-fu, I am tempted
-> to make some sense of the organic growth that happened on GitHub.
-> It doesn't appear that anyone else is willing to do this, so I doubt
-> there will be any duplication of effort.
-> 
+Junio C Hamano <gitster@pobox.com> writes:
 
-What is the status of the work on git-subtree described in this thread?
-It looks like it's stalled.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Overall, I like this better than the "log --follow" hack; as the
+>> revision traversal is done without any pathspec when being "careful
+>> and slow" (aka -M), you do not suffer from the "just use a singleton
+>> pathspec globally regardless of what other history paths are being
+>> traversed" limitation of "log --follow".
+>>
+>> The patch series certainly is interesting.
+>
+> Having said that, I notice that "careful and slow" is just "too slow
+> to be usable" even on a small tree like ours.  Try running
+>
+>     $ git log -M -L:get_name:builtin/describe.c
+>
+> and see how long you have to wait until you hit the first line of
+> output.
+
+I'll dig some more.  It *should* be essentially the following times
+taken together:
+
+  $ time git log --raw -M --topo-order >/dev/null
+
+  real    0m5.448s
+  user    0m4.599s
+  sys     0m0.794s
+  $ time git log -L:get_name:builtin/describe.c >/dev/null
+
+  real    0m0.832s
+  user    0m0.796s
+  sys     0m0.032s
+
+  $ time git log -L:get_name:builtin-describe.c 81b50f3ce40^ >/dev/null
+
+  real    0m0.489s
+  user    0m0.465s
+  sys     0m0.022s
+
+So I'm losing a factor of about 4 somewhere, which I can't explain right
+now.
+
+It could be improved further if --follow was fixed, because then the
+first step should be much faster than diffing *all* the trees.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
