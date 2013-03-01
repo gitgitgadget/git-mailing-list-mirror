@@ -1,154 +1,68 @@
-From: =?iso-8859-2?Q?Jan_Pe=B9ta?= <jan.pesta@certicon.cz>
-Subject: RE: [PATCH] GIT SVN
-Date: Fri, 1 Mar 2013 13:55:32 +0100
-Message-ID: <001001ce167c$0f376f10$2da64d30$@certicon.cz>
-References: <000301ce1677$c9eb3f80$5dc1be80$@certicon.cz> <vpqsj4fmhgu.fsf@grenoble-inp.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] GIT SVN
+Date: Fri, 01 Mar 2013 14:07:53 +0100
+Message-ID: <vpqip5bmfo6.fsf@grenoble-inp.fr>
+References: <000301ce1677$c9eb3f80$5dc1be80$@certicon.cz>
+	<vpqsj4fmhgu.fsf@grenoble-inp.fr>
+	<001001ce167c$0f376f10$2da64d30$@certicon.cz>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_0011_01CE1684.70FBD710"
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: <git@vger.kernel.org>
-To: "'Matthieu Moy'" <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Mar 01 13:56:03 2013
+To: Jan =?iso-8859-15?Q?Pe=A8ta?= <jan.pesta@certicon.cz>
+X-From: git-owner@vger.kernel.org Fri Mar 01 14:08:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBPVK-0007mO-EP
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 13:56:02 +0100
+	id 1UBPhH-0001qP-7I
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Mar 2013 14:08:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483Ab3CAMzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Mar 2013 07:55:33 -0500
-Received: from service.certicon.cz ([90.183.112.10]:1288 "EHLO
-	service.certicon.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751462Ab3CAMzc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Mar 2013 07:55:32 -0500
-Received: from miami (c-006.certicon.cz [90.183.112.6])
-	(Authenticated sender: pesta)
-	by service.certicon.cz (Postfix) with ESMTPSA id 077EA1707DB;
-	Fri,  1 Mar 2013 13:55:27 +0100 (CET)
-In-Reply-To: <vpqsj4fmhgu.fsf@grenoble-inp.fr>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQLYBr7R5UpAzf+j4ArYDo75iW8jGQEzuZAPlnNLAfA=
-Content-Language: cs
-X-certicon-MailScanner-Information: Please contact our ICT for more information
-X-MailScanner-ID: 077EA1707DB.C225F
-X-certicon-MailScanner: Found to be clean
-X-certicon-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
-	score=1.306, required 5.1, autolearn=disabled, ALL_TRUSTED -1.00,
-	BAYES_50 0.80, SUBJ_ALL_CAPS 1.51)
-X-certicon-MailScanner-SpamScore: s
-X-certicon-MailScanner-From: jan.pesta@certicon.cz
-X-Spam-Status: No
+	id S1750863Ab3CANH6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Mar 2013 08:07:58 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:39030 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750696Ab3CANH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Mar 2013 08:07:57 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r21D7q0n013129
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 1 Mar 2013 14:07:52 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UBPgn-0002Gg-Ug; Fri, 01 Mar 2013 14:07:53 +0100
+In-Reply-To: <001001ce167c$0f376f10$2da64d30$@certicon.cz> ("Jan
+ \=\?iso-8859-15\?Q\?Pe\=A8ta\=22's\?\=
+	message of "Fri, 1 Mar 2013 13:55:32 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 01 Mar 2013 14:07:53 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r21D7q0n013129
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1362748073.5751@p2424MPddyFa5d/QFvJSXw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217275>
 
-This is a multipart message in MIME format.
+Jan Pe=A8ta <jan.pesta@certicon.cz> writes:
 
-------=_NextPart_000_0011_01CE1684.70FBD710
-Content-Type: text/plain;
-	charset="iso-8859-2"
-Content-Transfer-Encoding: quoted-printable
-
-Hi again,
-
-Finally I created patch according to document.
-
-Please have a look on referenced site for more details.
-
-Currently I have a problems in our project, where SVN is main repository =
-and
-merge-info contains "*" which causes troubles in SVN.pm.
-
-Regards,
-Jan
-
-Kind regards / S pozdravem
-=A0
-Jan Pe=B9ta
-SW Engineer Sr.
-
-CertiCon a.s., www.certicon.cz
-Vaclavska 12
-12000 Prague 2
-Czech Republic
-=A0
-Office Prague: +420 224 904 406
-Mobile: +420 604 794 306
-=A0
-E-mail: jan.pesta@certicon.cz
-
-
------Original Message-----
-From: Matthieu Moy [mailto:Matthieu.Moy@grenoble-inp.fr]=20
-Sent: Friday, March 01, 2013 1:29 PM
-To: Jan Pe=B9ta
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] GIT SVN
-
-Jan Pe=B9ta <jan.pesta@certicon.cz> writes:
-
-> Sorry,
-> My fault :)
+> Hi again,
 >
-> Here is a patch atached.
+> Finally I created patch according to document.
 
-Still, please, read Documentation/SubmittingPatches. Your patch cannot =
-be
-included as it is because of lack of sign-off.
-
-Also, please write a commit message describing why this change is =
-needed.
-Where is this extra "*" comming from, and why do you need to remove it?
+This is much better, but you still haven't taken into account some
+important parts of Documentation/SubmittingPatches (the part about
+attachments Vs inline patch, and the part about sign-off).
 
 Thanks,
 
---
+--=20
 Matthieu Moy
 http://www-verimag.imag.fr/~moy/
-
-------=_NextPart_000_0011_01CE1684.70FBD710
-Content-Type: application/octet-stream;
-	name="0001-In-inproperly-merges-the-ranges-contains-additional-.patch"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
-	filename="0001-In-inproperly-merges-the-ranges-contains-additional-.patch"
-
->From 03aefff110cc46a82e87c01fed38ac6bb22b353b Mon Sep 17 00:00:00 2001=0A=
-From: Jan Pesta <jan.pesta@certicon.cz>=0A=
-Date: Fri, 1 Mar 2013 10:30:42 +0100=0A=
-Subject: [PATCH] In inproperly merges, the ranges contains additional=0A=
- character "*".=0A=
-=0A=
-See =
-http://www.open.collab.net/community/subversion/articles/merge-info.html=0A=
-Extract:=0A=
-The range r30430:30435 that was added to 1.5.x in this merge has a '*' =
-suffix for 1.5.x\www.=0A=
-This '*' is the marker for a non-inheritable mergeinfo range.=0A=
-The '*' means that only the path on which the mergeinfo is explicitly =
-set has had this range merged into it.=0A=
----=0A=
- perl/Git/SVN.pm | 1 +=0A=
- 1 file changed, 1 insertion(+)=0A=
-=0A=
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm=0A=
-index 0ebc68a..6bd18e9 100644=0A=
---- a/perl/Git/SVN.pm=0A=
-+++ b/perl/Git/SVN.pm=0A=
-@@ -1493,6 +1493,7 @@ sub lookup_svn_merge {=0A=
- 	my @merged_commit_ranges;=0A=
- 	# find the tip=0A=
- 	for my $range ( @ranges ) {=0A=
-+		$range =3D~ s/[*]$//;=0A=
- 		my ($bottom, $top) =3D split "-", $range;=0A=
- 		$top ||=3D $bottom;=0A=
- 		my $bottom_commit =3D $gs->find_rev_after( $bottom, 1, $top );=0A=
--- =0A=
-1.8.1.msysgit.1=0A=
-=0A=
-
-------=_NextPart_000_0011_01CE1684.70FBD710--
