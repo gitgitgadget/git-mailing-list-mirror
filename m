@@ -1,91 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [bug report] git-am applying maildir patches in reverse
-Date: Fri, 1 Mar 2013 18:05:08 -0500
-Message-ID: <20130301230508.GC862@sigill.intra.peff.net>
-References: <20130301222018.GA839@WST420>
- <7vwqtqeox7.fsf@alter.siamese.dyndns.org>
- <20130301225231.GB862@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: two-way merge corner case bug
+Date: Fri, 01 Mar 2013 15:06:57 -0800
+Message-ID: <7vppzien3i.fsf@alter.siamese.dyndns.org>
+References: <7v7glun8kt.fsf@alter.siamese.dyndns.org>
+ <20130226201820.GD13830@sigill.intra.peff.net>
+ <7vwqtulplp.fsf@alter.siamese.dyndns.org>
+ <20130301092201.GA17254@sigill.intra.peff.net>
+ <7va9qngisg.fsf@alter.siamese.dyndns.org>
+ <20130301223612.GA862@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: William Giokas <1007380@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 02 00:05:43 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 02 00:07:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBZ1J-0001qo-ST
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Mar 2013 00:05:42 +0100
+	id 1UBZ35-0003ax-Fm
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Mar 2013 00:07:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559Ab3CAXFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Mar 2013 18:05:13 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39593 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751381Ab3CAXFM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Mar 2013 18:05:12 -0500
-Received: (qmail 4829 invoked by uid 107); 1 Mar 2013 23:06:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Mar 2013 18:06:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Mar 2013 18:05:08 -0500
-Content-Disposition: inline
-In-Reply-To: <20130301225231.GB862@sigill.intra.peff.net>
+	id S1751962Ab3CAXHD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Mar 2013 18:07:03 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56879 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751436Ab3CAXHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Mar 2013 18:07:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46D55BA06;
+	Fri,  1 Mar 2013 18:07:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Q5++Igj3N+MTj49/6ApOi9jjZhc=; b=AUPKia
+	P3skTuC8aLJNJ2tp9gO5B7g9OOPDKofE8SPDg7LUri/0GzwRUIQoMTKRvqJt885/
+	s9DUz7D6jQOt6UqrhYduuiW2rNpXpsSbz8roSf1UD2DpBJHyP0Alf1rvh7SYltqy
+	mr8PAY3uiU0kgsjQJnhM4e/G+EYEMxmHtkWnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nMbI+3hzkQ4hQVcnLrmxvVCXWoutePOG
+	/r54JtCCSyxLszfx2uzYeqdaitBfgePmBIw+EFFGNvVeQaAND9uhAhlE4diyVlye
+	JJxWQHYWdwXnO5zIOXBKG4PnGVuCwSO4YxdarVv9gmGrLWe2dW5BM2he/V7Rv0J0
+	Lnw8lNpKK2k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3ABD7BA02;
+	Fri,  1 Mar 2013 18:07:01 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD60ABA00; Fri,  1 Mar 2013
+ 18:07:00 -0500 (EST)
+In-Reply-To: <20130301223612.GA862@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 1 Mar 2013 17:36:12 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B937D374-82C4-11E2-97E4-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217303>
 
-On Fri, Mar 01, 2013 at 05:52:31PM -0500, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> > Note to bystanders.  This is coming from populate_maildir_list() in
-> > builtin/mailsplit.c; the function claims to know what "maildir"
-> > should look like, so it should be enforcing the ordering as
-> > necessary by sorting the list, _if_ the implicit ordering given by
-> > string_list_insert() is insufficient.
-> [...]
-> 
-> I think it is a property of the maildir format that it does not
-> technically define the message order. The order of items you get from
-> readdir is filesystem specific and not necessarily defined (and that is
-> what we use now). On my ext4 system, I do not even get them in backwards
-> order; it is jumbled.
+> On Fri, Mar 01, 2013 at 08:57:03AM -0800, Junio C Hamano wrote:
+>> 
+>> Nobody seems to use that combination, either from scripts or from C
+>> (i.e. when opts.update==1 and opts.merge==1, opts.reset is not set)
+>> with a twoway merge, other than "git am --abort/--skip".
+>
+> I can believe it. So do we want to do that fix, then? Did you want to
+> roll up the two halves of it with a test and write a commit message? I
+> feel like you could write a much more coherent one than I could on this
+> subject.
 
-Hmph, sorry, I mistook string_list_insert for string_list_append. So we
-do actually sort them by filename, not just random readdir order. But
-due to this:
-
-> The maildir spec explicitly says that readers should not make
-> assumptions about the content of the filenames. Mutt happens to write
-> them as:
-> 
->   ${epoch_seconds}.${pid}_${seq}.${host}
-> 
-> so in practice, sorting them kind of works. Except that a series written
-> out at once will all have the same timestamp and pid, and because ${seq}
-> is not zero-padded, you have to actually parse up to there and do a
-> numeric instead of byte-wise comparison.  So we can add a mutt-specific
-> hack, but that's the best we can do. Other maildir writers (including
-> future versions of mutt) will not necessarily do the same thing.
-
-That ordering is not necessarily useful.
-
-So one strategy could be to try harder to sort numeric elements
-numerically. That is, to treat:
-
-  1234.5678_90.foo
-
-as the list
-
-  {1234, '.', 5678, '_', 90, "foo"}
-
-for the purposes of sorting (even though we do not necessarily know what
-each piece means). That works for mutt and similar schemes (dovecot, for
-example, does something like "M${seq}P${pid}"), but some systems may put
-random bytes in the middle (the point of it is to create a unique name).
-
-So it is somewhat against the maildir spec, but I think in practice it
-would help.
-
--Peff
+I actually was wondering if we can remove that sole uses of two-way
+merge with --reset -u from "git am" and replace them with something
+else.  But we do want to keep local change that existed before "am"
+started, so we cannot avoid use of two-way merge, I guess...
