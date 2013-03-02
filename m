@@ -1,66 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [BUG?] am --abort on null cache entries fails
-Date: Fri, 1 Mar 2013 19:57:05 -0500
-Message-ID: <20130302005705.GB15836@sigill.intra.peff.net>
-References: <51314D40.9030209@codeaurora.org>
+Subject: Re: suggestion for a simple addition: git update-ref --ff-only
+Date: Fri, 1 Mar 2013 20:10:50 -0500
+Message-ID: <20130302011049.GA16458@sigill.intra.peff.net>
+References: <20130301231859.GA334@achernar.madore.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Stephen Boyd <sboyd@codeaurora.org>
-X-From: git-owner@vger.kernel.org Sat Mar 02 01:57:35 2013
+To: David Madore <david+news@madore.org>
+X-From: git-owner@vger.kernel.org Sat Mar 02 02:11:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBala-0001ks-7M
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Mar 2013 01:57:34 +0100
+	id 1UBayu-0005PV-37
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Mar 2013 02:11:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559Ab3CBA5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Mar 2013 19:57:08 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39683 "EHLO
+	id S1751448Ab3CBBKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Mar 2013 20:10:52 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39692 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751269Ab3CBA5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Mar 2013 19:57:07 -0500
-Received: (qmail 6052 invoked by uid 107); 2 Mar 2013 00:58:43 -0000
+	id S1751269Ab3CBBKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Mar 2013 20:10:52 -0500
+Received: (qmail 6214 invoked by uid 107); 2 Mar 2013 01:12:28 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Mar 2013 19:58:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Mar 2013 19:57:05 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Mar 2013 20:12:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Mar 2013 20:10:50 -0500
 Content-Disposition: inline
-In-Reply-To: <51314D40.9030209@codeaurora.org>
+In-Reply-To: <20130301231859.GA334@achernar.madore.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217318>
 
-On Fri, Mar 01, 2013 at 04:52:16PM -0800, Stephen Boyd wrote:
+On Sat, Mar 02, 2013 at 12:18:59AM +0100, David Madore wrote:
 
-> I was trying git am -3 with a patch that touched files that didn't exist
-> in the branch I was on. Obviously it failed badly, so I wanted to abort
-> out of the git am state with git am --abort. Unfortunately, it seems
-> that git am --abort in this scenario fails with this error:
+> I'd like to suggest a very simple, but IMHO quite useful, additional
+> option to git-update-ref: an option --ff-only which would cause the
+> command to refuse unless the current ref is an ancestor of the new
+> one.
 > 
-> error: cache entry has null sha1: <non-existant-file>
-> 
-> and then leaves the file in my working tree untracked. This didn't used
-> to happen, so I bisected it down to this commit
-> 
-> commit 4337b5856f88f18da47c176e3cbc95a35627044c
-> Author: Jeff King <peff@peff.net>
-> Date: Sat Jul 28 11:05:24 2012 -0400
-> do not write null sha1s to on-disk index
-> 
-> Which definitely introduced that error message.
+> The reason I think it would be useful: I occasionally wish to perform
+> a trivial (i.e., fast-forward) merge of some branch into another
+> (e.g., after a git-fetch) without checking it out.  Now git-update-ref
+> is perfect for that, but there is always the possibility of getting
+> something wrong (which one would not have with git merge --ff-only,
+> but the latter requires checking out the branch), and this option
+> would avoid tedious verifications.
 
-Yep. It's a bug, but that commit does not introduce it; it actually just
-notices the bug earlier.
+The update-ref command is plumbing, which is supposed to do one small,
+well-defined job. But you can compose many plumbing commands to do what
+you want:
 
-> How do we fix this?
+  # input
+  ref=refs/heads/master
+  new=$some_sha1
 
-See this thread for the current discussion and some possible fixes:
+  # where are we now?
+  old=`git rev-parse --verify $ref` || exit 1
 
-  http://thread.gmane.org/gmane.comp.version-control.git/217172
+  # is it a fast-forward?
+  if ! git merge-base --is-ancestor $old $new; then
+    echo >&2 "Not a fast-forward"
+    exit 1
+  fi
+
+  # update it; we do not have to worry about race conditions because
+  # update-ref will abort if somebody touched the ref in the meantime
+  git update-ref $ref $new $old
+
+Yes, it's three commands instead of one, but it's much more flexible
+(you get to write your own message, you can use the same "merge-base" to
+handle the "already up to date" case, etc).
 
 -Peff
