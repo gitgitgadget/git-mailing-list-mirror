@@ -1,106 +1,109 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH] Allow combined diff to ignore white-spaces
-Date: Sat,  2 Mar 2013 16:04:18 +0100
-Message-ID: <1362236658-17200-1-git-send-email-apelisse@gmail.com>
-Cc: Antoine Pelisse <apelisse@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 02 16:05:08 2013
+From: Paul Campbell <pcampbell@kemitix.net>
+Subject: Re: Subtree in Git
+Date: Sat, 2 Mar 2013 17:43:11 +0000
+Message-ID: <CALeLG_=Yy0TkY-vY8AE9CtXhs4zF8kjdQBNdp+N4yhFmHM79RA@mail.gmail.com>
+References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com>
+	<nngk410vrja.fsf@transit.us.cray.com>
+	<4F9FA029.7040201@initfour.nl>
+	<87fwbgbs0h.fsf@smith.obbligato.org>
+	<7v8vh78dag.fsf@alter.siamese.dyndns.org>
+	<4FA82799.1020400@initfour.nl>
+	<nngzk9jvemb.fsf@transit.us.cray.com>
+	<nngaa0z3p8b.fsf@transit.us.cray.com>
+	<87bokpxqoq.fsf@smith.obbligato.org>
+	<4FD89383.70003@initfour.nl>
+	<nng4npe6zsj.fsf@transit.us.cray.com>
+	<50830374.9090308@initfour.nl>
+	<7vbofwgwso.fsf@alter.siamese.dyndns.org>
+	<5084102A.2010006@initfour.nl>
+	<nnga9vefu1v.fsf@transit.us.cray.com>
+	<508A8BD3.9020901@initfour.nl>
+	<2DDAA35052EA4F88A6EAC4FBDDF7FCCD@rr-dav.id.au>
+	<loom.20130301T032627-983@post.gmane.org>
+	<CALeLG_maSpjVtO3swZAWV12Cr7rDWOaJ=Jh8zw5tJn0EGGW+fA@mail.gmail.com>
+	<CACPE+fvuKiYmmGfJ=A_DZyOi+MiQQ3SgY+QyX5L08XK8TMwzEw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Kindjal <kindjal@gmail.com>, git <git@vger.kernel.org>
+To: David Michael Barr <b@rr-dav.id.au>
+X-From: git-owner@vger.kernel.org Sat Mar 02 18:43:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBnzn-000169-8C
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Mar 2013 16:05:07 +0100
+	id 1UBqTK-00054E-LO
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Mar 2013 18:43:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066Ab3CBPEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Mar 2013 10:04:39 -0500
-Received: from mail-we0-f177.google.com ([74.125.82.177]:61191 "EHLO
-	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751595Ab3CBPEi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Mar 2013 10:04:38 -0500
-Received: by mail-we0-f177.google.com with SMTP id d7so3274983wer.36
-        for <git@vger.kernel.org>; Sat, 02 Mar 2013 07:04:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=4j3TlbPjn81PiuXpqxfQk3cJ43D5JkypGgxe4Hss/T4=;
-        b=Kf7SO1msqp/xR94RN2z8MaXvmKJGLAQqN5iDFcvfRLOUhXdrEYi2NTnO+4ye/2VX0t
-         JXVyyTmY26GYcPzyP3gnb0aAiOG/vvRVVGjstyjCC8mXadqge2TrrH7nY36m94/7TDLm
-         ZCjRPVMg44Vu+5Ti3f/DqpyGPGel8b+zIauogyYVHz65EtQBK7Ied/B6MIIll9Nf0PGW
-         ZoYhkVwhUgCqBX2xvw4wbRHLYhP2fTgpjZf1GRFgYLGsWuTTTBdrW/qykWJzy2wCc7dJ
-         0q1dBDCFnxPBNsoK5vyd2KvhvLbTgkQWeAKk/d8m1xojKW7LEmFY5gH/FW0ZklqIVGIK
-         bJjA==
-X-Received: by 10.194.5.4 with SMTP id o4mr23119053wjo.40.1362236677631;
-        Sat, 02 Mar 2013 07:04:37 -0800 (PST)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPS id fx5sm4003569wib.11.2013.03.02.07.04.35
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 02 Mar 2013 07:04:36 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.5
+	id S1751527Ab3CBRnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Mar 2013 12:43:13 -0500
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:52268 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752156Ab3CBRnM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Mar 2013 12:43:12 -0500
+Received: by mail-oa0-f49.google.com with SMTP id j6so7410843oag.36
+        for <git@vger.kernel.org>; Sat, 02 Mar 2013 09:43:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:x-originating-ip:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type:x-gm-message-state;
+        bh=Y27+G5Ka5ZXNuIMFc15PbaSiiooICbNXL1VmjQbv1bs=;
+        b=cQnZibq+q7FGKkuZLOIYvJIxsEid0285e3GOvoZLcAN/KIXASKsRPRLR9sn5GjFEIa
+         khO+BUr+uDxCrhmOfemayAPjRapHT9u2h/CW9xyl46zywod45aqthvPeDSDsa5V4P6Hs
+         kaMo0HVdu997IeVcSaHi96P45EpNPrvQvC6yYwwgd+k3hYRrF5XM5HzR4KpjgtQD47NT
+         N9TQRu/66DY8YKxwhA1dRQl0wh5PhV6yXPLhUsRMt3Ieq5MJlfzQOW8uL/CYxis/66he
+         g/OsShhmtDLK9FNsnHviSazd8T1hRZiaqXe5QPINWgPgp8PmOR3nrPyZpAnxKcMkZX9F
+         R0Jg==
+X-Received: by 10.182.117.7 with SMTP id ka7mr11994873obb.29.1362246191484;
+ Sat, 02 Mar 2013 09:43:11 -0800 (PST)
+Received: by 10.76.93.37 with HTTP; Sat, 2 Mar 2013 09:43:11 -0800 (PST)
+X-Originating-IP: [2.102.85.176]
+In-Reply-To: <CACPE+fvuKiYmmGfJ=A_DZyOi+MiQQ3SgY+QyX5L08XK8TMwzEw@mail.gmail.com>
+X-Gm-Message-State: ALoCoQlOZxxXfn7MOAB4Brjghefr1M6CnSIkMZTt97iBBtFQ8hNfEzexZee06jRbcEb8zUdpv8X5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217332>
 
-Currently, it's not possible to use the space-ignoring options (-b, -w,
---ignore-space-at-eol) with combined diff. It makes it pretty impossible
-to read a merge between a branch that changed all tabs to spaces, and a
-branch with functional changes.
+On Sat, Mar 2, 2013 at 11:21 AM, David Michael Barr <b@rr-dav.id.au> wrote:
+> On Sat, Mar 2, 2013 at 9:05 AM, Paul Campbell <pcampbell@kemitix.net> wrote:
+>> On Fri, Mar 1, 2013 at 2:28 AM, Kindjal <kindjal@gmail.com> wrote:
+>>> David Michael Barr <b <at> rr-dav.id.au> writes:
+>>>
+>>>> From a quick survey, it appears there are no more than 55 patches
+>>>> squashed into the submitted patch.
+>>>> As I have an interest in git-subtree for maintaining the out-of-tree
+>>>> version of vcs-svn/ and a desire to improve my rebase-fu, I am tempted
+>>>> to make some sense of the organic growth that happened on GitHub.
+>>>> It doesn't appear that anyone else is willing to do this, so I doubt
+>>>> there will be any duplication of effort.
+>>>>
+>>>
+>>> What is the status of the work on git-subtree described in this thread?
+>>> It looks like it's stalled.
+>>>
+>>
+>> I hadn't been aware of that patch. Reading the thread David Michael
+>> Barr was going to try picking the patch apart into sensible chunks.
+>>
+>
+> Sorry for not updating the thread. I did end up moving onto other things.
+> I quickly realised the reason for globbing all the patches together was
+> that the individual patches were not well contained.
+> That is single patches with multiple unrelated changes and multiple
+> patches changing the same things in different directions.
+> To me this means that the first step is to curate the history.
+>
+>> If this work is still needing done I'd like to volunteer.
+>
+> You're most welcome. Sorry again for abandoning the thread.
+>
+> --
+> David Michael Barr
 
-Pass diff flags to diff engine, so that combined diff behaves as normal
-diff does with spaces.
+Okay, I'll start picking the patch apart this week then feedback when
+I have a plan to tackle it all.
 
-It also means that a conflict-less merge done using a ignore-* strategy
-option will not show any conflict if shown in combined-diff using the
-same option.
-
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
-That should be reviewed carefully as I'm not exactly sure that does make
-sense with the way combined-diff works.
-Still it seems natural to me to be able to remove the space in combined
-diff as we do with normal diff. Especially as I unfortunately have to
-deal with many space + feature merges that are very hard to analyze/handle
-if space differences can't be hidden.
-
-Cheers,
-Antoine
-
- combine-diff.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/combine-diff.c b/combine-diff.c
-index 35d41cd..7ca0a72 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -215,7 +215,7 @@ static void combine_diff(const unsigned char *parent, unsigned int mode,
- 			 struct sline *sline, unsigned int cnt, int n,
- 			 int num_parent, int result_deleted,
- 			 struct userdiff_driver *textconv,
--			 const char *path)
-+			 const char *path, long flags)
- {
- 	unsigned int p_lno, lno;
- 	unsigned long nmask = (1UL << n);
-@@ -231,7 +231,7 @@ static void combine_diff(const unsigned char *parent, unsigned int mode,
- 	parent_file.ptr = grab_blob(parent, mode, &sz, textconv, path);
- 	parent_file.size = sz;
- 	memset(&xpp, 0, sizeof(xpp));
--	xpp.flags = 0;
-+	xpp.flags = flags;
- 	memset(&xecfg, 0, sizeof(xecfg));
- 	memset(&state, 0, sizeof(state));
- 	state.nmask = nmask;
-@@ -962,7 +962,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 				     elem->parent[i].mode,
- 				     &result_file, sline,
- 				     cnt, i, num_parent, result_deleted,
--				     textconv, elem->path);
-+				     textconv, elem->path, opt->xdl_opts);
- 	}
-
- 	show_hunks = make_hunks(sline, cnt, num_parent, dense);
---
-1.7.9.5
+-- 
+Paul [W] Campbell
