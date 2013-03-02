@@ -1,82 +1,104 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [bug report] git-am applying maildir patches in reverse
-Date: Sat, 02 Mar 2013 09:44:39 +0100
-Message-ID: <m28v66198o.fsf@igel.home>
-References: <20130301222018.GA839@WST420>
-	<7vwqtqeox7.fsf@alter.siamese.dyndns.org>
-	<20130301225231.GB862@sigill.intra.peff.net>
-	<20130301230508.GC862@sigill.intra.peff.net>
-	<7vlia6em9x.fsf@alter.siamese.dyndns.org>
-	<20130301233548.GA13422@sigill.intra.peff.net>
-	<7v1ubyek9n.fsf@alter.siamese.dyndns.org>
-	<20130302004120.GB14936@sigill.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Avoid loading commits twice in log with diffs
+Date: Sat, 2 Mar 2013 11:05:52 +0100
+Message-ID: <3193c96cf5b036a91bc78b508b8b30ac87ca0f21.1362218700.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	William Giokas <1007380@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 02 09:45:14 2013
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 02 11:06:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UBi49-0005Q1-GV
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Mar 2013 09:45:13 +0100
+	id 1UBjKp-0004If-Ji
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Mar 2013 11:06:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751525Ab3CBIor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Mar 2013 03:44:47 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:41754 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751222Ab3CBIoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Mar 2013 03:44:46 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3ZJ1Jn2JmZz4KK6Q;
-	Sat,  2 Mar 2013 09:44:41 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3ZJ1Jn28TQzbbhV;
-	Sat,  2 Mar 2013 09:44:41 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id z9YjNkYf2sN8; Sat,  2 Mar 2013 09:44:40 +0100 (CET)
-X-Auth-Info: DqxO8VdqT0fYh2faylolqKtrJ3ujf6ZsLyswI+/yTdk=
-Received: from igel.home (ppp-88-217-125-229.dynamic.mnet-online.de [88.217.125.229])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sat,  2 Mar 2013 09:44:40 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id D4485CA2B4; Sat,  2 Mar 2013 09:44:39 +0100 (CET)
-X-Yow: TAILFINS!!  ...click...
-In-Reply-To: <20130302004120.GB14936@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 1 Mar 2013 19:41:20 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.93 (gnu/linux)
+	id S1751849Ab3CBKF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Mar 2013 05:05:57 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:4589 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751697Ab3CBKFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Mar 2013 05:05:55 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 2 Mar
+ 2013 11:05:49 +0100
+Received: from pctrast.v.cablecom.net (46.126.8.85) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 2 Mar
+ 2013 11:05:52 +0100
+X-Mailer: git-send-email 1.8.2.rc1.393.ga167915
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217323>
 
-Jeff King <peff@peff.net> writes:
+If you run a log with diffs (such as -p, --raw, --stat etc.) the
+current code ends up loading many objects twice.  For example, for
+'log -3000 -p' my instrumentation said the objects loaded more than
+once are distributed as follows:
 
->  static int maildir_filename_cmp(const char *a, const char *b)
->  {
-> -	while (1) {
-> +	while (*a && *b) {
->  		if (isdigit(*a) && isdigit(*b)) {
->  			long int na, nb;
->  			na = strtol(a, (char **)&a, 10);
-> @@ -148,6 +148,7 @@ static int maildir_filename_cmp(const char *a, const char *b)
->  			b++;
->  		}
->  	}
-> +	return *a - *b;
+  2008 blob
+  2103 commit
+  2678 tree
 
-You should always cast to unsigned char when determining the order of
-characters, to be consistent with strcmp/memcmp.
+Fixing blobs and trees will be harder, because those are really used
+within the diff engine and need some form of caching.
 
-Andreas.
+However, fixing the commits is easy at least at the band-aid level.
+They are triggered by log_tree_diff() invoking diff_tree_sha1() on
+commits, which duly loads the specified object to dereference it to a
+tree.  Since log_tree_diff() knows that it works with commits and they
+must have trees, we can simply pass through the trees.
 
+This has a quite dramatic effect on log --raw, though only a
+negligible impact on log -p:
+
+Test                      with patch        before
+--------------------------------------------------------------------
+4000.2: log --raw -3000   0.50(0.43+0.06)   0.54(0.46+0.06) +7.0%***
+4000.3: log -p -3000      2.34(2.20+0.13)   2.37(2.22+0.13) +1.2%
+--------------------------------------------------------------------
+Significance hints:  '.' 0.1  '*' 0.05  '**' 0.01  '***' 0.001
+
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ log-tree.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index eb1a1b4..277a38f 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -715,7 +715,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+ {
+ 	int showed_log;
+ 	struct commit_list *parents;
+-	unsigned const char *sha1 = commit->object.sha1;
++	unsigned const char *sha1 = commit->tree->object.sha1;
+ 
+ 	if (!opt->diff && !DIFF_OPT_TST(&opt->diffopt, EXIT_WITH_STATUS))
+ 		return 0;
+@@ -742,7 +742,8 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+ 			 * parent, showing summary diff of the others
+ 			 * we merged _in_.
+ 			 */
+-			diff_tree_sha1(parents->item->object.sha1, sha1, "", &opt->diffopt);
++			parse_commit(parents->item);
++			diff_tree_sha1(parents->item->tree->object.sha1, sha1, "", &opt->diffopt);
+ 			log_tree_diff_flush(opt);
+ 			return !opt->loginfo;
+ 		}
+@@ -755,7 +756,8 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+ 	for (;;) {
+ 		struct commit *parent = parents->item;
+ 
+-		diff_tree_sha1(parent->object.sha1, sha1, "", &opt->diffopt);
++		parse_commit(parent);
++		diff_tree_sha1(parent->tree->object.sha1, sha1, "", &opt->diffopt);
+ 		log_tree_diff_flush(opt);
+ 
+ 		showed_log |= !opt->loginfo;
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+1.8.2.rc1.393.ga167915
