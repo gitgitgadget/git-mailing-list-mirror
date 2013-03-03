@@ -1,135 +1,143 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/5] Help.c add --guide option
-Date: Sun, 03 Mar 2013 15:38:35 -0800
-Message-ID: <7vk3poyryc.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v2 5/5] Help doc: Include --guide option description
+Date: Sun, 03 Mar 2013 15:39:06 -0800
+Message-ID: <7vd2vgyrxh.fsf@alter.siamese.dyndns.org>
 References: <1362342072-1412-1-git-send-email-philipoakley@iee.org>
- <1362342072-1412-4-git-send-email-philipoakley@iee.org>
+ <1362342072-1412-6-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: GitList <git@vger.kernel.org>
 To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Mar 04 00:39:06 2013
+X-From: git-owner@vger.kernel.org Mon Mar 04 00:39:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCIUj-0000qu-QZ
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 00:39:06 +0100
+	id 1UCIVI-0001Nh-Ba
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 00:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754762Ab3CCXim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Mar 2013 18:38:42 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57623 "EHLO
+	id S1754637Ab3CCXjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Mar 2013 18:39:15 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57932 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754754Ab3CCXil (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Mar 2013 18:38:41 -0500
+	id S1754712Ab3CCXjO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Mar 2013 18:39:14 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12981B649;
-	Sun,  3 Mar 2013 18:38:41 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0E70B689;
+	Sun,  3 Mar 2013 18:39:13 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=YrhKhXwMqr3Tifxm+v96uRxyRrE=; b=VyEpMiiyakCBl5bLEq73
-	K7tWwh78Y0bnp2GrWooYyQwXwxBcPRVBj3QHu1DJ5gMZe/pN42sf0u+qiO3aM3NL
-	/pri+tKHyY4Crquw6rUqyXuhooid+t+j1i7xSPeq8MY9Vt+kErc72Nkh5MPX/vel
-	RkAEOIYNTHPbAI87ol+WkV4=
+	 s=sasl; bh=lgTD4d0yuMjKTQgByOEuiH3ZHFU=; b=cer0+cCzUrlkXshDv6hF
+	amgTkBJkFix1j/d2XpR/d5/xgx8+42z3Pr9b2kZM8Itu9n6a2NLLg173PYu59khU
+	yvWm+vEk36KFM9V5O3ddJNqglCy1b1FUiG/m0EC5qqpYrfy7/L+PghnAbzQlzy0f
+	HMkWvxj+bmiE4rh0W985z/g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=rW2/DoOM4VR+iR+O6zbERkeTquobxQkf4P04Yi7ZjWwyK3
-	C4AHHPEPLlo6XYzpHPiZtEiXTEYhRirIicm2SHu/mc2JtoOuajkqjnFM9ZGwlyo/
-	yHq/XKyviLC13FqRsomtWkrYH6MLZ9eKqkQ0GQYESd79degCuqVTdFA5HzIpY=
+	 q=dns; s=sasl; b=MlOJO6MCIUpg5iOffmmZnEsXV+WHDz+W9NDfLfEuRpNtg9
+	g2TM1661cOIFv5q7ZPeeYaTHg14qcsBPIPqJObaD8DSG09RpWev2v7iBD3OciMDX
+	A+ltyyF2f8b35GrLpn/sifIgn9mF/9Jq/Ymd6nbDbyrc7lzqv+j+qFW3Y1AnU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06E72B648;
-	Sun,  3 Mar 2013 18:38:41 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C65FEB688;
+	Sun,  3 Mar 2013 18:39:13 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 354C2B63C; Sun,  3 Mar 2013
- 18:38:37 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE3A2B686; Sun,  3 Mar 2013
+ 18:39:12 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 787355B4-845B-11E2-A504-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8DB9A478-845B-11E2-9651-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217371>
 
 Philip Oakley <philipoakley@iee.org> writes:
 
-> Logic, but no actions, included.
-
-I am not sure what you mean.  Is that to break "bisect"?
-
-Ahh, you meant "command line is parsed but we do not actually show
-guides yet, which is done by later patches in this series".  OK.
-
-> The --all commands option, if given, will display first.
-> The --guide option's list will then be displayed.
+> Note that the ability to display an individual guide was
+> always possible. Include this in the update.
 >
-> The common commands list is only displayed if neither option,
-> nor a command or guide name, is given.
+> Also tell readers how git(1) can be accessed, especially for
+> Git for Windows users who do not have the 'man' command.
+> Likewise include a commentary on how to access this page (Catch 22).
 >
 > Signed-off-by: Philip Oakley <philipoakley@iee.org>
 > ---
->  builtin/help.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
+>  Documentation/git-help.txt | 28 +++++++++++++++++++++-------
+>  1 file changed, 21 insertions(+), 7 deletions(-)
 >
-> diff --git a/builtin/help.c b/builtin/help.c
-> index d10cbed..6089d72 100644
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
-> @@ -36,10 +36,12 @@ enum help_format {
->  static const char *html_path;
+> diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+> index e07b6dc..498a94e 100644
+> --- a/Documentation/git-help.txt
+> +++ b/Documentation/git-help.txt
+> @@ -8,31 +8,45 @@ git-help - Display help information about Git
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git help' [-a|--all|-i|--info|-m|--man|-w|--web] [COMMAND]
+> +'git help' [-a|--all] [-g|--guide]
+> +	   [-i|--info|-m|--man|-w|--web] [COMMAND|GUIDE]
 >  
->  static int show_all = 0;
-> +static int show_guides = 0;
->  static unsigned int colopts;
->  static enum help_format help_format = HELP_FORMAT_NONE;
->  static struct option builtin_help_options[] = {
->  	OPT_COUNTUP('a', "all", &show_all, N_("print all available commands")),
-> +	OPT_COUNTUP('g', "guides", &show_guides, N_("print list of useful guides")),
->  	OPT_SET_INT('m', "man", &help_format, N_("show man page"), HELP_FORMAT_MAN),
->  	OPT_SET_INT('w', "web", &help_format, N_("show manual in web browser"),
->  			HELP_FORMAT_WEB),
-> @@ -49,7 +51,7 @@ static struct option builtin_help_options[] = {
->  };
+>  DESCRIPTION
+>  -----------
 >  
->  static const char * const builtin_help_usage[] = {
-> -	N_("git help [--all] [--man|--web|--info] [command]"),
-> +	N_("git help [--all] [--guides] [--man|--web|--info] [command]"),
->  	NULL
->  };
+> -With no options and no COMMAND given, the synopsis of the 'git'
+> +With no options and no COMMAND|GUIDE given, the synopsis of the 'git'
+
+Please avoid BNF in the prose meant for human consumption unless
+necessary.  I think you can just say " or " here.
+
+>  command and a list of the most commonly used Git commands are printed
+>  on the standard output.
+>
+>  If the option '--all' or '-a' is given, then all available commands are
+>  printed on the standard output.
 >  
-> @@ -429,9 +431,11 @@ int cmd_help(int argc, const char **argv, const char *prefix)
->  		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
->  		list_commands(colopts, &main_cmds, &other_cmds);
->  		printf("%s\n", _(git_more_info_string));
-> +		if (!show_guides) return 0;
-> +	}
-> +	if (show_guides) {
->  		return 0;
->  	}
-> -
+> -If a Git subcommand is named, a manual page for that subcommand is brought
+> -up. The 'man' program is used by default for this purpose, but this
+> -can be overridden by other options or configuration variables.
+> +If the option '--guide' or '-g' is given then, a list of the useful
+> +Git guides is also printed on the standard output.
 
-Ugly.
+s/given then,/given, then/ or just s/ then// make it easier to
+follow?  I personally would vote for doing s/given, then/given, /
+for the previous paragraph on "--all" as well.
 
-	if (show_all) {
-        	... do not touch anything here ...
-		... but remove "return 0;" ...
-	}
+> -Note that `git --help ...` is identical to `git help ...` because the
+> +If a Git subcommand, or a Git guide, is given, a manual page for that
 
-	if (show_guides) {
-        	... show guides but do not "return 0" ...
-	}
+"If the name of a command or a guide is given" without "Git/git"
+would be much easier to read, especially when the first paragraph
+talks about "COMMAND or GUIDE".  I also think s/command/subcommand/
+in the synopsis and in the first paragraph may be good for consistency
+with this part.
 
-	if (show_all || show_guides) {
-		... we were asked to do either/or --all/--guides ...
-                ... and have done what we were asked to do ...
-		return 0;
-	}
+> +subcommand is brought up. The 'man' program is used by default for this
+> +purpose, but this can be overridden by other options or configuration
+> +variables.
+> +
+> +Note that 'git --help ...' is identical to 'git help ...' because the
+>  former is internally converted into the latter.
+>  
+> +To display the linkgit:git[1] man page use 'git help git'.
 
-This is a tangent, but before all of the above, cmd_help() should
-verify that it got no arguments (when show_all/show_guides is in
-effect) or it got one argument (otherwise), I think.
+s/man page use/man page, use/;
 
->  	if (!argv[0]) {
->  		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
->  		list_common_cmds_help();
+> +
+> +This page can be displayed with 'git help help' or 'git help --help'
+> +
+>  OPTIONS
+>  -------
+>  -a::
+>  --all::
+>  	Prints all the available commands on the standard output. This
+> -	option supersedes any other option.
+> +	option overides any given command or guide name.
+> +
+> +-g::
+> +--guides::
+> +	Prints a list of useful guides on the standard output. This
+> +	option overides any given command or guide name.
+
+Thanks. Overall this round looks a lot more manageable than the
+previous one.
