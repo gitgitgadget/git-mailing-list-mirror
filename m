@@ -1,72 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make !pattern in .gitattributes non-fatal
-Date: Sat, 02 Mar 2013 22:30:24 -0800
-Message-ID: <7vppzhc7wf.fsf@alter.siamese.dyndns.org>
-References: <a1679159dbe67c34675bbe016e131260310db189.1362168366.git.trast@student.ethz.ch> <CACsJy8CO1i1_QpMbLvfys=wsLDPTK69_9JanQYq2D3-fboK_WA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [bug report] git-am applying maildir patches in reverse
+Date: Sun, 3 Mar 2013 01:32:44 -0500
+Message-ID: <20130303063244.GB23221@sigill.intra.peff.net>
+References: <20130301222018.GA839@WST420>
+ <7vwqtqeox7.fsf@alter.siamese.dyndns.org>
+ <20130301225231.GB862@sigill.intra.peff.net>
+ <20130301230508.GC862@sigill.intra.peff.net>
+ <7vlia6em9x.fsf@alter.siamese.dyndns.org>
+ <20130301233548.GA13422@sigill.intra.peff.net>
+ <7v1ubyek9n.fsf@alter.siamese.dyndns.org>
+ <20130302004120.GB14936@sigill.intra.peff.net>
+ <m28v66198o.fsf@igel.home>
+ <7vtxotc895.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 03 07:30:53 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	William Giokas <1007380@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 03 07:33:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UC2Rh-0000NY-D5
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Mar 2013 07:30:53 +0100
+	id 1UC2Ty-0002QJ-Mc
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Mar 2013 07:33:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751758Ab3CCGa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Mar 2013 01:30:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33041 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751304Ab3CCGa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Mar 2013 01:30:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66E73970B;
-	Sun,  3 Mar 2013 01:30:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Atg9W8YG3nsVddYxuhSIk6Ix168=; b=S7L708
-	Wp3NRIRHYct++h/X3ebi12wasoRDBWWUoj40mgDwYaud3azNH9hYVP8R65o5Caec
-	gD05fvsy/bci9M8Fj+h18g07XvdI/GmG/qt9rW+WnfPQy+cHK6aHyQs/zUNfRMd9
-	BIrAqb902zTxjlTCuVM79kfax+SSnugx09wwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GtpImrfyyfyS5J/sKegjWRT6pNLF6T4h
-	IewAarxZsKv6TG8g2yezYTfD9SzjB2ker/DSGsOL2k+MGIcsdYpVd/8wI4vhhIpO
-	2mdysbRZjED90152isIn3z2tJE1SpZG0vMtpT0+5wkvZhE50tHRZpgzgk5SuPRSj
-	eSJLc3G+3zE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D197970A;
-	Sun,  3 Mar 2013 01:30:26 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D73DD9707; Sun,  3 Mar 2013
- 01:30:25 -0500 (EST)
-In-Reply-To: <CACsJy8CO1i1_QpMbLvfys=wsLDPTK69_9JanQYq2D3-fboK_WA@mail.gmail.com> (Duy
- Nguyen's message of "Sat, 2 Mar 2013 10:50:14 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D58C88AA-83CB-11E2-A94A-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752255Ab3CCGcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Mar 2013 01:32:50 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40395 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752080Ab3CCGct (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Mar 2013 01:32:49 -0500
+Received: (qmail 16157 invoked by uid 107); 3 Mar 2013 06:34:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 03 Mar 2013 01:34:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 03 Mar 2013 01:32:44 -0500
+Content-Disposition: inline
+In-Reply-To: <7vtxotc895.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217338>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Sat, Mar 02, 2013 at 10:22:46PM -0800, Junio C Hamano wrote:
 
-> This "return NULL;" means we ignore "!blah" pattern, which is a
-> regression, isn't it? Should we treat '!' as literal here?
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+> 
+> > You should always cast to unsigned char when determining the order of
+> > characters, to be consistent with strcmp/memcmp.
+> 
+> We treat runs of digits as numbers, so it is not even similar to
+> strcmp.  As long as it is internally consistent (i.e. the return
+> value inside the loop (*a - *b) must match the last return), it
+> should be OK, no?
 
-Probably not.  Can you point to a project everybody has heard of
-that keeps track of a path that begins with an exclamation point?
+I almost responded and said something similar, but we also do byte-wise
+comparisons for non-numeric elements, and we would want those to match
+what other programs may do (and what git used to do).
 
-With clarification to the documentation that says "you cannot use !
-to negate" and your "die on such an entry", we have been going in
-the direction that forbids the use of such an entry, and making it
-mean literal exclamation point is going sideways in the middle of
-the road.
+I highly doubt that it matters in practice, as it would mean:
 
-Besides, if you want to match a path that begins with an exclam, you
-can always say "[!]", no?
+  1. The sorting of a maildir's filenames are dependent on the sorting
+     of non-numeric bits. We can't rule out such a scheme, but I'd guess
+     implementations either use numbers, or their sort order is
+     meaningless (and that is what I found in the ones I looked at).
+
+  2. The importantly-sorted bits contain non-ascii characters (the
+     difference is only seen when we go outside the signed range).
+
+but it doesn't hurt to be thorough (and to set a good example).
+
+-Peff
