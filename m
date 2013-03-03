@@ -1,620 +1,589 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Mar 2013, #01; Sun, 3)
-Date: Sun, 03 Mar 2013 02:00:51 -0800
-Message-ID: <7vppzgby5o.fsf@alter.siamese.dyndns.org>
+Subject: [ANNOUNCE] Git v1.8.2-rc2
+Date: Sun, 03 Mar 2013 02:01:07 -0800
+Message-ID: <7vobf0by58.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 03 11:01:43 2013
+X-From: git-owner@vger.kernel.org Sun Mar 03 11:01:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UC5jd-0001F2-QY
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Mar 2013 11:01:38 +0100
+	id 1UC5jv-0001VY-1t
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Mar 2013 11:01:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752837Ab3CCKA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Mar 2013 05:00:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42892 "EHLO
+	id S1752910Ab3CCKBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Mar 2013 05:01:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43015 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752746Ab3CCKA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Mar 2013 05:00:56 -0500
+	id S1752746Ab3CCKBK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Mar 2013 05:01:10 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 842A2BCF6;
-	Sun,  3 Mar 2013 05:00:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=v
-	OXI59may/sFGU8zMqFBEbReWfY=; b=Wr1CQSwOjVHEnc1rUBvTPh+K8t5un4gEC
-	nkfn3usiBkFqg8lmtfqivnvNjZPCvNXPV+0WRW4vyuVprWxGZ+J0LBRF0KLqVx6T
-	DSgHbkSjsMDlHm678LIjwjwD9K9w1u815yhSrY3qnVMADvVnugaOa0MpMqy4oEGf
-	xRz5wtpcTo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=OVy
-	PT8/IKdS4aOEc+pK/Y8vdjqe2LpVPYfxNiyGO7DkIUHkFnUn6p9yE3kca8roI9ck
-	rBchHuSxeoaNC24+7tn1FY0qiB6gMWUPZgkGvNx4stZMClBmoGAChOZaEsbzftGv
-	9pcTwj9cF6hDVvLpr7Z9tk1SLai3VUV4C+ENAHek=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02EA3BD06;
+	Sun,  3 Mar 2013 05:01:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=L
+	bCZKfBKG+hnLXANuI9wMlSZBNg=; b=IBNxWZOF5BzMa2W8z3CIqrrJYTU6ynzl6
+	cY1uSKCVhZmKjo8Tn0TuJudWJgoIhfPKf0PJkHhGa6c6WoDrL9SkkvLuasFj6Vin
+	owxmp+sUbGknsZfRJoSXUdkjjTi6AkjNTOtuLfprCnGB5ARXzQz/L7kU/f2DV+yw
+	lSD7HSXSh8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=i+160Rx/HJUzVg8LgPGxfIcR2lLAE9z0l+lN3EtpDboG03PxO819g6BZ
+	q4OUnGe6E4e91G9eIEUaqD1ERPKrv70F1eNOKETErdrSbGSKC7VD653h6yVwY9qG
+	jvewBHZeLZLtGsZvmuL7gvUgUnCf3lZ99EBQVK50r/z1k8iVj1o=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78B52BCF5;
-	Sun,  3 Mar 2013 05:00:54 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB0EABD05;
+	Sun,  3 Mar 2013 05:01:09 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6D30CBCF4; Sun,  3 Mar 2013
- 05:00:53 -0500 (EST)
-X-master-at: 4d0d0c3c59800e07d899e53121902833e3fd0cc7
-X-next-at: c3bedd3ddcc0d007d41c3ed9d173b298b181e827
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC614BD02; Sun,  3 Mar 2013
+ 05:01:08 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3C2A1F88-83E9-11E2-B9C5-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 45427DFE-83E9-11E2-AE8B-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217349>
+
+A release candidate Git v1.8.2-rc2 is now available for testing
+at the usual places.
+
+The release tarballs are found at:
+
+    http://code.google.com/p/git-core/downloads/list
+
+and their SHA-1 checksums are:
+
+b10a10d8e6351860fde123ffc62081e3800d602c  git-1.8.2.rc2.tar.gz
+de47a731c9fd426fca6385e2810d5345f85e32d9  git-htmldocs-1.8.2.rc2.tar.gz
+a90c7cf8bded4fcede74c1a370df712e15b3ba45  git-manpages-1.8.2.rc2.tar.gz
+
+Also the following public repositories all have a copy of the v1.8.2-rc2
+tag and the master branch that the tag points at:
+
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
+
+Git v1.8.2 Release Notes (draft)
+========================
+
+Backward compatibility notes
+----------------------------
+
+In the next major release Git 2.0 (not *this* one), we will change the
+behavior of the "git push" command.
+
+When "git push [$there]" does not say what to push, we have used the
+traditional "matching" semantics so far (all your branches were sent
+to the remote as long as there already are branches of the same name
+over there).  We will use the "simple" semantics that pushes the
+current branch to the branch with the same name, only when the current
+branch is set to integrate with that remote branch.  There is a user
+preference configuration variable "push.default" to change this.
+
+"git push $there tag v1.2.3" used to allow replacing a tag v1.2.3
+that already exists in the repository $there, if the rewritten tag
+you are pushing points at a commit that is a descendant of a commit
+that the old tag v1.2.3 points at.  This was found to be error prone
+and starting with this release, any attempt to update an existing
+ref under refs/tags/ hierarchy will fail, without "--force".
+
+When "git add -u" and "git add -A", that does not specify what paths
+to add on the command line, is run from inside a subdirectory, the
+scope of the operation has always been limited to the subdirectory.
+Many users found this counter-intuitive, given that "git commit -a"
+and other commands operate on the entire tree regardless of where you
+are. In this release, these commands give warning in such a case and
+encourage the user to say "git add -u/-A ." instead when restricting
+the scope to the current directory.
+
+At Git 2.0 (not *this* one), we plan to change these commands without
+pathspec to operate on the entire tree.  Forming a habit to type "."
+when you mean to limit the command to the current working directory
+will protect you against the planned future change, and that is the
+whole point of the new message (there will be no configuration
+variable to squelch this warning---it goes against the "habit forming"
+objective).
+
+
+Updates since v1.8.1
+--------------------
+
+UI, Workflows & Features
+
+ * Initial ports to QNX and z/OS UNIX System Services have started.
+
+ * Output from the tests is coloured using "green is okay, yellow is
+   questionable, red is bad and blue is informative" scheme.
+
+ * Mention of "GIT/Git/git" in the documentation have been updated to
+   be more uniform and consistent.  The name of the system and the
+   concept it embodies is "Git"; the command the users type is "git".
+   All-caps "GIT" was merely a way to imitate "Git" typeset in small
+   caps in our ASCII text only documentation and to be avoided.
+
+ * The completion script (in contrib/completion) used to let the
+   default completer to suggest pathnames, which gave too many
+   irrelevant choices (e.g. "git add" would not want to add an
+   unmodified path).  It learnt to use a more git-aware logic to
+   enumerate only relevant ones.
+
+ * In bare repositories, "git shortlog" and other commands now read
+   mailmap files from the tip of the history, to help running these
+   tools in server settings.
+
+ * Color specifiers, e.g. "%C(blue)Hello%C(reset)", used in the
+   "--format=" option of "git log" and friends can be disabled when
+   the output is not sent to a terminal by prefixing them with
+   "auto,", e.g. "%C(auto,blue)Hello%C(auto,reset)".
+
+ * Scripts can ask Git that wildcard patterns in pathspecs they give do
+   not have any significance, i.e. take them as literal strings.
+
+ * The patterns in .gitignore and .gitattributes files can have **/,
+   as a pattern that matches 0 or more levels of subdirectory.
+   E.g. "foo/**/bar" matches "bar" in "foo" itself or in a
+   subdirectory of "foo".
+
+ * When giving arguments without "--" disambiguation, object names
+   that come earlier on the command line must not be interpretable as
+   pathspecs and pathspecs that come later on the command line must
+   not be interpretable as object names.  This disambiguation rule has
+   been tweaked so that ":/" (no other string before or after) is
+   always interpreted as a pathspec; "git cmd -- :/" is no longer
+   needed, you can just say "git cmd :/".
+
+ * Various "hint" lines Git gives when it asks the user to edit
+   messages in the editor are commented out with '#' by default. The
+   core.commentchar configuration variable can be used to customize
+   this '#' to a different character.
+
+ * "git add -u" and "git add -A" without pathspec issues warning to
+   make users aware that they are only operating on paths inside the
+   subdirectory they are in.  Use ":/" (everything from the top) or
+   "." (everything from the $cwd) to disambiguate.
 
-Here are the topics that have been cooking.  Commits prefixed with
-'-' are only in 'pu' (proposed updates) while commits prefixed with
-'+' are in 'next'.
+ * "git blame" (and "git diff") learned the "--no-follow" option.
 
-The tip of the 'master' is at 1.8.2-rc2.  Hopefully we can tag the
-final in the middle of the month.
+ * "git branch" now rejects some nonsense combinations of command line
+   arguments (e.g. giving more than one branch name to rename) with
+   more case-specific error messages.
 
-You can find the changes described here in the integration branches of the
-repositories listed at
+ * "git check-ignore" command to help debugging .gitignore files has
+   been added.
 
-    http://git-blame.blogspot.com/p/git-public-repositories.html
+ * "git cherry-pick" can be used to replay a root commit to an unborn
+   branch.
 
---------------------------------------------------
-[Graduated to "master"]
+ * "git commit" can be told to use --cleanup=whitespace by setting the
+   configuration variable commit.cleanup to 'whitespace'.
 
-* mh/maint-ceil-absolute (2013-02-22) 1 commit
-  (merged to 'next' on 2013-02-26 at ba83c45)
- + Provide a mechanism to turn off symlink resolution in ceiling paths
+ * "git diff" and other Porcelain commands can be told to use a
+   non-standard algorithm by setting diff.algorithm configuration
+   variable.
 
- An earlier workaround designed to help people who list logical
- directories that will not match what getcwd(3) returns in the
- GIT_CEILING_DIRECTORIES had an adverse effect when it is slow to
- stat and readlink a directory component of an element listed on it.
+ * "git fetch --mirror" and fetch that uses other forms of refspec
+   with wildcard used to attempt to update a symbolic ref that match
+   the wildcard on the receiving end, which made little sense (the
+   real ref that is pointed at by the symbolic ref would be updated
+   anyway).  Symbolic refs no longer are affected by such a fetch.
 
---------------------------------------------------
-[New Topics]
+ * "git format-patch" now detects more cases in which a whole branch
+   is being exported, and uses the description for the branch, when
+   asked to write a cover letter for the series.
 
-* kb/name-hash (2013-02-27) 1 commit
- - name-hash.c: fix endless loop with core.ignorecase=true
+ * "git format-patch" learned "-v $count" option, and prepends a
+   string "v$count-" to the names of its output files, and also
+   automatically sets the subject prefix to "PATCH v$count". This
+   allows patches from rerolled series to be stored under different
+   names and makes it easier to reuse cover letter messages.
 
- The code to keep track of what directory names are known to Git on
- platforms with case insensitive filesystems can get confused upon
- a hash collision between these pathnames and looped forever.
+ * "git log" and friends can be told with --use-mailmap option to
+   rewrite the names and email addresses of people using the mailmap
+   mechanism.
+
+ * "git log --cc --graph" now shows the combined diff output with the
+   ancestry graph.
+
+ * "git log --grep=<pattern>" honors i18n.logoutputencoding to look
+   for the pattern after fixing the log message to the specified
+   encoding.
+
+ * "git mergetool" and "git difftool" learned to list the available
+   tool backends in a more consistent manner.
+
+ * "git mergetool" is aware of TortoiseGitMerge now and uses it over
+   TortoiseMerge when available.
+
+ * "git push" now requires "-f" to update a tag, even if it is a
+   fast-forward, as tags are meant to be fixed points.
+
+ * Error messages from "git push" when it stops to prevent remote refs
+   from getting overwritten by mistake have been improved to explain
+   various situations separately.
+
+ * "git push" will stop without doing anything if the new "pre-push"
+   hook exists and exits with a failure.
 
+ * When "git rebase" fails to generate patches to be applied (e.g. due
+   to oom), it failed to detect the failure and instead behaved as if
+   there were nothing to do.  A workaround to use a temporary file has
+   been applied, but we probably would want to revisit this later, as
+   it hurts the common case of not failing at all.
+
+ * Input and preconditions to "git reset" has been loosened where
+   appropriate.  "git reset $fromtree Makefile" requires $fromtree to
+   be any tree (it used to require it to be a commit), for example.
+   "git reset" (without options or parameters) used to error out when
+   you do not have any commits in your history, but it now gives you
+   an empty index (to match non-existent commit you are not even on).
+
+ * "git status" says what branch is being bisected or rebased when
+   able, not just "bisecting" or "rebasing".
 
-* rs/zip-compresssed-size-with-export-subst (2013-02-27) 1 commit
-  (merged to 'next' on 2013-03-03 at c1ac6d8)
- + archive-zip: fix compressed size for stored export-subst files
+ * "git submodule" started learning a new mode to integrate with the
+   tip of the remote branch (as opposed to integrating with the commit
+   recorded in the superproject's gitlink).
+
+ * "git upload-pack" which implements the service "ls-remote" and
+   "fetch" talk to can be told to hide ref hierarchies the server
+   side internally uses (and that clients have no business learning
+   about) with transfer.hiderefs configuration.
+
+
+Foreign Interface
+
+ * "git fast-export" has been updated for its use in the context of
+   the remote helper interface.
+
+ * A new remote helper to interact with bzr has been added to contrib/.
+
+ * "git p4" got various bugfixes around its branch handling.  It is
+   also made usable with Python 2.4/2.5.  In addition, its various
+   portability issues for Cygwin have been addressed.
+
+ * The remote helper to interact with Hg in contrib/ has seen a few
+   fixes.
+
+
+Performance, Internal Implementation, etc.
+
+ * "git fsck" has been taught to be pickier about entries in tree
+   objects that should not be there, e.g. ".", ".git", and "..".
+
+ * Matching paths with common forms of pathspecs that contain wildcard
+   characters has been optimized further.
+
+ * We stopped paying attention to $GIT_CONFIG environment that points
+   at a single configuration file from any command other than "git config"
+   quite a while ago, but "git clone" internally set, exported, and
+   then unexported the variable during its operation unnecessarily.
+
+ * "git reset" internals has been reworked and should be faster in
+   general. We tried to be careful not to break any behaviour but
+   there could be corner cases, especially when running the command
+   from a conflicted state, that we may have missed.
 
- When export-subst is used, "zip" output recorded incorrect
- size of the file.
+ * The implementation of "imap-send" has been updated to reuse xml
+   quoting code from http-push codepath, and lost a lot of unused
+   code.
 
- Will cook in 'next'.
+ * There is a simple-minded checker for the test scripts in t/
+   directory to catch most common mistakes (it is not enabled by
+   default).
 
+ * You can build with USE_WILDMATCH=YesPlease to use a replacement
+   implementation of pattern matching logic used for pathname-like
+   things, e.g. refnames and paths in the repository.  This new
+   implementation is not expected change the existing behaviour of Git
+   in this release, except for "git for-each-ref" where you can now
+   say "refs/**/master" and match with both refs/heads/master and
+   refs/remotes/origin/master.  We plan to use this new implementation
+   in wider places (e.g. "git ls-files '**/Makefile' may find Makefile
+   at the top-level, and "git log '**/t*.sh'" may find commits that
+   touch a shell script whose name begins with "t" at any level) in
+   future versions of Git, but we are not there yet.  By building with
+   USE_WILDMATCH, using the resulting Git daily and reporting when you
+   find breakages, you can help us get closer to that goal.
+
+ * Some reimplementations of Git do not write all the stat info back
+   to the index due to their implementation limitations (e.g. jgit).
+   A configuration option can tell Git to ignore changes to most of
+   the stat fields and only pay attention to mtime and size, which
+   these implementations can reliably update.  This can be used to
+   avoid excessive revalidation of contents.
+
+ * Some platforms ship with old version of expat where xmlparse.h
+   needs to be included instead of expat.h; the build procedure has
+   been taught about this.
 
-* hv/config-from-strbuf (2013-02-28) 4 commits
- - teach config parsing to read from strbuf
- - config: make parsing stack struct independent from actual data source
- - config: drop file pointer validity check in get_next_char()
- - config: factor out config file stack management
+ * "make clean" on platforms that cannot compute header dependencies
+   on the fly did not work with implementations of "rm" that do not
+   like an empty argument list.
 
+Also contains minor documentation updates and code clean-ups.
 
-* jc/describe (2013-02-28) 1 commit
- - describe: --match=<pattern> must limit the refs even when used with --all
 
- Comments?
+Fixes since v1.8.1
+------------------
 
+Unless otherwise noted, all the fixes since v1.8.1 in the maintenance
+track are contained in this release (see release notes to them for
+details).
 
-* jk/mailsplit-maildir-muttsort (2013-03-02) 1 commit
-  (merged to 'next' on 2013-03-03 at d5f7735)
- + mailsplit: sort maildir filenames more cleverly
+ * An element on GIT_CEILING_DIRECTORIES list that does not name the
+   real path to a directory (i.e. a symbolic link) could have caused
+   the GIT_DIR discovery logic to escape the ceiling.
 
- Will cook in 'next'.
+ * When attempting to read the XDG-style $HOME/.config/git/config and
+   finding that $HOME/.config/git is a file, we gave a wrong error
+   message, instead of treating the case as "a custom config file does
+   not exist there" and moving on.
 
+ * The behaviour visible to the end users was confusing, when they
+   attempt to kill a process spawned in the editor that was in turn
+   launched by Git with SIGINT (or SIGQUIT), as Git would catch that
+   signal and die.  We ignore these signals now.
+   (merge 0398fc34 pf/editor-ignore-sigint later to maint).
 
-* pc/subtree-add-before-fetch (2013-02-28) 1 commit
- - contrib/subtree: allow addition of remote branch with name not locally present
+ * A child process that was killed by a signal (e.g. SIGINT) was
+   reported in an inconsistent way depending on how the process was
+   spawned by us, with or without a shell in between.
 
- Comments?
+ * After failing to create a temporary file using mkstemp(), failing
+   pathname was not reported correctly on some platforms.
 
+ * We used to stuff "user@" and then append what we read from
+   /etc/mailname to come up with a default e-mail ident, but a bug
+   lost the "user@" part.
 
-* tr/line-log (2013-02-28) 5 commits
- - log -L: :pattern:file syntax to find by funcname
- - Implement line-history search (git log -L)
- - Export rewrite_parents() for 'log -L'
- - blame: introduce $ as "end of file" in -L syntax
- - Refactor parse_loc
+ * The attribute mechanism didn't allow limiting attributes to be
+   applied to only a single directory itself with "path/" like the
+   exclude mechanism does.  The initial implementation of this that
+   was merged to 'maint' and 1.8.1.2 was with a severe performance
+   degradations and needs to merge a fix-up topic.
 
---------------------------------------------------
-[Stalled]
+ * The smart HTTP clients forgot to verify the content-type that comes
+   back from the server side to make sure that the request is being
+   handled properly.
 
-* mb/gitweb-highlight-link-target (2012-12-20) 1 commit
- - Highlight the link target line in Gitweb using CSS
+ * "git am" did not parse datestamp correctly from Hg generated patch,
+   when it is run in a locale outside C (or en).
 
- Expecting a reroll.
- $gmane/211935
+ * "git apply" misbehaved when fixing whitespace breakages by removing
+   excess trailing blank lines.
 
+ * "git apply --summary" has been taught to make sure the similarity
+   value shown in its output is sensible, even when the input had a
+   bogus value.
 
-* jc/add-delete-default (2012-08-13) 1 commit
- - git add: notice removal of tracked paths by default
+ * A tar archive created by "git archive" recorded a directory in a
+   way that made NetBSD's implementation of "tar" sometimes unhappy.
 
- "git add dir/" updated modified files and added new files, but does
- not notice removed files, which may be "Huh?" to some users.  They
- can of course use "git add -A dir/", but why should they?
+ * "git archive" did not record uncompressed size in the header when
+   streaming a zip archive, which confused some implementations of unzip.
 
- Resurrected from graveyard, as I thought it was a worthwhile thing
- to do in the longer term.
+ * "git archive" did not parse configuration values in tar.* namespace
+   correctly.
+   (merge b3873c3 jk/config-parsing-cleanup later to maint).
 
- There seems to be some interest. Let's see if it results in a solid
- execution of a sensible transition plan towards Git 2.0.
+ * Attempt to "branch --edit-description" an existing branch, while
+   being on a detached HEAD, errored out.
 
+ * "git clean" showed what it was going to do, but sometimes end up
+   finding that it was not allowed to do so, which resulted in a
+   confusing output (e.g. after saying that it will remove an
+   untracked directory, it found an embedded git repository there
+   which it is not allowed to remove).  It now performs the actions
+   and then reports the outcome more faithfully.
 
-* mb/remote-default-nn-origin (2012-07-11) 6 commits
- - Teach get_default_remote to respect remote.default.
- - Test that plain "git fetch" uses remote.default when on a detached HEAD.
- - Teach clone to set remote.default.
- - Teach "git remote" about remote.default.
- - Teach remote.c about the remote.default configuration setting.
- - Rename remote.c's default_remote_name static variables.
+ * When "git clone --separate-git-dir=$over_there" is interrupted, it
+   failed to remove the real location of the $GIT_DIR it created.
+   This was most visible when interrupting a submodule update.
 
- When the user does not specify what remote to interact with, we
- often attempt to use 'origin'.  This can now be customized via a
- configuration variable.
+ * "git cvsimport" mishandled timestamps at DST boundary.
 
- Expecting a reroll.
- $gmane/210151
+ * We used to have an arbitrary 32 limit for combined diff input,
+   resulting in incorrect number of leading colons shown when showing
+   the "--raw --cc" output.
 
- "The first remote becomes the default" bit is better done as a
- separate step.
+ * "git fetch --depth" was broken in at least three ways.  The
+   resulting history was deeper than specified by one commit, it was
+   unclear how to wipe the shallowness of the repository with the
+   command, and documentation was misleading.
+   (merge cfb70e1 nd/fetch-depth-is-broken later to maint).
 
---------------------------------------------------
-[Cooking]
+ * "git log --all -p" that walked refs/notes/textconv/ ref can later
+   try to use the textconv data incorrectly after it gets freed.
 
-* jc/perl-cat-blob (2013-02-22) 1 commit
-  (merged to 'next' on 2013-02-25 at 7c0079a)
- + Git.pm: fix cat_blob crashes on large files
+ * We forgot to close the file descriptor reading from "gpg" output,
+   killing "git log --show-signature" on a long history.
 
- perl/Git.pm::cat_blob slurped everything in core only to write it
- out to a file descriptor, which was not a very smart thing to do.
+ * The way "git svn" asked for password using SSH_ASKPASS and
+   GIT_ASKPASS was not in line with the rest of the system.
 
- Will cook in 'next'.
+ * The --graph code fell into infinite loop when asked to do what the
+   code did not expect.
 
+ * http transport was wrong to ask for the username when the
+   authentication is done by certificate identity.
 
-* nd/doc-index-format (2013-02-23) 3 commits
-  (merged to 'next' on 2013-02-26 at 4d3caea)
- + update-index: list supported idx versions and their features
- + read-cache.c: use INDEX_FORMAT_{LB,UB} in verify_hdr()
- + index-format.txt: mention of v4 is missing in some places
+ * "git pack-refs" that ran in parallel to another process that
+   created new refs had a nasty race.
 
- Update the index format documentation to mention the v4 format.
+ * Rebasing the history of superproject with change in the submodule
+   has been broken since v1.7.12.
 
- Will cook in 'next'.
+ * After "git add -N" and then writing a tree object out of the
+   index, the cache-tree data structure got corrupted.
 
+ * "git clone" used to allow --bare and --separate-git-dir=$there
+   options at the same time, which was nonsensical.
 
-* ap/maint-diff-rename-avoid-overlap (2013-03-02) 3 commits
- - tests: make sure rename pretty print works
-  (merged to 'next' on 2013-02-26 at 19d70bf)
- + diff: prevent pprint_rename from underrunning input
-  (merged to 'next' on 2013-02-25 at c9bd6d3)
- + diff: Fix rename pretty-print when suffix and prefix overlap
+ * "git rebase --preserve-merges" lost empty merges in recent versions
+   of Git.
 
- The logic used by "git diff -M --stat" to shorten the names of
- files before and after a rename did not work correctly when the
- common prefix and suffix between the two filenames overlapped.
+ * "git merge --no-edit" computed who were involved in the work done
+   on the side branch, even though that information is to be discarded
+   without getting seen in the editor.
 
- Will cook in 'next' (the tip may still be rerolled).
+ * "git merge" started calling prepare-commit-msg hook like "git
+   commit" does some time ago, but forgot to pay attention to the exit
+   status of the hook.
 
+ * A failure to push due to non-ff while on an unborn branch
+   dereferenced a NULL pointer when showing an error message.
 
-* ap/maint-update-index-h-is-for-help (2013-02-23) 1 commit
-  (merged to 'next' on 2013-02-25 at f5f767c)
- + update-index: allow "-h" to also display options
+ * When users spell "cc:" in lowercase in the fake "header" in the
+   trailer part, "git send-email" failed to pick up the addresses from
+   there. As e-mail headers field names are case insensitive, this
+   script should follow suit and treat "cc:" and "Cc:" the same way.
 
- Will cook in 'next'.
+ * Output from "git status --ignored" showed an unexpected interaction
+   with "--untracked".
 
+ * "gitweb", when sorting by age to show repositories with new
+   activities first, used to sort repositories with absolutely
+   nothing in it early, which was not very useful.
 
-* jc/color-diff-doc (2013-02-22) 1 commit
-  (merged to 'next' on 2013-02-25 at c37541c)
- + diff-options: unconfuse description of --color
+ * "gitweb"'s code to sanitize control characters before passing it to
+   "highlight" filter lost known-to-be-safe control characters by
+   mistake.
 
- Will cook in 'next'.
+ * "gitweb" pages served over HTTPS, when configured to show picon or
+   gravatar, referred to these external resources to be fetched via
+   HTTP, resulting in mixed contents warning in browsers.
 
+ * When a line to be wrapped has a solid run of non space characters
+   whose length exactly is the wrap width, "git shortlog -w" failed
+   to add a newline after such a line.
 
-* nd/branch-error-cases (2013-02-23) 1 commit
-  (merged to 'next' on 2013-02-25 at 1d0289f)
- + branch: segfault fixes and validation
+ * Command line completion leaked an unnecessary error message while
+   looking for possible matches with paths in <tree-ish>.
 
- "git branch" had more cases where it did not bother to check
- nonsense command line parameters.
+ * Command line completion for "tcsh" emitted an unwanted space
+   after completing a single directory name.
 
- Will cook in 'next'.
+ * Command line completion code was inadvertently made incompatible with
+   older versions of bash by using a newer array notation.
 
+ * "git push" was taught to refuse updating the branch that is
+   currently checked out long time ago, but the user manual was left
+   stale.
+   (merge 50995ed wk/man-deny-current-branch-is-default-these-days later to maint).
 
-* rt/commit-cleanup-config (2013-02-23) 1 commit
-  (merged to 'next' on 2013-02-25 at 8249b61)
- + t7502: perform commits using alternate editor in a subshell
+ * Some shells do not behave correctly when IFS is unset; work it
+   around by explicitly setting it to the default value.
 
- Fix tests that contaminated their environments and affected new
- tests introduced later in the sequence by containing their effects
- in their own subshells.
+ * Some scripted programs written in Python did not get updated when
+   PYTHON_PATH changed.
+   (cherry-pick 96a4647fca54031974cd6ad1 later to maint).
 
- Will cook in 'next'.
+ * When autoconf is used, any build on a different commit always ran
+   "config.status --recheck" even when unnecessary.
 
+ * A fix was added to the build procedure to work around buggy
+   versions of ccache broke the auto-generation of dependencies, which
+   unfortunately is still relevant because some people use ancient
+   distros.
 
-* wk/doc-pre-rebase (2013-02-24) 1 commit
-  (merged to 'next' on 2013-02-25 at a6ec310)
- + Documentation/githooks: Explain pre-rebase parameters
+ * The autoconf subsystem passed --mandir down to generated
+   config.mak.autogen but forgot to do the same for --htmldir.
+   (merge 55d9bf0 ct/autoconf-htmldir later to maint).
 
- Will cook in 'next'.
+ * A change made on v1.8.1.x maintenance track had a nasty regression
+   to break the build when autoconf is used.
+   (merge 7f1b697 jn/less-reconfigure later to maint).
 
+ * We have been carrying a translated and long-unmaintained copy of an
+   old version of the tutorial; removed.
 
-* da/downcase-u-in-usage (2013-02-24) 20 commits
-  (merged to 'next' on 2013-02-26 at 977b67e)
- + contrib/mw-to-git/t/install-wiki.sh: use a lowercase "usage:" string
- + contrib/examples/git-remote.perl: use a lowercase "usage:" string
- + tests: use a lowercase "usage:" string
- + git-svn: use a lowercase "usage:" string
- + Documentation/user-manual.txt: use a lowercase "usage:" string
- + templates/hooks--update.sample: use a lowercase "usage:" string
- + contrib/hooks/setgitperms.perl: use a lowercase "usage:" string
- + contrib/examples: use a lowercase "usage:" string
- + contrib/fast-import/import-zips.py: use spaces instead of tabs
- + contrib/fast-import/import-zips.py: fix broken error message
- + contrib/fast-import: use a lowercase "usage:" string
- + contrib/credential: use a lowercase "usage:" string
- + git-cvsimport: use a lowercase "usage:" string
- + git-cvsimport: use a lowercase "usage:" string
- + git-cvsexportcommit: use a lowercase "usage:" string
- + git-archimport: use a lowercase "usage:" string
- + git-merge-one-file: use a lowercase "usage:" string
- + git-relink: use a lowercase "usage:" string
- + git-svn: use a lowercase "usage:" string
- + git-sh-setup: use a lowercase "usage:" string
+ * t0050 had tests expecting failures from a bug that was fixed some
+   time ago.
 
- Will cook in 'next'.
+ * t4014, t9502 and t0200 tests had various portability issues that
+   broke on OpenBSD.
 
+ * t9020 and t3600 tests had various portability issues.
 
-* dm/ni-maxhost-may-be-missing (2013-02-25) 1 commit
-  (merged to 'next' on 2013-02-26 at 93ec2c9)
- + git-compat-util.h: Provide missing netdb.h definitions
+ * t9200 runs "cvs init" on a directory that already exists, but a
+   platform can configure this fail for the current user (e.g. you
+   need to be in the cvsadmin group on NetBSD 6.0).
 
- Will cook in 'next'.
+ * t9020 and t9810 had a few non-portable shell script construct.
 
+ * Scripts to test bash completion was inherently flaky as it was
+   affected by whatever random things the user may have on $PATH.
 
-* gp/avoid-explicit-mention-of-dot-git-refs (2013-02-24) 1 commit
-  (merged to 'next' on 2013-02-26 at ec42d98)
- + Fix ".git/refs" stragglers
+ * An element on GIT_CEILING_DIRECTORIES could be a "logical" pathname
+   that uses a symbolic link to point at somewhere else (e.g. /home/me
+   that points at /net/host/export/home/me, and the latter directory
+   is automounted). Earlier when Git saw such a pathname e.g. /home/me
+   on this environment variable, the "ceiling" mechanism did not take
+   effect. With this release (the fix has also been merged to the
+   v1.8.1.x maintenance series), elements on GIT_CEILING_DIRECTORIES
+   are by default checked for such aliasing coming from symbolic
+   links. As this needs to actually resolve symbolic links for each
+   element on the GIT_CEILING_DIRECTORIES, you can disable this
+   mechanism for some elements by listing them after an empty element
+   on the GIT_CEILING_DIRECTORIES. e.g. Setting /home/me::/home/him to
+   GIT_CEILING_DIRECTORIES makes Git resolve symbolic links in
+   /home/me when checking if the current directory is under /home/me,
+   but does not do so for /home/him.
+   (merge 7ec30aa mh/maint-ceil-absolute later to maint).
 
- Will cook in 'next'.
+----------------------------------------------------------------
 
+Changes since v1.8.2-rc1 are as follows:
 
-* gp/describe-match-uses-glob-pattern (2013-02-24) 1 commit
-  (merged to 'next' on 2013-02-26 at c9cc789)
- + describe: Document --match pattern format
- (this branch is used by gp/forbid-describe-all-match.)
+Andrew Wong (1):
+      Documentation/githooks: Fix linkgit
 
- Will cook in 'next'.
+Brad King (1):
+      Documentation/submodule: Add --force to update synopsis
 
+Erik Faye-Lund (1):
+      Revert "compat: add strtok_r()"
 
-* gp/forbid-describe-all-match (2013-02-24) 1 commit
- - describe: make --all and --match=PATTERN mutually incompatible
- (this branch uses gp/describe-match-uses-glob-pattern.)
+Junio C Hamano (3):
+      Update draft release notes to 1.8.1.5
+      Git 1.8.1.5
+      Git 1.8.2-rc2
 
- "describe --match=<pattern> --all <commit>" ought to mean "use refs
- that match <pattern> to describe <commit>; you do not have to limit
- yourself to annotated tags."  But it doesn't.  Disable the
- combination.
+Karsten Blees (2):
+      wincred: accept CRLF on stdin to simplify console usage
+      wincred: improve compatibility with windows versions
 
- We may want to discard this if jc/describe topic turns out to be a
- better idea.
+Michael Haggerty (1):
+      Provide a mechanism to turn off symlink resolution in ceiling paths
 
-
-* jk/common-make-variables-export-safety (2013-02-25) 1 commit
- - Makefile: make mandir, htmldir and infodir absolute
-
- Make the three variables safer to be exported to submakes by
- ensuring that they are full paths so that they can be used as
- installation location.
-
-
-* jk/suppress-clang-warning (2013-02-25) 1 commit
- - fix clang -Wtautological-compare with unsigned enum
-
-
-* mg/qnx6 (2013-02-25) 1 commit
- - QNX: newer QNX 6.x.x is not so crippled
-
- Still under discussion.
- Not ready for inclusion.
-
-
-* mg/unsigned-time-t (2013-02-25) 2 commits
- - Fix time offset calculation in case of unsigned time_t
- - date.c: fix unsigned time_t comparison
-
- A few workarounds for systems with unsigned time_t.
-
-
-* rj/msvc-build (2013-02-25) 5 commits
-  (merged to 'next' on 2013-02-26 at 7493068)
- + msvc: avoid collisions between "tags" and "TAGS"
- + msvc: test-svn-fe: Fix linker "unresolved external" error
- + msvc: Fix build by adding missing symbol defines
- + msvc: git-daemon: Fix linker "unresolved external" errors
- + msvc: Fix compilation errors caused by poll.h emulation
-
- Will cook in 'next'.
-
-
-* wk/user-manual-literal-format (2013-02-25) 1 commit
-  (merged to 'next' on 2013-02-26 at d59ce38)
- + user-manual: Standardize backtick quoting
-
- Will cook in 'next'.
-
-
-* jk/utf-8-can-be-spelled-differently (2013-02-25) 1 commit
-  (merged to 'next' on 2013-02-26 at c079525)
- + utf8: accept alternate spellings of UTF-8
-
- Will cook in 'next'.
-
-
-* jk/pkt-line-cleanup (2013-02-24) 19 commits
-  (merged to 'next' on 2013-02-25 at d83e970)
- + remote-curl: always parse incoming refs
- + remote-curl: move ref-parsing code up in file
- + remote-curl: pass buffer straight to get_remote_heads
- + teach get_remote_heads to read from a memory buffer
- + pkt-line: share buffer/descriptor reading implementation
- + pkt-line: provide a LARGE_PACKET_MAX static buffer
- + pkt-line: move LARGE_PACKET_MAX definition from sideband
- + pkt-line: teach packet_read_line to chomp newlines
- + pkt-line: provide a generic reading function with options
- + pkt-line: drop safe_write function
- + pkt-line: move a misplaced comment
- + write_or_die: raise SIGPIPE when we get EPIPE
- + upload-archive: use argv_array to store client arguments
- + upload-archive: do not copy repo name
- + send-pack: prefer prefixcmp over memcmp in receive_status
- + fetch-pack: fix out-of-bounds buffer offset in get_ack
- + upload-pack: remove packet debugging harness
- + upload-pack: do not add duplicate objects to shallow list
- + upload-pack: use get_sha1_hex to parse "shallow" lines
-
- Cleans up pkt-line API, implementation and its callers to make
- them more robust.
-
- Will cook in 'next'.
-
-
-* ob/imap-send-ssl-verify (2013-02-20) 1 commit
-  (merged to 'next' on 2013-02-25 at e897609)
- + imap-send: support Server Name Indication (RFC4366)
-
- Correctly connect to SSL/TLS sites that serve multiple hostnames on
- a single IP by including Server Name Indication in the client-hello.
-
- Will cook in 'next'.
-
-
-* jc/format-patch (2013-02-21) 2 commits
- - format-patch: --inline-single
- - format-patch: rename "no_inline" field
-
- A new option to send a single patch to the standard output to be
- appended at the bottom of a message.  I personally have no need for
- this, but it was easy enough to cobble together.  Tests, docs and
- stripping out more MIMEy stuff are left as exercises to interested
- parties.
-
- Not ready for inclusion.
-
-
-* tk/doc-filter-branch (2013-02-26) 2 commits
-  (merged to 'next' on 2013-02-26 at bd4638b)
- + Documentation: filter-branch env-filter example
- + git-filter-branch.txt: clarify ident variables usage
-
- Will cook in 'next'.
-
-
-* bc/commit-complete-lines-given-via-m-option (2013-02-19) 4 commits
-  (merged to 'next' on 2013-02-19 at cf622b7)
- + Documentation/git-commit.txt: rework the --cleanup section
- + git-commit: only append a newline to -m mesg if necessary
- + t7502: demonstrate breakage with a commit message with trailing newlines
- + t/t7502: compare entire commit message with what was expected
-
- 'git commit -m "$str"' when $str was already terminated with a LF
- now avoids adding an extra LF to the message.
-
- Will cook in 'next'.
-
-
-* da/difftool-fixes (2013-02-21) 4 commits
-  (merged to 'next' on 2013-02-25 at 687db1f)
- + t7800: "defaults" is no longer a builtin tool name
- + t7800: modernize tests
- + t7800: update copyright notice
- + difftool: silence uninitialized variable warning
-
- Minor maintenance updates to difftool, and updates to its tests.
-
- Will cook in 'next'.
-
-
-* nd/read-directory-recursive-optim (2013-02-17) 1 commit
-  (merged to 'next' on 2013-02-17 at 36ba9f4)
- + read_directory: avoid invoking exclude machinery on tracked files
-
- "git status" has been optimized by taking advantage of the fact
- that paths that are already known to the index do not have to be
- checked against the .gitignore mechanism under some conditions.
-
- Will cook in 'next'.
-
-
-* mg/gpg-interface-using-status (2013-02-14) 5 commits
-  (merged to 'next' on 2013-02-26 at 93f0e72)
- + pretty: make %GK output the signing key for signed commits
- + pretty: parse the gpg status lines rather than the output
- + gpg_interface: allow to request status return
- + log-tree: rely upon the check in the gpg_interface
- + gpg-interface: check good signature in a reliable way
-
- Call "gpg" using the right API when validating the signature on
- tags.
-
- Will cook in 'next'.
-
-
-* jn/shell-disable-interactive (2013-02-11) 2 commits
- - shell: pay attention to exit status from 'help' command
- - shell doc: emphasize purpose and security model
-
- Expecting a reroll.
- $gmane/216229
-
-
-* jc/fetch-raw-sha1 (2013-02-07) 4 commits
-  (merged to 'next' on 2013-02-14 at ffa3c65)
- + fetch: fetch objects by their exact SHA-1 object names
- + upload-pack: optionally allow fetching from the tips of hidden refs
- + fetch: use struct ref to represent refs to be fetched
- + parse_fetch_refspec(): clarify the codeflow a bit
-
- Allows requests to fetch objects at any tip of refs (including
- hidden ones).  It seems that there may be use cases even outside
- Gerrit (e.g. $gmane/215701).
-
- Will cook in 'next'.
-
-
-* mn/send-email-works-with-credential (2013-02-27) 6 commits
-  (merged to 'next' on 2013-02-27 at ee7ae0e)
- + git-send-email: use git credential to obtain password
- + Git.pm: add interface for git credential command
- + Git.pm: allow pipes to be closed prior to calling command_close_bidi_pipe
- + Git.pm: refactor command_close_bidi_pipe to use _cmd_close
- + Git.pm: fix example in command_close_bidi_pipe documentation
- + Git.pm: allow command_close_bidi_pipe to be called as method
-
- Hooks the credential system to send-email.
-
- Will cook in 'next'.
-
-
-* nd/branch-show-rebase-bisect-state (2013-02-08) 1 commit
- - branch: show rebase/bisect info when possible instead of "(no branch)"
-
- Expecting a reroll.
- $gmane/215771
-
-
-* nd/count-garbage (2013-02-15) 4 commits
-  (merged to 'next' on 2013-02-17 at b2af923)
- + count-objects: report how much disk space taken by garbage files
- + count-objects: report garbage files in pack directory too
- + sha1_file: reorder code in prepare_packed_git_one()
- + git-count-objects.txt: describe each line in -v output
-
- Will cook in 'next'.
-
-
-* tz/credential-authinfo (2013-02-25) 1 commit
-  (merged to 'next' on 2013-02-27 at 7a261cb)
- + Add contrib/credentials/netrc with GPG support
-
- A new read-only credential helper (in contrib/) to interact with
- the .netrc/.authinfo files.  Hopefully mn/send-email-authinfo topic
- can rebuild on top of something like this.
-
- Will cook in 'next'.
-
-
-* jl/submodule-deinit (2013-02-17) 1 commit
- - submodule: add 'deinit' command
-
- There was no Porcelain way to say "I no longer am interested in
- this submodule", once you express your interest in a submodule with
- "submodule init".  "submodule deinit" is the way to do so.
-
- Expecting a reroll.
- $gmane/216498
-
-
-* jc/remove-export-from-config-mak-in (2013-02-12) 2 commits
-  (merged to 'next' on 2013-02-12 at eb8af04)
- + Makefile: do not export mandir/htmldir/infodir
-  (merged to 'next' on 2013-02-07 at 33f7d4f)
- + config.mak.in: remove unused definitions
-
- config.mak.in template had an "export" line to cause a few
- common makefile variables to be exported; if they need to be
- expoted for autoconf/configure users, they should also be exported
- for people who write config.mak the same way.  Move the "export" to
- the main Makefile.  Also, stop exporting mandir that used to be
- exported (only) when config.mak.autogen was used.  It would have
- broken installation of manpages (but not other documentation
- formats).
-
- Will cook in 'next'.
-
-
-* jc/remove-treesame-parent-in-simplify-merges (2013-01-17) 1 commit
-  (merged to 'next' on 2013-01-30 at b639b47)
- + simplify-merges: drop merge from irrelevant side branch
-
- The --simplify-merges logic did not cull irrelevant parents from a
- merge that is otherwise not interesting with respect to the paths
- we are following.
-
- This touches a fairly core part of the revision traversal
- infrastructure; even though I think this change is correct, please
- report immediately if you find any unintended side effect.
-
- Will cook in 'next'.
-
-
-* jc/push-2.0-default-to-simple (2013-01-16) 14 commits
-  (merged to 'next' on 2013-01-16 at 23f5df2)
- + t5570: do not assume the "matching" push is the default
- + t5551: do not assume the "matching" push is the default
- + t5550: do not assume the "matching" push is the default
-  (merged to 'next' on 2013-01-09 at 74c3498)
- + doc: push.default is no longer "matching"
- + push: switch default from "matching" to "simple"
- + t9401: do not assume the "matching" push is the default
- + t9400: do not assume the "matching" push is the default
- + t7406: do not assume the "matching" push is the default
- + t5531: do not assume the "matching" push is the default
- + t5519: do not assume the "matching" push is the default
- + t5517: do not assume the "matching" push is the default
- + t5516: do not assume the "matching" push is the default
- + t5505: do not assume the "matching" push is the default
- + t5404: do not assume the "matching" push is the default
-
- Will cook in 'next' until Git 2.0.
-
-
-* bc/append-signed-off-by (2013-02-23) 13 commits
-  (merged to 'next' on 2013-02-25 at 32f7ac2)
- + git-commit: populate the edit buffer with 2 blank lines before s-o-b
- + Unify appending signoff in format-patch, commit and sequencer
- + format-patch: update append_signoff prototype
- + t4014: more tests about appending s-o-b lines
- + sequencer.c: teach append_signoff to avoid adding a duplicate newline
- + sequencer.c: teach append_signoff how to detect duplicate s-o-b
- + sequencer.c: always separate "(cherry picked from" from commit body
- + sequencer.c: require a conforming footer to be preceded by a blank line
- + sequencer.c: recognize "(cherry picked from ..." as part of s-o-b footer
- + t/t3511: add some tests of 'cherry-pick -s' functionality
- + t/test-lib-functions.sh: allow to specify the tag name to test_commit
- + commit, cherry-pick -s: remove broken support for multiline rfc2822 fields
- + sequencer.c: rework search for start of footer to improve clarity
-
- Will cook in 'next'.
+Thomas Rast (1):
+      Make !pattern in .gitattributes non-fatal
