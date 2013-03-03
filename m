@@ -1,65 +1,101 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 1/5] Show 'git help <guide>' usage, with examples
-Date: Sun,  3 Mar 2013 23:44:16 +0000
-Message-ID: <1362354260-3772-2-git-send-email-philipoakley@iee.org>
-References: <1362354260-3772-1-git-send-email-philipoakley@iee.org>
+Subject: [PATCH v2 0/5] [RESEND with Cc:] Git help option to list user guides
+Date: Sun,  3 Mar 2013 23:44:15 +0000
+Message-ID: <1362354260-3772-1-git-send-email-philipoakley@iee.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"W. Trevor King" <wking@tremily.us>,
 	David Aguilar <davvid@gmail.com>
 To: GitList <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 04 00:44:05 2013
+X-From: git-owner@vger.kernel.org Mon Mar 04 00:44:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCIZX-00055m-Jr
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 00:44:03 +0100
+	id 1UCIZl-0005LE-U3
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 00:44:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754769Ab3CCXni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Mar 2013 18:43:38 -0500
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:56134 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754724Ab3CCXnh (ORCPT
+	id S1754767Ab3CCXnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Mar 2013 18:43:37 -0500
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:5354 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753217Ab3CCXnh (ORCPT
 	<rfc822;git@vger.kernel.org>); Sun, 3 Mar 2013 18:43:37 -0500
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAK7TM1FZ8rke/2dsb2JhbABFhWe8Y30Xc4IgAQVWIxAISTkQAQ0GE4gXxxSNSoFTB4NAA6cygwiBaQ
+X-IronPort-Anti-Spam-Result: AqsIACjTM1FZ8rke/2dsb2JhbABFhWe1cIZzfRdzgnwjGIECJIgqxxmPHYNHA6cygwg
 X-IronPort-AV: E=Sophos;i="4.84,774,1355097600"; 
-   d="scan'208";a="420962500"
+   d="scan'208";a="401818131"
 Received: from host-89-242-185-30.as13285.net (HELO localhost) ([89.242.185.30])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 03 Mar 2013 23:43:35 +0000
+  by out1.ip04ir2.opaltelecom.net with ESMTP; 03 Mar 2013 23:43:34 +0000
 X-Mailer: git-send-email 1.8.1.msysgit.1
-In-Reply-To: <1362354260-3772-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217374>
 
-The git(1) man page must be accessed via 'git help git' on Git for Windows
-as it has no 'man' command. And it prompts users to read the git(1) page,
-rather than hoping they follow a subsidiary link within another
-documentation page. The 'tutorial' is an obvious guide to suggest.
+This is the much truncated (was 0/13] and updated series for
+noting that 'git help' can display the existing guides that are
+formatted as man pages, and providing a 'git help' option to list
+a few of the most useful guides.
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
- git.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+The series is rebased on top of V1.8.2-rc1
 
-diff --git a/git.c b/git.c
-index b10c18b..d9b71c1 100644
---- a/git.c
-+++ b/git.c
-@@ -13,7 +13,9 @@ const char git_usage_string[] =
- 	"           <command> [<args>]";
- 
- const char git_more_info_string[] =
--	N_("See 'git help <command>' for more information on a specific command.");
-+	N_("See 'git help <command>' for more information on a specific command.\n"
-+	   "While 'git help <guide>', will show the selected Git concept guide.\n"
-+	   "Examples: 'git help git', 'git help branch', 'git help tutorial'...");
- 
- static struct startup_info git_startup_info;
- static int use_pager = -1;
+Differences relative to V1 numbering
+Patch 1: Use 'Git' in help messages
+Dropped.
+a. the 'git version' string is used in the wild for version checking,
+in particular Git Gui checks the string is 'git version'.
+b. a recent patch series fixed on lower case messages for 'usage:',
+respect that.
+c. many consider that the 'git' reference was to the 'git <cmd>' format
+rather than (the system) Git's commands.
+
+Patch 2 (now 1/5): Show 'git help <guide>' usage, with examples
+Correct elipsis dots for unterminated list of examples.
+
+Patch 2 (now 2/5): Help.c use OPT_COUNTUP
+Unchanged.
+
+Patch 4 (now 3/5): Help.c add --guide option
+Update commit message to explain the -g|--guide logic.
+
+Patch 5 (now 4/5): Help.c: add list_common_guides_help() function
+Removed the 'build artefact' /* */ comment line.
+Note that these are just the common guides and used in a usage message.
+The data was generated by a script variant of generate-cmdlist.sh
+
+Patch (new 5/5): Help doc: Include --guide option description
+Update the documentation/git-help.txt - I had been caught out by
+the same 'focus on the code' mistake made by many and forgot
+the documenation ;-)
+
+Patch 6 - 13: 
+All dropped.
+Drop the separate guide list.txt and extraction script, which was
+copied from the common command list and script. If the guide usage
+list is useful, extend the command-list.txt and generate-cmdlist.sh
+at a later date.
+
+Drop the rename of user-manual and everyday because they are not
+formatted as manuals. They can't be started by help's call to 'man'
+(and possibly other paths) anyway.
+
+Philip Oakley (5):
+  Show 'git help <guide>' usage, with examples
+  Help.c use OPT_COUNTUP
+  Help.c add --guide option
+  Help.c: add list_common_guides_help() function
+  Help doc: Include --guide option description
+
+ Documentation/git-help.txt | 28 +++++++++++++++++++++-------
+ builtin/help.c             | 11 ++++++++---
+ common-guides.h            | 11 +++++++++++
+ git.c                      |  4 +++-
+ help.c                     | 18 ++++++++++++++++++
+ help.h                     |  1 +
+ 6 files changed, 62 insertions(+), 11 deletions(-)
+ create mode 100644 common-guides.h
+
 -- 
 1.8.1.msysgit.1
