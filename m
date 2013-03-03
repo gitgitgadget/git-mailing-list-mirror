@@ -1,180 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow combined diff to ignore white-spaces
-Date: Sat, 02 Mar 2013 23:45:57 -0800
-Message-ID: <7v38wdc4ei.fsf@alter.siamese.dyndns.org>
-References: <1362236658-17200-1-git-send-email-apelisse@gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 0/5] nd/branch-show-rebase-bisect-state updates
+Date: Sun,  3 Mar 2013 16:41:16 +0700
+Message-ID: <1362303681-6585-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 03 08:46:39 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 03 10:41:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UC3d0-0004ry-SC
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Mar 2013 08:46:39 +0100
+	id 1UC5Pi-0000Zx-82
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Mar 2013 10:41:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751526Ab3CCHqC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Mar 2013 02:46:02 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39203 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751233Ab3CCHqA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Mar 2013 02:46:00 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E354490AA;
-	Sun,  3 Mar 2013 02:45:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IvQfOTUWGKNmz30vxxwsx89iRCQ=; b=GKthPj
-	azsV3fREBSacz62AKyDaeJYga4OvwUHU1PFWYNUs4ZuS7TJHBkVxrZGXGPYs6aqD
-	NfV3wGxmZtSXI/kvj/FdlAaqYydRDETFDpNBBA494ZgTJcAZoH8AZok0P1klMkZJ
-	3nO8KIIxpVnDUFCcLTmK4YJ0hwXayUHQ6SE0Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Zf77v39NFOc9OBPG+0pHrQnkR6KucYqQ
-	4vh+WbHM8Xil9yHwng8vVB8NHlan3zuhEL8a1ZQBZw5yNNvxiE5EVPeaY1RK4mzz
-	BYSz/eGjA6S4i3jw3iWtIODyI5et4gZCefvuxgJ17rMWwUXuHX/EtO9otlOUxuDC
-	QaQ8lFrXlwQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D82E490A9;
-	Sun,  3 Mar 2013 02:45:59 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 160B590A7; Sun,  3 Mar 2013
- 02:45:58 -0500 (EST)
-In-Reply-To: <1362236658-17200-1-git-send-email-apelisse@gmail.com> (Antoine
- Pelisse's message of "Sat, 2 Mar 2013 16:04:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 638D4392-83D6-11E2-9D1D-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752992Ab3CCJkd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Mar 2013 04:40:33 -0500
+Received: from mail-da0-f42.google.com ([209.85.210.42]:33231 "EHLO
+	mail-da0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752746Ab3CCJka (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Mar 2013 04:40:30 -0500
+Received: by mail-da0-f42.google.com with SMTP id n15so2071369dad.29
+        for <git@vger.kernel.org>; Sun, 03 Mar 2013 01:40:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=Wz4eVrffxNKLYYrTPPNrIb1CM3DKBTZrn54zP05cdcE=;
+        b=gkfE88ffCBCy4yfk6OJduLy7mRqvUKtIkkne9pWROx7HfICuuE8AAYm86RRAzG0xHW
+         zRK/oBjvcb5h+yU+IYVePOZOZpdzzTpb1dSabvPcQf3zkhRpdIprxJO0B/pvg+8n2pgg
+         u360W+rL2WLq4ukxFxRQf6/jbGQbyN451R4xpmlRBVLBxwU7KV8+NPMdcl8b7sfXOS+F
+         5qeP4RbLcsRHRAaBQpaRVXy0bwO+gdMdyyk72QEHhORC1u8p0z80obYDbl0vVrBclEwF
+         4e8dbXG2WZ6YXUth7lkj2/UiqjJZ9lJRg4/vTDO3NL0Ib4T5TdG89WSU3Uf1ciyT2n2h
+         Aykw==
+X-Received: by 10.66.9.2 with SMTP id v2mr27053790paa.18.1362303629790;
+        Sun, 03 Mar 2013 01:40:29 -0800 (PST)
+Received: from lanh ([115.74.33.184])
+        by mx.google.com with ESMTPS id e6sm19670067paw.16.2013.03.03.01.40.24
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 03 Mar 2013 01:40:28 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 03 Mar 2013 16:41:32 +0700
+X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217342>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+This round addresses the code sharing issue in the previous round and
+shows a bit more info in both git-status and git-branch. Now when you
+do "git checkout v1.8.0" or "git checkout origin/master", you should
+see that ref in status/branch output, in addition to detached HEAD
+status.
 
-> Currently, it's not possible to use the space-ignoring options (-b, -w,
-> --ignore-space-at-eol) with combined diff. It makes it pretty impossible
-> to read a merge between a branch that changed all tabs to spaces, and a
-> branch with functional changes.
->
-> Pass diff flags to diff engine, so that combined diff behaves as normal
-> diff does with spaces.
->
-> It also means that a conflict-less merge done using a ignore-* strategy
-> option will not show any conflict if shown in combined-diff using the
-> same option.
->
-> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
-> ---
-> That should be reviewed carefully as I'm not exactly sure that does make
-> sense with the way combined-diff works.
-> Still it seems natural to me to be able to remove the space in combined
-> diff as we do with normal diff. Especially as I unfortunately have to
-> deal with many space + feature merges that are very hard to analyze/handle
-> if space differences can't be hidden.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (5):
+  checkout: record full target ref in reflog
+  wt-status: split wt_status_state parsing function out
+  wt-status: move wt_status_get_state() out to wt_status_print()
+  status: show the ref that is checked out, even if it's detached
+  branch: show more information when HEAD is detached
 
-Assuming "That" at the beginning of the off-line comment refers to
-"this patch", I actually I do not think this patch needs to be
-reviewed carefully at all.
+ builtin/branch.c            |  25 +++++++-
+ builtin/checkout.c          |  19 +++++-
+ t/t6030-bisect-porcelain.sh |   2 +-
+ wt-status.c                 | 139 ++++++++++++++++++++++++++++++++++--=
+--------
+ wt-status.h                 |   6 +-
+ 5 files changed, 152 insertions(+), 39 deletions(-)
 
-The change in your patch to make the internal pairwise diff to
-ignore whitespaces is an obvious and a sensible first step for your
-stated goal.  With it, a block of lines where the postimage makes no
-change other than whitespace changes from one parent and matches
-with the other parent will see no hunks in either of the pair-wise
-diff, and such a hunk will not appear in the final output, which is
-exactly what you want.
-
-What needs to be audited carefully is the part of combine diff logic
-that this patch does *not* touch.
-
-An example.  After collecting pairwise diffs between the shared
-postimage and individual parents, we align the hunks and coalesce
-"identical" preimage lines to form shared "-" (removed) lines.  I
-think that step is done with byte-for-byte comparison.  If the
-postimage removes a line from one parent and a corresponding line
-from another parent, and if these corresponding lines in the parents
-differ only by whitespaces in a way the user told us to ignore with
--b/-w/etc., you would need to tweak the logic to coalesce
-corresponding "lost" lines in the append_lost() function. Otherwise,
-you will see two " -" and "- " lines that remove these corresponding
-lines from the parents that are identical when you ignore
-whitespaces.
-
-You should add some tests; it would help you think about these
-issues through.
-
-For example, in this history:
-
-       git init
-       seq 11 >ten
-       git add ten
-       git commit -m initial
-
-       seq 10 | sed -e 's/6/6 six/' -e 's/2/2 two/' >ten
-       echo 11 >>ten
-       git commit -m ten -a
-
-       git checkout -b side HEAD^
-       seq 10 | sed -e 's/^/  /' | sed -e 's/2/2 dos/' >ten
-       echo 11 >>ten
-       git commit -m indent -a
-
-       git merge master
-
-       seq 10 | sed -e 's/5/5 go/' -e 's/2/2 dois/' >ten
-       git commit -m merged -a
-
-one side indents the original and tweaks some lines, while the other
-side tweaks some other lines without reindenting.  Most notably, the
-fifth line on one side is "5" while on the other side is "  5", and
-this line is rewritten to "5 go" in the final.  The lost lines are
-not coalesced to a single "-- 5" (nor "--   5") but shows that two
-preimages were different only by whitespaces.  Compare that with
-what happens to the final line "11" that gets lost in the result.
-
-Thanks.
-
-> Cheers,
-> Antoine
->
->  combine-diff.c |    6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/combine-diff.c b/combine-diff.c
-> index 35d41cd..7ca0a72 100644
-> --- a/combine-diff.c
-> +++ b/combine-diff.c
-> @@ -215,7 +215,7 @@ static void combine_diff(const unsigned char *parent, unsigned int mode,
->  			 struct sline *sline, unsigned int cnt, int n,
->  			 int num_parent, int result_deleted,
->  			 struct userdiff_driver *textconv,
-> -			 const char *path)
-> +			 const char *path, long flags)
->  {
->  	unsigned int p_lno, lno;
->  	unsigned long nmask = (1UL << n);
-> @@ -231,7 +231,7 @@ static void combine_diff(const unsigned char *parent, unsigned int mode,
->  	parent_file.ptr = grab_blob(parent, mode, &sz, textconv, path);
->  	parent_file.size = sz;
->  	memset(&xpp, 0, sizeof(xpp));
-> -	xpp.flags = 0;
-> +	xpp.flags = flags;
->  	memset(&xecfg, 0, sizeof(xecfg));
->  	memset(&state, 0, sizeof(state));
->  	state.nmask = nmask;
-> @@ -962,7 +962,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
->  				     elem->parent[i].mode,
->  				     &result_file, sline,
->  				     cnt, i, num_parent, result_deleted,
-> -				     textconv, elem->path);
-> +				     textconv, elem->path, opt->xdl_opts);
->  	}
->
->  	show_hunks = make_hunks(sline, cnt, num_parent, dense);
-> --
-> 1.7.9.5
+--=20
+1.8.1.2.536.gf441e6d
