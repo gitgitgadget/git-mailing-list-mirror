@@ -1,78 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow combined diff to ignore white-spaces
-Date: Mon, 04 Mar 2013 10:36:51 -0800
-Message-ID: <7vy5e3vwos.fsf@alter.siamese.dyndns.org>
-References: <1362236658-17200-1-git-send-email-apelisse@gmail.com>
- <7v38wdc4ei.fsf@alter.siamese.dyndns.org>
- <CALWbr2z0eok-VOQX7DDZafevQUi7asCv_tD8=y6XA2PVYf52AQ@mail.gmail.com>
+From: Stephen Boyd <sboyd@quicinc.com>
+Subject: Re: [BUG/TEST 0/2] bugs with cherry-pick renames
+Date: Mon, 4 Mar 2013 10:48:52 -0800
+Message-ID: <5134EC94.6010602@quicinc.com>
+References: <1360643262-1472-1-git-send-email-sboyd@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 04 19:37:23 2013
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 04 19:49:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCaGH-0003BU-Pd
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 19:37:22 +0100
+	id 1UCaRt-00046E-7t
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 19:49:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758589Ab3CDSgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Mar 2013 13:36:55 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61996 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758520Ab3CDSgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Mar 2013 13:36:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8473FA77D;
-	Mon,  4 Mar 2013 13:36:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Q5lPsYYE9R4b2xVLkR5Q7Hw0h74=; b=fuEYl2
-	V2uziMjAn6FqXRV6DTvNrybEhZr1dMa1p/TF1wXABYzJaMGBpAMq/ifHGtloyx8z
-	bborbrdJ012r2wByEyQuDRdY2E088S2Xh1bCcyM4HaAZKjmcPvdo2v3A3iEu7KvG
-	ADeAgFJl/ITed538UMaYd/LDruyOm9KttiOmU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LfF3W++hbd9Cv+/eZMbB1eCuso8LxBEr
-	FUxlix70vPNv671FC5Z5L92ouoZp64VcMcO61RJAxkmoUOKuo1lYzZ9Kd4bMGMQU
-	OUupJ1u5F6LhFVrGW1TsBmaOp9IgvL3S4afTdeNiG8mqjB7EAse7H4R4/UmRHQqr
-	rFdf9nF50lM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A599A77C;
-	Mon,  4 Mar 2013 13:36:53 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F0BECA77A; Mon,  4 Mar 2013
- 13:36:52 -0500 (EST)
-In-Reply-To: <CALWbr2z0eok-VOQX7DDZafevQUi7asCv_tD8=y6XA2PVYf52AQ@mail.gmail.com> (Antoine
- Pelisse's message of "Mon, 4 Mar 2013 19:17:19 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7BE68532-84FA-11E2-BACB-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932144Ab3CDSsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 13:48:54 -0500
+Received: from sabertooth01.qualcomm.com ([65.197.215.72]:37412 "EHLO
+	sabertooth01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758706Ab3CDSsx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Mar 2013 13:48:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1362422933; x=1393958933;
+  h=message-id:date:from:mime-version:to:subject:references:
+   in-reply-to:content-transfer-encoding;
+  bh=gta5IbVxOx4wH3Z7RIPYK/IiP8k4oXmD2V9ZBdGxgDc=;
+  b=HqJLqZjPswz70a33CdaJ2YrbncvvU6/31TN/xlCbwdocZZ/IzXlrOQHc
+   9QKMJt3YSqoG+DdYXQQ24d8n7cQLvVcYttKoZjrjLhdR50hOK1O5To42a
+   o9lVJr6RcYLKUJwIkMbqTuiTe6eZfsLuwd5ZtKk+1rQENnaYu5wA8a+8y
+   Q=;
+X-IronPort-AV: E=Sophos;i="4.84,781,1355126400"; 
+   d="scan'208";a="27795480"
+Received: from ironmsg02-lv.qualcomm.com ([10.47.202.183])
+  by sabertooth01.qualcomm.com with ESMTP; 04 Mar 2013 10:48:52 -0800
+Received: from nasanexhc08.na.qualcomm.com ([172.30.39.7])
+  by ironmsg02-lv.qualcomm.com with ESMTP/TLS/RC4-SHA; 04 Mar 2013 10:48:52 -0800
+Received: from [10.46.166.8] (172.30.39.5) by qcmail1.qualcomm.com
+ (172.30.39.7) with Microsoft SMTP Server (TLS) id 14.2.318.4; Mon, 4 Mar 2013
+ 10:48:52 -0800
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+In-Reply-To: <1360643262-1472-1-git-send-email-sboyd@codeaurora.org>
+X-Originating-IP: [172.30.39.5]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217406>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+On 02/11/13 20:27, Stephen Boyd wrote:
+> I ran into these bugs the other day and didn't have time to 
+> investigate further. So I wrote test cases for them instead.
+>
+> Stephen Boyd (2):
+>   t3501: Expose bug with cherry-pick into dirty trees w/ renames
+>   t3501: Expose addinfo_cache error message in cherry-pick
+>
+>  t/t3501-revert-cherry-pick.sh | 60 +++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 60 insertions(+)
+>
 
-> It feels incorrect to me to coalsesce "- 5" and "-  5" as it might
-> look incorrect to the user. But still the idea is appealing.
-
-The users already need to see that when reading a regular patch with
-one or more context lines and -b/-w/etc., anyway.  The context lines
-are made into context only because whitespace differences were
-ignored, and in the regular unified patch format we can show only
-one version, either from preimage or from postimage, and have to
-pick one.  Coalescing "- 5" and "-  5" into "--5" or "--  5" by
-picking one or the other is the same thing, no?
-
-> Using the exact example you gave, and running the latest next, I have
-> this output, where 11 is not coalesced.
-> Is that a bug ?
-
-It could be tickling a corner case because the removal is at the end
-of the file.  Perhaps adding 12 that is all common across three
-versions and see what happens?
+Any comments? Anyone else running into these bugs?
