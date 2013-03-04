@@ -1,62 +1,70 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: "git commit" fails due to spurious file in index
-Date: Mon, 4 Mar 2013 21:58:58 +0100
-Message-ID: <87y5e2op9p.fsf@pctrast.inf.ethz.ch>
-References: <2D9BD788B02ABA478C57929170AF952B7622B5@EXCH-MBX-3.epic.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git rebase" loses the additional changes in "evil" merges
+Date: Mon, 04 Mar 2013 13:18:22 -0800
+Message-ID: <7vtxoqx3s1.fsf@alter.siamese.dyndns.org>
+References: <201303042058.r24KwwEx012408@freeze.ariadne.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Robert Irelan <rirelan@epic.com>
-X-From: git-owner@vger.kernel.org Mon Mar 04 21:59:37 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: worley@alum.mit.edu (Dale R. Worley)
+X-From: git-owner@vger.kernel.org Mon Mar 04 22:18:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCcTv-0000ZV-2S
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 21:59:35 +0100
+	id 1UCcmY-0008Tf-UE
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 22:18:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932478Ab3CDU7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Mar 2013 15:59:05 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:8866 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932218Ab3CDU7D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Mar 2013 15:59:03 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 4 Mar
- 2013 21:58:56 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (46.126.8.85) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 4 Mar
- 2013 21:58:58 +0100
-In-Reply-To: <2D9BD788B02ABA478C57929170AF952B7622B5@EXCH-MBX-3.epic.com>
-	(Robert Irelan's message of "Mon, 4 Mar 2013 18:15:36 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S932404Ab3CDVSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 16:18:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52388 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758173Ab3CDVSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Mar 2013 16:18:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62999A804;
+	Mon,  4 Mar 2013 16:18:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=a/mXDb3KxE3hG0ZXfucjk+WQVNA=; b=CnKfLi
+	XtPhSWPEFpyjAAIFkla5nKAfSak2ZTIN+l5U70D31ejHQt9VrdhMoSjt/CUPjlIj
+	34+3D8i5pitrca+Of5jSvmV9h6DQ7lh+2ZNY+qJiit3VY4OeKkxPuF39XL4YKSpS
+	Atl1E6VugxCGkLQ/IF9cL1VAT+fZ6GHt79maA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=g/jQ0E0yVr+nK7hQ963Hnrv4P6uMnRWX
+	FB9lb3Pmqa1iNh9dpol4tZGQJMC1ns+mwbNF2bu9ToWoLXeAk7eKLbVdXKVAYhN2
+	ANtNXfah7xRv693MlYADvWk0DQX9RAbnbPFWC4cdcEjNEbv/h9icAXmQ7NE0tKe/
+	fy3/ZVvif/I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55B1DA803;
+	Mon,  4 Mar 2013 16:18:24 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CAFB6A801; Mon,  4 Mar 2013
+ 16:18:23 -0500 (EST)
+In-Reply-To: <201303042058.r24KwwEx012408@freeze.ariadne.com> (Dale R.
+ Worley's message of "Mon, 4 Mar 2013 15:58:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0C1835CC-8511-11E2-865D-2F862E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217410>
 
-Robert Irelan <rirelan@epic.com> writes:
+worley@alum.mit.edu (Dale R. Worley) writes:
 
-> Now, when I run 'git add admin_script/setup' to add the new directory to
-> the repo and then try to commit, I receive the following message:
+> (git version 1.7.7.6)
 >
->     $ git commit
->     mv: cannot stat `admin_scripts/setup/2012/setup': No such file or directory
->
-> The error message is correct in that `admin_scripts/setup/2012/setup`
-> does not exist, either as a file or as a directory. However, I'm not
-> attempting to add this path at all. Using grep, I've confirmed that the
-> only place this path appears in any of my files is in `.git/index`.
+> I've been learning how to use Git.  While exploring "git rebase", I've
+> discovered that if the branch being rebased contains an "evil" merge,
+> that is, a merge which contains changes that are in addition to the
+> changes in any of the parent commits, the rebase operation will
+> silenty lose those additional changes.
 
-To me that sounds like the message comes from a commit hook.  Can you
-check if you have anything in .git/hooks/, especially pre-commit?
-
-There really isn't any other good reason why 'git commit' would call
-'mv' (plain mv, not git!).
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+I think this is to be expected for "git rebase", as it does not even
+look at merges.  It is a way to find non-merge commits that haven't
+been applied yet, and apply them to the upstream to create a new
+linear history.
