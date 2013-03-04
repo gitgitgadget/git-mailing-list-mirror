@@ -1,121 +1,78 @@
-From: Robert Irelan <rirelan@epic.com>
-Subject: "git commit" fails due to spurious file in index
-Date: Mon, 4 Mar 2013 18:15:36 +0000
-Message-ID: <2D9BD788B02ABA478C57929170AF952B7622B5@EXCH-MBX-3.epic.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow combined diff to ignore white-spaces
+Date: Mon, 04 Mar 2013 10:36:51 -0800
+Message-ID: <7vy5e3vwos.fsf@alter.siamese.dyndns.org>
+References: <1362236658-17200-1-git-send-email-apelisse@gmail.com>
+ <7v38wdc4ei.fsf@alter.siamese.dyndns.org>
+ <CALWbr2z0eok-VOQX7DDZafevQUi7asCv_tD8=y6XA2PVYf52AQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 04 19:30:56 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 04 19:37:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCaA1-0006M5-Bk
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 19:30:53 +0100
+	id 1UCaGH-0003BU-Pd
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 19:37:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932093Ab3CDSaR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Mar 2013 13:30:17 -0500
-Received: from goon4.epic.com ([199.204.56.118]:38126 "EHLO goon4.epic.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757248Ab3CDSaP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Mar 2013 13:30:15 -0500
-X-Greylist: delayed 874 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Mar 2013 13:30:14 EST
-Received: from EXCH-HUB-1.epic.com (exch-hub-1.epic.com [10.8.7.181])
-	by goon4.epic.com (8.13.8/8.13.8) with ESMTP id r24IFbqW024986
-	for <git@vger.kernel.org>; Mon, 4 Mar 2013 12:15:39 -0600
-Received: from EXCH-MBX-3.epic.com ([fe80::89d9:a0e3:3740:4f53]) by
- EXCH-HUB-1.epic.com ([fe80::90c1:a07:c011:1fde%10]) with mapi id
- 14.02.0342.003; Mon, 4 Mar 2013 12:15:37 -0600
-Thread-Topic: "git commit" fails due to spurious file in index
-Thread-Index: Ac4Y/ss6LRrQulaXQ/6loYEIwo4Ndw==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.191.131]
+	id S1758589Ab3CDSgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 13:36:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61996 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758520Ab3CDSgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Mar 2013 13:36:54 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8473FA77D;
+	Mon,  4 Mar 2013 13:36:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Q5lPsYYE9R4b2xVLkR5Q7Hw0h74=; b=fuEYl2
+	V2uziMjAn6FqXRV6DTvNrybEhZr1dMa1p/TF1wXABYzJaMGBpAMq/ifHGtloyx8z
+	bborbrdJ012r2wByEyQuDRdY2E088S2Xh1bCcyM4HaAZKjmcPvdo2v3A3iEu7KvG
+	ADeAgFJl/ITed538UMaYd/LDruyOm9KttiOmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LfF3W++hbd9Cv+/eZMbB1eCuso8LxBEr
+	FUxlix70vPNv671FC5Z5L92ouoZp64VcMcO61RJAxkmoUOKuo1lYzZ9Kd4bMGMQU
+	OUupJ1u5F6LhFVrGW1TsBmaOp9IgvL3S4afTdeNiG8mqjB7EAse7H4R4/UmRHQqr
+	rFdf9nF50lM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A599A77C;
+	Mon,  4 Mar 2013 13:36:53 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F0BECA77A; Mon,  4 Mar 2013
+ 13:36:52 -0500 (EST)
+In-Reply-To: <CALWbr2z0eok-VOQX7DDZafevQUi7asCv_tD8=y6XA2PVYf52AQ@mail.gmail.com> (Antoine
+ Pelisse's message of "Mon, 4 Mar 2013 19:17:19 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7BE68532-84FA-11E2-BACB-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217405>
 
-Hello all:
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-This is my first time posting to this mailing list, but it appears to
-me, through a Google search, that this is where you go to report what
-might be bugs. I'm not sure if this is a bug or not, but it is
-mysterious to me.
+> It feels incorrect to me to coalsesce "- 5" and "-  5" as it might
+> look incorrect to the user. But still the idea is appealing.
 
-My git repository has this directory structure (I don't know if the fil=
-e
-names are necessary or not; only the leaf directories contain files):
+The users already need to see that when reading a regular patch with
+one or more context lines and -b/-w/etc., anyway.  The context lines
+are made into context only because whitespace differences were
+ignored, and in the regular unified patch format we can show only
+one version, either from preimage or from postimage, and have to
+pick one.  Coalescing "- 5" and "-  5" into "--5" or "--  5" by
+picking one or the other is the same thing, no?
 
-    $ tree -ad -I.git
-    .
-    =84=80=80 admin_scripts
-        =86=80=80 integchk
-        =81=9A=9A =86=80=80 2012
-        =81=9A=9A =84=80=80 2014
-        =86=80=80 jrnadmin
-        =81=9A=9A =86=80=80 2012
-        =81=9A=9A =84=80=80 2014
-        =84=80=80 logarchiver
-         =9A=9A =86=80=80 2012
-         =9A=9A =84=80=80 2014
+> Using the exact example you gave, and running the latest next, I have
+> this output, where 11 is not coalesced.
+> Is that a bug ?
 
-    10 directories
-
-The last commit in this repo was a rearrangement of the hierarchy
-carried out using `git mv`.  Before, the directory structure went
-`admin_scripts/version/script_name` instead of
-`admin_scripts/script_name/version`.
-
-Now I'm attempting to some new files that I've already created into the
-repository, so that the repo now looks like this (`setup/2012`
-contains files, while `setup/2014` is empty):
-
-    $ tree -ad -I.git
-    .
-    =84=80=80 admin_scripts
-        =86=80=80 integchk
-        =81=9A=9A =86=80=80 2012
-        =81=9A=9A =84=80=80 2014
-        =86=80=80 jrnadmin
-        =81=9A=9A =86=80=80 2012
-        =81=9A=9A =84=80=80 2014
-        =86=80=80 logarchiver
-        =81=9A=9A =86=80=80 2012
-        =81=9A=9A =84=80=80 2014
-        =84=80=80 setup
-            =86=80=80 2012
-            =84=80=80 2014
-
-    13 directories
-
-Now, when I run 'git add admin_script/setup' to add the new directory t=
-o
-the repo and then try to commit, I receive the following message:
-
-    $ git commit
-    mv: cannot stat `admin_scripts/setup/2012/setup': No such file or d=
-irectory
-
-The error message is correct in that `admin_scripts/setup/2012/setup`
-does not exist, either as a file or as a directory. However, I'm not
-attempting to add this path at all. Using grep, I've confirmed that the
-only place this path appears in any of my files is in `.git/index`.
-
-Also, I can commit to other places in the repository without triggering
-any error. In addition, I can clone the repository to other locations
-and apply the problematic commit manually. This is how I've worked
-around the problem for now, and I've moved the repository that's
-exhibiting problems to another directory and started work on the cloned
-copy.
-
-Why is this spurious path appearing in the index? Is it a bug, or a
-symptom that my repo has been somehow corrupted? Any help would be
-greatly appreciated.
-
-Robert Irelan | Server Systems | Epic | (608) 271-9000
+It could be tickling a corner case because the removal is at the end
+of the file.  Perhaps adding 12 that is all common across three
+versions and see what happens?
