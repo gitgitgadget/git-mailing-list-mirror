@@ -1,144 +1,72 @@
-From: Eric Cousineau <eacousineau@gmail.com>
-Subject: [PATCH/RFC] Changing submodule foreach --recursive to be depth-first,
- --parent option to execute command in supermodule as well
-Date: Mon, 4 Mar 2013 02:41:40 -0600
-Message-ID: <CA+aSAWuoxZkSnRybhefnFr9ngs3tHmt6hAH4o0ebjYKvjJ-vpw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC v2] git-multimail: a replacement for post-receive-email
+Date: Mon, 04 Mar 2013 09:56:26 +0100
+Message-ID: <vpqhakrtuf9.fsf@grenoble-inp.fr>
+References: <5104E738.602@alum.mit.edu> <vpqfw0rb25c.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=f46d04088f176aaa3a04d71553e2
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 04 09:49:05 2013
+Content-Type: text/plain
+Cc: git discussion list <git@vger.kernel.org>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Chris Hiestand <chiestand@salk.edu>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Mar 04 09:57:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCR4y-0002j7-3S
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 09:49:04 +0100
+	id 1UCRCl-00087r-UA
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 09:57:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756053Ab3CDIsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Mar 2013 03:48:39 -0500
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:63103 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756018Ab3CDIsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Mar 2013 03:48:38 -0500
-Received: by mail-lb0-f182.google.com with SMTP id gg6so3778274lbb.13
-        for <git@vger.kernel.org>; Mon, 04 Mar 2013 00:48:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to
-         :content-type;
-        bh=NSIqogZ+T1hUFM2Co/dwTvRkEyasarH2hQMJLbP1oNE=;
-        b=puWTHz7/sM2i3j83GcCU0YM+EGeiR5JaIisib8pWpuJEQ0PdTTClU/sSWvf3Nk3Pup
-         dMJHMV6Yx/4D6IgHzaxwY7HaBkSiEfLY8F9X4VI1cBkXyV3oEawDbLITDOiQugm3dC0c
-         fOlk/hurpAUYgypJRmOWQaPBfrbFp/zbL9LFPWI/boMHlw3zipC8ZLUuUiBYCNtdmhiD
-         ZV2WjSRDOhjw91u9UCsE8zypycKu8AWxd3gGqGtu6BKFGA5UK+CCqVjD6YkG73kXKD3+
-         f440cx2nUQi8CU4zBMLZw4Ek/juE1jG6O6vpOdeatxfR/dLBphM96qgqnana/M9vsLIA
-         tDvw==
-X-Received: by 10.152.111.67 with SMTP id ig3mr17116719lab.41.1362386500624;
- Mon, 04 Mar 2013 00:41:40 -0800 (PST)
-Received: by 10.114.76.113 with HTTP; Mon, 4 Mar 2013 00:41:40 -0800 (PST)
+	id S1755536Ab3CDI4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 03:56:41 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:36191 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754489Ab3CDI4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Mar 2013 03:56:40 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r248uQDC020056
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 4 Mar 2013 09:56:26 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UCRC6-000740-V8; Mon, 04 Mar 2013 09:56:27 +0100
+In-Reply-To: <vpqfw0rb25c.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+	"Wed, 20 Feb 2013 13:28:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 04 Mar 2013 09:56:27 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r248uQDC020056
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1362992189.44794@x0Xn/EBLLNRHvgL0WZkUyA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217394>
 
---f46d04088f176aaa3a04d71553e2
-Content-Type: text/plain; charset=ISO-8859-1
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-In this patch, foreach --recursive acts depth-first, much like the default
-behavior described in the patch by Imram Yousuf in this
-post <http://marc.info/?l=git&m=121066084508631&w=2>.
-Changes were made so that the submodule "Entering ..." message was right
-next to the output generated by the command too.
-It also adds the --parent option for executing the command in the
-supermodule as well.
+> A few more random thoughts (not on my personal todo-list):
 
-I began by adding a --depth option, to preserve the original --recursive
-behavior, and the --parent option, and trying to get that to work. However,
-I pretty much confused myself for a while trying to straighten that out, so
-I just ended up modifying the --recursive behavior.
-If the --recursive behavior should be preserved, I could add the --depth
-option back and only have --parent affect non-recursive and --depth
-recursive behavior.
+One more:
 
-I had kind-of implemented this behavior with aliases / bash functions
-(posted to pastebin <http://pastebin.com/yLHe9XWy>
-, spurned by a
-question I asked in StackOverflow <http://stackoverflow.com/q/14846967/170413>),
-however I would always run into issues with escaping characters when
-passing from the bash functions to git aliases (i.e., putting "'ello" as an
-test commit message). I also tried out mb14's method from the StackOverflow
-post, but I ran into the same issues.
-Figured the best way to avoid that was to cut out the extra layers.
+When sending commit emails, it may help to ensure that the dates are
+strictly monotonic, so that the thread is seen in the right order.
 
-I've attached a test script to generate the tree that VonC suggested with
-output showing the iteration.
+IIRC, "git send-email" does this by tweaking the Date: field to make
+sure there is at least one second between two emails (although they may
+be actually sent at the same second). It would be cool to have the same
+for git multimail.
 
---f46d04088f176aaa3a04d71553e2
-Content-Type: application/octet-stream; name="0001-area-submodules.patch"
-Content-Disposition: attachment; filename="0001-area-submodules.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_hdvdq27m0
-
-RnJvbSA4NTFkNjVmY2ZiOGY0OTEzMTQyOGE1N2ZjMzE4YWY3YjU2NDE2NDMwIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBlYWNvdXNpbmVhdSA8ZWFjb3VzaW5lYXVAZ21haWwuY29tPgpE
-YXRlOiBNb24sIDQgTWFyIDIwMTMgMDE6MDg6MDcgLTA2MDAKU3ViamVjdDogW1BBVENIXSBhcmVh
-OiBzdWJtb2R1bGVzIE1ha2UgZm9yZWFjaCAtLXJlY3Vyc2l2ZSBkbyBkZXB0aC1maXJzdC4KIE1h
-a2UgZm9yZWFjaCAtLXBhcmVudCBbLS1yZWN1cnNpdmVdIGV4ZWN1dGUgY29tbWFuZCBpbiB0b3Bs
-ZXZlbCBzdXBlcm1vZHVsZQoKU2lnbmVkLW9mZi1ieTogRXJpYyBDb3VzaW5lYXUgPGVhY291c2lu
-ZWF1QGdtYWlsLmNvbT4KLS0tCiBnaXQtc3VibW9kdWxlLnNoIHwgMzEgKysrKysrKysrKysrKysr
-KysrKysrKysrKystLS0tLQogMSBmaWxlIGNoYW5nZWQsIDI2IGluc2VydGlvbnMoKyksIDUgZGVs
-ZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZ2l0LXN1Ym1vZHVsZS5zaCBiL2dpdC1zdWJtb2R1bGUu
-c2gKaW5kZXggMDA0YzAzNC4uNzIxYzk1OSAxMDA3NTUKLS0tIGEvZ2l0LXN1Ym1vZHVsZS5zaAor
-KysgYi9naXQtc3VibW9kdWxlLnNoCkBAIC00MzQsNiArNDM0LDkgQEAgVXNlIC1mIGlmIHlvdSBy
-ZWFsbHkgd2FudCB0byBhZGQgaXQuIiA+JjIKIGNtZF9mb3JlYWNoKCkKIHsKIAkjIHBhcnNlICRh
-cmdzIGFmdGVyICJzdWJtb2R1bGUgLi4uIGZvcmVhY2giLgorCSMgR3JhdHVpdG91cyBsb2NhbCdz
-IHRvIHByZXZlbnQgcmVjdXJzaXZlIGJsZWVkaW5nCisJbG9jYWwgcGFyZW50PQorCWxvY2FsIHJl
-Y3Vyc2l2ZT0KIAl3aGlsZSB0ZXN0ICQjIC1uZSAwCiAJZG8KIAkJY2FzZSAiJDEiIGluCkBAIC00
-NDMsNiArNDQ2LDEwIEBAIGNtZF9mb3JlYWNoKCkKIAkJLS1yZWN1cnNpdmUpCiAJCQlyZWN1cnNp
-dmU9MQogCQkJOzsKKwkJLS1wYXJlbnQpCisJCQkjIEV4ZWN1dGUgY29tbWFuZCBpbiBwYXJlbnQs
-IGFmdGVyIGNoaWxkcmVuIGNvbW1hbmRzIGFyZSBleGVjdXRlZAorCQkJcGFyZW50PTEKKwkJCTs7
-CiAJCS0qKQogCQkJdXNhZ2UKIAkJCTs7CkBAIC00NjQsOCArNDcxLDggQEAgY21kX2ZvcmVhY2go
-KQogCWRvCiAJCWRpZV9pZl91bm1hdGNoZWQgIiRtb2RlIgogCQlpZiB0ZXN0IC1lICIkc21fcGF0
-aCIvLmdpdAotCQl0aGVuCi0JCQlzYXkgIiQoZXZhbF9nZXR0ZXh0ICJFbnRlcmluZyAnXCRwcmVm
-aXhcJHNtX3BhdGgnIikiCisJCXRoZW4gCisJCQlsb2NhbCBtZXNzYWdlPSIkKGV2YWxfZ2V0dGV4
-dCAiRW50ZXJpbmcgJ1wkcHJlZml4XCRzbV9wYXRoJyIpIgogCQkJbmFtZT0kKG1vZHVsZV9uYW1l
-ICIkc21fcGF0aCIpCiAJCQkoCiAJCQkJcHJlZml4PSIkcHJlZml4JHNtX3BhdGgvIgpAQCAtNDcz
-LDE1ICs0ODAsMjkgQEAgY21kX2ZvcmVhY2goKQogCQkJCSMgd2UgbWFrZSAkcGF0aCBhdmFpbGFi
-bGUgdG8gc2NyaXB0cyAuLi4KIAkJCQlwYXRoPSRzbV9wYXRoCiAJCQkJY2QgIiRzbV9wYXRoIiAm
-JgotCQkJCWV2YWwgIiRAIiAmJgogCQkJCWlmIHRlc3QgLW4gIiRyZWN1cnNpdmUiCiAJCQkJdGhl
-bgogCQkJCQljbWRfZm9yZWFjaCAiLS1yZWN1cnNpdmUiICIkQCIKLQkJCQlmaQorCQkJCWZpICYm
-CisJCQkJKAorCQkJCQkjIFB1dCBtZXNzYWdlIGhlcmUgc28gaXQgc3RheXMgc29tZXdoYXQgdGlk
-eSAtLSBob3BlZnVsbHkgT0sgc2luY2UgcHJlZml4ZXMgYXJlIGluY2x1ZGVkCisJCQkJCXNheSAi
-JG1lc3NhZ2UiCisJCQkJCWV2YWwgIiRAIgorCQkJCSkKIAkJCSkgPCYzIDM8Ji0gfHwKIAkJCWRp
-ZSAiJChldmFsX2dldHRleHQgIlN0b3BwaW5nIGF0ICdcJHNtX3BhdGgnOyBzY3JpcHQgcmV0dXJu
-ZWQgbm9uLXplcm8gc3RhdHVzLiIpIgogCQlmaQotCWRvbmUKKwlkb25lICYmCisJKAorCQlpZiB0
-ZXN0IC1uICIkcGFyZW50IgorCQl0aGVuCisJCQluYW1lPSQoYmFzZW5hbWUgIiR0b3BsZXZlbCIp
-CisJCQljbGVhcl9sb2NhbF9naXRfZW52CisJCQlwYXRoPS4KKwkJCXNheSAiJChldmFsX2dldHRl
-eHQgIkVudGVyaW5nICdcJG5hbWUnIikiICMgTm90IHN1cmUgb2YgcHJvcGVyIHRoaW5nIGhlcmUK
-KwkJCWV2YWwgIiRAIiB8fCBkaWUgIiQoZXZhbF9nZXR0ZXh0ICJTdG9wcGluZyBhdCBzdXBlcm1v
-ZHVsZTsgc2NyaXB0IHJldHVybmVkIG5vbi16ZXJvIHN0YXR1cy4iKSIKKwkJZmkKKwkpCiB9CiAK
-ICMKLS0gCjEuOC4yLnJjMS4yNC5nMDZkNjdiOAoK
---f46d04088f176aaa3a04d71553e2
-Content-Type: application/x-sh; name="test.sh"
-Content-Disposition: attachment; filename="test.sh"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_hdvdq6ga1
-
-Zm9yIGRpciBpbiBhIGIgYyBkCmRvCiAgICAgICAgZ2l0IGluaXQgJGRpcgogICAgICAgIHB1c2hk
-ICRkaXIKICAgICAgICAgICAgICAgIHRvdWNoIHRlc3QKICAgICAgICAgICAgICAgIGVjaG8gJGRp
-ciA+IGJvYgogICAgICAgICAgICAgICAgZ2l0IGFkZCAtQQogICAgICAgICAgICAgICAgZ2l0IGNv
-bW1pdCAtbSAiSW5pdCIKICAgICAgICBwb3BkCmRvbmUKIApwdXNoZCBiCiAgICAgICAgZ2l0IHN1
-Ym1vZHVsZSBhZGQgLi4vZAogICAgICAgIGdpdCBjb21taXQgLW0gIlN1YmJlZCIKcG9wZAogCnB1
-c2hkIGEKICAgICAgICBnaXQgc3VibW9kdWxlIGFkZCAuLi9iCiAgICAgICAgZ2l0IHN1Ym1vZHVs
-ZSBhZGQgLi4vYwogICAgICAgIGdpdCBjb21taXQgLWEgLW0gIkRvdWJsZSBzdWJiZWQiCiAgICAg
-ICAgZ2l0IHN1Ym1vZHVsZSB1cGRhdGUgLS1pbml0IC0tcmVjdXJzaXZlCiAgICAgICAgZ2l0IHN1
-Ym1vZHVsZSBmb3JlYWNoIC0tcmVjdXJzaXZlIC0tcGFyZW50ICdnaXQgc3RhdHVzJwpwb3BkCgpl
-Y2hvIDw8Q09NTUVOVApFbnRlcmluZyAnYi9kJwojIE5vdCBjdXJyZW50bHkgb24gYW55IGJyYW5j
-aC4Kbm90aGluZyB0byBjb21taXQsIHdvcmtpbmcgZGlyZWN0b3J5IGNsZWFuCkVudGVyaW5nICdi
-JwojIE9uIGJyYW5jaCBtYXN0ZXIKbm90aGluZyB0byBjb21taXQsIHdvcmtpbmcgZGlyZWN0b3J5
-IGNsZWFuCkVudGVyaW5nICdjJwojIE9uIGJyYW5jaCBtYXN0ZXIKbm90aGluZyB0byBjb21taXQs
-IHdvcmtpbmcgZGlyZWN0b3J5IGNsZWFuCkVudGVyaW5nICdhJwojIE9uIGJyYW5jaCBtYXN0ZXIK
-bm90aGluZyB0byBjb21taXQsIHdvcmtpbmcgZGlyZWN0b3J5IGNsZWFuCkNPTU1FTlQK
---f46d04088f176aaa3a04d71553e2--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
