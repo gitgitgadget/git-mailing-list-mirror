@@ -1,76 +1,73 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] Allow combined diff to ignore white-spaces
-Date: Mon, 4 Mar 2013 19:50:33 +0100
-Message-ID: <CALWbr2xPJQ1tvyT6Q84ccn=k6fg8A1aUbJG7FQjjJGZGC5voGg@mail.gmail.com>
-References: <1362236658-17200-1-git-send-email-apelisse@gmail.com>
-	<7v38wdc4ei.fsf@alter.siamese.dyndns.org>
-	<CALWbr2z0eok-VOQX7DDZafevQUi7asCv_tD8=y6XA2PVYf52AQ@mail.gmail.com>
-	<7vy5e3vwos.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 04 19:51:01 2013
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: "git rebase" loses the additional changes in "evil" merges
+Date: Mon, 4 Mar 2013 15:58:58 -0500
+Message-ID: <201303042058.r24KwwEx012408@freeze.ariadne.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 04 21:59:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCaTU-0005Od-Hf
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 19:51:00 +0100
+	id 1UCcTo-0000Tv-34
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 21:59:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758706Ab3CDSuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Mar 2013 13:50:35 -0500
-Received: from mail-qa0-f51.google.com ([209.85.216.51]:58841 "EHLO
-	mail-qa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758582Ab3CDSue (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Mar 2013 13:50:34 -0500
-Received: by mail-qa0-f51.google.com with SMTP id cr7so1373631qab.3
-        for <git@vger.kernel.org>; Mon, 04 Mar 2013 10:50:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=q+G/z8EvWo1rFD83KRNaVHYTxd5b1rye7Hw6m+4xLZ8=;
-        b=0/OuXs9O4i6Lt5Bzw8BmZLTjTYf1hsMhM2YBnsyaquwFUL4dQA3P1nybocLKvKRu9k
-         OPpAsrfpDx7/DC+6ewIII0JUXbWol4MOSoDD4qdbAI7/Os9yjMxcN0AefzexbnxhhVRX
-         fnBeONLdUDKOqFbQlWQeybJt+xi5V5ZXg58LQcMyjiDRr/K+69I0Qy2ohQcQGJcAVH7l
-         UM4BhSfv2G7gwEbnxSn26JtECfCaRTX5VPpbX9F2pgkCT8RWue77eiHeAalh4AWa2u+B
-         bUJSKN6MEogw0LPgjE3bpBWZVsKl2ViPzIo8vi/a+Y2sogtxg/d4iiDY46RNQtkLNIcE
-         i+2Q==
-X-Received: by 10.49.127.116 with SMTP id nf20mr15054737qeb.2.1362423033828;
- Mon, 04 Mar 2013 10:50:33 -0800 (PST)
-Received: by 10.49.70.163 with HTTP; Mon, 4 Mar 2013 10:50:33 -0800 (PST)
-In-Reply-To: <7vy5e3vwos.fsf@alter.siamese.dyndns.org>
+	id S932455Ab3CDU7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 15:59:03 -0500
+Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:39255
+	"EHLO qmta05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932218Ab3CDU7B (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Mar 2013 15:59:01 -0500
+Received: from omta12.westchester.pa.mail.comcast.net ([76.96.62.44])
+	by qmta05.westchester.pa.mail.comcast.net with comcast
+	id 7R891l0060xGWP855Yz0b4; Mon, 04 Mar 2013 20:59:00 +0000
+Received: from freeze.ariadne.com ([24.34.72.61])
+	by omta12.westchester.pa.mail.comcast.net with comcast
+	id 7Yyz1l00w1KKtkw3YYyzne; Mon, 04 Mar 2013 20:59:00 +0000
+Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r24Kwxpg012409
+	for <git@vger.kernel.org>; Mon, 4 Mar 2013 15:58:59 -0500
+Received: (from worley@localhost)
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r24KwwEx012408;
+	Mon, 4 Mar 2013 15:58:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1362430740;
+	bh=obfbYP2p2GnwJM9FFwO7wRGWFCYzGR6n1N/s33b/Wmg=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=lfzQ1nDGVQhy7wgri2nc9sApM+lSi8MaQN1QC/yXJtiVFAJbohCq0rG9gGDEGqgYy
+	 DjMs5bpdcOPMvHeXAYPKQt0sOg+RLDry14Vjw8J/Q6BwQB13+MKJRZ3rc0wL31ttw8
+	 y8pXtuU2WT3I2Tj+bbfzhc2s4OFgOxBf4F26X1MrlnOknkBaoabS7jcNe32RVjIigP
+	 8T3cU/yajEcu07BT6ZJPb7VfwFpFVwdQyzO4Q+YPCpzjQqdpsKd66jmijKNprFfvbA
+	 H5lZIzFvKwrPFh6bm4Shg7QUOIe1px6XX9GbNaUc0qrBWgRs98l7Z4PwIUR/G92OVv
+	 DCklmqvLqvvzw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217408>
 
-On Mon, Mar 4, 2013 at 7:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Antoine Pelisse <apelisse@gmail.com> writes:
->
->> It feels incorrect to me to coalsesce "- 5" and "-  5" as it might
->> look incorrect to the user. But still the idea is appealing.
->
-> The users already need to see that when reading a regular patch with
-> one or more context lines and -b/-w/etc., anyway.  The context lines
-> are made into context only because whitespace differences were
-> ignored, and in the regular unified patch format we can show only
-> one version, either from preimage or from postimage, and have to
-> pick one.  Coalescing "- 5" and "-  5" into "--5" or "--  5" by
-> picking one or the other is the same thing, no?
+(git version 1.7.7.6)
 
-That's all I needed to be convinced. I obviously don't care which one we pick.
+I've been learning how to use Git.  While exploring "git rebase", I've
+discovered that if the branch being rebased contains an "evil" merge,
+that is, a merge which contains changes that are in addition to the
+changes in any of the parent commits, the rebase operation will
+silenty lose those additional changes.
 
->> Using the exact example you gave, and running the latest next, I have
->> this output, where 11 is not coalesced.
->> Is that a bug ?
->
-> It could be tickling a corner case because the removal is at the end
-> of the file.  Perhaps adding 12 that is all common across three
-> versions and see what happens?
+I believe that this is a serious bug.
 
-Doesn't make a difference. Still have "- 11" and " -11".
-I will try to have a look at it.
+The problem is not that Git does not propagate the additional changes
+(although I'd like it to do so), the problem is that the rebase
+*silently loses* changes in the code.  It would be acceptable if Git
+detected the evil merge, notified me of it, and forced me to manually
+re-do it in order to finish the rebase.
+
+Throughout the Git design (as in other SCMs), care has been taken to
+not lose changes that the user has introduced.  In this situation,
+that principle is violated.
+
+I have a script that demonstrates this failure, if that would be
+useful for testing purposes.
+
+Dale
