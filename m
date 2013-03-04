@@ -1,86 +1,125 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] match_push_refs(): nobody sets src->peer_ref anymore
-Date: Mon, 04 Mar 2013 14:36:33 -0800
-Message-ID: <7vlia2x05q.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH/RFC] Changing submodule foreach --recursive to be
+ depth-first, --parent option to execute command in supermodule as well
+Date: Mon, 04 Mar 2013 15:00:45 -0800
+Message-ID: <7vhakqwz1e.fsf@alter.siamese.dyndns.org>
+References: <CA+aSAWuoxZkSnRybhefnFr9ngs3tHmt6hAH4o0ebjYKvjJ-vpw@mail.gmail.com>
+ <51351CF5.7010308@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 04 23:37:03 2013
+Cc: Eric Cousineau <eacousineau@gmail.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 05 00:01:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCe0E-0007MD-AG
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 23:37:02 +0100
+	id 1UCeNe-00024r-Pt
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 00:01:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758887Ab3CDWgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Mar 2013 17:36:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45494 "EHLO
+	id S1758922Ab3CDXAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 18:00:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33084 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758783Ab3CDWgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Mar 2013 17:36:36 -0500
+	id S1758783Ab3CDXAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Mar 2013 18:00:48 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81D0AB405;
-	Mon,  4 Mar 2013 17:36:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=U
-	xILaSRPU6ba2PQk6ekMEb4DIzg=; b=IGbFo1X9EFzmNqLA3ZKEcczaAmtC7ZaXg
-	X6J12PPl8SzN9IqIg+gELzaC2+doS6xtn5v8yrXF//emilun4yWqUl+NXZaLaWvt
-	tnD1un4Rq+5/4B8b0lDYRYE1UahtTYn1ItFFO8VpETMFqjaJy/PKUf+6X+DTXIpb
-	1HI4+YebnQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Mc+
-	NmbUVSidJc5Fnh62LJ27nsnfhT8Q2jRInI9pWMEcgHBxfcA3QS/WeWU/Lr8UY2iX
-	WuiEqzox7CmXqJZ6bHv8yNnaCMfmfluJ/+nzXfIPwawi1cBqTRkif8gsjsyClTVS
-	UY7B+A7WCbly+O2nrF2I/NXLEqYGRHBtMQpbl+GQ=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F100A51C;
+	Mon,  4 Mar 2013 18:00:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8etQwt5fm0Ug5mr8rbViDyR64uE=; b=k0HCtB
+	I1Ns5jkv6GU2OiFkpprW/yCiJqTw+AhH0bw+pjNUUqFtlHTJB2Ba+Y/DFLxp0kla
+	RGnTgbd48XDJLmKBUlQW6q1wMiUXb83oh4tmwYFm6RGPG2u1pvNxht0VD1CZOHxH
+	OysRIDiJ0l+9NGMMzrjDFQSzgYFhBC3ipWuqs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H71uCvaTAk8D3qURqWbh7rgmXA8oLNfp
+	w7u7df4/K4ehao6sZairouCMSwaNowL/L4NrmVBRYEL3olh2clijZJiXFsqqZlQg
+	yU3sV/XDWBarW9RJJTcvqDspJgUnuIraQ9ahb5fpF2no6VaesMoYuTd/0QXhNx64
+	J22PzAXmKa4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76526B404;
-	Mon,  4 Mar 2013 17:36:35 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 320A6A51B;
+	Mon,  4 Mar 2013 18:00:48 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D38B6B402; Mon,  4 Mar 2013
- 17:36:34 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 441C4A512; Mon,  4 Mar 2013
+ 18:00:47 -0500 (EST)
+In-Reply-To: <51351CF5.7010308@web.de> (Jens Lehmann's message of "Mon, 04
+ Mar 2013 23:15:17 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F82B4044-851B-11E2-B59B-2F862E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 59F41E56-851F-11E2-903D-2F862E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217417>
 
-In ancient times, we used to disallow the same source ref to be
-pushed to more than one places, e.g. "git push there master:master
-master:naster" was disallowed.  We later lifted this restriction
-with db27ee63929f (send-pack: allow the same source to be pushed
-more than once., 2005-08-06) and there no longer is anybody that
-sets peer_ref for the source side of the ref list in the push
-codepath since then.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Remove one leftover no-op in a loop that iterates over the source
-side of ref list (i.e. our local ref) to see if it can/should be
-sent to a matching destination ref while skipping ones that is
-marked with peer_ref (which will never exist, so we do not skip
-anything).
+> Please don't attach your patches, see Documentation/SubmittingPatches on
+> how to post patches to this list.
+>
+> Am 04.03.2013 09:41, schrieb Eric Cousineau:
+>> In this patch, foreach --recursive acts depth-first, much like the default
+>> behavior described in the patch by Imram Yousuf in this
+>> post <http://marc.info/?l=git&m=121066084508631&w=2>.
+>> Changes were made so that the submodule "Entering ..." message was right
+>> next to the output generated by the command too.
+>> It also adds the --parent option for executing the command in the
+>> supermodule as well.
+>
+> From reading the linked pages I assume a valid use case you have is:
+>
+>    git submodule foreach --recursive 'git add -A && git commit ...'
+>
+> This will currently not work because the depth first algorithm of foreach
+> will execute the command /before/ recursing deeper. You'd need it to
+> execute the command /after/ returning from the deeper level (which is what
+> your patch seems to be about).
+> ...
+> What we currently get from your example is:
+>   Entering 'a'
+>   Entering 'a/b'
+>   Entering 'a/b/d'
+>   ...
+>   Entering 'c'
+>   Entering 'd'
+> Me thinks this is what most users would expect of a recursion, enter each
+> level before descending into the next.
+>
+> For your use case you'd need to have:
+>   Entering 'a/b/d'
+>   Entering 'a/b'
+>   Entering 'a/c'
+>   ...
+>   Entering 'c'
+>   Entering 'd'
+> (Please note that this is still depth-first)
+>
+> I won't object to adding an option to foreach that will execute the command
+> after recursing (but I'm not convinced --parent is a very good name for that).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- remote.c | 3 ---
- 1 file changed, 3 deletions(-)
+Are you comparing pre-order vs post-order traversal?
 
-diff --git a/remote.c b/remote.c
-index e53a6eb..bac2b02 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1227,9 +1227,6 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 		const struct refspec *pat = NULL;
- 		char *dst_name;
- 
--		if (ref->peer_ref)
--			continue;
--
- 		dst_name = get_ref_match(rs, nr_refspec, ref, send_mirror, FROM_SRC, &pat);
- 		if (!dst_name)
- 			continue;
--- 
-1.8.2-rc2-182-g857a7fa
+Both can be useful depending on what you are trying to achieve.  You
+need a pre-order traversal (i.e. you "visit" and perform some action
+on the node and then descend into its children) if you need to do
+some preparation before you visit deeper levels; you need a
+post-order traversal (i.e. you "visit" and perform some action on
+the node after you have done all its children) if you know you will
+be readly only after you are done with all your children.
+
+You can throw in in-order traversal to the mix (i.e. you "visit" and
+perform some action on the node after visiting some but not all of
+your children and then continue visiting the remainder of your
+children), but I do not know what practical value you would get out
+of it.
+
+So if you want a single boolean to toggle between the current
+behaviour and the other one, it would be --post-order.  But you may
+at least want to consider pros and cons of allowing users to give
+two separate commands, one for the pre-order visitation (which is
+the current "command") and the other for the post-order
+visitation. Being able to run both might turn out to be useful.
