@@ -1,125 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Changing submodule foreach --recursive to be
- depth-first, --parent option to execute command in supermodule as well
-Date: Mon, 04 Mar 2013 15:00:45 -0800
-Message-ID: <7vhakqwz1e.fsf@alter.siamese.dyndns.org>
-References: <CA+aSAWuoxZkSnRybhefnFr9ngs3tHmt6hAH4o0ebjYKvjJ-vpw@mail.gmail.com>
- <51351CF5.7010308@web.de>
+From: "Gene Thomas [DATACOM]" <Gene.Thomas@datacom.co.nz>
+Subject: rebase destroys branches
+Date: Tue, 5 Mar 2013 12:06:10 +1300
+Message-ID: <C057AC9B02D06A49810E9597C11F55BF14DFE51C9F@dnzwgex2.datacom.co.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Cousineau <eacousineau@gmail.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 05 00:01:15 2013
+Content-Type: multipart/mixed;
+	boundary="_002_C057AC9B02D06A49810E9597C11F55BF14DFE51C9Fdnzwgex2datac_"
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 05 00:06:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCeNe-00024r-Pt
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 00:01:15 +0100
+	id 1UCeSy-0006Ov-V8
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 00:06:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758922Ab3CDXAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Mar 2013 18:00:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33084 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758783Ab3CDXAs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Mar 2013 18:00:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F100A51C;
-	Mon,  4 Mar 2013 18:00:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8etQwt5fm0Ug5mr8rbViDyR64uE=; b=k0HCtB
-	I1Ns5jkv6GU2OiFkpprW/yCiJqTw+AhH0bw+pjNUUqFtlHTJB2Ba+Y/DFLxp0kla
-	RGnTgbd48XDJLmKBUlQW6q1wMiUXb83oh4tmwYFm6RGPG2u1pvNxht0VD1CZOHxH
-	OysRIDiJ0l+9NGMMzrjDFQSzgYFhBC3ipWuqs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H71uCvaTAk8D3qURqWbh7rgmXA8oLNfp
-	w7u7df4/K4ehao6sZairouCMSwaNowL/L4NrmVBRYEL3olh2clijZJiXFsqqZlQg
-	yU3sV/XDWBarW9RJJTcvqDspJgUnuIraQ9ahb5fpF2no6VaesMoYuTd/0QXhNx64
-	J22PzAXmKa4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 320A6A51B;
-	Mon,  4 Mar 2013 18:00:48 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 441C4A512; Mon,  4 Mar 2013
- 18:00:47 -0500 (EST)
-In-Reply-To: <51351CF5.7010308@web.de> (Jens Lehmann's message of "Mon, 04
- Mar 2013 23:15:17 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 59F41E56-851F-11E2-903D-2F862E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932366Ab3CDXGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 18:06:15 -0500
+Received: from mx6.datacom.co.nz ([202.175.142.6]:1082 "EHLO mx6.datacom.co.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758586Ab3CDXGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Mar 2013 18:06:15 -0500
+Received: from dnzwgex2.datacom.co.nz (Not Verified[172.30.0.121]) by mx6.datacom.co.nz with MailMarshal (v6,4,1,5038) (using TLS: SSLv23)
+	id <B513528e40000>; Tue, 05 Mar 2013 12:06:12 +1300
+Received: from DNZWGEX2.datacom.co.nz ([172.30.0.121]) by
+ dnzwgex2.datacom.co.nz ([172.30.0.121]) with mapi; Tue, 5 Mar 2013 12:06:11
+ +1300
+Thread-Topic: rebase destroys branches
+Thread-Index: Ac4ZJ8zS72ai2u3hTRmQhbswhmfo7gABNc2w
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217418>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+--_002_C057AC9B02D06A49810E9597C11F55BF14DFE51C9Fdnzwgex2datac_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-> Please don't attach your patches, see Documentation/SubmittingPatches on
-> how to post patches to this list.
->
-> Am 04.03.2013 09:41, schrieb Eric Cousineau:
->> In this patch, foreach --recursive acts depth-first, much like the default
->> behavior described in the patch by Imram Yousuf in this
->> post <http://marc.info/?l=git&m=121066084508631&w=2>.
->> Changes were made so that the submodule "Entering ..." message was right
->> next to the output generated by the command too.
->> It also adds the --parent option for executing the command in the
->> supermodule as well.
->
-> From reading the linked pages I assume a valid use case you have is:
->
->    git submodule foreach --recursive 'git add -A && git commit ...'
->
-> This will currently not work because the depth first algorithm of foreach
-> will execute the command /before/ recursing deeper. You'd need it to
-> execute the command /after/ returning from the deeper level (which is what
-> your patch seems to be about).
-> ...
-> What we currently get from your example is:
->   Entering 'a'
->   Entering 'a/b'
->   Entering 'a/b/d'
->   ...
->   Entering 'c'
->   Entering 'd'
-> Me thinks this is what most users would expect of a recursion, enter each
-> level before descending into the next.
->
-> For your use case you'd need to have:
->   Entering 'a/b/d'
->   Entering 'a/b'
->   Entering 'a/c'
->   ...
->   Entering 'c'
->   Entering 'd'
-> (Please note that this is still depth-first)
->
-> I won't object to adding an option to foreach that will execute the command
-> after recursing (but I'm not convinced --parent is a very good name for that).
+Hello,
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0I am evaluating git for use in a company. Ple=
+ase correct if I am wrong. I am concerned that an inexperienced developer c=
+ould mistakenly rebase branches, destroying the original branch. Attached i=
+s a script (Windoze) that shows the 'topic' branch being moved!, after the =
+rebase we are unable to see the original branch, read it's history or find =
+it's commit points.
 
-Are you comparing pre-order vs post-order traversal?
+Surely no operation should remove anything from the repository. Operations =
+like this irreversibly break the repository . When rebasing the original br=
+anch must be retained.
 
-Both can be useful depending on what you are trying to achieve.  You
-need a pre-order traversal (i.e. you "visit" and perform some action
-on the node and then descend into its children) if you need to do
-some preparation before you visit deeper levels; you need a
-post-order traversal (i.e. you "visit" and perform some action on
-the node after you have done all its children) if you know you will
-be readly only after you are done with all your children.
+Yours faithfully,
 
-You can throw in in-order traversal to the mix (i.e. you "visit" and
-perform some action on the node after visiting some but not all of
-your children and then continue visiting the remainder of your
-children), but I do not know what practical value you would get out
-of it.
 
-So if you want a single boolean to toggle between the current
-behaviour and the other one, it would be --post-order.  But you may
-at least want to consider pros and cons of allowing users to give
-two separate commands, one for the pre-order visitation (which is
-the current "command") and the other for the post-order
-visitation. Being able to run both might turn out to be useful.
+Gene Thomas.
+
+
+--_002_C057AC9B02D06A49810E9597C11F55BF14DFE51C9Fdnzwgex2datac_
+Content-Type: application/octet-stream; name="git-test.bat"
+Content-Description: git-test.bat
+Content-Disposition: attachment; filename="git-test.bat"; size=1196;
+	creation-date="Mon, 04 Mar 2013 23:05:57 GMT";
+	modification-date="Mon, 04 Mar 2013 22:34:30 GMT"
+Content-Transfer-Encoding: base64
+
+DQpyZW0gaHR0cHM6Ly93d3cua2VybmVsLm9yZy9wdWIvc29mdHdhcmUvc2NtL2dpdC9kb2NzL2dp
+dC1yZWJhc2UuaHRtbA0KDQpyZW0gKGMpIDIwMTMgR2VuZSBUaG9tYXMNCnJlbSBEYXRhY29tDQpy
+ZW0gR2VuZS5UaG9tYXNAZGF0YWNvbS5jby5ueg0KDQppZiBleGlzdCAiZ2l0LXRlc3QiIHJtZGly
+IC9xIC9zIGdpdC10ZXN0DQpta2RpciBnaXQtdGVzdA0KY2QgZ2l0LXRlc3QNCmdpdCBpbml0DQoN
+CnJlbSA9PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQplY2hvIGQgPiBkLnR4dA0KZ2l0IGFk
+ZCBkLnR4dA0KZ2l0IHRhZyBkDQpnaXQgY29tbWl0IC1hIC1tIGQNCg0KZWNobyBlID4gZS50eHQN
+CmdpdCBhZGQgZS50eHQNCmdpdCB0YWcgZQ0KZ2l0IGNvbW1pdCAtYSAtbSBlDQoNCmdpdCBicmFu
+Y2ggdG9waWMNCmdpdCBjaGVja291dCB0b3BpYw0KDQplY2hvIGEgPiBhLnR4dA0KZ2l0IGFkZCBh
+LnR4dA0KZ2l0IHRhZyBhDQpnaXQgY29tbWl0IC1tIGENCg0KZWNobyBiID4gYi50eHQNCmdpdCBh
+ZGQgYi50eHQNCmdpdCB0YWcgYg0KZ2l0IHRhZyB2Mi4wDQpnaXQgY29tbWl0IC1hIC1tIGINCg0K
+ZWNobyBjID4gYy50eHQNCmdpdCBhZGQgYy50eHQNCmdpdCB0YWcgYw0KZ2l0IGNvbW1pdCAtYSAt
+bSBjDQoNCmdpdCBsb2cNCg0KcmVtID09PT09PT09PT09PT09PT09PT09PT09PT09DQoNCmdpdCBj
+aGVja291dCBtYXN0ZXINCg0KZWNobyBmID4gZi50eHQNCmdpdCBhZGQgZi50eHQNCmdpdCB0YWcg
+Zg0KZ2l0IGNvbW1pdCAtYSAtbSBmDQoNCmVjaG8gZyA+IGcudHh0DQpnaXQgYWRkIGcudHh0DQpn
+aXQgdGFnIGcNCmdpdCBjb21taXQgLWEgLW0gZw0KDQpyZW0gPT09PT09PT09PT09PT09PT09PT09
+PT09PT0NCg0KZ2l0IGNoZWNrb3V0IHRvcGljDQpnaXQgcmViYXNlIG1hc3Rlcg0KDQpnaXQgbG9n
+DQoNCnJlbSA9PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQpnaXQgY2hlY2tvdXQgdjIuMA0K
+Z2l0IGJyYW5jaA0KcmVtIHdlIGFyZSBvbiB0aGUgIihubyBicmFuY2gpIiBwc3VlZG8gYnJhbmNo
+DQoNCnJlbSBvcmlnaW9uYWwgJ3RvcGljJyBicmFuY2ggaXMgbG9zdA0KcmVtIGNvbW1pdHMgYXJl
+IHN0aWxsIGluIHRoZSByZXBvc2l0cnkNCnJlbSBidXQgY2FuIG9ubHkgYmUgcmVmZXJlbmNlZCBi
+eSBoYXNoIG9yIHRhZw0KcmVtIGEgbWlzdGFrZSB3b3VsZCBkZXN0cm95IHRoZSBoaXN0b3J5DQo=
+
+--_002_C057AC9B02D06A49810E9597C11F55BF14DFE51C9Fdnzwgex2datac_--
