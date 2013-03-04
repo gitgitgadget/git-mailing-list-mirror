@@ -1,90 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git rebase" loses the additional changes in "evil" merges
-Date: Mon, 04 Mar 2013 13:41:21 -0800
-Message-ID: <7vppzex2pq.fsf@alter.siamese.dyndns.org>
-References: <201303042058.r24KwwEx012408@freeze.ariadne.com>
- <7vtxoqx3s1.fsf@alter.siamese.dyndns.org>
- <87sj4aoo3s.fsf@pctrast.inf.ethz.ch>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH/RFC] Changing submodule foreach --recursive to be depth-first,
+ --parent option to execute command in supermodule as well
+Date: Mon, 04 Mar 2013 23:15:17 +0100
+Message-ID: <51351CF5.7010308@web.de>
+References: <CA+aSAWuoxZkSnRybhefnFr9ngs3tHmt6hAH4o0ebjYKvjJ-vpw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Dale R. Worley" <worley@alum.mit.edu>, <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Mar 04 22:41:57 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Cousineau <eacousineau@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 04 23:15:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCd8r-00033m-66
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 22:41:53 +0100
+	id 1UCdfk-0006HQ-JF
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 23:15:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932648Ab3CDVlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Mar 2013 16:41:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34665 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932552Ab3CDVlY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Mar 2013 16:41:24 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6E7EB1E8;
-	Mon,  4 Mar 2013 16:41:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bIeUTCsc2l2B0tgiucp8aPYCemg=; b=Eq68J1
-	CdRTX3xzi2v0VSOR383NVp0Grvn0PEL5w70nx5r1nYFFjnn7ijxEpePsIZ21HasR
-	QpCtoTM8ROmNZBYvMq0qjBWzqt6vC7l9t0MvFN03bOJoFBytqnHXC09RBJunUwuo
-	l/WLd2lp3X70fHZ4CvHzpDn9G49c10KoxxA9Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WVJaM5HTqbud3Qk4PGUaMtBdIEu0qlMD
-	T3HxGjFEIR7lvyKuxUT1CYDl2s1MKD1L5PLrVAJOlN2yFbjykr6ZmPYFyrMDuLb/
-	+rqDlVAeeq/a/OG9SJocj51GT1Nuy1NeQ1d8Tq98RZ4OhmxJPCAlZ4JjUX7u1lU9
-	L/dPOjUx7Iw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB48AB1E0;
-	Mon,  4 Mar 2013 16:41:23 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E794B1DD; Mon,  4 Mar 2013
- 16:41:23 -0500 (EST)
-In-Reply-To: <87sj4aoo3s.fsf@pctrast.inf.ethz.ch> (Thomas Rast's message of
- "Mon, 4 Mar 2013 22:24:07 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4255D9B6-8514-11E2-9BF6-2F862E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932749Ab3CDWPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 17:15:21 -0500
+Received: from mout.web.de ([212.227.17.12]:64657 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932378Ab3CDWPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Mar 2013 17:15:20 -0500
+Received: from [192.168.178.41] ([91.3.179.58]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0LbZpT-1Ufg570i8B-00kxj5; Mon, 04 Mar 2013 23:15:18 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+In-Reply-To: <CA+aSAWuoxZkSnRybhefnFr9ngs3tHmt6hAH4o0ebjYKvjJ-vpw@mail.gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:bCeGt5BnPYICoFvNP+i74U2vGm+jINdC4aEcftzWmqT
+ vM5wVsY7zTg0ZKTsvKjKFcwyFci3Oh1G3DcUYOTEWbyPr0GwiN
+ mSYmeqRh6IO9JNGiqIBYu8hfZ1AEERBBQ5BDf0SjatFS3+QWOV
+ PwuP1wf0ItmDld9bCffViBcrREVkarCb3QuabXytXD0+I+rE2L
+ ZmlrOWI6lyJ++IQ94Qlrg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217414>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Please don't attach your patches, see Documentation/SubmittingPatches on
+how to post patches to this list.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> worley@alum.mit.edu (Dale R. Worley) writes:
->>
->>> (git version 1.7.7.6)
->>>
->>> I've been learning how to use Git.  While exploring "git rebase", I've
->>> discovered that if the branch being rebased contains an "evil" merge,
->>> that is, a merge which contains changes that are in addition to the
->>> changes in any of the parent commits, the rebase operation will
->>> silenty lose those additional changes.
->>
->> I think this is to be expected for "git rebase", as it does not even
->> look at merges.  It is a way to find non-merge commits that haven't
->> been applied yet, and apply them to the upstream to create a new
->> linear history.
->
-> I can see the problem with --preserve-merges though.  It will actually
-> just *redo* the merge; the name is wrong in the sense that it undertakes
-> nothing to preserve whatever evilness was in it.
+Am 04.03.2013 09:41, schrieb Eric Cousineau:
+> In this patch, foreach --recursive acts depth-first, much like the default
+> behavior described in the patch by Imram Yousuf in this
+> post <http://marc.info/?l=git&m=121066084508631&w=2>.
+> Changes were made so that the submodule "Entering ..." message was right
+> next to the output generated by the command too.
+> It also adds the --parent option for executing the command in the
+> supermodule as well.
 
-With or without evil, preserve-merges have other issues to make me
-not to trust it. Which side branches to take literally (i.e. just
-merge again) vs which side branches to also rebase (i.e. rebuild the
-history and then merge).
+>From reading the linked pages I assume a valid use case you have is:
 
-It was suggested to make it apply the first-parent diff and record
-the result, I think.  If that were an acceptable approach (I didn't
-think about it through myself, though), that would automatically
-cover the evil-merge case as well.
+   git submodule foreach --recursive 'git add -A && git commit ...'
+
+This will currently not work because the depth first algorithm of foreach
+will execute the command /before/ recursing deeper. You'd need it to
+execute the command /after/ returning from the deeper level (which is what
+your patch seems to be about).
+
+> I began by adding a --depth option, to preserve the original --recursive
+> behavior, and the --parent option, and trying to get that to work. However,
+> I pretty much confused myself for a while trying to straighten that out, so
+> I just ended up modifying the --recursive behavior.
+> If the --recursive behavior should be preserved, I could add the --depth
+> option back and only have --parent affect non-recursive and --depth
+> recursive behavior.
+
+I would rather not change default behavior without having a *very* good
+reason to do so (and I'm not sure what you need the --depth option for).
+
+What we currently get from your example is:
+  Entering 'a'
+  Entering 'a/b'
+  Entering 'a/b/d'
+  Entering 'a/c'
+  Entering 'b'
+  Entering 'b/d'
+  Entering 'c'
+  Entering 'd'
+Me thinks this is what most users would expect of a recursion, enter each
+level before descending into the next.
+
+For your use case you'd need to have:
+  Entering 'a/b/d'
+  Entering 'a/b'
+  Entering 'a/c'
+  Entering 'a'
+  Entering 'b/d'
+  Entering 'b'
+  Entering 'c'
+  Entering 'd'
+(Please note that this is still depth-first)
+
+I won't object to adding an option to foreach that will execute the command
+after recursing (but I'm not convinced --parent is a very good name for that).
+
+> I had kind-of implemented this behavior with aliases / bash functions
+> (posted to pastebin <http://pastebin.com/yLHe9XWy>
+> , spurned by a
+> question I asked in StackOverflow <http://stackoverflow.com/q/14846967/170413>),
+> however I would always run into issues with escaping characters when
+> passing from the bash functions to git aliases (i.e., putting "'ello" as an
+> test commit message). I also tried out mb14's method from the StackOverflow
+> post, but I ran into the same issues.
+> Figured the best way to avoid that was to cut out the extra layers.
+
+It seems to be really hard to do what you have in mind with shell commands
+or aliases, which is a good point for adding such an option to foreach. But
+I don't see a reason why we would want to change the current default, which
+is what your RFC proposes.
