@@ -1,72 +1,110 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC v2] git-multimail: a replacement for post-receive-email
-Date: Mon, 04 Mar 2013 09:56:26 +0100
-Message-ID: <vpqhakrtuf9.fsf@grenoble-inp.fr>
-References: <5104E738.602@alum.mit.edu> <vpqfw0rb25c.fsf@grenoble-inp.fr>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] Avoid loading commits twice in log with diffs
+Date: Mon, 4 Mar 2013 10:58:54 +0100
+Message-ID: <871ubvtrj5.fsf@pctrast.inf.ethz.ch>
+References: <3193c96cf5b036a91bc78b508b8b30ac87ca0f21.1362218700.git.trast@student.ethz.ch>
+	<7va9qlc690.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git discussion list <git@vger.kernel.org>,
-	Andy Parkins <andyparkins@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <mbranchaud@xiplink.com>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Chris Hiestand <chiestand@salk.edu>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 04 09:57:08 2013
+Cc: <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 04 10:59:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCRCl-00087r-UA
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 09:57:08 +0100
+	id 1UCSB2-0002qP-Pi
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 10:59:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755536Ab3CDI4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Mar 2013 03:56:41 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:36191 "EHLO shiva.imag.fr"
+	id S1757020Ab3CDJ66 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 04:58:58 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:24730 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754489Ab3CDI4k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Mar 2013 03:56:40 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r248uQDC020056
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 4 Mar 2013 09:56:26 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UCRC6-000740-V8; Mon, 04 Mar 2013 09:56:27 +0100
-In-Reply-To: <vpqfw0rb25c.fsf@grenoble-inp.fr> (Matthieu Moy's message of
-	"Wed, 20 Feb 2013 13:28:15 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 04 Mar 2013 09:56:27 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r248uQDC020056
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1362992189.44794@x0Xn/EBLLNRHvgL0WZkUyA
+	id S1755831Ab3CDJ65 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Mar 2013 04:58:57 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 4 Mar
+ 2013 10:58:54 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
+ CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 4 Mar 2013 10:58:54 +0100
+In-Reply-To: <7va9qlc690.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 02 Mar 2013 23:06:03 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217395>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> A few more random thoughts (not on my personal todo-list):
+> Thomas Rast <trast@student.ethz.ch> writes:
+>
+>> Test                      with patch        before
+>> --------------------------------------------------------------------
+>> 4000.2: log --raw -3000   0.50(0.43+0.06)   0.54(0.46+0.06) +7.0%***
+>> 4000.3: log -p -3000      2.34(2.20+0.13)   2.37(2.22+0.13) +1.2%
+>> --------------------------------------------------------------------
+>> Significance hints:  '.' 0.1  '*' 0.05  '**' 0.01  '***' 0.001
+>
+> It may be a silly question but what is a significance hint?
 
-One more:
+That's from my still-not-rerolled perf improvements series from, ahem,
+ages ago:
 
-When sending commit emails, it may help to ensure that the dates are
-strictly monotonic, so that the thread is seen in the right order.
+  http://thread.gmane.org/gmane.comp.version-control.git/192884
 
-IIRC, "git send-email" does this by tweaking the Date: field to make
-sure there is at least one second between two emails (although they may
-be actually sent at the same second). It would be cool to have the same
-for git multimail.
+I stole the idea from R (and in fact use R to compute it).  The ***
+tells you that the probability of the 7% difference is attributable to
+chance only with 0.1% probability, or in other words, it's highly likely
+that the difference is *not* down to chance.  On the other hand, note
+that the p4000.3 measurements do not show a significant difference
+(significance hint is absent).
+
+The statistical background: Assume that the two series of measurements
+are drawn from two normal distributions (possibly with different
+mean/variance).  Welch's t-test estimates the probability of the null
+hypothesis that the two distributions in fact had the same mean.  If you
+can reject the null hypothesis, you have essentially proven that there's
+*some* difference in the timing runs.  (Hopefully for the better, and
+hopefully _not_ caused just by CPU scaling or such.)
+
+By the way, in the above test Jakub pointed me at the Dumbbench perl
+module.  I've had a look at the ideas within, and I'll try to put some
+sample rejection along their lines into perf-lib.  However, several
+things make the module itself rather deserve the name.  Most
+prominently, I can only get it to print timings to stdout in a fixed
+format designed for human consumption.
+
+>> --- a/log-tree.c
+>> +++ b/log-tree.c
+>> @@ -715,7 +715,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+>>  {
+>>  	int showed_log;
+>>  	struct commit_list *parents;
+>> -	unsigned const char *sha1 = commit->object.sha1;
+>> +	unsigned const char *sha1 = commit->tree->object.sha1;
+>
+> Overall I think this goes in the right direction and I can see why
+> the changes in later two hunks are correct, but I am not sure if we
+> can safely assume that the caller has parsed the incoming commit and
+> we have a good commit->tree here already.
+>
+> Right now, this static function has a single call-site in a public
+> function log_tree_commit(), whose existing callers may all pass an
+> already parsed commit, but I feel somewhat uneasy to do the above
+> without some mechanism in place (either parse it here or in the
+> caller if unparsed, or document that log_tree_commit() must be
+> called with a parsed commit and perhaps add an assert there) to
+> ensure that the invariant is not broken in the future.
+
+In that case I'll reroll with the parsing -- it will have about the same
+cost as the assertion, since it'll just check ->object.parsed and
+return.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thomas Rast
+trast@{inf,student}.ethz.ch
