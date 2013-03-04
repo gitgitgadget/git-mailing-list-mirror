@@ -1,92 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] status: show the ref that is checked out, even if
- it's detached
-Date: Mon, 04 Mar 2013 07:49:53 -0800
-Message-ID: <7v38wbxizi.fsf@alter.siamese.dyndns.org>
-References: <1362303681-6585-1-git-send-email-pclouds@gmail.com>
- <1362303681-6585-5-git-send-email-pclouds@gmail.com>
- <7vy5e49l3i.fsf@alter.siamese.dyndns.org>
- <CACsJy8A+gw9oJYrJqa-b8noKM7qJTkZEd7ovmxqR68i6miCatA@mail.gmail.com>
+From: David Krmpotic <david.krmpotic@gmail.com>
+Subject: auto merge bug
+Date: Mon, 4 Mar 2013 17:46:48 +0100
+Message-ID: <CAOFaZ+5F1BcWNU=AkcnS53bQt1VfAfsFjp9EvRCL=7kYiU1ejg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Niedier <jrnieder@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 04 16:50:25 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 04 17:47:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCXei-0008Ih-Vn
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 16:50:25 +0100
+	id 1UCYY5-0008Nj-Vb
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Mar 2013 17:47:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758388Ab3CDPt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Mar 2013 10:49:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37527 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758371Ab3CDPt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Mar 2013 10:49:59 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D4BFA7E6;
-	Mon,  4 Mar 2013 10:49:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p1ugl2pjQGxsjacv3WNpEot94Zs=; b=BCYNie
-	dR8OASwIkFhIBGH1nGlfTkY1SIEYAdR2mEnSKFqVzJrr48jOvP+n/G8CUElr0LaA
-	s6AsNYt+ASq9USwA8I/tBvVZaQ3JaUzkwnx8sahSxC4gu8GCafnN3+iNi+FutimS
-	txWS1QJ0fbI7RED/lGlgxj0x+R5cV6VG5Kztc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GNJWe4FGe9zbsBnQ/6HHLq8RAtDk90g8
-	oxTQkFf+V7rIFsbTMaLq9KD4nSQyQMNPc1Z2XQgS68RlEH5kJh+i4JqwcHmxJ4VA
-	6MYagwdcIq38RRbzpG8yUZR1FmBKHXfgmt2FuCtMsri6jvmo/+bCmh2vaf7srOE5
-	7UcFC9Akcaw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35FF0A7E5;
-	Mon,  4 Mar 2013 10:49:56 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E32BA7E2; Mon,  4 Mar 2013
- 10:49:55 -0500 (EST)
-In-Reply-To: <CACsJy8A+gw9oJYrJqa-b8noKM7qJTkZEd7ovmxqR68i6miCatA@mail.gmail.com> (Duy
- Nguyen's message of "Mon, 4 Mar 2013 19:17:02 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 291A2C12-84E3-11E2-8B89-7FA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757106Ab3CDQrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 11:47:11 -0500
+Received: from mail-wg0-f41.google.com ([74.125.82.41]:42687 "EHLO
+	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756760Ab3CDQrL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Mar 2013 11:47:11 -0500
+Received: by mail-wg0-f41.google.com with SMTP id ds1so1614650wgb.4
+        for <git@vger.kernel.org>; Mon, 04 Mar 2013 08:47:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=Z9+EbdZdqLsvmsK1osa/izKyobnKH8uRSyRdZORqcIs=;
+        b=SXsYf2JOOb8737VC2oY+77TWY65FlD1r2Qj7UpBM2of+Y/aKx9QDG4+TGJ5geuh2z0
+         vT0qoRA2hMQDlyTSnpVbjN3+wRxcs7im8fPcadj9MZt+n2HLstvhHa4OqctaBq1JOWUK
+         NoiiaSj+UQouO6JMDARMlzg5+lElxBSiZff+PA+7+gdIckhC0TEabgqXtDFLb7/OX8Yu
+         s85TRXURXkro07wokHGKWvne4bRQqUw6GPNm/YZ0qpD3Ukp0cyBBjuylszOv9/vdNaBf
+         HAJZaP5UX8oSgdvdv0eBIn6oPJGmnqoaimbQ2g7wlmVWbbFpTcROZS6exUasjwZrlA+r
+         GvXw==
+X-Received: by 10.194.58.202 with SMTP id t10mr33580529wjq.4.1362415628322;
+ Mon, 04 Mar 2013 08:47:08 -0800 (PST)
+Received: by 10.194.143.70 with HTTP; Mon, 4 Mar 2013 08:46:48 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217402>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hi!
 
->> Instead of punting to "Currently not on any branch", would it help
->> to show the place you first detached at, so that the user can then
->> grab that commit object name and run
->>
->>     $ git log --oneline $that_commit..
->>
->> or something?
->
-> $that_commit would be HEAD@{-1} right? Should that be used instead of
-> grabbing random SHA-1 shown in git-status?
+We started working on a .NET app and the XML project file (.csproj)
+got corrupted (a few closing tag missing).
 
-You can say "git checkout @{-1}" to go back.  That is the commit you
-came _from_.
+79	     <Compile Include="SlovaricaForm.Designer.cs">
+80	       <DependentUpon>SlovaricaForm.cs</DependentUpon>
+81	+    <Compile Include="WebCamForm.cs">
+82	+      <SubType>Form</SubType>
+83	+    </Compile>
+84	+    <Compile Include="WebCamForm.Designer.cs">
+85	+      <DependentUpon>WebCamForm.cs</DependentUpon>
+86	     </Compile>
 
-But I think what you were computing for $that_commit was different.
-It's "the ref that is checked out, even if it's detached".
+between lines 80 and 81 there should be </Compile>
 
-After doing:
+similarly:
 
-	: start from anywhere
-        git checkout master	;# on master
-        git checkout branch~4   ;# detach at that commit
-        ... hack hack hack ...
-        git commit; git commit
+121	     </EmbeddedResource>
+122	     <EmbeddedResource Include="SlovaricaForm.resx">
+123	       <DependentUpon>SlovaricaForm.cs</DependentUpon>
+124	+    <EmbeddedResource Include="WebCamForm.resx">
+125	+      <DependentUpon>WebCamForm.cs</DependentUpon>
+126	     </EmbeddedResource>
+127	     <EmbeddedResource Include="WordsSelectForm.resx">
+128	       <DependentUpon>WordsSelectForm.cs</DependentUpon>
 
-your @{-1} is 'master'; "the ref that is checked out, even if its'
-detached" is 'branch~4', and that is what you want as $that_commit
-in the example.  That shows your _progress_, which has no relation
-with 'master' that is @{-1}.
+between 123 and 124 there is  </EmbeddedResource> missing.
+
+The problematic commit is here:
+
+https://github.com/davidhq/logo_x/commit/e3e5fa4b60b7939999b2a8c44330312755b72f93
+
+it has two parents: ae2a364 and bd1a059
+
+on both parents the project compiles in Visual Studio because
+Logo.csproj is not corrupted.
+
+How to reproduce and see that really there were no conflicts and the
+file became corrupted:
+
+C:\temp> git clone git@github.com:davidhq/logo_x.git
+C:\temp\logo_x [master]> git checkout ae2a364
+Note: checking out 'ae2a364'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at ae2a364... general handler for letters
+C:\temp\logo_x [(ae2a364...)]> git merge bd1a059
+Auto-merging Logo/Logo.csproj
+Merge made by the 'recursive' strategy.
+ Logo/Logo.csproj            |   7 ++
+ Logo/WebCamForm.Designer.cs |  88 +++++++++++++++++++
+ Logo/WebCamForm.cs          | 209 ++++++++++++++++++++++++++++++++++++++++++++
+ Logo/WebCamForm.resx        | 120 +++++++++++++++++++++++++
+ Logo/WordsForm.Designer.cs  |   1 +
+ Logo/WordsForm.cs           |   7 ++
+ 6 files changed, 432 insertions(+)
+ create mode 100644 Logo/WebCamForm.Designer.cs
+ create mode 100644 Logo/WebCamForm.cs
+ create mode 100644 Logo/WebCamForm.resx
+
+Now check Logo.csproj and observe line 81 (it should read </Compile>
+
+If I add both missing closing tags the project compiles again.
+
+Please investigate and thank you!
+
+PS: on Windows I have version 1.8.0.msysgit.0 of git and on Mac I'm
+not sure now, it's a bit older, but the same problem happens.
+
+David
