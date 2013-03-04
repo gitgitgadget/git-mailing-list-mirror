@@ -1,86 +1,55 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: rebase destroys branches
-Date: Mon, 4 Mar 2013 23:43:32 -0000
-Organization: OPDS
-Message-ID: <64FF012BC4AF45C4A5067DE93FD9FE17@PhilipOakley>
-References: <C057AC9B02D06A49810E9597C11F55BF14DFE51C9F@dnzwgex2.datacom.co.nz>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: "J.V." <jvsrvcs@gmail.com>
+Subject: git repo on Win 2008
+Date: Mon, 04 Mar 2013 16:43:27 -0700
+Message-ID: <5135319F.50404@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: "Gene Thomas [DATACOM]" <Gene.Thomas@datacom.co.nz>,
-	"Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 05 00:43:43 2013
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 05 00:43:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCf2k-0003xG-5r
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 00:43:42 +0100
+	id 1UCf2z-00046G-Hp
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 00:43:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758584Ab3CDXnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Mar 2013 18:43:16 -0500
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:49151 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753742Ab3CDXnP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Mar 2013 18:43:15 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ao4OABMeNVFZ8rke/2dsb2JhbABEjAy2QwEDgQsXc2gBAYEbAQERAgUBAQQBCAEBLh4BASYGAgMFAgEDFQELJRQBBBoGBxcGARIIAgECAwGFOAcBgjwKwRONSjsegVOBfGEDiDaFZJkYgnsN
-X-IronPort-AV: E=Sophos;i="4.84,783,1355097600"; 
-   d="scan'208";a="420504953"
-Received: from host-89-242-185-30.as13285.net (HELO PhilipOakley) ([89.242.185.30])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 04 Mar 2013 23:43:13 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S932256Ab3CDXnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Mar 2013 18:43:32 -0500
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:51759 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758586Ab3CDXnb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Mar 2013 18:43:31 -0500
+Received: by mail-pb0-f53.google.com with SMTP id un1so3552547pbc.40
+        for <git@vger.kernel.org>; Mon, 04 Mar 2013 15:43:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=Nik0MSPeaHjC9KqL3jmTHzjmqiej+77KjOhFaPdWcBQ=;
+        b=vPRXMmF54hxyfVvSWHQjSRTYjaEoZ5e7N/smdXx7gC0nHP8S7+irB2+rD004Uc3IVE
+         /qM3Sj0oqiEAUvUOH3fhIK/A28SdjWGDOisOpjrgbJULehLVdjDHjR1LvSx4L1x2Ivyx
+         9rnMc5iYRLLfTSjekyX17NgdKyTPtEUdN83LCCpFvdZZGkUtuysRn3VDtXrC7gnAQ/7f
+         OUoZQveI93FF2t1tM/JWoXUnRBJe9pIJ9rVxmGfS39sHFOILBjcVhE6nXsen7Z7CV5i2
+         QjypwbsXsFHpHn5PnZvyhV/cJ7wYEnGln0TSgsSdXKJaJ4XyV5RV74UMWyIJvvqcKoWG
+         kbHA==
+X-Received: by 10.68.251.167 with SMTP id zl7mr32085796pbc.116.1362440611002;
+        Mon, 04 Mar 2013 15:43:31 -0800 (PST)
+Received: from [10.16.242.114] ([192.206.100.4])
+        by mx.google.com with ESMTPS id i10sm24072400pbd.1.2013.03.04.15.43.28
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 04 Mar 2013 15:43:30 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217420>
 
-From: "Gene Thomas [DATACOM]" <Gene.Thomas@datacom.co.nz>
-Sent: Monday, March 04, 2013 11:06 PM
->Hello,
->I am evaluating git for use in a company. Please correct if I am wrong.
->I am concerned that an inexperienced developer could mistakenly rebase
->branches, destroying the original branch.
-
-The original branch is not 'destroyed', rather the pointer to the 
-previous tip is within the logs. All the content is still available 
-until the logs expire.
-
->   Attached is a script (Windoze)
->that shows the 'topic' branch being moved!, after the rebase we are
->unable to see the original branch, read it's history or find it's 
->commit
->points.
-
->Surely no operation should remove anything from the repository.
->Operations like this irreversibly break the repository . When rebasing
->the original branch must be retained.
-
-It's easy to misread some of Git's strengths if you have come from other 
-historic corporate 'version control systems' which are often based on 
-drawing office practice of old (e.g. the belief there is a single master 
-to be protected is one misconception for software).
-
-Rebase, at the personal level, is an important mechanism for staff to 
-prepare better code and commit messages. Trying to hide the reality will 
-just make your management 'control' less effective as staff work around 
-it and delay check-ins, etc.
-
-The broader access control and repo management issues are deliberately 
-not part of Git, and there are good tools for that. e.g. Gitolite.
-
->Yours faithfully,
+What is the best way to host a shared git repo on a Windows 2008 box?  I 
+would like to create a repo on the 2008 box (that everyone will 
+pull/push to), but add the initial code from my developer (Windows7 box).
 
 
->Gene Thomas.
-
-Philip
+J.V.
