@@ -1,79 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] help: show manpage for aliased command on git <alias>
- --help
-Date: Tue, 05 Mar 2013 08:52:16 -0800
-Message-ID: <7v4ngpvlfj.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] help: show manpage for aliased command on git <alias> --help
+Date: Tue, 05 Mar 2013 17:41:07 +0100
+Message-ID: <vpqy5e17qak.fsf@grenoble-inp.fr>
 References: <1362494681-11419-1-git-send-email-avarab@gmail.com>
- <7v8v61vn3h.fsf@alter.siamese.dyndns.org>
- <CACBZZX5=ARahxswkN_mLbBF3fQxV-HtKgehe_3ogHg5-i7utYw@mail.gmail.com>
+	<5136127C.2090402@viscovery.net>
+	<20130305165453.6077226c@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 05 17:52:52 2013
+Content-Type: text/plain
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r?= =?iso-8859-1?Q?=F0?= Bjarmason 
+	<avarab@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Tue Mar 05 17:55:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCv6c-00076l-0v
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 17:52:46 +0100
+	id 1UCv8n-0000O7-8G
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 17:55:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753249Ab3CEQwT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Mar 2013 11:52:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47780 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751746Ab3CEQwT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Mar 2013 11:52:19 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D56AA18B;
-	Tue,  5 Mar 2013 11:52:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=QqcS/Sa47j/6
-	f5bmDl5rqVQTzNQ=; b=hq2kUDgueJqzmr7cksfWDswyJHQTj2bmNOhvESDsz5V+
-	AKdONtNR+YQSYcsgB7UlDjh/eJ58YGdh/g0Vn1H3Fe8ogRp1URdDinHSgyx1xr3e
-	I0aqs3T0s/0pZUNxCYNcExd0W5RWHjXxR2TxaYS97t1o605qJf90mP9c8Alk+PU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=CHw9t7
-	o5oYcLwYcylNBYQ7oaIEcgz9icA3lnP/4+FVKkLainy+mbkKccqEvvekhw8QObVU
-	VAj682fgsij9wsN9X8dhiDUf/8fXbCxVKOOz7xN4ymEgtTkCFl64ShYcTR+X6H96
-	w3U1h0lRfQ63nWDaSXsOAIlKjS/bCDIBSbgqA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51423A18A;
-	Tue,  5 Mar 2013 11:52:18 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A849BA186; Tue,  5 Mar 2013
- 11:52:17 -0500 (EST)
-In-Reply-To: <CACBZZX5=ARahxswkN_mLbBF3fQxV-HtKgehe_3ogHg5-i7utYw@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 5 Mar
- 2013 17:32:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 09F26C1E-85B5-11E2-A141-099C2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754965Ab3CEQyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 11:54:35 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:56523 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753291Ab3CEQyf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 11:54:35 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r25Gf56Z015237
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 5 Mar 2013 17:41:05 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UCuvL-0001sQ-Gh; Tue, 05 Mar 2013 17:41:07 +0100
+In-Reply-To: <20130305165453.6077226c@pc09.procura.nl> (H. Merijn Brand's
+	message of "Tue, 5 Mar 2013 16:54:53 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 05 Mar 2013 17:41:05 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r25Gf56Z015237
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1363106468.00215@msPxk+3tmbE4kQiH3+6MSA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217464>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+"H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
 
-> No objection to the patch in principle though? I.e. not showing you
-> what the alias points to.
+> A single word that is (already) known to git as being a valid command
+> to do --help with. I which case I fully agree.
 
-I am not interested enough to even strongly object to such a change,
-because it is not reasonable to react with a "I know!" to the output
-of "git co --help", i.e. "'git co' is aliased to 'checkout'", in the
-first place.  Also some users may find it inconsistent if a single
-bareword jumps directly to the manpage and other input shows alias
-expansion.
+Just to insist on "that is known to git as being a valid command".
 
-So,... I do not see a very big plus in the proposed (and then
-amended by others in the thread) change, but if the damage to the
-code that is necessary to implement it is not too bad, perhaps it is
-an OK thing to do.  I don't know without seeing the patch.
+Compare:
+
+$ git foo --help
+`git foo' is aliased to `bar'
+
+with
+
+$ git foo --help
+No manual entry for gitbar
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
