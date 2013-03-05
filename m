@@ -1,79 +1,72 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: translate 1 new message
-Date: Tue,  5 Mar 2013 06:39:10 +0100
-Message-ID: <1362461950-3055-1-git-send-email-ralf.thielow@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] match_push_refs(): nobody sets src->peer_ref anymore
+Date: Tue, 5 Mar 2013 00:45:06 -0500
+Message-ID: <20130305054456.GA12446@sigill.intra.peff.net>
+References: <7vlia2x05q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
-To: trast@student.ethz.ch, jk@jk.gs, stimming@tuhh.de
-X-From: git-owner@vger.kernel.org Tue Mar 05 06:39:43 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 05 06:45:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCkbG-0006My-3l
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 06:39:42 +0100
+	id 1UCkgz-0001Ux-Gb
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 06:45:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751009Ab3CEFjQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Mar 2013 00:39:16 -0500
-Received: from mail-ea0-f178.google.com ([209.85.215.178]:36882 "EHLO
-	mail-ea0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750716Ab3CEFjP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 00:39:15 -0500
-Received: by mail-ea0-f178.google.com with SMTP id a14so1048370eaa.23
-        for <git@vger.kernel.org>; Mon, 04 Mar 2013 21:39:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=Zu9s4s597d8dqO5+JJm92BJCZkgxUR4JoGA22w7LYDI=;
-        b=y7/UluBX6bgUZXVZ4TIIYdc1b+yj5KoEZMc1ooSU8c7acwTWDT0O0S+97hLkUtQm+e
-         0bXclsn11YUSN26QYXhyYKvI28ayX3i7Rqc/nLNRdkqqCeAX3YAhfCY0+Z5jcXUlNoXe
-         vkoxMpf2wGfSOAiMgZetujkhQazmAC0LhVztv2cFbQpxyqd8qW6mNfjJb4AG3hFwR7Sd
-         +7PdWKaxlucSmZmvsRkgxoTSP0xUdX7X9bVpVr1DLA/nWGxkuPDC3LlN8r7CBYihYIkI
-         eQkzL0L0EGnfxDeV+fPOUyOI8GvsNu8F6l3Mtql+/VWR+JBHC9zaOCS2SsBzxz5V31as
-         Fcow==
-X-Received: by 10.14.210.132 with SMTP id u4mr66408039eeo.19.1362461954313;
-        Mon, 04 Mar 2013 21:39:14 -0800 (PST)
-Received: from localhost (dslb-178-012-126-061.pools.arcor-ip.net. [178.12.126.61])
-        by mx.google.com with ESMTPS id u44sm35554765eel.7.2013.03.04.21.39.12
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 04 Mar 2013 21:39:13 -0800 (PST)
-X-Mailer: git-send-email 1.8.2.rc2.4.g7799588
+	id S1751670Ab3CEFpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 00:45:09 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35095 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750730Ab3CEFpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 00:45:08 -0500
+Received: (qmail 10634 invoked by uid 107); 5 Mar 2013 05:46:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Mar 2013 00:46:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Mar 2013 00:45:06 -0500
+Content-Disposition: inline
+In-Reply-To: <7vlia2x05q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217431>
 
-Translate 1 new message came from git.pot update in
-ed1ddaf (l10n: git.pot: v1.8.2 round 4 (1 changed)).
+On Mon, Mar 04, 2013 at 02:36:33PM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- po/de.po | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+> In ancient times, we used to disallow the same source ref to be
+> pushed to more than one places, e.g. "git push there master:master
+> master:naster" was disallowed.  We later lifted this restriction
+> with db27ee63929f (send-pack: allow the same source to be pushed
+> more than once., 2005-08-06) and there no longer is anybody that
+> sets peer_ref for the source side of the ref list in the push
+> codepath since then.
+> 
+> Remove one leftover no-op in a loop that iterates over the source
+> side of ref list (i.e. our local ref) to see if it can/should be
+> sent to a matching destination ref while skipping ones that is
+> marked with peer_ref (which will never exist, so we do not skip
+> anything).
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-diff --git a/po/de.po b/po/de.po
-index 37aa24d..83c30b1 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -126,12 +126,11 @@ msgid "path to the remote git-upload-archive comm=
-and"
- msgstr "Pfad zum externen \"git-upload-archive\"-Programm"
-=20
- #: attr.c:259
--#, fuzzy
- msgid ""
- "Negative patterns are ignored in git attributes\n"
- "Use '\\!' for literal leading exclamation."
- msgstr ""
--"Verneinende Muster sind in Git-Attributen verboten.\n"
-+"Verneinende Muster werden in Git-Attributen ignoriert.\n"
- "Benutzen Sie '\\!' f=C3=BCr f=C3=BChrende Ausrufezeichen."
-=20
- #: bundle.c:36
---=20
-1.8.2.rc2.4.g7799588
+This looks good to me. I was curious how difficult it would be to verify
+the "no longer is anybody that sets peer_ref" claim. It's actually quite
+easy. All of the call-sites just feed the result of get_local_heads(),
+which is easy to verify does not ever set peer_ref. Looking at the
+current code, I think you could even drop the "src" parameter and just
+have match_push_refs call get_local_heads() itself, though that does
+feel like a step backwards in terms of function generality.
+
+As an aside, I have always found the embedded "next" and "peer_ref"
+pointers in "struct ref" to be hacky. They are not properties of the ref
+at all, and the "refs to fetch" list would be more logically represented
+as a list of pairs of refs (and then I would not have to ever remember
+whether the peer is the local or remote ref in a given case). Probably
+not worth worrying about at this point, though, as the code fallout
+would be significant for little gain.
+
+-Peff
