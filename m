@@ -1,123 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: auto merge bug
-Date: Tue, 5 Mar 2013 12:59:04 -0500
-Message-ID: <20130305175904.GC9379@sigill.intra.peff.net>
-References: <CAOFaZ+5F1BcWNU=AkcnS53bQt1VfAfsFjp9EvRCL=7kYiU1ejg@mail.gmail.com>
- <20130305090326.GC13552@sigill.intra.peff.net>
- <7vtxopvoky.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] push: --follow-tag
+Date: Tue, 05 Mar 2013 10:15:20 -0800
+Message-ID: <7vobexu30n.fsf@alter.siamese.dyndns.org>
+References: <7vd2vewu24.fsf@alter.siamese.dyndns.org>
+ <7v6216wtrk.fsf@alter.siamese.dyndns.org>
+ <20130305082204.GB13552@sigill.intra.peff.net>
+ <7vlia1vnwq.fsf@alter.siamese.dyndns.org>
+ <20130305172233.GA9379@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Krmpotic <david.krmpotic@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 05 18:59:38 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 05 19:15:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCw9F-0002Se-Uo
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 18:59:34 +0100
+	id 1UCwP0-0005lo-21
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 19:15:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756610Ab3CER7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 12:59:08 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35457 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755694Ab3CER7G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 12:59:06 -0500
-Received: (qmail 16556 invoked by uid 107); 5 Mar 2013 18:00:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Mar 2013 13:00:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Mar 2013 12:59:04 -0500
-Content-Disposition: inline
-In-Reply-To: <7vtxopvoky.fsf@alter.siamese.dyndns.org>
+	id S1757964Ab3CESPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 13:15:24 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44904 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756303Ab3CESPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 13:15:23 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4839B492;
+	Tue,  5 Mar 2013 13:15:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vwuOT1WL0nvDrTvA66toljozjvk=; b=vB+ZUB
+	03KMP12vPwCuUgnzXcR6ESNyOESZg9J/aOJ0yMkfIpYWwnCZEUeKxWe9ZWMNeq/5
+	oMbQXnkiSVilQthxC+GV93IcOCKjcAL4RE20Tl8jBBtlf7/IRquURf8IOKWBbta/
+	JOpwIEnQWpbuQApHVgT85jFG7zENV2W65ongw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XxcHZ5DZETEOI7xdzdjdXLRH1v4sdNxz
+	ntsVF55hugblpXZpVppC5w0RwJUQYfT8ZegzJyfRwLrcueje4uSg5pyJn6FD9tUD
+	6plaSOBROv3Qqy+EunnEfVDQfCCnD/X0ialiideXwlT3lqg0hQDeueG1YTSzZnoG
+	t0myfz1lFJc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A97BEB491;
+	Tue,  5 Mar 2013 13:15:22 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 217CCB48E; Tue,  5 Mar 2013
+ 13:15:22 -0500 (EST)
+In-Reply-To: <20130305172233.GA9379@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 5 Mar 2013 12:22:33 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A4E85C50-85C0-11E2-A2A9-70782E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217470>
 
-On Tue, Mar 05, 2013 at 07:44:13AM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I think the merge will produce the results you are looking for. This
-> > would have to be configurable, though, as it is a regression for
-> > existing users of "union", which would want the duplicate-line
-> > suppression (or maybe not; it will only catch such duplicates at the
-> > beginning and end of the conflict hunk, so maybe it is sane to always
-> > ask "union" to keep all lines).
-> 
-> The original use-case example of "union" was to merge two shopping
-> lists (e.g. I add "bread" and "orange juice" to remind me that we
-> need to buy these things, while my wife adds "bread" and "butter").
-> 
-> We do not necessarily want to end up with a shopping list to buy two
-> loaves of bread.  When the user verifies and fixes up the result, we
-> can keep the current behaviour and those who want to re-dup can add
-> one back, or we can change the behaviour to leave the duplicates and
-> those who do not want to see duplicates can remove them manually.
-> 
-> Given that the caveat you quoted already tells the user to verify
-> the result and not to use it without understanding its implications,
-> I think it technically is fine either way (read: keeping duplicates
-> is not a clearly superiour solution). So let's leave it as-is.
+> But I wonder if fetching and pushing are different in that respect. You
+> are (usually) fetching from a public publishing point, and it is assumed
+> that whatever is there is useful for sharing. The only reason to limit
+> it is to save time transferring objects the user does not want.
 
-My problem with the current behavior is that it is not predictable
-whether it will de-dup or not. If your shopping lists are:
+There are those who have to emulate "git fetch" with a reverse "git
+push" (or vice versa) due to network connection limitations, so I do
+not think hardcoding such a policy decision in the direction is
+necessarily a good idea.
 
-  bread
-  orange juice
+> ... But I also don't want to introduce a feature
+> that causes people to accidentally publish cruft. It may not be a
+> problem in practice; I'm just thinking out loud at this point.
 
-  bread
-  butter
-
-it works; you get only one bread. If they are:
-
-  milk
-  bread
-  orange juice
-
-  beer
-  bread
-  butter
-
-you get two. It depends on the exact behavior of the XDL_MERGE_ZEALOUS
-flag. What I'd propose is two different drivers:
-
-  1. Find conflicts via 3-way merge, and include both sides of the
-     conflict verbatim. Do not use XDL_MERGE_ZEALOUS, as it is more
-     important to retain items from both sides (in their original order)
-     than it is to remove duplicates.
-
-  2. A true line-based union, which should act like "cat $ours $theirs |
-     sort | uniq". That is what you want for the shopping list example,
-     I think (you could also preserve existing ordering with a lookup
-     table, though I prefer clobbering the ordering; the ordering of
-     resolved conflicts will be arbitrary anyway, so it makes it clear
-     from the outset that you should not use this driver if your content
-     is not really a set (in the mathematical sense) of lines).
-
-     You could also have sets of other objects (e.g., blank-line
-     delimited paragraphs, changelog entries, etc). But you would need
-     some way to specify the parsing then[1].
-
-I'm not sure which should be called "union". The first one would still
-need careful examination of the result. The second one should always be
-correct, but only because it is limited to a much more constrained
-problem.
-
-I'm also not sure how useful those really are in practice. I have not
-used "union" myself ever. And in the example that started this thread, I
-find the use of "union" slightly dubious. I do not even know how it
-would react to a line _changing_, or other complicated edit. Short of a
-specialized XML-aware merge driver, using XDL_MERGE_ZEALOUS and kicking
-the result out to the user (i.e., what the default merge driver does)
-seems like the only sane thing, even if it is more work at merge time.
-
--Peff
-
-[1] Some of this is fairly easy to do with perl one-liners (e.g., "perl
-   -00 -ne 'print unless $h{$_}++" for paragraph mode), so maybe it is
-   just an education/documentation issue. I dunno. I have always been
-   happy enough with the stock merge.
+Likewise.
