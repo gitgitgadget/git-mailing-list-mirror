@@ -1,124 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: auto merge bug
-Date: Tue, 5 Mar 2013 04:12:03 -0500
-Message-ID: <20130305091203.GD13552@sigill.intra.peff.net>
-References: <CAOFaZ+5F1BcWNU=AkcnS53bQt1VfAfsFjp9EvRCL=7kYiU1ejg@mail.gmail.com>
- <20130305090326.GC13552@sigill.intra.peff.net>
+From: Javier Domingo <javierdo1@gmail.com>
+Subject: Re: Fwd: Strange remote interaction
+Date: Tue, 5 Mar 2013 10:46:20 +0100
+Message-ID: <CALZVapkk2bugkSuqQ0EU7Zu9fjHGqrtAeArbG-ycJdS=morMLQ@mail.gmail.com>
+References: <CALZVapm32S2XqA48KCmfr8O5PVSNMgRj=JfRm_yyYz6N6wE0=A@mail.gmail.com>
+ <CALZVapnDyF7m=R7xrjUJUtyr9xVUeDnL4tQSCoM2ze8GSuUUyg@mail.gmail.com> <7v1ubuwhec.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: David Krmpotic <david.krmpotic@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 05 10:12:39 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 05 10:47:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCnvL-0006Xe-2j
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 10:12:39 +0100
+	id 1UCoSj-0003ZL-VB
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 10:47:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754999Ab3CEJMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 04:12:09 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35196 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752997Ab3CEJMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 04:12:06 -0500
-Received: (qmail 12542 invoked by uid 107); 5 Mar 2013 09:13:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Mar 2013 04:13:42 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Mar 2013 04:12:03 -0500
-Content-Disposition: inline
-In-Reply-To: <20130305090326.GC13552@sigill.intra.peff.net>
+	id S1755543Ab3CEJqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 04:46:43 -0500
+Received: from mail-ve0-f171.google.com ([209.85.128.171]:64890 "EHLO
+	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755540Ab3CEJql (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 04:46:41 -0500
+Received: by mail-ve0-f171.google.com with SMTP id b10so5618631vea.30
+        for <git@vger.kernel.org>; Tue, 05 Mar 2013 01:46:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=6dIfXWqA2hd50MpWwEetQWvbi5lYTVc25iEEgCSn3ZM=;
+        b=hJc0ewZPFeQ00WQYAio8fUmntUOgtlvFWEfx4UvIpfrxGsw6THWtnIriBzkpgZ361j
+         xdA0XUXqpESrkhwnmbn8hPNT8mKXRIUkgbnCeHGnrcYt3FJ8lQRddmr5dvvAKZSJWn+s
+         8/HFrdCBkkrfznYRqJMIBYp2cNPCtvZnEICQmjNtIqCpRHPvk6nprGGWUUwZQoDhkXeX
+         rA6nsCBGz+wpPmaugsNXjPMry+67tImpuIZCTsNUCy66nS5lZ5p+oqtUFv1ZFpTVyzrn
+         64jtUwjfVh8drOo+K8w0kkYH7Yc9KvmAgl+/BQmrGLLkSCxEgiuTaLWjOfF8jSYmoHeB
+         nWmw==
+X-Received: by 10.52.19.65 with SMTP id c1mr8009395vde.36.1362476801021; Tue,
+ 05 Mar 2013 01:46:41 -0800 (PST)
+Received: by 10.59.12.35 with HTTP; Tue, 5 Mar 2013 01:46:20 -0800 (PST)
+In-Reply-To: <7v1ubuwhec.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217440>
 
-On Tue, Mar 05, 2013 at 04:03:26AM -0500, Jeff King wrote:
+> In a usual set-up, an access to git@server:javier/pfc will first
+> locate the home directory for the user "git" (the token before "@"),
+> and then its subdirectory javier/pfc, e.g. /home/git/javier/pfc,
+> while an access to server:javier/pfc will first locate the home
+> directory of whatever username the ssh connection uses by default
+> (typically the local user but ~/.ssh/config may have "User"
+> directive for the server) and then its subdirectory javier/pfc,
+> e.g. /home/javier/javier/pfc.  These two may be different locations.
+>
+> Do these two commands show the same output?
+>
+>         $ git ls-remote git@server:javier/pfc refs/heads/master
+>         $ git ls-remote server:javier/pfc refs/heads/master
+>
+> If the above conjecture is correct, I suspect they don't.
 
-> You might be able to get by with a version of the "union" driver that
-> asks the 3-way merge driver to be less aggressive about shrinking the
-> conflict blocks. For example, with this patch to git:
-> 
-> diff --git a/ll-merge.c b/ll-merge.c
-> index fb61ea6..61b1d4e 100644
-> --- a/ll-merge.c
-> +++ b/ll-merge.c
-> @@ -100,7 +100,6 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
->  	}
->  
->  	memset(&xmp, 0, sizeof(xmp));
-> -	xmp.level = XDL_MERGE_ZEALOUS;
->  	xmp.favor = opts->variant;
->  	xmp.xpp.flags = opts->xdl_opts;
->  	if (git_xmerge_style >= 0)
-> 
-> I think the merge will produce the results you are looking for. This
-> would have to be configurable, though, as it is a regression for
-> existing users of "union", which would want the duplicate-line
-> suppression (or maybe not; it will only catch such duplicates at the
-> beginning and end of the conflict hunk, so maybe it is sane to always
-> ask "union" to keep all lines).
+I have a gitolite setup there, so it is imposible the give the same
+output. Anyways, as I don't have a user in the server machine, the
+second fails.
 
-Here's what the patch would look like to make it non-configurable, but
-to just trigger for the "union" case:
+$ git ls-remote git@server:javier/pfc
+22692a2d69d3138b7ccebd64e72c66ea8bf69e9f HEAD
+22692a2d69d3138b7ccebd64e72c66ea8bf69e9f refs/heads/master
 
-diff --git a/ll-merge.c b/ll-merge.c
-index fb61ea6..fc33a23 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -83,7 +83,8 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
- 			mmfile_t *src1, const char *name1,
- 			mmfile_t *src2, const char *name2,
- 			const struct ll_merge_options *opts,
--			int marker_size)
-+			int marker_size,
-+			int level)
- {
- 	xmparam_t xmp;
- 	assert(opts);
-@@ -100,7 +101,7 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
- 	}
- 
- 	memset(&xmp, 0, sizeof(xmp));
--	xmp.level = XDL_MERGE_ZEALOUS;
-+	xmp.level = level;
- 	xmp.favor = opts->variant;
- 	xmp.xpp.flags = opts->xdl_opts;
- 	if (git_xmerge_style >= 0)
-@@ -129,7 +130,23 @@ static int ll_union_merge(const struct ll_merge_driver *drv_unused,
- 	o.variant = XDL_MERGE_FAVOR_UNION;
- 	return ll_xdl_merge(drv_unused, result, path_unused,
- 			    orig, NULL, src1, NULL, src2, NULL,
--			    &o, marker_size);
-+			    &o, marker_size, XDL_MERGE_MINIMAL);
-+}
-+
-+static int ll_text_merge(const struct ll_merge_driver *drv,
-+			 mmbuffer_t *result,
-+			 const char *path,
-+			 mmfile_t *orig, const char *orig_name,
-+			 mmfile_t *src1, const char *name1,
-+			 mmfile_t *src2, const char *name2,
-+			 const struct ll_merge_options *opts,
-+			 int marker_size)
-+{
-+	return ll_xdl_merge(drv, result, path,
-+			    orig, orig_name,
-+			    src1, name1,
-+			    src2, name2,
-+			    opts, marker_size, XDL_MERGE_ZEALOUS);
- }
- 
- #define LL_BINARY_MERGE 0
-@@ -137,7 +154,7 @@ static struct ll_merge_driver ll_merge_drv[] = {
- #define LL_UNION_MERGE 2
- static struct ll_merge_driver ll_merge_drv[] = {
- 	{ "binary", "built-in binary merge", ll_binary_merge },
--	{ "text", "built-in 3-way text merge", ll_xdl_merge },
-+	{ "text", "built-in 3-way text merge", ll_text_merge },
- 	{ "union", "built-in union merge", ll_union_merge },
- };
- 
+It is the first time I encounter such a problem.
