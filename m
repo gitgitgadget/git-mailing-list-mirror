@@ -1,100 +1,236 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fwd: Strange remote interaction
-Date: Mon, 04 Mar 2013 21:21:47 -0800
-Message-ID: <7v1ubuwhec.fsf@alter.siamese.dyndns.org>
-References: <CALZVapm32S2XqA48KCmfr8O5PVSNMgRj=JfRm_yyYz6N6wE0=A@mail.gmail.com>
- <CALZVapnDyF7m=R7xrjUJUtyr9xVUeDnL4tQSCoM2ze8GSuUUyg@mail.gmail.com>
+From: Eric Cousineau <eacousineau@gmail.com>
+Subject: Re: [PATCH/RFC] Changing submodule foreach --recursive to be depth-first,
+ --parent option to execute command in supermodule as well
+Date: Mon, 04 Mar 2013 23:37:12 -0600
+Message-ID: <51358488.2080005@gmail.com>
+References: <CA+aSAWuoxZkSnRybhefnFr9ngs3tHmt6hAH4o0ebjYKvjJ-vpw@mail.gmail.com> <51351CF5.7010308@web.de> <7vhakqwz1e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Javier Domingo <javierdo1@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 05 06:22:23 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 05 06:37:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCkKU-0003Ik-Rf
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 06:22:23 +0100
+	id 1UCkZW-0005IR-2W
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 06:37:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750785Ab3CEFVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 00:21:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44305 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750716Ab3CEFVv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 00:21:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CF02BD79;
-	Tue,  5 Mar 2013 00:21:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iyjPgq14HjSUJ0sKoVqK182/KcU=; b=FLNUxm
-	UcrN5ghTgSiFw8SZUEcrpzNiQlWco1C1m8Hir0cDhN3nvqZ4XcPBytv2E6WbVGvU
-	M9dL51crNKyjQjaP0tBBe/pnMFn+bU4AtcOJY7DeG/UIeHbPb9APy1vpBS6rI3+U
-	xbBfa17DntJURgPyW2cRoJVj3vGUk5eRGDo54=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=t2m16nP6lx/2HGV6hbgOpTo9tDR7fiKy
-	uQ267iAH3Cu8ACws5NJh4jwaFNImx6u0Wv2JBSbgGWRmF2CVO4/l2YZY0ns9T93I
-	2HBoSb+3KlJjOq+KkkdTsYTWXAdK0ejm0iW2OJGxSHy2K5gY8eB8iRIQb6eHXIH0
-	M1nIq51CjPc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F846BD78;
-	Tue,  5 Mar 2013 00:21:50 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 699A6BD70; Tue,  5 Mar 2013
- 00:21:49 -0500 (EST)
-In-Reply-To: <CALZVapnDyF7m=R7xrjUJUtyr9xVUeDnL4tQSCoM2ze8GSuUUyg@mail.gmail.com> (Javier
- Domingo's message of "Tue, 5 Mar 2013 02:11:01 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 94C7B6B6-8554-11E2-99FD-2F862E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751027Ab3CEFhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 00:37:17 -0500
+Received: from mail-ia0-f177.google.com ([209.85.210.177]:48371 "EHLO
+	mail-ia0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716Ab3CEFhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 00:37:16 -0500
+Received: by mail-ia0-f177.google.com with SMTP id y25so410323iay.8
+        for <git@vger.kernel.org>; Mon, 04 Mar 2013 21:37:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=zq/Jiaa6yDIKoJfv0YALu+Bgwzb8FefIhGiEZfzidjI=;
+        b=eV33m4j7KKgam/ihjBNkdAoxGEQ8iYaWIchl3PeGopznbvy1H+QGU+DHRZYSl+zJYb
+         ZqtJVG6zlQBFdkG5CGfe+ELdIzaAyDIVxdd5/zBn8xBd5eIGJZpkm4k5BZ9j+ClWsSoB
+         1eY9NI5EKhS0FKhSeDkw8N/NpcSR4B8gW4XCq4u1wU8DjXNGo170GULzT0zTuuga7X9R
+         9KqNrOzQVhw8ZZFAWV2WHPVWFvBjx9BmlF60mL56Ae5Ao14uHZZ3Y6FqtRigpGc5GZZ4
+         LFASHvJtrs5MU05of2LSPQqsl9grwSdebkMg6nwg92QMosXP0nD9/z2e/LOzC45heHYf
+         ZMnw==
+X-Received: by 10.50.237.70 with SMTP id va6mr5058188igc.66.1362461835973;
+        Mon, 04 Mar 2013 21:37:15 -0800 (PST)
+Received: from [10.3.2.16] ([199.30.163.2])
+        by mx.google.com with ESMTPS id l2sm13787446igb.1.2013.03.04.21.37.13
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 04 Mar 2013 21:37:15 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/17.0 Thunderbird/17.0
+In-Reply-To: <7vhakqwz1e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217429>
 
-Javier Domingo <javierdo1@gmail.com> writes:
+git-submodule.sh: In foreach, make '-post-order' yield post-order 
+traversal and
+'--include-super' execute commands at the top-level supermodule, with 
+both of these
+options compatible with '--recursive'.
 
-> I have just had the attached bash session, and I have no idea on what
-> is going on.
->
-> Any help appreciated,
->
-> Javier Domingo
->
-> javier@frodo:~/proyectos/pfc$ git push -vvv javier master
-> Pushing to git@server:javier/pfc
-> To git@server:javier/pfc
->  ! [rejected]        master -> master (non-fast-forward)
-> error: failed to push some refs to 'git@server:javier/pfc'
-> hint: Updates were rejected because a pushed branch tip is behind its remote
-> hint: counterpart. Check out this branch and merge the remote changes
-> hint: (e.g. 'git pull') before pushing again.
-> hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+Signed-off-by: Eric Cousineau <eacousineau@gmail.com>
+---
+Sorry about missing the part about not included MIME attachments, hope 
+this is in a better format now.
+Jens, I changed the '--parent' option to '--include-super' which is 
+hopefully less vague.
+Junio, you made an excellent point about both being useful. In 
+particular, I overlooked the case
+for doing a submodule pull / update (if, for whatever reason, it is more 
+convenient than a submodule
+update, maybe for merging). In that case, you might want to initialize 
+new submodules and ignore the
+old ones, instead of wasting time on them with a post-order traversal pull.
+I've implemented your suggestions to have a boolean '--post-order' 
+option, and made the '--include-super'
+option compatible with it. This way, the original behavior of 'foreach' 
+is preserved.
 
-So push is going to git@server:javier/pfc repository, while ...
+I've updated the test and uploaded it to pastebin: 
+http://pastebin.com/BgZNzFpi
 
-> javier@frodo:~/proyectos/pfc$ git fetch -vvv javier 
-> From server:javier/pfc
->  = [up to date]      master     -> javier/master
+  git-submodule.sh | 102 
++++++++++++++++++++++++++++++++++++++++++--------------
+  1 file changed, 77 insertions(+), 25 deletions(-)
 
-... fetch/pull goes to server:javier/pfc repository.  Are they the
-same?
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 004c034..652bea0 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -10,7 +10,7 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] 
+[--name <name>] [--reference <re
+     or: $dashless [--quiet] init [--] [<path>...]
+     or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] 
+[-f|--force] [--rebase] [--reference <repository>] [--merge] 
+[--recursive] [--] [<path>...]
+     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit 
+<n>] [commit] [--] [<path>...]
+-   or: $dashless [--quiet] foreach [--recursive] <command>
++   or: $dashless [--quiet] foreach [--recursive] [--include-super] 
+[--post-order] <command>
+     or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
+  OPTIONS_SPEC=
+  . git-sh-setup
+@@ -434,6 +434,8 @@ Use -f if you really want to add it." >&2
+  cmd_foreach()
+  {
+      # parse $args after "submodule ... foreach".
++    # Gratuitous (empty) local's to prevent recursive bleeding
++    local include_super= recursive= post_order=
+      while test $# -ne 0
+      do
+          case "$1" in
+@@ -443,6 +445,12 @@ cmd_foreach()
+          --recursive)
+              recursive=1
+              ;;
++        --post-order)
++            post_order=1
++            ;;
++        --include-super)
++            include_super=1
++            ;;
+          -*)
+              usage
+              ;;
+@@ -453,35 +461,79 @@ cmd_foreach()
+          shift
+      done
 
-In a usual set-up, an access to git@server:javier/pfc will first
-locate the home directory for the user "git" (the token before "@"),
-and then its subdirectory javier/pfc, e.g. /home/git/javier/pfc,
-while an access to server:javier/pfc will first locate the home
-directory of whatever username the ssh connection uses by default
-(typically the local user but ~/.ssh/config may have "User"
-directive for the server) and then its subdirectory javier/pfc,
-e.g. /home/javier/javier/pfc.  These two may be different locations.
+-    toplevel=$(pwd)
++    if test -n "$recursive"
++    then
++        local recursive_flags="--recursive"
++        if test -n "$post_order"
++        then
++            recursive_flags="$recursive_flags --post-order"
++        fi
++    fi
++
++    local toplevel=$(pwd)
 
-Do these two commands show the same output?
+      # dup stdin so that it can be restored when running the external
+      # command in the subshell (and a recursive call to this function)
+      exec 3<&0
++
++    # Use nested functions
++    super_eval() {
++        name=$(basename "$toplevel")
++        clear_local_git_env
++        path=.
++        say "$(eval_gettext "Entering '\$name'")" # Not sure of proper 
+thing here
++        eval "$@" || die "$(eval_gettext "Stopping at supermodule; 
+script returned non-zero status.")"
++    }
 
-	$ git ls-remote git@server:javier/pfc refs/heads/master
-        $ git ls-remote server:javier/pfc refs/heads/master
+-    module_list |
+-    while read mode sha1 stage sm_path
+-    do
+-        die_if_unmatched "$mode"
+-        if test -e "$sm_path"/.git
+-        then
+-            say "$(eval_gettext "Entering '\$prefix\$sm_path'")"
+-            name=$(module_name "$sm_path")
+-            (
+-                prefix="$prefix$sm_path/"
+-                clear_local_git_env
+-                # we make $path available to scripts ...
+-                path=$sm_path
+-                cd "$sm_path" &&
+-                eval "$@" &&
+-                if test -n "$recursive"
+-                then
+-                    cmd_foreach "--recursive" "$@"
+-                fi
+-            ) <&3 3<&- ||
+-            die "$(eval_gettext "Stopping at '\$sm_path'; script 
+returned non-zero status.")"
+-        fi
+-    done
++    if test -n "$include_super" -a -z "$post_order"
++    then
++        super_eval "$@"
++    fi &&
++    (
++        module_list |
++        while read mode sha1 stage sm_path
++        do
++            die_if_unmatched "$mode"
++            if test -e "$sm_path"/.git
++            then
++                local name prefix path message epitaph
++                message="$(eval_gettext "Entering '\$prefix\$sm_path'")"
++                epitaph="$(eval_gettext "Stopping at '\$sm_path'; 
+script returned non-zero status.")"
++                name=$(module_name "$sm_path")
++                (
++                    prefix="$prefix$sm_path/"
++                    clear_local_git_env
++                    # we make $path available to scripts ...
++                    path=$sm_path
++
++                    sm_eval() {
++                        say "$message"
++                        eval "$@" || die "$epitaph"
++                    }
++
++                    cd "$sm_path" &&
++                    if test -z "$post_order"
++                    then
++                        sm_eval "$@"
++                    fi &&
++                    if test -n "$recursive"
++                    then
++                        cmd_foreach $recursive_flags "$@"
++                    fi &&
++                    if test -n "$post_order"
++                    then
++                        sm_eval "$@"
++                    fi
++                    # Since the (...) seems to limit exit's scope, make 
+sure to kill things here if something goes awry
++                    # (the `|| exit 1` at the end)
++                ) <&3 3<&- || exit 1
++            fi
++        done
++    ) &&
++    if test -n "$include_super" -a -n "$post_order"
++    then
++        super_eval "$@"
++    fi
+  }
 
-If the above conjecture is correct, I suspect they don't.
+  #
+-- 
+1.8.2.rc1.24.g06d67b8.dirty
