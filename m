@@ -1,73 +1,64 @@
-From: Javier Domingo <javierdo1@gmail.com>
-Subject: Re: Fwd: Strange remote interaction
-Date: Tue, 5 Mar 2013 10:46:20 +0100
-Message-ID: <CALZVapkk2bugkSuqQ0EU7Zu9fjHGqrtAeArbG-ycJdS=morMLQ@mail.gmail.com>
-References: <CALZVapm32S2XqA48KCmfr8O5PVSNMgRj=JfRm_yyYz6N6wE0=A@mail.gmail.com>
- <CALZVapnDyF7m=R7xrjUJUtyr9xVUeDnL4tQSCoM2ze8GSuUUyg@mail.gmail.com> <7v1ubuwhec.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Configurable .gitignore filename?
+Date: Tue, 5 Mar 2013 01:59:41 -0800
+Message-ID: <CAJDDKr55ayTpzXPG3j5czY=-W08L8QjhMmjqWdRpoWO=MpHdyg@mail.gmail.com>
+References: <CACoicv+Hq=d5fJ7PXYdyvOdWmc3-GbFrsAf2Ze7dnQTzjExXnw@mail.gmail.com>
+	<vpqzjyjp8y0.fsf@grenoble-inp.fr>
+	<CACoicvKMWSjU6Lf-2PsCShzqGiX-=2xF9+W0EtrHUzWPU7-T_A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 05 10:47:13 2013
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Jari Pennanen <jari.pennanen@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 05 11:00:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCoSj-0003ZL-VB
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 10:47:10 +0100
+	id 1UCofJ-0003eG-HY
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 11:00:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755543Ab3CEJqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 04:46:43 -0500
-Received: from mail-ve0-f171.google.com ([209.85.128.171]:64890 "EHLO
-	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755540Ab3CEJql (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 04:46:41 -0500
-Received: by mail-ve0-f171.google.com with SMTP id b10so5618631vea.30
-        for <git@vger.kernel.org>; Tue, 05 Mar 2013 01:46:41 -0800 (PST)
+	id S1755642Ab3CEJ7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 04:59:44 -0500
+Received: from mail-we0-f177.google.com ([74.125.82.177]:39040 "EHLO
+	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755104Ab3CEJ7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 04:59:43 -0500
+Received: by mail-we0-f177.google.com with SMTP id d7so5743555wer.36
+        for <git@vger.kernel.org>; Tue, 05 Mar 2013 01:59:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=6dIfXWqA2hd50MpWwEetQWvbi5lYTVc25iEEgCSn3ZM=;
-        b=hJc0ewZPFeQ00WQYAio8fUmntUOgtlvFWEfx4UvIpfrxGsw6THWtnIriBzkpgZ361j
-         xdA0XUXqpESrkhwnmbn8hPNT8mKXRIUkgbnCeHGnrcYt3FJ8lQRddmr5dvvAKZSJWn+s
-         8/HFrdCBkkrfznYRqJMIBYp2cNPCtvZnEICQmjNtIqCpRHPvk6nprGGWUUwZQoDhkXeX
-         rA6nsCBGz+wpPmaugsNXjPMry+67tImpuIZCTsNUCy66nS5lZ5p+oqtUFv1ZFpTVyzrn
-         64jtUwjfVh8drOo+K8w0kkYH7Yc9KvmAgl+/BQmrGLLkSCxEgiuTaLWjOfF8jSYmoHeB
-         nWmw==
-X-Received: by 10.52.19.65 with SMTP id c1mr8009395vde.36.1362476801021; Tue,
- 05 Mar 2013 01:46:41 -0800 (PST)
-Received: by 10.59.12.35 with HTTP; Tue, 5 Mar 2013 01:46:20 -0800 (PST)
-In-Reply-To: <7v1ubuwhec.fsf@alter.siamese.dyndns.org>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=zJLEUx/CEYkwI7DhgX0ggRXWxVdfunZXWUX85FXizOU=;
+        b=Vua7Pfel3M2/OaGp+vwK/91RfgRBPTpw0593o5MjRhOVRFb4m+GJooX7FWt/wtx96g
+         +0iXr3hDtEDv/lUNmFABT2wWmdi/m/y/Gf5ceHTsqSE1/u17mUlJJN2Uw2Zc2sXSWwB5
+         qWNtU35+UCo3E/rHeuTVfbqX5oiu4wAWbIiNJQ5xjFH30xQ0XsjeKX/3FIAqqTcz/QaX
+         1iJETiJsGOPKNB0KDYWa62W07O96G2lID+6juK3Iwzs0stkqqfybmmUYJc6J7Pb/H/Rb
+         bAtV+Ow3Z8mF7rVKUGvkpVRw2CuqWcX2cO1MBT202hy6vXWSPx3iTBsbvDFQ1EIsXYRL
+         wSiw==
+X-Received: by 10.180.183.81 with SMTP id ek17mr9039701wic.2.1362477581875;
+ Tue, 05 Mar 2013 01:59:41 -0800 (PST)
+Received: by 10.194.13.129 with HTTP; Tue, 5 Mar 2013 01:59:41 -0800 (PST)
+In-Reply-To: <CACoicvKMWSjU6Lf-2PsCShzqGiX-=2xF9+W0EtrHUzWPU7-T_A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217441>
 
-> In a usual set-up, an access to git@server:javier/pfc will first
-> locate the home directory for the user "git" (the token before "@"),
-> and then its subdirectory javier/pfc, e.g. /home/git/javier/pfc,
-> while an access to server:javier/pfc will first locate the home
-> directory of whatever username the ssh connection uses by default
-> (typically the local user but ~/.ssh/config may have "User"
-> directive for the server) and then its subdirectory javier/pfc,
-> e.g. /home/javier/javier/pfc.  These two may be different locations.
+On Mon, Mar 4, 2013 at 7:47 AM, Jari Pennanen <jari.pennanen@gmail.com> wrote:
+> 2013/3/4 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+>> There is already core.excludesfile, which does not replace the usual
+>> .gitignore but comes in addition. The common use is a user-wide ignore
+>> file, not a per-directory one.
 >
-> Do these two commands show the same output?
->
->         $ git ls-remote git@server:javier/pfc refs/heads/master
->         $ git ls-remote server:javier/pfc refs/heads/master
->
-> If the above conjecture is correct, I suspect they don't.
+> I'm actually aware of that. Problem is the normal .gitignore files
+> must *not* be used in the second GIT_DIR at all, in my case it's for
+> syncing so I need to sync almost all files (including stuff inside
+> .gitignore), though I'd still like to retain some ignore files for
+> second GIT_DIR, e.g. like in rsync the .rsync-filter file.
 
-I have a gitolite setup there, so it is imposible the give the same
-output. Anyways, as I don't have a user in the server machine, the
-second fails.
-
-$ git ls-remote git@server:javier/pfc
-22692a2d69d3138b7ccebd64e72c66ea8bf69e9f HEAD
-22692a2d69d3138b7ccebd64e72c66ea8bf69e9f refs/heads/master
-
-It is the first time I encounter such a problem.
+How about .git/info/exclude in the 2nd GIT_DIR?  Would that help?
+-- 
+David
