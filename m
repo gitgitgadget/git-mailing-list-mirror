@@ -1,92 +1,127 @@
-From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH] Fix `make install` when configured with autoconf
-Date: Tue,  5 Mar 2013 16:43:25 +0400
-Message-ID: <1362487405-32044-1-git-send-email-kirr@mns.spb.ru>
-Cc: Dmitry Komissarov <dak@mnsspb.ru>, git@vger.kernel.org,
-	Kirill Smelkov <kirr@mns.spb.ru>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 05 13:55:55 2013
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] help: show manpage for aliased command on git <alias> --help
+Date: Tue,  5 Mar 2013 14:44:41 +0000
+Message-ID: <1362494681-11419-1-git-send-email-avarab@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 05 15:45:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCrPN-0002P9-M6
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 13:55:53 +0100
+	id 1UCt7C-0001KY-0O
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 15:45:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752852Ab3CEMz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 07:55:27 -0500
-Received: from mail.mnsspb.ru ([84.204.75.2]:51932 "EHLO mail.mnsspb.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752441Ab3CEMz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 07:55:26 -0500
-X-Greylist: delayed 704 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Mar 2013 07:55:26 EST
-Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1UCrDW-0007GB-4k; Tue, 05 Mar 2013 16:43:38 +0400
-Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
-	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1UCrDR-0008Lp-Ja; Tue, 05 Mar 2013 16:43:33 +0400
-X-Mailer: git-send-email 1.8.2.rc2.353.gd2380b4
+	id S1756185Ab3CEOos convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Mar 2013 09:44:48 -0500
+Received: from mail-ee0-f43.google.com ([74.125.83.43]:48934 "EHLO
+	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754580Ab3CEOor (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 09:44:47 -0500
+Received: by mail-ee0-f43.google.com with SMTP id c50so4859164eek.16
+        for <git@vger.kernel.org>; Tue, 05 Mar 2013 06:44:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=ExvEa2JnFBiCDRG9Fauv+P0r59tAglJi0QTCB07hjUI=;
+        b=xVQdB95TRXF9vQd6MefPXFmK53eDFSsH79CAvGGHRnpj92HE0CASzygDYMSsKiEFLW
+         qlZe4WHtelLWT/M0PyzlzS93CIiKczAZOk54peFm9EQ0xBbqZdliHSXBxubY7uhqwZst
+         GUuuLX88J9ftmm6s6l9ohkGPdHNmo+Bvhn/EdLZNrFrxdePTNDZ7SatfPFc1rLwUzxiJ
+         y+Vn4c99c9qPMg7/ZTc4+P+6mPZrp0rTXbhgBjjlZv7jSKBwQG40ZBlo1i62jVoANY7P
+         dH01xMdr0PyZNcGNS3QeybQtwUgpq/Zbob/SHS3Fk0f6d1MrV2auj3IdueFOGj+WBPc1
+         /3SQ==
+X-Received: by 10.15.34.198 with SMTP id e46mr71077140eev.27.1362494686051;
+        Tue, 05 Mar 2013 06:44:46 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by mx.google.com with ESMTPS id 44sm37765847eek.5.2013.03.05.06.44.44
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 05 Mar 2013 06:44:45 -0800 (PST)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217449>
 
-Commit d8cf908c (config.mak.in: remove unused definitions) removed
+Change the semantics of "git <alias> --help" to show the help for the
+command <alias> is aliased to, instead of just saying:
 
-    exec_prefix = @exec_prefix@
+    `git <alias>' is aliased to `<whatever>'
 
-from config.mak.in, because nobody directly used ${exec_prefix}, but
-overlooked that other autoconf definitions could indirectly expand that
-variable.
+E.g. if you have "checkout" aliased to "co" you won't get:
 
-For example the following snippet from config.mak.in
+    $ git co --help
+    `git co' is aliased to `checkout'
 
-    prefix = @prefix@
-    bindir = @bindir@
-    gitexecdir = @libexecdir@/git-core
-    datarootdir = @datarootdir@
-    template_dir = @datadir@/git-core/templates
-    sysconfdir = @sysconfdir@
+But will instead get the manpage for git-checkout. The behavior this
+is replacing was originally added by Jeff King in 2156435. I'm
+changing it because of this off-the-cuff comment on IRC:
 
-is expanded to
+    14:27:43 <@Tux> git can be very unhelpful, literally:
+    14:27:46 <@Tux> $ git co --help
+    14:27:46 <@Tux> `git co' is aliased to `checkout'
+    14:28:08 <@Tux> I know!, gimme the help for checkout, please
 
-    prefix = /home/kirr/local/git
-    bindir = ${exec_prefix}/bin                             <-- HERE
-    gitexecdir = ${exec_prefix}/libexec/git-core            <--
-    datarootdir = ${prefix}/share
-    template_dir = ${datarootdir}/git-core/templates
-    sysconfdir = ${prefix}/etc
+And because I also think it makes more sense than showing you what the
+thing is aliased to.
 
-on my system, after `configure --prefix=$HOME/local/git`
-
-and withot exec_prefix being defined there I get an error on
-install:
-
-    install -d -m 755 '/bin'
-    install -d -m 755 '/libexec/git-core'
-    install: cannot create directory `/libexec': Permission denied
-    Makefile:2292: recipe for target `install' failed
-
-Fix it.
-
-Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
 ---
- config.mak.in | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/help.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/config.mak.in b/config.mak.in
-index 7440687..e6a6d0f 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -12,6 +12,7 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
- #INSTALL = @INSTALL@		# needs install-sh or install.sh in sources
- 
- prefix = @prefix@
-+exec_prefix = @exec_prefix@
- bindir = @bindir@
- gitexecdir = @libexecdir@/git-core
- datarootdir = @datarootdir@
--- 
-1.8.2.rc2.353.gd2380b4
+diff --git a/builtin/help.c b/builtin/help.c
+index d1d7181..fdb3312 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -417,6 +417,7 @@ int cmd_help(int argc, const char **argv, const cha=
+r *prefix)
+ {
+ 	int nongit;
+ 	const char *alias;
++	const char *show_help_for;
+ 	enum help_format parsed_help_format;
+ 	load_command_list("git-", &main_cmds, &other_cmds);
+=20
+@@ -449,20 +450,21 @@ int cmd_help(int argc, const char **argv, const c=
+har *prefix)
+=20
+ 	alias =3D alias_lookup(argv[0]);
+ 	if (alias && !is_git_command(argv[0])) {
+-		printf_ln(_("`git %s' is aliased to `%s'"), argv[0], alias);
+-		return 0;
++		show_help_for =3D alias;
++	} else {
++		show_help_for =3D argv[0];
+ 	}
+=20
+ 	switch (help_format) {
+ 	case HELP_FORMAT_NONE:
+ 	case HELP_FORMAT_MAN:
+-		show_man_page(argv[0]);
++		show_man_page(show_help_for);
+ 		break;
+ 	case HELP_FORMAT_INFO:
+-		show_info_page(argv[0]);
++		show_info_page(show_help_for);
+ 		break;
+ 	case HELP_FORMAT_WEB:
+-		show_html_page(argv[0]);
++		show_html_page(show_help_for);
+ 		break;
+ 	}
+=20
+--=20
+1.7.10.4
