@@ -1,93 +1,128 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] push: --follow-tag
-Date: Tue, 5 Mar 2013 14:27:52 -0500
-Message-ID: <20130305192752.GA13335@sigill.intra.peff.net>
-References: <7vd2vewu24.fsf@alter.siamese.dyndns.org>
- <7v6216wtrk.fsf@alter.siamese.dyndns.org>
- <20130305082204.GB13552@sigill.intra.peff.net>
- <5135DBE5.6080909@alum.mit.edu>
- <20130305182255.GB10928@sigill.intra.peff.net>
- <7v6215u05k.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH/RFC] Changing submodule foreach --recursive to be depth-first,
+ --parent option to execute command in supermodule as well
+Date: Tue, 05 Mar 2013 21:51:02 +0100
+Message-ID: <51365AB6.2010602@web.de>
+References: <CA+aSAWuoxZkSnRybhefnFr9ngs3tHmt6hAH4o0ebjYKvjJ-vpw@mail.gmail.com> <51351CF5.7010308@web.de> <7vhakqwz1e.fsf@alter.siamese.dyndns.org> <20130305075901.GB4677@sandbox-ub> <7vhakpvnex.fsf@alter.siamese.dyndns.org> <CA+aSAWvQj2wuJX3ENNn7n_pMJjA6nauve5BLRugiTuhWN25Ctg@mail.gmail.com> <7vboaxu23y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Eric Cousineau <eacousineau@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 05 20:28:24 2013
+X-From: git-owner@vger.kernel.org Tue Mar 05 21:51:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCxXB-00051A-Kn
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 20:28:21 +0100
+	id 1UCypo-0001rR-Lo
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 21:51:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757578Ab3CET1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 14:27:55 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35511 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756868Ab3CET1z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 14:27:55 -0500
-Received: (qmail 17501 invoked by uid 107); 5 Mar 2013 19:29:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Mar 2013 14:29:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Mar 2013 14:27:52 -0500
-Content-Disposition: inline
-In-Reply-To: <7v6215u05k.fsf@alter.siamese.dyndns.org>
+	id S1757577Ab3CEUvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 15:51:14 -0500
+Received: from mout.web.de ([212.227.17.11]:49162 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757267Ab3CEUvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 15:51:14 -0500
+Received: from [192.168.178.41] ([91.3.160.134]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0Lz3FM-1UqfAS0TAG-014PkJ; Tue, 05 Mar 2013 21:51:08
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+In-Reply-To: <7vboaxu23y.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:Fl80/6wzTqn75UUS/f8hYtwi3tVJgXFiYEJdlmnhYtA
+ BpcypQ2k9MeTbQhU42PSlE7pNb9ulfqyF5PGxehlB/Ac2380tJ
+ iHFVDLz8F17b+0HEhoMOHANCw9ObsNdej/nvYIspyhFXW6+nIh
+ twQ4F8N94WLMMqZ2DD8jnqKl2iD57e8BD+qlPJJG+gZSkxY/uG
+ qWhCHdu5aodAkgghiQMhQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217477>
 
-On Tue, Mar 05, 2013 at 11:17:11AM -0800, Junio C Hamano wrote:
-
-> I may have tentatively tagged the tip of 'master' as v1.8.2 in my
-> private repository, started the integration testing, but may not be
-> confident enough to push out the branch nor the tag yet.  I may have
-> an experimental topic that I want to share with others before I am
-> done with the release to unblock them, and the topic may build on
-> the 'master' I may or may not want to redo before the release.
+Am 05.03.2013 19:34, schrieb Junio C Hamano:
+> Eric Cousineau <eacousineau@gmail.com> writes:
 > 
-> I can do so with "git push github jc/topic" (no --follow-tags).
-> After doing such a "you may want to start with this" push, I can
-> continue working on the release, and the 'master' branch may turn
-> out to be good to go without redoing.
+>> Would these be the correct behaviors of Heiko's implementation?
 > 
-> A later "git push github --follow-tags master" in such a case should
-> send v1.8.2 out.  It is inexcuable to break it, saying "Oh, I've
-> seen that commit already---it is part of the previous update to
-> jc/topic".  That defeats the whole point of --follow-tags.
+> I do not think Heiko already has an implementation, but let's try to
+> see how each example makes sense.
+> 
+>> git submodule foreach # Empty command, pre-order
+>> git submodule foreach --pre-order # Same behavior
+>> git submodule foreach --post-order # Empty command, post-order
+> 
+> OK.  The last one shows "I am here" output differently from the
+> other two, but otherwise they are all no-op.
+> 
+>> git submodule foreach 'frotz' # Do 'frotz' pre-order in each submodule
+> 
+> OK.  And it would be the same if you said either one of:
+> 
+> 	git submodule foreach --pre-order 'frotz'
+> 	git submodule foreach --pre-order='frotz'
+> 
+>> git submodule foreach --post-order 'frotz' # Do 'frotz' post-order in
+>> each submodule
+> 
+> OK.
+> 
+>> git submodule foreach --pre-order='frotz' --post-order='shimmy' # Do
+>> 'frotz' pre-order and 'shimmy' post-order in each submodule
+> 
+> OK.
+> 
+>> git submodule foreach --post-order='shimmy' 'frotz' # Invalid usage of
+>> the command
+> 
+> I would expect this to behave exactly the same as:
+> 
+> 	git submodule foreach \
+>         	--post-order=shimmy \
+>                 --pre-order=frotz
+> 
+>> git submodule foreach --post-order --pre-order #
+> 
+> I expect it to behave exactly the same as:
+> 
+> 	git submodule foreach --post-order=: --pre-order=:
 
-That depends on the specifics of the rule. If the rule is "any commit
-that the server already has", then yes, it runs afoul of that problem.
-But what if it is "any commit in the ref update being sent"? That is, we
-would look at the range "origin/master..master" and send any tags that
-point to commits in that range.
+I'd favor to just drop the --pre-order option and do this:
 
-> The other "tags at the tip" is slightly less problematic than
-> "ignore the commits the receiving end has already seen", but it will
-> break if I tag the tip of 'maint' as v1.8.1.6, continue working
-> without being able to push perhaps due to network disruption, and
-> have already started building towards v1.8.1.7 when the network
-> comes back.  'maint' may be past v1.8.1.6 and its tip won't be
-> pointing at that tag, but it still is missing from the public
-> repository.
+  foreach [--recursive] [--post-order <command>] [<command>]
 
-Right, I think "tags at the tip" is too likely to miss things you did
-want to send.
+Me thinks pre-order is a sane default and we shouldn't add an
+explicit option for that. And even with current Git you can
+simply give no command at all and it'll show you all the
+submodules it enters without doing anything in them, so we'd
+only need to add the --post-order handling anyway (and fix the
+synopsis by adding square brackets around the command while at
+it, as that is optional).
 
-> While I agree with your goal to make it safer to use "push", both
-> "ignore commits that the receiving end already saw" and "only look
-> at the commits at the tip being sent" castrate the option too much
-> to the point that it is meaningless.  The whole point of asking
-> explicitly with the "--follow-tags" option to "push" to push out
-> relevant tags is, eh, to push out relevant tags.  I do not think it
-> is magical at all.  "backfill" is an integral part of the option.
+>> It should not be too hard to have this functionality affect the
+>> --include-super command as well.
+> 
+> I would assume that
+> 
+> 	git submodule foreach --pre-order=A --post-order=B --include-super
+> 
+> would be identical to running
+> 
+> 	A &&
+>         git submodule foreach --pre-order=A --post-order=B &&
+>         B
+>
+> I am not entirely convinced we would want --include-super in the
+> first place, though.  It does not belong to "submodule foreach";
+> it is doing something _outside_ the submoudules.
 
-I know, and I'm willing to accept that the right resolution is "we
-should not have this feature" (or possibly "the documentation must warn
-about caveats of the feature). I'm just worried about it accidentally
-being misused and causing problems.
-
--Peff
+I totally agree with that. First, adding --include-super does not
+belong into the --post-order patch at all, as that is a different
+topic (even though it belongs to the same use case Eric has). Also
+the reason why we are thinking about adding the --post-order option
+IMO cuts the other way for --include-super: It is so easy to do
+that yourself I'm not convinced we should add an extra option to
+foreach for that, especially as it has nothing to do with submodules.
+So I think we should just drop --include-super.
