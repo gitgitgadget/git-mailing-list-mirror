@@ -1,74 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] reflog: fix typo in "reflog expire" clean-up codepath
-Date: Tue, 05 Mar 2013 13:39:06 -0800
-Message-ID: <7vtxopsf0l.fsf@alter.siamese.dyndns.org>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: rebase destroys branches
+Date: Tue, 5 Mar 2013 22:04:02 -0000
+Organization: OPDS
+Message-ID: <BF397CFFF4D4468384AEB32BC18A0D2B@PhilipOakley>
+References: <C057AC9B02D06A49810E9597C11F55BF14DFE51C9F@dnzwgex2.datacom.co.nz> <64FF012BC4AF45C4A5067DE93FD9FE17@PhilipOakley> <C057AC9B02D06A49810E9597C11F55BF14DFE5214F@dnzwgex2.datacom.co.nz>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 05 22:39:42 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Gene Thomas [DATACOM]" <Gene.Thomas@datacom.co.nz>,
+	"Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 05 23:04:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCzaH-00013t-Bq
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 22:39:41 +0100
+	id 1UCzy9-0000sv-4T
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 23:04:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593Ab3CEVjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 16:39:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59573 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752467Ab3CEVjJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 16:39:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE4EDBE62;
-	Tue,  5 Mar 2013 16:39:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=F
-	jL0NYqIFGfx0fyvh7rzTroc8rc=; b=eIQZkZD2vdxmaOOZUepi8ySzxmt3CnVHW
-	9ZeIFnMDRKctYL/dsnFVBlVVFOzXWr7XE/EPNPpjnKknZAvXngygyxkkV/FqKGbo
-	0dBHeGEOyB2YlGurJkWZgHR+sbzghvokQCEf4UFmhalQa1JqMOP0CY197/Kesoqe
-	OYmq2Wct9Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=oYP
-	XXsjab4l5jPBhAT4F9aGxAqf6XFNvw9pi4zQHzfXGjSLiSWUvrmE1XM8LJ0mwdxz
-	Yly3JW+AGuqXABIkZVXE/8hHJfAuP+a0OoGaOLZiAuQi2c2YOnHPQTdmepPhiOI4
-	149+OgGNkpFS9etoRNR4Bad0MmJxqstkiTekStzA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E32D3BE60;
-	Tue,  5 Mar 2013 16:39:08 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C4DDBE5E; Tue,  5 Mar 2013
- 16:39:08 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1C4E761E-85DD-11E2-B87D-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754410Ab3CEWDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 17:03:54 -0500
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:13915 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753317Ab3CEWDy (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Mar 2013 17:03:54 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ar4MAJxiNlFZ8rke/2dsb2JhbABEjiO2QgEDAYFwF3N0AQGBGwEBEQIFAQEFCAEBLh4BASwBAQMFAgEDEQQBAQoeBxQBBBoGBwYJCAYBEggCAQIDAYU4BwGCRqw8kCONSzsedoJZYQOINoVlmR2DCA
+X-IronPort-AV: E=Sophos;i="4.84,791,1355097600"; 
+   d="scan'208";a="402045212"
+Received: from host-89-242-185-30.as13285.net (HELO PhilipOakley) ([89.242.185.30])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 05 Mar 2013 22:03:51 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217486>
 
-In "reflog expire" we were not clearing the REACHABLE bit from
-objects reachable from the tip of refs we marked earlier.
+From: "Gene Thomas [DATACOM]" <Gene.Thomas@datacom.co.nz>
+Sent: Tuesday, March 05, 2013 1:05 AM
+> Philip,
+>        Thanks for your reply.
+>
+>>The original branch is not 'destroyed', rather the pointer to the
+>>previous tip is within the logs.
+>
+> Is that the 'git log' log or internal logs? Are you sure? There
+> doesn't appear to be a way to checkout that tip of see the log back
+> from that tip.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/reflog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Double checking the [rebase] manual page... [The ref] "ORIG_HEAD is set
+to point at the tip of the branch before the reset."
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index b3c9e27..ef56e7b 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -414,7 +414,7 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
- 		if (cb.unreachable_expire_kind == UE_HEAD) {
- 			struct commit_list *elem;
- 			for (elem = tips; elem; elem = elem->next)
--				clear_commit_marks(tip_commit, REACHABLE);
-+				clear_commit_marks(elem->item, REACHABLE);
- 			free_commit_list(tips);
- 		} else {
- 			clear_commit_marks(tip_commit, REACHABLE);
--- 
-1.8.2-rc2-187-g1ea4a7c
+So your original branch starts there (I just checked one of mine).
+Obviously this is only for the machine that did the rebase, and only has
+the last rebase tip. But then until it's pushed to an open repo no one 
+knows ;-)
+
+>
+>>All the content is still available until the logs expire.
+>
+> So we will be unable to checkout content after a time?
+>
+> Gene Thomas.
+>
+> -----Original Message-----
+> From: Philip Oakley [mailto:philipoakley@iee.org]
+> Sent: Tuesday, 5 March 2013 12:44
+> To: Gene Thomas [DATACOM]; Git List
+> Subject: Re: rebase destroys branches
+>
+> From: "Gene Thomas [DATACOM]" <Gene.Thomas@datacom.co.nz>
+> Sent: Monday, March 04, 2013 11:06 PM
+>>Hello,
+>>I am evaluating git for use in a company. Please correct if I am
+>>wrong.
+>>I am concerned that an inexperienced developer could mistakenly rebase
+>>branches, destroying the original branch.
+>
+> The original branch is not 'destroyed', rather the pointer to the
+> previous tip is within the logs. All the content is still available
+> until the logs expire.
+>
+>>   Attached is a script (Windoze)
+>>that shows the 'topic' branch being moved!, after the rebase we are
+>>unable to see the original branch, read it's history or find it's
+>>commit points.
+>
+>>Surely no operation should remove anything from the repository.
+>>Operations like this irreversibly break the repository . When rebasing
+>>the original branch must be retained.
+>
+> It's easy to misread some of Git's strengths if you have come from
+> other historic corporate 'version control systems' which are often
+> based on drawing office practice of old (e.g. the belief there is a
+> single master to be protected is one misconception for software).
+>
+> Rebase, at the personal level, is an important mechanism for staff to
+> prepare better code and commit messages. Trying to hide the reality
+> will just make your management 'control' less effective as staff work
+> around it and delay check-ins, etc.
+>
+> The broader access control and repo management issues are deliberately
+> not part of Git, and there are good tools for that. e.g. Gitolite.
+>
+>>Yours faithfully,
+>
+>
+>>Gene Thomas.
+>
+> Philip
+>
