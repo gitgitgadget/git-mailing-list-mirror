@@ -1,77 +1,85 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: auto merge bug
-Date: Tue, 05 Mar 2013 21:56:47 +0100
-Message-ID: <51365C0F.8070207@op5.se>
-References: <CAOFaZ+5F1BcWNU=AkcnS53bQt1VfAfsFjp9EvRCL=7kYiU1ejg@mail.gmail.com> <20130305090326.GC13552@sigill.intra.peff.net> <7vtxopvoky.fsf@alter.siamese.dyndns.org> <20130305175904.GC9379@sigill.intra.peff.net> <7va9qhu1jk.fsf@alter.siamese.dyndns.org>
+From: Jose Garcia Juanino <jjuanino@gmail.com>
+Subject: Git hook commit similar to subversion start-commit hook
+Date: Tue, 5 Mar 2013 22:14:42 +0100
+Message-ID: <20130305211440.GA9929@banach>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	David Krmpotic <david.krmpotic@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 05 21:57:20 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZGiS0Q5IWpPtfppv"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 05 22:15:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCyvH-0005or-3q
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 21:57:19 +0100
+	id 1UCzCe-0001HE-NT
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 22:15:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757934Ab3CEU4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 15:56:53 -0500
-Received: from mail-la0-f43.google.com ([209.85.215.43]:49714 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757350Ab3CEU4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 15:56:52 -0500
-Received: by mail-la0-f43.google.com with SMTP id ek20so6560075lab.2
-        for <git@vger.kernel.org>; Tue, 05 Mar 2013 12:56:50 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=Hid1bYidkQjqQgpkBPzEce9AX9ksuYJuHdp2sokTlqg=;
-        b=myHa7ZpBXwJlf/sGvDmPwHakIXCVZy+kJkaa/F4eO86Uva00yYpth/UyCDmM8FsBjE
-         D7k0djUAsEKM3bLdUJYIeX6Pd+dmaqo7lEO2/EqC3ofK6z9icK3tcu51+RBpe3XwYmXY
-         4ckv0He3y0z+uB4zl0iy91pyib3nDKKSy4ZmqM9maSyaMJWb5rO8aggIEVSZTELgIrXO
-         5qUcHILMGv5TbV+tsO7cE7HlunsinCz5EeX+cd+Nq16OgyWdeM5gKwBAUKOZHbGg++HS
-         JCg/X3oJQyUziODHlGvvp4jegrDsvqH4Dbao3JDRnewd4c0ZhoF0jsaO8uHEvLyU9DLL
-         n9LQ==
-X-Received: by 10.112.88.72 with SMTP id be8mr6637695lbb.116.1362517010471;
-        Tue, 05 Mar 2013 12:56:50 -0800 (PST)
-Received: from vix.int.op5.se (c80-217-218-226.bredband.comhem.se. [80.217.218.226])
-        by mx.google.com with ESMTPS id iq6sm3575226lab.10.2013.03.05.12.56.48
+	id S1756751Ab3CEVOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 16:14:50 -0500
+Received: from mail-wg0-f53.google.com ([74.125.82.53]:54365 "EHLO
+	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755069Ab3CEVOu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 16:14:50 -0500
+Received: by mail-wg0-f53.google.com with SMTP id fn15so6579873wgb.20
+        for <git@vger.kernel.org>; Tue, 05 Mar 2013 13:14:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:x-operating-system:user-agent;
+        bh=JugVpNACreYORfU8gv02bnZNPWgcOgQLzIGzB2d1XAE=;
+        b=0VB9Pal8bmq0FfHaldIHLb6mAfL5y3aR5gY8hLiUW2n+y7zC3vVKgDl8kIsCk7+FbJ
+         siUGZXpMbo/CE/4VGEMHg1UbncQwDLrlY8RnnkpisEyWUnTz/G7jRAvMz3jUEkcDs1bc
+         tC+gCqKIQ7Zsnofoat0k2bn549DpNmlNhzxwldra3TjlaFGqcOsElICCTZtFKAykSYIa
+         bZj253gLb9c0pH9cbun26zDnvse7aspL4WwFzwZKLel/BEtDIoQITL3hFIwsp9qNJKRD
+         ik7n7OtW7DUb5/Mzmq+lKWBi5aOrShLgSsL6Tndx8wbldlBqie3pL+V7rxCtT4kzfDXU
+         zBRQ==
+X-Received: by 10.180.80.73 with SMTP id p9mr18512659wix.22.1362518088794;
+        Tue, 05 Mar 2013 13:14:48 -0800 (PST)
+Received: from banach (193.red-80-26-193.adsl.dynamic.ccgg.telefonica.net. [80.26.193.193])
+        by mx.google.com with ESMTPS id q2sm19193109wiz.8.2013.03.05.13.14.47
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 05 Mar 2013 12:56:49 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130219 Thunderbird/17.0.3
-In-Reply-To: <7va9qhu1jk.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQk2wIIDjoBR9fvXfBgXVUYAkI9OTk475IupAovzve8bMm1W9Vo7YmGplp8k+zPJ74mf/dAq
+        Tue, 05 Mar 2013 13:14:47 -0800 (PST)
+Content-Disposition: inline
+X-Operating-System: FreeBSD 9.1-RELEASE
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217480>
 
-On 03/05/2013 07:47 PM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> I'm also not sure how useful those really are in practice. I have not
->> used "union" myself ever. And in the example that started this thread, I
->> find the use of "union" slightly dubious.
-> 
-> Yeah, I do not think anybody sane used "union" outside toy examples.
 
-I do, for lists used in tests or to generate perfect hashes from. It's
-really quite handy for things like that but totally useless for any
-type of multiline format, or even .ini style files unless you're very,
-very careful with how you write them.
+--ZGiS0Q5IWpPtfppv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Hello,
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Is there any hook in Git similar to start-commit subversion hook? The
+requirements would be:
+
+1- A hook on the server side (as pre-receive)
+2- It will execute the actions *before* the begin of transaction
+(pre-receive hook needs the references already pushed before).
+
+For example, it would be useful to refuse a push if the server has a
+high load.
+
+I have read man githook, but there is nothing similar.
+
+Best regard, and excuse my poor english.
+
+
+--ZGiS0Q5IWpPtfppv
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (FreeBSD)
+
+iEYEARECAAYFAlE2YD8ACgkQFOo0zaS9RnJ+gQCeKgG2s5UrEvRrhGWUDPOW9BvI
+lP8An0WYIKw8IeYbrp1HlgpTUjwNDhey
+=bHXx
+-----END PGP SIGNATURE-----
+
+--ZGiS0Q5IWpPtfppv--
