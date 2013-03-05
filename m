@@ -1,63 +1,98 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: v3.4 released
-Date: Tue, 5 Mar 2013 12:25:29 +0530
-Message-ID: <CAMK1S_jBa4Z=Hb4ii-KQALQkycgwgsoCDbKZO=2w=FSZg8tggw@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v6] submodule: add 'deinit' command
+Date: Tue, 5 Mar 2013 08:29:46 +0100
+Message-ID: <20130305072944.GA4677@sandbox-ub>
+References: <5112C6F6.4030607@web.de>
+ <CABURp0oQcPotK20QcqCG1pGQPVoa4RnN2nDA=iQoKS99gnPEAQ@mail.gmail.com>
+ <511BEA75.6000002@web.de>
+ <7vip5w6l8s.fsf@alter.siamese.dyndns.org>
+ <5121384B.10009@web.de>
+ <7v38wufu5t.fsf@alter.siamese.dyndns.org>
+ <51227EFE.6030908@web.de>
+ <51351018.20301@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>,
-	gitolite-announce@googlegroups.com
-X-From: git-owner@vger.kernel.org Tue Mar 05 07:56:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phil Hord <phil.hord@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 05 08:30:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCln3-0002qT-Fv
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 07:55:57 +0100
+	id 1UCmKH-000707-5a
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 08:30:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752282Ab3CEGzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 01:55:31 -0500
-Received: from mail-we0-f176.google.com ([74.125.82.176]:59042 "EHLO
-	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751099Ab3CEGza (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 01:55:30 -0500
-Received: by mail-we0-f176.google.com with SMTP id s43so5411217wey.7
-        for <git@vger.kernel.org>; Mon, 04 Mar 2013 22:55:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to
-         :content-type;
-        bh=zx466AY0nAMr+fK7t7TI0SaIL4xxLT5sioOMYT8noeU=;
-        b=lCwvjB3xMm3fpWrRtATCJVhUAx5fhpCCyuI166hKgVRJ3bt9UiZS8MhilwZP2XbjqC
-         hU+d6C9vkljk2eKqiszRTJp7lP1RCe17di6HjFIAMbrbQg5vJzm6EqIDFr9Mkhto0l/1
-         S6qeprJRsfNMZaIsVb/CGh1dtxLyILjWsDcHbbAAdKxt2JlX66l94hd8QeXZ+yIIw6Hs
-         3PQrTf4iwb5y/g+xLYpNCdI8i+wvnJHa5dPjABtF9ieSDsp3iT5/yKZuUpR14CvlpELk
-         /2p5UMM6fRJP9a0kTkKIHEfE7WDl8dsWAGyJG8F+vUIMeH2bqeHXhdd2ad1RedJpW9Yf
-         FZPw==
-X-Received: by 10.180.94.135 with SMTP id dc7mr16318770wib.11.1362466529268;
- Mon, 04 Mar 2013 22:55:29 -0800 (PST)
-Received: by 10.194.153.161 with HTTP; Mon, 4 Mar 2013 22:55:29 -0800 (PST)
+	id S1752791Ab3CEH3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 02:29:51 -0500
+Received: from smtprelay02.ispgateway.de ([80.67.31.40]:60833 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751792Ab3CEH3u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 02:29:50 -0500
+Received: from [77.21.76.82] (helo=localhost)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1UCmJm-0001c1-LW; Tue, 05 Mar 2013 08:29:46 +0100
+Content-Disposition: inline
+In-Reply-To: <51351018.20301@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217433>
 
-mostly minor fixes but the rc file format change is in now.
+Hi,
 
-Also, I souped up the refex-expr a bit; here's a teaser:
+On Mon, Mar 04, 2013 at 10:20:24PM +0100, Jens Lehmann wrote:
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 004c034..44f70c4 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -547,6 +548,80 @@ cmd_init()
+>  }
+> 
+[...]
+> +
+> +	module_list "$@" |
+> +	while read mode sha1 stage sm_path
+> +	do
+> +		die_if_unmatched "$mode"
+> +		name=$(module_name "$sm_path") || exit
+> +
+> +		# Remove the submodule work tree (unless the user already did it)
+> +		if test -d "$sm_path"
+> +		then
+> +			# Protect submodules containing a .git directory
+> +			if test -d "$sm_path/.git"
+> +			then
+> +				echo >&2 "$(eval_gettext "Submodule work tree '\$sm_path' contains a .git directory")"
+> +				die "$(eval_gettext "(use 'rm -rf' if you really want to remove it including all of its history)")"
+> +			fi
+> +
+> +			if test -z "$force"
+> +			then
+> +				git rm -n "$sm_path" ||
+> +				die "$(eval_gettext "Submodule work tree '\$sm_path' contains local modifications; use '-f' to discard them")"
 
-  * user u2 is allowed to push either 'doc/' or 'src/' but not both
+Minor nit. IMO, there is an indentation for the || missing here. Maybe
+Junio can squash that in on his side?
 
-        repo    foo
-            RW+                         =   u1 u2 u3
+> +			fi
+> +			rm -rf "$sm_path" || say "$(eval_gettext "Could not remove submodule work tree '\$sm_path'")"
+> +		fi
+> +
+> +		mkdir "$sm_path" || say "$(eval_gettext "Could not create empty submodule directory '\$sm_path'")"
 
-            RW+ VREF/NAME/doc/                      =   u2
-            RW+ VREF/NAME/src/                      =   u2
-            -   VREF/NAME/doc/ and VREF/NAME/src/   =   u2
+[...]
 
-Interested people can take a look at src/VREF/refex-expr for details
-https://github.com/sitaramc/gitolite/blob/master/src/VREF/refex-expr
+Everything else looks good to me.
 
--- 
-Sitaram
+Cheers Heiko
