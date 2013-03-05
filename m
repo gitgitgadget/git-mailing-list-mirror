@@ -1,38 +1,38 @@
 From: Robert Irelan <rirelan@epic.com>
 Subject: RE: "git commit" fails due to spurious file in index
-Date: Tue, 5 Mar 2013 15:30:04 +0000
-Message-ID: <2D9BD788B02ABA478C57929170AF952B7637B5@EXCH-MBX-3.epic.com>
+Date: Tue, 5 Mar 2013 15:30:29 +0000
+Message-ID: <2D9BD788B02ABA478C57929170AF952B7637BC@EXCH-MBX-3.epic.com>
 References: <2D9BD788B02ABA478C57929170AF952B7622B5@EXCH-MBX-3.epic.com>
- <87y5e2op9p.fsf@pctrast.inf.ethz.ch>
+ <5135CBBB.60102@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Mar 05 16:30:48 2013
+To: =?utf-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 05 16:31:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCtpE-00079G-IK
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 16:30:44 +0100
+	id 1UCtpW-0007TR-SX
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 16:31:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755764Ab3CEPaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 10:30:16 -0500
-Received: from goon4.epic.com ([199.204.56.118]:49941 "EHLO goon4.epic.com"
+	id S1755871Ab3CEPag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 10:30:36 -0500
+Received: from goon4.epic.com ([199.204.56.118]:50010 "EHLO goon4.epic.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755179Ab3CEPaP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Mar 2013 10:30:15 -0500
+	id S1755838Ab3CEPaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 10:30:35 -0500
 Received: from EXCH-HUB-1.epic.com (exch-hub-1.epic.com [10.8.7.181])
-	by goon4.epic.com (8.13.8/8.13.8) with ESMTP id r25FU5Kg022671;
-	Tue, 5 Mar 2013 09:30:10 -0600
+	by goon4.epic.com (8.13.8/8.13.8) with ESMTP id r25FUVcq023200;
+	Tue, 5 Mar 2013 09:30:35 -0600
 Received: from EXCH-MBX-3.epic.com ([fe80::89d9:a0e3:3740:4f53]) by
  EXCH-HUB-1.epic.com ([fe80::90c1:a07:c011:1fde%10]) with mapi id
- 14.02.0342.003; Tue, 5 Mar 2013 09:30:06 -0600
+ 14.02.0342.003; Tue, 5 Mar 2013 09:30:31 -0600
 Thread-Topic: "git commit" fails due to spurious file in index
-Thread-Index: Ac4Y/ss6LRrQulaXQ/6loYEIwo4NdwAHGHR+ACaEyCA=
-In-Reply-To: <87y5e2op9p.fsf@pctrast.inf.ethz.ch>
+Thread-Index: Ac4Y/ss6LRrQulaXQ/6loYEIwo4NdwAwWvuAAAJ5ZKA=
+In-Reply-To: <5135CBBB.60102@web.de>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -42,53 +42,69 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217452>
 
-Yes, you're correct, it was a bug in my pre-commit hook. Thanks!
-
-For posterity, the issue is that I had the following line:
-
-    git diff -z --cached --name-only | egrep -z '\.(pl|pm|t)$' | \
-            while read -d'' -r f; do ...
-
-In Bash, when `read` is passed the `-d` option with a zero-length
-string argument, read will split on null characters (`'\0'`). However,
-I did not put a space between the `-d` option and the argument, so
-it took the `-` in the next argument `-r` as the delimiter. My commit
-includes Perl files with `-` characters in the name, which I had not
-previously committed to this repo, which is why I only ran into the
-problem now. I fixed it by changing the read command to
-`read -r -d '' f`, which now has the crucial space between -d and
-its argument, making the zero-length string a separate argument.
-
-Robert Irelan | Server Systems | Epic | (608) 271-9000
-
-
------Original Message-----
-From: Thomas Rast [mailto:trast@student.ethz.ch] 
-Sent: Monday, March 04, 2013 2:59 PM
-To: Robert Irelan
-Cc: git@vger.kernel.org
-Subject: Re: "git commit" fails due to spurious file in index
-
-Robert Irelan <rirelan@epic.com> writes:
-
-> Now, when I run 'git add admin_script/setup' to add the new directory 
-> to the repo and then try to commit, I receive the following message:
->
->     $ git commit
->     mv: cannot stat `admin_scripts/setup/2012/setup': No such file or 
-> directory
->
-> The error message is correct in that `admin_scripts/setup/2012/setup` 
-> does not exist, either as a file or as a directory. However, I'm not 
-> attempting to add this path at all. Using grep, I've confirmed that 
-> the only place this path appears in any of my files is in `.git/index`.
-
-To me that sounds like the message comes from a commit hook.  Can you check if you have anything in .git/hooks/, especially pre-commit?
-
-There really isn't any other good reason why 'git commit' would call 'mv' (plain mv, not git!).
-
---
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Tm9wZSwgaXQgd2FzIGEgYnVnIGluIG15IHByZS1jb21taXQgaG9vay4gU2VlIHRoZSBvdGhlciBy
+ZXNwb25zZSB0byB0aGlzIG1lc3NhZ2UuDQoNClJvYmVydCBJcmVsYW4gfCBTZXJ2ZXIgU3lzdGVt
+cyB8IEVwaWMgfCAoNjA4KSAyNzEtOTAwMA0KDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0t
+DQpGcm9tOiBUb3JzdGVuIELDtmdlcnNoYXVzZW4gW21haWx0bzp0Ym9lZ2lAd2ViLmRlXSANClNl
+bnQ6IFR1ZXNkYXksIE1hcmNoIDA1LCAyMDEzIDQ6NDEgQU0NClRvOiBSb2JlcnQgSXJlbGFuDQpD
+YzogZ2l0QHZnZXIua2VybmVsLm9yZw0KU3ViamVjdDogUmU6ICJnaXQgY29tbWl0IiBmYWlscyBk
+dWUgdG8gc3B1cmlvdXMgZmlsZSBpbiBpbmRleA0KDQpPbiAwNC4wMy4xMyAxOToxNSwgUm9iZXJ0
+IElyZWxhbiB3cm90ZToNCj4gSGVsbG8gYWxsOg0KPiANCj4gVGhpcyBpcyBteSBmaXJzdCB0aW1l
+IHBvc3RpbmcgdG8gdGhpcyBtYWlsaW5nIGxpc3QsIGJ1dCBpdCBhcHBlYXJzIHRvIA0KPiBtZSwg
+dGhyb3VnaCBhIEdvb2dsZSBzZWFyY2gsIHRoYXQgdGhpcyBpcyB3aGVyZSB5b3UgZ28gdG8gcmVw
+b3J0IHdoYXQgDQo+IG1pZ2h0IGJlIGJ1Z3MuIEknbSBub3Qgc3VyZSBpZiB0aGlzIGlzIGEgYnVn
+IG9yIG5vdCwgYnV0IGl0IGlzIA0KPiBteXN0ZXJpb3VzIHRvIG1lLg0KPiANCj4gTXkgZ2l0IHJl
+cG9zaXRvcnkgaGFzIHRoaXMgZGlyZWN0b3J5IHN0cnVjdHVyZSAoSSBkb24ndCBrbm93IGlmIHRo
+ZSANCj4gZmlsZSBuYW1lcyBhcmUgbmVjZXNzYXJ5IG9yIG5vdDsgb25seSB0aGUgbGVhZiBkaXJl
+Y3RvcmllcyBjb250YWluIGZpbGVzKToNCj4gDQo+ICAgICAkIHRyZWUgLWFkIC1JLmdpdA0KPiAg
+ICAgLg0KPiAgICAg4pSU4pSA4pSAIGFkbWluX3NjcmlwdHMNCj4gICAgICAgICDilJzilIDilIAg
+aW50ZWdjaGsNCj4gICAgICAgICDilIIgICDilJzilIDilIAgMjAxMg0KPiAgICAgICAgIOKUgiAg
+IOKUlOKUgOKUgCAyMDE0DQo+ICAgICAgICAg4pSc4pSA4pSAIGpybmFkbWluDQo+ICAgICAgICAg
+4pSCICAg4pSc4pSA4pSAIDIwMTINCj4gICAgICAgICDilIIgICDilJTilIDilIAgMjAxNA0KPiAg
+ICAgICAgIOKUlOKUgOKUgCBsb2dhcmNoaXZlcg0KPiAgICAgICAgICAgICDilJzilIDilIAgMjAx
+Mg0KPiAgICAgICAgICAgICDilJTilIDilIAgMjAxNA0KPiANCj4gICAgIDEwIGRpcmVjdG9yaWVz
+DQo+IA0KPiBUaGUgbGFzdCBjb21taXQgaW4gdGhpcyByZXBvIHdhcyBhIHJlYXJyYW5nZW1lbnQg
+b2YgdGhlIGhpZXJhcmNoeSANCj4gY2FycmllZCBvdXQgdXNpbmcgYGdpdCBtdmAuICBCZWZvcmUs
+IHRoZSBkaXJlY3Rvcnkgc3RydWN0dXJlIHdlbnQgDQo+IGBhZG1pbl9zY3JpcHRzL3ZlcnNpb24v
+c2NyaXB0X25hbWVgIGluc3RlYWQgb2YgDQo+IGBhZG1pbl9zY3JpcHRzL3NjcmlwdF9uYW1lL3Zl
+cnNpb25gLg0KPiANCj4gTm93IEknbSBhdHRlbXB0aW5nIHRvIHNvbWUgbmV3IGZpbGVzIHRoYXQg
+SSd2ZSBhbHJlYWR5IGNyZWF0ZWQgaW50byANCj4gdGhlIHJlcG9zaXRvcnksIHNvIHRoYXQgdGhl
+IHJlcG8gbm93IGxvb2tzIGxpa2UgdGhpcyAoYHNldHVwLzIwMTJgIA0KPiBjb250YWlucyBmaWxl
+cywgd2hpbGUgYHNldHVwLzIwMTRgIGlzIGVtcHR5KToNCj4gDQo+ICAgICAkIHRyZWUgLWFkIC1J
+LmdpdA0KPiAgICAgLg0KPiAgICAg4pSU4pSA4pSAIGFkbWluX3NjcmlwdHMNCj4gICAgICAgICDi
+lJzilIDilIAgaW50ZWdjaGsNCj4gICAgICAgICDilIIgICDilJzilIDilIAgMjAxMg0KPiAgICAg
+ICAgIOKUgiAgIOKUlOKUgOKUgCAyMDE0DQo+ICAgICAgICAg4pSc4pSA4pSAIGpybmFkbWluDQo+
+ICAgICAgICAg4pSCICAg4pSc4pSA4pSAIDIwMTINCj4gICAgICAgICDilIIgICDilJTilIDilIAg
+MjAxNA0KPiAgICAgICAgIOKUnOKUgOKUgCBsb2dhcmNoaXZlcg0KPiAgICAgICAgIOKUgiAgIOKU
+nOKUgOKUgCAyMDEyDQo+ICAgICAgICAg4pSCICAg4pSU4pSA4pSAIDIwMTQNCj4gICAgICAgICDi
+lJTilIDilIAgc2V0dXANCj4gICAgICAgICAgICAg4pSc4pSA4pSAIDIwMTINCj4gICAgICAgICAg
+ICAg4pSU4pSA4pSAIDIwMTQNCj4gDQo+ICAgICAxMyBkaXJlY3Rvcmllcw0KPiANCj4gTm93LCB3
+aGVuIEkgcnVuICdnaXQgYWRkIGFkbWluX3NjcmlwdC9zZXR1cCcgdG8gYWRkIHRoZSBuZXcgZGly
+ZWN0b3J5IA0KPiB0byB0aGUgcmVwbyBhbmQgdGhlbiB0cnkgdG8gY29tbWl0LCBJIHJlY2VpdmUg
+dGhlIGZvbGxvd2luZyBtZXNzYWdlOg0KPiANCj4gICAgICQgZ2l0IGNvbW1pdA0KPiAgICAgbXY6
+IGNhbm5vdCBzdGF0IGBhZG1pbl9zY3JpcHRzL3NldHVwLzIwMTIvc2V0dXAnOiBObyBzdWNoIGZp
+bGUgb3IgDQo+IGRpcmVjdG9yeQ0KPiANCj4gVGhlIGVycm9yIG1lc3NhZ2UgaXMgY29ycmVjdCBp
+biB0aGF0IGBhZG1pbl9zY3JpcHRzL3NldHVwLzIwMTIvc2V0dXBgIA0KPiBkb2VzIG5vdCBleGlz
+dCwgZWl0aGVyIGFzIGEgZmlsZSBvciBhcyBhIGRpcmVjdG9yeS4gSG93ZXZlciwgSSdtIG5vdCAN
+Cj4gYXR0ZW1wdGluZyB0byBhZGQgdGhpcyBwYXRoIGF0IGFsbC4gVXNpbmcgZ3JlcCwgSSd2ZSBj
+b25maXJtZWQgdGhhdCANCj4gdGhlIG9ubHkgcGxhY2UgdGhpcyBwYXRoIGFwcGVhcnMgaW4gYW55
+IG9mIG15IGZpbGVzIGlzIGluIGAuZ2l0L2luZGV4YC4NCj4gDQo+IEFsc28sIEkgY2FuIGNvbW1p
+dCB0byBvdGhlciBwbGFjZXMgaW4gdGhlIHJlcG9zaXRvcnkgd2l0aG91dCANCj4gdHJpZ2dlcmlu
+ZyBhbnkgZXJyb3IuIEluIGFkZGl0aW9uLCBJIGNhbiBjbG9uZSB0aGUgcmVwb3NpdG9yeSB0byBv
+dGhlciANCj4gbG9jYXRpb25zIGFuZCBhcHBseSB0aGUgcHJvYmxlbWF0aWMgY29tbWl0IG1hbnVh
+bGx5LiBUaGlzIGlzIGhvdyBJJ3ZlIA0KPiB3b3JrZWQgYXJvdW5kIHRoZSBwcm9ibGVtIGZvciBu
+b3csIGFuZCBJJ3ZlIG1vdmVkIHRoZSByZXBvc2l0b3J5IA0KPiB0aGF0J3MgZXhoaWJpdGluZyBw
+cm9ibGVtcyB0byBhbm90aGVyIGRpcmVjdG9yeSBhbmQgc3RhcnRlZCB3b3JrIG9uIA0KPiB0aGUg
+Y2xvbmVkIGNvcHkuDQo+IA0KPiBXaHkgaXMgdGhpcyBzcHVyaW91cyBwYXRoIGFwcGVhcmluZyBp
+biB0aGUgaW5kZXg/IElzIGl0IGEgYnVnLCBvciBhIA0KPiBzeW1wdG9tIHRoYXQgbXkgcmVwbyBo
+YXMgYmVlbiBzb21laG93IGNvcnJ1cHRlZD8gQW55IGhlbHAgd291bGQgYmUgDQo+IGdyZWF0bHkg
+YXBwcmVjaWF0ZWQuDQo+IA0KPiBSb2JlcnQgSXJlbGFuIHwgU2VydmVyIFN5c3RlbXMgfCBFcGlj
+IHwgKDYwOCkgMjcxLTkwMDANCllvdSBoYXZlIGNvbWUgdG8gdGhlIHJpZ2h0IGdyb3VwLg0KSXQg
+bWlnaHQgYmUgZGlmZmljdWx0IHRvIHRlbGwgKGF0IGxlYXN0IGZvciBtZSkgaWYgdGhlcmUgaXMg
+YSBidWcgb3IgYSBjb3JydXB0aW9uLCBNYXkgYmUgc29tZSB0ZXN0cyBjb3VsZCBoZWxwIHRvIGJy
+aW5nIG1vcmUgbGlnaHQgaW50byB0aGUgZGFya25lc3M6DQoNCldoYXQgZG9lcyAiZ2l0IHN0YXR1
+cyIgKGluIHRoZSBwcm9ibGVtYXRpYyByZXBvKSB0ZWxsIHlvdT8NCldoYXQgZG9lcyAiZ2l0IGZz
+Y2siIChpbiB0aGUgcHJvYmxlbWF0aWMgcmVwbykgdGVsbCB5b3U/DQpXaGF0IGRvZXMgImdpdCBs
+cy1maWxlcyIgKGluIGJvdGggcmVwb3MpIHRlbGwgeW91Pw0KDQovVG9yc3Rlbg0KDQoNCg0K
