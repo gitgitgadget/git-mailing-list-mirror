@@ -1,110 +1,77 @@
-From: Robert Irelan <rirelan@epic.com>
-Subject: RE: "git commit" fails due to spurious file in index
-Date: Tue, 5 Mar 2013 15:30:29 +0000
-Message-ID: <2D9BD788B02ABA478C57929170AF952B7637BC@EXCH-MBX-3.epic.com>
-References: <2D9BD788B02ABA478C57929170AF952B7622B5@EXCH-MBX-3.epic.com>
- <5135CBBB.60102@web.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] help: show manpage for aliased command on git <alias>
+ --help
+Date: Tue, 05 Mar 2013 16:42:52 +0100
+Message-ID: <5136127C.2090402@viscovery.net>
+References: <1362494681-11419-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: =?utf-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 05 16:31:12 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 05 16:43:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCtpW-0007TR-SX
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 16:31:03 +0100
+	id 1UCu1a-0001S6-8x
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 16:43:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755871Ab3CEPag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 10:30:36 -0500
-Received: from goon4.epic.com ([199.204.56.118]:50010 "EHLO goon4.epic.com"
+	id S1756578Ab3CEPnD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Mar 2013 10:43:03 -0500
+Received: from so.liwest.at ([212.33.55.24]:39067 "EHLO so.liwest.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755838Ab3CEPaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 10:30:35 -0500
-Received: from EXCH-HUB-1.epic.com (exch-hub-1.epic.com [10.8.7.181])
-	by goon4.epic.com (8.13.8/8.13.8) with ESMTP id r25FUVcq023200;
-	Tue, 5 Mar 2013 09:30:35 -0600
-Received: from EXCH-MBX-3.epic.com ([fe80::89d9:a0e3:3740:4f53]) by
- EXCH-HUB-1.epic.com ([fe80::90c1:a07:c011:1fde%10]) with mapi id
- 14.02.0342.003; Tue, 5 Mar 2013 09:30:31 -0600
-Thread-Topic: "git commit" fails due to spurious file in index
-Thread-Index: Ac4Y/ss6LRrQulaXQ/6loYEIwo4NdwAwWvuAAAJ5ZKA=
-In-Reply-To: <5135CBBB.60102@web.de>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.191.131]
+	id S1756015Ab3CEPnC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Mar 2013 10:43:02 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1UCu0z-0002JM-G6; Tue, 05 Mar 2013 16:42:53 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 3BE971660F;
+	Tue,  5 Mar 2013 16:42:53 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+In-Reply-To: <1362494681-11419-1-git-send-email-avarab@gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217453>
 
-Tm9wZSwgaXQgd2FzIGEgYnVnIGluIG15IHByZS1jb21taXQgaG9vay4gU2VlIHRoZSBvdGhlciBy
-ZXNwb25zZSB0byB0aGlzIG1lc3NhZ2UuDQoNClJvYmVydCBJcmVsYW4gfCBTZXJ2ZXIgU3lzdGVt
-cyB8IEVwaWMgfCAoNjA4KSAyNzEtOTAwMA0KDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0t
-DQpGcm9tOiBUb3JzdGVuIELDtmdlcnNoYXVzZW4gW21haWx0bzp0Ym9lZ2lAd2ViLmRlXSANClNl
-bnQ6IFR1ZXNkYXksIE1hcmNoIDA1LCAyMDEzIDQ6NDEgQU0NClRvOiBSb2JlcnQgSXJlbGFuDQpD
-YzogZ2l0QHZnZXIua2VybmVsLm9yZw0KU3ViamVjdDogUmU6ICJnaXQgY29tbWl0IiBmYWlscyBk
-dWUgdG8gc3B1cmlvdXMgZmlsZSBpbiBpbmRleA0KDQpPbiAwNC4wMy4xMyAxOToxNSwgUm9iZXJ0
-IElyZWxhbiB3cm90ZToNCj4gSGVsbG8gYWxsOg0KPiANCj4gVGhpcyBpcyBteSBmaXJzdCB0aW1l
-IHBvc3RpbmcgdG8gdGhpcyBtYWlsaW5nIGxpc3QsIGJ1dCBpdCBhcHBlYXJzIHRvIA0KPiBtZSwg
-dGhyb3VnaCBhIEdvb2dsZSBzZWFyY2gsIHRoYXQgdGhpcyBpcyB3aGVyZSB5b3UgZ28gdG8gcmVw
-b3J0IHdoYXQgDQo+IG1pZ2h0IGJlIGJ1Z3MuIEknbSBub3Qgc3VyZSBpZiB0aGlzIGlzIGEgYnVn
-IG9yIG5vdCwgYnV0IGl0IGlzIA0KPiBteXN0ZXJpb3VzIHRvIG1lLg0KPiANCj4gTXkgZ2l0IHJl
-cG9zaXRvcnkgaGFzIHRoaXMgZGlyZWN0b3J5IHN0cnVjdHVyZSAoSSBkb24ndCBrbm93IGlmIHRo
-ZSANCj4gZmlsZSBuYW1lcyBhcmUgbmVjZXNzYXJ5IG9yIG5vdDsgb25seSB0aGUgbGVhZiBkaXJl
-Y3RvcmllcyBjb250YWluIGZpbGVzKToNCj4gDQo+ICAgICAkIHRyZWUgLWFkIC1JLmdpdA0KPiAg
-ICAgLg0KPiAgICAg4pSU4pSA4pSAIGFkbWluX3NjcmlwdHMNCj4gICAgICAgICDilJzilIDilIAg
-aW50ZWdjaGsNCj4gICAgICAgICDilIIgICDilJzilIDilIAgMjAxMg0KPiAgICAgICAgIOKUgiAg
-IOKUlOKUgOKUgCAyMDE0DQo+ICAgICAgICAg4pSc4pSA4pSAIGpybmFkbWluDQo+ICAgICAgICAg
-4pSCICAg4pSc4pSA4pSAIDIwMTINCj4gICAgICAgICDilIIgICDilJTilIDilIAgMjAxNA0KPiAg
-ICAgICAgIOKUlOKUgOKUgCBsb2dhcmNoaXZlcg0KPiAgICAgICAgICAgICDilJzilIDilIAgMjAx
-Mg0KPiAgICAgICAgICAgICDilJTilIDilIAgMjAxNA0KPiANCj4gICAgIDEwIGRpcmVjdG9yaWVz
-DQo+IA0KPiBUaGUgbGFzdCBjb21taXQgaW4gdGhpcyByZXBvIHdhcyBhIHJlYXJyYW5nZW1lbnQg
-b2YgdGhlIGhpZXJhcmNoeSANCj4gY2FycmllZCBvdXQgdXNpbmcgYGdpdCBtdmAuICBCZWZvcmUs
-IHRoZSBkaXJlY3Rvcnkgc3RydWN0dXJlIHdlbnQgDQo+IGBhZG1pbl9zY3JpcHRzL3ZlcnNpb24v
-c2NyaXB0X25hbWVgIGluc3RlYWQgb2YgDQo+IGBhZG1pbl9zY3JpcHRzL3NjcmlwdF9uYW1lL3Zl
-cnNpb25gLg0KPiANCj4gTm93IEknbSBhdHRlbXB0aW5nIHRvIHNvbWUgbmV3IGZpbGVzIHRoYXQg
-SSd2ZSBhbHJlYWR5IGNyZWF0ZWQgaW50byANCj4gdGhlIHJlcG9zaXRvcnksIHNvIHRoYXQgdGhl
-IHJlcG8gbm93IGxvb2tzIGxpa2UgdGhpcyAoYHNldHVwLzIwMTJgIA0KPiBjb250YWlucyBmaWxl
-cywgd2hpbGUgYHNldHVwLzIwMTRgIGlzIGVtcHR5KToNCj4gDQo+ICAgICAkIHRyZWUgLWFkIC1J
-LmdpdA0KPiAgICAgLg0KPiAgICAg4pSU4pSA4pSAIGFkbWluX3NjcmlwdHMNCj4gICAgICAgICDi
-lJzilIDilIAgaW50ZWdjaGsNCj4gICAgICAgICDilIIgICDilJzilIDilIAgMjAxMg0KPiAgICAg
-ICAgIOKUgiAgIOKUlOKUgOKUgCAyMDE0DQo+ICAgICAgICAg4pSc4pSA4pSAIGpybmFkbWluDQo+
-ICAgICAgICAg4pSCICAg4pSc4pSA4pSAIDIwMTINCj4gICAgICAgICDilIIgICDilJTilIDilIAg
-MjAxNA0KPiAgICAgICAgIOKUnOKUgOKUgCBsb2dhcmNoaXZlcg0KPiAgICAgICAgIOKUgiAgIOKU
-nOKUgOKUgCAyMDEyDQo+ICAgICAgICAg4pSCICAg4pSU4pSA4pSAIDIwMTQNCj4gICAgICAgICDi
-lJTilIDilIAgc2V0dXANCj4gICAgICAgICAgICAg4pSc4pSA4pSAIDIwMTINCj4gICAgICAgICAg
-ICAg4pSU4pSA4pSAIDIwMTQNCj4gDQo+ICAgICAxMyBkaXJlY3Rvcmllcw0KPiANCj4gTm93LCB3
-aGVuIEkgcnVuICdnaXQgYWRkIGFkbWluX3NjcmlwdC9zZXR1cCcgdG8gYWRkIHRoZSBuZXcgZGly
-ZWN0b3J5IA0KPiB0byB0aGUgcmVwbyBhbmQgdGhlbiB0cnkgdG8gY29tbWl0LCBJIHJlY2VpdmUg
-dGhlIGZvbGxvd2luZyBtZXNzYWdlOg0KPiANCj4gICAgICQgZ2l0IGNvbW1pdA0KPiAgICAgbXY6
-IGNhbm5vdCBzdGF0IGBhZG1pbl9zY3JpcHRzL3NldHVwLzIwMTIvc2V0dXAnOiBObyBzdWNoIGZp
-bGUgb3IgDQo+IGRpcmVjdG9yeQ0KPiANCj4gVGhlIGVycm9yIG1lc3NhZ2UgaXMgY29ycmVjdCBp
-biB0aGF0IGBhZG1pbl9zY3JpcHRzL3NldHVwLzIwMTIvc2V0dXBgIA0KPiBkb2VzIG5vdCBleGlz
-dCwgZWl0aGVyIGFzIGEgZmlsZSBvciBhcyBhIGRpcmVjdG9yeS4gSG93ZXZlciwgSSdtIG5vdCAN
-Cj4gYXR0ZW1wdGluZyB0byBhZGQgdGhpcyBwYXRoIGF0IGFsbC4gVXNpbmcgZ3JlcCwgSSd2ZSBj
-b25maXJtZWQgdGhhdCANCj4gdGhlIG9ubHkgcGxhY2UgdGhpcyBwYXRoIGFwcGVhcnMgaW4gYW55
-IG9mIG15IGZpbGVzIGlzIGluIGAuZ2l0L2luZGV4YC4NCj4gDQo+IEFsc28sIEkgY2FuIGNvbW1p
-dCB0byBvdGhlciBwbGFjZXMgaW4gdGhlIHJlcG9zaXRvcnkgd2l0aG91dCANCj4gdHJpZ2dlcmlu
-ZyBhbnkgZXJyb3IuIEluIGFkZGl0aW9uLCBJIGNhbiBjbG9uZSB0aGUgcmVwb3NpdG9yeSB0byBv
-dGhlciANCj4gbG9jYXRpb25zIGFuZCBhcHBseSB0aGUgcHJvYmxlbWF0aWMgY29tbWl0IG1hbnVh
-bGx5LiBUaGlzIGlzIGhvdyBJJ3ZlIA0KPiB3b3JrZWQgYXJvdW5kIHRoZSBwcm9ibGVtIGZvciBu
-b3csIGFuZCBJJ3ZlIG1vdmVkIHRoZSByZXBvc2l0b3J5IA0KPiB0aGF0J3MgZXhoaWJpdGluZyBw
-cm9ibGVtcyB0byBhbm90aGVyIGRpcmVjdG9yeSBhbmQgc3RhcnRlZCB3b3JrIG9uIA0KPiB0aGUg
-Y2xvbmVkIGNvcHkuDQo+IA0KPiBXaHkgaXMgdGhpcyBzcHVyaW91cyBwYXRoIGFwcGVhcmluZyBp
-biB0aGUgaW5kZXg/IElzIGl0IGEgYnVnLCBvciBhIA0KPiBzeW1wdG9tIHRoYXQgbXkgcmVwbyBo
-YXMgYmVlbiBzb21laG93IGNvcnJ1cHRlZD8gQW55IGhlbHAgd291bGQgYmUgDQo+IGdyZWF0bHkg
-YXBwcmVjaWF0ZWQuDQo+IA0KPiBSb2JlcnQgSXJlbGFuIHwgU2VydmVyIFN5c3RlbXMgfCBFcGlj
-IHwgKDYwOCkgMjcxLTkwMDANCllvdSBoYXZlIGNvbWUgdG8gdGhlIHJpZ2h0IGdyb3VwLg0KSXQg
-bWlnaHQgYmUgZGlmZmljdWx0IHRvIHRlbGwgKGF0IGxlYXN0IGZvciBtZSkgaWYgdGhlcmUgaXMg
-YSBidWcgb3IgYSBjb3JydXB0aW9uLCBNYXkgYmUgc29tZSB0ZXN0cyBjb3VsZCBoZWxwIHRvIGJy
-aW5nIG1vcmUgbGlnaHQgaW50byB0aGUgZGFya25lc3M6DQoNCldoYXQgZG9lcyAiZ2l0IHN0YXR1
-cyIgKGluIHRoZSBwcm9ibGVtYXRpYyByZXBvKSB0ZWxsIHlvdT8NCldoYXQgZG9lcyAiZ2l0IGZz
-Y2siIChpbiB0aGUgcHJvYmxlbWF0aWMgcmVwbykgdGVsbCB5b3U/DQpXaGF0IGRvZXMgImdpdCBs
-cy1maWxlcyIgKGluIGJvdGggcmVwb3MpIHRlbGwgeW91Pw0KDQovVG9yc3Rlbg0KDQoNCg0K
+Am 3/5/2013 15:44, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> Change the semantics of "git <alias> --help" to show the help for the
+> command <alias> is aliased to, instead of just saying:
+>=20
+>     `git <alias>' is aliased to `<whatever>'
+>=20
+> E.g. if you have "checkout" aliased to "co" you won't get:
+>=20
+>     $ git co --help
+>     `git co' is aliased to `checkout'
+>=20
+> But will instead get the manpage for git-checkout.
+=2E..
+>  	alias =3D alias_lookup(argv[0]);
+>  	if (alias && !is_git_command(argv[0])) {
+> -		printf_ln(_("`git %s' is aliased to `%s'"), argv[0], alias);
+> -		return 0;
+> +		show_help_for =3D alias;
+> +	} else {
+> +		show_help_for =3D argv[0];
+>  	}
+
+This needs a lot more scrutiny. The alias can be more than just a singl=
+e
+word, and it can even be a shell scriptlet, i.e., not a git command at =
+all.
+
+It may make sense to show the help of the aliased-to command if the ali=
+as
+resolves to just a single word.
+
+-- Hannes
