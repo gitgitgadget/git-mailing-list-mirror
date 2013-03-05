@@ -1,134 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] push: --follow-tag
-Date: Tue, 05 Mar 2013 07:58:45 -0800
-Message-ID: <7vlia1vnwq.fsf@alter.siamese.dyndns.org>
-References: <7vd2vewu24.fsf@alter.siamese.dyndns.org>
- <7v6216wtrk.fsf@alter.siamese.dyndns.org>
- <20130305082204.GB13552@sigill.intra.peff.net>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: [PATCH] help: show manpage for aliased command on git <alias>
+ --help
+Date: Tue, 5 Mar 2013 16:54:53 +0100
+Message-ID: <20130305165453.6077226c@pc09.procura.nl>
+References: <1362494681-11419-1-git-send-email-avarab@gmail.com>
+	<5136127C.2090402@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 05 16:59:18 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 05 17:06:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCuGr-00069S-Jn
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 16:59:17 +0100
+	id 1UCuNY-0003F0-GE
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 17:06:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755542Ab3CEP6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 10:58:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37028 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752611Ab3CEP6t (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 10:58:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3977BF7F;
-	Tue,  5 Mar 2013 10:58:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1lM2sbLvw+1/BXaa4WmFmNy7duU=; b=FaiQZ3
-	TL0dAgl1AIf8nycY2xxG0RGPw5AVqXleEzxCCpTcL0y56r8nMzG0tz4fxwJrr92p
-	nr3/SFmgKkWuNdbeuGMoKZI2feJjjbyEaAKXd8Xx2+/BfMy5MZRPdN14ou+OoLt3
-	8mahA08fE0uSMp10gw1FeAMZAcWkwM1ptsex8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yg7Rfp8pc99lNfs/CVE/ELvpXEGerZkY
-	v7FhSojKIHBdXJb7OzeUX89lsS/8y9sWXd+ukk7rxVRZUH+puTv9Z0CJOm6wJjj6
-	Y6wixpEZIjJtKh5D0b9XeUsTIxOPucgMg2uTU/82MJAxAWc1UDXdy3kwGlJNpMDe
-	Vfmr5qspwR8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8EB8BF7D;
-	Tue,  5 Mar 2013 10:58:48 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE9D4BF76; Tue,  5 Mar 2013
- 10:58:47 -0500 (EST)
-In-Reply-To: <20130305082204.GB13552@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 5 Mar 2013 03:22:04 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 90BAED82-85AD-11E2-BE10-2F862E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755896Ab3CEQFr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Mar 2013 11:05:47 -0500
+Received: from smtp-vbr14.xs4all.nl ([194.109.24.34]:3164 "EHLO
+	smtp-vbr14.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751792Ab3CEQFq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Mar 2013 11:05:46 -0500
+Received: from pc09.procura.nl (adsl.procura.nl [82.95.216.30])
+	(authenticated bits=0)
+	by smtp-vbr14.xs4all.nl (8.13.8/8.13.8) with ESMTP id r25Fss3v028821
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 5 Mar 2013 16:54:55 +0100 (CET)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <5136127C.2090402@viscovery.net>
+X-Mailer: Claws Mail 3.9.0cvs60 (GTK+ 2.24.10; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217457>
 
-Jeff King <peff@peff.net> writes:
+On Tue, 05 Mar 2013 16:42:52 +0100, Johannes Sixt
+<j.sixt@viscovery.net> wrote:
 
-> Should this be called "--follow-tags"? That makes more sense to me, as
-> you are catching all tags.
+> Am 3/5/2013 15:44, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> > Change the semantics of "git <alias> --help" to show the help for t=
+he
+> > command <alias> is aliased to, instead of just saying:
+> >=20
+> >     `git <alias>' is aliased to `<whatever>'
+> >=20
+> > E.g. if you have "checkout" aliased to "co" you won't get:
+> >=20
+> >     $ git co --help
+> >     `git co' is aliased to `checkout'
+> >=20
+> > But will instead get the manpage for git-checkout.
+> ...
+> >  	alias =3D alias_lookup(argv[0]);
+> >  	if (alias && !is_git_command(argv[0])) {
+> > -		printf_ln(_("`git %s' is aliased to `%s'"), argv[0], alias);
+> > -		return 0;
+> > +		show_help_for =3D alias;
+> > +	} else {
+> > +		show_help_for =3D argv[0];
+> >  	}
+>=20
+> This needs a lot more scrutiny. The alias can be more than just a sin=
+gle
+> word, and it can even be a shell scriptlet, i.e., not a git command a=
+t all.
+>=20
+> It may make sense to show the help of the aliased-to command if the a=
+lias
+> resolves to just a single word.
 
-Perhaps.  We are sending all zero-or-more relevant tags, so I agree
-that plural form is more appropriate.  I have a doubt about
-"follow", though; inertia made me use "follow", but I am not sure
-what we are following.  We certainly are not following tags.  If
-anything, we are making tags to piggy back on the history being
-pushed.
+A single word that is (already) known to git as being a valid command
+to do --help with. I which case I fully agree.
 
-> For consistency, should this match the naming of git-fetch's
-> options (or vice versa)? There we have:
->
->   <default>: auto-follow tags
->
->   --tags: fetch all of refs/heads/tags
->
->   --no-tags: do not auto-follow
->
-> I think that naming has caused some confusion in the past.
-
-"--tags" does not belong in the discussion of "auto following".  It
-does not have to do with any "auto"-ness.  Renaming "--no-tags" to
-"--no-follow-tags" does make sense, though.
-
-> And there is no way to explicitly specify the default behavior. I
-> wonder if both should support:
->
->   --follow-tags: auto-follow tags
->
->   --no-follow-tags: do not auto-follow tags
-
-Yup, I like that.  Perhaps make "--no-tags" a deprecated synonym to
-the latter.
-
->   --tags: fetch/push all of refs/heads/tags
->
->   --no-tags: turn off auto-following, and cancel any previous --tags
-
-Sounds sensible.
-
-> The default for push should probably keep auto-follow off, though.
->
->> +--follow-tag::
->> +	Push all the refs that would be pushed without this option,
->> +	and also push the refs under `refs/tags` that are missing
->> +	from the remote but are reachable from the refs that would
->> +	be pushed without this option.
->> +
->
-> This reads OK to me, though it is a little confusing in that there are
-> two sets of refs being discussed, and "the refs that would be pushed
-> without this option" is quite a long noun phrase (that gets used twice).
-
-Yes, exactly why I said I do not like the phrasing of this one.
-
-> This will find anything under refs/tags, including annotated and
-> non-annotated tags. I wonder if it is worth making a distinction. In
-> many workflows, unannotated tags should not be leaked out to public
-> repos. But because this feature finds any reachable tags, it will push a
-> tag you made a long time ago as a bookmarker on some part of the history
-> unrelated to the release you are making now.
-
-What does the auto-follow feature of "git fetch" do currently?
-Whatever we do here on the "git push" side should match it.
-
-If somebody wants to add some form of filtering mechanism based on
-the tagname (e.g. '--auto-follow-tags=v[0-9]*'), I would not have a
-strong objection to it, but I think that is something we should do
-on top and consistently between fetch and push.  I am not thrilled
-by the idea of conflating annotated-ness and the public-ness of
-tags.
-
-Thanks.
+--=20
+H.Merijn Brand  http://tux.nl   Perl Monger  http://amsterdam.pm.org/
+using perl5.00307 .. 5.17   porting perl5 on HP-UX, AIX, and openSUSE
+http://mirrors.develooper.com/hpux/        http://www.test-smoke.org/
+http://qa.perl.org   http://www.goldmark.org/jeff/stupid-disclaimers/
