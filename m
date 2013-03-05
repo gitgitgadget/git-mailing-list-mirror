@@ -1,127 +1,89 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] help: show manpage for aliased command on git <alias> --help
-Date: Tue,  5 Mar 2013 14:44:41 +0000
-Message-ID: <1362494681-11419-1-git-send-email-avarab@gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [BUG] Incorrect/misleading error when `git rev-list --objects
+ --all` hits the max open files limit
+Date: Tue, 5 Mar 2013 10:26:25 -0500
+Message-ID: <20130305152625.GA20562@padd.com>
+References: <20130303232927.GA16606@rabbit.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 05 15:45:17 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Peter Rabbitson <rabbit@rabbit.us>
+X-From: git-owner@vger.kernel.org Tue Mar 05 16:24:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCt7C-0001KY-0O
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 15:45:14 +0100
+	id 1UCtjC-00028m-MC
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 16:24:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756185Ab3CEOos convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Mar 2013 09:44:48 -0500
-Received: from mail-ee0-f43.google.com ([74.125.83.43]:48934 "EHLO
-	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754580Ab3CEOor (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 09:44:47 -0500
-Received: by mail-ee0-f43.google.com with SMTP id c50so4859164eek.16
-        for <git@vger.kernel.org>; Tue, 05 Mar 2013 06:44:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=ExvEa2JnFBiCDRG9Fauv+P0r59tAglJi0QTCB07hjUI=;
-        b=xVQdB95TRXF9vQd6MefPXFmK53eDFSsH79CAvGGHRnpj92HE0CASzygDYMSsKiEFLW
-         qlZe4WHtelLWT/M0PyzlzS93CIiKczAZOk54peFm9EQ0xBbqZdliHSXBxubY7uhqwZst
-         GUuuLX88J9ftmm6s6l9ohkGPdHNmo+Bvhn/EdLZNrFrxdePTNDZ7SatfPFc1rLwUzxiJ
-         y+Vn4c99c9qPMg7/ZTc4+P+6mPZrp0rTXbhgBjjlZv7jSKBwQG40ZBlo1i62jVoANY7P
-         dH01xMdr0PyZNcGNS3QeybQtwUgpq/Zbob/SHS3Fk0f6d1MrV2auj3IdueFOGj+WBPc1
-         /3SQ==
-X-Received: by 10.15.34.198 with SMTP id e46mr71077140eev.27.1362494686051;
-        Tue, 05 Mar 2013 06:44:46 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by mx.google.com with ESMTPS id 44sm37765847eek.5.2013.03.05.06.44.44
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 05 Mar 2013 06:44:45 -0800 (PST)
-X-Mailer: git-send-email 1.7.10.4
+	id S1755881Ab3CEPYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 10:24:05 -0500
+Received: from honk.padd.com ([74.3.171.149]:42821 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755580Ab3CEPYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 10:24:03 -0500
+Received: from tic.padd.com (unknown [216.240.30.5])
+	by honk.padd.com (Postfix) with ESMTPSA id 666E7322B;
+	Tue,  5 Mar 2013 07:24:02 -0800 (PST)
+Received: by tic.padd.com (Postfix, from userid 1000)
+	id E0FA0100F04; Tue,  5 Mar 2013 10:26:25 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20130303232927.GA16606@rabbit.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217450>
 
-Change the semantics of "git <alias> --help" to show the help for the
-command <alias> is aliased to, instead of just saying:
+rabbit@rabbit.us wrote on Mon, 04 Mar 2013 10:29 +1100:
+> I was tinkering with a massive git repository (actually a bup 
+> repository, but it is a standard valid git repo underneath). While 
+> validating that a repack ran succesfully I executed the command:
+> 
+>  git rev-list --objects --all > rev.list
+> 
+> And got back this:
+> 
+> error: packfile ./objects/pack/pack-d9808b7515419737806d0c621a0a1910f71c5cba.pack cannot be accessed
+> fatal: missing blob object '27a8cf44da85b958aef2b5074931e7913e08ae95'
+> 
+> Several hours later after successful fsck, and after chasing down trees 
+> blobs etc, I realized that the problem is too many open files. The hint 
+> came from ls-tree which lists the correct error (among a lot of spurious 
+> junk):
+> 
+>  git ls-tree -r c636a5f51d4e > /dev/null
+> 
+>  error: packfile ./objects/pack/pack-d9808b7515419737806d0c621a0a1910f71c5cba.pack cannot be accessed
+>  error: packfile ./objects/pack/pack-841e375f5e6c793a52fd1a3a2aea0b76219c4cdd.pack cannot be accessed
+>  error: packfile ./objects/pack/pack-e67d9bf75e0840fc6113170b314d2d5a32cbb45a.pack cannot be accessed
+>  error: packfile ./objects/pack/pack-b8fd8f083461c391fe6ec396840c328620d912e2.pack cannot be accessed
+>  error: packfile ./objects/pack/pack-d9808b7515419737806d0c621a0a1910f71c5cba.pack cannot be accessed
+>  error: packfile ./objects/pack/pack-804e0fadf56e2a165c157ef257620369adeea595.pack cannot be accessed
+>  error: unable to open object pack directory: ./objects/pack: Too many open files
+>  error: packfile ./objects/pack/pack-804e0fadf56e2a165c157ef257620369adeea595.pack cannot be accessed
+>  error: Could not read 32a050cb7e54a1e817d135d25ab251480e8d9e3c
+> 
+> Failure to report the correct message verified with git 1.7.2.5 and 
+> 1.8.2 (debian testing and experimental).
+> 
+> I hope this is sufficient description to address the underlying issue. I 
+> will keep the un-repacked "many files" repo around just in case you need 
+> more info/testing (though lowering the ulimit works equally well on 
+> normal-size repos).
 
-    `git <alias>' is aliased to `<whatever>'
+I've run into this twice:
 
-E.g. if you have "checkout" aliased to "co" you won't get:
+    1.  user with restrictive ulimit on #files.
+    2.  forgot to do "git gc" after regular fast-imports
 
-    $ git co --help
-    `git co' is aliased to `checkout'
+Here's one thread:
 
-But will instead get the manpage for git-checkout. The behavior this
-is replacing was originally added by Jeff King in 2156435. I'm
-changing it because of this off-the-cuff comment on IRC:
+    http://thread.gmane.org/gmane.comp.version-control.git/179231/focus=179292
 
-    14:27:43 <@Tux> git can be very unhelpful, literally:
-    14:27:46 <@Tux> $ git co --help
-    14:27:46 <@Tux> `git co' is aliased to `checkout'
-    14:28:08 <@Tux> I know!, gimme the help for checkout, please
+I've got a patch in cold storage.  It's not beautiful because
+there are too many paths that can end up hitting EMFILE.  I'll
+dust it off and see if it is worth considering.
 
-And because I also think it makes more sense than showing you what the
-thing is aliased to.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
- builtin/help.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/help.c b/builtin/help.c
-index d1d7181..fdb3312 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -417,6 +417,7 @@ int cmd_help(int argc, const char **argv, const cha=
-r *prefix)
- {
- 	int nongit;
- 	const char *alias;
-+	const char *show_help_for;
- 	enum help_format parsed_help_format;
- 	load_command_list("git-", &main_cmds, &other_cmds);
-=20
-@@ -449,20 +450,21 @@ int cmd_help(int argc, const char **argv, const c=
-har *prefix)
-=20
- 	alias =3D alias_lookup(argv[0]);
- 	if (alias && !is_git_command(argv[0])) {
--		printf_ln(_("`git %s' is aliased to `%s'"), argv[0], alias);
--		return 0;
-+		show_help_for =3D alias;
-+	} else {
-+		show_help_for =3D argv[0];
- 	}
-=20
- 	switch (help_format) {
- 	case HELP_FORMAT_NONE:
- 	case HELP_FORMAT_MAN:
--		show_man_page(argv[0]);
-+		show_man_page(show_help_for);
- 		break;
- 	case HELP_FORMAT_INFO:
--		show_info_page(argv[0]);
-+		show_info_page(show_help_for);
- 		break;
- 	case HELP_FORMAT_WEB:
--		show_html_page(argv[0]);
-+		show_html_page(show_help_for);
- 		break;
- 	}
-=20
---=20
-1.7.10.4
+		-- Pete
