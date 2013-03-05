@@ -1,98 +1,96 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: [PATCH] help: show manpage for aliased command on git <alias>
- --help
-Date: Tue, 5 Mar 2013 16:54:53 +0100
-Message-ID: <20130305165453.6077226c@pc09.procura.nl>
-References: <1362494681-11419-1-git-send-email-avarab@gmail.com>
-	<5136127C.2090402@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Changing submodule foreach --recursive to be
+ depth-first, --parent option to execute command in supermodule as well
+Date: Tue, 05 Mar 2013 08:09:26 -0800
+Message-ID: <7vhakpvnex.fsf@alter.siamese.dyndns.org>
+References: <CA+aSAWuoxZkSnRybhefnFr9ngs3tHmt6hAH4o0ebjYKvjJ-vpw@mail.gmail.com>
+ <51351CF5.7010308@web.de> <7vhakqwz1e.fsf@alter.siamese.dyndns.org>
+ <20130305075901.GB4677@sandbox-ub>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Mar 05 17:06:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Eric Cousineau <eacousineau@gmail.com>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Mar 05 17:09:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCuNY-0003F0-GE
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 17:06:12 +0100
+	id 1UCuR9-0006EW-CS
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 17:09:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755896Ab3CEQFr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Mar 2013 11:05:47 -0500
-Received: from smtp-vbr14.xs4all.nl ([194.109.24.34]:3164 "EHLO
-	smtp-vbr14.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751792Ab3CEQFq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Mar 2013 11:05:46 -0500
-Received: from pc09.procura.nl (adsl.procura.nl [82.95.216.30])
-	(authenticated bits=0)
-	by smtp-vbr14.xs4all.nl (8.13.8/8.13.8) with ESMTP id r25Fss3v028821
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 5 Mar 2013 16:54:55 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <5136127C.2090402@viscovery.net>
-X-Mailer: Claws Mail 3.9.0cvs60 (GTK+ 2.24.10; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1755971Ab3CEQJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 11:09:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46893 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752616Ab3CEQJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 11:09:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6814A74A;
+	Tue,  5 Mar 2013 11:09:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LWCWJ21aGJ7l+AxQ4iHxgYmRrLQ=; b=OgJoP6
+	98o1dMSmkzVf+7pa1FrDcrfWwXY/ru8PdXPSZmxC4GCIFtcHOElQKOhyXLFkIw09
+	ifn2DeT1phVZhP4PYEKlMswET5NYtfGKe8YrcmT/ir1lIOsRBxoEz69JiKx1Xj11
+	CnFBGFOFUPTSobPUufc5MZyDHyD8x4IgzCWeU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xPiut5mV8qBjTAwzpCpMEX7rO9OmG6R2
+	24uSnvQCn1l6i2QPQo4rYN1Z6sjFw6lHk03eEHTxvty2ynem5EyC1k3CVGlI+F7q
+	fcWh7T0THXz1keJ3Dra8AfZV4RebpLMPYPU5HQk6kSEbPK5X1zriJ4o5hCz/732h
+	GkrFkUAzgNU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB759A748;
+	Tue,  5 Mar 2013 11:09:28 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 157BDA73F; Tue,  5 Mar 2013
+ 11:09:27 -0500 (EST)
+In-Reply-To: <20130305075901.GB4677@sandbox-ub> (Heiko Voigt's message of
+ "Tue, 5 Mar 2013 08:59:02 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0E581E94-85AF-11E2-8F87-2F862E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217458>
 
-On Tue, 05 Mar 2013 16:42:52 +0100, Johannes Sixt
-<j.sixt@viscovery.net> wrote:
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-> Am 3/5/2013 15:44, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> > Change the semantics of "git <alias> --help" to show the help for t=
-he
-> > command <alias> is aliased to, instead of just saying:
-> >=20
-> >     `git <alias>' is aliased to `<whatever>'
-> >=20
-> > E.g. if you have "checkout" aliased to "co" you won't get:
-> >=20
-> >     $ git co --help
-> >     `git co' is aliased to `checkout'
-> >=20
-> > But will instead get the manpage for git-checkout.
-> ...
-> >  	alias =3D alias_lookup(argv[0]);
-> >  	if (alias && !is_git_command(argv[0])) {
-> > -		printf_ln(_("`git %s' is aliased to `%s'"), argv[0], alias);
-> > -		return 0;
-> > +		show_help_for =3D alias;
-> > +	} else {
-> > +		show_help_for =3D argv[0];
-> >  	}
->=20
-> This needs a lot more scrutiny. The alias can be more than just a sin=
-gle
-> word, and it can even be a shell scriptlet, i.e., not a git command a=
-t all.
->=20
-> It may make sense to show the help of the aliased-to command if the a=
-lias
-> resolves to just a single word.
+> On Mon, Mar 04, 2013 at 03:00:45PM -0800, Junio C Hamano wrote:
+>> So if you want a single boolean to toggle between the current
+>> behaviour and the other one, it would be --post-order.  But you may
+>> at least want to consider pros and cons of allowing users to give
+>> two separate commands, one for the pre-order visitation (which is
+>> the current "command") and the other for the post-order
+>> visitation. Being able to run both might turn out to be useful.
+>
+> I second that. Having a --post-order=<command/script> switch will give
+> us much more flexibility. For ease of use we could allow --post-order
+> without command to switch the meaning of the main command.
+>
+> So a final solution would have these switches:
+>
+> git submodule foreach ... [--pre-order[=<command>]] [--post-order[=<command>]] [<command>]
+>
+> If only --pre-order without argument is given the command will be
+> executed pre-order. If only --post-order the command will be executed
+> post-order. If both are given its an error and so on...
+>
+> There are some combinations we would need to catch as errors but this
+> design should allow a step by step implementation:
+>
+> 	1. just the --post-order switch
+> 	2. --post-order with argument switch
+> 	3. --pre-order (including argument) for symmetry of usage
 
-A single word that is (already) known to git as being a valid command
-to do --help with. I which case I fully agree.
+Yeah, I think I can agree with that direction, and Eric's patch
+could be that first step of the three-step progression, without
+painting us into a corner we cannot get out of when we want to
+advance to 2 and 3 later.
 
---=20
-H.Merijn Brand  http://tux.nl   Perl Monger  http://amsterdam.pm.org/
-using perl5.00307 .. 5.17   porting perl5 on HP-UX, AIX, and openSUSE
-http://mirrors.develooper.com/hpux/        http://www.test-smoke.org/
-http://qa.perl.org   http://www.goldmark.org/jeff/stupid-disclaimers/
+I was more interested in the design aspect and I didn't look at the
+actual patch text, though.
