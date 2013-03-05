@@ -1,72 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] match_push_refs(): nobody sets src->peer_ref anymore
-Date: Tue, 5 Mar 2013 00:45:06 -0500
-Message-ID: <20130305054456.GA12446@sigill.intra.peff.net>
-References: <7vlia2x05q.fsf@alter.siamese.dyndns.org>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: v3.4 released
+Date: Tue, 5 Mar 2013 12:25:29 +0530
+Message-ID: <CAMK1S_jBa4Z=Hb4ii-KQALQkycgwgsoCDbKZO=2w=FSZg8tggw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 05 06:45:38 2013
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>,
+	gitolite-announce@googlegroups.com
+X-From: git-owner@vger.kernel.org Tue Mar 05 07:56:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UCkgz-0001Ux-Gb
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 06:45:37 +0100
+	id 1UCln3-0002qT-Fv
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 07:55:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670Ab3CEFpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 00:45:09 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35095 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750730Ab3CEFpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 00:45:08 -0500
-Received: (qmail 10634 invoked by uid 107); 5 Mar 2013 05:46:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Mar 2013 00:46:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Mar 2013 00:45:06 -0500
-Content-Disposition: inline
-In-Reply-To: <7vlia2x05q.fsf@alter.siamese.dyndns.org>
+	id S1752282Ab3CEGzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 01:55:31 -0500
+Received: from mail-we0-f176.google.com ([74.125.82.176]:59042 "EHLO
+	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751099Ab3CEGza (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 01:55:30 -0500
+Received: by mail-we0-f176.google.com with SMTP id s43so5411217wey.7
+        for <git@vger.kernel.org>; Mon, 04 Mar 2013 22:55:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=zx466AY0nAMr+fK7t7TI0SaIL4xxLT5sioOMYT8noeU=;
+        b=lCwvjB3xMm3fpWrRtATCJVhUAx5fhpCCyuI166hKgVRJ3bt9UiZS8MhilwZP2XbjqC
+         hU+d6C9vkljk2eKqiszRTJp7lP1RCe17di6HjFIAMbrbQg5vJzm6EqIDFr9Mkhto0l/1
+         S6qeprJRsfNMZaIsVb/CGh1dtxLyILjWsDcHbbAAdKxt2JlX66l94hd8QeXZ+yIIw6Hs
+         3PQrTf4iwb5y/g+xLYpNCdI8i+wvnJHa5dPjABtF9ieSDsp3iT5/yKZuUpR14CvlpELk
+         /2p5UMM6fRJP9a0kTkKIHEfE7WDl8dsWAGyJG8F+vUIMeH2bqeHXhdd2ad1RedJpW9Yf
+         FZPw==
+X-Received: by 10.180.94.135 with SMTP id dc7mr16318770wib.11.1362466529268;
+ Mon, 04 Mar 2013 22:55:29 -0800 (PST)
+Received: by 10.194.153.161 with HTTP; Mon, 4 Mar 2013 22:55:29 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217432>
 
-On Mon, Mar 04, 2013 at 02:36:33PM -0800, Junio C Hamano wrote:
+mostly minor fixes but the rc file format change is in now.
 
-> In ancient times, we used to disallow the same source ref to be
-> pushed to more than one places, e.g. "git push there master:master
-> master:naster" was disallowed.  We later lifted this restriction
-> with db27ee63929f (send-pack: allow the same source to be pushed
-> more than once., 2005-08-06) and there no longer is anybody that
-> sets peer_ref for the source side of the ref list in the push
-> codepath since then.
-> 
-> Remove one leftover no-op in a loop that iterates over the source
-> side of ref list (i.e. our local ref) to see if it can/should be
-> sent to a matching destination ref while skipping ones that is
-> marked with peer_ref (which will never exist, so we do not skip
-> anything).
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Also, I souped up the refex-expr a bit; here's a teaser:
 
-This looks good to me. I was curious how difficult it would be to verify
-the "no longer is anybody that sets peer_ref" claim. It's actually quite
-easy. All of the call-sites just feed the result of get_local_heads(),
-which is easy to verify does not ever set peer_ref. Looking at the
-current code, I think you could even drop the "src" parameter and just
-have match_push_refs call get_local_heads() itself, though that does
-feel like a step backwards in terms of function generality.
+  * user u2 is allowed to push either 'doc/' or 'src/' but not both
 
-As an aside, I have always found the embedded "next" and "peer_ref"
-pointers in "struct ref" to be hacky. They are not properties of the ref
-at all, and the "refs to fetch" list would be more logically represented
-as a list of pairs of refs (and then I would not have to ever remember
-whether the peer is the local or remote ref in a given case). Probably
-not worth worrying about at this point, though, as the code fallout
-would be significant for little gain.
+        repo    foo
+            RW+                         =   u1 u2 u3
 
--Peff
+            RW+ VREF/NAME/doc/                      =   u2
+            RW+ VREF/NAME/src/                      =   u2
+            -   VREF/NAME/doc/ and VREF/NAME/src/   =   u2
+
+Interested people can take a look at src/VREF/refex-expr for details
+https://github.com/sitaramc/gitolite/blob/master/src/VREF/refex-expr
+
+-- 
+Sitaram
