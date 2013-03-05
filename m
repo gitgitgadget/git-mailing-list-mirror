@@ -1,8 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/4] commit.c: add clear_commit_marks_many()
-Date: Tue,  5 Mar 2013 14:47:16 -0800
-Message-ID: <1362523639-30566-2-git-send-email-gitster@pobox.com>
-References: <1362523639-30566-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 0/4] push --follow-tags
+Date: Tue,  5 Mar 2013 14:47:15 -0800
+Message-ID: <1362523639-30566-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Mar 05 23:47:51 2013
 Return-path: <git-owner@vger.kernel.org>
@@ -10,117 +9,62 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UD0eD-0004uP-Oz
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 23:47:50 +0100
+	id 1UD0eD-0004uP-9y
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Mar 2013 23:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755404Ab3CEWrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Mar 2013 17:47:24 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48730 "EHLO
+	id S1755343Ab3CEWrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Mar 2013 17:47:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48700 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755052Ab3CEWrY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Mar 2013 17:47:24 -0500
+	id S1755052Ab3CEWrW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Mar 2013 17:47:22 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AC3DAD45
-	for <git@vger.kernel.org>; Tue,  5 Mar 2013 17:47:23 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4B90AD10
+	for <git@vger.kernel.org>; Tue,  5 Mar 2013 17:47:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=lOCR
-	4Vw31EC7MxtVyR8jq+8XGu4=; b=n+pc2zyjVtQnbX6pYQ7HR74qvEpxs1JrOr7p
-	7yHHyj1pAFb/8HMaes4psLjeDO0j97drhA/NJlRHIJyMAxKEsTJg5xRh1S1cBF5P
-	XVNsm3Y6vrrz1+vYZAFCUWP5tXPCSy8D/Zg85/CtBR2Q5T9ZZUq60kRKziJIvjF7
-	eOXq5RQ=
+	:subject:date:message-id; s=sasl; bh=HRrALZHbVdXBWRwwhh/o8V+4iSc
+	=; b=OxnP4venr7tHoi1tEZX9SOT48AVBHS58ii6FKbwPGERnrhsinOb0NuQu0rM
+	SVJw+Sj3McVWXTLPlIZvypYLVaJKq82xNVhO8wv7jtgEjKMf5T3D6Emeb5UphUw7
+	bq1Du5dag9NVxIx5vMr2EhsF1nX2JmECbUGRoDP1vIkqz4nM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=sRf36y
-	CgXVq6tQrIRX6ZzOjZbDSUNu21/5H6YTTmz+u3GYkmNSq+49V7NnwMgxNusJk/ez
-	k3IuoiicOA9ExypuXEp03f1B+o6nXb7++AIUq83wsIYSconx2+MOPpNtY7puNi4k
-	iLpfbuQ0bEc+EUppd9/Q8gZ/NcXKgDoFNVD9k=
+	:date:message-id; q=dns; s=sasl; b=SOYtTdKzG4Q/O4QnzPvrex3YUcLow
+	VQsz+dyBSifD+ub4Y3lu2ikJbTY3yxVbmlySTKXbufcKCGy/o0j/WIvyGE1X1R3a
+	q100zuAJseWGeNKaHp4al+2lPBIw5TDqKntWT1jWQguRVc9SF6Ppx3wvFbulNinj
+	d4Z8W/+5oyAbFc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 900DCAD3C
-	for <git@vger.kernel.org>; Tue,  5 Mar 2013 17:47:23 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99356AD0F
+	for <git@vger.kernel.org>; Tue,  5 Mar 2013 17:47:21 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA89BAD11 for
- <git@vger.kernel.org>; Tue,  5 Mar 2013 17:47:22 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2214AAD0D for
+ <git@vger.kernel.org>; Tue,  5 Mar 2013 17:47:21 -0500 (EST)
 X-Mailer: git-send-email 1.8.2-rc2-194-g549a9ef
-In-Reply-To: <1362523639-30566-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: A4E04012-85E6-11E2-98AC-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A3CA7EC2-85E6-11E2-90D5-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217490>
 
-clear_commit_marks(struct commit *, unsigned) only can clear flag
-bits starting from a single commit; introduce an API to allow
-feeding an array of commits, so that flag bits can be cleared from
-commits reachable from any of them with a single traversal.
+The primary change since the last round is that it pushes out only
+annotated tags that are missing from the other side.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- commit.c | 19 +++++++++++++------
- commit.h |  1 +
- 2 files changed, 14 insertions(+), 6 deletions(-)
+Junio C Hamano (4):
+  commit.c: add clear_commit_marks_many()
+  commit.c: add in_merge_bases_many()
+  commit.c: use clear_commit_marks_many() in in_merge_bases_many()
+  push: --follow-tags
 
-diff --git a/commit.c b/commit.c
-index e8eb0ae..4757e50 100644
---- a/commit.c
-+++ b/commit.c
-@@ -463,14 +463,23 @@ static void clear_commit_marks_1(struct commit_list **plist,
- 	}
- }
- 
--void clear_commit_marks(struct commit *commit, unsigned int mark)
-+void clear_commit_marks_many(int nr, struct commit **commit, unsigned int mark)
- {
- 	struct commit_list *list = NULL;
--	commit_list_insert(commit, &list);
-+
-+	while (nr--) {
-+		commit_list_insert(*commit, &list);
-+		commit++;
-+	}
- 	while (list)
- 		clear_commit_marks_1(&list, pop_commit(&list), mark);
- }
- 
-+void clear_commit_marks(struct commit *commit, unsigned int mark)
-+{
-+	clear_commit_marks_many(1, &commit, mark);
-+}
-+
- void clear_commit_marks_for_object_array(struct object_array *a, unsigned mark)
- {
- 	struct object *object;
-@@ -797,8 +806,7 @@ struct commit_list *get_merge_bases_many(struct commit *one,
- 	if (!result || !result->next) {
- 		if (cleanup) {
- 			clear_commit_marks(one, all_flags);
--			for (i = 0; i < n; i++)
--				clear_commit_marks(twos[i], all_flags);
-+			clear_commit_marks_many(n, twos, all_flags);
- 		}
- 		return result;
- 	}
-@@ -816,8 +824,7 @@ struct commit_list *get_merge_bases_many(struct commit *one,
- 	free_commit_list(result);
- 
- 	clear_commit_marks(one, all_flags);
--	for (i = 0; i < n; i++)
--		clear_commit_marks(twos[i], all_flags);
-+	clear_commit_marks_many(n, twos, all_flags);
- 
- 	cnt = remove_redundant(rslt, cnt);
- 	result = NULL;
-diff --git a/commit.h b/commit.h
-index b6ad8f3..b997eea 100644
---- a/commit.h
-+++ b/commit.h
-@@ -134,6 +134,7 @@ struct commit *pop_most_recent_commit(struct commit_list **list,
- struct commit *pop_commit(struct commit_list **stack);
- 
- void clear_commit_marks(struct commit *commit, unsigned int mark);
-+void clear_commit_marks_many(int nr, struct commit **commit, unsigned int mark);
- void clear_commit_marks_for_object_array(struct object_array *a, unsigned mark);
- 
- /*
+ Documentation/git-push.txt |  8 +++-
+ builtin/push.c             |  2 +
+ commit.c                   | 42 ++++++++++++++------
+ commit.h                   |  2 +
+ remote.c                   | 99 ++++++++++++++++++++++++++++++++++++++++++++++
+ remote.h                   |  3 +-
+ t/t5516-fetch-push.sh      | 73 ++++++++++++++++++++++++++++++++++
+ transport.c                |  2 +
+ transport.h                |  1 +
+ 9 files changed, 218 insertions(+), 14 deletions(-)
+
 -- 
 1.8.2-rc2-194-g549a9ef
