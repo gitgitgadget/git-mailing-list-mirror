@@ -1,109 +1,147 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/4] push --follow-tags
-Date: Wed, 06 Mar 2013 07:55:07 -0800
-Message-ID: <7v8v60seuc.fsf@alter.siamese.dyndns.org>
-References: <1362523639-30566-1-git-send-email-gitster@pobox.com>
- <20130306084105.GB2018@sigill.intra.peff.net>
+Subject: Re: [PATCH] add: Clarify documentation of -A and -u
+Date: Wed, 06 Mar 2013 09:10:57 -0800
+Message-ID: <7vhakoqwri.fsf@alter.siamese.dyndns.org>
+References: <20130306072610.GB15534@biohazard-cafe.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 06 16:55:40 2013
+To: Greg Price <price@MIT.EDU>
+X-From: git-owner@vger.kernel.org Wed Mar 06 18:11:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDGgt-0001h2-Ks
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 16:55:39 +0100
+	id 1UDHsI-0007oQ-Fq
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 18:11:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758594Ab3CFPzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Mar 2013 10:55:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61126 "EHLO
+	id S1752611Ab3CFRLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Mar 2013 12:11:04 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60269 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753334Ab3CFPzL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Mar 2013 10:55:11 -0500
+	id S1752440Ab3CFRLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Mar 2013 12:11:01 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 064B1B816;
-	Wed,  6 Mar 2013 10:55:10 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61232AF05;
+	Wed,  6 Mar 2013 12:11:00 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JXEPgF94cEuxW5ekFEF3F1bx/Ig=; b=gkFKqp
-	D+V9kpvReqI8t+F9FqjxPvWsyx0KlprixC9udg+YV8mJI2s5U5HFAvi+mO+pCMGt
-	B6wXPSW2gvF5WTmiR5fPt5Gx2CBG3ud073cy3AEwe0RjEszaBEvEEMpWCvqfHBVP
-	s8Kagvzm5G8OQPXqv9y4EM1VK2Fg3fN2wDwto=
+	:content-type; s=sasl; bh=EwvK1PXbN1+b0NSMTglvhxdbWds=; b=xchp40
+	hZyaHo7F9ai8IkBcWbs2OhXIsEcypQ8O3rv3TTVVxiyVaL/hxGEnJmwqWzlHB8X2
+	1aYamFs8J6NM4iuJSwo6RMvh2VBADTTWadP9yAPASLbHqJL3/NjaHF6vLlSazZPT
+	6sPBBMmyOXiFk5fYd7HoONTNokTKyC7Sk9faI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xZzfKpZULaLuAZSRw6aeyQlg+Mk+N76E
-	A8PtEE+PKoceMMdog2/zEYoEfUKqoLfmOgHmxLm4DqytmS4le91WOG5tM9omC5Fb
-	ZV1koxfuom94Dmvz10f0ml0sgFBDElsnkOD+fHs5EE3UMwXSOE8VhxXHks0f/fJg
-	H8lQOatD1dY=
+	:content-type; q=dns; s=sasl; b=oNZO/8SOSB4teM/1x7jC1c9rE3sfT5MQ
+	URjq4hAmkRNO4IDtKM6WVWModYiTkk0uCOkn3yJtsWSXefPsrGhO3mP1DtaBVtDN
+	1U80SOTLJR8FAAA2uiHQR9kB1SNYFKFMTyPpdiaLwS+ZTaDaOSiGB6eZB5DN/CDc
+	Q8xF9Wjc6rQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF919B815;
-	Wed,  6 Mar 2013 10:55:09 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55ACEAF04;
+	Wed,  6 Mar 2013 12:11:00 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 67915B814; Wed,  6 Mar 2013
- 10:55:09 -0500 (EST)
-In-Reply-To: <20130306084105.GB2018@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 6 Mar 2013 03:41:05 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 646F9AF02; Wed,  6 Mar 2013
+ 12:10:59 -0500 (EST)
+In-Reply-To: <20130306072610.GB15534@biohazard-cafe.mit.edu> (Greg Price's
+ message of "Wed, 6 Mar 2013 02:26:10 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 38F3FC5A-8676-11E2-AD1B-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D0F4F69E-8680-11E2-961F-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217532>
 
-Jeff King <peff@peff.net> writes:
+Greg Price <price@MIT.EDU> writes:
 
-> On Tue, Mar 05, 2013 at 02:47:15PM -0800, Junio C Hamano wrote:
->
->> The primary change since the last round is that it pushes out only
->> annotated tags that are missing from the other side.
->
-> Like you, I have mixed feelings on treating annotated tags separately. I
-> don't feel like the previous discussion actually came to a conclusion.
->
-> I kind of lean towards the "if we are pushing A..B to a ref,...
+> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+> index 388a225..f89d920 100644
+> --- a/Documentation/git-add.txt
+> +++ b/Documentation/git-add.txt
+> @@ -105,7 +105,9 @@ apply to the index. See EDITING PATCHES below.
+>  	will never stage new files, but that it will stage modified
+>  	new contents of tracked files and that it will remove files
+>  	from the index if the corresponding files in the working tree
+> -	have been removed.
+> +	have been removed.  By contrast `-A` will add new files as
+> +	well as updating and removing existing ones, and the default
+> +	behavior will add new files and will not remove existing ones.
+>  +
+>  If no <pathspec> is given, the current version of Git defaults to
+>  "."; in other words, update all tracked files in the current directory
 
-I rejected that approach when I started writing the initial round of
-this topic, primarily because A (i.e. dst_ref->old_sha1) may not
-necessarily be what the current pusher pushed out during his last
-push.
+I do not know if mentioning what -A does in the description for -u
+(and vice versa) makes it easier to understand or more confusing
+(not rhetorical: I suspect some may find it easier and others not).
 
-The criteria for the tip of a branch to be good enough to be pushed
-out and the criteria for a commit to be good enough to be tagged are
-different.  You may know that a commit together with the history
-behind it is solid and may be sure that you will not have to rewind
-beyond that commit---that is when you _can_ push out (you do not
-have to, and I usually don't, so this is not a problem for me
-personally).
+But "and the default behaviour will..." here _is_ confusing.  After
+reading this patch three times, I still cannot tell what "default"
+you are trying to describe.  Is it "-u" without arguments?  Is it
+"add" without "-u" nor "-A"?  Is it something else???
 
-But at that point in time, you may still not know if the commit and
-the history behind it is the good point to be tagged for a release,
-or you would still need some other commits on top to polish other
-areas for the tagged release is complete.
+Exactly the same comment applies to the other hunk.
 
-As I made a habit of not pushing anything out if I am planning to
-tag in a near future (and my tagged commits are ones designed to be
-tagged, not just an ordinary commit that happens to be tagged), it
-is not a problem for me, but it would be for "centralized workflow"
-people, where there is more pressure to publish a commit as early as
-possible.  Once you know the commit is good enough so that you do
-not anticipate that it will need to be rewound, you want to push it
-out so that you can unblock others who want to build on it.  It is
-plausible to see:
+Having said that, I agree that the current description for "-u" is
+way suboptimal.  It begins like this:
 
-    (1) The pumpking pushes 'master' after being satisfied the
-        correctness of the history that leads to it.  The pumpking
-        hasn't decided if the commit is to be tagged, or needs some
-        other commits on top, for the next release.  But he prefers
-        to push the current state out so that he can unblock other
-        people.
+    -u::
+    --update::
+            Only match <pathspec> against already tracked files in
+            the index rather than the working tree. That means that it
+            will ...
 
-    (2) Another committer pulls and pushes with his changes.
+Whenever you see an incomprehensible technobabble followed by "That
+means", "In other words", etc., you (not limited to Greg-you but
+figuratively "everybody") should see if it makes it easier to read
+to remove everything up to that "That means" and adding a bit more
+to the remainder.  In this particular case, the technobabble is not
+even correct---"match"ing is only a small part of what "add -u" does
+to find what to "add".
 
-    (3) The pumpking tags what he pushed out with (1), attempts a
-        push, fails the ff check, pulls (2) and then pushes the
-        result out with "push --follow-tags".
+I would suggest rewriting the first part of "-u" perhaps like this:
+
+	-u::
+        --update::
+		Update modified and/or removed paths in the index
+		that match <pathspec> with the current state of the
+		working tree files.  No new path is added because
+		this considers only the paths that are already in
+		the index.
+
+
+The text for "-A" may look like this:
+
+	-A::
+        --all::
+		Update the index to record the current state of the
+		working tree files that match <pathspec>.  Note that
+		new paths will be added to the index, in addition to
+		modified and/or removed paths.
+
+I agree with your patch that "If no <pathspec> is given" should be
+repeated for both "-u" and "-A".
+
+> @@ -114,10 +116,17 @@ of Git, hence the form without <pathspec> should not be used.
+>  
+>  -A::
+>  --all::
+> -	Like `-u`, but match <pathspec> against files in the
+> -	working tree in addition to the index. That means that it
+> -	will find new files as well as staging modified content and
+> -	removing files that are no longer in the working tree.
+> +	Update the index regarding all files that match <pathspec>,
+> +	either in the index or the working tree.  That is, remove
+> +	files that are only in the index, add files that are only in
+> +	the working tree, and update files that differ between the
+> +	two.  By contrast `-u` only removes and updates, and the
+> +	default behavior only adds and updates.
+> ++
+> +If no <pathspec> is given, the current version of Git defaults to
+> +"."; in other words, update all tracked files in the current directory
+> +and its subdirectories. This default will change in a future version
+> +of Git, hence the form without <pathspec> should not be used.
+>  
+>  -N::
+>  --intent-to-add::
