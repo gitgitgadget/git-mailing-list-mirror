@@ -1,9 +1,8 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: feature suggestion: optimize common parts for checkout
  --conflict=diff3
-Date: Wed, 6 Mar 2013 22:31:29 +0100
-Message-ID: <20130306213129.GE15375@pengutronix.de>
+Date: Wed, 06 Mar 2013 13:32:28 -0800
+Message-ID: <7vmwugp637.fsf@alter.siamese.dyndns.org>
 References: <20130306150548.GC15375@pengutronix.de>
  <CALWbr2xDYuCN4nd-UNxkAY8-EguYjHBYgfu1fLtOGhYZyRQg_A@mail.gmail.com>
  <20130306200347.GA20312@sigill.intra.peff.net>
@@ -11,58 +10,68 @@ References: <20130306150548.GC15375@pengutronix.de>
  <20130306205400.GA29604@sigill.intra.peff.net>
  <7vr4jsp756.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Antoine Pelisse <apelisse@gmail.com>,
-	git <git@vger.kernel.org>, kernel@pengutronix.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 06 22:32:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git <git@vger.kernel.org>,
+	kernel@pengutronix.de
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 06 22:32:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDLwW-00061w-Av
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 22:32:08 +0100
+	id 1UDLxK-0006ei-ER
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 22:32:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755841Ab3CFVbl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Mar 2013 16:31:41 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:39495 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754114Ab3CFVbk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Mar 2013 16:31:40 -0500
-Received: from dude.hi.pengutronix.de ([2001:6f8:1178:2:21e:67ff:fe11:9c5c])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1UDLvx-0001Tt-4f; Wed, 06 Mar 2013 22:31:33 +0100
-Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.80)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1UDLvu-00029w-19; Wed, 06 Mar 2013 22:31:30 +0100
-Content-Disposition: inline
-In-Reply-To: <7vr4jsp756.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:21e:67ff:fe11:9c5c
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1754262Ab3CFVcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Mar 2013 16:32:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35122 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752971Ab3CFVcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Mar 2013 16:32:31 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85EB7B084;
+	Wed,  6 Mar 2013 16:32:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TN8+cavMctFTCepKwZJCE9hRBaI=; b=v7IO89
+	ruL/1bE41hJQY/wjGxKkTagowikLSG/SQgkgcW38/PmmKbsn4mySUOrJLLGlGRJW
+	RvswxAKuVnu2y7AYnwmjqtkGREitaJqxgQ1hq1uWhJNJ7IqcKT+OKXoZzo1pHVrK
+	JCYFgIxlwEpH+7EwYIjt5EbXKElcDxtXKAmns=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Wm/Rl808Y8L8JcND8mwMGOEODVP1fXrz
+	xUiqcP0PT5AfhP6atamNEtbIX8uwA720fYbifIiQjd8s1ZWZ/3Bh6gSPRni5iYEq
+	WykpmHC0qof5UHfjAeOMM/FGyuPKKzKe5zsFYNuyNuavnQeFmI2mve66d/xPuUU3
+	DxyKEu5STss=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7981CB083;
+	Wed,  6 Mar 2013 16:32:30 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD522B081; Wed,  6 Mar 2013
+ 16:32:29 -0500 (EST)
+In-Reply-To: <7vr4jsp756.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 06 Mar 2013 13:09:41 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 592EAF90-86A5-11E2-A0FC-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217550>
 
-Hello Junio,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Wed, Mar 06, 2013 at 01:09:41PM -0800, Junio C Hamano wrote:
 > Jeff King <peff@peff.net> writes:
->=20
-> > But it would apply to the content that is outside
-> > of the hunk marker; we have changed the concept of what is in the b=
-ase
-> > and what is in the conflict by shrinking the conflict to its smalle=
-st
-> > size.
->=20
+>
+>> But it would apply to the content that is outside
+>> of the hunk marker; we have changed the concept of what is in the base
+>> and what is in the conflict by shrinking the conflict to its smallest
+>> size.
+>
 > Hmm, unless you mean by "base" something entirely different from
 > "what was in the common ancestor version", I do not think I can
 > agree.  The point of diff3 mode is to show how it looked line in the
@@ -70,29 +79,17 @@ st
 > common version into; letting the user view three versions to help
 > him decide what to do by only looking at the part inside conflict
 > markers.
->=20
+>
 > We show "both sides added, either identically or differently" as
 > noteworthy events, but the patched code pushes "both sides added
 > identically" case outside the conflicting hunk, as if what was added
-I didn't test, but "both sides removed identically" should be moved out=
-,
-too, shouldn't it?
-
 > relative to the common ancestor version (in Uwe's case, is it 1-14
 > that is common, or just 10-14?) is not worth looking at when
 > considering what the right resolution is.  If it is not worth
 > looking at what was in the original for the conflicting part, why
 > would we be even using diff3 mode in the first place?
-because even zdiff3 contains more information than merge. And compared
-to diff3 it's smaller sometimes and so easier to understand.
 
-Other than that I agree fully to the things Jeff said so far.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+I vaguely recall we did this "clip to eager" as an explicit bugfix
+at 83133740d9c8 (xmerge.c: "diff3 -m" style clips merge reduction
+level to EAGER or less, 2008-08-29).  The list archive around that
+time may give us more contexts.
