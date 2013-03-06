@@ -1,91 +1,88 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Merging submodules - best merge-base
-Date: Wed, 6 Mar 2013 19:12:05 +0100
-Message-ID: <20130306181156.GA4114@sandbox-ub>
-References: <op.ws2l3rgnrbppqq@cicero.linkoping.osa>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: feature suggestion: optimize common parts for checkout --conflict=diff3
+Date: Wed, 6 Mar 2013 19:27:59 +0100
+Message-ID: <CALWbr2zjrKN-op+deOvjT5ZC+6X=we7eoXTPv9W4AkcNst4yMw@mail.gmail.com>
+References: <20130306150548.GC15375@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>
-To: Daniel Bratell <bratell@opera.com>
-X-From: git-owner@vger.kernel.org Wed Mar 06 19:12:38 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, kernel@pengutronix.de
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Wed Mar 06 19:28:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDIpQ-0007as-CY
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 19:12:36 +0100
+	id 1UDJ4m-0003ds-C8
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 19:28:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753454Ab3CFSMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Mar 2013 13:12:10 -0500
-Received: from smtprelay04.ispgateway.de ([80.67.18.16]:47727 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751225Ab3CFSMJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Mar 2013 13:12:09 -0500
-Received: from [77.21.76.82] (helo=localhost)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1UDIov-0005jg-Qn; Wed, 06 Mar 2013 19:12:05 +0100
-Content-Disposition: inline
-In-Reply-To: <op.ws2l3rgnrbppqq@cicero.linkoping.osa>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1753980Ab3CFS2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Mar 2013 13:28:01 -0500
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:52590 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753567Ab3CFS2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Mar 2013 13:28:00 -0500
+Received: by mail-qc0-f176.google.com with SMTP id n41so1540791qco.35
+        for <git@vger.kernel.org>; Wed, 06 Mar 2013 10:28:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=wRzxPObcy09r1CAHGpF5zMKq36myK5ldOKK6zMP+5Bk=;
+        b=0hkgZKh+muekSAF8vfgfxW11JjHx0PypXJy9P4fdtJHvDF3U4ZOThQDikj00UqBcc+
+         oU6CNnO9QvRGSRXiGlaiu0HDqpsOB3A3ZvwJBzTSfF9mPn/BkLaHmPTABr204XkshhRV
+         fpQoTclIQlkID1ahFe9k1a2AYOEtfdUz+j+0c1HiNMD6N7GwdZkXREIKF5ngXzWFGA2L
+         KqQgndbXBms2TbefAc6Q+bhAQTX8CIbeekPooMsINkrCIHx77Q4DLWjaj7USp3ljw7ZY
+         HurU1pPuw4PGHA2d3hEiAmLXtPC/7vZZpbEW4YSfqNV6SgBcALNJ9qtfCSctm/MLIsTo
+         ONsA==
+X-Received: by 10.224.180.15 with SMTP id bs15mr46086245qab.24.1362594479935;
+ Wed, 06 Mar 2013 10:27:59 -0800 (PST)
+Received: by 10.49.70.163 with HTTP; Wed, 6 Mar 2013 10:27:59 -0800 (PST)
+In-Reply-To: <20130306150548.GC15375@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217535>
 
-On Mon, Feb 25, 2013 at 05:44:05PM +0100, Daniel Bratell wrote:
-> I can phrase this in two ways and I'll start with the short way:
-> 
-> Why does a merge of a git submodule use as merge-base the commit that was  
-> active in the merge-base of the parent repo, rather than the merge-base of  
-> the two commits that are being merged?
-> 
-> The long question is:
-> 
-> A submodule change can be merged, but only if the merge is a  
-> "fast-forward" which I think is a fair demand, but currently it checks if  
-> it's a fast-forward from a commit that might not be very interesting  
-> anymore.
-> 
-> If two branches A and B split at a point when they used submodule commit  
-> S1 (based on S), and both then switched to S2 (also based on S) and B then  
-> switched to S21, then it's today not possible to merge B into A, despite  
-> S21 being a descendant of S2 and you get a conflict and this warning:
-> 
-> warning: Failed to merge submodule S (commits don't follow merge-base)
-> 
-> (attempt at ASCII gfx:
-> 
-> Submodule tree:
-> 
-> S ---- S1
->    \
->     \ - S2 -- S21
-> 
-> Main tree:
-> 
-> A' (uses S1) --- A (uses S2)
->    \
->     \ --- B' (uses S2) -- B (uses S21)
-> 
-> 
-> I would like it to end up as:
-> 
-> A' (uses S1) --- A (uses S2) ------------ A+ (uses S21)
->    \                                     /
->     \ --- B' (uses S2) -- B (uses S21)- /
-> 
-> And that should be legal since S21 is a descendant of S2.
+>         git checkout --conflict=diff3 file
 
-So to summarize what you are requesting: You want a submodule merge be
-two way in the view of the superproject and calculate the merge base
-in the submodule from the two commits that are going to be merged?
+That's somehow unrelated, but shouldn't we have a "conflict" option to
+git-merge as we have for git-checkout ?
 
-It currently sounds logical but I have to think about it further and
-whether that might break other use cases.
+With something like this (pasted into gmail):
 
-Cheers Heiko
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 7c8922c..edad742 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -65,6 +65,7 @@ static int abort_current_merge;
+ static int show_progress = -1;
+ static int default_to_upstream;
+ static const char *sign_commit;
++static char *conflict_style;
+
+ static struct strategy all_strategy[] = {
+  { "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+@@ -213,6 +214,7 @@ static struct option builtin_merge_options[] = {
+  { OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key id"),
+   N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+  OPT_BOOLEAN(0, "overwrite-ignore", &overwrite_ignore, N_("update
+ignored files (default)")),
++ OPT_STRING(0, "conflict", &conflict_style, N_("style"), N_("conflict
+style (merge or diff3)")),
+  OPT_END()
+ };
+
+@@ -1102,6 +1104,9 @@ int cmd_merge(int argc, const char **argv, const
+char *prefix)
+  if (verbosity < 0 && show_progress == -1)
+  show_progress = 0;
+
++ if (conflict_style)
++ git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
++
+  if (abort_current_merge) {
+  int nargc = 2;
+  const char *nargv[] = {"reset", "--merge", NULL};
