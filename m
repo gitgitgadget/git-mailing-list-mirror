@@ -1,54 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Using socks proxy with git for http(s) transport
-Date: Wed, 6 Mar 2013 03:21:16 -0500
-Message-ID: <20130306082110.GA31638@sigill.intra.peff.net>
-References: <CABmRxH1g2BR+-MvGZ4J-2vC8NDq3x8pG148hXfuYTpUkX0L=0A@mail.gmail.com>
+From: Michael Weiser <M.Weiser@science-computing.de>
+Subject: Re: [PATCH] Extend runtime prefix computation
+Date: Wed, 6 Mar 2013 09:19:43 +0100
+Message-ID: <20130306081942.GA11151@science-computing.de>
+References: <20121127163004.GC7499@science-computing.de>
+ <20130305115837.GD21473@science-computing.de>
+ <7vd2vdvn7l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Yves Blusseau <yves.blusseau@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 06 09:21:45 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 06 09:30:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UD9bc-0006pY-UT
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 09:21:45 +0100
+	id 1UD9kP-0004eA-39
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 09:30:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752682Ab3CFIVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Mar 2013 03:21:19 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37866 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751514Ab3CFIVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Mar 2013 03:21:19 -0500
-Received: (qmail 23408 invoked by uid 107); 6 Mar 2013 08:22:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Mar 2013 03:22:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Mar 2013 03:21:16 -0500
+	id S1755014Ab3CFIaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Mar 2013 03:30:23 -0500
+Received: from mx3.science-computing.de ([193.197.16.20]:11517 "EHLO
+	mx3.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752831Ab3CFIaX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Mar 2013 03:30:23 -0500
+X-Greylist: delayed 631 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Mar 2013 03:30:22 EST
+Received: from localhost (localhost [127.0.0.1])
+	by scmail.science-computing.de (Postfix) with ESMTP id E128841405B;
+	Wed,  6 Mar 2013 09:19:43 +0100 (CET)
+X-Virus-Scanned: amavisd-new
+Received: from scmail.science-computing.de ([127.0.0.1])
+	by localhost (obitest.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 723OJcRWAUm7; Wed,  6 Mar 2013 09:19:43 +0100 (CET)
+Received: from verus.science-computing.de (verus.science-computing.de [10.160.1.22])
+	by scmail.science-computing.de (Postfix) with ESMTP id 3CE55414002;
+	Wed,  6 Mar 2013 09:19:43 +0100 (CET)
+Received: by verus.science-computing.de (Postfix, from userid 1176)
+	id 196EF1044B4; Wed,  6 Mar 2013 09:19:43 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <CABmRxH1g2BR+-MvGZ4J-2vC8NDq3x8pG148hXfuYTpUkX0L=0A@mail.gmail.com>
+In-Reply-To: <7vd2vdvn7l.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217505>
 
-On Wed, Mar 06, 2013 at 09:12:30AM +0100, Yves Blusseau wrote:
+Hello Junio,
 
-> i have a socks proxy to access internet.
-> I successed in configuring git (with GIT_PROXY_COMMAND) to use the
-> socks proxy for GIT transport protocol.
-> But how to use this socks proxy with git for HTTP(S) transport protocol ?
+On Tue, Mar 05, 2013 at 08:13:50AM -0800, Junio C Hamano wrote:
 
-Try:
+> >> Support determining the binaries' installation path at runtime even if
+> >> called without any path components (i.e. via search path).
 
-  git config --global http.proxy 'socks://yourhost:port'
+> The default for any change is not to include it.  Is there any
+> reason why we want this change?
 
-That will enable it for all git repositories on your machine. Git should
-also respect any environment variables that curl handles (because we use
-libcurl under the hood), if you prefer to set it up that way. See "man
-curl" for details.
+It makes a binary git installation fully relocatable. Seeing how git
+already has basic support for it I thought other people might be
+interested in this.
 
--Peff
+Thanks,
+-- 
+Michael Weiser                science + computing ag
+Senior Systems Engineer       Geschaeftsstelle Duesseldorf
+                              Martinstrasse 47-55, Haus A
+phone: +49 211 302 708 32     D-40223 Duesseldorf
+fax:   +49 211 302 708 50     www.science-computing.de
+-- 
+Vorstandsvorsitzender/Chairman of the board of management:
+Gerd-Lothar Leonhart
+Vorstand/Board of Management:
+Dr. Bernd Finkbeiner, Michael Heinrichs, 
+Dr. Arno Steitz, Dr. Ingrid Zech
+Vorsitzender des Aufsichtsrats/
+Chairman of the Supervisory Board:
+Philippe Miltin
+Sitz/Registered Office: Tuebingen
+Registergericht/Registration Court: Stuttgart
+Registernummer/Commercial Register No.: HRB 382196
