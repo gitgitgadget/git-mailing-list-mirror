@@ -1,94 +1,105 @@
 From: Greg Price <price@MIT.EDU>
-Subject: [PATCH] add: cut redundant require_pathspec logic
-Date: Wed, 6 Mar 2013 02:24:21 -0500
-Message-ID: <20130306072414.GA15534@biohazard-cafe.mit.edu>
+Subject: [PATCH] add: Clarify documentation of -A and -u
+Date: Wed, 6 Mar 2013 02:26:10 -0500
+Message-ID: <20130306072610.GB15534@biohazard-cafe.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 06 08:24:59 2013
+X-From: git-owner@vger.kernel.org Wed Mar 06 08:26:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UD8ia-0002lL-CD
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 08:24:52 +0100
+	id 1UD8kJ-0003wr-RL
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 08:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752561Ab3CFHY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Mar 2013 02:24:26 -0500
-Received: from DMZ-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.37]:62383 "EHLO
-	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751369Ab3CFHYZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Mar 2013 02:24:25 -0500
-X-AuditID: 12074425-b7fec6d000007584-cc-5136ef28132e
-Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
-	by dmz-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id BE.B2.30084.82FE6315; Wed,  6 Mar 2013 02:24:25 -0500 (EST)
+	id S1752997Ab3CFH0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Mar 2013 02:26:14 -0500
+Received: from DMZ-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.35]:48470 "EHLO
+	dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752509Ab3CFH0O (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Mar 2013 02:26:14 -0500
+X-AuditID: 12074423-b7f5b6d000007e03-66-5136ef959ebb
+Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
+	by dmz-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 06.7C.32259.59FE6315; Wed,  6 Mar 2013 02:26:13 -0500 (EST)
 Received: from outgoing.mit.edu (OUTGOING-AUTH-1.MIT.EDU [18.9.28.11])
-	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id r267ON7B028697;
-	Wed, 6 Mar 2013 02:24:24 -0500
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id r267QChC022190;
+	Wed, 6 Mar 2013 02:26:12 -0500
 Received: from localhost (BIOHAZARD-CAFE.MIT.EDU [18.9.64.18])
 	(authenticated bits=0)
         (User authenticated as price@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id r267OL0m018856;
-	Wed, 6 Mar 2013 02:24:22 -0500
+	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id r267QARj019206;
+	Wed, 6 Mar 2013 02:26:11 -0500
 Content-Disposition: inline
 User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFIsWRmVeSWpSXmKPExsUixCmqrKv53izQ4MR3JouuK91MFg29V5gd
-	mDwuXlL2+LxJLoApissmJTUnsyy1SN8ugSvj3J3Qgp1cFS9b77M1MO7k6GLk5JAQMJH4M+8z
-	C4QtJnHh3no2EFtIYB+jxKNd+l2MXED2BkaJOds+M0I4nxglzl3fztrFyMHBIqAisei0FUgD
-	m4CCxI/565hBbBEBcYm3x2eyg9jMAmoS7ZumsILYwgJWEou3rANbxitgLbFh5jEoW1Di5Mwn
-	LBD1WhI3/r1kAhnPLCAtsfwf2J2iQJuu7W9nm8DIPwtJxywkHbMQOhYwMq9ilE3JrdLNTczM
-	KU5N1i1OTszLSy3StdDLzSzRS00p3cQICkJ2F9UdjBMOKR1iFOBgVOLhnaFtFijEmlhWXJl7
-	iFGSg0lJlPfbK6AQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEV6uM0A53pTEyqrUonyYlDQHi5I4
-	742Um/5CAumJJanZqakFqUUwWRkODiUJXuZ3QI2CRanpqRVpmTklCGkmDk6Q4TxAwzVBaniL
-	CxJzizPTIfKnGBWlxHllQRICIImM0jy4XliSeMUoDvSKMO/7t0BVPMAEA9f9CmgwE9Bgj1AT
-	kMEliQgpqQZGs/MXHfz6jOLYFUXLrVelq7BIpUSc+WdxUjXZoEFy9qSgjSybGGLSfjZNPnA8
-	XayqW2LyFJn36QU7dj1T/NM8+a3WYekn1w6+frX5i/q9/XLrHmQzMr9ZavF2K8dx7fa1U9hf
-	/3dPMS1ZpNMw61ZqRdBKv7O6B121fQLesS23aj8w6Rznhe9pSizFGYmGWsxFxYkA 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJIsWRmVeSWpSXmKPExsUixCmqrTv1vVmgwZLZ8hZdV7qZLBp6rzA7
+	MHlcvKTs8XmTXABTFJdNSmpOZllqkb5dAlfG1DXHWQsmCVUcnX2HtYHxDF8XIyeHhICJxIW3
+	H5ghbDGJC/fWs3UxcnEICexjlLjWup0FwtnAKLH80HN2COcTo0T3xqVgLSwCKhILLixlBLHZ
+	BBQkfsxfBxYXERCXeHt8JjuIzSygJtG+aQoriC0sYCHxZMkrsDivgLXElwttULagxMmZT1gg
+	6rUkbvx7ydTFyAFkS0ss/8cBEhYFWnVtfzvbBEb+WUg6ZiHpmIXQsYCReRWjbEpulW5uYmZO
+	cWqybnFyYl5eapGumV5uZoleakrpJkZQKLK7KO9g/HNQ6RCjAAejEg/vDG2zQCHWxLLiytxD
+	jJIcTEqivN9eAYX4kvJTKjMSizPii0pzUosPMUpwMCuJ8HKdAcrxpiRWVqUW5cOkpDlYlMR5
+	r6Xc9BcSSE8sSc1OTS1ILYLJynBwKEnwVr0DahQsSk1PrUjLzClBSDNxcIIM5wEaPh+khre4
+	IDG3ODMdIn+KUZfjyN9nLxiFWPLy81KlxHnTQYoEQIoySvPg5sBSyCtGcaC3hHkzQKp4gOkH
+	btIroCVMQEs8Qk1AlpQkIqSkGhiLX5goeRr8+r492pvbYnaOa5v6GrO6FXrPf1hFH301w3Dh
+	ClWflab7AutuL+9OOWMZMvW5vkqM4r17q4P310m6tZcZ7hWRfau19O1N27aUgx/vZtdnaddX
+	JP0X17opurt62d2WFen/wjLdmqdOzHsv6Zi83MXtZsGD9PzcWdq58cIiq6efDFNi 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217500>
 
-If take_worktree_changes is true, then the logic around
-option_with_implicit_dot ensures argc is positive by this point.
-So require_pathspec never has an effect.
+The documentation of '-A' is very confusing for someone who doesn't
+already know what it does.  In particular, it describes the option's
+meaning by reference to that of '-u', but it's no more similar to the
+latter than it is to the default behavior.  Describe it directly (and
+in a way that uses the word 'all'), and then describe the contrast
+separately.
 
 Signed-off-by: Greg Price <price@mit.edu>
 ---
- builtin/add.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ Documentation/git-add.txt | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 0dd014e..9feb2ba 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -358,7 +358,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	struct dir_struct dir;
- 	int flags;
- 	int add_new_files;
--	int require_pathspec;
- 	char *seen = NULL;
- 	const char *option_with_implicit_dot = NULL;
- 	const char *short_option_with_implicit_dot = NULL;
-@@ -399,7 +398,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	}
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 388a225..f89d920 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -105,7 +105,9 @@ apply to the index. See EDITING PATCHES below.
+ 	will never stage new files, but that it will stage modified
+ 	new contents of tracked files and that it will remove files
+ 	from the index if the corresponding files in the working tree
+-	have been removed.
++	have been removed.  By contrast `-A` will add new files as
++	well as updating and removing existing ones, and the default
++	behavior will add new files and will not remove existing ones.
+ +
+ If no <pathspec> is given, the current version of Git defaults to
+ "."; in other words, update all tracked files in the current directory
+@@ -114,10 +116,17 @@ of Git, hence the form without <pathspec> should not be used.
  
- 	add_new_files = !take_worktree_changes && !refresh_only;
--	require_pathspec = !take_worktree_changes;
+ -A::
+ --all::
+-	Like `-u`, but match <pathspec> against files in the
+-	working tree in addition to the index. That means that it
+-	will find new files as well as staging modified content and
+-	removing files that are no longer in the working tree.
++	Update the index regarding all files that match <pathspec>,
++	either in the index or the working tree.  That is, remove
++	files that are only in the index, add files that are only in
++	the working tree, and update files that differ between the
++	two.  By contrast `-u` only removes and updates, and the
++	default behavior only adds and updates.
+++
++If no <pathspec> is given, the current version of Git defaults to
++"."; in other words, update all tracked files in the current directory
++and its subdirectories. This default will change in a future version
++of Git, hence the form without <pathspec> should not be used.
  
- 	newfd = hold_locked_index(&lock_file, 1);
- 
-@@ -410,7 +408,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		 (!(addremove || take_worktree_changes)
- 		  ? ADD_CACHE_IGNORE_REMOVAL : 0));
- 
--	if (require_pathspec && argc == 0) {
-+	if (argc == 0) {
- 		fprintf(stderr, _("Nothing specified, nothing added.\n"));
- 		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
- 		return 0;
+ -N::
+ --intent-to-add::
 -- 
 1.7.11.3
