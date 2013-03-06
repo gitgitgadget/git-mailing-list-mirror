@@ -1,75 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: fetch --no-tags with and w/o --all
-Date: Wed, 06 Mar 2013 13:56:01 -0800
-Message-ID: <7vboawp4zy.fsf@alter.siamese.dyndns.org>
-References: <1879950.i2j8pjGADy@gandalf>
+From: Stephen Bash <bash@genarts.com>
+Subject: "Already up-to-date!" merge isn't a no-op?
+Date: Wed, 6 Mar 2013 16:48:07 -0500 (EST)
+Message-ID: <142915274.2151729.1362606487755.JavaMail.root@genarts.com>
+References: <1826064298.2151517.1362605175796.JavaMail.root@genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Cristian Tibirna <ctibirna@giref.ulaval.ca>
-X-From: git-owner@vger.kernel.org Wed Mar 06 22:56:35 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 06 22:59:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDMK8-0008Bf-MY
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 22:56:33 +0100
+	id 1UDMMf-0001mO-9s
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 22:59:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753852Ab3CFV4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Mar 2013 16:56:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60317 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752611Ab3CFV4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Mar 2013 16:56:04 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A913A514;
-	Wed,  6 Mar 2013 16:56:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=POBhh4TEegCk0QPIGKzy7K0wdJI=; b=yiBNxL
-	i2rolDcTrOYSsTGHAkWgd3LzBenpXAsQ0A1NxcBm6GigopFH6L/5vea9TgSs7HBa
-	EHz5zdE/6tjaqWn1skkuXTtIfnhf3BDwmp1+5SfV8wVDxfILb4pjMWdEpTNYntId
-	eTJx+It0D36x2QQqow3enlTElyY0z5bDJJJo4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RA13WYEGDMk4gUM/9zyRdK1uA9vz5uc2
-	7ibhD1kslp5o9ldAVpA11C5CkBStoOKra9LFatQn2QRBbE+stkHSYTvOqPuM0Wau
-	Vj+XM3mAS/yg3lhwTSPJCUoMdZUsZbL6fcgQG8h3lKPSDSVrMcdoaKcO4qInFqXz
-	hP1wGQ29Y98=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CE7FA512;
-	Wed,  6 Mar 2013 16:56:04 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5751A510; Wed,  6 Mar 2013
- 16:56:03 -0500 (EST)
-In-Reply-To: <1879950.i2j8pjGADy@gandalf> (Cristian Tibirna's message of
- "Wed, 06 Mar 2013 16:33:02 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A3E4F852-86A8-11E2-AAB7-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755150Ab3CFV6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Mar 2013 16:58:43 -0500
+Received: from hq.genarts.com ([173.9.65.1]:60421 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754154Ab3CFV6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Mar 2013 16:58:43 -0500
+X-Greylist: delayed 618 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Mar 2013 16:58:33 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 686A6BE2F06
+	for <git@vger.kernel.org>; Wed,  6 Mar 2013 16:48:13 -0500 (EST)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NyTrPRZwIWCu for <git@vger.kernel.org>;
+	Wed,  6 Mar 2013 16:48:07 -0500 (EST)
+Received: from mail.hq.genarts.com (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id C47F0BE33FE
+	for <git@vger.kernel.org>; Wed,  6 Mar 2013 16:48:07 -0500 (EST)
+In-Reply-To: <1826064298.2151517.1362605175796.JavaMail.root@genarts.com>
+X-Mailer: Zimbra 7.2.0_GA_2669 (ZimbraWebClient - GC25 (Mac)/7.2.0_GA_2669)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217556>
 
-Cristian Tibirna <ctibirna@giref.ulaval.ca> writes:
+Hi all-
 
-> Hello
->
-> $ git --version
-> git version 1.7.10.4
->
-> $ git fetch origin --no-tags
-> does what it says
->
-> $ git fetch --all --no-tags
-> still gets all the tags from the remote.
->
-> Is this known?
+I have a branch history that looks like this:
 
-Because --all (or --multiple) to iterate through all remotes
-does not pass accept any command line refspecs, using these options
-with --no-tags and/or --tags should be diagnosed as an error, but it
-appears that the error checking is not done.
+ ----------M-----M-- master
+  \       /     /
+   x---------------- feature
+    \             \
+     x-------------A- maint
+
+In other words we had a new feature that was "so cool" that after testing on master was back-ported to maint (luckily we knew ahead of time this was likely).  When it came time to merge feature into maint the process looked something like this:
+
+Yesterday (not shown above):
+ $ git checkout master
+ $ git merge maint
+
+Today:
+ $ git checkout maint
+ $ git merge feature
+ Merge made by the 'recursive' strategy.
+ $ git checkout master
+ $ git merge maint
+ Already up-to-date!
+ Merge made by the 'recursive' strategy.
+ $ git --version
+ git version 1.8.1.5
+
+In the past, I've only seen "Already up-to-date!" when there is literally nothing to do (all commits are reachable from HEAD).  In this case, the merge of feature into maint (commit A) is the only commit not reachable from HEAD, and Git does create a merge commit (though the new commit and the first parent point to the same tree).  The fact that a commit is created makes me call this something more than a no-op, even though no content changed.
+
+So what is the actual meaning of "Already up-to-date!"?  Is it based on the tree, the reachable commits, or something more complicated?
+
+Thanks,
+Stephen
