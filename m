@@ -1,104 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: feature suggestion: optimize common parts for checkout
- --conflict=diff3
-Date: Wed, 6 Mar 2013 16:21:40 -0500
-Message-ID: <20130306212140.GA30202@sigill.intra.peff.net>
-References: <20130306150548.GC15375@pengutronix.de>
- <CALWbr2xDYuCN4nd-UNxkAY8-EguYjHBYgfu1fLtOGhYZyRQg_A@mail.gmail.com>
- <20130306200347.GA20312@sigill.intra.peff.net>
- <7vvc94p8hb.fsf@alter.siamese.dyndns.org>
- <20130306205400.GA29604@sigill.intra.peff.net>
- <7vr4jsp756.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Antoine Pelisse <apelisse@gmail.com>,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git <git@vger.kernel.org>,
-	kernel@pengutronix.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 06 22:22:09 2013
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: [PATCH 1/2] p4merge: swap LOCAL and REMOTE for mergetool
+Date: Wed,  6 Mar 2013 22:32:57 +0200
+Message-ID: <1362601978-16911-2-git-send-email-kevin@bracey.fi>
+References: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
+Cc: David Aguilar <davvid@gmail.com>,
+	Ciaran Jessup <ciaranj@gmail.com>,
+	Scott Chacon <schacon@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 06 22:27:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDLmr-0006og-5g
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 22:22:09 +0100
+	id 1UDLs4-0002Wz-HC
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 22:27:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755660Ab3CFVVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Mar 2013 16:21:43 -0500
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:38399 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755642Ab3CFVVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Mar 2013 16:21:42 -0500
-Received: (qmail 29951 invoked by uid 107); 6 Mar 2013 21:23:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Mar 2013 16:23:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Mar 2013 16:21:40 -0500
-Content-Disposition: inline
-In-Reply-To: <7vr4jsp756.fsf@alter.siamese.dyndns.org>
+	id S1754183Ab3CFV1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Mar 2013 16:27:05 -0500
+Received: from 8.mo2.mail-out.ovh.net ([188.165.52.147]:59624 "EHLO
+	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753936Ab3CFV1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Mar 2013 16:27:04 -0500
+X-Greylist: delayed 3242 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Mar 2013 16:27:04 EST
+Received: from mail406.ha.ovh.net (b9.ovh.net [213.186.33.59])
+	by mo2.mail-out.ovh.net (Postfix) with SMTP id EE8E8DC15A2
+	for <git@vger.kernel.org>; Wed,  6 Mar 2013 21:44:05 +0100 (CET)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 6 Mar 2013 22:33:47 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 6 Mar 2013 22:33:45 +0200
+X-Ovh-Mailout: 178.32.228.2 (mo2.mail-out.ovh.net)
+X-Mailer: git-send-email 1.8.2.rc2.5.g1a80410.dirty
+In-Reply-To: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
+X-Ovh-Tracer-Id: 12117216273725427935
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -48
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrvdehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -48
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrvdehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217548>
 
-On Wed, Mar 06, 2013 at 01:09:41PM -0800, Junio C Hamano wrote:
+Reverse LOCAL and REMOTE when invoking P4Merge as a mergetool, so that
+the incoming branch is now in the left-hand, blue triangle pane, and the
+current branch is in the right-hand, green circle pane.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > But it would apply to the content that is outside
-> > of the hunk marker; we have changed the concept of what is in the base
-> > and what is in the conflict by shrinking the conflict to its smallest
-> > size.
-> 
-> Hmm, unless you mean by "base" something entirely different from
-> "what was in the common ancestor version", I do not think I can
-> agree.
+This change makes use of P4Merge consistent with its built-in help, its
+reference documentation, and Perforce itself. But most importantly, it
+makes merge results clearer. P4Merge is not totally symmetrical between
+left and right; despite changing a few text labels from "theirs/ours" to
+"left/right" when invoked manually, it still retains its original
+Perforce "theirs/ours" viewpoint.
 
-I don't know. I didn't use the word "base" in the first place. I was
-trying to figure out what you meant. :)
+Most obviously, in the result pane P4Merge shows changes that are common
+to both branches in green. This is on the basis of the current branch
+being green, as it is when invoked from Perforce; it means that lines in
+the result are blue if and only if they are being changed by the merge,
+making the resulting diff clearer.  Whereas if you use blue as the
+current branch, then there is no single colour highlighting changes -
+a green line in the result could be a change, but it could also be
+something already in the current branch that isn't changed by the merge.
 
-My point is that the hunk (everything from "<<<" to ">>>") is
-self-consistent. It's just misleading in that the hunk has been shrunk
-not to include identical bits from each side. IMHO, this is not much
-different than a nearby change being auto-resolved. The conflict hunks
-the user sees do not represent the original files, but rather the
-remains after a first pass at resolving.
+There is no need to swap LOCAL/REMOTE order for difftool; P4Merge is
+symmetrical in this case, and a 0- or 1-revision difftool invocation
+already gives the working tree ("ours") on the right in green, matching
+Perforce's equivalent "Diff Against Have Revision". And you couldn't
+swap it anyway, as it would make 2-revision difftool invocation
+back-to-front.
 
-> The point of diff3 mode is to show how it looked line in the
-> common ancestor and what the conflicting sides want to change that
-> common version into; letting the user view three versions to help
-> him decide what to do by only looking at the part inside conflict
-> markers.
+Note that P4Merge now shows "ours" on the right for both diff and merge,
+unlike other diff/mergetools, which always have REMOTE on the right.
+But observe that REMOTE is the working tree (ie "ours") for a diff,
+while it's another branch (ie "theirs") for a merge.
 
-Right, I agree.
+Signed-off-by: Kevin Bracey <kevin@bracey.fi>
+---
+ mergetools/p4merge | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> We show "both sides added, either identically or differently" as
-> noteworthy events, but the patched code pushes "both sides added
-> identically" case outside the conflicting hunk, as if what was added
-> relative to the common ancestor version (in Uwe's case, is it 1-14
-> that is common, or just 10-14?) is not worth looking at when
-> considering what the right resolution is.  If it is not worth
-> looking at what was in the original for the conflicting part, why
-> would we be even using diff3 mode in the first place?
-
-I think Uwe's example shows that it _is_ useful. Yes, you no longer have
-the information about what happened through 1-14 (whether it was really
-there in the ancestor file, or whether it was simply added identically).
-But that information might or might not be relevant. In Uwe's example,
-it is just noise that detracts from the interesting part of the change
-(or does it? I think the answer is in the eye of the reader).  I think
-it can be helpful to have both types available, and they can pick which
-one they want; it's just another tool.
-
-Another argument is that some people (including me) set
-merge.conflictstyle to diff3, because they like seeing the extra context
-when resolving (I find it helps a lot with rebasing, when it is
-sometimes hard to remember which side is which in the merge). I'd
-consider setting it to zdiff3 to get the benefits of XDL_MERGE_ZEALOUS,
-and using "git checkout --conflict-style=diff3" if I need to get more
-information about a specific case.
-
--Peff
+diff --git a/mergetools/p4merge b/mergetools/p4merge
+index 8a36916..46b3a5a 100644
+--- a/mergetools/p4merge
++++ b/mergetools/p4merge
+@@ -22,7 +22,7 @@ diff_cmd () {
+ merge_cmd () {
+ 	touch "$BACKUP"
+ 	$base_present || >"$BASE"
+-	"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
++	"$merge_tool_path" "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
+ 	check_unchanged
+ }
+ 
+-- 
+1.8.2.rc2.5.g1a80410.dirty
