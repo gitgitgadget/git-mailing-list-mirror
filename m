@@ -1,72 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "Already up-to-date!" merge isn't a no-op?
-Date: Wed, 06 Mar 2013 14:08:12 -0800
-Message-ID: <7v38w8p4fn.fsf@alter.siamese.dyndns.org>
-References: <1826064298.2151517.1362605175796.JavaMail.root@genarts.com>
- <142915274.2151729.1362606487755.JavaMail.root@genarts.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Wed Mar 06 23:08:42 2013
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: [PATCH 0/2] Improve P4Merge mergetool invocation
+Date: Wed,  6 Mar 2013 22:32:56 +0200
+Message-ID: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
+Cc: David Aguilar <davvid@gmail.com>,
+	Ciaran Jessup <ciaranj@gmail.com>,
+	Scott Chacon <schacon@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 07 00:37:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDMVt-0000fG-Jm
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Mar 2013 23:08:41 +0100
+	id 1UDNu5-0007bV-1e
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 00:37:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755655Ab3CFWIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Mar 2013 17:08:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38915 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754335Ab3CFWIP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Mar 2013 17:08:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDEABAD63;
-	Wed,  6 Mar 2013 17:08:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HoPs/8oei/fhjqAwLuixC9a3O9k=; b=YMT44B
-	GIC7/KW4r9DDyITcooQxPUhLCQdigRAjHRcse8ToYsEWXCUr2qRFAQCzpJqRQn6H
-	BLDvNLQ2gedUPD3LcdUggQb52WZ7jalIHP8sSPW9WeaDJBiaMT8lxcNv/8zwMGws
-	SU4FjNc1CfamI46GJ9SI8Ig19P04pdg+Ix484=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XDepbhoVkaOmt512BSlzrN4ifbWY2pzt
-	EWJRiuriCtHjao5x49BYNFPMSAiJEIOi8qHDdCaFPenEiRoZAX6iLfmwG50sapLf
-	8op8U8F95AScPPmNE7dgCX7vMf7JOvHgzA0O9oG21SQG8IcMaobM7bIlxJkVi5cu
-	4x4aGTAEAC0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2929AD62;
-	Wed,  6 Mar 2013 17:08:14 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 433FEAD60; Wed,  6 Mar 2013
- 17:08:14 -0500 (EST)
-In-Reply-To: <142915274.2151729.1362606487755.JavaMail.root@genarts.com>
- (Stephen Bash's message of "Wed, 6 Mar 2013 16:48:07 -0500 (EST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 575D3B00-86AA-11E2-BF30-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757529Ab3CFXhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Mar 2013 18:37:13 -0500
+Received: from 8.mo2.mail-out.ovh.net ([188.165.52.147]:49385 "EHLO
+	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757425Ab3CFXhE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Mar 2013 18:37:04 -0500
+Received: from mail406.ha.ovh.net (b9.ovh.net [213.186.33.59])
+	by mo2.mail-out.ovh.net (Postfix) with SMTP id 13CFBDC1519
+	for <git@vger.kernel.org>; Wed,  6 Mar 2013 21:44:04 +0100 (CET)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 6 Mar 2013 22:33:45 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 6 Mar 2013 22:33:45 +0200
+X-Ovh-Mailout: 178.32.228.2 (mo2.mail-out.ovh.net)
+X-Mailer: git-send-email 1.8.2.rc2.5.g1a80410.dirty
+X-Ovh-Tracer-Id: 12116934798748717278
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -48
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrvdehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -48
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrvdehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217559>
 
-Stephen Bash <bash@genarts.com> writes:
+Two changes to the same piece of code that have greatly improved the behaviour
+of P4Merge for me. Some of it may also be applicable to other mergetools.
 
-> So what is the actual meaning of "Already up-to-date!"?  Is it
-> based on the tree, the reachable commits, or something more
-> complicated?
+I've put probably overly-long-winded explanations in the commit messages.
 
-The resulting tree of the merge happened to be the same as the
-original tree (i.e. "git diff HEAD^ HEAD" is empty).
+Comments welcome. In particular, I know almost nothing of sh, so I may have
+made some blunder there.
 
-This happens quite often and is perfectly normal.  After merging
-topics that has been cooking in 'next' to 'master', merging the
-resulting 'master' to 'next' is likely to result in that situation,
-unless 'master' has gained some other changes, such as updating the
-draft release notes with a commit on it, or applying an obvious and
-trivial fix before cooking it in 'next'.
+Kevin Bracey (2):
+  p4merge: swap LOCAL and REMOTE for mergetool
+  p4merge: create a virtual base if none available
+
+ git-mergetool--lib.sh | 14 ++++++++++++++
+ mergetools/p4merge    |  4 ++--
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+-- 
+1.8.2.rc2.5.g1a80410.dirty
