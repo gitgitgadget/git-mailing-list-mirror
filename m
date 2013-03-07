@@ -1,87 +1,202 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: fetch --no-tags with and w/o --all
-Date: Wed, 06 Mar 2013 16:41:44 -0800
-Message-ID: <7vhakonirb.fsf@alter.siamese.dyndns.org>
-References: <1879950.i2j8pjGADy@gandalf>
- <7vboawp4zy.fsf@alter.siamese.dyndns.org>
- <20130307002038.GA31571@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: feature suggestion: optimize common parts for checkout
+ --conflict=diff3
+Date: Wed, 6 Mar 2013 20:02:54 -0500
+Message-ID: <20130307010254.GA850@sigill.intra.peff.net>
+References: <20130306150548.GC15375@pengutronix.de>
+ <CALWbr2xDYuCN4nd-UNxkAY8-EguYjHBYgfu1fLtOGhYZyRQg_A@mail.gmail.com>
+ <20130306200347.GA20312@sigill.intra.peff.net>
+ <7vvc94p8hb.fsf@alter.siamese.dyndns.org>
+ <20130306205400.GA29604@sigill.intra.peff.net>
+ <7vr4jsp756.fsf@alter.siamese.dyndns.org>
+ <20130306212140.GA30202@sigill.intra.peff.net>
+ <7vip54p58p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Cristian Tibirna <ctibirna@giref.ulaval.ca>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 07 01:42:22 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git <git@vger.kernel.org>,
+	kernel@pengutronix.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 07 02:03:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDOuU-0001Au-UI
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 01:42:20 +0100
+	id 1UDPEx-0004Xo-IZ
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 02:03:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758440Ab3CGAls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Mar 2013 19:41:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54434 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758398Ab3CGAlq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Mar 2013 19:41:46 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A81ABBDE;
-	Wed,  6 Mar 2013 19:41:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DvGwB5nuifsuRV98jLMND5DhjAU=; b=eshC4Q
-	w8DQfMi5LNfayWAvnPLfm/0tV1oRYzVVkZBgWT4cPNXyLLPS1q00/yTvxlDYnY6n
-	G0K7isA9TSDMIS+cqq01iDn1ot1NGX3cWrjGKQOxu+mHcGep+jhVQY4/FaF7+Blt
-	shI3LDbNdpv58sbUXiSdj4fchsAmpPMHHKpJw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ib98Uadjh5Q0ZCM0B1KmzXCSg4Ql/0RC
-	zpvOl+MGiaKVQl+edW1p2DmKVyVqE/4RFju0L64oBZK3VVl20tSVme/MJa595f6x
-	PQsQycw+T2YAwuiXr8xYtxxUSlNdETcdqxHKm3MoDhWLMOjqm9B/QxX3ARQzefow
-	QYbzwZqdNeo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E54ABBDD;
-	Wed,  6 Mar 2013 19:41:46 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8050EBBD7; Wed,  6 Mar 2013
- 19:41:45 -0500 (EST)
-In-Reply-To: <20130307002038.GA31571@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 6 Mar 2013 19:20:38 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C9B2A1C6-86BF-11E2-B423-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755076Ab3CGBC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Mar 2013 20:02:57 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:38684 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753509Ab3CGBC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Mar 2013 20:02:57 -0500
+Received: (qmail 32440 invoked by uid 107); 7 Mar 2013 01:04:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Mar 2013 20:04:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Mar 2013 20:02:54 -0500
+Content-Disposition: inline
+In-Reply-To: <7vip54p58p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217566>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Mar 06, 2013 at 01:50:46PM -0800, Junio C Hamano wrote:
 
-> On Wed, Mar 06, 2013 at 01:56:01PM -0800, Junio C Hamano wrote:
->
->> Cristian Tibirna <ctibirna@giref.ulaval.ca> writes:
->> 
->> > Hello
->> >
->> > $ git --version
->> > git version 1.7.10.4
->> >
->> > $ git fetch origin --no-tags
->> > does what it says
->> >
->> > $ git fetch --all --no-tags
->> > still gets all the tags from the remote.
->> >
->> > Is this known?
->> 
->> Because --all (or --multiple) to iterate through all remotes
->> does not pass accept any command line refspecs, using these options
->> with --no-tags and/or --tags should be diagnosed as an error, but it
->> appears that the error checking is not done.
->
-> Or we could just pass them through. Looks like this was already fixed by
-> 8556646 (fetch --all: pass --tags/--no-tags through to each remote,
-> 2012-09-05), which is in v1.7.12.2 and higher.
+> I think it is more like "I added bread and my wife added bread to
+> our common shopping list" and our two-way "RCS merge" default is to
+> collapse that case to "one loaf of bread on the shopping list".  My
+> impression has always been that people who use "diff3" mode care
+> about this case and want to know that the original did not have
+> "bread" on the list in order to decide if one or two loaves of bread
+> should remain in the result.
 
-;-)  No wonder this looked somewhat familiar.
+I think that is only the case sometimes. It depends on what is in the
+conflict, and what your data is. I think you are conflating two things,
+though: zealousness of merge, and having the original content handy when
+resolving. To me, diff3 is about the latter. It can also be a hint that
+the user cares about the former, but not necessarily.
+
+> > In Uwe's example,
+> > it is just noise that detracts from the interesting part of the change
+> > (or does it? I think the answer is in the eye of the reader).
+> 
+> In other words, you would use the "RCS merge" style because most of
+> the time you would resolve to "one loaf of bread" and the fact that
+> it was missing in the original is not needed to decide that.  So, it
+> feels strange to use "diff3" and still want to discard that
+> information---if it is not relevant, why are you using diff3 mode in
+> the first place?  That is the question that is still not answered.
+
+Because for the lines that _are_ changed, you may want to see what the
+original looked like. Here's a more realistic example:
+
+	git init repo
+	cd repo
+
+	# Some baseline C code.
+	cat >foo.c <<\EOF
+	int foo(int bar)
+	{
+	  return bar + 5;
+	}
+	EOF
+	git add foo.c
+	git commit -m base
+	git tag base
+
+	# Simulate a modification to the function.
+	sed -i '2a\
+	  if (bar < 3)\
+	    bar *= 2;
+	' foo.c
+	git commit -am multiply
+	git tag multiply
+
+	# And another modification.
+	sed -i 's/bar + 5/bar + 7/' foo.c
+	git commit -am plus7
+
+	# Now on a side branch...
+	git checkout -b side base
+
+	# let's cherry pick the first change. Obviously
+	# we could just fast-forward in this toy example,
+	# but let's try to simulate a real history.
+	#
+	# We insert a sleep so that the cherry-pick does not
+	# accidentally end up with the exact same commit-id (again,
+	# because this is a toy example).
+	sleep 1
+	git cherry-pick multiply
+
+	# and now let's make a change that conflicts with later
+	# changes on master
+	sed -i 's/bar + 5/bar + 8/' foo.c
+	git commit -am plus8
+
+	# and now merge, getting a conflict
+	git merge master
+
+	# show the result with various marker styles
+	for i in merge diff3 zdiff3; do
+	  echo
+	  echo "==> $i"
+	  git.compile checkout --conflict=$i foo.c
+	  cat foo.c
+	done
+
+which produces:
+
+	==> merge
+	int foo(int bar)
+	{
+	  if (bar < 3)
+	    bar *= 2;
+	<<<<<<< ours
+	  return bar + 8;
+	=======
+	  return bar + 7;
+	>>>>>>> theirs
+	}
+
+The ZEALOUS level has helpfully cut out the shared cherry-picked bits,
+and let us focus on the real change.
+
+	==> diff3
+	int foo(int bar)
+	{
+	<<<<<<< ours
+	  if (bar < 3)
+	    bar *= 2;
+	  return bar + 8;
+	||||||| base
+	  return bar + 5;
+	=======
+	  if (bar < 3)
+	    bar *= 2;
+	  return bar + 7;
+	>>>>>>> theirs
+	}
+
+Here we get to see all of the change, but the interesting difference is
+overwhelmed by the shared cherry-picked bits. It's only 2 lines here,
+but of course it could be much larger in a real example, and the reader
+is forced to manually verify that the early parts are byte-for-byte
+identical.
+
+	==> zdiff3
+	int foo(int bar)
+	{
+	  if (bar < 3)
+	    bar *= 2;
+	<<<<<<< ours
+	  return bar + 8;
+	||||||| base
+	  return bar + 5;
+	=======
+	  return bar + 7;
+	>>>>>>> theirs
+	}
+
+Here we see the hunk cut-down again, removing the cherry-picked parts.
+But the presence of the base is still interesting, because we see
+something that was not in the "merge" marker: that we were originally
+at "5", and moved to "7" on one side and "8" on the other.
+
+I see conflicts like this when I rebase my topics forward; you may pick
+up part of my series, or even make a tweak to a patch in the middle. I
+prefer diff3 markers because they carry more information (and use them
+automatically via merge.conflictstyle). But in some cases, the lack of
+zealous reduction means that I end having to figure out whether and if
+anything changed in the seemingly identical bits.  Sometimes it is
+nothing, and sometimes you tweaked whitespace or fixed a typo, and it
+takes a lot of manual looking to figure it out. I hadn't realized it was
+related to the use of diff3 until the discussion today.
+
+-Peff
