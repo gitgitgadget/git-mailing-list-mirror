@@ -1,69 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] p4merge: create a virtual base if none available
-Date: Wed, 06 Mar 2013 23:25:52 -0800
-Message-ID: <7v8v5zoem7.fsf@alter.siamese.dyndns.org>
-References: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
- <1362601978-16911-3-git-send-email-kevin@bracey.fi>
- <CAJDDKr6+VRnc-HK52woHHLtAqXau=76Gc+Ag=keiMGffuco64A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: feature suggestion: optimize common parts for checkout
+ --conflict=diff3
+Date: Thu, 7 Mar 2013 03:04:11 -0500
+Message-ID: <20130307080411.GA25506@sigill.intra.peff.net>
+References: <20130306150548.GC15375@pengutronix.de>
+ <CALWbr2xDYuCN4nd-UNxkAY8-EguYjHBYgfu1fLtOGhYZyRQg_A@mail.gmail.com>
+ <20130306200347.GA20312@sigill.intra.peff.net>
+ <7vvc94p8hb.fsf@alter.siamese.dyndns.org>
+ <20130306205400.GA29604@sigill.intra.peff.net>
+ <7vr4jsp756.fsf@alter.siamese.dyndns.org>
+ <7vmwugp637.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kevin Bracey <kevin@bracey.fi>, git@vger.kernel.org,
-	Ciaran Jessup <ciaranj@gmail.com>,
-	Scott Chacon <schacon@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 07 08:26:23 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git <git@vger.kernel.org>,
+	kernel@pengutronix.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 07 09:04:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDVDa-0002jS-0H
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 08:26:22 +0100
+	id 1UDVoq-0003G7-Sy
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 09:04:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753477Ab3CGHZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Mar 2013 02:25:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43055 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752732Ab3CGHZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Mar 2013 02:25:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E885E8BF6;
-	Thu,  7 Mar 2013 02:25:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=URQBmnjd9HMybQxp9pD80VuoO2A=; b=FVJxWl
-	nDIz3FXxo6vPTNhGflus/HEkRpVOnuue+DdgQrpMjFD7JS9dT3i0/TwE6RqdDimF
-	iFtbcp5Ui/t/IMntemtDyxAoyuBCbe8+UIhbjIhSXf2FC2w8ik7nDCCehwgPkYbV
-	HSLq94hMkHZnMLXct0SazYi9fqOoBxtehDVxU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZtD17TTV/qOfnVm0AzajmJ3Pjrt/ZVVe
-	qwvuAT64hagcf+/LXwVBlEjIts323bDjaztt9Rut/v/RWKt7AFaS+BVQ/kz6yB4v
-	9ldjzRaByA2FSEBQwr2NWvI0uZDvBtKVhLH0ww9c2gnJkwhm3ntravsAJqqFAmPu
-	bizbQqG2rgg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCD588BF5;
-	Thu,  7 Mar 2013 02:25:54 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76BFC8BF3; Thu,  7 Mar 2013
- 02:25:54 -0500 (EST)
-In-Reply-To: <CAJDDKr6+VRnc-HK52woHHLtAqXau=76Gc+Ag=keiMGffuco64A@mail.gmail.com> (David
- Aguilar's message of "Wed, 6 Mar 2013 18:23:02 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3F348F4E-86F8-11E2-9A8A-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754487Ab3CGIEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Mar 2013 03:04:16 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39020 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754346Ab3CGIEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Mar 2013 03:04:14 -0500
+Received: (qmail 4685 invoked by uid 107); 7 Mar 2013 08:05:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 07 Mar 2013 03:05:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Mar 2013 03:04:11 -0500
+Content-Disposition: inline
+In-Reply-To: <7vmwugp637.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217578>
 
-David Aguilar <davvid@gmail.com> writes:
+On Wed, Mar 06, 2013 at 01:32:28PM -0800, Junio C Hamano wrote:
 
-> How do we feel about this duplication?
-> Should we make a common function in the git-sh-setup.sh,
-> or is it okay to have a slightly modified version of this
-> function in two places?
+> > We show "both sides added, either identically or differently" as
+> > noteworthy events, but the patched code pushes "both sides added
+> > identically" case outside the conflicting hunk, as if what was added
+> > relative to the common ancestor version (in Uwe's case, is it 1-14
+> > that is common, or just 10-14?) is not worth looking at when
+> > considering what the right resolution is.  If it is not worth
+> > looking at what was in the original for the conflicting part, why
+> > would we be even using diff3 mode in the first place?
+> 
+> I vaguely recall we did this "clip to eager" as an explicit bugfix
+> at 83133740d9c8 (xmerge.c: "diff3 -m" style clips merge reduction
+> level to EAGER or less, 2008-08-29).  The list archive around that
+> time may give us more contexts.
 
-It probably is a good idea to have it in one place.  That would also
-solve the @@DIFF@@ replacement issue you noticed at the same time.
+Thanks for the pointer. The relevant threads are:
+
+  http://article.gmane.org/gmane.comp.version-control.git/94228
+
+and
+
+  http://thread.gmane.org/gmane.comp.version-control.git/94339
+
+There is not much discussion beyond what ended up in 8313374; both Linus
+and Dscho question whether level and output format are orthogonal, but
+seem to accept the explanation you give in the commit message.
+
+Having read that commit and the surrounding thread, I think I stand by
+my argument that "zdiff3" is a useful tool to have, as long as the user
+understands what the hunks mean. It should never replace diff3, but I
+think it makes sense as a separate format.
+
+I was also curious whether it would the diff3/zealous combination would
+trigger any weird corner cases. In particular, I wanted to know how the
+example you gave in that commit of:
+
+  postimage#1: 1234ABCDE789
+                  |    /
+                  |   /
+  preimage:    123456789
+                  |   \
+                  |    \
+  postimage#2: 1234AXCYE789
+
+would react with diff3 (this is not the original example, but one with
+an extra "C" in the middle of postimage#2, which could in theory be
+presented as split hunks). However, it seems that we do not do such hunk
+splitting at all, neither for diff3 nor for the "merge" representation.
+
+-Peff
