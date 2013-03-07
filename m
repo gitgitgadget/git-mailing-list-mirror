@@ -1,96 +1,80 @@
-From: Jeremy Rosen <jeremy.rosen@openwide.fr>
-Subject: Re: Questions/investigations on git-subtree and tags
-Date: Thu, 7 Mar 2013 12:05:51 +0100 (CET)
-Message-ID: <1938485067.193912.1362654351290.JavaMail.root@openwide.fr>
-References: <CALeLG_=YQDrgMfOoR_GyNRexWxDqQGhFubmaYwM6pqXJuLnO6A@mail.gmail.com>
+From: =?utf-8?Q?Jan_Pe=C5=A1ta?= <jan.pesta@certicon.cz>
+Subject: [PATCH] git svn: ignore partial svn:mergeinfo
+Date: Thu, 7 Mar 2013 12:28:14 +0100
+Message-ID: <000e01ce1b26$dbb65570$93230050$@certicon.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Paul Campbell <pcampbell@kemitix.net>
-X-From: git-owner@vger.kernel.org Thu Mar 07 12:06:21 2013
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>, "'Junio C Hamano'" <gitster@pobox.com>,
+	"'Matthieu Moy'" <Matthieu.Moy@grenoble-inp.fr>,
+	"'Sam Vilain'" <sam@vilain.net>
+To: "'Eric Wong'" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Mar 07 12:28:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDYeR-0005KT-N9
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 12:06:20 +0100
+	id 1UDZ09-0004cT-LH
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 12:28:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932278Ab3CGLFy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Mar 2013 06:05:54 -0500
-Received: from zimbra3.corp.accelance.fr ([213.162.49.233]:48138 "EHLO
-	zimbra3.corp.accelance.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932235Ab3CGLFx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Mar 2013 06:05:53 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id 0CA6828068;
-	Thu,  7 Mar 2013 12:05:52 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zimbra3.corp.accelance.fr
-Received: from zimbra3.corp.accelance.fr ([127.0.0.1])
-	by localhost (zimbra3.corp.accelance.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DmL0U98S9c86; Thu,  7 Mar 2013 12:05:51 +0100 (CET)
-Received: from zimbra2.corp.accelance.fr (zimbra2.corp.accelance.fr [213.162.49.232])
-	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id 7290528065;
-	Thu,  7 Mar 2013 12:05:51 +0100 (CET)
-In-Reply-To: <CALeLG_=YQDrgMfOoR_GyNRexWxDqQGhFubmaYwM6pqXJuLnO6A@mail.gmail.com>
-X-Originating-IP: [213.162.49.238]
-X-Mailer: Zimbra 7.2.2_GA_2852 (ZimbraWebClient - GC25 (Linux)/7.2.2_GA_2852)
+	id S932407Ab3CGL2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Mar 2013 06:28:20 -0500
+Received: from service.certicon.cz ([90.183.112.10]:4750 "EHLO
+	service.certicon.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754601Ab3CGL2T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Mar 2013 06:28:19 -0500
+Received: from miami (c-006.certicon.cz [90.183.112.6])
+	(Authenticated sender: pesta)
+	by service.certicon.cz (Postfix) with ESMTPSA id 242B017080B;
+	Thu,  7 Mar 2013 12:28:15 +0100 (CET)
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: Ac4bJttG09FJeJKdTMyRuwCFMdh0kQ==
+Content-Language: cs
+X-certicon-MailScanner-Information: Please contact our ICT for more information
+X-MailScanner-ID: 242B017080B.69247
+X-certicon-MailScanner: Found to be clean
+X-certicon-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-0.2, required 5.1, autolearn=disabled, ALL_TRUSTED -1.00,
+	BAYES_50 0.80)
+X-certicon-MailScanner-From: jan.pesta@certicon.cz
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217593>
 
->=20
-> Hi J=C3=A9r=C3=A9my,
->=20
-> Git subtree ignores tags from the remote repo.
->=20
+Currently this is cosmetic change - the merges are ignored, becuase the methods 
+(lookup_svn_merge, find_rev_before, find_rev_after) are failing on comparing text with number.
 
-is that a design decision or a case of "not implemented yet"
+See http://www.open.collab.net/community/subversion/articles/merge-info.html
+Extract:
+The range r30430:30435 that was added to 1.5.x in this merge has a '*' suffix for 1.5.x\www.
+This '*' is the marker for a non-inheritable mergeinfo range.
+The '*' means that only the path on which the mergeinfo is explicitly set has had this range merged into it.
 
-> To follow a project in a subdirectory I would use git-subtree add
-> selecting a branch, not a tag, from the other repo. Then use
-> git-subtree pull to keep yourself updated.
->=20
+Signed-off-by: Jan Pesta <jan.pesta@certicon.cz>
+---
+ perl/Git/SVN.pm | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-
-well... yes, but releases are marked by tags, not branches so what I re=
-ally want is a tag.
-
-I still use git so I have the possibility to update and can traceback w=
-hat happened later
-
-> e.g.
->=20
-> To add:
->=20
-> git subtree add --prefix=3D$subdir $repo $branch
->=20
-> Then to update:
->=20
-> git subtree pull --prefix=3D$subdir $repo $branch
->=20
-
-
-ok, that probably works with branches (didn't test)
-
-> If you make any changes on the branch and wanted to push them back
-> you
-> could do that with:
->=20
-> git subtree pull --prefix=3D$subdir $repo2 $branch2
->=20
-> $repo2 and $branch2 would be different from $repo and $branch if you
-> wanted to push to your own fork before submitting a pull request.
->=20
-
-shouldn't there be a subtree split somewhere ? IIUC pull is only merge =
-from the remote to my local repo,
-not the other way round
-
-
-> --
-> Paul [W] Campbell
->=20
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 0ebc68a..74d49bb 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1493,6 +1493,11 @@ sub lookup_svn_merge {
+ 	my @merged_commit_ranges;
+ 	# find the tip
+ 	for my $range ( @ranges ) {
++		if ($range =~ /[*]$/) {
++			warn "W:Ignoring partial merge in svn:mergeinfo "
++				."dirprop: $source:$range\n";
++			next;
++		}
+ 		my ($bottom, $top) = split "-", $range;
+ 		$top ||= $bottom;
+ 		my $bottom_commit = $gs->find_rev_after( $bottom, 1, $top );
+-- 
+1.8.1.msysgit.1
