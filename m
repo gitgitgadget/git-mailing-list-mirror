@@ -1,105 +1,76 @@
-From: Jeremy Rosen <jeremy.rosen@openwide.fr>
-Subject: Re: Questions/investigations on git-subtree and tags
-Date: Thu, 7 Mar 2013 17:09:10 +0100 (CET)
-Message-ID: <1027208424.206728.1362672550530.JavaMail.root@openwide.fr>
-References: <CALeLG_noUfcOZ8gUjqftz8sfWiWdXP3kZUjkRNJ4W=_J+V70rw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Paul Campbell <pcampbell@kemitix.net>
-X-From: git-owner@vger.kernel.org Thu Mar 07 17:09:44 2013
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: [PATCH] setup.c: Fix prefix_pathspec from looping pass end of string
+Date: Thu,  7 Mar 2013 11:36:03 -0500
+Message-ID: <1362674163-24682-1-git-send-email-andrew.kw.w@gmail.com>
+Cc: Andrew Wong <andrew.kw.w@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 07 17:41:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDdNz-0007un-Tp
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 17:09:40 +0100
+	id 1UDdsc-00032f-VQ
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 17:41:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932358Ab3CGQJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Mar 2013 11:09:13 -0500
-Received: from zimbra3.corp.accelance.fr ([213.162.49.233]:37491 "EHLO
-	zimbra3.corp.accelance.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754830Ab3CGQJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Mar 2013 11:09:12 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id 36AD5280B8;
-	Thu,  7 Mar 2013 17:09:11 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zimbra3.corp.accelance.fr
-Received: from zimbra3.corp.accelance.fr ([127.0.0.1])
-	by localhost (zimbra3.corp.accelance.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qce54pdlMaWy; Thu,  7 Mar 2013 17:09:10 +0100 (CET)
-Received: from zimbra2.corp.accelance.fr (zimbra2.corp.accelance.fr [213.162.49.232])
-	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id A4D3E2804A;
-	Thu,  7 Mar 2013 17:09:10 +0100 (CET)
-In-Reply-To: <CALeLG_noUfcOZ8gUjqftz8sfWiWdXP3kZUjkRNJ4W=_J+V70rw@mail.gmail.com>
-X-Originating-IP: [213.162.49.238]
-X-Mailer: Zimbra 7.2.2_GA_2852 (ZimbraWebClient - GC25 (Linux)/7.2.2_GA_2852)
+	id S1753852Ab3CGQkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Mar 2013 11:40:53 -0500
+Received: from mail-ia0-f179.google.com ([209.85.210.179]:46588 "EHLO
+	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752029Ab3CGQkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Mar 2013 11:40:52 -0500
+Received: by mail-ia0-f179.google.com with SMTP id x24so582057iak.38
+        for <git@vger.kernel.org>; Thu, 07 Mar 2013 08:40:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=Ol5IDkQe3B4JJrfWV6RV45OIuBo/yJYpXxuYiJX3HAk=;
+        b=tyGHfiCw4IoE8kvDH+wADwjbc8WLg3uxUDeAlkWUCXmQ4/QvuUuzCsCQqRgdtjsfVP
+         618eGQr0fEWzBRFORVVRXdf1e5tkSY4IS7M1ue+kMhQY5pifbvlrYa/l/jHWANOsMCEI
+         v3TR5DhMkCa5exqMoQSlOU+XYpBlW22PJIlftG7Sl3rUUOjkKSqlz88F0w22kbq6Wxrg
+         NCeISeEtrPF03OlwjrL8jivdqCEueRWL69fpHebDs+xNS4uyvQmDcKXpOYUxq8GxSRcw
+         zdCxBoxJPbD6C5Jzq+lqVs39T1kvoObdWV1VlwDeNr8g54alCws+e931KfWBW0bjdaKL
+         SguA==
+X-Received: by 10.50.46.202 with SMTP id x10mr15303010igm.87.1362674451853;
+        Thu, 07 Mar 2013 08:40:51 -0800 (PST)
+Received: from localhost.localdomain ([69.165.234.69])
+        by mx.google.com with ESMTPS id xf4sm27396945igb.8.2013.03.07.08.40.49
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 07 Mar 2013 08:40:50 -0800 (PST)
+X-Mailer: git-send-email 1.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217600>
 
-> 
-> I think I tried adding the ^{} syntax, but I don't think it works on
-> remote repos. Or I couldn't get the right syntax.
-> 
+The previous code was assuming length ends at either `)` or `,`, and was
+not handling the case where strcspn returns length due to end of string.
+So specifying ":(top" as pathspec will cause the loop to go pass the end
+of string.
 
-indeed, it doesn't work on fetch, but it could be used somewhere between the fetch and the commit-tree to move from the ref to the associated commit
+Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
+---
+ setup.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-
-
-
-> 
-> Latest patch:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/217257
-> 
-
-oh, that patch, yes I found it while looking around it is a step in the right direction but it doesn't help in my case since i'm using a valid remote ref that can be fetched
-
-(on a side note you could use git ls-remote to check for the remote ref and avoid a fetch in case of an incorrect ref, but that's just a detail)
-
-
-
-I just tested with it and here is what happens
-
-git subtree add --squash -P br2 git://git.buildroot.net/buildroot 2013.02 => works ok, br2 is created
-
-however the message of the squash commit is 
-
-
-    Squashed 'br2/' content from commit f1d2c19
-    
-    git-subtree-dir: br2
-    git-subtree-split: f1d2c19091e1c2ef803ec3267fe71cf6ce7dd948
-
-
-which is not correct :
-
-git ls-remote git://git.buildroot.net/buildroot 2013.02
-f1d2c19091e1c2ef803ec3267fe71cf6ce7dd948	refs/tags/2013.02
-
-git ls-remote git://git.buildroot.net/buildroot 2013.02^{}
-15ace1a845c9e7fc65b648bbaf4dd14e03d938fd	refs/tags/2013.02^{}
-
-
-as you can see git subtee thinks it splited from the tag SHA instead of the tag's commit SHA
-
-this is incorrect because the tag isn't here, and at split time git subtree won't be able to find the correct ancestor. We just need to make sure we use the tag's commit instead
-of the tag
-
-
-
-changing
-	revs=FETCH_HEAD
-to
-	revs=FETCH_HEAD^{}
-in cmd_add_repository
-
-seems to fix it, both for remote branch pull and remote tag pull
-
-
-we still have a bug lurking around it's the case where the user does the fetch himself then use subtree add with a tag SHA. but let's discuss problems one at a time :)
+diff --git a/setup.c b/setup.c
+index 1dee47e..f4c4e73 100644
+--- a/setup.c
++++ b/setup.c
+@@ -207,9 +207,11 @@ static const char *prefix_pathspec(const char *prefix, int prefixlen, const char
+ 		     *copyfrom && *copyfrom != ')';
+ 		     copyfrom = nextat) {
+ 			size_t len = strcspn(copyfrom, ",)");
+-			if (copyfrom[len] == ')')
++			if (copyfrom[len] == '\0')
+ 				nextat = copyfrom + len;
+-			else
++			else if (copyfrom[len] == ')')
++				nextat = copyfrom + len;
++			else if (copyfrom[len] == ',')
+ 				nextat = copyfrom + len + 1;
+ 			if (!len)
+ 				continue;
+-- 
+1.8.2.rc0.22.gb3600c3
