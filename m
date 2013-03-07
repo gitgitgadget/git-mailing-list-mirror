@@ -1,101 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] bundle: Add colons to list headings in "verify"
-Date: Thu, 07 Mar 2013 13:38:28 -0800
-Message-ID: <7vvc92lwkr.fsf@alter.siamese.dyndns.org>
-References: <1362617796-4120-1-git-send-email-git@cryptocrack.de>
- <1362617796-4120-2-git-send-email-git@cryptocrack.de>
+Subject: Re: [PATCH] setup.c: Fix prefix_pathspec from looping pass end of
+ string
+Date: Thu, 07 Mar 2013 13:48:18 -0800
+Message-ID: <7vobeulw4d.fsf@alter.siamese.dyndns.org>
+References: <1362674163-24682-1-git-send-email-andrew.kw.w@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Lukas Fleischer <git@cryptocrack.de>
-X-From: git-owner@vger.kernel.org Thu Mar 07 22:39:00 2013
+Cc: git@vger.kernel.org
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 07 22:48:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDiWh-00023E-J6
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 22:38:59 +0100
+	id 1UDigC-0001Ym-Gt
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 22:48:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759820Ab3CGVic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Mar 2013 16:38:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57989 "EHLO
+	id S1759154Ab3CGVsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Mar 2013 16:48:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35067 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758727Ab3CGVib (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Mar 2013 16:38:31 -0500
+	id S1754356Ab3CGVsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Mar 2013 16:48:21 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21AF8A3AB;
-	Thu,  7 Mar 2013 16:38:31 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 145AAAA73;
+	Thu,  7 Mar 2013 16:48:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tqw+YMTEgtkPUmwI/Y4d2VgQ6dc=; b=JDvBdS
-	+H/RHr5K4XGnlH+7m0mudA/g35ugJNk3OdJk4txYW85tMjw7ahIW9pdI0n1Nm0gK
-	8zr/lXbHdbkBsiQVmjtCI41xKTFxzW7nEz47uUpmdYLyPzsvIlDMttjBvyd9SxF8
-	WaDKPMoBweOSRBLHue/xqWZ5Cn3qpbXYP92hM=
+	:content-type; s=sasl; bh=vSOj/lDZByf4zrPenhFZEXsx/gQ=; b=LpoZ9R
+	J3U0PUr6qeNtMYYyOjhmjSJaB01plcNwtRppjbT69CNTEN8xex3ekgiIkSIrvDNr
+	xqCGo3FbHimap++in7TkruuuCqHj23YVZPoUIbAl9MTOcoy1tkiJh/3UElmbIWA7
+	OQAuCJ+A9UiKQuPmzTfkoFTsMa6xnP4PfDKmE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FPAAX48SCO/MOq1z7J5tf9pe9uNugDy1
-	AlupaF59Yq11lzsEA5rte0hvaUkOaJvSCc7GkghWISEenpxNhDadVFX70aEWmfjw
-	FRvmP0drDZ4BkLUx+5thwQRa6R9d6xT1IcdXH85QzDZIbZ3tqo+jh08Xcpg86+5A
-	mV3sb1pRJPU=
+	:content-type; q=dns; s=sasl; b=gqh0kyfORDFZYhECfbK+XlK0kezvMBdc
+	6claiLFEJWPKhmaaFycZcdK8qXr17/v/e1qaI0H0aTUJievdZKoFtVdAkKmswZWu
+	+RNdTe0Fs227cXBKAgrCzo8XnZ+2E2Q31PpRpeJzVuseUyYs3r+x45mutPR1lpw4
+	9kCCGTYJxYA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 166D0A3A8;
-	Thu,  7 Mar 2013 16:38:31 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A44DAA72;
+	Thu,  7 Mar 2013 16:48:21 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9499CA3A2; Thu,  7 Mar 2013
- 16:38:30 -0500 (EST)
-In-Reply-To: <1362617796-4120-2-git-send-email-git@cryptocrack.de> (Lukas
- Fleischer's message of "Thu, 7 Mar 2013 01:56:36 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A4B1AA70; Thu,  7 Mar 2013
+ 16:48:20 -0500 (EST)
+In-Reply-To: <1362674163-24682-1-git-send-email-andrew.kw.w@gmail.com>
+ (Andrew Wong's message of "Thu, 7 Mar 2013 11:36:03 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5AA1371A-876F-11E2-90A7-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: BA3B85E4-8770-11E2-8486-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217618>
 
-Lukas Fleischer <git@cryptocrack.de> writes:
+Andrew Wong <andrew.kw.w@gmail.com> writes:
 
-> These slightly improve the reading flow by making it obvious that a list
-> follows.
->
-> Signed-off-by: Lukas Fleischer <git@cryptocrack.de>
+> The previous code was assuming length ends at either `)` or `,`, and was
+> not handling the case where strcspn returns length due to end of string.
+> So specifying ":(top" as pathspec will cause the loop to go pass the end
+> of string.
 
-Perhaps.
+Thanks.
 
-The earlier message says "contains X ref(s)" while the later one
-says "requires this/these X ref(s)".  Do we want to make them
-consistent, too?
+The parser that goes past the end of the string may be a bug worth
+fixing, but is this patch sufficient to diagnose such an input as an
+error?
 
+
+
+
+> Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
 > ---
->  bundle.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  setup.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 >
-> diff --git a/bundle.c b/bundle.c
-> index 65db53b..8cd8b4f 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -183,8 +183,8 @@ int verify_bundle(struct bundle_header *header, int verbose)
->  		struct ref_list *r;
->  
->  		r = &header->references;
-> -		printf_ln(Q_("The bundle contains %d ref",
-> -			     "The bundle contains %d refs",
-> +		printf_ln(Q_("The bundle contains %d ref:",
-> +			     "The bundle contains %d refs:",
->  			     r->nr),
->  			  r->nr);
->  		list_refs(r, 0, NULL);
-> @@ -192,8 +192,8 @@ int verify_bundle(struct bundle_header *header, int verbose)
->  		if (!r->nr) {
->  			printf_ln(_("The bundle records a complete history."));
->  		} else {
-> -			printf_ln(Q_("The bundle requires this ref",
-> -				     "The bundle requires these %d refs",
-> +			printf_ln(Q_("The bundle requires this ref:",
-> +				     "The bundle requires these %d refs:",
->  				     r->nr),
->  				  r->nr);
->  			list_refs(r, 0, NULL);
+> diff --git a/setup.c b/setup.c
+> index 1dee47e..f4c4e73 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -207,9 +207,11 @@ static const char *prefix_pathspec(const char *prefix, int prefixlen, const char
+>  		     *copyfrom && *copyfrom != ')';
+>  		     copyfrom = nextat) {
+>  			size_t len = strcspn(copyfrom, ",)");
+> -			if (copyfrom[len] == ')')
+> +			if (copyfrom[len] == '\0')
+>  				nextat = copyfrom + len;
+> -			else
+> +			else if (copyfrom[len] == ')')
+> +				nextat = copyfrom + len;
+> +			else if (copyfrom[len] == ',')
+>  				nextat = copyfrom + len + 1;
+>  			if (!len)
+>  				continue;
