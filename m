@@ -1,158 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add: Clarify documentation of -A and -u
-Date: Thu, 07 Mar 2013 09:52:06 -0800
-Message-ID: <7vsj47m721.fsf@alter.siamese.dyndns.org>
-References: <20130306072610.GB15534@biohazard-cafe.mit.edu>
- <7vhakoqwri.fsf@alter.siamese.dyndns.org>
- <20130307101314.GP22203@biohazard-cafe.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: feature suggestion: optimize common parts for checkout
+ --conflict=diff3
+Date: Thu, 7 Mar 2013 13:01:57 -0500
+Message-ID: <20130307180157.GA6604@sigill.intra.peff.net>
+References: <20130306150548.GC15375@pengutronix.de>
+ <CALWbr2xDYuCN4nd-UNxkAY8-EguYjHBYgfu1fLtOGhYZyRQg_A@mail.gmail.com>
+ <20130306200347.GA20312@sigill.intra.peff.net>
+ <7vvc94p8hb.fsf@alter.siamese.dyndns.org>
+ <20130306205400.GA29604@sigill.intra.peff.net>
+ <7vr4jsp756.fsf@alter.siamese.dyndns.org>
+ <7vmwugp637.fsf@alter.siamese.dyndns.org>
+ <20130307080411.GA25506@sigill.intra.peff.net>
+ <7v1ubrnmtu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Greg Price <price@MIT.EDU>
-X-From: git-owner@vger.kernel.org Thu Mar 07 18:52:38 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git <git@vger.kernel.org>,
+	kernel@pengutronix.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 07 19:02:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDezd-0000N5-EZ
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 18:52:37 +0100
+	id 1UDf9D-00005F-SK
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 19:02:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756453Ab3CGRwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Mar 2013 12:52:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60981 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755963Ab3CGRwJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Mar 2013 12:52:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A995AB811;
-	Thu,  7 Mar 2013 12:52:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p734R4Ax1f53WbRS8z6FuRNDilo=; b=g1Fkvb
-	a0u95e2kiOLpUQ29eUsavj1zmtq8sdBswJIxrQafYS/KLqqi8MgMCgeydHNG6RB6
-	EgW2fp1vez1szuRiw+Bm9t74ZlhYfsmpNxU8rSer5t6g8AQShlBb2O1K3QkXz8jU
-	cs7uyQa07A71ITJ7emnQM/29+T5JCJElvjlzU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nqcXgvGsS23mJm1EJQ7ijHeSa+lKZ3dO
-	p8JT0xOdKDEBmCGfKkPHSLiq18SLRZTN5NxAxx3pcurtIK25W8oRpSJKR8cCpLlH
-	26fl6M4Y3+ZIawUuJRBupvT7EmU8FfyrZkKNXmCClud6RozKxmA4EKfEvtY7sPAq
-	WzuyKZnYlyg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E764B80F;
-	Thu,  7 Mar 2013 12:52:08 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E0DE8B80A; Thu,  7 Mar 2013
- 12:52:07 -0500 (EST)
-In-Reply-To: <20130307101314.GP22203@biohazard-cafe.mit.edu> (Greg Price's
- message of "Thu, 7 Mar 2013 05:13:15 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BAB765B8-874F-11E2-948B-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932366Ab3CGSCE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Mar 2013 13:02:04 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40196 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932237Ab3CGSCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Mar 2013 13:02:03 -0500
+Received: (qmail 8138 invoked by uid 107); 7 Mar 2013 18:03:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 07 Mar 2013 13:03:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Mar 2013 13:01:57 -0500
+Content-Disposition: inline
+In-Reply-To: <7v1ubrnmtu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217604>
 
-Greg Price <price@MIT.EDU> writes:
+On Thu, Mar 07, 2013 at 09:26:05AM -0800, Junio C Hamano wrote:
 
-> On Wed, Mar 06, 2013 at 09:10:57AM -0800, Junio C Hamano wrote:
->> I do not know if mentioning what -A does in the description for -u
->> (and vice versa) makes it easier to understand or more confusing
->> (not rhetorical: I suspect some may find it easier and others not).
->> 
->> But "and the default behaviour will..." here _is_ confusing.  After
->> reading this patch three times, I still cannot tell what "default"
->> you are trying to describe.  Is it "-u" without arguments?  Is it
->> "add" without "-u" nor "-A"?  Is it something else???
->
-> I meant the behavior without -A or -u.  This could be fixed directly
-> by s/the default behavior will/with neither -A nor -u we/.
+> Without thinking about it too deeply,...
+> 
+> I think the "RCS merge" _could_ show it as "1234A<B=X>C<D=Y>E789"
+> without losing any information (as it is already discarding what was
+> in the original in the part that is affected by the conflict,
+> i.e. "56 was there").
 
-When we have bulletted list that enumerates options and describes
-what each option does and how each option affects the behaviour, I'd
-prefer to see us *not* talking about what happens when you do *not*
-give that option, unless it makes it hard to understand that option
-without such an extra description.  The overall description of what
-the command does without the options should go to the top level.
+Right, I think that is sane, though we do not do that at this point.
 
-> Here's a crack at making those distinctions clear.  I've also tried to
-> make the descriptions as parallel as possible, as what they're saying
-> is very similar.
->
-> -u::
-> --update::
-> 	Update the index just where it already has an entry matching
-> 	<pathspec>.
+> Let's think aloud how "diff3 -m" _should_ split this. The most
+> straight-forward representation would be "1234<ABCDE|56=AXCYE>789",
+> that is, where "56" was originally there, one side made it to
+> "ABCDE" and the other "AXCYE".
 
-Good; this was the short phrasing I was looking for but couldn't
-come up with myself without repeating "the index" over and over.
+Yes, that is what diff3 would do now (because it does not do any hunk
+refinement at all), and should continue doing.
 
-> Then follow both with the "If no <pathspec>" paragraph.  I just
-> noticed that the paragraph actually needs a small modification to fit
-> '-A', too.  New patch below.
->
-> Greg
->
-> From: Greg Price <price@mit.edu>
-> Date: Thu, 7 Mar 2013 02:08:21 -0800
-> Subject: [PATCH] add: Clarify documentation of -A and -u
+> You could make it "1234<AB|5=AX><C|=C><DE|6=YE>789", and that is
+> technically correct (what there were in the shared original for the
+> conflicted part is 5 and then 6), but the representation pretends
+> that it knows more than there actually is information, which may be
+> somewhat misleading.  All these three are equally plausible split of
+> the original "56":
+> 
+> 	1234<AB|=AX><C|=C><DE|56=YE>789
+> 	1234<AB|5=AX><C|=C><DE|6=YE>789
+> 	1234<AB|56=AX><C|=C><DE|=YE>789
+> 
+> and picking one over others would be a mere heuristic.  All three
+> are technically correct representations and it is just the matter of
+> which one is the easiest to understand.  So, this is the kind of
+> "misleading but not incorrect".
 
-(for future reference) Drop the three lines and have "-- >8 --" here.
+Yes, I agree it is a heuristic about which part of a split hunk to place
+deleted preimage lines in. Conceptually, I'm OK with that; the point of
+zdiff3 is to try to make the conflict easier to read by eliminating
+possibly uninteresting parts. It doesn't have to be right all the time;
+it just has to be useful most of the time. But it's not clear how true
+that would be in real life.
 
-[patch kept unsnipped for others']
+I think this is somewhat a moot point, though. We do not do this
+splitting now. If we later learn to do it, there is nothing to say that
+zdiff3 would have to adopt it also; it could stop at a lower
+zealous-level than the regular merge markers. I think I'd want to
+experiment with it and see some real-world examples before making a
+decision on that.
 
-> The documentation of '-A' and '-u' is very confusing for someone who
-> doesn't already know what they do.  Describe them with fewer words and
-> clearer parallelism to each other and to the behavior of plain 'add'.
->
-> Also mention the default <pathspec> for '-A' as well as '-u', because
-> it applies to both.
->
-> Signed-off-by: Greg Price <price@mit.edu>
-> ---
->  Documentation/git-add.txt | 22 ++++++++++++----------
->  1 file changed, 12 insertions(+), 10 deletions(-)
->
-> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-> index 388a225..b0944e5 100644
-> --- a/Documentation/git-add.txt
-> +++ b/Documentation/git-add.txt
-> @@ -100,12 +100,9 @@ apply to the index. See EDITING PATCHES below.
->  
->  -u::
->  --update::
-> -	Only match <pathspec> against already tracked files in
-> -	the index rather than the working tree. That means that it
-> -	will never stage new files, but that it will stage modified
-> -	new contents of tracked files and that it will remove files
-> -	from the index if the corresponding files in the working tree
-> -	have been removed.
-> +	Update the index just where it already has an entry matching
-> +	<pathspec>.  This removes as well as modifies index entries to
-> +	match the working tree, but adds no new files.
->  +
->  If no <pathspec> is given, the current version of Git defaults to
->  "."; in other words, update all tracked files in the current directory
-> @@ -114,10 +111,15 @@ of Git, hence the form without <pathspec> should not be used.
->  
->  -A::
->  --all::
-> -	Like `-u`, but match <pathspec> against files in the
-> -	working tree in addition to the index. That means that it
-> -	will find new files as well as staging modified content and
-> -	removing files that are no longer in the working tree.
-> +	Update the index not only where the working tree has a file
-> +	matching <pathspec> but also where the index already has an
-> +	entry.	This adds, modifies, and removes index entries to
-> +	match the working tree.
-> ++
-> +If no <pathspec> is given, the current version of Git defaults to
-> +"."; in other words, update all files in the current directory
-> +and its subdirectories. This default will change in a future version
-> +of Git, hence the form without <pathspec> should not be used.
->  
->  -N::
->  --intent-to-add::
+> In all these cases, the middle part would look like this:
+> 
+> 	<<<<<<< ours
+>         C
+>         ||||||| base
+>         =======
+> 	C
+>         >>>>>>> theirs
+> 
+> in order to honor the explicit "I want to view all three versions to
+> examine the situation" aka "--conflict=diff3" option.  We cannot
+> reduce it to just "C".  That will make it "not just misleading but
+> is actively wrong".
+
+I'm not sure I agree. In this output (which does the zealous
+simplification, the splitting, and arbitrarily assigns deleted preimage
+to the first of the split hunks):
+
+  1234A<B|56=X>C<D|Y>E789
+
+I do not see the promotion of C to "already resolved, you cannot tell if
+it was really in the preimage or not" as any more or less misleading or
+wrong than that of A or E.  It is no more misleading than what the
+merge-marker case would do, which would be:
+
+  1234A<B=X>C<D=Y>E789
+
+The wrong thing to me is the arbitrary choice about how to distribute
+the preimage lines. In this example, it is not a big deal for the
+heuristic to be wrong; you can see both of the hunks. But if C is long,
+and you do not even see D=Y while resolving B=X, seeing the preimage
+there may become nonsensical.
+
+But again, we don't do this splitting now. So I don't think it's
+something that should make or break a decision to have zdiff3. Without
+the splitting, I can see it being quite useful. I'm going to carry the
+patch in my tree for a while and try using it in practice for a while.
+
+-Peff
