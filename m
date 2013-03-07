@@ -1,147 +1,105 @@
-From: Max Horn <max@quendi.de>
-Subject: rebase: strange failures to apply patc 3-way
-Date: Thu, 7 Mar 2013 11:16:50 +0100
-Message-ID: <7A483B92-D671-46CA-9EFD-83C6F4C97B5E@quendi.de>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Jeremy Rosen <jeremy.rosen@openwide.fr>
+Subject: Questions/investigations on git-subtree and tags
+Date: Thu, 7 Mar 2013 11:25:59 +0100 (CET)
+Message-ID: <822188477.192374.1362651959144.JavaMail.root@openwide.fr>
+References: <1492019317.191838.1362650820122.JavaMail.root@openwide.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 07 11:33:07 2013
+X-From: git-owner@vger.kernel.org Thu Mar 07 11:35:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDY8J-0006qe-74
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 11:33:07 +0100
+	id 1UDYAB-0008Lu-LK
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 11:35:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752971Ab3CGKck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Mar 2013 05:32:40 -0500
-Received: from merkurneu.hrz.uni-giessen.de ([134.176.2.3]:48193 "EHLO
-	merkurneu.hrz.uni-giessen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752847Ab3CGKcj convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Mar 2013 05:32:39 -0500
-X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Mar 2013 05:32:38 EST
-Received: from mailgw82.hrz.uni-giessen.de by merkurneu.hrz.uni-giessen.de with ESMTP for git@vger.kernel.org; Thu, 7 Mar 2013 11:17:34 +0100
-Received: from hermes.hrz.uni-giessen.de (hermes.hrz.uni-giessen.de [134.176.2.15])
-	by mailgw82.hrz.uni-giessen.de (Postfix) with ESMTP id B2C50480008C
-	for <git@vger.kernel.org>; Thu,  7 Mar 2013 11:16:50 +0100 (CET)
-Received: from [134.176.2.15] by hermes.hrz.uni-giessen.de with ESMTP for git@vger.kernel.org; Thu, 7 Mar 2013 11:16:50 +0100
-X-Mailer: Apple Mail (2.1283)
-X-HRZ-JLUG-MailScanner-Information: Passed JLUG virus check
-X-HRZ-JLUG-MailScanner: No virus found
-X-Envelope-From: max@quendi.de
-X-Spam-Status: No
+	id S1755150Ab3CGKei convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Mar 2013 05:34:38 -0500
+Received: from zimbra3.corp.accelance.fr ([213.162.49.233]:45954 "EHLO
+	zimbra3.corp.accelance.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752909Ab3CGKeh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Mar 2013 05:34:37 -0500
+X-Greylist: delayed 517 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Mar 2013 05:34:37 EST
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id F1449280AD
+	for <git@vger.kernel.org>; Thu,  7 Mar 2013 11:25:59 +0100 (CET)
+X-Virus-Scanned: amavisd-new at zimbra3.corp.accelance.fr
+Received: from zimbra3.corp.accelance.fr ([127.0.0.1])
+	by localhost (zimbra3.corp.accelance.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id dv3h4OXWL+xq for <git@vger.kernel.org>;
+	Thu,  7 Mar 2013 11:25:59 +0100 (CET)
+Received: from zimbra2.corp.accelance.fr (zimbra2.corp.accelance.fr [213.162.49.232])
+	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id 4EDD228065
+	for <git@vger.kernel.org>; Thu,  7 Mar 2013 11:25:59 +0100 (CET)
+In-Reply-To: <1492019317.191838.1362650820122.JavaMail.root@openwide.fr>
+X-Originating-IP: [213.162.49.238]
+X-Mailer: Zimbra 7.2.2_GA_2852 (ZimbraWebClient - GC25 (Linux)/7.2.2_GA_2852)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217588>
 
-Recently I have observed very strange failures in "git rebase" that cause it to fail to work automatically in situations where it should trivially be able to do so.
-
-In case it matter, here's my setup: git 1.8.2.rc2.4.g7799588 (i.e. git.git master branch) on Mac OS X. The repos clone is on a HFS+ partition, not on a network volume. No gitattributes are being used.  Regarding the origin of the repos (I hope it doesn't matter, but just in case): The repository in question used to be a CVS repository; it was decided to switch to Mercurial (not my decision ;-) and I performed the conversion; I first converted it to git using cvs2git (from the cvs2svn suite), then performed some history cleanup, and finally used "hg convert" to convert it to git. Recently, I have been accessing the repository from git via the gitifyhg tool <https://github.com/buchuki/gitifyhg>. 
-
-Anyway, several strange things just happened (and I had similar experiences in the past days and weeks, but that was using an older git, and I thought I was just doing something wrong).
-
-Specifically, I wanted to rebase a branch with some experimental commits. The strange things started with this:
-
-$ git rebase MY-NEW-BASE
-First, rewinding head to replay your work on top of it...
-Applying: SOME COMMIT
-Applying: SOME OTHER COMMIT
-...
-Applying: COMMIT A
-Applying: COMMIT B
-Using index info to reconstruct a base tree...
-Falling back to patching base and 3-way merge...
-error: Your local changes to the following files would be overwritten by merge:
-	some/source.file
-Please, commit your changes or stash them before you can merge.
-Aborting
-Failed to merge in the changes.
-Patch failed at 0014 COMMIT B
-The copy of the patch that failed is found in:
-   /path/to/my/repo/.git/rebase-apply/patch
-
-When you have resolved this problem, run "git rebase --continue".
-If you prefer to skip this patch, run "git rebase --skip" instead.
-To check out the original branch and stop rebasing, run "git rebase --abort".
+Hello everybody
 
 
-Now, what is strange about this is that the failed patch actually applies cleanly:
+I am trying to use git-subtree to follow a subproject but I have a coup=
+le of problems and I am not sure if I am doing something wrong=20
 
-$ patch -p1 < /path/to/my/repo/.git/rebase-apply/patch
-patching file some/source.file
-$
-
-And there is no subtle merge issue here, either: That patch is the only one to have touched the surrounding code since 1999! There is no source of conflict there!
-
-Anyway. The tale gets stranger, as I was trying to do this again (no changes were made to the repos in between, this is a straight continuation from above):
-
-$ git rebase --abort
-$ git rebase MY-NEW-BASE
-First, rewinding head to replay your work on top of it...
-Applying: SOME COMMIT
-Applying: SOME OTHER COMMIT
-...
-Applying: COMMIT A
-Using index info to reconstruct a base tree...
-Falling back to patching base and 3-way merge...
-error: Your local changes to the following files would be overwritten by merge:
-	some/othersource.file
-	some/yetanother.file
-Please, commit your changes or stash them before you can merge.
-Aborting
-Failed to merge in the changes.
-Patch failed at 0013 COMMIT A
-The copy of the patch that failed is found in:
-   /path/to/my/repo/.git/rebase-apply/patch
-
-When you have resolved this problem, run "git rebase --continue".
-If you prefer to skip this patch, run "git rebase --skip" instead.
-To check out the original branch and stop rebasing, run "git rebase --abort".
+Basically I am trying to use a tag on the subproject as my "base" for t=
+he subproject but subtree doesn't seem to handle that properly
 
 
+my first attempt was to simply do=20
 
-So suddenly it fails to apply the commit A, the one before the previously failing commit. Huh? But again, the failing patch applies cleanly (and after all, rebase was able to apply it in my previous attempt).  And again, the patch actually applies cleanly. So one more try:
+"git subtree add --squash git://git.buildroot.net/buildroot 2013.02"=20
 
+but subtree refused, telling me that the SHA of the tag is not a valid =
+commit.=20
+Ok it makes sense, though I think this is a very valid use-case...
 
-$ git rebase --abort
-$ git rebase MY-NEW-BASE
-First, rewinding head to replay your work on top of it...
-Applying: SOME COMMIT
-Applying: SOME OTHER COMMIT
-...
-Applying: COMMIT A
-Using index info to reconstruct a base tree...
-Falling back to patching base and 3-way merge...
-error: Your local changes to the following files would be overwritten by merge:
-	some/othersource.file
-Please, commit your changes or stash them before you can merge.
-Aborting
-Failed to merge in the changes.
-Patch failed at 0013 COMMIT A
-The copy of the patch that failed is found in:
-   /path/to/my/repo/.git/rebase-apply/patch
+so I tried
 
-When you have resolved this problem, run "git rebase --continue".
-If you prefer to skip this patch, run "git rebase --skip" instead.
-To check out the original branch and stop rebasing, run "git rebase --abort".
+"git subtree add git://git.buildroot.net/buildroot 2013.02^{commit}"=20
+
+which was refused because git fetch can't parse the ^{commit} marker.
+Again it makes sense, but I really want to start from that tag.
 
 
-Again it fails in commit A -- but this time, it only thinks one file is problematic. HUH? Again, the patch actually applies cleanly:
+so I tried
 
-$ patch -p1 < /path/to/my/repo/.git/rebase-apply/patch
-patching file some/othersource.file
-patching file some/yetanother.file
+"git fetch git://git.buildroot.net/buildroot 2013.02"
+"git subtree add --squash FETCH_HEAD"
+
+which worked. Ok at that point I am slightly abusing git subtree, but i=
+t seems a valid usage
+
+except that this last attempt causes serious problems when trying to sp=
+lit out the tree again
+
+the call to "git commit-tree" within "git subtree split" complains that=
+ the SHA of the parent
+is not a valid commit SHA. Which is true, it's the SHA of the tag.
 
 
-At this point, things stabilized, and when I now abort and reattempt the merge, it always fails in the same way. This time trying to apply a change to a code comment that was last changed in 1997 (though for one hunk, a few lines before the changed lines, there is a line that was changed in 2008... but I assure you, that line is there in the ancestors of both the branch I want to rebase, and also in the MY-NEW-BASE branch I rebase onto).
+At this point I am not sure if I am abusing subtree, if I have a legiti=
+mate but unimplemented use-case and how to=20
+fix/implement it.
 
+the squash-commit message only contains the SHA of the tag, should it c=
+ontain the SHA of the commit ?
 
-Something seems to be really fishy here and I wonder if anybody has an idea what's going wrong here. Is this a bug in git? Is my repos broken in some way? Note that "git fsck" reported nothing except some dangling objects. Any other ideas? 
+"subtree split" can only handle commit SHA, should it somehow follow ta=
+g SHA too ? how ?
 
+this is probably a trivial fix for someone with good knowledge of git-s=
+ubtree but i'm not there yet, so any hint would be welcomed
 
-Cheers,
-Max
+    Regards
+
+    J=C3=A9r=C3=A9my Rosen
+
+fight key loggers : write some perl using vim
