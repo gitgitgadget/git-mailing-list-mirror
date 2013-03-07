@@ -1,127 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: feature suggestion: optimize common parts for checkout
- --conflict=diff3
-Date: Thu, 07 Mar 2013 09:26:05 -0800
-Message-ID: <7v1ubrnmtu.fsf@alter.siamese.dyndns.org>
-References: <20130306150548.GC15375@pengutronix.de>
- <CALWbr2xDYuCN4nd-UNxkAY8-EguYjHBYgfu1fLtOGhYZyRQg_A@mail.gmail.com>
- <20130306200347.GA20312@sigill.intra.peff.net>
- <7vvc94p8hb.fsf@alter.siamese.dyndns.org>
- <20130306205400.GA29604@sigill.intra.peff.net>
- <7vr4jsp756.fsf@alter.siamese.dyndns.org>
- <7vmwugp637.fsf@alter.siamese.dyndns.org>
- <20130307080411.GA25506@sigill.intra.peff.net>
+Subject: Re: What I want rebase to do
+Date: Thu, 07 Mar 2013 09:38:36 -0800
+Message-ID: <7vwqtjm7oj.fsf@alter.siamese.dyndns.org>
+References: <201303042058.r24KwwEx012408@freeze.ariadne.com>
+ <7vtxoqx3s1.fsf@alter.siamese.dyndns.org>
+ <87sj4aoo3s.fsf@pctrast.inf.ethz.ch>
+ <7vppzex2pq.fsf@alter.siamese.dyndns.org>
+ <201303061855.r26ItKtM018797@freeze.ariadne.com>
+ <87r4jra942.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Antoine Pelisse <apelisse@gmail.com>,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git <git@vger.kernel.org>,
-	kernel@pengutronix.de
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 07 18:26:37 2013
+Cc: "Dale R. Worley" <worley@alum.mit.edu>, <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Mar 07 18:39:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDeaS-0001hg-Rb
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 18:26:37 +0100
+	id 1UDemX-0004TN-PA
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 18:39:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755581Ab3CGR0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Mar 2013 12:26:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41680 "EHLO
+	id S1758009Ab3CGRik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Mar 2013 12:38:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51250 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754358Ab3CGR0J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Mar 2013 12:26:09 -0500
+	id S1754374Ab3CGRij (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Mar 2013 12:38:39 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C32FA820;
-	Thu,  7 Mar 2013 12:26:08 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA02AAFE3;
+	Thu,  7 Mar 2013 12:38:38 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QOXnz5mQq/8iISDm40/RIMmWtdQ=; b=uagJD6
-	B6Ggi75ma1uhhmsAj9uUJkig+INgqOBFMIlAuRD3DoqCeP/CurEeej3HSODEw3QZ
-	FkUTiR5rEx5+hq2XqwsGD/iJIniraioaj91nRkSFbBmhoYunTR4+4FvFEh+ufAgh
-	ZLWAR1SKemRnsmkVqjsVQ8a7hyILKjyp7u0B4=
+	:content-type; s=sasl; bh=9m4UY2tGyQFmL4hfA1/X2flNn9c=; b=DWFHSO
+	wggFw4qO2yFEiRwMHmcI3UWFWdP1y/KBKIfh9iz2cX3dMJcWHxTf6EMsCX3SeYZH
+	RK3KTx3kkfNjIjg2IVI57zE1Wpls85+f5VQelYQIxAEIBzCbcCUeUrH2X2vB1y9F
+	+uPq0xydfNU4AW1OA1LiI6VVzXSZ6A/SLap6M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B206tyBof1tBXanfnrMHXzlwUKgJub/r
-	ZMRrHUiiK/JNXcK1X/nDBrVXeLhvb6XXOy3QLl9qUaCqBn8Mm8j08GAo8v7vrlpa
-	gYUfsDs/qt+LBoDgwzkgHTo0054Fulh1I2uzCkFPn0MpxPUZDekwHkMTKgjPmFxs
-	W6JsVJetTfk=
+	:content-type; q=dns; s=sasl; b=lla1TA2xLm/VV+qtFXm5nGuZJkMAUWrg
+	Xufpu0QFUPyayjRCGer1deJ2jr5y+FceP29iYKT1WNUQcVDToL/DbFhZpwkdjPKc
+	tOXQdKqOlbG2XP+G8y/4bN3AsRB5f55L6w1PMbo4u9qQ3zebGT8aiP8l2f0qxVMd
+	zUnGL7bw5v0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EA1BA81E;
-	Thu,  7 Mar 2013 12:26:08 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE7CFAFE2;
+	Thu,  7 Mar 2013 12:38:38 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D6B1A819; Thu,  7 Mar 2013
- 12:26:07 -0500 (EST)
-In-Reply-To: <20130307080411.GA25506@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 7 Mar 2013 03:04:11 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33285AFE0; Thu,  7 Mar 2013
+ 12:38:38 -0500 (EST)
+In-Reply-To: <87r4jra942.fsf@pctrast.inf.ethz.ch> (Thomas Rast's message of
+ "Thu, 7 Mar 2013 09:48:29 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1890AF2C-874C-11E2-A6A3-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D8176CB8-874D-11E2-AA0A-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217602>
 
-Jeff King <peff@peff.net> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-> I was also curious whether it would the diff3/zealous combination would
-> trigger any weird corner cases. In particular, I wanted to know how the
-> example you gave in that commit of:
->
->   postimage#1: 1234ABCDE789
->                   |    /
->                   |   /
->   preimage:    123456789
->                   |   \
->                   |    \
->   postimage#2: 1234AXCYE789
->
-> would react with diff3 (this is not the original example, but one with
-> an extra "C" in the middle of postimage#2, which could in theory be
-> presented as split hunks). However, it seems that we do not do such hunk
-> splitting at all, neither for diff3 nor for the "merge" representation.
+> I still think that the _right_ solution is first redoing the merge on
+> its original parents and then seeing how the actual merge differs from
+> that.
 
-Without thinking about it too deeply,...
+I think that is what was suggested in
 
-I think the "RCS merge" _could_ show it as "1234A<B=X>C<D=Y>E789"
-without losing any information (as it is already discarding what was
-in the original in the part that is affected by the conflict,
-i.e. "56 was there").
+    http://article.gmane.org/gmane.comp.version-control.git/198316
 
-Let's think aloud how "diff3 -m" _should_ split this. The most
-straight-forward representation would be "1234<ABCDE|56=AXCYE>789",
-that is, where "56" was originally there, one side made it to
-"ABCDE" and the other "AXCYE".
+> Perhaps a new option to git-rebase could trigger the above behavior for
+> merges, who knows.  (It could be called --first-parent.)
 
-You could make it "1234<AB|5=AX><C|=C><DE|6=YE>789", and that is
-technically correct (what there were in the shared original for the
-conflicted part is 5 and then 6), but the representation pretends
-that it knows more than there actually is information, which may be
-somewhat misleading.  All these three are equally plausible split of
-the original "56":
+Yeah, I think that is what the old thread concluded to be the way to
+move forward:
 
-	1234<AB|=AX><C|=C><DE|56=YE>789
-	1234<AB|5=AX><C|=C><DE|6=YE>789
-	1234<AB|56=AX><C|=C><DE|=YE>789
+    http://thread.gmane.org/gmane.comp.version-control.git/198125
 
-and picking one over others would be a mere heuristic.  All three
-are technically correct representations and it is just the matter of
-which one is the easiest to understand.  So, this is the kind of
-"misleading but not incorrect".
+I'll throw it in to the "leftover bits".
 
-In all these cases, the middle part would look like this:
-
-	<<<<<<< ours
-        C
-        ||||||| base
-        =======
-	C
-        >>>>>>> theirs
-
-in order to honor the explicit "I want to view all three versions to
-examine the situation" aka "--conflict=diff3" option.  We cannot
-reduce it to just "C".  That will make it "not just misleading but
-is actively wrong".
+    http://git-blame.blogspot.com/2013/02/more-leftover-bits.html
