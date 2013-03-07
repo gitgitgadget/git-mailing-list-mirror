@@ -1,142 +1,96 @@
-From: Paul Campbell <pcampbell@kemitix.net>
+From: Jeremy Rosen <jeremy.rosen@openwide.fr>
 Subject: Re: Questions/investigations on git-subtree and tags
-Date: Thu, 7 Mar 2013 11:00:21 +0000
-Message-ID: <CALeLG_=YQDrgMfOoR_GyNRexWxDqQGhFubmaYwM6pqXJuLnO6A@mail.gmail.com>
-References: <1492019317.191838.1362650820122.JavaMail.root@openwide.fr>
-	<822188477.192374.1362651959144.JavaMail.root@openwide.fr>
+Date: Thu, 7 Mar 2013 12:05:51 +0100 (CET)
+Message-ID: <1938485067.193912.1362654351290.JavaMail.root@openwide.fr>
+References: <CALeLG_=YQDrgMfOoR_GyNRexWxDqQGhFubmaYwM6pqXJuLnO6A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeremy Rosen <jeremy.rosen@openwide.fr>
-X-From: git-owner@vger.kernel.org Thu Mar 07 12:00:55 2013
+To: Paul Campbell <pcampbell@kemitix.net>
+X-From: git-owner@vger.kernel.org Thu Mar 07 12:06:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDYZB-0001N4-Ss
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 12:00:54 +0100
+	id 1UDYeR-0005KT-N9
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 12:06:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756218Ab3CGLAZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Mar 2013 06:00:25 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:55571 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755967Ab3CGLAX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Mar 2013 06:00:23 -0500
-Received: by mail-ob0-f171.google.com with SMTP id x4so232118obh.2
-        for <git@vger.kernel.org>; Thu, 07 Mar 2013 03:00:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:x-originating-ip:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=9IYFeGwxVRpYthtCRXX6jBb5xp/NrRGL9QLnnoMkoyI=;
-        b=aVlkjwL51nyLOzVYu9pd57y23fgNi+HobccVDIh/2WaDZQBaGqC349LeIlkVUg8WXC
-         lGkVa/8s1YzbuJVwTn1vhMOOuPU/xrLOpnBY1hfPacwunJMbwL/fgnYUgDpxaLyqusdW
-         3m1vhJYrhVMFXIIEdRupzVB2IPiKSOru1EomK/Se7vo4VBHMU5n9VqbuKOAyFdvQwYKH
-         be6V4D13u+4NNRH79IlmpkEpXUrlSXzVZrZpQmy7YNhQzgi+iiiY3B1iMmgmJw+pMFDy
-         /yvnCSwRbC+do7lweXQgQRBUKIREumLOoENOVO3WaZKiq8qvHIIJgvUVKC1emUrbxicx
-         zDvw==
-X-Received: by 10.182.12.6 with SMTP id u6mr25288500obb.3.1362654021609; Thu,
- 07 Mar 2013 03:00:21 -0800 (PST)
-Received: by 10.76.122.109 with HTTP; Thu, 7 Mar 2013 03:00:21 -0800 (PST)
-X-Originating-IP: [212.219.195.146]
-In-Reply-To: <822188477.192374.1362651959144.JavaMail.root@openwide.fr>
-X-Gm-Message-State: ALoCoQn7LKhiDTBZfVfA1NN929RT2f+OrH2ngiEWu/pN22e3+gOFzCjQYFtJnQPxMf4G5BSlI1c0
+	id S932278Ab3CGLFy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Mar 2013 06:05:54 -0500
+Received: from zimbra3.corp.accelance.fr ([213.162.49.233]:48138 "EHLO
+	zimbra3.corp.accelance.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932235Ab3CGLFx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Mar 2013 06:05:53 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id 0CA6828068;
+	Thu,  7 Mar 2013 12:05:52 +0100 (CET)
+X-Virus-Scanned: amavisd-new at zimbra3.corp.accelance.fr
+Received: from zimbra3.corp.accelance.fr ([127.0.0.1])
+	by localhost (zimbra3.corp.accelance.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id DmL0U98S9c86; Thu,  7 Mar 2013 12:05:51 +0100 (CET)
+Received: from zimbra2.corp.accelance.fr (zimbra2.corp.accelance.fr [213.162.49.232])
+	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id 7290528065;
+	Thu,  7 Mar 2013 12:05:51 +0100 (CET)
+In-Reply-To: <CALeLG_=YQDrgMfOoR_GyNRexWxDqQGhFubmaYwM6pqXJuLnO6A@mail.gmail.com>
+X-Originating-IP: [213.162.49.238]
+X-Mailer: Zimbra 7.2.2_GA_2852 (ZimbraWebClient - GC25 (Linux)/7.2.2_GA_2852)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217592>
 
-On Thu, Mar 7, 2013 at 10:25 AM, Jeremy Rosen <jeremy.rosen@openwide.fr=
-> wrote:
-> Hello everybody
->
->
-> I am trying to use git-subtree to follow a subproject but I have a co=
-uple of problems and I am not sure if I am doing something wrong
->
-> Basically I am trying to use a tag on the subproject as my "base" for=
- the subproject but subtree doesn't seem to handle that properly
->
->
-> my first attempt was to simply do
->
-> "git subtree add --squash git://git.buildroot.net/buildroot 2013.02"
->
-> but subtree refused, telling me that the SHA of the tag is not a vali=
-d commit.
-> Ok it makes sense, though I think this is a very valid use-case...
->
-> so I tried
->
-> "git subtree add git://git.buildroot.net/buildroot 2013.02^{commit}"
->
-> which was refused because git fetch can't parse the ^{commit} marker.
-> Again it makes sense, but I really want to start from that tag.
->
->
-> so I tried
->
-> "git fetch git://git.buildroot.net/buildroot 2013.02"
-> "git subtree add --squash FETCH_HEAD"
->
-> which worked. Ok at that point I am slightly abusing git subtree, but=
- it seems a valid usage
->
-> except that this last attempt causes serious problems when trying to =
-split out the tree again
->
-> the call to "git commit-tree" within "git subtree split" complains th=
-at the SHA of the parent
-> is not a valid commit SHA. Which is true, it's the SHA of the tag.
->
->
-> At this point I am not sure if I am abusing subtree, if I have a legi=
-timate but unimplemented use-case and how to
-> fix/implement it.
->
-> the squash-commit message only contains the SHA of the tag, should it=
- contain the SHA of the commit ?
->
-> "subtree split" can only handle commit SHA, should it somehow follow =
-tag SHA too ? how ?
->
-> this is probably a trivial fix for someone with good knowledge of git=
--subtree but i'm not there yet, so any hint would be welcomed
->
->     Regards
->
->     J=E9r=E9my Rosen
->
+>=20
+> Hi J=C3=A9r=C3=A9my,
+>=20
+> Git subtree ignores tags from the remote repo.
+>=20
 
-Hi J=E9r=E9my,
+is that a design decision or a case of "not implemented yet"
 
-Git subtree ignores tags from the remote repo.
+> To follow a project in a subdirectory I would use git-subtree add
+> selecting a branch, not a tag, from the other repo. Then use
+> git-subtree pull to keep yourself updated.
+>=20
 
-To follow a project in a subdirectory I would use git-subtree add
-selecting a branch, not a tag, from the other repo. Then use
-git-subtree pull to keep yourself updated.
 
-e.g.
+well... yes, but releases are marked by tags, not branches so what I re=
+ally want is a tag.
 
-To add:
+I still use git so I have the possibility to update and can traceback w=
+hat happened later
 
-git subtree add --prefix=3D$subdir $repo $branch
+> e.g.
+>=20
+> To add:
+>=20
+> git subtree add --prefix=3D$subdir $repo $branch
+>=20
+> Then to update:
+>=20
+> git subtree pull --prefix=3D$subdir $repo $branch
+>=20
 
-Then to update:
 
-git subtree pull --prefix=3D$subdir $repo $branch
+ok, that probably works with branches (didn't test)
 
-If you make any changes on the branch and wanted to push them back you
-could do that with:
+> If you make any changes on the branch and wanted to push them back
+> you
+> could do that with:
+>=20
+> git subtree pull --prefix=3D$subdir $repo2 $branch2
+>=20
+> $repo2 and $branch2 would be different from $repo and $branch if you
+> wanted to push to your own fork before submitting a pull request.
+>=20
 
-git subtree pull --prefix=3D$subdir $repo2 $branch2
+shouldn't there be a subtree split somewhere ? IIUC pull is only merge =
+from the remote to my local repo,
+not the other way round
 
-$repo2 and $branch2 would be different from $repo and $branch if you
-wanted to push to your own fork before submitting a pull request.
 
---=20
-Paul [W] Campbell
+> --
+> Paul [W] Campbell
+>=20
