@@ -1,211 +1,147 @@
-From: Greg Price <price@MIT.EDU>
-Subject: Re: [PATCH] add: Clarify documentation of -A and -u
-Date: Thu, 7 Mar 2013 05:13:15 -0500
-Message-ID: <20130307101314.GP22203@biohazard-cafe.mit.edu>
-References: <20130306072610.GB15534@biohazard-cafe.mit.edu>
- <7vhakoqwri.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
+From: Max Horn <max@quendi.de>
+Subject: rebase: strange failures to apply patc 3-way
+Date: Thu, 7 Mar 2013 11:16:50 +0100
+Message-ID: <7A483B92-D671-46CA-9EFD-83C6F4C97B5E@quendi.de>
+Mime-Version: 1.0 (Apple Message framework v1283)
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 07 11:13:50 2013
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 07 11:33:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDXpd-0001ka-2m
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 11:13:49 +0100
+	id 1UDY8J-0006qe-74
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 11:33:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932210Ab3CGKNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Mar 2013 05:13:22 -0500
-Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:62223 "EHLO
-	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932093Ab3CGKNT (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Mar 2013 05:13:19 -0500
-X-AuditID: 12074424-b7f936d0000008eb-c1-5138683ed3e6
-Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
-	by dmz-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 02.89.02283.E3868315; Thu,  7 Mar 2013 05:13:18 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH-1.MIT.EDU [18.9.28.11])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id r27ADGGV017954;
-	Thu, 7 Mar 2013 05:13:17 -0500
-Received: from localhost (BIOHAZARD-CAFE.MIT.EDU [18.9.64.18])
-	(authenticated bits=0)
-        (User authenticated as price@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id r27ADFFN012042;
-	Thu, 7 Mar 2013 05:13:16 -0500
-Content-Disposition: inline
-In-Reply-To: <7vhakoqwri.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgleLIzCtJLcpLzFFi42IR4hTV1rXLsAg0WH9VyKLrSjeTRUPvFWYH
-	Jo+Ll5Q9Pm+SC2CK4rJJSc3JLEst0rdL4MpYcsSkYJJxxYZ9jewNjFs0uhg5OSQETCQ2/f7F
-	DGGLSVy4t56ti5GLQ0hgH6NEz9ZfLBDOBkaJA90/oZxPjBLrn75kA2lhEVCR+Ld1KzuIzSag
-	IPFj/jqwUSICahIT2w6xgNjMAuIS6+aeB6sRFrCRuPr2Mlgvr4C1xLLFc8BsIYF0iR9LVkHF
-	BSVOznwC1aslcePfS6YuRg4gW1pi+T8OkDCngJlE26PlrCC2KNAJ1/a3s01gFJyFpHsWku5Z
-	CN0LGJlXMcqm5Fbp5iZm5hSnJusWJyfm5aUW6Zrr5WaW6KWmlG5iBAUuu4vKDsbmQ0qHGAU4
-	GJV4eDfkmAcKsSaWFVfmHmKU5GBSEuW1SLAIFOJLyk+pzEgszogvKs1JLT7EKMHBrCTCe0EO
-	KMebklhZlVqUD5OS5mBREue9nnLTH+jfxJLU7NTUgtQimKwMB4eSBK93OlCjYFFqempFWmZO
-	CUKaiYMTZDgP0HAdkBre4oLE3OLMdIj8KUZdjgXXHr1gFGLJy89LlRLn1QApEgApyijNg5sD
-	SzivGMWB3hLmZQSp4gEmK7hJr4CWMAEt8QsGW1KSiJCSamCMvhq+rCnFsSNMW+rhnhO/bz5d
-	tDLYSOuoK993JtnYbGGvznz3U2rHWPhEPjMeYGlelqVz3FX9o2SfY8S/mGKvkG/etf82PTi1
-	NEGu8GO8ToG0x98dF0NjtrZvOt8rHeH5n2XzBUl/8dN6sdtVNu9dsb5OUt75fUxu 
+	id S1752971Ab3CGKck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Mar 2013 05:32:40 -0500
+Received: from merkurneu.hrz.uni-giessen.de ([134.176.2.3]:48193 "EHLO
+	merkurneu.hrz.uni-giessen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752847Ab3CGKcj convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Mar 2013 05:32:39 -0500
+X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Mar 2013 05:32:38 EST
+Received: from mailgw82.hrz.uni-giessen.de by merkurneu.hrz.uni-giessen.de with ESMTP for git@vger.kernel.org; Thu, 7 Mar 2013 11:17:34 +0100
+Received: from hermes.hrz.uni-giessen.de (hermes.hrz.uni-giessen.de [134.176.2.15])
+	by mailgw82.hrz.uni-giessen.de (Postfix) with ESMTP id B2C50480008C
+	for <git@vger.kernel.org>; Thu,  7 Mar 2013 11:16:50 +0100 (CET)
+Received: from [134.176.2.15] by hermes.hrz.uni-giessen.de with ESMTP for git@vger.kernel.org; Thu, 7 Mar 2013 11:16:50 +0100
+X-Mailer: Apple Mail (2.1283)
+X-HRZ-JLUG-MailScanner-Information: Passed JLUG virus check
+X-HRZ-JLUG-MailScanner: No virus found
+X-Envelope-From: max@quendi.de
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217587>
 
-On Wed, Mar 06, 2013 at 09:10:57AM -0800, Junio C Hamano wrote:
-> I do not know if mentioning what -A does in the description for -u
-> (and vice versa) makes it easier to understand or more confusing
-> (not rhetorical: I suspect some may find it easier and others not).
-> 
-> But "and the default behaviour will..." here _is_ confusing.  After
-> reading this patch three times, I still cannot tell what "default"
-> you are trying to describe.  Is it "-u" without arguments?  Is it
-> "add" without "-u" nor "-A"?  Is it something else???
+Recently I have observed very strange failures in "git rebase" that cause it to fail to work automatically in situations where it should trivially be able to do so.
 
-I meant the behavior without -A or -u.  This could be fixed directly
-by s/the default behavior will/with neither -A nor -u we/.  But we can
-also keep revising -- there's definitely more room to make this
-clearer!  I suggest new versions at the bottom of this message.
+In case it matter, here's my setup: git 1.8.2.rc2.4.g7799588 (i.e. git.git master branch) on Mac OS X. The repos clone is on a HFS+ partition, not on a network volume. No gitattributes are being used.  Regarding the origin of the repos (I hope it doesn't matter, but just in case): The repository in question used to be a CVS repository; it was decided to switch to Mercurial (not my decision ;-) and I performed the conversion; I first converted it to git using cvs2git (from the cvs2svn suite), then performed some history cleanup, and finally used "hg convert" to convert it to git. Recently, I have been accessing the repository from git via the gitifyhg tool <https://github.com/buchuki/gitifyhg>. 
 
-I do think that it's important that the reader be able to see clearly
-what the option does as a contrast with what the command does without
-the option.  Normally in a man page this is how the option is
-described in the first place -- for example, the next entry in this
-very man page says "Record *only* the fact that the path will be added
-later", rather than "Record the fact that ..."  These two descriptions
-suffer from not doing that, so that it's not clear which parts of the
-behavior they describe are just what 'add' does with no options and
-which parts are actually due to the option.
+Anyway, several strange things just happened (and I had similar experiences in the past days and weeks, but that was using an older git, and I thought I was just doing something wrong).
 
+Specifically, I wanted to rebase a branch with some experimental commits. The strange things started with this:
 
-> Whenever you see an incomprehensible technobabble followed by "That
-> means", "In other words", etc., you (not limited to Greg-you but
-> figuratively "everybody") should see if it makes it easier to read
-> to remove everything up to that "That means" [...]
+$ git rebase MY-NEW-BASE
+First, rewinding head to replay your work on top of it...
+Applying: SOME COMMIT
+Applying: SOME OTHER COMMIT
+...
+Applying: COMMIT A
+Applying: COMMIT B
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+error: Your local changes to the following files would be overwritten by merge:
+	some/source.file
+Please, commit your changes or stash them before you can merge.
+Aborting
+Failed to merge in the changes.
+Patch failed at 0014 COMMIT B
+The copy of the patch that failed is found in:
+   /path/to/my/repo/.git/rebase-apply/patch
 
-Seems like a reasonable heuristic.
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
 
 
-> 	-u::
->         --update::
-> 		Update modified and/or removed paths in the index
-> 		that match <pathspec> with the current state of the
-> 		working tree files.  No new path is added because
-> 		this considers only the paths that are already in
-> 		the index.
-> 
-> 	-A::
->         --all::
-> 		Update the index to record the current state of the
-> 		working tree files that match <pathspec>.  Note that
-> 		new paths will be added to the index, in addition to
-> 		modified and/or removed paths.
+Now, what is strange about this is that the failed patch actually applies cleanly:
 
-These are good -- I especially like that they're shorter.  I do think
-they're still likely to be confusing.  The lead sentences are hard to
-tell apart from each other or one's mental model of what 'add' alone
-does, though the contrasts that follow them help.  I also think the
-lead sentence for '--all' isn't really correct -- we update the index
-not only for the working tree files that match <pathspec>, but also
-where there is no working tree file, only an index entry.  (So the
-sentence actually describes what 'add' with neither option does.)
+$ patch -p1 < /path/to/my/repo/.git/rebase-apply/patch
+patching file some/source.file
+$
 
-Maybe it's worth taking a step back.  The overall taxonomy is
- * 'add' alone considers matching filenames in the working tree
- * 'add -u' considers matching filenames in the index
- * 'add -A' considers matching filenames in both the index and the
-   working tree
-and in each case we make the index match the working tree on those
-files.  Or, put another way,
- * 'add' alone modifies and adds files
- * 'add -u' modifies and removes files
- * 'add -A' modifies, adds, and removes files
+And there is no subtle merge issue here, either: That patch is the only one to have touched the surrounding code since 1999! There is no source of conflict there!
 
-Here's a crack at making those distinctions clear.  I've also tried to
-make the descriptions as parallel as possible, as what they're saying
-is very similar.
+Anyway. The tale gets stranger, as I was trying to do this again (no changes were made to the repos in between, this is a straight continuation from above):
 
--u::
---update::
-	Update the index just where it already has an entry matching
-	<pathspec>.  This removes as well as modifies index entries to
-	match the working tree, but adds no new files.
+$ git rebase --abort
+$ git rebase MY-NEW-BASE
+First, rewinding head to replay your work on top of it...
+Applying: SOME COMMIT
+Applying: SOME OTHER COMMIT
+...
+Applying: COMMIT A
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+error: Your local changes to the following files would be overwritten by merge:
+	some/othersource.file
+	some/yetanother.file
+Please, commit your changes or stash them before you can merge.
+Aborting
+Failed to merge in the changes.
+Patch failed at 0013 COMMIT A
+The copy of the patch that failed is found in:
+   /path/to/my/repo/.git/rebase-apply/patch
 
--A::
---all::
-	Update the index not only where the working tree has a file
-	matching <pathspec> but also where the index already has an
-	entry.  This adds, modifies, and removes index entries to
-	match the working tree.
-
-These are the shortest in the discussion so far, and I think they're
-also the clearest.
-
-Then follow both with the "If no <pathspec>" paragraph.  I just
-noticed that the paragraph actually needs a small modification to fit
-'-A', too.  New patch below.
-
-Greg
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
 
 
-From: Greg Price <price@mit.edu>
-Date: Thu, 7 Mar 2013 02:08:21 -0800
-Subject: [PATCH] add: Clarify documentation of -A and -u
 
-The documentation of '-A' and '-u' is very confusing for someone who
-doesn't already know what they do.  Describe them with fewer words and
-clearer parallelism to each other and to the behavior of plain 'add'.
+So suddenly it fails to apply the commit A, the one before the previously failing commit. Huh? But again, the failing patch applies cleanly (and after all, rebase was able to apply it in my previous attempt).  And again, the patch actually applies cleanly. So one more try:
 
-Also mention the default <pathspec> for '-A' as well as '-u', because
-it applies to both.
 
-Signed-off-by: Greg Price <price@mit.edu>
----
- Documentation/git-add.txt | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+$ git rebase --abort
+$ git rebase MY-NEW-BASE
+First, rewinding head to replay your work on top of it...
+Applying: SOME COMMIT
+Applying: SOME OTHER COMMIT
+...
+Applying: COMMIT A
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+error: Your local changes to the following files would be overwritten by merge:
+	some/othersource.file
+Please, commit your changes or stash them before you can merge.
+Aborting
+Failed to merge in the changes.
+Patch failed at 0013 COMMIT A
+The copy of the patch that failed is found in:
+   /path/to/my/repo/.git/rebase-apply/patch
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 388a225..b0944e5 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -100,12 +100,9 @@ apply to the index. See EDITING PATCHES below.
- 
- -u::
- --update::
--	Only match <pathspec> against already tracked files in
--	the index rather than the working tree. That means that it
--	will never stage new files, but that it will stage modified
--	new contents of tracked files and that it will remove files
--	from the index if the corresponding files in the working tree
--	have been removed.
-+	Update the index just where it already has an entry matching
-+	<pathspec>.  This removes as well as modifies index entries to
-+	match the working tree, but adds no new files.
- +
- If no <pathspec> is given, the current version of Git defaults to
- "."; in other words, update all tracked files in the current directory
-@@ -114,10 +111,15 @@ of Git, hence the form without <pathspec> should not be used.
- 
- -A::
- --all::
--	Like `-u`, but match <pathspec> against files in the
--	working tree in addition to the index. That means that it
--	will find new files as well as staging modified content and
--	removing files that are no longer in the working tree.
-+	Update the index not only where the working tree has a file
-+	matching <pathspec> but also where the index already has an
-+	entry.	This adds, modifies, and removes index entries to
-+	match the working tree.
-++
-+If no <pathspec> is given, the current version of Git defaults to
-+"."; in other words, update all files in the current directory
-+and its subdirectories. This default will change in a future version
-+of Git, hence the form without <pathspec> should not be used.
- 
- -N::
- --intent-to-add::
--- 
-1.7.11.3
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+
+
+Again it fails in commit A -- but this time, it only thinks one file is problematic. HUH? Again, the patch actually applies cleanly:
+
+$ patch -p1 < /path/to/my/repo/.git/rebase-apply/patch
+patching file some/othersource.file
+patching file some/yetanother.file
+
+
+At this point, things stabilized, and when I now abort and reattempt the merge, it always fails in the same way. This time trying to apply a change to a code comment that was last changed in 1997 (though for one hunk, a few lines before the changed lines, there is a line that was changed in 2008... but I assure you, that line is there in the ancestors of both the branch I want to rebase, and also in the MY-NEW-BASE branch I rebase onto).
+
+
+Something seems to be really fishy here and I wonder if anybody has an idea what's going wrong here. Is this a bug in git? Is my repos broken in some way? Note that "git fsck" reported nothing except some dangling objects. Any other ideas? 
+
+
+Cheers,
+Max
