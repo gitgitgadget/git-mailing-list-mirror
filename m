@@ -1,77 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] help: show manpage for aliased command on git <alias>
- --help
-Date: Wed, 06 Mar 2013 15:55:47 -0800
-Message-ID: <7vtxoonkvw.fsf@alter.siamese.dyndns.org>
-References: <1362494681-11419-1-git-send-email-avarab@gmail.com>
- <20130305173831.GB9379@sigill.intra.peff.net>
- <51374029.6080906@drmicha.warpmail.net>
+Subject: Re: [PATCH] In partial SVN merges, the ranges contains additional
+ character "*"
+Date: Wed, 06 Mar 2013 16:04:49 -0800
+Message-ID: <7vppzcnkgu.fsf@alter.siamese.dyndns.org>
+References: <000001ce1ab2$903fbc40$b0bf34c0$@certicon.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Mar 07 00:56:17 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>,
+	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
+	Jan =?utf-8?Q?Pe=C5=A1ta?= <jan.pesta@certicon.cz>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Mar 07 01:05:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDOC0-0003WO-J5
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 00:56:16 +0100
+	id 1UDOL6-0001Ou-PT
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 01:05:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755022Ab3CFXzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Mar 2013 18:55:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55310 "EHLO
+	id S1758092Ab3CGAEy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Mar 2013 19:04:54 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63159 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753109Ab3CFXzu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Mar 2013 18:55:50 -0500
+	id S1757370Ab3CGAEv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Mar 2013 19:04:51 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 107E5A4E8;
-	Wed,  6 Mar 2013 18:55:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F296AB33;
+	Wed,  6 Mar 2013 19:04:51 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y3DOYCrznug5qWHn8w5Vmhv8a3M=; b=OzbOxc
-	z3sm9QgTFUwm2CERqOb9WPFAAJXbmn/O/J4RGRIKh5ykO6eVmoSWYLr6sXWHMzuL
-	3NkwTaFxLlt6hIqp00o9CMWpCBLrvLyRgGgE6S5WQdJ9mRyYfT00q4cT7IL8yYQF
-	FFk0mFAr/lZotZY99ZkF8WvyRo3/7Sjgm2L9I=
+	:content-type:content-transfer-encoding; s=sasl; bh=b0UFClD7Dl0u
+	JIoH8/Hzk2xzCj0=; b=n60eHXNKohfcHvmtC2ME3YRejQ35YnLF3H4Knn4emV2Y
+	pb8CuMlMrtIggHYpiDvj+c/ZytsOUDHxeCzVL3g5LcRfRXM/ij3t8k+hbwL5htGt
+	iJI7Pbbg0S67ckfPgIFmPlNoD8zXba9AAqbMjRg0d6MqtVrHcSK5uN3s+KgUTJM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YmQn12eZ1YNZPC18M93AaWXWyiFVXFek
-	pZbS5kLa3u5Rpam6glDzz63kMrERiA1lPmVmVEDKo9BCZDDBxFaZg3jGk+JTuVYM
-	tjIcyQFxYVeY1ZySr+Pv4/ZJzLEvgZvb22DhClOmClpKRy0cy4J4UxAgmtxshxiL
-	wgmTGkk7kzc=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=orYbpS
+	8Y/7LaxRjyEmt3jJ6qn1RiprhWBxp3fCWUvF2MwW0OJJRyRkLv6RbeLXEctw9zDv
+	GfbSX3U8qjh8Tg2WQG+439pf+O5L6W+gLmbPsaH+Oosq8a4Ki/jGerVb22gFIy3O
+	dmlEVXekBo4lvCNMQRffNy+WZakSVeJDKQ1ac=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 04D4CA4E7;
-	Wed,  6 Mar 2013 18:55:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 645E2AB31;
+	Wed,  6 Mar 2013 19:04:51 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76BD8A4E6; Wed,  6 Mar 2013
- 18:55:49 -0500 (EST)
-In-Reply-To: <51374029.6080906@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Wed, 06 Mar 2013 14:10:01 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB424AB2E; Wed,  6 Mar 2013
+ 19:04:50 -0500 (EST)
+In-Reply-To: <000001ce1ab2$903fbc40$b0bf34c0$@certicon.cz> ("Jan
+ =?utf-8?Q?Pe=C5=A1ta=22's?= message of "Wed, 6 Mar 2013 22:35:46 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5EFB8B8C-86B9-11E2-949A-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A1AD536A-86BA-11E2-B823-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217562>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Jan Pe=C5=A1ta <jan.pesta@certicon.cz> writes:
 
-> Well, even in the simple case one has to wonder: Why does the user
-> invoke help for "co"? There are two very likely cases:
+> See http://www.open.collab.net/community/subversion/articles/merge-in=
+fo.html
+> Extract:
+> The range r30430:30435 that was added to 1.5.x in this merge has a '*=
+'
+> suffix for 1.5.x\www.
+> This '*' is the marker for a non-inheritable mergeinfo range.
+> The '*' means that only the path on which the mergeinfo is explicitly=
+ set
+> has had this range merged into it.
 >
-> A) User does not remember what "co" is aliased to.
-> B) User wants to see the man page.
+> Signed-off-by: Jan Pesta <jan.pesta@certicon.cz>
+> ---
+>  perl/Git/SVN.pm | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> If A is not the case then it's easy for the user to request help for
-> "checkout" (or "commit" or ...).
->
-> Removing the only easy way to look up the definition of an alias is a
-> major regression.
-
-Very well said ;-).
+> diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+> index 0ebc68a..74d49bb 100644
+> --- a/perl/Git/SVN.pm
+> +++ b/perl/Git/SVN.pm
+> @@ -1493,6 +1493,11 @@ sub lookup_svn_merge {
+>  	my @merged_commit_ranges;
+>  	# find the tip
+>  	for my $range ( @ranges ) {
+> +		if ($range =3D~ /[*]$/) {
+> +			warn "W:Ignoring partial merge in svn:mergeinfo "
+> +				."dirprop: $source:$range\n";
+> +			next;
+> +		}
+>  		my ($bottom, $top) =3D split "-", $range;
+>  		$top ||=3D $bottom;
+>  		my $bottom_commit =3D $gs->find_rev_after( $bottom, 1, $top );
