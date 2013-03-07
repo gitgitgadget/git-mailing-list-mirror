@@ -1,130 +1,102 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] git p4: chdir resolves symlinks only for relative paths
-Date: Thu, 7 Mar 2013 09:13:18 +0000
-Message-ID: <20130307091317.GY7738@serenity.lan>
-References: <CAAMmcSSvrsZqEVf68Nrqy_ZG6r5ESKhtx7JdQ7vzypkZ3gOFnA@mail.gmail.com>
- <CAAMmcSSEzs3+vZDO=FDMV9c2rp-8HTdMuPeeQCkok6y7sRDYJw@mail.gmail.com>
- <20130203230803.GA25555@padd.com>
- <CAAMmcSQszVbDERd964VLu1d4UG7SihC+Pn99D0gPvG7HAZp2UQ@mail.gmail.com>
+From: "Daniel Bratell" <bratell@opera.com>
+Subject: Re: Merging submodules - best merge-base
+Date: Thu, 07 Mar 2013 10:49:09 +0100
+Organization: Opera Software
+Message-ID: <op.wtklj7e9rbppqq@cicero.linkoping.osa>
+References: <op.ws2l3rgnrbppqq@cicero.linkoping.osa>
+ <20130306181156.GA4114@sandbox-ub>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
-	Gary Gibbons <ggibbons@perforce.com>
-To: =?iso-8859-1?Q?Mikl=F3s?= Fazekas <mfazekas@szemafor.com>
-X-From: git-owner@vger.kernel.org Thu Mar 07 10:14:02 2013
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Jens Lehmann" <jens.lehmann@web.de>
+To: "Heiko Voigt" <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Mar 07 10:50:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDWti-00017G-SK
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 10:13:59 +0100
+	id 1UDXSw-0001uO-5q
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Mar 2013 10:50:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755293Ab3CGJNc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Mar 2013 04:13:32 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:49755 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755005Ab3CGJN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Mar 2013 04:13:29 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 9909223136;
-	Thu,  7 Mar 2013 09:13:28 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id iWBf49cdbQUj; Thu,  7 Mar 2013 09:13:26 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 4E38C231A9;
-	Thu,  7 Mar 2013 09:13:19 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CAAMmcSQszVbDERd964VLu1d4UG7SihC+Pn99D0gPvG7HAZp2UQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754358Ab3CGJty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Mar 2013 04:49:54 -0500
+Received: from smtp.opera.com ([213.236.208.81]:36547 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753065Ab3CGJtS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Mar 2013 04:49:18 -0500
+Received: from cicero.linkoping.osa (oslo.jvpn.opera.com [213.236.208.46])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id r279nD6K020576
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 7 Mar 2013 09:49:14 GMT
+In-Reply-To: <20130306181156.GA4114@sandbox-ub>
+User-Agent: Opera Mail/12.14 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217583>
 
-On Thu, Mar 07, 2013 at 09:36:06AM +0100, Mikl=F3s Fazekas wrote:
-> Sorry for the late turnaround here is an improved version. Now chdir
-> has an optional argument client_path, if it's true then we don't do
-> os.getcwd. I think that my first patch is also valid too - when the
-> path is absolute no need for getcwd no matter what is the context,
-> when it's relative we have to use os.getcwd() no matter of the
-> context.
->=20
-> ---
-> If p4 client is configured to /p/foo which is a symlink:
-> /p/foo -> /vol/barvol/projects/foo.  Then resolving the
-> symlink will confuse p4:
-> "Path /vol/barvol/projects/foo/... is not under client root
-> /p/foo". While AltRoots in p4 client specification can be
-> used as a workaround on p4 side, git-p4 should not resolve
-> symlinks in client paths.
-> chdir(dir) uses os.getcwd() after os.chdir(dir) to resolve
-> relative paths, but as a sideeffect it resolves symlinks
-> too. Now for client paths we don't call os.getcwd().
->=20
-> Signed-off-by: Mikl=F3s Fazekas <mfazekas@szemafor.com>
-> ---
->  git-p4.py |   11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
->=20
-> diff --git a/git-p4.py b/git-p4.py
-> index 0682e61..2bd8cc2 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -68,12 +68,17 @@ def p4_build_cmd(cmd):
->          real_cmd +=3D cmd
->      return real_cmd
->=20
-> -def chdir(dir):
-> +def chdir(dir,client_path=3DFalse):
+Den 2013-03-06 19:12:05 skrev Heiko Voigt <hvoigt@hvoigt.net>:
 
-Style (space after comma):
+> On Mon, Feb 25, 2013 at 05:44:05PM +0100, Daniel Bratell wrote:
+>> I can phrase this in two ways and I'll start with the short way:
+>>
+>> Why does a merge of a git submodule use as merge-base the commit that  
+>> was
+>> active in the merge-base of the parent repo, rather than the merge-base  
+>> of
+>> the two commits that are being merged?
+>>
+>> The long question is:
+>>
+>> A submodule change can be merged, but only if the merge is a
+>> "fast-forward" which I think is a fair demand, but currently it checks  
+>> if
+>> it's a fast-forward from a commit that might not be very interesting
+>> anymore.
+>>
+>> If two branches A and B split at a point when they used submodule commit
+>> S1 (based on S), and both then switched to S2 (also based on S) and B  
+>> then
+>> switched to S21, then it's today not possible to merge B into A, despite
+>> S21 being a descendant of S2 and you get a conflict and this warning:
+>>
+>> warning: Failed to merge submodule S (commits don't follow merge-base)
+>>
+>> (attempt at ASCII gfx:
+>>
+>> Submodule tree:
+>>
+>> S ---- S1
+>>    \
+>>     \ - S2 -- S21
+>>
+>> Main tree:
+>>
+>> A' (uses S1) --- A (uses S2)
+>>    \
+>>     \ --- B' (uses S2) -- B (uses S21)
+>>
+>>
+>> I would like it to end up as:
+>>
+>> A' (uses S1) --- A (uses S2) ------------ A+ (uses S21)
+>>    \                                     /
+>>     \ --- B' (uses S2) -- B (uses S21)- /
+>>
+>> And that should be legal since S21 is a descendant of S2.
+>
+> So to summarize what you are requesting: You want a submodule merge be
+> two way in the view of the superproject and calculate the merge base
+> in the submodule from the two commits that are going to be merged?
+>
+> It currently sounds logical but I have to think about it further and
+> whether that might break other use cases.
 
-    def chdir(dir, client_path=3DFalse):
+Maybe both could be legal even. The current code can't be all wrong, and  
+this case also seems to be straightforward.
 
->      # P4 uses the PWD environment variable rather than getcwd(). Sin=
-ce we're
->      # not using the shell, we have to set it ourselves.  This path c=
-ould
->      # be relative, so go there first, then figure out where we ended=
- up.
-> +    # os.getcwd() will resolve symlinks, so we should avoid it for
-> +    # client_paths.
->      os.chdir(dir)
-> -    os.environ['PWD'] =3D os.getcwd()
-> +    if client_path:
-> +        os.environ['PWD'] =3D dir
-> +    else:
-> +               os.environ['PWD'] =3D os.getcwd()
-
-Indentation seems to have gone a bit wrong here...
-
->=20
->  def die(msg):
->      if verbose:
-> @@ -1554,7 +1559,7 @@ class P4Submit(Command, P4UserMap):
->              new_client_dir =3D True
->              os.makedirs(self.clientPath)
->=20
-> -        chdir(self.clientPath)
-> +        chdir(self.clientPath,client_path=3DTrue)
-
-Again, there should be a space after the comma here.
-
->          if self.dry_run:
->              print "Would synchronize p4 checkout in %s" % self.clien=
-tPath
->          else:
-> --=20
-> 1.7.10.2 (Apple Git-33)
+/Daniel
