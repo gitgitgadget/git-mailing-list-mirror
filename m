@@ -1,72 +1,140 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/3] Enumerating reflog entries in a wrong order
-Date: Fri,  8 Mar 2013 13:53:41 -0800
-Message-ID: <1362779624-15513-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH 1/3] for_each_reflog_ent(): extract a helper to process a
+ single entry
+Date: Fri,  8 Mar 2013 13:53:42 -0800
+Message-ID: <1362779624-15513-2-git-send-email-gitster@pobox.com>
+References: <1362779624-15513-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 08 22:54:24 2013
+X-From: git-owner@vger.kernel.org Fri Mar 08 22:54:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UE5F7-0000MP-TL
+	id 1UE5F8-0000MP-Ct
 	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 22:54:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522Ab3CHVxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Mar 2013 16:53:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53780 "EHLO
+	id S1754216Ab3CHVxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Mar 2013 16:53:51 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53811 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752670Ab3CHVxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Mar 2013 16:53:47 -0500
+	id S1752670Ab3CHVxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Mar 2013 16:53:49 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6064B4B8
-	for <git@vger.kernel.org>; Fri,  8 Mar 2013 16:53:46 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9578B4BF
+	for <git@vger.kernel.org>; Fri,  8 Mar 2013 16:53:48 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id; s=sasl; bh=Zy/4qPBIiiaLSdL351SIrk18SZU
-	=; b=eOnDbvXUpLcCbpSWJofiis3czP4yzgD8Bi2CoAvPlTvnTUz46fiXjEfXQCX
-	97h2BXwuZcezbr9PiLB3e5i0jatyXZzfHnphXx3rGUZq2mNE3st9Ir4zIAp3hqXd
-	NdVBsrTwAVf8y8ybUBRbt/Pvt4hZ+2iq1G2b4F3oW7q7i3b8=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Qcg5
+	p0UZYDk30IwheGsccYqSL+I=; b=Bg0t5RowgcUYWr9pUcusO0gwQ4GSz1hzQHgn
+	rAzPjwnpyodDrI2uC2aC7bFB1FHV51xnLqjoCD6xSueBXBZDovc30pE7VNzy/m8z
+	WL0D82GaX6k16TaJwyE5DJ1KMCWpQfsvPP/ZfpRSfFh5723O+bVmcyexvGpV+6hN
+	HpW5oMk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id; q=dns; s=sasl; b=xABuYElISAC+m6nbR7TmG2mHLDesv
-	/GxwkFNLwDWrM+aP5m2wEfMyEmeWO3OmyoGckIlub/3lXtz2t3d7jrsLVe/jOx0P
-	6rpCZptF1kpoxoZps8B34AP30fsm3EbVif6/XPqrMx3CwO3XuG0bMRQ2eLK+qOg8
-	FZwOnbEklPkivY=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=BsJlFr
+	g1GLb5HDoZS7cSf7qpW47zHO71YQFrReIkCfUXE1CXn7kWFozEQf4iUM9XarPGKE
+	6DgJjdpaBTyJO14XN6F83FdWBHbG1iDOvNxgY3137Y7tHANs+4Rwq83ha/MBMk1c
+	XhAMfD0ntoQ9AUf02R4C6Ss1MiF3aI9lNmXco=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC1ECB4B7
-	for <git@vger.kernel.org>; Fri,  8 Mar 2013 16:53:46 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACF76B4BE
+	for <git@vger.kernel.org>; Fri,  8 Mar 2013 16:53:48 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3BEFDB4B4 for
- <git@vger.kernel.org>; Fri,  8 Mar 2013 16:53:46 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19AE5B4BB for
+ <git@vger.kernel.org>; Fri,  8 Mar 2013 16:53:48 -0500 (EST)
 X-Mailer: git-send-email 1.8.2-rc3-189-g94c4d42
-X-Pobox-Relay-ID: A6CDD186-883A-11E2-B7EB-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+In-Reply-To: <1362779624-15513-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: A7E99118-883A-11E2-8F29-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217688>
 
-The for_each_reflog_ent() function yields reflog entries from the
-oldest to newer, and is inefficient when we know what we are looking
-for are near the newest end (e.g. "find the nth newest reflog entry
-that matches 'checkout: moving from X to Y'").  To optimize for the
-common case, we introduced for_each_recent_reflog_ent() to scan only
-the newest part (i.e. tail) of the reflog file, but it is difficult
-to use this function correctly.
+Split the logic that takes a single line of reflog entry in a strbuf
+parses it and calls the callback function out of the loop into a
+separate helper function.
 
-Just bite the bullet and stop working around the API that reads the
-file in a wrong order.  The new for_each_reflog_ent_reverse()
-function gives us reflog entries from the newest to older.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ refs.c | 59 ++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 30 insertions(+), 29 deletions(-)
 
-Junio C Hamano (3):
-  for_each_reflog_ent(): extract a helper to process a single entry
-  for_each_recent_reflog_ent(): simplify opening of a reflog file
-  reflog: add for_each_reflog_ent_reverse() API
-
- refs.c      | 161 +++++++++++++++++++++++++++++++++++++++++++-----------------
- refs.h      |   2 +-
- sha1_name.c |  48 +++++++-----------
- 3 files changed, 134 insertions(+), 77 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index da74a2b..9f702a7 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2290,6 +2290,34 @@ int read_ref_at(const char *refname, unsigned long at_time, int cnt,
+ 	return 1;
+ }
+ 
++static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *cb_data)
++{
++	unsigned char osha1[20], nsha1[20];
++	char *email_end, *message;
++	unsigned long timestamp;
++	int tz;
++
++	/* old SP new SP name <email> SP time TAB msg LF */
++	if (sb->len < 83 || sb->buf[sb->len - 1] != '\n' ||
++	    get_sha1_hex(sb->buf, osha1) || sb->buf[40] != ' ' ||
++	    get_sha1_hex(sb->buf + 41, nsha1) || sb->buf[81] != ' ' ||
++	    !(email_end = strchr(sb->buf + 82, '>')) ||
++	    email_end[1] != ' ' ||
++	    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
++	    !message || message[0] != ' ' ||
++	    (message[1] != '+' && message[1] != '-') ||
++	    !isdigit(message[2]) || !isdigit(message[3]) ||
++	    !isdigit(message[4]) || !isdigit(message[5]))
++		return 0; /* corrupt? */
++	email_end[1] = '\0';
++	tz = strtol(message + 1, NULL, 10);
++	if (message[6] != '\t')
++		message += 6;
++	else
++		message += 7;
++	return fn(osha1, nsha1, sb->buf + 82, timestamp, tz, message, cb_data);
++}
++
+ int for_each_recent_reflog_ent(const char *refname, each_reflog_ent_fn fn, long ofs, void *cb_data)
+ {
+ 	const char *logfile;
+@@ -2314,35 +2342,8 @@ int for_each_recent_reflog_ent(const char *refname, each_reflog_ent_fn fn, long
+ 		}
+ 	}
+ 
+-	while (!strbuf_getwholeline(&sb, logfp, '\n')) {
+-		unsigned char osha1[20], nsha1[20];
+-		char *email_end, *message;
+-		unsigned long timestamp;
+-		int tz;
+-
+-		/* old SP new SP name <email> SP time TAB msg LF */
+-		if (sb.len < 83 || sb.buf[sb.len - 1] != '\n' ||
+-		    get_sha1_hex(sb.buf, osha1) || sb.buf[40] != ' ' ||
+-		    get_sha1_hex(sb.buf + 41, nsha1) || sb.buf[81] != ' ' ||
+-		    !(email_end = strchr(sb.buf + 82, '>')) ||
+-		    email_end[1] != ' ' ||
+-		    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
+-		    !message || message[0] != ' ' ||
+-		    (message[1] != '+' && message[1] != '-') ||
+-		    !isdigit(message[2]) || !isdigit(message[3]) ||
+-		    !isdigit(message[4]) || !isdigit(message[5]))
+-			continue; /* corrupt? */
+-		email_end[1] = '\0';
+-		tz = strtol(message + 1, NULL, 10);
+-		if (message[6] != '\t')
+-			message += 6;
+-		else
+-			message += 7;
+-		ret = fn(osha1, nsha1, sb.buf + 82, timestamp, tz, message,
+-			 cb_data);
+-		if (ret)
+-			break;
+-	}
++	while (!ret && !strbuf_getwholeline(&sb, logfp, '\n'))
++		ret = show_one_reflog_ent(&sb, fn, cb_data);
+ 	fclose(logfp);
+ 	strbuf_release(&sb);
+ 	return ret;
 -- 
 1.8.2-rc3-189-g94c4d42
