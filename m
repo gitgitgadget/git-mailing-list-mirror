@@ -1,78 +1,86 @@
-From: =?ISO-8859-1?Q?Bj=F6rn_T=F6pel?= <bjorn.topel@gmail.com>
-Subject: svn-fe + git-fast-import bails out on certain SVN commits
-Date: Fri, 8 Mar 2013 11:21:45 +0100
-Message-ID: <CAJ+HfNiLYYzpDN2NNzw99=z_PcbKtb_3fTneOkNOdJymSbB-zA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-scm.com/book/ru -- incorrect "next" link containing a
+ question mark
+Date: Fri, 8 Mar 2013 05:40:20 -0500
+Message-ID: <20130308104019.GA16068@sigill.intra.peff.net>
+References: <5fe58162-33ed-48c2-a095-e98a355ed4f6@googlegroups.com>
+ <20130307124736.3d738c5aab39345fa9ca2930@domain007.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 08 11:22:13 2013
+Cc: git-users@googlegroups.com, Aleksey Rozhkov <ekkertan@gmail.com>,
+	git@vger.kernel.org
+To: Konstantin Khomoutov <kostix+git@007spb.ru>
+X-From: git-owner@vger.kernel.org Fri Mar 08 11:40:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDuRI-0007jl-T8
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 11:22:13 +0100
+	id 1UDujM-0007LU-Vd
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 11:40:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752184Ab3CHKVr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Mar 2013 05:21:47 -0500
-Received: from mail-ve0-f172.google.com ([209.85.128.172]:48643 "EHLO
-	mail-ve0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750869Ab3CHKVq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Mar 2013 05:21:46 -0500
-Received: by mail-ve0-f172.google.com with SMTP id cz11so1151053veb.3
-        for <git@vger.kernel.org>; Fri, 08 Mar 2013 02:21:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=Mx1ntWg97iHOl3cZ0WFHvyq5XQnm3+Y3eBGAnSO/4+g=;
-        b=kOutpNrrUT+ohR81qNJ+2gXqfHOEddO4pgfJALSAwhX97g20Heh9/h9ABjyhHI3S+U
-         ZpMw6R/nGal61f6KXloP/5Jx7Wbi7kyqQOmoAY6qij7gbC0iZwJ1WgkJJiYNGAV5JWSH
-         ejMTSMqGauxquJVVXrYXp/Cg4XIFIsqEI5pG0RUfUySSIX4wDEBEbX2mHHuoJdSZ4K7O
-         L7KT1zybCVSNBJfG9jLUpbUbxyWh6vp2ngzw9rQnkrq6oe9EGj2U/1e/HPtGpZMf/aO+
-         8G7RJX6gyhVXzWIdecP+McYaRuurt6EDgHs6IorqZPk7DwXSaUrIZ/sYSZAgRyMpkdHe
-         IY/Q==
-X-Received: by 10.58.46.134 with SMTP id v6mr690739vem.45.1362738105480; Fri,
- 08 Mar 2013 02:21:45 -0800 (PST)
-Received: by 10.52.155.211 with HTTP; Fri, 8 Mar 2013 02:21:45 -0800 (PST)
+	id S1753741Ab3CHKk0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Mar 2013 05:40:26 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40830 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752016Ab3CHKkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Mar 2013 05:40:25 -0500
+Received: (qmail 15561 invoked by uid 107); 8 Mar 2013 10:42:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Mar 2013 05:42:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Mar 2013 05:40:20 -0500
+Content-Disposition: inline
+In-Reply-To: <20130307124736.3d738c5aab39345fa9ca2930@domain007.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217658>
 
-I'm importing a huge repository using svn-fe and git-fast-import.
+On Thu, Mar 07, 2013 at 12:47:36PM +0400, Konstantin Khomoutov wrote:
 
-$ cat repo.svn_dump | svn-fe 'svn+ssh://bjornto@example.com/pub/repo/'
-3<backchannel | git fast-import --cat-blob-fd=3D3 3>backchannel
+> On Thu, 7 Mar 2013 00:01:31 -0800 (PST)
+> Aleksey Rozhkov <ekkertan@gmail.com> wrote:
+>=20
+> > The page http://git-scm.com/book/ru/
+> > =D0=92=D0=B2=D0=B5=D0=B4=D0=B5=D0=BD=D0=B8=D0=B5-=D0=9F=D0=B5=D1=80=
+=D0=B2=D0=BE=D0=BD=D0=B0=D1=87=D0=B0=D0=BB=D1=8C=D0=BD=D0=B0=D1=8F-=D0=BD=
+=D0=B0=D1=81=D1=82=D1=80=D0=BE=D0=B9=D0=BA=D0=B0-Git contains incorrect=
+ link "next"
+> > Now this link to the page=20
+> > http://git-scm.com/book/ru/=D0=92=D0=B2=D0=B5=D0=B4=D0=B5=D0=BD=D0=B8=
+=D0=B5-=D0=9A=D0=B0=D0=BA-=D0=BF=D0=BE=D0=BB=D1=83=D1=87=D0=B8=D1=82=D1=
+=8C-=D0=BF=D0=BE=D0=BC=D0=BE=D1=89=D1=8C? , but this
+> > page does not exist
+>=20
+> I would say "?" is just interpreted as a request part of the URL.
 
-git-fast-import crashes with:
-  fatal: Empty path component found in input
-  fast-import: dumping crash report to .git/fast_import_crash_10844
+Yes, the problem is that the page's URL actually has the "?" in it,
+but it needs to be URL-encoded in links.
 
-Crashing command:
-  * ls :202791
+> > So, correct link is=20
+> > http://git-scm.com/book/ru/=D0=92=D0=B2=D0=B5=D0=B4=D0=B5=D0=BD=D0=B8=
+=D0=B5-=D0=9A=D0=B0=D0=BA-=D0=BF=D0=BE=D0=BB=D1=83=D1=87=D0=B8=D1=82=D1=
+=8C-=D0=BF=D0=BE=D0=BC=D0=BE=D1=89=D1=8C%3F
+>=20
+> Good point, thanks.  I Cc'ed the main Git list and made the message
+> title a bit more clear.
 
-Where the crashing SVN commit is "svn cp $SVN_ROOT $SVN_ROOT/subdirecto=
-ry".
+Exactly. I fixed a few instances of this a while ago, but not the
+prev/next pointers. This PR should fix all sites:
 
-A Google search led me to:
-http://git.661346.n2.nabble.com/BUG-fast-import-ls-command-on-commit-ro=
-ot-returns-missing-was-Bug-in-svn-fe-copying-the-root-directo-td7353801=
-=2Ehtml
+  https://github.com/github/gitscm-next/pull/259
 
-As far as I understand, this issue is fixed in fast-import, or am I
-missing something? Is there a way workaround this problem?
+> To the Pro Git book maintainer: is it possible to somehow fix the HTM=
+L
+> generation script to URL-encode any special characters if they're to
+> appear in an URL?
 
+I don't think Scott reads the list too closely these days. In general,
+the best place to report git-scm.com problems is as an issue in the rep=
+o
+linked above.
 
-
-Bj=F6rn
-
-
-$ git --verion
-git version 1.8.2.rc3.dirty
-$ uname -a # Ubuntu 12.04
-Linux bjorntodesktop 3.2.0-38-generic #61-Ubuntu SMP Tue Feb 19
-12:18:21 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux
+-Peff
