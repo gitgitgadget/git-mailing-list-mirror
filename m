@@ -1,121 +1,206 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: inotify to minimize stat() calls
-Date: Fri, 08 Mar 2013 08:01:41 +0100
-Message-ID: <51398CD5.1070603@web.de>
-References: <7vehgqzc2p.fsf@alter.siamese.dyndns.org> <7va9rezaoy.fsf@alter.siamese.dyndns.org> <7vsj56w5y9.fsf@alter.siamese.dyndns.org> <9AF8A28B-71FE-4BBC-AD55-1DD3FDE8FFC3@gmail.com> <CALkWK0mttn6E+D-22UBbvDCuNEy_jNOtBaKPS-a8mTbO2uAF3g@mail.gmail.com> <CALkWK0nQVjKpyef8MDYMs0D9HJGCL8egypT3YWSdU8EYTO7Y+w@mail.gmail.com> <CACsJy8CEHzqH1X=v4yau0SyZwrZp1r6hNp=yXD+eZh1q_BS-0g@mail.gmail.com> <CALkWK0=6_n4rf6AWci6J+uhGHpjTUmK7YFdVHuSJedN2zLWtMA@mail.gmail.com> <CACsJy8DeM5--WVXg3b65RxLBS7Jho-7KmcGwWk7B5uAx77yOEw@mail.gmail.com> <20130210111732.GA24377@lanh> <20130210112205.GA28434@lanh> <7vhaljudos.fsf@alter.siamese.dyndns.org> <CACsJy8DnvAjQPL4aP_LRC7aqx6OC4M5dMtj-OUot76qET2z08Q@mail.gmail.com> <513911B3.7010903@web.de> <7vr4jqkb9g.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] setup: suppress implicit "." work-tree for bare repos
+Date: Fri, 8 Mar 2013 02:15:54 -0500
+Message-ID: <20130308071554.GB24429@sigill.intra.peff.net>
+References: <CAHREChhuX82ibNEDQnQUeS9TEeyMFGpuNhyXzt1Pn-Tt2BVOQA@mail.gmail.com>
+ <20130308054824.GA24429@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Robert Zeh <robert.allan.zeh@gmail.com>,
-	Git List <git@vger.kernel.org>, finnag@pvv.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 08 08:02:32 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 08 08:16:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDrK3-0000Ob-Qj
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 08:02:32 +0100
+	id 1UDrXW-00030U-Hh
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 08:16:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933346Ab3CHHCF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Mar 2013 02:02:05 -0500
-Received: from mout.web.de ([212.227.17.12]:53315 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932697Ab3CHHCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Mar 2013 02:02:03 -0500
-Received: from [192.168.2.107] ([79.223.122.215]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0Le4Lg-1UYes01ZDI-00qVFp; Fri, 08 Mar 2013 08:01:48
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130216 Thunderbird/17.0.3
-In-Reply-To: <7vr4jqkb9g.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:7jyYObyLdhoe/X07QrzDxFlcJNOCC0k1J/5zFWTwS6y
- xYD4auA7JLvIVJwskEEk/tRuWI4SKaHvAqm4PtKj4bTKK9Z8sG
- kyMwuuRlhvrH0HxMw1FR5UvJgZeGBs0EN8e5Zhz1+SCYUL9Bdk
- 07igyC+DksyhSmSuW8ULIZt4M8VKfuxXuBUG7cKQT7lgzZ1kC9
- 3kyfToDjvfZY4WV3ORqBQ==
+	id S1754412Ab3CHHP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Mar 2013 02:15:58 -0500
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40688 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753922Ab3CHHP5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Mar 2013 02:15:57 -0500
+Received: (qmail 14166 invoked by uid 107); 8 Mar 2013 07:17:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Mar 2013 02:17:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Mar 2013 02:15:54 -0500
+Content-Disposition: inline
+In-Reply-To: <20130308054824.GA24429@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217643>
 
-On 08.03.13 01:04, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index d6dd3df..6a5ba11 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -1158,6 +1158,8 @@ int cmd_status(int argc, const char **argv, co=
-nst char *prefix)
->>  	unsigned char sha1[20];
->>  	static struct option builtin_status_options[] =3D {
->>  		OPT__VERBOSE(&verbose, N_("be verbose")),
->> +		OPT_BOOLEAN('c', "changed-only", &s.check_changed_only,
->> +			    N_("Ignore untracked files. Check if files known to git are =
-modified")),
->=20
-> Doesn't this make one wonder why a separate bit and implementation
-> is necessary to say "I am not interested in untracked files" when
-> "-uno" option is already there?
-Thanks Junio,
-this is good news.
-I need to admit that I wasn't aware about "git status -uno".
+If an explicit GIT_DIR is given without a working tree, we
+implicitly assume that the current working directory should
+be used as the working tree. E.g.,:
 
-Thinking about it, how many git users are aware of the speed penalty
-when running git status to find out which (tracked) files they had chan=
-ged?
+  GIT_DIR=/some/repo.git git status
 
-Or to put it the other way, when a developer wants a quick overview
-about the files she changed, then git status -uno may be a good and fas=
-t friend.
+would compare against the cwd.
 
-Does it make sence to stress put that someway in the documentation?
+Unfortunately, we fool this rule for sub-invocations of git
+by setting GIT_DIR internally ourselves. For example:
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.tx=
-t
-index 9f1ef9a..360d813 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -51,13 +51,18 @@ default is 'normal', i.e. show untracked files and =
-directori
- +
- The possible options are:
- +
--       - 'no'     - Show no untracked files
-+       - 'no'     - Show no untracked files (this is fastest)
-        - 'normal' - Shows untracked files and directories
-        - 'all'    - Also shows individual files in untracked directori=
-es.
- +
- The default can be changed using the status.showUntrackedFiles
- configuration variable documented in linkgit:git-config[1].
-=20
-++
-+Note: Searching for untracked files or directories may take some time.
-+A fast way to get a status of files tracked by git is to use
-+'git status -uno'
+  git init foo
+  cd foo/.git
+  git status ;# fails, as we expect
+  git config alias.st status
+  git status ;# does not fail, but should
+
+What happens is that we run setup_git_directory when doing
+alias lookup (since we need to see the config), set GIT_DIR
+as a result, and then leave GIT_WORK_TREE blank (because we
+do not have one). Then when we actually run the status
+command, we do setup_git_directory again, which sees our
+explicit GIT_DIR and uses the cwd as an implicit worktree.
+
+It's tempting to argue that we should be suppressing that
+second invocation of setup_git_directory, as it could use
+the values we already found in memory. However, the problem
+still exists for sub-processes (e.g., if "git status" were
+an external command).
+
+You can see another example with the "--bare" option, which
+sets GIT_DIR explicitly. For example:
+
+  git init foo
+  cd foo/.git
+  git status ;# fails
+  git --bare status ;# does NOT fail
+
+We need some way of telling sub-processes "even though
+GIT_DIR is set, do not use cwd as an implicit working tree".
+We could do it by putting a special token into
+GIT_WORK_TREE, but the obvious choice (an empty string) has
+some portability problems, and could potentially be
+triggered accidentally by a user.
+
+Instead, we add a new boolean variable, GIT_IMPLICIT_WORK_TREE,
+which suppresses the use of cwd as a working tree when
+GIT_DIR is set. We trigger the new variable when we know we
+are in a bare setting.
+
+The variable is left intentionally undocumented, as this is
+an internal detail (for now, anyway). If somebody comes up
+with a good alternate use for it, and once we are confident
+we have shaken any bugs out of it, we can consider promoting
+it further.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+So I think this just ends up being a cleaner and smaller change than
+trying to support $GIT_BARE. I think $GIT_BARE could allow more
+flexibility, but it's flexibility nobody is particularly asking for, and
+there are lots of nasty corner cases around it. I'm pretty sure this is
+doing the right thing.
+
+Having written this, I'm still tempted to signal the same thing by
+putting /dev/null into GIT_WORK_TREE (Junio's suggestion from the old
+thread). This one works OK because we only check GIT_WORK_TREE_IMPLICIT
+_after_ exhausting all of the other working tree options, so it is
+always subordinate to a later setting of GIT_WORK_TREE. But it seems a
+little cleaner for somebody setting GIT_WORK_TREE To clear this
+"implicit" flag automatically.
+
+At the same time, I would wonder how other git implementations would
+react to GIT_WORK_TREE=/dev/null. Would they try to chdir() there and
+barf, when they could happily exist without a working tree? Doing it
+this way seems a bit safer from regressions (those other implementations
+do not get the _benefit_ of this patch unless they support
+GIT_WORK_TREE_IMPLICIT, of course, but at least we are not breaking
+them).
+
+ cache.h               |  1 +
+ git.c                 |  1 +
+ setup.c               |  8 ++++++++
+ t/t1510-repo-setup.sh | 19 +++++++++++++++++++
+ 4 files changed, 29 insertions(+)
+
+diff --git a/cache.h b/cache.h
+index e493563..070169a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -344,6 +344,7 @@ static inline enum object_type object_type(unsigned int mode)
+ #define GIT_DIR_ENVIRONMENT "GIT_DIR"
+ #define GIT_NAMESPACE_ENVIRONMENT "GIT_NAMESPACE"
+ #define GIT_WORK_TREE_ENVIRONMENT "GIT_WORK_TREE"
++#define GIT_IMPLICIT_WORK_TREE_ENVIRONMENT "GIT_IMPLICIT_WORK_TREE"
+ #define DEFAULT_GIT_DIR_ENVIRONMENT ".git"
+ #define DB_ENVIRONMENT "GIT_OBJECT_DIRECTORY"
+ #define INDEX_ENVIRONMENT "GIT_INDEX_FILE"
+diff --git a/git.c b/git.c
+index b10c18b..24b7984 100644
+--- a/git.c
++++ b/git.c
+@@ -125,6 +125,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			static char git_dir[PATH_MAX+1];
+ 			is_bare_repository_cfg = 1;
+ 			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir, sizeof(git_dir)), 0);
++			setenv(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, "0", 1);
+ 			if (envchanged)
+ 				*envchanged = 1;
+ 		} else if (!strcmp(cmd, "-c")) {
+diff --git a/setup.c b/setup.c
+index 1dee47e..6c87660 100644
+--- a/setup.c
++++ b/setup.c
+@@ -523,6 +523,12 @@ static const char *setup_explicit_git_dir(const char *gitdirenv,
+ 			set_git_work_tree(core_worktree);
+ 		}
+ 	}
++	else if (!git_env_bool(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, 1)) {
++		/* #16d */
++		set_git_dir(gitdirenv);
++		free(gitfile);
++		return NULL;
++	}
+ 	else /* #2, #10 */
+ 		set_git_work_tree(".");
+ 
+@@ -601,6 +607,8 @@ static const char *setup_bare_git_dir(char *cwd, int offset, int len, int *nongi
+ 	if (check_repository_format_gently(".", nongit_ok))
+ 		return NULL;
+ 
++	setenv(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, "0", 1);
 +
-
-
-
-
-
-
-
-
-
-
-
-
->=20
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+ 	/* --work-tree is set without --git-dir; use discovered one */
+ 	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
+ 		const char *gitdir;
+diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
+index 80aedfc..cf2ee78 100755
+--- a/t/t1510-repo-setup.sh
++++ b/t/t1510-repo-setup.sh
+@@ -517,6 +517,25 @@ test_expect_success '#16c: bare .git has no worktree' '
+ 		"$here/16c/.git" "(null)" "$here/16c/sub" "(null)"
+ '
+ 
++test_expect_success '#16d: bareness preserved across alias' '
++	setup_repo 16d unset "" unset &&
++	(
++		cd 16d/.git &&
++		test_must_fail git status &&
++		git config alias.st status &&
++		test_must_fail git st
++	)
++'
++
++test_expect_success '#16e: bareness preserved by --bare' '
++	setup_repo 16e unset "" unset &&
++	(
++		cd 16e/.git &&
++		test_must_fail git status &&
++		test_must_fail git --bare status
++	)
++'
++
+ test_expect_success '#17: GIT_WORK_TREE without explicit GIT_DIR is accepted (bare case)' '
+ 	# Just like #16.
+ 	setup_repo 17a unset "" true &&
+-- 
+1.8.2.rc2.4.g3e774bb
