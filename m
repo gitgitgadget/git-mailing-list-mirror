@@ -1,68 +1,89 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: Re: rebase: strange failures to apply patc 3-way
-Date: Fri, 8 Mar 2013 14:20:22 -0500
-Message-ID: <CADgNja=Ej8jnYn027GX986VrmuqVemM7aE59rynHzUpToPVaEw@mail.gmail.com>
-References: <7A483B92-D671-46CA-9EFD-83C6F4C97B5E@quendi.de>
-	<494292C5-EBD9-487B-8846-9D9DD23ACB83@quendi.de>
-	<CADeaMWp_R0HLwEYn7O3oX4-0OoSeqLfzz_2AYXT-Po88nM4HkQ@mail.gmail.com>
-	<205D17C4-F737-46E9-BC48-D16D5948C707@quendi.de>
-	<CADgNjan9v++__TSPE55j7+=BBZrVEkMD52O+9kXAm-C8SRV+Ww@mail.gmail.com>
-	<B21B6CEC-7507-47A1-9BBB-FB95EA6B831F@quendi.de>
+From: Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>
+Subject: Re: [feature request] 2) Remove many tags at once and 1) Prune tags
+ on old-branch-before-rebase
+Date: Fri, 08 Mar 2013 14:37:21 -0500
+Message-ID: <513A3DF1.7020009@giref.ulaval.ca>
+References: <51390E43.60704@giref.ulaval.ca> <7v38w6lr8n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Fri Mar 08 20:20:52 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 08 20:38:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UE2qY-0000gE-IL
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 20:20:50 +0100
+	id 1UE375-0005TH-4B
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 20:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149Ab3CHTUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Mar 2013 14:20:24 -0500
-Received: from mail-wg0-f50.google.com ([74.125.82.50]:42076 "EHLO
-	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750851Ab3CHTUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Mar 2013 14:20:23 -0500
-Received: by mail-wg0-f50.google.com with SMTP id es5so2961962wgb.29
-        for <git@vger.kernel.org>; Fri, 08 Mar 2013 11:20:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=ej2h7EnqgQ86pvUnSa08F4KW8F4hMhGgnUHpR6VkTds=;
-        b=CqxGh56RA5wsjJbHuSD8DlDef9hp58GzNTaMhdNPkVtR1olgzze4Q2EgxiLVerGPhC
-         TFQGzgRQvYUmQn+RNDrUIJnwiMrXEHeByP1epivET/xGM/XNHp4IIpuern4xK0xBFKDz
-         xWTyQ5iI/Papg1vzXDGrIfFZWROyRoOr4XgipWVk5EJVFilcBxjJbUYNhfM+RDZaY3Xu
-         tUvOyrR5+Hjc9HZSHBL9haPaF0x0mbGCcv6QW59DixfXtqXl+keSGwCTUsqfMi6tVxBl
-         fNUEV1/pylwBxTSJ3g3fs3fRACpdNKmjT3qt3yBRaNQsboCPU5H9+Mhn19pb9mUJ4+0p
-         Y4IQ==
-X-Received: by 10.180.81.164 with SMTP id b4mr89140wiy.34.1362770422750; Fri,
- 08 Mar 2013 11:20:22 -0800 (PST)
-Received: by 10.194.138.107 with HTTP; Fri, 8 Mar 2013 11:20:22 -0800 (PST)
-In-Reply-To: <B21B6CEC-7507-47A1-9BBB-FB95EA6B831F@quendi.de>
+	id S1752050Ab3CHTh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Mar 2013 14:37:28 -0500
+Received: from serveur.giref.ulaval.ca ([132.203.7.102]:55328 "EHLO
+	mailhost.giref.ulaval.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751275Ab3CHTh1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Mar 2013 14:37:27 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id 07817101226;
+	Fri,  8 Mar 2013 14:37:26 -0500 (EST)
+X-Virus-Scanned: amavisd-new at giref.ulaval.ca
+Received: from mailhost.giref.ulaval.ca ([127.0.0.1])
+	by localhost (mailhost.giref.ulaval.ca [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 99y-aKH5TRTH; Fri,  8 Mar 2013 14:37:21 -0500 (EST)
+Received: from [132.203.7.22] (melkor.giref.ulaval.ca [132.203.7.22])
+	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id AB1AA101222;
+	Fri,  8 Mar 2013 14:37:21 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+In-Reply-To: <7v38w6lr8n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217679>
 
-On 3/8/13, Max Horn <max@quendi.de> wrote:
-> Same result, it works fine.
+Hi Junio,
 
-Just shooting in the dark here... I wonder if there's some background
-process running in OS X that's messing with the files/directories
-while rebase is working... backup, virus scan, etc? Or maybe some
-programs that you're using at the same time? Maybe also make sure you
-don't have any programs (shells, editors, etc.) opened that's
-accessing those files/directories?
+On 03/07/2013 06:33 PM, Junio C Hamano wrote:
+> Eric Chamberland <Eric.Chamberland@giref.ulaval.ca> writes:
+>
+> What you want is a way to compute, given a set of tags (or refs in
+> general) and a set of branches (or another set of refs in general),
+> find the ones in the former that none of the latter can reach.  With
+> that, you can drive "git tag -d $(that way)".
+>
 
-Does the error always happen at COMMIT A and COMMIT B? Or is it all
-over the place?
+Yes, this is *exactly* what I want...
 
-In cases where COMMIT A succeeded, did it say it did a 3-way merge? Or
-was it exactly as the output in your original message? i.e. no message
-at all
+> In other words, the feature does not belong to "git tag" command.
+>
+>> 2) git tag -d "TOKEN*"
+>
+> Again, not interesting.  You already have:
+>
+>      git for-each-ref --format='%(refname:short)' refs/tags/TOKEN\* |
+>      xargs -r git tag -d
+>
+
+I don't agree here for one reason:
+
+git tag -l "TOKEN*"
+
+already exists and works very well...
+
+So why is it not interesting to have:
+
+git tag -d "TOKEN*"
+
+?
+
+We can also write:
+
+git tag -d `git tag -l "TOKEN*"`
+
+but a simple addition to "-d" feature looks like a receivable behavior 
+here, no?
+
+Thanks,
+
+Eric
