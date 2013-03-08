@@ -1,83 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [ANNOUNCE] Git v1.8.2-rc3
-Date: Fri, 08 Mar 2013 11:18:59 +0100
-Message-ID: <vpqtxommbxo.fsf@grenoble-inp.fr>
-References: <7v7glils5k.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Bj=F6rn_T=F6pel?= <bjorn.topel@gmail.com>
+Subject: svn-fe + git-fast-import bails out on certain SVN commits
+Date: Fri, 8 Mar 2013 11:21:45 +0100
+Message-ID: <CAJ+HfNiLYYzpDN2NNzw99=z_PcbKtb_3fTneOkNOdJymSbB-zA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 08 11:19:36 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 08 11:22:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDuOl-0005Rn-91
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 11:19:35 +0100
+	id 1UDuRI-0007jl-T8
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 11:22:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752016Ab3CHKTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Mar 2013 05:19:09 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:37216 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750869Ab3CHKTH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Mar 2013 05:19:07 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r28AIxjJ025844
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 8 Mar 2013 11:18:59 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UDuOC-0007Fn-8l; Fri, 08 Mar 2013 11:19:00 +0100
-In-Reply-To: <7v7glils5k.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 07 Mar 2013 15:13:59 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 08 Mar 2013 11:18:59 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r28AIxjJ025844
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1363342741.02346@xsLpTM59UjkkFffmjM+zoA
+	id S1752184Ab3CHKVr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Mar 2013 05:21:47 -0500
+Received: from mail-ve0-f172.google.com ([209.85.128.172]:48643 "EHLO
+	mail-ve0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750869Ab3CHKVq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Mar 2013 05:21:46 -0500
+Received: by mail-ve0-f172.google.com with SMTP id cz11so1151053veb.3
+        for <git@vger.kernel.org>; Fri, 08 Mar 2013 02:21:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=Mx1ntWg97iHOl3cZ0WFHvyq5XQnm3+Y3eBGAnSO/4+g=;
+        b=kOutpNrrUT+ohR81qNJ+2gXqfHOEddO4pgfJALSAwhX97g20Heh9/h9ABjyhHI3S+U
+         ZpMw6R/nGal61f6KXloP/5Jx7Wbi7kyqQOmoAY6qij7gbC0iZwJ1WgkJJiYNGAV5JWSH
+         ejMTSMqGauxquJVVXrYXp/Cg4XIFIsqEI5pG0RUfUySSIX4wDEBEbX2mHHuoJdSZ4K7O
+         L7KT1zybCVSNBJfG9jLUpbUbxyWh6vp2ngzw9rQnkrq6oe9EGj2U/1e/HPtGpZMf/aO+
+         8G7RJX6gyhVXzWIdecP+McYaRuurt6EDgHs6IorqZPk7DwXSaUrIZ/sYSZAgRyMpkdHe
+         IY/Q==
+X-Received: by 10.58.46.134 with SMTP id v6mr690739vem.45.1362738105480; Fri,
+ 08 Mar 2013 02:21:45 -0800 (PST)
+Received: by 10.52.155.211 with HTTP; Fri, 8 Mar 2013 02:21:45 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217657>
 
-A few suggestions on the release notes (you may safely ignore)
+I'm importing a huge repository using svn-fe and git-fast-import.
 
-Junio C Hamano <gitster@pobox.com> writes:
+$ cat repo.svn_dump | svn-fe 'svn+ssh://bjornto@example.com/pub/repo/'
+3<backchannel | git fast-import --cat-blob-fd=3D3 3>backchannel
 
-> In the next major release Git 2.0 (not *this* one), we will change the
-> behavior of the "git push" command.
+git-fast-import crashes with:
+  fatal: Empty path component found in input
+  fast-import: dumping crash report to .git/fast_import_crash_10844
 
-It's not entirely clear from the formatting whether this sentenece
-introduces the whole "Backward compatibility notes" section or just the
-paragraph above. I'd merge this paragraph with the one below
-(push.default).
+Crashing command:
+  * ls :202791
 
-It may make sense to split "Backward compatibility notes" in two
-sections "Backward compatibility notes (this release)" and "Backward
-compatibility notes (future Git 2.0 release)".
+Where the crashing SVN commit is "svn cp $SVN_ROOT $SVN_ROOT/subdirecto=
+ry".
 
-> At Git 2.0 (not *this* one), we plan to change these commands without
-> pathspec to operate on the entire tree.  Forming a habit to type "."
-> when you mean to limit the command to the current working directory
-> will protect you against the planned future change, and that is the
-> whole point of the new message (there will be no configuration
-> variable to squelch this warning---it goes against the "habit forming"
-> objective).
+A Google search led me to:
+http://git.661346.n2.nabble.com/BUG-fast-import-ls-command-on-commit-ro=
+ot-returns-missing-was-Bug-in-svn-fe-copying-the-root-directo-td7353801=
+=2Ehtml
 
-I think it will make sense to have a way to shut down the warning
-starting from Git 2.0 (people who upgrade and don't look back aren't
-interested in warnings about compatibility with previous versions).
+As far as I understand, this issue is fixed in fast-import, or am I
+missing something? Is there a way workaround this problem?
 
-So I'd say just "there is no configuration" instead of "there will be no
-configuration".
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+
+Bj=F6rn
+
+
+$ git --verion
+git version 1.8.2.rc3.dirty
+$ uname -a # Ubuntu 12.04
+Linux bjorntodesktop 3.2.0-38-generic #61-Ubuntu SMP Tue Feb 19
+12:18:21 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux
