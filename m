@@ -1,119 +1,170 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 3/4] status: show more info than "currently not on any branch"
-Date: Fri, 8 Mar 2013 18:04:38 +0700
-Message-ID: <CACsJy8CnDoMRzR5ifH3+0AKRLfzrNpkc3-NOxoA85SiRUb40ng@mail.gmail.com>
-References: <1362303681-6585-1-git-send-email-pclouds@gmail.com>
- <1362572482-20570-1-git-send-email-pclouds@gmail.com> <1362572482-20570-4-git-send-email-pclouds@gmail.com>
- <7vzjygpcd5.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Niedier <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 08 12:05:37 2013
+From: Max Horn <max@quendi.de>
+Subject: Re: rebase: strange failures to apply patc 3-way
+Date: Fri, 8 Mar 2013 12:34:55 +0100
+Message-ID: <494292C5-EBD9-487B-8846-9D9DD23ACB83@quendi.de>
+References: <7A483B92-D671-46CA-9EFD-83C6F4C97B5E@quendi.de>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Fri Mar 08 12:35:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UDv7J-0002zb-8a
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 12:05:37 +0100
+	id 1UDvaU-00034l-0O
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Mar 2013 12:35:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756366Ab3CHLFK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Mar 2013 06:05:10 -0500
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:62066 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752302Ab3CHLFJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Mar 2013 06:05:09 -0500
-Received: by mail-oa0-f45.google.com with SMTP id o6so1836309oag.18
-        for <git@vger.kernel.org>; Fri, 08 Mar 2013 03:05:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=s2QBFMvrhHhQ4g/eAgfA/qJ2RjXDKSgNFb4lnT8IjQM=;
-        b=FkkunVndPu7RgxqYNqD7tGRbLj8/Tnp1FaMJlaihGsTB9JPIJHZ/34qFGpgYfGic9a
-         KdGVeQJc7nGz8BkrpELM5KEx8m7/gTOXvhMy01FrK2LxTaZT4MVb8uZtN8re4pYAzxir
-         cxI5EuhqXKfAB8JXT04yUs/HUNOnPsZW3Nufv+q9NQzuJQjvHvdkqjqWag6Afpa49Da9
-         ZglikJT1wPktL4r5gyDn7adlTj90Zlx6ISc2efDI7LciDVkh9BSXJXK5esRjcggJEHLV
-         u9nDF+us2NQd5675Ks/vCB3Qp6F7VRjpNX1Y4MYmP1ebz4O98ODzuXJeOYYSXYNiCKq2
-         JjXg==
-X-Received: by 10.60.29.72 with SMTP id i8mr1145258oeh.93.1362740708390; Fri,
- 08 Mar 2013 03:05:08 -0800 (PST)
-Received: by 10.76.27.200 with HTTP; Fri, 8 Mar 2013 03:04:38 -0800 (PST)
-In-Reply-To: <7vzjygpcd5.fsf@alter.siamese.dyndns.org>
+	id S1752809Ab3CHLfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Mar 2013 06:35:19 -0500
+Received: from merkurneu.hrz.uni-giessen.de ([134.176.2.3]:51761 "EHLO
+	merkurneu.hrz.uni-giessen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751733Ab3CHLfR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Mar 2013 06:35:17 -0500
+Received: from mailgw42.hrz.uni-giessen.de by merkurneu.hrz.uni-giessen.de with ESMTP for git@vger.kernel.org; Fri, 8 Mar 2013 12:35:07 +0100
+Received: from merkurneu.hrz.uni-giessen.de (merkurneu.hrz.uni-giessen.de [134.176.2.3])
+	by mailgw42.hrz.uni-giessen.de (Postfix) with ESMTP id BA535B6
+	for <git@vger.kernel.org>; Fri,  8 Mar 2013 12:34:55 +0100 (CET)
+Received: from [134.176.2.3] by merkurneu.hrz.uni-giessen.de with ESMTP for git@vger.kernel.org; Fri, 8 Mar 2013 12:34:55 +0100
+In-Reply-To: <7A483B92-D671-46CA-9EFD-83C6F4C97B5E@quendi.de>
+X-Mailer: Apple Mail (2.1283)
+X-HRZ-JLUG-MailScanner-Information: Passed JLUG virus check
+X-HRZ-JLUG-MailScanner: No virus found
+X-Envelope-From: max@quendi.de
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217662>
 
-On Thu, Mar 7, 2013 at 2:16 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> +static void wt_status_get_detached_from(struct wt_status_state *sta=
-te)
->> +{
->> +     struct grab_1st_switch_cbdata cb;
->> +     struct commit *commit;
->> +     unsigned char sha1[20];
->> +     char *ref =3D NULL;
->> +
->> +     strbuf_init(&cb.buf, 0);
->> +     if (for_each_recent_reflog_ent("HEAD", grab_1st_switch, 4096, =
-&cb))
->> +             for_each_reflog_ent("HEAD", grab_1st_switch, &cb);
->> +     if (!cb.buf.len)
->> +             return;
->
-> Is this correct?  What if the recent entries (i.e. the tail 4k) of
-> the HEAD reflog did not have *any* checkout?  Your callback never
-> returns non-zero, so as long as the HEAD reflog is sufficiently
-> long, for_each_recent_reflog_ent() will return 0 to signal success,
-> and you do not dig deeper by retrying the full reflog for HEAD,
-> missing the checkout that exists before the final 4k, no?
->
-> It should be more like this, I would think:
->
->         for_each_recent_reflog_ent();
->         if (!found)
->                 for_each_reflog_ent();
->         if (!found)
->                 return;
+A follow up:
 
-Yes. This "recent" optimization is tricky.
+I was able to reproduce this behavior on my Mac with multiple git versions down to 1.6.0.6. On the other hand, I copied the whole work tree to a virtual machine running Ubuntu, and there the issue did not occur.
 
-> Using cb.buf.len as the "found" marker may be correct, but I found
-> it a bit subtle to my taste, without explanation.  Adding an
-> explicit bit to "struct grab_1st_switch_cbdata" would be cleaner and
-> more resistant to future changes, I think.
+All in all, I suspect that Mac OS X and/or the filesystem (HFS+ with journaling, not case sensitive (the default)) might be at fault. Still, this is quite puzzling and annoying, and so I still wonder if anybody has any insights on this.
 
-OK
+And: is this a known issue, I wonder?
 
->
->> +
->> +     if (dwim_ref(cb.buf.buf, cb.buf.len, sha1, &ref) =3D=3D 1 &&
->> +         (commit =3D lookup_commit_reference_gently(sha1, 1)) !=3D =
-NULL &&
->> +         !hashcmp(cb.nsha1, commit->object.sha1)) {
->
-> That feels unnecessarily expensive.  Why not hashcmp before checking
-> the type of the object to reject the case where the ref moved since
-> the last checkout early?
->
-> For that matter, does this even need to check the type of the object
-> that currently sits at the ref?  Isn't it sufficient to reject this
-> case by seeing if sha1 is the same as cb.nsha1?
 
-nsha1 is always a commit sha-1, sha-1 could be a tag sha-1 that refers
-to the same commit. hashcmp before lookup is a good idea. Although I
-don't think it's expensive in the big picture. When HEAD is not
-detached, we show "<n> commits ahead of @{u}" which is way more
-expensive than this. As long as "git status" on detached HEAD does not
-use up all the time that "git status" on branches normally does, I
-think we're fine.
---=20
-Duy
+Cheers,
+Max
+
+
+On 07.03.2013, at 11:16, Max Horn wrote:
+
+> Recently I have observed very strange failures in "git rebase" that cause it to fail to work automatically in situations where it should trivially be able to do so.
+> 
+> In case it matter, here's my setup: git 1.8.2.rc2.4.g7799588 (i.e. git.git master branch) on Mac OS X. The repos clone is on a HFS+ partition, not on a network volume. No gitattributes are being used.  Regarding the origin of the repos (I hope it doesn't matter, but just in case): The repository in question used to be a CVS repository; it was decided to switch to Mercurial (not my decision ;-) and I performed the conversion; I first converted it to git using cvs2git (from the cvs2svn suite), then performed some history cleanup, and finally used "hg convert" to convert it to git. Recently, I have been accessing the repository from git via the gitifyhg tool <https://github.com/buchuki/gitifyhg>. 
+> 
+> Anyway, several strange things just happened (and I had similar experiences in the past days and weeks, but that was using an older git, and I thought I was just doing something wrong).
+> 
+> Specifically, I wanted to rebase a branch with some experimental commits. The strange things started with this:
+> 
+> $ git rebase MY-NEW-BASE
+> First, rewinding head to replay your work on top of it...
+> Applying: SOME COMMIT
+> Applying: SOME OTHER COMMIT
+> ...
+> Applying: COMMIT A
+> Applying: COMMIT B
+> Using index info to reconstruct a base tree...
+> Falling back to patching base and 3-way merge...
+> error: Your local changes to the following files would be overwritten by merge:
+> 	some/source.file
+> Please, commit your changes or stash them before you can merge.
+> Aborting
+> Failed to merge in the changes.
+> Patch failed at 0014 COMMIT B
+> The copy of the patch that failed is found in:
+>   /path/to/my/repo/.git/rebase-apply/patch
+> 
+> When you have resolved this problem, run "git rebase --continue".
+> If you prefer to skip this patch, run "git rebase --skip" instead.
+> To check out the original branch and stop rebasing, run "git rebase --abort".
+> 
+> 
+> Now, what is strange about this is that the failed patch actually applies cleanly:
+> 
+> $ patch -p1 < /path/to/my/repo/.git/rebase-apply/patch
+> patching file some/source.file
+> $
+> 
+> And there is no subtle merge issue here, either: That patch is the only one to have touched the surrounding code since 1999! There is no source of conflict there!
+> 
+> Anyway. The tale gets stranger, as I was trying to do this again (no changes were made to the repos in between, this is a straight continuation from above):
+> 
+> $ git rebase --abort
+> $ git rebase MY-NEW-BASE
+> First, rewinding head to replay your work on top of it...
+> Applying: SOME COMMIT
+> Applying: SOME OTHER COMMIT
+> ...
+> Applying: COMMIT A
+> Using index info to reconstruct a base tree...
+> Falling back to patching base and 3-way merge...
+> error: Your local changes to the following files would be overwritten by merge:
+> 	some/othersource.file
+> 	some/yetanother.file
+> Please, commit your changes or stash them before you can merge.
+> Aborting
+> Failed to merge in the changes.
+> Patch failed at 0013 COMMIT A
+> The copy of the patch that failed is found in:
+>   /path/to/my/repo/.git/rebase-apply/patch
+> 
+> When you have resolved this problem, run "git rebase --continue".
+> If you prefer to skip this patch, run "git rebase --skip" instead.
+> To check out the original branch and stop rebasing, run "git rebase --abort".
+> 
+> 
+> 
+> So suddenly it fails to apply the commit A, the one before the previously failing commit. Huh? But again, the failing patch applies cleanly (and after all, rebase was able to apply it in my previous attempt).  And again, the patch actually applies cleanly. So one more try:
+> 
+> 
+> $ git rebase --abort
+> $ git rebase MY-NEW-BASE
+> First, rewinding head to replay your work on top of it...
+> Applying: SOME COMMIT
+> Applying: SOME OTHER COMMIT
+> ...
+> Applying: COMMIT A
+> Using index info to reconstruct a base tree...
+> Falling back to patching base and 3-way merge...
+> error: Your local changes to the following files would be overwritten by merge:
+> 	some/othersource.file
+> Please, commit your changes or stash them before you can merge.
+> Aborting
+> Failed to merge in the changes.
+> Patch failed at 0013 COMMIT A
+> The copy of the patch that failed is found in:
+>   /path/to/my/repo/.git/rebase-apply/patch
+> 
+> When you have resolved this problem, run "git rebase --continue".
+> If you prefer to skip this patch, run "git rebase --skip" instead.
+> To check out the original branch and stop rebasing, run "git rebase --abort".
+> 
+> 
+> Again it fails in commit A -- but this time, it only thinks one file is problematic. HUH? Again, the patch actually applies cleanly:
+> 
+> $ patch -p1 < /path/to/my/repo/.git/rebase-apply/patch
+> patching file some/othersource.file
+> patching file some/yetanother.file
+> 
+> 
+> At this point, things stabilized, and when I now abort and reattempt the merge, it always fails in the same way. This time trying to apply a change to a code comment that was last changed in 1997 (though for one hunk, a few lines before the changed lines, there is a line that was changed in 2008... but I assure you, that line is there in the ancestors of both the branch I want to rebase, and also in the MY-NEW-BASE branch I rebase onto).
+> 
+> 
+> Something seems to be really fishy here and I wonder if anybody has an idea what's going wrong here. Is this a bug in git? Is my repos broken in some way? Note that "git fsck" reported nothing except some dangling objects. Any other ideas? 
+> 
+> 
+> Cheers,
+> Max
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
