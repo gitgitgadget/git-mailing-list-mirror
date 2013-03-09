@@ -1,71 +1,89 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: [PATCH v2 0/3] Improve P4Merge mergetool invocation
-Date: Sat,  9 Mar 2013 21:20:57 +0200
-Message-ID: <1362856860-15205-1-git-send-email-kevin@bracey.fi>
-References: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
-Cc: Kevin Bracey <kevin@bracey.fi>, David Aguilar <davvid@gmail.com>,
-	Ciaran Jessup <ciaranj@gmail.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 09 21:39:41 2013
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: Segfault in git 1.8.1.5
+Date: Sat, 09 Mar 2013 22:13:29 +0100
+Message-ID: <1362863609.29502.4.camel@localhost>
+References: <2078462.OF4zRmv4ar@pablohp>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Strasser Pablo <strasserpablo@bluewin.ch>
+X-From: git-owner@vger.kernel.org Sat Mar 09 22:14:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEQYO-0003xW-Ls
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 21:39:40 +0100
+	id 1UER5c-0005is-M1
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 22:14:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751450Ab3CIUjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Mar 2013 15:39:06 -0500
-Received: from 2.mo5.mail-out.ovh.net ([178.33.109.111]:60076 "EHLO
-	mo5.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751369Ab3CIUjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Mar 2013 15:39:05 -0500
-X-Greylist: delayed 2399 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Mar 2013 15:39:05 EST
-Received: from mail173.ha.ovh.net (gw6.ovh.net [213.251.189.206])
-	by mo5.mail-out.ovh.net (Postfix) with SMTP id 0DD66FF9131
-	for <git@vger.kernel.org>; Sat,  9 Mar 2013 20:32:41 +0100 (CET)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 9 Mar 2013 21:21:21 +0200
-Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 9 Mar 2013 21:21:19 +0200
-X-Ovh-Mailout: 178.32.228.5 (mo5.mail-out.ovh.net)
-X-Mailer: git-send-email 1.8.2.rc3.7.g77aeedb
-In-Reply-To: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
-X-Ovh-Tracer-Id: 10065263693809357022
-X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: -60
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeefucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlgedtmd
-X-Spam-Check: DONE|U 0.500002/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -60
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeefucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlgedtmd
+	id S1751502Ab3CIVNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Mar 2013 16:13:34 -0500
+Received: from mail-we0-f169.google.com ([74.125.82.169]:63605 "EHLO
+	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751133Ab3CIVNe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Mar 2013 16:13:34 -0500
+Received: by mail-we0-f169.google.com with SMTP id t11so2397625wey.28
+        for <git@vger.kernel.org>; Sat, 09 Mar 2013 13:13:32 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-type:x-mailer:mime-version
+         :content-transfer-encoding:x-gm-message-state;
+        bh=TvULBe1F2RV9cNEknMGZXy7rI1Y12SeIaUsQ73SkBfk=;
+        b=X8kkfTUYamVTZa9hTamzP5Uqseln+fh2crFxwfWgPgNf6QeumoHIAHXTijVIHDzHNg
+         eszJuwLvkvEHmP9j7oC3oiQU7mA8Fs+hKm7A/Mr4rKNKUai+PEwvjqQ3ZTcghGtpoYsl
+         QYKRql5G9azHrl491OeKvOHKywcB+sk/QcyrOkeHjDdEw1xaW8tqkTe7ipEGTDq1Pu+6
+         ljrgRHtzfXKhxwRq6r76yjhKslR918b4xHVg9NAogXlJOMNNfbJXYauViciYuzJtZ1dS
+         hTFV3cH1MNXQINOzEyf3nS8RDyNVMzKNWj2DrSa5PUri0JAPoQf/gxsRgVQG2gbbJ7op
+         NtZw==
+X-Received: by 10.180.105.229 with SMTP id gp5mr5088817wib.10.1362863612623;
+        Sat, 09 Mar 2013 13:13:32 -0800 (PST)
+Received: from [10.42.1.4] (82-168-11-8.ip.telfort.nl. [82.168.11.8])
+        by mx.google.com with ESMTPS id q2sm7103581wiz.8.2013.03.09.13.13.30
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 09 Mar 2013 13:13:31 -0800 (PST)
+In-Reply-To: <2078462.OF4zRmv4ar@pablohp>
+X-Mailer: Evolution 3.6.2-0ubuntu0.1 
+X-Gm-Message-State: ALoCoQkQfHJxDfePe1c2hZDcKRMYeeu3ZEKaQ/V0AZPosnR4f3Lsgn/D4j58x4qEWSoGc1EnfwSB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217763>
 
-Incorporated comments on the previous patches, and one new patch
-addressing a problem I spotted while testing git-merge-one-file.
+On za, 2013-03-09 at 21:16 +0100, Strasser Pablo wrote:
+> Hello,
+> 
+> I segfault with the following command:
+> 
+> git checkout HEAD~1
+> git branch -u origin/master
+> 
+> I think it's because i'm in detached head.
+> A error message like cannot use this command in would be a better responce 
+> than a segfault.
 
-I couldn't figure out how to use git diff to achieve the effect of the
-external diff here - we'd need some alternative to achieve what it does
-with the -L option, and I failed to come up with anything remotely elegant.
+Confirmed.
 
-Kevin Bracey (3):
-  mergetools/p4merge: swap LOCAL and REMOTE
-  mergetools/p4merge: create a base if none available
-  git-merge-one-file: revise merge error reporting
+dennis@lightning:/tmp/hacks$ gdb --args ~/code/git/git branch -u origin/master
+(gdb) run
+Starting program: /home/dennis/code/git/git branch -u origin/master
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/i386-linux-gnu/libthread_db.so.1".
 
- git-merge-one-file.sh | 38 ++++++++++++--------------------------
- git-sh-setup.sh       | 13 +++++++++++++
- mergetools/p4merge    |  8 ++++++--
- 3 files changed, 31 insertions(+), 28 deletions(-)
+Program received signal SIGSEGV, Segmentation fault.
+cmd_branch (argc=0, argv=0xbfffec08, prefix=0x0) at builtin/branch.c:886
+886			if (!ref_exists(branch->refname))
+(gdb) bt
+#0  cmd_branch (argc=0, argv=0xbfffec08, prefix=0x0) at builtin/branch.c:886
+#1  0x0804c26c in run_builtin (argv=0xbfffec08, argc=3, p=0x819f3f4 <commands.21695+84>) at git.c:273
+#2  handle_internal_command (argc=3, argv=0xbfffec08) at git.c:435
+#3  0x0804b656 in run_argv (argv=0xbfffeb74, argcp=0xbfffeb70) at git.c:481
+#4  main (argc=3, argv=0xbfffec08) at git.c:556
 
+But it's already been fixed by 8efb889: branch: segfault fixes and
+validation. 
 -- 
-1.8.2.rc3.7.g77aeedb
+Dennis Kaarsemaker
+www.kaarsemaker.net
