@@ -1,162 +1,208 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] git add: -u/-A now affects the entire working tree
-Date: Fri,  8 Mar 2013 15:54:49 -0800
-Message-ID: <1362786889-28688-3-git-send-email-gitster@pobox.com>
-References: <1362786889-28688-1-git-send-email-gitster@pobox.com>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 09 00:55:30 2013
+From: Bernhard Posselt <mail@bernhard-posselt.com>
+Subject: Re: Memory corruption when rebasing with git version 1.8.1.5 on arch
+Date: Sat, 09 Mar 2013 01:08:32 +0100
+Message-ID: <513A7D80.5000501@bernhard-posselt.com>
+References: <5139D76D.80703@bernhard-posselt.com> <20130308212831.GA9217@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 09 01:09:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UE78L-0002c3-Hi
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 00:55:29 +0100
+	id 1UE7Lr-0005pM-6v
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 01:09:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760018Ab3CHXy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Mar 2013 18:54:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38103 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759889Ab3CHXy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Mar 2013 18:54:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D6ACBF70;
-	Fri,  8 Mar 2013 18:54:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=0llc
-	57oDa4qIDrXnqKcpMn4TsZ8=; b=RZbh9fHdAl39mpa171u+9HY9MkkdDSr7zw0H
-	dY8z14aY6UWXQo2wnVxYXg6wFB0WT3XHsqHj5tb9q4Vbtg90RuO34tLjTum5ErBz
-	gnpCybZPQ951OeSCZU4m3O2hvthYLNLl5yxl4G8mlMPAMFnec6emQOxKE3mW8sLa
-	/JnpG4A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	pZsqy7OafRmf9eSGMNREZ1zpV/ea2KDLZqswhPcEJQFZkKjlSq2wOUNLIDXPGig8
-	T638u7sruIspplk2BACr8uf+V8mtkSTVPEUUpG22r/to7/QWS7ShZEW3XKe57JYn
-	2BzlBckTiLG3So+ASLY4emZsusUEAs1dm2tIeZaLBQo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E0EFBF6F;
-	Fri,  8 Mar 2013 18:54:55 -0500 (EST)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA5B8BF6E; Fri,  8 Mar 2013
- 18:54:54 -0500 (EST)
-X-Mailer: git-send-email 1.8.2-rc3-196-gfcda97c
-In-Reply-To: <1362786889-28688-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 932DA8C0-884B-11E2-8ED7-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754898Ab3CIAJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Mar 2013 19:09:00 -0500
+Received: from suou.newyork.w1r3.net ([204.62.14.108]:59321 "EHLO
+	suou.newyork.w1r3.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752522Ab3CIAI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Mar 2013 19:08:59 -0500
+Received: from [192.168.1.139] (194-208-147-142.tele.net [194.208.147.142])
+	by suou.newyork.w1r3.net (Postfix) with ESMTPSA id 0007441A04;
+	Sat,  9 Mar 2013 01:08:56 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
+In-Reply-To: <20130308212831.GA9217@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217694>
 
-As promised in 0fa2eb530fb7 (add: warn when -u or -A is used without
-pathspec, 2013-01-28), in Git 2.0, "git add -u/-A" that is run
-without pathspec in a subdirectory updates all updated paths in the
-entire working tree, not just the current directory and its
-subdirectories.
+On 03/08/2013 10:28 PM, Jeff King wrote:
+> On Fri, Mar 08, 2013 at 01:19:57PM +0100, Bernhard Posselt wrote:
+>
+>> Using valgrind gives me:
+>>
+>> $ valgrind /usr/bin/git pull --rebasehttps://github.com/PatrickHeller/core.git  master
+>> ==5995== Memcheck, a memory error detector
+>> ==5995== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+>> ==5995== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+>> ==5995== Command: /usr/bin/git pull --rebasehttps://github.com/PatrickHeller/core.git  master
+>> ==5995==
+>> remote: Counting objects: 5, done.
+>> remote: Compressing objects: 100% (1/1), done.
+>> remote: Total 3 (delta 2), reused 3 (delta 2)
+>> Unpacking objects: 100% (3/3), done.
+>>   Fromhttps://github.com/PatrickHeller/core
+>>    * branch            master     -> FETCH_HEAD
+>> First, rewinding head to replay your work on top of it...
+>> Applying: distinguish between touch and write
+>> Applying: remove debug output
+>> *** Error in `git': malloc(): memory corruption: 0x00000000027f14e0 ***
+> The problem is likely happening in a sub-command of git-pull, so
+> valgrind isn't reporting it. Can you try re-running with
+> "valgrind --trace-children=yes", or alternatively narrow down the
+> problematic command by setting GIT_TRACE=1 in the environment?
+>
+> -Peff
+Thanks for the reply!
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-add.txt | 12 ++++--------
- builtin/add.c             | 47 ++++-------------------------------------------
- 2 files changed, 8 insertions(+), 51 deletions(-)
+Heres the output with GIT_TRACE=1, the valgrind log has 4000 lines. If 
+you should still require the valgrind log, please tell me.
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 1ea1d39..15a8859 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -107,14 +107,10 @@ apply to the index. See EDITING PATCHES below.
- 	from the index if the corresponding files in the working tree
- 	have been removed.
- +
--If no <pathspec> is given when `-u` or `-A` option is used, Git used
--to update all tracked files in the current directory and its
--subdirectories. We would eventually want to change this to operate
--on the entire working tree, not limiting it to the current
--directory, to make it consistent with `git commit -a` and other
--commands.  In order to avoid harming users who are used to the old
--default, Git *errors out* when no <pathspec> is given to train their
--fingers to explicitly type `git add -u .` when they mean it.
-+If no <pathspec> is given when `-u` or `-A` option is used, all
-+tracked files in the entire working tree are updated (old versions
-+of Git used to limit the update to the current directory and its
-+subdirectories).
- 
- -A::
- --all::
-diff --git a/builtin/add.c b/builtin/add.c
-index 4b9d57c..6cd063f 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -321,33 +321,6 @@ static int add_files(struct dir_struct *dir, int flags)
- 	return exit_status;
- }
- 
--static void die_on_pathless_add(const char *option_name, const char *short_name)
--{
--	/*
--	 * To be consistent with "git add -p" and most Git
--	 * commands, we should default to being tree-wide, but
--	 * this is not the original behavior and can't be
--	 * changed until users trained themselves not to type
--	 * "git add -u" or "git add -A". In the previous release,
--	 * we kept the old behavior but gave a big warning.
--	 */
--	die(_("The behavior of 'git add %s (or %s)' with no path argument from a\n"
--	      "subdirectory of the tree will change in Git 2.0 and should not be "
--	      "used anymore.\n"
--	      "To add content for the whole tree, run:\n"
--	      "\n"
--	      "  git add %s :/\n"
--	      "  (or git add %s :/)\n"
--	      "\n"
--	      "To restrict the command to the current directory, run:\n"
--	      "\n"
--	      "  git add %s .\n"
--	      "  (or git add %s .)"),
--		option_name, short_name,
--		option_name, short_name,
--		option_name, short_name);
--}
--
- int cmd_add(int argc, const char **argv, const char *prefix)
- {
- 	int exit_status = 0;
-@@ -358,8 +331,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	int add_new_files;
- 	int require_pathspec;
- 	char *seen = NULL;
--	const char *option_with_implicit_dot = NULL;
--	const char *short_option_with_implicit_dot = NULL;
- 
- 	git_config(add_config, NULL);
- 
-@@ -379,21 +350,11 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		die(_("-A and -u are mutually incompatible"));
- 	if (!show_only && ignore_missing)
- 		die(_("Option --ignore-missing can only be used together with --dry-run"));
--	if (addremove) {
--		option_with_implicit_dot = "--all";
--		short_option_with_implicit_dot = "-A";
--	}
--	if (take_worktree_changes) {
--		option_with_implicit_dot = "--update";
--		short_option_with_implicit_dot = "-u";
--	}
--	if (option_with_implicit_dot && !argc) {
--		static const char *here[2] = { ".", NULL };
--		if (prefix)
--			die_on_pathless_add(option_with_implicit_dot,
--					    short_option_with_implicit_dot);
-+
-+	if ((addremove || take_worktree_changes) && !argc) {
-+		static const char *whole[2] = { ":/", NULL };
- 		argc = 1;
--		argv = here;
-+		argv = whole;
- 	}
- 
- 	add_new_files = !take_worktree_changes && !refresh_only;
--- 
-1.8.2-rc3-196-gfcda97c
+$ git pull --rebase https://github.com/PatrickHeller/core.git master
+trace: exec: 'git-pull' '--rebase' 
+'https://github.com/PatrickHeller/core.git' 'master'
+trace: run_command: 'git-pull' '--rebase' 
+'https://github.com/PatrickHeller/core.git' 'master'
+trace: built-in: git 'rev-parse' '--git-dir'
+trace: built-in: git 'rev-parse' '--is-bare-repository'
+trace: built-in: git 'rev-parse' '--show-toplevel'
+trace: built-in: git 'ls-files' '-u'
+trace: built-in: git 'symbolic-ref' '-q' 'HEAD'
+trace: built-in: git 'config' '--bool' 'branch.master.rebase'
+trace: built-in: git 'config' '--bool' 'pull.rebase'
+trace: built-in: git 'rev-parse' '-q' '--verify' 'HEAD'
+trace: built-in: git 'rev-parse' '--verify' 'HEAD'
+trace: built-in: git 'update-index' '-q' '--ignore-submodules' '--refresh'
+trace: built-in: git 'diff-files' '--quiet' '--ignore-submodules'
+trace: built-in: git 'diff-index' '--cached' '--quiet' 
+'--ignore-submodules' 'HEAD' '--'
+trace: built-in: git 'rev-parse' '-q' '--git-dir'
+trace: built-in: git 'rev-parse' '-q' '--verify' 
+'refs/remotes/https://github.com/PatrickHeller/core.git/master'
+trace: built-in: git 'rev-parse' '-q' '--verify' 'HEAD'
+trace: built-in: git 'fetch' '--update-head-ok' 
+'https://github.com/PatrickHeller/core.git' 'master'
+trace: run_command: 'git-remote-https' 
+'https://github.com/PatrickHeller/core.git' 
+'https://github.com/PatrickHeller/core.git'
+trace: run_command: 'rev-list' '--objects' '--stdin' '--not' '--all' 
+'--quiet'
+trace: run_command: 'fetch-pack' '--stateless-rpc' '--stdin' 
+'--lock-pack' '--thin' 'https://github.com/PatrickHeller/core.git/'
+trace: exec: 'git' 'fetch-pack' '--stateless-rpc' '--stdin' 
+'--lock-pack' '--thin' 'https://github.com/PatrickHeller/core.git/'
+trace: built-in: git 'fetch-pack' '--stateless-rpc' '--stdin' 
+'--lock-pack' '--thin' 'https://github.com/PatrickHeller/core.git/'
+remote: Counting objects: 5, done.
+remote: Compressing objects: 100% (1/1), done.
+remote: Total 3 (delta 2), reused 3 (delta 2)
+trace: run_command: 'unpack-objects' '--pack_header=2,3'
+trace: exec: 'git' 'unpack-objects' '--pack_header=2,3'
+trace: built-in: git 'unpack-objects' '--pack_header=2,3'
+Unpacking objects: 100% (3/3), done.
+trace: run_command: 'rev-list' '--objects' '--stdin' '--not' '--all'
+trace: exec: 'git' 'rev-list' '--objects' '--stdin' '--not' '--all'
+trace: built-in: git 'rev-list' '--objects' '--stdin' '--not' '--all'
+ From https://github.com/PatrickHeller/core
+  * branch            master     -> FETCH_HEAD
+trace: built-in: git 'rev-parse' '-q' '--verify' 'HEAD'
+trace: built-in: git 'show-branch' '--merge-base' 'refs/heads/master' 
+'d686039828089d53fb42e42046d7a9a3992a0507'
+trace: built-in: git 'fmt-merge-msg'
+trace: built-in: git 'rev-parse' '--parseopt' '--' '--onto' 
+'d686039828089d53fb42e42046d7a9a3992a0507' 
+'d686039828089d53fb42e42046d7a9a3992a0507'
+trace: built-in: git 'rev-parse' '--git-dir'
+trace: built-in: git 'rev-parse' '--is-bare-repository'
+trace: built-in: git 'rev-parse' '--show-toplevel'
+trace: built-in: git 'config' '--bool' 'rebase.stat'
+trace: built-in: git 'config' '--bool' 'rebase.autosquash'
+trace: built-in: git 'rev-parse' '--verify' 
+'d686039828089d53fb42e42046d7a9a3992a0507^0'
+trace: built-in: git 'rev-parse' '--verify' 
+'d686039828089d53fb42e42046d7a9a3992a0507^0'
+trace: built-in: git 'symbolic-ref' '-q' 'HEAD'
+trace: built-in: git 'rev-parse' '--verify' 'master^0'
+trace: built-in: git 'rev-parse' '--verify' 'HEAD'
+trace: built-in: git 'update-index' '-q' '--ignore-submodules' '--refresh'
+trace: built-in: git 'diff-files' '--quiet' '--ignore-submodules'
+trace: built-in: git 'diff-index' '--cached' '--quiet' 
+'--ignore-submodules' 'HEAD' '--'
+trace: built-in: git 'merge-base' 
+'d686039828089d53fb42e42046d7a9a3992a0507' 
+'0525bbd73c9015499ba92d1ac654b980aaca35b2'
+First, rewinding head to replay your work on top of it...
+trace: built-in: git 'checkout' '-q' 
+'d686039828089d53fb42e42046d7a9a3992a0507^0'
+trace: built-in: git 'update-ref' 'ORIG_HEAD' 
+'0525bbd73c9015499ba92d1ac654b980aaca35b2'
+trace: exec: 'git-am' '--rebasing' '--resolvemsg=
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase 
+--abort".
+'
+trace: run_command: 'git-am' '--rebasing' '--resolvemsg=
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase 
+--abort".
+'
+trace: built-in: git 'format-patch' '-k' '--stdout' '--full-index' 
+'--ignore-if-in-upstream' '--src-prefix=a/' '--dst-prefix=b/' 
+'--no-renames' 
+'d686039828089d53fb42e42046d7a9a3992a0507..0525bbd73c9015499ba92d1ac654b980aaca35b2'
+trace: built-in: git 'rev-parse' '--parseopt' '--' '--rebasing' 
+'--resolvemsg=
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase 
+--abort".
+'
+trace: built-in: git 'rev-parse' '--git-dir'
+trace: built-in: git 'rev-parse' '--show-prefix'
+trace: built-in: git 'rev-parse' '--show-toplevel'
+trace: built-in: git 'var' 'GIT_COMMITTER_IDENT'
+trace: built-in: git 'rev-parse' '--verify' '-q' 'HEAD'
+trace: built-in: git 'config' '--bool' '--get' 'am.keepcr'
+trace: built-in: git 'mailsplit' '-d4' 
+'-o/srv/http/owncloud/.git/rebase-apply' '-b' '--'
+trace: built-in: git 'update-index' '-q' '--refresh'
+trace: built-in: git 'diff-index' '--cached' '--name-only' 'HEAD' '--'
+trace: built-in: git 'cat-file' '-t' 
+'48bb53030c657e1133da47765c7c778a069af665'
+trace: built-in: git 'cat-file' 'commit' 
+'48bb53030c657e1133da47765c7c778a069af665'
+trace: built-in: git 'config' 'i18n.commitencoding'
+trace: built-in: git 'show' '-s' '--pretty=raw' '--encoding=UTF-8' 
+'48bb53030c657e1133da47765c7c778a069af665' '--'
+trace: built-in: git 'diff-tree' '--root' '--binary' '--full-index' 
+'48bb53030c657e1133da47765c7c778a069af665'
+Applying: distinguish between touch and write
+trace: built-in: git 'write-tree'
+trace: built-in: git 'rev-parse' '--verify' '-q' 'HEAD'
+trace: built-in: git 'commit-tree' 
+'d785d568d8b4649dfdcc01e03d6c8e87b036ea5a' '-p' 
+'d686039828089d53fb42e42046d7a9a3992a0507'
+trace: built-in: git 'update-ref' '-m' 'pull --rebase 
+https://github.com/PatrickHeller/core.git master: distinguish between 
+touch and write' 'HEAD' '2726978d8cbd9b0a3367fd3d62b64b4c78438e79'
+trace: built-in: git 'cat-file' '-t' 
+'45869afa5ac718e11c3d2e3bccdb501a022cfc24'
+trace: built-in: git 'cat-file' 'commit' 
+'45869afa5ac718e11c3d2e3bccdb501a022cfc24'
+trace: built-in: git 'config' 'i18n.commitencoding'
+trace: built-in: git 'show' '-s' '--pretty=raw' '--encoding=UTF-8' 
+'45869afa5ac718e11c3d2e3bccdb501a022cfc24' '--'
+trace: built-in: git 'diff-tree' '--root' '--binary' '--full-index' 
+'45869afa5ac718e11c3d2e3bccdb501a022cfc24'
+Applying: remove debug output
+*** Error in `git': malloc(): memory corruption: 0x000000000139f4e0 ***
