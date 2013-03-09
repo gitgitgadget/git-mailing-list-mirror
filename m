@@ -1,428 +1,103 @@
-From: Paul Campbell <pcampbell@kemitix.net>
-Subject: [PATCH 19/19] Fix some trailing whitespace
-Date: Sat, 9 Mar 2013 19:31:29 +0000
-Message-ID: <CALeLG_=4uJKn44i+iiinosQ28pAqj6GJQS4NAuMveW4bVRLofA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/19] spell checking
+Date: Sat, 09 Mar 2013 11:45:30 -0800
+Message-ID: <7vobese4rp.fsf@alter.siamese.dyndns.org>
+References: <CALeLG_=R4o1y-kA+n883nnAu+jrjgaA2ys2d+Vo9KasmVKeduQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: David Michael Barr <b@rr-dav.id.au>, Kindjal <kindjal@gmail.com>,
-	bibendi <bibendi@bk.ru>, Herman van Rink <rink@initfour.nl>,
-	mhoffman <matt.hoffman@quantumretail.com>,
-	Nate Jones <nate@endot.org>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 09 20:31:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Paul Campbell <pcampbell@kemitix.net>
+X-From: git-owner@vger.kernel.org Sat Mar 09 20:46:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEPUr-0006I2-0o
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 20:31:57 +0100
+	id 1UEPiS-0001GF-9e
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 20:46:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301Ab3CITbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Mar 2013 14:31:31 -0500
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:62881 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750816Ab3CITba (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Mar 2013 14:31:30 -0500
-Received: by mail-ob0-f180.google.com with SMTP id ef5so2258366obb.11
-        for <git@vger.kernel.org>; Sat, 09 Mar 2013 11:31:29 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:x-originating-ip:date:message-id:subject
-         :from:to:cc:content-type:x-gm-message-state;
-        bh=B8tBfbMfhIeqQ6s5kzHE38Ca1W9ZNjAuj0ZPRJNDZrI=;
-        b=Io7kJvJQvR5QVFji+Ah5NzjOJpDS/vP5iLqFNIJhtaTF0KNFkrWHKOz7SAUr/IjUg5
-         xRGbwb1QpveWKO+k6LnBoHvM84VHZvwjvDOTDYnKuWj84/NJT0/o5hVz8GYAqhkc3soE
-         8KNKWwHDZ5xPmS4GnuEiBUmC7g5YPjPlGZ5S23+Jst98+k2+CdWKhoTvU+9Qtn2ml9dY
-         0n4JVxalUIPGH+M3AHT1EVwURHVizazKvdF5HYyk8WypsCoHAKVEr1wS+IIjx9Bvn97A
-         NSB6wVcrsWXVle/OP2fcXKv0m3JEsW2lM6Cz3u3kOZKuUP64GD/qclSHCNOIf3I5VJ2Y
-         o05A==
-X-Received: by 10.60.14.226 with SMTP id s2mr5067499oec.124.1362857489529;
- Sat, 09 Mar 2013 11:31:29 -0800 (PST)
-Received: by 10.76.122.109 with HTTP; Sat, 9 Mar 2013 11:31:29 -0800 (PST)
-X-Originating-IP: [2.102.85.67]
-X-Gm-Message-State: ALoCoQmJ66WYCmXcNwBG5qUfuEP4n5n/Rp1l+vvoJBo9YqhHhfOA/eOs36VJePW7UKxwlXTro62J
+	id S1751337Ab3CITpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Mar 2013 14:45:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47603 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750840Ab3CITpd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Mar 2013 14:45:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 898BCB91D;
+	Sat,  9 Mar 2013 14:45:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bogA5vxQ19io+H/f4BRF+R7Xrs0=; b=YpXo86
+	6siPz5Ya+8pDCHQRLo6ecDjp1dO4dUtRT1sXcTYzOnJX86MujyyBM8mg7JWnPFES
+	8g4ofzULuephBgUEts+Sat0R1vl8a78ciCxgQhEmR0Fplj5P7go/DFxyhfuySQLK
+	rol+Ms3VOCj7Xd03L68QsXtpmqVOWyWGGKxTA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QMVMPJjzFJIxsTwFvaFwdJa+mqtKQBCF
+	rpV7EAgh4HSCNY3AxPu6ygBKcZrG8WY2XpTo0zwTN6c8a0QpzazlTD5CMK9HRf5j
+	ccMkPH//Blxr81pG0NMPKzOxG51BDpdWTjv10E6L6Z47YUOZRJH2bQUoN2AAo6F1
+	PXEvxK6oif0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FCE0B91C;
+	Sat,  9 Mar 2013 14:45:32 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 035C5B918; Sat,  9 Mar 2013
+ 14:45:31 -0500 (EST)
+In-Reply-To: <CALeLG_=R4o1y-kA+n883nnAu+jrjgaA2ys2d+Vo9KasmVKeduQ@mail.gmail.com> (Paul
+ Campbell's message of "Sat, 9 Mar 2013 19:19:44 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E719592E-88F1-11E2-BCBC-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217758>
 
->From 54d376c3d731ce9e528fe9095ea6c16d382b5ce3 Mon Sep 17 00:00:00 2001
-From: Paul Campbell <pcampbell@kemitix.net>
-Date: Sat, 9 Mar 2013 18:36:22 +0000
-Subject: [PATCH 19/19] Fix some trailing whitespace
+Paul Campbell <pcampbell@kemitix.net> writes:
 
-Conflicts:
-	contrib/subtree/.gitignore
-	contrib/subtree/git-subtree.sh
-	contrib/subtree/test.sh
+> From 72fc84b6e5085b328cc90e664c9f85a1f5cde36c Mon Sep 17 00:00:00 2001
+> From: Paul Cartwright <paul.cartwright@ziilabs.com>
+> Date: Thu, 27 Jan 2011 22:33:06 +0800
+> Subject: [PATCH 01/19] spell checking
+>
+> ---
+>  contrib/subtree/git-subtree.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Original-Author: Herman van Rink <rink@initfour.nl>
+I won't repeat these for other 18 patches, but please:
 
-OPTS_SPEC for push and pull updated (should have been picked up in an
-earlier commit)
+ - drop the first "From <object name> <magic timestamp>" line which
+   is not part of the patch (it is only meant to help people who
+   maintain the "file(1)" and "magic(5)");
 
-Fixed order of cases in setting the --default parameter
+ - keep "From: <author name> ..." and "Date: " lines for other
+   peoples' patches you are forwarding (they can be dropped for your
+   own patches); and
 
-Conflicts-resolved-by: Paul Campbell <pcampbell@kemitix.net>
----
- contrib/subtree/git-subtree.sh | 223 +++++++++++++++++++++--------------------
- 1 file changed, 114 insertions(+), 109 deletions(-)
+ - drop "Subject: " as that is the same as the subject of the e-mail
+   message.
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 3582a55..df1413d 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -11,10 +11,10 @@ OPTS_SPEC="\
- git subtree add   --prefix=<prefix> <commit>
- git subtree add   --prefix=<prefix> <repository> <commit>
- git subtree merge --prefix=<prefix> <commit>
--git subtree pull  --prefix=<prefix> <repository> <refspec...>
-+git subtree pull  --prefix=<prefix> [<repository> [<refspec>...]]
- git subtree pull-all
- git subtree push-all
--git subtree push  --prefix=<prefix> <repository> <refspec...>
-+git subtree push  --prefix=<prefix> [<repository> [<refspec>...]]
- git subtree list
- git subtree split --prefix=<prefix> <commit...>
- git subtree diff  --prefix=<prefix> [<repository> [<refspec>...]]
-@@ -92,7 +92,7 @@ while [ $# -gt 0 ]; do
- 		-b) branch="$1"; shift ;;
- 		-P) prefix="$1"; shift ;;
- 		-m) message="$1"; shift ;;
--        -f|--force) force=1 ;;
-+		-f|--force) force=1 ;;
- 		--no-prefix) prefix= ;;
- 		--onto) onto="$1"; shift ;;
- 		--no-onto) onto= ;;
-@@ -113,9 +113,9 @@ prefix="${prefix%/}";
- command="$1"
- shift
- case "$command" in
--    add|merge|pull|from-submodule|pull-all|push-all|prune) default= ;;
-+	add|merge|pull|pull-all|push-all|from-submodule|prune) default= ;;
-+	split|push|diff|list) default="--default HEAD" ;;
- 	*) die "Unknown command '$command'" ;;
--    split|push|diff|list) default="--default HEAD" ;;
- esac
+ - fix the subject to make it clear that the change is for
+   contrib/subtree.
 
- if [ -z "$prefix" -a "$command" != "pull-all" -a "$command" !=
-"push-all" -a "$command" != "list" -a "$command" != "prune" ]; then
-@@ -123,8 +123,10 @@ if [ -z "$prefix" -a "$command" != "pull-all" -a
-"$command" != "push-all" -a "$c
- fi
+   "spell checking" [*1*] in the output of "git shortlog v1.8.1..",
+   together with other 600+ patches' titles, will not help the
+   reader to see how much activity each area had and who worked in
+   what area.
 
- case "$command" in
--    pull-all);;
--    push-all);;
-+	pull-all);;
-+	push-all);;
-+	list);;
-+	prune);;
- 	add) [ -e "$prefix" ] &&
- 		die "prefix '$prefix' already exists." ;;
- 	*)   [ -e "$prefix" ] ||
-@@ -133,7 +135,7 @@ esac
+ - have the authors sign-off their patches, and then add yours as
+   the person who is forwarding other peoples' patches (see
+   Documentation/SubmittingPatches).
 
- dir="$(dirname "$prefix/.")"
+ - Cc the area maintainer (I thought it was David Greene?)
 
--if [ "$command" != "pull" -a "$command" != "add" -a "$command" !=
-"push" -a "$command" != "pull-all" ]; then
-+if [ "$command" != "pull" -a "$command" != "add" -a "$command" !=
-"push" -a "$command" != "pull-all" -a "$command" != "diff" ]; then
- 	revs=$(git rev-parse $default --revs-only "$@") || exit $?
- 	dirs="$(git rev-parse --no-revs --no-flags "$@")" || exit $?
- 	if [ -n "$dirs" ]; then
-@@ -541,14 +543,14 @@ cmd_add_repository()
- 	revs=FETCH_HEAD
- 	set -- $revs
- 	cmd_add_commit "$@"
--
--  # now add it to our list of repos
--  git config -f .gittrees --unset subtree.$dir.url
--  git config -f .gittrees --add subtree.$dir.url $repository
--  git config -f .gittrees --unset subtree.$dir.path
--  git config -f .gittrees --add subtree.$dir.path $dir
--  git config -f .gittrees --unset subtree.$dir.branch
--  git config -f .gittrees --add subtree.$dir.branch $refspec
-+
-+	# now add it to our list of repos
-+	git config -f .gittrees --unset subtree.$dir.url
-+	git config -f .gittrees --add subtree.$dir.url $repository
-+	git config -f .gittrees --unset subtree.$dir.path
-+	git config -f .gittrees --add subtree.$dir.path $dir
-+	git config -f .gittrees --unset subtree.$dir.branch
-+	git config -f .gittrees --add subtree.$dir.branch $refspec
- }
+if these patches are meant to become part of git.git eventually.
 
- cmd_add_commit()
-@@ -721,89 +723,91 @@ cmd_merge()
-
- cmd_pull()
- {
--  if [ $# -gt 2 ]; then
--	    die "You should provide either <refspec> or <repository> <refspec>"
-+	if [ $# -gt 2 ]; then
-+		die "You should provide either <refspec> or <repository> <refspec>"
- 	fi
- 	if [ -e "$dir" ]; then
--	    ensure_clean
--      if [ $# -eq 1 ]; then
--	      repository=$(git config -f .gittrees subtree.$prefix.url)
--	      refspec=$1
--      elif [ $# -eq 2 ]; then
--        repository=$1
--        refspec=$2
--      else
--	      repository=$(git config -f .gittrees subtree.$prefix.url)
--        refspec=$(git config -f .gittrees subtree.$prefix.branch)
--      fi
--	    git fetch $repository $refspec || exit $?
--	    echo "git fetch using: " $repository $refspec
--	    revs=FETCH_HEAD
--	    set -- $revs
--	    cmd_merge "$@"
-+		ensure_clean
-+		if [ $# -eq 1 ]; then
-+			repository=$(git config -f .gittrees subtree.$prefix.url)
-+			refspec=$1
-+		elif [ $# -eq 2 ]; then
-+			repository=$1
-+			refspec=$2
-+		else
-+			repository=$(git config -f .gittrees subtree.$prefix.url)
-+			refspec=$(git config -f .gittrees subtree.$prefix.branch)
-+		fi
-+		git fetch $repository $refspec || exit $?
-+		echo "git fetch using: " $repository $refspec
-+		revs=FETCH_HEAD
-+		set -- $revs
-+		cmd_merge "$@"
- 	else
--	    die "'$dir' must already exist. Try 'git subtree add'."
-+		die "'$dir' must already exist. Try 'git subtree add'."
- 	fi
- }
-
--cmd_diff()
--{
--    if [ -e "$dir" ]; then
--        if [ $# -eq 1 ]; then
--            repository=$(git config -f .gittrees subtree.$prefix.url)
--            refspec=$1
--        elif [ $# -eq 2 ]; then
--            repository=$1
--            refspec=$2
--        else
--            repository=$(git config -f .gittrees subtree.$prefix.url)
--            refspec=$(git config -f .gittrees subtree.$prefix.branch)
--        fi
--        # this is ugly, but I don't know of a better way to do it. My
-git-fu is weak.
--        # git diff-tree expects a treeish, but I have only a
-repository and branch name.
--        # I don't know how to turn that into a treeish without
-creating a remote.
--        # Please change this if you know a better way!
--        tmp_remote=__diff-tmp
--        git remote rm $tmp_remote > /dev/null 2>&1
--        git remote add -t $refspec $tmp_remote $repository > /dev/null
--        # we fetch as a separate step so we can pass -q (quiet),
-which isn't an option for "git remote"
--        # could this instead be "git fetch -q $repository $refspec"
-and leave aside creating the remote?
--        # Still need a treeish for the diff-tree command...
--        git fetch -q $tmp_remote
--        git diff-tree -p refs/remotes/$tmp_remote/$refspec
--        git remote rm $tmp_remote > /dev/null 2>&1
--    else
--        die "Cannot resolve directory '$dir'. Please point to an
-existing subtree directory to diff. Try 'git subtree add' to add a
-subtree."
--    fi
-+cmd_diff()
-+{
-+	if [ -e "$dir" ]; then
-+		if [ $# -eq 1 ]; then
-+			repository=$(git config -f .gittrees subtree.$prefix.url)
-+			refspec=$1
-+		elif [ $# -eq 2 ]; then
-+			repository=$1
-+			refspec=$2
-+		else
-+			repository=$(git config -f .gittrees subtree.$prefix.url)
-+			refspec=$(git config -f .gittrees subtree.$prefix.branch)
-+		fi
-+		# this is ugly, but I don't know of a better way to do it. My git-fu is weak.
-+		# git diff-tree expects a treeish, but I have only a repository and
-branch name.
-+		# I don't know how to turn that into a treeish without creating a remote.
-+		# Please change this if you know a better way!
-+		tmp_remote=__diff-tmp
-+		git remote rm $tmp_remote > /dev/null 2>&1
-+		git remote add -t $refspec $tmp_remote $repository > /dev/null
-+		# we fetch as a separate step so we can pass -q (quiet), which
-isn't an option for "git remote"
-+		# could this instead be "git fetch -q $repository $refspec" and
-leave aside creating the remote?
-+		# Still need a treeish for the diff-tree command...
-+		git fetch -q $tmp_remote
-+		git diff-tree -p refs/remotes/$tmp_remote/$refspec
-+		git remote rm $tmp_remote > /dev/null 2>&1
-+	else
-+		die "Cannot resolve directory '$dir'. Please point to an existing
-subtree directory to diff. Try 'git subtree add' to add a subtree."
-+	fi
- }
-
- cmd_push()
- {
- 	if [ $# -gt 2 ]; then
--	    die "You shold provide either <refspec> or <repository> <refspec>"
-+		die "You shold provide either <refspec> or <repository> <refspec>"
- 	fi
- 	if [ -e "$dir" ]; then
--      if [ $# -eq 1 ]; then
--	      repository=$(git config -f .gittrees subtree.$prefix.url)
--        refspec=$1
--      elif [ $# -eq 2 ]; then
--        repository=$1
--        refspec=$2
--      else
--	      repository=$(git config -f .gittrees subtree.$prefix.url)
--        refspec=$(git config -f .gittrees subtree.$prefix.branch)
--      fi
--        push_opts=
--        if [ "$force" == "1" ]; then
--            push_opts="$push_opts --force"
--        fi
--	    echo "git push using: " $repository $refspec
--	    rev=$(git subtree split --prefix=$prefix)
--	    if [ -n "$rev" ]; then
--	        git push $push_opts $repository $rev:refs/heads/$refspec
--	    else
--	        die "Couldn't push, 'git subtree split' failed."
--	    fi
-+		if [ $# -eq 1 ]; then
-+			repository=$(git config -f .gittrees subtree.$prefix.url)
-+			refspec=$1
-+		elif [ $# -eq 2 ]; then
-+			repository=$1
-+			refspec=$2
-+		else
-+			repository=$(git config -f .gittrees subtree.$prefix.url)
-+			refspec=$(git config -f .gittrees subtree.$prefix.branch)
-+		fi
-+
-+		push_opts=
-+		if [ "$force" == "1" ]; then
-+		  push_opts="$push_opts --force"
-+		fi
-+
-+		echo "git push using: " $repository $refspec
-+		rev=$(git subtree split --prefix=$prefix)
-+		if [ -n "$rev" ]; then
-+			git push $push_opts $repository $rev:refs/heads/$refspec
-+		else
-+			die "Couldn't push, 'git subtree split' failed."
-+		fi
- 	else
- 	    die "'$dir' must already exist. Try 'git subtree add'."
- 	fi
-@@ -831,6 +835,7 @@ cmd_from-submodule()
- 	git commit -m "Remove '$prefix/' submodule"
-
- 	# subtree add from submodule repo.
-+	# TODO: Could be determin HEAD to be a specific branch
- 	cmd_add_repository $tmp_repo HEAD
-
- 	# Update .gittrees with the original repo url
-@@ -841,46 +846,46 @@ cmd_from-submodule()
- 	rm -rf $tmp_repo
- }
-
--subtree_list()
-+subtree_list()
- {
--    git config -f .gittrees -l | grep subtree | grep path | grep -o
-'=.*' | grep -o '[^=].*' |
--    while read path; do
--        repository=$(git config -f .gittrees subtree.$path.url)
--        refspec=$(git config -f .gittrees subtree.$path.branch)
--        echo "    $path        (merged from $repository branch $refspec) "
--    done
-+	git config -f .gittrees -l | grep subtree | grep path | grep -o
-'=.*' | grep -o '[^=].*' |
-+	while read path; do
-+		repository=$(git config -f .gittrees subtree.$path.url)
-+		refspec=$(git config -f .gittrees subtree.$path.branch)
-+		echo "	$path		(merged from $repository branch $refspec) "
-+	done
- }
-
- cmd_list()
- {
--  subtree_list
-+  subtree_list
- }
-
- cmd_prune()
- {
--    git config -f .gittrees -l | grep subtree | grep path | grep -o
-'=.*' | grep -o '[^=].*' |
--    while read path; do
--        if [ ! -e "$path" ]; then
--            echo "pruning $path"
--            git config -f .gittrees --remove-section subtree.$path
--        fi
--    done
-+	git config -f .gittrees -l | grep subtree | grep path | grep -o
-'=.*' | grep -o '[^=].*' |
-+	while read path; do
-+		if [ ! -e "$path" ]; then
-+			echo "pruning $path"
-+			git config -f .gittrees --remove-section subtree.$path
-+		fi
-+	done
- }
-
- cmd_pull-all()
- {
--    git config -f .gittrees -l | grep subtree | grep path | grep -o
-'=.*' | grep -o '[^=].*' |
--        while read path; do
--            git subtree pull -P $path master || exit $?
--        done
-+	git config -f .gittrees -l | grep subtree | grep path | grep -o
-'=.*' | grep -o '[^=].*' |
-+	while read path; do
-+		git subtree pull -P $path $(git config -f .gittrees
-subtree.$path.url) $(git config -f .gittrees subtree.$path.branch) ||
-exit $?
-+	done
- }
-
- cmd_push-all()
- {
--    git config -f .gittrees -l | grep subtree | grep path | grep -o
-'=.*' | grep -o '[^=].*' |
--        while read path; do
--            git subtree push -P $path master || exit $?
--        done
-+	git config -f .gittrees -l | grep subtree | grep path | grep -o
-'=.*' | grep -o '[^=].*' |
-+	while read path; do
-+		git subtree push -P $path $(git config -f .gittrees
-subtree.$path.url) $(git config -f .gittrees subtree.$path.branch) ||
-exit $?
-+	done
- }
-
- "cmd_$command" "$@"
--- 
-1.8.2.rc1
+Thanks.
 
 
--- 
-Paul [W] Campbell
+[Footnote]
+
+*1* Besides, a patch can never be "spell *checking*".  It would be
+ "typofix" after the author did a 'spell checking' ;-)
