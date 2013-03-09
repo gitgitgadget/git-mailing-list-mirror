@@ -1,65 +1,66 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [PATCH] Replace strcmp_icase with strequal_icase
-Date: Sat, 9 Mar 2013 09:57:13 +0100
-Message-ID: <20130309085713.GA23639@paksenarrion.iveqy.com>
-References: <1362818574-16873-1-git-send-email-iveqy@iveqy.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH 1/3] match_pathname: avoid calling strncmp if baselen is 0
+Date: Sat, 9 Mar 2013 10:06:29 +0100
+Message-ID: <CALWbr2xJfgba9_nyy609mhMOY3vq_ckZwb5C2nSsZJNNFRCLTA@mail.gmail.com>
+References: <1362802190-7331-1-git-send-email-pclouds@gmail.com>
+	<1362802190-7331-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org, pclouds@gmail.com
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Sat Mar 09 09:57:19 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 09 10:07:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEFaf-00051W-FU
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 09:57:17 +0100
+	id 1UEFkH-0004B7-Cr
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 10:07:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755917Ab3CII4v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Mar 2013 03:56:51 -0500
-Received: from mail-la0-f51.google.com ([209.85.215.51]:39925 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755273Ab3CII4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Mar 2013 03:56:50 -0500
-Received: by mail-la0-f51.google.com with SMTP id fo13so2472213lab.38
-        for <git@vger.kernel.org>; Sat, 09 Mar 2013 00:56:49 -0800 (PST)
+	id S1756145Ab3CIJGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Mar 2013 04:06:33 -0500
+Received: from mail-qa0-f41.google.com ([209.85.216.41]:55038 "EHLO
+	mail-qa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755917Ab3CIJGb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Mar 2013 04:06:31 -0500
+Received: by mail-qa0-f41.google.com with SMTP id bs12so204555qab.14
+        for <git@vger.kernel.org>; Sat, 09 Mar 2013 01:06:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:sender:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=qlwKb3VK+9oJ/ncwJTaoXnE6rINyI/WeyjpVW9R5ddc=;
-        b=IvZ3s2alE0XrGBUAIfOcOvaxFzuUXyUz6AqVE43zG/pL81gN03y4gKDT/zRK+greXB
-         F3wwbe2cBpLyU1loJ9yGxtrM1wTs9DKCUhj/wuovUqNKl33RORlBriwaqb9NWclI6WPP
-         H42hSGpW4jAfGKV7c4p4M8YNjNosmLJ6BPN6PTf1lhmMeJlwwJAof/lU8TKb2DWj0Y8i
-         i4YUTogVnvd7M3TgHxpc9yxVtJfvC6+3Au2y8FdYX2GeEYqlZ//d/bjXMdiuIUI+iWsc
-         p7VZEUj8As7lWyjaH7H63EqBjywWTQSoqa4EpYaeNVXLE5vd6KIByC1P8jHic+hfvare
-         sYVw==
-X-Received: by 10.152.144.105 with SMTP id sl9mr4554080lab.4.1362819409309;
-        Sat, 09 Mar 2013 00:56:49 -0800 (PST)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPS id j2sm2416299lbd.16.2013.03.09.00.56.47
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 09 Mar 2013 00:56:48 -0800 (PST)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UEFab-00069T-2h; Sat, 09 Mar 2013 09:57:13 +0100
-Content-Disposition: inline
-In-Reply-To: <1362818574-16873-1-git-send-email-iveqy@iveqy.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=9LGoZOuJmrz2mEBjDddg8ey9HLBOVu7uKpPhb2X006M=;
+        b=gXDmEyznpoqy17BuBKVLQpQb3uLxSPdM7kCF6FY+yiqmSoWk2NJlAhm4/Q76IRDRwn
+         XvxW5YvqH3xOVdFn2Z6tF/++4Qa9FutTXCvXSM4F/YYRa47VgaDTs9yM0mhDuo30wx4f
+         5fXGpHZadk9Cn4oyir/vrtS8PiyyW9BLP3C0PQN6Vp/DyLPqwJcRBZG0I8nZilSclDKv
+         elx5OrK1gBi1CWifrvSwjHOWDiiIgyexCDu+omCr0Wo+rVRb6Cv9tLBed3tGp4uvbQMe
+         nwCqXRm0PyDylZn1Rdjsde3PbaxY6bZUq+zCkBFgV/s6K7pFBuwzBa8vpLmFsChhdAEO
+         NGfw==
+X-Received: by 10.229.111.79 with SMTP id r15mr1717281qcp.133.1362819990049;
+ Sat, 09 Mar 2013 01:06:30 -0800 (PST)
+Received: by 10.49.70.163 with HTTP; Sat, 9 Mar 2013 01:06:29 -0800 (PST)
+In-Reply-To: <1362802190-7331-2-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217715>
 
-Please ignore last e-mail. Sorry for the disturbance.
+> diff --git a/dir.c b/dir.c
+> index 57394e4..669cf80 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -663,7 +663,7 @@ int match_pathname(const char *pathname, int pathlen,
+>          */
+>         if (pathlen < baselen + 1 ||
+>             (baselen && pathname[baselen] != '/') ||
+> -           strncmp_icase(pathname, base, baselen))
+> +           (baselen && strncmp_icase(pathname, base, baselen)))
 
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
+Shouldn't you factorize by baselen here ? For readability reasons, not
+performance of course.
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+>                 return 0;
+>
+>         namelen = baselen ? pathlen - baselen - 1 : pathlen;
