@@ -1,7 +1,7 @@
 From: Paul Campbell <pcampbell@kemitix.net>
-Subject: [PATCH 08/19] fixing typo
-Date: Sat, 9 Mar 2013 19:26:13 +0000
-Message-ID: <CALeLG_kcJy4ksL5YVRpUoOvCTkS9J2WvDeT64fnb668H+X6pAA@mail.gmail.com>
+Subject: [PATCH 09/19] Adding a "list" command
+Date: Sat, 9 Mar 2013 19:26:37 +0000
+Message-ID: <CALeLG_nWWbQnmMcKoqtpdLa+7VaxMgjmAr4Y7pPZ98SNO+_05g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: David Michael Barr <b@rr-dav.id.au>, Kindjal <kindjal@gmail.com>,
@@ -9,129 +9,102 @@ Cc: David Michael Barr <b@rr-dav.id.au>, Kindjal <kindjal@gmail.com>,
 	mhoffman <matt.hoffman@quantumretail.com>,
 	Nate Jones <nate@endot.org>
 To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 09 20:26:41 2013
+X-From: git-owner@vger.kernel.org Sat Mar 09 20:27:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEPPk-0001hO-BN
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 20:26:40 +0100
+	id 1UEPQ8-00022C-91
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 20:27:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751229Ab3CIT0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Mar 2013 14:26:14 -0500
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:61264 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750798Ab3CIT0N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Mar 2013 14:26:13 -0500
-Received: by mail-ob0-f181.google.com with SMTP id ni5so2215635obc.26
-        for <git@vger.kernel.org>; Sat, 09 Mar 2013 11:26:13 -0800 (PST)
+	id S1751254Ab3CIT0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Mar 2013 14:26:38 -0500
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:64259 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750816Ab3CIT0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Mar 2013 14:26:37 -0500
+Received: by mail-oa0-f45.google.com with SMTP id o6so3316811oag.32
+        for <git@vger.kernel.org>; Sat, 09 Mar 2013 11:26:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:x-received:x-originating-ip:date:message-id:subject
          :from:to:cc:content-type:x-gm-message-state;
-        bh=Yp91sD49PJBpO+YpzXAluRHBA24Qu/aWU/0bKLw0Nx8=;
-        b=kmkwNCxEx8T52SIcRbsBKp00KZ+CLIXDI3143Va+9lNpy5D4do+oaXcjPL7Sb+8i5t
-         eXzFD+VMdH9PjH0zUk98fw3a0T9M4NIHtvt/qQoWEPFQmLxJz4yzLrSHFi7InGDPTPwj
-         5MeXF27VWuugMXXyLTdrAEC7LG5ebF9CfBuCmVGw8htlmrwkK1a6GtEaErC5LrhpDMeU
-         rRJchjxN7IkJzVVoK8ChjX6+XoywuqUxLxrHNEaEeobdWUm/JpVaAQ2Nx5DeRtKe/+02
-         bRkrwZvKENXH2xHrcSw6yTOB+X/k00Ci4JkmprUFmynxrZf86Ywv90+oD7X/4DN5PJkG
-         ET5Q==
-X-Received: by 10.60.10.34 with SMTP id f2mr5001499oeb.104.1362857173427; Sat,
- 09 Mar 2013 11:26:13 -0800 (PST)
-Received: by 10.76.122.109 with HTTP; Sat, 9 Mar 2013 11:26:13 -0800 (PST)
+        bh=8jjDWf2VtzqUg0xV0D3DICpypI1kTuhOaxKYXiKwAZU=;
+        b=hvY7vz/fdyHMsGkBwmMm/abhtrBmMf7xzWn6vO1UU4e7fksoJX7I/X5WgfITCVWclb
+         DV5cy+Tx3UpKhbayG/O+Jq1tJZ1vxdXlaTiaidm0nUeOim3E5UVVCLNGlwd/hoBKRBez
+         EtSeYIRGSt6juFi15pgaeDF8zix1t6jCUE7WzxQeNHSoYue3JgLIpvXP4GeRF73ZsldQ
+         TruXCH4s7EiCeqplFUqsG5mIz5/Zo2UsTPCShHhdraOOh0+5qMJGIp2UBQf6kQDuZSx0
+         eVj0knS+y8C1XYUrbPyTWDQwL0MRf2Q2DqI0IzmHYthL96JXXDkVn6SYAA/cFikUMVO2
+         bdig==
+X-Received: by 10.182.3.196 with SMTP id e4mr5150553obe.36.1362857197292; Sat,
+ 09 Mar 2013 11:26:37 -0800 (PST)
+Received: by 10.76.122.109 with HTTP; Sat, 9 Mar 2013 11:26:37 -0800 (PST)
 X-Originating-IP: [2.102.85.67]
-X-Gm-Message-State: ALoCoQlNjZ+P1aeSceZBT8ya7DJzZKntqxttMwaKJq7Uj6hqHrkw2vYEPxc/uPymmhsFj2fMOPu5
+X-Gm-Message-State: ALoCoQnWGNt/ESFPE4q3to+3KsoiwFgj/bPNlL1icqbKOC0m2rSqIn2ltD5GsLqcOCq6is/6papa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217746>
 
->From 8f6eb2ddfcaef888dc3d3ea4d089aa2e9cad5d0f Mon Sep 17 00:00:00 2001
+>From ca1c855c032d88159ed878f68ef2e18640bbd49c Mon Sep 17 00:00:00 2001
 From: Paul Campbell <pcampbell@kemitix.net>
-Date: Sat, 9 Mar 2013 18:32:53 +0000
-Subject: [PATCH 08/19] fixing typo
+Date: Sat, 9 Mar 2013 18:33:12 +0000
+Subject: [PATCH 09/19] Adding a "list" command
 
 Conflicts:
 	git-subtree.sh
 
-Add diff command
-
 Original-Author: mhoffman <matt.hoffman@quantumretail.com>
 Conflicts-resolved-by: Paul Campbell <pcampbell@kemitix.net>
 ---
- contrib/subtree/git-subtree.sh | 34 +++++++++++++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ contrib/subtree/git-subtree.sh | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index ae9f87f..4c3f3c0 100755
+index 4c3f3c0..7d08064 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -16,6 +16,7 @@ git subtree pull-all
- git subtree push-all
- git subtree push  --prefix=<prefix> <repository> <refspec...>
- git subtree split --prefix=<prefix> <commit...>
-+git subtree diff  --prefix=<prefix> [<repository> [<refspec>...]]
- git subtree from-submodule --prefix=<prefix>
- --
- h,help        show the help
-@@ -105,8 +106,8 @@ command="$1"
- shift
+@@ -107,10 +107,10 @@ shift
  case "$command" in
  	add|merge|pull|from-submodule|pull-all|push-all) default= ;;
--	split|push) default="--default HEAD" ;;
  	*) die "Unknown command '$command'" ;;
-+    split|push|diff) default="--default HEAD" ;;
+-    split|push|diff) default="--default HEAD" ;;
++    split|push|diff|list) default="--default HEAD" ;;
  esac
 
- if [ -z "$prefix" -a "$command" != "pull-all" -a "$command" !=
+-if [ -z "$prefix" -a "$command" != "pull-all" -a "$command" !=
 "push-all" ]; then
-@@ -737,6 +738,37 @@ cmd_pull()
- 	fi
++if [ -z "$prefix" -a "$command" != "pull-all" -a "$command" !=
+"push-all" -a "$command" != "list" ]; then
+ 	die "You must provide the --prefix option."
+ fi
+
+@@ -824,6 +824,21 @@ cmd_from-submodule()
+ 	rm -rf $tmp_repo
  }
 
-+cmd_diff()
++subtree_list()
 +{
-+    if [ -e "$dir" ]; then
-+        if [ $# -eq 1 ]; then
-+            repository=$(git config -f .gittrees subtree.$prefix.url)
-+            refspec=$1
-+        elif [ $# -eq 2 ]; then
-+            repository=$1
-+            refspec=$2
-+        else
-+            repository=$(git config -f .gittrees subtree.$prefix.url)
-+            refspec=$(git config -f .gittrees subtree.$prefix.branch)
-+        fi
-+        # this is ugly, but I don't know of a better way to do it. My
-git-fu is weak.
-+        # git diff-tree expects a treeish, but I have only a
-repository and branch name.
-+        # I don't know how to turn that into a treeish without
-creating a remote.
-+        # Please change this if you know a better way!
-+        tmp_remote=__diff-tmp
-+        git remote rm $tmp_remote > /dev/null 2>&1
-+        git remote add -t $refspec $tmp_remote $repository > /dev/null
-+        # we fetch as a separate step so we can pass -q (quiet),
-which isn't an option for "git remote"
-+        # could this instead be "git fetch -q $repository $refspec"
-and leave aside creating the remote?
-+        # Still need a treeish for the diff-tree command...
-+        git fetch -q $tmp_remote
-+        git diff-tree -p refs/remotes/$tmp_remote/$refspec
-+        git remote rm $tmp_remote > /dev/null 2>&1
-+    else
-+        die "Cannot resolve directory '$dir'. Please point to an
-existing subtree directory to diff. Try 'git subtree add' to add a
-subtree."
-+    fi
++    git config -f .gittrees -l | grep subtree | grep path | grep -o
+'=.*' | grep -o '[^=].*' |
++    while read path; do
++        repository=$(git config -f .gittrees subtree.$path.url)
++        refspec=$(git config -f .gittrees subtree.$path.branch)
++        echo "    $path        (merged from $repository branch $refspec) "
++    done
 +}
 +
- cmd_push()
++cmd_list()
++{
++  subtree_list
++}
++
+ cmd_pull-all()
  {
- 	if [ $# -gt 2 ]; then
+     git config -f .gittrees -l | grep subtree | grep path | grep -o
+'=.*' | grep -o '[^=].*' |
 -- 
 1.8.2.rc1
 
