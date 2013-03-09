@@ -1,90 +1,164 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 3/3] match_basename: use strncmp instead of strcmp
-Date: Sat, 9 Mar 2013 16:58:39 +0700
-Message-ID: <CACsJy8D-ZJrC7n5ky9sc_UoenOLTg0h6tEczp=-U9ppn820P-g@mail.gmail.com>
-References: <1362802190-7331-1-git-send-email-pclouds@gmail.com>
- <1362802190-7331-4-git-send-email-pclouds@gmail.com> <7v4nglf1w3.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Replace strcmp_icase with strequal_icase
+Date: Sat, 9 Mar 2013 17:21:55 +0700
+Message-ID: <20130309102155.GA11616@lanh>
+References: <1362818574-16873-1-git-send-email-iveqy@iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 09 10:59:50 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Sat Mar 09 11:22:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEGZA-00045l-7U
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 10:59:48 +0100
+	id 1UEGvM-0005Lw-2l
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 11:22:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757174Ab3CIJ7M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Mar 2013 04:59:12 -0500
-Received: from mail-la0-f41.google.com ([209.85.215.41]:41916 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756145Ab3CIJ7L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Mar 2013 04:59:11 -0500
-Received: by mail-la0-f41.google.com with SMTP id fo12so2490282lab.28
-        for <git@vger.kernel.org>; Sat, 09 Mar 2013 01:59:09 -0800 (PST)
+	id S1756419Ab3CIKWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Mar 2013 05:22:06 -0500
+Received: from mail-da0-f49.google.com ([209.85.210.49]:34782 "EHLO
+	mail-da0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756128Ab3CIKWF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Mar 2013 05:22:05 -0500
+Received: by mail-da0-f49.google.com with SMTP id t11so322241daj.36
+        for <git@vger.kernel.org>; Sat, 09 Mar 2013 02:22:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=KMy49r7BYkwZJmW93GRl8ICHg3IVGkz1dTCKD6oXJKM=;
-        b=ShPRKRZLv7fzVwiK/U1Qw6hbAKXZzqrPEmqo7HMwI0FDn/s59A7lMTzN4PepIFwqUt
-         toEkJXxdG53kElyUl5tbw2nCPo02316m/bG0BvYH4+NP82thWM6yGu0/iAvpnESxv7h9
-         hhmvc19xoS9g0at+YPmZRlpLuHKXk5WLKLe+l2gpVgf9m28Yei2s1jdqxwS3Gd2FcgMv
-         wSmi9usN9aD/XBakymS2UjUYAlGsidq8esZUXIzshMRRV5Wn3r/DL0pmDZabyU9+Qf67
-         b6FDWsYSA75zJAdsSWmoNRjEsaZUk4kcJJ9tI0sVylni4J2dEYzGlmGOVKoDlSG1tXKn
-         EFJQ==
-X-Received: by 10.112.39.106 with SMTP id o10mr2233450lbk.23.1362823149430;
- Sat, 09 Mar 2013 01:59:09 -0800 (PST)
-Received: by 10.114.25.226 with HTTP; Sat, 9 Mar 2013 01:58:39 -0800 (PST)
-In-Reply-To: <7v4nglf1w3.fsf@alter.siamese.dyndns.org>
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=2b6OL/XUKqGl70f9WFrKXO32AvsgSDQsvEqd5p3UGkE=;
+        b=DfPGF/0OxVEzoWgTumQW30b0qexGftAz9kTYVDdTa7GRy5ihx2SyeY4KcHYNvxuaxJ
+         Mq4zR/LgxXGdSOne+F5XKS+O7CLNe+Ijv3hpTRJPBSWLx2onVFYP4Gp6gtOX9hhrkwlT
+         htoLHY7iuM85UYDMt9nli0cRw+xUrx7T8uYEs6Xd6i356w9Pa/QIDgPsQbVyeEQ+P0pk
+         EJFTelVBZYSy5du6S/veQog1xvNC8Bi12BvGfhzUFErC+hn41v1Vv2ssyve9VGguh9Z7
+         kvASV6+0JN6Q1ZUoij0S2E6KcL2SXJNO+QyCPhbmJf0uUoLSPLwwJKZtiQt671t7+0Yc
+         bp7w==
+X-Received: by 10.68.231.42 with SMTP id td10mr10174717pbc.174.1362824523650;
+        Sat, 09 Mar 2013 02:22:03 -0800 (PST)
+Received: from lanh ([115.74.63.193])
+        by mx.google.com with ESMTPS id kb3sm9603068pbc.21.2013.03.09.02.21.59
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 09 Mar 2013 02:22:02 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 09 Mar 2013 17:21:55 +0700
+Content-Disposition: inline
+In-Reply-To: <1362818574-16873-1-git-send-email-iveqy@iveqy.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217717>
 
-On Sat, Mar 9, 2013 at 2:50 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> strncmp provides length information, compared to strcmp, which could
->> be taken advantage by the implementation. Even better, we could chec=
-k
->> if the lengths are equal before calling strncmp, eliminating a bit o=
-f
->> strncmp calls.
->
-> I think I am a bit slower than my usual self tonight, but I am
-> utterly confused by the above.
->
-> strncmp() compares _only_ up to the first n bytes, so when you are
-> using it for equality, it is not "we could check length", but is "we
-> MUST check they match to the length of the shorter string", if you
-> want to obtain not just faster but correct result.
->
-> Am I mistaken?
+On Sat, Mar 09, 2013 at 09:42:54AM +0100, Fredrik Gustafsson wrote:
+> To improve performance.
+> git status before:
+> user    0m0.020s
+> user    0m0.024s
+> user    0m0.024s
+> user    0m0.020s
+> user    0m0.024s
+> user    0m0.028s
+> user    0m0.024s
+> user    0m0.024s
+> user    0m0.016s
+> user    0m0.028s
+> 
+> git status after:
+> user    0m0.012s
+> user    0m0.008s
+> user    0m0.008s
+> user    0m0.008s
+> user    0m0.008s
+> user    0m0.008s
+> user    0m0.008s
+> user    0m0.004s
+> user    0m0.008s
+> user    0m0.016s
 
-Yeap, the description is a bit misleading. Although you could get away
-with length check by doing !strncmp(a, b, strlen(a)+1).
+I tested a slightly different version that checks ignore_case, inlines
+if possible and replaces one more strncmp_icase call site (the top
+call site in webkit.git). The numbers are impressive (well not as
+impressive as yours, but I guess it depends on the actual .gitignore
+patterns). On top of my 3/3
 
-> Even if you are using strcmp() that yields ordering not just
-> equality, it can return a correct result as soon as it hits the
-> first bytes that are different; I doubt using strncmp() contributes
-> to the performance very much.  Comparing lengths before doing
-> byte-for-byte comparison could help because you can reject two
-> strings with different lengths without looking at them.
->
-> At the same time, I wonder if we can take advantage of the fact that
-> these call sites only care about equality and not ordering.
+        before      after
+user    0m0.508s    0m0.392s
+user    0m0.511s    0m0.394s
+user    0m0.513s    0m0.405s
+user    0m0.516s    0m0.407s
+user    0m0.516s    0m0.407s
+user    0m0.518s    0m0.410s
+user    0m0.519s    0m0.412s
+user    0m0.524s    0m0.415s
+user    0m0.527s    0m0.415s
+user    0m0.534s    0m0.417s
 
-I tried to push it further and compare hash before do the actual
-string comparison. It slowed things down (hopefully because the cost
-of hashing, the same one from name-hash.c, not because I did it
-wrong).
---=20
-Duy
+I still need to run the test suite. Then maybe reroll my series with
+this.
+
+-- 8< --
+diff --git a/dir.c b/dir.c
+index 2a91d14..6a9b4b7 100644
+--- a/dir.c
++++ b/dir.c
+@@ -21,6 +21,24 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, in
+ 	int check_only, const struct path_simplify *simplify);
+ static int get_dtype(struct dirent *de, const char *path, int len);
+ 
++static inline strnequal_icase(const char *first, const char *second, int length)
++{
++	if (ignore_case) {
++		while (length && toupper(*first) == toupper(*second)) {
++			first++;
++			second++;
++			length--;
++		}
++	} else {
++		while (length && *first == *second) {
++			first++;
++			second++;
++			length--;
++		}
++	}
++	return length == 0;
++}
++
+ inline int git_fnmatch(const char *pattern, const char *string,
+ 		       int flags, int prefix)
+ {
+@@ -611,11 +629,11 @@ int match_basename(const char *basename, int basenamelen,
+ {
+ 	if (prefix == patternlen) {
+ 		if (patternlen == basenamelen &&
+-		    !strncmp_icase(pattern, basename, patternlen))
++		    strnequal_icase(pattern, basename, patternlen))
+ 			return 1;
+ 	} else if (flags & EXC_FLAG_ENDSWITH) {
+ 		if (patternlen - 1 <= basenamelen &&
+-		    !strncmp_icase(pattern + 1,
++		    strnequal_icase(pattern + 1,
+ 				   basename + basenamelen - patternlen + 1,
+ 				   patternlen - 1))
+ 			return 1;
+@@ -649,7 +667,7 @@ int match_pathname(const char *pathname, int pathlen,
+ 	 */
+ 	if (pathlen < baselen + 1 ||
+ 	    (baselen && pathname[baselen] != '/') ||
+-	    (baselen && strncmp_icase(pathname, base, baselen)))
++	    (baselen && !strnequal_icase(pathname, base, baselen)))
+ 		return 0;
+ 
+ 	namelen = baselen ? pathlen - baselen - 1 : pathlen;
+@@ -663,7 +681,7 @@ int match_pathname(const char *pathname, int pathlen,
+ 		if (prefix > namelen)
+ 			return 0;
+ 
+-		if (strncmp_icase(pattern, name, prefix))
++		if (!strnequal_icase(pattern, name, prefix))
+ 			return 0;
+ 		pattern += prefix;
+ 		name    += prefix;
+-- 8< --
