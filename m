@@ -1,87 +1,182 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] git.c: Remove unnecessary new line
-Date: Sat, 9 Mar 2013 16:00:23 -0800
-Message-ID: <20130310000023.GI3908@elie.Belkin>
-References: <513BB4A2.8000407@fallo.ws>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Michael Fallows <michael@fallo.ws>
-X-From: git-owner@vger.kernel.org Sun Mar 10 01:00:57 2013
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: [PATCH v2 2/3] mergetools/p4merge: create a base if none available
+Date: Sat,  9 Mar 2013 21:20:59 +0200
+Message-ID: <1362856860-15205-3-git-send-email-kevin@bracey.fi>
+References: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
+ <1362856860-15205-1-git-send-email-kevin@bracey.fi>
+Cc: Kevin Bracey <kevin@bracey.fi>, David Aguilar <davvid@gmail.com>,
+	Ciaran Jessup <ciaranj@gmail.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 10 01:09:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEThA-0007Wg-Uv
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 01:00:57 +0100
+	id 1UETpW-0005XJ-Mi
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 01:09:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218Ab3CJAAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Mar 2013 19:00:31 -0500
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:54900 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751194Ab3CJAAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Mar 2013 19:00:30 -0500
-Received: by mail-pb0-f54.google.com with SMTP id rr4so2474728pbb.13
-        for <git@vger.kernel.org>; Sat, 09 Mar 2013 16:00:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=r6rb6vPzyYtFlNxBeg1EYZJCvla0OGkQ3T6emOdEEMI=;
-        b=ARGC9w81BY6mFDzwxwAcg44g9M911UxGO0LDK6/41O1PexT1O5SsRvizF/DCLJ8R4e
-         OVYyJe+eJ4jPGYGwymBNb+pXtFZ8Z9ZMwzA2q3IsxMBJhWsvR8tmYbuojS9OLqexjsIF
-         dbdl90zmAuy4hIBU7iwyKLZ2RORAXhBkZRXTdqc4SozLdXu3HBLb+TGE5DhuHAFb4+Re
-         P+rcpDOC1ydQlsuMUAV9WhA+j18OCzJ++7bXlR21faBFrAaHN5XvAktDAmzoCJgbfc5V
-         2BKwGYlvXCV/mUOUJya2jHR3uuBTum8dfWBsjjgzWiZ5ID841Ov6bp5/3icJt5zA2mMq
-         G2Nw==
-X-Received: by 10.68.198.97 with SMTP id jb1mr1425248pbc.23.1362873630019;
-        Sat, 09 Mar 2013 16:00:30 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id i10sm12460285pbd.1.2013.03.09.16.00.26
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 09 Mar 2013 16:00:27 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <513BB4A2.8000407@fallo.ws>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1751297Ab3CJAJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Mar 2013 19:09:07 -0500
+Received: from 5.mo5.mail-out.ovh.net ([87.98.173.103]:34283 "EHLO
+	mo5.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751218Ab3CJAJF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Mar 2013 19:09:05 -0500
+X-Greylist: delayed 8400 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Mar 2013 19:09:05 EST
+Received: from mail173.ha.ovh.net (gw6.ovh.net [213.251.189.206])
+	by mo5.mail-out.ovh.net (Postfix) with SMTP id 1F501FF9142
+	for <git@vger.kernel.org>; Sat,  9 Mar 2013 20:32:45 +0100 (CET)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 9 Mar 2013 21:21:25 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 9 Mar 2013 21:21:25 +0200
+X-Ovh-Mailout: 178.32.228.5 (mo5.mail-out.ovh.net)
+X-Mailer: git-send-email 1.8.2.rc3.7.g77aeedb
+In-Reply-To: <1362856860-15205-1-git-send-email-kevin@bracey.fi>
+X-Ovh-Tracer-Id: 10066671068692910304
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -60
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeefucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlgedtmd
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -60
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeefucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlgedtmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217775>
 
-Hi,
+Originally, with no base, Git gave P4Merge $LOCAL as a dummy base:
 
-Michael Fallows wrote:
+   p4merge "$LOCAL" "$LOCAL" "$REMOTE" "$MERGED"
 
-> --- a/git.c
-> +++ b/git.c
-> @@ -316,8 +316,7 @@ static void handle_internal_command(int argc, const char **argv)
->  		{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
->  		{ "check-ref-format", cmd_check_ref_format },
->  		{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
-> -		{ "checkout-index", cmd_checkout_index,
-> -			RUN_SETUP | NEED_WORK_TREE},
-> +		{ "checkout-index", cmd_checkout_index, RUN_SETUP | NEED_WORK_TREE },
+Commit 0a0ec7bd changed this to:
 
-This wrapped line was introduced a while ago (4465f410, checkout-index
-needs a working tree, 2007-08-04).  It was the first line to wrap, but
-it was also the longest line at the time.
+   p4merge "empty file" "$LOCAL" "$REMOTE" "$MERGED"
 
-Now the longest line is
+to avoid the problem of being unable to save in some circumstances with
+similar inputs.
 
-		{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+Unfortunately this approach produces much worse results on differing
+inputs. P4Merge really regards the blank file as the base, and once you
+have just a couple of differences between the two branches you end up
+with one a massive full-file conflict. The 3-way diff is not readable,
+and you have to invoke "difftool MERGE_HEAD HEAD" manually to get a
+useful view.
 
-(94 columns), so you are right that consistency would suggest dropping
-the line wrapping for checkout-index.
+The original approach appears to have invoked special 2-way merge
+behaviour in P4Merge that occurs only if the base filename is "" or
+equal to the left input.  You get a good visual comparison, and it does
+not auto-resolve differences. (Normally if one branch matched the base,
+it would autoresolve to the other branch).
 
-But I find it hard to convince myself that alone is worth the churn.
-In what context did you notice this?  Is the intent to help scripts to
-parse the commands[] list, or to manipulate it while preserving
-formatting to avoid distractions?  Did you notice the broken line
-while reading through and get distracted, or did some syntax
-highlighting tool notice the oddity, or something else?
+But there appears to be no way of getting this 2-way behaviour and being
+able to reliably save. Having base==left appears to be triggering other
+assumptions. There are tricks the user can use to force the save icon
+on, but it's not intuitive.
 
-Hope that helps,
-Jonathan
+So we now follow a suggestion given in the original patch's discussion:
+generate a virtual base, consisting of the lines common to the two
+branches. This is the same as the technique used in resolve and octopus
+merges, so we relocate that code to a shared function.
+
+Note that if there are no differences at the same location, this
+technique can lead to automatic resolution without conflict, combining
+everything from the 2 files.  As with the other merges using this
+technique, we assume the user will inspect the result before saving.
+
+Signed-off-by: Kevin Bracey <kevin@bracey.fi>
+---
+ git-merge-one-file.sh | 18 +++++-------------
+ git-sh-setup.sh       | 13 +++++++++++++
+ mergetools/p4merge    |  6 +++++-
+ 3 files changed, 23 insertions(+), 14 deletions(-)
+
+diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
+index f612cb8..1236fbf 100755
+--- a/git-merge-one-file.sh
++++ b/git-merge-one-file.sh
+@@ -104,30 +104,22 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 		;;
+ 	esac
+ 
+-	src2=`git-unpack-file $3`
++	src1=$(git-unpack-file $2)
++	src2=$(git-unpack-file $3)
+ 	case "$1" in
+ 	'')
+ 		echo "Added $4 in both, but differently."
+-		# This extracts OUR file in $orig, and uses git apply to
+-		# remove lines that are unique to ours.
+-		orig=`git-unpack-file $2`
+-		sz0=`wc -c <"$orig"`
+-		@@DIFF@@ -u -La/$orig -Lb/$orig $orig $src2 | git apply --no-add
+-		sz1=`wc -c <"$orig"`
+-
+-		# If we do not have enough common material, it is not
+-		# worth trying two-file merge using common subsections.
+-		expr $sz0 \< $sz1 \* 2 >/dev/null || : >$orig
++		orig=$(git-unpack-file $2)
++		create_virtual_base "$orig" "$src1" "$src2"
+ 		;;
+ 	*)
+ 		echo "Auto-merging $4"
+-		orig=`git-unpack-file $1`
++		orig=$(git-unpack-file $1)
+ 		;;
+ 	esac
+ 
+ 	# Be careful for funny filename such as "-L" in "$4", which
+ 	# would confuse "merge" greatly.
+-	src1=`git-unpack-file $2`
+ 	git merge-file "$src1" "$orig" "$src2"
+ 	ret=$?
+ 	msg=
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 795edd2..aa9a732 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -249,6 +249,19 @@ clear_local_git_env() {
+ 	unset $(git rev-parse --local-env-vars)
+ }
+ 
++# Generate a virtual base file for a two-file merge. On entry the
++# base file $1 should be a copy of $2. Uses git apply to remove
++# lines from $1 that are not in $3, leaving only common lines.
++create_virtual_base() {
++	sz0=$(wc -c <"$1")
++	@@DIFF@@ -u -La/"$1" -Lb/"$1" "$2" "$3" | git apply --no-add
++	sz1=$(wc -c <"$1")
++
++	# If we do not have enough common material, it is not
++	# worth trying two-file merge using common subsections.
++	expr $sz0 \< $sz1 \* 2 >/dev/null || : >"$1"
++}
++
+ 
+ # Platform specific tweaks to work around some commands
+ case $(uname -s) in
+diff --git a/mergetools/p4merge b/mergetools/p4merge
+index 46b3a5a..16ae0cc 100644
+--- a/mergetools/p4merge
++++ b/mergetools/p4merge
+@@ -21,7 +21,11 @@ diff_cmd () {
+ 
+ merge_cmd () {
+ 	touch "$BACKUP"
+-	$base_present || >"$BASE"
++	if ! $base_present
++	then
++		cp -- "$LOCAL" "$BASE"
++		create_virtual_base "$BASE" "$LOCAL" "$REMOTE"
++	fi
+ 	"$merge_tool_path" "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
+ 	check_unchanged
+ }
+-- 
+1.8.2.rc3.7.g77aeedb
