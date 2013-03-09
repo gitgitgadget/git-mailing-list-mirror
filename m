@@ -1,71 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 01/19] spell checking
-Date: Sat, 9 Mar 2013 12:25:19 -0800
-Message-ID: <20130309202518.GD3908@elie.Belkin>
-References: <CALeLG_=R4o1y-kA+n883nnAu+jrjgaA2ys2d+Vo9KasmVKeduQ@mail.gmail.com>
- <7vobese4rp.fsf@alter.siamese.dyndns.org>
- <CALeLG_kdYjFhZXWedTgr2zdzJfrGV6XmqT1qkMX9XpJgztnPcg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	David Greene <greened@obbligato.org>
-To: Paul Campbell <pcampbell@kemitix.net>
-X-From: git-owner@vger.kernel.org Sat Mar 09 21:25:55 2013
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: [PATCH v2 0/3] Improve P4Merge mergetool invocation
+Date: Sat,  9 Mar 2013 21:20:57 +0200
+Message-ID: <1362856860-15205-1-git-send-email-kevin@bracey.fi>
+References: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
+Cc: Kevin Bracey <kevin@bracey.fi>, David Aguilar <davvid@gmail.com>,
+	Ciaran Jessup <ciaranj@gmail.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 09 21:39:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEQL1-0001K6-D5
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 21:25:51 +0100
+	id 1UEQYO-0003xW-Ls
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 21:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751760Ab3CIUZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Mar 2013 15:25:26 -0500
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:51525 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751753Ab3CIUZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Mar 2013 15:25:25 -0500
-Received: by mail-pb0-f41.google.com with SMTP id um15so2403392pbc.14
-        for <git@vger.kernel.org>; Sat, 09 Mar 2013 12:25:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=YMKjLapGyjrBg5UNUBhuux5HeqCBOnB0CJ31ny6gMAk=;
-        b=BuKOlXPa1cGUGXfw3X3v57jS0MuOfPQhVWmyqxfiktEHgKaEnyzXoYfKkw0CbulNMx
-         wUq4q5w02BzfUdp6ZIHzzSDOhgF6FNKp/oAKw1bgvNnruMo5hPNbAh7bHK4SXDwO47wH
-         ZHpVmnERVmYGdP/iINA/8FQvj74o+5e6WISutc6pPdgwHpjAqGJpI9t1F2eVpimvQsWW
-         KTECEELKqRzKSk3IIfg8USuxoz0Uf2ntD87wX8PW42p3LPH1knS/Hrg2veSRHRymXEIq
-         SC3h4JusRJxZ8CifUlZzUVkOEJsUrj2ppAN1eriaqSwGzjMVHJ6Ai4KqxQQVa6tEMXFQ
-         elBw==
-X-Received: by 10.68.11.35 with SMTP id n3mr13838482pbb.220.1362860724549;
-        Sat, 09 Mar 2013 12:25:24 -0800 (PST)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id tm1sm11765347pbc.11.2013.03.09.12.25.22
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 09 Mar 2013 12:25:23 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CALeLG_kdYjFhZXWedTgr2zdzJfrGV6XmqT1qkMX9XpJgztnPcg@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1751450Ab3CIUjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Mar 2013 15:39:06 -0500
+Received: from 2.mo5.mail-out.ovh.net ([178.33.109.111]:60076 "EHLO
+	mo5.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751369Ab3CIUjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Mar 2013 15:39:05 -0500
+X-Greylist: delayed 2399 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Mar 2013 15:39:05 EST
+Received: from mail173.ha.ovh.net (gw6.ovh.net [213.251.189.206])
+	by mo5.mail-out.ovh.net (Postfix) with SMTP id 0DD66FF9131
+	for <git@vger.kernel.org>; Sat,  9 Mar 2013 20:32:41 +0100 (CET)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 9 Mar 2013 21:21:21 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 9 Mar 2013 21:21:19 +0200
+X-Ovh-Mailout: 178.32.228.5 (mo5.mail-out.ovh.net)
+X-Mailer: git-send-email 1.8.2.rc3.7.g77aeedb
+In-Reply-To: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
+X-Ovh-Tracer-Id: 10065263693809357022
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -60
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeefucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlgedtmd
+X-Spam-Check: DONE|U 0.500002/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -60
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeefucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlgedtmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217762>
 
-Paul Campbell wrote:
+Incorporated comments on the previous patches, and one new patch
+addressing a problem I spotted while testing git-merge-one-file.
 
-> Four of the eight original authors now have dead email addresses. As I
-> found out when I started getting the mail bounces when I started
-> sending these patches out. Would it be acceptable for those patches to
-> leave the From line, add a Based-on-patch-by and then sign of myself?
+I couldn't figure out how to use git diff to achieve the effect of the
+external diff here - we'd need some alternative to achieve what it does
+with the -L option, and I failed to come up with anything remotely elegant.
 
-It's always nice to get the original author's sign-off, but if you can
-certify what's stated in the DCO1.1 (from
-Documentation/SubmittingPatches) then just adding your sign-off is
-fine.  Please still keep the original authorship in that case, and no
-need to add a Based-on-patch-by line.
+Kevin Bracey (3):
+  mergetools/p4merge: swap LOCAL and REMOTE
+  mergetools/p4merge: create a base if none available
+  git-merge-one-file: revise merge error reporting
 
-Thanks,
-Jonathan
+ git-merge-one-file.sh | 38 ++++++++++++--------------------------
+ git-sh-setup.sh       | 13 +++++++++++++
+ mergetools/p4merge    |  8 ++++++--
+ 3 files changed, 31 insertions(+), 28 deletions(-)
+
+-- 
+1.8.2.rc3.7.g77aeedb
