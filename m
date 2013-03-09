@@ -1,126 +1,88 @@
 From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: [PATCH] Replace strcmp_icase with strequal_icase
-Date: Sat,  9 Mar 2013 09:42:54 +0100
-Message-ID: <1362818574-16873-1-git-send-email-iveqy@iveqy.com>
-Cc: git@vger.kernel.org, iveqy@iveqy.com, pclouds@gmail.com
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Mar 09 09:43:40 2013
+Subject: Re: [PATCH 3/3] match_basename: use strncmp instead of strcmp
+Date: Sat, 9 Mar 2013 09:47:59 +0100
+Message-ID: <20130309084759.GA8688@paksenarrion.iveqy.com>
+References: <1362802190-7331-1-git-send-email-pclouds@gmail.com>
+ <1362802190-7331-4-git-send-email-pclouds@gmail.com>
+ <7v4nglf1w3.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 09 09:48:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEFNT-0002v4-28
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 09:43:39 +0100
+	id 1UEFRk-0006MJ-BD
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 09:48:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756128Ab3CIInC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Mar 2013 03:43:02 -0500
-Received: from mail-la0-f48.google.com ([209.85.215.48]:39592 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755051Ab3CIInA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Mar 2013 03:43:00 -0500
-Received: by mail-la0-f48.google.com with SMTP id fq13so2466714lab.35
-        for <git@vger.kernel.org>; Sat, 09 Mar 2013 00:42:57 -0800 (PST)
+	id S1756128Ab3CIIri convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Mar 2013 03:47:38 -0500
+Received: from mail-la0-f50.google.com ([209.85.215.50]:33555 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755051Ab3CIIrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Mar 2013 03:47:37 -0500
+Received: by mail-la0-f50.google.com with SMTP id ec20so2459095lab.37
+        for <git@vger.kernel.org>; Sat, 09 Mar 2013 00:47:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=B4jxh0a7cBHvg5uguOnliZnL4f6dJPs4U05VITPic4Q=;
-        b=zl+aMDb7WWyeQJWwbSZIZrnKXbVSpcZWWLlItVNML5cUqr5JUQI7BTIa8yFTdFtfdT
-         GSdtkm1sy8L1D8ZPCrYMqGyz7gnhnONo7V9yH+Mqa1NiltIgB8kNrPWLzUjYSbaSozYz
-         fpFvAkC4o+UH5yBjTXhHoVns3ByClBv7GJ9GH75+9mTKx/+Rf55sWwP1NyOPVRiRi2IK
-         qLmTqZJFt4x2UGHkVxYSAm+1FyoVG7oXuLStPG1QJ+e1POE2yz/v+AMdpoNhJiA7oQlJ
-         h9420Haq3sSG7II8ej4oka9/yfYwKxLvtqAMrrf1Gc792MzRYKfmo8XhTGXDLUq8i/q3
-         /KAg==
-X-Received: by 10.112.25.202 with SMTP id e10mr2117906lbg.98.1362818577461;
-        Sat, 09 Mar 2013 00:42:57 -0800 (PST)
+        h=x-received:sender:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=XGmxEvjd+e5sEUkGj+NaqbQqUY0GQW8xj2+B8Fs1L5M=;
+        b=0tQsSVIFBEa+rUu+O4ivyGoAaTB1DkfABSYu7AIEKYRSRC4w7mVdkqSndztCxODT/4
+         xh/Rm5oa34/c7gWKv3kCSuxx2uS8zviSYSaXgCxfYzim2GfWJKZN6WxemBGBueFLsbJa
+         WmYASj6U2qhP/VAOA6XjTcsj5VWSNref30fiEQAZZ67a7ZSyYH9+HS9Z1swSfJ12XjK/
+         QENVScBZea/tD/HeNZVxKbFxMPYjdEguGQjQ6t3lsXX7q8WFfKWH9/op90brD+thbx1U
+         1z6WFE5YkxwPPMtzw90tFf7d+XkqPE1rpobzj37ZsIaaYgJZ2mOQIDi1rniygN4rXpvm
+         mFuQ==
+X-Received: by 10.152.47.97 with SMTP id c1mr4575414lan.6.1362818856007;
+        Sat, 09 Mar 2013 00:47:36 -0800 (PST)
 Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPS id v7sm2408169lbg.13.2013.03.09.00.42.55
+        by mx.google.com with ESMTPS id fz10sm2412330lbb.12.2013.03.09.00.47.34
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 09 Mar 2013 00:42:56 -0800 (PST)
+        Sat, 09 Mar 2013 00:47:34 -0800 (PST)
 Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
 	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UEFNA-0004On-Ht; Sat, 09 Mar 2013 09:43:20 +0100
-X-Mailer: git-send-email 1.8.1.5
+	id 1UEFRf-0004Pc-Ls; Sat, 09 Mar 2013 09:47:59 +0100
+Content-Disposition: inline
+In-Reply-To: <7v4nglf1w3.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217713>
 
-To improve performance.
-git status before:
-user    0m0.020s
-user    0m0.024s
-user    0m0.024s
-user    0m0.020s
-user    0m0.024s
-user    0m0.028s
-user    0m0.024s
-user    0m0.024s
-user    0m0.016s
-user    0m0.028s
+On Fri, Mar 08, 2013 at 11:50:04PM -0800, Junio C Hamano wrote:
+> At the same time, I wonder if we can take advantage of the fact that
+> these call sites only care about equality and not ordering.
 
-git status after:
-user    0m0.012s
-user    0m0.008s
-user    0m0.008s
-user    0m0.008s
-user    0m0.008s
-user    0m0.008s
-user    0m0.008s
-user    0m0.004s
-user    0m0.008s
-user    0m0.016s
+I did an RFC-patch for that (that I mistakenly didn't sent as a reply t=
+o
+this e-mail). And I believe that you're correct. My solution is inspire=
+d
+of curl's strequal.
 
-Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
----
- dir.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+Is the reason for git not to care about lower/upper-case for beeing abl=
+e
+to support windows? Or is there any other smart reason?
 
-diff --git a/dir.c b/dir.c
-index 57394e4..2b801e8 100644
---- a/dir.c
-+++ b/dir.c
-@@ -37,6 +37,17 @@ int fnmatch_icase(const char *pattern, const char *string, int flags)
- 	return fnmatch(pattern, string, flags | (ignore_case ? FNM_CASEFOLD : 0));
- }
- 
-+int strequal_icase(const char *first, const char *second)
-+{
-+	while (*first && *second) {
-+		if( toupper(*first) != toupper(*second))
-+			break;
-+		first++;
-+		second++;
-+	}
-+	return toupper(*first) == toupper(*second);
-+}
-+
- inline int git_fnmatch(const char *pattern, const char *string,
- 		       int flags, int prefix)
- {
-@@ -626,11 +637,11 @@ int match_basename(const char *basename, int basenamelen,
- 		   int flags)
- {
- 	if (prefix == patternlen) {
--		if (!strcmp_icase(pattern, basename))
-+		if (!strequal_icase(pattern, basename))
- 			return 1;
- 	} else if (flags & EXC_FLAG_ENDSWITH) {
- 		if (patternlen - 1 <= basenamelen &&
--		    !strcmp_icase(pattern + 1,
-+		    !strequal_icase(pattern + 1,
- 				  basename + basenamelen - patternlen + 1))
- 			return 1;
- 	} else {
-@@ -663,7 +674,7 @@ int match_pathname(const char *pathname, int pathlen,
- 	 */
- 	if (pathlen < baselen + 1 ||
- 	    (baselen && pathname[baselen] != '/') ||
--	    strncmp_icase(pathname, base, baselen))
-+	    strequal_icase(pathname, base))
- 		return 0;
- 
- 	namelen = baselen ? pathlen - baselen - 1 : pathlen;
--- 
-1.8.1.5
+I was also thinking about discarding files by looking at their
+modification date. If the modification timestamp is older than/or equal=
+ to
+the latest commit, there's probably no reason for examine that file any
+further. I'm not sure about the side effects this may imply though. I
+think they can be quite nasty. Is this something worth digging more in
+or am I already on the wrong path?
+
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
+
+tel: 0733-608274
+e-post: iveqy@iveqy.com
