@@ -1,85 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] match_basename: use strncmp instead of strcmp
-Date: Fri, 08 Mar 2013 23:50:04 -0800
-Message-ID: <7v4nglf1w3.fsf@alter.siamese.dyndns.org>
-References: <1362802190-7331-1-git-send-email-pclouds@gmail.com>
- <1362802190-7331-4-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 09 08:50:52 2013
+Subject: [PATCH 1/3] builtin/add.c: simplify boolean variables
+Date: Sat,  9 Mar 2013 00:22:36 -0800
+Message-ID: <1362817358-24356-2-git-send-email-gitster@pobox.com>
+References: <1362817358-24356-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 09 09:23:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEEYN-0003rP-SP
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 08:50:52 +0100
+	id 1UEF3m-0003sY-VY
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Mar 2013 09:23:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754766Ab3CIHuJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Mar 2013 02:50:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61252 "EHLO
+	id S1756548Ab3CIIWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Mar 2013 03:22:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48014 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750789Ab3CIHuI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Mar 2013 02:50:08 -0500
+	id S1752365Ab3CIIWm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Mar 2013 03:22:42 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B6D79149;
-	Sat,  9 Mar 2013 02:50:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=YuyXgey7Gzl5
-	CFzn6Yl01zCCR8g=; b=cDFd823owWL0MXs1rylzjIzxcIJIMfVsvWb+E9hRmEIb
-	Bw7F410xZ7IX+oQA37ru59I4CC5nYuvnScN/HxLmle8tpCf64S7csk5du1nKVfw7
-	gFbDe5zE7JbiE+SBqRCtNMADpXqP/O0SoGIyULUuWoPDL2uSbfEElI7WUlcDaU8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=eT0Xux
-	qLMUPQbUUvrBFYkWkNQV0Y4+pwZn7DcJf8+DKYdcVMUDtbnT3EMjdLy9zlKVmD4v
-	TZJJMmRjH7vrLYIiAWc7gigvtPgqI2/yy/2SjZuBXRLqyN7LAOMACsTDI0QjB+9G
-	EBSrsgs7475caL4NiItYhHi5RjnYrzs9lGfSM=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 826C79FAE
+	for <git@vger.kernel.org>; Sat,  9 Mar 2013 03:22:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=zEUV
+	MOlp6qdDHN0uXkXzI9+a1y8=; b=rDvM13skRDyB2cOZehwKcEpr5DPclwxYkbEx
+	mEWaFcnNhhtxFYndNlb9Gr6HZBo2yTpgzOSvJhho4I3wVz+l6cMJvEQs2r4TgUZQ
+	VA/ZC91bBgMq2dh9bkAIfQc3NBXX/VJ6os0qREpyBEwDT/FjXGyIJ5A4jtSUpr1D
+	k6VuX3I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=a9soWA
+	kztTL2cKN52GN55UZ3JjiYaL/fSAwhrTXIh5sYB1YixYnz1TFLCo1OAiZbIQK9sN
+	nbzxeucx7xhxUT69NbHu/rhJ4Ytr9PZvSN5AnaCSAMx55vMcXgL2I7Vp8iV7tYRy
+	1IkK8Qz8+clQntp+tVxS912ooXT7lYFutWMx0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8047E9148;
-	Sat,  9 Mar 2013 02:50:06 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 777CB9FAD
+	for <git@vger.kernel.org>; Sat,  9 Mar 2013 03:22:42 -0500 (EST)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2BA39146; Sat,  9 Mar 2013
- 02:50:05 -0500 (EST)
-In-Reply-To: <1362802190-7331-4-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 9 Mar
- 2013 11:09:50 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F5325A1A-888D-11E2-966F-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EEF069FAC for
+ <git@vger.kernel.org>; Sat,  9 Mar 2013 03:22:41 -0500 (EST)
+X-Mailer: git-send-email 1.8.2-rc3-203-gc9aaab5
+In-Reply-To: <1362817358-24356-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 830DBD62-8892-11E2-9F36-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217705>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Do not to explicitly initialize static variables to 0 and instead
+let BSS take care of it.  Also use OPT_BOOL() to let the command
+line arguments set these variables to 0 or 1, instead of the
+deprecated OPT_BOOLEAN() aka OPT_COUNTUP().
 
-> strncmp provides length information, compared to strcmp, which could
-> be taken advantage by the implementation. Even better, we could check
-> if the lengths are equal before calling strncmp, eliminating a bit of
-> strncmp calls.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/add.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-I think I am a bit slower than my usual self tonight, but I am
-utterly confused by the above.
-
-strncmp() compares _only_ up to the first n bytes, so when you are
-using it for equality, it is not "we could check length", but is "we
-MUST check they match to the length of the shorter string", if you
-want to obtain not just faster but correct result.
-
-Am I mistaken?
-
-Even if you are using strcmp() that yields ordering not just
-equality, it can return a correct result as soon as it hits the
-first bytes that are different; I doubt using strncmp() contributes
-to the performance very much.  Comparing lengths before doing
-byte-for-byte comparison could help because you can reject two
-strings with different lengths without looking at them.
-
-At the same time, I wonder if we can take advantage of the fact that
-these call sites only care about equality and not ordering.
+diff --git a/builtin/add.c b/builtin/add.c
+index 0dd014e..220321b 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -270,23 +270,23 @@ static struct lock_file lock_file;
+ static const char ignore_error[] =
+ N_("The following paths are ignored by one of your .gitignore files:\n");
+ 
+-static int verbose = 0, show_only = 0, ignored_too = 0, refresh_only = 0;
+-static int ignore_add_errors, addremove, intent_to_add, ignore_missing = 0;
++static int verbose, show_only, ignored_too, refresh_only;
++static int ignore_add_errors, addremove, intent_to_add, ignore_missing;
+ 
+ static struct option builtin_add_options[] = {
+ 	OPT__DRY_RUN(&show_only, N_("dry run")),
+ 	OPT__VERBOSE(&verbose, N_("be verbose")),
+ 	OPT_GROUP(""),
+-	OPT_BOOLEAN('i', "interactive", &add_interactive, N_("interactive picking")),
+-	OPT_BOOLEAN('p', "patch", &patch_interactive, N_("select hunks interactively")),
+-	OPT_BOOLEAN('e', "edit", &edit_interactive, N_("edit current diff and apply")),
++	OPT_BOOL('i', "interactive", &add_interactive, N_("interactive picking")),
++	OPT_BOOL('p', "patch", &patch_interactive, N_("select hunks interactively")),
++	OPT_BOOL('e', "edit", &edit_interactive, N_("edit current diff and apply")),
+ 	OPT__FORCE(&ignored_too, N_("allow adding otherwise ignored files")),
+-	OPT_BOOLEAN('u', "update", &take_worktree_changes, N_("update tracked files")),
+-	OPT_BOOLEAN('N', "intent-to-add", &intent_to_add, N_("record only the fact that the path will be added later")),
+-	OPT_BOOLEAN('A', "all", &addremove, N_("add changes from all tracked and untracked files")),
+-	OPT_BOOLEAN( 0 , "refresh", &refresh_only, N_("don't add, only refresh the index")),
+-	OPT_BOOLEAN( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
+-	OPT_BOOLEAN( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
++	OPT_BOOL('u', "update", &take_worktree_changes, N_("update tracked files")),
++	OPT_BOOL('N', "intent-to-add", &intent_to_add, N_("record only the fact that the path will be added later")),
++	OPT_BOOL('A', "all", &addremove, N_("add changes from all tracked and untracked files")),
++	OPT_BOOL( 0 , "refresh", &refresh_only, N_("don't add, only refresh the index")),
++	OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
++	OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
+ 	OPT_END(),
+ };
+ 
+-- 
+1.8.2-rc3-203-gc9aaab5
