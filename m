@@ -1,300 +1,121 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: [PATCH/RFC] Make help behaviour more consistent
-Date: Sun, 10 Mar 2013 19:48:49 +0200
-Message-ID: <1362937729-9050-1-git-send-email-kevin@bracey.fi>
-Cc: Kevin Bracey <kevin@bracey.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 10 23:36:38 2013
+From: Paul Campbell <pcampbell@kemitix.net>
+Subject: [PATCH v2 00/23] contrib/subtree: Collected updates
+Date: Sun, 10 Mar 2013 23:41:08 +0000
+Message-ID: <1362958891-26941-1-git-send-email-pcampbell@kemitix.net>
+Cc: David Greene <greened@obbligato.org>,
+	Paul Campbell <pcampbell@kemitix.net>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 11 00:42:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEor4-0004Gt-Kp
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 23:36:35 +0100
+	id 1UEptG-0002ic-TL
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 00:42:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753291Ab3CJWgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Mar 2013 18:36:07 -0400
-Received: from mo4.mail-out.ovh.net ([178.32.228.4]:34922 "EHLO
-	mo4.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751642Ab3CJWgG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Mar 2013 18:36:06 -0400
-Received: from mail638.ha.ovh.net (gw6.ovh.net [213.251.189.206])
-	by mo4.mail-out.ovh.net (Postfix) with SMTP id D4CDC104DE1C
-	for <git@vger.kernel.org>; Sun, 10 Mar 2013 19:00:17 +0100 (CET)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 10 Mar 2013 19:50:23 +0200
-Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 10 Mar 2013 19:50:22 +0200
-X-Ovh-Mailout: 178.32.228.4 (mo4.mail-out.ovh.net)
-X-Mailer: git-send-email 1.8.2.rc3.7.g1100d09.dirty
-X-Ovh-Tracer-Id: 14401667185464742110
-X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 52
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecuudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
-X-Spam-Check: DONE|U 0.5/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 52
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecuudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
+	id S1753310Ab3CJXm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 19:42:26 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:62930 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751801Ab3CJXmT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 19:42:19 -0400
+Received: by mail-wi0-f176.google.com with SMTP id hm14so606636wib.9
+        for <git@vger.kernel.org>; Sun, 10 Mar 2013 16:42:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer
+         :x-gm-message-state;
+        bh=U+DWUM6HI5MxvSvx3mhJTRhuNHnC4oIv0VR1bKfKIYM=;
+        b=h4Q0IV5MxOwdaoTtj4n5QwTrD7a6mVtlkoH4qDMgq3NxiBkN64jWjYymwVEafrLvlF
+         w6eXpjFFkzcWRiRCkDR+QL/wtv0hDhxBf5GUdEbAXG0AQEnuYruxntyIKTr47Dg9nQwW
+         Wz6HO3n0ewyj6RxnhAFgzPMLcR29XBMTfUj56yCFUIdeqwDsPqM7iJHyEEQZv8Pmc/5n
+         8WFI3UCwgEOSBR17qe0u/KT6kn+tghqw/FdSDguhMUyTYgJcGMxnVE0UeigTLv0MyYQG
+         +Sw6JzcUWkOu4neVMiRcvBlEmrFlEUvxsxXU84fzaROiGpvWx7AZuAgPn2Ol1f384GO5
+         dORw==
+X-Received: by 10.194.83.105 with SMTP id p9mr15573644wjy.56.1362958938347;
+        Sun, 10 Mar 2013 16:42:18 -0700 (PDT)
+Received: from coyote.home (host-2-102-87-75.as13285.net. [2.102.87.75])
+        by mx.google.com with ESMTPS id r7sm13757148wiz.2.2013.03.10.16.42.13
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 10 Mar 2013 16:42:17 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.rc1
+X-Gm-Message-State: ALoCoQmwQbD/QcaMZi6JsYwOPKzUhuKDLzf6sFXzn1hbPkaIOrl1YyvkmGanHcj7Sb0D17RtXxgW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217820>
 
-Previously, the command "help" and the option "-h" behaved differently
-depending on whether a command was specified or not. Old user interface:
+A selection of updates to git-subtree were offered to the list in May of 
+last year ($gmane/196667) by Herman van Rink.
 
-Commands with no defaults show usage: "git"           "git CMD"
-To specifically request usage:        "git help"      "git CMD -h"
-To get a manual page:                 "git help git"  "git help CMD"
+At the time the commits were available as either a single commit or a 
+large collection of commits and merges to the git-subtree prior to it's
+inclusion in contrib/subtree.
 
-Two significant usability flaws here:
- - If using man, "man git" to side-step "git help" is obvious. But if
-   trying to use help.format=web, how to get the root html page? My
-   technique was "git help XXX" and click the "git(1) suite" link at the
-   bottom. "git help git" is non-obvious and apparently undocumented
-   (it's not mentioned by "git", "git help", or "git help help"...).
+The following patches take a selection of these commits and rebase them 
+against the tip of master.
 
- - Because git itself didn't support -h (and thus actually printed less
-   if you specified it), the general availability of -h for commands was
-   non-obvious. I didn't know about it until I started this patch.
+The git-subtree tests work (make test), but they don't cover any of
+the new commands added nor the use of the .gittrees file for storing
+the subtree metadata.
 
-Tidy this up, so that help and -h do not change behaviour depending on
-whether a command is specified or not. New, consistent user interface:
+If I could ask the original contributors to add their Signed-off-by, I
+would appreciate it.
 
-Commands with no defaults show usage: "git"           "git CMD"
-To specifically request usage:        "git -h"        "git CMD -h"
-To get a manual page:                 "git help"      "git help CMD".
+However I don't have current email addresses for four of them: Peter 
+Jaros, Michael Hart, Paul Cartwright and James Roper. If anyone has 
+current email address for any of these, please either forward the 
+relevant patch(es) to them or let me know so I can do so.
 
-"git help git" is still accepted. The legacy "--help" option behaves as
-before, which means "git --help" on its own is now a synonym for "git
--h", not "git help", and it remains consistent with GNU Coding
-Guidelines.
+Herman van Rink (8):
+  contrib/subtree: Add prune command to OPTS_SPEC
+  contrib/subtree: Remove trailing slash from prefix parameter
+  contrib/subtree: Teach from-submodule to add new subtree to .gittrees
+  contrib/subtree: Document pull-all and push-all
+  contrib/subtree: Document from-submodule and prune commands
+  contrib/subtree: Add missing commands to SYNOPSIS
+  contrib/subtree: Document list command
+  contrib/subtree: Convert spaces to tabs and remove some trailing
+    whitespace
 
-So the only change to existing command behaviour is that "git help" or
-"git help -w" now opens the git manual page, rather than showing common
-commands.
+James Roper (1):
+  contrib/subtree: Teach push to use --force option
 
-"git -h cmd" is also accepted as a synonym for "git cmd -h", as per
-Linus's rationale for treating "git cmd --help" as a synonym for "git
---help cmd".
+Matt Hoffman (6):
+  contrib/subtree: Teach add to store repository & branch in .gittrees
+  contrib/subtree: Rename commands push_all/pull_all to
+    push-all/pull-all
+  contrib/subtree: Teach push and pull to use .gittrees if needed
+  contrib/subtree: Replace invisible carriage return with a visible \r
+  contrib/subtree: Add command diff
+  contrib/subtree: Add command list
 
-Option list shown in command-line usage re-ordered to match the manual
-page, and git and git-help manual pages edited to reflect the new help
-behaviour.
+Michael Hart (1):
+  contrib/subtree: Teach push to abort if split fails
 
-Signed-off-by: Kevin Bracey <kevin@bracey.fi>
----
- Documentation/git-help.txt | 22 +++++++++-------------
- Documentation/git.txt      | 17 ++++++++---------
- builtin/help.c             |  9 +--------
- git.c                      | 40 +++++++++++++++++++++++-----------------
- 4 files changed, 41 insertions(+), 47 deletions(-)
+Nate Jones (1):
+  contrib/subtree: Add command prune
 
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index e07b6dc..25def9f 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -13,19 +13,16 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 
--With no options and no COMMAND given, the synopsis of the 'git'
--command and a list of the most commonly used Git commands are printed
--on the standard output.
--
- If the option '--all' or '-a' is given, then all available commands are
- printed on the standard output.
- 
--If a Git subcommand is named, a manual page for that subcommand is brought
-+Otherwise, a manual page for Git or the specified Git command is brought
- up. The 'man' program is used by default for this purpose, but this
- can be overridden by other options or configuration variables.
- 
- Note that `git --help ...` is identical to `git help ...` because the
--former is internally converted into the latter.
-+former is internally converted into the latter.  Also, to supplement
-+`git help`, most Git commands offer the option '-h' to print usage.
- 
- OPTIONS
- -------
-@@ -36,14 +33,13 @@ OPTIONS
- 
- -i::
- --info::
--	Display manual page for the command in the 'info' format. The
--	'info' program will be used for that purpose.
-+	Display manual page in the 'info' format. The 'info' program will
-+	be used for that purpose.
- 
- -m::
- --man::
--	Display manual page for the command in the 'man' format. This
--	option may be used to override a value set in the
--	'help.format' configuration variable.
-+	Display manual page in the 'man' format. This option may be used to
-+	override a value set in the 'help.format' configuration variable.
- +
- By default the 'man' program will be used to display the manual page,
- but the 'man.viewer' configuration variable may be used to choose
-@@ -51,8 +47,8 @@ other display programs (see below).
- 
- -w::
- --web::
--	Display manual page for the command in the 'web' (HTML)
--	format. A web browser will be used for that purpose.
-+	Display manual page in the 'web' (HTML)	format. A web browser will
-+	be used for that purpose.
- +
- The web browser can be specified using the configuration variable
- 'help.browser', or 'web.browser' if the former is not set. If none of
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 9d29ed5..51cdca2 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -9,7 +9,7 @@ git - the stupid content tracker
- SYNOPSIS
- --------
- [verse]
--'git' [--version] [--help] [-c <name>=<value>]
-+'git' [--version] [--help] [-h] [-c <name>=<value>]
-     [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-     [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
-     [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-@@ -361,16 +361,15 @@ OPTIONS
- --version::
- 	Prints the Git suite version that the 'git' program came from.
- 
----help::
-+-h::
- 	Prints the synopsis and a list of the most commonly used
--	commands. If the option '--all' or '-a' is given then all
--	available commands are printed. If a Git command is named this
--	option will bring up the manual page for that command.
-+	commands. Most Git commands also provide a '-h'	option to
-+	show their own synopsis.
- +
--Other options are available to control how the manual page is
--displayed. See linkgit:git-help[1] for more information,
--because `git --help ...` is converted internally into `git
--help ...`.
-+For compatibility, `git --help` is also implemented. With no
-+following options, it is equivalent to `git -h`. Otherwise it is
-+converted internally into `git help ...`, which will open a manual
-+page. See linkgit:git-help[1] for more information.
- 
- -c <name>=<value>::
- 	Pass a configuration parameter to the command. The value
-diff --git a/builtin/help.c b/builtin/help.c
-index d1d7181..ef4706a 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -432,13 +432,6 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 		return 0;
- 	}
- 
--	if (!argv[0]) {
--		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
--		list_common_cmds_help();
--		printf("\n%s\n", _(git_more_info_string));
--		return 0;
--	}
--
- 	setup_git_directory_gently(&nongit);
- 	git_config(git_help_config, NULL);
- 
-@@ -447,7 +440,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 	if (help_format == HELP_FORMAT_NONE)
- 		help_format = parse_help_format(DEFAULT_HELP_FORMAT);
- 
--	alias = alias_lookup(argv[0]);
-+	alias = argv[0] ? alias_lookup(argv[0]) : NULL;
- 	if (alias && !is_git_command(argv[0])) {
- 		printf_ln(_("`git %s' is aliased to `%s'"), argv[0], alias);
- 		return 0;
-diff --git a/git.c b/git.c
-index b10c18b..82a74c5 100644
---- a/git.c
-+++ b/git.c
-@@ -6,10 +6,10 @@
- #include "run-command.h"
- 
- const char git_usage_string[] =
--	"git [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
-+	"git [--version] [--help] [-h] [-c name=value]\n"
-+	"           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
- 	"           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]\n"
- 	"           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
--	"           [-c name=value] [--help]\n"
- 	"           <command> [<args>]";
- 
- const char git_more_info_string[] =
-@@ -17,6 +17,7 @@ const char git_more_info_string[] =
- 
- static struct startup_info git_startup_info;
- static int use_pager = -1;
-+static int show_usage;
- 
- static void commit_pager_choice(void) {
- 	switch (use_pager) {
-@@ -40,17 +41,6 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 		if (cmd[0] != '-')
- 			break;
- 
--		/*
--		 * For legacy reasons, the "version" and "help"
--		 * commands can be written with "--" prepended
--		 * to make them look like flags.
--		 */
--		if (!strcmp(cmd, "--help") || !strcmp(cmd, "--version"))
--			break;
--
--		/*
--		 * Check remaining flags.
--		 */
- 		if (!prefixcmp(cmd, "--exec-path")) {
- 			cmd += 11;
- 			if (*cmd == '=')
-@@ -143,6 +133,25 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			setenv(GIT_LITERAL_PATHSPECS_ENVIRONMENT, "0", 1);
- 			if (envchanged)
- 				*envchanged = 1;
-+		} else if (!strcmp(cmd, "--version")) {
-+			/* Alternative spelling for "git version" */
-+			(*argv)[0] += 2;
-+			break;
-+		} else if (!strcmp(cmd, "--help")) {
-+			if (*argc > 1) {
-+				/* Alternative spelling for "git help XXX" */
-+				(*argv)[0] += 2;
-+				break;
-+			} else
-+				show_usage = 1;
-+		} else if (!strcmp(cmd, "-h")) {
-+			if (*argc > 1 && (*argv)[1][0] != '-') {
-+				/* Turn "git -h cmd" into "git cmd -h" */
-+				(*argv)[0] = (*argv)[1];
-+				(*argv)[1] = "-h";
-+				break;
-+			} else
-+				show_usage = 1;
- 		} else {
- 			fprintf(stderr, "Unknown option: %s\n", cmd);
- 			usage(git_usage_string);
-@@ -537,10 +546,7 @@ int main(int argc, const char **argv)
- 	argv++;
- 	argc--;
- 	handle_options(&argv, &argc, NULL);
--	if (argc > 0) {
--		if (!prefixcmp(argv[0], "--"))
--			argv[0] += 2;
--	} else {
-+	if (argc <= 0 || show_usage) {
- 		/* The user didn't specify a command; give them help */
- 		commit_pager_choice();
- 		printf("usage: %s\n\n", git_usage_string);
+Paul Campbell (2):
+  contrib/subtree: Parameters repository/branch for push/pull are
+    optional
+  contrib/subtree: Fix order of case switches so default case is last
+
+Paul Cartwright (1):
+  contrib/subtree: Fix typo (s/incldued/included/)
+
+Peter Jaros (1):
+  contrib/subtree: Add command from-submodule
+
+bibendi (2):
+  contrib/subtree: Teach push and pull to use .gittrees for defaults
+  contrib/subtree: Add commands pull_all and push_all
+
+ contrib/subtree/git-subtree.sh  | 203 ++++++++++++++++++++++++++++++++++++----
+ contrib/subtree/git-subtree.txt |  46 +++++++--
+ 2 files changed, 222 insertions(+), 27 deletions(-)
+
 -- 
-1.8.2.rc3.7.g1100d09.dirty
+1.8.2.rc1
