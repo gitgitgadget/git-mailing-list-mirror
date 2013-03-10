@@ -1,112 +1,107 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 3/6] match_basename: use strncmp instead of strcmp
-Date: Sun, 10 Mar 2013 17:38:37 +0700
-Message-ID: <CACsJy8A_4SqLu5L6P0PJ78Lwy12fjL7T2p-KbVEVLJmKNqhyRw@mail.gmail.com>
-References: <1362802190-7331-1-git-send-email-pclouds@gmail.com>
- <1362896070-17456-1-git-send-email-pclouds@gmail.com> <1362896070-17456-4-git-send-email-pclouds@gmail.com>
- <7vy5dvd7yq.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/2] shell: new no-interactive-login command to print a
+ custom message
+Date: Sun, 10 Mar 2013 16:19:14 +0530
+Message-ID: <CALkWK0kK3YCwkv26cxVf61yUd8WHmHDG+mFwb2VRwNF3k_40qA@mail.gmail.com>
+References: <CAE_TNikk-9sYVRQRwRecNpp3otQ+oc=uV9SPu+7pAkCUNbcUoQ@mail.gmail.com>
+ <20130309215237.GA24777@elie.Belkin> <20130309220011.GC24777@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 10 11:39:45 2013
+Cc: Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Greg Brockman <gdb@mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 10 11:50:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEdfN-000240-9U
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 11:39:45 +0100
+	id 1UEdpK-0001NK-Tq
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 11:50:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751191Ab3CJKjK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Mar 2013 06:39:10 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:51319 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751173Ab3CJKjJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Mar 2013 06:39:09 -0400
-Received: by mail-ob0-f169.google.com with SMTP id ta14so2536778obb.0
-        for <git@vger.kernel.org>; Sun, 10 Mar 2013 03:39:09 -0700 (PDT)
+	id S1751319Ab3CJKtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 06:49:35 -0400
+Received: from mail-ia0-f175.google.com ([209.85.210.175]:39444 "EHLO
+	mail-ia0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751282Ab3CJKte (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 06:49:34 -0400
+Received: by mail-ia0-f175.google.com with SMTP id e16so1067272iaa.20
+        for <git@vger.kernel.org>; Sun, 10 Mar 2013 03:49:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=UcAOV5DVrRBT1QfCmVFBWND13NjSfDZaS4mvIgX+8B8=;
-        b=0YkE+C4wlmDQiXbsxg8vxs5omrSnJGuQ+M/ZJfL8jsaxVZh7Mm2xoNi46l42KOKIrQ
-         9TbSOwtQ7iGVX1pY8VkzZ5Z+BO6ECmV/78NVu3GZbAzgoapLewwMYBYpWk81QJYLCUAk
-         /67AJIQRu6B5vU8fhnARJr9P71kkvXfashwbTHOqGpA51Rzwm0fs7N/ual51Nil9CF9Z
-         CsbsMKOmU6us09mJHrz7acscaSgPAom6GSncZvQ+O/QAc0YUhD9iGGey5S58yveTQmJr
-         jjKHi07jf1oJMz8vd9BkpXVF9h5ujDEsqeaZ1/1PmDESpv4jj7hNxnFgiObwSb7Pq/gn
-         671Q==
-X-Received: by 10.60.30.231 with SMTP id v7mr6163448oeh.118.1362911948907;
- Sun, 10 Mar 2013 03:39:08 -0700 (PDT)
-Received: by 10.76.27.200 with HTTP; Sun, 10 Mar 2013 03:38:37 -0700 (PDT)
-In-Reply-To: <7vy5dvd7yq.fsf@alter.siamese.dyndns.org>
+         :subject:to:cc:content-type;
+        bh=wQ/01a+Ft37H1qeK016aNfcZZ817ISDh4QTXXNApZoI=;
+        b=Vyws/D7E2eTafgrxnSiKYeFiRMpUCj8Wq1jv2Bzo8i8hABwNsoCDBrKb6OXfNtm1Ld
+         RJKMIDbUb1fbGV0YMC1421uFNJKDC9hP2x2lir49flWZg4tElYCb9iWGtFYafgYoh9xx
+         2dbnkBEvUR3zeekM8CzcS9YC8Ee4WJ+ECLR1z/3Zfqb9nzI7U6FwbngAMLH4MPXki/6l
+         zlOBI3Klkse1gM4uf33ulwy0cu669jYxqwaVHTOD934jd5QVv0/XJjAmK6pvQPXjZCKL
+         eV7jaTSI/9g/B61RW3dBzC0Scyor3T/gyOIX+z34Y9pezu+84028TWfmqceI3uN635g+
+         YW+w==
+X-Received: by 10.42.204.79 with SMTP id fl15mr5918614icb.57.1362912574365;
+ Sun, 10 Mar 2013 03:49:34 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Sun, 10 Mar 2013 03:49:14 -0700 (PDT)
+In-Reply-To: <20130309220011.GC24777@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217796>
 
-On Sun, Mar 10, 2013 at 2:34 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+Jonathan Nieder wrote:
+>  * If the file ~/git-shell-commands/no-interactive-login exists,
+>    run no-interactive-login to let the server say what it likes,
+>    then hang up.
 >
->> strncmp is provided length information which could be taken advantag=
-e
->> by the underlying implementation.
+>  * Otherwise, if ~/git-shell-commands/ is present, start an
+>    interactive read-eval-print loop.
 >
-> I may be missing something fundamental, but I somehow find the above
-> does not make any sense.
->
-> strcmp(a, b) has to pay attention to NUL in these strings and stop
-> comparison.  strncmp(a, b, n) not only has to pay the same attention
-> to NUL in the strings, but also needs to stop comparing at n bytes.
->
-> In what situation can the latter take advantage of that extra thing
-> that it needs to keep track of and operate faster, when n is the
-> length of shorter of the two strings?
+>  * Otherwise, print the usual configuration hint and hang up.
 
-glibc's C strncmp version does 4-byte comparison at a time when n >=3D4=
-,
-then fall back to 1-byte for the rest. I don't know if it's faster
-than a plain always 1-byte comparison though. There's also the hand
-written assembly version that compares n from 1..16, not exactly sure
-how this version works yet.
+Excellent.  A way to suppress the ugly warning, and replace it with a
+nice message in a non-interactive shell.  You've chosen
+"no-interactive-login" as the name of this special file, which is
+reasonable.  I'm not too fond of the name "git-shell-commands" in the
+first place, but I suspect it's too late to do anything about it now.
 
->> diff --git a/dir.c b/dir.c
->> index 9960a37..46b24db 100644
->> --- a/dir.c
->> +++ b/dir.c
->> @@ -610,12 +610,14 @@ int match_basename(const char *basename, int b=
-asenamelen,
->>                  int flags)
->>  {
->>       if (prefix =3D=3D patternlen) {
->> -             if (!strcmp_icase(pattern, basename))
->> +             if (patternlen =3D=3D basenamelen &&
->> +                 !strncmp_icase(pattern, basename, patternlen))
->>                       return 1;
+> diff --git a/shell.c b/shell.c
+> index 84b237fe..1429870a 100644
+> --- a/shell.c
+> +++ b/shell.c
+> @@ -6,6 +6,7 @@
 >
-> What happens if you replace this with
+>  #define COMMAND_DIR "git-shell-commands"
+>  #define HELP_COMMAND COMMAND_DIR "/help"
+> +#define NOLOGIN_COMMAND COMMAND_DIR "/no-interactive-login"
 >
->                 if (patternlen =3D=3D baselen &&
->                     !strcmp_icase(pattern, basename, patternlen))
->
-> and drop the other hunk and run the benchmark again?
->
+>  static int do_generic_cmd(const char *me, char *arg)
+>  {
+> @@ -65,6 +66,18 @@ static void run_shell(void)
+>  {
+>         int done = 0;
+>         static const char *help_argv[] = { HELP_COMMAND, NULL };
+> +
+> +       if (!access(NOLOGIN_COMMAND, F_OK)) {
+> +               /* Interactive login disabled. */
 
-        before      after
-user    0m0.533s    0m0.522s
-user    0m0.549s    0m0.530s
-user    0m0.550s    0m0.534s
-user    0m0.551s    0m0.545s
-user    0m0.556s    0m0.550s
-user    0m0.557s    0m0.552s
-user    0m0.559s    0m0.554s
-user    0m0.564s    0m0.561s
-user    0m0.567s    0m0.565s
-user    0m0.567s    0m0.565s
---=20
-Duy
+You're just checking for its existence here, not for execute permissions.
+
+> +               const char *argv[] = { NOLOGIN_COMMAND, NULL };
+> +               int status;
+> +
+> +               status = run_command_v_opt(argv, 0);
+
+If "no-interactive-login" doesn't have execute permissions, we'll get
+an error from here:
+
+    fatal: cannot exec 'git-shell-commands/no-interactive-login':
+Permission denied
+
+Would you like to check that the file has execute permission in
+advance to prevent some extra processing (in run_command_v_opt,
+start_command and friends) before this message is printed?
+
+Looks good otherwise.
