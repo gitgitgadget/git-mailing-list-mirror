@@ -1,81 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Memory corruption when rebasing with git version 1.8.1.5 on arch
-Date: Sun, 10 Mar 2013 03:05:05 -0400
-Message-ID: <20130310070505.GA15324@sigill.intra.peff.net>
-References: <5139D76D.80703@bernhard-posselt.com>
- <20130308212831.GA9217@sigill.intra.peff.net>
- <513A7D80.5000501@bernhard-posselt.com>
- <20130309044850.GB12167@sigill.intra.peff.net>
- <513B14EC.4040504@bernhard-posselt.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/6] match_basename: use strncmp instead of strcmp
+Date: Sat, 09 Mar 2013 23:34:05 -0800
+Message-ID: <7vy5dvd7yq.fsf@alter.siamese.dyndns.org>
+References: <1362802190-7331-1-git-send-email-pclouds@gmail.com>
+ <1362896070-17456-1-git-send-email-pclouds@gmail.com>
+ <1362896070-17456-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Bernhard Posselt <mail@bernhard-posselt.com>
-X-From: git-owner@vger.kernel.org Sun Mar 10 08:05:40 2013
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 10 08:34:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEaKA-0004hI-Mr
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 08:05:39 +0100
+	id 1UEamD-0001Jv-5m
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 08:34:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751453Ab3CJHFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Mar 2013 03:05:09 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42764 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751365Ab3CJHFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Mar 2013 03:05:08 -0400
-Received: (qmail 32627 invoked by uid 107); 10 Mar 2013 07:06:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 10 Mar 2013 03:06:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Mar 2013 03:05:05 -0400
-Content-Disposition: inline
-In-Reply-To: <513B14EC.4040504@bernhard-posselt.com>
+	id S1751491Ab3CJHeL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Mar 2013 03:34:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60132 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751467Ab3CJHeK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Mar 2013 03:34:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 490C08296;
+	Sun, 10 Mar 2013 03:34:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=tx+rhfeEAtEb
+	8VaLWMeiygKjMUM=; b=pkDVKus+qaeyZ8lgq6Uw1RNxOhoCxYTbajpZeaFV1xIE
+	A4y6rDcXAEzXtxzLHv1kzQwoYjtV5T+O44i5ZWSG9oc+zXI5NSauWuB5N7v1rspj
+	nB0p2amWBUWBx3Jef/YrR0GYNVsLq6zK2jJPkQ0lh/EIZGaWQoEF4SjTOZCVVTE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=sPOmwS
+	hxQD5OPivErTbisMCfyGK0aKbvYyw6KejTVj6TUzcK4pC2ElUOnLL1f8yqZ/Uydl
+	6LKoHNcjMfqQva4LKKu9pnE8jmIIzh0noQjuBS5BmDPjauIh2yPFwwQ+szZHkplz
+	AyGo7akMWAdLvhrLUaPqGokIHDRCrf+IsFNlU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3449E8294;
+	Sun, 10 Mar 2013 03:34:09 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 348828292; Sun, 10 Mar 2013
+ 03:34:07 -0400 (EDT)
+In-Reply-To: <1362896070-17456-4-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 10 Mar
+ 2013 13:14:27 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E4BA9D10-8954-11E2-8E7D-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217789>
 
-On Sat, Mar 09, 2013 at 11:54:36AM +0100, Bernhard Posselt wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> >Also, I can almost reproduce here, as PatrickHeller/core.git is public.
-> >However, I suspect the problem is particular to your work built on top,
-> >which looks like it is at commit 0525bbd73c9015499ba92d1ac654b980aaca35b2.
-> >Is it possible for you to make that commit available on a temporary
-> >branch?
+> strncmp is provided length information which could be taken advantage
+> by the underlying implementation.
 
-> What do you mean exactly by that?
+I may be missing something fundamental, but I somehow find the above
+does not make any sense.
 
-I just meant to push the work from your local repository somewhere where
-I could access it to try to replicate the issue. What you did here:
+strcmp(a, b) has to pay attention to NUL in these strings and stop
+comparison.  strncmp(a, b, n) not only has to pay the same attention
+to NUL in the strings, but also needs to stop comparing at n bytes.
 
-> git clone https://github.com/Raydiation/memorycorruption
-> cd memorycorruption
-> git pull --rebase https://github.com/Raydiation/core
+In what situation can the latter take advantage of that extra thing
+that it needs to keep track of and operate faster, when n is the
+length of shorter of the two strings?
 
-...should be plenty. Unfortunately, I'm not able to reproduce the
-segfault.  All of the patches apply fine, both normally and when run
-under valgrind.
+> diff --git a/dir.c b/dir.c
+> index 9960a37..46b24db 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -610,12 +610,14 @@ int match_basename(const char *basename, int ba=
+senamelen,
+>  		   int flags)
+>  {
+>  	if (prefix =3D=3D patternlen) {
+> -		if (!strcmp_icase(pattern, basename))
+> +		if (patternlen =3D=3D basenamelen &&
+> +		    !strncmp_icase(pattern, basename, patternlen))
+>  			return 1;
 
-> Heres the output of the GIT_TRACE file
-> [...]
-> trace: built-in: git 'apply' '--index' '/srv/http/owncloud/.git/rebase-apply/patch'
+What happens if you replace this with
 
-This confirms my suspicion that the problem is in "git apply".
+		if (patternlen =3D=3D baselen &&
+                    !strcmp_icase(pattern, basename, patternlen))
 
-You had mentioned before that the valgrind log was very long.  If you're
-still able to reproduce, could you try running it with valgrind like
-this:
+and drop the other hunk and run the benchmark again?
 
-  valgrind -q --trace-children=yes --log-file=/tmp/valgrind.out \
-    git pull --rebase https://github.com/Raydiation/core
-
-Logging to a file instead of stderr should mean we still get output for
-commands that are invoked with their stderr redirected (which is the
-case for the "git apply" in question), and using "-q" should eliminate
-the uninteresting cruft from the log.
-
--Peff
+>  	} else if (flags & EXC_FLAG_ENDSWITH) {
+>  		if (patternlen - 1 <=3D basenamelen &&
+> -		    !strcmp_icase(pattern + 1,
+> -				  basename + basenamelen - patternlen + 1))
+> +		    !strncmp_icase(pattern + 1,
+> +				   basename + basenamelen - patternlen + 1,
+> +				   patternlen - 1))
+>  			return 1;
+>  	} else {
+>  		if (fnmatch_icase(pattern, basename, 0) =3D=3D 0)
