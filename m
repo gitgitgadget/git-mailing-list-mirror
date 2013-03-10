@@ -1,60 +1,115 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH v2 3/6] match_basename: use strncmp instead of strcmp
-Date: Sun, 10 Mar 2013 12:43:02 +0100
-Message-ID: <CALWbr2wEJy0p2hcFK_rLtA98koeacE8rS2T=9P130GUFjWKc0Q@mail.gmail.com>
-References: <1362802190-7331-1-git-send-email-pclouds@gmail.com>
-	<1362896070-17456-1-git-send-email-pclouds@gmail.com>
-	<1362896070-17456-4-git-send-email-pclouds@gmail.com>
-	<7vy5dvd7yq.fsf@alter.siamese.dyndns.org>
-	<CACsJy8A_4SqLu5L6P0PJ78Lwy12fjL7T2p-KbVEVLJmKNqhyRw@mail.gmail.com>
+From: Bernhard Posselt <mail@bernhard-posselt.com>
+Subject: Re: Memory corruption when rebasing with git version 1.8.1.5 on arch
+Date: Sun, 10 Mar 2013 12:45:43 +0100
+Message-ID: <513C7267.2090608@bernhard-posselt.com>
+References: <5139D76D.80703@bernhard-posselt.com> <20130308212831.GA9217@sigill.intra.peff.net> <513A7D80.5000501@bernhard-posselt.com> <20130309044850.GB12167@sigill.intra.peff.net> <513B14EC.4040504@bernhard-posselt.com> <20130310070505.GA15324@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 10 12:43:32 2013
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 10 12:46:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEef6-0000lT-3p
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 12:43:32 +0100
+	id 1UEei4-0003Js-Qr
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 12:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751837Ab3CJLnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Mar 2013 07:43:05 -0400
-Received: from mail-qa0-f44.google.com ([209.85.216.44]:32844 "EHLO
-	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751764Ab3CJLnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Mar 2013 07:43:04 -0400
-Received: by mail-qa0-f44.google.com with SMTP id bv4so532650qab.10
-        for <git@vger.kernel.org>; Sun, 10 Mar 2013 04:43:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=oFS7Tp1DBW7nCQa2hPEITZDaJoDcJJZl//LgPL1Q4qw=;
-        b=HfQ4dpjFBTTuEqF0+HEPnBVdr5U26KLGjrWAtHiADq6Fsy8wzkuesmiPoZCr3kz567
-         mWUzdOWjXgOumHlPD4QUT2ygHeEpSXwB768hePOGH6nfMh0eLOQS3QAEzbJQQUAVwhWu
-         QAbCRzAUlWmeYIyI8tdd75sOOJaJmDmuBP9FrQk10v85+uj6EIkp9bmJe0ZDaLbWPDIp
-         dEF12hBuutMbG+IcfDjq/FtACk+wxD4eWYp/6FdoHQjkCX1r+lhK+gZHfC8EmzkC7Kut
-         4UB5U2UgR/obqPGp0HOvGQIEl+2w6Z9SpBRye2rye0QXdtqU/4E8Wrq2PpdY/LOqlyuN
-         umQA==
-X-Received: by 10.229.111.79 with SMTP id r15mr2746208qcp.133.1362915782668;
- Sun, 10 Mar 2013 04:43:02 -0700 (PDT)
-Received: by 10.49.70.163 with HTTP; Sun, 10 Mar 2013 04:43:02 -0700 (PDT)
-In-Reply-To: <CACsJy8A_4SqLu5L6P0PJ78Lwy12fjL7T2p-KbVEVLJmKNqhyRw@mail.gmail.com>
+	id S1751965Ab3CJLqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 07:46:10 -0400
+Received: from suou.newyork.w1r3.net ([204.62.14.108]:59329 "EHLO
+	suou.newyork.w1r3.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751764Ab3CJLqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 07:46:09 -0400
+Received: from [192.168.1.139] (194-208-147-142.tele.net [194.208.147.142])
+	by suou.newyork.w1r3.net (Postfix) with ESMTPSA id 2FCD941A04;
+	Sun, 10 Mar 2013 12:46:08 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
+In-Reply-To: <20130310070505.GA15324@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217801>
 
-On Sun, Mar 10, 2013 at 11:38 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> glibc's C strncmp version does 4-byte comparison at a time when n >=4,
-> then fall back to 1-byte for the rest.
+On 03/10/2013 08:05 AM, Jeff King wrote:
+> On Sat, Mar 09, 2013 at 11:54:36AM +0100, Bernhard Posselt wrote:
+>
+>>> Also, I can almost reproduce here, as PatrickHeller/core.git is public.
+>>> However, I suspect the problem is particular to your work built on top,
+>>> which looks like it is at commit 0525bbd73c9015499ba92d1ac654b980aaca35b2.
+>>> Is it possible for you to make that commit available on a temporary
+>>> branch?
+>> What do you mean exactly by that?
+> I just meant to push the work from your local repository somewhere where
+> I could access it to try to replicate the issue. What you did here:
+>
+>> git clone https://github.com/Raydiation/memorycorruption
+>> cd memorycorruption
+>> git pull --rebase https://github.com/Raydiation/core
+> ...should be plenty. Unfortunately, I'm not able to reproduce the
+> segfault.  All of the patches apply fine, both normally and when run
+> under valgrind.
+>
+>> Heres the output of the GIT_TRACE file
+>> [...]
+>> trace: built-in: git 'apply' '--index' '/srv/http/owncloud/.git/rebase-apply/patch'
+> This confirms my suspicion that the problem is in "git apply".
+>
+> You had mentioned before that the valgrind log was very long.  If you're
+> still able to reproduce, could you try running it with valgrind like
+> this:
+>
+>    valgrind -q --trace-children=yes --log-file=/tmp/valgrind.out \
+>      git pull --rebase https://github.com/Raydiation/core
+>
+> Logging to a file instead of stderr should mean we still get output for
+> commands that are invoked with their stderr redirected (which is the
+> case for the "git apply" in question), and using "-q" should eliminate
+> the uninteresting cruft from the log.
+>
+> -Peff
+First time I've used Archlinux ABS and build from source :)
 
-Looking at this
-(http://fossies.org/dox/glibc-2.17/strncmp_8c_source.html), it's not
-exactly true.
+The log file was empty and it seemed to apply everything nice when 
+running valgrind. When i tried to run it without valgrind it failed with 
+memory corruption.
+Heres the output with debug symbols, fetched with tail -f:
 
-It would rather be while (n >= 4), manually unroll the loop.
+==22291== Invalid write of size 1
+==22291==    at 0x4C2DB93: memcpy@@GLIBC_2.14 (in 
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==22291==    by 0x4076B1: update_pre_post_images (in /usr/lib/git-core/git)
+==22291==    by 0x40A60F: apply_fragments (in /usr/lib/git-core/git)
+==22291==    by 0x40C29F: check_patch_list (in /usr/lib/git-core/git)
+==22291==    by 0x40CC35: apply_patch (in /usr/lib/git-core/git)
+==22291==    by 0x40F584: cmd_apply (in /usr/lib/git-core/git)
+==22291==    by 0x4058E7: handle_internal_command (in /usr/lib/git-core/git)
+==22291==    by 0x404DD1: main (in /usr/lib/git-core/git)
+==22291==  Address 0x5f245c0 is 0 bytes after a block of size 384 alloc'd
+==22291==    at 0x4C2C04B: malloc (in 
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==22291==    by 0x4C2C2FF: realloc (in 
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==22291==    by 0x4F057B: xrealloc (in /usr/lib/git-core/git)
+==22291==    by 0x4DDF9F: strbuf_grow (in /usr/lib/git-core/git)
+==22291==    by 0x409E9C: apply_fragments (in /usr/lib/git-core/git)
+==22291==    by 0x40C29F: check_patch_list (in /usr/lib/git-core/git)
+==22291==    by 0x40CC35: apply_patch (in /usr/lib/git-core/git)
+==22291==    by 0x40F584: cmd_apply (in /usr/lib/git-core/git)
+==22291==    by 0x4058E7: handle_internal_command (in /usr/lib/git-core/git)
+==22291==    by 0x404DD1: main (in /usr/lib/git-core/git)
+==22291==
+==22291== Invalid read of size 1
+==22291==    at 0x4C2DCB4: memcpy@@GLIBC_2.14 (in 
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==22291==    by 0x40B0D5: apply_fragments (in /usr/lib/git-core/git)
+==22291==    by 0x40C29F: check_patch_list (in /usr/lib/git-core/git)
+==22291==    by 0x40CC35: apply_patch (in /usr/lib/git-core/git)
+==22291==    by 0x40F584: cmd_apply (in /usr/lib/git-core/git)
+==22291==    by 0x4058E7: handle_internal_command (in /usr/lib/git-core/git)
+==22291==    by 0x404DD1: main (in /usr/lib/git-core/git)
+==22291==  Address 0x5f245e1 is not stack'd, malloc'd or (recently) free'd
+==22291==
