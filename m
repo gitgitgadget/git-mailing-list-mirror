@@ -1,69 +1,112 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v2 0/4] allow more sources for config values
-Date: Sun, 10 Mar 2013 17:56:42 +0100
-Message-ID: <20130310165642.GA1136@sandbox-ub.fritz.box>
+Subject: [PATCH v2 1/4] config: factor out config file stack management
+Date: Sun, 10 Mar 2013 17:57:53 +0100
+Message-ID: <20130310165752.GB1136@sandbox-ub.fritz.box>
+References: <20130310165642.GA1136@sandbox-ub.fritz.box>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
 	Jeff King <peff@peff.net>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 10 17:57:24 2013
+X-From: git-owner@vger.kernel.org Sun Mar 10 17:58:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEjYp-0004uM-T7
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 17:57:24 +0100
+	id 1UEjZs-0005ch-51
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 17:58:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752794Ab3CJQ4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Mar 2013 12:56:49 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.30]:33565 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751642Ab3CJQ4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Mar 2013 12:56:49 -0400
+	id S1752711Ab3CJQ6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 12:58:01 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.29]:34873 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751110Ab3CJQ6A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 12:58:00 -0400
 Received: from [77.21.76.82] (helo=localhost)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
 	(Exim 4.68)
 	(envelope-from <hvoigt@hvoigt.net>)
-	id 1UEjYB-0001iy-Dc; Sun, 10 Mar 2013 17:56:43 +0100
+	id 1UEjZJ-0007Zz-IK; Sun, 10 Mar 2013 17:57:53 +0100
 Content-Disposition: inline
+In-Reply-To: <20130310165642.GA1136@sandbox-ub.fritz.box>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217812>
 
-The following issues still exist:
+Because a config callback may start parsing a new file, the
+global context regarding the current config file is stored
+as a stack. Currently we only need to manage that stack from
+git_config_from_file. Let's factor it out to allow new
+sources of config data.
 
- * Error handling: If this should be useful to interrogate configs from
-   the database during git operations we need a way to recover from
-   parsing errors instead of dying.
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ config.c | 38 ++++++++++++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
- * More tests ?
-
-This is an update with the comments of the first iteration[1]
-incorporated.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/217018/
-
-Heiko Voigt (4):
-  config: factor out config file stack management
-  config: drop file pointer validity check in get_next_char()
-  config: make parsing stack struct independent from actual data source
-  teach config parsing to read from strbuf
-
- .gitignore             |   1 +
- Makefile               |   1 +
- cache.h                |   2 +
- config.c               | 143 ++++++++++++++++++++++++++++++++++++++-----------
- t/t1300-repo-config.sh |  24 +++++++++
- test-config.c          |  40 ++++++++++++++
- 6 files changed, 180 insertions(+), 31 deletions(-)
- create mode 100644 test-config.c
-
+diff --git a/config.c b/config.c
+index aefd80b..2c299dc 100644
+--- a/config.c
++++ b/config.c
+@@ -896,6 +896,28 @@ int git_default_config(const char *var, const char *value, void *dummy)
+ 	return 0;
+ }
+ 
++static int do_config_from(struct config_file *top, config_fn_t fn, void *data)
++{
++	int ret;
++
++	/* push config-file parsing state stack */
++	top->prev = cf;
++	top->linenr = 1;
++	top->eof = 0;
++	strbuf_init(&top->value, 1024);
++	strbuf_init(&top->var, 1024);
++	cf = top;
++
++	ret = git_parse_file(fn, data);
++
++	/* pop config-file parsing state stack */
++	strbuf_release(&top->value);
++	strbuf_release(&top->var);
++	cf = top->prev;
++
++	return ret;
++}
++
+ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
+ {
+ 	int ret;
+@@ -905,22 +927,10 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
+ 	if (f) {
+ 		config_file top;
+ 
+-		/* push config-file parsing state stack */
+-		top.prev = cf;
+ 		top.f = f;
+ 		top.name = filename;
+-		top.linenr = 1;
+-		top.eof = 0;
+-		strbuf_init(&top.value, 1024);
+-		strbuf_init(&top.var, 1024);
+-		cf = &top;
+-
+-		ret = git_parse_file(fn, data);
+-
+-		/* pop config-file parsing state stack */
+-		strbuf_release(&top.value);
+-		strbuf_release(&top.var);
+-		cf = top.prev;
++
++		ret = do_config_from(&top, fn, data);
+ 
+ 		fclose(f);
+ 	}
 -- 
 1.8.2.rc0.26.gf7384c5
