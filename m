@@ -1,54 +1,300 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] perf: update documentation of GIT_PERF_REPEAT_COUNT
-Date: Sun, 10 Mar 2013 21:32:34 +0100
-Message-ID: <87boaratct.fsf@pctrast.inf.ethz.ch>
-References: <1362842965-3446-1-git-send-email-apelisse@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 10 21:33:11 2013
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: [PATCH/RFC] Make help behaviour more consistent
+Date: Sun, 10 Mar 2013 19:48:49 +0200
+Message-ID: <1362937729-9050-1-git-send-email-kevin@bracey.fi>
+Cc: Kevin Bracey <kevin@bracey.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 10 23:36:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEmvZ-00042g-S8
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 21:33:06 +0100
+	id 1UEor4-0004Gt-Kp
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 23:36:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751493Ab3CJUcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Mar 2013 16:32:39 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:42493 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751170Ab3CJUcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Mar 2013 16:32:39 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 10 Mar
- 2013 21:32:34 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (46.126.8.85) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 10 Mar
- 2013 21:32:36 +0100
-In-Reply-To: <1362842965-3446-1-git-send-email-apelisse@gmail.com> (Antoine
-	Pelisse's message of "Sat, 9 Mar 2013 16:29:25 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S1753291Ab3CJWgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 18:36:07 -0400
+Received: from mo4.mail-out.ovh.net ([178.32.228.4]:34922 "EHLO
+	mo4.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751642Ab3CJWgG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 18:36:06 -0400
+Received: from mail638.ha.ovh.net (gw6.ovh.net [213.251.189.206])
+	by mo4.mail-out.ovh.net (Postfix) with SMTP id D4CDC104DE1C
+	for <git@vger.kernel.org>; Sun, 10 Mar 2013 19:00:17 +0100 (CET)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 10 Mar 2013 19:50:23 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 10 Mar 2013 19:50:22 +0200
+X-Ovh-Mailout: 178.32.228.4 (mo4.mail-out.ovh.net)
+X-Mailer: git-send-email 1.8.2.rc3.7.g1100d09.dirty
+X-Ovh-Tracer-Id: 14401667185464742110
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: 52
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecuudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 52
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecuudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217819>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+Previously, the command "help" and the option "-h" behaved differently
+depending on whether a command was specified or not. Old user interface:
 
-> Currently the documentation of GIT_PERF_REPEAT_COUNT says the default is
-> five while "perf-lib.sh" uses a value of three as a default.
->
-> Update the documentation so that it is consistent with the code.
->
-> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+Commands with no defaults show usage: "git"           "git CMD"
+To specifically request usage:        "git help"      "git CMD -h"
+To get a manual page:                 "git help git"  "git help CMD"
 
-Acked-by: Thomas Rast <trast@inf.ethz.ch>
+Two significant usability flaws here:
+ - If using man, "man git" to side-step "git help" is obvious. But if
+   trying to use help.format=web, how to get the root html page? My
+   technique was "git help XXX" and click the "git(1) suite" link at the
+   bottom. "git help git" is non-obvious and apparently undocumented
+   (it's not mentioned by "git", "git help", or "git help help"...).
 
+ - Because git itself didn't support -h (and thus actually printed less
+   if you specified it), the general availability of -h for commands was
+   non-obvious. I didn't know about it until I started this patch.
+
+Tidy this up, so that help and -h do not change behaviour depending on
+whether a command is specified or not. New, consistent user interface:
+
+Commands with no defaults show usage: "git"           "git CMD"
+To specifically request usage:        "git -h"        "git CMD -h"
+To get a manual page:                 "git help"      "git help CMD".
+
+"git help git" is still accepted. The legacy "--help" option behaves as
+before, which means "git --help" on its own is now a synonym for "git
+-h", not "git help", and it remains consistent with GNU Coding
+Guidelines.
+
+So the only change to existing command behaviour is that "git help" or
+"git help -w" now opens the git manual page, rather than showing common
+commands.
+
+"git -h cmd" is also accepted as a synonym for "git cmd -h", as per
+Linus's rationale for treating "git cmd --help" as a synonym for "git
+--help cmd".
+
+Option list shown in command-line usage re-ordered to match the manual
+page, and git and git-help manual pages edited to reflect the new help
+behaviour.
+
+Signed-off-by: Kevin Bracey <kevin@bracey.fi>
+---
+ Documentation/git-help.txt | 22 +++++++++-------------
+ Documentation/git.txt      | 17 ++++++++---------
+ builtin/help.c             |  9 +--------
+ git.c                      | 40 +++++++++++++++++++++++-----------------
+ 4 files changed, 41 insertions(+), 47 deletions(-)
+
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index e07b6dc..25def9f 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -13,19 +13,16 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
+ 
+-With no options and no COMMAND given, the synopsis of the 'git'
+-command and a list of the most commonly used Git commands are printed
+-on the standard output.
+-
+ If the option '--all' or '-a' is given, then all available commands are
+ printed on the standard output.
+ 
+-If a Git subcommand is named, a manual page for that subcommand is brought
++Otherwise, a manual page for Git or the specified Git command is brought
+ up. The 'man' program is used by default for this purpose, but this
+ can be overridden by other options or configuration variables.
+ 
+ Note that `git --help ...` is identical to `git help ...` because the
+-former is internally converted into the latter.
++former is internally converted into the latter.  Also, to supplement
++`git help`, most Git commands offer the option '-h' to print usage.
+ 
+ OPTIONS
+ -------
+@@ -36,14 +33,13 @@ OPTIONS
+ 
+ -i::
+ --info::
+-	Display manual page for the command in the 'info' format. The
+-	'info' program will be used for that purpose.
++	Display manual page in the 'info' format. The 'info' program will
++	be used for that purpose.
+ 
+ -m::
+ --man::
+-	Display manual page for the command in the 'man' format. This
+-	option may be used to override a value set in the
+-	'help.format' configuration variable.
++	Display manual page in the 'man' format. This option may be used to
++	override a value set in the 'help.format' configuration variable.
+ +
+ By default the 'man' program will be used to display the manual page,
+ but the 'man.viewer' configuration variable may be used to choose
+@@ -51,8 +47,8 @@ other display programs (see below).
+ 
+ -w::
+ --web::
+-	Display manual page for the command in the 'web' (HTML)
+-	format. A web browser will be used for that purpose.
++	Display manual page in the 'web' (HTML)	format. A web browser will
++	be used for that purpose.
+ +
+ The web browser can be specified using the configuration variable
+ 'help.browser', or 'web.browser' if the former is not set. If none of
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 9d29ed5..51cdca2 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -9,7 +9,7 @@ git - the stupid content tracker
+ SYNOPSIS
+ --------
+ [verse]
+-'git' [--version] [--help] [-c <name>=<value>]
++'git' [--version] [--help] [-h] [-c <name>=<value>]
+     [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+     [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+     [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+@@ -361,16 +361,15 @@ OPTIONS
+ --version::
+ 	Prints the Git suite version that the 'git' program came from.
+ 
+---help::
++-h::
+ 	Prints the synopsis and a list of the most commonly used
+-	commands. If the option '--all' or '-a' is given then all
+-	available commands are printed. If a Git command is named this
+-	option will bring up the manual page for that command.
++	commands. Most Git commands also provide a '-h'	option to
++	show their own synopsis.
+ +
+-Other options are available to control how the manual page is
+-displayed. See linkgit:git-help[1] for more information,
+-because `git --help ...` is converted internally into `git
+-help ...`.
++For compatibility, `git --help` is also implemented. With no
++following options, it is equivalent to `git -h`. Otherwise it is
++converted internally into `git help ...`, which will open a manual
++page. See linkgit:git-help[1] for more information.
+ 
+ -c <name>=<value>::
+ 	Pass a configuration parameter to the command. The value
+diff --git a/builtin/help.c b/builtin/help.c
+index d1d7181..ef4706a 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -432,13 +432,6 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 		return 0;
+ 	}
+ 
+-	if (!argv[0]) {
+-		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
+-		list_common_cmds_help();
+-		printf("\n%s\n", _(git_more_info_string));
+-		return 0;
+-	}
+-
+ 	setup_git_directory_gently(&nongit);
+ 	git_config(git_help_config, NULL);
+ 
+@@ -447,7 +440,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	if (help_format == HELP_FORMAT_NONE)
+ 		help_format = parse_help_format(DEFAULT_HELP_FORMAT);
+ 
+-	alias = alias_lookup(argv[0]);
++	alias = argv[0] ? alias_lookup(argv[0]) : NULL;
+ 	if (alias && !is_git_command(argv[0])) {
+ 		printf_ln(_("`git %s' is aliased to `%s'"), argv[0], alias);
+ 		return 0;
+diff --git a/git.c b/git.c
+index b10c18b..82a74c5 100644
+--- a/git.c
++++ b/git.c
+@@ -6,10 +6,10 @@
+ #include "run-command.h"
+ 
+ const char git_usage_string[] =
+-	"git [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
++	"git [--version] [--help] [-h] [-c name=value]\n"
++	"           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
+ 	"           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]\n"
+ 	"           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
+-	"           [-c name=value] [--help]\n"
+ 	"           <command> [<args>]";
+ 
+ const char git_more_info_string[] =
+@@ -17,6 +17,7 @@ const char git_more_info_string[] =
+ 
+ static struct startup_info git_startup_info;
+ static int use_pager = -1;
++static int show_usage;
+ 
+ static void commit_pager_choice(void) {
+ 	switch (use_pager) {
+@@ -40,17 +41,6 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 		if (cmd[0] != '-')
+ 			break;
+ 
+-		/*
+-		 * For legacy reasons, the "version" and "help"
+-		 * commands can be written with "--" prepended
+-		 * to make them look like flags.
+-		 */
+-		if (!strcmp(cmd, "--help") || !strcmp(cmd, "--version"))
+-			break;
+-
+-		/*
+-		 * Check remaining flags.
+-		 */
+ 		if (!prefixcmp(cmd, "--exec-path")) {
+ 			cmd += 11;
+ 			if (*cmd == '=')
+@@ -143,6 +133,25 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			setenv(GIT_LITERAL_PATHSPECS_ENVIRONMENT, "0", 1);
+ 			if (envchanged)
+ 				*envchanged = 1;
++		} else if (!strcmp(cmd, "--version")) {
++			/* Alternative spelling for "git version" */
++			(*argv)[0] += 2;
++			break;
++		} else if (!strcmp(cmd, "--help")) {
++			if (*argc > 1) {
++				/* Alternative spelling for "git help XXX" */
++				(*argv)[0] += 2;
++				break;
++			} else
++				show_usage = 1;
++		} else if (!strcmp(cmd, "-h")) {
++			if (*argc > 1 && (*argv)[1][0] != '-') {
++				/* Turn "git -h cmd" into "git cmd -h" */
++				(*argv)[0] = (*argv)[1];
++				(*argv)[1] = "-h";
++				break;
++			} else
++				show_usage = 1;
+ 		} else {
+ 			fprintf(stderr, "Unknown option: %s\n", cmd);
+ 			usage(git_usage_string);
+@@ -537,10 +546,7 @@ int main(int argc, const char **argv)
+ 	argv++;
+ 	argc--;
+ 	handle_options(&argv, &argc, NULL);
+-	if (argc > 0) {
+-		if (!prefixcmp(argv[0], "--"))
+-			argv[0] += 2;
+-	} else {
++	if (argc <= 0 || show_usage) {
+ 		/* The user didn't specify a command; give them help */
+ 		commit_pager_choice();
+ 		printf("usage: %s\n\n", git_usage_string);
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.8.2.rc3.7.g1100d09.dirty
