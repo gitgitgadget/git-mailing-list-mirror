@@ -1,68 +1,104 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/2] require pathspec for "git add -u/-A"
-Date: Sun, 10 Mar 2013 16:49:09 +0100
-Message-ID: <vpqmwubgsqy.fsf@grenoble-inp.fr>
-References: <1362786889-28688-1-git-send-email-gitster@pobox.com>
-	<1362786889-28688-2-git-send-email-gitster@pobox.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH 4/4] teach config parsing to read from strbuf
+Date: Sun, 10 Mar 2013 17:39:34 +0100
+Message-ID: <20130310163933.GA26857@sandbox-ub.fritz.box>
+References: <cover.1361751905.git.hvoigt@hvoigt.net>
+ <6c69068b4e6a72a2cca5dc6eaffa9982032a7f2a.1361751905.git.hvoigt@hvoigt.net>
+ <7v4nh13plo.fsf@alter.siamese.dyndns.org>
+ <20130226193050.GA22756@sandbox-ub>
+ <20130226194313.GE22756@sandbox-ub>
+ <5138DFA3.8040308@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 10 16:49:59 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jens Lehmann <jens.lehmann@web.de>, Jeff King <peff@peff.net>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sun Mar 10 17:40:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEiVW-0004sK-7R
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 16:49:54 +0100
+	id 1UEjI9-0000uO-8J
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 17:40:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520Ab3CJPt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Mar 2013 11:49:28 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41095 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751327Ab3CJPt1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Mar 2013 11:49:27 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r2AFn8eW008537
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 10 Mar 2013 16:49:08 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UEiUo-0005Ms-6e; Sun, 10 Mar 2013 16:49:10 +0100
-In-Reply-To: <1362786889-28688-2-git-send-email-gitster@pobox.com> (Junio C.
-	Hamano's message of "Fri, 8 Mar 2013 15:54:48 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 10 Mar 2013 16:49:09 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r2AFn8eW008537
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1363535352.96397@WseKHi9HL4ecmjetX1Plig
+	id S1751583Ab3CJQjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 12:39:43 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.31.101]:57464 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751327Ab3CJQjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 12:39:42 -0400
+Received: from [77.21.76.82] (helo=localhost)
+	by smtprelay06.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1UEjHb-0003jk-8E; Sun, 10 Mar 2013 17:39:35 +0100
+Content-Disposition: inline
+In-Reply-To: <5138DFA3.8040308@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217810>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> As promised in 0fa2eb530fb7 (add: warn when -u or -A is used without
-> pathspec, 2013-01-28), "git add -u/-A" that is run without pathspec
-> in a subdirectory will stop working sometime before Git 2.0, to wean
-> users off of the old default, in preparation for adopting the new
-> default in Git 2.0.
+On Thu, Mar 07, 2013 at 06:42:43PM +0000, Ramsay Jones wrote:
+> Heiko Voigt wrote:
+> > +int git_config_from_strbuf(config_fn_t fn, struct strbuf *strbuf, void *data)
+> > +{
+> > +	struct config top;
+> > +	struct config_strbuf str;
+> > +
+> > +	str.strbuf = strbuf;
+> > +	str.pos = 0;
+> > +
+> > +	top.data = &str;
+> 
+> You will definitely want to initialise 'top.name' here, rather
+> than let it take whatever value happens to be at that position
+> on the stack. In your editor, search for 'cf->name' and contemplate
+> each such occurrence.
 
-I originally thought this step was necessary, but I changed my mind. The
-warning is big enough and doesn't need to be turned into an error.
+Good catch, thanks. The initialization seems to got lost during
+refactoring. In the codepaths we call with the new strbuf function it is
+only used for error reporting so I think we need to get the name from
+the user of this function so the error messages are useful.
 
-If this step is applied, it should be applied at 2.0, not before, as
-this is the big incompatible change. Re-introducing a new behavior won't
-harm users OTOH.
+I have extended the test to demonstrate how I imagine this name could
+look like.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Does the 'include' facility work from a strbuf? Should it?
+
+No the 'include' facility does not work here. A special handling would
+need to be implemented by the caller. For us 'include' values have no
+special meaning and are parsed like normal values.
+
+AFAICS when a config file is given to git config we do not currently
+respect includes. So we can just do the same behavior here for the
+moment. There is no roadblock against adding it later.
+
+> Are you happy with the error handling/reporting?
+
+Good point, while adding the name for strbuf I noticed that we currently
+die on some parsing errors. We should probably make these errors
+handleable for strbufs. Currently the main usecase is to read submodule
+configurations from the database and in case someone commits a broken
+configuration we should be able to continue with that. Otherwise the
+repository might render into an unuseable state. I will look into that.
+
+> Do the above additions to the test-suite give you confidence
+> that the code works as you intend?
+
+Well, I am reusing most of the existing infrastructure which I assume is
+tested using config files. So what I want to test here is the
+integration of this new function. As you mentioned the name variable I
+have now added a test for the parsing error case as well. I have
+refactored the test binary to read configs from stdin so its easiert to
+implement further tests from the bash part of the testsuite.
+
+I will send out another iteration shortly.
+
+Cheers Heiko
