@@ -1,113 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 6/6] exclude: filter patterns by directory level
-Date: Sun, 10 Mar 2013 03:58:13 -0700
-Message-ID: <7vmwubcyii.fsf@alter.siamese.dyndns.org>
-References: <1362802190-7331-1-git-send-email-pclouds@gmail.com>
- <1362896070-17456-1-git-send-email-pclouds@gmail.com>
- <1362896070-17456-7-git-send-email-pclouds@gmail.com>
- <7vtxojd5u7.fsf@alter.siamese.dyndns.org>
+From: Bernhard Posselt <mail@bernhard-posselt.com>
+Subject: Re: Memory corruption when rebasing with git version 1.8.1.5 on arch
+Date: Sun, 10 Mar 2013 12:04:58 +0100
+Message-ID: <513C68DA.8060700@bernhard-posselt.com>
+References: <5139D76D.80703@bernhard-posselt.com> <20130308212831.GA9217@sigill.intra.peff.net> <513A7D80.5000501@bernhard-posselt.com> <20130309044850.GB12167@sigill.intra.peff.net> <513B14EC.4040504@bernhard-posselt.com> <20130310070505.GA15324@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 10 11:58:59 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 10 12:05:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEdxw-0008Hc-KR
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 11:58:56 +0100
+	id 1UEe4f-0005K2-1h
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 12:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751280Ab3CJK6W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Mar 2013 06:58:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35908 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751145Ab3CJK6V convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Mar 2013 06:58:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80E6BB080;
-	Sun, 10 Mar 2013 06:58:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=w51nNfHYCULJ
-	9cgOM2OxUnNVasA=; b=UJuLj4nhEfQ5B8vqaJzQUPMn6Uzk0xZaDf/a0O3Sp9mj
-	p24BYpuqjHCvgFpiifzJO9IU3LoKAILaMDp+ZZDONQG95WlfoXMciwgaMhQPrvHv
-	yPP6iamlkrFBChN1+lKgwZ0F19DEnY46XgJfPztZGXihAhqFi+EHo58JashNZxw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Vcffko
-	TOb3yNt4EtdtJjGjguTE1IT17rR92ZpNAPymrIcwmqExT72hDySGLTE0Zv19Zo0B
-	oFu7ovlPOrvfCff4GGmc4G7OoXOFeNY9FO1p7Xm34rdUP7GJ2hsROpWo1CCfhu45
-	XjDHcgH7HtIKKmc+/pWMTC0qB95zOpf2ALKJo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76CB7B07F;
-	Sun, 10 Mar 2013 06:58:15 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D866BB07B; Sun, 10 Mar 2013
- 06:58:14 -0400 (EDT)
-In-Reply-To: <7vtxojd5u7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 10 Mar 2013 00:20:00 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 68506E68-8971-11E2-AFB6-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751467Ab3CJLF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 07:05:26 -0400
+Received: from suou.newyork.w1r3.net ([204.62.14.108]:59327 "EHLO
+	suou.newyork.w1r3.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751282Ab3CJLFZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 07:05:25 -0400
+Received: from [192.168.1.139] (194-208-147-142.tele.net [194.208.147.142])
+	by suou.newyork.w1r3.net (Postfix) with ESMTPSA id CAB9241A04;
+	Sun, 10 Mar 2013 12:05:23 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
+In-Reply-To: <20130310070505.GA15324@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217798>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+On 03/10/2013 08:05 AM, Jeff King wrote:
+> On Sat, Mar 09, 2013 at 11:54:36AM +0100, Bernhard Posselt wrote:
 >
->> A non-basename pattern that does not contain /**/ can't match anythi=
-ng
->> outside the attached directory. Record its directory level and avoid
->> matching unless the pathname is also at the same directory level.
+>>> Also, I can almost reproduce here, as PatrickHeller/core.git is public.
+>>> However, I suspect the problem is particular to your work built on top,
+>>> which looks like it is at commit 0525bbd73c9015499ba92d1ac654b980aaca35b2.
+>>> Is it possible for you to make that commit available on a temporary
+>>> branch?
+>> What do you mean exactly by that?
+> I just meant to push the work from your local repository somewhere where
+> I could access it to try to replicate the issue. What you did here:
 >
-> Without defining what a "directory level" is, the above is a bit
-> hard to grok, but I think you mean an entry "b/c/*.c" that appears
-> in "a/.gitignore" file will want to match a path that is directly
-> in "a/b/c" directory (and not in its subdirectories),
-> "a/b/x.c" at the two levels deep subdirectory or "a/b/c/d/x.c" that i=
-s
-> four levels deep will never match the pattern.
+>> git clone https://github.com/Raydiation/memorycorruption
+>> cd memorycorruption
+>> git pull --rebase https://github.com/Raydiation/core
+> ...should be plenty. Unfortunately, I'm not able to reproduce the
+> segfault.  All of the patches apply fine, both normally and when run
+> under valgrind.
 >
-> The logic feels sound.
+>> Heres the output of the GIT_TRACE file
+>> [...]
+>> trace: built-in: git 'apply' '--index' '/srv/http/owncloud/.git/rebase-apply/patch'
+> This confirms my suspicion that the problem is in "git apply".
+>
+> You had mentioned before that the valgrind log was very long.  If you're
+> still able to reproduce, could you try running it with valgrind like
+> this:
+>
+>    valgrind -q --trace-children=yes --log-file=/tmp/valgrind.out \
+>      git pull --rebase https://github.com/Raydiation/core
+>
+> Logging to a file instead of stderr should mean we still get output for
+> commands that are invoked with their stderr redirected (which is the
+> case for the "git apply" in question), and using "-q" should eliminate
+> the uninteresting cruft from the log.
+>
+> -Peff
+Do you need debug symbols?
 
-Actually, I think you may be able to do a lot more with a simpler
-change.  If your top-level .gitignore has "a/b/c/*.c" in it, you
-certainly want to mark it not to be applied when you are looking at
-paths directly in directory a/b/ because they will never match, but
-you also know that nothing will match when you are inside a/b/d/,
-even though the pattern and the path you are checking are at the
-same levels.  Your dirlen approach will fail for that case, no?
-
-The idea behind prep_exclude() that organizes the exclode patterns
-into a stack structure and update the groups near the leaves by
-popping those for the old directory we were in and pushing those for
-the new directory we are going into is to give us a place to tweak
-the elements on the whole stack for optimization when we notice that
-we are looking at paths in different directories.  Instead of giving
-a "dirlen" member to each element, you could give a "do not look at
-me" flag to it, and when you notice that you were in a/b/c/ and now
-you are going to look at paths in a/b/d/, you can look at the group
-that was read from the .gitignore from the top-level, and mark
-entries that cannot be relevant (e.g. "a/b/c/*.c") as such.
-
-The mark does not have to be a boolean.  "a/b/*.c" when you are in
-"a/b/c/" can be marked as "This never matches, and I do not have to
-re-check until I pop one level".  When digging deeper to "a/b/c/d",
-you add one to that.  When switching to "a/b/e", you would first pop
-twice ("d" and then "c"), each time decrementing the "I do not have
-to re-check" counter by one, and then when pushing "e" down, you
-notice that you need to re-check, and mark it again as "no need to
-re-check for one pop".  So it is not like you have to re-scan all
-entries textually every time you switch directories. Most entries
-that are level-limited you would increment or decrement its counter
-and only the ones at the level boundary need to be re-checked.
-
-Hmm?
+==2395== Invalid write of size 1
+==2395==    at 0x4C2DB93: memcpy@@GLIBC_2.14 (in 
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2395==    by 0x4076B1: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x40A60F: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x40C29F: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x40CC35: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x40F584: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x4058E7: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x404DD1: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x58F3A14: (below main) (in /usr/lib/libc-2.17.so)
+==2395==  Address 0x5f245c0 is 0 bytes after a block of size 384 alloc'd
+==2395==    at 0x4C2C04B: malloc (in 
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2395==    by 0x4C2C2FF: realloc (in 
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2395==    by 0x4F057B: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x4DDF9F: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x409E9C: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x40C29F: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x40CC35: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x40F584: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x4058E7: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x404DD1: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x58F3A14: (below main) (in /usr/lib/libc-2.17.so)
+==2395==
+==2395== Invalid read of size 1
+==2395==    at 0x4C2DCB4: memcpy@@GLIBC_2.14 (in 
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2395==    by 0x40B0D5: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x40C29F: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x40CC35: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x40F584: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x4058E7: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x404DD1: ??? (in /usr/lib/git-core/git)
+==2395==    by 0x58F3A14: (below main) (in /usr/lib/libc-2.17.so)
+==2395==  Address 0x5f245e1 is not stack'd, malloc'd or (recently) free'd
+==2395==
