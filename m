@@ -1,61 +1,81 @@
-From: Kirill Smelkov <kirr@navytux.spb.ru>
-Subject: Re: [PATCH] format-patch: RFC 2047 says multi-octet character may
- not be split
-Date: Sun, 10 Mar 2013 11:05:26 +0400
-Organization: NAVYTUX.SPB.RU
-Message-ID: <20130310070525.GA4020@vasy.zxlink>
-References: <1362568106-30741-1-git-send-email-kirr@mns.spb.ru>
- <7vd2vcqv1y.fsf@alter.siamese.dyndns.org>
- <20130307105430.GA3049@tugrik.mns.mnsspb.ru>
- <7vobevm6fp.fsf@alter.siamese.dyndns.org>
- <20130309152722.GA32248@mini.zxlink>
- <7vzjyce6jc.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Memory corruption when rebasing with git version 1.8.1.5 on arch
+Date: Sun, 10 Mar 2013 03:05:05 -0400
+Message-ID: <20130310070505.GA15324@sigill.intra.peff.net>
+References: <5139D76D.80703@bernhard-posselt.com>
+ <20130308212831.GA9217@sigill.intra.peff.net>
+ <513A7D80.5000501@bernhard-posselt.com>
+ <20130309044850.GB12167@sigill.intra.peff.net>
+ <513B14EC.4040504@bernhard-posselt.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Komissarov <dak@mnsspb.ru>, git@vger.kernel.org,
-	Jan =?iso-8859-1?Q?H=2E_Sch=F6nherr?= <schnhrr@cs.tu-berlin.de>,
-	kirr@mns.spb.ru
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 10 08:02:42 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Bernhard Posselt <mail@bernhard-posselt.com>
+X-From: git-owner@vger.kernel.org Sun Mar 10 08:05:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEaHI-0002XM-Mx
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 08:02:41 +0100
+	id 1UEaKA-0004hI-Mr
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 08:05:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435Ab3CJHCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Mar 2013 03:02:03 -0400
-Received: from forward2h.mail.yandex.net ([84.201.187.147]:59472 "EHLO
-	forward2h.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751377Ab3CJHCC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Mar 2013 03:02:02 -0400
-Received: from smtp1h.mail.yandex.net (smtp1h.mail.yandex.net [84.201.187.144])
-	by forward2h.mail.yandex.net (Yandex) with ESMTP id F212C700E24;
-	Sun, 10 Mar 2013 11:01:57 +0400 (MSK)
-Received: from smtp1h.mail.yandex.net (localhost [127.0.0.1])
-	by smtp1h.mail.yandex.net (Yandex) with ESMTP id 3D09713400E4;
-	Sun, 10 Mar 2013 11:01:57 +0400 (MSK)
-Received: from unknown (unknown [78.25.121.25])
-	by smtp1h.mail.yandex.net (nwsmtp/Yandex) with ESMTP id 1oDWZh9h-1uDKOcf8;
-	Sun, 10 Mar 2013 11:01:56 +0400
-Received: from kirr by vasy.zxlink with local (Exim 4.80)
-	(envelope-from <kirr@vasy.zxlink>)
-	id 1UEaJz-00014c-L1; Sun, 10 Mar 2013 11:05:27 +0400
+	id S1751453Ab3CJHFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 03:05:09 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42764 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751365Ab3CJHFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 03:05:08 -0400
+Received: (qmail 32627 invoked by uid 107); 10 Mar 2013 07:06:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 10 Mar 2013 03:06:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Mar 2013 03:05:05 -0400
 Content-Disposition: inline
-In-Reply-To: <7vzjyce6jc.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <513B14EC.4040504@bernhard-posselt.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217788>
 
-On Sat, Mar 09, 2013 at 11:07:19AM -0800, Junio C Hamano wrote:
-> Kirill Smelkov <kirr@navytux.spb.ru> writes:
-> > P.S. sorry for the delay - I harmed my arm yesterday.
-> 
-> Ouch. Take care and be well soon.
+On Sat, Mar 09, 2013 at 11:54:36AM +0100, Bernhard Posselt wrote:
 
-Thanks, and thanks fr accepting the patch.
+> >Also, I can almost reproduce here, as PatrickHeller/core.git is public.
+> >However, I suspect the problem is particular to your work built on top,
+> >which looks like it is at commit 0525bbd73c9015499ba92d1ac654b980aaca35b2.
+> >Is it possible for you to make that commit available on a temporary
+> >branch?
+
+> What do you mean exactly by that?
+
+I just meant to push the work from your local repository somewhere where
+I could access it to try to replicate the issue. What you did here:
+
+> git clone https://github.com/Raydiation/memorycorruption
+> cd memorycorruption
+> git pull --rebase https://github.com/Raydiation/core
+
+...should be plenty. Unfortunately, I'm not able to reproduce the
+segfault.  All of the patches apply fine, both normally and when run
+under valgrind.
+
+> Heres the output of the GIT_TRACE file
+> [...]
+> trace: built-in: git 'apply' '--index' '/srv/http/owncloud/.git/rebase-apply/patch'
+
+This confirms my suspicion that the problem is in "git apply".
+
+You had mentioned before that the valgrind log was very long.  If you're
+still able to reproduce, could you try running it with valgrind like
+this:
+
+  valgrind -q --trace-children=yes --log-file=/tmp/valgrind.out \
+    git pull --rebase https://github.com/Raydiation/core
+
+Logging to a file instead of stderr should mean we still get output for
+commands that are invoked with their stderr redirected (which is the
+case for the "git apply" in question), and using "-q" should eliminate
+the uninteresting cruft from the log.
+
+-Peff
