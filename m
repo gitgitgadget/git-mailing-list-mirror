@@ -1,93 +1,114 @@
-From: Michael Fallows <michael@fallo.ws>
-Subject: Re: [PATCH v2] git.c: Remove unnecessary new line
-Date: Sun, 10 Mar 2013 00:10:45 +0000
-Message-ID: <513BCF85.7050605@fallo.ws>
-References: <513BB4A2.8000407@fallo.ws> <20130310000023.GI3908@elie.Belkin>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] mergetools/p4merge: create a base if none
+ available
+Date: Sat, 09 Mar 2013 20:55:55 -0800
+Message-ID: <7v7glfetus.fsf@alter.siamese.dyndns.org>
+References: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
+ <1362856860-15205-1-git-send-email-kevin@bracey.fi>
+ <1362856860-15205-3-git-send-email-kevin@bracey.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 10 01:11:19 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Ciaran Jessup <ciaranj@gmail.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Kevin Bracey <kevin@bracey.fi>
+X-From: git-owner@vger.kernel.org Sun Mar 10 05:56:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UETrC-0006pk-UN
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 01:11:19 +0100
+	id 1UEYJ8-0001Bu-0I
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 05:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307Ab3CJAKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Mar 2013 19:10:53 -0500
-Received: from uk-dedi-rs-01.svrz.com ([87.117.195.124]:45219 "EHLO
-	uk-dedi-rs-01.svrz.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751218Ab3CJAKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Mar 2013 19:10:52 -0500
-Received: from cpc9-tilb8-2-0-cust26.basl.cable.virginmedia.com ([62.31.243.27]:56986 helo=[192.168.1.222])
-	by uk-dedi-rs-01.svrz.com with esmtpa (Exim 4.80)
-	(envelope-from <michael@fallo.ws>)
-	id 1UETqe-0008HI-6m; Sun, 10 Mar 2013 00:10:44 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
-In-Reply-To: <20130310000023.GI3908@elie.Belkin>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - uk-dedi-rs-01.svrz.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - fallo.ws
-X-Get-Message-Sender-Via: uk-dedi-rs-01.svrz.com: authenticated_id: michael@htmlland.net
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751467Ab3CJEz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Mar 2013 23:55:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49201 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751124Ab3CJEz6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Mar 2013 23:55:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F812C20E;
+	Sat,  9 Mar 2013 23:55:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WfsKLz3OF04Mu8iPeKIs741q3oU=; b=h2uTv4
+	xQDkq0tHwk08iyyZBQSwAiDzm6RwvGJ5dpX4RHsrhxR3RXaP2lZkRiPYPjd+tiBr
+	oISLRlKnmxQDVwTuPx0M7PtuHrj7NqfgQDneKYJQtlg8d1o+nQNsuxUD1biEfEk/
+	Mmx/U2V8N7bCYgpZM0V6NNZCgXElZYPne5KZY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pq8GwQnmeCoGw/FgtMT1hmKSfZAjI031
+	r2Hjhz4rMePQqcX6XCJQaj2rmpd4HOMa5oyv6nxuw56brA+w+uV/2i77osZD4GiD
+	HExbpeLYRO+A1AJ9Gg+S8XZtLvqwtU683eCXdy7BP/t79CqtOcx8jeoq9x6gzBo2
+	K20xxmogofU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0381DC20D;
+	Sat,  9 Mar 2013 23:55:58 -0500 (EST)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 535B1C20C; Sat,  9 Mar 2013
+ 23:55:57 -0500 (EST)
+In-Reply-To: <1362856860-15205-3-git-send-email-kevin@bracey.fi> (Kevin
+ Bracey's message of "Sat, 9 Mar 2013 21:20:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CBBA7120-893E-11E2-8AC5-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217777>
 
-On 10/03/13 00:00, Jonathan Nieder wrote:
-> Hi,
->
-> Michael Fallows wrote:
->
->> --- a/git.c
->> +++ b/git.c
->> @@ -316,8 +316,7 @@ static void handle_internal_command(int argc, const char **argv)
->>   		{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
->>   		{ "check-ref-format", cmd_check_ref_format },
->>   		{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
->> -		{ "checkout-index", cmd_checkout_index,
->> -			RUN_SETUP | NEED_WORK_TREE},
->> +		{ "checkout-index", cmd_checkout_index, RUN_SETUP | NEED_WORK_TREE },
->
-> This wrapped line was introduced a while ago (4465f410, checkout-index
-> needs a working tree, 2007-08-04).  It was the first line to wrap, but
-> it was also the longest line at the time.
->
-> Now the longest line is
->
-> 		{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
->
-> (94 columns), so you are right that consistency would suggest dropping
-> the line wrapping for checkout-index.
->
-> But I find it hard to convince myself that alone is worth the churn.
-> In what context did you notice this?  Is the intent to help scripts to
-> parse the commands[] list, or to manipulate it while preserving
-> formatting to avoid distractions?  Did you notice the broken line
-> while reading through and get distracted, or did some syntax
-> highlighting tool notice the oddity, or something else?
->
-> Hope that helps,
-> Jonathan
->
+Kevin Bracey <kevin@bracey.fi> writes:
 
-I do agree with you it does seem like a silly small change in the 
-context of the project! I noticed it when reading through the source 
-code (I felt working with git is nice but why not see what makes it 
-tick). I will admit also, have never contributed to git and my C is 
-nowhere near the standard worthy of any real contribution so this was 
-also a step for me to see exactly how the world of patch contribution 
-works too :D.
+> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+> index 795edd2..aa9a732 100644
+> --- a/git-sh-setup.sh
+> +++ b/git-sh-setup.sh
+> @@ -249,6 +249,19 @@ clear_local_git_env() {
+>  	unset $(git rev-parse --local-env-vars)
+>  }
+>  
+> +# Generate a virtual base file for a two-file merge. On entry the
+> +# base file $1 should be a copy of $2. Uses git apply to remove
+> +# lines from $1 that are not in $3, leaving only common lines.
+> +create_virtual_base() {
+> +	sz0=$(wc -c <"$1")
+> +	@@DIFF@@ -u -La/"$1" -Lb/"$1" "$2" "$3" | git apply --no-add
+> +	sz1=$(wc -c <"$1")
+> +
+> +	# If we do not have enough common material, it is not
+> +	# worth trying two-file merge using common subsections.
+> +	expr $sz0 \< $sz1 \* 2 >/dev/null || : >"$1"
+> +}
+> +
 
-Thanks,
-Michael
+This rewrite is wrong.  It should be
+
+> +	sz0=$(wc -c <"$1")
+> +	@@DIFF@@ -u -La/"$1" -Lb/"$1" "$1" "$3" | git apply --no-add
+> +	sz1=$(wc -c <"$1")
+
+for it to make sense.  "diff $1 $3" is a change to go from $1 to $3;
+with "-La/$1 -Lb/$1", we declare that the change is to be applied to
+$1, and use --no-add to only use the removal from the diff when we
+edit $1 using this mechanism.
+
+The end effect is to in-place edit "$1" to remove what is not common
+with "$3", and sz0/sz1 computation is done on "$1" for this reason.
+Does it (i.e. "$1") shrink sufficiently when we remove the material
+that is not common in it (i.e. "$1") and "$3"?
+
+This part is a two-file operation between $1 and $3; there is
+nothing you would want to pass $2 to influence what the above three
+lines do.
+
+It may happen that the caller has two copies of the same thing,
+$orig and $src1, and uses one for $1 and the other for $2, so you
+won't observe the damage from the incorrect rewriting of the above
+logic, but it invites the next caller to incorrectly feed something
+totally unrelated to $1 and $2.
+
+Please fix it to a function that takes two temporary paths, not
+three.
