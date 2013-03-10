@@ -1,69 +1,89 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 3/6] match_basename: use strncmp instead of strcmp
-Date: Sun, 10 Mar 2013 19:14:25 +0700
-Message-ID: <CACsJy8C+29ebL37kFC21S-b670-ct2yCOjghLPErjwXz1BoQBA@mail.gmail.com>
-References: <1362802190-7331-1-git-send-email-pclouds@gmail.com>
- <1362896070-17456-1-git-send-email-pclouds@gmail.com> <1362896070-17456-4-git-send-email-pclouds@gmail.com>
- <7vy5dvd7yq.fsf@alter.siamese.dyndns.org> <CACsJy8A_4SqLu5L6P0PJ78Lwy12fjL7T2p-KbVEVLJmKNqhyRw@mail.gmail.com>
- <CALWbr2wEJy0p2hcFK_rLtA98koeacE8rS2T=9P130GUFjWKc0Q@mail.gmail.com>
- <CALWbr2x6V6TB9g_nQCgG2r9L__a2wxG28Qi5KTXChHxj5JSQ8w@mail.gmail.com>
- <CACsJy8A4+2t=PMJ+iSFFz-fafkAHYGvm6G4M-qpiO9674sanEQ@mail.gmail.com> <CALWbr2w+HdsOJAXF3974=vx+BtxgCC=bKHetE=ptXTwv7_L0pg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 10 13:15:32 2013
+From: Max Horn <max@quendi.de>
+Subject: Re: rebase: strange failures to apply patc 3-way
+Date: Sun, 10 Mar 2013 14:22:58 +0100
+Message-ID: <C79E1B20-2C42-49FF-A964-285A7049FDED@quendi.de>
+References: <7A483B92-D671-46CA-9EFD-83C6F4C97B5E@quendi.de> <494292C5-EBD9-487B-8846-9D9DD23ACB83@quendi.de> <CADeaMWp_R0HLwEYn7O3oX4-0OoSeqLfzz_2AYXT-Po88nM4HkQ@mail.gmail.com> <205D17C4-F737-46E9-BC48-D16D5948C707@quendi.de> <CADgNjan9v++__TSPE55j7+=BBZrVEkMD52O+9kXAm-C8SRV+Ww@mail.gmail.com> <B21B6CEC-7507-47A1-9BBB-FB95EA6B831F@quendi.de> <CADgNja=Ej8jnYn027GX986VrmuqVemM7aE59rynHzUpToPVaEw@mail.gmail.com> <3B5EA38E-9603-4321-AA3C-74354BBC8BFC@quendi.de> <513B8037.7060107@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 10 14:23:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEfA3-00087G-E4
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 13:15:31 +0100
+	id 1UEgE8-000251-Ry
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Mar 2013 14:23:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752213Ab3CJMPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Mar 2013 08:15:03 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:37002 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751778Ab3CJMPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Mar 2013 08:15:01 -0400
-Received: by mail-ob0-f177.google.com with SMTP id eh20so2485099obb.8
-        for <git@vger.kernel.org>; Sun, 10 Mar 2013 05:14:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=kMjhml+kXj3qCkm1VLKSW1DftyzCDB+i0/Bqe5zwzAY=;
-        b=Ehmw8dQ01LMRLQB3chQQSIzHVjJhBGDd2LHaVmWe9Be1sxHoXnaR8HJsLf8zwLG0nU
-         eiW0k9Svb6ncEQYH1qNNVEV8kwDCXQNEWgbnayqSyE5YgZcfWBWB0Gb4yWqm2hrKEg5y
-         Au/eh+bYKZRBdek/40fsEwBVYfBUS/jHiPlQ9Ly5dgrCHLp2qEUlQn5xys+UcDU/9h5h
-         dS2Pj8IZY2UlBt6jBgX8NhZyUR8vXaWhkdL2de/D3cv+TYepbP1osp4TBVqSLT4WGWUu
-         14/X8X9IEtijHytn6aPfyO/hxyJfk4ZVQQc+ReMj72sT2GKZ5oUmGrZcBAVMDArKsvE0
-         1lyg==
-X-Received: by 10.182.118.104 with SMTP id kl8mr6136477obb.54.1362917696004;
- Sun, 10 Mar 2013 05:14:56 -0700 (PDT)
-Received: by 10.76.27.200 with HTTP; Sun, 10 Mar 2013 05:14:25 -0700 (PDT)
-In-Reply-To: <CALWbr2w+HdsOJAXF3974=vx+BtxgCC=bKHetE=ptXTwv7_L0pg@mail.gmail.com>
+	id S1752684Ab3CJNXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 09:23:22 -0400
+Received: from merkurneu.hrz.uni-giessen.de ([134.176.2.3]:49337 "EHLO
+	merkurneu.hrz.uni-giessen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752616Ab3CJNXV convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 09:23:21 -0400
+Received: from mailgw82.hrz.uni-giessen.de by merkurneu.hrz.uni-giessen.de with ESMTP; Sun, 10 Mar 2013 14:23:11 +0100
+Received: from merkurneu.hrz.uni-giessen.de (merkurneu.hrz.uni-giessen.de [134.176.2.3])
+	by mailgw82.hrz.uni-giessen.de (Postfix) with ESMTP id 13D1B4800085;
+	Sun, 10 Mar 2013 14:23:01 +0100 (CET)
+Received: from [134.176.2.3] by merkurneu.hrz.uni-giessen.de with ESMTP; Sun, 10 Mar 2013 14:23:01 +0100
+In-Reply-To: <513B8037.7060107@gmail.com>
+X-Mailer: Apple Mail (2.1283)
+X-HRZ-JLUG-MailScanner-Information: Passed JLUG virus check
+X-HRZ-JLUG-MailScanner: No virus found
+X-Envelope-From: max@quendi.de
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217806>
 
-On Sun, Mar 10, 2013 at 7:11 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
->>> By the way, if we know the length of the string, we could use memcmp.
->>> This one is allowed to compare 4-bytes at a time (he doesn't care
->>> about end of string). This is true because the value of the length
->>> parameter is no longer "at most".
->>
->> We still need to worry about access violation after NUL when two
->> strings have different lengths. That could be avoided in this
->> particular case, but I think it's too fragile.
->
-> Why would we need to compare if the strings don't have the same length
-> ? We already do that in combine-diff.c:append_lost().
+Sorry for taking so long to reply... :-/
 
-Watching movie and replying to git@ don't mix. You're right we don't
-need to compare if lengths are different. What was I thinking..
--- 
-Duy
+On 09.03.2013, at 19:32, Andrew Wong wrote:
+
+> On 03/09/13 06:26, Max Horn wrote:
+>> It tends to fail in separate places, but eventually "stabilizes". E.g. I just did a couple test rebases, and it failed twice in commit 14, then the third time in commit 15 (which underlines once more that the failures are inappropriate).
+>> 
+>> The fourth time, something new and weird happened:
+>> 
+>> $ git rebase --abort
+>> $ git rebase NEW-PARENT 
+>> Cannot rebase: You have unstaged changes.
+>> Please commit or stash them.
+>> $
+>> 
+>> This is quite suspicious. It appears that git for some reason things a file is dirty when it isn't. That could explain the other rebase failures too, couldn't it? But what might cause such a thing?
+> Yea, that's really suspicious. This could mean there's an issue with
+> when git is checking the index. Try running these a couple times in a
+> clean work tree:
+>    $ git update-index --refresh
+>    $ git diff-files
+> 
+> In a clean work tree, these commands should print nothing. But in your
+> case, these might print random files that git thinks have been modified...
+
+I did run
+
+  touch lib/*.* src/*.* && git update-index --refresh && git diff-files
+
+a couple dozen times (the "problematic" files where in src/ and lib), but nothing happened. I just re-checked, and the rebase still fails in the same why...
+
+Perhaps I should add some printfs into the git source to figure out what exactly it thinks is not right about those files... i.e. how does it come to the conclusion that I have local changes, exactly. I don't know how Git does that -- does it take the mtime from (l)stat into account? Perhaps problems with my machine's clock could be responsible?
+
+
+> 
+> If the commands do print out some files, check the timestamp from the
+> git index and the filesystem:
+>    $ git ls-files --debug file1 file2
+>    $ stat -f "%N %m %c" file1 file2
+> 
+> Is this repo on a network drive? Or is it local drive in your Mac?
+
+Local (some more details also described in my first email on this thread, but I'll happily provide more data if I can).
+
+Thanks again,
+Max
