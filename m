@@ -1,90 +1,92 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH v2 2/3] git p4 test: should honor symlink in p4 client root
-Date: Mon, 11 Mar 2013 17:45:28 -0400
-Message-ID: <1363038329-20185-3-git-send-email-pw@padd.com>
-References: <5139883C.6080308@viscovery.net>
- <1363038329-20185-1-git-send-email-pw@padd.com>
-Cc: =?UTF-8?q?Mikl=C3=B3s=20Fazekas?= <mfazekas@szemafor.com>,
-	John Keeping <john@keeping.me.uk>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 11 22:46:41 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Make help behaviour more consistent
+Date: Mon, 11 Mar 2013 14:50:31 -0700
+Message-ID: <7vhakh8v2w.fsf@alter.siamese.dyndns.org>
+References: <1362937729-9050-1-git-send-email-kevin@bracey.fi>
+ <vpq620yfj6g.fsf@grenoble-inp.fr> <7vppz592v5.fsf@alter.siamese.dyndns.org>
+ <CD3017A6746B45FE8A5F242E4C597B51@PhilipOakley>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
+	"Kevin Bracey" <kevin@bracey.fi>, <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Mon Mar 11 22:51:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFAYK-0003DD-0g
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 22:46:40 +0100
+	id 1UFAcX-0007AH-MT
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 22:51:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754589Ab3CKVqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 17:46:13 -0400
-Received: from honk.padd.com ([74.3.171.149]:40830 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754370Ab3CKVqM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 17:46:12 -0400
-Received: from arf.padd.com (unknown [50.55.138.130])
-	by honk.padd.com (Postfix) with ESMTPSA id B736E3362;
-	Mon, 11 Mar 2013 14:46:11 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id B7F2A2261E; Mon, 11 Mar 2013 17:46:09 -0400 (EDT)
-X-Mailer: git-send-email 1.8.2.rc2.65.g92f3e2d
-In-Reply-To: <1363038329-20185-1-git-send-email-pw@padd.com>
+	id S1754484Ab3CKVuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 17:50:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37964 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753234Ab3CKVue (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Mar 2013 17:50:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03AB4B4DE;
+	Mon, 11 Mar 2013 17:50:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PuSO8mF7iAk8MblKDIyYDOkxd/Y=; b=Y8EiZT
+	pYIGUsO2zasujo+rqFWYWjrZ4tjEkfgYqBBPInGGrW2Kw3mGav4cUz3NWLCc1/c9
+	5PKLpCluN6s18Yx0DNttal0WBD7EmNqlp3qqWl6/Qre/H8VSyYoKUOLRR7yAH2/6
+	XSv+t4brUgCjxx4ugORAppLvONqcxUgzc1VVQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=j/BWLeLMZaaMEWZOpliU4QDfl74rR24M
+	34BX7ERLjMVgJgGFWbNF+AtF4oPo6fkmf84dGxLe0iFcWGgnL4DZjM+nAUDsVdGD
+	4i3d1cW2ipAIypXMGwy4QSTFGitDbiSAi0tKl5F9ba8R0Cc9HzS+Qp34piAxyZ/q
+	08cmkIvsqqY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E9FA7B4DD;
+	Mon, 11 Mar 2013 17:50:33 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57864B4DA; Mon, 11 Mar 2013
+ 17:50:33 -0400 (EDT)
+In-Reply-To: <CD3017A6746B45FE8A5F242E4C597B51@PhilipOakley> (Philip Oakley's
+ message of "Mon, 11 Mar 2013 21:06:33 -0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B3130D64-8A95-11E2-A4B7-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217916>
 
-This test fails when the p4 client root includes
-a symlink.  It complains:
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-    Path /vol/bar/projects/foo/... is not under client root /p/foo
+> From: "Junio C Hamano" <gitster@pobox.com>
+>> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>>
+>>>   See 'git help git' for general help about Git.
+>>>
+>>> to the output of "git help"?
+>> ...
+>> That sounds like a good direction to go in.
+>
+> My earlier attempt, and Junio's reply
+> http://thread.gmane.org/gmane.comp.version-control.git/217352
 
-and dumps a traceback.
+Yeah, I threw "git help git" in the general category of "git help
+<cmd>" in that message, and now I realize that it may arguably be
+confusing to some people.
 
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
- t/t9808-git-p4-chdir.sh | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+Perhaps spend one more line to do something like this?
 
-diff --git a/t/t9808-git-p4-chdir.sh b/t/t9808-git-p4-chdir.sh
-index 55c5e36..4773296 100755
---- a/t/t9808-git-p4-chdir.sh
-+++ b/t/t9808-git-p4-chdir.sh
-@@ -56,6 +56,33 @@ test_expect_success 'p4 client root would be relative due to clone --dest' '
- 	)
- '
- 
-+# When the p4 client Root is a symlink, make sure chdir() does not use
-+# getcwd() to convert it to a physical path.
-+test_expect_failure SYMLINKS 'p4 client root symlink should stay symbolic' '
-+	physical="$TRASH_DIRECTORY/physical" &&
-+	symbolic="$TRASH_DIRECTORY/symbolic" &&
-+	test_when_finished "rm -rf \"$physical\"" &&
-+	test_when_finished "rm \"$symbolic\"" &&
-+	mkdir -p "$physical" &&
-+	ln -s "$physical" "$symbolic" &&
-+	test_when_finished cleanup_git &&
-+	(
-+		P4CLIENT=client-sym &&
-+		p4 client -i <<-EOF &&
-+		Client: $P4CLIENT
-+		Description: $P4CLIENT
-+		Root: $symbolic
-+		LineEnd: unix
-+		View: //depot/... //$P4CLIENT/...
-+		EOF
-+		git p4 clone --dest="$git" //depot &&
-+		cd "$git" &&
-+		test_commit file2 &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git p4 submit
-+	)
-+'
-+
- test_expect_success 'kill p4d' '
- 	kill_p4d
- '
--- 
-1.8.2.rc2.65.g92f3e2d
+    'git help -a' and 'git help -g' lists available subcommands and
+    concept guides. See 'git help <command>' or 'git help <concept>'
+    to read about a specific subcommand or concept.
+    For an overview, see 'git help git'.
+
+I am neutral between the above and this:
+
+    For an overview, see 'git help git'.
+    'git help -a' and 'git help -g' lists available subcommands and
+    concept guides. See 'git help <command>' or 'git help <concept>'
+    to read about a specific subcommand or concept.
+
+Hrm?
