@@ -1,117 +1,79 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Textconv
-Date: Mon, 11 Mar 2013 15:40:20 +0100
-Message-ID: <513DECD4.8080002@drmicha.warpmail.net>
-References: <513DA7E1.7050206@mylovecompany.com> <vpqtxoicl2l.fsf@grenoble-inp.fr> <513DB273.2090007@mylovecompany.com> <vpqd2v6b4n5.fsf@grenoble-inp.fr> <513DC04D.9090904@mylovecompany.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 0/6] Exclude optimizations
+Date: Mon, 11 Mar 2013 22:11:21 +0700
+Message-ID: <CACsJy8D=P0Fyg5MoVry8JnsxsKsrQZXqWsvi_Yrb-G_VfCtDRg@mail.gmail.com>
+References: <1362802190-7331-1-git-send-email-pclouds@gmail.com> <1362896070-17456-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Dmitry Ilin <dmitry@mylovecompany.com>
-X-From: git-owner@vger.kernel.org Mon Mar 11 15:40:48 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 11 16:12:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UF3u8-0007NF-W0
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 15:40:45 +0100
+	id 1UF4Ol-0005Ni-4x
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 16:12:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835Ab3CKOkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 10:40:19 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:55847 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751868Ab3CKOkS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Mar 2013 10:40:18 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 43A6220A6D;
-	Mon, 11 Mar 2013 10:40:17 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute4.internal (MEProxy); Mon, 11 Mar 2013 10:40:17 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=ll9GZFYBNFQ0LeGczrS+UM
-	hSqCs=; b=qvThkaZO9Bo/pQxumKsExAu0DJKUcN9EHsLwKE6Z2IkysxPvYxTg0X
-	JD01U1ZJ6boEjRHdR/5EycrKEKHjsTxHbZlmQ7n5u7EchyYYoKj/fNfHBIFtN7C8
-	U5lYt5qE/XjmnVht7tPbyeTUgeCfbZmznWPhJWdtNqkoclw/Ydaa4=
-X-Sasl-enc: hBjMz1iRE0bs3H6UhaKie+aXNelN92BeeUquKH+n6Llu 1363012816
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 971A7C80E8C;
-	Mon, 11 Mar 2013 10:40:16 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130219 Thunderbird/17.0.3
-In-Reply-To: <513DC04D.9090904@mylovecompany.com>
+	id S1752821Ab3CKPL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 11:11:56 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:54944 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751665Ab3CKPLz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Mar 2013 11:11:55 -0400
+Received: by mail-oa0-f42.google.com with SMTP id i18so4661941oag.29
+        for <git@vger.kernel.org>; Mon, 11 Mar 2013 08:11:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=u7j/sMV6df2NzlI8DF/n54K3FxBp2Wi6FS8JKxPo6D0=;
+        b=U7KRULDgneFWBQhL5Oe9fjz8DpQEmOJDjS1sgK8PhbInqc54GvKVrNY3XRVKv5N4bE
+         pnFckilsAFoez8/foGbsPU8Y2azp687UZt3eHJcuq4HSehQ1+bALOcjzpiyv8BjSW5tr
+         v9t8GG1nifprlt4VwtUW+B88TVdYXafgJsWm0Jboza8wRzSpAcNnedBCTK12RbhyltOu
+         3QkyAX5UNlMR2Dno+qjyZc1nZlekiX6gDhCP9dFLovZxxq7B3YLf8vB2pdVJmD4ksEHq
+         G1zvcDQYOWIYwHHg7IAufFbFJ8jDulXzVftu46BhMUku9a6pvvpWgIhM9IbTHl969KoG
+         djxg==
+X-Received: by 10.182.235.49 with SMTP id uj17mr8877724obc.18.1363014713094;
+ Mon, 11 Mar 2013 08:11:53 -0700 (PDT)
+Received: by 10.76.27.200 with HTTP; Mon, 11 Mar 2013 08:11:21 -0700 (PDT)
+In-Reply-To: <1362896070-17456-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217878>
 
-Dmitry Ilin venit, vidit, dixit 11.03.2013 12:30:
-> I tried this command and I got following result:
-> 
-> trace: built-in: git 'show' 'a1bffde'
-> trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
-> '\''abcde'\'' 2> /dev/null || cat'
-> trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
-> '\''abcde'\'' 2> /dev/null || cat' 'openssl enc -d -base64 -aes-256-ecb 
-> -k '\''abcde'\'' 2> /dev/null || cat'
-> trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
-> '\''abcde'\'' -in $1 2> /dev/null || cat $1' '/tmp/CLPGPk_config.js'
-> trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
-> '\''abcde'\'' -in $1 2> /dev/null || cat $1 "$@"' 'openssl enc -d 
-> -base64 -aes-256-ecb -k '\''abcde'\'' -in $1 2> /dev/null || cat $1' 
-> '/tmp/CLPGPk_config.js'
-> trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
-> '\''abcde'\'' 2> /dev/null || cat'
-> trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
-> '\''abcde'\'' 2> /dev/null || cat' 'openssl enc -d -base64 -aes-256-ecb 
-> -k '\''abcde'\'' 2> /dev/null || cat'
-> trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
-> '\''abcde'\'' -in $1 2> /dev/null || cat $1' '/tmp/Uyc2Dj_config.js'
-> trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
-> '\''abcde'\'' -in $1 2> /dev/null || cat $1 "$@"' 'openssl enc -d 
-> -base64 -aes-256-ecb -k '\''abcde'\'' -in $1 2> /dev/null || cat $1' 
-> '/tmp/Uyc2Dj_config.js'
-> diff --git a/path/config.js b/path/config.js
-> index c4ad2d4..a67d13f 100644
-> --- a/path/config.js
-> +++ b/path/config.js
-> 
-> 
-> And also not encrypted data of my commit.
-> 
-> 
-> On 03/11/2013 02:41 PM, Matthieu Moy wrote:
->> Dmitry Ilin <dmitry@mylovecompany.com> writes:
->>
->>> I mean that our filter doesn't work with 'git show' and I need to
->>> enable it for this command.
->>>
->>> This is part of my git config file:
->>>
->>> [filter "openssl"]
->>>     smudge = openssl enc -d -base64 -aes-256-ecb -k 'abcde' 2>
->>> /dev/null || cat
->>>     clean = openssl enc -base64 -aes-256-ecb -S '12345' -k 'abcde'
->>> [diff "openssl"]
->>>     textconv = openssl enc -d -base64 -aes-256-ecb -k 'abcde' -in "$1"
->>> 2> /dev/null || cat "$1"
->>> [merge]
->>>     renormalize = true
->> Maybe a bad interaction between the [filter ...] section and the
->> [textconv ...] one. Can you run:
->>
->> GIT_TRACE=true git show <some-relevant-commit>
->>
->> to see what's going on?
->>
-> 
+The hunt continues.. (and thanks everyone for suggestions). Now
+is_excluded() (and exclude machinery) is no longer the hot spot in
+read_directory. index_name_exists is the new star:
 
-"git show commit" uses textconv by default for the patch, but "git show
-blob" does not. There's a series on the list which deals with textconv
-for "grep" and "show blob", but I haven't had the time to polish it up.
-I don't think it's cooking in pu yet, but I've been running with it
-since. "running git with it", that is, not "running away with it" ;)
+function                  time (in seconds)
+treat_leading_path:       0.000
+read_directory:           0.289
++treat_one_path:          0.147
+++is_excluded:            0.013
++++prep_exclude:          0.006
++++matching:              0.004
+++dir_exists_in_index:    0.008
+++index_name_exists:      0.117 <--
++++lazy_init_name_hash:   0.060
++simplify_away:           0.004
++dir_add_name:            0.000
 
-Michael
+real    0m0.372s
+user    0m0.256s
+sys     0m0.114s  <-- can't kill this one (*) until we get inotify support
+
+I think if we save the hash in index, we could nearly cut
+lazy_init_name_hash out (or not, perf reported insert_hash near the
+top, not hash_name). Any ideas to further reduce iname_name_exists
+cost are welcome. 0.117s on 2.50GHz turns to 0.549s on my Atom 1.6GHz,
+so I think it's worth doing something about it.
+
+(*) I tried breadth-first search, checking for .gitignore existence
+before opening, chdir() to shorten pathnames. Nothing worked.
+-- 
+Duy
