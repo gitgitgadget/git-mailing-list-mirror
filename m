@@ -1,59 +1,91 @@
-From: Lawrence Mitchell <wence@gmx.li>
-Subject: Re: Rewriting references to existing commits in commit messages with filter-branch
-Date: Mon, 11 Mar 2013 12:06:29 +0000
-Message-ID: <87haki2la2.fsf@gmx.li>
-References: <E1UF1Ag-0006m3-5k@smtp.tt-solutions.com>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [RFC/PATCH] git-completion.bash: remove bashism to fix ZSH compatibility
+Date: Mon, 11 Mar 2013 13:21:27 +0100
+Message-ID: <1363004487-1193-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 11 13:07:09 2013
+X-From: git-owner@vger.kernel.org Mon Mar 11 13:22:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UF1VS-0000Ye-Q9
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 13:07:07 +0100
+	id 1UF1jr-0006EG-Vq
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 13:22:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920Ab3CKMGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 08:06:40 -0400
-Received: from plane.gmane.org ([80.91.229.3]:44852 "EHLO plane.gmane.org"
+	id S1753939Ab3CKMVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 08:21:33 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41250 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753751Ab3CKMGk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 08:06:40 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UF1VM-0000Uw-SP
-	for git@vger.kernel.org; Mon, 11 Mar 2013 13:07:00 +0100
-Received: from e4300lm.epcc.ed.ac.uk ([129.215.63.156])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 11 Mar 2013 13:07:00 +0100
-Received: from wence by e4300lm.epcc.ed.ac.uk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 11 Mar 2013 13:07:00 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: e4300lm.epcc.ed.ac.uk
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.3.50 (gnu/linux)
-Cancel-Lock: sha1:2Kb3LneB20F/7D7trUgZWNuFSUY=
+	id S1753751Ab3CKMVd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Mar 2013 08:21:33 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r2BCLRpu002459
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 11 Mar 2013 13:21:27 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1UF1jM-0003Jo-JG; Mon, 11 Mar 2013 13:21:28 +0100
+Received: from moy by anie with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1UF1jM-0000Ch-Fh; Mon, 11 Mar 2013 13:21:28 +0100
+X-Mailer: git-send-email 1.8.2.rc3.16.g0a33571.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 11 Mar 2013 13:21:27 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r2BCLRpu002459
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1363609290.22665@u8o+b5zm35fA3teWiTxJjQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217871>
 
-Vadim Zeitlin wrote:
+The function-wide redirection used for __git_ls_files_helper and
+__git_diff_index_helper work only with bash. Using ZSH, trying to
+complete an inexistant directory gave this:
 
-[...]
+  git add no-such-dir/__git_ls_files_helper:cd:2: no such file or directory: no-such-dir/
 
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+These two instances seem to be the only ones in the file.
 
-> git filter-branch --msg-filter svnmsg2git --tag-name-filter cat -- --all
+I'm not sure whether the 2>/dev/null would be needed for the command
+on the RHS of the && too (git ls-files and git diff-index).
 
-git rev-list lists by default in chronological order.  Do you
-want to pass --topo-order as one of the rev-list options?
-[...]
+ contrib/completion/git-completion.bash | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Lawrence
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index b62bec0..0640274 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -300,8 +300,8 @@ __git_index_file_list_filter ()
+ __git_ls_files_helper ()
+ {
+ 	# NOTE: $2 is not quoted in order to support multiple options
+-	cd "$1" && git ls-files --exclude-standard $2
+-} 2>/dev/null
++	cd "$1" 2>/dev/null && git ls-files --exclude-standard $2
++}
+ 
+ 
+ # Execute git diff-index, returning paths relative to the directory
+@@ -309,8 +309,8 @@ __git_ls_files_helper ()
+ # specified in the second argument.
+ __git_diff_index_helper ()
+ {
+-	cd "$1" && git diff-index --name-only --relative "$2"
+-} 2>/dev/null
++	cd "$1" 2>/dev/null && git diff-index --name-only --relative "$2"
++}
+ 
+ # __git_index_files accepts 1 or 2 arguments:
+ # 1: Options to pass to ls-files (required).
 -- 
-Lawrence Mitchell <wence@gmx.li>
+1.8.2.rc3.16.g0a33571.dirty
