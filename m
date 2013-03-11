@@ -1,121 +1,115 @@
-From: Dmitry Ilin <dmitry@mylovecompany.com>
-Subject: Re: Textconv
-Date: Mon, 11 Mar 2013 15:30:21 +0400
-Message-ID: <513DC04D.9090904@mylovecompany.com>
-References: <513DA7E1.7050206@mylovecompany.com> <vpqtxoicl2l.fsf@grenoble-inp.fr> <513DB273.2090007@mylovecompany.com> <vpqd2v6b4n5.fsf@grenoble-inp.fr>
+From: Paul Campbell <pcampbell@kemitix.net>
+Subject: Re: [PATCH v2 05/23] contrib/subtree: Add commands pull_all and push_all
+Date: Mon, 11 Mar 2013 11:49:14 +0000
+Message-ID: <CALeLG_=JbuZJs3dt26aS+kNMyZKC=kBXs4+OMpdQ7fC0nUyTAQ@mail.gmail.com>
+References: <1362958891-26941-1-git-send-email-pcampbell@kemitix.net>
+	<1362958891-26941-6-git-send-email-pcampbell@kemitix.net>
+	<7vk3pebkac.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 11 12:30:54 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>, David Greene <greened@obbligato.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 11 12:49:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UF0wP-0001hZ-Rb
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 12:30:54 +0100
+	id 1UF1Ee-0001Px-BG
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 12:49:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754010Ab3CKLa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 07:30:27 -0400
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:53406 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753970Ab3CKLa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 07:30:27 -0400
-Received: by mail-lb0-f177.google.com with SMTP id go11so2966692lbb.22
-        for <git@vger.kernel.org>; Mon, 11 Mar 2013 04:30:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mylovecompany.com; s=google;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=T63jvYqPCzQB7WH+d6OIbPbsN1BVVDtmIbNjRsfWrBI=;
-        b=YJe4blPe2hj5sUw4/8VLh8vVNYziI1EjN6LW2Weu31T+ag/TMEx7Jzhp0rJduNaZkx
-         s70PvnQVNIEd9ZJH/yTKfvyq4E9XyTqAcKJu+AzjBGKHvYpamRpDbSqUhvAuyOhjsEWE
-         qRnqWO240izSEpIRxku4AdBGD7PQVKyeVMd1o=
+	id S1754028Ab3CKLtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 07:49:17 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:58899 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753886Ab3CKLtP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Mar 2013 07:49:15 -0400
+Received: by mail-ob0-f177.google.com with SMTP id eh20so3138865obb.8
+        for <git@vger.kernel.org>; Mon, 11 Mar 2013 04:49:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=T63jvYqPCzQB7WH+d6OIbPbsN1BVVDtmIbNjRsfWrBI=;
-        b=ly/mULB1WZsujxhWiUCBZiBGC3oQ3Q7lccOfv1B424GQG2hWxNX36dpwuvTPTlkhbw
-         cKE/Qoao0lHIAMicdRLlRC8W/t6avyczWIkEUivblU8e/oTPOhHRTga9sSJVZm0WKti7
-         Lwcy3Z7oMZTCl1/ILBJqRSymZh3W6lrbU2F5PO8UeECQCl5vrVBCArpdM/MCHfCrrYcO
-         bYLHPDNUBbNa8cD7QZOcXUy2O+n0lF9Oz6nv1Y6qLs/8BsAhKN7lV2cX8U+152Em8Rp/
-         krNrCqlSuGXVcHjWDGXAvpvnmDYmfCKugu5ChXAVWsUP7I4owG0oDgQBuUo13C7lEuwd
-         RNaw==
-X-Received: by 10.152.132.170 with SMTP id ov10mr9867649lab.21.1363001425339;
-        Mon, 11 Mar 2013 04:30:25 -0700 (PDT)
-Received: from [192.168.1.11] (broadband-178-140-233-175.nationalcablenetworks.ru. [178.140.233.175])
-        by mx.google.com with ESMTPS id fz16sm7109828lab.5.2013.03.11.04.30.22
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 11 Mar 2013 04:30:23 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
-In-Reply-To: <vpqd2v6b4n5.fsf@grenoble-inp.fr>
-X-Gm-Message-State: ALoCoQm6wy3l1VLvSagiixb2/C4fGkX2hBBkO7YbKnSU6lfVWU988E1LqFAuO9h+jXg/LQ/J/v8Q
+        h=mime-version:x-received:x-originating-ip:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type:x-gm-message-state;
+        bh=PABVGNdu22p9g+8BD3YrBJsqZ0+ZGCSwAUtdDcwR4N8=;
+        b=i9O86cLPViaNt0lzya9KQyolX8fYk3eFN5vNoEzaYYvaKCDNfCGc0Wy6FqkXnoaCNu
+         N8Bee7fPEf/YNLaZYMRJlJwk1KrnmYZag2h39qJaSHUJU4JbkeZ6yfkVqGhx0rY/cH92
+         pq+NstS2BIOELI7Mhklrm9pe1ayWD+lWxFZPbALgOBIbGx9Om8hxqROi0DAExKct6F2a
+         gAclzY4c+MoHAhfR8TnC4+Kn87b8NwkZfesSVjOJZaiUYjqhkkpdop0FmoDHIBB9GpmA
+         Xuf1S7rR5fo/fiGaOv2VZ6TQcXk3Cb+WTHhosk4DeOMLgCUX1yCSnXMWoqfp0Wm7Noca
+         +eKg==
+X-Received: by 10.182.93.193 with SMTP id cw1mr8187227obb.93.1363002555142;
+ Mon, 11 Mar 2013 04:49:15 -0700 (PDT)
+Received: by 10.76.122.109 with HTTP; Mon, 11 Mar 2013 04:49:14 -0700 (PDT)
+X-Originating-IP: [212.219.195.16]
+In-Reply-To: <7vk3pebkac.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQlhJdXadYtRsGZxCqjV3iIf6xKp/VHGW0VSk1k8yQq+e6a9Ajs7XlpRLtH1lZNexiv6fhbV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217868>
 
-I tried this command and I got following result:
-
-trace: built-in: git 'show' 'a1bffde'
-trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
-'\''abcde'\'' 2> /dev/null || cat'
-trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
-'\''abcde'\'' 2> /dev/null || cat' 'openssl enc -d -base64 -aes-256-ecb 
--k '\''abcde'\'' 2> /dev/null || cat'
-trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
-'\''abcde'\'' -in $1 2> /dev/null || cat $1' '/tmp/CLPGPk_config.js'
-trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
-'\''abcde'\'' -in $1 2> /dev/null || cat $1 "$@"' 'openssl enc -d 
--base64 -aes-256-ecb -k '\''abcde'\'' -in $1 2> /dev/null || cat $1' 
-'/tmp/CLPGPk_config.js'
-trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
-'\''abcde'\'' 2> /dev/null || cat'
-trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
-'\''abcde'\'' 2> /dev/null || cat' 'openssl enc -d -base64 -aes-256-ecb 
--k '\''abcde'\'' 2> /dev/null || cat'
-trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
-'\''abcde'\'' -in $1 2> /dev/null || cat $1' '/tmp/Uyc2Dj_config.js'
-trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
-'\''abcde'\'' -in $1 2> /dev/null || cat $1 "$@"' 'openssl enc -d 
--base64 -aes-256-ecb -k '\''abcde'\'' -in $1 2> /dev/null || cat $1' 
-'/tmp/Uyc2Dj_config.js'
-diff --git a/path/config.js b/path/config.js
-index c4ad2d4..a67d13f 100644
---- a/path/config.js
-+++ b/path/config.js
-
-
-And also not encrypted data of my commit.
-
-
-On 03/11/2013 02:41 PM, Matthieu Moy wrote:
-> Dmitry Ilin <dmitry@mylovecompany.com> writes:
+On Mon, Mar 11, 2013 at 5:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Campbell <pcampbell@kemitix.net> writes:
 >
->> I mean that our filter doesn't work with 'git show' and I need to
->> enable it for this command.
+>> From: bibendi <bibendi@bk.ru>
 >>
->> This is part of my git config file:
+>> For each subtree listed in .gittrees perform a push or a pull.
 >>
->> [filter "openssl"]
->>     smudge = openssl enc -d -base64 -aes-256-ecb -k 'abcde' 2>
->> /dev/null || cat
->>     clean = openssl enc -base64 -aes-256-ecb -S '12345' -k 'abcde'
->> [diff "openssl"]
->>     textconv = openssl enc -d -base64 -aes-256-ecb -k 'abcde' -in "$1"
->> 2> /dev/null || cat "$1"
->> [merge]
->>     renormalize = true
-> Maybe a bad interaction between the [filter ...] section and the
-> [textconv ...] one. Can you run:
+>> Signed-off-by: Paul Campbell <pcampbell@kemitix.net>
+>>
+>> Conflicts:
+>>       contrib/subtree/git-subtree.sh
 >
-> GIT_TRACE=true git show <some-relevant-commit>
+> The "Conflicts:" part is totally irrelevant.  Please remove.
 >
-> to see what's going on?
+>> ---
+>>  contrib/subtree/git-subtree.sh | 25 ++++++++++++++++++++++---
+>>  1 file changed, 22 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+>> index 1aff956..ddae56e 100755
+>> --- a/contrib/subtree/git-subtree.sh
+>> +++ b/contrib/subtree/git-subtree.sh
+>> @@ -12,6 +12,7 @@ git subtree add   --prefix=<prefix> <commit>
+>>  git subtree add   --prefix=<prefix> <repository> <commit>
+>>  git subtree merge --prefix=<prefix> <commit>
+>>  git subtree pull  --prefix=<prefix> <repository> <refspec...>
+>> +git subtree pull_all
 >
+> Why isn't it "pull --all"?
+>
+>>  git subtree push  --prefix=<prefix> <repository> <refspec...>
+>
+> Where did "push_all" go?
+>
+>> +cmd_pull_all()
+>> +{
+>> +    git config -f .gittrees -l | grep subtree | grep path | grep -o '=.*' | grep -o '[^=].*' |
+>
+> "grep -o" is not even in POSIX.  Besides, what is this trying to
+> parse?  Is it expected to match lines like
+>
+>         path.subtree=trash
+>
+> with this, or is it more like you only want something like this:
+>
+>         subtree.over/there.path=foo
+>
+> in which case you would want to read with something like
+>
+>         sed -n -e 's/^subtree\...*\.path=\(.*\)/\1/p'
+>
+> instead (modulo the usual caveat on $IFS whitespaces in path)?
+>
+>> +        while read path; do
+>> +            git subtree pull -P $path master || exit $?
+>> +        done
+>> +}
+>
+> I'd stop looking at this series myself at this step for now.
+
+Thanks for your feedback. Plenty there for me already to get cracking on.
+
+-- 
+Paul [W] Campbell
