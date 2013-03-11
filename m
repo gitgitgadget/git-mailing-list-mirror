@@ -1,115 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] add: add a newline at the end of pathless 'add
- [-u|-A]' warning
-Date: Mon, 11 Mar 2013 09:06:46 -0700
-Message-ID: <7v7gldc44p.fsf@alter.siamese.dyndns.org>
-References: <vpqk3pefjs4.fsf@grenoble-inp.fr>
- <1362988893-27539-1-git-send-email-Matthieu.Moy@imag.fr>
- <1362988893-27539-2-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: [RFC/PATCH] git-completion.bash: remove bashism to fix ZSH
+ compatibility
+Date: Mon, 11 Mar 2013 09:17:31 -0700
+Message-ID: <7v38w1c3ms.fsf@alter.siamese.dyndns.org>
+References: <1363004487-1193-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Manlio Perillo <manlio.perillo@gmail.com>
 To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 11 17:07:25 2013
+X-From: git-owner@vger.kernel.org Mon Mar 11 17:18:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UF5Fy-0000Xx-RA
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 17:07:23 +0100
+	id 1UF5QH-0002gF-6O
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 17:18:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753821Ab3CKQGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 12:06:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64271 "EHLO
+	id S1753871Ab3CKQRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 12:17:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37167 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753588Ab3CKQGt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 12:06:49 -0400
+	id S1753540Ab3CKQRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Mar 2013 12:17:34 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF294B8F9;
-	Mon, 11 Mar 2013 12:06:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67DD4BCD8;
+	Mon, 11 Mar 2013 12:17:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=m4bF6Hr0SX9jCEBQtVoQgCra8bM=; b=LLIi1l
-	+2cPEWsqMdlwx4wi7HvLefDYj5m4a6AOsYr7fvqeSQ0Y7AAU4pNJww0YBHKzJyFD
-	+ZAtAq4jUIWj4rTkplK8xBV9lhC2KWzJlbvNXjyin6OmpbNdT9XszfbxUIj5DO9l
-	KuA8g1DdwTUTNLJAADFZW4ctVyNN2mo33M8Yk=
+	:content-type; s=sasl; bh=lbO2LWV+Ogb5wL9ZlQy/UaYcoSU=; b=IFgm+4
+	RsRqstdHw0/HVBF2Mh3uJAGSaKCzrwRgGNWdPF+x0pw/47620inkKfL4+trpBund
+	Cd9sAo7zmSiE6f5j9dZWiYhd/EZxoI07aY4auuCDae5wAcJChqQGfZ+FUxTj7W9B
+	ddz881EKrwUVEljAk0OiJzYXmjyYahTAEon0w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XTX6cIX7veQUPkDenA3S8yiyV4v1HXwO
-	th/jqR78mrajPEQQPeJKyvmftF11vl2NpukOGvKQ1rFQpLC5aecYAOVIYeAPPRtq
-	OHWXKYezQ1CTfb+pAGjkf8wKP7pxA70dF1SYe6TrZz8tY5X2UcgR7rP0QHsxTzYY
-	HAAUbOZ5zLA=
+	:content-type; q=dns; s=sasl; b=HPFUv4Z7VAHooxvj1Zer1gTXbZbcDhoz
+	WyLDemaDXNKNpY2XuupWKucv+LzrK6ShMuvsSjghZ6MNvZUw6svHQ8oNhTtMXmgZ
+	Cb4KWUy2HhKig+GfJiS/KEw+t/2CZmBfv8l+MthUT28WXN4tiKxdefdEfrtzZb0q
+	h8LZivJc8t0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0DA0B8F8;
-	Mon, 11 Mar 2013 12:06:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C4E7BCD7;
+	Mon, 11 Mar 2013 12:17:33 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0C655B8F7; Mon, 11 Mar 2013
- 12:06:47 -0400 (EDT)
-In-Reply-To: <1362988893-27539-2-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Mon, 11 Mar 2013 09:01:33 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF15BBCD5; Mon, 11 Mar 2013
+ 12:17:32 -0400 (EDT)
+In-Reply-To: <1363004487-1193-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Mon, 11 Mar 2013 13:21:27 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AD6EBE9C-8A65-11E2-A05A-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2DAF3E5A-8A67-11E2-8EB0-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217884>
 
 Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> When the commands give an actual output (e.g. when ran with -v), the
-> output is visually mixed with the warning. The newline makes the actual
-> output more visible.
+> The function-wide redirection used for __git_ls_files_helper and
+> __git_diff_index_helper work only with bash. Using ZSH, trying to
+> complete an inexistant directory gave this:
+>
+>   git add no-such-dir/__git_ls_files_helper:cd:2: no such file or directory: no-such-dir/
 >
 > Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 > ---
 
-It would have been easier to immediately understand what is going on
-if you said "blank line" instead of "newline" ;-)
+This is not bash-ism but POSIX.1, even though it is not very well
+known.  I recall commenting on this exact pattern during the review.
 
-An obvious issues is what if user does not run with "-v" or if "-v"
-produces no results.  We will be left with an extra blank line at
-the end.
+  http://thread.gmane.org/gmane.comp.version-control.git/213232/focus=213286
 
-I suspect that the true reason why the warning does not stand out
-and other output looks mixed in it may be because we only prefix the
-first line with the "warning: " label.  In the longer term, I have a
-feeling that we should be showing something like this instead:
+After all, I was right when I said that some implementations may get
+it wrong and we shouldn't use the construct X-<.
 
-    $ cd t && echo >>t0000*.sh && git add -u -v
-    warning: The behavior of 'git add --update (or -u)' with no path ar...
-    warning: subdirectory of the tree will change in Git 2.0 and should...
-    warning: To add content for the whole tree, run:
-    warning:
-    warning:  git add --update :/
-    warning:   (or git add -u :/)
-    warning:
-    warning: To restrict the command to the current directory, run:
-    warning:
-    warning:   git add --update .
-    warning:   (or git add -u .)
-    warning:
-    warning: With the current Git version, the command is restricted to...
-    add 't/t0000-basic.sh'
-
-using a logic similar to what strbuf_add_commented_lines() and
-strbuf_add_lines() use.
-
->  builtin/add.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> These two instances seem to be the only ones in the file.
 >
-> diff --git a/builtin/add.c b/builtin/add.c
-> index ab1c9e8..620bf00 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -344,7 +344,7 @@ static void warn_pathless_add(const char *option_name, const char *short_name) {
->  		  "  git add %s .\n"
->  		  "  (or git add %s .)\n"
->  		  "\n"
-> -		  "With the current Git version, the command is restricted to the current directory."),
-> +		  "With the current Git version, the command is restricted to the current directory.\n"),
->  		option_name, short_name,
->  		option_name, short_name,
->  		option_name, short_name);
+> I'm not sure whether the 2>/dev/null would be needed for the command
+> on the RHS of the && too (git ls-files and git diff-index).
+
+It would not hurt to discard their standard error.
+
+>  contrib/completion/git-completion.bash | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index b62bec0..0640274 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -300,8 +300,8 @@ __git_index_file_list_filter ()
+>  __git_ls_files_helper ()
+>  {
+>  	# NOTE: $2 is not quoted in order to support multiple options
+> -	cd "$1" && git ls-files --exclude-standard $2
+> -} 2>/dev/null
+> +	cd "$1" 2>/dev/null && git ls-files --exclude-standard $2
+> +}
+>  
+>  
+>  # Execute git diff-index, returning paths relative to the directory
+> @@ -309,8 +309,8 @@ __git_ls_files_helper ()
+>  # specified in the second argument.
+>  __git_diff_index_helper ()
+>  {
+> -	cd "$1" && git diff-index --name-only --relative "$2"
+> -} 2>/dev/null
+> +	cd "$1" 2>/dev/null && git diff-index --name-only --relative "$2"
+> +}
+>  
+>  # __git_index_files accepts 1 or 2 arguments:
+>  # 1: Options to pass to ls-files (required).
