@@ -1,93 +1,77 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: rebase: strange failures to apply patc 3-way
-Date: Mon, 11 Mar 2013 23:36:09 +0100
-Message-ID: <ED1442D4-C011-49F3-928C-0BE0280F7D42@quendi.de>
-References: <7A483B92-D671-46CA-9EFD-83C6F4C97B5E@quendi.de> <494292C5-EBD9-487B-8846-9D9DD23ACB83@quendi.de> <CADeaMWp_R0HLwEYn7O3oX4-0OoSeqLfzz_2AYXT-Po88nM4HkQ@mail.gmail.com> <205D17C4-F737-46E9-BC48-D16D5948C707@quendi.de> <CADgNjan9v++__TSPE55j7+=BBZrVEkMD52O+9kXAm-C8SRV+Ww@mail.gmail.com> <B21B6CEC-7507-47A1-9BBB-FB95EA6B831F@quendi.de> <CADgNja=Ej8jnYn027GX986VrmuqVemM7aE59rynHzUpToPVaEw@mail.gmail.com> <3B5EA38E-9603-4321-AA3C-74354BBC8BFC@quendi.de> <513B8037.7060107@gmail.com> <C79E1B20-2C42-49FF-A964-285A7049FDED@quendi.de> <CADgNjanQxMFrQG=7SqgAXv5PW8OEfG+1kZt_Mrq27OcP1uyGtA@mail.gmail.com> <E30ECECD-DD58-41E2-AA7C-18F83E5E74E6@quendi.de> <CADgNja=QJpe2nmqKn9rR1os=zjjqK+dWA+ZLaJA4pgLG8tVgzg@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 11 23:36:54 2013
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] shell: new no-interactive-login command to print a
+ custom message
+Date: Mon, 11 Mar 2013 15:48:11 -0700
+Message-ID: <20130311224811.GD20586@google.com>
+References: <CAE_TNikk-9sYVRQRwRecNpp3otQ+oc=uV9SPu+7pAkCUNbcUoQ@mail.gmail.com>
+ <20130309215237.GA24777@elie.Belkin>
+ <20130309220011.GC24777@elie.Belkin>
+ <CALkWK0kK3YCwkv26cxVf61yUd8WHmHDG+mFwb2VRwNF3k_40qA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Ethan Reesor <firelizzard@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Greg Brockman <gdb@mit.edu>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 11 23:48:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFBKt-0004sr-Sp
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 23:36:52 +0100
+	id 1UFBWQ-0006QI-Oe
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 23:48:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754355Ab3CKWgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 18:36:25 -0400
-Received: from merkurneu.hrz.uni-giessen.de ([134.176.2.3]:44490 "EHLO
-	merkurneu.hrz.uni-giessen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754179Ab3CKWgY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 18:36:24 -0400
-Received: from mailgw42.hrz.uni-giessen.de by merkurneu.hrz.uni-giessen.de with ESMTP; Mon, 11 Mar 2013 23:36:20 +0100
-Received: from merkur.hrz.uni-giessen.de (merkur.hrz.uni-giessen.de [134.176.2.12])
-	by mailgw42.hrz.uni-giessen.de (Postfix) with ESMTP id 89A2CA1;
-	Mon, 11 Mar 2013 23:36:10 +0100 (CET)
-Received: from [134.176.2.12] by merkur.hrz.uni-giessen.de with ESMTP; Mon, 11 Mar 2013 23:36:10 +0100
-In-Reply-To: <CADgNja=QJpe2nmqKn9rR1os=zjjqK+dWA+ZLaJA4pgLG8tVgzg@mail.gmail.com>
-X-Mailer: Apple Mail (2.1283)
-X-HRZ-JLUG-MailScanner-Information: Passed JLUG virus check
-X-HRZ-JLUG-MailScanner: No virus found
-X-Envelope-From: max@quendi.de
-X-Spam-Status: No
+	id S1754011Ab3CKWsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 18:48:20 -0400
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:54867 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752994Ab3CKWsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Mar 2013 18:48:19 -0400
+Received: by mail-pb0-f45.google.com with SMTP id ro8so4287433pbb.4
+        for <git@vger.kernel.org>; Mon, 11 Mar 2013 15:48:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=R7LflhK5pf+FBiWSawOxvhnfFvEt7ARgrH3J63xT734=;
+        b=mAnBZH1MmGUP+z9XmBwqbSFJvLGhCyhyNc1PPqTBU9105tQqJxadqWzpfqMN+f+aQh
+         e/M1/ePRNs9pQjVeVNP/WlXf3R6pFdrVTZ89wibcaCB45qF0K2M9pZcNZT6vx9Y9hN53
+         Q87AjVgnGUgJkSglHXVpBBxk7jiYMF73usplkhGxqfnU5838zRf5GrDb3GQEXHMgV6wu
+         qDDh6NiCCUt64lhIk51Fk7Oh4eW7F29n7Q0VrnAt9RdVUrZ1ZeXmCBifxkfE3mP+x5jO
+         adW9rhX2ivli7lclWvvamUzIuLVgv276AsOIx+PxcMt5szRT4dDssYWenXHBInB/FPgX
+         33dg==
+X-Received: by 10.68.225.40 with SMTP id rh8mr32349221pbc.137.1363042099202;
+        Mon, 11 Mar 2013 15:48:19 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id tm1sm22184744pbc.11.2013.03.11.15.48.16
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 11 Mar 2013 15:48:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0kK3YCwkv26cxVf61yUd8WHmHDG+mFwb2VRwNF3k_40qA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217923>
 
+Ramkumar Ramachandra wrote:
+> Jonathan Nieder wrote:
 
-On 11.03.2013, at 23:10, Andrew Wong wrote:
+>>  * If the file ~/git-shell-commands/no-interactive-login exists,
+>>    run no-interactive-login to let the server say what it likes,
+>>    then hang up.
+[...]
+> If "no-interactive-login" doesn't have execute permissions, we'll get
+> an error from here:
+>
+>     fatal: cannot exec 'git-shell-commands/no-interactive-login': Permission denied
 
-> On 3/11/13, Max Horn <max@quendi.de> wrote:
->> PS: Just as a side note, I should mention that I have done tons of rebases
->> on various repositories on this very machine: same hard drive, same file
->> system; the git version of course has changed over time, but as I already
->> described, I can reproduce the same issue with older git versions.
-> 
-> What if you do a "git clone" from this repo to an entirely new repo? I
-> wonder if the rebase issue still happens in the new repo...
+Yep.  Intended.
 
-The problem seems to be non-existent in a clone. 
-
-> 
-> Could you also post the .git/config file from the repo?
-
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-	ignorecase = true
-	precomposeunicode = false
-
-Other than that, it just contains some a [remote] section and several [branch] sections. None of these contains any fancy (i.e. the branch sections just say "remote = origin" and give the name of the remote branch).
-
-Looking at the git config man page to check what each of my config settings does, I discovered "trustctime". And adding
-	trustctime = false
-to .git/config made the rebase work, every single time. Huh. 
-
-
-Adding this to the fact that a clone works fine, I wonder if  something *is* touching my files, but just in that directory. But what could it be? One nagging suspicion is the "file versioning" feature Apple introduced as part of Time Machine in OS X 10.7; it's kind of a "version control system for n00bs" for arbitrary documents. It has caused me some pain in the past.
-
-But I just re-checked, and problematic repos is explicitly on the Time Machine exclusion list. I also used the "tmutil isexcluded FILES" to verify that the problematic files are really on the TM exclusion list. Finally, I moved the one of the repos subdirectory containing most of the problematic files, and then run "git checkout". In other instances, this sufficed to "disassociate" a file from an unwanted TM version history. But doing that had no effect here, i.e. also with the freshly regenerated files, the problems appear.
-
-> 
-> If supported, git could actually make use of threading when doing
-> "stat"... it should be disabled by default though, but you could try
-> disabling it with this config:
->    git config core.preloadindex false
-> 
-> But I don't know why that'd only affect this one repo and not the
-> others though...
-> 
-This setting doesn't seem to have any effect on the issue at hand.
-
-
-Cheers,
-Max
+Thanks for looking it over,
+Jonathan
