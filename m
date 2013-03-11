@@ -1,112 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] git-completion.bash: remove bashism to fix ZSH
- compatibility
-Date: Mon, 11 Mar 2013 09:17:31 -0700
-Message-ID: <7v38w1c3ms.fsf@alter.siamese.dyndns.org>
-References: <1363004487-1193-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: A bug or unhandled case
+Date: Mon, 11 Mar 2013 09:29:33 -0700
+Message-ID: <7vvc8xaoia.fsf@alter.siamese.dyndns.org>
+References: <CABB6UqEfx=ssbiD1+2HA3AtmSrFeJeg5fmU3z1SKukNsKvd4qw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Manlio Perillo <manlio.perillo@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 11 17:18:02 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Micha=C5=82?= Janiszewski <janisozaur@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 11 17:30:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UF5QH-0002gF-6O
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 17:18:01 +0100
+	id 1UF5bv-0006Zs-CQ
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 17:30:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753871Ab3CKQRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 12:17:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37167 "EHLO
+	id S1754310Ab3CKQ3i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Mar 2013 12:29:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45211 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753540Ab3CKQRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 12:17:34 -0400
+	id S1754306Ab3CKQ3g convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Mar 2013 12:29:36 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67DD4BCD8;
-	Mon, 11 Mar 2013 12:17:33 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19BCDA34C;
+	Mon, 11 Mar 2013 12:29:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lbO2LWV+Ogb5wL9ZlQy/UaYcoSU=; b=IFgm+4
-	RsRqstdHw0/HVBF2Mh3uJAGSaKCzrwRgGNWdPF+x0pw/47620inkKfL4+trpBund
-	Cd9sAo7zmSiE6f5j9dZWiYhd/EZxoI07aY4auuCDae5wAcJChqQGfZ+FUxTj7W9B
-	ddz881EKrwUVEljAk0OiJzYXmjyYahTAEon0w=
+	:content-type:content-transfer-encoding; s=sasl; bh=OpGaAigF32MT
+	9giGlcqKEGzdV3I=; b=Co8GxUVIDAdT3VJWGq5XX+eeo+5dzfErRibwS1NmkKs6
+	PzuA+53q7drmFR3j5uJQfziQyNJRXrt29d9qT4J2SafBmPOalzILzHrFbHIV0JML
+	2NEk0JT+6ybCA3OVx6QU1Jpnhu1D01qe58C+M4rF34uMROsfR4DXgz4hfSjNLxo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HPFUv4Z7VAHooxvj1Zer1gTXbZbcDhoz
-	WyLDemaDXNKNpY2XuupWKucv+LzrK6ShMuvsSjghZ6MNvZUw6svHQ8oNhTtMXmgZ
-	Cb4KWUy2HhKig+GfJiS/KEw+t/2CZmBfv8l+MthUT28WXN4tiKxdefdEfrtzZb0q
-	h8LZivJc8t0=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EDUvuL
+	DQyzAUKaeQiZRUQdYLUVkkOOWP93d9QKujO1GeTvw5/WFgrNtV+xP95AFOhgc4hf
+	xmhHWkNCNzNiy5dyrBWIyaJxCHi+Qr6gsn5Z82gzftXw6whRf5XZZi+ecZa43ScI
+	npUWeSVP48gBIlyEgXkPembmvY3Ia2LChTwrs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C4E7BCD7;
-	Mon, 11 Mar 2013 12:17:33 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3D6FA34A;
+	Mon, 11 Mar 2013 12:29:35 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF15BBCD5; Mon, 11 Mar 2013
- 12:17:32 -0400 (EDT)
-In-Reply-To: <1363004487-1193-1-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Mon, 11 Mar 2013 13:21:27 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71C2FA345; Mon, 11 Mar 2013
+ 12:29:35 -0400 (EDT)
+In-Reply-To: <CABB6UqEfx=ssbiD1+2HA3AtmSrFeJeg5fmU3z1SKukNsKvd4qw@mail.gmail.com>
+ (=?utf-8?Q?=22Micha=C5=82?= Janiszewski"'s message of "Mon, 11 Mar 2013
+ 17:06:26 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2DAF3E5A-8A67-11E2-8EB0-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DC7A28E0-8A68-11E2-B5A6-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217885>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Micha=C5=82 Janiszewski <janisozaur@gmail.com> writes:
 
-> The function-wide redirection used for __git_ls_files_helper and
-> __git_diff_index_helper work only with bash. Using ZSH, trying to
-> complete an inexistant directory gave this:
+> Hi,
+> I think I've found a bug in git or at least a use case that is not ha=
+ndled.
+> In few words it can be described like this: if you push a remote
+> branch to another remote, which is bare repository, you cannot remove
+> that branch from said bare repository.
+> Here is a recipe how to reproduce that with git 1.8.0:
+> git init foo
+> git init --bare bar.git
+> git init --bare baz.git
+> cd foo
+> echo test > file
+> git commit -am "initial commit"
+
+Nothing added, nothing committed, at this point.
+I'd assume there is "git add file" before this commit.
+
+> git remote add bar ../bar.git
+> git remote add baz ../baz.git
+> git push bar master
+> cd ..
+> git clone bar.git bax
+> cd bax
+> git checkout -b "test_branch"
+> echo evil > file
+> git commit -am "evil commit"
+> git push origin test-branch
+
+error: src refspec test-branch does not match any.
+error: failed to push some refs to '...../bar.git'
+
+I'd assume that is test_branch
+
+> cd ../foo
+> git fetch bar
+> git push baz bar/test_branch
+> cd ../baz.git
 >
->   git add no-such-dir/__git_ls_files_helper:cd:2: no such file or directory: no-such-dir/
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
+> ###
+> # on that point in baz.git there is only one branch:
 
-This is not bash-ism but POSIX.1, even though it is not very well
-known.  I recall commenting on this exact pattern during the review.
+Correct.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/213232/focus=213286
+> # remotes/bar/test_branch 8b96ffe evil commit
+> # trying to remove that branch yields no results:
+> $ git branch -D refs/remotes/bar/test_branch
 
-After all, I was right when I said that some implementations may get
-it wrong and we shouldn't use the construct X-<.
+That is not the way to remove the remote tracking branch test_branch
+you have from remote bar, is it?
 
-> These two instances seem to be the only ones in the file.
->
-> I'm not sure whether the 2>/dev/null would be needed for the command
-> on the RHS of the && too (git ls-files and git diff-index).
-
-It would not hurt to discard their standard error.
-
->  contrib/completion/git-completion.bash | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index b62bec0..0640274 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -300,8 +300,8 @@ __git_index_file_list_filter ()
->  __git_ls_files_helper ()
->  {
->  	# NOTE: $2 is not quoted in order to support multiple options
-> -	cd "$1" && git ls-files --exclude-standard $2
-> -} 2>/dev/null
-> +	cd "$1" 2>/dev/null && git ls-files --exclude-standard $2
-> +}
->  
->  
->  # Execute git diff-index, returning paths relative to the directory
-> @@ -309,8 +309,8 @@ __git_ls_files_helper ()
->  # specified in the second argument.
->  __git_diff_index_helper ()
->  {
-> -	cd "$1" && git diff-index --name-only --relative "$2"
-> -} 2>/dev/null
-> +	cd "$1" 2>/dev/null && git diff-index --name-only --relative "$2"
-> +}
->  
->  # __git_index_files accepts 1 or 2 arguments:
->  # 1: Options to pass to ls-files (required).
+	git branch -r -D bar/test_branch
