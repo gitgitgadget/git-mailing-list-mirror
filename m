@@ -1,115 +1,83 @@
-From: Paul Campbell <pcampbell@kemitix.net>
-Subject: Re: [PATCH v2 05/23] contrib/subtree: Add commands pull_all and push_all
-Date: Mon, 11 Mar 2013 11:49:14 +0000
-Message-ID: <CALeLG_=JbuZJs3dt26aS+kNMyZKC=kBXs4+OMpdQ7fC0nUyTAQ@mail.gmail.com>
-References: <1362958891-26941-1-git-send-email-pcampbell@kemitix.net>
-	<1362958891-26941-6-git-send-email-pcampbell@kemitix.net>
-	<7vk3pebkac.fsf@alter.siamese.dyndns.org>
+From: Vadim Zeitlin <vz-git@zeitlins.org>
+Subject: Rewriting references to existing commits in commit messages with filter-branch
+Date: Mon, 11 Mar 2013 12:45:38 +0100
+Message-ID: <E1UF1Ag-0006m3-5k@smtp.tt-solutions.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>, David Greene <greened@obbligato.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 11 12:49:45 2013
+Content-Type: MULTIPART/SIGNED; protocol="application/pgp-signature"; micalg=pgp-sha1; BOUNDARY="2143049595-41-1363002338=:6060"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 11 12:55:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UF1Ee-0001Px-BG
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 12:49:44 +0100
+	id 1UF1K1-0006je-9x
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 12:55:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028Ab3CKLtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 07:49:17 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:58899 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753886Ab3CKLtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 07:49:15 -0400
-Received: by mail-ob0-f177.google.com with SMTP id eh20so3138865obb.8
-        for <git@vger.kernel.org>; Mon, 11 Mar 2013 04:49:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:x-originating-ip:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type:x-gm-message-state;
-        bh=PABVGNdu22p9g+8BD3YrBJsqZ0+ZGCSwAUtdDcwR4N8=;
-        b=i9O86cLPViaNt0lzya9KQyolX8fYk3eFN5vNoEzaYYvaKCDNfCGc0Wy6FqkXnoaCNu
-         N8Bee7fPEf/YNLaZYMRJlJwk1KrnmYZag2h39qJaSHUJU4JbkeZ6yfkVqGhx0rY/cH92
-         pq+NstS2BIOELI7Mhklrm9pe1ayWD+lWxFZPbALgOBIbGx9Om8hxqROi0DAExKct6F2a
-         gAclzY4c+MoHAhfR8TnC4+Kn87b8NwkZfesSVjOJZaiUYjqhkkpdop0FmoDHIBB9GpmA
-         Xuf1S7rR5fo/fiGaOv2VZ6TQcXk3Cb+WTHhosk4DeOMLgCUX1yCSnXMWoqfp0Wm7Noca
-         +eKg==
-X-Received: by 10.182.93.193 with SMTP id cw1mr8187227obb.93.1363002555142;
- Mon, 11 Mar 2013 04:49:15 -0700 (PDT)
-Received: by 10.76.122.109 with HTTP; Mon, 11 Mar 2013 04:49:14 -0700 (PDT)
-X-Originating-IP: [212.219.195.16]
-In-Reply-To: <7vk3pebkac.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQlhJdXadYtRsGZxCqjV3iIf6xKp/VHGW0VSk1k8yQq+e6a9Ajs7XlpRLtH1lZNexiv6fhbV
+	id S1754010Ab3CKLyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 07:54:51 -0400
+Received: from sunset.tt-solutions.com ([82.238.156.189]:39474 "EHLO
+	smtp.tt-solutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753886Ab3CKLyu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Mar 2013 07:54:50 -0400
+X-Greylist: delayed 549 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Mar 2013 07:54:50 EDT
+Received: from [192.168.17.86] (helo=Twilight)
+	by smtp.tt-solutions.com with esmtp (Exim 4.72)
+	(envelope-from <vz-git@zeitlins.org>)
+	id 1UF1Ag-0006m3-5k
+	for git@vger.kernel.org; Mon, 11 Mar 2013 12:45:38 +0100
+X-Mailer: Mahogany 0.68.0 'Cynthia', running under Windows 7 (build 7601, Service Pack 1), 64-bit edition
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217869>
 
-On Mon, Mar 11, 2013 at 5:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Paul Campbell <pcampbell@kemitix.net> writes:
->
->> From: bibendi <bibendi@bk.ru>
->>
->> For each subtree listed in .gittrees perform a push or a pull.
->>
->> Signed-off-by: Paul Campbell <pcampbell@kemitix.net>
->>
->> Conflicts:
->>       contrib/subtree/git-subtree.sh
->
-> The "Conflicts:" part is totally irrelevant.  Please remove.
->
->> ---
->>  contrib/subtree/git-subtree.sh | 25 ++++++++++++++++++++++---
->>  1 file changed, 22 insertions(+), 3 deletions(-)
->>
->> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
->> index 1aff956..ddae56e 100755
->> --- a/contrib/subtree/git-subtree.sh
->> +++ b/contrib/subtree/git-subtree.sh
->> @@ -12,6 +12,7 @@ git subtree add   --prefix=<prefix> <commit>
->>  git subtree add   --prefix=<prefix> <repository> <commit>
->>  git subtree merge --prefix=<prefix> <commit>
->>  git subtree pull  --prefix=<prefix> <repository> <refspec...>
->> +git subtree pull_all
->
-> Why isn't it "pull --all"?
->
->>  git subtree push  --prefix=<prefix> <repository> <refspec...>
->
-> Where did "push_all" go?
->
->> +cmd_pull_all()
->> +{
->> +    git config -f .gittrees -l | grep subtree | grep path | grep -o '=.*' | grep -o '[^=].*' |
->
-> "grep -o" is not even in POSIX.  Besides, what is this trying to
-> parse?  Is it expected to match lines like
->
->         path.subtree=trash
->
-> with this, or is it more like you only want something like this:
->
->         subtree.over/there.path=foo
->
-> in which case you would want to read with something like
->
->         sed -n -e 's/^subtree\...*\.path=\(.*\)/\1/p'
->
-> instead (modulo the usual caveat on $IFS whitespaces in path)?
->
->> +        while read path; do
->> +            git subtree pull -P $path master || exit $?
->> +        done
->> +}
->
-> I'd stop looking at this series myself at this step for now.
+--2143049595-41-1363002338=:6060
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Disposition: INLINE
 
-Thanks for your feedback. Plenty there for me already to get cracking on.
+ Hello,
 
--- 
-Paul [W] Campbell
+ I'm in the process of converting an existing svn repository to git. The
+first step was a standard "git svn clone" that went successfully (after
+taking 15 hours to complete). However I don't want to stop there and would
+like massage the repository a little before making it publicly available.
+
+ The first thing I'd like to do is to replace all references to subversion
+revision numbers in the commit messages with the corresponding git commit
+SHA1s. I've written a small message filter script called "svnmsg2git" that
+searches for all occurrences of r12345, runs "git svn find-rev r12345" and
+then -- and this is the important part -- looks up the new commit id
+corresponding to this under .git-rewrite/map. This seemed to work well in
+limited testing I did initially but after running
+
+git filter-branch --msg-filter svnmsg2git --tag-name-filter cat -- --all
+
+on all ~50k revisions, I have a couple of dozens of errors which happen
+because the file .git-rewrite/map/$commit doesn't exist yet when I'm trying
+to look it up.
+
+ Does anybody know of a way to fix this? This happens apparently because
+filter-branch doesn't process the commits in their svn order, and when one
+of them is on a branch while the other one is on the trunk, it can happen
+that the commit references a previous svn revision is processed before the
+commit corresponding to this revision itself. At least this is the only
+explanation I see. But even if my hypothesis is correct, I still have no
+idea about how to force filter-branch to do things in the "right" order.
+
+ Thanks in advance for any ideas!
+VZ
+
+--2143049595-41-1363002338=:6060
+Content-Type: APPLICATION/PGP-SIGNATURE
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (MingW32)
+
+iEYEABECAAYFAlE9w+IACgkQBupB3k9sHoaglgCeL+U+V43UOcMi6R96Rts+qJkX
+CnIAnROYKSNMXYX3ZgJ6yy1a6UdGm1tb
+=SJZZ
+-----END PGP SIGNATURE-----
+
+--2143049595-41-1363002338=:6060--
