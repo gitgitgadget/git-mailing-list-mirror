@@ -1,73 +1,117 @@
-From: Vadim Zeitlin <vz-git@zeitlins.org>
-Subject: Re: Rewriting references to existing commits in commit messages with filter-branch
-Date: Mon, 11 Mar 2013 14:05:46 +0000 (UTC)
-Message-ID: <loom.20130311T145745-986@post.gmane.org>
-References: <E1UF1Ag-0006m3-5k@smtp.tt-solutions.com> <513DE1E8.7010302@alum.mit.edu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Textconv
+Date: Mon, 11 Mar 2013 15:40:20 +0100
+Message-ID: <513DECD4.8080002@drmicha.warpmail.net>
+References: <513DA7E1.7050206@mylovecompany.com> <vpqtxoicl2l.fsf@grenoble-inp.fr> <513DB273.2090007@mylovecompany.com> <vpqd2v6b4n5.fsf@grenoble-inp.fr> <513DC04D.9090904@mylovecompany.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 11 15:06:40 2013
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Dmitry Ilin <dmitry@mylovecompany.com>
+X-From: git-owner@vger.kernel.org Mon Mar 11 15:40:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UF3N2-0006wP-A0
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 15:06:32 +0100
+	id 1UF3u8-0007NF-W0
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 15:40:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751352Ab3CKOGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 10:06:05 -0400
-Received: from plane.gmane.org ([80.91.229.3]:53976 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750872Ab3CKOGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 10:06:04 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UF3Ms-0006pi-37
-	for git@vger.kernel.org; Mon, 11 Mar 2013 15:06:22 +0100
-Received: from ip-208.net-89-3-60.rev.numericable.fr ([89.3.60.208])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 11 Mar 2013 15:06:22 +0100
-Received: from vz-git by ip-208.net-89-3-60.rev.numericable.fr with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 11 Mar 2013 15:06:22 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 89.3.60.208 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0)
+	id S1752835Ab3CKOkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 10:40:19 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:55847 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751868Ab3CKOkS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Mar 2013 10:40:18 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 43A6220A6D;
+	Mon, 11 Mar 2013 10:40:17 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute4.internal (MEProxy); Mon, 11 Mar 2013 10:40:17 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=ll9GZFYBNFQ0LeGczrS+UM
+	hSqCs=; b=qvThkaZO9Bo/pQxumKsExAu0DJKUcN9EHsLwKE6Z2IkysxPvYxTg0X
+	JD01U1ZJ6boEjRHdR/5EycrKEKHjsTxHbZlmQ7n5u7EchyYYoKj/fNfHBIFtN7C8
+	U5lYt5qE/XjmnVht7tPbyeTUgeCfbZmznWPhJWdtNqkoclw/Ydaa4=
+X-Sasl-enc: hBjMz1iRE0bs3H6UhaKie+aXNelN92BeeUquKH+n6Llu 1363012816
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 971A7C80E8C;
+	Mon, 11 Mar 2013 10:40:16 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130219 Thunderbird/17.0.3
+In-Reply-To: <513DC04D.9090904@mylovecompany.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217877>
 
-Michael Haggerty <mhagger <at> alum.mit.edu> writes:
-
+Dmitry Ilin venit, vidit, dixit 11.03.2013 12:30:
+> I tried this command and I got following result:
 > 
-> On 03/11/2013 12:45 PM, Vadim Zeitlin wrote:
-> > [...]
-> >  The first thing I'd like to do is to replace all references to subversion
-> > revision numbers in the commit messages with the corresponding git commit
-> > SHA1s. [...] I have a couple of dozens of errors which happen
-> > because the file .git-rewrite/map/$commit doesn't exist yet when I'm trying
-> > to look it up.
+> trace: built-in: git 'show' 'a1bffde'
+> trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
+> '\''abcde'\'' 2> /dev/null || cat'
+> trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
+> '\''abcde'\'' 2> /dev/null || cat' 'openssl enc -d -base64 -aes-256-ecb 
+> -k '\''abcde'\'' 2> /dev/null || cat'
+> trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
+> '\''abcde'\'' -in $1 2> /dev/null || cat $1' '/tmp/CLPGPk_config.js'
+> trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
+> '\''abcde'\'' -in $1 2> /dev/null || cat $1 "$@"' 'openssl enc -d 
+> -base64 -aes-256-ecb -k '\''abcde'\'' -in $1 2> /dev/null || cat $1' 
+> '/tmp/CLPGPk_config.js'
+> trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
+> '\''abcde'\'' 2> /dev/null || cat'
+> trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
+> '\''abcde'\'' 2> /dev/null || cat' 'openssl enc -d -base64 -aes-256-ecb 
+> -k '\''abcde'\'' 2> /dev/null || cat'
+> trace: run_command: 'openssl enc -d -base64 -aes-256-ecb -k 
+> '\''abcde'\'' -in $1 2> /dev/null || cat $1' '/tmp/Uyc2Dj_config.js'
+> trace: exec: 'sh' '-c' 'openssl enc -d -base64 -aes-256-ecb -k 
+> '\''abcde'\'' -in $1 2> /dev/null || cat $1 "$@"' 'openssl enc -d 
+> -base64 -aes-256-ecb -k '\''abcde'\'' -in $1 2> /dev/null || cat $1' 
+> '/tmp/Uyc2Dj_config.js'
+> diff --git a/path/config.js b/path/config.js
+> index c4ad2d4..a67d13f 100644
+> --- a/path/config.js
+> +++ b/path/config.js
 > 
-> The quick and dirty solution would be to rewrite your script such that
-> if the commit is still unknown to Git, it emits a warning and leaves the
-> commit message unchanged (i.e., leaves the Subversion revision number
-> untouched).  Then simply run the filter-branch a few times until it
-> emits no warnings.
+> 
+> And also not encrypted data of my commit.
+> 
+> 
+> On 03/11/2013 02:41 PM, Matthieu Moy wrote:
+>> Dmitry Ilin <dmitry@mylovecompany.com> writes:
+>>
+>>> I mean that our filter doesn't work with 'git show' and I need to
+>>> enable it for this command.
+>>>
+>>> This is part of my git config file:
+>>>
+>>> [filter "openssl"]
+>>>     smudge = openssl enc -d -base64 -aes-256-ecb -k 'abcde' 2>
+>>> /dev/null || cat
+>>>     clean = openssl enc -base64 -aes-256-ecb -S '12345' -k 'abcde'
+>>> [diff "openssl"]
+>>>     textconv = openssl enc -d -base64 -aes-256-ecb -k 'abcde' -in "$1"
+>>> 2> /dev/null || cat "$1"
+>>> [merge]
+>>>     renormalize = true
+>> Maybe a bad interaction between the [filter ...] section and the
+>> [textconv ...] one. Can you run:
+>>
+>> GIT_TRACE=true git show <some-relevant-commit>
+>>
+>> to see what's going on?
+>>
+> 
 
- Thanks, I did think about this but the trouble is that after the first rewrite
-"git svn find-rev" wouldn't work any more, so I'd have to do the substitutions
-manually. Which might be doable as there are not that many of them but, if
-possible, I'd rather do it automatically.
+"git show commit" uses textconv by default for the patch, but "git show
+blob" does not. There's a series on the list which deals with textconv
+for "grep" and "show blob", but I haven't had the time to polish it up.
+I don't think it's cooking in pu yet, but I've been running with it
+since. "running git with it", that is, not "running away with it" ;)
 
- FWIW I'm playing with --date-order now (thanks Thomas) but somehow it seems to
-create other problems while fixing (some of) the existing ones. I need to look
-at this more closely to understand what's going on here...
-
-VZ
+Michael
