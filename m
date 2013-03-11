@@ -1,181 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] archive: handle commits with an empty tree
-Date: Sun, 10 Mar 2013 21:32:32 -0400
-Message-ID: <20130311013231.GB11778@sigill.intra.peff.net>
-References: <20130311013123.GA11692@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Make help behaviour more consistent
+Date: Sun, 10 Mar 2013 20:03:42 -0700
+Message-ID: <7v1ubmd4dt.fsf@alter.siamese.dyndns.org>
+References: <1362937729-9050-1-git-send-email-kevin@bracey.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 11 02:33:03 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Kevin Bracey <kevin@bracey.fi>
+X-From: git-owner@vger.kernel.org Mon Mar 11 04:04:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UErbq-0000NY-DH
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 02:33:02 +0100
+	id 1UEt2A-0001T7-91
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 04:04:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753619Ab3CKBcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Mar 2013 21:32:35 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45566 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753609Ab3CKBcf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Mar 2013 21:32:35 -0400
-Received: (qmail 9611 invoked by uid 107); 11 Mar 2013 01:34:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 10 Mar 2013 21:34:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Mar 2013 21:32:32 -0400
-Content-Disposition: inline
-In-Reply-To: <20130311013123.GA11692@sigill.intra.peff.net>
+	id S1753663Ab3CKDDw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 23:03:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47661 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753546Ab3CKDDv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 23:03:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F138C749;
+	Sun, 10 Mar 2013 23:03:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=h9MCTwVO9nr7kTPnlESnAiod4Tc=; b=xTVCox
+	1V+zaLsbEHxvEeSVzcgFBn7fXI2yih8p3AeAtBoYKSBo/NmzqyvGhmzs+WjIVJev
+	d0/i7IGopQ+2Om43/0MhslEKFbFELsfQd1k59bO2xtvZcmQrwKTICFrc8VLCUzgt
+	XPQ/Pg3q3rg4QzdE90/GDpZNYpGN53aNffIXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jmlM3x4RJKDNtqgRNrWyd4p+91Ctfgx6
+	Mp06innIbs5IxOr8xu7TIcPFc0DBJuP2/7eRGGWOMD+KkAD5TUrLvztqWPejOqdX
+	BxWqkFK6wUR83p+bOJq7nnZB7D9moQ2Q+h6A4ixOHB/2SY2rPYRPA8kIl9KahwYR
+	FkUDL+yj+I8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6404CC748;
+	Sun, 10 Mar 2013 23:03:45 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B80C2C73D; Sun, 10 Mar 2013
+ 23:03:44 -0400 (EDT)
+In-Reply-To: <1362937729-9050-1-git-send-email-kevin@bracey.fi> (Kevin
+ Bracey's message of "Sun, 10 Mar 2013 19:48:49 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 493495CC-89F8-11E2-A77A-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217848>
 
-git-archive relies on get_pathspec to convert its argv into
-a list of pathspecs. When get_pathspec is given an empty
-argv list, it returns a single pathspec, the empty string,
-to indicate that everything matches. When we feed this to
-our path_exists function, we typically see that the pathspec
-turns up at least one item in the tree, and we are happy.
+Kevin Bracey <kevin@bracey.fi> writes:
 
-But when our tree is empty, we erroneously think it is
-because the pathspec is too limited, when in fact it is
-simply that there is nothing to be found in the tree. This
-is a weird corner case, but the correct behavior is almost
-certainly to produce an empty archive, not to exit with an
-error.
+> Previously, the command "help" and the option "-h" behaved differently
+> depending on whether a command was specified or not. Old user interface:
+>
+> Commands with no defaults show usage: "git"           "git CMD"
+> To specifically request usage:        "git help"      "git CMD -h"
+> To get a manual page:                 "git help git"  "git help CMD"
+>
+> Two significant usability flaws here:
+>  - If using man, "man git" to side-step "git help" is obvious. But if
+>    trying to use help.format=web, how to get the root html page? My
+>    technique was "git help XXX" and click the "git(1) suite" link at the
+>    bottom. "git help git" is non-obvious and apparently undocumented
+>    (it's not mentioned by "git", "git help", or "git help help"...).
+>
+>  - Because git itself didn't support -h (and thus actually printed less
+>    if you specified it), the general availability of -h for commands was
+>    non-obvious. I didn't know about it until I started this patch.
 
-This patch teaches git-archive to create empty archives when
-there is no pathspec given (we continue to complain if a
-pathspec is given, since it obviously is not matched). It
-also confirms that the tar and zip writers produce sane
-output in this instance.
+Hmm, I feel more confused than convinced after reading the above
+three times.  Perhaps that is because I am too used to the way how
+"git" potty itself behaves, especially the part that "git help git"
+is the way to ask "git" (the first token on the command line) to
+give me "help" about "git" (the second) itself.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- archive.c                       |   2 +-
- t/t5004-archive-corner-cases.sh |  83 ++++++++++++++++++++++++++++++++++++++++
- t/t5004/empty.zip               | Bin 0 -> 62 bytes
- 3 files changed, 84 insertions(+), 1 deletion(-)
- create mode 100755 t/t5004-archive-corner-cases.sh
- create mode 100644 t/t5004/empty.zip
+Having said that, I would agree that "git -h" that shows a "unknown
+option" error message that lists the supported command line options
+(just like how it reacts to "git -x") is less friendly than "git"
+that knows "-h" to show the short help text, and that part of the
+patch is a definite improvement.  But other than that I do not see
+any "significant usablity flow" in it.
 
-diff --git a/archive.c b/archive.c
-index 93e00bb..d254fa5 100644
---- a/archive.c
-+++ b/archive.c
-@@ -234,7 +234,7 @@ static void parse_pathspec_arg(const char **pathspec,
- 	ar_args->pathspec = pathspec = get_pathspec("", pathspec);
- 	if (pathspec) {
- 		while (*pathspec) {
--			if (!path_exists(ar_args->tree, *pathspec))
-+			if (**pathspec && !path_exists(ar_args->tree, *pathspec))
- 				die("path not found: %s", *pathspec);
- 			pathspec++;
- 		}
-diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
-new file mode 100755
-index 0000000..395dd58
---- /dev/null
-+++ b/t/t5004-archive-corner-cases.sh
-@@ -0,0 +1,83 @@
-+#!/bin/sh
-+
-+test_description='test corner cases of git-archive'
-+. ./test-lib.sh
-+
-+test_expect_success 'create commit with empty tree' '
-+	git commit --allow-empty -m foo
-+'
-+
-+# Make a dir and clean it up afterwards
-+make_dir() {
-+	mkdir "$1" &&
-+	test_when_finished "rm -rf '$1'"
-+}
-+
-+# Check that the dir given in "$1" contains exactly the
-+# set of paths given as arguments.
-+check_dir() {
-+	dir=$1; shift
-+	{
-+		echo "$dir" &&
-+		for i in "$@"; do
-+			echo "$dir/$i"
-+		done
-+	} | sort >expect &&
-+	find "$dir" -print | sort >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'tar archive of empty tree is empty' '
-+	git archive --format=tar HEAD >empty.tar &&
-+	make_dir extract &&
-+	"$TAR" xf empty.tar -C extract &&
-+	check_dir extract
-+'
-+
-+test_expect_success 'tar archive of empty tree with prefix' '
-+	git archive --format=tar --prefix=foo/ HEAD >prefix.tar &&
-+	make_dir extract &&
-+	"$TAR" xf prefix.tar -C extract &&
-+	check_dir extract foo
-+'
-+
-+test_expect_success UNZIP 'zip archive of empty tree is empty' '
-+	# Detect the exit code produced when our particular flavor of unzip
-+	# sees an empty archive. Infozip will generate a warning and exit with
-+	# code 1. But in the name of sanity, we do not expect other unzip
-+	# implementations to do the same thing (it would be perfectly
-+	# reasonable to exit 0, for example).
-+	#
-+	# This makes our test less rigorous on some platforms (unzip may not
-+	# handle the empty repo at all, making our later check of its exit code
-+	# a no-op). But we cannot do anything reasonable except skip the test
-+	# on such platforms anyway, and this is the moral equivalent.
-+	"$GIT_UNZIP" "$TEST_DIRECTORY"/t5004/empty.zip
-+	expect_code=$?
-+
-+	git archive --format=zip HEAD >empty.zip &&
-+	make_dir extract &&
-+	(
-+		cd extract &&
-+		test_expect_code $expect_code "$GIT_UNZIP" ../empty.zip
-+	) &&
-+	check_dir extract
-+'
-+
-+test_expect_success UNZIP 'zip archive of empty tree with prefix' '
-+	# We do not have to play exit-code tricks here, because our
-+	# result should not be empty; it has a directory in it.
-+	git archive --format=zip --prefix=foo/ HEAD >prefix.zip &&
-+	make_dir extract &&
-+	(
-+		cd extract &&
-+		"$GIT_UNZIP" ../prefix.zip
-+	) &&
-+	check_dir extract foo
-+'
-+
-+test_expect_success 'archive complains about pathspec on empty tree' '
-+	test_must_fail git archive --format=tar HEAD -- foo >/dev/null
-+'
-+
-+test_done
-diff --git a/t/t5004/empty.zip b/t/t5004/empty.zip
-new file mode 100644
-index 0000000000000000000000000000000000000000..1a76bb600558dc94913a80076fe8dbdef13c1b15
-GIT binary patch
-literal 62
-zcmWIWW@TeQ0~!oz$rh;wDW;amhRMmM$%ZCLW|oGQX-P%~24+b{=4q+M#^$N!DF&$k
-D8w?B~
+The patch seems to do a lot more than just teaching "git" to react
+to "-h" to give a short usage, instead of doing the generic "I do
+not know -h option" thing.  I am not sure what merit these other
+changes of this patch have.
 
-literal 0
-HcmV?d00001
+In the introductory part, you list three possibilities, but there is
+the fourth "git help help" to ask "git" to give me "help" about
+"help".  Depending on where one comes from, that may also seem just
+as odd as "git help git" (again, I personally find neither is odd,
+though). Would this change help with that "usability flaw" as well?
 
--- 
-1.8.2.rc3.4.gc6ed371
+Undecided...
