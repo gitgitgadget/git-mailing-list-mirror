@@ -1,101 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Make help behaviour more consistent
-Date: Sun, 10 Mar 2013 20:03:42 -0700
-Message-ID: <7v1ubmd4dt.fsf@alter.siamese.dyndns.org>
-References: <1362937729-9050-1-git-send-email-kevin@bracey.fi>
+Subject: Re: [PATCH v2 02/23] contrib/subtree: Add command from-submodule
+Date: Sun, 10 Mar 2013 20:19:09 -0700
+Message-ID: <7vwqtebp3m.fsf@alter.siamese.dyndns.org>
+References: <1362958891-26941-1-git-send-email-pcampbell@kemitix.net>
+ <1362958891-26941-3-git-send-email-pcampbell@kemitix.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Mon Mar 11 04:04:19 2013
+Cc: git <git@vger.kernel.org>, David Greene <greened@obbligato.org>,
+	Peter Jaros <pjaros@pivotallabs.com>,
+	"Avery Pennarun" <apenwarr@gmail.com>,
+	"Wayne Walter" <wayne@tickzoom.com>
+To: Paul Campbell <pcampbell@kemitix.net>
+X-From: git-owner@vger.kernel.org Mon Mar 11 04:19:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UEt2A-0001T7-91
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 04:04:18 +0100
+	id 1UEtH7-0005II-9z
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 04:19:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753663Ab3CKDDw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Mar 2013 23:03:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47661 "EHLO
+	id S1753713Ab3CKDTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Mar 2013 23:19:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57273 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753546Ab3CKDDv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Mar 2013 23:03:51 -0400
+	id S1753554Ab3CKDTM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Mar 2013 23:19:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F138C749;
-	Sun, 10 Mar 2013 23:03:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC257CD6E;
+	Sun, 10 Mar 2013 23:19:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h9MCTwVO9nr7kTPnlESnAiod4Tc=; b=xTVCox
-	1V+zaLsbEHxvEeSVzcgFBn7fXI2yih8p3AeAtBoYKSBo/NmzqyvGhmzs+WjIVJev
-	d0/i7IGopQ+2Om43/0MhslEKFbFELsfQd1k59bO2xtvZcmQrwKTICFrc8VLCUzgt
-	XPQ/Pg3q3rg4QzdE90/GDpZNYpGN53aNffIXE=
+	:content-type; s=sasl; bh=TESL1wzYCQvNQ8ft+8c57EqzJag=; b=iy1BPB
+	Zo9qrmqBmeMuUWnJ7eqVfkOYHc6aYZprP3nAgX7CVjQDkY8OX8sB/u+t9q4lnp6O
+	bk0vsDXoMQ71QqP4dKJaEcg56E6CYz7DPrytiSP9eUZOFC4xrlEKzbl9E/0jSOAc
+	FfHkLG0bRbT2wibWKkdqZkz+ePP90p8ELXa+k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jmlM3x4RJKDNtqgRNrWyd4p+91Ctfgx6
-	Mp06innIbs5IxOr8xu7TIcPFc0DBJuP2/7eRGGWOMD+KkAD5TUrLvztqWPejOqdX
-	BxWqkFK6wUR83p+bOJq7nnZB7D9moQ2Q+h6A4ixOHB/2SY2rPYRPA8kIl9KahwYR
-	FkUDL+yj+I8=
+	:content-type; q=dns; s=sasl; b=V0z8RqbBX2na8NLpiAO8K1pfLJzWxJER
+	qSRcj8UfaAy4qVkhHpGdWPbKa+BlnfE60hrK9lgyqpoTQVg8fXo+5CUPH8D+q/ua
+	QtAYEVEzy2Z+SgXYvKUMF19A+mv0aRbju/seqk3WeYq2q24zsQZ8/7oWVWSmUCk2
+	h3QVWbm32Rk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6404CC748;
-	Sun, 10 Mar 2013 23:03:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B091CCD6D;
+	Sun, 10 Mar 2013 23:19:11 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B80C2C73D; Sun, 10 Mar 2013
- 23:03:44 -0400 (EDT)
-In-Reply-To: <1362937729-9050-1-git-send-email-kevin@bracey.fi> (Kevin
- Bracey's message of "Sun, 10 Mar 2013 19:48:49 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0368CCD6B; Sun, 10 Mar 2013
+ 23:19:10 -0400 (EDT)
+In-Reply-To: <1362958891-26941-3-git-send-email-pcampbell@kemitix.net> (Paul
+ Campbell's message of "Sun, 10 Mar 2013 23:41:10 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 493495CC-89F8-11E2-A77A-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 714D12F8-89FA-11E2-97C2-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217849>
 
-Kevin Bracey <kevin@bracey.fi> writes:
+Paul Campbell <pcampbell@kemitix.net> writes:
 
-> Previously, the command "help" and the option "-h" behaved differently
-> depending on whether a command was specified or not. Old user interface:
->
-> Commands with no defaults show usage: "git"           "git CMD"
-> To specifically request usage:        "git help"      "git CMD -h"
-> To get a manual page:                 "git help git"  "git help CMD"
->
-> Two significant usability flaws here:
->  - If using man, "man git" to side-step "git help" is obvious. But if
->    trying to use help.format=web, how to get the root html page? My
->    technique was "git help XXX" and click the "git(1) suite" link at the
->    bottom. "git help git" is non-obvious and apparently undocumented
->    (it's not mentioned by "git", "git help", or "git help help"...).
->
->  - Because git itself didn't support -h (and thus actually printed less
->    if you specified it), the general availability of -h for commands was
->    non-obvious. I didn't know about it until I started this patch.
+> @@ -721,4 +722,31 @@ cmd_push()
+>  	fi
+>  }
+>  
+> +cmd_from-submodule()
+> +{
 
-Hmm, I feel more confused than convinced after reading the above
-three times.  Perhaps that is because I am too used to the way how
-"git" potty itself behaves, especially the part that "git help git"
-is the way to ask "git" (the first token on the command line) to
-give me "help" about "git" (the second) itself.
+I know contrib/subtree does not work with anything other than bash,
+and bash may accept this as a valid function name, but if you can
+avoid it easily I would prefer not to see a non-POSIX construct like
+this in my tree, even in contrib/ part:
 
-Having said that, I would agree that "git -h" that shows a "unknown
-option" error message that lists the supported command line options
-(just like how it reacts to "git -x") is less friendly than "git"
-that knows "-h" to show the short help text, and that part of the
-patch is a definite improvement.  But other than that I do not see
-any "significant usablity flow" in it.
+  http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_230
 
-The patch seems to do a lot more than just teaching "git" to react
-to "-h" to give a short usage, instead of doing the generic "I do
-not know -h option" thing.  I am not sure what merit these other
-changes of this patch have.
+because people often reference random parts of the tree and mimick
+what existing code does.
 
-In the introductory part, you list three possibilities, but there is
-the fourth "git help help" to ask "git" to give me "help" about
-"help".  Depending on where one comes from, that may also seem just
-as odd as "git help git" (again, I personally find neither is odd,
-though). Would this change help with that "usability flaw" as well?
+> +	ensure_clean
+> +
+> +	local submodule_sha=$(git submodule status $prefix | cut -d ' ' -f 2)
 
-Undecided...
+Is $prefix guaranteed not to have any $IFS whitespaces?
+
+> +	# Remove references to submodule.
+> +	git config --remove-section submodule.$prefix
+> +	git config --file .gitmodules --remove-section submodule.$prefix
+> +	git add .gitmodules
+> +
+> +	# Move submodule aside.
+> +	local tmp_repo="$(mktemp -d /tmp/git-subtree.XXXXX)"
+
+Doesn't "git subtree" honor TMPDIR?  Not complaining, but being
+curious.
+
+> +	rm -r $tmp_repo
+> +	mv $prefix $tmp_repo
+> +	git rm $prefix
+
+Is $prefix guaranteed not to have any $IFS whitespaces?
+
+> +
+> +	# Commit changes.
+> +	git commit -m "Remove '$prefix/' submodule"
+> +
+> +	# subtree add from submodule repo.
+> +	cmd_add_repository $tmp_repo HEAD
+> +
+> +	# Remove submodule repo.
+> +	rm -rf $tmp_repo
+> +}
+> +
+>  "cmd_$command" "$@"
