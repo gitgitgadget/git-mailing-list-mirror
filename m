@@ -1,80 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] git-completion.bash: remove bashism to fix ZSH
- compatibility
-Date: Mon, 11 Mar 2013 10:01:20 -0700
-Message-ID: <7vfw01an1b.fsf@alter.siamese.dyndns.org>
-References: <1363004487-1193-1-git-send-email-Matthieu.Moy@imag.fr>
- <7v38w1c3ms.fsf@alter.siamese.dyndns.org>
- <7vobepany3.fsf@alter.siamese.dyndns.org> <vpqtxohubmb.fsf@grenoble-inp.fr>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [RFC/PATCH] Documentation/technical/api-fswatch.txt: start with
+ outline
+Date: Mon, 11 Mar 2013 18:05:49 +0100
+Message-ID: <20130311170542.GB4167@sandbox-ub.fritz.box>
+References: <1362946623-23649-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Manlio Perillo <manlio.perillo@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 11 18:01:56 2013
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 11 18:06:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UF66g-0004Jx-Q6
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 18:01:51 +0100
+	id 1UF6B5-0000F1-Te
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 18:06:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753313Ab3CKRBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 13:01:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34831 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753086Ab3CKRBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 13:01:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48385B6D4;
-	Mon, 11 Mar 2013 13:01:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jfyIYfTsfkxq8hAYJND0Ioj/ZoM=; b=qHiuAU
-	F8MlalMyV7R/d68KHYRgQajihQTUSe1VRZTwk5Yh9Y5aWNcD2jxLtJgI+o5sH67k
-	92CCUhxbU1HRyB7XTHd7F+DJuAn+x4pMnuHXg6YJB1krJsMi/1HUx/3o5BNW49M9
-	r2Iad0A0fcphRlO15E0GmUh1VKEze4iPdMr5c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OadaGS/GZ5u9q8RUDS+EN/1pnTf7JV5Z
-	jAwn0T8urJF/u9hw4YNe1xX4VGoBdljcyq0FU+BxAM+ZxznuKEFXJwyOhfmY5H88
-	F98cyzxSyVD8AG/8Z9JN9zY+H11M8JOWQcyDORYMLd2libY2GdImBAN0thq+eYpR
-	OhN0fJaQqV4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D22BB6D3;
-	Mon, 11 Mar 2013 13:01:23 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8662B6D2; Mon, 11 Mar 2013
- 13:01:21 -0400 (EDT)
-In-Reply-To: <vpqtxohubmb.fsf@grenoble-inp.fr> (Matthieu Moy's message of
- "Mon, 11 Mar 2013 17:47:40 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4CAC7BDC-8A6D-11E2-872C-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753245Ab3CKRF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 13:05:58 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.31.101]:47468 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751665Ab3CKRF5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Mar 2013 13:05:57 -0400
+Received: from [77.21.76.82] (helo=localhost)
+	by smtprelay06.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1UF6AY-0005nl-4p; Mon, 11 Mar 2013 18:05:50 +0100
+Content-Disposition: inline
+In-Reply-To: <1362946623-23649-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217892>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Mon, Mar 11, 2013 at 01:47:03AM +0530, Ramkumar Ramachandra wrote:
+> git operations are slow on repositories with lots of files, and lots
+> of tiny filesystem calls like lstat(), getdents(), open() are
+> reposible for this.  On the linux-2.6 repository, for instance, the
+> numbers for "git status" look like this:
+> 
+>   top syscalls sorted     top syscalls sorted
+>   by acc. time            by number
+>   ----------------------------------------------
+>   0.401906 40950 lstat    0.401906 40950 lstat
+>   0.190484 5343 getdents  0.150055 5374 open
+>   0.150055 5374 open      0.190484 5343 getdents
+>   0.074843 2806 close     0.074843 2806 close
+>   0.003216 157 read       0.003216 157 read
+> 
+> To solve this problem, we propose to build a daemon which will watch
+> the filesystem using inotify and report batched up events over a UNIX
+> socket.  Since inotify is Linux-only, we have to leave open the
+> possibility of writing similar daemons for other platforms.
+> Everything will continue to work as before if there is no helper
+> present.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> So here is an updated based on your patch.
->
-> Perfect, thanks.
->
->> The correct thing to do in the longer term may be to stop dot-sourcing
->> the source meant for bash into zsh, but this patch should suffice as
->> a band-aid in the meantime.
->
-> I disagree with this particular part though. I think using the same code
-> for bash and zsh makes sense, and it implies restricting to the common
-> subset.
+While talking about platform independence. How about Windows? AFAIK
+there are no file based sockets. How about using shared memory, thats
+available, instead? It would greatly reduce the needed porting effort.
 
-Having to restrict to the common subset means that whenever bash
-adds new and useful features that this script could take advantage
-of to improve the user experience, they cannot be employed until zsh
-catches up (and worse yet, it is outside the control of this script
-if zsh may ever catch up in the specific feature).
+Since operations on a lot of files is especially expensive on Windows it
+is one of the platforms that would profit the most from such a daemon.
+
+Cheers Heiko
