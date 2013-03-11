@@ -1,92 +1,74 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: ZSH segmentation fault while completing "git mv dir/"
-Date: Mon, 11 Mar 2013 20:33:36 +0100
-Message-ID: <513E3190.20100@gmail.com>
-References: <vpqd2v686fi.fsf@grenoble-inp.fr> <513DF4D1.6000500@gmail.com> <vpq8v5uueug.fsf@grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, felipe.contreras@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 11 20:34:23 2013
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: [PATCH] git.c: make usage match manual page
+Date: Mon, 11 Mar 2013 21:44:15 +0200
+Message-ID: <1363031055-13562-1-git-send-email-kevin@bracey.fi>
+Cc: Kevin Bracey <kevin@bracey.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 11 20:45:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UF8UF-0006t4-1H
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 20:34:19 +0100
+	id 1UF8ec-0008Oo-RX
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 20:45:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754365Ab3CKTdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 15:33:47 -0400
-Received: from mail-ee0-f41.google.com ([74.125.83.41]:61319 "EHLO
-	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754474Ab3CKTdq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 15:33:46 -0400
-Received: by mail-ee0-f41.google.com with SMTP id c13so2343278eek.14
-        for <git@vger.kernel.org>; Mon, 11 Mar 2013 12:33:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=R34gndwrCXP/EdQZ17XPBYn598Vto8alwDat0DzjSns=;
-        b=TbuYRXTx8AgzqF1ECkHLxcj8M1mkmS6kIJp5XmQQ2CcCUEB23hPyW1Z3IbgSFoCMJe
-         s32GVHn9EIw5GxOZ96iIBcxLZGk02dHSVbgqAajzFYRbe60rD+v20VaEDYv+n5Ig7ozZ
-         uWzJkBXBxf/Zgv0yXNS5ewsQbPEYIzhy2YQHcoVpdZCp4c8AQ1GjWXhBaoEJ3tAkWDwM
-         k1xaseDHuInFw+hlQsRTSVgJ8yFguQZO0RaIOSRxYmXAq0TR4/KvGP7d23Zrji2dCXyM
-         6ISSN7U6C4zTw6sBQ4KA+xtvz2xRCcObEWq7nI396mKkA4QfTBRk9EnG17qoMd7/foEy
-         9e4Q==
-X-Received: by 10.14.182.137 with SMTP id o9mr39413978eem.13.1363030424649;
-        Mon, 11 Mar 2013 12:33:44 -0700 (PDT)
-Received: from [192.168.0.3] ([151.70.200.211])
-        by mx.google.com with ESMTPS id 44sm25391281eek.5.2013.03.11.12.33.42
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 11 Mar 2013 12:33:43 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
-In-Reply-To: <vpq8v5uueug.fsf@grenoble-inp.fr>
-X-Enigmail-Version: 1.0.1
+	id S1754498Ab3CKTob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 15:44:31 -0400
+Received: from 1.mo1.mail-out.ovh.net ([178.32.127.22]:44575 "EHLO
+	mo1.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751468Ab3CKToa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Mar 2013 15:44:30 -0400
+X-Greylist: delayed 3178 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Mar 2013 15:44:30 EDT
+Received: from mail420.ha.ovh.net (b6.ovh.net [213.186.33.56])
+	by mo1.mail-out.ovh.net (Postfix) with SMTP id F0692FF9339
+	for <git@vger.kernel.org>; Mon, 11 Mar 2013 21:01:04 +0100 (CET)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 11 Mar 2013 21:44:25 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 11 Mar 2013 21:44:24 +0200
+X-Ovh-Mailout: 178.32.228.1 (mo1.mail-out.ovh.net)
+X-Mailer: git-send-email 1.8.2.rc3.7.g1100d09.dirty
+X-Ovh-Tracer-Id: 3753750291142709470
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: 52
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeejucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecuudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 52
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrfeejucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecuudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217904>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Re-ordered option list in command-line usage to match the manual page.
+Also makes it less than 80-characters wide.
 
-Il 11/03/2013 16:37, Matthieu Moy ha scritto:
-> [...]
-> I could reproduce with ~/.zshrc containing just:
-> 
-> ----------------------------------------------
-> fpath=(${HOME}/usr/etc/zsh ${fpath})
-> 
-> autoload -Uz compinit
-> compinit
-> 
-> eval "`dircolors`"
-> zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-> ----------------------------------------------
-> 
-> ${HOME}/usr/etc/zsh contains two links _git and git-completion.bash
-> pointing to Git's completion scripts in contrib/.
-> 
+Signed-off-by: Kevin Bracey <kevin@bracey.fi>
+---
+ git.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Using this configuration I still can't reproduce the problem, using
-git v1.8.2-rc3-8-g0c91a6f.
-
-But I'm not a zsh expert.
-
-
-
-Regards   Manlio Perillo
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAlE+MZAACgkQscQJ24LbaUSTuACfYmZV9cvroPzBUdJspw9abh24
-fk8AnRTjvCEJ3m8Y2m/5jCIVVNsJAcG7
-=5p6c
------END PGP SIGNATURE-----
+diff --git a/git.c b/git.c
+index d33f9b3..2a98624 100644
+--- a/git.c
++++ b/git.c
+@@ -6,10 +6,10 @@
+ #include "run-command.h"
+ 
+ const char git_usage_string[] =
+-	"git [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
++	"git [--version] [--help] [-c name=value]\n"
++	"           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
+ 	"           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]\n"
+ 	"           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
+-	"           [-c name=value] [--help]\n"
+ 	"           <command> [<args>]";
+ 
+ const char git_more_info_string[] =
+-- 
+1.8.2.rc3.7.g1100d09.dirty
