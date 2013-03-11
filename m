@@ -1,74 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: ZSH segmentation fault while completing "git mv dir/"
-Date: Mon, 11 Mar 2013 16:37:59 +0100
-Message-ID: <vpq8v5uueug.fsf@grenoble-inp.fr>
-References: <vpqd2v686fi.fsf@grenoble-inp.fr> <513DF4D1.6000500@gmail.com>
+From: Vadim Zeitlin <vz-git@zeitlins.org>
+Subject: Re: Rewriting references to existing commits in commit messages with filter-branch
+Date: Mon, 11 Mar 2013 15:58:27 +0000 (UTC)
+Message-ID: <loom.20130311T164232-124@post.gmane.org>
+References: <E1UF1Ag-0006m3-5k@smtp.tt-solutions.com> <87haki2la2.fsf@gmx.li> <loom.20130311T131746-169@post.gmane.org> <87y5dut72l.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>, felipe.contreras@gmail.com
-To: Manlio Perillo <manlio.perillo@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 11 16:38:35 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 11 16:59:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UF4o3-0005aT-4o
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 16:38:31 +0100
+	id 1UF58B-0000tI-8n
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Mar 2013 16:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754041Ab3CKPiD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Mar 2013 11:38:03 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:33715 "EHLO shiva.imag.fr"
+	id S1753012Ab3CKP6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Mar 2013 11:58:52 -0400
+Received: from plane.gmane.org ([80.91.229.3]:46570 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752041Ab3CKPiC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Mar 2013 11:38:02 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r2BFbwVr028555
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 11 Mar 2013 16:37:58 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UF4nX-000093-Ip; Mon, 11 Mar 2013 16:37:59 +0100
-In-Reply-To: <513DF4D1.6000500@gmail.com> (Manlio Perillo's message of "Mon,
-	11 Mar 2013 16:14:25 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 11 Mar 2013 16:37:58 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r2BFbwVr028555
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1363621078.30405@p7EgIFubJtBuVyy8/1hBHA
+	id S1752850Ab3CKP6v (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Mar 2013 11:58:51 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UF57x-0000fm-BC
+	for git@vger.kernel.org; Mon, 11 Mar 2013 16:59:05 +0100
+Received: from ip-208.net-89-3-60.rev.numericable.fr ([89.3.60.208])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Mar 2013 16:59:05 +0100
+Received: from vz-git by ip-208.net-89-3-60.rev.numericable.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Mar 2013 16:59:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 89.3.60.208 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217881>
 
-Manlio Perillo <manlio.perillo@gmail.com> writes:
+Thomas Rast <trast <at> student.ethz.ch> writes:
 
-> I have the same system, but I can't reproduce the problem.
-> What is the content of your .zshrc file?
+> 
+> Vadim Zeitlin <vz-git <at> zeitlins.org> writes:
+> 
+> > Lawrence Mitchell <wence <at> gmx.li> writes:
+> >
+> >> Vadim Zeitlin wrote:
+> >> 
+> >> [...]
+> >> 
+> >> > git filter-branch --msg-filter svnmsg2git --tag-name-filter cat -- --all
+> >> 
+> >> git rev-list lists by default in chronological order.  Do you
+> >> want to pass --topo-order as one of the rev-list options?
+> >
+> >  Thanks, this looked like a good idea but reading git-filter-branch code it
+> > seems to already do it, at
+> > https://github.com/git/git/blob/master/git-filter-branch.sh#L269 you can see
+> > that it does "git rev-list --reverse --topo-order ...".
+> 
+> Try overring that with --date-order (you may have to patch the source).
 
-I could reproduce with ~/.zshrc containing just:
+ Thanks for the hint, this was indeed the solution. And there is actually no
+need to patch the source because, considering the way git-filter-branch.sh is
+written, the user-specified parameters come after the hard-coded --topo-order
+and it seems that --date-order overrides it if it comes after it. So I just had
+to use
 
-----------------------------------------------
-fpath=(${HOME}/usr/etc/zsh ${fpath})
+git filter-branch --msg-filter svnmsg2git --tag-name-filter cat -- --date-order
+--all
 
-autoload -Uz compinit
-compinit
+instead of my original command. The only remaining question I have is why isn't
+--date-order the default? At least when using message filter, it seems to me
+that we always want to rewrite commits in chronological order to deal with
+possible back references (even when not migrating from svn, commit messages can
+still refer to previous commits, like e.g. the ones created by "git revert" do
+and they need to be updated when rewriting history). So why not use it in
+git-filter-branch.sh?
 
-eval "`dircolors`"
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-----------------------------------------------
 
-${HOME}/usr/etc/zsh contains two links _git and git-completion.bash
-pointing to Git's completion scripts in contrib/.
+ BTW, the explanation for the new errors I was getting with --date-order was
+that I had some artificial commits generated by cvs2svn in the history of this
+repository which had _exactly_ the same date as the previous commit and
+--date-order sorted them in the wrong order for some reason. I got round this by
+simply checking for the specific form of the message (which is "This commit was
+generated by cvs2svn to compensate for changes in rNNNNN, which included commits
+to RCS files with non-trunk default branches.") and replacing "rNNNNN" with "the
+previous commit" in this particular case in order to avoid the problem.
 
-Removing any line aboves removes the segmentation fault.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+ Thanks again for your help!
+VZ
