@@ -1,269 +1,339 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 09/13] exclude: filter out patterns not applicable to the current directory
-Date: Tue, 12 Mar 2013 20:04:56 +0700
-Message-ID: <1363093500-16796-10-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 10/13] read_directory: avoid invoking exclude machinery on tracked files
+Date: Tue, 12 Mar 2013 20:04:57 +0700
+Message-ID: <1363093500-16796-11-git-send-email-pclouds@gmail.com>
 References: <1362896070-17456-1-git-send-email-pclouds@gmail.com>
  <1363093500-16796-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 12 14:06:55 2013
+X-From: git-owner@vger.kernel.org Tue Mar 12 14:07:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFOus-0007s4-6M
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 14:06:54 +0100
+	id 1UFOvD-00086y-6R
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 14:07:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755388Ab3CLNGW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Mar 2013 09:06:22 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:62563 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754872Ab3CLNGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 09:06:21 -0400
-Received: by mail-pb0-f49.google.com with SMTP id xa12so5002766pbc.36
-        for <git@vger.kernel.org>; Tue, 12 Mar 2013 06:06:20 -0700 (PDT)
+	id S932424Ab3CLNGf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Mar 2013 09:06:35 -0400
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:58358 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755345Ab3CLNGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 09:06:32 -0400
+Received: by mail-pb0-f45.google.com with SMTP id ro8so4996746pbb.4
+        for <git@vger.kernel.org>; Tue, 12 Mar 2013 06:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=rMCJcpcqXKCYe45qQinWFlRIAnQm12EN0BBrX99YLrQ=;
-        b=yYw+TY/zpqAAyY84V6zhxYS7VuUrosXJxApg28tikxzZpGH898zPJjzwTEQIXl7vx3
-         Uj60rBBFatLntfsMaRA4R+zR71HWuy+s6tHuxgZ0+6NK1MxvH7Yeh7X19OWsCLZqMJ21
-         P+0gdyjBi2Uxae63oEZSJyr8RbPTt7XPKbXRtc3LBWanpCXVuCNj7wvlwIU8n/goGkEe
-         ouDgVOCGGtjpDOV7+Vsm5GAh78IjhK64+veFhQ0VcEAVJqJLK5ZoiHLkfFu5j+D5BfPv
-         vTfOXA0XbDb/8r7OeD3DK28T0y60utuYKFIcBTnaoVDRTQwYFtto07wp+prAl0cT4T7E
-         f5mA==
-X-Received: by 10.68.251.169 with SMTP id zl9mr18697890pbc.17.1363093580736;
-        Tue, 12 Mar 2013 06:06:20 -0700 (PDT)
+        bh=xPge7AKIjZ2gJVF9x8l44reDC1fA6NMgcyKe6XuwCMw=;
+        b=sRvXkk2JUs3JSjRgsfUDONnWwzjME8V1FRUn7nry+8lFshVFNwmhTwRluBaB6DowWE
+         VLUuyZn4bzynK87IlkXHwiG23bu+YzAz/U2EN/LM4904dP8qQhDjLTJw4uzUxL0eRK3y
+         aV6GuGPsh6Ndl5WVCQBXOcWZ07+992JpgqVJAoE8hDkjZBkhTHYzFoeb3DIgIyBaxz1o
+         BY5Lb4+v2CWmbQ/EJv57VHktYJRYw1s240f+E5A3UQgurQWuuxdhpMeU48Rfr6Q95EK5
+         bdgFk/3SG4TU8tyf5jIB14Fh6S7pbqDyumHKxfbACxzJtCD4DXuBQdwEWEqlmi9AjsGO
+         mxsQ==
+X-Received: by 10.68.134.201 with SMTP id pm9mr29277639pbb.182.1363093592253;
+        Tue, 12 Mar 2013 06:06:32 -0700 (PDT)
 Received: from lanh ([115.74.63.193])
-        by mx.google.com with ESMTPS id ti8sm25002404pbc.12.2013.03.12.06.06.17
+        by mx.google.com with ESMTPS id ol7sm25001773pbb.14.2013.03.12.06.06.28
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 12 Mar 2013 06:06:19 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 12 Mar 2013 20:06:14 +0700
+        Tue, 12 Mar 2013 06:06:31 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 12 Mar 2013 20:06:21 +0700
 X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
 In-Reply-To: <1363093500-16796-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217959>
 
-=2Egitignore files are spread over directories (*) so that when we chec=
-k
-for ignored files at foo, we are not bothered by foo/bar/.gitignore,
-which contains ignore rules for foo/bar only.
+read_directory() (and its friendly wrapper fill_directory) collects
+untracked/ignored files by traversing through the whole worktree,
+feeding every entry to treat_one_path(), where each entry is checked
+against .gitignore patterns.
 
-This is not enough. foo/.gitignore can contain the pattern
-"foo/bar/*.c". When we stay at foo, we know that the pattern cannot
-match anything. Similarly, the pattern "/autom4te.cache" at root
-directory cannot match anything in foo. This patch attempts to filter
-out such patterns to drive down matching cost.
+One may see that tracked files can't be excluded and we do not need to
+run them through exclude machinery. On repos where there are many
+=2Egitignore patterns and/or a lot of tracked files, this unnecessary
+processing can become expensive.
 
-The algorithm implemented here is a naive one. Patterns can be either
-active or passive:
+This patch avoids it mostly for normal cases. Directories are still
+processed as before. DIR_SHOW_IGNORED and DIR_COLLECT_IGNORED are not
+normally used unless some options are given (e.g. "checkout
+--overwrite-ignore", "add -f"...)
 
- - When we enter a new directory (e.g. from root to foo), currently
-   active patterns may no longer be applicable and can be turned to
-   passive.
+treat_one_path's behavior changes when taking this shortcut. With
+current code, when a non-directory path is not excluded,
+treat_one_path calls treat_file, which returns the initial value of
+exclude_file and causes treat_one_path to return path_handled. With
+this patch, on the same conditions, treat_one_path returns
+path_ignored.
 
- - On the opposite, when we leave a directory (foo back to roo),
-   passive patterns may come alive again.
+read_directory_recursive() cares about this difference. Check out the
+snippet:
 
-We could do smarter things. But this implementation cuts a big portion
-of cost already (and solves the "root .gitignore is evil" problem).
-There's probably no need to be smart.
+	while (...) {
+		switch (treat_path(...)) {
+		case path_ignored:
+			continue;
+		case path_handled:
+			break;
+		}
+		contents++;
+		if (check_only)
+			break;
+		dir_add_name(dir, path.buf, path.len);
+	}
 
-(*) this design forces us to try to find .gitignore at every
-directory. On webkit.git that equals to 6k open syscalls. It feels
-like ".svn on every directory" again. I suggest we add
-~/.gitignore.master, containing the list .gitignore files in
-worktree. If this file exists, we don't poke at every directory for
-=2Egitignore.
+If path_handled is returned, contents goes up. And if check_only is
+true, the loop could be broken early. These will not happen when
+treat_one_path (and its wrapper treat_path) returns
+path_ignored. dir_add_name internally does a cache_name_exists() check
+so it makes no difference.
+
+To avoid this behavior change, treat_one_path is instructed to skip
+the optimization when check_only or contents is used.
+
+=46inally some numbers (best of 20 runs) that shows why it's worth all
+the hassle:
+
+git status   | webkit linux-2.6 libreoffice-core gentoo-x86
+-------------+----------------------------------------------
+before       | 1.097s    0.208s           0.399s     0.539s
+after        | 0.736s    0.159s           0.248s     0.501s
+nr. patterns |    89       376               19          0
+nr. tracked  |   182k       40k              63k       101k
 
 treat_leading_path:   0.000  0.000
-read_directory:       3.455  2.879
-+treat_one_path:      2.203  1.620
-++is_excluded:        2.000  1.416
-+++prep_exclude:      0.171  0.198
-+++matching:          1.509  0.904
-++dir_exist:          0.036  0.035
-++index_name_exists:  0.292  0.289
+read_directory:       2.879  1.299
++treat_one_path:      1.620  0.599
+++is_excluded:        1.416  0.103
++++prep_exclude:      0.198  0.040
++++matching:          0.904  0.036
+++dir_exist:          0.035  0.036
+++index_name_exists:  0.289  0.291
 lazy_init_name_hash:  0.257  0.257
-+simplify_away:       0.084  0.085
-+dir_add_name:        0.446  0.446
++simplify_away:       0.085  0.082
++dir_add_name:        0.446  0.000
 
+Tracked-down-by: Karsten Blees <karsten.blees@gmail.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
 ---
- dir.c | 93 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++--
- dir.h |  1 +
- 2 files changed, 92 insertions(+), 2 deletions(-)
+ dir.c | 80 ++++++++++++++++++++++++++++++++++++++++++++---------------=
+--------
+ 1 file changed, 53 insertions(+), 27 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 932fd2f..c57bf06 100644
+index c57bf06..6809dd2 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -458,7 +458,7 @@ void add_exclude(const char *string, const char *ba=
-se,
- 	x->base =3D base;
- 	x->baselen =3D baselen;
- 	x->pattern_baselen =3D pattern_baselen;
--	x->flags =3D flags;
-+	x->flags =3D flags | EXC_FLAG_ACTIVE;
- 	x->srcpos =3D srcpos;
- 	ALLOC_GROW(el->excludes, el->nr + 1, el->alloc);
- 	el->excludes[el->nr++] =3D x;
-@@ -591,6 +591,87 @@ void add_excludes_from_file(struct dir_struct *dir=
-, const char *fname)
- 		die("cannot use %s as an exclude file", fname);
+@@ -43,8 +43,11 @@ struct path_simplify {
+ 	const char *path;
+ };
+=20
+-static int read_directory_recursive(struct dir_struct *dir, const char=
+ *path, int len,
+-	int check_only, const struct path_simplify *simplify);
++static void read_directory_recursive(struct dir_struct *dir,
++				     const char *path, int len,
++				     int check_only,
++				     const struct path_simplify *simplify,
++				     int *contents);
+ static int get_dtype(struct dirent *de, const char *path, int len);
+=20
+ static inline int memequal_icase(const char *a, const char *b, int n)
+@@ -1184,7 +1187,7 @@ static enum directory_treatment treat_directory(s=
+truct dir_struct *dir,
+ 	const char *dirname, int len, int exclude,
+ 	const struct path_simplify *simplify)
+ {
+-	int ret;
++	int contents =3D 0, ret;
+ 	START_CLOCK();
+ 	/* The "len-1" is to strip the final '/' */
+ 	ret =3D directory_exists_in_index(dirname, len-1);
+@@ -1219,19 +1222,19 @@ static enum directory_treatment treat_directory=
+(struct dir_struct *dir,
+ 	 * check if it contains only ignored files
+ 	 */
+ 	if ((dir->flags & DIR_SHOW_IGNORED) && !exclude) {
+-		int ignored;
+ 		dir->flags &=3D ~DIR_SHOW_IGNORED;
+ 		dir->flags |=3D DIR_HIDE_EMPTY_DIRECTORIES;
+-		ignored =3D read_directory_recursive(dir, dirname, len, 1, simplify)=
+;
++		read_directory_recursive(dir, dirname, len, 1, simplify, &contents);
+ 		dir->flags &=3D ~DIR_HIDE_EMPTY_DIRECTORIES;
+ 		dir->flags |=3D DIR_SHOW_IGNORED;
+=20
+-		return ignored ? ignore_directory : show_directory;
++		return contents ? ignore_directory : show_directory;
+ 	}
+ 	if (!(dir->flags & DIR_SHOW_IGNORED) &&
+ 	    !(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
+ 		return show_directory;
+-	if (!read_directory_recursive(dir, dirname, len, 1, simplify))
++	read_directory_recursive(dir, dirname, len, 1, simplify, &contents);
++	if (!contents)
+ 		return ignore_directory;
+ 	return show_directory;
+ }
+@@ -1398,10 +1401,26 @@ enum path_treatment {
+ static enum path_treatment treat_one_path(struct dir_struct *dir,
+ 					  struct strbuf *path,
+ 					  const struct path_simplify *simplify,
+-					  int dtype, struct dirent *de)
++					  int dtype, struct dirent *de,
++					  int exclude_shortcut_ok)
+ {
+ 	int exclude;
+=20
++	if (dtype =3D=3D DT_UNKNOWN)
++		dtype =3D get_dtype(de, path->buf, path->len);
++
++	if (exclude_shortcut_ok &&
++	    !(dir->flags & DIR_SHOW_IGNORED) &&
++	    !(dir->flags & DIR_COLLECT_IGNORED) &&
++	    dtype !=3D DT_DIR) {
++		struct cache_entry *ce;
++		START_CLOCK();
++		ce =3D cache_name_exists(path->buf, path->len, ignore_case);
++		STOP_CLOCK(tv_index_name_exists);
++		if (ce)
++			return path_ignored;
++	}
++
+ 	START_CLOCK();
+ 	exclude =3D is_excluded(dir, path->buf, path->len, &dtype);
+ 	STOP_CLOCK(tv_is_excluded);
+@@ -1417,9 +1436,6 @@ static enum path_treatment treat_one_path(struct =
+dir_struct *dir,
+ 	if (exclude && !(dir->flags & DIR_SHOW_IGNORED))
+ 		return path_ignored;
+=20
+-	if (dtype =3D=3D DT_UNKNOWN)
+-		dtype =3D get_dtype(de, path->buf, path->len);
+-
+ 	switch (dtype) {
+ 	default:
+ 		return path_ignored;
+@@ -1451,7 +1467,8 @@ static enum path_treatment treat_path(struct dir_=
+struct *dir,
+ 				      struct dirent *de,
+ 				      struct strbuf *path,
+ 				      int baselen,
+-				      const struct path_simplify *simplify)
++				      const struct path_simplify *simplify,
++				      int exclude_shortcut_ok)
+ {
+ 	int dtype, ret;
+=20
+@@ -1467,7 +1484,7 @@ static enum path_treatment treat_path(struct dir_=
+struct *dir,
+=20
+ 	dtype =3D DTYPE(de);
+ 	START_CLOCK();
+-	ret =3D treat_one_path(dir, path, simplify, dtype, de);
++	ret =3D treat_one_path(dir, path, simplify, dtype, de, exclude_shortc=
+ut_ok);
+ 	STOP_CLOCK(tv_treat_one_path);
+ 	return ret;
+ }
+@@ -1481,13 +1498,13 @@ static enum path_treatment treat_path(struct di=
+r_struct *dir,
+  * Also, we ignore the name ".git" (even if it is not a directory).
+  * That likely will not change.
+  */
+-static int read_directory_recursive(struct dir_struct *dir,
+-				    const char *base, int baselen,
+-				    int check_only,
+-				    const struct path_simplify *simplify)
++static void read_directory_recursive(struct dir_struct *dir,
++				     const char *base, int baselen,
++				     int check_only,
++				     const struct path_simplify *simplify,
++				     int *contents)
+ {
+ 	DIR *fdir;
+-	int contents =3D 0;
+ 	struct dirent *de;
+ 	struct strbuf path =3D STRBUF_INIT;
+=20
+@@ -1499,18 +1516,29 @@ static int read_directory_recursive(struct dir_=
+struct *dir,
+=20
+ 	dir->exclude_prepared =3D 0;
+ 	while ((de =3D readdir(fdir)) !=3D NULL) {
+-		switch (treat_path(dir, de, &path, baselen, simplify)) {
++		switch (treat_path(dir, de, &path, baselen,
++				   simplify,
++				   !check_only && !contents)) {
+ 		case path_recurse:
+-			contents +=3D read_directory_recursive(dir, path.buf,
+-							     path.len, 0,
+-							     simplify);
++			read_directory_recursive(dir, path.buf,
++						 path.len, 0,
++						 simplify,
++						 contents);
+ 			continue;
+ 		case path_ignored:
+ 			continue;
+ 		case path_handled:
+ 			break;
+ 		}
+-		contents++;
++		/*
++		 * Update the last argument to treat_path if anything
++		 * else is done after this point. This is because if
++		 * treat_path's exclude_shortcut_ok is true, it may
++		 * incorrectly return path_ignored (and never reaches
++		 * this part) instead of path_handled.
++		 */
++		if (contents)
++			(*contents)++;
+ 		if (check_only)
+ 			break;
+ 		START_CLOCK();
+@@ -1521,8 +1549,6 @@ static int read_directory_recursive(struct dir_st=
+ruct *dir,
+  out:
+ 	dir->exclude_prepared =3D 0;
+ 	strbuf_release(&path);
+-
+-	return contents;
  }
 =20
-+static int pattern_match_base(struct dir_struct *dir,
-+			      const char *base, int baselen,
-+			      const struct exclude *exc)
-+{
-+	const char *pattern;
-+
-+	/*
-+	 * TODO: if a patterns come from a .gitignore, exc->base would
-+	 * be the same for all of them. We could compare once and
-+	 * reuse the result, instead of perform the comparison per
-+	 * pattern like this.
-+	 */
-+	if (exc->baselen) {
-+		if (baselen < exc->baselen + 1)
-+			return 0;
-+
-+		if (base[exc->baselen] !=3D '/' ||
-+		    memcmp(base, exc->base, exc->baselen))
-+			return 0;
-+
-+		base +=3D exc->baselen + 1;
-+		baselen -=3D exc->baselen + 1;
-+	}
-+
-+	if (baselen !=3D exc->pattern_baselen)
-+		return 0;
-+
-+	if (exc->pattern_baselen) {
-+		pattern =3D exc->pattern;
-+		if (*pattern =3D=3D '/')
-+			pattern++;
-+		if (memcmp(base, pattern, exc->pattern_baselen))
-+			return 0;
-+	}
-+
-+	return 1;
-+}
-+
-+/*
-+ * If pushed is non-zero, we have entered a new directory. Some
-+ * pathname patterns may no longer applicable. Go over all active
-+ * patterns and disable them if so.
-+ *
-+ * If popped is non-zero, we have left a directory. Inactive patterns
-+ * may be applicable again. Go over them and re-enable if so.
-+ */
-+static void scan_patterns(struct dir_struct *dir,
-+			  const char *base, int baselen,
-+			  int pushed, int popped)
-+{
-+	int i, j, k;
-+
-+	for (i =3D EXC_CMDL; i <=3D EXC_FILE; i++) {
-+		struct exclude_list_group *group =3D &dir->exclude_list_group[i];
-+		for (j =3D group->nr - 1; j >=3D 0; j--) {
-+			struct exclude_list *list =3D &group->el[j];
-+			for (k =3D 0; k < list->nr; k++) {
-+				struct exclude *exc =3D list->excludes[k];
-+
-+				/*
-+				 * No base (i.e. EXC_FLAG_NODIR) or
-+				 * applicable to many bases ("**"
-+				 * patterns)
-+				 */
-+				if (exc->pattern_baselen =3D=3D -1)
-+					continue;
-+
-+				if (exc->flags & EXC_FLAG_ACTIVE) {
-+					if (pushed &&
-+					    !pattern_match_base(dir, base, baselen, exc))
-+						exc->flags &=3D ~EXC_FLAG_ACTIVE;
-+				} else {
-+					if (popped &&
-+					    pattern_match_base(dir, base, baselen, exc))
-+						exc->flags |=3D EXC_FLAG_ACTIVE;
-+				}
-+			}
-+		}
-+	}
-+}
-+
- /*
-  * Loads the per-directory exclude list for the substring of base
-  * which has a char length of baselen.
-@@ -600,7 +681,7 @@ static void prep_exclude(struct dir_struct *dir, co=
-nst char *base, int baselen)
- 	struct exclude_list_group *group;
- 	struct exclude_list *el;
- 	struct exclude_stack *stk =3D NULL;
--	int current;
-+	int current, popped =3D 0, pushed =3D 0;
-=20
- 	if ((!dir->exclude_per_dir) ||
- 	    (baselen + strlen(dir->exclude_per_dir) >=3D PATH_MAX))
-@@ -621,6 +702,7 @@ static void prep_exclude(struct dir_struct *dir, co=
-nst char *base, int baselen)
- 		clear_exclude_list(el);
- 		free(stk);
- 		group->nr--;
-+		popped++;
+ static int cmp_name(const void *p1, const void *p2)
+@@ -1593,7 +1619,7 @@ static int treat_leading_path(struct dir_struct *=
+dir,
+ 			break;
+ 		dir->exclude_prepared =3D 0;
+ 		if (treat_one_path(dir, &sb, simplify,
+-				   DT_DIR, NULL) =3D=3D path_ignored)
++				   DT_DIR, NULL, 0) =3D=3D path_ignored)
+ 			break; /* do not recurse into it */
+ 		if (len <=3D baselen) {
+ 			rc =3D 1;
+@@ -1621,7 +1647,7 @@ int read_directory(struct dir_struct *dir, const =
+char *path, int len, const char
+ 		STOP_CLOCK(tv_lazy_init_name_hash);
+ #endif
+ 		START_CLOCK();
+-		read_directory_recursive(dir, path, len, 0, simplify);
++		read_directory_recursive(dir, path, len, 0, simplify, NULL);
+ 		STOP_CLOCK(tv_read_directory);
  	}
-=20
- 	/* Read from the parent directories and push them down. */
-@@ -659,8 +741,12 @@ static void prep_exclude(struct dir_struct *dir, c=
-onst char *base, int baselen)
- 					       el, 1);
- 		dir->exclude_stack =3D stk;
- 		current =3D stk->baselen;
-+		pushed++;
- 	}
- 	dir->basebuf[baselen] =3D '\0';
-+
-+	if (pushed | popped)
-+		scan_patterns(dir, base, baselen, pushed, popped);
- }
-=20
- int match_basename(const char *basename, int basenamelen,
-@@ -755,6 +841,9 @@ static struct exclude *last_exclude_matching_from_l=
-ist(const char *pathname,
- 		const char *exclude =3D x->pattern;
- 		int prefix =3D x->nowildcardlen;
-=20
-+		if (!(x->flags & EXC_FLAG_ACTIVE))
-+			continue;
-+
- 		if (x->flags & EXC_FLAG_MUSTBEDIR) {
- 			if (*dtype =3D=3D DT_UNKNOWN)
- 				*dtype =3D get_dtype(NULL, pathname, pathlen);
-diff --git a/dir.h b/dir.h
-index cb50a85..247bfda 100644
---- a/dir.h
-+++ b/dir.h
-@@ -14,6 +14,7 @@ struct dir_entry {
- #define EXC_FLAG_ENDSWITH 4
- #define EXC_FLAG_MUSTBEDIR 8
- #define EXC_FLAG_NEGATIVE 16
-+#define EXC_FLAG_ACTIVE 32
-=20
- /*
-  * Each excludes file will be parsed into a fresh exclude_list which
+ #ifdef MEASURE_EXCLUDE
 --=20
 1.8.1.2.536.gf441e6d
