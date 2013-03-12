@@ -1,86 +1,79 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: linux-next: unneeded merge in the security tree
-Date: Tue, 12 Mar 2013 14:54:04 -0700
-Message-ID: <CA+55aFzWjfFjcRZXBO+edO7f66REA0pOsC3iZ2vYdHrkcovnHA@mail.gmail.com>
+Date: Tue, 12 Mar 2013 15:00:24 -0700
+Message-ID: <7vli9s5ldz.fsf@alter.siamese.dyndns.org>
 References: <20130312100950.e45ef0e721492ff0d5fd7c8d@canb.auug.org.au>
-	<alpine.LRH.2.02.1303121510270.25612@tundra.namei.org>
-	<20130312041641.GE18595@thunk.org>
-	<CA+55aFzFLDcN-1GKae6Xqrns59K1xOD_HPzuv2Lv1__fZpqFMw@mail.gmail.com>
-	<20130312212027.GE14792@thunk.org>
-	<CA+55aFwHJtOU4Qzt3XZsER165kTc5P0ATQP2wPHvuUiVic8bnA@mail.gmail.com>
-	<7vppz45lz9.fsf@alter.siamese.dyndns.org>
+ <alpine.LRH.2.02.1303121510270.25612@tundra.namei.org>
+ <20130312041641.GE18595@thunk.org>
+ <CA+55aFzFLDcN-1GKae6Xqrns59K1xOD_HPzuv2Lv1__fZpqFMw@mail.gmail.com>
+ <20130312212027.GE14792@thunk.org>
+ <CA+55aFwHJtOU4Qzt3XZsER165kTc5P0ATQP2wPHvuUiVic8bnA@mail.gmail.com>
+ <7vppz45lz9.fsf@alter.siamese.dyndns.org>
+ <CA+55aFzWjfFjcRZXBO+edO7f66REA0pOsC3iZ2vYdHrkcovnHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: "Theodore Ts'o" <tytso@mit.edu>, James Morris <jmorris@namei.org>,
 	Stephen Rothwell <sfr@canb.auug.org.au>,
 	linux-next@vger.kernel.org,
 	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Tue Mar 12 22:54:40 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: linux-next-owner@vger.kernel.org Tue Mar 12 23:00:53 2013
+Return-path: <linux-next-owner@vger.kernel.org>
+Envelope-to: glkn-linux-next@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1UFX9b-0007tL-HK
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 12 Mar 2013 22:54:39 +0100
+	(envelope-from <linux-next-owner@vger.kernel.org>)
+	id 1UFXFc-0003Ox-70
+	for glkn-linux-next@plane.gmane.org; Tue, 12 Mar 2013 23:00:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933652Ab3CLVyI (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 12 Mar 2013 17:54:08 -0400
-Received: from mail-vc0-f176.google.com ([209.85.220.176]:40564 "EHLO
-	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755346Ab3CLVyG (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 12 Mar 2013 17:54:06 -0400
-Received: by mail-vc0-f176.google.com with SMTP id e10so183070vcx.21
-        for <multiple recipients>; Tue, 12 Mar 2013 14:54:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=pHYSKCU/Cgcg/n4V3cSrSv/FmZI6f2MRW5Z5kS8M39s=;
-        b=gh1w/oQSVQckTpJIKTLZE5LpKmfuZ4G5xuna1lJzwwfBgGzth1eNxBV/5LylQ6lKHD
-         41JJZw4O54HcGCazTI1qkEPKOVpKyHv4iT6Yg3nekA3f/D3wwXW+AYjN0nBCHC2Eigs/
-         y3o7sHoevlVYACmJnAAX4ZlW6r+wmRL2u3qEEC4VV0RTKdnXVIq6YwrO8DJ+5A6hg/Vs
-         VfDr58gGrWk/6QL436BRArL0jx4dQ+7hw0fZLGxFb+iCTuB1WeV40MmeuZ0XawMqINlV
-         ceTdwwWyLIbn0IHGL3F9EF6CPnw0g0nRC3Ep6ZB/aLmX/8xne97QtYBAv1Dd8sNbyQgf
-         tVYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=pHYSKCU/Cgcg/n4V3cSrSv/FmZI6f2MRW5Z5kS8M39s=;
-        b=U/DFDyOzHdanIfR/tSD4E1Q+q6LvClXWVaa49VAI2soSkGYQu2D5lNv8lq8/8aVyJn
-         PsnPvLrYeaEZjEH8RjH7CVrllVcmLMdVtJRyNznBVHxX7ah5At/B7OkP9P42YcV21HlN
-         AIbMUXvd7KmwqnzBNRI8vj/r26/nCYv13y1Nc=
-X-Received: by 10.52.176.65 with SMTP id cg1mr6285974vdc.1.1363125244782; Tue,
- 12 Mar 2013 14:54:04 -0700 (PDT)
-Received: by 10.220.145.131 with HTTP; Tue, 12 Mar 2013 14:54:04 -0700 (PDT)
-In-Reply-To: <7vppz45lz9.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: fxkciU2-jmDVxko7xC_QD6Q41bk
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1755391Ab3CLWA2 (ORCPT <rfc822;glkn-linux-next@m.gmane.org>);
+	Tue, 12 Mar 2013 18:00:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33933 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755190Ab3CLWA1 (ORCPT <rfc822;linux-next@vger.kernel.org>);
+	Tue, 12 Mar 2013 18:00:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD717B6C6;
+	Tue, 12 Mar 2013 18:00:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=S9DAS2z3DH4p/pyGS/N+v3Mq86M=; b=a99YNj
+	kuS+n/6EbPaS3U10ZILn6v1SHG/NQrB8Y1VrsMxY3d0mty/9SSIGU8F89vTuR/OY
+	uNhq7YYnx3xwTMhUCLn3PDuCeF93PB7XzWwo7BmHnJB1gf/hTr2JljwWzEojZ45M
+	0lcPhzkom1S6u5xZGSUhNFdho9VBH65hRlcK4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aeU6sCReqUNhldTTaeKRWEODHOa+VcUa
+	PGB8BMwTGwnj+1qJ1FM0HUEpNDD1RF0424TME3+0i4KESv5XVsIb1g1MlbxdjGYV
+	SENM9p6ijGHdqBYe9DMCdnZYFOu6jlmqm7gpVsE5cBAjiIYqugZ2rJzkLfNJ+IjU
+	j7O4MCfzfk8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1E91B6C4;
+	Tue, 12 Mar 2013 18:00:26 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A437B6BF; Tue, 12 Mar 2013
+ 18:00:25 -0400 (EDT)
+In-Reply-To: <CA+55aFzWjfFjcRZXBO+edO7f66REA0pOsC3iZ2vYdHrkcovnHA@mail.gmail.com> (Linus
+ Torvalds's message of "Tue, 12 Mar 2013 14:54:04 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3EC4677A-8B60-11E2-8FD2-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-next-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218001>
+List-ID: <linux-next.vger.kernel.org>
+X-Mailing-List: linux-next@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218002>
 
-On Tue, Mar 12, 2013 at 2:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> I agree that "--ff-only" thing is too strict and sometimes you would
-> want to allow back-merges, but when you do allow such a back-merge,
-> is there a reason you want it to be --no-signatures merge?  When a
-> subtree maintainer decides to merge a stable release point from you
-> with a good reason, I do not see anything wrong in recording that
-> the resulting commit _did_ merge what you released with a signature.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-No, there's nothing really bad with adding the signature to the merge
-commit if you do make a merge. It's the fact that it currently makes a
-non-ff merge when that is pointless that hurts.
+> That said, adding the signature from an upstream tag doesn't really
+> seem to be hugely useful. I'm not seeing much of an upside, in other
+> words. I'd *expect* that people would pick up upstream tags
+> regardless, no?
 
-That said, adding the signature from an upstream tag doesn't really
-seem to be hugely useful. I'm not seeing much of an upside, in other
-words. I'd *expect* that people would pick up upstream tags
-regardless, no?
-
-           Linus
+Yes, their "git fetch" will auto-follow, but mergetag embedded in
+the commit objects will give the history auditable trail the same
+way as the merges you make your downstream.  You of course could
+match out-of-line tags against back-merges and verify your merges
+with mergetags, but you do not have to.
