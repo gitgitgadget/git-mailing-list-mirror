@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 06/13] dir: pass pathname length to last_exclude_matching
-Date: Tue, 12 Mar 2013 20:04:53 +0700
-Message-ID: <1363093500-16796-7-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 05/13] match_{base,path}name: replace strncmp_icase with memequal_icase
+Date: Tue, 12 Mar 2013 20:04:52 +0700
+Message-ID: <1363093500-16796-6-git-send-email-pclouds@gmail.com>
 References: <1362896070-17456-1-git-send-email-pclouds@gmail.com>
  <1363093500-16796-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -11,118 +11,138 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 12 14:06:31 2013
+X-From: git-owner@vger.kernel.org Tue Mar 12 14:06:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFOuP-0007Yu-L2
+	id 1UFOuP-0007Yu-5L
 	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 14:06:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755443Ab3CLNF7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Mar 2013 09:05:59 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:51420 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755361Ab3CLNF5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 09:05:57 -0400
-Received: by mail-pb0-f53.google.com with SMTP id un1so4926798pbc.40
-        for <git@vger.kernel.org>; Tue, 12 Mar 2013 06:05:57 -0700 (PDT)
+	id S1755413Ab3CLNFw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Mar 2013 09:05:52 -0400
+Received: from mail-da0-f54.google.com ([209.85.210.54]:54785 "EHLO
+	mail-da0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755278Ab3CLNFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 09:05:51 -0400
+Received: by mail-da0-f54.google.com with SMTP id p1so1259365dad.27
+        for <git@vger.kernel.org>; Tue, 12 Mar 2013 06:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=36rBYwaRjBDzwAfCxc/43lUc/ydhtf+Llai87Z95A64=;
-        b=eM7pkW4RGDB6DHM3cDEzKeu9eKbd4GWeafjIzBvkhWCI/FMVSDFB0s+Z5RwLO6q+5f
-         hkMm7b5fGLEvzFbkgAeAPJdJhCZXl8m0UwIiwdvG76kXgA06F+PufMK22dpITvZtHHgt
-         JWXACLmtZ+d2ByUH8SB/mU0LgeGQovnYUMtAt45PVROvxdak2qqw4uZE1X8f7JW669Ke
-         izpfiV/bq6XguUbe2ds6uIy+fERwy3ldUv2FJLJyOmBXXFHAmcLs28HVhW1mfnSUAuDN
-         M8BhZmEmh/9vw5YZbmxVB004PcvrZI1fYEWKP0PPmgCPS3W5H2b3oEAUJsNBwgp67mbC
-         inSQ==
-X-Received: by 10.68.37.6 with SMTP id u6mr1588084pbj.78.1363093557383;
-        Tue, 12 Mar 2013 06:05:57 -0700 (PDT)
+        bh=ZH40xoWGfV6yKA82Do9HTspAja7ZdO5rJse4aKOax4I=;
+        b=TRASQXapauI73O77zfm8brZU+hZS3OuZq8rZsZI93863h1OK0Xua3olLBEorpjrBl9
+         cwxBy8U2h8XPeNxoEIf9sIkERzsb4sflbFSnY0lGxDM1NwC0iiXX5T9X4Pq1M1wVCfdz
+         qosEZf9oass22IhXqv4Cf9Yaf+XIyu4kgw8x0UaE2B7qmSjBOtL8y7L7E5kyajdbzOSH
+         uFzTCh39a81RCpJOkd01RGljQ4gE1E8+nh/xLHhUK4WfIipPla41cRPwm7aWx3qZIPR5
+         B+kv3peEO6qxmhdsDYovpodBVBtQVyUkU5bnz8hnZzymR537pQyKolrdVlFCcpIUcDQZ
+         awzw==
+X-Received: by 10.68.224.65 with SMTP id ra1mr37011471pbc.55.1363093551137;
+        Tue, 12 Mar 2013 06:05:51 -0700 (PDT)
 Received: from lanh ([115.74.63.193])
-        by mx.google.com with ESMTPS id tm1sm25001122pbc.11.2013.03.12.06.05.54
+        by mx.google.com with ESMTPS id kb3sm24994059pbc.21.2013.03.12.06.05.48
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 12 Mar 2013 06:05:56 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 12 Mar 2013 20:05:51 +0700
+        Tue, 12 Mar 2013 06:05:50 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 12 Mar 2013 20:05:44 +0700
 X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
 In-Reply-To: <1363093500-16796-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217955>
 
+treat_leading_path:   0.000  0.000
+read_directory:       3.578  3.501
++treat_one_path:      2.323  2.257
+++is_excluded:        2.117  2.056
++++prep_exclude:      0.224  0.216
++++matching:          1.544  1.493
+++dir_exist:          0.035  0.035
+++index_name_exists:  0.290  0.292
+lazy_init_name_hash:  0.258  0.256
++simplify_away:       0.087  0.084
++dir_add_name:        0.445  0.447
 
+Suggested-by: Fredrik Gustafsson <iveqy@iveqy.com>
+Suggested-by: Antoine Pelisse <apelisse@gmail.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- dir.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ dir.c | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 26c3b3a..58739f3 100644
+index a2ab200..26c3b3a 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -794,9 +794,9 @@ int is_excluded_from_list(const char *pathname,
-  */
- static struct exclude *last_exclude_matching(struct dir_struct *dir,
- 					     const char *pathname,
-+					     int pathlen,
- 					     int *dtype_p)
+@@ -47,6 +47,29 @@ static int read_directory_recursive(struct dir_struc=
+t *dir, const char *path, in
+ 	int check_only, const struct path_simplify *simplify);
+ static int get_dtype(struct dirent *de, const char *path, int len);
+=20
++static inline int memequal_icase(const char *a, const char *b, int n)
++{
++	if (!memcmp(a, b, n))
++		return 1;
++
++	if (!ignore_case)
++		return 0;
++
++	/*
++	 * This assumes that ASCII is used in most repositories. We
++	 * try the ascii-only version first (i.e. Git's
++	 * toupper). Failing that, fall back to normal strncasecmp.
++	 */
++	while (n && toupper(*a) =3D=3D toupper(*b)) {
++		a++;
++		b++;
++		n--;
++	}
++	if (!n)
++		return 1;
++	return !strncasecmp(a, b, n);
++}
++
+ inline int git_fnmatch(const char *pattern, const char *string,
+ 		       int flags, int prefix)
  {
--	int pathlen =3D strlen(pathname);
- 	int i, j;
- 	struct exclude_list_group *group;
- 	struct exclude *exclude;
-@@ -827,10 +827,12 @@ static struct exclude *last_exclude_matching(stru=
-ct dir_struct *dir,
-  * scans all exclude lists to determine whether pathname is excluded.
-  * Returns 1 if true, otherwise 0.
-  */
--static int is_excluded(struct dir_struct *dir, const char *pathname, i=
-nt *dtype_p)
-+static int is_excluded(struct dir_struct *dir,
-+		       const char *pathname, int pathlen,
-+		       int *dtype_p)
+@@ -637,11 +660,11 @@ int match_basename(const char *basename, int base=
+namelen,
  {
- 	struct exclude *exclude =3D
--		last_exclude_matching(dir, pathname, dtype_p);
-+		last_exclude_matching(dir, pathname, pathlen, dtype_p);
- 	if (exclude)
- 		return exclude->flags & EXC_FLAG_NEGATIVE ? 0 : 1;
- 	return 0;
-@@ -893,7 +895,8 @@ struct exclude *last_exclude_matching_path(struct p=
-ath_exclude_check *check,
- 		if (ch =3D=3D '/') {
- 			int dt =3D DT_DIR;
- 			exclude =3D last_exclude_matching(check->dir,
--							path->buf, &dt);
-+							path->buf, path->len,
-+							&dt);
- 			if (exclude) {
- 				check->exclude =3D exclude;
- 				return exclude;
-@@ -905,7 +908,7 @@ struct exclude *last_exclude_matching_path(struct p=
-ath_exclude_check *check,
- 	/* An entry in the index; cannot be a directory with subentries */
- 	strbuf_setlen(path, 0);
+ 	if (prefix =3D=3D patternlen) {
+ 		if (patternlen =3D=3D basenamelen &&
+-		    !strncmp_icase(pattern, basename, patternlen))
++		    memequal_icase(pattern, basename, patternlen))
+ 			return 1;
+ 	} else if (flags & EXC_FLAG_ENDSWITH) {
+ 		if (patternlen - 1 <=3D basenamelen &&
+-		    !strncmp_icase(pattern + 1,
++		    memequal_icase(pattern + 1,
+ 				   basename + basenamelen - patternlen + 1,
+ 				   patternlen - 1))
+ 			return 1;
+@@ -675,7 +698,7 @@ int match_pathname(const char *pathname, int pathle=
+n,
+ 	 */
+ 	if (pathlen < baselen + 1 ||
+ 	    (baselen && (pathname[baselen] !=3D '/' ||
+-			 strncmp_icase(pathname, base, baselen))))
++			 !memequal_icase(pathname, base, baselen))))
+ 		return 0;
 =20
--	return last_exclude_matching(check->dir, name, dtype);
-+	return last_exclude_matching(check->dir, name, namelen, dtype);
- }
+ 	namelen =3D baselen ? pathlen - baselen - 1 : pathlen;
+@@ -689,7 +712,7 @@ int match_pathname(const char *pathname, int pathle=
+n,
+ 		if (prefix > namelen)
+ 			return 0;
 =20
- /*
-@@ -1297,7 +1300,7 @@ static enum path_treatment treat_one_path(struct =
-dir_struct *dir,
- 	int exclude;
-=20
- 	START_CLOCK();
--	exclude =3D is_excluded(dir, path->buf,  &dtype);
-+	exclude =3D is_excluded(dir, path->buf, path->len, &dtype);
- 	STOP_CLOCK(tv_is_excluded);
-=20
- 	if (exclude && (dir->flags & DIR_COLLECT_IGNORED)
+-		if (strncmp_icase(pattern, name, prefix))
++		if (!memequal_icase(pattern, name, prefix))
+ 			return 0;
+ 		pattern +=3D prefix;
+ 		name    +=3D prefix;
 --=20
 1.8.1.2.536.gf441e6d
