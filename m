@@ -1,85 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] submodule: add 'deinit' command
-Date: Tue, 12 Mar 2013 09:22:07 -0700
-Message-ID: <7v1ubk8u6o.fsf@alter.siamese.dyndns.org>
-References: <5112C6F6.4030607@web.de>
- <CABURp0pC2FELxM5aUwxuTqS1roZm+fwkCQA+BoXjrd0+yQMmbg@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v2 3/4] config: make parsing stack struct independent
+ from actual data source
+Date: Tue, 12 Mar 2013 17:27:35 +0100
+Message-ID: <20130312162734.GB4704@sandbox-ub.fritz.box>
+References: <20130310165642.GA1136@sandbox-ub.fritz.box>
+ <20130310165940.GD1136@sandbox-ub.fritz.box>
+ <20130312110355.GE11340@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 12 17:22:47 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jens Lehmann <jens.lehmann@web.de>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 12 17:28:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFRyM-0001MS-KT
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 17:22:42 +0100
+	id 1UFS3Z-0005Bx-E6
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 17:28:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932897Ab3CLQWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Mar 2013 12:22:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34297 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932465Ab3CLQWJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 12:22:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16678A4F3;
-	Tue, 12 Mar 2013 12:22:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Uv1+hA9sVr/zmXnVbnzWxl5vwiM=; b=o1t0SM
-	U+eWwZqPaEUM4ScvAmGBjAL6cpljaWXblfLjZnXrzNUU0JXHcKZncDPvYJXLsiLL
-	CBIYrupKlCwgEgMG+RfiGDO6uXKMC0hQ/DvQcReMkEPCBUaTIg8kzLsCbv+AzZR6
-	8pnoKdQTSug22VMvIv75OptMXV5c7vTn+goGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rk62jvGDPBr2kthjgNrEcAXRXn46oabv
-	vSx3AmBQoDpFfiF5CbezN5dwtmWpmqtxRotpRV0Vo+x0roOcHExxT2kPuegfmdeh
-	yZ/s6ZXAiE0umdLxJmDI8FWJ/GCkBFdVzBR3K2ZsAui+cIw1PXtjpx4toq1eQhHN
-	61K0ugKdIBE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09FF8A4F2;
-	Tue, 12 Mar 2013 12:22:09 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D540A4F1; Tue, 12 Mar 2013
- 12:22:08 -0400 (EDT)
-In-Reply-To: <CABURp0pC2FELxM5aUwxuTqS1roZm+fwkCQA+BoXjrd0+yQMmbg@mail.gmail.com> (Phil
- Hord's message of "Tue, 12 Mar 2013 11:39:40 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FC7E5AC6-8B30-11E2-8EA8-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932898Ab3CLQ1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Mar 2013 12:27:39 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.29.24]:53245 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932388Ab3CLQ1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 12:27:38 -0400
+Received: from [77.21.76.82] (helo=localhost)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1UFS35-0007Bc-IZ; Tue, 12 Mar 2013 17:27:35 +0100
+Content-Disposition: inline
+In-Reply-To: <20130312110355.GE11340@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217974>
 
-Phil Hord <phil.hord@gmail.com> writes:
+On Tue, Mar 12, 2013 at 07:03:55AM -0400, Jeff King wrote:
+> On Sun, Mar 10, 2013 at 05:59:40PM +0100, Heiko Voigt wrote:
+> 
+> > diff --git a/config.c b/config.c
+> > index f55c43d..fe1c0e5 100644
+> > --- a/config.c
+> > +++ b/config.c
+> > @@ -10,20 +10,42 @@
+> >  #include "strbuf.h"
+> >  #include "quote.h"
+> >  
+> > -typedef struct config_file {
+> > -	struct config_file *prev;
+> > -	FILE *f;
+> > +struct config_source {
+> > +	struct config_source *prev;
+> > +	void *data;
+> 
+> Would a union be more appropriate here? We do not ever have to pass it
+> directly as a parameter, since we pass the "struct config_source" to the
+> method functions.
+> 
+> It's still possible to screw up using a union, but it's slightly harder
+> than screwing up using a void pointer. And I do not think we need the
+> run-time flexibility offered by the void pointer in this case.
 
-> I think this would be clearer if 'git deinit' said
->
->     rm 'submodule/*'
->
-> or maybe
->
->     Removed workdir for 'submodule'
->
-> Is it just me?
+No we do not need the void pointer flexibility. But that means every new
+source would need to add to this union. Junio complained about that fact
+when I first added the extra members directly to the struct. A union
+does not waste that much space and we get some seperation using the
+union members. Since this struct is local only I think that should be
+ok.
 
-The latter may probably be better.  
+> > +static int config_file_fgetc(struct config_source *conf)
+> > +{
+> > +	FILE *f = conf->data;
+> > +	return fgetc(f);
+> > +}
+> 
+> This could become just:
+> 
+>   return fgetc(conf->u.f);
+> 
+> and so forth (might it make sense to give "f" a more descriptive name,
+> as we are adding other sources?).
 
-After cloning the superproject, you show interest in individual
-submodules by saying "git submodule init <that submodule>" and until
-then your .git/config in the superproject does not indicate that you
-are interested in that submodule, and you won't have a submodule
-checkout.
+Will change that.
 
-"deinit" is a way to revert back to that original state; recording
-that you are no longer interested in the submodule is the primary
-effect, and removal of its checkout is a mere side effect of it.
+Cheers Heiko
