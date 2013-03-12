@@ -1,71 +1,85 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH v3 04/13] match_basename: use strncmp instead of strcmp
-Date: Tue, 12 Mar 2013 18:40:40 +0100
-Message-ID: <CALWbr2w71DsORxsFBBj4N2wzYQomjvCqxGfovbTDjGAT9eASyQ@mail.gmail.com>
-References: <1362896070-17456-1-git-send-email-pclouds@gmail.com>
-	<1363093500-16796-1-git-send-email-pclouds@gmail.com>
-	<1363093500-16796-5-git-send-email-pclouds@gmail.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: Re: linux-next: unneeded merge in the security tree
+Date: Tue, 12 Mar 2013 18:51:44 +0100
+Message-ID: <CAMuHMdXaf_wfmwpQ4O5v+n8vd4uwddDANyZna4ufK10JxZhSvA@mail.gmail.com>
+References: <20130312100950.e45ef0e721492ff0d5fd7c8d@canb.auug.org.au>
+	<alpine.LRH.2.02.1303121510270.25612@tundra.namei.org>
+	<20130312041641.GE18595@thunk.org>
+	<CA+55aFzFLDcN-1GKae6Xqrns59K1xOD_HPzuv2Lv1__fZpqFMw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 12 18:49:06 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Cc: "Theodore Ts'o" <tytso@mit.edu>, James Morris <jmorris@namei.org>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	linux-next@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: linux-next-owner@vger.kernel.org Tue Mar 12 18:52:25 2013
+Return-path: <linux-next-owner@vger.kernel.org>
+Envelope-to: glkn-linux-next@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFTJx-0004oI-Or
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 18:49:06 +0100
+	(envelope-from <linux-next-owner@vger.kernel.org>)
+	id 1UFTN9-00072f-Um
+	for glkn-linux-next@plane.gmane.org; Tue, 12 Mar 2013 18:52:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932470Ab3CLRsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Mar 2013 13:48:39 -0400
-Received: from mail-qe0-f46.google.com ([209.85.128.46]:59391 "EHLO
-	mail-qe0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932453Ab3CLRsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 13:48:38 -0400
-Received: by mail-qe0-f46.google.com with SMTP id a11so73038qen.5
-        for <git@vger.kernel.org>; Tue, 12 Mar 2013 10:48:37 -0700 (PDT)
+	id S932938Ab3CLRvq (ORCPT <rfc822;glkn-linux-next@m.gmane.org>);
+	Tue, 12 Mar 2013 13:51:46 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:41043 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932355Ab3CLRvp (ORCPT
+	<rfc822;linux-next@vger.kernel.org>); Tue, 12 Mar 2013 13:51:45 -0400
+Received: by mail-ie0-f169.google.com with SMTP id 13so171427iea.28
+        for <multiple recipients>; Tue, 12 Mar 2013 10:51:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=PwtK2ldRNcSogefUsPnysj2u4e20KeLsddGS235zz1I=;
-        b=DHT8Udl0SHT88UR+QYSJyq17RR31XvAYdvOAvyRYo1NAcn7AtEjuyWZndHSUyFrEtd
-         kN3uPadA/ZYWCvf5k8zDYYm4oPfIE58kdxTUylQZghDEYTJrjuYHm+6B2feLeDGkgJMJ
-         kERLpytjg47N/MZQ/sbjYuS1h6NX5MM2zF9n+1+yel2U9A7ayoDHTAenM5RiJ1fOtXQ8
-         MIwNx8s7uJLnFzGcBI57G8AibwWNjPbNiJ3J8czZlEX9VfDSHuP1dFblkeZqUjTeVqOa
-         JCU8lSEGnVdpZvPoI+Pca3HusKI2rYUHVa7VXPjeLttRjxJ/feSBdwKI3cQ6mdh2Pjib
-         9SzQ==
-X-Received: by 10.224.70.3 with SMTP id b3mr17172027qaj.47.1363110040792; Tue,
- 12 Mar 2013 10:40:40 -0700 (PDT)
-Received: by 10.49.70.163 with HTTP; Tue, 12 Mar 2013 10:40:40 -0700 (PDT)
-In-Reply-To: <1363093500-16796-5-git-send-email-pclouds@gmail.com>
-Sender: git-owner@vger.kernel.org
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=Skl6CM6fItltpqMOTpdFTALWj1aTmGJTixLOeJKe8bA=;
+        b=xJL4mDulw0GKCpmJ4i+d59lgp7FCc5sfhWb/3HtadR23HwmunUMKINvZl5yMW/MY4P
+         1QmaqEP+g11PF1reYI7HSn+IjlBSx4Ma9Xa0bnk1fFBHVCWY26RyC1wQu2VWaHTKmZos
+         mj1e455frDhv7xjDOqbfDdKC05yhDubHHGHnM9UsBNZvDUv4ovSQfB4tTY9qX7/zqaon
+         lYphLwzrRmjuyn0P7Flsu8N7XwqByxr7v7rZUboWtzPIk9yusmD4+ybPmvFicT4PYltg
+         2oz1RV78flm+7LRHA4K/1S1HYiyb4WdWPPt3NT4bZw6dZp6cNVSQId4JXu5kmMz2/DSf
+         mN9g==
+X-Received: by 10.50.191.164 with SMTP id gz4mr12883843igc.2.1363110704936;
+ Tue, 12 Mar 2013 10:51:44 -0700 (PDT)
+Received: by 10.64.82.137 with HTTP; Tue, 12 Mar 2013 10:51:44 -0700 (PDT)
+In-Reply-To: <CA+55aFzFLDcN-1GKae6Xqrns59K1xOD_HPzuv2Lv1__fZpqFMw@mail.gmail.com>
+X-Google-Sender-Auth: RRPze5wdhlAF2RStTnStK3nZwkg
+Sender: linux-next-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217977>
+List-ID: <linux-next.vger.kernel.org>
+X-Mailing-List: linux-next@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217978>
 
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -636,12 +636,14 @@ int match_basename(const char *basename, int basenamelen,
->                    int flags)
->  {
->         if (prefix == patternlen) {
-> -               if (!strcmp_icase(pattern, basename))
-> +               if (patternlen == basenamelen &&
-> +                   !strncmp_icase(pattern, basename, patternlen))
->                         return 1;
->         } else if (flags & EXC_FLAG_ENDSWITH) {
->                 if (patternlen - 1 <= basenamelen &&
-> -                   !strcmp_icase(pattern + 1,
-> -                                 basename + basenamelen - patternlen + 1))
-> +                   !strncmp_icase(pattern + 1,
-> +                                  basename + basenamelen - patternlen + 1,
-> +                                  patternlen - 1))
->                         return 1;
+On Tue, Mar 12, 2013 at 6:13 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>> Why not just force the head of the security tree to be v3.9-rc2?  Then
+>> you don't end up creating a completely unnecessary merge commit, and
+>> users who were at the previous head of the security tree will
+>> experience a fast forward when they pull your new head.
+>
+> So I think that may *technically* be the right solution, but it's a
+> rather annoying UI issue, partly because you can't just do it in a
+> single operation (you can't do a pull of the tag to both fetch and
+> fast-forward it), but partly because "git reset --hard" is also an
+> operation that can lose history, so it's something that people should
+> be nervous about, and shouldn't use as some kind of standard "let's
+> just fast-forward to Linus' tree" thing.
 
+In many cases, "git rebase x" does the exact same thing as
+"git reset --hard x", with an added safeguard: if you forgot to upstream
+something, it'll boil up on top of "x".
 
-I can see that you kept strncmp(), was it worse with memcmp() ?
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
