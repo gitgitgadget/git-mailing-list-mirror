@@ -1,74 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 2/5] blame: introduce $ as "end of file" in -L syntax
-Date: Tue, 12 Mar 2013 15:34:26 -0700
-Message-ID: <7va9q85jt9.fsf@alter.siamese.dyndns.org>
-References: <cover.1362069310.git.trast@student.ethz.ch>
- <7973d90cfcd86a3c15776b8718ad6bd84ee7b4ac.1362069310.git.trast@student.ethz.ch> <7vk3psicgf.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	"Will Palmer" <wmpalmer@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Mar 12 23:35:12 2013
+From: Matt McClure <matthewlmcclure@gmail.com>
+Subject: Re: difftool -d symlinks, under what conditions
+Date: Tue, 12 Mar 2013 16:48:16 -0600
+Message-ID: <3222724986386016520@unknownmsgid>
+References: <CAJELnLGq_oLBiNHANoaE7iEiA6g4fXX0PtJbqPFi4PQ+5LLvnA@mail.gmail.com>
+ <CAJDDKr4mTc8-FX7--pd7j0vUbdk_1+KU0YniKEhRdee6SaS-8Q@mail.gmail.com>
+ <CAJELnLEL8y0G3MBGkW+YDKtVxX4n4axJG7p0oPsXsV4_FRyGDg@mail.gmail.com>
+ <CAJELnLGOK5m-JLwgfUdmQcS1exZMQdf1QR_g-GB_UhryDw3C9w@mail.gmail.com>
+ <20130312190956.GC2317@serenity.lan> <CAJDDKr7S0ex1RvZS0QeBXxAuqcKrQJzhZeJP0MoMGmpGXyMOrA@mail.gmail.com>
+ <20130312194306.GE2317@serenity.lan> <7vfw0073pm.fsf@alter.siamese.dyndns.org>
+ <20130312210630.GF2317@serenity.lan> <CAJELnLGBr1wOX4-3rCNjPpPLezc_6FgyeuPqty268JR0==qtvQ@mail.gmail.com>
+ <7vehfk5kn2.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: John Keeping <john@keeping.me.uk>,
+	David Aguilar <davvid@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Tim Henigan <tim.henigan@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 12 23:49:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFXmm-0001oT-Vk
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 23:35:09 +0100
+	id 1UFY0F-0004TN-HJ
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 23:49:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933440Ab3CLWec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Mar 2013 18:34:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58865 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933701Ab3CLWe3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 18:34:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FA2BAAC9;
-	Tue, 12 Mar 2013 18:34:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LHhTZl5UyPKefUnCmS5LXauU3N4=; b=Yr28Q1
-	+Myj61i4DK6yvQpfoVdC5/F9r6/r1yaDfL4L6F1VJfGqw9VmUTn4Qua9olUaJfQu
-	IswsUX+jGX37WYjtFrTdqcG6uQJP1rebvSa8Aik6R1oZetrBKK1TOWeGEglLKU0s
-	NXBcGkOCVaum5ncQOFyB9Rr84xqTF6LRd4n+s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bwuNY9QCUooaeqbKscw7R12CIil3K4ho
-	UVMkhdLxKixcfAWYrTo40O9xCEJOP9BiIFrmq6lL2+L7hnnbxpwN/tbpEvtFvJkv
-	iHSJHTgSlM1bPWVP81VRGjTc6Oin60650N+TLsvVSiurfOzDINA/y07gW9uVyQop
-	qGFadno4ARk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9293CAAC8;
-	Tue, 12 Mar 2013 18:34:28 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B47FAAC7; Tue, 12 Mar 2013
- 18:34:27 -0400 (EDT)
-In-Reply-To: <7vk3psicgf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 28 Feb 2013 09:18:40 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FFE250DA-8B64-11E2-B8DE-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S964894Ab3CLWsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Mar 2013 18:48:21 -0400
+Received: from mail-da0-f45.google.com ([209.85.210.45]:59263 "EHLO
+	mail-da0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933759Ab3CLWsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 18:48:18 -0400
+Received: by mail-da0-f45.google.com with SMTP id v40so132603dad.18
+        for <git@vger.kernel.org>; Tue, 12 Mar 2013 15:48:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:references:from:in-reply-to:mime-version:date:message-id
+         :subject:to:cc:content-type;
+        bh=CIcyWK5QulAGVaderzVi7aQE+HZHn1qew2px3V0jyoA=;
+        b=tkbkohWVTFio/yyA8Bxuq9UJBC/m9Qqvgfq6lW0kTPOstcUkXS1bsbS90oANQzb15b
+         4pTPQDuE6rfljC8xi52iJ4xUZgILA3sl+fn4HpcXxNotQNdZVJsIHVXzAFukmE83mPyN
+         w1ZXA2qw+PTgTfFljAGh+1AWyQaGBs5B7w2kEdu2pi+/VeSfjFfLIxo1endBnRtX+s5A
+         u3nlparM439IOCabwQU7MXs1krgehQ/YKlq7AOuYbDi7TCro+NWFrFpIfzIgFBfmudJL
+         GUFqDTdXS0CdED6GFek+Bp8w3pquRmQ2+qIJ9Uc7zt8PeQGCaJdv70LPA65IXK8Wo6N2
+         3FTQ==
+X-Received: by 10.68.194.8 with SMTP id hs8mr18340175pbc.44.1363128497916;
+ Tue, 12 Mar 2013 15:48:17 -0700 (PDT)
+In-Reply-To: <7vehfk5kn2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218006>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mar 12, 2013, at 4:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Thomas Rast <trast@student.ethz.ch> writes:
+> Matt McClure <matthewlmcclure@gmail.com> writes:
 >
->> To save the user a lookup of the last line number, introduce $ as a
->> shorthand for the last line.  This is mostly useful to spell "until
->> the end of the file" as '-L<begin>,$'.
+>> An alternative approach would be to reuse git-diff's option parsing
 >
-> Doesn't "-L <begin>" or "-L <begin>," do that already?  If it were
-> to introduce "-L $-4," or "-L$-4,+2", I would understand why the
-> addition may be useful, but otherwise I do not think it adds much
-> value.
+> I do not think you want to go there.  That wouldn't solve the third
+> case in my previous message, no?
 
-It is a quiet-period so there is no need to rush, but did anything
-happened further on this series?
+I think I don't fully understand your third bullet.
+
+> * If you are comparing two trees, and especially if your RHS is not
+>   HEAD, you will send everything to a temporary without
+>   symlinks. Any edit made by the user will be lost.
+
+I think you're suggesting to use a symlink any time the content of any
+given RHS revision is the same as the working tree.
+
+I imagine that might confuse me as a user. It would create
+circumstances where some files are symlinked and others aren't for
+reasons that won't be straightforward.
+
+I imagine solving that case, I might instead implement a copy back to
+the working tree with conflict detection/resolution. Some earlier
+iterations of the directory diff feature used copy back without
+conflict detection and created situations where I clobbered my own
+changes by finishing a directory diff after making edits concurrently.
