@@ -1,80 +1,76 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: difftool -d symlinks, under what conditions
-Date: Tue, 12 Mar 2013 21:06:30 +0000
-Message-ID: <20130312210630.GF2317@serenity.lan>
-References: <CAJELnLGq_oLBiNHANoaE7iEiA6g4fXX0PtJbqPFi4PQ+5LLvnA@mail.gmail.com>
- <CAJDDKr4mTc8-FX7--pd7j0vUbdk_1+KU0YniKEhRdee6SaS-8Q@mail.gmail.com>
- <CAJELnLEL8y0G3MBGkW+YDKtVxX4n4axJG7p0oPsXsV4_FRyGDg@mail.gmail.com>
- <CAJELnLGOK5m-JLwgfUdmQcS1exZMQdf1QR_g-GB_UhryDw3C9w@mail.gmail.com>
- <20130312190956.GC2317@serenity.lan>
- <CAJDDKr7S0ex1RvZS0QeBXxAuqcKrQJzhZeJP0MoMGmpGXyMOrA@mail.gmail.com>
- <20130312194306.GE2317@serenity.lan>
- <7vfw0073pm.fsf@alter.siamese.dyndns.org>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: linux-next: unneeded merge in the security tree
+Date: Tue, 12 Mar 2013 17:20:27 -0400
+Message-ID: <20130312212027.GE14792@thunk.org>
+References: <20130312100950.e45ef0e721492ff0d5fd7c8d@canb.auug.org.au>
+ <alpine.LRH.2.02.1303121510270.25612@tundra.namei.org>
+ <20130312041641.GE18595@thunk.org>
+ <CA+55aFzFLDcN-1GKae6Xqrns59K1xOD_HPzuv2Lv1__fZpqFMw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>,
-	Matt McClure <matthewlmcclure@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Tim Henigan <tim.henigan@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 12 22:07:16 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Cc: James Morris <jmorris@namei.org>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	linux-next@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: linux-next-owner@vger.kernel.org Tue Mar 12 22:21:01 2013
+Return-path: <linux-next-owner@vger.kernel.org>
+Envelope-to: glkn-linux-next@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFWPh-0007uu-Fd
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 22:07:13 +0100
+	(envelope-from <linux-next-owner@vger.kernel.org>)
+	id 1UFWd0-0000eB-8p
+	for glkn-linux-next@plane.gmane.org; Tue, 12 Mar 2013 22:20:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933469Ab3CLVGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Mar 2013 17:06:43 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:49736 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754527Ab3CLVGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 17:06:42 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 862386064D7;
-	Tue, 12 Mar 2013 21:06:41 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qgrgaFOcJ6OV; Tue, 12 Mar 2013 21:06:40 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 38BAB606515;
-	Tue, 12 Mar 2013 21:06:32 +0000 (GMT)
+	id S932671Ab3CLVUe (ORCPT <rfc822;glkn-linux-next@m.gmane.org>);
+	Tue, 12 Mar 2013 17:20:34 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:52956 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755682Ab3CLVUe (ORCPT <rfc822;linux-next@vger.kernel.org>);
+	Tue, 12 Mar 2013 17:20:34 -0400
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.80)
+	(envelope-from <tytso@thunk.org>)
+	id 1UFWcW-0001A9-Pj; Tue, 12 Mar 2013 21:20:28 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id A4DDD42C380; Tue, 12 Mar 2013 17:20:27 -0400 (EDT)
+Mail-Followup-To: Theodore Ts'o <tytso@mit.edu>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	James Morris <jmorris@namei.org>,
+	Stephen Rothwell <sfr@canb.auug.org.au>, linux-next@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
 Content-Disposition: inline
-In-Reply-To: <7vfw0073pm.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <CA+55aFzFLDcN-1GKae6Xqrns59K1xOD_HPzuv2Lv1__fZpqFMw@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+Sender: linux-next-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217994>
+List-ID: <linux-next.vger.kernel.org>
+X-Mailing-List: linux-next@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217995>
 
-On Tue, Mar 12, 2013 at 01:39:17PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > How about something like "--symlink-all" where the everything in the
-> > right-hand tree is symlink'd?
-> 
-> Does it even have to be conditional?  What is the situation when you
-> do not want symbolic links?
+What if we added the ability to do something like this:
 
-When you're not comparing the working tree.
+[remote "origin"]
+	url = git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+	fetch = +refs/heads/master:refs/heads/master
+	mergeoptions = --ff-only
 
-If we can reliably say "the RHS is the working tree" then it could be
-unconditional, but I haven't thought about how to do that - I can't see
-a particularly easy way to check for that; is it sufficient to say
-"there is no more than one non-option to the left of '--' and '--cached'
-is not among the options"?
+This would be an analog to branch.<name>.mergeoptions, but it would
+apply to the source of the pull request, instead of the destination.
 
+That way, people who do a "git pull" from Linus's tree would get the
+protection of --ff-only, while pulls from submaintainer trees would
+automatically get a merge commit, which is what we want.
 
-John
+It doesn't handle the case of a submaintainer pulling from a
+maintainer in a back-merge scenario, but that should be a pretty rare
+case, so maybe that's OK.
+
+      	     	       	   	- Ted
