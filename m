@@ -1,88 +1,85 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH v2 2/4] config: drop file pointer validity check in
- get_next_char()
-Date: Tue, 12 Mar 2013 17:16:20 +0100
-Message-ID: <20130312161620.GA4551@sandbox-ub.fritz.box>
-References: <20130310165642.GA1136@sandbox-ub.fritz.box>
- <20130310165857.GC1136@sandbox-ub.fritz.box>
- <20130312110003.GD11340@sigill.intra.peff.net>
- <20130312160056.GB4472@sandbox-ub.fritz.box>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] submodule: add 'deinit' command
+Date: Tue, 12 Mar 2013 09:22:07 -0700
+Message-ID: <7v1ubk8u6o.fsf@alter.siamese.dyndns.org>
+References: <5112C6F6.4030607@web.de>
+ <CABURp0pC2FELxM5aUwxuTqS1roZm+fwkCQA+BoXjrd0+yQMmbg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 12 17:17:45 2013
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 12 17:22:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFRtY-0006IB-Qm
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 17:17:45 +0100
+	id 1UFRyM-0001MS-KT
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 17:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933057Ab3CLQQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Mar 2013 12:16:31 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.18.44]:34002 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932706Ab3CLQQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 12:16:29 -0400
-Received: from [77.21.76.82] (helo=localhost)
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1UFRsD-0006nM-3U; Tue, 12 Mar 2013 17:16:21 +0100
-Content-Disposition: inline
-In-Reply-To: <20130312160056.GB4472@sandbox-ub.fritz.box>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S932897Ab3CLQWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Mar 2013 12:22:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34297 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932465Ab3CLQWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 12:22:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16678A4F3;
+	Tue, 12 Mar 2013 12:22:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Uv1+hA9sVr/zmXnVbnzWxl5vwiM=; b=o1t0SM
+	U+eWwZqPaEUM4ScvAmGBjAL6cpljaWXblfLjZnXrzNUU0JXHcKZncDPvYJXLsiLL
+	CBIYrupKlCwgEgMG+RfiGDO6uXKMC0hQ/DvQcReMkEPCBUaTIg8kzLsCbv+AzZR6
+	8pnoKdQTSug22VMvIv75OptMXV5c7vTn+goGE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rk62jvGDPBr2kthjgNrEcAXRXn46oabv
+	vSx3AmBQoDpFfiF5CbezN5dwtmWpmqtxRotpRV0Vo+x0roOcHExxT2kPuegfmdeh
+	yZ/s6ZXAiE0umdLxJmDI8FWJ/GCkBFdVzBR3K2ZsAui+cIw1PXtjpx4toq1eQhHN
+	61K0ugKdIBE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09FF8A4F2;
+	Tue, 12 Mar 2013 12:22:09 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D540A4F1; Tue, 12 Mar 2013
+ 12:22:08 -0400 (EDT)
+In-Reply-To: <CABURp0pC2FELxM5aUwxuTqS1roZm+fwkCQA+BoXjrd0+yQMmbg@mail.gmail.com> (Phil
+ Hord's message of "Tue, 12 Mar 2013 11:39:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FC7E5AC6-8B30-11E2-8EA8-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217973>
 
-On Tue, Mar 12, 2013 at 05:00:56PM +0100, Heiko Voigt wrote:
-> On Tue, Mar 12, 2013 at 07:00:03AM -0400, Jeff King wrote:
-> > On Sun, Mar 10, 2013 at 05:58:57PM +0100, Heiko Voigt wrote:
-> > 
-> > > The only location where cf is set in this file is in do_config_from().
-> > > This function has only one callsite which is config_from_file(). In
-> > > config_from_file() its ensured that the f member is set to non-zero.
-> > > [...]
-> > > -	if (cf && ((f = cf->f) != NULL)) {
-> > > +	if (cf) {
-> > 
-> > I still think we can drop this conditional entirely. The complete call
-> > graph looks like:
-> > 
-> >   git_config_from_file
-> >     -> git_parse_file
-> >       -> get_next_char
-> >       -> get_value
-> >           -> get_next_char
-> >           -> parse_value
-> >               -> get_next_char
-> >       -> get_base_var
-> >           -> get_next_char
-> >           -> get_extended_base_var
-> >               -> get_next_char
-> > 
-> > That is, every path to get_next_char happens while we are in
-> > git_config_from_file, and that function guarantees that cf = &top, and
-> > that top.f != NULL.  We do not have to even do any analysis of the
-> > conditions for each call, because we never change "cf" nor "top.f"
-> > except when we set them in git_config_from_file.
-> 
-> Ok if you say so I will do that :-). I was thinking about adding a patch
-> that would remove cf as a global variable and explicitely pass it down
-> to get_next_char. That makes it more obvious that it actually is != NULL.
-> Looking at your callgraph I do not think its that much work. What do you
-> think?
+Phil Hord <phil.hord@gmail.com> writes:
 
-I just had a look and unfortunately there are other functions that use
-this variable (namely handle_path_include) for which its not that easy
-to pass this in. So I will just drop the check here.
+> I think this would be clearer if 'git deinit' said
+>
+>     rm 'submodule/*'
+>
+> or maybe
+>
+>     Removed workdir for 'submodule'
+>
+> Is it just me?
 
-Cheers Heiko
+The latter may probably be better.  
+
+After cloning the superproject, you show interest in individual
+submodules by saying "git submodule init <that submodule>" and until
+then your .git/config in the superproject does not indicate that you
+are interested in that submodule, and you won't have a submodule
+checkout.
+
+"deinit" is a way to revert back to that original state; recording
+that you are no longer interested in the submodule is the primary
+effect, and removal of its checkout is a mere side effect of it.
