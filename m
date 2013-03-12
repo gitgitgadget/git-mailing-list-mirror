@@ -1,76 +1,99 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: linux-next: unneeded merge in the security tree
-Date: Tue, 12 Mar 2013 17:20:27 -0400
-Message-ID: <20130312212027.GE14792@thunk.org>
-References: <20130312100950.e45ef0e721492ff0d5fd7c8d@canb.auug.org.au>
- <alpine.LRH.2.02.1303121510270.25612@tundra.namei.org>
- <20130312041641.GE18595@thunk.org>
- <CA+55aFzFLDcN-1GKae6Xqrns59K1xOD_HPzuv2Lv1__fZpqFMw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: difftool -d symlinks, under what conditions
+Date: Tue, 12 Mar 2013 14:26:11 -0700
+Message-ID: <7vy5ds5mz0.fsf@alter.siamese.dyndns.org>
+References: <CAJELnLGq_oLBiNHANoaE7iEiA6g4fXX0PtJbqPFi4PQ+5LLvnA@mail.gmail.com>
+ <CAJDDKr4mTc8-FX7--pd7j0vUbdk_1+KU0YniKEhRdee6SaS-8Q@mail.gmail.com>
+ <CAJELnLEL8y0G3MBGkW+YDKtVxX4n4axJG7p0oPsXsV4_FRyGDg@mail.gmail.com>
+ <CAJELnLGOK5m-JLwgfUdmQcS1exZMQdf1QR_g-GB_UhryDw3C9w@mail.gmail.com>
+ <20130312190956.GC2317@serenity.lan>
+ <CAJDDKr7S0ex1RvZS0QeBXxAuqcKrQJzhZeJP0MoMGmpGXyMOrA@mail.gmail.com>
+ <20130312194306.GE2317@serenity.lan>
+ <7vfw0073pm.fsf@alter.siamese.dyndns.org>
+ <20130312210630.GF2317@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: James Morris <jmorris@namei.org>,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	linux-next@vger.kernel.org,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-next-owner@vger.kernel.org Tue Mar 12 22:21:01 2013
-Return-path: <linux-next-owner@vger.kernel.org>
-Envelope-to: glkn-linux-next@plane.gmane.org
+Cc: David Aguilar <davvid@gmail.com>,
+	Matt McClure <matthewlmcclure@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Tim Henigan <tim.henigan@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Mar 12 22:26:50 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-next-owner@vger.kernel.org>)
-	id 1UFWd0-0000eB-8p
-	for glkn-linux-next@plane.gmane.org; Tue, 12 Mar 2013 22:20:58 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UFWia-0004oj-A0
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 22:26:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932671Ab3CLVUe (ORCPT <rfc822;glkn-linux-next@m.gmane.org>);
-	Tue, 12 Mar 2013 17:20:34 -0400
-Received: from li9-11.members.linode.com ([67.18.176.11]:52956 "EHLO
-	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755682Ab3CLVUe (ORCPT <rfc822;linux-next@vger.kernel.org>);
-	Tue, 12 Mar 2013 17:20:34 -0400
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.80)
-	(envelope-from <tytso@thunk.org>)
-	id 1UFWcW-0001A9-Pj; Tue, 12 Mar 2013 21:20:28 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id A4DDD42C380; Tue, 12 Mar 2013 17:20:27 -0400 (EDT)
-Mail-Followup-To: Theodore Ts'o <tytso@mit.edu>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	James Morris <jmorris@namei.org>,
-	Stephen Rothwell <sfr@canb.auug.org.au>, linux-next@vger.kernel.org,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <CA+55aFzFLDcN-1GKae6Xqrns59K1xOD_HPzuv2Lv1__fZpqFMw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
-Sender: linux-next-owner@vger.kernel.org
+	id S933618Ab3CLV0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Mar 2013 17:26:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40476 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932723Ab3CLV0O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 17:26:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 93470A1A6;
+	Tue, 12 Mar 2013 17:26:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vJ4atu00OGbrzjvlrpt86/tLoNU=; b=uiU+kD
+	tqOZi/CCB8mYVI0sicOuS/lEwGeNtiS+XbRypjUnuCYkRNKmteM8UsM70p4RbOuJ
+	tm6EjZJKLpaqQ31KTR4bk5IpAD01LFPVVN1NeiGBnc9X15VIh4bPvl88BoiqvWQN
+	7WG16iij6Lc3183eoReQbcG6/8wovB6GJzZ5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rGrdhvFtayvuarCAL0XK0R3Yh9rYQI+t
+	tPyXd+JV8rJqkvVk+IDoRUsJzpTyZwsD0GtsQFT28Q5rHlh9pRsiJaV5hpVzDbdR
+	MgMee+01PajywoSsjlHNvC+Pcqa5JntJv2wgC7jr31eD4B0j8hdkUN956f4y4tc3
+	lxv4eeYHFec=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88184A1A4;
+	Tue, 12 Mar 2013 17:26:13 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B93EA1A2; Tue, 12 Mar 2013
+ 17:26:12 -0400 (EDT)
+In-Reply-To: <20130312210630.GF2317@serenity.lan> (John Keeping's message of
+ "Tue, 12 Mar 2013 21:06:30 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7715C1E6-8B5B-11E2-AEAB-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-next.vger.kernel.org>
-X-Mailing-List: linux-next@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217995>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217996>
 
-What if we added the ability to do something like this:
+John Keeping <john@keeping.me.uk> writes:
 
-[remote "origin"]
-	url = git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-	fetch = +refs/heads/master:refs/heads/master
-	mergeoptions = --ff-only
+>> Does it even have to be conditional?  What is the situation when you
+>> do not want symbolic links?
+>
+> When you're not comparing the working tree.
 
-This would be an analog to branch.<name>.mergeoptions, but it would
-apply to the source of the pull request, instead of the destination.
+OK, so what you want is essentially:
 
-That way, people who do a "git pull" from Linus's tree would get the
-protection of --ff-only, while pulls from submaintainer trees would
-automatically get a merge commit, which is what we want.
+ * If you see 0{40} in "diff --raw", you *know* you are showing the working tree
+   file on the RHS, and you want to symlink, so that the edit made
+   by the user will be reflected back to theh working tree copy.
+ 
+ * If your working tree file match what is in the index, you won't
+   see 0{40} but you still want to symlink, for the same reason.
 
-It doesn't handle the case of a submaintainer pulling from a
-maintainer in a back-merge scenario, but that should be a pretty rare
-case, so maybe that's OK.
+ * If you are comparing two trees, and especially if your RHS is not
+   HEAD, you will send everything to a temporary without
+   symlinks. Any edit made by the user will be lost.
 
-      	     	       	   	- Ted
+If that is the case, perhaps the safest way to go may be to write
+the object out when you see non 0{40}, compare it with the working
+tree version and then turn that into symlink?  That way, you not
+only cover the second bullet point, but also cover half of the third
+one where the user may find a bug in the RHS, update it in difftool.
+
+I am assuming that you are write-protecting the non-symlink files in
+the temporary tree (i.e. those that do not match the working tree)
+to prevent users from accidentally modifying something there is no
+place to save back to.
+
+Hrm?
