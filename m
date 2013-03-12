@@ -1,89 +1,109 @@
-From: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
-Subject: Re: [PATCH 14/19] Document pull-all and push-all
-Date: Tue, 12 Mar 2013 16:12:30 +0100
-Message-ID: <513F45DE.6010304@ira.uka.de>
-References: <CALeLG_kdXMb8wAyAL7T9jXk3sT85uJeiNh+v3jz9tKcf25VA9A@mail.gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH v4] submodule: add 'deinit' command
+Date: Tue, 12 Mar 2013 11:39:40 -0400
+Message-ID: <CABURp0pC2FELxM5aUwxuTqS1roZm+fwkCQA+BoXjrd0+yQMmbg@mail.gmail.com>
+References: <5112C6F6.4030607@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, David Michael Barr <b@rr-dav.id.au>,
-	Kindjal <kindjal@gmail.com>, bibendi <bibendi@bk.ru>,
-	Herman van Rink <rink@initfour.nl>,
-	mhoffman <matt.hoffman@quantumretail.com>,
-	Nate Jones <nate@endot.org>
-To: Paul Campbell <pcampbell@kemitix.net>
-X-From: git-owner@vger.kernel.org Tue Mar 12 16:31:43 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 12 16:40:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFRAu-0006tu-EP
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 16:31:36 +0100
+	id 1UFRJY-0004mc-H1
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 16:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755522Ab3CLPbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Mar 2013 11:31:09 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:42980 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755211Ab3CLPbI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Mar 2013 11:31:08 -0400
-X-Greylist: delayed 1157 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Mar 2013 11:31:07 EDT
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1UFQrd-0004x0-UT; Tue, 12 Mar 2013 16:11:46 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 587 
-	id 1UFQrd-0001pB-Kh; Tue, 12 Mar 2013 16:11:41 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-In-Reply-To: <CALeLG_kdXMb8wAyAL7T9jXk3sT85uJeiNh+v3jz9tKcf25VA9A@mail.gmail.com>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1363101107.052086000
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1363102266.836206000
+	id S932065Ab3CLPkD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Mar 2013 11:40:03 -0400
+Received: from mail-ve0-f171.google.com ([209.85.128.171]:61640 "EHLO
+	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755196Ab3CLPkC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 11:40:02 -0400
+Received: by mail-ve0-f171.google.com with SMTP id b10so3593637vea.2
+        for <git@vger.kernel.org>; Tue, 12 Mar 2013 08:40:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=A99/oiHy43lh3+H+rUcNJuoOo6gx6ZCnqLmZJ/GVl5w=;
+        b=JZsL6KpWnlHal5e/iEc5NTnHybkjk7Quv++rDv540ZuIvN/oEPkxUz3v1WXAYcdg2n
+         YVp7vxQhlOJFoH117dHCr6oonk7Dej9rUsexNnNA16/uEHepRRzrl9pVXA45JucKSoqQ
+         OPnZWaPm1Ci6lz3I1bX2EtKktYpr2ivABEmcFt/d8BFGQmLMUXGez6khyFgHaAgwAXNh
+         f2RQ2lSeR279WBcSg0B5LZfrKX6+wCJpjCYEzp9V6bg+cxnn4uya+Yvde+4Iw7Vel6c5
+         qBVFjaghaylrvTKmchkD03LlJ91fXRBZD1BxxGUB7DZDxOgsMD93dQHEc9gt3bfDJBDC
+         WFeA==
+X-Received: by 10.52.68.116 with SMTP id v20mr5775842vdt.126.1363102801595;
+ Tue, 12 Mar 2013 08:40:01 -0700 (PDT)
+Received: by 10.58.201.103 with HTTP; Tue, 12 Mar 2013 08:39:40 -0700 (PDT)
+In-Reply-To: <5112C6F6.4030607@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217967>
 
-Am 09.03.2013 20:28, schrieb Paul Campbell:
->  From 7dcd40ab8687a588b7b0c6ff914a7cfb601b6774 Mon Sep 17 00:00:00 2001
-> From: Herman van Rink <rink@initfour.nl>
-> Date: Tue, 27 Mar 2012 13:59:16 +0200
-> Subject: [PATCH 14/19] Document pull-all and push-all
+On Wed, Feb 6, 2013 at 4:11 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> With "git submodule init" the user is able to tell git he cares about one
+> or more submodules and wants to have it populated on the next call to "git
+> submodule update". But currently there is no easy way he could tell git he
+> does not care about a submodule anymore and wants to get rid of his local
+> work tree (except he knows a lot about submodule internals and removes the
+> "submodule.$name.url" setting from .git/config together with the work tree
+> himself).
 >
-> ---
->   contrib/subtree/git-subtree.txt | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
+> Help those users by providing a 'deinit' command. This removes the whole
+> submodule.<name> section from .git/config either for the given
+> submodule(s) or for all those which have been initialized if '.' is
+> given. Fail if the current work tree contains modifications unless
+> forced. Complain when for a submodule given on the command line the url
+> setting can't be found in .git/config, but nonetheless don't fail.
 >
-> diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-> index e0957ee..c8fc103 100644
-> --- a/contrib/subtree/git-subtree.txt
-> +++ b/contrib/subtree/git-subtree.txt
-> @@ -92,13 +92,19 @@ pull::
->   	Exactly like 'merge', but parallels 'git pull' in that
->   	it fetches the given commit from the specified remote
->   	repository.
-> -	
-> +
-> +pull-all::
-> +	Perform a pull operation on all in .gittrees registered subtrees.
-> +
->   push::
->   	Does a 'split' (see below) using the <prefix> supplied
->   	and then does a 'git push' to push the result to the
->   	repository and refspec. This can be used to push your
->   	subtree to different branches of the remote repository.
+> Add tests and link the man pages of "git submodule deinit" and "git rm"
+> to assist the user in deciding whether removing or unregistering the
+> submodule is the right thing to do for him.
 >
-> +push-all::
-> +	Perform a pull operation on all in .gittrees registered subtrees.
-                  -----
-pull->push
+> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 
 
-> +
->   split::
->   	Extract a new, synthetic project history from the
->   	history of the <prefix> subtree.  The new history
->
+Probably because I was new to this command, I was confused by this output.
+
+  $ git submodule deinit submodule
+  rm 'submodule'
+  Submodule 'submodule' (gerrit:foo/submodule) unregistered for path 'submodule'
+
+  $ git rm submodule
+  rm 'submodule'
+
+
+This line is confusing to me in the deinit command:
+
+  rm 'submodule'
+
+It doesn't mean what git usually means when it says this to me.  See
+how the 'git rm' command says the same thing but means something
+different in the next command.
+
+In the deinit case, git removes the workdir contents of 'submodule'
+and it reports "rm 'submodule'".  In the rm case, git removes the
+submodule link from the tree and rmdirs the empty 'submodule'
+directory.
+
+I think this would be clearer if 'git deinit' said
+
+    rm 'submodule/*'
+
+or maybe
+
+    Removed workdir for 'submodule'
+
+Is it just me?
+
+Phil
