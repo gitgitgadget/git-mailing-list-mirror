@@ -1,78 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/6] match_basename: use strncmp instead of strcmp
-Date: Tue, 12 Mar 2013 13:59:40 -0700
-Message-ID: <7v7glc72rn.fsf@alter.siamese.dyndns.org>
-References: <1362802190-7331-1-git-send-email-pclouds@gmail.com>
- <1362896070-17456-1-git-send-email-pclouds@gmail.com>
- <1362896070-17456-4-git-send-email-pclouds@gmail.com>
- <7vy5dvd7yq.fsf@alter.siamese.dyndns.org>
- <CACsJy8A_4SqLu5L6P0PJ78Lwy12fjL7T2p-KbVEVLJmKNqhyRw@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: difftool -d symlinks, under what conditions
+Date: Tue, 12 Mar 2013 21:06:30 +0000
+Message-ID: <20130312210630.GF2317@serenity.lan>
+References: <CAJELnLGq_oLBiNHANoaE7iEiA6g4fXX0PtJbqPFi4PQ+5LLvnA@mail.gmail.com>
+ <CAJDDKr4mTc8-FX7--pd7j0vUbdk_1+KU0YniKEhRdee6SaS-8Q@mail.gmail.com>
+ <CAJELnLEL8y0G3MBGkW+YDKtVxX4n4axJG7p0oPsXsV4_FRyGDg@mail.gmail.com>
+ <CAJELnLGOK5m-JLwgfUdmQcS1exZMQdf1QR_g-GB_UhryDw3C9w@mail.gmail.com>
+ <20130312190956.GC2317@serenity.lan>
+ <CAJDDKr7S0ex1RvZS0QeBXxAuqcKrQJzhZeJP0MoMGmpGXyMOrA@mail.gmail.com>
+ <20130312194306.GE2317@serenity.lan>
+ <7vfw0073pm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 12 22:00:15 2013
+Cc: David Aguilar <davvid@gmail.com>,
+	Matt McClure <matthewlmcclure@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Tim Henigan <tim.henigan@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 12 22:07:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFWIv-0002pv-L6
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 22:00:13 +0100
+	id 1UFWPh-0007uu-Fd
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 22:07:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933397Ab3CLU7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Mar 2013 16:59:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52243 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932542Ab3CLU7m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 16:59:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BC4DB060;
-	Tue, 12 Mar 2013 16:59:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2y/2Asj4ckum5f/5fzFEAFCCHls=; b=ZN6H5w
-	PyuScePgacGnNXoxriUieoDkHrtl7suKUTZFhojpXJmUrF8mVAqVnE6C6sWVPQPR
-	2fLa2sEJTE8N6Jz7xI4+hAYLpiFDBBIxvR8yjiVDPHWXEQAZzReIf0o4JDcEvb+W
-	EZPTXooc7xLZmh/twqIHekW5hiei5A+ol9qhY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TGZJWXviYaSbSUa05gBt6Y28TChyXmIH
-	oozjEWmBBrEk8qAAeaJseKEjqR8T+L1zPh30MAGPSLTw04aVT/CB0Dt4jdq68qFb
-	wTsSVuUfD7ct4Mv4zd1uhXTSkh+DumvGwH0AaCT5u/fe9vYoc8LWdBT2+Z6Q4rXd
-	8SDlCbyh7fs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17471B05F;
-	Tue, 12 Mar 2013 16:59:42 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 817CAB05B; Tue, 12 Mar 2013
- 16:59:41 -0400 (EDT)
-In-Reply-To: <CACsJy8A_4SqLu5L6P0PJ78Lwy12fjL7T2p-KbVEVLJmKNqhyRw@mail.gmail.com> (Duy
- Nguyen's message of "Sun, 10 Mar 2013 17:38:37 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C274C384-8B57-11E2-9E70-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933469Ab3CLVGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Mar 2013 17:06:43 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:49736 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754527Ab3CLVGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 17:06:42 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 862386064D7;
+	Tue, 12 Mar 2013 21:06:41 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qgrgaFOcJ6OV; Tue, 12 Mar 2013 21:06:40 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 38BAB606515;
+	Tue, 12 Mar 2013 21:06:32 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vfw0073pm.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217994>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Tue, Mar 12, 2013 at 01:39:17PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > How about something like "--symlink-all" where the everything in the
+> > right-hand tree is symlink'd?
+> 
+> Does it even have to be conditional?  What is the situation when you
+> do not want symbolic links?
 
-> glibc's C strncmp version does 4-byte comparison at a time when n >=4,
-> then fall back to 1-byte for the rest. I don't know if it's faster
-> than a plain always 1-byte comparison though. There's also the hand
-> written assembly version that compares n from 1..16, not exactly sure
-> how this version works yet.
+When you're not comparing the working tree.
 
-It sounds to me more like "a very popular implementation of
-strcmp/strncmp pair found to have more optimized strncmp than
-strcmp".  While that may be a good reason to justify this patch,
-I do not think it justifies this:
+If we can reliably say "the RHS is the working tree" then it could be
+unconditional, but I haven't thought about how to do that - I can't see
+a particularly easy way to check for that; is it sufficient to say
+"there is no more than one non-option to the left of '--' and '--cached'
+is not among the options"?
 
->> strncmp is provided length information which could be taken advantage
->> by the underlying implementation.
 
-After all, strcmp() could also be optimized to fetch word-at-a-time
-while being careful about not overstepping the page boundary.
+John
