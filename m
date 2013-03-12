@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 07/13] exclude: avoid calling prep_exclude on entries of the same directory
-Date: Tue, 12 Mar 2013 20:04:54 +0700
-Message-ID: <1363093500-16796-8-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 08/13] exclude: record baselen in the pattern
+Date: Tue, 12 Mar 2013 20:04:55 +0700
+Message-ID: <1363093500-16796-9-git-send-email-pclouds@gmail.com>
 References: <1362896070-17456-1-git-send-email-pclouds@gmail.com>
  <1363093500-16796-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -11,136 +11,173 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 12 14:06:43 2013
+X-From: git-owner@vger.kernel.org Tue Mar 12 14:06:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFOuc-0007k4-79
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 14:06:38 +0100
+	id 1UFOuh-0007n6-R6
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 14:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755451Ab3CLNGK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Mar 2013 09:06:10 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:54085 "EHLO
+	id S1755456Ab3CLNGP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Mar 2013 09:06:15 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:36917 "EHLO
 	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755388Ab3CLNGI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 09:06:08 -0400
-Received: by mail-pb0-f42.google.com with SMTP id xb4so4971419pbc.1
-        for <git@vger.kernel.org>; Tue, 12 Mar 2013 06:06:08 -0700 (PDT)
+	with ESMTP id S1755388Ab3CLNGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 09:06:14 -0400
+Received: by mail-pb0-f42.google.com with SMTP id xb4so4971512pbc.1
+        for <git@vger.kernel.org>; Tue, 12 Mar 2013 06:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=Z4tGVaTOh8mo7Ziz06w3axsQt/b7GygUFdXhK9er7T4=;
-        b=nv2KHsPb8a5ZquoSOG5CEVH5L5aQbT58wiJnlKrNZpc7UR62MkLs6gUcix+Nmb2cWf
-         XhavEou0AjWP7GPod0QVgv5DVeeht+gwAIvtDGrBjRzT6T+0/Drj7ObHPAiD9xkgbLwv
-         rxyxCxNXLz5rKKLeQmgEWGL5nTQgWa/l/3Hb//U42SMwX7cXiEB93g0NRslaTepk6srr
-         z8trhLsBJMT4MAyB1yXggKHeYupE4sY0UrB37GaXT9jmDcnFOeW2t6hTytjlYFOMa+zc
-         3+hjmSMtsYZsPz7LvtqqyOCqtwr7bvAb0ggfhZbEidmfQgGn4JWXMml3wCGNQoRcABpI
-         yVuQ==
-X-Received: by 10.68.237.100 with SMTP id vb4mr37491062pbc.202.1363093568280;
-        Tue, 12 Mar 2013 06:06:08 -0700 (PDT)
+        bh=AnevXY0LYkOOYngrBT7WVT8AxTmUvWGbbQBy9bF+rMQ=;
+        b=iCiBZCRR7d8j5j/TOZcJ4eI2iTWKW0fztVnw01pllvNAELfrGIo8RIrRa5C7KeHSdC
+         2T9KBSS9dkoVffuOC2wh+csE0XkHjL/RjQtfDJWdpbLCN54wRCAGecu68H92hmiKs7MJ
+         v2HDt5gFNs6gjAFaEgbTlAVQegfDAo4J2Dm1jdCftR74V8F0F0RHA+jMCrokvamaPAvB
+         KOUqkAekAyouHCQutCmBIIK8YM4SrhKfpDyTLcvhB1hVxeSC0Mjpg2yZqYcHuqNxeInT
+         kfqX8d5TwBbGs0TStohaAL8eBxtvR9JmE0Kism2DLNQHzbr4hzmLG66UFqBQzWqVGwYT
+         eQcA==
+X-Received: by 10.68.143.74 with SMTP id sc10mr37439383pbb.110.1363093574077;
+        Tue, 12 Mar 2013 06:06:14 -0700 (PDT)
 Received: from lanh ([115.74.63.193])
-        by mx.google.com with ESMTPS id eg1sm24986579pbb.33.2013.03.12.06.06.05
+        by mx.google.com with ESMTPS id ou3sm25006710pbc.7.2013.03.12.06.06.11
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 12 Mar 2013 06:06:07 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 12 Mar 2013 20:05:57 +0700
+        Tue, 12 Mar 2013 06:06:13 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 12 Mar 2013 20:06:08 +0700
 X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
 In-Reply-To: <1363093500-16796-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217957>
 
-prep_exclude is only necessary when we enter or leave a directory. Now
-it's called for every entry in a directory. With this patch, the
-number of prep_exclude calls in webkit.git goes from 188k down to
-11k. This patch does not make exclude any faster, but it prepares for
-making prep_exclude heavier in terms of computation, where a large
-number of calls may have bigger impacts.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- dir.c | 10 +++++++++-
- dir.h |  1 +
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ attr.c |  4 +++-
+ dir.c  | 19 ++++++++++++++-----
+ dir.h  |  6 +++++-
+ 3 files changed, 22 insertions(+), 7 deletions(-)
 
+diff --git a/attr.c b/attr.c
+index 1818ba5..b89da33 100644
+--- a/attr.c
++++ b/attr.c
+@@ -249,12 +249,14 @@ static struct match_attr *parse_attr_line(const c=
+har *line, const char *src,
+ 		res->u.attr =3D git_attr_internal(name, namelen);
+ 	else {
+ 		char *p =3D (char *)&(res->state[num_attr]);
++		int pattern_baselen;
+ 		memcpy(p, name, namelen);
+ 		res->u.pat.pattern =3D p;
+ 		parse_exclude_pattern(&res->u.pat.pattern,
+ 				      &res->u.pat.patternlen,
+ 				      &res->u.pat.flags,
+-				      &res->u.pat.nowildcardlen);
++				      &res->u.pat.nowildcardlen,
++				      &pattern_baselen);
+ 		if (res->u.pat.flags & EXC_FLAG_MUSTBEDIR)
+ 			res->u.pat.patternlen++;
+ 		if (res->u.pat.flags & EXC_FLAG_NEGATIVE) {
 diff --git a/dir.c b/dir.c
-index 58739f3..f8f7a7e 100644
+index f8f7a7e..932fd2f 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -804,7 +804,10 @@ static struct exclude *last_exclude_matching(struc=
-t dir_struct *dir,
- 	basename =3D (basename) ? basename+1 : pathname;
+@@ -390,10 +390,11 @@ static int no_wildcard(const char *string)
+ void parse_exclude_pattern(const char **pattern,
+ 			   int *patternlen,
+ 			   int *flags,
+-			   int *nowildcardlen)
++			   int *nowildcardlen,
++			   int *pattern_baselen)
+ {
+ 	const char *p =3D *pattern;
+-	size_t i, len;
++	int i, len;
 =20
- 	START_CLOCK();
--	prep_exclude(dir, pathname, basename-pathname);
-+	if (!dir->exclude_prepared) {
-+		prep_exclude(dir, pathname, basename-pathname);
-+		dir->exclude_prepared =3D 1;
-+	}
- 	STOP_CLOCK(tv_prep_exclude);
-=20
- 	START_CLOCK();
-@@ -894,6 +897,7 @@ struct exclude *last_exclude_matching_path(struct p=
-ath_exclude_check *check,
-=20
- 		if (ch =3D=3D '/') {
- 			int dt =3D DT_DIR;
-+			check->dir->exclude_prepared =3D 0;
- 			exclude =3D last_exclude_matching(check->dir,
- 							path->buf, path->len,
- 							&dt);
-@@ -908,6 +912,7 @@ struct exclude *last_exclude_matching_path(struct p=
-ath_exclude_check *check,
- 	/* An entry in the index; cannot be a directory with subentries */
- 	strbuf_setlen(path, 0);
-=20
-+	check->dir->exclude_prepared =3D 0;
- 	return last_exclude_matching(check->dir, name, namelen, dtype);
- }
-=20
-@@ -1394,6 +1399,7 @@ static int read_directory_recursive(struct dir_st=
-ruct *dir,
- 	if (!fdir)
- 		goto out;
-=20
-+	dir->exclude_prepared =3D 0;
- 	while ((de =3D readdir(fdir)) !=3D NULL) {
- 		switch (treat_path(dir, de, &path, baselen, simplify)) {
- 		case path_recurse:
-@@ -1415,6 +1421,7 @@ static int read_directory_recursive(struct dir_st=
-ruct *dir,
+ 	*flags =3D 0;
+ 	if (*p =3D=3D '!') {
+@@ -405,12 +406,15 @@ void parse_exclude_pattern(const char **pattern,
+ 		len--;
+ 		*flags |=3D EXC_FLAG_MUSTBEDIR;
  	}
- 	closedir(fdir);
-  out:
-+	dir->exclude_prepared =3D 0;
- 	strbuf_release(&path);
+-	for (i =3D 0; i < len; i++) {
++	for (i =3D len - 1; i >=3D 0; i--) {
+ 		if (p[i] =3D=3D '/')
+ 			break;
+ 	}
+-	if (i =3D=3D len)
++	if (i < 0) {
+ 		*flags |=3D EXC_FLAG_NODIR;
++		*pattern_baselen =3D -1;
++	} else
++		*pattern_baselen =3D i;
+ 	*nowildcardlen =3D simple_length(p);
+ 	/*
+ 	 * we should have excluded the trailing slash from 'p' too,
+@@ -421,6 +425,8 @@ void parse_exclude_pattern(const char **pattern,
+ 		*nowildcardlen =3D len;
+ 	if (*p =3D=3D '*' && no_wildcard(p + 1))
+ 		*flags |=3D EXC_FLAG_ENDSWITH;
++	else if (*nowildcardlen !=3D len)
++		*pattern_baselen =3D -1;
+ 	*pattern =3D p;
+ 	*patternlen =3D len;
+ }
+@@ -432,8 +438,10 @@ void add_exclude(const char *string, const char *b=
+ase,
+ 	int patternlen;
+ 	int flags;
+ 	int nowildcardlen;
++	int pattern_baselen;
 =20
- 	return contents;
-@@ -1486,6 +1493,7 @@ static int treat_leading_path(struct dir_struct *=
-dir,
- 			break;
- 		if (simplify_away(sb.buf, sb.len, simplify))
- 			break;
-+		dir->exclude_prepared =3D 0;
- 		if (treat_one_path(dir, &sb, simplify,
- 				   DT_DIR, NULL) =3D=3D path_ignored)
- 			break; /* do not recurse into it */
+-	parse_exclude_pattern(&string, &patternlen, &flags, &nowildcardlen);
++	parse_exclude_pattern(&string, &patternlen, &flags,
++			      &nowildcardlen, &pattern_baselen);
+ 	if (flags & EXC_FLAG_MUSTBEDIR) {
+ 		char *s;
+ 		x =3D xmalloc(sizeof(*x) + patternlen + 1);
+@@ -449,6 +457,7 @@ void add_exclude(const char *string, const char *ba=
+se,
+ 	x->nowildcardlen =3D nowildcardlen;
+ 	x->base =3D base;
+ 	x->baselen =3D baselen;
++	x->pattern_baselen =3D pattern_baselen;
+ 	x->flags =3D flags;
+ 	x->srcpos =3D srcpos;
+ 	ALLOC_GROW(el->excludes, el->nr + 1, el->alloc);
 diff --git a/dir.h b/dir.h
-index 560ade4..0748407 100644
+index 0748407..cb50a85 100644
 --- a/dir.h
 +++ b/dir.h
-@@ -86,6 +86,7 @@ struct dir_struct {
+@@ -44,6 +44,7 @@ struct exclude_list {
+ 		int nowildcardlen;
+ 		const char *base;
+ 		int baselen;
++		int pattern_baselen;
+ 		int flags;
 =20
- 	/* Exclude info */
- 	const char *exclude_per_dir;
-+	int exclude_prepared;
-=20
- 	/*
- 	 * We maintain three groups of exclude pattern lists:
+ 		/*
+@@ -172,7 +173,10 @@ extern struct exclude_list *add_exclude_list(struc=
+t dir_struct *dir,
+ extern int add_excludes_from_file_to_list(const char *fname, const cha=
+r *base, int baselen,
+ 					  struct exclude_list *el, int check_index);
+ extern void add_excludes_from_file(struct dir_struct *, const char *fn=
+ame);
+-extern void parse_exclude_pattern(const char **string, int *patternlen=
+, int *flags, int *nowildcardlen);
++extern void parse_exclude_pattern(const char **string,
++				  int *patternlen, int *flags,
++				  int *nowildcardlen,
++				  int *pattern_baselen);
+ extern void add_exclude(const char *string, const char *base,
+ 			int baselen, struct exclude_list *el, int srcpos);
+ extern void clear_exclude_list(struct exclude_list *el);
 --=20
 1.8.1.2.536.gf441e6d
