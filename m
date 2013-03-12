@@ -1,88 +1,71 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/4] teach config parsing to read from strbuf
-Date: Tue, 12 Mar 2013 07:18:06 -0400
-Message-ID: <20130312111806.GF11340@sigill.intra.peff.net>
-References: <20130310165642.GA1136@sandbox-ub.fritz.box>
- <20130310170052.GE1136@sandbox-ub.fritz.box>
+Subject: Re: [PATCH 1/2] require pathspec for "git add -u/-A"
+Date: Tue, 12 Mar 2013 07:28:40 -0400
+Message-ID: <20130312112840.GA13186@sigill.intra.peff.net>
+References: <1362786889-28688-1-git-send-email-gitster@pobox.com>
+ <1362786889-28688-2-git-send-email-gitster@pobox.com>
+ <vpqmwubgsqy.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Mar 12 12:18:39 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Mar 12 12:29:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFNE5-0004Pw-Qb
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 12:18:38 +0100
+	id 1UFNOK-0005oK-8Q
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Mar 2013 12:29:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754721Ab3CLLSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Mar 2013 07:18:10 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49578 "EHLO
+	id S932587Ab3CLL2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Mar 2013 07:28:44 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49592 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752623Ab3CLLSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 07:18:09 -0400
-Received: (qmail 26041 invoked by uid 107); 12 Mar 2013 11:19:49 -0000
+	id S932255Ab3CLL2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 07:28:43 -0400
+Received: (qmail 26106 invoked by uid 107); 12 Mar 2013 11:30:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Mar 2013 07:19:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Mar 2013 07:18:06 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Mar 2013 07:30:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Mar 2013 07:28:40 -0400
 Content-Disposition: inline
-In-Reply-To: <20130310170052.GE1136@sandbox-ub.fritz.box>
+In-Reply-To: <vpqmwubgsqy.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/217948>
 
-On Sun, Mar 10, 2013 at 06:00:52PM +0100, Heiko Voigt wrote:
+On Sun, Mar 10, 2013 at 04:49:09PM +0100, Matthieu Moy wrote:
 
-> This can be used to read configuration values directly from gits
-> database.
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+> > As promised in 0fa2eb530fb7 (add: warn when -u or -A is used without
+> > pathspec, 2013-01-28), "git add -u/-A" that is run without pathspec
+> > in a subdirectory will stop working sometime before Git 2.0, to wean
+> > users off of the old default, in preparation for adopting the new
+> > default in Git 2.0.
+> 
+> I originally thought this step was necessary, but I changed my mind. The
+> warning is big enough and doesn't need to be turned into an error.
+> 
+> If this step is applied, it should be applied at 2.0, not before, as
+> this is the big incompatible change. Re-introducing a new behavior won't
+> harm users OTOH.
 
-This is lacking motivation. IIRC, the rest of the story is something
-like "...so we can read .gitmodules directly from the repo" or something
-like that?
-
-> +struct config_strbuf {
-> +	struct strbuf *strbuf;
-> +	int pos;
-> +};
->
-> +static int config_strbuf_fgetc(struct config_source *conf)
-> +{
-> +	struct config_strbuf *str = conf->data;
-
-Yuck. If you used a union in the previous patch, then this could just go
-inline into the "struct config_source".
-
-> +int git_config_from_strbuf(config_fn_t fn, const char *name, struct strbuf *strbuf, void *data)
-
-Should this be a "const struct strbuf *strbuf"? For that matter, is
-there any reason not to take a bare pointer/len combination? It seems
-likely that callers would get the data from read_sha1_file, which means
-they have to stuff it into a strbuf for no good reason.
-
-> diff --git a/test-config.c b/test-config.c
-> new file mode 100644
-> index 0000000..c650837
-> --- /dev/null
-> +++ b/test-config.c
-> @@ -0,0 +1,40 @@
-
-I'm slightly "meh" on this test-config program.  Having to add a C test
-harness like this is a good indication that we are short-changing users
-of the shell API in favor of builtin C code.
-
-Your series does not actually add any callers of the new function. The
-obvious "patch 5/4" would be to plumb it into "git config --blob", and
-then we can just directly test it there (there could be other callers
-besides reading from a blob, of course, but I think the point of the
-series is to head in that direction).
+FWIW, I agree with this. The warning is enough without an error period
+(unless the intent was to switch to the error and stay there forever,
+but I do not think that is the proposal).
 
 -Peff
+
+PS I wonder how others are finding the warning? I'm finding it slightly
+   annoying. Perhaps I just haven't retrained my fingers yet. But one
+   problem with that retraining is that I type "git add -u" from the
+   root _most_ of the time, and it just works. But occasionally, I get
+   the "hey, do not do that" warning, because I'm in a subdir, even
+   though I would be happy to have the full-tree behavior. I guess we
+   already rejected the idea of being able to shut off the warning and
+   just get the new behavior, in favor of having people specify it
+   manually each time?
