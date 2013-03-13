@@ -1,122 +1,90 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v3 1/3] mergetools/p4merge: swap LOCAL and REMOTE
-Date: Tue, 12 Mar 2013 19:05:19 -0700
-Message-ID: <CAJDDKr7NJsmB3R_kYtZeocSZAz-kfP9k6GssZ+AM-qfPCTzrdg@mail.gmail.com>
-References: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
-	<1363137142-18606-1-git-send-email-kevin@bracey.fi>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: linux-next: unneeded merge in the security tree
+Date: Tue, 12 Mar 2013 22:30:26 -0400
+Message-ID: <20130313023026.GD16919@thunk.org>
+References: <7vtxog5msj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Ciaran Jessup <ciaranj@gmail.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Wed Mar 13 03:05:52 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: James Morris <jmorris@namei.org>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	linux-next@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 13 03:31:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFb4h-00021P-51
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 03:05:51 +0100
+	id 1UFbTO-00057U-W1
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 03:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932586Ab3CMCFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Mar 2013 22:05:21 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:40858 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932564Ab3CMCFV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Mar 2013 22:05:21 -0400
-Received: by mail-wi0-f182.google.com with SMTP id hi18so388082wib.3
-        for <git@vger.kernel.org>; Tue, 12 Mar 2013 19:05:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=5xLmeOpYDVb4jo0fNKDyy5OYEXexzKpvwgPCXxkzY1Q=;
-        b=PMmT1PmJfwDBkYmZdynqNNCRx68+FZN6ZceGG7Vds9emhBoBxnigzSS0i6KrQhvva+
-         NWB3wzdVzn13C/QjC10uFTnjNWh7nYNprPkVhuHskR1OcPDTyLmA+zlvCh7sNzHsk2zU
-         7F5XOLu+adKg5fB50fkzhaunPOyzOzMYv+hyUV6ZZaeD0CKXFEOYzrInY9eYnJ27XT72
-         WXPQBkgxfLOf0+9gFBniubU8s73z+OaZewxsVOSoYeE6k9jaywqAF4sRyi9BGOD3uo/5
-         uIJppQayNUW+Xi6KfJzPScDHGcnepWM/BjbmGX2uk5nz45VHE6SblFy4F5v85MLf/diq
-         YrHA==
-X-Received: by 10.180.87.129 with SMTP id ay1mr23629396wib.1.1363140319883;
- Tue, 12 Mar 2013 19:05:19 -0700 (PDT)
-Received: by 10.194.13.129 with HTTP; Tue, 12 Mar 2013 19:05:19 -0700 (PDT)
-In-Reply-To: <1363137142-18606-1-git-send-email-kevin@bracey.fi>
+	id S1755821Ab3CMCad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Mar 2013 22:30:33 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:53013 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755550Ab3CMCac (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 22:30:32 -0400
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.80)
+	(envelope-from <tytso@thunk.org>)
+	id 1UFbSV-0001Pm-O4; Wed, 13 Mar 2013 02:30:27 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id 4BBDE42C380; Tue, 12 Mar 2013 22:30:26 -0400 (EDT)
+Mail-Followup-To: Theodore Ts'o <tytso@mit.edu>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	James Morris <jmorris@namei.org>,
+	Stephen Rothwell <sfr@canb.auug.org.au>, linux-next@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <7vtxog5msj.fsf@alter.siamese.dyndns.org>
+ <CA+55aFwHJtOU4Qzt3XZsER165kTc5P0ATQP2wPHvuUiVic8bnA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218026>
 
-On Tue, Mar 12, 2013 at 6:12 PM, Kevin Bracey <kevin@bracey.fi> wrote:
-> Reverse LOCAL and REMOTE when invoking P4Merge as a mergetool, so that
-> the incoming branch is now in the left-hand, blue triangle pane, and the
-> current branch is in the right-hand, green circle pane.
+On Tue, Mar 12, 2013 at 02:30:04PM -0700, Junio C Hamano wrote:
+> Theodore Ts'o <tytso@mit.edu> writes:
+> 
+> > [remote "origin"]
+> > 	url = git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> > 	fetch = +refs/heads/master:refs/heads/master
+> > 	mergeoptions = --ff-only
+> >
+> 
+> Is there an escape hatch for that rare case?  IOW, how does a
+> submaintainer who configured the above to override --ff-only?
+
+Hmm, maybe we would need to add a --no-ff-only?  Or they could just
+do:
+
+	git fetch origin
+	git merge FETCH_HEAD
+
+On Tue, Mar 12, 2013 at 02:28:39PM -0700, Linus Torvalds wrote:
 >
-> This change makes use of P4Merge consistent with its built-in help, its
-> reference documentation, and Perforce itself. But most importantly, it
-> makes merge results clearer. P4Merge is not totally symmetrical between
-> left and right; despite changing a few text labels from "theirs/ours" to
-> "left/right" when invoked manually, it still retains its original
-> Perforce "theirs/ours" viewpoint.
->
-> Most obviously, in the result pane P4Merge shows changes that are common
-> to both branches in green. This is on the basis of the current branch
-> being green, as it is when invoked from Perforce; it means that lines in
-> the result are blue if and only if they are being changed by the merge,
-> making the resulting diff clearer.
->
-> Note that P4Merge now shows "ours" on the right for both diff and merge,
-> unlike other diff/mergetools, which always have REMOTE on the right.
-> But observe that REMOTE is the working tree (ie "ours") for a diff,
-> while it's another branch (ie "theirs") for a merge.
->
-> Ours and theirs are reversed for a rebase - see "git help rebase".
-> However, this does produce the desired "show the results of this commit"
-> effect in P4Merge - changes that remain in the rebased commit (in your
-> branch, but not in the new base) appear in blue; changes that do not
-> appear in the rebased commit (from the new base, or common to both) are
-> in green. If Perforce had rebase, they'd probably not swap ours/theirs,
-> but make P4Merge show common changes in blue, picking out our changes in
-> green. We can't do that, so this is next best.
->
-> Signed-off-by: Kevin Bracey <kevin@bracey.fi>
-> ---
+> Of course, I'm not really sure if we want to list the flags. Maybe
+> it's better to just introduce the notion of "upstream" directly, and
+> make that a flag, and make "origin" default to that when you clone.
+> And then have git use different heurstics for pulling upstream (like
+> warning by default when doing a back-merge, perhaps?)
 
-This seems sensible to apply.  The commit message is a bit long,
-but I think it's justified since this is exactly the kind of thing
-I would tend to forget after enough time has passed.
+What if git automaticallly set up the origin branch to have a certain
+set of mergeoptions by default?  That would probably be right for most
+users, but it makes it obvious what's going on when they take a look
+at the .git/config file, and doesn't make the remote that happens to
+have the name "origin" as having certain magic properties.  Using a
+set of mergeoptions would also be bit more general, and might have
+applications in the future.
 
-Ditto on the create_virtual_base patch.  Your latest patch
-addressed Junio's note about making it take 2 args.
-
-FWIW, please feel free to add:
-
-Reviewed-by: David Aguilar <davvid@gmail.com>
-
-Thanks.
-
->  mergetools/p4merge | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/mergetools/p4merge b/mergetools/p4merge
-> index 8a36916..46b3a5a 100644
-> --- a/mergetools/p4merge
-> +++ b/mergetools/p4merge
-> @@ -22,7 +22,7 @@ diff_cmd () {
->  merge_cmd () {
->         touch "$BACKUP"
->         $base_present || >"$BASE"
-> -       "$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
-> +       "$merge_tool_path" "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
->         check_unchanged
->  }
->
-> --
-> 1.8.2.rc3.7.g1100d09.dirty
->
-
-
-
--- 
-David
+     	      	       	  	 	       - Ted
