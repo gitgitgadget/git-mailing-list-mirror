@@ -1,105 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/3] git-merge-one-file: revise merge error reporting
-Date: Wed, 13 Mar 2013 10:57:26 -0700
-Message-ID: <7vehfj2neh.fsf@alter.siamese.dyndns.org>
-References: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
- <1363137142-18606-1-git-send-email-kevin@bracey.fi>
- <1363137142-18606-3-git-send-email-kevin@bracey.fi>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: difftool -d symlinks, under what conditions
+Date: Wed, 13 Mar 2013 18:01:06 +0000
+Message-ID: <20130313180106.GL2317@serenity.lan>
+References: <20130312210630.GF2317@serenity.lan>
+ <CAJELnLGBr1wOX4-3rCNjPpPLezc_6FgyeuPqty268JR0==qtvQ@mail.gmail.com>
+ <7vehfk5kn2.fsf@alter.siamese.dyndns.org>
+ <3222724986386016520@unknownmsgid>
+ <20130313001758.GH2317@serenity.lan>
+ <CAJDDKr7ZU16XWtCfYX9-RMzcpKa_FF80Od+mUMG4n8dUKeLsvw@mail.gmail.com>
+ <7vtxof48sg.fsf@alter.siamese.dyndns.org>
+ <7v1ubj45ac.fsf@alter.siamese.dyndns.org>
+ <20130313170821.GK2317@serenity.lan>
+ <7vppz32o60.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Ciaran Jessup <ciaranj@gmail.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Wed Mar 13 18:57:56 2013
+Cc: David Aguilar <davvid@gmail.com>,
+	Matt McClure <matthewlmcclure@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Tim Henigan <tim.henigan@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 13 19:02:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFpw3-0006Jg-OY
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 18:57:56 +0100
+	id 1UFpzy-0002Eb-Ll
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 19:01:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933872Ab3CMR53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 13:57:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44116 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933043Ab3CMR52 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 13:57:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7362BB85B;
-	Wed, 13 Mar 2013 13:57:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lnoQRv7N63eSPrNcCLdZGEilTec=; b=yFuDzI
-	81xca0lgRk+gU6pSmw8fRRY6vqP6Xb5l1EWjJR9qA14JUndT1DDUiZE+WM/ctNvE
-	4L4W9NH7KaRo8bews58MGRyftV2rvt0M8j7CykkH240fuDRxOrryTaDAgLL4FZLd
-	zThaIz04jrXqiU6vUM8jC0Ftuw99j6wi8OFWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XiG+8egRZeb6JmjtOhbSYfOnRgb7rq2E
-	SLuLdBSfd1oigwmPkjm5edWvUq0yNBmfkfSmzs0ZNSWZTxXnH4l3memUD3Pr0vbJ
-	h+CtIeYHBVN3oIK0ZeGyn6Z0VWrsEf9D5JaaxD+JwUZBNROnk7C2gYTXld+xzhEr
-	pwHy+dyF4rs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6735FB85A;
-	Wed, 13 Mar 2013 13:57:28 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C51A5B858; Wed, 13 Mar 2013
- 13:57:27 -0400 (EDT)
-In-Reply-To: <1363137142-18606-3-git-send-email-kevin@bracey.fi> (Kevin
- Bracey's message of "Wed, 13 Mar 2013 03:12:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 77DCE4F4-8C07-11E2-B833-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S934124Ab3CMSBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Mar 2013 14:01:20 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:60067 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933095Ab3CMSBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 14:01:17 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id EA924CDA5E4;
+	Wed, 13 Mar 2013 18:01:16 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tdLYbGioEbQo; Wed, 13 Mar 2013 18:01:16 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 16C6CCDA5BE;
+	Wed, 13 Mar 2013 18:01:08 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vppz32o60.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218080>
 
-Kevin Bracey <kevin@bracey.fi> writes:
+On Wed, Mar 13, 2013 at 10:40:55AM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > git-hash-object(1) implies that it will apply the clean filter and EOL
+> > conversion when it's given a path to a file in the working tree (as it
+> > is here).  Is that not the case?
+> 
+> Applying clean to smudged contents _ought to_ recover clean version,
+> but is that "ought to" something you would want to rely on?
 
-> Commit 718135e improved the merge error reporting for the resolve
-> strategy's merge conflict and permission conflict cases, but led to a
-> malformed "ERROR:  in myfile.c" message in the case of a file added
-> differently.
->
-> This commit reverts that change, and uses an alternative approach without
-> this flaw.
->
-> Signed-off-by: Kevin Bracey <kevin@bracey.fi>
-> ---
->  git-merge-one-file.sh | 20 +++++++-------------
->  1 file changed, 7 insertions(+), 13 deletions(-)
->
-> diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
-> index 0f164e5..78b07a8 100755
-> --- a/git-merge-one-file.sh
-> +++ b/git-merge-one-file.sh
-> @@ -104,11 +104,13 @@ case "${1:-.}${2:-.}${3:-.}" in
->  		;;
->  	esac
->  
-> +	ret=0
->  	src1=$(git-unpack-file $2)
->  	src2=$(git-unpack-file $3)
->  	case "$1" in
->  	'')
-> -		echo "Added $4 in both, but differently."
-> +		echo "ERROR: Added $4 in both, but differently."
-> +		ret=1
+How does git-status figure out that file that has been touch'd does not
+have unstaged changes without relying on this?  Surely this case is no
+different from that?
 
-The problem you identified may be worth fixing, but I do not think
-this change is correct.
 
-This message is at the same severity level as the message on the
-other arm of this case that says "Auto-merging $4".  In that other
-case arm, we are attempting a true three-way merge, and in this case
-arm, we are attempting a similar three-way merge using your "virtual
-base".
-
-Neither has found any error in this case arm yet.  The messages are
-both "informational", not an error.  I do not think you would want
-to set ret=1 until you see content conflict.
+John
