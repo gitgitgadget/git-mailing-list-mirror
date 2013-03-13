@@ -1,154 +1,94 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v3 3/3] git-merge-one-file: revise merge error reporting
-Date: Wed, 13 Mar 2013 02:03:47 -0700
-Message-ID: <CAJDDKr4swZzzv3e+Huz72CVmisFKU8T74jFj3-uGmZHReRGVBw@mail.gmail.com>
-References: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
-	<1363137142-18606-1-git-send-email-kevin@bracey.fi>
-	<1363137142-18606-3-git-send-email-kevin@bracey.fi>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/2] add: respect add.updateroot config option
+Date: Wed, 13 Mar 2013 10:07:34 +0100
+Message-ID: <vpqr4jjd5wp.fsf@grenoble-inp.fr>
+References: <20130313040845.GA5057@sigill.intra.peff.net>
+	<20130313041037.GB5378@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Ciaran Jessup <ciaranj@gmail.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Wed Mar 13 10:04:19 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 13 10:08:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFhbc-0002Pi-Oj
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 10:04:17 +0100
+	id 1UFhfV-0005Zb-Ph
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 10:08:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754870Ab3CMJDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 05:03:50 -0400
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:62390 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755345Ab3CMJDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 05:03:48 -0400
-Received: by mail-wg0-f51.google.com with SMTP id 8so708549wgl.18
-        for <git@vger.kernel.org>; Wed, 13 Mar 2013 02:03:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=rleU6D+Ui3Ovd6NTGAr2x76CVv5+aY7a6Usdu2xfNV4=;
-        b=DJMyNUlLrDu+QU7vjv3mamjdiYX5fw2nuR2fENx0MW+G8qzmYGnRO1VNfN19UUd9zR
-         gkdQ3I8MJfc1qVXEI8MixLa/GLJKJVarRFl0oIK2QU0fxm5Gjetgr4qIguLLd46t2mLi
-         4S9/6o79b2ESfBdxM2esGiieWmrde6YLp9SjA+CqbMisA8K0yZdzIooPvlea6Cx6q2W8
-         SKI5X3Kc3C0swM6UXPo+S9GUSgJ/XczC6QXRiJKpiTEsrGGNW8jxnhZWNNTCF6xoheY+
-         PtSuEWUC6JcBoC7uBeQA9lwSZg7y/wkKovdwCHQY+dOpgNTfBZmhAVe4nP53b1UPKTgR
-         d8FQ==
-X-Received: by 10.180.84.8 with SMTP id u8mr25158848wiy.1.1363165427209; Wed,
- 13 Mar 2013 02:03:47 -0700 (PDT)
-Received: by 10.194.13.129 with HTTP; Wed, 13 Mar 2013 02:03:47 -0700 (PDT)
-In-Reply-To: <1363137142-18606-3-git-send-email-kevin@bracey.fi>
+	id S1754855Ab3CMJHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Mar 2013 05:07:51 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:51601 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753889Ab3CMJHt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 05:07:49 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r2D97X5S007930
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 13 Mar 2013 10:07:34 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UFheo-0004tt-Re; Wed, 13 Mar 2013 10:07:34 +0100
+In-Reply-To: <20130313041037.GB5378@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 13 Mar 2013 00:10:37 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 13 Mar 2013 10:07:36 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r2D97X5S007930
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1363770458.7299@erlGjEIv+yy7m8HUgScZOw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218043>
 
-On Tue, Mar 12, 2013 at 6:12 PM, Kevin Bracey <kevin@bracey.fi> wrote:
-> Commit 718135e improved the merge error reporting for the resolve
-> strategy's merge conflict and permission conflict cases, but led to a
-> malformed "ERROR:  in myfile.c" message in the case of a file added
-> differently.
->
-> This commit reverts that change, and uses an alternative approach without
-> this flaw.
->
-> Signed-off-by: Kevin Bracey <kevin@bracey.fi>
-> ---
+Jeff King <peff@peff.net> writes:
 
-I wonder whether before these changes we should
-update the style in this file to follow Documentation/CodingGuidelines.
+> For users who have read and accepted the warning, there is no way to
+> jump directly to the future behavior and silence the warning.
 
-Not in this patch, but in the file right now there's
-this part that stands out:
+I think the idea makes sense. The transition period is necessary for
+people who use different versions of Git (which includes anybody
+writting and distributing scripts), but for poor mortals who only use a
+single version of Git, it's nice to be able to jump to the future
+behavior once for all as soon as possible.
 
-	if [ "$2" ]; then
-		echo "Removing $4"
+Your patch doesn't advertise the option in the warning message, which I
+think is good. You may mention it the commit message that this is a
+deliberate choice.
 
-I think that expression would read more clearly as:
+> +add.updateroot::
 
-	if test -n "$2"
-	then
-		echo "Removing $4"
+Detail: option names are normally camelCased => updateRoot.
 
-Ditto `if [ "$1" = '' ]` is better written as `test -z "$1"`.
+I think the option name needs a bit more thinking. Without reading the
+doc,
 
-Can you please send a patch to true these up?
+[add]
+	updateRoot = false
 
-It'd be especially nice if the style patch could come
-first, followed by the fixes/features ;-)
+would be a very tempting thing to try. Perhaps explicitly warning when
+add.updateroot is set to false would avoid possible confusion.
 
+In case you had missed it, here's a previous piece of discussion on the
+subject:
 
->  git-merge-one-file.sh | 20 +++++++-------------
->  1 file changed, 7 insertions(+), 13 deletions(-)
->
-> diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
-> index 0f164e5..78b07a8 100755
-> --- a/git-merge-one-file.sh
-> +++ b/git-merge-one-file.sh
-> @@ -104,11 +104,13 @@ case "${1:-.}${2:-.}${3:-.}" in
->                 ;;
->         esac
->
-> +       ret=0
->         src1=$(git-unpack-file $2)
->         src2=$(git-unpack-file $3)
->         case "$1" in
->         '')
-> -               echo "Added $4 in both, but differently."
-> +               echo "ERROR: Added $4 in both, but differently."
-> +               ret=1
->                 orig=$(git-unpack-file $2)
->                 create_virtual_base "$orig" "$src2"
->                 ;;
-> @@ -121,10 +123,9 @@ case "${1:-.}${2:-.}${3:-.}" in
->         # Be careful for funny filename such as "-L" in "$4", which
->         # would confuse "merge" greatly.
->         git merge-file "$src1" "$orig" "$src2"
-> -       ret=$?
-> -       msg=
-> -       if [ $ret -ne 0 ]; then
-> -               msg='content conflict'
-> +       if [ $? -ne 0 ]; then
-> +               echo "ERROR: Content conflict in $4"
-> +               ret=1
+http://thread.gmane.org/gmane.comp.version-control.git/216818/focus=216846
 
-if test $? != 0
-then
+I liked David's suggestion of using future.* to mean "start using
+behavior from the future right now".
 
-Also.. should this error not go to stderr?
-I guess the existing script was not doing that,
-but it seems like anything that says "ERROR" should go there.
+> +	which they were called. In a future version of git, this behavior
 
->         fi
->
->         # Create the working tree file, using "our tree" version from the
-> @@ -133,18 +134,11 @@ case "${1:-.}${2:-.}${3:-.}" in
->         rm -f -- "$orig" "$src1" "$src2"
->
->         if [ "$6" != "$7" ]; then
-> -               if [ -n "$msg" ]; then
-> -                       msg="$msg, "
-> -               fi
-> -               msg="${msg}permissions conflict: $5->$6,$7"
-> -               ret=1
-> -       fi
-> -       if [ "$1" = '' ]; then
-> +               echo "ERROR: Permissions conflict: $5->$6,$7"
->                 ret=1
->         fi
->
->         if [ $ret -ne 0 ]; then
-> -               echo "ERROR: $msg in $4"
->                 exit 1
->         fi
->         exec git update-index -- "$4"
+Capital "Git".
 
-same notes as above.  I think a style patch should come first.
 -- 
-David
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
