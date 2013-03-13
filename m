@@ -1,121 +1,176 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] add: respect add.updateroot config option
-Date: Wed, 13 Mar 2013 08:51:08 -0700
-Message-ID: <7vmwu747tf.fsf@alter.siamese.dyndns.org>
-References: <20130313040845.GA5057@sigill.intra.peff.net>
- <20130313041037.GB5378@sigill.intra.peff.net>
- <vpqr4jjd5wp.fsf@grenoble-inp.fr>
- <20130313092754.GA12658@sigill.intra.peff.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] difftool: Make directory diff symlink working tree
+Date: Wed, 13 Mar 2013 16:01:34 +0000
+Message-ID: <20130313160134.GJ2317@serenity.lan>
+References: <CAJELnLEbYrDWUjZH6iWnovEFDh8xFvpJL5wtEcPGOpkhPo+XEA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 13 16:51:39 2013
+Cc: David Aguilar <davvid@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Tim Henigan <tim.henigan@gmail.com>
+To: Matt McClure <matthewlmcclure@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 13 17:02:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFnxq-0006Lw-Ro
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 16:51:39 +0100
+	id 1UFo85-0000zG-1M
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 17:02:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933188Ab3CMPvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 11:51:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42169 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932656Ab3CMPvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 11:51:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97716A3D4;
-	Wed, 13 Mar 2013 11:51:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WGzGzJ9/OLlkkY/1nhEskxWp9Z4=; b=wAbQiz
-	X/cdQyQNdfjT9EhtTZeywZIqQsVRJHl2V4rrEQOvz9E2UMK2AT4hAvBIJ9BuMjLN
-	x8TbWHdqatqC+s6udjQBn99thJPLorMRkCXlt9N+n4xCNfGlfLqbL3DWy82rPFgL
-	tU7cOQwHw8q+0pZUrJnQuhiekIKJgWI3IGphs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KnzOPVIHqo2ceKVQ7YOhVKWJbaYt56O/
-	OmlRb5QjoCcXve0tFy7LtRhQfQNiuHCqq6BZ3vk/Dq2LIitZAhrkgyR0epvxn2+a
-	psjChl/ehdVzXbUwJyvSYGiAdNesaq8cQSXDTPvTBrh5I4DNpriIa+w1YA+WP+Ft
-	aF10CnNhyjE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CA33A3D3;
-	Wed, 13 Mar 2013 11:51:10 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E53BAA3CF; Wed, 13 Mar 2013
- 11:51:09 -0400 (EDT)
-In-Reply-To: <20130313092754.GA12658@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 13 Mar 2013 05:27:54 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D31A67C2-8BF5-11E2-93FA-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933124Ab3CMQBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Mar 2013 12:01:46 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:51080 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932656Ab3CMQBq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 12:01:46 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 4B950606554;
+	Wed, 13 Mar 2013 16:01:45 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id A8fg+YfWm3D1; Wed, 13 Mar 2013 16:01:44 +0000 (GMT)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 397FF606538;
+	Wed, 13 Mar 2013 16:01:36 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <CAJELnLEbYrDWUjZH6iWnovEFDh8xFvpJL5wtEcPGOpkhPo+XEA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218061>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Mar 13, 2013 at 11:21:40AM -0400, Matt McClure wrote:
+> On Wed, Mar 13, 2013 at 4:24 AM, David Aguilar <davvid@gmail.com> wrote:
+> > This is a nice straightforward approach.
+> >
+> > As Junio mentioned, a good next step would be this patch
+> > in combination with making the truly temporary files
+> > created by dir-diff readonly.
+> >
+> > Will that need a win32 platform check?
+> > Does anyone want to take this and whip it into a proper patch?
+> 
+> An attempt:
+> 
+> From 429ae282ffd7202b6d2fb024a92dea543b8af376 Mon Sep 17 00:00:00 2001
+> From: Matt McClure <matthewlmcclure@gmail.com>
+> Date: Wed, 13 Mar 2013 11:14:22 -0400
+> Subject: [PATCH] difftool: Make directory diff symlink working tree
+> 
+> ...primarily so that a user can edit working tree files in his difftool.
 
->> Your patch doesn't advertise the option in the warning message, which I
->> think is good. You may mention it the commit message that this is a
->> deliberate choice.
->
-> Yes, it was deliberate. I can add a note.
->
->> > +add.updateroot::
->> 
->> Detail: option names are normally camelCased => updateRoot.
->
-> Good point, thanks.
->
->> I think the option name needs a bit more thinking. Without reading the
->> doc,
->> 
->> [add]
->> 	updateRoot = false
->> 
->> would be a very tempting thing to try. Perhaps explicitly warning when
->> add.updateroot is set to false would avoid possible confusion.
+Please don't continue the subject like this, look at some recent commits
+in git.git to see how commits are normally formatted.
 
-This is essentially the same as Matthieu's add.use2dot0Behavior but
-with that "it is an error to explicitly set it to false" twist, it
-alleviates one of the worries. It still has the same "the user saw
-it mentioned on stackoverflow and sets it without understanding that
-the behaviour is getting changed" effect.
+The subject here is also inaccurate since difftool already symlinks the
+working tree in some situations.
 
-Also it won't give chance for scripts to get fixed, even though I
-suspect that instances of "add -u/-A" without pathspec end users
-write in their custom scripts almost always would want to be
-tree-wide and it is a bug that they do not pass ":/" to them.
+> difftool -d formerly knew how to symlink to the working tree when the
+> work tree contains uncommitted changes. In practice, prior to this
+> change, it would not symlink to the working tree in case there were no
+> uncommitted changes, even when the user invoked difftool with the form:
+> 
+>     git difftool -d [--options] <commit> [--] [<path>...]
+>         This form is to view the changes you have in your working tree
+>         relative to the named <commit>. You can use HEAD to compare it
+>         with the latest commit, or a branch name to compare with the tip
+>         of a different branch.
+> 
+> Instead, prior to this change, difftool would use the file's blob SHA1
+> to find its content in the index rather than use the working tree
+> content. This change teaches `git difftool` to compare the blob SHA1 to
+> the file's working tree blob SHA1 and use the working tree file if the
+> SHA1s are the same.
 
-The "future.*" (I'd rather call that "migration.*") approach with
-the "never set it to false" twist is probably OK from the "complaint
-avoidance" perspective.  The user cannot later complain "I tried to
-squelch the advice but at the same time I ended up adding updated
-contents outside my diretory", without getting told "That is the
-documented behaviour, isn't it?"  But I still think it is much less
-nice from "avoid hurting the users" perspective.  If the way to
-squelch the user learns were to say "git add -u .", where the user
-explicitly says "take the updated contents from this directory and
-below", there is no room for confusion.  We won't hear complaints
-either way, but with the "future.*" the reason why we won't hear
-complaints is because the users do not have excuse to complain.
-With the "require explicit .", it is because the users won't get
-hurt in the first place.
+You don't need to say things like "formerly..." and "prior to this",
+write in the imperative describing how the commit changes things.  A
+better commit message might be:
 
-> I dunno. I am not all that excited about this patch, due to all of the
-> caveats that we need to communicate to the user. The current warning has
-> annoyed me a few times, but perhaps it is still too soon, and my fingers
-> and brain just need retraining. I think a config option could help some
-> people, but maybe it will end up hurting more.  I'm inclined at this
-> point to table the patch for now and see how I feel in a few weeks.
->
-> I do think patch 1/2 makes sense regardless.
+    difftool -d: symlink working tree files matching RHS
 
-These two concluding paragraphs match my current thinking.
+    Change the behaviour of git-difftool's directory diff mode so that
+    instead of symlinking to working tree files only when they have
+    unstaged changes we now symlink to any files where the working tree
+    matches the RHS of the diff.
 
-Thanks.
+    This helps users who like to edit files in their diff tool and
+    expect to have those changes reflected in the working tree.
+
+> Author: John Keeping <john@keeping.me.uk>
+
+The correct way to credit authorship is via a "From: " header at the top
+of the message.  In this particular case, I think this change also
+requires a documentation update and some test coverage, so it would be
+appropriate for whoever adds those to take the credit for the commit and
+add a "Based-on-patch-by: John Keeping <john@keeping.me.uk>" footer.
+
+You should also add your own "Signed-off-by:" line.
+
+If no-one else gets there first I'm hoping to have a bit of time to add
+the documentation and test case in 4 hours or so.
+
+> Conversation:
+> http://thread.gmane.org/gmane.comp.version-control.git/217979/focus=218014
+
+This isn't necessary, just reply to relevant message in that thread and
+it will show up correctly in people's mail clients.
+
+> ---
+>  git-difftool.perl | 21 ++++++++++++++++++---
+>  1 file changed, 18 insertions(+), 3 deletions(-)
+> 
+> diff --git a/git-difftool.perl b/git-difftool.perl
+> index 0a90de4..5f093ae 100755
+> --- a/git-difftool.perl
+> +++ b/git-difftool.perl
+> @@ -83,6 +83,21 @@ sub exit_cleanup
+>  	exit($status | ($status >> 8));
+>  }
+> 
+> +sub use_wt_file
+> +{
+> +	my ($repo, $workdir, $file, $sha1, $symlinks) = @_;
+> +	my $null_sha1 = '0' x 40;
+> +
+> +	if ($sha1 eq $null_sha1) {
+> +		return 1;
+> +	} elsif (not $symlinks) {
+> +		return 0;
+> +	}
+> +
+> +	my $wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
+> +	return $sha1 eq $wt_sha1;
+> +}
+> +
+>  sub setup_dir_diff
+>  {
+>  	my ($repo, $workdir, $symlinks) = @_;
+> @@ -159,10 +174,10 @@ EOF
+>  		}
+> 
+>  		if ($rmode ne $null_mode) {
+> -			if ($rsha1 ne $null_sha1) {
+> -				$rindex .= "$rmode $rsha1\t$dst_path\0";
+> -			} else {
+> +			if (use_wt_file($repo, $workdir, $dst_path, $rsha1, $symlinks)) {
+>  				push(@working_tree, $dst_path);
+> +			} else {
+> +				$rindex .= "$rmode $rsha1\t$dst_path\0";
+>  			}
+>  		}
+>  	}
+> -- 
+> 1.8.1.5
