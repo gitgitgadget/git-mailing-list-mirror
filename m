@@ -1,141 +1,90 @@
-From: Matt McClure <matthewlmcclure@gmail.com>
-Subject: [PATCH] difftool: Make directory diff symlink working tree
-Date: Wed, 13 Mar 2013 11:21:40 -0400
-Message-ID: <CAJELnLEbYrDWUjZH6iWnovEFDh8xFvpJL5wtEcPGOpkhPo+XEA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: difftool -d symlinks, under what conditions
+Date: Wed, 13 Mar 2013 08:30:07 -0700
+Message-ID: <7vtxof48sg.fsf@alter.siamese.dyndns.org>
+References: <CAJELnLEL8y0G3MBGkW+YDKtVxX4n4axJG7p0oPsXsV4_FRyGDg@mail.gmail.com>
+ <CAJELnLGOK5m-JLwgfUdmQcS1exZMQdf1QR_g-GB_UhryDw3C9w@mail.gmail.com>
+ <20130312190956.GC2317@serenity.lan>
+ <CAJDDKr7S0ex1RvZS0QeBXxAuqcKrQJzhZeJP0MoMGmpGXyMOrA@mail.gmail.com>
+ <20130312194306.GE2317@serenity.lan>
+ <7vfw0073pm.fsf@alter.siamese.dyndns.org>
+ <20130312210630.GF2317@serenity.lan>
+ <CAJELnLGBr1wOX4-3rCNjPpPLezc_6FgyeuPqty268JR0==qtvQ@mail.gmail.com>
+ <7vehfk5kn2.fsf@alter.siamese.dyndns.org> <3222724986386016520@unknownmsgid>
+ <20130313001758.GH2317@serenity.lan>
+ <CAJDDKr7ZU16XWtCfYX9-RMzcpKa_FF80Od+mUMG4n8dUKeLsvw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: John Keeping <john@keeping.me.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Matt McClure <matthewlmcclure@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
 	Tim Henigan <tim.henigan@gmail.com>
 To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 13 16:22:10 2013
+X-From: git-owner@vger.kernel.org Wed Mar 13 16:30:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFnVJ-0006vq-Eu
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 16:22:09 +0100
+	id 1UFndd-00081D-3v
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 16:30:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933007Ab3CMPVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 11:21:42 -0400
-Received: from mail-da0-f52.google.com ([209.85.210.52]:58668 "EHLO
-	mail-da0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932391Ab3CMPVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 11:21:41 -0400
-Received: by mail-da0-f52.google.com with SMTP id f10so460330dak.39
-        for <git@vger.kernel.org>; Wed, 13 Mar 2013 08:21:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=hW+mkubqw5ib5MWAbLu7MaVMk4hzXdPzR0SbEU6DPII=;
-        b=a8iKDkC9SHWjQroiEQ4uEutZb+BhitvBQnJJK6KX0thnix456ZxQgcoayFTx8L37sY
-         INtDltx9ah51Pciq1apkgaiKd6lzB44qwslwd0+gw/Cdsu/3oKL346A8mV4tWHuORCt1
-         a2l4/NHyj9sPspKeld53o8nq73wXu0oByEGk7b3WobnZg7msLxyrFkgF1u0I7clSXumz
-         fG4OBcgR6AdEJeDGFyeDvblAtHH/s7KikXz4FX3qqODe8pSy3NE3AUValI8iYUVvckOY
-         R662jEy+WCnJMVvO34ofB+IH78HBUfDKvmN456XhZ8dvS1rp/etTVr9L5Iq8oGuKFBkD
-         ZOwA==
-X-Received: by 10.68.213.104 with SMTP id nr8mr47057689pbc.200.1363188100886;
- Wed, 13 Mar 2013 08:21:40 -0700 (PDT)
-Received: by 10.68.49.65 with HTTP; Wed, 13 Mar 2013 08:21:40 -0700 (PDT)
+	id S933007Ab3CMPaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Mar 2013 11:30:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57429 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932391Ab3CMPaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 11:30:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A199B45B;
+	Wed, 13 Mar 2013 11:30:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vFhg5YliqWlYGoXfBf8djylff+8=; b=du18az
+	WTTGhouPUAhnBsv2jqRmMUZI1IA+vtlW9d10L24lBY60S8KlBMbZXfkP6X7t77kH
+	Cn5mvwiCOxuw7DVdzzRftRE4jbiBOm9fnvvDX++p3W4DpHukGnkaks1rMu8f96xX
+	64R3SrXPZQ4SMBKtvnPwvOOcEiydDf20canMI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DkTbBHTsUOBQSbdwiE/BNwT4Tb2q5XRt
+	qGMV9gk/szm7yCmH0ICHOLXwmMmwQBnrH5UK/XxWx/8NCLOjc6IwK20ffNPrpqc6
+	30EJCgm0hUAiT+JZGF7w/HIcRS0pgxDIAAvyVYc5qWHCidTVRSb2i8Da5KpbGr5n
+	1LNO/Dpr/pA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 69541B45A;
+	Wed, 13 Mar 2013 11:30:09 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C38E0B457; Wed, 13 Mar 2013
+ 11:30:08 -0400 (EDT)
+In-Reply-To: <CAJDDKr7ZU16XWtCfYX9-RMzcpKa_FF80Od+mUMG4n8dUKeLsvw@mail.gmail.com> (David
+ Aguilar's message of "Wed, 13 Mar 2013 01:24:07 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E36AAA5E-8BF2-11E2-B62B-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218058>
 
-On Wed, Mar 13, 2013 at 4:24 AM, David Aguilar <davvid@gmail.com> wrote:
+David Aguilar <davvid@gmail.com> writes:
+
+>> The implementation of Junio's suggestion is relatively straightforward
+>> (this is untested, although t7800 passes, and can probably be improved
+>> by someone better versed in Perl).  Does this work for your original
+>> scenario?
+>
 > This is a nice straightforward approach.
 >
-> As Junio mentioned, a good next step would be this patch
-> in combination with making the truly temporary files
-> created by dir-diff readonly.
->
-> Will that need a win32 platform check?
-> Does anyone want to take this and whip it into a proper patch?
+> As Junio mentioned, a good next step would be this patch in
+> combination with making the truly temporary files created by
+> dir-diff readonly.
 
-An attempt:
-
->From 429ae282ffd7202b6d2fb024a92dea543b8af376 Mon Sep 17 00:00:00 2001
-From: Matt McClure <matthewlmcclure@gmail.com>
-Date: Wed, 13 Mar 2013 11:14:22 -0400
-Subject: [PATCH] difftool: Make directory diff symlink working tree
-
-...primarily so that a user can edit working tree files in his difftool.
-
-difftool -d formerly knew how to symlink to the working tree when the
-work tree contains uncommitted changes. In practice, prior to this
-change, it would not symlink to the working tree in case there were no
-uncommitted changes, even when the user invoked difftool with the form:
-
-    git difftool -d [--options] <commit> [--] [<path>...]
-        This form is to view the changes you have in your working tree
-        relative to the named <commit>. You can use HEAD to compare it
-        with the latest commit, or a branch name to compare with the tip
-        of a different branch.
-
-Instead, prior to this change, difftool would use the file's blob SHA1
-to find its content in the index rather than use the working tree
-content. This change teaches `git difftool` to compare the blob SHA1 to
-the file's working tree blob SHA1 and use the working tree file if the
-SHA1s are the same.
-
-Author: John Keeping <john@keeping.me.uk>
-
-Conversation:
-http://thread.gmane.org/gmane.comp.version-control.git/217979/focus=218014
----
- git-difftool.perl | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 0a90de4..5f093ae 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -83,6 +83,21 @@ sub exit_cleanup
- 	exit($status | ($status >> 8));
- }
-
-+sub use_wt_file
-+{
-+	my ($repo, $workdir, $file, $sha1, $symlinks) = @_;
-+	my $null_sha1 = '0' x 40;
-+
-+	if ($sha1 eq $null_sha1) {
-+		return 1;
-+	} elsif (not $symlinks) {
-+		return 0;
-+	}
-+
-+	my $wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
-+	return $sha1 eq $wt_sha1;
-+}
-+
- sub setup_dir_diff
- {
- 	my ($repo, $workdir, $symlinks) = @_;
-@@ -159,10 +174,10 @@ EOF
- 		}
-
- 		if ($rmode ne $null_mode) {
--			if ($rsha1 ne $null_sha1) {
--				$rindex .= "$rmode $rsha1\t$dst_path\0";
--			} else {
-+			if (use_wt_file($repo, $workdir, $dst_path, $rsha1, $symlinks)) {
- 				push(@working_tree, $dst_path);
-+			} else {
-+				$rindex .= "$rmode $rsha1\t$dst_path\0";
- 			}
- 		}
- 	}
--- 
-1.8.1.5
-
-
-
--- 
-Matt McClure
-http://www.matthewlmcclure.com
-http://www.mapmyfitness.com/profile/matthewlmcclure
+Even though I agree that the idea Matt McClure mentioned to run a
+three-way merge to take the modification back when the path checked
+out to the temporary tree as a temporary file (because it does not
+match the working tree version) gets edited by the user might be a
+better longer-term direction to go, marking the temporaries that the
+users should not modify clearly as such needs to be done in the
+shorter term.  This thread wouldn't have had to happen if we had
+such a safety measure in the first place.
