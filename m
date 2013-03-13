@@ -1,89 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: difftool -d symlinks, under what conditions
-Date: Wed, 13 Mar 2013 12:28:27 -0700
-Message-ID: <7vy5dr14mc.fsf@alter.siamese.dyndns.org>
-References: <20130312210630.GF2317@serenity.lan>
- <CAJELnLGBr1wOX4-3rCNjPpPLezc_6FgyeuPqty268JR0==qtvQ@mail.gmail.com>
- <7vehfk5kn2.fsf@alter.siamese.dyndns.org> <3222724986386016520@unknownmsgid>
- <20130313001758.GH2317@serenity.lan>
- <CAJDDKr7ZU16XWtCfYX9-RMzcpKa_FF80Od+mUMG4n8dUKeLsvw@mail.gmail.com>
- <7vtxof48sg.fsf@alter.siamese.dyndns.org>
- <7v1ubj45ac.fsf@alter.siamese.dyndns.org>
- <20130313170821.GK2317@serenity.lan>
- <7vppz32o60.fsf@alter.siamese.dyndns.org>
- <20130313180106.GL2317@serenity.lan>
+Subject: Re: [RFC/PATCH] Documentation/technical/api-fswatch.txt: start with
+ outline
+Date: Wed, 13 Mar 2013 12:38:02 -0700
+Message-ID: <7vtxof146d.fsf@alter.siamese.dyndns.org>
+References: <1362946623-23649-1-git-send-email-artagnon@gmail.com>
+ <513FB85C.5010106@gmail.com>
+ <CACsJy8CBru+Z0+oYVKGdwjiF4DDH3w4vCjunaoCnoDQ6AizwWg@mail.gmail.com>
+ <5140BC80.4000201@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>,
-	Matt McClure <matthewlmcclure@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Tim Henigan <tim.henigan@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Mar 13 20:29:03 2013
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 13 20:38:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFrMB-0002F6-Te
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 20:29:00 +0100
+	id 1UFrVV-0002gb-GL
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 20:38:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933242Ab3CMT2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 15:28:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61669 "EHLO
+	id S933272Ab3CMTiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Mar 2013 15:38:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37660 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933218Ab3CMT2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 15:28:32 -0400
+	id S933232Ab3CMTiF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 15:38:05 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2A15A14B;
-	Wed, 13 Mar 2013 15:28:29 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCCEFA893;
+	Wed, 13 Mar 2013 15:38:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sQBcdpSWLFQM2PNscHhIe9879+c=; b=wimhQZ
-	f+T0gm4vMLPeFxlD1rU0zYsiNwSfH+6cGyH3reIpEQojXDDWsLK/oYvEoBvT4jLh
-	P9VUplxXaB7qW26F874tKHcncFLmt5in5XO6CPnMVdF8jX6zaSTDyvlo/+g+OSqK
-	VXLO83INHOkbS1FyK34R+rGw9VjX0AjxMrw9Q=
+	:content-type; s=sasl; bh=nv6xpr/OmgbuARTePSEN2dCxTWI=; b=CUptid
+	oO0Fa33RndCf3fCcyblSPWT39wchFHlVfTCdlY//krxNPHCtyvQp0D/UeCZ7c/JC
+	HrCfzlv3EWuKm1k4RYaT69NJ7yb8fk1UijsSdoYGL112t71IFiqhG+3U7WpT6Yq+
+	9dXm8DkYw4XI6I0yucKa2erM3lM/F5eeKKvTo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZmDR9iWxdIqR3/7RBAoX4rESTwa5Zz9n
-	4kkQvHIfPt7EwI/goMC4uyaiUeeKTFW/MurSL6eyRafI2VwyOY9fxc9mv84UuUva
-	THuhWSkzS8z0gAaNeHbfISJo0fPgzUckNzqj3fBsa3dljncY1/hIkEJF36wHtIoX
-	3DfBzNDTfIg=
+	:content-type; q=dns; s=sasl; b=h1DrZfMhzAa3F0zSF5oRgmiAiqlsjZa5
+	qSXTEa89lPrq3WmiWm8RyiIcRX//zvtHHmsUjzY24/W7yaABx+qilH2bEoNhjhSd
+	iY0mUNML7Gitx+SklEIlli7YE6RUjx1J58t99/8SiZDMA2LCZr4HAOEk4NFn/V1g
+	NpeE0eqfyKA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5261A14A;
-	Wed, 13 Mar 2013 15:28:29 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0FF1A892;
+	Wed, 13 Mar 2013 15:38:04 -0400 (EDT)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D473A146; Wed, 13 Mar 2013
- 15:28:29 -0400 (EDT)
-In-Reply-To: <20130313180106.GL2317@serenity.lan> (John Keeping's message of
- "Wed, 13 Mar 2013 18:01:06 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 180E6A889; Wed, 13 Mar 2013
+ 15:38:04 -0400 (EDT)
+In-Reply-To: <5140BC80.4000201@gmail.com> (Karsten Blees's message of "Wed,
+ 13 Mar 2013 18:50:56 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2F2D3760-8C14-11E2-8EE2-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 85DC6C9C-8C15-11E2-BD6D-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218084>
 
-John Keeping <john@keeping.me.uk> writes:
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-> On Wed, Mar 13, 2013 at 10:40:55AM -0700, Junio C Hamano wrote:
->> John Keeping <john@keeping.me.uk> writes:
->> 
->> > git-hash-object(1) implies that it will apply the clean filter and EOL
->> > conversion when it's given a path to a file in the working tree (as it
->> > is here).  Is that not the case?
->> 
->> Applying clean to smudged contents _ought to_ recover clean version,
->> but is that "ought to" something you would want to rely on?
->
-> How does git-status figure out that file that has been touch'd does not
-> have unstaged changes without relying on this?  Surely this case is no
-> different from that?
+> However, AFAIK inotify doesn't work recursively, so the daemon
+> would at least have to track the directory structure to be able to
+> register / unregister inotify handlers as directories come and go.
 
-I just checked.  ce_modified_check_fs() does ce_compare_data() which
-does the same "hash the path and compare the resulting hash".  So I
-think we are OK.
+Yes, and you would need one inotify per directory but you do not
+have an infinite supply of outstanding inotify watch (wasn't the
+limit like 8k per a single uid or something?), so the daemon must be
+prepared to say "I'll watch this, that and that directories, but the
+consumers should check other directories themselves."
 
-Thanks.
+FWIW, I share your suspicion that an effort in the direction this
+thread suggests may end up duplicating what the caching vfs layer
+already does, and doing so poorly.
