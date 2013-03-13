@@ -1,81 +1,90 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH] tag: --force is quiet about new tags
-Date: Wed, 13 Mar 2013 00:21:00 -0400
-Message-ID: <CABURp0oT8ZN5fKtKh67Gm1P5rf_a3diqcYbw8mUga-gv5MPu6Q@mail.gmail.com>
-References: <1363130021-28624-1-git-send-email-hordp@cisco.com> <7vy5ds3re0.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v8 2/5] blame: introduce $ as "end of file" in -L syntax
+Date: Wed, 13 Mar 2013 08:52:59 +0100
+Message-ID: <87wqtbivms.fsf@pctrast.inf.ethz.ch>
+References: <cover.1362069310.git.trast@student.ethz.ch>
+	<7973d90cfcd86a3c15776b8718ad6bd84ee7b4ac.1362069310.git.trast@student.ethz.ch>
+	<7vk3psicgf.fsf@alter.siamese.dyndns.org>
+	<7va9q85jt9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Phil Hord <hordp@cisco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Will Palmer <wmpalmer@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 13 05:21:54 2013
+X-From: git-owner@vger.kernel.org Wed Mar 13 08:53:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFdCL-0005hT-N1
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 05:21:54 +0100
+	id 1UFgVC-0003PJ-UE
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 08:53:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751109Ab3CMEVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 00:21:22 -0400
-Received: from mail-ve0-f182.google.com ([209.85.128.182]:38567 "EHLO
-	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750914Ab3CMEVV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 00:21:21 -0400
-Received: by mail-ve0-f182.google.com with SMTP id ox1so428537veb.13
-        for <git@vger.kernel.org>; Tue, 12 Mar 2013 21:21:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Ym/iASHQl7NZnqxHRntc+JbmPZy+4gxx7Xd+7LX0rFI=;
-        b=qGwzmXjSXJ7KB6uXicL/1vFx3TtSwOs/lfSz++aI/WnElTrUbFhFcWjUneXyLS68ox
-         KR/z4o/z3G5T7+QmYGryDBkt9L0WqBw0QP2TBUDjW35ros7weaJCOr1924wocQqwftAp
-         a9dKq7nfuLsTP4dI50oQebi4V2MGnYun9bjXvtTctcktXpXAsBuJc13Rl597125ZRMT7
-         0qxDbcFLzTM4G2yq24LUvxCIlhXW1KYj3aGqGBkD/niUpA8iMz0TeTFxdoTRFplxcnjX
-         +ddBhkUQMmYeLSjmpiCQ3mPwBJG8FCpp+5CCA5aH+xRAK6P5dUPTbSR2zN1HDS6TTYvb
-         tEUA==
-X-Received: by 10.52.92.199 with SMTP id co7mr6555242vdb.82.1363148480594;
- Tue, 12 Mar 2013 21:21:20 -0700 (PDT)
-Received: by 10.58.201.103 with HTTP; Tue, 12 Mar 2013 21:21:00 -0700 (PDT)
-In-Reply-To: <7vy5ds3re0.fsf@alter.siamese.dyndns.org>
+	id S932540Ab3CMHxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Mar 2013 03:53:07 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:54847 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932490Ab3CMHxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 03:53:06 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 13 Mar
+ 2013 08:52:55 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
+ CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Wed, 13 Mar 2013 08:53:00 +0100
+In-Reply-To: <7va9q85jt9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 12 Mar 2013 15:34:26 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218037>
 
-On Tue, Mar 12, 2013 at 11:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Phil Hord <hordp@cisco.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> git tag --force is used to replace an existing tag with
->> a new reference.  Git helpfully tells the user the old
->> ref when this happens.  But if the tag name is new and does
->> not exist, git tells the user the old ref anyway (000000).
+>> Thomas Rast <trast@student.ethz.ch> writes:
 >>
->> Teach git to ignore --force if the tag is new.  Add a test
->> for this and also to ensure --force can replace tags at all.
+>>> To save the user a lookup of the last line number, introduce $ as a
+>>> shorthand for the last line.  This is mostly useful to spell "until
+>>> the end of the file" as '-L<begin>,$'.
 >>
->> Signed-off-by: Phil Hord <hordp@cisco.com>
->> ---
+>> Doesn't "-L <begin>" or "-L <begin>," do that already?  If it were
+>> to introduce "-L $-4," or "-L$-4,+2", I would understand why the
+>> addition may be useful, but otherwise I do not think it adds much
+>> value.
 >
-> I think we would still want to allow the operation to go through,
-> even when the --force option is given, to create a new tag.  I agree
-> that the message should not say "Updated".  So teaching Git not to
-> issue the "Updated" message makes perfect sense.  It is somewhat
-> misleading to say we are teaching Git to ignore the option, though.
->
-> Thanks.
+> It is a quiet-period so there is no need to rush, but did anything
+> happened further on this series?
 
-My phrasing was too ambiguous.  What you described is exactly what the
-patch does.  --force is superfluous when the tag does not already
-exist.  It is only checked in two places, and one of those is to
-decide whether to print the "Updated" message.  How's this?
+No, I've been busy :-(
 
-   Teach 'git tag --force' to suppress the update message if
-   the tag is new.  Add a test for this and also to ensure
-   --force can replace tags at all.
+The only open point is in the other email:
 
-Phil
+> >>  Documentation/blame-options.txt     |  19 +------
+> >>  Documentation/line-range-format.txt |  18 +++++++
+> >>  Makefile                            |   2 +
+> >>  builtin/blame.c                     |  99 +++-------------------------------
+> >>  line-log.c                          | 105 ++++++++++++++++++++++++++++++++++++
+> >>  line-log.h                          |  23 ++++++++
+> >
+> > Was this churn necessary?  
+> >
+> > It is strange to move existing functions that will be tweaked to be
+> > shared by two different codepaths (blame and line-log) to the new
+> > user.
+> [...]
+> 
+> Even though I am moving from builtin/blame.c to line-log.c?  I would
+> otherwise have to call from a rather lib-ish file into a "front
+
+You haven't sent any reply to this.  Does that mean you agree?  Would
+you prefer the shared file to be named something like line-range.c?
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
