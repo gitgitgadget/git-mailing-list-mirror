@@ -1,97 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Tag peeling peculiarities
-Date: Wed, 13 Mar 2013 17:58:00 -0400
-Message-ID: <20130313215800.GA23838@sigill.intra.peff.net>
-References: <51409439.5090001@alum.mit.edu>
- <7vwqtb2ood.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Deletion of git repo causes incorrect block count on HFS+ case-sensitive
+Date: Wed, 13 Mar 2013 15:14:27 -0700
+Message-ID: <CAJDDKr6q4kz0oFtukmnOc3heWyRS8TfgKjEkgNmqdZdMxEeENg@mail.gmail.com>
+References: <B6ED348A-2168-42F5-B6EC-81D7E62805ED@me.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 13 22:58:34 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Ismail Tabtabai <itabtabai@me.com>
+X-From: git-owner@vger.kernel.org Wed Mar 13 23:15:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFtgu-0002hj-3b
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 22:58:32 +0100
+	id 1UFtwt-00020u-3N
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 23:15:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933325Ab3CMV6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 17:58:04 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51155 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933283Ab3CMV6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 17:58:03 -0400
-Received: (qmail 8334 invoked by uid 107); 13 Mar 2013 21:59:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 13 Mar 2013 17:59:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Mar 2013 17:58:00 -0400
-Content-Disposition: inline
-In-Reply-To: <7vwqtb2ood.fsf@alter.siamese.dyndns.org>
+	id S933344Ab3CMWO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Mar 2013 18:14:29 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:34532 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933260Ab3CMWO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 18:14:28 -0400
+Received: by mail-wi0-f181.google.com with SMTP id hm6so1247349wib.14
+        for <git@vger.kernel.org>; Wed, 13 Mar 2013 15:14:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=sCv0EH/YLS9H+ErvXTazk4SUwnj33aWrGhEpvF8xKQ0=;
+        b=lseSEqa7p9HexUD5BOA15BWhWrxscSHYUIoo0E76PzuyXfuAdonUzcOeGr6MXSCGdK
+         oYl+p7ezr4Yvv+YOoMqhU5ov7ifSzvtCaxid+v7c/IuXpUvLsdQ/uzmJlksZ6q4V5hiN
+         zD81LmsJxMsD8H5/cWhT1kJe50Va5rv4fx8UHpztxJiHGOfZg2W6x4Z2/nkcKvPPzmOm
+         GeuUW0iRhExQDxiEBwzuJBEr/PXD+S4CZdFghioYim6uil+Ls50ETp9OjWIrlXWKu6Us
+         AjNKdjFf34wmL43jZ501FR84mIaGQMk8t8zSFTVhHEhFp5vIePblXZUyFoSe2KtvuhEw
+         EFxw==
+X-Received: by 10.180.183.81 with SMTP id ek17mr30126846wic.2.1363212867226;
+ Wed, 13 Mar 2013 15:14:27 -0700 (PDT)
+Received: by 10.194.13.129 with HTTP; Wed, 13 Mar 2013 15:14:27 -0700 (PDT)
+In-Reply-To: <B6ED348A-2168-42F5-B6EC-81D7E62805ED@me.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218095>
 
-On Wed, Mar 13, 2013 at 10:29:54AM -0700, Junio C Hamano wrote:
+On Wed, Mar 13, 2013 at 11:45 AM, Ismail Tabtabai <itabtabai@me.com> wrote:
+> Hello,
+>
+> When I delete a git repo that I have cloned on my machine using 'rm -rf repo-name' I get an incorrect block count when I attempt a Disk Repair.
+>
+> I am running OS X 10.8.2 on a user installed SSD. The git version is 1.8.1.5.
 
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
-> > It is not
-> > clear to me whether the prohibition of tags outside of refs/tags should
-> > be made more airtight or whether the peeling of tags outside of
-> > refs/tags should be fixed.
-> 
-> Retroactively forbidding presense/creation of tags outside the
-> designated refs/tags hierarchy will not fly.  I think we should peel
-> them when we are reading from "# pack-refs with: peeled" version.
-> 
-> Theoretically, we could introduce "# pack-refs with: fully-peeled"
-> that records peeled versions for _all_ annotated tags even in
-> unusual places, but that would be introducing problems to existing
-> versions of the software to cater to use cases that is not blessed
-> officially, so I doubt it has much value.
+This is not a git issue.
 
-I agree. The REF_KNOWS_PEELED thing is an optimization, so it's OK to
-simply omit the optimization in the corner case, since we don't expect
-it to happen often. So what happens now is a bug, but it is a bug in the
-reader that mis-applies the optimization, and we can just fix the
-reader.
+I would recommend inspecting your hardware; this could be a disk going bad.
 
-I do not think there is any point in peeling while we are reading the
-pack-refs file; it is no more expensive to do so later, and in most
-cases we will not even bother peeling. We should simply omit the
-REF_KNOWS_PEELED bit so that later calls to peel_ref do not follow the
-optimization code path. Something like this:
+There's not much git can do to fix a broken HFS+ filesystem or faulty
+hardware.  If anything, it's an HFS+ / Apple bug, though that is less
+likely than a bad disk.
 
-diff --git a/refs.c b/refs.c
-index 175b9fc..ee498c8 100644
---- a/refs.c
-+++ b/refs.c
-@@ -824,7 +824,10 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
- 
- 		refname = parse_ref_line(refline, sha1);
- 		if (refname) {
--			last = create_ref_entry(refname, sha1, flag, 1);
-+			int this_flag = flag;
-+			if (prefixcmp(refname, "refs/tags/"))
-+				this_flag &= ~REF_KNOWS_PEELED;
-+			last = create_ref_entry(refname, sha1, this_flag, 1);
- 			add_ref(dir, last);
- 			continue;
- 		}
+If you haven't already, you should probably start doing backups.
+I hope that helps.
 
-I think with this patch, though, that upload-pack would end up having to
-read the object type of everything under refs/heads to decide whether it
-needs to be peeled (and in most cases, it does not, making the initial
-ref advertisement potentially much more expensive). How do we want to
-handle that? Should we teach upload-pack not to bother advertising peels
-outside of refs/tags? That would break people who expect tag
-auto-following to work for refs outside of refs/tags, but I am not sure
-that is a sane thing to expect.
+> Checking file systemChecking Journaled HFS Plus volume.
+> Detected a case-sensitive volume.
+> Checking extents overflow file.
+> Checking catalog file.
+> Incorrect block count for file pack-8c0dc1a398a22c58ea1eba09de3ee9d935ad1ea3.pack
+> (It should be 4865 instead of 12244)
+> Incorrect block count for file pack-db61a037ad0e043e801d8ba1db98b1af14d466af.pack
+> (It should be 5889 instead of 12245)
+> Incorrect block count for file pack-db61a037ad0e043e801d8ba1db98b1af14d466af.pack
+> (It should be 6220 instead of 12245)
+> Incorrect block count for file pack-286c1444bc32ee2ed0af1d15070e0e31f22ba0a8.pack
+> (It should be 7937 instead of 12246)
+> Checking multi-linked files.
+> Checking catalog hierarchy.
+> Checking extended attributes file.
+> Checking volume bitmap.
+> Volume bitmap needs minor repair for orphaned blocks
+> Checking volume information.
+> Invalid volume free block count
+> (It should be 85306183 instead of 85282114)
+> Repairing volume.
+> Rechecking volume.
+> Checking Journaled HFS Plus volume.
+> Detected a case-sensitive volume.
+> Checking extents overflow file.
+> Checking catalog file.
+> Checking multi-linked files.
+> Checking catalog hierarchy.
+> Checking extended attributes file.
+> Checking volume bitmap.
+> Checking volume information.
+> The volume avicenna was repaired successfully.
+> Volume repair complete.Updating boot support partitions for the volume as required.
 
--Peff
+It looks like it repaired itself.  bad blocks?
+-- 
+David
