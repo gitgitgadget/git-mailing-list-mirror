@@ -1,87 +1,102 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] tag: --force is quiet about new tags
-Date: Wed, 13 Mar 2013 10:16:52 +0100
-Message-ID: <51404404.4030005@drmicha.warpmail.net>
-References: <1363130021-28624-1-git-send-email-hordp@cisco.com> <7vy5ds3re0.fsf@alter.siamese.dyndns.org> <CABURp0oT8ZN5fKtKh67Gm1P5rf_a3diqcYbw8mUga-gv5MPu6Q@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] add: respect add.updateroot config option
+Date: Wed, 13 Mar 2013 05:27:54 -0400
+Message-ID: <20130313092754.GA12658@sigill.intra.peff.net>
+References: <20130313040845.GA5057@sigill.intra.peff.net>
+ <20130313041037.GB5378@sigill.intra.peff.net>
+ <vpqr4jjd5wp.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Phil Hord <hordp@cisco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 13 10:17:22 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Mar 13 10:28:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFhoE-0005YO-4Y
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 10:17:18 +0100
+	id 1UFhz5-0000AE-Kj
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 10:28:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754870Ab3CMJQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 05:16:51 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:59333 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754474Ab3CMJQu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Mar 2013 05:16:50 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C185720B85;
-	Wed, 13 Mar 2013 05:16:49 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute6.internal (MEProxy); Wed, 13 Mar 2013 05:16:49 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=/7RQ3+H+Xik854KuR+rR44
-	LUHlI=; b=l5GIrw3sovAimtaunnlQYow/GQ1H0DuEmN2JiCEKBbqvKJF21ZISFz
-	QQIo5k/7dFdPRKB7qX+dOknzDs6cNot1SPceJLJGhGdsPfwAumIA9TLtTUgkGI6d
-	oruv1KRnOjy8n4xZl+KzAB/XbRPoWONdeiI5vVBndCqCuqfEFG8ME=
-X-Sasl-enc: 7NGUhdBha1qztvxtx1aQ6dr83A5W/mHC2kUgtn5b7KPn 1363166209
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 07494C80E8C;
-	Wed, 13 Mar 2013 05:16:48 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130219 Thunderbird/17.0.3
-In-Reply-To: <CABURp0oT8ZN5fKtKh67Gm1P5rf_a3diqcYbw8mUga-gv5MPu6Q@mail.gmail.com>
+	id S1754877Ab3CMJ2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Mar 2013 05:28:04 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50733 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753653Ab3CMJ2C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 05:28:02 -0400
+Received: (qmail 3335 invoked by uid 107); 13 Mar 2013 09:29:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 13 Mar 2013 05:29:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Mar 2013 05:27:54 -0400
+Content-Disposition: inline
+In-Reply-To: <vpqr4jjd5wp.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218046>
 
-Phil Hord venit, vidit, dixit 13.03.2013 05:21:
-> On Tue, Mar 12, 2013 at 11:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Phil Hord <hordp@cisco.com> writes:
->>
->>> git tag --force is used to replace an existing tag with
->>> a new reference.  Git helpfully tells the user the old
->>> ref when this happens.  But if the tag name is new and does
->>> not exist, git tells the user the old ref anyway (000000).
->>>
->>> Teach git to ignore --force if the tag is new.  Add a test
->>> for this and also to ensure --force can replace tags at all.
->>>
->>> Signed-off-by: Phil Hord <hordp@cisco.com>
->>> ---
->>
->> I think we would still want to allow the operation to go through,
->> even when the --force option is given, to create a new tag.  I agree
->> that the message should not say "Updated".  So teaching Git not to
->> issue the "Updated" message makes perfect sense.  It is somewhat
->> misleading to say we are teaching Git to ignore the option, though.
->>
->> Thanks.
-> 
-> My phrasing was too ambiguous.  What you described is exactly what the
-> patch does.  --force is superfluous when the tag does not already
-> exist.  It is only checked in two places, and one of those is to
-> decide whether to print the "Updated" message.  How's this?
-> 
->    Teach 'git tag --force' to suppress the update message if
->    the tag is new.  Add a test for this and also to ensure
->    --force can replace tags at all.
-> 
-> Phil
+On Wed, Mar 13, 2013 at 10:07:34AM +0100, Matthieu Moy wrote:
 
-Looks good to me, both the patch and the (updated) commit message.
+> Jeff King <peff@peff.net> writes:
+> 
+> > For users who have read and accepted the warning, there is no way to
+> > jump directly to the future behavior and silence the warning.
+> 
+> I think the idea makes sense. The transition period is necessary for
+> people who use different versions of Git (which includes anybody
+> writting and distributing scripts), but for poor mortals who only use a
+> single version of Git, it's nice to be able to jump to the future
+> behavior once for all as soon as possible.
 
-Michael
+I think the biggest risk is from people who think they are safe to jump,
+and then find out that some script they depend on is not ready. Even if
+they do not even realize they are relying on it. Part of the point of
+the transition period is to get script authors to update their scripts,
+and to let the new versions trickle down to the users.
+
+> Your patch doesn't advertise the option in the warning message, which I
+> think is good. You may mention it the commit message that this is a
+> deliberate choice.
+
+Yes, it was deliberate. I can add a note.
+
+> > +add.updateroot::
+> 
+> Detail: option names are normally camelCased => updateRoot.
+
+Good point, thanks.
+
+> I think the option name needs a bit more thinking. Without reading the
+> doc,
+> 
+> [add]
+> 	updateRoot = false
+> 
+> would be a very tempting thing to try. Perhaps explicitly warning when
+> add.updateroot is set to false would avoid possible confusion.
+
+Yeah, that occurred to me, too, hence the note in the doc. Since it
+isn't advertised elsewhere, I had hoped that anybody who discovered it
+would see the note. I suppose we can warn when we see add.updateRoot set
+to anything but true. That feels a bit hacky, as it's possible the user
+could be overriding an earlier setting (although that is getting kind of
+crazy).
+
+> I liked David's suggestion of using future.* to mean "start using
+> behavior from the future right now".
+
+I do like that idea, as it makes the meaning of the variable more clear.
+
+I dunno. I am not all that excited about this patch, due to all of the
+caveats that we need to communicate to the user. The current warning has
+annoyed me a few times, but perhaps it is still too soon, and my fingers
+and brain just need retraining. I think a config option could help some
+people, but maybe it will end up hurting more.  I'm inclined at this
+point to table the patch for now and see how I feel in a few weeks.
+
+I do think patch 1/2 makes sense regardless.
+
+-Peff
