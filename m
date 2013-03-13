@@ -1,165 +1,245 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 5/5] branch: show more information when HEAD is detached
-Date: Wed, 13 Mar 2013 18:42:53 +0700
-Message-ID: <1363174973-17597-6-git-send-email-pclouds@gmail.com>
-References: <1362572482-20570-1-git-send-email-pclouds@gmail.com>
- <1363174973-17597-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH] status: hint the user about -uno if read_directory takes too long
+Date: Wed, 13 Mar 2013 19:59:16 +0700
+Message-ID: <1363179556-4144-1-git-send-email-pclouds@gmail.com>
+References: <CACsJy8DZm153Tu_3GTOnxF8bFrYPh7_DP6Rn6rr3n6tfuVuv2Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Niedier <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
+Cc: Junio C Hamano <gitster@pobox.com>, tboegi@web.de,
+	artagnon@gmail.com, robert.allan.zeh@gmail.com, finnag@pvv.org,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 13 12:44:10 2013
+X-From: git-owner@vger.kernel.org Wed Mar 13 13:59:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFk6M-0006jI-4V
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 12:44:10 +0100
+	id 1UFlHe-0006hL-EC
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 13:59:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755641Ab3CMLnn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Mar 2013 07:43:43 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:40540 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755218Ab3CMLnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 07:43:42 -0400
-Received: by mail-pb0-f43.google.com with SMTP id md12so941067pbc.30
-        for <git@vger.kernel.org>; Wed, 13 Mar 2013 04:43:42 -0700 (PDT)
+	id S1755471Ab3CMM71 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Mar 2013 08:59:27 -0400
+Received: from mail-da0-f50.google.com ([209.85.210.50]:59912 "EHLO
+	mail-da0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755160Ab3CMM70 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 08:59:26 -0400
+Received: by mail-da0-f50.google.com with SMTP id t1so403572dae.9
+        for <git@vger.kernel.org>; Wed, 13 Mar 2013 05:59:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=IDZCfx14aQYqeS9cEzCECjLwXf1XCCxq5VHyO1pBBKI=;
-        b=Vgw7jRB6uqbuAzvq8lexC/up1egT4jwXn3K/Ok7Qh6N9iIiec+dyvoEPOwuO89Rby1
-         SKCh5oDGNMKiHIyp7vVxCdIWwZLM6waFgQlfUL3fcYD9FwjGIYtWV324PSIoGngvxe+D
-         g8RCRxymK4kspbytpT4lKgqOsQuy31Ewh/M0spnVVXtIRpSRlUNp4V4BjFZHuCPIq4Hr
-         J2IORwgUAlb4dpUd1rOHfAR70oaKWvuVRwW+GolS61UrX2mF/pk+sDYjrcQIa0CRFM1o
-         Vrs3coDpfMxxGPBi952xifZ428nsCStG4OFGHyyLgmjUibgxRCBpEJ89fVucp8ffyfAD
-         uJwQ==
-X-Received: by 10.68.238.163 with SMTP id vl3mr44550531pbc.177.1363175022227;
-        Wed, 13 Mar 2013 04:43:42 -0700 (PDT)
+        bh=ulU86SsEmWyPbGC/i3xQOBA7EaL6MjRslp9ro9+b7N4=;
+        b=H6A6S/BtVLft6ZWZm08ZKhgr+mkNZ05nFePE4C/ifmsdqE4cW0jVKyEJRMGbHnzxME
+         CcJZPHylorMd6sawrpcOcL+Wgl2L7J3isRZDxBEm21HOjVgtc6ITQGdVPQnZ+21TQSNK
+         TKXYz54gx2vHGBNFeXRbGMbX1uAg4mcF5iRTvhXguftUjFag7uBkZyKO3lLrxpTRSTDf
+         5XkK2syWrRmTcWM8lcUcx1mVg7wx8Qq11HKrTZdcmXndlkI9/DUP4uDzM9XtCJUkf99a
+         meYM+ccgJ9NJX8bhl6uy3GpaIqM+9/y7ws+JeBY5L53yVWJvVVpR5jsavOp9GnTm7KuJ
+         9H2g==
+X-Received: by 10.68.48.168 with SMTP id m8mr39697440pbn.138.1363179565845;
+        Wed, 13 Mar 2013 05:59:25 -0700 (PDT)
 Received: from lanh ([115.74.63.193])
-        by mx.google.com with ESMTPS id 1sm29259763pbg.18.2013.03.13.04.43.38
+        by mx.google.com with ESMTPS id ab1sm29520989pbd.37.2013.03.13.05.59.20
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 13 Mar 2013 04:43:40 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 13 Mar 2013 18:43:35 +0700
+        Wed, 13 Mar 2013 05:59:24 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 13 Mar 2013 19:59:17 +0700
 X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
-In-Reply-To: <1363174973-17597-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <CACsJy8DZm153Tu_3GTOnxF8bFrYPh7_DP6Rn6rr3n6tfuVuv2Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218053>
 
-This prints more helpful info when HEAD is detached: is it detached
-because of bisect or rebase? What is the original branch name in those
-cases? Is it detached because the user checks out a remote ref or a
-tag (and which one)?
+This patch attempts to advertise -uno to the users who tolerate slow
+"git status" on large repositories (or slow machines/disks). The 2
+seconds limit is quite arbitrary but is probably long enough to start
+using -uno.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/branch.c            | 26 +++++++++++++++++++++++++-
- t/t3203-branch-output.sh    |  6 +++---
- t/t6030-bisect-porcelain.sh |  2 +-
- 3 files changed, 29 insertions(+), 5 deletions(-)
+ Documentation/config.txt |  4 ++++
+ advice.c                 |  2 ++
+ advice.h                 |  1 +
+ t/t7060-wtstatus.sh      |  2 ++
+ t/t7508-status.sh        |  4 ++++
+ t/t7512-status-help.sh   |  1 +
+ wt-status.c              | 20 +++++++++++++++++++-
+ wt-status.h              |  1 +
+ 8 files changed, 34 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 00d17d2..2ab0e4f 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -18,6 +18,7 @@
- #include "string-list.h"
- #include "column.h"
- #include "utf8.h"
-+#include "wt-status.h"
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index bbba728..e91d06f 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -178,6 +178,10 @@ advice.*::
+ 		the template shown when writing commit messages in
+ 		linkgit:git-commit[1], and in the help message shown
+ 		by linkgit:git-checkout[1] when switching branch.
++	statusUno::
++		If collecting untracked files in linkgit:git-status[1]
++		takes more than 2 seconds, hint the user that the option
++		`-uno` could be used to stop collecting untracked files.
+ 	commitBeforeMerge::
+ 		Advice shown when linkgit:git-merge[1] refuses to
+ 		merge to avoid overwriting local changes.
+diff --git a/advice.c b/advice.c
+index 780f58d..72b5c66 100644
+--- a/advice.c
++++ b/advice.c
+@@ -8,6 +8,7 @@ int advice_push_already_exists =3D 1;
+ int advice_push_fetch_first =3D 1;
+ int advice_push_needs_force =3D 1;
+ int advice_status_hints =3D 1;
++int advice_status_uno =3D 1;
+ int advice_commit_before_merge =3D 1;
+ int advice_resolve_conflict =3D 1;
+ int advice_implicit_identity =3D 1;
+@@ -25,6 +26,7 @@ static struct {
+ 	{ "pushfetchfirst", &advice_push_fetch_first },
+ 	{ "pushneedsforce", &advice_push_needs_force },
+ 	{ "statushints", &advice_status_hints },
++	{ "statusuno", &advice_status_uno },
+ 	{ "commitbeforemerge", &advice_commit_before_merge },
+ 	{ "resolveconflict", &advice_resolve_conflict },
+ 	{ "implicitidentity", &advice_implicit_identity },
+diff --git a/advice.h b/advice.h
+index fad36df..d7e03be 100644
+--- a/advice.h
++++ b/advice.h
+@@ -11,6 +11,7 @@ extern int advice_push_already_exists;
+ extern int advice_push_fetch_first;
+ extern int advice_push_needs_force;
+ extern int advice_status_hints;
++extern int advice_status_uno;
+ extern int advice_commit_before_merge;
+ extern int advice_resolve_conflict;
+ extern int advice_implicit_identity;
+diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+index f4f38a5..dd340d5 100755
+--- a/t/t7060-wtstatus.sh
++++ b/t/t7060-wtstatus.sh
+@@ -5,6 +5,7 @@ test_description=3D'basic work tree status reporting'
+ . ./test-lib.sh
 =20
- static const char * const builtin_branch_usage[] =3D {
- 	N_("git branch [options] [-r | -a] [--merged | --no-merged]"),
-@@ -550,6 +551,29 @@ static int calc_maxwidth(struct ref_list *refs)
- 	return w;
+ test_expect_success setup '
++	git config advice.statusuno false &&
+ 	test_commit A &&
+ 	test_commit B oneside added &&
+ 	git checkout A^0 &&
+@@ -46,6 +47,7 @@ test_expect_success 'M/D conflict does not segfault' =
+'
+ 	(
+ 		cd mdconflict &&
+ 		git init &&
++		git config advice.statusuno false
+ 		test_commit initial foo "" &&
+ 		test_commit modify foo foo &&
+ 		git checkout -b side HEAD^ &&
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index a79c032..9d6e4db 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -8,11 +8,13 @@ test_description=3D'git status'
+ . ./test-lib.sh
+=20
+ test_expect_success 'status -h in broken repository' '
++	git config advice.statusuno false &&
+ 	mkdir broken &&
+ 	test_when_finished "rm -fr broken" &&
+ 	(
+ 		cd broken &&
+ 		git init &&
++		git config advice.statusuno false &&
+ 		echo "[status] showuntrackedfiles =3D CORRUPT" >>.git/config &&
+ 		test_expect_code 129 git status -h >usage 2>&1
+ 	) &&
+@@ -25,6 +27,7 @@ test_expect_success 'commit -h in broken repository' =
+'
+ 	(
+ 		cd broken &&
+ 		git init &&
++		git config advice.statusuno false &&
+ 		echo "[status] showuntrackedfiles =3D CORRUPT" >>.git/config &&
+ 		test_expect_code 129 git commit -h >usage 2>&1
+ 	) &&
+@@ -780,6 +783,7 @@ test_expect_success 'status refreshes the index' '
+ test_expect_success 'setup status submodule summary' '
+ 	test_create_repo sm && (
+ 		cd sm &&
++		git config advice.statusuno false &&
+ 		>foo &&
+ 		git add foo &&
+ 		git commit -m "Add foo"
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index d2da89a..033a1b3 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -14,6 +14,7 @@ test_description=3D'git status advice'
+ set_fake_editor
+=20
+ test_expect_success 'prepare for conflicts' '
++	git config advice.statusuno false &&
+ 	test_commit init main.txt init &&
+ 	git branch conflicts &&
+ 	test_commit on_master main.txt on_master &&
+diff --git a/wt-status.c b/wt-status.c
+index ef405d0..6fde08b 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -540,7 +540,16 @@ void wt_status_collect(struct wt_status *s)
+ 		wt_status_collect_changes_initial(s);
+ 	else
+ 		wt_status_collect_changes_index(s);
+-	wt_status_collect_untracked(s);
++	if (s->show_untracked_files && advice_status_uno) {
++		struct timeval tv1, tv2;
++		gettimeofday(&tv1, NULL);
++		wt_status_collect_untracked(s);
++		gettimeofday(&tv2, NULL);
++		s->untracked_in_ms =3D
++			(uint64_t)tv2.tv_sec * 1000 + tv2.tv_usec / 1000 -
++			((uint64_t)tv1.tv_sec * 1000 + tv1.tv_usec / 1000);
++	} else
++		wt_status_collect_untracked(s);
  }
 =20
-+static char *get_head_description(void)
-+{
-+	struct strbuf desc =3D STRBUF_INIT;
-+	struct wt_status_state state;
-+	memset(&state, 0, sizeof(state));
-+	wt_status_get_state(&state, 1);
-+	if (state.rebase_in_progress ||
-+	    state.rebase_interactive_in_progress)
-+		strbuf_addf(&desc, _("(no branch, rebasing %s)"),
-+			    state.branch);
-+	else if (state.bisect_in_progress)
-+		strbuf_addf(&desc, _("(no branch, bisecting %s)"),
-+			    state.branch);
-+	else if (state.detached_from)
-+		strbuf_addf(&desc, _("(detached from %s)"),
-+			    state.detached_from);
-+	else
-+		strbuf_addstr(&desc, _("(no branch)"));
-+	free(state.branch);
-+	free(state.onto);
-+	free(state.detached_from);
-+	return strbuf_detach(&desc, NULL);
-+}
+ static void wt_status_print_unmerged(struct wt_status *s)
+@@ -1097,6 +1106,15 @@ void wt_status_print(struct wt_status *s)
+ 		wt_status_print_other(s, &s->untracked, _("Untracked files"), "add")=
+;
+ 		if (s->show_ignored_files)
+ 			wt_status_print_other(s, &s->ignored, _("Ignored files"), "add -f")=
+;
++		if (advice_status_uno && s->untracked_in_ms > 2000) {
++			status_printf_ln(s, GIT_COLOR_NORMAL,
++					 _("It took %.2f seconds to collect untracked files."),
++					 (float)s->untracked_in_ms / 1000);
++			status_printf_ln(s, GIT_COLOR_NORMAL,
++					 _("If it happens often, you may want to use option -uno"));
++			status_printf_ln(s, GIT_COLOR_NORMAL,
++					 _("to speed up by stopping displaying untracked files"));
++		}
+ 	} else if (s->commitable)
+ 		status_printf_ln(s, GIT_COLOR_NORMAL, _("Untracked files not listed%=
+s"),
+ 			advice_status_hints
+diff --git a/wt-status.h b/wt-status.h
+index 81e1dcf..74208c0 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -69,6 +69,7 @@ struct wt_status {
+ 	struct string_list change;
+ 	struct string_list untracked;
+ 	struct string_list ignored;
++	uint32_t untracked_in_ms;
+ };
 =20
- static void show_detached(struct ref_list *ref_list)
- {
-@@ -557,7 +581,7 @@ static void show_detached(struct ref_list *ref_list=
-)
-=20
- 	if (head_commit && is_descendant_of(head_commit, ref_list->with_commi=
-t)) {
- 		struct ref_item item;
--		item.name =3D xstrdup(_("(no branch)"));
-+		item.name =3D get_head_description();
- 		item.width =3D utf8_strwidth(item.name);
- 		item.kind =3D REF_LOCAL_BRANCH;
- 		item.dest =3D NULL;
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 76fe7e0..ba4f98e 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -94,13 +94,13 @@ test_expect_success 'git branch -v pattern does not=
- show branch summaries' '
- 	test_must_fail git branch -v branch*
- '
-=20
--cat >expect <<'EOF'
--* (no branch)
-+test_expect_success 'git branch shows detached HEAD properly' '
-+	cat >expect <<EOF &&
-+* (detached from $(git rev-parse --short HEAD^0))
-   branch-one
-   branch-two
-   master
- EOF
--test_expect_success 'git branch shows detached HEAD properly' '
- 	git checkout HEAD^0 &&
- 	git branch >actual &&
- 	test_i18ncmp expect actual
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 3e0e15f..9b6f0d0 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -164,7 +164,7 @@ test_expect_success 'bisect start: existing ".git/B=
-ISECT_START" not modified if
- 	cp .git/BISECT_START saved &&
- 	test_must_fail git bisect start $HASH4 foo -- &&
- 	git branch > branch.output &&
--	test_i18ngrep "* (no branch)" branch.output > /dev/null &&
-+	test_i18ngrep "* (no branch, bisecting other)" branch.output > /dev/n=
-ull &&
- 	test_cmp saved .git/BISECT_START
- '
- test_expect_success 'bisect start: no ".git/BISECT_START" if mistaken =
-rev' '
+ struct wt_status_state {
 --=20
 1.8.1.2.536.gf441e6d
