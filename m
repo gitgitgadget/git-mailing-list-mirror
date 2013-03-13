@@ -1,101 +1,72 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: difftool -d symlinks, under what conditions
-Date: Wed, 13 Mar 2013 17:08:21 +0000
-Message-ID: <20130313170821.GK2317@serenity.lan>
-References: <20130312194306.GE2317@serenity.lan>
- <7vfw0073pm.fsf@alter.siamese.dyndns.org>
- <20130312210630.GF2317@serenity.lan>
- <CAJELnLGBr1wOX4-3rCNjPpPLezc_6FgyeuPqty268JR0==qtvQ@mail.gmail.com>
- <7vehfk5kn2.fsf@alter.siamese.dyndns.org>
- <3222724986386016520@unknownmsgid>
- <20130313001758.GH2317@serenity.lan>
- <CAJDDKr7ZU16XWtCfYX9-RMzcpKa_FF80Od+mUMG4n8dUKeLsvw@mail.gmail.com>
- <7vtxof48sg.fsf@alter.siamese.dyndns.org>
- <7v1ubj45ac.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Tag peeling peculiarities
+Date: Wed, 13 Mar 2013 10:29:54 -0700
+Message-ID: <7vwqtb2ood.fsf@alter.siamese.dyndns.org>
+References: <51409439.5090001@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>,
-	Matt McClure <matthewlmcclure@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Tim Henigan <tim.henigan@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 13 18:09:05 2013
+Cc: git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 13 18:30:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFpAh-00060D-11
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 18:08:59 +0100
+	id 1UFpVR-0002rC-KD
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 18:30:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932881Ab3CMRIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 13:08:32 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:45061 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756375Ab3CMRIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 13:08:32 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 67D6C6064E2;
-	Wed, 13 Mar 2013 17:08:31 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id s3sBt36X+E9u; Wed, 13 Mar 2013 17:08:31 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id D0DFC6064E4;
-	Wed, 13 Mar 2013 17:08:23 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7v1ubj45ac.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933169Ab3CMR36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Mar 2013 13:29:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55742 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932984Ab3CMR35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 13:29:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF401A6A9;
+	Wed, 13 Mar 2013 13:29:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ois+CliZ/70xK049PlzCVCdpfgc=; b=wD+yh/
+	FG2r155rWS53p2ZowUSZ1WhNuIcyzykbUdq6Qqh4Bff49/yor5O66YoDt3XYFdso
+	kn0qt3vAL5miSWF1B7UTc56ipgcFqG4ym3e/M4YDB5yHh9lwem8iwsl6EL+Cgwh+
+	upsgljDlt8B6953zuWSjkz1xlr8rbBR2yc+y4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YjF1WcpHWfcTxXmkxYPEehnE+CJaMQGV
+	iBhWUIQnzUmox1nqyHypN1TCy3NGznJnb4v5beb7nUaO3FjVMaUmQF81oQqSGmpE
+	Krxblkr1MKZcn8VMpUWNj5YskjsFJWZdP7F7yH0av+Cbc/+cA0+lZQpA2wHEH/S4
+	ch/YlciBLds=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F0C9A6A7;
+	Wed, 13 Mar 2013 13:29:56 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 116D5A6A4; Wed, 13 Mar 2013
+ 13:29:55 -0400 (EDT)
+In-Reply-To: <51409439.5090001@alum.mit.edu> (Michael Haggerty's message of
+ "Wed, 13 Mar 2013 15:59:05 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9F59DA4A-8C03-11E2-87A8-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218072>
 
-On Wed, Mar 13, 2013 at 09:45:47AM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > David Aguilar <davvid@gmail.com> writes:
-> >
-> >>> The implementation of Junio's suggestion is relatively straightforward
-> >>> (this is untested, although t7800 passes, and can probably be improved
-> >>> by someone better versed in Perl).  Does this work for your original
-> >>> scenario?
-> >>
-> >> This is a nice straightforward approach.
-> >>
-> >> As Junio mentioned, a good next step would be this patch in
-> >> combination with making the truly temporary files created by
-> >> dir-diff readonly.
-> >
-> > Even though I agree that the idea Matt McClure mentioned to run a
-> > three-way merge to take the modification back when the path checked
-> > out to the temporary tree as a temporary file (because it does not
-> > match the working tree version) gets edited by the user might be a
-> > better longer-term direction to go, marking the temporaries that the
-> > users should not modify clearly as such needs to be done in the
-> > shorter term.  This thread wouldn't have had to happen if we had
-> > such a safety measure in the first place.
-> 
-> One thing I forgot to add.  I suspect the patch in the thread will
-> not work if the path needs smudge filter and end-of-line conversion,
-> as it seems to just hash-object what is in the working tree (which
-> should be _after_ these transformations) and compare with the object
-> name.  The comparison should go the other way around.  Try to check
-> out the object with these transformations applied, and compare the
-> resulting file with what is in the working tree.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-git-hash-object(1) implies that it will apply the clean filter and EOL
-conversion when it's given a path to a file in the working tree (as it
-is here).  Is that not the case?
+> It is not
+> clear to me whether the prohibition of tags outside of refs/tags should
+> be made more airtight or whether the peeling of tags outside of
+> refs/tags should be fixed.
 
+Retroactively forbidding presense/creation of tags outside the
+designated refs/tags hierarchy will not fly.  I think we should peel
+them when we are reading from "# pack-refs with: peeled" version.
 
-John
+Theoretically, we could introduce "# pack-refs with: fully-peeled"
+that records peeled versions for _all_ annotated tags even in
+unusual places, but that would be introducing problems to existing
+versions of the software to cater to use cases that is not blessed
+officially, so I doubt it has much value.
