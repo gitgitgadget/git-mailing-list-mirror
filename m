@@ -1,78 +1,89 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: git-am and CRLF
-Date: Wed, 13 Mar 2013 10:42:42 -0700
-Message-ID: <CA+sFfMfJp1-REXVjipUhsVrUKDSmhrBkV0yd_=sMwwmiw2aypQ@mail.gmail.com>
-References: <CABPQNSb9euNgCY9g617opThHC8OUpZQvJ+peor8Yk39LZ+y+TQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] t2200: check that "add -u" limits itself to
+ subdirectory
+Date: Wed, 13 Mar 2013 10:44:25 -0700
+Message-ID: <7vli9r2o06.fsf@alter.siamese.dyndns.org>
+References: <20130313040845.GA5057@sigill.intra.peff.net>
+ <20130313041022.GA5378@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Wed Mar 13 18:43:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 13 18:44:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFphm-0007TF-Je
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 18:43:10 +0100
+	id 1UFpjS-0000oA-Tp
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 18:44:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933158Ab3CMRmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 13:42:44 -0400
-Received: from mail-we0-f169.google.com ([74.125.82.169]:37163 "EHLO
-	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933133Ab3CMRmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 13:42:44 -0400
-Received: by mail-we0-f169.google.com with SMTP id t11so1299776wey.0
-        for <git@vger.kernel.org>; Wed, 13 Mar 2013 10:42:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=bU7gcKRphQcNdzzbaFIHKKJ/Sz8T3WLhVc6AF9Fzqjs=;
-        b=dKs/6ixe71dv4rxBA4N4mGXTmBOQFQi+FgfNcETy/mqKJBGUVhgMN+7D0e2Cu2CTLX
-         y9UDwrxkxkCPCgb0r1Vu6Re5MywiVFMPTSsIT4CmtVHXBuwIjyVVDcOMHuggP7PXxliA
-         U4K42SqQ9Gj1e9ZX7rLlzB4Wpu+Fj8JmMC8SdW03HioXfV7UShQv9uqYKK9L6gyI36ox
-         4VpWRS2RrykYTlTp4/hh0Iks7zjHYdZXvOrzXyDlbJ0fRktW3uiSqnXljnXHFZrQW6XN
-         ckSb/cOhm1aa8YK70n7ZDslBR/GbB5P+jIH0SVyvGeO9pSG8kiiXOLDyTsQJigPVZ6O6
-         KH3w==
-X-Received: by 10.194.76.37 with SMTP id h5mr36278919wjw.21.1363196562908;
- Wed, 13 Mar 2013 10:42:42 -0700 (PDT)
-Received: by 10.194.63.46 with HTTP; Wed, 13 Mar 2013 10:42:42 -0700 (PDT)
-In-Reply-To: <CABPQNSb9euNgCY9g617opThHC8OUpZQvJ+peor8Yk39LZ+y+TQ@mail.gmail.com>
+	id S933151Ab3CMRo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Mar 2013 13:44:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34372 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933096Ab3CMRo1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 13:44:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33AA7B072;
+	Wed, 13 Mar 2013 13:44:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L6nboEwaBCKiwKe01fHX9nOSJxY=; b=qWtvQg
+	JPHGHZr8M6pO8E4lrYwZOh/OrY2VrjNoQc8447V7se9EeF9ZWoL+XJZxR+afWASW
+	FoAkqLPtkhdclKxceVtOoi5w3gssinTb7cJueKBwDpXJE2DyObHUS7LX2zwqjU9A
+	h1obvNUrss76Qipc/Io9uRXXbAstjQzFsdfPQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=umEtQ1o9b1ZFRFyBEpUOZmtURMhTLNw0
+	+A2LatGAmmZwE+/eQq4014iAdQDV9jgUR/tn/A3fKtotcNLKlX/JkttVMOywJ8HQ
+	WpgkSXMxjx9oosA8ZMt3iw31eYJvAWQpiAchdz4XQutSrsrPc47ecCUOcbO6GMmV
+	amkDp4Ebjxc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 274A8B071;
+	Wed, 13 Mar 2013 13:44:27 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8881DB070; Wed, 13 Mar 2013
+ 13:44:26 -0400 (EDT)
+In-Reply-To: <20130313041022.GA5378@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 13 Mar 2013 00:10:22 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A633C284-8C05-11E2-ADC0-26A52E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218075>
 
-On Wed, Mar 13, 2013 at 9:54 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> I recently tried to apply a patch-series to a repo that is
-> unfortunately full of CRLF files, and was a bit surprised that it
-> didn't work at all.
->
-> So I made a small repro-case, and it seems CRLF new-lines is indeed
-> the problem. Any clue how to fix it? The way I see it, we should
-> simply be able top treat the CR as any other character, and succeed.
-> But that doesn't seem to happen...
->
-> git init test &&
-> (
->         cd test/ &&
->         git config core.autocrlf false &&
->         printf "%s\r\n%s\r\n" "foo" "bar" > test.txt &&
->         git add test.txt &&
->         git commit -m. &&
->         printf "%s\r\n%s\r\n%s\r\n" "foo" "baz" "bar" > test.txt &&
->         git commit -am. &&
->         git format-patch -1 &&
->         git reset --hard HEAD^ &&
->         git am 0001-.patch
-> )
+Jeff King <peff@peff.net> writes:
 
-Does 'git am --keep-cr' help?
+> We didn't seem to be testing this transition at all. I think it's sane
+> to do so now, and Junio's "now it is 2.0, let's switch" patch should
+> update the test.
 
-Unfortunately the original information about line ending is lost once
-a patch is sent via email since RFC2822/822 dictates that the line
-ending in an email must be crlf.  So by default, mailsplit strips it.
+Yes, but I am not sure if this is testing the right thing.
 
--Brandon
+> +# Note that this is scheduled to change in Git 2.0, when
+> +# "git add -u" will become full-tree by default.
+> +test_expect_success 'update did not touch files at root' '
+> +	cat >expect <<-\EOF &&
+> +	check
+> +	top
+> +	EOF
+> +	git diff-files --name-only >actual &&
+> +	test_cmp expect actual
+> +'
+
+The last "git add -u" we have beforet his block is this test piece:
+
+ test_expect_success 'update from a subdirectory' '
+        (
+                cd dir1 &&
+                echo more >sub2 &&
+                git add -u sub2
+        )
+ '
+
+That is not "git add -u" without pathspec, which is the only thing
+we are transitioning at Git 2.0 boundary.
