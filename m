@@ -1,102 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] add: respect add.updateroot config option
-Date: Wed, 13 Mar 2013 05:27:54 -0400
-Message-ID: <20130313092754.GA12658@sigill.intra.peff.net>
-References: <20130313040845.GA5057@sigill.intra.peff.net>
- <20130313041037.GB5378@sigill.intra.peff.net>
- <vpqr4jjd5wp.fsf@grenoble-inp.fr>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v3 0/5] nd/branch-show-rebase-bisect-state updates
+Date: Wed, 13 Mar 2013 18:42:48 +0700
+Message-ID: <1363174973-17597-1-git-send-email-pclouds@gmail.com>
+References: <1362572482-20570-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Mar 13 10:28:32 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 13 12:43:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFhz5-0000AE-Kj
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 10:28:31 +0100
+	id 1UFk5o-0006Au-8t
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 12:43:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754877Ab3CMJ2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 05:28:04 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50733 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753653Ab3CMJ2C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 05:28:02 -0400
-Received: (qmail 3335 invoked by uid 107); 13 Mar 2013 09:29:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 13 Mar 2013 05:29:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Mar 2013 05:27:54 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqr4jjd5wp.fsf@grenoble-inp.fr>
+	id S1755407Ab3CMLnJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Mar 2013 07:43:09 -0400
+Received: from mail-da0-f43.google.com ([209.85.210.43]:51346 "EHLO
+	mail-da0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755218Ab3CMLnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 07:43:08 -0400
+Received: by mail-da0-f43.google.com with SMTP id u36so384658dak.16
+        for <git@vger.kernel.org>; Wed, 13 Mar 2013 04:43:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=V7ssJpBofPPed6E4Ucd541eFxpCsNGKdNDBsr5a3ktU=;
+        b=By+MuRq1LruUnSRQk+Df8FP1FjjUsu+tSXRTHbmz1dCV4OwioWruIx+fTS7Vb+xJjr
+         hK8DC/O4ekrfH+P/Q9zmhnnxDmfuJUvdvPfOl/V9ifFrPUnuDLnxQYUJERzy90XbNiaV
+         9aCexf3iDMTjDlorhpGj39vamwWg4s13WeCok1HAJWmad1U+epaGxLMGJjK237S0xJWC
+         63BIozqsjJj1adrXlM2btYQ2hYlOvV3iiFZ9WJbTIyZCf6EBgojzQqkyl+47qjctmcLA
+         rLpC0ijYOM8982cDqPiqA3vZC0Y4ojKStE3rQrolpXsT49f/LMR89U5G7Kq/j9mkDUed
+         BSnQ==
+X-Received: by 10.68.184.66 with SMTP id es2mr45515357pbc.217.1363174987515;
+        Wed, 13 Mar 2013 04:43:07 -0700 (PDT)
+Received: from lanh ([115.74.63.193])
+        by mx.google.com with ESMTPS id kt5sm29248290pbc.30.2013.03.13.04.43.03
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 13 Mar 2013 04:43:06 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 13 Mar 2013 18:43:00 +0700
+X-Mailer: git-send-email 1.8.1.2.536.gf441e6d
+In-Reply-To: <1362572482-20570-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218047>
 
-On Wed, Mar 13, 2013 at 10:07:34AM +0100, Matthieu Moy wrote:
+This round fixes the design issue of read_and_strip_branch(), makes
+use of jc/reflog-reverse-walk and performs cheaper sha-1 check on
+detached commits.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > For users who have read and accepted the warning, there is no way to
-> > jump directly to the future behavior and silence the warning.
-> 
-> I think the idea makes sense. The transition period is necessary for
-> people who use different versions of Git (which includes anybody
-> writting and distributing scripts), but for poor mortals who only use a
-> single version of Git, it's nice to be able to jump to the future
-> behavior once for all as soon as possible.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (5):
+  wt-status: move strbuf into read_and_strip_branch()
+  wt-status: split wt_status_state parsing function out
+  wt-status: move wt_status_get_state() out to wt_status_print()
+  status: show more info than "currently not on any branch"
+  branch: show more information when HEAD is detached
 
-I think the biggest risk is from people who think they are safe to jump,
-and then find out that some script they depend on is not ready. Even if
-they do not even realize they are relying on it. Part of the point of
-the transition period is to get script authors to update their scripts,
-and to let the new versions trickle down to the users.
+ builtin/branch.c            |  26 +++++-
+ t/t3203-branch-output.sh    |   6 +-
+ t/t6030-bisect-porcelain.sh |   2 +-
+ t/t7406-submodule-update.sh |   6 +-
+ t/t7512-status-help.sh      |  52 ++++++-----
+ wt-status.c                 | 204 +++++++++++++++++++++++++++++++-----=
+--------
+ wt-status.h                 |   7 +-
+ 7 files changed, 214 insertions(+), 89 deletions(-)
 
-> Your patch doesn't advertise the option in the warning message, which I
-> think is good. You may mention it the commit message that this is a
-> deliberate choice.
-
-Yes, it was deliberate. I can add a note.
-
-> > +add.updateroot::
-> 
-> Detail: option names are normally camelCased => updateRoot.
-
-Good point, thanks.
-
-> I think the option name needs a bit more thinking. Without reading the
-> doc,
-> 
-> [add]
-> 	updateRoot = false
-> 
-> would be a very tempting thing to try. Perhaps explicitly warning when
-> add.updateroot is set to false would avoid possible confusion.
-
-Yeah, that occurred to me, too, hence the note in the doc. Since it
-isn't advertised elsewhere, I had hoped that anybody who discovered it
-would see the note. I suppose we can warn when we see add.updateRoot set
-to anything but true. That feels a bit hacky, as it's possible the user
-could be overriding an earlier setting (although that is getting kind of
-crazy).
-
-> I liked David's suggestion of using future.* to mean "start using
-> behavior from the future right now".
-
-I do like that idea, as it makes the meaning of the variable more clear.
-
-I dunno. I am not all that excited about this patch, due to all of the
-caveats that we need to communicate to the user. The current warning has
-annoyed me a few times, but perhaps it is still too soon, and my fingers
-and brain just need retraining. I think a config option could help some
-people, but maybe it will end up hurting more.  I'm inclined at this
-point to table the patch for now and see how I feel in a few weeks.
-
-I do think patch 1/2 makes sense regardless.
-
--Peff
+--=20
+1.8.1.2.536.gf441e6d
