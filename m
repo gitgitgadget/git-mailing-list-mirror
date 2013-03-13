@@ -1,83 +1,103 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 05/13] match_{base,path}name: replace strncmp_icase
- with memequal_icase
-Date: Wed, 13 Mar 2013 08:14:14 +0700
-Message-ID: <CACsJy8Du7XMPWa032kSp0-z6j2ggOYHAQ0xadt=-XCATM5rPRw@mail.gmail.com>
-References: <1362896070-17456-1-git-send-email-pclouds@gmail.com>
- <1363093500-16796-1-git-send-email-pclouds@gmail.com> <1363093500-16796-6-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: [PATCH v3 1/3] mergetools/p4merge: swap LOCAL and REMOTE
+Date: Wed, 13 Mar 2013 03:12:20 +0200
+Message-ID: <1363137142-18606-1-git-send-email-kevin@bracey.fi>
+References: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
+Cc: David Aguilar <davvid@gmail.com>,
+	Ciaran Jessup <ciaranj@gmail.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Kevin Bracey <kevin@bracey.fi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 13 02:15:13 2013
+X-From: git-owner@vger.kernel.org Wed Mar 13 02:31:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFaHg-0004Vj-2e
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 02:15:12 +0100
+	id 1UFaXS-0000GH-T2
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Mar 2013 02:31:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755325Ab3CMBOq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Mar 2013 21:14:46 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:38478 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754198Ab3CMBOp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Mar 2013 21:14:45 -0400
-Received: by mail-oa0-f50.google.com with SMTP id l20so526869oag.23
-        for <git@vger.kernel.org>; Tue, 12 Mar 2013 18:14:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=L4SEoFowi8Akcc2Vb0hoxVc6qQEsbGGaMTSVp8dhnhA=;
-        b=hDNcH5nBHdE60pwPf32/UDEr7I7Pm7sh7ABE4sZNf0B1viIzYl8AAztTUME/J0NkMK
-         0WR2dEZcItM2sYbwWSMsq4dbRj/qQSIh9Gro/282LYfq8xNpj38FzLjO2SJkGVZXHECl
-         GmDhmT/5DE1o/tgb9DH0l9/sFVkcfsKW4G605m39a4Jm5fBFl+Z3YlnmctRcPg7CiHsV
-         LuFOI4m8yK/ao/pTPCOzGLbZJLQilKgeeBi6eNYuAtuomRAElcFczj059eDaAArwjAZB
-         rxyrF8aLMDXcGTvd0usQrXVOVLExKTPwvR70u9kZARJYNg1+pD8hc0fmPcz+xIjAer8n
-         zoTQ==
-X-Received: by 10.60.30.231 with SMTP id v7mr14169857oeh.118.1363137285033;
- Tue, 12 Mar 2013 18:14:45 -0700 (PDT)
-Received: by 10.76.27.200 with HTTP; Tue, 12 Mar 2013 18:14:14 -0700 (PDT)
-In-Reply-To: <1363093500-16796-6-git-send-email-pclouds@gmail.com>
+	id S932509Ab3CMBbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Mar 2013 21:31:04 -0400
+Received: from 3.mo4.mail-out.ovh.net ([46.105.57.129]:46650 "EHLO
+	mo4.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755365Ab3CMBbC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Mar 2013 21:31:02 -0400
+Received: from mail433.ha.ovh.net (b7.ovh.net [213.186.33.57])
+	by mo4.mail-out.ovh.net (Postfix) with SMTP id 0A2D5104DED1
+	for <git@vger.kernel.org>; Wed, 13 Mar 2013 02:23:46 +0100 (CET)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 13 Mar 2013 03:12:41 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 13 Mar 2013 03:12:40 +0200
+X-Ovh-Mailout: 178.32.228.4 (mo4.mail-out.ovh.net)
+X-Mailer: git-send-email 1.8.2.rc3.7.g1100d09.dirty
+In-Reply-To: <1362601978-16911-1-git-send-email-kevin@bracey.fi>
+X-Ovh-Tracer-Id: 15170375345756803294
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -48
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrgedtucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
+X-Spam-Check: DONE|U 0.500001/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -48
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrgedtucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenudcurhgrnhguohhmuchsthhrihhnghdlshdmucdlhedvmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218023>
 
-On Tue, Mar 12, 2013 at 8:04 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> +static inline int memequal_icase(const char *a, const char *b, int n=
-)
-> +{
-> +       if (!memcmp(a, b, n))
-> +               return 1;
-> +
-> +       if (!ignore_case)
-> +               return 0;
-> +
-> +       /*
-> +        * This assumes that ASCII is used in most repositories. We
-> +        * try the ascii-only version first (i.e. Git's
-> +        * toupper). Failing that, fall back to normal strncasecmp.
-> +        */
-> +       while (n && toupper(*a) =3D=3D toupper(*b)) {
-> +               a++;
-> +               b++;
-> +               n--;
-> +       }
-> +       if (!n)
-> +               return 1;
-> +       return !strncasecmp(a, b, n);
-> +}
+Reverse LOCAL and REMOTE when invoking P4Merge as a mergetool, so that
+the incoming branch is now in the left-hand, blue triangle pane, and the
+current branch is in the right-hand, green circle pane.
 
-Note, the ignore_case =3D=3D 1 codepath was not tested and measured. I
-suspect that strncasecmp may be more complex to support locales and
-the "LANG=3DC" version should suffice in most case. But it's just
-guesses at this moment.
---=20
-Duy
+This change makes use of P4Merge consistent with its built-in help, its
+reference documentation, and Perforce itself. But most importantly, it
+makes merge results clearer. P4Merge is not totally symmetrical between
+left and right; despite changing a few text labels from "theirs/ours" to
+"left/right" when invoked manually, it still retains its original
+Perforce "theirs/ours" viewpoint.
+
+Most obviously, in the result pane P4Merge shows changes that are common
+to both branches in green. This is on the basis of the current branch
+being green, as it is when invoked from Perforce; it means that lines in
+the result are blue if and only if they are being changed by the merge,
+making the resulting diff clearer.
+
+Note that P4Merge now shows "ours" on the right for both diff and merge,
+unlike other diff/mergetools, which always have REMOTE on the right.
+But observe that REMOTE is the working tree (ie "ours") for a diff,
+while it's another branch (ie "theirs") for a merge.
+
+Ours and theirs are reversed for a rebase - see "git help rebase".
+However, this does produce the desired "show the results of this commit"
+effect in P4Merge - changes that remain in the rebased commit (in your
+branch, but not in the new base) appear in blue; changes that do not
+appear in the rebased commit (from the new base, or common to both) are
+in green. If Perforce had rebase, they'd probably not swap ours/theirs,
+but make P4Merge show common changes in blue, picking out our changes in
+green. We can't do that, so this is next best.
+
+Signed-off-by: Kevin Bracey <kevin@bracey.fi>
+---
+ mergetools/p4merge | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mergetools/p4merge b/mergetools/p4merge
+index 8a36916..46b3a5a 100644
+--- a/mergetools/p4merge
++++ b/mergetools/p4merge
+@@ -22,7 +22,7 @@ diff_cmd () {
+ merge_cmd () {
+ 	touch "$BACKUP"
+ 	$base_present || >"$BASE"
+-	"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
++	"$merge_tool_path" "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
+ 	check_unchanged
+ }
+ 
+-- 
+1.8.2.rc3.7.g1100d09.dirty
