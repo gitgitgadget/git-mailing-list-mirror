@@ -1,109 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] difftool --dir-diff: symlink all files matching
- the working tree
-Date: Thu, 14 Mar 2013 15:31:53 -0700
-Message-ID: <7vobelwr3a.fsf@alter.siamese.dyndns.org>
-References: <cover.1363206651.git.john@keeping.me.uk>
- <cover.1363291949.git.john@keeping.me.uk>
- <ae17a152cadc650920c6446a4493384cc2e77309.1363291949.git.john@keeping.me.uk>
- <7v620ty8lc.fsf@alter.siamese.dyndns.org>
- <20130314222415.GC4256@serenity.lan>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: [RFD] Combine diff improvements
+Date: Thu, 14 Mar 2013 23:32:35 +0100
+Message-ID: <CALWbr2zY3uo==QTd69t1eXNS4-CX1w3T-AaMjOLVmxj-SMJyvg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Matt McClure <matthewlmcclure@gmail.com>,
-	Tim Henigan <tim.henigan@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Mar 14 23:32:31 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 14 23:33:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGGhE-0006gp-9T
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 23:32:24 +0100
+	id 1UGGhq-0007NS-Is
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 23:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753488Ab3CNWb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Mar 2013 18:31:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51020 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753373Ab3CNWb4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Mar 2013 18:31:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 135ACC915;
-	Thu, 14 Mar 2013 18:31:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IfogLyx3OhECvZHj8yLpVaa0ob8=; b=cE/xrX
-	VDTuVej+Cy0DQZhSJczHPiflCys1yzf3t0tMhl7HuTTD0Y7miAzLVMn9d+Vt+DZn
-	83NbEM0BhsAmuIKHhUhLQiaBl8dPIqV6704gLaGVjAf5JSi7Ms+gSLhmLMxql14h
-	3N+MvEDq6SYCYUYm+mAGCAY6OUdo/7EXjpjMA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=clPSuk8xMznrMVIBXDnVBpCRDFOBPK3K
-	UVCeiJCHf+A6YzPySLo6wfE+pQ/JQUUTWNb0rsnFn84EVLy+HQ7lTTcJ3y3DTbhO
-	Lev6w6OIqzNeyfZB1cXszSJbUF82kXiZri+h9Ybgwr7p8rQhpQyC9DzZB3kON0CI
-	+Njjblcf7jg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07DC0C914;
-	Thu, 14 Mar 2013 18:31:56 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 761A1C912; Thu, 14 Mar 2013
- 18:31:55 -0400 (EDT)
-In-Reply-To: <20130314222415.GC4256@serenity.lan> (John Keeping's message of
- "Thu, 14 Mar 2013 22:24:15 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F9C93C2A-8CF6-11E2-8FC6-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753498Ab3CNWcg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Mar 2013 18:32:36 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:63610 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753373Ab3CNWcg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Mar 2013 18:32:36 -0400
+Received: by mail-qc0-f174.google.com with SMTP id z24so1287295qcq.33
+        for <git@vger.kernel.org>; Thu, 14 Mar 2013 15:32:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=C7N7EkYa8KmsKufud6hjhKABTQEsJOK1oDKWDeXB47Y=;
+        b=Avg0nrzJgSgdECN492JgKHR3cguhaXWIkKGdk/dcX1JO6ySlzTp9Loj7dcehDSqo3S
+         5bWECuLIDhwlQBAsLehOToz2NmjJVf6DSoNpw3dWOLi+TLkVnC4T5KVVjZfwlRqHMXJF
+         b4Rai5AyFDO2rviw5M2SuVVme9mbzWDk7kIdh7bOPV94XpE21QbdgEMJs5TXJh6hFVNd
+         M3GKaweEAO1faoWWwE2KdD3HoegsC7bfqw4+WGlXbSK8YBAETRTSGtJtZ9KhHYfMrDYP
+         yvViPqkhcsk0F3qmr0QBvjXG+MU/WGQ2o4K/NSi/chCKjRRuKI5J8yrNmZdOYiFVWzVr
+         Or2A==
+X-Received: by 10.229.174.196 with SMTP id u4mr777366qcz.84.1363300355421;
+ Thu, 14 Mar 2013 15:32:35 -0700 (PDT)
+Received: by 10.49.70.163 with HTTP; Thu, 14 Mar 2013 15:32:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218177>
 
-John Keeping <john@keeping.me.uk> writes:
+Hi,
+I've been working on combine diff recently and have seen that the curre=
+nt
+implementation does not produce optimal results for coalescing lost lin=
+es.
 
->> > +for f in file file2 sub/sub
->> > +do
->> > +	echo "$f"
->> > +	readlink "$2/$f"
->> > +done >actual
->> > +EOF
->> 
->> When you later want to enhance the test to check a combination of
->> difftool arguments where some paths are expected to become links and
->> others are expected to become real files, wouldn't this helper
->> become a bit awkward to use?  The element that expects a real file
->> could be an empty line to what corresponds to the output from
->> readlink, but still...
->> ...
->
-> It looks like t3903 uses "ls -l" for this sort of test, perhaps
-> something like this covers these cases better:
-> ...
->     grep "-> $workdir/file" file.actual
+I would like to discuss some improvements.
 
-Writing it without -e would confuse some implementations of grep
-into thinking "-" introduces an option, realizing it does not
-support the "->" option, and then barfing ;-)
+I think we can define an optimal solution as the shortest diff
+output. That is that we coalesced as much line as we could.
+It means that if each parent has the same file removed, the output will
+be n lines long (all lines coalesce to each others).
 
-What I had in mind was more along the lines of...
+The current implementation doesn't look for optimal solution but for th=
+e
+easiest/greedy solution. It also stops matching with a parent if it
+can't find a match. As an example, it means that losing [1, 2, 3, 4] fr=
+om
+parent A, and [3, 1, 2, 4] from parent B would give:
+- 1
+- 2
+--3
+- 4
+ -1
+ -2
+ -4
 
-	for f
-        do
-        	echo "$f"
-                readlink "$2/$f" || echo "# not a link $f"
-	done
+While if we invert the two parents order we will have:
+- 3
+--1
+--2
+- 4
+ -3
+ -4
 
-so that your "expect" list can become
+While clearly, in both cases, the optimal solution would be close to:
+- 3
+--1
+--2
+ -3
+--4
 
-	file
-        $(pwd)/realdir/file
-        modifiedone.txt
-        # not a link modifiedone.txt
+Let's say we have only one empty file (deleted), with p parents. In eac=
+h
+parent, the file was n lines long, but the lines don't have to be the
+same.
 
-In any case, this "say blank if you expect a non symlink" is not an
-urgent issue that needs to be fixed or anything like that, so let's
-queue the v2 for now and see what happens.
+It clearly looks like an extension/variation of the Longest Common
+Subsequence (LCS) problem, but with p sequences (and the common
+subsequences doesn't have to be common to all sequences).
 
-Thanks.
+LCS dynamic programming is O(n=C2=B2) in time and space complexity for =
+two
+sequences.
+
+We could extend it this way:
+After processing two of the p parents, let's find LCS and build a new
+optimal list of removals. Then find LCS again between this new list and
+the third parent removals. And repeat until we made each parents.
+
+Best-case analysis:
+All p parents have the same n lines.
+We will find LCS and provide a n lines (the same lines) new list in
+O(n=C2=B2), and then run it again in O(n=C2=B2) with the next parent, e=
+tc.
+It will end-up being O(pn=C2=B2).
+
+Worst-case analysis:
+All p parents have no lines in common.
+We will find LCS and provide a 2n new list in O(n=C2=B2).
+Then we run it again in O(2n x n), and again O(3n x n), etc, until
+O(pn x n).
+When we sum these all, we end-up with O(p=C2=B2 x n=C2=B2)
+
+Does it make any sense ? And is it worth implementing ?
+
+Cheers,
+Antoine
