@@ -1,177 +1,106 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC] http_init: only initialize SSL for https
-Date: Thu, 14 Mar 2013 16:36:26 +0100
-Message-ID: <CABPQNSZNdGea9Nn91emWhfRGAZjZXm755UKArNr3EUy9CrSKHg@mail.gmail.com>
-References: <1363269079-6124-1-git-send-email-kusmabite@gmail.com> <alpine.DEB.1.00.1303141621340.3794@s15462909.onlinehome-server.info>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-tag: Allow --points-at syntax to create a tag
+ pointing to specified commit
+Date: Thu, 14 Mar 2013 08:48:25 -0700
+Message-ID: <7v38vyyoc6.fsf@alter.siamese.dyndns.org>
+References: <4150f65f3e425d6120ed80c6bec36c1fe209a876.1363264398.git.minovotn@redhat.com>
+ <20130314133629.GA4256@serenity.lan> <5141E056.3090808@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBDR53PPJ7YHRBIW5Q6FAKGQEF3UTTLI@googlegroups.com Thu Mar 14 16:37:32 2013
-Return-path: <msysgit+bncBDR53PPJ7YHRBIW5Q6FAKGQEF3UTTLI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gh0-f184.google.com ([209.85.160.184])
+Content-Type: text/plain; charset=us-ascii
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+To: Michal Novotny <minovotn@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Mar 14 16:49:06 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBIW5Q6FAKGQEF3UTTLI@googlegroups.com>)
-	id 1UGADj-0004Ul-Jc
-	for gcvm-msysgit@m.gmane.org; Thu, 14 Mar 2013 16:37:31 +0100
-Received: by mail-gh0-f184.google.com with SMTP id f11sf924533ghb.21
-        for <gcvm-msysgit@m.gmane.org>; Thu, 14 Mar 2013 08:37:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:received-spf:x-received
-         :mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:x-google-group-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type;
-        bh=1RF+Yqb4rX1IpExcIW7pH8j64vGV+svokYNlgxxxJLw=;
-        b=s0klXd4scgREx/AIhtYQTS4MjS1pHs08zEZogYT0mrmWdqu3CiyaTa5Zc/m1Vl7QHJ
-         NwtAa6R15xEdWI1QHadBQwT/3ND22678rK9O7Q4JgSm35PdKNKsyjxYPXzCTGDgQR1pK
-         Qim2OXJM73vrK9Dy1qd0/YKxDh1P5FPYxrbAn6gqmk+ICPHjdh64Ev7n+rdAMohvjQzH
-         xrEz/i8eOBvy1vfQr0Ar8doqUyPtC/xSgSVMis9nqnd408BNbFcFeEk0xVaq6Upc74p0
-         QUqmkjEi+jEpbk+6B0jWWm5cZ96oDlPLJTUTvHrVWU6 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:x-beenthere:x-received:received-spf:x-received
-         :mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:x-google-group-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type;
-        bh=1RF+Yqb4rX1IpExcIW7pH8j64vGV+svokYNlgxxxJLw=;
-        b=DSdl1WF/y6MLHpuH8P7hQ9KZTVcmnFsrJmUxj60PBIzzm/wdllboJtaXd52kbYgjjl
-         EGIQdhP4mChGhEBOCH21ttoLO160+iIG3nq9GTqNxLA4KRLdFQ1Uze6vdhFMbTXis7fa
-         8F8XoRjrKGDF9sUUleNUP+7jl5PUxVp7mMZzEnnoV1HtuVmQQ0eSXlfm/qZTnsNPnL4i
-         O/OMc/XHtd7VldvG6xlrpRb7tQmfB5oET5+tEZwpWrIBAXk/xKAfxpAvieZXL8mp3M/U
-         1UlNkJh5ZjaxwOuTAhSx07R6vBha6o4YKkt1gVbxJrrV9pZFRa 
-X-Received: by 10.50.187.133 with SMTP id fs5mr432771igc.12.1363275428268;
-        Thu, 14 Mar 2013 08:37:08 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.202.72 with SMTP id kg8ls3572784igc.24.canary; Thu, 14 Mar
- 2013 08:37:06 -0700 (PDT)
-X-Received: by 10.50.168.5 with SMTP id zs5mr2677723igb.2.1363275426618;
-        Thu, 14 Mar 2013 08:37:06 -0700 (PDT)
-Received: from mail-ia0-x229.google.com (mail-ia0-x229.google.com [2607:f8b0:4001:c02::229])
-        by gmr-mx.google.com with ESMTPS id iw8si485933igc.1.2013.03.14.08.37.06
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 14 Mar 2013 08:37:06 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c02::229 as permitted sender) client-ip=2607:f8b0:4001:c02::229;
-Received: by mail-ia0-f169.google.com with SMTP id j5so2210673iaf.14
-        for <msysgit@googlegroups.com>; Thu, 14 Mar 2013 08:37:06 -0700 (PDT)
-X-Received: by 10.50.190.231 with SMTP id gt7mr20639168igc.85.1363275426463;
- Thu, 14 Mar 2013 08:37:06 -0700 (PDT)
-Received: by 10.64.44.47 with HTTP; Thu, 14 Mar 2013 08:36:26 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1303141621340.3794@s15462909.onlinehome-server.info>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c02::229
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218147>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UGAOt-0008LS-H4
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 16:49:03 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S964806Ab3CNPsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Mar 2013 11:48:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51141 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933909Ab3CNPs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Mar 2013 11:48:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6A82B27F;
+	Thu, 14 Mar 2013 11:48:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZOMEsy1QbivanAO0NeGx/SejTjo=; b=Rryykc
+	gwyDdV/scd6nI/1i5mU55fDI/wKKvvn3WhP571BhWAkulTfjUFXk1GocEiuGaTjE
+	ABg3C9g0DmwvIyZTW9t6/mlFgYiinQkkhhdLzXSiQzX5BcXIhtBOmyKvNWEYrtzP
+	Iz8cbZ8Y9wtJiKw1ODCPn7ovMpk92VI3wXuRQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SEirhJ8rQaS+4/FmiMBXoYWYClKO2b1n
+	bcawQO+0s9bBrFymhHKDkUD0xdv81wNr2uyta4H9DLyBpl+YVXGAcRizmvx0t1FU
+	/Mi7NrGrznXJW0//jUAFU8qvj7jeCugy759gFcLjP/Y/GVZTwy0rpjUO1krQGzc3
+	KCUM6C0sAHk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB046B27E;
+	Thu, 14 Mar 2013 11:48:27 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E269B27D; Thu, 14 Mar 2013
+ 11:48:27 -0400 (EDT)
+In-Reply-To: <5141E056.3090808@redhat.com> (Michal Novotny's message of "Thu,
+ 14 Mar 2013 15:36:06 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9C8BE6E4-8CBE-11E2-8365-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218148>
 
-On Thu, Mar 14, 2013 at 4:23 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi kusma,
->
-> On Thu, 14 Mar 2013, Erik Faye-Lund wrote:
->
->> Since ancient times, we have been calling curl_global_init with the
->> CURL_GLOBAL_ALL-flag, which initializes SSL (and the Win32 socket
->> stack on Windows).
->>
->> Initializing SSL takes quite some time on Windows, so let's avoid
->> doing it when it's not needed.
->>
->> timing of echo "" | ./git-remote-http.exe origin http://localhost
->>
->> before
->>
->> best of 10 runs:
->> real    0m1.634s
->> user    0m0.015s
->> sys     0m0.000s
->>
->> worst of 10 runs:
->> real    0m2.701s
->> user    0m0.000s
->> sys     0m0.000s
->>
->> after
->>
->> best of 10 runs:
->> real    0m0.018s
->> user    0m0.000s
->> sys     0m0.000s
->>
->> worst of 10 runs:
->> real    0m0.024s
->> user    0m0.000s
->> sys     0m0.015s
->
-> Good analysis!
->
->> diff --git a/http.c b/http.c
->> index 3b312a8..528a736 100644
->> --- a/http.c
->> +++ b/http.c
->> @@ -343,7 +343,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
->>
->>       git_config(http_options, NULL);
->>
->> -     curl_global_init(CURL_GLOBAL_ALL);
->> +     curl_global_init(CURL_GLOBAL_WIN32 | (prefixcmp(url, "https:") ? 0 :
->> +         CURL_GLOBAL_SSL));
->>
->>       http_proactive_auth = proactive_auth;
->
-> I wonder whether we want to have something like this instead:
->
->         flags = CURL_GLOBAL_ALL;
->         if (prefixcmp(url, "https:"))
->                 flags &= ^CURL_GLOBAL_SSL;
->         curl_global_init(flags);
->
-> I do see that CURL_GLOBAL_ALL is #define'd as CURL_GLOBAL_WIN32 |
-> CURL_GLOBAL_SSL in curl.h, but that might change in the future, no?
->
+Michal Novotny <minovotn@redhat.com> writes:
 
-Good suggestion. But perhaps we'd want to use CURL_GLOBAL_DEFAULT
-instead? I'm thinking that this define is probably what they'd include
-any essential flags, but not non-essential flags. CURL_GLOBAL_ALL
-might be extended to include initialization bits for other transports,
-for instance... but this feels a bit hand-wavy. Simply masking out the
-CURL_GLOBAL_SSL-flag would probably be the smallest logical change.
+> Oh, interesting. It's working now and I didn't know that as it was not
+> working some time ago I've been trying this approach. Maybe it's been
+> added recently...
 
-I don't have any strong feeling on this, really. I'd like to hear what
-other people think, though.
+Pretty much from the very beginning "git tag <name> <commit>" has
+been the way to create a tag, with missing <commit> defaulting to
+HEAD.  In retrospect, it _might_ have been a more consistent UI
+organization if the object to point the new tag at were given with a
+command line argument like --point-at=<object>, absence of which
+defaults to HEAD, but it is a bit too late for that.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+By the way, your implementation is wrong and it shows that you are
+not aware that a tag, either annotated or lightweight, can point at
+any object, not just a commit.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+> ... as I also saw several sites having different approach of
+> tagging to specified commit (usually creating a new branch, tagging
+> there and rebasing etc.).
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+There are at least two explanations that are more plausible than
+that.
+
+When rebasing an existing branch, especially if you are not familiar
+with Git and want to be extra cautious, it is not unreasonable to
+practice it by running the rebase on a new branch that you are
+willing to discard when something goes in an unexpected way.  If the
+tip of that throw-away branch happens to be where you want to tag,
+it is easier to do
+
+	git checkout -b new-branch <<some long object name>>
+        git tag return-here
+
+than
+
+	git checkout -b new-branch <<some long object name>>
+        git tag return-here <<the same long object name again>>
+
+So it is understandable that "if untold, default to HEAD" is used in
+such a workflow.  After all, we made it to default to HEAD exactly
+because that is one of the most common thing to do.
+
+Another plausible explanation is that these "sites" are written by
+people who do not know what they are writing, which is not a big
+news in the Internet.
+
+It would surely be nice to get these "sites" fixed.
