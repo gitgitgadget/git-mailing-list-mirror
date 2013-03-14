@@ -1,123 +1,129 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [RFD] Combine diff improvements
-Date: Thu, 14 Mar 2013 23:32:35 +0100
-Message-ID: <CALWbr2zY3uo==QTd69t1eXNS4-CX1w3T-AaMjOLVmxj-SMJyvg@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC] http_init: only initialize SSL for https
+Date: Thu, 14 Mar 2013 23:35:03 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1303142333170.3794@s15462909.onlinehome-server.info>
+References: <1363269079-6124-1-git-send-email-kusmabite@gmail.com> <alpine.DEB.1.00.1303141621340.3794@s15462909.onlinehome-server.info> <CABPQNSZNdGea9Nn91emWhfRGAZjZXm755UKArNr3EUy9CrSKHg@mail.gmail.com> <7vmwu6x72q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 14 23:33:04 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: kusmabite@gmail.com, git@vger.kernel.org, msysgit@googlegroups.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCZPH74Q5YNRBGNBRGFAKGQE6DN2GBY@googlegroups.com Thu Mar 14 23:35:34 2013
+Return-path: <msysgit+bncBCZPH74Q5YNRBGNBRGFAKGQE6DN2GBY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ea0-f187.google.com ([209.85.215.187])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGGhq-0007NS-Is
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 23:33:02 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753498Ab3CNWcg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Mar 2013 18:32:36 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:63610 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753373Ab3CNWcg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Mar 2013 18:32:36 -0400
-Received: by mail-qc0-f174.google.com with SMTP id z24so1287295qcq.33
-        for <git@vger.kernel.org>; Thu, 14 Mar 2013 15:32:35 -0700 (PDT)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBGNBRGFAKGQE6DN2GBY@googlegroups.com>)
+	id 1UGGkC-0001TN-JD
+	for gcvm-msysgit@m.gmane.org; Thu, 14 Mar 2013 23:35:28 +0100
+Received: by mail-ea0-f187.google.com with SMTP id o10sf799093eaj.4
+        for <gcvm-msysgit@m.gmane.org>; Thu, 14 Mar 2013 15:35:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=C7N7EkYa8KmsKufud6hjhKABTQEsJOK1oDKWDeXB47Y=;
-        b=Avg0nrzJgSgdECN492JgKHR3cguhaXWIkKGdk/dcX1JO6ySlzTp9Loj7dcehDSqo3S
-         5bWECuLIDhwlQBAsLehOToz2NmjJVf6DSoNpw3dWOLi+TLkVnC4T5KVVjZfwlRqHMXJF
-         b4Rai5AyFDO2rviw5M2SuVVme9mbzWDk7kIdh7bOPV94XpE21QbdgEMJs5TXJh6hFVNd
-         M3GKaweEAO1faoWWwE2KdD3HoegsC7bfqw4+WGlXbSK8YBAETRTSGtJtZ9KhHYfMrDYP
-         yvViPqkhcsk0F3qmr0QBvjXG+MU/WGQ2o4K/NSi/chCKjRRuKI5J8yrNmZdOYiFVWzVr
-         Or2A==
-X-Received: by 10.229.174.196 with SMTP id u4mr777366qcz.84.1363300355421;
- Thu, 14 Mar 2013 15:32:35 -0700 (PDT)
-Received: by 10.49.70.163 with HTTP; Thu, 14 Mar 2013 15:32:35 -0700 (PDT)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218177>
+        d=googlegroups.com; s=20120806;
+        h=x-received:x-beenthere:x-received:received-spf:x-authenticated
+         :x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:x-y-gmx-trusted
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=p09uEEkKS6DoqH7fBe2hzLIpiS1EHkUnUoLoWKRvSsM=;
+        b=k1KWm4hYBcJ45NsRNyxs1OkNPUTp64absiz7sKPkRnC0bniU1F/AnFD8mYImKbRtaM
+         Rjunr9wa+BgEDFKKowz/LJbz7uAyw5Xa8B0dXspBM167uFGp4WdyP0CX2tTsCIfqs9dF
+         Bykh+Kh/sLRyBPIicoYo2frZ8x1E0bJF54Vs6Drnt6HoYMDyn/AL/XMXcOUrSxziCpaS
+         ZSCNl/7wy6pxJ4qQvaduiheNIQQqohoL/2iNbnPyalsUR/Ib/1KjqNT3AYLXKoL53dK4
+      
+X-Received: by 10.180.183.66 with SMTP id ek2mr540383wic.8.1363300506093;
+        Thu, 14 Mar 2013 15:35:06 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.181.13.74 with SMTP id ew10ls174179wid.52.gmail; Thu, 14 Mar
+ 2013 15:35:04 -0700 (PDT)
+X-Received: by 10.14.184.9 with SMTP id r9mr5726362eem.7.1363300504689;
+        Thu, 14 Mar 2013 15:35:04 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
+        by gmr-mx.google.com with ESMTP id 47si1060340eeh.1.2013.03.14.15.35.04;
+        Thu, 14 Mar 2013 15:35:04 -0700 (PDT)
+Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
+Received: from mailout-de.gmx.net ([10.1.76.12]) by mrigmx.server.lan
+ (mrigmx001) with ESMTP (Nemesis) id 0MZANm-1U1ukO2DsK-00L0mM for
+ <msysgit@googlegroups.com>; Thu, 14 Mar 2013 23:35:04 +0100
+Received: (qmail invoked by alias); 14 Mar 2013 22:35:04 -0000
+Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
+  by mail.gmx.net (mp012) with SMTP; 14 Mar 2013 23:35:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19O6KI1V8NOKPcdPyMHs3yJSQ8WqklEpk7Ng6VNma
+	GWE4uIwGsUi44g
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <7vmwu6x72q.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of johannes.schindelin@gmx.de designates 212.227.17.21 as
+ permitted sender) smtp.mail=johannes.schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218178>
 
-Hi,
-I've been working on combine diff recently and have seen that the curre=
-nt
-implementation does not produce optimal results for coalescing lost lin=
-es.
+Hi Junio,
 
-I would like to discuss some improvements.
+On Thu, 14 Mar 2013, Junio C Hamano wrote:
 
-I think we can define an optimal solution as the shortest diff
-output. That is that we coalesced as much line as we could.
-It means that if each parent has the same file removed, the output will
-be n lines long (all lines coalesce to each others).
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+> 
+> >> I wonder whether we want to have something like this instead:
+> >>
+> >>         flags = CURL_GLOBAL_ALL;
+> >>         if (prefixcmp(url, "https:"))
+> >>                 flags &= ^CURL_GLOBAL_SSL;
+> >>         curl_global_init(flags);
+> >>
+> >> I do see that CURL_GLOBAL_ALL is #define'd as CURL_GLOBAL_WIN32 |
+> >> CURL_GLOBAL_SSL in curl.h, but that might change in the future, no?
+> >
+> > Good suggestion. But perhaps we'd want to use CURL_GLOBAL_DEFAULT
+> > instead?
+> 
+> That as a follow-up suggestion may be fine but if you go that route,
+> you would need to explicitly flip SSL on when you know it is going
+> to an SSL destination.
+> 
+> The way to determine SSL-ness has to be rock solid and that is much
+> more important than ALL vs DEFAULT.  Is prefixcmp(url, "https://")
+> the right way to do so?  Do we use this codepath only for HTTPS, or
+> does anybody use other protocol cURL supports over SSL with this,
+> too?
 
-The current implementation doesn't look for optimal solution but for th=
-e
-easiest/greedy solution. It also stops matching with a parent if it
-can't find a match. As an example, it means that losing [1, 2, 3, 4] fr=
-om
-parent A, and [3, 1, 2, 4] from parent B would give:
-- 1
-- 2
---3
-- 4
- -1
- -2
- -4
+Apparently, ftps is also handled by cURL and most likely requires SSL.
 
-While if we invert the two parents order we will have:
-- 3
---1
---2
-- 4
- -3
- -4
+How about optimizing for the common case and instead of prefixcmp(url,
+"https:")) ask for !prefixcmp(url, "http:")?
 
-While clearly, in both cases, the optimal solution would be close to:
-- 3
---1
---2
- -3
---4
+Ciao,
+Dscho
 
-Let's say we have only one empty file (deleted), with p parents. In eac=
-h
-parent, the file was n lines long, but the lines don't have to be the
-same.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-It clearly looks like an extension/variation of the Longest Common
-Subsequence (LCS) problem, but with p sequences (and the common
-subsequences doesn't have to be common to all sequences).
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-LCS dynamic programming is O(n=C2=B2) in time and space complexity for =
-two
-sequences.
-
-We could extend it this way:
-After processing two of the p parents, let's find LCS and build a new
-optimal list of removals. Then find LCS again between this new list and
-the third parent removals. And repeat until we made each parents.
-
-Best-case analysis:
-All p parents have the same n lines.
-We will find LCS and provide a n lines (the same lines) new list in
-O(n=C2=B2), and then run it again in O(n=C2=B2) with the next parent, e=
-tc.
-It will end-up being O(pn=C2=B2).
-
-Worst-case analysis:
-All p parents have no lines in common.
-We will find LCS and provide a 2n new list in O(n=C2=B2).
-Then we run it again in O(2n x n), and again O(3n x n), etc, until
-O(pn x n).
-When we sum these all, we end-up with O(p=C2=B2 x n=C2=B2)
-
-Does it make any sense ? And is it worth implementing ?
-
-Cheers,
-Antoine
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
