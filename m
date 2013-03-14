@@ -1,100 +1,91 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Re: [PATCH v3 3/3] git-merge-one-file: revise merge error reporting
-Date: Thu, 14 Mar 2013 19:31:39 +0200
-Message-ID: <5142097B.1080105@bracey.fi>
-References: <1362601978-16911-1-git-send-email-kevin@bracey.fi> <1363137142-18606-1-git-send-email-kevin@bracey.fi> <1363137142-18606-3-git-send-email-kevin@bracey.fi> <7vehfj2neh.fsf@alter.siamese.dyndns.org> <51416DD5.2030805@bracey.fi> <7vr4jiyqrj.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: difftool -d symlinks, under what conditions
+Date: Thu, 14 Mar 2013 10:33:36 -0700
+Message-ID: <7vehfhyjgv.fsf@alter.siamese.dyndns.org>
+References: <7vfw0073pm.fsf@alter.siamese.dyndns.org>
+ <20130312210630.GF2317@serenity.lan>
+ <CAJELnLGBr1wOX4-3rCNjPpPLezc_6FgyeuPqty268JR0==qtvQ@mail.gmail.com>
+ <7vehfk5kn2.fsf@alter.siamese.dyndns.org> <3222724986386016520@unknownmsgid>
+ <20130313001758.GH2317@serenity.lan>
+ <CAJDDKr7ZU16XWtCfYX9-RMzcpKa_FF80Od+mUMG4n8dUKeLsvw@mail.gmail.com>
+ <7vtxof48sg.fsf@alter.siamese.dyndns.org>
+ <7v1ubj45ac.fsf@alter.siamese.dyndns.org>
+ <20130314094300.GN2317@serenity.lan> <20130314172515.GB4256@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"David Aguilar <davvid@gmail.com>l Antoine Pelisse" 
-	<apelisse@gmail.com>, Ciaran Jessup <ciaranj@gmail.com>,
-	Jeff King <peff@peff.net>,
-	=?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>, Scott Chacon <schacon@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 14 18:32:16 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>,
+	Matt McClure <matthewlmcclure@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Tim Henigan <tim.henigan@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Mar 14 18:34:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGC0k-0007i0-4o
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 18:32:14 +0100
+	id 1UGC2X-0001aI-Pl
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 18:34:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757948Ab3CNRbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Mar 2013 13:31:47 -0400
-Received: from 8.mo2.mail-out.ovh.net ([188.165.52.147]:52978 "EHLO
-	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755902Ab3CNRbq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Mar 2013 13:31:46 -0400
-Received: from mail406.ha.ovh.net (b9.ovh.net [213.186.33.59])
-	by mo2.mail-out.ovh.net (Postfix) with SMTP id F0FA2DC37F7
-	for <git@vger.kernel.org>; Thu, 14 Mar 2013 18:43:02 +0100 (CET)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 14 Mar 2013 19:32:35 +0200
-Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 14 Mar 2013 19:32:33 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-X-Ovh-Mailout: 178.32.228.2 (mo2.mail-out.ovh.net)
-In-Reply-To: <7vr4jiyqrj.fsf@alter.siamese.dyndns.org>
-X-Ovh-Tracer-Id: 698339418194809048
-X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: -100
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrgeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-X-Spam-Check: DONE|U 0.53121/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiuddrgeehucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+	id S933910Ab3CNRdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Mar 2013 13:33:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51826 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755902Ab3CNRdi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Mar 2013 13:33:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22A36BC8E;
+	Thu, 14 Mar 2013 13:33:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+4zm2reQUtdWNIJVExuSbbok3lA=; b=QxtGe1
+	v/vHWPZZshbZMH2R7mN10gEzcVT9g7Sfo1hi6G/yHnj4aFs4IIC3GCtkiPxgOxQx
+	Sdak2RHowLrEX4ID12yTVFi+pLp70Yw0abH4bjOtvkKH/XM8B5yOGDG3/4V+tV1w
+	BgXdjlt5r5QWeMrBlLi+XS5WRRrbWeZ2eoacM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=D3MjJhEEdaQ1oXzvV9W3n6Q+ngQOTO9H
+	kbkkin7CmQTq7Ks3sihrw4d4cerhNPyIqoi6VrvmfLmC9Gd7wdIF4qbtSUYiHtTz
+	OLD7JBayTGxFWfLs8iergzoY6G3SYlY1z3NK+cPPs/xwtMqt98KFlllco8AVMJMH
+	Jl1xtgfkcDE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 170E5BC8C;
+	Thu, 14 Mar 2013 13:33:38 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8CEC3BC8A; Thu, 14 Mar 2013
+ 13:33:37 -0400 (EDT)
+In-Reply-To: <20130314172515.GB4256@serenity.lan> (John Keeping's message of
+ "Thu, 14 Mar 2013 17:25:15 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4DCADF9C-8CCD-11E2-86E5-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218157>
 
-On 14/03/2013 16:56, Junio C Hamano wrote:
-> Kevin Bracey <kevin@bracey.fi> writes:
+John Keeping <john@keeping.me.uk> writes:
+
+> The path passed to get_stream_filter is only used to decide what filters
+> apply to the file, so shouldn't it be using "ce->name" and not "path"
+> for the same reason that the call to convert_to_working_tree() further
+> down the same function does?
+
+Correct and well spotted.
+
 >
->> Maybe the virtual base itself should be different. Maybe it should put
->> a ??????? marker in place of every unique line. So you get:
->>
->> Left   ABCEFGH
->> Right XABCDEFJH  -> Merge result <|X>ABC<|D>EF<G|J>H
->> VBase ?ABC?EF??H
->>
->> That actually feels like it may be the correct answer here.
-> Interesting, though the approach has downsides with the diff3
-> conflict style, no?
->
-Well, yes, but I would assume that we would forcibly select normal diff 
-here somehow, if we aren't already. We should be - turning ABCDEFGH vs 
-ABCD into ABCD<EFGH|EFGH=> is silly.
-
-This topic has a lot in common with the zdiff3 discussion going on. The 
-concern there is about large chunks of similar code appearing on two 
-sides, and not being in the base, leading to useless diff3.
-
-This is just the special case of the base being totally empty.
-
-The thought on zdiff3 philosophy was that common additions should be 
-treated as resolved, and not appear inside conflict markers. That's 
-exactly what we'd be doing.  So, same conflict as above, but this time 
-embedded in a larger file, using zdiff3 logic:
-
-Left    aaaaaabaacaaABCEFGHeee
-Base    aaaaaaaaaaaaeee             -> zdiff3 
-aaada<b|a=f>aacaaABC<|D>EF<G|J>Heee
-Right   aaadaafaaaaaABCDEFJHeee
-
-Note that I've chosen to suppress the = marker if the lines surrounding 
-the conflict are not in the base. I think that helps highlight the fact 
-that we're in a diff2 section. EF<G|=J>H reads like an assertion that 
-the base has EFH. Whereas EF<G|J>H avoids that.
-
-So, anyway, commonality with zdiff3 would be good. Even if we can't 
-share code, we should at least share the general style of result.
-
-Kevin
+> -- >8 --
+> diff --git a/entry.c b/entry.c
+> index 17a6bcc..63c52ed 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -145,7 +145,7 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
+>  	struct stat st;
+>  
+>  	if (ce_mode_s_ifmt == S_IFREG) {
+> -		struct stream_filter *filter = get_stream_filter(path, ce->sha1);
+> +		struct stream_filter *filter = get_stream_filter(ce->name, ce->sha1);
+>  		if (filter &&
+>  		    !streaming_write_entry(ce, path, filter,
+>  					   state, to_tempfile,
