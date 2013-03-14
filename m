@@ -1,158 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] http_init: only initialize SSL for https
-Date: Thu, 14 Mar 2013 16:23:59 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1303141621340.3794@s15462909.onlinehome-server.info>
-References: <1363269079-6124-1-git-send-email-kusmabite@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow combined diff to ignore white-spaces
+Date: Thu, 14 Mar 2013 08:31:22 -0700
+Message-ID: <7v7glayp4l.fsf@alter.siamese.dyndns.org>
+References: <7v38wdc4ei.fsf@alter.siamese.dyndns.org>
+ <1363209683-10264-1-git-send-email-apelisse@gmail.com>
+ <51417773.5000401@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: msysgit+bncBCZPH74Q5YNRBE6XQ6FAKGQE5SRCLXI@googlegroups.com Thu Mar 14 16:24:27 2013
-Return-path: <msysgit+bncBCZPH74Q5YNRBE6XQ6FAKGQE5SRCLXI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f187.google.com ([209.85.217.187])
+Content-Type: text/plain; charset=us-ascii
+Cc: Antoine Pelisse <apelisse@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Mar 14 16:32:04 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBE6XQ6FAKGQE5SRCLXI@googlegroups.com>)
-	id 1UGA15-0007st-6t
-	for gcvm-msysgit@m.gmane.org; Thu, 14 Mar 2013 16:24:27 +0100
-Received: by mail-lb0-f187.google.com with SMTP id i15sf807005lbo.4
-        for <gcvm-msysgit@m.gmane.org>; Thu, 14 Mar 2013 08:24:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:received-spf:x-authenticated
-         :x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:x-y-gmx-trusted
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:x-google-group-id:list-post:list-help
-         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
-        bh=f23fHiEgT1niUhSPS6lspqpukyyoqn6cV+bj4M2b078=;
-        b=C5+f6vHmXctrytpzETDJzFNdo15082JuIj3giLGFTihoNo8IN74wT94mE2oloV7g40
-         B5GG3xCiDWGlRlk8UrhpNfDssItuUroNiu8DIx9kGH17mIWT4vjnlou2IOPL1zlKQAnA
-         vzFCjQeZSwyBM7Vupr9uHuuZ88NghrIqTTfysZUOLJvH0XvGxHE7c+i2cxTtTKeh/PcD
-         WZhpnIQo1rTdYMdAP3hxsm4dOCMo5C84kaP74rxPFwgGITRfHDx/C7Lt2gdAf9N+VjU6
-      
-X-Received: by 10.180.73.162 with SMTP id m2mr249856wiv.18.1363274644552;
-        Thu, 14 Mar 2013 08:24:04 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.24.37 with SMTP id r5ls8682wif.3.gmail; Thu, 14 Mar 2013
- 08:24:02 -0700 (PDT)
-X-Received: by 10.14.149.138 with SMTP id x10mr4005794eej.5.1363274642971;
-        Thu, 14 Mar 2013 08:24:02 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
-        by gmr-mx.google.com with ESMTP id 47si683622eeh.1.2013.03.14.08.24.02;
-        Thu, 14 Mar 2013 08:24:02 -0700 (PDT)
-Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
-Received: from mailout-de.gmx.net ([10.1.76.16]) by mrigmx.server.lan
- (mrigmx002) with ESMTP (Nemesis) id 0Ld330-1Uxz9e2jSq-00iA2i for
- <msysgit@googlegroups.com>; Thu, 14 Mar 2013 16:24:02 +0100
-Received: (qmail invoked by alias); 14 Mar 2013 15:24:02 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp016) with SMTP; 14 Mar 2013 16:24:02 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/o/Tc8Ge7oibsyQ3IXsnsijATppuUYs1Hsj41tQJ
-	caltxubHiXR/kg
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <1363269079-6124-1-git-send-email-kusmabite@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.15 as
- permitted sender) smtp.mail=johannes.schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218145>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UGA8O-0007ab-OE
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 16:32:01 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1758079Ab3CNPb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Mar 2013 11:31:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37084 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757582Ab3CNPbZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Mar 2013 11:31:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FFF5A926;
+	Thu, 14 Mar 2013 11:31:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dgaIA8JS9uFg+MBieSR2NG46Ppw=; b=ke+UnZ
+	1woQ3VcbEGG/ttB6Vyb0rl6PtAraYpfrbIM969G/OM3PRG+02GsDkqcv1C9v6nHM
+	Of9NP+nBU++URN8ZW8FPdUKdWWhWbjz3qBvh9fho6mbI90scAjBzMdjOyN0uVm4T
+	oT2cIv+m4Tc0438g0DwRBzEaraIbeRBmQ3PVw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z6/AASU/YP18eTn3RJy6yGFlE00SVt5R
+	h89gIEeI5L8UyHGRgqC4uiy3V3/4G9M5JGt4k0DmKKzgBcDIk89feoWzdNKJUQ+T
+	wPYQhsxuRhg1rJ5rTU8LdJscmyzDgweoZD1CZzejPYX5CLnGAh5FeMM5k9ZXzCHT
+	pX5eZZfvOxA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 82D80A925;
+	Thu, 14 Mar 2013 11:31:24 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2198A924; Thu, 14 Mar 2013
+ 11:31:23 -0400 (EDT)
+In-Reply-To: <51417773.5000401@viscovery.net> (Johannes Sixt's message of
+ "Thu, 14 Mar 2013 08:08:35 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3A9867E8-8CBC-11E2-8D47-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218146>
 
-Hi kusma,
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-On Thu, 14 Mar 2013, Erik Faye-Lund wrote:
+> This form of 'echo' is not sufficiently portable. How about:
+>
+> 	tr -d Q <<-\EOF >test &&
+>
+> 	always coalesce
+> 	eol space coalesce Q
+> ...
+> 	EOF
 
-> Since ancient times, we have been calling curl_global_init with the
-> CURL_GLOBAL_ALL-flag, which initializes SSL (and the Win32 socket
-> stack on Windows).
-> 
-> Initializing SSL takes quite some time on Windows, so let's avoid
-> doing it when it's not needed.
-> 
-> timing of echo "" | ./git-remote-http.exe origin http://localhost
-> 
-> before
-> 
-> best of 10 runs:
-> real    0m1.634s
-> user    0m0.015s
-> sys     0m0.000s
-> 
-> worst of 10 runs:
-> real    0m2.701s
-> user    0m0.000s
-> sys     0m0.000s
-> 
-> after
-> 
-> best of 10 runs:
-> real    0m0.018s
-> user    0m0.000s
-> sys     0m0.000s
-> 
-> worst of 10 runs:
-> real    0m0.024s
-> user    0m0.000s
-> sys     0m0.015s
+Much better.
 
-Good analysis!
+>> +test_expect_success 'check combined output (no ignore space)' '
+>> +	git show | test_i18ngrep "^-\s*eol spaces" &&
+>> ...
+>> +	git show | test_i18ngrep "^--\s*always coalesce"
+>
+> This loses the exit code of git show. We usually write this as
+>
+> 	git show >actual &&
+> 	grep "^- *eol spaces" &&
+> 	grep "^- *eol space coalesce" &&
+> 	...
+>
+> (Same for later tests.)
+>
+> There is nothing i18n-ish in the test patterns. Use regular grep.
+>
+> BTW, there is compare_diff_patch() in diff-lib.sh. You can use it to
+> compare diff output to expected output. Then you do not need a grep
+> invocation for each line of the test file.
 
-> diff --git a/http.c b/http.c
-> index 3b312a8..528a736 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -343,7 +343,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
->  
->  	git_config(http_options, NULL);
->  
-> -	curl_global_init(CURL_GLOBAL_ALL);
-> +	curl_global_init(CURL_GLOBAL_WIN32 | (prefixcmp(url, "https:") ? 0 :
-> +	    CURL_GLOBAL_SSL));
->  
->  	http_proactive_auth = proactive_auth;
-
-I wonder whether we want to have something like this instead:
-
-	flags = CURL_GLOBAL_ALL;
-	if (prefixcmp(url, "https:"))
-		flags &= ^CURL_GLOBAL_SSL;
-	curl_global_init(flags);
-
-I do see that CURL_GLOBAL_ALL is #define'd as CURL_GLOBAL_WIN32 |
-CURL_GLOBAL_SSL in curl.h, but that might change in the future, no?
-
-Ciao,
-Dscho
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+All good suggestions.  Thanks.
