@@ -1,268 +1,290 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Allow combined diff to ignore white-spaces
-Date: Thu, 14 Mar 2013 08:08:35 +0100
-Message-ID: <51417773.5000401@viscovery.net>
-References: <7v38wdc4ei.fsf@alter.siamese.dyndns.org> <1363209683-10264-1-git-send-email-apelisse@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/4] teach config parsing to read from strbuf
+Date: Thu, 14 Mar 2013 03:10:46 -0400
+Message-ID: <20130314071046.GB6103@sigill.intra.peff.net>
+References: <20130310165642.GA1136@sandbox-ub.fritz.box>
+ <20130310170052.GE1136@sandbox-ub.fritz.box>
+ <20130312111806.GF11340@sigill.intra.peff.net>
+ <20130312164254.GB4752@sandbox-ub.fritz.box>
+ <20130312192959.GG17099@sigill.intra.peff.net>
+ <20130314063933.GB4062@sandbox-ub.fritz.box>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 14 08:09:16 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jens Lehmann <jens.lehmann@web.de>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Mar 14 08:11:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UG2Hq-0004lb-Om
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 08:09:15 +0100
+	id 1UG2Jr-0006hb-3P
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 08:11:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754443Ab3CNHIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Mar 2013 03:08:48 -0400
-Received: from so.liwest.at ([212.33.55.24]:63480 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753515Ab3CNHIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Mar 2013 03:08:47 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UG2HD-0000x7-KN; Thu, 14 Mar 2013 08:08:42 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 3EEF01660F;
-	Thu, 14 Mar 2013 08:08:35 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-In-Reply-To: <1363209683-10264-1-git-send-email-apelisse@gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1754686Ab3CNHKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Mar 2013 03:10:50 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51455 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754617Ab3CNHKt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Mar 2013 03:10:49 -0400
+Received: (qmail 12559 invoked by uid 107); 14 Mar 2013 07:12:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Mar 2013 03:12:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Mar 2013 03:10:46 -0400
+Content-Disposition: inline
+In-Reply-To: <20130314063933.GB4062@sandbox-ub.fritz.box>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218121>
 
-Am 3/13/2013 22:21, schrieb Antoine Pelisse:
-> Currently, it's not possible to use the space-ignoring options (-b, -w,
-> --ignore-space-at-eol) with combined diff. It makes it pretty impossible
-> to read a merge between a branch that changed all tabs to spaces, and a
-> branch with functional changes.
+On Thu, Mar 14, 2013 at 07:39:33AM +0100, Heiko Voigt wrote:
+
+> > I am on the fence. I do not want to create more work for you, but I do
+> > think it may come in handy, if only for doing submodule things from
+> > shell. And it is hopefully not a very large patch. I'd say try it, and
+> > if starts looking like it will be very ugly, the right thing may be to
+> > leave it until somebody really wants it.
 > 
-> Pass diff flags to diff engine, so that combined diff behaves as normal
-> diff does with spaces.
-> Also coalesce lines that are removed from both (or more) parents.
-> 
-> It also means that a conflict-less merge done using a ignore-* strategy
-> option will not show any conflict if shown in combined-diff using the
-> same option.
-> 
-> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
-> ---
-> OK, I added some tests and coalesce similar lost lines (using the same flags
-> we used for diff.
-> 
->  combine-diff.c           |   57 ++++++++++++++++++++++++++++++-----
->  t/t4038-diff-combined.sh |   75 ++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 125 insertions(+), 7 deletions(-)
-> 
-> diff --git a/combine-diff.c b/combine-diff.c
-> index 35d41cd..0f33983 100644
-> --- a/combine-diff.c
-> +++ b/combine-diff.c
-> @@ -5,6 +5,7 @@
->  #include "diffcore.h"
->  #include "quote.h"
->  #include "xdiff-interface.h"
-> +#include "xdiff/xmacros.h"
->  #include "log-tree.h"
->  #include "refs.h"
->  #include "userdiff.h"
-> @@ -122,7 +123,47 @@ static char *grab_blob(const unsigned char *sha1, unsigned int mode,
->  	return blob;
->  }
-> 
-> -static void append_lost(struct sline *sline, int n, const char *line, int len)
-> +static int match_string_spaces(const char *line1, int len1,
-> +			       const char *line2, int len2,
-> +			       long flags)
-> +{
-> +	if (flags & XDF_WHITESPACE_FLAGS) {
-> +		for (; len1 > 0 && XDL_ISSPACE(line1[len1 - 1]); len1--);
-> +		for (; len2 > 0 && XDL_ISSPACE(line2[len2 - 1]); len2--);
-> +	}
-> +
-> +	if (!(flags & (XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE)))
-> +		return (len1 == len2 && !memcmp(line1, line2, len1));
-> +
-> +	while (len1 > 0 && len2 > 0) {
-> +		len1--;
-> +		len2--;
-> +		if (XDL_ISSPACE(line1[len1]) || XDL_ISSPACE(line2[len2])) {
-> +			if ((flags & XDF_IGNORE_WHITESPACE_CHANGE) &&
-> +			    (!XDL_ISSPACE(line1[len1]) || !XDL_ISSPACE(line2[len2])))
-> +				return 0;
-> +
-> +			for (; len1 > 0 && XDL_ISSPACE(line1[len1]); len1--);
-> +			for (; len2 > 0 && XDL_ISSPACE(line2[len2]); len2--);
-> +		}
-> +		if (line1[len1] != line2[len2])
-> +			return 0;
-> +	}
-> +
-> +	if (flags & XDF_IGNORE_WHITESPACE) {
-> +		// Consume remaining spaces
-> +		for (; len1 > 0 && XDL_ISSPACE(line1[len1 - 1]); len1--);
-> +		for (; len2 > 0 && XDL_ISSPACE(line2[len2 - 1]); len2--);
-> +	}
-> +
-> +	// We matched full line1 and line2
-> +	if (!len1 && !len2)
-> +		return 1;
-> +
-> +	return 0;
-> +}
-> +
-> +static void append_lost(struct sline *sline, int n, const char *line, int len, long flags)
->  {
->  	struct lline *lline;
->  	unsigned long this_mask = (1UL<<n);
-> @@ -133,8 +174,8 @@ static void append_lost(struct sline *sline, int n, const char *line, int len)
->  	if (sline->lost_head) {
->  		lline = sline->next_lost;
->  		while (lline) {
-> -			if (lline->len == len &&
-> -			    !memcmp(lline->line, line, len)) {
-> +			if (match_string_spaces(lline->line, lline->len,
-> +						line, len, flags)) {
->  				lline->parent_map |= this_mask;
->  				sline->next_lost = lline->next;
->  				return;
-> @@ -162,6 +203,7 @@ struct combine_diff_state {
->  	int n;
->  	struct sline *sline;
->  	struct sline *lost_bucket;
-> +	long flags;
->  };
-> 
->  static void consume_line(void *state_, char *line, unsigned long len)
-> @@ -201,7 +243,7 @@ static void consume_line(void *state_, char *line, unsigned long len)
->  		return; /* not in any hunk yet */
->  	switch (line[0]) {
->  	case '-':
-> -		append_lost(state->lost_bucket, state->n, line+1, len-1);
-> +		append_lost(state->lost_bucket, state->n, line+1, len-1, state->flags);
->  		break;
->  	case '+':
->  		state->sline[state->lno-1].flag |= state->nmask;
-> @@ -215,7 +257,7 @@ static void combine_diff(const unsigned char *parent, unsigned int mode,
->  			 struct sline *sline, unsigned int cnt, int n,
->  			 int num_parent, int result_deleted,
->  			 struct userdiff_driver *textconv,
-> -			 const char *path)
-> +			 const char *path, long flags)
->  {
->  	unsigned int p_lno, lno;
->  	unsigned long nmask = (1UL << n);
-> @@ -231,9 +273,10 @@ static void combine_diff(const unsigned char *parent, unsigned int mode,
->  	parent_file.ptr = grab_blob(parent, mode, &sz, textconv, path);
->  	parent_file.size = sz;
->  	memset(&xpp, 0, sizeof(xpp));
-> -	xpp.flags = 0;
-> +	xpp.flags = flags;
->  	memset(&xecfg, 0, sizeof(xecfg));
->  	memset(&state, 0, sizeof(state));
-> +	state.flags = flags;
->  	state.nmask = nmask;
->  	state.sline = sline;
->  	state.lno = 1;
-> @@ -962,7 +1005,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
->  				     elem->parent[i].mode,
->  				     &result_file, sline,
->  				     cnt, i, num_parent, result_deleted,
-> -				     textconv, elem->path);
-> +				     textconv, elem->path, opt->xdl_opts);
->  	}
-> 
->  	show_hunks = make_hunks(sline, cnt, num_parent, dense);
-> diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
-> index 614425a..ba8a56b 100755
-> --- a/t/t4038-diff-combined.sh
-> +++ b/t/t4038-diff-combined.sh
-> @@ -113,4 +113,79 @@ test_expect_success 'check --cc --raw with forty trees' '
->  	grep "^::::::::::::::::::::::::::::::::::::::::[^:]" out
->  '
-> 
-> +test_expect_success 'setup combined ignore spaces' '
-> +	git checkout master &&
-> +	>test &&
-> +	git add test &&
-> +	git commit -m initial &&
-> +
-> +	echo "
-> +	always coalesce
-> +	eol space coalesce \n\
-> +	space  change coalesce
-> +	all spa ces coalesce
-> +	eol spaces \n\
-> +	space  change
-> +	all spa ces" >test &&
+> Thats what I will do: Try it and see where I get.
 
-This form of 'echo' is not sufficiently portable. How about:
+I looked into this a little. The first sticking point is that
+git_config_with_options needs to support the alternate source. Here's a
+sketch of what I think the solution should look like, on top of your
+patches.
 
-	tr -d Q <<-\EOF >test &&
-
-	always coalesce
-	eol space coalesce Q
-	space  change coalesce
-	all spa ces coalesce
-	eol spaces Q
-	space  change
-	all spa ces
-	EOF
-
-> +	git commit -m "change three" -a &&
-> +
-> +	git checkout -b side HEAD^ &&
-> +	echo "
-> +	always coalesce
-> +	eol space coalesce
-> +	space change coalesce
-> +	all spaces coalesce
-> +	eol spaces
-> +	space change
-> +	all spaces" >test &&
-> +	git commit -m indent -a &&
-> +
-> +	test_must_fail git merge master &&
-> +	echo "
-> +	eol spaces \n\
-> +	space  change
-> +	all spa ces" > test &&
-
-Ditto.
-
-> +	git commit -m merged -a
-> +'
-> +
-> +test_expect_success 'check combined output (no ignore space)' '
-> +	git show | test_i18ngrep "^-\s*eol spaces" &&
-> +	git show | test_i18ngrep "^-\s*eol space coalesce" &&
-> +	git show | test_i18ngrep "^-\s*space change" &&
-> +	git show | test_i18ngrep "^-\s*space change coalesce" &&
-> +	git show | test_i18ngrep "^-\s*all spaces" &&
-> +	git show | test_i18ngrep "^-\s*all spaces coalesce" &&
-> +	git show | test_i18ngrep "^--\s*always coalesce"
-
-This loses the exit code of git show. We usually write this as
-
-	git show >actual &&
-	grep "^- *eol spaces" &&
-	grep "^- *eol space coalesce" &&
-	...
-
-(Same for later tests.)
-
-There is nothing i18n-ish in the test patterns. Use regular grep.
-
-BTW, there is compare_diff_patch() in diff-lib.sh. You can use it to
-compare diff output to expected output. Then you do not need a grep
-invocation for each line of the test file.
-
--- Hannes
+diff --git a/builtin/config.c b/builtin/config.c
+index 33c9bf9..8d01b7a 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -21,6 +21,7 @@ static const char *given_config_file;
+ 
+ static int use_global_config, use_system_config, use_local_config;
+ static const char *given_config_file;
++static const char *given_config_blob;
+ static int actions, types;
+ static const char *get_color_slot, *get_colorbool_slot;
+ static int end_null;
+@@ -53,6 +54,7 @@ static struct option builtin_config_options[] = {
+ 	OPT_BOOLEAN(0, "system", &use_system_config, N_("use system config file")),
+ 	OPT_BOOLEAN(0, "local", &use_local_config, N_("use repository config file")),
+ 	OPT_STRING('f', "file", &given_config_file, N_("file"), N_("use given config file")),
++	OPT_STRING(0, "blob", &given_config_blob, N_("blob-id"), N_("read config from given blob object")),
+ 	OPT_GROUP(N_("Action")),
+ 	OPT_BIT(0, "get", &actions, N_("get value: name [value-regex]"), ACTION_GET),
+ 	OPT_BIT(0, "get-all", &actions, N_("get all values: key [value-regex]"), ACTION_GET_ALL),
+@@ -218,7 +220,8 @@ static int get_value(const char *key_, const char *regex_)
+ 	}
+ 
+ 	git_config_with_options(collect_config, &values,
+-				given_config_file, respect_includes);
++				given_config_file, given_config_blob,
++				respect_includes);
+ 
+ 	ret = !values.nr;
+ 
+@@ -302,7 +305,8 @@ static void get_color(const char *def_color)
+ 	get_color_found = 0;
+ 	parsed_color[0] = '\0';
+ 	git_config_with_options(git_get_color_config, NULL,
+-				given_config_file, respect_includes);
++				given_config_file, given_config_blob,
++				respect_includes);
+ 
+ 	if (!get_color_found && def_color)
+ 		color_parse(def_color, "command line", parsed_color);
+@@ -330,7 +334,8 @@ static int get_colorbool(int print)
+ 	get_colorbool_found = -1;
+ 	get_diff_color_found = -1;
+ 	git_config_with_options(git_get_colorbool_config, NULL,
+-				given_config_file, respect_includes);
++				given_config_file, given_config_blob,
++				respect_includes);
+ 
+ 	if (get_colorbool_found < 0) {
+ 		if (!strcmp(get_colorbool_slot, "color.diff"))
+@@ -348,6 +353,12 @@ static int get_colorbool(int print)
+ 		return get_colorbool_found ? 0 : 1;
+ }
+ 
++static void check_blob_write(void)
++{
++	if (given_config_blob)
++		die("writing config blobs is not supported");
++}
++
+ int cmd_config(int argc, const char **argv, const char *prefix)
+ {
+ 	int nongit = !startup_info->have_repository;
+@@ -359,7 +370,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 			     builtin_config_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+ 
+-	if (use_global_config + use_system_config + use_local_config + !!given_config_file > 1) {
++	if (use_global_config + use_system_config + use_local_config +
++	    !!given_config_file + !!given_config_blob > 1) {
+ 		error("only one config file at a time.");
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
+@@ -438,6 +450,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		check_argc(argc, 0, 0);
+ 		if (git_config_with_options(show_all_config, NULL,
+ 					    given_config_file,
++					    given_config_blob,
+ 					    respect_includes) < 0) {
+ 			if (given_config_file)
+ 				die_errno("unable to read config file '%s'",
+@@ -450,6 +463,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		check_argc(argc, 0, 0);
+ 		if (!given_config_file && nongit)
+ 			die("not in a git directory");
++		if (given_config_blob)
++			die("editing blobs is not supported");
+ 		git_config(git_default_config, NULL);
+ 		launch_editor(given_config_file ?
+ 			      given_config_file : git_path("config"),
+@@ -457,6 +472,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	}
+ 	else if (actions == ACTION_SET) {
+ 		int ret;
++		check_blob_write();
+ 		check_argc(argc, 2, 2);
+ 		value = normalize_value(argv[0], argv[1]);
+ 		ret = git_config_set_in_file(given_config_file, argv[0], value);
+@@ -466,18 +482,21 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		return ret;
+ 	}
+ 	else if (actions == ACTION_SET_ALL) {
++		check_blob_write();
+ 		check_argc(argc, 2, 3);
+ 		value = normalize_value(argv[0], argv[1]);
+ 		return git_config_set_multivar_in_file(given_config_file,
+ 						       argv[0], value, argv[2], 0);
+ 	}
+ 	else if (actions == ACTION_ADD) {
++		check_blob_write();
+ 		check_argc(argc, 2, 2);
+ 		value = normalize_value(argv[0], argv[1]);
+ 		return git_config_set_multivar_in_file(given_config_file,
+ 						       argv[0], value, "^$", 0);
+ 	}
+ 	else if (actions == ACTION_REPLACE_ALL) {
++		check_blob_write();
+ 		check_argc(argc, 2, 3);
+ 		value = normalize_value(argv[0], argv[1]);
+ 		return git_config_set_multivar_in_file(given_config_file,
+@@ -500,6 +519,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		return get_value(argv[0], argv[1]);
+ 	}
+ 	else if (actions == ACTION_UNSET) {
++		check_blob_write();
+ 		check_argc(argc, 1, 2);
+ 		if (argc == 2)
+ 			return git_config_set_multivar_in_file(given_config_file,
+@@ -509,12 +529,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 						      argv[0], NULL);
+ 	}
+ 	else if (actions == ACTION_UNSET_ALL) {
++		check_blob_write();
+ 		check_argc(argc, 1, 2);
+ 		return git_config_set_multivar_in_file(given_config_file,
+ 						       argv[0], NULL, argv[1], 1);
+ 	}
+ 	else if (actions == ACTION_RENAME_SECTION) {
+ 		int ret;
++		check_blob_write();
+ 		check_argc(argc, 2, 2);
+ 		ret = git_config_rename_section_in_file(given_config_file,
+ 							argv[0], argv[1]);
+@@ -525,6 +547,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	}
+ 	else if (actions == ACTION_REMOVE_SECTION) {
+ 		int ret;
++		check_blob_write();
+ 		check_argc(argc, 1, 1);
+ 		ret = git_config_rename_section_in_file(given_config_file,
+ 							argv[0], NULL);
+diff --git a/cache.h b/cache.h
+index a2621fa..9db5f74 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1134,7 +1134,9 @@ extern int git_config_with_options(config_fn_t fn, void *,
+ extern int git_config_from_parameters(config_fn_t fn, void *data);
+ extern int git_config(config_fn_t fn, void *);
+ extern int git_config_with_options(config_fn_t fn, void *,
+-				   const char *filename, int respect_includes);
++				   const char *filename,
++				   const char *blob_ref,
++				   int respect_includes);
+ extern int git_config_early(config_fn_t fn, void *, const char *repo_config);
+ extern int git_parse_ulong(const char *, unsigned long *);
+ extern int git_config_int(const char *, const char *);
+diff --git a/config.c b/config.c
+index b8c8640..35aa8e2 100644
+--- a/config.c
++++ b/config.c
+@@ -1073,8 +1073,34 @@ int git_config_with_options(config_fn_t fn, void *data,
+ 	return ret == 0 ? found : ret;
+ }
+ 
++static int read_blob_reference(const char *ref,
++			       struct strbuf *sb)
++{
++	unsigned char sha1[20];
++	enum object_type type;
++	void *buf;
++	unsigned long size;
++
++	if (get_sha1(ref, sha1) < 0)
++		return error("unable to resolve config blob '%s'", ref);
++
++	buf = read_sha1_file(sha1, &type, &size);
++	if (!buf)
++		return error("unable to load config blob object '%s'", ref);
++	if (type != OBJ_BLOB) {
++		free(buf);
++		return error("reference '%s' does not point to a blob", ref);
++	}
++
++	/* read_sha1_file always NUL-terminates for us, so size+1 is OK */
++	strbuf_attach(sb, buf, size, size+1);
++	return 0;
++}
++
+ int git_config_with_options(config_fn_t fn, void *data,
+-			    const char *filename, int respect_includes)
++			    const char *filename,
++			    const char *blob_ref,
++			    int respect_includes)
+ {
+ 	char *repo_config = NULL;
+ 	int ret;
+@@ -1093,6 +1119,15 @@ int git_config_with_options(config_fn_t fn, void *data,
+ 	 */
+ 	if (filename)
+ 		return git_config_from_file(fn, filename, data);
++	else if (blob_ref) {
++		struct strbuf buf = STRBUF_INIT;
++		if (read_blob_reference(blob_ref, &buf) < 0)
++			return -1;
++
++		ret = git_config_from_strbuf(fn, blob_ref, &buf, data);
++		strbuf_release(&buf);
++		return ret;
++	}
+ 
+ 	repo_config = git_pathdup("config");
+ 	ret = git_config_early(fn, data, repo_config);
+@@ -1103,7 +1138,7 @@ int git_config(config_fn_t fn, void *data)
+ 
+ int git_config(config_fn_t fn, void *data)
+ {
+-	return git_config_with_options(fn, data, NULL, 1);
++	return git_config_with_options(fn, data, NULL, NULL, 1);
+ }
+ 
+ /*
