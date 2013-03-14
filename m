@@ -1,138 +1,157 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Tag peeling peculiarities
-Date: Thu, 14 Mar 2013 09:40:33 -0400
-Message-ID: <20130314134032.GA9222@sigill.intra.peff.net>
-References: <51409439.5090001@alum.mit.edu>
- <7vwqtb2ood.fsf@alter.siamese.dyndns.org>
- <20130313215800.GA23838@sigill.intra.peff.net>
- <51415516.2070702@alum.mit.edu>
- <20130314052448.GA2300@sigill.intra.peff.net>
- <5141B475.1000707@alum.mit.edu>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH/RFC] http_init: only initialize SSL for https
+Date: Thu, 14 Mar 2013 14:51:19 +0100
+Message-ID: <1363269079-6124-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	git discussion list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 14 14:41:04 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com
+To: git@vger.kernel.org
+X-From: msysgit+bncBDR53PPJ7YHRBV5LQ6FAKGQETCXGXMQ@googlegroups.com Thu Mar 14 14:51:43 2013
+Return-path: <msysgit+bncBDR53PPJ7YHRBV5LQ6FAKGQETCXGXMQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-we0-f192.google.com ([74.125.82.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UG8P1-0004yB-Rt
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 14:41:04 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757984Ab3CNNkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Mar 2013 09:40:36 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51732 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757965Ab3CNNkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Mar 2013 09:40:35 -0400
-Received: (qmail 16132 invoked by uid 107); 14 Mar 2013 13:42:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Mar 2013 09:42:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Mar 2013 09:40:33 -0400
-Content-Disposition: inline
-In-Reply-To: <5141B475.1000707@alum.mit.edu>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218136>
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBV5LQ6FAKGQETCXGXMQ@googlegroups.com>)
+	id 1UG8ZK-0007FE-Qr
+	for gcvm-msysgit@m.gmane.org; Thu, 14 Mar 2013 14:51:42 +0100
+Received: by mail-we0-f192.google.com with SMTP id u54sf630039wey.29
+        for <gcvm-msysgit@m.gmane.org>; Thu, 14 Mar 2013 06:51:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-received:mime-version:x-beenthere:x-received:received-spf
+         :x-received:from:to:cc:subject:date:message-id:x-mailer
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=ck3GJkCSbG0BXNxxkxJKn7dSy8Z6jp7uFCDO6HODNg0=;
+        b=Ux8RRn8Nr7jzfLqJZQxYEw83ISBUZFcKshBICjhr+LIZlDQtLCyEAoBTdFHyzxnFqu
+         Fqx5O799JHIjlMiRs+rpJu4lqPur9XltIREqi8mS/+Uzu61r7RSLdHnNbCKck5GzHKwt
+         efu1UeeabhAKkyBG46VvmwwJhlzYqLaNeVhOoqx1IsfModicEHrW9hzgl0vzbguP6C5V
+         zmMEriHo2n8746BNzYwKnPkrMWL1l2yJ7cNDv3I0Wz2ra+rh12SpxUsYeIuop+4+sNLm
+         AfFvkJf4P+r9aiuJQTGq8Mwpf1OtV2Xy85CBcrnW4afqLhMBcdb6YNQUejzv6f1A4fbC
+        
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:x-beenthere:x-received:received-spf
+         :x-received:from:to:cc:subject:date:message-id:x-mailer
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=ck3GJkCSbG0BXNxxkxJKn7dSy8Z6jp7uFCDO6HODNg0=;
+        b=J9Dijv84T8ZxdGO3iXmSul4qOd6OFlMVntVTouw0ndF1m8XhTRLSqHE9Y27T7UAF6f
+         XMbVGdaGF/lBakzdLWfAUPpU+8G/Ylo+fFY8b33g5LsfKR793uZ8KYa+v/aPLEhAy1s3
+         sYsnlRY2H/C0roxwSE8bGsbQmt22BSYdGefWTd4Hu+oT5ZDr7fzuIQgZfvYSdq8Bl55L
+         dG+6GqdD+AUic72sm2BNnjdg56eceF9bfL3/mhPtZGJ9SnGUD+N/BYpN7P6acpFERzIy
+         nxScXLbfRHulvKFQjKHhEBSpIAeAua00YkvB5MFlWcO+MMOnJRqW/gUxSVTx0b7xTTIk
+         iSlw= 
+X-Received: by 10.180.88.4 with SMTP id bc4mr2484854wib.19.1363269080413;
+        Thu, 14 Mar 2013 06:51:20 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.101.136 with SMTP id fg8ls1724397wib.8.canary; Thu, 14 Mar
+ 2013 06:51:19 -0700 (PDT)
+X-Received: by 10.205.24.134 with SMTP id re6mr286467bkb.7.1363269079624;
+        Thu, 14 Mar 2013 06:51:19 -0700 (PDT)
+Received: from mail-lb0-f180.google.com (mail-lb0-f180.google.com [209.85.217.180])
+        by gmr-mx.google.com with ESMTPS id i9si226657bki.2.2013.03.14.06.51.19
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 14 Mar 2013 06:51:19 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.217.180 as permitted sender) client-ip=209.85.217.180;
+Received: by mail-lb0-f180.google.com with SMTP id q12so1865890lbc.25
+        for <msysgit@googlegroups.com>; Thu, 14 Mar 2013 06:51:19 -0700 (PDT)
+X-Received: by 10.112.44.66 with SMTP id c2mr1164957lbm.69.1363269079389;
+        Thu, 14 Mar 2013 06:51:19 -0700 (PDT)
+Received: from localhost ([77.40.159.131])
+        by mx.google.com with ESMTPS id mq7sm1231452lab.1.2013.03.14.06.51.17
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 14 Mar 2013 06:51:18 -0700 (PDT)
+X-Mailer: git-send-email 1.8.0.msysgit.0.3.gd0186ec
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of kusmabite@gmail.com designates 209.85.217.180 as
+ permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218137>
 
-On Thu, Mar 14, 2013 at 12:28:53PM +0100, Michael Haggerty wrote:
+Since ancient times, we have been calling curl_global_init with the
+CURL_GLOBAL_ALL-flag, which initializes SSL (and the Win32 socket
+stack on Windows).
 
-> Perhaps if peel_ref() *were* 100% reliable, we might be able to use it
-> to avoid object lookups in some other places.
+Initializing SSL takes quite some time on Windows, so let's avoid
+doing it when it's not needed.
 
-In theory, some of the many uses of deref_tag could be adopted. However,
-we do not always have the refname handy at that point (and I believe
-peel_ref's optimization only kicks in during for_each_ref traversals
-anyway).
+timing of echo "" | ./git-remote-http.exe origin http://localhost
 
-It may still be a win to check the packed-refs file before peeling a
-random sha1, as looking up there should be cheaper than actually loading
-the object. But right now, the way the optimization is used is always
-O(1) to just check the last ref loaded. With your recent ref
-refactoring, I think we should be able to do lookups in O(lg n).
+before
 
-> > Another fun fact: upload-pack did not use peel_ref until recently
-> > (435c833, in v1.8.1). So while it is tempting to say "well, this was
-> > always broken, and nobody cared", it was not really; it is a fairly
-> > recent regression in 435c833.
-> 
-> I didn't realize that; thanks for pointing it out.  Although peel_ref()
-> itself has been broken since it was introduced, at least in the sense
-> that it gives wrong answers for tags outside of refs/tags, prior to
-> 435c833 it appears to only have been used for refs/tags.
+best of 10 runs:
+real    0m1.634s
+user    0m0.015s
+sys     0m0.000s
 
-Hmph. I coincidentally ran across another problem with 435c833 today.
-Try this:
+worst of 10 runs:
+real    0m2.701s
+user    0m0.000s
+sys     0m0.000s
 
-  git init repo &&
-  cd repo &&
-  git commit --allow-empty -m one &&
-  git checkout -b other &&
-  git commit --allow-empty -m two &&
-  git checkout master &&
-  git commit --allow-empty -m three &&
-  git pack-refs --all &&
-  git.compile clone --no-local --depth=1 --no-single-branch . foo
+after
 
-I get:
+best of 10 runs:
+real    0m0.018s
+user    0m0.000s
+sys     0m0.000s
 
-  Cloning into 'foo'...
-  fatal: (null) is unknown object
-  remote: Total 0 (delta 0), reused 0 (delta 0)
-  fatal: recursion detected in die handler
-  remote: aborting due to possible repository corruption on the remote side.
-  fatal: error in sideband demultiplexer
+worst of 10 runs:
+real    0m0.024s
+user    0m0.000s
+sys     0m0.015s
 
-This is not due to the same problem you are describing with peel_refs,
-but simply due to the fact that we do not load and parse objects anymore
-(which is the point of the optimization). The client feeds these back to
-us in the "want" list, and we then feed these objects to the revision
-walker, which expects them to be parsed and have their "type" field
-actually filled in.
+Signed-off-by: Erik Faye-Lund <erik.faye-lund@hue.no>
+---
+ http.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-We never noticed before because:
+diff --git a/http.c b/http.c
+index 3b312a8..528a736 100644
+--- a/http.c
++++ b/http.c
+@@ -343,7 +343,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 
+ 	git_config(http_options, NULL);
+ 
+-	curl_global_init(CURL_GLOBAL_ALL);
++	curl_global_init(CURL_GLOBAL_WIN32 | (prefixcmp(url, "https:") ? 0 :
++	    CURL_GLOBAL_SSL));
+ 
+ 	http_proactive_auth = proactive_auth;
+ 
+-- 
+1.8.0.msysgit.0.3.gd0186ec
 
-  1. It only happens with --depth, because otherwise we do not do the
-     revision walk in-process.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-  2. Modern git, when given --depth, will default to --single-branch,
-     and so ask only about HEAD, which we do parse. However, older
-     versions of git (pre v1.7.10) will ask for much more, and trigger
-     the bug.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-     I haven't tried yet, but I suspect you may also be able to trigger
-     it by asking for "clone --depth=1 -b other".
-
-That's the overtly visible symptom. We also check the type in
-ok_to_give_up, so I suspect that can produce subtly wrong results in
-some situations. The solution is to actually parse the objects in
-question, but I need to figure out when is the optimal time. Obviously
-any time we read a "want" line would be enough, but we may be able to
-get by with less. OTOH, it probably doesn't matter that much; the point
-of the optimization was to avoid touching objects for the ref
-advertisement. Once we have a "want", the client really is going to
-fetch objects, and accessing them will probably be lost in the noise.
-
-But that's somewhat off-topic for this discussion. I'll look into it
-further and try to make a patch later today or tomorrow.
-
-> Your patch looks about right aside from its lack of comments :-).  I was
-> going to implement approximately the same thing in a patch series that I
-> am working on, but if you prefer then go ahead and submit your patch and
-> I will rebase my branch on top of it.
-
-I just meant it as a quick sketch, since you said you were working in
-the area. I'm not sure what you are working on. If we don't consider it
-an urgent bugfix, I'm just as happy for you to incorporate the idea into
-what you are doing.
-
-But if we want to do it as a maint-track fix, I can clean up my patch.
-Junio?
-
--Peff
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
