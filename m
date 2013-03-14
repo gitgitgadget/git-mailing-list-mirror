@@ -1,169 +1,322 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v2 3/3] difftool --dir-diff: symlink all files matching the working tree
-Date: Thu, 14 Mar 2013 20:19:41 +0000
-Message-ID: <ae17a152cadc650920c6446a4493384cc2e77309.1363291949.git.john@keeping.me.uk>
-References: <cover.1363206651.git.john@keeping.me.uk>
- <cover.1363291949.git.john@keeping.me.uk>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: [PATCH v3] Allow combined diff to ignore white-spaces
+Date: Thu, 14 Mar 2013 22:03:14 +0100
+Message-ID: <1363294994-3127-1-git-send-email-apelisse@gmail.com>
+References: <7v7glayp4l.fsf@alter.siamese.dyndns.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	David Aguilar <davvid@gmail.com>,
-	Matt McClure <matthewlmcclure@gmail.com>,
-	Tim Henigan <tim.henigan@gmail.com>,
-	John Keeping <john@keeping.me.uk>
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Antoine Pelisse <apelisse@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 14 21:21:08 2013
+X-From: git-owner@vger.kernel.org Thu Mar 14 22:07:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGEeB-0007Eh-Va
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 21:21:08 +0100
+	id 1UGFMl-0007ab-9m
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 22:07:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752020Ab3CNUUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Mar 2013 16:20:39 -0400
-Received: from pichi.aluminati.org ([72.9.246.58]:49096 "EHLO
-	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751970Ab3CNUUg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Mar 2013 16:20:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 4B36A161E53A;
-	Thu, 14 Mar 2013 20:20:36 +0000 (GMT)
-X-Quarantine-ID: <KH8Cro2r2rDN>
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KH8Cro2r2rDN; Thu, 14 Mar 2013 20:20:35 +0000 (GMT)
-Received: from river.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 2A796161E4DB;
-	Thu, 14 Mar 2013 20:20:24 +0000 (GMT)
-X-Mailer: git-send-email 1.8.2.396.g36b63d6
-In-Reply-To: <cover.1363291949.git.john@keeping.me.uk>
-In-Reply-To: <cover.1363291949.git.john@keeping.me.uk>
-References: <cover.1363291949.git.john@keeping.me.uk>
+	id S1752632Ab3CNVGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Mar 2013 17:06:42 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:37406 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751979Ab3CNVGk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Mar 2013 17:06:40 -0400
+Received: by mail-wi0-f173.google.com with SMTP id hq4so4222353wib.0
+        for <git@vger.kernel.org>; Thu, 14 Mar 2013 14:06:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=hxZLFXnFYRb9UElCQ54LSEuXQmiesTKCoFIO/pfC+TE=;
+        b=JW3sRU5NHYGhqT7Ye0aReFMem5N8SONEW1tBtNspCTAvTKW6+nwFCFGEkQKTrJbjc1
+         XkNQXrbUyUW+aVTG0hJpFQZtXkLSpefwikgeyDkQp5kna45aOlbtz+Y6GxpeXHuZbu6U
+         0JI3314GuE7XuGM9F1VlVIqYjilNhlOOSjswKMqo68TRIcRgNe4NSL/wHYBZbi65N22/
+         uT+SRQXq8QttLYfrL3km0fipBqoMJEHSyZgxOuHKvYJI/zz5x0yJ64uSf5qEhuGo5o0T
+         Vpp50RQR3q4BIuGuyyGhebvmBL/NHcGq5AakbL6Ooqt+STVTeyT6ye0gyxzGuxsE7kHv
+         v04Q==
+X-Received: by 10.194.89.169 with SMTP id bp9mr6928027wjb.57.1363295199351;
+        Thu, 14 Mar 2013 14:06:39 -0700 (PDT)
+Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
+        by mx.google.com with ESMTPS id fv2sm6550061wib.6.2013.03.14.14.06.37
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 14 Mar 2013 14:06:38 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <7v7glayp4l.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218168>
 
-Some users like to edit files in their diff tool when using "git
-difftool --dir-diff --symlink" to compare against the working tree but
-difftool currently only created symlinks when a file contains unstaged
-changes.
+Currently, it's not possible to use the space-ignoring options (-b, -w,
+--ignore-space-at-eol) with combined diff. It makes it pretty impossible
+to read a merge between a branch that changed all tabs to spaces, and a
+branch with functional changes.
 
-Change this behaviour so that symlinks are created whenever the
-right-hand side of the comparison has the same SHA1 as the file in the
-working tree.
+Pass diff flags to diff engine, so that combined diff behaves as normal
+diff does with spaces.
+Also coalesce lines that are removed from both (or more) parents.
 
-Note that textconv filters are handled in the same way as by git-diff
-and if a clean filter is not the inverse of its smudge filter we already
-get a null SHA1 from "diff --raw" and will symlink the file without
-going through the new hash-object based check.
+It also means that a conflict-less merge done using a ignore-* strategy
+option will not show any conflict if shown in combined-diff using the
+same option.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
-
+Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
 ---
- Documentation/git-difftool.txt |  4 +++-
- git-difftool.perl              | 21 ++++++++++++++++++---
- t/t7800-difftool.sh            | 22 ++++++++++++++++++++++
- 3 files changed, 43 insertions(+), 4 deletions(-)
+Changes:
+- Fixed comments
+- Fixed tests (following Johannes suggestions)
 
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index e575fea..8361e6e 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -72,7 +72,9 @@ with custom merge tool commands and has the same value as `$MERGED`.
- --symlinks::
- --no-symlinks::
- 	'git difftool''s default behavior is create symlinks to the
--	working tree when run in `--dir-diff` mode.
-+	working tree when run in `--dir-diff` mode and the right-hand
-+	side of the comparison yields the same content as the file in
-+	the working tree.
- +
- Specifying `--no-symlinks` instructs 'git difftool' to create copies
- instead.  `--no-symlinks` is the default on Windows.
-diff --git a/git-difftool.perl b/git-difftool.perl
-index e594f9c..663640d 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -83,6 +83,21 @@ sub exit_cleanup
- 	exit($status | ($status >> 8));
+ combine-diff.c           |   57 +++++++++++++++++++++---
+ t/t4038-diff-combined.sh |  111 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 161 insertions(+), 7 deletions(-)
+
+diff --git a/combine-diff.c b/combine-diff.c
+index 35d41cd..6288485 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -5,6 +5,7 @@
+ #include "diffcore.h"
+ #include "quote.h"
+ #include "xdiff-interface.h"
++#include "xdiff/xmacros.h"
+ #include "log-tree.h"
+ #include "refs.h"
+ #include "userdiff.h"
+@@ -122,7 +123,47 @@ static char *grab_blob(const unsigned char *sha1, unsigned int mode,
+ 	return blob;
  }
- 
-+sub use_wt_file
+
+-static void append_lost(struct sline *sline, int n, const char *line, int len)
++static int match_string_spaces(const char *line1, int len1,
++			       const char *line2, int len2,
++			       long flags)
 +{
-+	my ($repo, $workdir, $file, $sha1, $symlinks) = @_;
-+	my $null_sha1 = '0' x 40;
-+
-+	if ($sha1 eq $null_sha1) {
-+		return 1;
-+	} elsif (not $symlinks) {
-+		return 0;
++	if (flags & XDF_WHITESPACE_FLAGS) {
++		for (; len1 > 0 && XDL_ISSPACE(line1[len1 - 1]); len1--);
++		for (; len2 > 0 && XDL_ISSPACE(line2[len2 - 1]); len2--);
 +	}
 +
-+	my $wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
-+	return $sha1 eq $wt_sha1;
++	if (!(flags & (XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE)))
++		return (len1 == len2 && !memcmp(line1, line2, len1));
++
++	while (len1 > 0 && len2 > 0) {
++		len1--;
++		len2--;
++		if (XDL_ISSPACE(line1[len1]) || XDL_ISSPACE(line2[len2])) {
++			if ((flags & XDF_IGNORE_WHITESPACE_CHANGE) &&
++			    (!XDL_ISSPACE(line1[len1]) || !XDL_ISSPACE(line2[len2])))
++				return 0;
++
++			for (; len1 > 0 && XDL_ISSPACE(line1[len1]); len1--);
++			for (; len2 > 0 && XDL_ISSPACE(line2[len2]); len2--);
++		}
++		if (line1[len1] != line2[len2])
++			return 0;
++	}
++
++	if (flags & XDF_IGNORE_WHITESPACE) {
++		/* Consume remaining spaces */
++		for (; len1 > 0 && XDL_ISSPACE(line1[len1 - 1]); len1--);
++		for (; len2 > 0 && XDL_ISSPACE(line2[len2 - 1]); len2--);
++	}
++
++	/* We matched full line1 and line2 */
++	if (!len1 && !len2)
++		return 1;
++
++	return 0;
 +}
 +
- sub setup_dir_diff
++static void append_lost(struct sline *sline, int n, const char *line, int len, long flags)
  {
- 	my ($repo, $workdir, $symlinks) = @_;
-@@ -159,10 +174,10 @@ EOF
- 		}
- 
- 		if ($rmode ne $null_mode) {
--			if ($rsha1 ne $null_sha1) {
--				$rindex .= "$rmode $rsha1\t$dst_path\0";
--			} else {
-+			if (use_wt_file($repo, $workdir, $dst_path, $rsha1, $symlinks)) {
- 				push(@working_tree, $dst_path);
-+			} else {
-+				$rindex .= "$rmode $rsha1\t$dst_path\0";
- 			}
- 		}
+ 	struct lline *lline;
+ 	unsigned long this_mask = (1UL<<n);
+@@ -133,8 +174,8 @@ static void append_lost(struct sline *sline, int n, const char *line, int len)
+ 	if (sline->lost_head) {
+ 		lline = sline->next_lost;
+ 		while (lline) {
+-			if (lline->len == len &&
+-			    !memcmp(lline->line, line, len)) {
++			if (match_string_spaces(lline->line, lline->len,
++						line, len, flags)) {
+ 				lline->parent_map |= this_mask;
+ 				sline->next_lost = lline->next;
+ 				return;
+@@ -162,6 +203,7 @@ struct combine_diff_state {
+ 	int n;
+ 	struct sline *sline;
+ 	struct sline *lost_bucket;
++	long flags;
+ };
+
+ static void consume_line(void *state_, char *line, unsigned long len)
+@@ -201,7 +243,7 @@ static void consume_line(void *state_, char *line, unsigned long len)
+ 		return; /* not in any hunk yet */
+ 	switch (line[0]) {
+ 	case '-':
+-		append_lost(state->lost_bucket, state->n, line+1, len-1);
++		append_lost(state->lost_bucket, state->n, line+1, len-1, state->flags);
+ 		break;
+ 	case '+':
+ 		state->sline[state->lno-1].flag |= state->nmask;
+@@ -215,7 +257,7 @@ static void combine_diff(const unsigned char *parent, unsigned int mode,
+ 			 struct sline *sline, unsigned int cnt, int n,
+ 			 int num_parent, int result_deleted,
+ 			 struct userdiff_driver *textconv,
+-			 const char *path)
++			 const char *path, long flags)
+ {
+ 	unsigned int p_lno, lno;
+ 	unsigned long nmask = (1UL << n);
+@@ -231,9 +273,10 @@ static void combine_diff(const unsigned char *parent, unsigned int mode,
+ 	parent_file.ptr = grab_blob(parent, mode, &sz, textconv, path);
+ 	parent_file.size = sz;
+ 	memset(&xpp, 0, sizeof(xpp));
+-	xpp.flags = 0;
++	xpp.flags = flags;
+ 	memset(&xecfg, 0, sizeof(xecfg));
+ 	memset(&state, 0, sizeof(state));
++	state.flags = flags;
+ 	state.nmask = nmask;
+ 	state.sline = sline;
+ 	state.lno = 1;
+@@ -962,7 +1005,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 				     elem->parent[i].mode,
+ 				     &result_file, sline,
+ 				     cnt, i, num_parent, result_deleted,
+-				     textconv, elem->path);
++				     textconv, elem->path, opt->xdl_opts);
  	}
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 3aab6e1..70e09b6 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -340,6 +340,28 @@ test_expect_success PERL 'difftool --dir-diff' '
- 	stdin_contains file <output
+
+ 	show_hunks = make_hunks(sline, cnt, num_parent, dense);
+diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
+index 614425a..b7e16a7 100755
+--- a/t/t4038-diff-combined.sh
++++ b/t/t4038-diff-combined.sh
+@@ -3,6 +3,7 @@
+ test_description='combined diff'
+
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/diff-lib.sh
+
+ setup_helper () {
+ 	one=$1 branch=$2 side=$3 &&
+@@ -113,4 +114,114 @@ test_expect_success 'check --cc --raw with forty trees' '
+ 	grep "^::::::::::::::::::::::::::::::::::::::::[^:]" out
  '
- 
-+write_script .git/CHECK_SYMLINKS <<\EOF
-+for f in file file2 sub/sub
-+do
-+	echo "$f"
-+	readlink "$2/$f"
-+done >actual
-+EOF
+
++test_expect_success 'setup combined ignore spaces' '
++	git checkout master &&
++	>test &&
++	git add test &&
++	git commit -m initial &&
 +
-+test_expect_success PERL,SYMLINKS 'difftool --dir-diff --symlink without unstaged changes' '
-+	cat <<EOF >expect &&
-+file
-+$(pwd)/file
-+file2
-+$(pwd)/file2
-+sub/sub
-+$(pwd)/sub/sub
-+EOF
-+	git difftool --dir-diff --symlink \
-+		--extcmd "./.git/CHECK_SYMLINKS" branch HEAD &&
-+	test_cmp actual expect
++	tr -d Q <<-\EOF >test &&
++	always coalesce
++	eol space coalesce Q
++	space  change coalesce
++	all spa ces coalesce
++	eol spaces Q
++	space  change
++	all spa ces
++	EOF
++	git commit -m "test space change" -a &&
++
++	git checkout -b side HEAD^ &&
++	tr -d Q <<-\EOF >test &&
++	always coalesce
++	eol space coalesce
++	space change coalesce
++	all spaces coalesce
++	eol spaces
++	space change
++	all spaces
++	EOF
++	git commit -m "test other space changes" -a &&
++
++	test_must_fail git merge master &&
++	tr -d Q <<-\EOF >test &&
++	eol spaces Q
++	space  change
++	all spa ces
++	EOF
++	git commit -m merged -a
 +'
 +
- test_expect_success PERL 'difftool --dir-diff ignores --prompt' '
- 	git difftool --dir-diff --prompt --extcmd ls branch >output &&
- 	stdin_contains sub <output &&
--- 
-1.8.2.396.g36b63d6
++test_expect_success 'check combined output (no ignore space)' '
++	git show >actual.tmp &&
++	sed -e "1,/^@@@/d" < actual.tmp >actual &&
++	tr -d Q <<-\EOF >expected &&
++	--always coalesce
++	- eol space coalesce
++	- space change coalesce
++	- all spaces coalesce
++	- eol spaces
++	- space change
++	- all spaces
++	 -eol space coalesce Q
++	 -space  change coalesce
++	 -all spa ces coalesce
++	+ eol spaces Q
++	+ space  change
++	+ all spa ces
++	EOF
++	compare_diff_patch expected actual
++'
++
++test_expect_success 'check combined output (ignore space at eol)' '
++	git show --ignore-space-at-eol >actual.tmp &&
++	sed -e "1,/^@@@/d" < actual.tmp >actual &&
++	tr -d Q <<-\EOF >expected &&
++	--always coalesce
++	--eol space coalesce
++	- space change coalesce
++	- all spaces coalesce
++	 -space  change coalesce
++	 -all spa ces coalesce
++	  eol spaces Q
++	- space change
++	- all spaces
++	+ space  change
++	+ all spa ces
++	EOF
++	compare_diff_patch expected actual
++'
++
++test_expect_success 'check combined output (ignore space change)' '
++	git show -b >actual.tmp &&
++	sed -e "1,/^@@@/d" < actual.tmp >actual &&
++	tr -d Q <<-\EOF >expected &&
++	--always coalesce
++	--eol space coalesce
++	--space change coalesce
++	- all spaces coalesce
++	 -all spa ces coalesce
++	  eol spaces Q
++	  space  change
++	- all spaces
++	+ all spa ces
++	EOF
++	compare_diff_patch expected actual
++'
++
++test_expect_success 'check combined output (ignore all spaces)' '
++	git show -w >actual.tmp &&
++	sed -e "1,/^@@@/d" < actual.tmp >actual &&
++	tr -d Q <<-\EOF >expected &&
++	--always coalesce
++	--eol space coalesce
++	--space change coalesce
++	--all spaces coalesce
++	  eol spaces Q
++	  space  change
++	  all spa ces
++	EOF
++	compare_diff_patch expected actual
++'
++
+ test_done
+--
+1.7.9.5
