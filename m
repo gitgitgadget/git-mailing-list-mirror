@@ -1,83 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Allow combined diff to ignore white-spaces
-Date: Thu, 14 Mar 2013 14:43:19 -0700
-Message-ID: <7v1ubhy7wo.fsf@alter.siamese.dyndns.org>
-References: <7v7glayp4l.fsf@alter.siamese.dyndns.org>
- <1363294994-3127-1-git-send-email-apelisse@gmail.com>
+Subject: Re: [PATCH 2/2] entry: fix filter lookup
+Date: Thu, 14 Mar 2013 14:50:45 -0700
+Message-ID: <7vwqt9wszu.fsf@alter.siamese.dyndns.org>
+References: <7vehfhyjgv.fsf@alter.siamese.dyndns.org>
+ <cover.1363291173.git.john@keeping.me.uk>
+ <bede6d48dd44f7ed4a11da5821bb112b700475d5.1363291173.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 14 22:43:51 2013
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Matt McClure <matthewlmcclure@gmail.com>,
+	Tim Henigan <tim.henigan@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Mar 14 22:51:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGFwD-0006A7-4c
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 22:43:49 +0100
+	id 1UGG3R-0005bJ-SY
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 22:51:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753122Ab3CNVnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Mar 2013 17:43:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43221 "EHLO
+	id S1753140Ab3CNVuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Mar 2013 17:50:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48509 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753110Ab3CNVnV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Mar 2013 17:43:21 -0400
+	id S1752292Ab3CNVuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Mar 2013 17:50:50 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 138E3CA9B;
-	Thu, 14 Mar 2013 17:43:21 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71F11CD8F;
+	Thu, 14 Mar 2013 17:50:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jcLWHpGhLjgJWcq2/mWULSUX5WI=; b=JfVOrd
-	dN0WZ3ggUPr+KbXEzhZGPMHw3cJFTM5XwCcAUihf98evIi8Y8EAg59lQl8PCcTr3
-	/MblJRG7jBsBZGAl19JqDPe7m5psUbN4xsI2k9SP+7RKd5N07awIDHw7T8j0Sq9K
-	kpza8VRzlasb2Ac/aveX6zdfiKB34CNQy7SYY=
+	:content-type; s=sasl; bh=ohTiGqWLvcnyajP7IZPSwKM+Jwg=; b=wEleNv
+	5/g6BKaRq7ig/T5kcUpPPZVgWndeT6shhTTh2DUU40LAhLn5qGOjd2QIATy85CDT
+	9Ydz+Rl0xOQE5ZuiCQ2nl/BzUoRGgB90tgzaxDJUIPse9zazY1njdFXe6V4q8qQw
+	8M3KBe0vzokCgomEE1yXXfHnsrS37w8RXUmAY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uWAEv51l7WsZS6GgpNUPxxCtC79/kBof
-	79sVc/LePsByIn2N6da5RAnIF16/lM3GqAiUoWvCF1QjHR+LQWnM9tzun5tSZySR
-	zWcSF0h1JeHvkjcN3IBD+cRv0wlNeuijsOYPIu6iuefnPgMaoH/LA6Rar1sinNt0
-	oGIvvLSuBcU=
+	:content-type; q=dns; s=sasl; b=swDQqbK8g/8iF2kchIRUnkORSigkV7Xn
+	dhkLl1etzxQ8GYhkKsIcV18VSCXDtCVrjlfvQzIsveWb6Bc6Bo9alY4m75zCsXwv
+	HypWyuJRhmV8wBxkSH/W/oLxgW87F3FwObsYHj0+G4+6+kvyAuf8keiko4Muctp2
+	CW05LLO0+TU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 08F38CA9A;
-	Thu, 14 Mar 2013 17:43:21 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64C94CD8E;
+	Thu, 14 Mar 2013 17:50:47 -0400 (EDT)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8150CCA98; Thu, 14 Mar 2013
- 17:43:20 -0400 (EDT)
-In-Reply-To: <1363294994-3127-1-git-send-email-apelisse@gmail.com> (Antoine
- Pelisse's message of "Thu, 14 Mar 2013 22:03:14 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA956CD8C; Thu, 14 Mar 2013
+ 17:50:46 -0400 (EDT)
+In-Reply-To: <bede6d48dd44f7ed4a11da5821bb112b700475d5.1363291173.git.john@keeping.me.uk>
+ (John Keeping's message of "Thu, 14 Mar 2013 20:00:51 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3053DDF6-8CF0-11E2-B743-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3A4E213A-8CF1-11E2-8783-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218172>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+John Keeping <john@keeping.me.uk> writes:
 
-> +test_expect_success 'check combined output (no ignore space)' '
-> +	git show >actual.tmp &&
-> +	sed -e "1,/^@@@/d" < actual.tmp >actual &&
-> +	tr -d Q <<-\EOF >expected &&
-> +	--always coalesce
-> +	- eol space coalesce
-> +	- space change coalesce
-> +	- all spaces coalesce
-> +	- eol spaces
-> +	- space change
-> +	- all spaces
-> +	 -eol space coalesce Q
-> +	 -space  change coalesce
-> +	 -all spa ces coalesce
-> +	+ eol spaces Q
-> +	+ space  change
-> +	+ all spa ces
-> +	EOF
-> +	compare_diff_patch expected actual
+> diff --git a/t/t2003-checkout-cache-mkdir.sh b/t/t2003-checkout-cache-mkdir.sh
+> index 63fd0a8..4c97468 100755
+> --- a/t/t2003-checkout-cache-mkdir.sh
+> +++ b/t/t2003-checkout-cache-mkdir.sh
+> @@ -90,4 +90,30 @@ test_expect_success SYMLINKS 'use --prefix=tmp- where tmp-path1 is a symlink' '
+>  	test -f tmp-path1/file1
+>  '
+>  
+> +test_expect_success 'apply filter from working tree .gitattributes with --prefix' '
+> +	rm -fr path0 path1 path2 tmp* &&
+> +	mkdir path1 &&
+> +	mkdir tmp &&
+> +	git config filter.replace-all.smudge "sed -e s/./=/g" &&
+> +	git config filter.replace-all.clean cat &&
+> +	git config filter.replace-all.required true &&
+> +	echo "file1 filter=replace-all" >path1/.gitattributes &&
+> +	git checkout-index --prefix=tmp/ -f -a &&
+> +	echo frotz >expected &&
+> +	test_cmp expected tmp/path0 &&
+> +	echo ====== >expected &&
+> +	test_cmp expected tmp/path1/file1
+> +'
+> +
+> +test_expect_success 'apply CRLF filter from working tree .gitattributes with --prefix' '
+> +	rm -fr path0 path1 path2 tmp* &&
+> +	mkdir path1 &&
+> +	mkdir tmp &&
+> +	echo "file1 eol=crlf" >path1/.gitattributes &&
+> +	git checkout-index --prefix=tmp/ -f -a &&
+> +	echo rezrovQ >expected &&
+> +	tr \\015 Q <tmp/path1/file1 >actual &&
+> +	test_cmp expected actual
 > +'
 
-Nicely constructed ;-)
-
-Thanks.
+Nicely done.  Thanks.
