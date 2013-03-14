@@ -1,61 +1,83 @@
-From: Alberto Bertogli <albertito@blitiri.com.ar>
-Subject: [ANN] git-arr 0.11
-Date: Wed, 13 Mar 2013 23:41:43 +0000
-Message-ID: <20130313234143.GD14686@blitiri.com.ar>
+From: Lukas Fleischer <git@cryptocrack.de>
+Subject: [PATCH] setup.c: Remove duplicate code from prefix_pathspec()
+Date: Thu, 14 Mar 2013 01:24:55 +0100
+Message-ID: <1363220695-27911-1-git-send-email-git@cryptocrack.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andrew Wong <andrew.kw.w@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 14 01:08:24 2013
+X-From: git-owner@vger.kernel.org Thu Mar 14 01:25:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UFviZ-0004n1-N8
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 01:08:24 +0100
+	id 1UFvzA-00031e-P8
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 01:25:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933401Ab3CNAH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Mar 2013 20:07:57 -0400
-Received: from alerce.vps.bitfolk.com ([85.119.82.134]:48954 "EHLO
-	alerce.vps.bitfolk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932588Ab3CNAH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Mar 2013 20:07:57 -0400
-X-Greylist: delayed 1520 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Mar 2013 20:07:57 EDT
-Received: from 85-91-26-102.ptr.magnet.ie ([85.91.26.102] helo=blitiri.com.ar)
-	by alerce.vps.bitfolk.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.76)
-	(envelope-from <albertito@blitiri.com.ar>)
-	id 1UFvJc-0001yK-5I
-	for git@vger.kernel.org; Wed, 13 Mar 2013 20:42:36 -0300
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755657Ab3CNAZC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Mar 2013 20:25:02 -0400
+Received: from elnino.cryptocrack.de ([46.165.227.75]:29476 "EHLO
+	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754015Ab3CNAZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Mar 2013 20:25:01 -0400
+Received: from localhost (p57B459C4.dip.t-dialin.net [87.180.89.196])
+	by elnino.cryptocrack.de (OpenSMTPD) with ESMTP id 17265fe2
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128);
+	Thu, 14 Mar 2013 01:24:56 +0100 (CET)
+X-Mailer: git-send-email 1.8.2.rc2.352.g908df73
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218108>
 
+Only check for ',' explicitly and handle both ')' and '\0' in the else
+branch. strcspn() can only return ',', ')' and '\0' at this point so th=
+e
+new code is completely equivalent to what we had before.
 
-Hi!
+This also fixes following GCC warning:
 
-I wanted to let you know about git-arr, which is a git repository
-browser that can generate static HTML instead of having to run
-dynamically.
+    setup.c: In function =E2=80=98get_pathspec=E2=80=99:
+    setup.c:207:8: warning: =E2=80=98nextat=E2=80=99 may be used uninit=
+ialized in this function [-Wmaybe-uninitialized]
+    setup.c:205:15: note: =E2=80=98nextat=E2=80=99 was declared here
 
-It is smaller, with less features and a different set of tradeoffs than
-gitweb or cgit, but if you have a reduced environment, the static
-generation can be useful.
+Signed-off-by: Lukas Fleischer <git@cryptocrack.de>
+---
+This removes the only warning that currently occurs when building the
+next branch.
 
-You can find more details on http://blitiri.com.ar/p/git-arr/, and see
-an example of the generated output at http://blitiri.com.ar/git/.
+Junio: Feel free to squash this into Andrew's patch (805da4dee15b,
+"setup.c: stop prefix_pathspec() from looping past the end of string").
 
+ setup.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-It's written in Python, uses the Bottle web framework, and is open
-source under the MIT licence.
-
-Please note it's new and there are still some rough edges that I
-obviously intend to fix, but it's been working fine for my use cases, so
-all feedback is welcome :)
-
-Thanks a lot!
-		Alberto
+diff --git a/setup.c b/setup.c
+index d2335a8..94c1e61 100644
+--- a/setup.c
++++ b/setup.c
+@@ -207,12 +207,11 @@ static const char *prefix_pathspec(const char *pr=
+efix, int prefixlen, const char
+ 		     *copyfrom && *copyfrom !=3D ')';
+ 		     copyfrom =3D nextat) {
+ 			size_t len =3D strcspn(copyfrom, ",)");
+-			if (copyfrom[len] =3D=3D '\0')
+-				nextat =3D copyfrom + len;
+-			else if (copyfrom[len] =3D=3D ')')
+-				nextat =3D copyfrom + len;
+-			else if (copyfrom[len] =3D=3D ',')
++			if (copyfrom[len] =3D=3D ',')
+ 				nextat =3D copyfrom + len + 1;
++			else
++				/* handle ')' and '\0' */
++				nextat =3D copyfrom + len;
+ 			if (!len)
+ 				continue;
+ 			for (i =3D 0; i < ARRAY_SIZE(pathspec_magic); i++)
+--=20
+1.8.2.rc2.352.g908df73
