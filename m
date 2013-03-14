@@ -1,83 +1,116 @@
-From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH] Make core.sharedRepository work under cygwin 1.7
-Date: Thu, 14 Mar 2013 17:01:38 +0100
-Message-ID: <201303141701.39215.tboegi@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] http_init: only initialize SSL for https
+Date: Thu, 14 Mar 2013 09:04:24 -0700
+Message-ID: <7vy5dqx913.fsf@alter.siamese.dyndns.org>
+References: <1363269079-6124-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 14 17:02:18 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org,  msysgit@googlegroups.com
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRBC7KQ6FAKGQEBZZAHJY@googlegroups.com Thu Mar 14 17:04:55 2013
+Return-path: <msysgit+bncBCG77UMM3EJRBC7KQ6FAKGQEBZZAHJY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gh0-f184.google.com ([209.85.160.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGAbc-00086R-VP
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 17:02:13 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933610Ab3CNQBq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Mar 2013 12:01:46 -0400
-Received: from mout.web.de ([212.227.17.12]:53046 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932394Ab3CNQBq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Mar 2013 12:01:46 -0400
-Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb003) with
- ESMTPA (Nemesis) id 0MJCR8-1UIvkg0NqM-002P0P; Thu, 14 Mar 2013 17:01:44 +0100
-X-Provags-ID: V02:K0:jRJG1qFsx3he4rqJmRA4ihflxgP+lGXsrQrRCOQ4Alw
- mzaLaAO9ORbwZPNJaWbAhnVRN1uaWTTzenhaPj4mi+v4YqIOsC
- JWAJlLWBuIshLl4vWmhDvWdYwoos6uu3iPoi2d3doxT5g31NHf
- D9PokzhSeR26+DBjJwu+JuRsSx5moMNfkNOLAEljMrmcvwnzYs
- V99NtdvjfMyPpfYIskqSg==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218150>
+	(envelope-from <msysgit+bncBCG77UMM3EJRBC7KQ6FAKGQEBZZAHJY@googlegroups.com>)
+	id 1UGAeA-0002mq-VU
+	for gcvm-msysgit@m.gmane.org; Thu, 14 Mar 2013 17:04:51 +0100
+Received: by mail-gh0-f184.google.com with SMTP id f11sf940890ghb.21
+        for <gcvm-msysgit@m.gmane.org>; Thu, 14 Mar 2013 09:04:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-received:x-beenthere:x-received:received-spf:from:to:cc:subject
+         :references:date:in-reply-to:message-id:user-agent:mime-version
+         :x-pobox-relay-id:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=LnA78S/90jXLYzzFA5zQhYhqTA1Ar9CKWevAYHfs+4Y=;
+        b=v/NYfMUEcJn3T6cGWHkI5GA1mrMkDpcWEF+pjvDdCtR76nLnkA/B3TLsHNP7rczfNK
+         jf22b1V3gl7a4G4aJwfECMkN/o2VsWg0R4THGaHe/9ESd+NrQcCIimSHvMYPL0O+Q6o/
+         NZmYcfLj+v55CWcEWq6HUHVxm7IB9l8ehNuiRWwKi3XgPsjffKbjKeUvI7lXluybDjQo
+         vsrVN94haz7BUDxwleXKbIwGF7Joq/FDOY8UAHsw0+uBHWqoEvcV6XYhSjfvxTDUbrWs
+         5JwNb0cvVbwhtABHA2WEWwXOeZPaP/kyO5h 
+X-Received: by 10.50.5.197 with SMTP id u5mr3883573igu.0.1363277067849;
+        Thu, 14 Mar 2013 09:04:27 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.152.165 with SMTP id uz5ls40902igb.34.gmail; Thu, 14 Mar
+ 2013 09:04:26 -0700 (PDT)
+X-Received: by 10.68.132.73 with SMTP id os9mr1711377pbb.4.1363277066950;
+        Thu, 14 Mar 2013 09:04:26 -0700 (PDT)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id tj3si1209665pbc.0.2013.03.14.09.04.26;
+        Thu, 14 Mar 2013 09:04:26 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of junio@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34C7EBC0C;
+	Thu, 14 Mar 2013 12:04:26 -0400 (EDT)
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 289A9BC0B;
+	Thu, 14 Mar 2013 12:04:26 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F89CBC09; Thu, 14 Mar 2013
+ 12:04:25 -0400 (EDT)
+In-Reply-To: <1363269079-6124-1-git-send-email-kusmabite@gmail.com> (Erik
+ Faye-Lund's message of "Thu, 14 Mar 2013 14:51:19 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D7C1FF80-8CC0-11E2-8CA6-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: best guess record for domain of junio@b-sasl-quonix.pobox.com
+ designates 208.72.237.35 as permitted sender) smtp.mail=junio@b-sasl-quonix.pobox.com;
+       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218151>
 
-When core.sharedRepository is used, set_shared_perm() in path.c
-needs lstat() to return the correct POSIX permissions.
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-The default for cygwin is core.ignoreCygwinFSTricks =3D false, which
-means that a simplified and fast implementation of lstat() is used.
+> diff --git a/http.c b/http.c
+> index 3b312a8..528a736 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -343,7 +343,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+>  
+>  	git_config(http_options, NULL);
+>  
+> -	curl_global_init(CURL_GLOBAL_ALL);
+> +	curl_global_init(CURL_GLOBAL_WIN32 | (prefixcmp(url, "https:") ? 0 :
+> +	    CURL_GLOBAL_SSL));
 
-Especially the file permission bits are wrong in cygwin_lstat_fn():
-The read-only attribute of a file is used to calculate
-the permissions, resulting in either rw-r--r-- or r--r--r--
+The first and obvious question is what the symbol with a name
+specific to one single platform doing in this generic codepath.
+In order to get convinced that the patch does not regress, one
+somehow need to know that bits in ALL other than WIN32 and SSL
+do not matter (or there is no such bit).
 
-Use a compile switch IGNORECYGWINFSTRICKS to disable the usage
-of cygwin_lstat_fn() only in path.c
+I'd understand if it were "ALL & ~SSL" though.
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- compat/cygwin.h | 2 ++
- path.c          | 2 ++
- 2 files changed, 4 insertions(+)
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-diff --git a/compat/cygwin.h b/compat/cygwin.h
-index a3229f5..984efbe 100644
---- a/compat/cygwin.h
-+++ b/compat/cygwin.h
-@@ -5,5 +5,7 @@ typedef int (*stat_fn_t)(const char*, struct stat*);
- extern stat_fn_t cygwin_stat_fn;
- extern stat_fn_t cygwin_lstat_fn;
-=20
-+#ifndef IGNORECYGWINFSTRICKS
- #define stat(path, buf) (*cygwin_stat_fn)(path, buf)
- #define lstat(path, buf) (*cygwin_lstat_fn)(path, buf)
-+#endif
-diff --git a/path.c b/path.c
-index d3d3f8b..0acfabf 100644
---- a/path.c
-+++ b/path.c
-@@ -10,6 +10,8 @@
-  *
-  * which is what it's designed for.
-  */
-+#define IGNORECYGWINFSTRICKS
-+
- #include "cache.h"
- #include "strbuf.h"
- #include "string-list.h"
---=20
-1.8.1.3
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
