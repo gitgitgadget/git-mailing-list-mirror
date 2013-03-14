@@ -1,75 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Delivery Status Notification (Failure)
-Date: Thu, 14 Mar 2013 15:12:28 -0700
-Message-ID: <7vsj3xwrzn.fsf@alter.siamese.dyndns.org>
-References: <CAN_hzmqrrue8jif3AJv4pZwmyMpQ6u558HaRX6dQKZCF0c_H1w@mail.gmail.com>
- <bcaec5396b50ba47be04d7e99955@google.com>
- <CAN_hzmomGYpfh1MchCnrSwv3jv201DL2wLEXeYrG+=eNKwX4Yw@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2 3/3] difftool --dir-diff: symlink all files matching
+ the working tree
+Date: Thu, 14 Mar 2013 22:24:15 +0000
+Message-ID: <20130314222415.GC4256@serenity.lan>
+References: <cover.1363206651.git.john@keeping.me.uk>
+ <cover.1363291949.git.john@keeping.me.uk>
+ <ae17a152cadc650920c6446a4493384cc2e77309.1363291949.git.john@keeping.me.uk>
+ <7v620ty8lc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Harring Figueiredo <harringf@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 14 23:13:38 2013
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Matt McClure <matthewlmcclure@gmail.com>,
+	Tim Henigan <tim.henigan@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 14 23:24:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGGP0-0003JX-2M
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 23:13:34 +0100
+	id 1UGGZz-0006dq-Na
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Mar 2013 23:24:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753305Ab3CNWND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Mar 2013 18:13:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35249 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753411Ab3CNWMb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Mar 2013 18:12:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2782BE06;
-	Thu, 14 Mar 2013 18:12:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zFNcfZ88j9LoYW767xkl6uH43jo=; b=hnZWeA
-	NI4cE9qWCWd4/rO1PPUUr4MUyh3EIGf4hbrpgclprYxhVzBEbhuFp75bLdpzAcDb
-	LADk1j4Y2NsD5touERVYwTkWzYXg+RFgtuSCLVn1dByYrUJAFkbU4gsV5ltxoJfm
-	+7+Fg3kIRrYU7nSKZQEBd7LoUFhi8icYBsRus=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OX1KmkeFyfsHhdVmVL6QtPh6i5JnPoA6
-	MAVZyFvelwJ+Ok+813gpwJHITrZxpEtFR2fvVyt/eMc+5hC5h5wtTzUiMn8LVGnq
-	dIDcwOHuys3EUWyKQgIsXAwvLBQSXWjSzUVeJfRtzjXFy2X6gJEoGBkUywGiQL3/
-	FeRAlJewUig=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8339BE05;
-	Thu, 14 Mar 2013 18:12:30 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E5C1BE04; Thu, 14 Mar 2013
- 18:12:30 -0400 (EDT)
-In-Reply-To: <CAN_hzmomGYpfh1MchCnrSwv3jv201DL2wLEXeYrG+=eNKwX4Yw@mail.gmail.com> (Harring
- Figueiredo's message of "Thu, 14 Mar 2013 18:01:41 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4334C788-8CF4-11E2-985B-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753296Ab3CNWY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Mar 2013 18:24:29 -0400
+Received: from pichi.aluminati.org ([72.9.246.58]:57045 "EHLO
+	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753273Ab3CNWY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Mar 2013 18:24:28 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 53636161E47D;
+	Thu, 14 Mar 2013 22:24:27 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bW3RbmSSzMH4; Thu, 14 Mar 2013 22:24:26 +0000 (GMT)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id BDE8E161E291;
+	Thu, 14 Mar 2013 22:24:18 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7v620ty8lc.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218175>
 
-Harring Figueiredo <harringf@gmail.com> writes:
+On Thu, Mar 14, 2013 at 02:28:31PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> > index 3aab6e1..70e09b6 100755
+> > --- a/t/t7800-difftool.sh
+> > +++ b/t/t7800-difftool.sh
+> > @@ -340,6 +340,28 @@ test_expect_success PERL 'difftool --dir-diff' '
+> >  	stdin_contains file <output
+> >  '
+> >  
+> > +write_script .git/CHECK_SYMLINKS <<\EOF
+> > +for f in file file2 sub/sub
+> > +do
+> > +	echo "$f"
+> > +	readlink "$2/$f"
+> > +done >actual
+> > +EOF
+> 
+> When you later want to enhance the test to check a combination of
+> difftool arguments where some paths are expected to become links and
+> others are expected to become real files, wouldn't this helper
+> become a bit awkward to use?  The element that expects a real file
+> could be an empty line to what corresponds to the output from
+> readlink, but still...
+> 
+> If t/ directory (or when the test is run with --root=<there>) is
+> aliased with symlinks in such a way that "cd <there> && $(pwd)" does
+> not match <there>, would this check with $(pwd) still work, I have
+> to wonder?
 
->  Just want to confirm that this is not a bug:
-> ...
->   printf_ln(Q_("The bundle requires this ref",
->                                       "The bundle requires these %d refs",
->                                       r->nr),
->                                    r->nr);
-> ...
->  seems to be missing %d parameter on the first message.
+It looks like t3903 uses "ls -l" for this sort of test, perhaps
+something like this covers these cases better:
 
-Perhaps visit
+    write_script .git/CHECK_SYMLINKS <<\EOF
+    for f in file file2 sub/sub
+    do
+        ls -l "$2/$f" >"$f".actual
+    done
+    EOF
 
-	http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms
+    ...
 
-look for "In the English singular case,..." and read the
-explanation there?
+    workdir=$(git rev-parse --show-toplevel)
+    grep "-> $workdir/file" file.actual
+    grep "-> $workdir/file2" file2.actual
+    grep "-> $workdir/sub/sub" sub/sub.actual
+
+It looks like we already rely on that output format in t3903 so I think
+that is safe, but it would be nice to have a better way to say "does
+this link point to that file?".  I can't think of a way to do that that
+doesn't seem far too complicated for what's required here.
+
+> > +test_expect_success PERL,SYMLINKS 'difftool --dir-diff --symlink without unstaged changes' '
+> > +	cat <<EOF >expect &&
+> > +file
+> > +$(pwd)/file
+> > +file2
+> > +$(pwd)/file2
+> > +sub/sub
+> > +$(pwd)/sub/sub
+> > +EOF
+> 
+> You can do this to align them nicer (note the "-" before EOF):
+> 
+> 	cat >expect <<-EOF &&
+> 	file
+>         $(pwd)/file
+>         ...
+>         EOF
+> 
+> > +	git difftool --dir-diff --symlink \
+> > +		--extcmd "./.git/CHECK_SYMLINKS" branch HEAD &&
+> > +	test_cmp actual expect
+> > +'
+> > +
+>
+> Thanks.
