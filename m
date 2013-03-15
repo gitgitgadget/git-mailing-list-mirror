@@ -1,93 +1,125 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Bug: git web--browse doesn't recognise browser on OS X
-Date: Fri, 15 Mar 2013 12:19:39 +0100
-Message-ID: <CAP8UFD2oR5tnYuw7Nbe-CzGx7fw-OpAFW+reN+1Nroh1jXjfsQ@mail.gmail.com>
-References: <CAMxBVSs6dJFnK78E2Da7t4V9ndJFRVDZEd1fR5QuCFz=u2Bnpw@mail.gmail.com>
-	<CAMxBVStw-b3J_Fm9x=h3==9ebdLUkpjBSQ9-W4+zJ9N20ojfxg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [BUG?] google code http auth weirdness
+Date: Fri, 15 Mar 2013 07:59:47 -0400
+Message-ID: <20130315115947.GA30675@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Timo Sand <timo.j.sand@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 15 12:20:10 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 15 13:00:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGSgC-00080b-LV
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 12:20:08 +0100
+	id 1UGTJ8-0007cs-GD
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 13:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754127Ab3COLTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Mar 2013 07:19:41 -0400
-Received: from mail-vb0-f52.google.com ([209.85.212.52]:49901 "EHLO
-	mail-vb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753561Ab3COLTk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Mar 2013 07:19:40 -0400
-Received: by mail-vb0-f52.google.com with SMTP id fa15so1774317vbb.25
-        for <git@vger.kernel.org>; Fri, 15 Mar 2013 04:19:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=VzZqgUgWQ7qMlKYESNsh0Aaf9391bPvhjDL8zko1X/g=;
-        b=iv2jNUKUG82bhoem44ozQ09CNMe0/7kE/iVkRZjigB+kwq+5OqYDnksakTNHEDyino
-         xwZzFv+UNN5gIQ42YufewYjcwidqOJ/q9p+JveAtGeIxkqLDUrxVzLphsmtBJo/49S59
-         t7z36QreVogUY0IpRvXUYDoeu1DUViZ+74SUMQlmgbSCBN+8tKeWs3rFbN8X9KRW1FFp
-         YIgPnBaiQTH9tejsWLDJA2wl0dI7nPH1DXFgXSI6DDy616JrlBFFZZPfbCUDVqBqF9hm
-         Wx91pC73w1eXwouGOmOGErCLMYW1iBQPM6Ec70MdhxJxMn4KwAZW7hHzWeP3B5VhgG30
-         PGeg==
-X-Received: by 10.58.116.244 with SMTP id jz20mr6506363veb.27.1363346380042;
- Fri, 15 Mar 2013 04:19:40 -0700 (PDT)
-Received: by 10.58.120.97 with HTTP; Fri, 15 Mar 2013 04:19:39 -0700 (PDT)
-In-Reply-To: <CAMxBVStw-b3J_Fm9x=h3==9ebdLUkpjBSQ9-W4+zJ9N20ojfxg@mail.gmail.com>
+	id S1754128Ab3COL7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Mar 2013 07:59:54 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52447 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754183Ab3COL7y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Mar 2013 07:59:54 -0400
+Received: (qmail 25284 invoked by uid 107); 15 Mar 2013 12:01:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Mar 2013 08:01:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Mar 2013 07:59:47 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218237>
 
-Hi,
+I tried pushing to a repository at Google Code for the first time today,
+and I encountered some weird behavior with respect to asking for
+credentials.
 
-On Thu, Mar 14, 2013 at 12:39 PM, Timo Sand <timo.j.sand@gmail.com> wrote:
-> Hi
->
-> I tried to open a website by runnin 'git web--browse http://google.com'
-> and it replied 'No known browser available'.
+If I use the url "https://code.google.com/r/repo/", everything works; I
+get prompted for my username/password.
 
-First git web--browse is a plumbing shell script to display
-documentation on a web browser when you type something like "git help
--w log".
-It is not really supposed to be used directly by the user. On OS X it
-might be simpler to just type "open http://google.com".
+But if I instead use the url "https://myuser@code.google.com/r/repo/",
+it doesn't work. I get:
 
-That said there is the following in it to make it work on OS X:
+  $ git push
+  fatal: remote error: Invalid username/password.
+  You may need to use your generated googlecode.com password; see
+  https://code.google.com/hosting/settings
 
-# SECURITYSESSIONID indicates an OS X GUI login session
-if test -n "$SECURITYSESSIONID" \
--o "$TERM_PROGRAM" = "Apple_Terminal" ; then
-browser_candidates="open $browser_candidates"
-fi
+without any prompt at all. I bisected it to 986bbc0 (http: don't always
+prompt for password, 2011-11-04), but I think that is a red herring. It
+worked before that commit because we always asked for the password,
+before we even talked to the server.
 
-So I guess that you don't have SECURITYSESSIONID set in your terminal
-and you are not using Apple Terminal.
+After that commit, we should be reacting to an HTTP 401. But it seems that
+Google Code's 401 behavior is odd. When t5540 checks this, the
+conversation goes something like:
 
-As I am not using OS X, I have no idea how to improve the script in this case.
+  1. We do a GET with no "Authorization" header.
 
-> I also tried with '--browser=chrome' and '--browser=google-chrome' but
-> the responded with 'The browser chrome is not available as 'chrome'.'
+  2. The server returns a 401, asking for credentials.
 
-Could you try something like: "chromium http://google.com" or
-"chromium-browser http://google.com"
-If it works, then using 'git web--browse' with '--browser=chromium' or
-'--browser=chromium-browser' should work.
+  3. Curl repeats the GET request, putting the username into the
+     Authorization header.
 
-Otherwise did you try "chrome http://google.com" and "google-chrome
-http://google.com"?
+  4. The server returns a 401, again, as our credential is not
+     sufficient.
 
-> I expected the command to open a new tab in my browser in each of the 3 tries.
-> This has worked for my system before.
->
-> OS X 10.8.2, git 1.8.2, Google Chrome 27.0.1438.7 dev
+  5. Curl returns the 401 to git; git prompts for the credential, feeds
+     it to curl, and then repeats the request. It works.
 
-Thanks,
-Christian.
+But with Google Code, the first three steps are identical. But then for
+step 4, the server returns this:
+
+  < HTTP/1.1 200 OK
+  < Content-Type: application/x-git-receive-pack-advertisement
+  < X-Content-Type-Options: nosniff
+  < Date: Fri, 15 Mar 2013 11:43:14 GMT
+  < Server: git_frontend
+  < Content-Length: 175
+  < X-XSS-Protection: 1; mode=block
+  < 
+  * Connection #0 to host code.google.com left intact
+  packet:          git< # service=git-receive-pack
+  packet:          git< 0000
+  packet:          git< ERR Invalid username/password [...]
+
+That seems kind of crazy to me. It's generating an HTTP 200 just to tell
+us the credentials are wrong. Which kind of makes sense; it's the only
+way to convince the git client to show a custom message when it aborts
+(rather than producing its own client-side "authorization failed"
+message). But it takes the retry decision out of the client's hands. And
+in this case, it is wrong; the failed credential is a result of curl
+trying the username only, and git never even gets a chance to provide
+the real credential.
+
+Technically this did work before 986bbc0, so it could be considered a
+regression in git, but I really think that Google Code is in the wrong
+here. It should either:
+
+  1. Always return a 401 for bad credentials. This means it would lose
+     the custom message. But I think that is a good indication that the
+     client should be putting more effort into showing the body of the
+     401. Probably not all the time, as we do not want to spew HTML at
+     the user, but we could perhaps relay error bodies if the
+     content-type is "application/x-git-error" or something.
+
+     The downside is that even if we make such a client change and the
+     the Google Code server change sit's behavior, people on older git
+     clients will lose the benefit of the message.
+
+  2. Treat a credential with a non-empty username and an empty password
+     specially, and return a 401. This covers the specific case of
+     https://user@host/, but continues to show the custom message when
+     the user provides a wrong password. It does mean that the custom
+     message will not be shown if the user actually enters a blank
+     password at the prompt (but it will still be shown if they get
+     prompted for both username and password and leave both blank).
+
+     So it's a little hacky, but I think it would work OK in practice.
+
+What do you think?
+
+-Peff
