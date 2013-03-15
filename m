@@ -1,108 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] status: hint the user about -uno if read_directory takes
- too long
-Date: Fri, 15 Mar 2013 14:59:18 -0700
-Message-ID: <7vzjy4tjd5.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8DZm153Tu_3GTOnxF8bFrYPh7_DP6Rn6rr3n6tfuVuv2Q@mail.gmail.com>
- <1363179556-4144-1-git-send-email-pclouds@gmail.com>
- <7vehfj46mu.fsf@alter.siamese.dyndns.org>
- <CACsJy8BixM-9bPB3G_WO+W3cTHBFxLQ=YCU2NDEzHmCYW73ZPQ@mail.gmail.com>
- <7vmwu6yqbd.fsf@alter.siamese.dyndns.org>
- <CACsJy8BruzR=EGnwA5nc_aCJ5pO4FHyQKxd-9_36U48Ci_FFew@mail.gmail.com>
- <514343BA.3030405@web.de> <7vvc8svc2r.fsf@alter.siamese.dyndns.org>
- <51435D49.6040005@web.de> <7v4ngcv35l.fsf@alter.siamese.dyndns.org>
- <51438F33.3080607@web.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v1 40/45] parse_pathspec: preserve prefix length via PATHSPEC_PREFIX_ORIGIN
+Date: Fri, 15 Mar 2013 18:00:56 -0400
+Message-ID: <CAPig+cSbb7hz2PMyOegqGRofQ8nUsVL7JboWobVviyy0spy=9w@mail.gmail.com>
+References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
+	<1363327620-29017-41-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
-	artagnon@gmail.com, robert.allan.zeh@gmail.com, finnag@pvv.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Mar 15 22:59:51 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 15 23:01:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGcfF-0007ia-8d
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 22:59:49 +0100
+	id 1UGcgo-00016g-Hu
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 23:01:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754785Ab3COV7W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 17:59:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52633 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754406Ab3COV7V convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Mar 2013 17:59:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C975BB0E;
-	Fri, 15 Mar 2013 17:59:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=V51HlrCYke5u
-	bn3HnrSU1ZEr1eQ=; b=dFI9W/YhBfkw2jqYXJHaz9s4SMpeokawmP1dIz8Zhg+D
-	XsrHSn0nicqoimz7vmIP9YAkDCgcBXKI2VQnPOVpX2YhbR2/0GdstOlld47m0fN3
-	a09oHmFu5dQWD5IXmUOQWcZ3enKjyt9+8OHLAyKPpWXK/RONkyIRkF6CQSuwpEU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=na3fkv
-	tZjTHfIudxFl11TCOyIkHwvLoJWzfHJfGCKl9dwCh5eFmsI6+OXnqrStvamBSwI1
-	Da47XmjqO33Epn81IAuxp2yOze5R7jXKhPqFDRYNqAxELdMuFbznNaY4zMBKDKQX
-	TrdggppNapm3l34zvA/9CkfKH7L5vrscYcsaQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E735BB0D;
-	Fri, 15 Mar 2013 17:59:20 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D56A2BB0C; Fri, 15 Mar 2013
- 17:59:19 -0400 (EDT)
-In-Reply-To: <51438F33.3080607@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of "Fri, 15 Mar 2013 22:14:27 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 968E1548-8DBB-11E2-A608-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755045Ab3COWA6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 18:00:58 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:60946 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754610Ab3COWA6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Mar 2013 18:00:58 -0400
+Received: by mail-lb0-f181.google.com with SMTP id gm6so3138561lbb.40
+        for <git@vger.kernel.org>; Fri, 15 Mar 2013 15:00:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kVT1Lfi9wmGZexo0BeOLxcz9YSEmHNdeNhh9wVWS4rA=;
+        b=YwlsOphbAvQC9eVQovQpm0Dpek0RPLaeEGTLr2OpdCygS83U9Uza9hc+8ZdRsZR7GX
+         nGBxPzdFpGyDqkVm43l2IlP0+WEDNUoRRGGm11fBpZ7fxVlNloo2xCkRBs6XA5Lu0R8Q
+         KfQ2xA6yYb6UOVr40KGlt7nxCKPMuO/NP8ipUP6aB2si4sslwMVde0J024UjbsnDjIn7
+         6AEk1Kdin9+Uzr8zU6i3RxgGCaeC9HHOh8PAg5aTau8qBu3KOdXhEKweS/KHgEEzhheF
+         djmp6DrGzLLgtSm3Crf8PPZojrXfyfzoLsq/H3HrqYGSsN+rkQusmS/QzxcuP9CD08Ln
+         EOcQ==
+X-Received: by 10.112.30.104 with SMTP id r8mr3268739lbh.82.1363384856422;
+ Fri, 15 Mar 2013 15:00:56 -0700 (PDT)
+Received: by 10.114.1.43 with HTTP; Fri, 15 Mar 2013 15:00:56 -0700 (PDT)
+In-Reply-To: <1363327620-29017-41-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: dbib7L5n1nBjPE5iCEPBJKSb2TM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218264>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On Fri, Mar 15, 2013 at 2:06 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> Prefix length is not preserved across commands when --literal-pathspe=
+cs
+> is specified (no magic is allowed, including 'prefix'). That's OK
+> because we all paths are literal. No magic, no special treatment
 
-> Thanks, that looks good to me:
->
-> # It took 2.58 seconds to enumerate untracked files.
-> # Consider the -u option for a possible speed-up?
->
-> But:
-> If I follow the advice as is given and use "git status -u", the resul=
-t is the same.
+s/we all/we know all/
+=2E..or...
+s/we all/all/
 
-Yeah, that was taken from
+> We could also preserve 'prefix' across commands is quote the prefix
+> part, then dequote on receiving. But it may not be 100% accurate, we
 
-    http://thread.gmane.org/gmane.comp.version-control.git/215820/focus=
-=3D218125
+s/is quote/by quoting/
+s/dequote/dequoting/
 
-to which I said something about "more levels of indirections".  This
-episode shows that even a user who was very well aware of the issue
-did not follow a single level of indirection.
-
-> If I think loud, would it be better to say:
->
-> # It took 2.58 seconds to search for untracked files.
-> # Consider the -uno option for a possible speed-up?
->
-> or
->
-> # It took 2.58 seconds to search for untracked files.
-> # Consider the -u option for a possible speed-up?
-> # Please see git help status
-
-The former actively hurts the users, but the latter would be good,
-given that your documentation updates clarifies the trade off.
-
-Or we can be more explicit and say
-
-# It took 2.58 seconds to search for untracked files.  'status -uno'
-# may speed it up, but you have to be careful not to forget to add
-# new files yourself (see 'git help status').
-
-or something.
+> may dequote longer than the original prefix part, for example. That
+> may be good or not, but it's not the purpose.
