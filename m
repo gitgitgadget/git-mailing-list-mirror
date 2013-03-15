@@ -1,61 +1,68 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
+From: Joydeep Bakshi <joydeep.bakshi@infoservices.in>
 Subject: Re: building git ; need suggestion
-Date: Fri, 15 Mar 2013 13:44:15 +0100
-Message-ID: <20130315124415.GA23122@paksenarrion.iveqy.com>
+Date: Fri, 15 Mar 2013 18:13:28 +0530
+Message-ID: <FB013A89-A4A5-431B-A288-D0C922F156A4@infoservices.in>
 References: <868B103B-690E-477B-BF75-8F954F893E6F@infoservices.in>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Joydeep Bakshi <joydeep.bakshi@infoservices.in>
-X-From: git-owner@vger.kernel.org Fri Mar 15 13:43:53 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 15 13:44:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGTzD-0004Jc-ED
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 13:43:51 +0100
+	id 1UGTzN-0004YB-Tw
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 13:44:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754432Ab3COMnY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 08:43:24 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:38099 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754384Ab3COMnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Mar 2013 08:43:24 -0400
-Received: by mail-la0-f54.google.com with SMTP id gw10so3617191lab.41
-        for <git@vger.kernel.org>; Fri, 15 Mar 2013 05:43:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:sender:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=FL4P0n53cHqXRWled0AET2MMU69XstuPqFxDM9mxzpw=;
-        b=H86rF4oVtVhdftd0HWA7zG5O9Ugmls4AcVBMLK4EdCWAtOKV6VIqwzdw4haoqS8Vsw
-         PtJug9hPQudWWmr8MEJN6db+HV5oUav07YfsVBsnmvXGqoKe/sL/e/SUEWNAUqGSjbCu
-         eYku2QZtUefdyGyINPnMtjWgtKQIqVj27hDaT7Rnhja0QGFIHBnVkPUg8LdkvVJ8kcD3
-         kcmQKZE4aiBEC3E6jQLBkXR50B4BF35wWj/3FgSWVbJFR5JV9RyucgvgA/DItJJR0o3N
-         VbifqQVV4ptY2BbmphQ9ZIAVep3sockR/GaFohH3H+EEzAP+EkTQ9IRtEtYuLH1LzUDO
-         LZDQ==
-X-Received: by 10.112.99.100 with SMTP id ep4mr2593284lbb.13.1363351402465;
-        Fri, 15 Mar 2013 05:43:22 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPS id l1sm2003371lbn.8.2013.03.15.05.43.21
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 15 Mar 2013 05:43:21 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UGTzb-00064K-GH; Fri, 15 Mar 2013 13:44:15 +0100
-Content-Disposition: inline
+	id S1754448Ab3COMnf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 08:43:35 -0400
+Received: from static.88-198-19-49.clients.your-server.de ([88.198.19.49]:45446
+	"EHLO zimbra.infoservices.in" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754440Ab3COMne convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Mar 2013 08:43:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.infoservices.in (Postfix) with ESMTP id 5C910CF7BC6
+	for <git@vger.kernel.org>; Fri, 15 Mar 2013 18:13:33 +0530 (IST)
+X-Virus-Scanned: amavisd-new at zimbra.infoservices.in
+Received: from zimbra.infoservices.in ([127.0.0.1])
+	by localhost (zimbra.infoservices.in [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VkQAhe6IBv3j for <git@vger.kernel.org>;
+	Fri, 15 Mar 2013 18:13:32 +0530 (IST)
+Received: from [192.168.1.116] (unknown [122.176.30.116])
+	by zimbra.infoservices.in (Postfix) with ESMTPSA id B9D75CF7ACB
+	for <git@vger.kernel.org>; Fri, 15 Mar 2013 18:13:31 +0530 (IST)
 In-Reply-To: <868B103B-690E-477B-BF75-8F954F893E6F@infoservices.in>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Mailer: Apple Mail (2.1499)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218241>
 
-On Fri, Mar 15, 2013 at 05:54:05PM +0530, Joydeep Bakshi wrote:
+
+forgot to mention:
+------------------------
+
+a code review system like gerrit is also helpful, but don't know if ger=
+rit
+has such fine control mechanism.
+
+
+
+
+On 15-Mar-2013, at 5:54 PM, Joydeep Bakshi <joydeep.bakshi@infoservices=
+=2Ein> wrote:
+
+> Hello list,
+>=20
+> Greetings !!!
+>=20
+> I'm building a git repo on a dedicated server; hence need some kind g=
+uidelines from you.
+>=20
 > [1] the server will have different git repo with branches
 > [2] there will be a web-based GUI which must be flexible to show just=
  a specific branch of a repo based on user authentication
@@ -70,35 +77,13 @@ le to commit there only.
 >=20
 > based on the above scenario could anyone suggest the best available s=
 olution ?
-> There are many like gitolike/github etc=E2=80=A6. but don't know whig=
- one has much finer granular
-> control/ACL/web-based GUI=E2=80=A6
-
-gitolite have a more fine ACL. Check it out. However it doesn't really
-meet your needs with web-interface (and I'm not even sure about the ACL
-thing is fine enough for you). You can read more about ACL in the git
-book: http://git-scm.com/book/ch7-4.html
-
-The webgui that's most populair is cgit and git-web. They don't do ACL
-afaik.
-
-Why would you need ACL? Why not don't share the branches that are going
-to be secret? Or are you looking for some branches to be read only?
-
-When we did this, we did a simple gitolite implementation ourself and
-integrated cgit on our website wich already had ACL. It works well.
-Howerver we do ACL on repo-level, not on branch level.
-
-You can also look into git-submodules which will make it possible for
-you to do repo-wide ACL.
-
-However I'm not sure you will be using git in the way git is designed
-too and even if it will work, maybe an other solution is better for you=
-=2E
-
---=20
-Med v=C3=A4nliga h=C3=A4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+> There are many like gitolike/github etc=85. but don't know whig one h=
+as much finer granular
+> control/ACL/web-based GUI=85
+>=20
+> Thanks in advanced for your kind response.
+>=20
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
