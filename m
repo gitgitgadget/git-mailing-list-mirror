@@ -1,70 +1,123 @@
-From: Kristof Mattei <kristof@kristofmattei.be>
-Subject: SSH version on Git 1.8.1.2 for Windows is outdated.
-Date: Fri, 15 Mar 2013 11:05:11 +0100
-Message-ID: <CAJ5Q6vXTyaegQq2uMoK7QQVYiYS9GcJhCefkQs9tXxqU=M10Vg@mail.gmail.com>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: [PATCH/RFC] http_init: only initialize SSL for https
+Date: Fri, 15 Mar 2013 11:08:17 +0100 (CET)
+Message-ID: <alpine.DEB.2.00.1303151054130.32216@tvnag.unkk.fr>
+References: <1363269079-6124-1-git-send-email-kusmabite@gmail.com> <alpine.DEB.1.00.1303141621340.3794@s15462909.onlinehome-server.info> <CABPQNSZNdGea9Nn91emWhfRGAZjZXm755UKArNr3EUy9CrSKHg@mail.gmail.com> <7vmwu6x72q.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.1303142333170.3794@s15462909.onlinehome-server.info> <7vk3p9wqh5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 15 11:05:44 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1; format=flowed
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, kusmabite@gmail.com,
+        git@vger.kernel.org, msysgit@googlegroups.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCS5LIPSQMEBBGXGROFAKGQEWB3Y4II@googlegroups.com Fri Mar 15 11:08:51 2013
+Return-path: <msysgit+bncBCS5LIPSQMEBBGXGROFAKGQEWB3Y4II@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-fa0-f55.google.com ([209.85.161.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGRWB-0001lG-5T
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 11:05:43 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108Ab3COKFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Mar 2013 06:05:13 -0400
-Received: from mail-ia0-f179.google.com ([209.85.210.179]:63543 "EHLO
-	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753940Ab3COKFM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Mar 2013 06:05:12 -0400
-Received: by mail-ia0-f179.google.com with SMTP id x24so3008914iak.38
-        for <git@vger.kernel.org>; Fri, 15 Mar 2013 03:05:12 -0700 (PDT)
+	(envelope-from <msysgit+bncBCS5LIPSQMEBBGXGROFAKGQEWB3Y4II@googlegroups.com>)
+	id 1UGRZB-0005D4-7V
+	for gcvm-msysgit@m.gmane.org; Fri, 15 Mar 2013 11:08:49 +0100
+Received: by mail-fa0-f55.google.com with SMTP id t1sf981276fae.0
+        for <gcvm-msysgit@m.gmane.org>; Fri, 15 Mar 2013 03:08:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:date:x-google-sender-auth:message-id
-         :subject:from:to:content-type;
-        bh=4F2OlzAGaVJS6S9VYBE/W9D5YWEIzKvau4xqWOxFFwQ=;
-        b=tCx47IBJLj1RblXeqLIzQP+0r1rBSRZvN6lfgDmpn/CLNq1L7Qu+KBt+cDV4CYC69R
-         6RwNvx3ZZPQQp8BAfbWKWOSwAWMLDiSjnwbHbRucVpXF+/q1A2RTlA5g5LSpfBJxPtnw
-         nuQpTkMr10hI+Kt34xgHUDId8sg6goJ+rRzY7FhjLXpYNnM1rjhCxWfilISfoVjpCC2M
-         r0pCVEP2r+IDHEZzZPwXiGLKkdnHSLPaZUXFhOQum9ACbk5HsOO+AR3V8xww4yFGUpjW
-         kM1KwCIeKBuJ92v07vMKqI44I/eFgJWCz/X0jPqG/Cv13bQBvfe1o7Qg7uMFStQFuiNV
-         wNEA==
-X-Received: by 10.50.53.146 with SMTP id b18mr835815igp.82.1363341912004; Fri,
- 15 Mar 2013 03:05:12 -0700 (PDT)
-Received: by 10.64.63.7 with HTTP; Fri, 15 Mar 2013 03:05:11 -0700 (PDT)
-X-Google-Sender-Auth: Y_4EbFgAROvFCLvuJ2v28zih9fs
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218234>
+        d=googlegroups.com; s=20120806;
+        h=x-received:x-beenthere:x-received:received-spf
+         :x-authentication-warning:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:x-fromdanielhimself
+         :mime-version:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:x-google-group-id:list-post
+         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
+         :content-type;
+        bh=GfLJFs8vZiL70huNq0zpE6oD75i9nA6dfNbA3kKE0Qo=;
+        b=brWnuhk0rIfMhg3PyynX+71VPJQwHND3V5ojWtBaGH34fLWUFnPRqck/Gz1jajLLm/
+         w7+F5Iu4fGKRgO0amjTss0Dgt+jZJvrefkJZ4oeajK3GJwe4+TZhVCyGEnuHcb3wqh7X
+         8EZuNAA7FEhZaSE+oHkB08ryELWdKMbBRXFC5LSRvICyjFUboYPQ8q7wjBfLL7+DDhnW
+         TpCCJflo9yMsODEi5Hi1bQNAIGgkAKR60cAF2Hi3bgSF20waN5sAToiPs3tL6rXl 
+X-Received: by 10.180.72.232 with SMTP id g8mr84917wiv.15.1363342106586;
+        Fri, 15 Mar 2013 03:08:26 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.109.47 with SMTP id hp15ls2154224wib.33.canary; Fri, 15
+ Mar 2013 03:08:26 -0700 (PDT)
+X-Received: by 10.204.150.5 with SMTP id w5mr676180bkv.0.1363342106050;
+        Fri, 15 Mar 2013 03:08:26 -0700 (PDT)
+Received: from giant.haxx.se (www.haxx.se. [2a00:1a28:1200:9::2])
+        by gmr-mx.google.com with ESMTPS id s1si514034bkt.3.2013.03.15.03.08.24
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 15 Mar 2013 03:08:24 -0700 (PDT)
+Received-SPF: pass (google.com: domain of daniel@haxx.se designates 2a00:1a28:1200:9::2 as permitted sender) client-ip=2a00:1a28:1200:9::2;
+Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
+	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id r2FA8I0T021262
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 15 Mar 2013 11:08:18 +0100
+Received: from localhost (dast@localhost)
+	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id r2FA8HNa021256;
+	Fri, 15 Mar 2013 11:08:18 +0100
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+In-Reply-To: <7vk3p9wqh5.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
+X-Original-Sender: daniel@haxx.se
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of daniel@haxx.se designates 2a00:1a28:1200:9::2 as
+ permitted sender) smtp.mail=daniel@haxx.se
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218235>
 
-We're having issues with the version of SSH included in git version
-1.8.1.msysgit.1 (Git-1.8.1.2-preview20130201.exe)
+On Thu, 14 Mar 2013, Junio C Hamano wrote:
 
-The included version of SSH is from 2007:
+> As to ALL vs DEFAULT, given that its manual page is riddled with a scary 
+> warning:
+>
+>    This function must be called at least once within a program (a
+>    program is all the code that shares a memory space) before the
+>    program calls any other function in libcurl. The environment it sets
+>    up is constant for the life of the program and is the same for every
+>    program, so multiple calls have the same effect as one call.  ... In
+>    normal operation, you must specify CURL_GLOBAL_ALL. Don't use any
+>    other value unless you are familiar with it and mean to control
+>    internal operations of libcurl.
 
-C:\Program Files (x86)\Git\bin - Old>ssh -V
-OpenSSH_4.6p1, OpenSSL 0.9.8e 23 Feb 2007
+(speaking from a libcurl perspective)
 
-Updating the OpenSSH component (downloaded with Cygwin, cumbersome!!!)
-resolves the issue:
+The "warning" is just there to scare people into actually consider what they 
+want and understand that removing bits will change behavior. I would say 
+that's exactly what you've done and I don't think people here need to be 
+scared anymore! :-)
 
-C:\Program Files (x86)\Git\bin>ssh -V
-OpenSSH_6.1p1, OpenSSL 1.0.1e 11 Feb 2013
+As for how ALL vs DEFAULT will act or differ in the future, I suspect that we 
+will end up having them being the same (even when we add bits) as we've 
+encouraged "ALL" in the documentation like this for quite some time.
 
-Is there any way you can incorporate this update in the installer?
+-- 
 
-Thanks,
+  / daniel.haxx.se
 
--Kristof
---
-Kristof Mattei
-Human Compiler
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Blog: www.kristofmattei.be
-Twitter: KristofMattei
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
