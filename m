@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v1 25/45] reset: convert to use parse_pathspec
-Date: Fri, 15 Mar 2013 13:06:40 +0700
-Message-ID: <1363327620-29017-26-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v1 24/45] add: convert to use parse_pathspec
+Date: Fri, 15 Mar 2013 13:06:39 +0700
+Message-ID: <1363327620-29017-25-git-send-email-pclouds@gmail.com>
 References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,156 +17,290 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGO6z-0006Sb-58
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 07:27:29 +0100
+	id 1UGO6y-0006Sb-Kx
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 07:27:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069Ab3COG0y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 02:26:54 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:41642 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751507Ab3COG0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Mar 2013 02:26:52 -0400
-Received: by mail-ie0-f179.google.com with SMTP id k11so3952197iea.24
-        for <git@vger.kernel.org>; Thu, 14 Mar 2013 23:26:52 -0700 (PDT)
+	id S1753551Ab3COG0t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 02:26:49 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:34798 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753325Ab3COG0r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Mar 2013 02:26:47 -0400
+Received: by mail-ie0-f172.google.com with SMTP id c10so3943061ieb.17
+        for <git@vger.kernel.org>; Thu, 14 Mar 2013 23:26:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=MWTkZyZdYQTRC0P+E1Q7t4T3n7hEKshsYkOOdvopJ0U=;
-        b=JRz912+4akwgGTH/dr25xZX2McLAeqPV9/P5AIxcdMnoHpxJVaX3Bucdt5oceX95wi
-         vtglVmpvSltXhPW9MAkJNP6DYTpQmMO8Ykxx0PZTRRrQQtN/NQoXRtCqzoSDmYiR9gA3
-         R6UvwqTBxvxqMdjXk9cMoaF+nRh2ufnZz5YgsOjHO4bluNFo4kpyS+ibY4yyxvJxCnkU
-         mh5umSqmyR2AoudzK0bOHgRXdyB6jqOq0PPjBpLzB9dIz05fz7Zrtj22tWy4+/HAimw6
-         +WemG0KnUUria6rvUhHNynvN/tK+TyEmajFJNAGyleFPtkHL821TmZl3eNIEsTwPZ2k7
-         iWMA==
-X-Received: by 10.50.237.70 with SMTP id va6mr472672igc.66.1363328812451;
-        Thu, 14 Mar 2013 23:26:52 -0700 (PDT)
+        bh=161PLXU9IOhw3i8eyTnmvrNzvgsqhtGUmMehcYx/hV0=;
+        b=JcDjw5pTuoKnHZ12ynJcaaYoIwE6uGC+HDNp8tAb2pRnzKpIP6GD8bpYXvWAzmZ17n
+         PYBAkMDNBxboz9lyU08qrb5l8WM75WydEd/pIf4wSDpDlI93eMqqsXCeb7rY+DXJDok6
+         0FcoSwMZE0phzBjm4WrGCsf9s04EhQqr6zeLt6HXCVXuylcZtErADg7728H2W639AxpX
+         mcHCywqi3c/4duGWaAwvA8zcZnQlYGA12C630aLQrtfx2mJtcR1yQKwXxaEpdsCZNfhL
+         ZhFWYvUUMvHjFNB8gT2cN1Hx51dtiEDrprzTpcCOMQWy0zhyLycJWO/dkxnZUwrREJAo
+         2H8g==
+X-Received: by 10.42.203.68 with SMTP id fh4mr3879361icb.36.1363328805996;
+        Thu, 14 Mar 2013 23:26:45 -0700 (PDT)
 Received: from tre ([115.74.58.84])
-        by mx.google.com with ESMTPS id in10sm1072739igc.1.2013.03.14.23.26.49
+        by mx.google.com with ESMTPS id ew5sm756977igc.2.2013.03.14.23.26.42
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 14 Mar 2013 23:26:51 -0700 (PDT)
-Received: by tre (sSMTP sendmail emulation); Fri, 15 Mar 2013 13:09:54 +0700
+        Thu, 14 Mar 2013 23:26:45 -0700 (PDT)
+Received: by tre (sSMTP sendmail emulation); Fri, 15 Mar 2013 13:09:47 +0700
 X-Mailer: git-send-email 1.8.0.rc0.19.g7bbb31d
 In-Reply-To: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218212>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/reset.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ builtin/add.c | 100 +++++++++++++++++++++++++-------------------------=
+--------
+ pathspec.c    |  43 -------------------------
+ 2 files changed, 43 insertions(+), 100 deletions(-)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 6032131..da7282e 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -171,7 +171,10 @@ static void die_if_unmerged_cache(int reset_type)
-=20
+diff --git a/builtin/add.c b/builtin/add.c
+index ab1c9e8..ec6fbe3 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -121,21 +121,6 @@ static char *prune_directory(struct dir_struct *di=
+r, const char **pathspec, int
+ 	return seen;
  }
 =20
--static const char **parse_args(const char **argv, const char *prefix, =
-const char **rev_ret)
-+static void parse_args(struct pathspec *pathspec,
-+		       const char **argv, const char *prefix,
-+		       int patch_mode,
-+		       const char **rev_ret)
+-/*
+- * Checks the index to see whether any path in pathspec refers to
+- * something inside a submodule.  If so, dies with an error message.
+- */
+-static void treat_gitlinks(const char **pathspec)
+-{
+-	int i;
+-
+-	if (!pathspec || !*pathspec)
+-		return;
+-
+-	for (i =3D 0; pathspec[i]; i++)
+-		pathspec[i] =3D check_path_for_gitlink(pathspec[i]);
+-}
+-
+ static void refresh(int verbose, const char **pathspec)
  {
- 	const char *rev =3D "HEAD";
- 	unsigned char unused[20];
-@@ -213,7 +216,10 @@ static const char **parse_args(const char **argv, =
-const char *prefix, const char
- 		}
- 	}
- 	*rev_ret =3D rev;
--	return argv[0] ? get_pathspec(prefix, argv) : NULL;
-+	parse_pathspec(pathspec,
-+		       patch_mode ? PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP : 0,
-+		       PATHSPEC_PREFER_FULL,
-+		       prefix, argv);
+ 	char *seen;
+@@ -153,25 +138,6 @@ static void refresh(int verbose, const char **path=
+spec)
+         free(seen);
  }
 =20
- static int update_refs(const char *rev, const unsigned char *sha1)
-@@ -243,7 +249,7 @@ int cmd_reset(int argc, const char **argv, const ch=
-ar *prefix)
- 	int patch_mode =3D 0, unborn;
- 	const char *rev;
- 	unsigned char sha1[20];
+-/*
+- * Normalizes argv relative to prefix, via get_pathspec(), and then
+- * runs die_if_path_beyond_symlink() on each path in the normalized
+- * list.
+- */
+-static const char **validate_pathspec(const char **argv, const char *p=
+refix)
+-{
+-	const char **pathspec =3D get_pathspec(prefix, argv);
+-
+-	if (pathspec) {
+-		const char **p;
+-		for (p =3D pathspec; *p; p++) {
+-			die_if_path_beyond_symlink(*p, prefix);
+-		}
+-	}
+-
+-	return pathspec;
+-}
+-
+ int run_add_interactive(const char *revision, const char *patch_mode,
+ 			const char **pathspec)
+ {
+@@ -203,17 +169,23 @@ int run_add_interactive(const char *revision, con=
+st char *patch_mode,
+=20
+ int interactive_add(int argc, const char **argv, const char *prefix, i=
+nt patch)
+ {
 -	const char **pathspec =3D NULL;
 +	struct pathspec pathspec;
- 	const struct option options[] =3D {
- 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
- 		OPT_SET_INT(0, "mixed", &reset_type,
-@@ -263,13 +269,13 @@ int cmd_reset(int argc, const char **argv, const =
-char *prefix)
 =20
- 	argc =3D parse_options(argc, argv, prefix, options, git_reset_usage,
- 						PARSE_OPT_KEEP_DASHDASH);
--	pathspec =3D parse_args(argv, prefix, &rev);
-+	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
+-	if (argc) {
+-		pathspec =3D validate_pathspec(argv, prefix);
+-		if (!pathspec)
+-			return -1;
+-	}
++	/*
++	 * git-add--interactive itself does not parse pathspec. It
++	 * simply passes the pathspec to other builtin commands. Let's
++	 * hope all of them support all magic, or we'll need to limit
++	 * the magic here. There is still a problem with prefix. But
++	 * that'll be worked on later on.
++	 */
++	parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP,
++		       PATHSPEC_PREFER_FULL |
++		       PATHSPEC_SYMLINK_LEADING_PATH,
++		       prefix, argv);
 =20
- 	unborn =3D !strcmp(rev, "HEAD") && get_sha1("HEAD", sha1);
- 	if (unborn) {
- 		/* reset on unborn branch: treat as reset to empty tree */
- 		hashcpy(sha1, EMPTY_TREE_SHA1_BIN);
--	} else if (!pathspec) {
-+	} else if (!pathspec.nr) {
- 		struct commit *commit;
- 		if (get_sha1_committish(rev, sha1))
- 			die(_("Failed to resolve '%s' as a valid revision."), rev);
-@@ -290,13 +296,13 @@ int cmd_reset(int argc, const char **argv, const =
-char *prefix)
- 	if (patch_mode) {
- 		if (reset_type !=3D NONE)
- 			die(_("--patch is incompatible with --{hard,mixed,soft}"));
--		return run_add_interactive(sha1_to_hex(sha1), "--patch=3Dreset", pat=
-hspec);
-+		return run_add_interactive(sha1_to_hex(sha1), "--patch=3Dreset", pat=
-hspec.raw);
+ 	return run_add_interactive(NULL,
+ 				   patch ? "--patch" : NULL,
+-				   pathspec);
++				   pathspec.raw);
+ }
+=20
+ static int edit_patch(int argc, const char **argv, const char *prefix)
+@@ -354,7 +326,7 @@ int cmd_add(int argc, const char **argv, const char=
+ *prefix)
+ {
+ 	int exit_status =3D 0;
+ 	int newfd;
+-	const char **pathspec;
++	struct pathspec pathspec;
+ 	struct dir_struct dir;
+ 	int flags;
+ 	int add_new_files;
+@@ -415,11 +387,19 @@ int cmd_add(int argc, const char **argv, const ch=
+ar *prefix)
+ 		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
+ 		return 0;
+ 	}
+-	pathspec =3D validate_pathspec(argv, prefix);
+=20
+ 	if (read_cache() < 0)
+ 		die(_("index file corrupt"));
+-	treat_gitlinks(pathspec);
++
++	/*
++	 * Check the "pathspec '%s' did not match any files" block
++	 * below before enabling new magic.
++	 */
++	parse_pathspec(&pathspec, 0,
++		       PATHSPEC_PREFER_FULL |
++		       PATHSPEC_SYMLINK_LEADING_PATH |
++		       PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE,
++		       prefix, argv);
+=20
+ 	if (add_new_files) {
+ 		int baselen;
+@@ -432,33 +412,39 @@ int cmd_add(int argc, const char **argv, const ch=
+ar *prefix)
+ 		}
+=20
+ 		/* This picks up the paths that are not tracked */
+-		baselen =3D fill_directory(&dir, pathspec);
+-		if (pathspec)
+-			seen =3D prune_directory(&dir, pathspec, baselen);
++		baselen =3D fill_directory(&dir, pathspec.raw);
++		if (pathspec.nr)
++			seen =3D prune_directory(&dir, pathspec.raw, baselen);
  	}
 =20
- 	/* git reset tree [--] paths... can be used to
- 	 * load chosen paths from the tree into the index without
- 	 * affecting the working tree nor HEAD. */
+ 	if (refresh_only) {
+-		refresh(verbose, pathspec);
++		refresh(verbose, pathspec.raw);
+ 		goto finish;
+ 	}
+=20
 -	if (pathspec) {
 +	if (pathspec.nr) {
- 		if (reset_type =3D=3D MIXED)
- 			warning(_("--mixed with paths is deprecated; use 'git reset -- <pat=
-hs>' instead."));
- 		else if (reset_type !=3D NONE)
-@@ -323,7 +329,7 @@ int cmd_reset(int argc, const char **argv, const ch=
-ar *prefix)
- 		struct lock_file *lock =3D xcalloc(1, sizeof(struct lock_file));
- 		int newfd =3D hold_locked_index(lock, 1);
- 		if (reset_type =3D=3D MIXED) {
--			if (read_from_tree(pathspec, sha1))
-+			if (read_from_tree(pathspec.raw, sha1))
- 				return 1;
- 		} else {
- 			int err =3D reset_index(sha1, reset_type, quiet);
-@@ -344,7 +350,7 @@ int cmd_reset(int argc, const char **argv, const ch=
-ar *prefix)
- 			die(_("Could not write new index file."));
- 	}
+ 		int i;
+ 		struct path_exclude_check check;
 =20
--	if (!pathspec && !unborn) {
-+	if (!pathspec.nr && !unborn) {
- 		/* Any resets without paths update HEAD to the head being
- 		 * switched to, saving the previous head in ORIG_HEAD before. */
- 		update_ref_status =3D update_refs(rev, sha1);
-@@ -352,7 +358,7 @@ int cmd_reset(int argc, const char **argv, const ch=
-ar *prefix)
- 		if (reset_type =3D=3D HARD && !update_ref_status && !quiet)
- 			print_new_head_line(lookup_commit_reference(sha1));
- 	}
--	if (!pathspec)
-+	if (!pathspec.nr)
- 		remove_branch_state();
+ 		path_exclude_check_init(&check, &dir);
+ 		if (!seen)
+-			seen =3D find_pathspecs_matching_against_index(pathspec);
+-		for (i =3D 0; pathspec[i]; i++) {
+-			if (!seen[i] && pathspec[i][0]
+-			    && !file_exists(pathspec[i])) {
++			seen =3D find_pathspecs_matching_against_index(pathspec.raw);
++
++		/*
++		 * file_exists() assumes exact match
++		 */
++		GUARD_PATHSPEC(&pathspec, PATHSPEC_FROMTOP);
++
++		for (i =3D 0; pathspec.raw[i]; i++) {
++			if (!seen[i] && pathspec.raw[i][0]
++			    && !file_exists(pathspec.raw[i])) {
+ 				if (ignore_missing) {
+ 					int dtype =3D DT_UNKNOWN;
+-					if (is_path_excluded(&check, pathspec[i], -1, &dtype))
+-						dir_add_ignored(&dir, pathspec[i], strlen(pathspec[i]));
++					if (is_path_excluded(&check, pathspec.raw[i], -1, &dtype))
++						dir_add_ignored(&dir, pathspec.raw[i], strlen(pathspec.raw[i]));
+ 				} else
+ 					die(_("pathspec '%s' did not match any files"),
+-					    pathspec[i]);
++					    pathspec.raw[i]);
+ 			}
+ 		}
+ 		free(seen);
+@@ -467,7 +453,7 @@ int cmd_add(int argc, const char **argv, const char=
+ *prefix)
 =20
- 	return update_ref_status;
+ 	plug_bulk_checkin();
+=20
+-	exit_status |=3D add_files_to_cache(prefix, pathspec, flags);
++	exit_status |=3D add_files_to_cache(prefix, pathspec.raw, flags);
+=20
+ 	if (add_new_files)
+ 		exit_status |=3D add_files(&dir, flags);
+diff --git a/pathspec.c b/pathspec.c
+index f531038..0b658cb 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -58,49 +58,6 @@ char *find_pathspecs_matching_against_index(const ch=
+ar **pathspec)
+ }
+=20
+ /*
+- * Check the index to see whether path refers to a submodule, or
+- * something inside a submodule.  If the former, returns the path with
+- * any trailing slash stripped.  If the latter, dies with an error
+- * message.
+- */
+-const char *check_path_for_gitlink(const char *path)
+-{
+-	int i, path_len =3D strlen(path);
+-	for (i =3D 0; i < active_nr; i++) {
+-		struct cache_entry *ce =3D active_cache[i];
+-		if (S_ISGITLINK(ce->ce_mode)) {
+-			int ce_len =3D ce_namelen(ce);
+-			if (path_len <=3D ce_len || path[ce_len] !=3D '/' ||
+-			    memcmp(ce->name, path, ce_len))
+-				/* path does not refer to this
+-				 * submodule or anything inside it */
+-				continue;
+-			if (path_len =3D=3D ce_len + 1) {
+-				/* path refers to submodule;
+-				 * strip trailing slash */
+-				return xstrndup(ce->name, ce_len);
+-			} else {
+-				die (_("Path '%s' is in submodule '%.*s'"),
+-				     path, ce_len, ce->name);
+-			}
+-		}
+-	}
+-	return path;
+-}
+-
+-/*
+- * Dies if the given path refers to a file inside a symlinked
+- * directory in the index.
+- */
+-void die_if_path_beyond_symlink(const char *path, const char *prefix)
+-{
+-	if (has_symlink_leading_path(path, strlen(path))) {
+-		int len =3D prefix ? strlen(prefix) : 0;
+-		die(_("'%s' is beyond a symbolic link"), path + len);
+-	}
+-}
+-
+-/*
+  * Magic pathspec
+  *
+  * Possible future magic semantics include stuff like:
 --=20
 1.8.0.rc0.19.g7bbb31d
