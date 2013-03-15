@@ -1,116 +1,135 @@
-From: Paul Campbell <pcampbell@kemitix.net>
-Subject: Re: building git ; need suggestion
-Date: Fri, 15 Mar 2013 17:25:26 +0000
-Message-ID: <CALeLG_mSkHfpBkfDu_MCe_rQBxGa_1i==mf9cBSwurYgv3EbfQ@mail.gmail.com>
-References: <868B103B-690E-477B-BF75-8F954F893E6F@infoservices.in>
-	<20130315124415.GA23122@paksenarrion.iveqy.com>
-	<00107242-04EB-423F-90FE-A6DCDEE7E262@infoservices.in>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] status: hint the user about -uno if read_directory takes
+ too long
+Date: Fri, 15 Mar 2013 18:41:29 +0100
+Message-ID: <51435D49.6040005@web.de>
+References: <CACsJy8DZm153Tu_3GTOnxF8bFrYPh7_DP6Rn6rr3n6tfuVuv2Q@mail.gmail.com> <1363179556-4144-1-git-send-email-pclouds@gmail.com> <7vehfj46mu.fsf@alter.siamese.dyndns.org> <CACsJy8BixM-9bPB3G_WO+W3cTHBFxLQ=YCU2NDEzHmCYW73ZPQ@mail.gmail.com> <7vmwu6yqbd.fsf@alter.siamese.dyndns.org> <CACsJy8BruzR=EGnwA5nc_aCJ5pO4FHyQKxd-9_36U48Ci_FFew@mail.gmail.com> <514343BA.3030405@web.de> <7vvc8svc2r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-To: Joydeep Bakshi <joydeep.bakshi@infoservices.in>
-X-From: git-owner@vger.kernel.org Fri Mar 15 18:25:56 2013
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
+	artagnon@gmail.com, robert.allan.zeh@gmail.com, finnag@pvv.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 15 18:42:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGYOA-0000U4-Ef
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 18:25:54 +0100
+	id 1UGYdu-0002MS-R0
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 18:42:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751901Ab3CORZ2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 13:25:28 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:54881 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419Ab3CORZ1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Mar 2013 13:25:27 -0400
-Received: by mail-oa0-f54.google.com with SMTP id n12so3699661oag.13
-        for <git@vger.kernel.org>; Fri, 15 Mar 2013 10:25:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:x-originating-ip:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=PeC1VQ+RcL0Cu35+L25WV+mYCSknBSg3xsV4HqNeQqM=;
-        b=En01xN/qOolic/50DpFJqWDNAWiioKpN8FqgsYbIVQryOMyPKrYEjUtDSxisOMtCCv
-         PECO4u7/U18eYBZEg3I6LS8NOGatyNulfZc+VDRuSmtRIw16VaaYXlhWGPkjcyTRfaqI
-         F4Tb1Pre7mmQklB3QLDqcbLUtosEjQoCg9r++s59253UVlr13D+XbqD1OAs8h4MljM2s
-         XFL6HLnvZlSPKEGOMOf2Y/0hiEv49GR6Qcs+SiDbK2YD20xzEO8aDUvhPkQHZXB7iqfB
-         ajVNj1QkCnPBIsL67kkzL1KXrPTTZ+F/ljpCguo3hXbZBGXJ7XcRTYz8F/wa2GbJP4cL
-         Omhw==
-X-Received: by 10.182.144.40 with SMTP id sj8mr3219545obb.82.1363368326642;
- Fri, 15 Mar 2013 10:25:26 -0700 (PDT)
-Received: by 10.76.13.2 with HTTP; Fri, 15 Mar 2013 10:25:26 -0700 (PDT)
-X-Originating-IP: [2.102.85.74]
-In-Reply-To: <00107242-04EB-423F-90FE-A6DCDEE7E262@infoservices.in>
-X-Gm-Message-State: ALoCoQnX8I0JGW9Fm+zYqLSVcLIOYY33AGnKn0GS0NC+Eqsjp9UW0kBKFn1ziUCw6iS489TL7N8d
+	id S1754792Ab3CORlo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 13:41:44 -0400
+Received: from mout.web.de ([212.227.17.12]:54441 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754491Ab3CORln (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Mar 2013 13:41:43 -0400
+Received: from [192.168.209.16] ([195.67.191.23]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0MUWCB-1U6tqo13Dv-00QuMx; Fri, 15 Mar 2013 18:41:42
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
+In-Reply-To: <7vvc8svc2r.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:UgzEz+gwQA8Tc0m0KVNyGhZ6RrWggn18JBgS5bNpdId
+ M8ZPXBfFaN4uvqtQ6/xe2MMmJrjbS39dJbsMsj76tfjXPUv9Yp
+ BRHa29VlFbQyFyH9yD0qBQqA/YGUcXghvJELzKLlOOzEIhQtnO
+ xF5t2IYHLQvISXtefrCE4oRbYSdEgkYSbdDXiHiWoRCvhMGNdN
+ +CNxMms4KvnJDaeqZdW5g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218255>
 
-On Fri, Mar 15, 2013 at 12:52 PM, Joydeep Bakshi
-<joydeep.bakshi@infoservices.in> wrote:
+On 03/15/2013 05:53 PM, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen<tboegi@web.de>  writes:
 >
-> On 15-Mar-2013, at 6:14 PM, Fredrik Gustafsson <iveqy@iveqy.com> wrot=
-e:
->
->> On Fri, Mar 15, 2013 at 05:54:05PM +0530, Joydeep Bakshi wrote:
->>> [1] the server will have different git repo with branches
->>> [2] there will be a web-based GUI which must be flexible to show ju=
-st a specific branch of a repo based on user authentication
->>> [3] the web-based GUI should also have the flexibility to show a si=
-ngle repo based on the authentication
->>> [4] the web-based GUI should have an admin account to supervise and=
- configure all repos along with their branches
->>> [3] there must be a control mechanism in the repo/web based GUI whi=
-ch have ACL on branches i.e.
->>> some specific users should see some specific/ or just a branch and =
-able to commit there only.
->>>
->>> based on the above scenario could anyone suggest the best available=
- solution ?
->>> There are many like gitolike/github etc=85. but don't know whig one=
- has much finer granular
->>> control/ACL/web-based GUI=85
+>> [PATCH] git status: Document that git status -uno is faster
 >>
->> gitolite have a more fine ACL. Check it out. However it doesn't real=
-ly
->> meet your needs with web-interface (and I'm not even sure about the =
-ACL
->> thing is fine enough for you). You can read more about ACL in the gi=
-t
->> book: http://git-scm.com/book/ch7-4.html
+>> In some repostories users expere that "git status" command takes lon=
+g time.
+> expere???  Certainly you did not mean "expect".  "observe",
+> "experience", or "see", perhaps?
+>
+>> The command spends some time searching the file system for untracked=
+ files.
+>> Document that searching for untracked file may take some time, and d=
+ocuemnt
+>> the option -uno better.
+> Good intentions.
+>
+>> Signed-off-by: Torsten B=C3=B6gershausen<tboegi@web.de>
+>> ---
+>>   Documentation/git-status.txt | 7 +++++++
+>>   1 file changed, 7 insertions(+)
 >>
->> The webgui that's most populair is cgit and git-web. They don't do A=
-CL
->> afaik.
+>> diff --git a/Documentation/git-status.txt b/Documentation/git-status=
+=2Etxt
+>> index 0412c40..fd36bbd 100644
+>> --- a/Documentation/git-status.txt
+>> +++ b/Documentation/git-status.txt
+>> @@ -58,6 +58,13 @@ The possible options are:
+>>   The default can be changed using the status.showUntrackedFiles
+>>   configuration variable documented in linkgit:git-config[1].
 >>
->> Why would you need ACL? Why not don't share the branches that are go=
-ing
->> to be secret? Or are you looking for some branches to be read only?
+>> ++
+>> +Note: Searching the file system for untracked files may take some t=
+ime.
+>> +git status -uno is faster than git status -uall.
+>> +There is a trade-off around the use of -uno between safety and perf=
+ormance.
+>> +The default is not to use -uno so that you will not forget to add a
+>> file you newly created (i.e safety).
+>> +You would pay for the safety with the cost to find such untracked
+>> files (i.e. performance).
+>> +
+> The second sentence looks out of flow, and the last sentence, while
+> technically not incorrect, is unclear what it is trying to convey in
+> the larger picture.
 >
-> Actually the branches have to be dedicated to a group of users.
->  developer branch ---> developers
-> bug fixed branch --- > bug fixer
+> Perhaps it is just me.
 >
-> and specific group don't need to RW permission on other branch.
-> Obviously the admin must have the full permission on all these branch=
-es
-> and merge as per requirement.
+> In any case, I think it is a good idea to explain the reason why the
+> user might want to use a non-default setting, and the criteria the
+> user may want to base the choice on (which is the gist of your
+> addition), and it is a good idea to do so _before_ saying "The
+> default can be changed using ...".
 >
-> The web-interface is required for checking the history by the users t=
-hemselves
-> and for code review. I don't know any web interface which can show re=
-po/branch
-> based on authentication. I have tried gitweb but it can handle a sing=
-le repo or multiple
-> repo with single authentication. NO ACL
+> How about this?
+>
+>   Documentation/git-status.txt | 14 ++++++++++----
+>   1 file changed, 10 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/git-status.txt b/Documentation/git-status.=
+txt
+> index 0412c40..9046df9 100644
+> --- a/Documentation/git-status.txt
+> +++ b/Documentation/git-status.txt
+> @@ -46,15 +46,21 @@ OPTIONS
+>   	Show untracked files.
+>   +
+>   The mode parameter is optional (defaults to 'all'), and is used to
+> -specify the handling of untracked files; when -u is not used, the
+> -default is 'normal', i.e. show untracked files and directories.
+> +specify the handling of untracked files.
+>   +
+>   The possible options are:
+>   +
+> -	- 'no'     - Show no untracked files
+> -	- 'normal' - Shows untracked files and directories
+> +	- 'no'     - Show no untracked files.
+> +	- 'normal' - Shows untracked files and directories.
+>   	- 'all'    - Also shows individual files in untracked directories.
+>   +
+> +When `-u` option is not used, untracked files and directories are
+> +shown (i.e. the same as specifying `normal`), to help you avoid
+> +forgetting to add newly created files.  Because it takes extra work
+> +to find untracked files in the filesystem, this mode may take some
+> +time in a large working tree.  You can use `no` to have `git status`
+(Small nit: extra space before the "You" in the line above)
 
-I think you would need to have a separate repo for each group. Then
-only push the appropriate branches to each repo.
-
---=20
-Paul [W] Campbell
+Thanks, I like that much better than mine
+(and expere is probably a word not yet invented)
+/Torsten
