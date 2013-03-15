@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v1 27/45] Convert run_add_interactive to use struct pathspec
-Date: Fri, 15 Mar 2013 13:06:42 +0700
-Message-ID: <1363327620-29017-28-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v1 28/45] Convert unmerge_cache to take struct pathspec
+Date: Fri, 15 Mar 2013 13:06:43 +0700
+Message-ID: <1363327620-29017-29-git-send-email-pclouds@gmail.com>
 References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,200 +11,126 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 15 07:27:45 2013
+X-From: git-owner@vger.kernel.org Fri Mar 15 07:27:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGO79-0006h1-Pv
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 07:27:40 +0100
+	id 1UGO7F-0006j2-Nn
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 07:27:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752061Ab3COG1I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 02:27:08 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:64934 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751507Ab3COG1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Mar 2013 02:27:06 -0400
-Received: by mail-ie0-f175.google.com with SMTP id c12so3915241ieb.6
-        for <git@vger.kernel.org>; Thu, 14 Mar 2013 23:27:06 -0700 (PDT)
+	id S1753170Ab3COG1T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 02:27:19 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:59152 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752741Ab3COG1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Mar 2013 02:27:18 -0400
+Received: by mail-ie0-f171.google.com with SMTP id 10so3995894ied.16
+        for <git@vger.kernel.org>; Thu, 14 Mar 2013 23:27:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=5HdIoFQHqO11qv0zf9JiITO0VI4pCg7QgyT8Q9QYt0M=;
-        b=BRNVTIjBc3i7DpEUdrLzbNsq9blgMRhV+rdrCAzBdUr2NCfXuzwLuJ71EG5zE67CDm
-         i/aGnxtd5gZg9ycV/Whp+E37nu5s2Y/oOVmDO81iuKSgMZ/aWcYfFCHK6xw/37wb79z+
-         sGYKnGDgVN+hBZa0O0zq/jlxfZ8CkSrrQAKCtQ9IabP9xjpmRHbNHyNlbCuEYY/K+nPz
-         JNINQJ1lsGwuqEw+Tx3CdbQD3X8Wsq9Ux542gX6jin9lOXZkoIsw000ejMBC6FvBDNp9
-         AVM6u/K7Zq9oZrQHSdkPh1RVRCWFfutjKLvTWx5sj4PRcwwB0B4gH2plSHpLgDy2UCPo
-         3KnA==
-X-Received: by 10.50.209.4 with SMTP id mi4mr490131igc.40.1363328826407;
-        Thu, 14 Mar 2013 23:27:06 -0700 (PDT)
+        bh=oFjeUGzTpNUamhKriI+hC4WGxo3zJPLQWGc1Y+3itYE=;
+        b=DElP6gxt/8NyLeCaVpKwwkEXH9m2wPmG/NOeIXxL3cJbn2FZ7V2q1M1hkDfrq1ZnGP
+         dFW4cNZ9dlrqjpgeCli0IAe/5Lc4EoXo+hGqSf6YHDhKIa0h3TBwKFRe74hMrIzMSeYd
+         UggedQzge8TW8zNM51yjWdwwLc/6FyoiVyf+GuII45hyzU7HwZHRsfCiya2tBMPDj1m5
+         liGn26WehSQuGggPAu7JVguO9fV6CqSd9Ofi23xEQvAo3ASKsUaLs6pq6EmuLAx5n+62
+         Z8vURSU1/uJFX02fqnNPJxGhTRnbbYM5dAWKHWO1Oioj0UNBjTlF+0AdjVT0uzbh1cc9
+         aVfA==
+X-Received: by 10.50.196.130 with SMTP id im2mr418719igc.90.1363328838036;
+        Thu, 14 Mar 2013 23:27:18 -0700 (PDT)
 Received: from tre ([115.74.58.84])
-        by mx.google.com with ESMTPS id ua6sm633796igb.0.2013.03.14.23.27.03
+        by mx.google.com with ESMTPS id a3sm748532igq.5.2013.03.14.23.27.14
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 14 Mar 2013 23:27:05 -0700 (PDT)
-Received: by tre (sSMTP sendmail emulation); Fri, 15 Mar 2013 13:10:08 +0700
+        Thu, 14 Mar 2013 23:27:17 -0700 (PDT)
+Received: by tre (sSMTP sendmail emulation); Fri, 15 Mar 2013 13:10:15 +0700
 X-Mailer: git-send-email 1.8.0.rc0.19.g7bbb31d
 In-Reply-To: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218215>
 
-This passes the pathspec, more or less unmodified, to
-git-add--interactive. The command itself does not process pathspec. It
-simply passes the pathspec to other builtin commands. So if all those
-commands support pathspec, we're good.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/add.c      | 26 ++++++++++----------------
- builtin/checkout.c |  9 ++++-----
- builtin/reset.c    |  8 ++++----
- commit.h           |  2 +-
- 4 files changed, 19 insertions(+), 26 deletions(-)
+ builtin/checkout.c | 2 +-
+ rerere.c           | 2 +-
+ resolve-undo.c     | 4 ++--
+ resolve-undo.h     | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index ec6fbe3..2b20d7d 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -139,16 +139,12 @@ static void refresh(int verbose, const char **pat=
-hspec)
- }
-=20
- int run_add_interactive(const char *revision, const char *patch_mode,
--			const char **pathspec)
-+			const struct pathspec *pathspec)
- {
--	int status, ac, pc =3D 0;
-+	int status, ac, i;
- 	const char **args;
-=20
--	if (pathspec)
--		while (pathspec[pc])
--			pc++;
--
--	args =3D xcalloc(sizeof(const char *), (pc + 5));
-+	args =3D xcalloc(sizeof(const char *), (pathspec->nr + 6));
- 	ac =3D 0;
- 	args[ac++] =3D "add--interactive";
- 	if (patch_mode)
-@@ -156,11 +152,9 @@ int run_add_interactive(const char *revision, cons=
-t char *patch_mode,
- 	if (revision)
- 		args[ac++] =3D revision;
- 	args[ac++] =3D "--";
--	if (pc) {
--		memcpy(&(args[ac]), pathspec, sizeof(const char *) * pc);
--		ac +=3D pc;
--	}
--	args[ac] =3D NULL;
-+	for (i =3D 0; i < pathspec->nr; i++)
-+		/* pass original pathspec, to be re-parsed */
-+		args[ac++] =3D pathspec->items[i].original;
-=20
- 	status =3D run_command_v_opt(args, RUN_GIT_CMD);
- 	free(args);
-@@ -175,17 +169,17 @@ int interactive_add(int argc, const char **argv, =
-const char *prefix, int patch)
- 	 * git-add--interactive itself does not parse pathspec. It
- 	 * simply passes the pathspec to other builtin commands. Let's
- 	 * hope all of them support all magic, or we'll need to limit
--	 * the magic here. There is still a problem with prefix. But
--	 * that'll be worked on later on.
-+	 * the magic here.
- 	 */
- 	parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP,
- 		       PATHSPEC_PREFER_FULL |
--		       PATHSPEC_SYMLINK_LEADING_PATH,
-+		       PATHSPEC_SYMLINK_LEADING_PATH |
-+		       PATHSPEC_PREFIX_ORIGIN,
- 		       prefix, argv);
-=20
- 	return run_add_interactive(NULL,
- 				   patch ? "--patch" : NULL,
--				   pathspec.raw);
-+				   &pathspec);
- }
-=20
- static int edit_patch(int argc, const char **argv, const char *prefix)
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3c19cb4..2ddff95 100644
+index 2ddff95..ba5a5c0 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -256,7 +256,7 @@ static int checkout_paths(const struct checkout_opt=
+@@ -281,7 +281,7 @@ static int checkout_paths(const struct checkout_opt=
 s *opts,
 =20
- 	if (opts->patch_mode)
- 		return run_add_interactive(revision, "--patch=3Dcheckout",
--					   opts->pathspec.raw);
-+					   &opts->pathspec);
+ 	/* "checkout -m path" to recreate conflicted state */
+ 	if (opts->merge)
+-		unmerge_cache(opts->pathspec.raw);
++		unmerge_cache(&opts->pathspec);
 =20
- 	lock_file =3D xcalloc(1, sizeof(struct lock_file));
+ 	/* Any unmerged paths? */
+ 	for (pos =3D 0; pos < active_nr; pos++) {
+diff --git a/rerere.c b/rerere.c
+index c52c1f2..ac02eb8 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -667,7 +667,7 @@ int rerere_forget(struct pathspec *pathspec)
 =20
-@@ -1115,10 +1115,9 @@ int cmd_checkout(int argc, const char **argv, co=
-nst char *prefix)
- 		 * cannot handle. Magic mask is pretty safe to be
- 		 * lifted for new magic when opts.patch_mode =3D=3D 0.
- 		 */
--		parse_pathspec(&opts.pathspec,
--			       opts.patch_mode =3D=3D 0 ? 0 :
--			       (PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP),
--			       0, prefix, argv);
-+		parse_pathspec(&opts.pathspec, 0,
-+			       opts.patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0,
-+			       prefix, argv);
+ 	fd =3D setup_rerere(&merge_rr, RERERE_NOAUTOUPDATE);
 =20
- 		if (!opts.pathspec.nr)
- 			die(_("invalid path specification"));
-diff --git a/builtin/reset.c b/builtin/reset.c
-index da7282e..7c6e8b6 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -216,9 +216,9 @@ static void parse_args(struct pathspec *pathspec,
- 		}
- 	}
- 	*rev_ret =3D rev;
--	parse_pathspec(pathspec,
--		       patch_mode ? PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP : 0,
--		       PATHSPEC_PREFER_FULL,
-+	parse_pathspec(pathspec, 0,
-+		       PATHSPEC_PREFER_FULL |
-+		       patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0,
- 		       prefix, argv);
+-	unmerge_cache(pathspec->raw);
++	unmerge_cache(pathspec);
+ 	find_conflict(&conflict);
+ 	for (i =3D 0; i < conflict.nr; i++) {
+ 		struct string_list_item *it =3D &conflict.items[i];
+diff --git a/resolve-undo.c b/resolve-undo.c
+index 72b4612..1bfece2 100644
+--- a/resolve-undo.c
++++ b/resolve-undo.c
+@@ -156,7 +156,7 @@ int unmerge_index_entry_at(struct index_state *ista=
+te, int pos)
+ 	return unmerge_index_entry_at(istate, pos);
  }
 =20
-@@ -296,7 +296,7 @@ int cmd_reset(int argc, const char **argv, const ch=
-ar *prefix)
- 	if (patch_mode) {
- 		if (reset_type !=3D NONE)
- 			die(_("--patch is incompatible with --{hard,mixed,soft}"));
--		return run_add_interactive(sha1_to_hex(sha1), "--patch=3Dreset", pat=
-hspec.raw);
-+		return run_add_interactive(sha1_to_hex(sha1), "--patch=3Dreset", &pa=
-thspec);
- 	}
-=20
- 	/* git reset tree [--] paths... can be used to
-diff --git a/commit.h b/commit.h
-index 4138bb4..9448fda 100644
---- a/commit.h
-+++ b/commit.h
-@@ -179,7 +179,7 @@ int in_merge_bases(struct commit *, struct commit *=
-);
-=20
- extern int interactive_add(int argc, const char **argv, const char *pr=
-efix, int patch);
- extern int run_add_interactive(const char *revision, const char *patch=
-_mode,
--			       const char **pathspec);
-+			       const struct pathspec *pathspec);
-=20
- static inline int single_parent(struct commit *commit)
+-void unmerge_index(struct index_state *istate, const char **pathspec)
++void unmerge_index(struct index_state *istate, const struct pathspec *=
+pathspec)
  {
+ 	int i;
+=20
+@@ -165,7 +165,7 @@ void unmerge_index(struct index_state *istate, cons=
+t char **pathspec)
+=20
+ 	for (i =3D 0; i < istate->cache_nr; i++) {
+ 		struct cache_entry *ce =3D istate->cache[i];
+-		if (!match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, NULL))
++		if (!match_pathspec_depth(pathspec, ce->name, ce_namelen(ce), 0, NUL=
+L))
+ 			continue;
+ 		i =3D unmerge_index_entry_at(istate, i);
+ 	}
+diff --git a/resolve-undo.h b/resolve-undo.h
+index 8458769..81e8803 100644
+--- a/resolve-undo.h
++++ b/resolve-undo.h
+@@ -11,6 +11,6 @@ extern void resolve_undo_write(struct strbuf *, struc=
+t string_list *);
+ extern struct string_list *resolve_undo_read(const char *, unsigned lo=
+ng);
+ extern void resolve_undo_clear_index(struct index_state *);
+ extern int unmerge_index_entry_at(struct index_state *, int);
+-extern void unmerge_index(struct index_state *, const char **);
++extern void unmerge_index(struct index_state *, const struct pathspec =
+*);
+=20
+ #endif
 --=20
 1.8.0.rc0.19.g7bbb31d
