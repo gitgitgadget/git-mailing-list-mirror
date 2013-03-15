@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v1 36/45] Remove init_pathspec() in favor of parse_pathspec()
-Date: Fri, 15 Mar 2013 13:06:51 +0700
-Message-ID: <1363327620-29017-37-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v1 37/45] Remove match_pathspec() in favor of match_pathspec_depth()
+Date: Fri, 15 Mar 2013 13:06:52 +0700
+Message-ID: <1363327620-29017-38-git-send-email-pclouds@gmail.com>
 References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,339 +11,371 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 15 07:28:43 2013
+X-From: git-owner@vger.kernel.org Fri Mar 15 07:28:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGO88-0007n7-Lv
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 07:28:41 +0100
+	id 1UGO8E-0007pY-LL
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 07:28:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631Ab3COG2N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 02:28:13 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:47626 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753610Ab3COG2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Mar 2013 02:28:12 -0400
-Received: by mail-ie0-f172.google.com with SMTP id c10so4019071ieb.31
-        for <git@vger.kernel.org>; Thu, 14 Mar 2013 23:28:11 -0700 (PDT)
+	id S1753636Ab3COG2U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 02:28:20 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:47350 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753223Ab3COG2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Mar 2013 02:28:19 -0400
+Received: by mail-ie0-f170.google.com with SMTP id c11so4014034ieb.15
+        for <git@vger.kernel.org>; Thu, 14 Mar 2013 23:28:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=dKDBEZn06AWtxa2FifK2zG8uy+i6NkaVy4bNR3begUA=;
-        b=ku6YMfrgd9tpYeQYx8IR9paOeRSPWJ17X0YbYhij7WRljCzO8b4TdeG0BwdAbyc7RI
-         L5ol4Wy8pEIJ2g+GyZeEPM+nLQy1BH5Atf8TQkHs/q+KgcvjmXUabzVQzdxj4IdB9YFd
-         DlGNCWA8wVYwdIzCbLsqPRRVjmSOuqjgdmAGXUCdVv+CbJk8fjQdKVBEWoejEuC+hH+F
-         4KTdQey7rszZn8UjvqzS31ngTyo0zRGGIkJC8I+9awFl5C9/gtmVnShOvc9OHVI29rqR
-         fp34C6obPtOpklPv2VMGD5psnUnoQJ0FeQROXpcPOxY0ERpKZt3QfywdiSC9zwR8Zt2F
-         MnwA==
-X-Received: by 10.50.73.133 with SMTP id l5mr4431124igv.108.1363328891479;
-        Thu, 14 Mar 2013 23:28:11 -0700 (PDT)
+        bh=THF2cmSMZH3xyvLcgMkDsoy1Te2AtedpVRNnWP43IbM=;
+        b=W/ZuBOCC73EiTD1vNiPF2uHNH0VRpdKDXwrZHsXMdug0wN+3579Nta7dxcAH7dzPwG
+         +aa+7N7ANB3ihKReCxxmKGezVOUty2jIyqEYdlihYCUTFOdkbsLuUJ8FLjC9NIoaZgzt
+         +ub4hXyFakz0sPhiYiZAJVjxgKNjh+2WVjqBE32pg20AErc7Yr+MBlBsQ5HWXO41kQlo
+         YKv5Bi7gxzCLeE8RVqDnHCmKzGKPDCugLzWFmNmBuxc4mcQbD32HfnbMEy1hhaQcG54w
+         5zlzv4uvgwfE1sx1VE7IBl25vpy8eHEZewCN6KDLUk6/3+UvXcP8WmRLrhPTf0dmpULk
+         HuIw==
+X-Received: by 10.50.216.164 with SMTP id or4mr522620igc.38.1363328898826;
+        Thu, 14 Mar 2013 23:28:18 -0700 (PDT)
 Received: from tre ([115.74.58.84])
-        by mx.google.com with ESMTPS id hi4sm746022igc.6.2013.03.14.23.28.08
+        by mx.google.com with ESMTPS id g6sm624052ign.4.2013.03.14.23.28.15
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 14 Mar 2013 23:28:10 -0700 (PDT)
-Received: by tre (sSMTP sendmail emulation); Fri, 15 Mar 2013 13:11:13 +0700
+        Thu, 14 Mar 2013 23:28:18 -0700 (PDT)
+Received: by tre (sSMTP sendmail emulation); Fri, 15 Mar 2013 13:11:20 +0700
 X-Mailer: git-send-email 1.8.0.rc0.19.g7bbb31d
 In-Reply-To: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218224>
 
-While at there, move free_pathspec() to pathspec.c
+match_pathspec_depth was created to replace match_pathspec (see
+61cf282 (pathspec: add match_pathspec_depth() - 2010-12-15). It took
+more than two years, but the replacement finally happens :-)
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/blame.c    |  8 +-------
- builtin/log.c      |  2 +-
- builtin/ls-files.c | 11 +++++------
- diff-lib.c         |  2 +-
- dir.c              | 58 ----------------------------------------------=
+ builtin/add.c          |  30 +++++++-------
+ builtin/check-ignore.c |   4 +-
+ dir.c                  | 107 -----------------------------------------=
 --------
- merge-recursive.c  |  2 +-
- pathspec.c         |  6 ++++++
- pathspec.h         |  1 -
- revision.c         |  2 +-
- tree-diff.c        | 10 +++++-----
- 10 files changed, 21 insertions(+), 81 deletions(-)
+ dir.h                  |   1 -
+ pathspec.c             |  19 ++++-----
+ pathspec.h             |   4 +-
+ 6 files changed, 25 insertions(+), 140 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index da2dc4c..5b91e94 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -407,7 +407,7 @@ static struct origin *find_origin(struct scoreboard=
- *sb,
- 	paths[0] =3D origin->path;
- 	paths[1] =3D NULL;
-=20
--	init_pathspec(&diff_opts.pathspec, paths);
-+	parse_pathspec(&diff_opts.pathspec, PATHSPEC_ALL_MAGIC, 0, "", paths)=
-;
- 	diff_setup_done(&diff_opts);
-=20
- 	if (is_null_sha1(origin->commit->object.sha1))
-@@ -485,15 +485,12 @@ static struct origin *find_rename(struct scoreboa=
-rd *sb,
- 	struct origin *porigin =3D NULL;
- 	struct diff_options diff_opts;
- 	int i;
--	const char *paths[2];
-=20
- 	diff_setup(&diff_opts);
- 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
- 	diff_opts.detect_rename =3D DIFF_DETECT_RENAME;
- 	diff_opts.output_format =3D DIFF_FORMAT_NO_OUTPUT;
- 	diff_opts.single_follow =3D origin->path;
--	paths[0] =3D NULL;
--	init_pathspec(&diff_opts.pathspec, paths);
- 	diff_setup_done(&diff_opts);
-=20
- 	if (is_null_sha1(origin->commit->object.sha1))
-@@ -1058,7 +1055,6 @@ static int find_copy_in_parent(struct scoreboard =
-*sb,
- 			       int opt)
- {
- 	struct diff_options diff_opts;
--	const char *paths[1];
- 	int i, j;
- 	int retval;
- 	struct blame_list *blame_list;
-@@ -1072,8 +1068,6 @@ static int find_copy_in_parent(struct scoreboard =
-*sb,
- 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
- 	diff_opts.output_format =3D DIFF_FORMAT_NO_OUTPUT;
-=20
--	paths[0] =3D NULL;
--	init_pathspec(&diff_opts.pathspec, paths);
- 	diff_setup_done(&diff_opts);
-=20
- 	/* Try "find copies harder" on new path if requested;
-diff --git a/builtin/log.c b/builtin/log.c
-index 8f0b2e8..812bcb9 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -469,7 +469,7 @@ int cmd_show(int argc, const char **argv, const cha=
-r *prefix)
- 	init_grep_defaults();
- 	git_config(git_log_config, NULL);
-=20
--	init_pathspec(&match_all, NULL);
-+	memset(&match_all, 0, sizeof(match_all));
- 	init_revisions(&rev, prefix);
- 	rev.diff =3D 1;
- 	rev.always_show_header =3D 1;
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index f211539..50842ba 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -320,13 +320,12 @@ void overlay_tree_on_cache(const char *tree_name,=
- const char *prefix)
- 	}
-=20
- 	if (prefix) {
--		static const char *(matchbuf[2]);
--		matchbuf[0] =3D prefix;
--		matchbuf[1] =3D NULL;
--		init_pathspec(&pathspec, matchbuf);
--		pathspec.items[0].nowildcard_len =3D pathspec.items[0].len;
-+		static const char *(matchbuf[1]);
-+		matchbuf[0] =3D NULL;
-+		parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC,
-+			       PATHSPEC_PREFER_CWD, prefix, matchbuf);
- 	} else
--		init_pathspec(&pathspec, NULL);
-+		memset(&pathspec, 0, sizeof(pathspec));
- 	if (read_tree(tree, 1, &pathspec))
- 		die("unable to read tree entries %s", tree_name);
-=20
-diff --git a/diff-lib.c b/diff-lib.c
-index 4729157..68fc991 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -499,7 +499,7 @@ int do_diff_cache(const unsigned char *tree_sha1, s=
-truct diff_options *opt)
- 	struct rev_info revs;
-=20
- 	init_revisions(&revs, NULL);
--	init_pathspec(&revs.prune_data, opt->pathspec.raw);
-+	copy_pathspec(&revs.prune_data, &opt->pathspec);
- 	revs.diffopt =3D *opt;
-=20
- 	if (diff_cache(&revs, tree_sha1, NULL, 1))
-diff --git a/dir.c b/dir.c
-index a646e55..e354abb 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1630,64 +1630,6 @@ int remove_path(const char *name)
- 	return 0;
+diff --git a/builtin/add.c b/builtin/add.c
+index 70bfc05..aa0709e 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -100,26 +100,24 @@ int add_files_to_cache(const char *prefix,
+ 	return !!data.add_errors;
  }
 =20
--static int pathspec_item_cmp(const void *a_, const void *b_)
+-static char *prune_directory(struct dir_struct *dir, const char **path=
+spec, int prefix)
++static char *prune_directory(struct dir_struct *dir, struct pathspec *=
+pathspec, int prefix)
+ {
+ 	char *seen;
+-	int i, specs;
++	int i;
+ 	struct dir_entry **src, **dst;
+=20
+-	for (specs =3D 0; pathspec[specs];  specs++)
+-		/* nothing */;
+-	seen =3D xcalloc(specs, 1);
++	seen =3D xcalloc(pathspec->nr, 1);
+=20
+ 	src =3D dst =3D dir->entries;
+ 	i =3D dir->nr;
+ 	while (--i >=3D 0) {
+ 		struct dir_entry *entry =3D *src++;
+-		if (match_pathspec(pathspec, entry->name, entry->len,
+-				   prefix, seen))
++		if (match_pathspec_depth(pathspec, entry->name, entry->len,
++					 prefix, seen))
+ 			*dst++ =3D entry;
+ 	}
+ 	dir->nr =3D dst - dir->entries;
+-	add_pathspec_matches_against_index(pathspec, seen, specs);
++	add_pathspec_matches_against_index(pathspec, seen);
+ 	return seen;
+ }
+=20
+@@ -409,7 +407,7 @@ int cmd_add(int argc, const char **argv, const char=
+ *prefix)
+ 		/* This picks up the paths that are not tracked */
+ 		baselen =3D fill_directory(&dir, &pathspec);
+ 		if (pathspec.nr)
+-			seen =3D prune_directory(&dir, pathspec.raw, baselen);
++			seen =3D prune_directory(&dir, &pathspec, baselen);
+ 	}
+=20
+ 	if (refresh_only) {
+@@ -423,23 +421,23 @@ int cmd_add(int argc, const char **argv, const ch=
+ar *prefix)
+=20
+ 		path_exclude_check_init(&check, &dir);
+ 		if (!seen)
+-			seen =3D find_pathspecs_matching_against_index(pathspec.raw);
++			seen =3D find_pathspecs_matching_against_index(&pathspec);
+=20
+ 		/*
+ 		 * file_exists() assumes exact match
+ 		 */
+ 		GUARD_PATHSPEC(&pathspec, PATHSPEC_FROMTOP);
+=20
+-		for (i =3D 0; pathspec.raw[i]; i++) {
+-			if (!seen[i] && pathspec.raw[i][0]
+-			    && !file_exists(pathspec.raw[i])) {
++		for (i =3D 0; i < pathspec.nr; i++) {
++			const char *path =3D pathspec.items[i].match;
++			if (!seen[i] && !file_exists(path)) {
+ 				if (ignore_missing) {
+ 					int dtype =3D DT_UNKNOWN;
+-					if (is_path_excluded(&check, pathspec.raw[i], -1, &dtype))
+-						dir_add_ignored(&dir, pathspec.raw[i], strlen(pathspec.raw[i]));
++					if (is_path_excluded(&check, path, -1, &dtype))
++						dir_add_ignored(&dir, path, pathspec.items[i].len);
+ 				} else
+ 					die(_("pathspec '%s' did not match any files"),
+-					    pathspec.raw[i]);
++					    pathspec.items[i].original);
+ 			}
+ 		}
+ 		free(seen);
+diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
+index 6e55f06..80e6bf7 100644
+--- a/builtin/check-ignore.c
++++ b/builtin/check-ignore.c
+@@ -93,9 +93,9 @@ static int check_ignore(int argc, const char **argv, =
+const char *prefix)
+ 	 * should not be ignored, in order to be consistent with
+ 	 * 'git status', 'git add' etc.
+ 	 */
+-	seen =3D find_pathspecs_matching_against_index(pathspec.raw);
++	seen =3D find_pathspecs_matching_against_index(&pathspec);
+ 	for (i =3D 0; i < pathspec.nr; i++) {
+-		const char *full_path =3D pathspec.raw[i];
++		const char *full_path =3D pathspec.items[i].match;
+ 		if (!seen[i]) {
+ 			exclude =3D last_exclude_matching_path(&check, full_path,
+ 							     -1, &dtype);
+diff --git a/dir.c b/dir.c
+index e354abb..9627d7e 100644
+--- a/dir.c
++++ b/dir.c
+@@ -140,113 +140,6 @@ int within_depth(const char *name, int namelen,
+  *
+  * It returns 0 when there is no match.
+  */
+-static int match_one(const char *match, const char *name, int namelen)
 -{
--	struct pathspec_item *a, *b;
+-	int matchlen;
+-	int literal =3D limit_pathspec_to_literal();
 -
--	a =3D (struct pathspec_item *)a_;
--	b =3D (struct pathspec_item *)b_;
--	return strcmp(a->match, b->match);
--}
+-	/* If the match was just the prefix, we matched */
+-	if (!*match)
+-		return MATCHED_RECURSIVELY;
 -
--int init_pathspec(struct pathspec *pathspec, const char **paths)
--{
--	const char **p =3D paths;
--	int i;
--
--	memset(pathspec, 0, sizeof(*pathspec));
--	if (!p)
--		return 0;
--	while (*p)
--		p++;
--	pathspec->raw =3D paths;
--	pathspec->nr =3D p - paths;
--	if (!pathspec->nr)
--		return 0;
--
--	pathspec->items =3D xmalloc(sizeof(struct pathspec_item)*pathspec->nr=
-);
--	for (i =3D 0; i < pathspec->nr; i++) {
--		struct pathspec_item *item =3D pathspec->items+i;
--		const char *path =3D paths[i];
--
--		item->match =3D path;
--		item->original =3D path;
--		item->len =3D strlen(path);
--		item->flags =3D 0;
--		if (limit_pathspec_to_literal()) {
--			item->nowildcard_len =3D item->len;
--		} else {
--			item->nowildcard_len =3D simple_length(path);
--			if (item->nowildcard_len < item->len) {
--				pathspec->has_wildcard =3D 1;
--				if (path[item->nowildcard_len] =3D=3D '*' &&
--				    no_wildcard(path + item->nowildcard_len + 1))
--					item->flags |=3D PATHSPEC_ONESTAR;
--			}
+-	if (ignore_case) {
+-		for (;;) {
+-			unsigned char c1 =3D tolower(*match);
+-			unsigned char c2 =3D tolower(*name);
+-			if (c1 =3D=3D '\0' || (!literal && is_glob_special(c1)))
+-				break;
+-			if (c1 !=3D c2)
+-				return 0;
+-			match++;
+-			name++;
+-			namelen--;
+-		}
+-	} else {
+-		for (;;) {
+-			unsigned char c1 =3D *match;
+-			unsigned char c2 =3D *name;
+-			if (c1 =3D=3D '\0' || (!literal && is_glob_special(c1)))
+-				break;
+-			if (c1 !=3D c2)
+-				return 0;
+-			match++;
+-			name++;
+-			namelen--;
 -		}
 -	}
 -
--	qsort(pathspec->items, pathspec->nr,
--	      sizeof(struct pathspec_item), pathspec_item_cmp);
+-	/*
+-	 * If we don't match the matchstring exactly,
+-	 * we need to match by fnmatch
+-	 */
+-	matchlen =3D strlen(match);
+-	if (strncmp_icase(match, name, matchlen)) {
+-		if (literal)
+-			return 0;
+-		return !fnmatch_icase(match, name, 0) ? MATCHED_FNMATCH : 0;
+-	}
 -
+-	if (namelen =3D=3D matchlen)
+-		return MATCHED_EXACTLY;
+-	if (match[matchlen-1] =3D=3D '/' || name[matchlen] =3D=3D '/')
+-		return MATCHED_RECURSIVELY;
 -	return 0;
 -}
 -
--void free_pathspec(struct pathspec *pathspec)
+-/*
+- * Given a name and a list of pathspecs, returns the nature of the
+- * closest (i.e. most specific) match of the name to any of the
+- * pathspecs.
+- *
+- * The caller typically calls this multiple times with the same
+- * pathspec and seen[] array but with different name/namelen
+- * (e.g. entries from the index) and is interested in seeing if and
+- * how each pathspec matches all the names it calls this function
+- * with.  A mark is left in the seen[] array for each pathspec element
+- * indicating the closest type of match that element achieved, so if
+- * seen[n] remains zero after multiple invocations, that means the nth
+- * pathspec did not match any names, which could indicate that the
+- * user mistyped the nth pathspec.
+- */
+-int match_pathspec(const char **pathspec, const char *name, int namele=
+n,
+-		int prefix, char *seen)
 -{
--	free(pathspec->items);
--	pathspec->items =3D NULL;
+-	int i, retval =3D 0;
+-
+-	if (!pathspec)
+-		return 1;
+-
+-	name +=3D prefix;
+-	namelen -=3D prefix;
+-
+-	for (i =3D 0; pathspec[i] !=3D NULL; i++) {
+-		int how;
+-		const char *match =3D pathspec[i] + prefix;
+-		if (seen && seen[i] =3D=3D MATCHED_EXACTLY)
+-			continue;
+-		how =3D match_one(match, name, namelen);
+-		if (how) {
+-			if (retval < how)
+-				retval =3D how;
+-			if (seen && seen[i] < how)
+-				seen[i] =3D how;
+-		}
+-	}
+-	return retval;
 -}
 -
- int limit_pathspec_to_literal(void)
+-/*
+- * Does 'match' match the given name?
+- * A match is found if
+- *
+- * (1) the 'match' string is leading directory of 'name', or
+- * (2) the 'match' string is a wildcard and matches 'name', or
+- * (3) the 'match' string is exactly the same as 'name'.
+- *
+- * and the return value tells which case it was.
+- *
+- * It returns 0 when there is no match.
+- */
+ static int match_pathspec_item(const struct pathspec_item *item, int p=
+refix,
+ 			       const char *name, int namelen)
  {
- 	static int flag =3D -1;
-diff --git a/merge-recursive.c b/merge-recursive.c
-index ea9dbd3..8395b9b 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -297,7 +297,7 @@ static int get_files_dirs(struct merge_options *o, =
-struct tree *tree)
- {
- 	int n;
- 	struct pathspec match_all;
--	init_pathspec(&match_all, NULL);
-+	memset(&match_all, 0, sizeof(match_all));
- 	if (read_tree_recursive(tree, "", 0, 0, &match_all, save_files_dirs, =
-o))
- 		return 0;
- 	n =3D o->current_file_set.nr + o->current_directory_set.nr;
+diff --git a/dir.h b/dir.h
+index d3f76df..13da62c 100644
+--- a/dir.h
++++ b/dir.h
+@@ -128,7 +128,6 @@ struct dir_struct {
+ extern int simple_length(const char *match);
+ extern int no_wildcard(const char *string);
+ extern char *common_prefix(const struct pathspec *pathspec);
+-extern int match_pathspec(const char **pathspec, const char *name, int=
+ namelen, int prefix, char *seen);
+ extern int match_pathspec_depth(const struct pathspec *pathspec,
+ 				const char *name, int namelen,
+ 				int prefix, char *seen);
 diff --git a/pathspec.c b/pathspec.c
-index 0b658cb..767ce65 100644
+index 767ce65..1ea1c4c 100644
 --- a/pathspec.c
 +++ b/pathspec.c
-@@ -370,3 +370,9 @@ void copy_pathspec(struct pathspec *dst, const stru=
-ct pathspec *src)
- 	memcpy(dst->items, src->items,
- 	       sizeof(struct pathspec_item) * dst->nr);
+@@ -15,8 +15,8 @@
+  * If seen[] has not already been written to, it may make sense
+  * to use find_pathspecs_matching_against_index() instead.
+  */
+-void add_pathspec_matches_against_index(const char **pathspec,
+-					char *seen, int specs)
++void add_pathspec_matches_against_index(const struct pathspec *pathspe=
+c,
++					char *seen)
+ {
+ 	int num_unmatched =3D 0, i;
+=20
+@@ -26,14 +26,14 @@ void add_pathspec_matches_against_index(const char =
+**pathspec,
+ 	 * mistakenly think that the user gave a pathspec that did not match
+ 	 * anything.
+ 	 */
+-	for (i =3D 0; i < specs; i++)
++	for (i =3D 0; i < pathspec->nr; i++)
+ 		if (!seen[i])
+ 			num_unmatched++;
+ 	if (!num_unmatched)
+ 		return;
+ 	for (i =3D 0; i < active_nr; i++) {
+ 		struct cache_entry *ce =3D active_cache[i];
+-		match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, seen);
++		match_pathspec_depth(pathspec, ce->name, ce_namelen(ce), 0, seen);
+ 	}
  }
-+
-+void free_pathspec(struct pathspec *pathspec)
-+{
-+	free(pathspec->items);
-+	pathspec->items =3D NULL;
-+}
+=20
+@@ -45,15 +45,10 @@ void add_pathspec_matches_against_index(const char =
+**pathspec,
+  * nature of the "closest" (i.e. most specific) matches which each of =
+the
+  * given pathspecs achieves against all items in the index.
+  */
+-char *find_pathspecs_matching_against_index(const char **pathspec)
++char *find_pathspecs_matching_against_index(const struct pathspec *pat=
+hspec)
+ {
+-	char *seen;
+-	int i;
+-
+-	for (i =3D 0; pathspec[i];  i++)
+-		; /* just counting */
+-	seen =3D xcalloc(i, 1);
+-	add_pathspec_matches_against_index(pathspec, seen, i);
++	char *seen =3D xcalloc(pathspec->nr, 1);
++	add_pathspec_matches_against_index(pathspec, seen);
+ 	return seen;
+ }
+=20
 diff --git a/pathspec.h b/pathspec.h
-index 44253c8..9e9e442 100644
+index 9e9e442..30aea46 100644
 --- a/pathspec.h
 +++ b/pathspec.h
-@@ -44,7 +44,6 @@ struct pathspec {
- #define PATHSPEC_PREFIX_ORIGIN (1<<6)
- #define PATHSPEC_KEEP_ORDER (1<<7)
+@@ -54,8 +54,8 @@ extern void free_pathspec(struct pathspec *);
 =20
--extern int init_pathspec(struct pathspec *, const char **);
- extern void parse_pathspec(struct pathspec *pathspec,
- 			   unsigned magic_mask,
- 			   unsigned flags,
-diff --git a/revision.c b/revision.c
-index c0ced84..56ada54 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1113,7 +1113,7 @@ static void prepare_show_merge(struct rev_info *r=
-evs)
- 			i++;
- 	}
- 	free_pathspec(&revs->prune_data);
--	init_pathspec(&revs->prune_data, prune);
-+	parse_pathspec(&revs->prune_data, PATHSPEC_ALL_MAGIC, 0, "", prune);
- 	revs->limited =3D 1;
- }
+ extern int limit_pathspec_to_literal(void);
 =20
-diff --git a/tree-diff.c b/tree-diff.c
-index f4c92f6..e1145c6 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -195,7 +195,6 @@ static void try_to_follow_renames(struct tree_desc =
-*t1, struct tree_desc *t2, co
- 	struct diff_options diff_opts;
- 	struct diff_queue_struct *q =3D &diff_queued_diff;
- 	struct diff_filepair *choice;
--	const char *paths[1];
- 	int i;
+-extern char *find_pathspecs_matching_against_index(const char **pathsp=
+ec);
+-extern void add_pathspec_matches_against_index(const char **pathspec, =
+char *seen, int specs);
++extern char *find_pathspecs_matching_against_index(const struct pathsp=
+ec *pathspec);
++extern void add_pathspec_matches_against_index(const struct pathspec *=
+pathspec, char *seen);
+ extern const char *check_path_for_gitlink(const char *path);
+ extern void die_if_path_beyond_symlink(const char *path, const char *p=
+refix);
 =20
- 	/*
-@@ -228,8 +227,6 @@ static void try_to_follow_renames(struct tree_desc =
-*t1, struct tree_desc *t2, co
- 	diff_opts.single_follow =3D opt->pathspec.raw[0];
- 	diff_opts.break_opt =3D opt->break_opt;
- 	diff_opts.rename_score =3D opt->rename_score;
--	paths[0] =3D NULL;
--	init_pathspec(&diff_opts.pathspec, paths);
- 	diff_setup_done(&diff_opts);
- 	diff_tree(t1, t2, base, &diff_opts);
- 	diffcore_std(&diff_opts);
-@@ -247,14 +244,17 @@ static void try_to_follow_renames(struct tree_des=
-c *t1, struct tree_desc *t2, co
- 		 */
- 		if ((p->status =3D=3D 'R' || p->status =3D=3D 'C') &&
- 		    !strcmp(p->two->path, opt->pathspec.raw[0])) {
-+			const char *path[2];
-+
- 			/* Switch the file-pairs around */
- 			q->queue[i] =3D choice;
- 			choice =3D p;
-=20
- 			/* Update the path we use from now on.. */
-+			path[0] =3D p->one->path;
-+			path[1] =3D NULL;
- 			free_pathspec(&opt->pathspec);
--			opt->pathspec.raw[0] =3D xstrdup(p->one->path);
--			init_pathspec(&opt->pathspec, opt->pathspec.raw);
-+			parse_pathspec(&opt->pathspec, PATHSPEC_ALL_MAGIC, 0, "", path);
-=20
- 			/*
- 			 * The caller expects us to return a set of vanilla
 --=20
 1.8.0.rc0.19.g7bbb31d
