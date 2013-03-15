@@ -1,95 +1,204 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1 44/45] pathspec: support :(glob) syntax
-Date: Fri, 15 Mar 2013 18:11:31 -0400
-Message-ID: <CAPig+cTsP2TmoO0MHPZAUB1RZQO3iVAEA11zxxCvcjbGqNeQuQ@mail.gmail.com>
-References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
-	<1363327620-29017-45-git-send-email-pclouds@gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] archive-zip: use deflateInit2() to ask for raw compressed
+ data
+Date: Fri, 15 Mar 2013 23:21:51 +0100
+Message-ID: <51439EFF.3000607@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 15 23:12:02 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 15 23:22:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGcr2-00058x-MW
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 23:12:01 +0100
+	id 1UGd17-0000LK-Ow
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 23:22:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932206Ab3COWLd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 18:11:33 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:44015 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932129Ab3COWLd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Mar 2013 18:11:33 -0400
-Received: by mail-lb0-f175.google.com with SMTP id n3so3201745lbo.34
-        for <git@vger.kernel.org>; Fri, 15 Mar 2013 15:11:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qvxGauh5PKAA88JrAafjLkbAnEOWqUPyD/j8YOGoRHc=;
-        b=bKfnX4tzDFk1iniwzXtIbHmdJrwUi49kLh/Vvvl+2QhBSAx5UceLXc9HhJrw+nTMI2
-         HsTdgyDKiif/5tbbogupppculop1R4GfdG8cKIIui8ymTn0CcFB7n+qYYXKGWAIOSsLO
-         pohE940cSt9vbC/L/vzN8yVHaDWUbhMLuVW4ihGtTYYRipy/wI8GrsFi8gnUCLDVHIXF
-         ASGLYFswd15hiZlqIB5JIPihlMB3eDs/eNreN1DiSXwgOOhhQ2qJvSPCwQUzVIk7IqSy
-         1YhPoSJMMGp0n798aFZ7hHHs0egVXS+++hfLlthbqgQtN1XKnCZ/8KQlcYkVs0ZCrmQp
-         Hxcw==
-X-Received: by 10.112.88.35 with SMTP id bd3mr3294700lbb.56.1363385491409;
- Fri, 15 Mar 2013 15:11:31 -0700 (PDT)
-Received: by 10.114.1.43 with HTTP; Fri, 15 Mar 2013 15:11:31 -0700 (PDT)
-In-Reply-To: <1363327620-29017-45-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: PhI__kkh_kgsjrFvIMCeQ9EnH0E
+	id S1755518Ab3COWV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Mar 2013 18:21:58 -0400
+Received: from india601.server4you.de ([85.25.151.105]:42618 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755136Ab3COWV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Mar 2013 18:21:57 -0400
+Received: from [192.168.2.105] (p4FFD93E4.dip.t-dialin.net [79.253.147.228])
+	by india601.server4you.de (Postfix) with ESMTPSA id BAC6E323;
+	Fri, 15 Mar 2013 23:21:55 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218266>
 
-On Fri, Mar 15, 2013 at 2:06 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> +GIT_GLOB_PATHSPECS::
-> +       Setting this variable to `1` will cause git to treat all
-> +       pathspecs as glob patterns (aka "glob" magic).
+We use the function git_deflate_init() -- which wraps the zlib function
+deflateInit() -- to initialize compression of ZIP file entries.  This
+results in compressed data prefixed with a two-bytes long header and
+followed by a four-bytes trailer.  ZIP file entries consist of ZIP
+headers and raw compressed data instead, so we remove the zlib wrapper
+before writing the result.
 
-Per recent git -> Git normalization, probably: s/git/Git/
+We can ask zlib for the the raw compressed data without the unwanted
+parts in the first place by using deflateInit2() and specifying a
+negative number of bits to size the window.  For that purpose, factor
+out the function do_git_deflate_init() and add git_deflate_init_raw(),
+which wraps it.  Then use the latter in archive-zip.c and get rid of
+the code that stripped the zlib header and trailer.
 
-> +
-> +GIT_NOGLOB_PATHSPECS::
-> +       Setting this variable to `1` will cause git to treat all
-> +       pathspecs as literal (aka "literal" magic).
+Also rename the helper function zlib_deflate() to zlib_deflate_raw()
+to reflect the change.
 
-Ditto: s/git/Git/
+Thus we avoid generating data that we throw away anyway, the code
+becomes shorter and some magic constants are removed.
 
-> @@ -103,6 +105,22 @@ static unsigned prefix_pathspec(struct pathspec_=
-item *item,
->         if (literal_global)
->                 global_magic |=3D PATHSPEC_LITERAL;
->
-> +       if (glob_global < 0)
-> +               glob_global =3D git_env_bool(GIT_GLOB_PATHSPECS_ENVIR=
-ONMENT, 0);
-> +       if (glob_global)
-> +               global_magic |=3D PATHSPEC_GLOB;
-> +
-> +       if (noglob_global < 0)
-> +               noglob_global =3D git_env_bool(GIT_NOGLOB_PATHSPECS_E=
-NVIRONMENT, 0);
-> +
-> +       if (glob_global && noglob_global)
-> +               die(_("global 'glob' and 'noglob' pathspec settings a=
-re incompatible"));
-> +
-> +       if ((global_magic & PATHSPEC_LITERAL) &&
-> +           (global_magic & ~PATHSPEC_LITERAL))
-> +               die(_("global 'literal' pathspec setting is incompati=
-able "
-> +                     "with all other global pathspec settings"));
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ archive-zip.c | 36 ++++++++++++++----------------------
+ cache.h       |  1 +
+ zlib.c        | 25 +++++++++++++++++++------
+ 3 files changed, 34 insertions(+), 28 deletions(-)
 
-s/incompatiable/incompatible/
-
--- ES
+diff --git a/archive-zip.c b/archive-zip.c
+index d3aef53..e744d77 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -111,8 +111,9 @@ static void copy_le32(unsigned char *dest, unsigned int n)
+ 	dest[3] = 0xff & (n >> 030);
+ }
+ 
+-static void *zlib_deflate(void *data, unsigned long size,
+-		int compression_level, unsigned long *compressed_size)
++static void *zlib_deflate_raw(void *data, unsigned long size,
++			      int compression_level,
++			      unsigned long *compressed_size)
+ {
+ 	git_zstream stream;
+ 	unsigned long maxsize;
+@@ -120,7 +121,7 @@ static void *zlib_deflate(void *data, unsigned long size,
+ 	int result;
+ 
+ 	memset(&stream, 0, sizeof(stream));
+-	git_deflate_init(&stream, compression_level);
++	git_deflate_init_raw(&stream, compression_level);
+ 	maxsize = git_deflate_bound(&stream, size);
+ 	buffer = xmalloc(maxsize);
+ 
+@@ -265,14 +266,11 @@ static int write_zip_entry(struct archiver_args *args,
+ 	}
+ 
+ 	if (buffer && method == 8) {
+-		deflated = zlib_deflate(buffer, size, args->compression_level,
+-				&compressed_size);
+-		if (deflated && compressed_size - 6 < size) {
+-			/* ZLIB --> raw compressed data (see RFC 1950) */
+-			/* CMF and FLG ... */
+-			out = (unsigned char *)deflated + 2;
+-			compressed_size -= 6;	/* ... and ADLER32 */
+-		} else {
++		out = deflated = zlib_deflate_raw(buffer, size,
++						  args->compression_level,
++						  &compressed_size);
++		if (!out || compressed_size >= size) {
++			out = buffer;
+ 			method = 0;
+ 			compressed_size = size;
+ 		}
+@@ -353,7 +351,7 @@ static int write_zip_entry(struct archiver_args *args,
+ 		unsigned char compressed[STREAM_BUFFER_SIZE * 2];
+ 
+ 		memset(&zstream, 0, sizeof(zstream));
+-		git_deflate_init(&zstream, args->compression_level);
++		git_deflate_init_raw(&zstream, args->compression_level);
+ 
+ 		compressed_size = 0;
+ 		zstream.next_out = compressed;
+@@ -370,13 +368,10 @@ static int write_zip_entry(struct archiver_args *args,
+ 			result = git_deflate(&zstream, 0);
+ 			if (result != Z_OK)
+ 				die("deflate error (%d)", result);
+-			out = compressed;
+-			if (!compressed_size)
+-				out += 2;
+-			out_len = zstream.next_out - out;
++			out_len = zstream.next_out - compressed;
+ 
+ 			if (out_len > 0) {
+-				write_or_die(1, out, out_len);
++				write_or_die(1, compressed, out_len);
+ 				compressed_size += out_len;
+ 				zstream.next_out = compressed;
+ 				zstream.avail_out = sizeof(compressed);
+@@ -394,11 +389,8 @@ static int write_zip_entry(struct archiver_args *args,
+ 			die("deflate error (%d)", result);
+ 
+ 		git_deflate_end(&zstream);
+-		out = compressed;
+-		if (!compressed_size)
+-			out += 2;
+-		out_len = zstream.next_out - out - 4;
+-		write_or_die(1, out, out_len);
++		out_len = zstream.next_out - compressed;
++		write_or_die(1, compressed, out_len);
+ 		compressed_size += out_len;
+ 		zip_offset += compressed_size;
+ 
+diff --git a/cache.h b/cache.h
+index e493563..81a39a2 100644
+--- a/cache.h
++++ b/cache.h
+@@ -34,6 +34,7 @@ int git_inflate(git_zstream *, int flush);
+ 
+ void git_deflate_init(git_zstream *, int level);
+ void git_deflate_init_gzip(git_zstream *, int level);
++void git_deflate_init_raw(git_zstream *, int level);
+ void git_deflate_end(git_zstream *);
+ int git_deflate_abort(git_zstream *);
+ int git_deflate_end_gently(git_zstream *);
+diff --git a/zlib.c b/zlib.c
+index 2b2c0c7..bbaa081 100644
+--- a/zlib.c
++++ b/zlib.c
+@@ -168,13 +168,8 @@ void git_deflate_init(git_zstream *strm, int level)
+ 	    strm->z.msg ? strm->z.msg : "no message");
+ }
+ 
+-void git_deflate_init_gzip(git_zstream *strm, int level)
++static void do_git_deflate_init(git_zstream *strm, int level, int windowBits)
+ {
+-	/*
+-	 * Use default 15 bits, +16 is to generate gzip header/trailer
+-	 * instead of the zlib wrapper.
+-	 */
+-	const int windowBits = 15 + 16;
+ 	int status;
+ 
+ 	zlib_pre_call(strm);
+@@ -188,6 +183,24 @@ void git_deflate_init_gzip(git_zstream *strm, int level)
+ 	    strm->z.msg ? strm->z.msg : "no message");
+ }
+ 
++void git_deflate_init_gzip(git_zstream *strm, int level)
++{
++	/*
++	 * Use default 15 bits, +16 is to generate gzip header/trailer
++	 * instead of the zlib wrapper.
++	 */
++	return do_git_deflate_init(strm, level, 15 + 16);
++}
++
++void git_deflate_init_raw(git_zstream *strm, int level)
++{
++	/*
++	 * Use default 15 bits, negate the value to get raw compressed
++	 * data without zlib header and trailer.
++	 */
++	return do_git_deflate_init(strm, level, -15);
++}
++
+ int git_deflate_abort(git_zstream *strm)
+ {
+ 	int status;
+-- 
+1.8.2
