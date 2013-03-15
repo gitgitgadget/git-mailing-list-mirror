@@ -1,64 +1,112 @@
-From: Alberto Bertogli <albertito@blitiri.com.ar>
-Subject: Re: [ANN] git-arr 0.11
-Date: Fri, 15 Mar 2013 01:16:25 +0000
-Message-ID: <20130315011625.GE14686@blitiri.com.ar>
-References: <20130313234143.GD14686@blitiri.com.ar>
- <vpqppz22luj.fsf@grenoble-inp.fr>
+From: Peter Eisentraut <peter@eisentraut.org>
+Subject: [PATCH] pull: Apply -q and -v options to rebase mode as well
+Date: Thu, 14 Mar 2013 22:26:08 -0400
+Message-ID: <1363314368.14066.3.camel@vanquo.pezone.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Mar 15 02:17:51 2013
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Mar 15 03:36:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGJHH-0006hl-Cy
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 02:17:47 +0100
+	id 1UGKVt-00015I-Kq
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Mar 2013 03:36:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753376Ab3COBRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Mar 2013 21:17:21 -0400
-Received: from alerce.vps.bitfolk.com ([85.119.82.134]:49190 "EHLO
-	alerce.vps.bitfolk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752799Ab3COBRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Mar 2013 21:17:20 -0400
-Received: from 85-91-26-102.ptr.magnet.ie ([85.91.26.102] helo=blitiri.com.ar)
-	by alerce.vps.bitfolk.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.76)
-	(envelope-from <albertito@blitiri.com.ar>)
-	id 1UGJGp-0004Tb-GM; Thu, 14 Mar 2013 22:17:19 -0300
-Content-Disposition: inline
-In-Reply-To: <vpqppz22luj.fsf@grenoble-inp.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753631Ab3COCg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Mar 2013 22:36:29 -0400
+Received: from eisentraut.org ([85.214.91.16]:38638 "EHLO gattler.pezone.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753609Ab3COCg1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Mar 2013 22:36:27 -0400
+X-Greylist: delayed 613 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Mar 2013 22:36:26 EDT
+Received: from [192.168.1.5] (pool-108-52-108-60.phlapa.fios.verizon.net [108.52.108.60])
+	by gattler.pezone.net (Postfix) with ESMTPSA id E7EE05A87B6;
+	Fri, 15 Mar 2013 02:26:10 +0000 (UTC)
+X-Mailer: Evolution 3.4.4-2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218184>
 
-On Thu, Mar 14, 2013 at 01:43:16PM +0100, Matthieu Moy wrote:
-> Alberto Bertogli <albertito@blitiri.com.ar> writes:
-> 
-> > I wanted to let you know about git-arr, which is a git repository
-> > browser that can generate static HTML instead of having to run
-> > dynamically.
-> 
-> Can it run incrementally? I mean, if you have launched it for one
-> revision, does re-running it on the next revision regenerate the whole
-> set of pages, or does it only generate new pages?
+git pull passed -q and -v only to git merge, but they can be useful for
+git rebase as well, so pass them there, too.  In particular, using -q
+shuts up the "Already up-to-date." message.  Add test cases to prove it.
 
-Yes, you can run it incrementally, and it will only generate new pages.
+Signed-off-by: Peter Eisentraut <peter@eisentraut.org>
+---
+ git-pull.sh             |    2 +-
+ t/t5521-pull-options.sh |   27 +++++++++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 1 deletion(-)
 
-
-> If so, that could be a nice way to replace dynamic browsers for people
-> who do not have/want dynamic webpages, by just setting a hook or cron
-> job that generate the new pages when an update is made.
-
-That's my main intended use. I'm using a hook
-(http://blitiri.com.ar/git/r/git-arr/b/master/t/hooks/f=post-receive.html)
-to update repos when I push to them and it's been working fine for me so
-far. I never tried the cron approach but it should work well too.
-
-Thanks!
-		Alberto
+diff --git a/git-pull.sh b/git-pull.sh
+index 266e682..5d97e97 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -279,7 +279,7 @@ fi
+ merge_name=$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
+ case "$rebase" in
+ true)
+-	eval="git-rebase $diffstat $strategy_args $merge_args"
++	eval="git-rebase $diffstat $strategy_args $merge_args $verbosity"
+ 	eval="$eval --onto $merge_head ${oldremoteref:-$merge_head}"
+ 	;;
+ *)
+diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
+index 1b06691..aa31abe 100755
+--- a/t/t5521-pull-options.sh
++++ b/t/t5521-pull-options.sh
+@@ -19,6 +19,17 @@ test_expect_success 'git pull -q' '
+ 	test ! -s out)
+ '
+ 
++test_expect_success 'git pull -q --rebase' '
++	mkdir clonedqrb &&
++	(cd clonedqrb && git init &&
++	git pull -q --rebase "../parent" >out 2>err &&
++	test ! -s err &&
++	test ! -s out &&
++	git pull -q --rebase "../parent" >out 2>err &&
++	test ! -s err &&
++	test ! -s out)
++'
++
+ test_expect_success 'git pull' '
+ 	mkdir cloned &&
+ 	(cd cloned && git init &&
+@@ -27,6 +38,14 @@ test_expect_success 'git pull' '
+ 	test ! -s out)
+ '
+ 
++test_expect_success 'git pull --rebase' '
++	mkdir clonedrb &&
++	(cd clonedrb && git init &&
++	git pull --rebase "../parent" >out 2>err &&
++	test -s err &&
++	test ! -s out)
++'
++
+ test_expect_success 'git pull -v' '
+ 	mkdir clonedv &&
+ 	(cd clonedv && git init &&
+@@ -35,6 +54,14 @@ test_expect_success 'git pull -v' '
+ 	test ! -s out)
+ '
+ 
++test_expect_success 'git pull -v --rebase' '
++	mkdir clonedvrb &&
++	(cd clonedvrb && git init &&
++	git pull -v --rebase "../parent" >out 2>err &&
++	test -s err &&
++	test ! -s out)
++'
++
+ test_expect_success 'git pull -v -q' '
+ 	mkdir clonedvq &&
+ 	(cd clonedvq && git init &&
+-- 
+1.7.10.4
