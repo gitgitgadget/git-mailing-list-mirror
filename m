@@ -1,48 +1,65 @@
-From: Pascal <p.p14@orange.fr>
-Subject: Some small issues with GIT GUI on MacOS.
-Date: Sat, 16 Mar 2013 10:47:06 +0100
-Message-ID: <2B3EF039-E893-4333-8D33-08589AB3DC50@orange.fr>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/3] fix unparsed object access in upload-pack
+Date: Sat, 16 Mar 2013 06:24:28 -0400
+Message-ID: <20130316102428.GA29358@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 16 10:54:16 2013
+X-From: git-owner@vger.kernel.org Sat Mar 16 11:25:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGnoc-0003FQ-0r
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 10:54:14 +0100
+	id 1UGoIO-0002lM-IX
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 11:25:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754389Ab3CPJxp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Mar 2013 05:53:45 -0400
-Received: from smtp10.smtpout.orange.fr ([80.12.242.132]:20761 "EHLO
-	smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753091Ab3CPJxo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Mar 2013 05:53:44 -0400
-X-Greylist: delayed 472 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Mar 2013 05:53:44 EDT
-Received: from anantes-557-1-141-81.w2-1.abo.wanadoo.fr ([2.1.44.81])
-	by mwinf5d33 with ME
-	id C9lq1l00Z1l4oRe039lrxu; Sat, 16 Mar 2013 10:45:51 +0100
-X-Mailer: Apple Mail (2.1499)
+	id S1755602Ab3CPKYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Mar 2013 06:24:33 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53464 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755587Ab3CPKYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Mar 2013 06:24:32 -0400
+Received: (qmail 830 invoked by uid 107); 16 Mar 2013 10:26:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 16 Mar 2013 06:26:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 16 Mar 2013 06:24:28 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218294>
 
-Hello, I'm new to this list and using GIT on MacOS 10.8:
-$ /usr/local/git/bin/git --version
-git version 1.7.4.1
+This series fixes the issue I mentioned recently with upload-pack, where
+we might feed unparsed objects to the revision parser. The bug is in
+435c833 (the tip of the jk/peel-ref topic), which is in v1.8.1 and up.
 
-I've caught some small issues when using GIT GUI (French version):
-- when GIT GUI just launched, the menu "D=E9p=F4t" (repository I guess)=
- and Apple are disabled
-- when opening preferences window then clic on cancel button, all menus=
- stay disabled
+The fix should go to maint.  The bug breaks shallow clones from
+repositories with packed refs, though the effects range from working OK
+to sending too many objects to calling die() in the revision traversal
+machinery. Given the size of the breakage (I had several bug reports
+within a few hours of deploying v1.8.1.5 on github.com), and the fact
+that the bug was introduced only in v1.8.1, it may make sense to roll a
+v1.8.1.6 in addition to putting it on the 1.8.2 maint track.
 
-Maybe, they have been already fixed in a recent release.
+  [1/3]: upload-pack: drop lookup-before-parse optimization
 
-HTH, Pascal.
-http://blady.pagesperso-orange.fr
+    This is just a cleanup, and is not necessary for the fix.
+
+  [2/3]: upload-pack: make sure "want" objects are parsed
+
+    This is the fix itself, which can stand alone from the other two
+    patches, both semantically and textually.
+
+  [3/3]: upload-pack: load non-tip "want" objects from disk
+
+    While investigating the bug, I found some weirdness around the
+    stateless-rpc check_non_tip code. As far as I can tell, that code
+    never actually gets triggered. It's not too surprising that we
+    wouldn't have noticed, because it is about falling back due to a
+    race condition. But please sanity check my explanation and patch.
+
+-Peff
