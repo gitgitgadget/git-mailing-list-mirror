@@ -1,130 +1,72 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] sha1_name: pass object name length to diagnose_invalid_sha1_path()
-Date: Sat, 16 Mar 2013 19:29:31 +0100
-Message-ID: <5144BA0B.2040109@lsrfire.ath.cx>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+From: Dannes Wessels <dizzzz@exist-db.org>
+Subject: Re: git svn error "Not a valid object name"
+Date: Sat, 16 Mar 2013 19:52:33 +0100
+Message-ID: <84CAE079-7E2B-4F47-AC61-CED24D6C90A3@exist-db.org>
+References: <CAJKLP9ZQBXf5ZZY9FccOAL5QU+q1b5SnAfvP9BpARdqvzPuWeg@mail.gmail.com> <20130316014548.GA16253@dcvr.yhbt.net> <CAJKLP9aX20i+oy7AMhh5+uAmP2Np4tUGTEvR+XDHyG1a_DSXtQ@mail.gmail.com> <20130316171354.GA2427@dcvr.yhbt.net>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain;
+	charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 16 19:30:05 2013
+Cc: Adam Retter <adam@exist-db.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Dannes Wessels <dannes@exist-db.org>,
+	Wolfgang Meier <wolfgang@exist-db.org>,
+	=?utf-8?Q?Leif-J=C3=B6ran_Olsson?= <ljo@exist-db.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Mar 16 19:51:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGvrp-0001bd-1r
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 19:30:05 +0100
+	id 1UGwCh-0008D0-2x
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 19:51:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753311Ab3CPS3i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Mar 2013 14:29:38 -0400
-Received: from india601.server4you.de ([85.25.151.105]:49225 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751414Ab3CPS3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Mar 2013 14:29:37 -0400
-Received: from [192.168.2.105] (p4FFD98FC.dip.t-dialin.net [79.253.152.252])
-	by india601.server4you.de (Postfix) with ESMTPSA id 1C242D5;
-	Sat, 16 Mar 2013 19:29:36 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+	id S1752921Ab3CPSvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Mar 2013 14:51:00 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:38202 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751569Ab3CPSu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Mar 2013 14:50:59 -0400
+Received: by mail-wi0-f176.google.com with SMTP id hm14so1508779wib.9
+        for <git@vger.kernel.org>; Sat, 16 Mar 2013 11:50:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:references:mime-version:in-reply-to:content-type
+         :content-transfer-encoding:message-id:cc:x-mailer:from:subject:date
+         :to:x-gm-message-state;
+        bh=m9RCml+4bFmIJ7ortpXvyqTJ2Xj7JEuX6VyBoMZqN3g=;
+        b=Zm2hW9DdLsnbO2owShqU8dNX8xPi+UsKLNP/9iDp3tXrwXLnSiyUADrRw9b3FbgMfU
+         o79WzPPe+s06toMRTzK0eUEwYt0OSRXWcxKm+piO3UuQdS9oBUHNaeZVrqcYWs+Y9E8S
+         rvn7wDxvTAxKcVx81yJZ4WYRBMNBBk0JxKyzD+reqG3DYKwGDZDaeGsqpEXmTDnRwY0u
+         08iz5iObMJSzO9+wkGaGiz3K1BnCJYhs3E4WST2OA+AY6qyBZtOJM7ryVYzJplGVh2Vs
+         KS0/FHkOmYNPSfIDARPFe1GwpiQOp4uGzaAONXVvF1G2TPEWT770hFHb9LrgVdyrJST0
+         TFfA==
+X-Received: by 10.180.86.1 with SMTP id l1mr9149629wiz.32.1363459858249;
+        Sat, 16 Mar 2013 11:50:58 -0700 (PDT)
+Received: from ?IPv6:2002:d52e:c660::a02a:98ec:ecb4:6a9f? ([2002:d52e:c660:0:a02a:98ec:ecb4:6a9f])
+        by mx.google.com with ESMTPS id j4sm4589766wiz.10.2013.03.16.11.50.56
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 16 Mar 2013 11:50:57 -0700 (PDT)
+In-Reply-To: <20130316171354.GA2427@dcvr.yhbt.net>
+X-Mailer: iPhone Mail (10B146)
+X-Gm-Message-State: ALoCoQmCz61KnKsM+ul5iibrQib1BbAJm4mCHz3tbeyEbeSs40Op3+Rd5GYfB+ghyRMj2AbE2Mxv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218312>
 
-The only caller of diagnose_invalid_sha1_path() extracts a substring from
-an object name by creating a NUL-terminated copy of the interesting part.
-Add a length parameter to the function and thus avoid the need for an
-allocation, thereby simplifying the code.
+Http:// should provide access without password ......
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- sha1_name.c | 32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+--
+Dannes Wessels
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 95003c7..4cea6d3 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1137,7 +1137,8 @@ int get_sha1_blob(const char *name, unsigned char *sha1)
- static void diagnose_invalid_sha1_path(const char *prefix,
- 				       const char *filename,
- 				       const unsigned char *tree_sha1,
--				       const char *object_name)
-+				       const char *object_name,
-+				       int object_name_len)
- {
- 	struct stat st;
- 	unsigned char sha1[20];
-@@ -1147,8 +1148,8 @@ static void diagnose_invalid_sha1_path(const char *prefix,
- 		prefix = "";
- 
- 	if (!lstat(filename, &st))
--		die("Path '%s' exists on disk, but not in '%s'.",
--		    filename, object_name);
-+		die("Path '%s' exists on disk, but not in '%.*s'.",
-+		    filename, object_name_len, object_name);
- 	if (errno == ENOENT || errno == ENOTDIR) {
- 		char *fullname = xmalloc(strlen(filename)
- 					     + strlen(prefix) + 1);
-@@ -1158,16 +1159,16 @@ static void diagnose_invalid_sha1_path(const char *prefix,
- 		if (!get_tree_entry(tree_sha1, fullname,
- 				    sha1, &mode)) {
- 			die("Path '%s' exists, but not '%s'.\n"
--			    "Did you mean '%s:%s' aka '%s:./%s'?",
-+			    "Did you mean '%.*s:%s' aka '.*%.*s:./%s'?",
- 			    fullname,
- 			    filename,
--			    object_name,
-+			    object_name_len, object_name,
- 			    fullname,
--			    object_name,
-+			    object_name_len, object_name,
- 			    filename);
- 		}
--		die("Path '%s' does not exist in '%s'",
--		    filename, object_name);
-+		die("Path '%s' does not exist in '%.*s'",
-+		    filename, object_name_len, object_name);
- 	}
- }
- 
-@@ -1332,13 +1333,8 @@ static int get_sha1_with_context_1(const char *name,
- 	}
- 	if (*cp == ':') {
- 		unsigned char tree_sha1[20];
--		char *object_name = NULL;
--		if (only_to_die) {
--			object_name = xmalloc(cp-name+1);
--			strncpy(object_name, name, cp-name);
--			object_name[cp-name] = '\0';
--		}
--		if (!get_sha1_1(name, cp-name, tree_sha1, GET_SHA1_TREEISH)) {
-+		int len = cp - name;
-+		if (!get_sha1_1(name, len, tree_sha1, GET_SHA1_TREEISH)) {
- 			const char *filename = cp+1;
- 			char *new_filename = NULL;
- 
-@@ -1348,8 +1344,8 @@ static int get_sha1_with_context_1(const char *name,
- 			ret = get_tree_entry(tree_sha1, filename, sha1, &oc->mode);
- 			if (ret && only_to_die) {
- 				diagnose_invalid_sha1_path(prefix, filename,
--							   tree_sha1, object_name);
--				free(object_name);
-+							   tree_sha1,
-+							   name, len);
- 			}
- 			hashcpy(oc->tree, tree_sha1);
- 			strncpy(oc->path, filename,
-@@ -1360,7 +1356,7 @@ static int get_sha1_with_context_1(const char *name,
- 			return ret;
- 		} else {
- 			if (only_to_die)
--				die("Invalid object name '%s'.", object_name);
-+				die("Invalid object name '%.*s'.", len, name);
- 		}
- 	}
- 	return ret;
--- 
-1.8.2
+On 16 mrt. 2013, at 18:13, Eric Wong <normalperson@yhbt.net> wrote:
+
+> Adam Retter <adam@exist-db.org> wrote:
+>> If your able, any idea of when you might be able to take a look at the
+>> bug? Our svn repo is publicly available for all.
+> 
+> svn ls https://svn.code.sf.net/p/exist/code/trunk
+> ...Is asking me for username
