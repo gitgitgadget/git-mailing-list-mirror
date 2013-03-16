@@ -1,75 +1,65 @@
-From: Adam Retter <adam@exist-db.org>
-Subject: Re: git svn error "Not a valid object name"
-Date: Sat, 16 Mar 2013 18:54:32 +0000
-Message-ID: <CAJKLP9Zo_3fdXW0eNBo+qrgomZ_PtbLbDKyqtwLZsGecN2B8iA@mail.gmail.com>
-References: <CAJKLP9ZQBXf5ZZY9FccOAL5QU+q1b5SnAfvP9BpARdqvzPuWeg@mail.gmail.com>
-	<20130316014548.GA16253@dcvr.yhbt.net>
-	<CAJKLP9aX20i+oy7AMhh5+uAmP2Np4tUGTEvR+XDHyG1a_DSXtQ@mail.gmail.com>
-	<20130316171354.GA2427@dcvr.yhbt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Dannes Wessels <dannes@exist-db.org>,
-	Wolfgang Meier <wolfgang@exist-db.org>,
-	=?UTF-8?B?TGVpZi1Kw7ZyYW4gT2xzc29u?= <ljo@exist-db.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Mar 16 19:55:01 2013
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: [PATCH] rev-parse: Clarify documentation of @{upstream} syntax
+Date: Sat, 16 Mar 2013 19:51:43 +0100
+Message-ID: <1363459903-32358-1-git-send-email-draenog@pld-linux.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 16 20:10:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGwFw-0003Xq-6A
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 19:55:00 +0100
+	id 1UGwUm-0002eE-Of
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 20:10:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753286Ab3CPSyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Mar 2013 14:54:33 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:61248 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752154Ab3CPSyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Mar 2013 14:54:33 -0400
-Received: by mail-ob0-f182.google.com with SMTP id va7so4227462obc.27
-        for <git@vger.kernel.org>; Sat, 16 Mar 2013 11:54:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:x-gm-message-state;
-        bh=4MBdoLHUNYft9WD6OBlcENL2cR0tDocAw2Urfg2JbHE=;
-        b=Odym3gYyPup6E3USTJHnIAfGZKBbF3sV8q/MTGc8+MDxBxsW60WpO4Kr2tqlqAOFWE
-         NeWgZOpOUm0N0x6vRilOyikLt5F+YAMmHN8liGgKDrRJkVNIjFyEnDIW13Ew1TT2VYii
-         5A9yLKcJOCjmFgwzzxyKPsp56DxrEkx+olRco2zrtsssRmEH8E+xuUImBROr6CutDtQH
-         E7ydY6AKL8M4nprxWNWzPM9t8lRVvaxb/vOAQBeaQfC+m+FRyfhkHhJ7RI/1PX/Tg8em
-         wmMDz3gVX4Td57unYOwMD9K08GxKZo9eZWrhugRY1RQINobOcDNHdFXcVzenKs0sYW+Z
-         RrBw==
-X-Received: by 10.182.64.74 with SMTP id m10mr4642460obs.61.1363460072307;
- Sat, 16 Mar 2013 11:54:32 -0700 (PDT)
-Received: by 10.76.33.166 with HTTP; Sat, 16 Mar 2013 11:54:32 -0700 (PDT)
-In-Reply-To: <20130316171354.GA2427@dcvr.yhbt.net>
-X-Gm-Message-State: ALoCoQn/2hUDZOgSgPAIvma/3pKjL4WC3xHWWkWlxKV/NnyJhRUsU/RfTkauPhUCmXxol3c4LRJP
+	id S1753311Ab3CPTJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Mar 2013 15:09:45 -0400
+Received: from carme.pld-linux.org ([193.239.45.140]:59024 "EHLO
+	carme.pld-linux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752154Ab3CPTJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Mar 2013 15:09:44 -0400
+X-Greylist: delayed 1079 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Mar 2013 15:09:44 EDT
+Received: from draenog by carme.pld-linux.org with local (Exim 4.80.1)
+	(envelope-from <draenog@carme.pld-linux.org>)
+	id 1UGwCl-0008Sh-Hv
+	for git@vger.kernel.org; Sat, 16 Mar 2013 19:51:43 +0100
+X-Mailer: git-send-email 1.8.1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218314>
 
-Ah right yes, sorry the HTTPS version needs a username the HTTP
-version does not. Please use:
+git-rev-parse interprets string in string@{upstream} as a name of
+a branch not a ref. For example refs/heads/master@{upstream} looks
+for an upstream branch that is merged by git-pull to ref
+refs/heads/refs/heads/master not to refs/heads/master. However the
+documentation could misled a user to believe that the string is
+interpreted as ref.
 
-http://svn.code.sf.net/p/exist/code
+Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+---
+ Documentation/revisions.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-On 16 March 2013 17:13, Eric Wong <normalperson@yhbt.net> wrote:
-> Adam Retter <adam@exist-db.org> wrote:
->> If your able, any idea of when you might be able to take a look at the
->> bug? Our svn repo is publicly available for all.
->
-> svn ls https://svn.code.sf.net/p/exist/code/trunk
-> ...Is asking me for username
-
-
-
---
-Adam Retter
-
-eXist Developer
-{ United Kingdom }
-adam@exist-db.org
-irc://irc.freenode.net/existdb
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 678d175..314e25d 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -88,10 +88,10 @@ some output processing may assume ref names in UTF-8.
+   The construct '@\{-<n>\}' means the <n>th branch checked out
+   before the current one.
+ 
+-'<refname>@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
+-  The suffix '@\{upstream\}' to a ref (short form '<refname>@\{u\}') refers to
+-  the branch the ref is set to build on top of.  A missing ref defaults
+-  to the current branch.
++'<branchname>@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
++  The suffix '@\{upstream\}' to a branchname (short form '<branchname>@\{u\}')
++  refers to the branch that the branch specified by branchname is set to build on
++  top of.  A missing branchname defaults to the current one.
+ 
+ '<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
+   A suffix '{caret}' to a revision parameter means the first parent of
+-- 
+1.8.2
