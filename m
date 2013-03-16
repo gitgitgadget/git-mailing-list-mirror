@@ -1,153 +1,158 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/2] pack-refs: write peeled entry for non-tags
-Date: Sat, 16 Mar 2013 05:01:03 -0400
-Message-ID: <20130316090103.GA26855@sigill.intra.peff.net>
+Subject: [PATCH 2/2] pack-refs: add fully-peeled trait
+Date: Sat, 16 Mar 2013 05:01:16 -0400
+Message-ID: <20130316090116.GB26855@sigill.intra.peff.net>
 References: <20130316090018.GA26708@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 16 10:01:38 2013
+X-From: git-owner@vger.kernel.org Sat Mar 16 10:01:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGmzg-0004At-Hi
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 10:01:36 +0100
+	id 1UGmzr-0004Nn-M4
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 10:01:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753182Ab3CPJBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Mar 2013 05:01:09 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53386 "EHLO
+	id S1753091Ab3CPJBV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Mar 2013 05:01:21 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53390 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752358Ab3CPJBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Mar 2013 05:01:07 -0400
-Received: (qmail 32718 invoked by uid 107); 16 Mar 2013 09:02:48 -0000
+	id S1751948Ab3CPJBU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Mar 2013 05:01:20 -0400
+Received: (qmail 32736 invoked by uid 107); 16 Mar 2013 09:03:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 16 Mar 2013 05:02:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 16 Mar 2013 05:01:03 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 16 Mar 2013 05:03:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 16 Mar 2013 05:01:16 -0400
 Content-Disposition: inline
 In-Reply-To: <20130316090018.GA26708@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218290>
 
-When we pack an annotated tag ref, we write not only the
-sha1 of the tag object along with the ref, but also the sha1
-obtained by peeling the tag. This lets readers of the
-pack-refs file know the peeled value without having to
-actually load the object, speeding up upload-pack's ref
-advertisement.
+Older versions of pack-refs did not write peel lines for
+refs outside of refs/tags. This meant that on reading the
+pack-refs file, we might set the REF_KNOWS_PEELED flag for
+such a ref, even though we do not know anything about its
+peeled value.
 
-The writer marks a packed-refs file with peeled refs using
-the "peeled" trait at the top of the file. When the reader
-sees this trait, it knows that each ref is either followed
-by its peeled value, or it is not an annotated tag.
+The previous commit updated the writer to always peel, no
+matter what the ref is. That means that packed-refs files
+written by newer versions of git are fine to be read by both
+old and new versions of git. However, we still have the
+problem of reading packed-refs files written by older
+versions of git, or by other implementations which have not
+yet learned the same trick.
 
-However, there is a mismatch between the assumptions of the
-reader and writer. The writer will only peel refs under
-refs/tags, but the reader does not know this; it will assume
-a ref without a peeled value must not be a tag object. Thus
-an annotated tag object placed outside of the refs/tags
-hierarchy will not have its peeled value printed by
-upload-pack.
+The simplest fix would be to always unset the
+REF_KNOWS_PEELED flag for refs outside of refs/tags that do
+not have a peel line (if it has a peel line, we know it is
+valid, but we cannot assume a missing peel line means
+anything). But that loses an important optimization, as
+upload-pack should not need to load the object pointed to by
+refs/heads/foo to determine that it is not a tag.
 
-The simplest way to fix this is to start writing peel values
-for all refs. This matches what the reader expects for both
-new and old versions of git.
+Instead, we add a "fully-peeled" trait to the packed-refs
+file. If it is set, we know that we can trust a missing peel
+line to mean that a ref cannot be peeled. Otherwise, we fall
+back to assuming nothing.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- pack-refs.c         | 16 ++++++++--------
- t/t3211-peel-ref.sh | 42 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+), 8 deletions(-)
- create mode 100755 t/t3211-peel-ref.sh
+ pack-refs.c         |  2 +-
+ refs.c              | 16 +++++++++++++++-
+ t/t3211-peel-ref.sh | 22 ++++++++++++++++++++++
+ 3 files changed, 38 insertions(+), 2 deletions(-)
 
 diff --git a/pack-refs.c b/pack-refs.c
-index f09a054..10832d7 100644
+index 10832d7..87ca04d 100644
 --- a/pack-refs.c
 +++ b/pack-refs.c
-@@ -27,6 +27,7 @@ static int handle_one_ref(const char *path, const unsigned char *sha1,
- 			  int flags, void *cb_data)
- {
- 	struct pack_refs_cb_data *cb = cb_data;
-+	struct object *o;
- 	int is_tag_ref;
+@@ -128,7 +128,7 @@ int pack_refs(unsigned int flags)
+ 		die_errno("unable to create ref-pack file structure");
  
- 	/* Do not pack the symbolic refs */
-@@ -39,14 +40,13 @@ static int handle_one_ref(const char *path, const unsigned char *sha1,
- 		return 0;
+ 	/* perhaps other traits later as well */
+-	fprintf(cbdata.refs_file, "# pack-refs with: peeled \n");
++	fprintf(cbdata.refs_file, "# pack-refs with: peeled fully-peeled \n");
  
- 	fprintf(cb->refs_file, "%s %s\n", sha1_to_hex(sha1), path);
--	if (is_tag_ref) {
--		struct object *o = parse_object(sha1);
--		if (o->type == OBJ_TAG) {
--			o = deref_tag(o, path, 0);
--			if (o)
--				fprintf(cb->refs_file, "^%s\n",
--					sha1_to_hex(o->sha1));
--		}
+ 	for_each_ref(handle_one_ref, &cbdata);
+ 	if (ferror(cbdata.refs_file))
+diff --git a/refs.c b/refs.c
+index 175b9fc..6a38c41 100644
+--- a/refs.c
++++ b/refs.c
+@@ -808,6 +808,7 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 	struct ref_entry *last = NULL;
+ 	char refline[PATH_MAX];
+ 	int flag = REF_ISPACKED;
++	int fully_peeled = 0;
+ 
+ 	while (fgets(refline, sizeof(refline), f)) {
+ 		unsigned char sha1[20];
+@@ -818,13 +819,26 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 			const char *traits = refline + sizeof(header) - 1;
+ 			if (strstr(traits, " peeled "))
+ 				flag |= REF_KNOWS_PEELED;
++			if (strstr(traits, " fully-peeled "))
++				fully_peeled = 1;
+ 			/* perhaps other traits later as well */
+ 			continue;
+ 		}
+ 
+ 		refname = parse_ref_line(refline, sha1);
+ 		if (refname) {
+-			last = create_ref_entry(refname, sha1, flag, 1);
++			/*
++			 * Older git did not write peel lines for anything
++			 * outside of refs/tags/; if the fully-peeled trait
++			 * is not set, we are dealing with such an older
++			 * git and cannot assume an omitted peel value
++			 * means the ref is not a tag object.
++			 */
++			int this_flag = flag;
++			if (!fully_peeled && prefixcmp(refname, "refs/tags/"))
++				this_flag &= ~REF_KNOWS_PEELED;
 +
-+	o = parse_object(sha1);
-+	if (o->type == OBJ_TAG) {
-+		o = deref_tag(o, path, 0);
-+		if (o)
-+			fprintf(cb->refs_file, "^%s\n",
-+				sha1_to_hex(o->sha1));
- 	}
- 
- 	if ((cb->flags & PACK_REFS_PRUNE) && !do_not_prune(flags)) {
++			last = create_ref_entry(refname, sha1, this_flag, 1);
+ 			add_ref(dir, last);
+ 			continue;
+ 		}
 diff --git a/t/t3211-peel-ref.sh b/t/t3211-peel-ref.sh
-new file mode 100755
-index 0000000..dd5b48b
---- /dev/null
+index dd5b48b..a8eb1aa 100755
+--- a/t/t3211-peel-ref.sh
 +++ b/t/t3211-peel-ref.sh
-@@ -0,0 +1,42 @@
-+#!/bin/sh
-+
-+test_description='tests for the peel_ref optimization of packed-refs'
-+. ./test-lib.sh
-+
-+test_expect_success 'create annotated tag in refs/tags' '
-+	test_commit base &&
-+	git tag -m annotated foo
-+'
-+
-+test_expect_success 'create annotated tag outside of refs/tags' '
-+	git update-ref refs/outside/foo refs/tags/foo
-+'
-+
-+# This matches show-ref's output
-+print_ref() {
-+	echo "`git rev-parse "$1"` $1"
-+}
-+
-+test_expect_success 'set up expected show-ref output' '
+@@ -39,4 +39,26 @@ test_expect_success 'refs are peeled outside of refs/tags (packed)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'create old-style pack-refs without fully-peeled' '
++	# Git no longer writes without fully-peeled, so we just write our own
++	# from scratch; we could also munge the existing file to remove the
++	# fully-peeled bits, but that seems even more prone to failure,
++	# especially if the format ever changes again. At least this way we
++	# know we are emulating exactly what an older git would have written.
 +	{
++		echo "# pack-refs with: peeled " &&
 +		print_ref "refs/heads/master" &&
 +		print_ref "refs/outside/foo" &&
-+		print_ref "refs/outside/foo^{}" &&
 +		print_ref "refs/tags/base" &&
 +		print_ref "refs/tags/foo" &&
-+		print_ref "refs/tags/foo^{}"
-+	} >expect
++		echo "^$(git rev-parse "refs/tags/foo^{}")"
++	} >tmp &&
++	mv tmp .git/packed-refs
 +'
 +
-+test_expect_success 'refs are peeled outside of refs/tags (loose)' '
++test_expect_success 'refs are peeled outside of refs/tags (old packed)' '
 +	git show-ref -d >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'refs are peeled outside of refs/tags (packed)' '
-+	git pack-refs --all &&
-+	git show-ref -d >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
+ test_done
 -- 
 1.8.2.rc2.7.gef06216
