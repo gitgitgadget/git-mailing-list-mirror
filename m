@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 12/12] pretty: support %>> that steal trailing spaces
-Date: Sat, 16 Mar 2013 09:24:43 +0700
-Message-ID: <1363400683-14813-13-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 05/12] pretty: save commit encoding from logmsg_reencode if the caller needs it
+Date: Sat, 16 Mar 2013 09:24:36 +0700
+Message-ID: <1363400683-14813-6-git-send-email-pclouds@gmail.com>
 References: <1363400683-14813-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,168 +11,177 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 16 03:26:38 2013
+X-From: git-owner@vger.kernel.org Sat Mar 16 03:32:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGgpP-0003Lm-3X
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 03:26:35 +0100
+	id 1UGgv0-00018h-T4
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 03:32:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932228Ab3CPC0G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 22:26:06 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:62193 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932125Ab3CPC0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Mar 2013 22:26:05 -0400
-Received: by mail-pb0-f49.google.com with SMTP id xa12so4595486pbc.36
-        for <git@vger.kernel.org>; Fri, 15 Mar 2013 19:26:05 -0700 (PDT)
+	id S1755347Ab3CPCbz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Mar 2013 22:31:55 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:54314 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754081Ab3CPCby (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Mar 2013 22:31:54 -0400
+Received: by mail-pb0-f50.google.com with SMTP id up1so4525511pbc.9
+        for <git@vger.kernel.org>; Fri, 15 Mar 2013 19:31:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=Pov4ZoFZD8tAQrW5RZU63DH98M425876TgyJ6VBdGAg=;
-        b=EH5udxKq/8hik2nJA1g3Iw2FeGFbkUDjy1EbwicVrR6yniVQEoISRnI7RfD/YiSB8h
-         ndZhMnjc/b8axut4IS5gu+uXUbmdqwRBpECbOYSG9LW1fueRP3qS86sWF7dlRlvBm669
-         h2SCsjeghr5fx04vRE2sKOfvT1ZogeReZ6reBe1vOvvnCXb96TOihoKOYPz0PQHEuOnB
-         4xqCx1iuZDT1QYv+MTpqef4x/07sdo06oL/fxhDPqkzBNoD3GzWLZU9DCZFN/JWUxfIT
-         /gxBWsV5OcDtW/C7Mz92L3ngDaf9g1Lk6JKe6N+DXh2MeiWn2z2/PyWiTAoVxknxlPeO
-         DcmA==
-X-Received: by 10.68.221.68 with SMTP id qc4mr21463176pbc.152.1363400765015;
-        Fri, 15 Mar 2013 19:26:05 -0700 (PDT)
+        bh=FEPRkAunbgk+Dy3eLvFq1748IthIcngEUeoFxSyXtKA=;
+        b=kQqoeh7MHluKgWoe+NsSWbgG+5DYEr5qRs3HbrHss7yBnkuHafFapsNhZpCMn8w2mt
+         wK1w1k8lL1UOnJU1jeDcxibPQNK59JZj10CEPPKaj7cIBND7dkBBBuVZSOGMVp27JjFN
+         UMhy9y1cF4G7Aznoxp5863YhHh5KcBqN5ywwY5M1ipOfcXOHuzd8ZejxtBuiTRaAEmub
+         5SOzfSNNfS8GcInU11TK9ZRF/lr5VdBj3Eo+J14opVrVClPnMd9hO5RpoQ/xAf9LXs8k
+         FYbtCPf7VzIA2ze/Pw7ipeFsRMeFwGf+dRMXgoNmVr/5ngCRK83wkdI45HowObPkgpoc
+         /YgQ==
+X-Received: by 10.68.227.202 with SMTP id sc10mr21085401pbc.109.1363400722566;
+        Fri, 15 Mar 2013 19:25:22 -0700 (PDT)
 Received: from lanh ([115.74.58.84])
-        by mx.google.com with ESMTPS id na4sm11520112pbc.8.2013.03.15.19.26.01
+        by mx.google.com with ESMTPS id is1sm11511733pbc.15.2013.03.15.19.25.19
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 15 Mar 2013 19:26:04 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 16 Mar 2013 09:25:59 +0700
+        Fri, 15 Mar 2013 19:25:21 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 16 Mar 2013 09:25:17 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1363400683-14813-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218282>
 
-This is pretty useful in `%<(100)%s%Cred%>(20)% an' where %s does not
-use up all 100 columns and %an needs more than 20 columns. By
-replacing %>(20) with %>>(20), %an can steal spaces from %s.
-
-%>> understands escape sequences, so %Cred does not stop it from
-stealing spaces in %<(100).
+The commit encoding is parsed by logmsg_reencode, there's no need for
+the caller to re-parse it again. The reencoded message now have the
+new encoding, not the original one. The caller would need to read
+commit object again before parsing.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/pretty-formats.txt |  5 ++++-
- pretty.c                         | 34 ++++++++++++++++++++++++++++++++=
-++
- utf8.c                           |  2 +-
- utf8.h                           |  1 +
- 4 files changed, 40 insertions(+), 2 deletions(-)
+ builtin/blame.c  |  2 +-
+ builtin/commit.c |  2 +-
+ commit.h         |  1 +
+ pretty.c         | 16 ++++++++++++----
+ revision.c       |  2 +-
+ 5 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
-rmats.txt
-index 17f82f4..036c14a 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -170,7 +170,10 @@ The placeholders are:
-   columns, padding spaces on the right if necessary
- - '%>(<N>)', '%>|(<N>)': similar to '%<(<N<)', '%<|(<N<)'
-   respectively, but padding spaces on the left
--- '%><(<N>)', '%><|(<N>)': similar to '%<(<N<)', '%<|(<N<)'
-+- '%>>(<N>)', '%>>|(<N>)': similar to '%>(<N<)', '%>|(<N<)'
-+  respectively, except that if the next placeholder takes more spaces
-+  than given and there are spaces on its left, use those spaces
-+- '%><(<N>)', '%><|(<N>)': similar to '% <(<N<)', '%<|(<N<)'
-   respectively, but padding both sides (i.e. the text is centered)
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 86100e9..104a948 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1425,7 +1425,7 @@ static void get_commit_info(struct commit *commit=
+,
+ 	commit_info_init(ret);
 =20
- NOTE: Some placeholders may depend on other options given to the
+ 	encoding =3D get_log_output_encoding();
+-	message =3D logmsg_reencode(commit, encoding);
++	message =3D logmsg_reencode(commit, NULL, encoding);
+ 	get_ac_line(message, "\nauthor ",
+ 		    &ret->author, &ret->author_mail,
+ 		    &ret->author_time, &ret->author_tz);
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 3348aa1..beead44 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -953,7 +953,7 @@ static const char *read_commit_message(const char *=
+name)
+ 	if (!commit)
+ 		die(_("could not lookup commit %s"), name);
+ 	out_enc =3D get_commit_output_encoding();
+-	return logmsg_reencode(commit, out_enc);
++	return logmsg_reencode(commit, NULL, out_enc);
+ }
+=20
+ static int parse_and_validate_options(int argc, const char *argv[],
+diff --git a/commit.h b/commit.h
+index 4138bb4..085349a 100644
+--- a/commit.h
++++ b/commit.h
+@@ -100,6 +100,7 @@ struct userformat_want {
+ extern int has_non_ascii(const char *text);
+ struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
+ extern char *logmsg_reencode(const struct commit *commit,
++			     char **commit_encoding,
+ 			     const char *output_encoding);
+ extern void logmsg_free(char *msg, const struct commit *commit);
+ extern void get_commit_format(const char *arg, struct rev_info *);
 diff --git a/pretty.c b/pretty.c
-index 29384b5..892274d 100644
+index 79784be..ab5d70f 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -764,6 +764,7 @@ enum flush_type {
- 	no_flush,
- 	flush_right,
- 	flush_left,
-+	flush_left_and_steal,
- 	flush_both
- };
+@@ -584,6 +584,7 @@ static char *replace_encoding_header(char *buf, con=
+st char *encoding)
+ }
 =20
-@@ -1037,6 +1038,9 @@ static size_t parse_padding_placeholder(struct st=
-rbuf *sb,
- 		if (*ch =3D=3D '<') {
- 			flush_type =3D flush_both;
- 			ch++;
-+		} else if (*ch =3D=3D '>') {
-+			flush_type =3D flush_left_and_steal;
-+			ch++;
- 		} else
- 			flush_type =3D flush_left;
- 		break;
-@@ -1360,6 +1364,36 @@ static size_t format_and_pad_commit(struct strbu=
-f *sb, /* in UTF-8 */
- 		total_consumed++;
- 	}
- 	len =3D utf8_strnwidth(local_sb.buf, -1, 1);
-+
-+	if (c->flush_type =3D=3D flush_left_and_steal) {
-+		const char *ch =3D sb->buf + sb->len - 1;
-+		while (len > padding && ch > sb->buf) {
-+			const char *p;
-+			if (*ch =3D=3D ' ') {
-+				ch--;
-+				padding++;
-+				continue;
-+			}
-+			/* check for trailing ansi sequences */
-+			if (*ch !=3D 'm')
-+				break;
-+			p =3D ch - 1;
-+			while (ch - p < 10 && *p !=3D '\033')
-+				p--;
-+			if (*p !=3D '\033' ||
-+			    ch + 1 - p !=3D display_mode_esc_sequence_len(p))
-+				break;
-+			/*
-+			 * got a good ansi sequence, put it back to
-+			 * local_sb as we're cutting sb
-+			 */
-+			strbuf_insert(&local_sb, 0, p, ch + 1 - p);
-+			ch =3D p - 1;
-+		}
-+		strbuf_setlen(sb, ch + 1 - sb->buf);
-+		c->flush_type =3D flush_left;
-+	}
-+
- 	if (len > padding) {
- 		switch (c->truncate) {
- 		case trunc_left:
-diff --git a/utf8.c b/utf8.c
-index 766df80..414ae49 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -9,7 +9,7 @@ struct interval {
-   int last;
- };
-=20
--static size_t display_mode_esc_sequence_len(const char *s)
-+size_t display_mode_esc_sequence_len(const char *s)
+ char *logmsg_reencode(const struct commit *commit,
++		      char **commit_encoding,
+ 		      const char *output_encoding)
  {
- 	const char *p =3D s;
- 	if (*p++ !=3D '\033')
-diff --git a/utf8.h b/utf8.h
-index faf2f91..e913edb 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -3,6 +3,7 @@
+ 	static const char *utf8 =3D "UTF-8";
+@@ -605,9 +606,15 @@ char *logmsg_reencode(const struct commit *commit,
+ 			    sha1_to_hex(commit->object.sha1), typename(type));
+ 	}
 =20
- typedef unsigned int ucs_char_t;  /* assuming 32bit int */
+-	if (!output_encoding || !*output_encoding)
++	if (!output_encoding || !*output_encoding) {
++		if (commit_encoding)
++			*commit_encoding =3D
++				get_header(commit, msg, "encoding");
+ 		return msg;
++	}
+ 	encoding =3D get_header(commit, msg, "encoding");
++	if (commit_encoding)
++		*commit_encoding =3D encoding;
+ 	use_encoding =3D encoding ? encoding : utf8;
+ 	if (same_encoding(use_encoding, output_encoding)) {
+ 		/*
+@@ -648,7 +655,8 @@ char *logmsg_reencode(const struct commit *commit,
+ 	if (out)
+ 		out =3D replace_encoding_header(out, output_encoding);
 =20
-+size_t display_mode_esc_sequence_len(const char *s);
- int utf8_width(const char **start, size_t *remainder_p);
- int utf8_strnwidth(const char *string, int len, int skip_ansi);
- int utf8_strwidth(const char *string);
+-	free(encoding);
++	if (!commit_encoding)
++		free(encoding);
+ 	/*
+ 	 * If the re-encoding failed, out might be NULL here; in that
+ 	 * case we just return the commit message verbatim.
+@@ -1313,7 +1321,7 @@ void format_commit_message(const struct commit *c=
+ommit,
+ 	context.commit =3D commit;
+ 	context.pretty_ctx =3D pretty_ctx;
+ 	context.wrap_start =3D sb->len;
+-	context.message =3D logmsg_reencode(commit, output_enc);
++	context.message =3D logmsg_reencode(commit, NULL, output_enc);
+=20
+ 	strbuf_expand(sb, format, format_commit_item, &context);
+ 	rewrap_message_tail(sb, &context, 0, 0, 0);
+@@ -1476,7 +1484,7 @@ void pretty_print_commit(const struct pretty_prin=
+t_context *pp,
+ 	}
+=20
+ 	encoding =3D get_log_output_encoding();
+-	msg =3D reencoded =3D logmsg_reencode(commit, encoding);
++	msg =3D reencoded =3D logmsg_reencode(commit, NULL, encoding);
+=20
+ 	if (pp->fmt =3D=3D CMIT_FMT_ONELINE || pp->fmt =3D=3D CMIT_FMT_EMAIL)
+ 		indent =3D 0;
+diff --git a/revision.c b/revision.c
+index ef60205..c6ff560 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2290,7 +2290,7 @@ static int commit_match(struct commit *commit, st=
+ruct rev_info *opt)
+ 	 * in it.
+ 	 */
+ 	encoding =3D get_log_output_encoding();
+-	message =3D logmsg_reencode(commit, encoding);
++	message =3D logmsg_reencode(commit, NULL, encoding);
+=20
+ 	/* Copy the commit to temporary if we are using "fake" headers */
+ 	if (buf.len)
 --=20
 1.8.2.83.gc99314b
