@@ -1,80 +1,76 @@
-From: Adam Retter <adam@exist-db.org>
-Subject: Re: git svn error "Not a valid object name"
-Date: Sat, 16 Mar 2013 12:07:51 +0000
-Message-ID: <CAJKLP9aX20i+oy7AMhh5+uAmP2Np4tUGTEvR+XDHyG1a_DSXtQ@mail.gmail.com>
-References: <CAJKLP9ZQBXf5ZZY9FccOAL5QU+q1b5SnAfvP9BpARdqvzPuWeg@mail.gmail.com>
-	<20130316014548.GA16253@dcvr.yhbt.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: regression in multi-threaded git-pack-index
+Date: Sat, 16 Mar 2013 19:38:40 +0700
+Message-ID: <CACsJy8D9zwwij9DDrug_tvp2_zrXG7RGcZBbKzpHu1T5iQdxZg@mail.gmail.com>
+References: <20130315224240.50AA340839@wince.sfo.corp.google.com> <20130316114118.GA1940@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Dannes Wessels <dannes@exist-db.org>,
-	Wolfgang Meier <wolfgang@exist-db.org>,
-	=?UTF-8?B?TGVpZi1Kw7ZyYW4gT2xzc29u?= <ljo@exist-db.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Mar 16 13:08:23 2013
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Stefan Zager <szager@google.com>
+X-From: git-owner@vger.kernel.org Sat Mar 16 13:39:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGpuO-0007Ob-52
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 13:08:20 +0100
+	id 1UGqOh-0006Uk-Ug
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 13:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755592Ab3CPMHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Mar 2013 08:07:53 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:49623 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755044Ab3CPMHw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Mar 2013 08:07:52 -0400
-Received: by mail-ob0-f171.google.com with SMTP id x4so4069045obh.16
-        for <git@vger.kernel.org>; Sat, 16 Mar 2013 05:07:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:x-gm-message-state;
-        bh=c8lBG+t5Ui18wmT/5PagC4xG3XWKmhLAFyPlH5Yz2Bc=;
-        b=RSLoKttbfGncBd5lTxXChHN3GbRvAxR6cB4XR/9OsWFnlZqKJqr7W0HPD/iC5W8Sli
-         K3zTi4Xgi0QSO6KODjgk5t0kzQzq5ZHnZxaQcLSbHIo+mpfxgdtNGx74HeKGoEPqQoHG
-         ltX3Tu0n/c7SFWhNoyz9KnOG2gprU1XRNfJuACL3rMztuH527NalYWaF+jkTgKZpEFb/
-         ox0TQnIlisq9+nGdpDcw3aa2HT9yJskmVS/mlUVjplshdR97CE1XuxdsEpr3W3bV7tGs
-         pYVHQlg7k26cURNZunXv4V+Vzz95ab2rYbyIHrW25QsjG+fLYJ2uVq59JRMcH0o9rqUn
-         QVVA==
-X-Received: by 10.182.64.74 with SMTP id m10mr4293497obs.61.1363435671587;
- Sat, 16 Mar 2013 05:07:51 -0700 (PDT)
-Received: by 10.76.33.166 with HTTP; Sat, 16 Mar 2013 05:07:51 -0700 (PDT)
-In-Reply-To: <20130316014548.GA16253@dcvr.yhbt.net>
-X-Gm-Message-State: ALoCoQknfFXvr7jb+2ykDHh7OtOKymfds0uAVgPW2mPEZgJmUgn18U/B7dg3FpP6TGFkGAXU8b2Y
+	id S1755710Ab3CPMjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Mar 2013 08:39:13 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:36272 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755665Ab3CPMjM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Mar 2013 08:39:12 -0400
+Received: by mail-oa0-f42.google.com with SMTP id i18so4368174oag.29
+        for <git@vger.kernel.org>; Sat, 16 Mar 2013 05:39:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=6Exy297fYFuFTiYhnzZQDcklr/nBK6kax9fI/J4iGPQ=;
+        b=cvKsfIh6IsOAh5tXss1miTTFTVY8qnrNkcsqra4oP/OEM4w/obpsNXNiGNZyVm8fji
+         Hr8aMktjVsHn2KEiIlOkr2oXzmwxfkEzH0LDzii6mgEqKkHnGVSoLTc/jmn9Q9NkonKL
+         aaCer7zjFGbplK38u/4cwiAWD0sWNuI0Q75FUYl9B8QWcsIWKyUDOxSWrQuE78TGuhwD
+         fmwrV8wYnND6smat2UrC9oMmgkAZNn4LY2MEEqJn8F1XFK3UdfeqMVFjBN2UjKuMCxQm
+         2GE9EEbGnut2AFVAaWVz4gN2e33v5x/tzAZGE+C0dn9MsxMGXZe/7lEKQijs7ZK2KPJo
+         4SkQ==
+X-Received: by 10.182.43.103 with SMTP id v7mr4402571obl.17.1363437551051;
+ Sat, 16 Mar 2013 05:39:11 -0700 (PDT)
+Received: by 10.76.27.200 with HTTP; Sat, 16 Mar 2013 05:38:40 -0700 (PDT)
+In-Reply-To: <20130316114118.GA1940@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218301>
 
->> fatal: Not a valid object name
->> ls-tree -z  ./webapp/api/: command returned error: 128
->>
->> I have no idea what this means, or how to fix this.
->> We are using Git version 1.8.1.GIT on Amazon EC2 Linux.
->>
->> Any suggestions please?
+On Sat, Mar 16, 2013 at 6:41 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Mar 15, 2013 at 03:42:40PM -0700, Stefan Zager wrote:
 >
-> You might've hit a bug in branch detection, but I'd have to look at the
-> repo to be certain and fix it if neded.
-> --no-follow-parent should work, but you'd lose branch/tag history.
+>> We have uncovered a regression in this commit:
+>>
+>> b8a2486f1524947f232f657e9f2ebf44e3e7a243
 
-Hi Eric,
+What version did you test? We used to have problems with multithreaded
+index-pack on cywgin because its pread implementation is not
+thread-safe, see c0f8654 (index-pack: Disable threading on cygwin -
+2012-06-26). Not sure if we fall into the same path on Mac, or this is
+something else..
 
-Thanks for the response, ideally we would like to keep our history
-which is why we are really using one of these tools in the first
-place.
+>>
+>> The symptom is that 'git fetch' dies with:
+>>
+>> error: index-pack died of signal 10
+>> fatal: index-pack failed
 
-If your able, any idea of when you might be able to take a look at the
-bug? Our svn repo is publicly available for all.
+I guess it won't help much, but what if you enable coredump and get a
+stack trace from it?
 
-
+>>
+>> I have only been able to reproduce it on a Mac thus far; will try
+>> ubuntu next.  We can make it go away by running:
+>>
+>> git config pack.threads 1
 -- 
-Adam Retter
-
-eXist Developer
-{ United Kingdom }
-adam@exist-db.org
-irc://irc.freenode.net/existdb
+Duy
