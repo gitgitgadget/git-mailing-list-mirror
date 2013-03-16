@@ -1,127 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] http_init: only initialize SSL for https
-Date: Sat, 16 Mar 2013 08:03:00 -0400
-Message-ID: <20130316120300.GA2626@sigill.intra.peff.net>
-References: <1363269079-6124-1-git-send-email-kusmabite@gmail.com>
- <alpine.DEB.1.00.1303141621340.3794@s15462909.onlinehome-server.info>
- <CABPQNSZNdGea9Nn91emWhfRGAZjZXm755UKArNr3EUy9CrSKHg@mail.gmail.com>
- <7vmwu6x72q.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1303142333170.3794@s15462909.onlinehome-server.info>
- <7vk3p9wqh5.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.2.00.1303151054130.32216@tvnag.unkk.fr>
- <7v4ngcwt4w.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.2.00.1303151719170.32216@tvnag.unkk.fr>
+From: Adam Retter <adam@exist-db.org>
+Subject: Re: git svn error "Not a valid object name"
+Date: Sat, 16 Mar 2013 12:07:51 +0000
+Message-ID: <CAJKLP9aX20i+oy7AMhh5+uAmP2Np4tUGTEvR+XDHyG1a_DSXtQ@mail.gmail.com>
+References: <CAJKLP9ZQBXf5ZZY9FccOAL5QU+q1b5SnAfvP9BpARdqvzPuWeg@mail.gmail.com>
+	<20130316014548.GA16253@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	kusmabite@gmail.com, git@vger.kernel.org, msysgit@googlegroups.com
-To: Daniel Stenberg <daniel@haxx.se>
-X-From: msysgit+bncBDO2DJFKTEFBB6F6SGFAKGQERKF7WKQ@googlegroups.com Sat Mar 16 13:03:31 2013
-Return-path: <msysgit+bncBDO2DJFKTEFBB6F6SGFAKGQERKF7WKQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pb0-f57.google.com ([209.85.160.57])
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Dannes Wessels <dannes@exist-db.org>,
+	Wolfgang Meier <wolfgang@exist-db.org>,
+	=?UTF-8?B?TGVpZi1Kw7ZyYW4gT2xzc29u?= <ljo@exist-db.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Mar 16 13:08:23 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBB6F6SGFAKGQERKF7WKQ@googlegroups.com>)
-	id 1UGpph-0002D5-4B
-	for gcvm-msysgit@m.gmane.org; Sat, 16 Mar 2013 13:03:29 +0100
-Received: by mail-pb0-f57.google.com with SMTP id wy12sf1616020pbc.2
-        for <gcvm-msysgit@m.gmane.org>; Sat, 16 Mar 2013 05:03:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:received-spf:date:from:to:cc
-         :subject:message-id:references:mime-version:in-reply-to
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:x-google-group-id:list-post:list-help
-         :list-archive:sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        bh=memaiuFYxAe19zPc2Ypbp3kVr1f1qpm94JoKKuK7SqQ=;
-        b=J4K2iikMTsbrKC9cwSAc0VMGZtZF2XLRl2772p10/GoQUBht0wFuNYDLxODvW/lsBV
-         2Ad09/V2BsWsNDFpxaHo8z8yCWaggwP86+6XvZfOyorN7ErzwCubwXBiyLXQKesyAFt8
-         HQiTe2rPBNTq/hDMNJdorw6JJ0AlBiBmQ5c55imUL5yjhGyNDIvdkk4iYoozC5aSvntg
-         y9wE0I0LJbp5qHFJ86+5aMmGs5Fx1XaAkKlGDIFlEQCzZfgOKieYXhYI5lap+5/751vB
-         QJQzKLggcxYQHrfXbxM81v6cSrxnTWKhBYZ8wJ05/tP 
-X-Received: by 10.50.242.37 with SMTP id wn5mr685655igc.15.1363435385185;
-        Sat, 16 Mar 2013 05:03:05 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.192.169 with SMTP id hh9ls341045igc.6.canary; Sat, 16 Mar
- 2013 05:03:04 -0700 (PDT)
-X-Received: by 10.43.85.4 with SMTP id am4mr6635868icc.13.1363435384354;
-        Sat, 16 Mar 2013 05:03:04 -0700 (PDT)
-Received: from peff.net (75-15-5-89.uvs.iplsin.sbcglobal.net. [75.15.5.89])
-        by gmr-mx.google.com with ESMTPS id fc5si92666igc.0.2013.03.16.05.03.04
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 16 Mar 2013 05:03:04 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 75.15.5.89 as permitted sender) client-ip=75.15.5.89;
-Received: (qmail 1891 invoked by uid 107); 16 Mar 2013 12:04:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 16 Mar 2013 08:04:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 16 Mar 2013 08:03:00 -0400
-In-Reply-To: <alpine.DEB.2.00.1303151719170.32216@tvnag.unkk.fr>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of peff@peff.net designates 75.15.5.89 as permitted
- sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218299>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UGpuO-0007Ob-52
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 13:08:20 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755592Ab3CPMHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Mar 2013 08:07:53 -0400
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:49623 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755044Ab3CPMHw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Mar 2013 08:07:52 -0400
+Received: by mail-ob0-f171.google.com with SMTP id x4so4069045obh.16
+        for <git@vger.kernel.org>; Sat, 16 Mar 2013 05:07:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:x-gm-message-state;
+        bh=c8lBG+t5Ui18wmT/5PagC4xG3XWKmhLAFyPlH5Yz2Bc=;
+        b=RSLoKttbfGncBd5lTxXChHN3GbRvAxR6cB4XR/9OsWFnlZqKJqr7W0HPD/iC5W8Sli
+         K3zTi4Xgi0QSO6KODjgk5t0kzQzq5ZHnZxaQcLSbHIo+mpfxgdtNGx74HeKGoEPqQoHG
+         ltX3Tu0n/c7SFWhNoyz9KnOG2gprU1XRNfJuACL3rMztuH527NalYWaF+jkTgKZpEFb/
+         ox0TQnIlisq9+nGdpDcw3aa2HT9yJskmVS/mlUVjplshdR97CE1XuxdsEpr3W3bV7tGs
+         pYVHQlg7k26cURNZunXv4V+Vzz95ab2rYbyIHrW25QsjG+fLYJ2uVq59JRMcH0o9rqUn
+         QVVA==
+X-Received: by 10.182.64.74 with SMTP id m10mr4293497obs.61.1363435671587;
+ Sat, 16 Mar 2013 05:07:51 -0700 (PDT)
+Received: by 10.76.33.166 with HTTP; Sat, 16 Mar 2013 05:07:51 -0700 (PDT)
+In-Reply-To: <20130316014548.GA16253@dcvr.yhbt.net>
+X-Gm-Message-State: ALoCoQknfFXvr7jb+2ykDHh7OtOKymfds0uAVgPW2mPEZgJmUgn18U/B7dg3FpP6TGFkGAXU8b2Y
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218300>
 
-On Fri, Mar 15, 2013 at 05:23:27PM +0100, Daniel Stenberg wrote:
+>> fatal: Not a valid object name
+>> ls-tree -z  ./webapp/api/: command returned error: 128
+>>
+>> I have no idea what this means, or how to fix this.
+>> We are using Git version 1.8.1.GIT on Amazon EC2 Linux.
+>>
+>> Any suggestions please?
+>
+> You might've hit a bug in branch detection, but I'd have to look at the
+> repo to be certain and fix it if neded.
+> --no-follow-parent should work, but you'd lose branch/tag history.
 
-> >Thanks, then we should stick to starting from ALL like everybody
-> >else who followed the suggestion in the documentation.  Do you have
-> >recommendations on the conditional dropping of SSL?
-> 
-> Not really, no.
-> 
-> SSL initing is as has been mentioned alredy only relevant with
-> libcurl if an SSL powered protocol is gonna be used, so if checking
-> the URL for the protocol is enough to figure this out then sure that
-> should work fine.
+Hi Eric,
 
-But are we correct in assuming that curl will barf if it gets a redirect
-to an ssl-enabled protocol? My testing seems to say yes:
+Thanks for the response, ideally we would like to keep our history
+which is why we are really using one of these tools in the first
+place.
 
-  [in one terminal]
-  $ nc -lCp 5001 <<\EOF
-  HTTP/1.1 301
-  Location: https://github.com/peff/git.git
+If your able, any idea of when you might be able to take a look at the
+bug? Our svn repo is publicly available for all.
 
-  EOF
-
-  [in another, git compiled with Erik's patch]
-  $ git ls-remote http://localhost:5001
-  error: SSL: couldn't create a context: error:140A90A1:lib(20):func(169):reason(161) while accessing http://localhost:5001/info/refs?service=git-upload-pack
-  fatal: HTTP request failed
-
--Peff
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+Adam Retter
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+eXist Developer
+{ United Kingdom }
+adam@exist-db.org
+irc://irc.freenode.net/existdb
