@@ -1,188 +1,194 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 1/2] pack-refs: write peeled entry for non-tags
-Date: Sat, 16 Mar 2013 14:50:56 +0100
-Message-ID: <514478C0.6060008@alum.mit.edu>
-References: <20130316090018.GA26708@sigill.intra.peff.net> <20130316090103.GA26855@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/2] pack-refs: add fully-peeled trait
+Date: Sat, 16 Mar 2013 15:06:22 +0100
+Message-ID: <51447C5E.3050808@alum.mit.edu>
+References: <20130316090018.GA26708@sigill.intra.peff.net> <20130316090116.GB26855@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 16 14:58:32 2013
+X-From: git-owner@vger.kernel.org Sat Mar 16 15:14:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UGrd1-0004ry-Ld
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 14:58:31 +0100
+	id 1UGrrx-0004Js-Ln
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Mar 2013 15:13:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755886Ab3CPN6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Mar 2013 09:58:04 -0400
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:57534 "EHLO
+	id S1755843Ab3CPONb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Mar 2013 10:13:31 -0400
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:46605 "EHLO
 	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755846Ab3CPN6B (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Mar 2013 09:58:01 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Mar 2013 09:58:01 EDT
-X-AuditID: 12074412-b7f216d0000008d4-01-514478c3972a
+	by vger.kernel.org with ESMTP id S1755841Ab3CPONa (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Mar 2013 10:13:30 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Mar 2013 10:13:30 EDT
+X-AuditID: 12074412-b7f216d0000008d4-2d-51447c62e9df
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id CA.98.02260.3C874415; Sat, 16 Mar 2013 09:50:59 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 37.D8.02260.26C74415; Sat, 16 Mar 2013 10:06:26 -0400 (EDT)
 Received: from [192.168.69.140] (p57A24A2D.dip.t-dialin.net [87.162.74.45])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r2GDouVr020640
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r2GE6NY1021280
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 16 Mar 2013 09:50:58 -0400
+	Sat, 16 Mar 2013 10:06:24 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
-In-Reply-To: <20130316090103.GA26855@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsUixO6iqHu4wiXQYF8zr0XXlW4mi4beK8wW
-	P1p6mB2YPZ717mH0uHhJ2ePzJrkA5ihum6TEkrLgzPQ8fbsE7ozrLa/YCi4oVsy5x9fAuF6q
-	i5GTQ0LARGLa6TesELaYxIV769lAbCGBy4wSi6+GdDFyAdmnmSR+PVnJ3MXIwcEroC0x8zQP
-	SA2LgKrEhTU7GUFsNgFdiUU9zUwgtqhAmMTeC9PA5vAKCEqcnPmEBcQWEZCV+H54I1g9s4C1
-	xO4+iLiwgLPEub13GEHGCwlkSvSt0QAJcwKV/L9/Emwrs4C6xPp5QhCd8hLb385hnsAoMAvJ
-	glkIVbOQVC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuml5tZopeaUrqJERKwQjsY15+U
-	O8QowMGoxMNbYeccKMSaWFZcmXuIUZKDSUmU92SZS6AQX1J+SmVGYnFGfFFpTmrxIUYJDmYl
-	Ed79RkA53pTEyqrUonyYlDQHi5I478/F6n5CAumJJanZqakFqUUwWRkODiUJ3onlQI2CRanp
-	qRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoPiMLwZGKEiKB2jvT5CbeIsLEnOBohCtpxh1
-	OXa/e/SCUYglLz8vVUqcdxXIDgGQoozSPLgVsPT0ilEc6GNh3rkgVTzA1AY36RXQEiagJfuu
-	OIEsKUlESEk1MDpzvtr/NOx7yn6jS3s4bO3OOE0M21+X1ShvEtL3TrwtUC7ET+nGhrlbVcKc
-	T/7hm81QbBHqPKehKSjbL1CuX0980dbt8xZ5TXsoqhNd6y4kb6obYVBioOdwbNOR 
+In-Reply-To: <20130316090116.GB26855@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqJtU4xJo8Ocal0XXlW4mi4beK8wW
+	P1p6mB2YPZ717mH0uHhJ2ePzJrkA5ihum6TEkrLgzPQ8fbsE7oy53cYFpzQrrl/ewd7AuE+h
+	i5GTQ0LARGLC6pnMELaYxIV769m6GLk4hAQuM0o82fSBCcI5zSTxePkRNpAqXgFtibPvX4LZ
+	LAKqEmvWnmAFsdkEdCUW9TQzgdiiAmESey9Mg6oXlDg58wkLiC0iICvx/fBGRhCbWcBaYncf
+	RFxYwEri6qaXYFcICWRK7Dt1BayXE6jm7aQzQDUcQPXqEuvnCUG0yktsfzuHeQKjwCwkG2Yh
+	VM1CUrWAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6ZXm5miV5qSukmRkjYCu1gXH9S7hCj
+	AAejEg9vhZ1zoBBrYllxZe4hRkkOJiVR3pNlLoFCfEn5KZUZicUZ8UWlOanFhxglOJiVRHir
+	K4ByvCmJlVWpRfkwKWkOFiVx3p+L1f2EBNITS1KzU1MLUotgsjIcHEoSvCHVQI2CRanpqRVp
+	mTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoCiNLwbGKUiKB2ivNUg7b3FBYi5QFKL1FKMux+53
+	j14wCrHk5eelSonz8oEUCYAUZZTmwa2AJalXjOJAHwvz6oBU8QATHNykV0BLmICW7LviBLKk
+	JBEhJdXAaLReKmh5xZ5V304cZmi753r5SU0Ek5GXcK2Ka3nb7Zo9Z4VetVyf+IvP2ck6ac5O
+	11WnohgynfSzZSOWZM3cqXxMeUXrR7lllRYs19cFdF2Wi+0Ik3Cs2SZSXHhlet3z 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218305>
 
-Looks good aside from a couple of minor points mentioned below.
+ACK, with one ignorable comment.
+
+Michael
 
 On 03/16/2013 10:01 AM, Jeff King wrote:
-> When we pack an annotated tag ref, we write not only the
-> sha1 of the tag object along with the ref, but also the sha1
-> obtained by peeling the tag. This lets readers of the
-> pack-refs file know the peeled value without having to
-> actually load the object, speeding up upload-pack's ref
-> advertisement.
+> Older versions of pack-refs did not write peel lines for
+> refs outside of refs/tags. This meant that on reading the
+> pack-refs file, we might set the REF_KNOWS_PEELED flag for
+> such a ref, even though we do not know anything about its
+> peeled value.
 > 
-> The writer marks a packed-refs file with peeled refs using
-> the "peeled" trait at the top of the file. When the reader
-> sees this trait, it knows that each ref is either followed
-> by its peeled value, or it is not an annotated tag.
+> The previous commit updated the writer to always peel, no
+> matter what the ref is. That means that packed-refs files
+> written by newer versions of git are fine to be read by both
+> old and new versions of git. However, we still have the
+> problem of reading packed-refs files written by older
+> versions of git, or by other implementations which have not
+> yet learned the same trick.
 > 
-> However, there is a mismatch between the assumptions of the
-> reader and writer. The writer will only peel refs under
-> refs/tags, but the reader does not know this; it will assume
-> a ref without a peeled value must not be a tag object. Thus
-> an annotated tag object placed outside of the refs/tags
-> hierarchy will not have its peeled value printed by
-> upload-pack.
+> The simplest fix would be to always unset the
+> REF_KNOWS_PEELED flag for refs outside of refs/tags that do
+> not have a peel line (if it has a peel line, we know it is
+> valid, but we cannot assume a missing peel line means
+> anything). But that loses an important optimization, as
+> upload-pack should not need to load the object pointed to by
+> refs/heads/foo to determine that it is not a tag.
 > 
-> The simplest way to fix this is to start writing peel values
-> for all refs. This matches what the reader expects for both
-> new and old versions of git.
-> 
+> Instead, we add a "fully-peeled" trait to the packed-refs
+> file. If it is set, we know that we can trust a missing peel
+> line to mean that a ref cannot be peeled. Otherwise, we fall
+> back to assuming nothing.
+
+Another nice, clear explanation of the issue.
+
 > Signed-off-by: Jeff King <peff@peff.net>
-
-I like your explanation of the problem.
-
 > ---
->  pack-refs.c         | 16 ++++++++--------
->  t/t3211-peel-ref.sh | 42 ++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 50 insertions(+), 8 deletions(-)
->  create mode 100755 t/t3211-peel-ref.sh
+>  pack-refs.c         |  2 +-
+>  refs.c              | 16 +++++++++++++++-
+>  t/t3211-peel-ref.sh | 22 ++++++++++++++++++++++
+>  3 files changed, 38 insertions(+), 2 deletions(-)
 > 
 > diff --git a/pack-refs.c b/pack-refs.c
-> index f09a054..10832d7 100644
+> index 10832d7..87ca04d 100644
 > --- a/pack-refs.c
 > +++ b/pack-refs.c
-> @@ -27,6 +27,7 @@ static int handle_one_ref(const char *path, const unsigned char *sha1,
->  			  int flags, void *cb_data)
->  {
->  	struct pack_refs_cb_data *cb = cb_data;
-> +	struct object *o;
->  	int is_tag_ref;
+> @@ -128,7 +128,7 @@ int pack_refs(unsigned int flags)
+>  		die_errno("unable to create ref-pack file structure");
 >  
->  	/* Do not pack the symbolic refs */
-> @@ -39,14 +40,13 @@ static int handle_one_ref(const char *path, const unsigned char *sha1,
->  		return 0;
+>  	/* perhaps other traits later as well */
+> -	fprintf(cbdata.refs_file, "# pack-refs with: peeled \n");
+> +	fprintf(cbdata.refs_file, "# pack-refs with: peeled fully-peeled \n");
 >  
->  	fprintf(cb->refs_file, "%s %s\n", sha1_to_hex(sha1), path);
-> -	if (is_tag_ref) {
-> -		struct object *o = parse_object(sha1);
-> -		if (o->type == OBJ_TAG) {
-> -			o = deref_tag(o, path, 0);
-> -			if (o)
-> -				fprintf(cb->refs_file, "^%s\n",
-> -					sha1_to_hex(o->sha1));
-> -		}
+>  	for_each_ref(handle_one_ref, &cbdata);
+>  	if (ferror(cbdata.refs_file))
+> diff --git a/refs.c b/refs.c
+> index 175b9fc..6a38c41 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -808,6 +808,7 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+>  	struct ref_entry *last = NULL;
+>  	char refline[PATH_MAX];
+>  	int flag = REF_ISPACKED;
+> +	int fully_peeled = 0;
+>  
+>  	while (fgets(refline, sizeof(refline), f)) {
+>  		unsigned char sha1[20];
+> @@ -818,13 +819,26 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+>  			const char *traits = refline + sizeof(header) - 1;
+>  			if (strstr(traits, " peeled "))
+>  				flag |= REF_KNOWS_PEELED;
+> +			if (strstr(traits, " fully-peeled "))
+> +				fully_peeled = 1;
+>  			/* perhaps other traits later as well */
+>  			continue;
+>  		}
+>  
+>  		refname = parse_ref_line(refline, sha1);
+>  		if (refname) {
+> -			last = create_ref_entry(refname, sha1, flag, 1);
+> +			/*
+> +			 * Older git did not write peel lines for anything
+> +			 * outside of refs/tags/; if the fully-peeled trait
+> +			 * is not set, we are dealing with such an older
+> +			 * git and cannot assume an omitted peel value
+> +			 * means the ref is not a tag object.
+> +			 */
+> +			int this_flag = flag;
+> +			if (!fully_peeled && prefixcmp(refname, "refs/tags/"))
+> +				this_flag &= ~REF_KNOWS_PEELED;
 > +
-> +	o = parse_object(sha1);
-> +	if (o->type == OBJ_TAG) {
+> +			last = create_ref_entry(refname, sha1, this_flag, 1);
+>  			add_ref(dir, last);
+>  			continue;
+>  		}
 
-You suggested that I add a test (o != NULL) at the equivalent place in
-my code (which was derived from this code).  Granted, my code was
-explicitly intending to pass invalid SHA1 values to parse_object().  But
-wouldn't it be a good defensive step to add the same check here?
+I have to admit that I am partial to my variant of this code [1] because
+the logic makes it clearer when the affirmative decision can be made to
+set the REF_KNOWS_PEELED flag.  But this version also looks correct to
+me and equivalent (aside from the idea that a few lines later if a
+peeled value is found then the REF_KNOWS_PEELED bit could also be set).
 
-> +		o = deref_tag(o, path, 0);
-> +		if (o)
-> +			fprintf(cb->refs_file, "^%s\n",
-> +				sha1_to_hex(o->sha1));
->  	}
->  
->  	if ((cb->flags & PACK_REFS_PRUNE) && !do_not_prune(flags)) {
 > diff --git a/t/t3211-peel-ref.sh b/t/t3211-peel-ref.sh
-> new file mode 100755
-> index 0000000..dd5b48b
-> --- /dev/null
+> index dd5b48b..a8eb1aa 100755
+> --- a/t/t3211-peel-ref.sh
 > +++ b/t/t3211-peel-ref.sh
-> @@ -0,0 +1,42 @@
-> +#!/bin/sh
-> +
-> +test_description='tests for the peel_ref optimization of packed-refs'
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'create annotated tag in refs/tags' '
-> +	test_commit base &&
-> +	git tag -m annotated foo
-> +'
-> +
-> +test_expect_success 'create annotated tag outside of refs/tags' '
-> +	git update-ref refs/outside/foo refs/tags/foo
-> +'
-> +
-> +# This matches show-ref's output
-> +print_ref() {
-> +	echo "`git rev-parse "$1"` $1"
-> +}
-> +
-
-CodingGuidelines prefers $() over ``.
-
-> +test_expect_success 'set up expected show-ref output' '
+> @@ -39,4 +39,26 @@ test_expect_success 'refs are peeled outside of refs/tags (packed)' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'create old-style pack-refs without fully-peeled' '
+> +	# Git no longer writes without fully-peeled, so we just write our own
+> +	# from scratch; we could also munge the existing file to remove the
+> +	# fully-peeled bits, but that seems even more prone to failure,
+> +	# especially if the format ever changes again. At least this way we
+> +	# know we are emulating exactly what an older git would have written.
 > +	{
+> +		echo "# pack-refs with: peeled " &&
 > +		print_ref "refs/heads/master" &&
 > +		print_ref "refs/outside/foo" &&
-> +		print_ref "refs/outside/foo^{}" &&
 > +		print_ref "refs/tags/base" &&
 > +		print_ref "refs/tags/foo" &&
-> +		print_ref "refs/tags/foo^{}"
-> +	} >expect
+> +		echo "^$(git rev-parse "refs/tags/foo^{}")"
+> +	} >tmp &&
+> +	mv tmp .git/packed-refs
 > +'
 > +
-> +test_expect_success 'refs are peeled outside of refs/tags (loose)' '
+> +test_expect_success 'refs are peeled outside of refs/tags (old packed)' '
 > +	git show-ref -d >actual &&
 > +	test_cmp expect actual
 > +'
 > +
-> +test_expect_success 'refs are peeled outside of refs/tags (packed)' '
-> +	git pack-refs --all &&
-> +	git show-ref -d >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_done
+>  test_done
 > 
 
+[1]
+https://github.com/mhagger/git/commit/1c8d4daa2de15a03637d753471a9e5222b01b968
 
 -- 
 Michael Haggerty
