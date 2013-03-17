@@ -1,68 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Make GIT_USE_LOOKUP default?
-Date: Sun, 17 Mar 2013 13:13:56 -0700
-Message-ID: <7vd2uxrdh7.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8AihriCDfN=cz7FjdHzZAhnPPGML_w8yWcVVrmTQLZyjw@mail.gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] combine-diff: coalesce lost lines optimally
+Date: Sun, 17 Mar 2013 21:37:09 +0100
+Message-ID: <CALWbr2yfgA8kvtn4yxzPD5cencAPmwMqx=A6n4ohsjdzfAE1bQ@mail.gmail.com>
+References: <7vboalw6lt.fsf@alter.siamese.dyndns.org>
+	<1363525436-21667-1-git-send-email-apelisse@gmail.com>
+	<7vhak9rdne.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 17 21:14:30 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 17 21:37:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHJyO-0007VO-6O
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 21:14:28 +0100
+	id 1UHKL2-0000hh-LC
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 21:37:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756618Ab3CQUOA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Mar 2013 16:14:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65202 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756500Ab3CQUN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Mar 2013 16:13:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09873A896;
-	Sun, 17 Mar 2013 16:13:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eQXTKzfTpihZXiDPE3+vRHfuXeM=; b=Fpzpm/
-	X89NRCAnEuQxSjYL7QM1tZ/tHCU+gR274ObYPMt8FUuPPEVmizizE005T+2wgltk
-	igGAOF1x21gWUHRgELpqi7GD/pPwq4g75zcUKk8hBFSy6KjsP4L+jTiuTHQbFacT
-	CkHBBb/TbX0Y2GOM8fOqsip1V/tbY0CLGSqmI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AEodJXDaY6+wEFKx9bm3fUHGBq3AaYw0
-	e2h6wIk12fA5C6m4u+uojGTecDpfJjcwGTKjqm2bs9MXuxJiB1FdxXH0kAteBUNM
-	vhJA+psDMApPANiOKJnkCagDVRCt0y4I0A2NIDLFQj3GsWvRpRsWH9LH1uth0YsZ
-	IXul2zFkRhc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2A27A894;
-	Sun, 17 Mar 2013 16:13:58 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C2D6A891; Sun, 17 Mar 2013
- 16:13:58 -0400 (EDT)
-In-Reply-To: <CACsJy8AihriCDfN=cz7FjdHzZAhnPPGML_w8yWcVVrmTQLZyjw@mail.gmail.com> (Duy
- Nguyen's message of "Sun, 17 Mar 2013 20:25:55 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 338D8DE0-8F3F-11E2-8813-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756632Ab3CQUhL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Mar 2013 16:37:11 -0400
+Received: from mail-qc0-f179.google.com ([209.85.216.179]:59196 "EHLO
+	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756581Ab3CQUhK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Mar 2013 16:37:10 -0400
+Received: by mail-qc0-f179.google.com with SMTP id b40so2422459qcq.38
+        for <git@vger.kernel.org>; Sun, 17 Mar 2013 13:37:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=x7SoGQ6n4PFpLWwQ4SQIUM4GgZkDijjIJ6HCPp8XIWM=;
+        b=spdr8x/sCgurgj9/2ISljWGdelIvWgWEJhvXII2OEoq1QpZTFH7wnqRdV0tKyA9dpP
+         DUTpJIt/J2iZeSCuNIz+7zpmsnM2ryAoIWWwjNUpkFVKIR2jkfZ8NA+EEhDtlzJ8BxX9
+         N5zmAEWbhqNHPHBt/Fk1KNQkZFUNs4+zwADo/Edx9uHPE0gSqj5BRY8rOMApUxN10ion
+         lxRI5wjfheOauUsIz5lAjqXs/aUTzeBXoyuEHKzvUPSulmmJP4ooUG8fBy4sodIumONs
+         VgAes52y5qtjuAqdC19mV0pc8ZM8415DPkKlprCYEDMYIw15zpCj0Vm2dWdhKYFAvGdj
+         SnTA==
+X-Received: by 10.229.118.158 with SMTP id v30mr3071977qcq.52.1363552629872;
+ Sun, 17 Mar 2013 13:37:09 -0700 (PDT)
+Received: by 10.49.70.163 with HTTP; Sun, 17 Mar 2013 13:37:09 -0700 (PDT)
+In-Reply-To: <7vhak9rdne.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218373>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hopefully, my patch takes about the same time as git 1.7.9.5 and
+produces the same output on that commit ;)
+Unfortunately on a commit that would remove A LOT of lines (10000)
+from 7 parents, the times goes from 0.01s to 1.5s... I'm pretty sure
+that scenario is quite uncommon though.
 
-> This env comes from jc/sha1-lookup in 2008 (merge commit e9f9d4f), 5
-> years ago. I wonder if it's good enough to turn on by default and keep
-> improving from there, or is it still experimental?
-
-The algorithm has been used in production in other codepaths like
-patch-ids and replace-object, so correctness-wise it should be fine
-to turn it on.  I think nobody has bothered to benchmark with and
-without the environment to see if it is really worth the complexity.
-
-It may be a good idea to try doing so, now you have noticed it ;-).
+On Sun, Mar 17, 2013 at 9:10 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Antoine Pelisse <apelisse@gmail.com> writes:
+>
+>> This replaces the greedy implementation to coalesce lost lines by us=
+ing
+>> dynamic programming to find the Longest Common Subsequence.
+>>
+>> The O(n=C2=B2) time complexity is obviously bigger than previous
+>> implementation but it can produce shorter diff results (and most lik=
+ely
+>> easier to read).
+>>
+>> List of lost lines is now doubly-linked because we reverse-read it w=
+hen
+>> reading the direction matrix.
+>>
+>> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+>> ---
+>> Hi,
+>> This is a very first draft for improving the way we coalesce lost
+>> lines. It has only been tested with the two scenarios below.
+>>
+>> What is left to do:
+>> - Test it more extensively
+>> - Had some tests scenarios
+>>
+>> I'm also having a hard time trying it with more than two parents. Ho=
+w I
+>> am supposed to have more than two parents while octopus merge refuse=
+s if
+>> there are conflicts ?
+>
+> 9fdb62af92c7 ([ACPI] merge 3549 4320 4485 4588 4980 5483 5651 acpica
+> asus fops pnpacpi branches into release, 2006-01-24) is one of the
+> amusing examples ;-)  Cf.
+>
+>     http://thread.gmane.org/gmane.comp.version-control.git/15486
