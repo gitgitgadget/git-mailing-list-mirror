@@ -1,103 +1,92 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] fix unparsed object access in upload-pack
-Date: Sun, 17 Mar 2013 01:40:39 -0400
-Message-ID: <20130317054039.GA16070@sigill.intra.peff.net>
-References: <20130316102428.GA29358@sigill.intra.peff.net>
- <7v7gl6txl3.fsf@alter.siamese.dyndns.org>
+Subject: Re: [RFC/PATCH] Introduce remote.pushdefault
+Date: Sun, 17 Mar 2013 01:48:03 -0400
+Message-ID: <20130317054803.GB16070@sigill.intra.peff.net>
+References: <7v1ucr43mk.fsf@alter.siamese.dyndns.org>
+ <1360314123-1259-1-git-send-email-artagnon@gmail.com>
+ <7v4nhm1s85.fsf@alter.siamese.dyndns.org>
+ <CALkWK0m2N=D47WJLk1F4j1GsGGWHyfxVF_WGXBbG3vyrfQ-oLA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 17 06:41:09 2013
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 17 06:48:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UH6LE-0001Ro-O9
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 06:41:09 +0100
+	id 1UH6Sb-000832-Gd
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 06:48:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750919Ab3CQFkm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Mar 2013 01:40:42 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54019 "EHLO
+	id S1751521Ab3CQFsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Mar 2013 01:48:09 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54029 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750802Ab3CQFkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Mar 2013 01:40:42 -0400
-Received: (qmail 6867 invoked by uid 107); 17 Mar 2013 05:42:24 -0000
+	id S1750818Ab3CQFsG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Mar 2013 01:48:06 -0400
+Received: (qmail 6919 invoked by uid 107); 17 Mar 2013 05:49:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 17 Mar 2013 01:42:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Mar 2013 01:40:39 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 17 Mar 2013 01:49:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Mar 2013 01:48:03 -0400
 Content-Disposition: inline
-In-Reply-To: <7v7gl6txl3.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <CALkWK0m2N=D47WJLk1F4j1GsGGWHyfxVF_WGXBbG3vyrfQ-oLA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218334>
 
-On Sat, Mar 16, 2013 at 10:16:40PM -0700, Junio C Hamano wrote:
+On Sun, Mar 17, 2013 at 06:00:08AM +0530, Ramkumar Ramachandra wrote:
 
-> > ... (I had several bug reports
-> > within a few hours of deploying v1.8.1.5 on github.com)
-> 
-> Nice to have a pro at the widely used site ;-)  I often wish it had
-> a mechanism to deploy the tip of 'master' or 'maint', or even 'next'
-> for 0.2% of its users' repositories to give us an early feedback.
-
-We are quite slow and conservative at deploying new git, preferring
-instead to let the rest of the world act as our testbed. :)
-
-As seen with this bug, though, we really do get a lot more coverage of
-weird cases due to our size. In the cases I looked at, the trigger
-seemed to be clients doing the equivalent of of "git clone --depth=X
---no-single-branch". Almost nobody would do that intentionally, but
-prior to v1.7.10, we did not have --single-branch; older clients using
---depth on a repository with multiple branches started failing clones
-almost immediately.
-
-We do have the capability to roll out to one or a few of our servers
-(the granularity is not 0.2%, but it is still small). I'm going to try
-to keep us more in sync with upstream git, but I don't know if I will
-get to the point of ever deploying "master" or "next", even for a small
-portion of the population. We are accumulating more hacks[1] on top of
-git, so it is not just "run master for an hour on this server"; I have
-to actually merge our fork.
-
-I had been handling our hacks as patch series to be rebased on top of
-upstream git releases, but that was getting increasingly unwieldy
-(especially as people besides me work on it). Going forward, I'm going
-to treat upstream git as a vendor branch and merge in occasionally to
-get fixes.
-
-One thing I might try is to keep a local "next-upstream" branch, that is
-continually merging what is on upstream master with our local production
-version. Then I could graduate it to production just like any other
-topic branch when it comes time (instead of doing a gigantic painful
-merge when we decide to upgrade upstream git).
-
-That would mean I could test-deploy the "next-upstream" branch to a few
-servers on any given day without doing a lot of work. So it might make
-sense to do it at key times, like when we are in -rc here, to help shake
-out any existing bugs before you make a release.
-
-> >   [3/3]: upload-pack: load non-tip "want" objects from disk
+> >> +remote.pushdefault::
+> >> +     The remote to push to by default.  Overrides the
+> >> +     branch-specific configuration `branch.<name>.remote`.
 > >
-> >     While investigating the bug, I found some weirdness around the
-> >     stateless-rpc check_non_tip code. As far as I can tell, that code
-> >     never actually gets triggered. It's not too surprising that we
-> >     wouldn't have noticed, because it is about falling back due to a
-> >     race condition. But please sanity check my explanation and patch.
+> > It feels unexpected to see "I may have said while on this branch I
+> > push there and on that branch I push somewhere else, but no, with
+> > this single configuration I'm invalidating all these previous
+> > statements, and all pushes go to this new place".
+> >
+> > Shouldn't the default be the default that is to be overridden by
+> > other configuration that is more specific?  That is, "I would
+> > normally push to this remote and unless I say otherwise that is all
+> > I have to say, but for this particular branch, I push to somehwere
+> > else".
 > 
-> Thanks. That fall-back is Shawn's doing and I suspect that nobody is
-> exercising the codepath (he isn't).
+> I'm a little confused as to where this configuration variable will be
+> useful.  On a fresh clone from Github, I get branch.master.remote
+> configured to "origin".  How will adding remote.pushdefault have any
+> impact, unless I explicitly remove this branch-specific remote
+> configuration?  Besides, without branch.<name>.remote configured, I
+> can't even pull and expect changes to be merged.  So, really: what is
+> the use of remote.pushdefault?
+> 
+> I'm dropping this patch, and just going with branch.<name>.pushremote,
+> unless you convince me otherwise.
 
-I almost wonder if we should cut it out entirely. It is definitely a
-possible race condition, but I wonder if anybody actually hits it in
-practice (and if they do, the consequence is that the fetch fails and
-needs to be retried). As far as I can tell, the code path has never
-actually been followed, and I do not recall ever seeing a bug report or
-complaint about it (though perhaps it happened once, which spurred the
-initial development?).
+That is why I described the scheme I did in [1]. It uses the following
+two general rules:
+
+  1. Per-branch config trumps repo-wide config.
+
+  2. Push-specific config (e.g., "remote.pushdefault") trumps
+     non-specific config (e.g., "remote.default") for pushing.
+
+So the push lookup list is (in order of precedence):
+
+  1. branch.*.pushremote
+  2. remote.pushdefault
+  3. branch.*.remote
+  4. remote.default
+  5. origin
+
+and it solves Junio's issue because the way to say "override my
+remote.pushdefault for this branch" is not to set "branch.*.remote", but
+to set "branch.*.pushremote".
 
 -Peff
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/215751
