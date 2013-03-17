@@ -1,111 +1,88 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH/RFC] http_init: only initialize SSL for https
-Date: Sat, 16 Mar 2013 23:58:55 +0100 (CET)
-Message-ID: <alpine.DEB.2.00.1303162355120.21738@tvnag.unkk.fr>
-References: <1363269079-6124-1-git-send-email-kusmabite@gmail.com> <alpine.DEB.1.00.1303141621340.3794@s15462909.onlinehome-server.info> <CABPQNSZNdGea9Nn91emWhfRGAZjZXm755UKArNr3EUy9CrSKHg@mail.gmail.com> <7vmwu6x72q.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1303142333170.3794@s15462909.onlinehome-server.info> <7vk3p9wqh5.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1303151054130.32216@tvnag.unkk.fr> <7v4ngcwt4w.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1303151719170.32216@tvnag.unkk.fr>
- <20130316120300.GA2626@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH] Introduce remote.pushdefault
+Date: Sun, 17 Mar 2013 06:00:08 +0530
+Message-ID: <CALkWK0m2N=D47WJLk1F4j1GsGGWHyfxVF_WGXBbG3vyrfQ-oLA@mail.gmail.com>
+References: <7v1ucr43mk.fsf@alter.siamese.dyndns.org> <1360314123-1259-1-git-send-email-artagnon@gmail.com>
+ <7v4nhm1s85.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1; format=flowed
-Cc: Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>, kusmabite@gmail.com,
-        git@vger.kernel.org, msysgit@googlegroups.com
-To: Jeff King <peff@peff.net>
-X-From: msysgit+bncBCS5LIPSQMEBBPPSSOFAKGQE6FXMLFQ@googlegroups.com Sat Mar 16 23:59:35 2013
-Return-path: <msysgit+bncBCS5LIPSQMEBBPPSSOFAKGQE6FXMLFQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f189.google.com ([209.85.212.189])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 17 01:31:07 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCS5LIPSQMEBBPPSSOFAKGQE6FXMLFQ@googlegroups.com>)
-	id 1UH04a-0006Zt-8v
-	for gcvm-msysgit@m.gmane.org; Sat, 16 Mar 2013 23:59:32 +0100
-Received: by mail-wi0-f189.google.com with SMTP id hi8sf441808wib.26
-        for <gcvm-msysgit@m.gmane.org>; Sat, 16 Mar 2013 15:59:09 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UH1VC-0006z2-7e
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 01:31:06 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752849Ab3CQAa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Mar 2013 20:30:29 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:51195 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752423Ab3CQAa3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Mar 2013 20:30:29 -0400
+Received: by mail-ie0-f182.google.com with SMTP id k14so5781688iea.27
+        for <git@vger.kernel.org>; Sat, 16 Mar 2013 17:30:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:received-spf
-         :x-authentication-warning:date:from:x-x-sender:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:x-fromdanielhimself
-         :mime-version:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:x-google-group-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type;
-        bh=/sR+piwQPcEE3b4pjyQs8TRcnxRAuShGa1gCufIztdg=;
-        b=nUgEoMtkpwVg6isZwW0t+6Gi1Y3DjDrSxS6t8UDDnQobLvKddoHnVa8J3tQpstDJsA
-         9Yim87UG9o/ZYPRat7Bx/wKvHbWdOvIfzFltc0WFUGvmmGysRljEh2QQlmrsY6Xv2n+g
-         w15YbTFPaFI//5CbVfJIdB0CDKM+Tc5H8AwzzKHE104Dx55qgPk7g7ZaXRPuxpzh4zEX
-         8bvQKM29mtqV0jerGlG5RV3QWA5ycOmfyyw6u5ndOrRCr9WhlzzKhatdIgRXQe0O 
-X-Received: by 10.180.84.195 with SMTP id b3mr338475wiz.13.1363474749443;
-        Sat, 16 Mar 2013 15:59:09 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.189.166 with SMTP id gj6ls263256wic.26.canary; Sat, 16 Mar
- 2013 15:59:08 -0700 (PDT)
-X-Received: by 10.205.24.134 with SMTP id re6mr1053601bkb.7.1363474748860;
-        Sat, 16 Mar 2013 15:59:08 -0700 (PDT)
-Received: from giant.haxx.se (www.haxx.se. [2a00:1a28:1200:9::2])
-        by gmr-mx.google.com with ESMTPS id i9si942016bki.2.2013.03.16.15.59.05
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 16 Mar 2013 15:59:06 -0700 (PDT)
-Received-SPF: pass (google.com: domain of daniel@haxx.se designates 2a00:1a28:1200:9::2 as permitted sender) client-ip=2a00:1a28:1200:9::2;
-Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
-	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id r2GMwwVt020723
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 16 Mar 2013 23:58:58 +0100
-Received: from localhost (dast@localhost)
-	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id r2GMwtlh020709;
-	Sat, 16 Mar 2013 23:58:56 +0100
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-In-Reply-To: <20130316120300.GA2626@sigill.intra.peff.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-fromdanielhimself: yes
-X-Original-Sender: daniel@haxx.se
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of daniel@haxx.se designates 2a00:1a28:1200:9::2 as
- permitted sender) smtp.mail=daniel@haxx.se
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218319>
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=k89/8AkgLlu97ZeliRnrpIholaPQmkGyPV3jopvwToI=;
+        b=iPTQeIJO7Eyz5Sq/P5SxdDFliRLXNm8D/N+JLONJHYcUuI993ON+jpYOh/cmfiUNhW
+         4pVd1wk8l+YxCYPgztUek95BD9wFnygz8rEoZpmZI3RXgVTCs0/lvXPGh+xBTFakPTi3
+         YKWPYOqrYq+574nc3HBgHDSJtTvNfpC4ScamP56lrvggjXQR2+9YfU+j98/RQtOWrGkq
+         ko5trkB4lQmojDTbiRlMAsLe45BNF9QfQJ0AAWP4c+BUVcPDUyDU8nsSbtOqDLs/5up5
+         DMisUZo5kCZ6gWaPdT2GVoUlbcDKGu3gjBcgsuW9Nr5rtMNCIBK8iSQT9Toa4P/6pxtX
+         iRlA==
+X-Received: by 10.50.41.200 with SMTP id h8mr3884074igl.14.1363480228537; Sat,
+ 16 Mar 2013 17:30:28 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Sat, 16 Mar 2013 17:30:08 -0700 (PDT)
+In-Reply-To: <7v4nhm1s85.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218320>
 
-On Sat, 16 Mar 2013, Jeff King wrote:
+Sorry about the horribly late response- I just got around to
+re-rolling this, and had a doubt.
 
-> But are we correct in assuming that curl will barf if it gets a redirect to 
-> an ssl-enabled protocol? My testing seems to say yes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index 9b11597..82a4a78 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -1884,6 +1884,10 @@ receive.updateserverinfo::
+>>       If set to true, git-receive-pack will run git-update-server-info
+>>       after receiving data from git-push and updating refs.
+>>
+>> +remote.pushdefault::
+>> +     The remote to push to by default.  Overrides the
+>> +     branch-specific configuration `branch.<name>.remote`.
+>
+> It feels unexpected to see "I may have said while on this branch I
+> push there and on that branch I push somewhere else, but no, with
+> this single configuration I'm invalidating all these previous
+> statements, and all pushes go to this new place".
+>
+> Shouldn't the default be the default that is to be overridden by
+> other configuration that is more specific?  That is, "I would
+> normally push to this remote and unless I say otherwise that is all
+> I have to say, but for this particular branch, I push to somehwere
+> else".
 
-Ah yes. If it switches over to an SSL-based protocol it will pretty much 
-require that it had been initialized previously.
+I'm a little confused as to where this configuration variable will be
+useful.  On a fresh clone from Github, I get branch.master.remote
+configured to "origin".  How will adding remote.pushdefault have any
+impact, unless I explicitly remove this branch-specific remote
+configuration?  Besides, without branch.<name>.remote configured, I
+can't even pull and expect changes to be merged.  So, really: what is
+the use of remote.pushdefault?
 
-With redirects taken into account, I can't think of any really good way around 
-avoiding this init...
-
--- 
-
-  / daniel.haxx.se
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+I'm dropping this patch, and just going with branch.<name>.pushremote,
+unless you convince me otherwise.
