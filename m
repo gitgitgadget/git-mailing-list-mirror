@@ -1,52 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Preallocate hash tables when the number of inserts are
- known in advance
-Date: Sun, 17 Mar 2013 04:51:07 -0400
-Message-ID: <20130317085107.GB934@sigill.intra.peff.net>
-References: <1363490886-29729-1-git-send-email-pclouds@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 05/12] pretty: save commit encoding from logmsg_reencode
+ if the caller needs it
+Date: Sun, 17 Mar 2013 04:57:43 -0400
+Message-ID: <CAPig+cQ52J=21Z5JVq2ifZKVAiDSHBYr=_Db7L6k+Lr2tLgHBQ@mail.gmail.com>
+References: <1363400683-14813-1-git-send-email-pclouds@gmail.com>
+	<1363400683-14813-6-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 17 09:51:52 2013
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 17 09:58:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UH9Jn-0000hI-Ve
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 09:51:52 +0100
+	id 1UH9Pw-0006EE-Ib
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 09:58:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756221Ab3CQIvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Mar 2013 04:51:23 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54212 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756139Ab3CQIvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Mar 2013 04:51:09 -0400
-Received: (qmail 8021 invoked by uid 107); 17 Mar 2013 08:52:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 17 Mar 2013 04:52:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Mar 2013 04:51:07 -0400
-Content-Disposition: inline
-In-Reply-To: <1363490886-29729-1-git-send-email-pclouds@gmail.com>
+	id S1756194Ab3CQI5q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Mar 2013 04:57:46 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:49114 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756140Ab3CQI5p convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Mar 2013 04:57:45 -0400
+Received: by mail-la0-f49.google.com with SMTP id fs13so4984651lab.22
+        for <git@vger.kernel.org>; Sun, 17 Mar 2013 01:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=f8UWrLQgLdLGVZLeCbFFRUIvt7pDkp58gnbTdl41V1Y=;
+        b=ssm85+9FoDqbWe62xGlob02cUrt1awfr83mb6XtXZxOQTp2uXDOmV3avEgH2HODmO7
+         gJvOb7hCh9ALcbYuwuxjyCsiyGAAix6+dgQA8veJs7tT9C4kGqMtJTCUEIQeErLU25kW
+         ZhPpONgyrPVJOWsnxDmDaDTOv0UilarVdDq+rt3qTFJY1AnX5e5rvlyOOCYf5O9zBPgr
+         nvLgPuFMSdlaPI+ao5VifG9IjBkx4wuVQxAy+roNIpU9OfHei+TOe0487RXfluqNy/Gf
+         HeCFvLAu68/kyXDTJYlh9GzUR26nA3NC4wJ2IAlWM4iTQI31WJO9v/XCOj89PNIzSjb6
+         gW2A==
+X-Received: by 10.112.88.35 with SMTP id bd3mr4915068lbb.56.1363510663863;
+ Sun, 17 Mar 2013 01:57:43 -0700 (PDT)
+Received: by 10.114.1.43 with HTTP; Sun, 17 Mar 2013 01:57:43 -0700 (PDT)
+In-Reply-To: <1363400683-14813-6-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: iM91rZwhB4OwFNboWouwOKORqPs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218355>
 
-On Sun, Mar 17, 2013 at 10:28:06AM +0700, Nguyen Thai Ngoc Duy wrote:
+On Fri, Mar 15, 2013 at 10:24 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
+ Duy
+<pclouds@gmail.com> wrote:
+> The commit encoding is parsed by logmsg_reencode, there's no need for
+> the caller to re-parse it again. The reencoded message now have the
 
-> This avoids unnecessary re-allocations and reinsertions. On webkit.git
-> (i.e. about 182k inserts to the name hash table), this reduces about
-> 100ms out of 3s user time.
+s/have/has/
 
-Good idea.
-
-I had a similar thought when analyzing the hashing behavior of
-pack-objects' "Counting objects..." phase, but it had even less impact
-there. The insertions are just drowned out by the number of lookups in
-that case.
-
--Peff
+> new encoding, not the original one. The caller would need to read
+> commit object again before parsing.
