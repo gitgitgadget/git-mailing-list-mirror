@@ -1,76 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] combine-diff: coalesce lost lines optimally
-Date: Sun, 17 Mar 2013 15:37:51 -0700
-Message-ID: <7vhak9ps8w.fsf@alter.siamese.dyndns.org>
-References: <7vboalw6lt.fsf@alter.siamese.dyndns.org>
- <1363525436-21667-1-git-send-email-apelisse@gmail.com>
+From: Rob Hoelz <rob@hoelz.ro>
+Subject: Re: [PATCH] remote.<name>.pushurl does not consider aliases when
+ pushing
+Date: Sun, 17 Mar 2013 23:47:05 +0100
+Message-ID: <20130317234705.654fc987@hoelz.ro>
+References: <20130317224002.366f54f7@hoelz.ro>
+	<7vppyxptbr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 17 23:38:23 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, josh@joshtriplett.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 17 23:47:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHMDe-0000LZ-Cj
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 23:38:22 +0100
+	id 1UHMMb-0007JG-N0
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 23:47:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932587Ab3CQWhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Mar 2013 18:37:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38160 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755757Ab3CQWhy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Mar 2013 18:37:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 162DFA45E;
-	Sun, 17 Mar 2013 18:37:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=F7mrhrDIsUCAW9ownt3m04wyBzY=; b=Aa9vbf
-	u8DZ5Jk41ZuUX5fbURknIV905y/NPWt0S24mqk/0UIZ/IFFKT/zq45hs8rrGJ+1M
-	/PKW/s3+Fc2JPW/kYRb0jeqzda32MV32jCb6Hz8Co3b5Wg7ynE4I1laQT2wutezi
-	7OZC079ouFsL/ut9IGHq335dRvQt4kQalup2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vRJXh2FKPbxQaH0FyHsBhqCyVKGL1mCn
-	TVcBVq76//5Vf7yC8kgST5mXmxPEB8KI/IMH/DI4CjW+fEHGV977yXaJWLTOOdvI
-	0rWqC1wNCUZZ87Dj7TqvwJ1sHflP4g0PxgrugmDyadWq8+8JySAfhe9BJGkVzeHF
-	Cq0mHpE6jk8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A07CA45D;
-	Sun, 17 Mar 2013 18:37:54 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 73CA8A45B; Sun, 17 Mar 2013
- 18:37:53 -0400 (EDT)
-In-Reply-To: <1363525436-21667-1-git-send-email-apelisse@gmail.com> (Antoine
- Pelisse's message of "Sun, 17 Mar 2013 14:03:56 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4E64C57A-8F53-11E2-B5DD-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932673Ab3CQWrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Mar 2013 18:47:11 -0400
+Received: from hoelz.ro ([66.228.44.67]:53563 "EHLO mail.hoelz.ro"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932576Ab3CQWrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Mar 2013 18:47:10 -0400
+Received: from localhost.localdomain (g95115.upc-g.chello.nl [80.57.95.115])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mail.hoelz.ro (Postfix) with ESMTPSA id BFBE8280F2;
+	Sun, 17 Mar 2013 18:47:08 -0400 (EDT)
+In-Reply-To: <7vppyxptbr.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.9.0 (GTK+ 2.24.16; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218382>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+On Sun, 17 Mar 2013 15:14:32 -0700
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> +/* Coalesce new lines into base by finding LCS */
-> +static struct lline *coalesce_lines(struct lline *base, int *lenbase,
-> +				    struct lline *new, int lennew,
-> +				    unsigned long parent)
-> +{
+> Rob Hoelz <rob@hoelz.ro> writes:
+> 
+> > Hi everyone!  I found a bug in Git today and wrote up a fix; I did
+> > my best to conform to the rules layed out in
+> > Documentation/SubmittingPatches, but please let me know if I need
+> > to change anything to get my work merged. =)  I have CC'ed Josh
+> > Triplet, as he was the last one to touch the line I modified.  I
+> > hope my commit messages explain the problem I encountered well
+> > enough; if not, I can always go back and amend them.
+> >
+> > Patches follow.
+> >
+> > -Rob
+> 
+> 
+> Please read Documentation/SubmittingPatches and follow it.  The
+> above is most likely to be the cover letter of a two-patch series
+> (meaning you will be sending three pieces of e-mail messages), or
+> perhaps out of band comment below the three-dash line of a single
+> patch (you will send only one piece of e-mail message).
+> 
+> See recent patches on the list from list regulars for good examples,
+> e.g.
+> 
+>     http://thread.gmane.org/gmane.comp.version-control.git/218350
+>     http://thread.gmane.org/gmane.comp.version-control.git/218177/focus=218361
+> 
+> > From 5007b11e86c0835807632cb41e6cfa75ce9a1aa1 Mon Sep 17 00:00:00
+> > 2001 From: Rob Hoelz <rob@hoelz.ro>
+> > Date: Sun, 17 Mar 2013 21:49:20 +0100
+> > Subject: [PATCH 1/2] Add test for pushInsteadOf + pushurl
+> >
+> > git push currently doesn't consider pushInsteadOf when
+> > using pushurl; this test tests that.
+> >
+> > Signed-off-by: Rob Hoelz <rob@hoelz.ro>
+> > ---
+> >  t/t5500-push-pushurl.sh | 37 +++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 37 insertions(+)
+> >  create mode 100644 t/t5500-push-pushurl.sh
+> 
+> The number 5500 is already taken.  Please do not add a duplicate.
+> 
+> I also wonder if we need to waste a new test number for this;
+> perhaps adding new tests to 5516 that already tests insteadOf might
+> be a better fit, but I didn't carefully read it.
+> 
+> > diff --git a/t/t5500-push-pushurl.sh b/t/t5500-push-pushurl.sh
+> > new file mode 100644
+> 
+> Test scripts are supposed to be executable.
+> 
+> > +test_expect_success 'test commit and push' '
+> > +	test_commit one &&
+> > +	git push origin master:master
+> > +'
+> > +
+> > +test_expect_success 'check for commits in rw repo' '
+> > +	cd ../rw/repo &&
+> > +	git log --pretty=oneline | grep -q .
+> > +'
+> 
+> Are both expected to succeed in patch 1/2 without any code change?
+> 
+> If you were doing a large code change, it is a good series structure
+> to have tests first that are marked as "expect_failure" in an early
+> patch, and then in a later patch that changes the code to fix it,
+> update the tests that start to pass to "expect_success".
+> 
+> I personally do not think you need such a two-step approach for
+> something small like this; instead you can just have a single patch
+> that adds a set of tests that expect success and code change.
+> 
+> Thanks.
+> 
 
-Don't you want to pass flags so that you can use match_string_spaces()
-at places like this:
-
-> +	for (i = 1, baseend = base; i < origbaselen + 1; i++) {
-> +		for (j = 1, newend = new; j < lennew + 1; j++) {
-> +			if (baseend->len == newend->len &&
-> +			    !memcmp(baseend->line, newend->line, baseend->len)) {
-
-IOW, it looks to me that this wants to be rebuilt on top of
-fa04ae0be8cc (Allow combined diff to ignore white-spaces,
-2013-03-14).
+Thanks for the feeback; another reply with the new patch follows.
