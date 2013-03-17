@@ -1,146 +1,99 @@
-From: Rob Hoelz <rob@hoelz.ro>
-Subject: [PATCH] remote.<name>.pushurl does not consider aliases when
- pushing
-Date: Sun, 17 Mar 2013 22:40:02 +0100
-Message-ID: <20130317224002.366f54f7@hoelz.ro>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 11/45] parse_pathspec: support stripping submodule
+ trailing slashes
+Date: Sun, 17 Mar 2013 14:55:29 -0700
+Message-ID: <7vy5dlpu7i.fsf@alter.siamese.dyndns.org>
+References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
+ <1363327620-29017-12-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 8BIT
-Cc: josh@joshtriplett.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 17 22:48:01 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 17 22:56:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHLQq-0003t3-Jf
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 22:47:56 +0100
+	id 1UHLYd-0001WC-UN
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Mar 2013 22:56:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932576Ab3CQVr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Mar 2013 17:47:29 -0400
-Received: from hoelz.ro ([66.228.44.67]:53381 "EHLO mail.hoelz.ro"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932476Ab3CQVr2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Mar 2013 17:47:28 -0400
-X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Mar 2013 17:47:28 EDT
-Received: from localhost.localdomain (g95115.upc-g.chello.nl [80.57.95.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by mail.hoelz.ro (Postfix) with ESMTPSA id 21BD1280F2;
-	Sun, 17 Mar 2013 17:40:06 -0400 (EDT)
-X-Mailer: Claws Mail 3.9.0 (GTK+ 2.24.16; x86_64-unknown-linux-gnu)
+	id S932653Ab3CQVzd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Mar 2013 17:55:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42182 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932587Ab3CQVzc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Mar 2013 17:55:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B96FEAB54;
+	Sun, 17 Mar 2013 17:55:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=T1Z+FvrX3rD1
+	a/JUuTXROaiDJZA=; b=fhFW52o5BxNC/zRW9KUn1Z49TVAr5r9TnO5vx/EQOfv0
+	TvdPfXvaUuCWqFYLT6D18tWwWP6nropehDkDSfTicYunOigsMV2CoStI7Tkkq90r
+	sWIHazDBQ1QpHQH2RusiXveaSqA9MS5v537hsjeWJVaMYu+97ADHmJ4eXqIPb8U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=eex7d1
+	+b2cVQae12zQWAEym0A1jq2IA+H9nmuMEiF9+DS2qY0y+4wlaMsLWp9mLt2JHFe/
+	MD8iZ74x+gJhk7O7NIaB2OzNm29uMruVa3NB2JxGYmGktyflvhWVxwj27KhSuGqC
+	nmBR4VBXQymVT9ahADs9IRG3SaEgAlBBHMmRQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADD51AB53;
+	Sun, 17 Mar 2013 17:55:31 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC951AB50; Sun, 17 Mar 2013
+ 17:55:30 -0400 (EDT)
+In-Reply-To: <1363327620-29017-12-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 15 Mar
+ 2013 13:06:26 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 62F13268-8F4D-11E2-88A6-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218375>
 
-Hi everyone!  I found a bug in Git today and wrote up a fix; I did my best to conform to the rules layed out in Documentation/SubmittingPatches, but please let me know if I need to change anything to get my work merged. =)  I have CC'ed Josh Triplet, as
-he was the last one to touch the line I modified.  I hope my commit messages explain the problem I encountered well enough; if not,
-I can always go back and amend them.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Patches follow.
+> This flag is equivalent to builtin/ls-files.c:strip_trailing_slashes(=
+)
+> and is intended to replace that function when ls-files is converted t=
+o
+> use parse_pathspec.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  pathspec.c | 9 +++++++++
+>  pathspec.h | 1 +
+>  2 files changed, 10 insertions(+)
+>
+> diff --git a/pathspec.c b/pathspec.c
+> index b2446c3..2da8bc9 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -204,6 +204,15 @@ static unsigned prefix_pathspec(struct pathspec_=
+item *item,
+>  	*raw =3D item->match =3D match;
+>  	item->original =3D elt;
+>  	item->len =3D strlen(item->match);
+> +
+> +	if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
 
--Rob
+I see that having cheap and expensive variant at these steps is a
+way to achieve a bug-for-bug compatible rewrite of the existing
+code, but in the longer term should we lose one of them?  After all,
+a path that points at the working tree of another repository that is
+beyond a symlink cannot be added to us as a submodule, so CHEAP can
+be used only when we know that any intermediate component on the
+path is not a symlink pointing elsewhere, and the user in the
+codepath of ls-files may know it.
 
->From 5007b11e86c0835807632cb41e6cfa75ce9a1aa1 Mon Sep 17 00:00:00 2001
-From: Rob Hoelz <rob@hoelz.ro>
-Date: Sun, 17 Mar 2013 21:49:20 +0100
-Subject: [PATCH 1/2] Add test for pushInsteadOf + pushurl
-
-git push currently doesn't consider pushInsteadOf when
-using pushurl; this test tests that.
-
-Signed-off-by: Rob Hoelz <rob@hoelz.ro>
----
- t/t5500-push-pushurl.sh | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
- create mode 100644 t/t5500-push-pushurl.sh
-
-diff --git a/t/t5500-push-pushurl.sh b/t/t5500-push-pushurl.sh
-new file mode 100644
-index 0000000..74d4ff6
---- /dev/null
-+++ b/t/t5500-push-pushurl.sh
-@@ -0,0 +1,37 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2013 Rob Hoelz
-+#
-+
-+test_description='Test that remote.<name>.pushurl uses pushInsteadOf'
-+. ./test-lib.sh
-+
-+wd=$(pwd)
-+test_expect_success 'setup test repositories' '
-+	mkdir ro &&
-+	mkdir rw &&
-+
-+	git init --bare ro/repo &&
-+	git init --bare rw/repo &&
-+	git init test-repo
-+'
-+
-+test_expect_success 'setup remote config' "
-+	cd test-repo &&
-+	git config 'url.file://$wd/ro/.insteadOf' herero: &&
-+	git config 'url.file://$wd/rw/.pushInsteadOf' hererw: &&
-+	git remote add origin herero:repo &&
-+	git config remote.origin.pushurl hererw:repo
-+"
-+
-+test_expect_success 'test commit and push' '
-+	test_commit one &&
-+	git push origin master:master
-+'
-+
-+test_expect_success 'check for commits in rw repo' '
-+	cd ../rw/repo &&
-+	git log --pretty=oneline | grep -q .
-+'
-+
-+test_done
--- 
-1.8.2
-
->From 0cbd1aab6bdc0c2f8893ed8b9a8e3eb0126917d1 Mon Sep 17 00:00:00 2001
-From: Rob Hoelz <rob@hoelz.ro>
-Date: Sun, 17 Mar 2013 16:34:35 +0100
-Subject: [PATCH 2/2] push: Alias pushurl from push rewrites
-
-If you use pushurl with an alias that has a pushInsteadOf configuration
-value, Git does not take advantage of it.  For example:
-
-[url "git://github.com/"]
-    insteadOf = github:
-[url "git://github.com/myuser/"]
-    insteadOf = mygithub:
-[url "git@github.com:myuser/"]
-    pushInsteadOf = mygithub:
-[remote "origin"]
-    url     = github:organization/project
-    pushurl = mygithub:project
-
-This commit fixes that.
-
-Signed-off-by: Rob Hoelz <rob@hoelz.ro>
----
- remote.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/remote.c b/remote.c
-index ca1f8f2..de7a915 100644
---- a/remote.c
-+++ b/remote.c
-@@ -465,7 +465,7 @@ static void alias_all_urls(void)
- 		if (!remotes[i])
- 			continue;
- 		for (j = 0; j < remotes[i]->pushurl_nr; j++) {
--			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
-+			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites_push);
- 		}
- 		add_pushurl_aliases = remotes[i]->pushurl_nr == 0;
- 		for (j = 0; j < remotes[i]->url_nr; j++) {
--- 
-1.8.2
+To put it differently, shouldn't CHEAP and EXPENSIVE be accompanied
+by in-code comment and updates to Documentation/technical/api-*.txt
+to help users of the API to decide which one to use?
