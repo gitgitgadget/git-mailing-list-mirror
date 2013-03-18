@@ -1,116 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Make GIT_USE_LOOKUP default?
-Date: Mon, 18 Mar 2013 03:32:29 -0400
-Message-ID: <20130318073229.GA5551@sigill.intra.peff.net>
-References: <CACsJy8AihriCDfN=cz7FjdHzZAhnPPGML_w8yWcVVrmTQLZyjw@mail.gmail.com>
- <7vd2uxrdh7.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH] Documentation/technical/api-fswatch.txt: start with outline
+Date: Mon, 18 Mar 2013 13:54:03 +0530
+Message-ID: <CALkWK0=0+HYn=bSrGC5sMQOE-53As0h9dG3N9wvUB2=NW3=98A@mail.gmail.com>
+References: <1362946623-23649-1-git-send-email-artagnon@gmail.com>
+ <513FB85C.5010106@gmail.com> <CACsJy8CBru+Z0+oYVKGdwjiF4DDH3w4vCjunaoCnoDQ6AizwWg@mail.gmail.com>
+ <5140BC80.4000201@gmail.com> <7vtxof146d.fsf@alter.siamese.dyndns.org> <87ehffv30f.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ingo Molnar <mingo@elte.hu>, Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 18 08:33:02 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Mar 18 09:24:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHUZ2-000209-8e
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 08:33:00 +0100
+	id 1UHVNE-0007uQ-L1
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 09:24:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751358Ab3CRHcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 03:32:33 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55113 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751116Ab3CRHcd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 03:32:33 -0400
-Received: (qmail 13979 invoked by uid 107); 18 Mar 2013 07:34:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Mar 2013 03:34:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Mar 2013 03:32:29 -0400
-Content-Disposition: inline
-In-Reply-To: <7vd2uxrdh7.fsf@alter.siamese.dyndns.org>
+	id S1752382Ab3CRIYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 04:24:25 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:41598 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752320Ab3CRIYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 04:24:23 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k10so6527382iea.5
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 01:24:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=+NN9anfIGQDrBGec8s1IM0DEuXGpf8/a0v3dG8e7YTw=;
+        b=zQwPy76GSvFcwddJFg8H4WGBC2GceXJiaZVnFPnwDzpurlhVTIrt/1E6vdR04IE9Wl
+         YZXPnilmE527PnutbEE16oaZbzE3+WYurXAEc5hfQAkc7yzpue5UwaFRKSbHKW6O5+gJ
+         76qoGAiPbu9+AoC4fNqL2f3n6qVkyF38AwFp09B3K8WvJ3QX3dse6s4JvFPVnwP7tFEG
+         XB/5QJoSfB5IgQ79BwIPtpJcONzZ4oL3H0QO650nJBhdfAyrG6VGrwp12LhmfltyeKIj
+         VwgnlV1XH9GN7hzGbk5lGtxYK0Juv/4eT9QhZlTu5ALnZO2dR1PlrhqM53aKqQfgC9pM
+         njFw==
+X-Received: by 10.50.17.166 with SMTP id p6mr5594960igd.12.1363595063483; Mon,
+ 18 Mar 2013 01:24:23 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Mon, 18 Mar 2013 01:24:03 -0700 (PDT)
+In-Reply-To: <87ehffv30f.fsf@pctrast.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218397>
 
-[+cc Ingo and Jonathan, as this revisits the "open-code hashcmp" thread
-     referenced below]
+Junio C Hamano wrote:
+> Yes, and you would need one inotify per directory but you do not
+> have an infinite supply of outstanding inotify watch (wasn't the
+> limit like 8k per a single uid or something?), so the daemon must be
+> prepared to say "I'll watch this, that and that directories, but the
+> consumers should check other directories themselves."
+>
+> FWIW, I share your suspicion that an effort in the direction this
+> thread suggests may end up duplicating what the caching vfs layer
+> already does, and doing so poorly.
 
-On Sun, Mar 17, 2013 at 01:13:56PM -0700, Junio C Hamano wrote:
+Thomas Rast wrote:
+>   $ cat /proc/sys/fs/inotify/max_user_watches
+>   65536
+>   $ cat /proc/sys/fs/inotify/max_user_instancest
+>   128
 
-> Duy Nguyen <pclouds@gmail.com> writes:
-> 
-> > This env comes from jc/sha1-lookup in 2008 (merge commit e9f9d4f), 5
-> > years ago. I wonder if it's good enough to turn on by default and keep
-> > improving from there, or is it still experimental?
-> 
-> The algorithm has been used in production in other codepaths like
-> patch-ids and replace-object, so correctness-wise it should be fine
-> to turn it on.  I think nobody has bothered to benchmark with and
-> without the environment to see if it is really worth the complexity.
-> 
-> It may be a good idea to try doing so, now you have noticed it ;-).
+>From Junio's and Thomas' observations, I'm inclined to think that
+inotify is ill-suited for the problem we are trying to solve.  It is
+designed as a per-directory watch, because VFS can quickly supply the
+inodes for a directory entry.  As such, I think the ideal usecase for
+inotify is to execute something immediately when a change takes place
+in a directory: it's well-suited for solutions like Dropbox (which I
+think is poorly designed to begin with, but that's offtopic).  It
+doesn't substitute of augment VFS caching.  I suspect the VFS cache
+works by caching the inodes in a frequently used directory entry, thus
+optimizing calls like lstat() on them.
 
-The only benchmarking I could find in the list archive (besides the ones
-in the commit itself, showing little change, but fewer page faults) is:
+The correct solution for our problem is to get VFS to recognize our
+repository as a unit: the repository is not a bunch of frequently-used
+directory entries, but a frequently-used unit in itself.  We need an
+optimization that will work on recursively on a directory entry.
+However, since the repository is a special usecase, I suspect adding
+an rwatch() system call (or similar) will be necessary to register the
+repository with VFS.  The design of this feature should be transparent
+to userland, and their filesystem calls will be optimized magically.
+We certainly don't need something as fine-grained as inotify to
+perform these optimizations: if the tree hash of a registered
+repository changes frequently enough, we have to optimize operations
+on that directory tree (recursively).
 
-  http://article.gmane.org/gmane.comp.version-control.git/123832
-
-which actually indicates that GIT_USE_LOOKUP is slower (despite having
-fewer page faults).
-
-By the way, looking at that made me think for a few minutes about
-hashcmp, and I was surprised to find that we use an open-coded
-comparison loop. That dates back to this thread by Ingo:
-
-  http://article.gmane.org/gmane.comp.version-control.git/172286
-
-I could not replicate his benchmarks at all. In fact, my measurements
-showed a slight slowdown with 1a812f3 (hashcmp(): inline memcmp() by
-hand to optimize, 2011-04-28).
-
-Here are my best-of-five numbers for running "git rev-list --objects
---all >/dev/null" on linux-2.6.git:
-
-  [current master, compiled with -O2]
-  real    0m45.612s
-  user    0m45.140s
-  sys     0m0.300s
-
-  [current master, compiled with -O3 for comparison]
-  real    0m45.588s
-  user    0m45.088s
-  sys     0m0.312s
-
-  [revert 1a812f3 (i.e., go back to memcmp), -O2]
-  real    0m44.358s
-  user    0m43.876s
-  sys     0m0.316s
-
-  [open-code first byte, fall back to memcmp, -O2]
-  real    0m43.963s
-  user    0m43.568s
-  sys     0m0.284s
-
-I wonder why we get such different numbers. Ingo said his tests are on a
-Nehalem CPU, as are mine (mine is an i7-840QM). I wonder if we should be
-wrapping the optimization in an #ifdef, but I'm not sure which flag we
-should be checking.
-
-Note that I didn't run all of my measurements using "git gc" as Ingo
-did, which I think conflates a lot of unrelated performance issues (like
-writing out a packfile). The interesting bits for hashcmp in "gc" are
-the "Counting objects" phase of pack-objects, and "git prune"
-determining reachability. Those are both basically the same as "rev-list
---objects --all".
-
-I did do a quick check of `git gc`, though, and it showed results that
-matched my rev-lists above (i.e., a very slight speedup by going back to
-memcmp).
-
--Peff
+Inputs from btrfs/ vfs hackers would be appreciated.  I'll take out
+some time to look at them myself this week.
