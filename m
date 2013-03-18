@@ -1,148 +1,93 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH 4/8] dir.c: git-status --ignored: don't list empty directories
- as ignored
-Date: Mon, 18 Mar 2013 21:28:49 +0100
-Message-ID: <51477901.9020804@gmail.com>
-References: <514775FA.9080304@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v4] submodule: add 'deinit' command
+Date: Mon, 18 Mar 2013 21:54:23 +0100
+Message-ID: <51477EFF.2010505@web.de>
+References: <5112C6F6.4030607@web.de> <CABURp0pC2FELxM5aUwxuTqS1roZm+fwkCQA+BoXjrd0+yQMmbg@mail.gmail.com> <7v1ubk8u6o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Robert Zeh <robert.allan.zeh@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Adam Spiers <git@adamspiers.org>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 18 21:36:17 2013
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 18 21:55:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHgn1-0006k4-R0
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 21:36:16 +0100
+	id 1UHh5D-0002qj-FW
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 21:55:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755158Ab3CRUft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 16:35:49 -0400
-Received: from mail-ea0-f177.google.com ([209.85.215.177]:38075 "EHLO
-	mail-ea0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754639Ab3CRUfs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 16:35:48 -0400
-Received: by mail-ea0-f177.google.com with SMTP id r16so2662280ead.36
-        for <git@vger.kernel.org>; Mon, 18 Mar 2013 13:35:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=xPE0c62uCxoIbp4AGUZbrS2Y4tkXn2HvCj2Ic5ymais=;
-        b=dxXZ+sfdokCWfSIbTFccvYRHFBZayDDoPaJgcT6H54HXDzJCw3F+ATElWHrrHITLRz
-         Bk8A+ZiL95PrBmYUD/zcWXGL8bKwiGofwHR9MjoJFnghPp2CWzLAtrtptbTVnizdw45K
-         sumneRKAKskeyPtq2+60BOip/pz1H9NEiDxxmigplz2ApNmdneLhQpOtm8/sw+ih3VIQ
-         2n79DTLUoSNOvFuu5I9r/Zw/RKnnqYD6PymN/v0LyXhKAch6i1ElplCHHr0Imv8oM16K
-         5A3kQtVPelIziqjzXkx9XcMILRuVoPVSphitGQYezX+on8EpH9IgnjaVK715ID2yidmQ
-         V6xg==
-X-Received: by 10.14.202.71 with SMTP id c47mr52178728eeo.39.1363638529329;
-        Mon, 18 Mar 2013 13:28:49 -0700 (PDT)
-Received: from [10.1.100.50] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPS id q42sm29265734eem.14.2013.03.18.13.28.47
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Mar 2013 13:28:48 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <514775FA.9080304@gmail.com>
+	id S1752518Ab3CRUy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 16:54:29 -0400
+Received: from mout.web.de ([212.227.15.3]:54045 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751354Ab3CRUy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 16:54:28 -0400
+Received: from [192.168.178.41] ([91.3.185.39]) by smtp.web.de (mrweb101) with
+ ESMTPA (Nemesis) id 0MVLj0-1UDi1u0dKA-00Y8Nm; Mon, 18 Mar 2013 21:54:25 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <7v1ubk8u6o.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:mJFJOusOR7xj264/LML0ionnOaoLqle8T8uibHtlQAx
+ KhxPQmsqaEc5S3lUEyHNTwD2n10/ATnTdigl28oekxguRIMaiv
+ hWA/Yk12LxWLA0RNhNDMDlerPLk6KpO0jKB0jnWee7vnuGoOP8
+ Hdc6goEqEeTqBDJ+4XhuDJp78Yjy9M1cGrC1UgfqYLqp7CZ+og
+ ZzLF4EIxg95UEyvAG6pAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218449>
 
-'git-status --ignored' lists empty untracked directories as ignored, even
-though they don't have any ignored files.
+Am 12.03.2013 17:22, schrieb Junio C Hamano:
+> Phil Hord <phil.hord@gmail.com> writes:
+> 
+>> I think this would be clearer if 'git deinit' said
+>>
+>>     rm 'submodule/*'
+>>
+>> or maybe
+>>
+>>     Removed workdir for 'submodule'
+>>
+>> Is it just me?
+> 
+> The latter may probably be better.  
 
-When checking if a directory is already listed as untracked (i.e. shouldn't
-be listed as ignored as well), don't assume that the dirctory has only
-ignored files if it doesn't have untracked files, as the directory may be
-empty.
+Hmm, it doesn't really remove the directory but only empties it
+(it recreates it a few lines after removing it together with its
+contents). So what about
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
----
- dir.c                      | 17 ++++++++---------
- t/t7061-wtstatus-ignore.sh | 26 ++++++++++++++++++++++++--
- 2 files changed, 32 insertions(+), 11 deletions(-)
+    Cleared directory 'submodule'
 
-diff --git a/dir.c b/dir.c
-index fd1f088..64457db 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1071,17 +1071,16 @@ static enum directory_treatment treat_directory(struct dir_struct *dir,
- 
- 	/*
- 	 * We are looking for ignored files and our directory is not ignored,
--	 * check if it contains only ignored files
-+	 * check if it contains untracked files (i.e. is listed as untracked)
- 	 */
- 	if ((dir->flags & DIR_SHOW_IGNORED) && !exclude) {
--		int ignored;
--		dir->flags &= ~DIR_SHOW_IGNORED;
--		dir->flags |= DIR_HIDE_EMPTY_DIRECTORIES;
--		ignored = read_directory_recursive(dir, dirname, len, 1, simplify);
--		dir->flags &= ~DIR_HIDE_EMPTY_DIRECTORIES;
--		dir->flags |= DIR_SHOW_IGNORED;
--
--		return ignored ? ignore_directory : show_directory;
-+		int untracked;
-+		dir->flags &= ~(DIR_SHOW_IGNORED|DIR_SHOW_OTHER_DIRECTORIES);
-+		untracked = read_directory_recursive(dir, dirname, len, 1, simplify);
-+		dir->flags |= DIR_SHOW_IGNORED|DIR_SHOW_OTHER_DIRECTORIES;
-+
-+		if (untracked)
-+			return ignore_directory;
- 	}
- 	if (!(dir->flags & DIR_SHOW_IGNORED) &&
- 	    !(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index 28b7d95..6171a49 100755
---- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -64,13 +64,35 @@ cat >expected <<\EOF
- ?? .gitignore
- ?? actual
- ?? expected
--!! untracked-ignored/
- EOF
- 
--test_expect_success 'status untracked directory with ignored files with --ignore' '
-+test_expect_success 'status empty untracked directory with --ignore' '
- 	rm -rf ignored &&
- 	mkdir untracked-ignored &&
- 	mkdir untracked-ignored/test &&
-+	git status --porcelain --ignored >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<\EOF
-+?? .gitignore
-+?? actual
-+?? expected
-+EOF
-+
-+test_expect_success 'status empty untracked directory with --ignore -u' '
-+	git status --porcelain --ignored -u >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<\EOF
-+?? .gitignore
-+?? actual
-+?? expected
-+!! untracked-ignored/
-+EOF
-+
-+test_expect_success 'status untracked directory with ignored files with --ignore' '
- 	: >untracked-ignored/ignored &&
- 	: >untracked-ignored/test/ignored &&
- 	git status --porcelain --ignored >actual &&
--- 
-1.8.1.2.8021.g7e51819
+The attached interdiff suppresses the "rm 'submodule'" message
+and issues the "Cleared ..." message after it successfully removed
+the work tree. (But please note that it also prints this message
+even if the submodule work tree is already empty, e.g. when you
+deinit a submodule the second time)
+
+----------------8<-------------------------
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 204bc78..d003e8a 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -601,10 +601,12 @@ cmd_deinit()
+
+ 			if test -z "$force"
+ 			then
+-				git rm -n "$sm_path" ||
++				git rm -qn "$sm_path" ||
+ 				die "$(eval_gettext "Submodule work tree '\$sm_path' contains local modifications; use '-f' to discard them")"
+ 			fi
+-			rm -rf "$sm_path" || say "$(eval_gettext "Could not remove submodule work tree '\$sm_path'")"
++			rm -rf "$sm_path" &&
++			say "$(eval_gettext "Cleared directory '\$sm_path'")" ||
++			say "$(eval_gettext "Could not remove submodule work tree '\$sm_path'")"
+ 		fi
+
+ 		mkdir "$sm_path" || say "$(eval_gettext "Could not create empty submodule directory '\$sm_path'")"
