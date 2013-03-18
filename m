@@ -1,100 +1,144 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 3/3] push test: rely on &&-chaining instead of 'if bad; then
- echo Oops; fi'
-Date: Mon, 18 Mar 2013 16:14:26 -0700
-Message-ID: <20130318231426.GG5062@elie.Belkin>
+Subject: Re: [PATCH] push: Alias pushurl from push rewrites
+Date: Mon, 18 Mar 2013 16:10:43 -0700
+Message-ID: <20130318231043.GD5062@elie.Belkin>
 References: <20130318220224.3b23a381@hoelz.ro>
- <20130318231043.GD5062@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	josh@joshtriplett.org
 To: Rob Hoelz <rob@hoelz.ro>
-X-From: git-owner@vger.kernel.org Tue Mar 19 00:15:15 2013
+X-From: git-owner@vger.kernel.org Tue Mar 19 00:17:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHjGl-0007cf-OU
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 00:15:08 +0100
+	id 1UHjJU-000155-Lq
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 00:17:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755569Ab3CRXOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 19:14:33 -0400
-Received: from mail-da0-f47.google.com ([209.85.210.47]:45667 "EHLO
-	mail-da0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753106Ab3CRXOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 19:14:32 -0400
-Received: by mail-da0-f47.google.com with SMTP id s35so1628996dak.20
-        for <git@vger.kernel.org>; Mon, 18 Mar 2013 16:14:31 -0700 (PDT)
+	id S1755853Ab3CRXR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 19:17:29 -0400
+Received: from mail-da0-f45.google.com ([209.85.210.45]:46086 "EHLO
+	mail-da0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752100Ab3CRXR3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 19:17:29 -0400
+Received: by mail-da0-f45.google.com with SMTP id v40so1625730dad.32
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 16:17:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=MDPa4jStvrIYugpPZQVAEfb5RyoxUjqGlAC8JbpP3rc=;
-        b=1IzaZlKi+bzqlvIo4MTqdAdtF49BQg6uLOtIEYaIqsOY7RQGWEdCujVNjNL/YBxd/l
-         G0aIyQ3wmtX2GPE6eOIelpAEBeG4iBMzxVTvDgdnf/n4y51MQM1LK8m167v1ZiOXOEmp
-         237190LNH8OcmM9ZE5dWMqpeFd22CQau0ZgngOi+4TmprbiKsKZ/0J9ZxGCAV5HTAe0i
-         QAQjW3AzM39cZCtAr+S5NRx4EsTknj1YYykfDb0wl86G2q0eg5i4TeaOua7W873mvnj8
-         /Gm+I0zo8tltbW9hTXHfo+UzQEt3LiklHicUBfAyITfxVaZVoIs2mfIfvxpNa1SXab6e
-         lMAg==
-X-Received: by 10.66.40.206 with SMTP id z14mr13151880pak.216.1363648471621;
-        Mon, 18 Mar 2013 16:14:31 -0700 (PDT)
+        bh=NpmAEUoghBEsmOUiUIDfru+1uXBASReWkvkgghVrhBg=;
+        b=wWWGEAOwT/7l7M+XuGn9A1xuoQ/YrzApA3gIJvrq/fYNqpw3lFiHAr4Fc0+N5GKGbg
+         EeN0tP2bbucNMLLeP6KOqCZZF8amOizgeuHuo/UuP9BjWxoz3anj9A18faEnXJ+Nmzpd
+         86cmYzll7VluAk2j8PPd+7DCvR4EvTKPxNWZeDcYKdOR5kwYCa+tIYlMjM+wn3N4dHp3
+         t1xByCqqc2RAy45byVZbOROJzFX2W0/CdR6ksUzQWCu/a/e2rLJ+eijHVzVEtcdCPocx
+         GFZwbpea6Je5jcrKW6QR6gMGUMCg/dP+vNk9cRDGdp7/yKdkgRMcYAj8e12wt6dLMEKs
+         N/OA==
+X-Received: by 10.66.72.37 with SMTP id a5mr12877097pav.193.1363648247957;
+        Mon, 18 Mar 2013 16:10:47 -0700 (PDT)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id m18sm9877243pad.17.2013.03.18.16.14.29
+        by mx.google.com with ESMTPS id vd4sm21689098pbc.35.2013.03.18.16.10.45
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Mar 2013 16:14:30 -0700 (PDT)
+        Mon, 18 Mar 2013 16:10:46 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20130318231043.GD5062@elie.Belkin>
+In-Reply-To: <20130318220224.3b23a381@hoelz.ro>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218465>
 
-When it is unclear which command from a test has failed, usual
-practice these days is to debug by running the test again with "sh -x"
-instead of relying on debugging 'echo' statements.
+Hi,
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/t5516-fetch-push.sh | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+Rob Hoelz wrote:
 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 2f1255d4..0695d570 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -22,10 +22,8 @@ mk_test () {
- 	(
- 		for ref in "$@"
- 		do
--			git push testrepo $the_first_commit:refs/$ref || {
--				echo "Oops, push refs/$ref failure"
--				exit 1
--			}
-+			git push testrepo $the_first_commit:refs/$ref ||
-+			exit
- 		done &&
- 		cd testrepo &&
- 		for ref in "$@"
-@@ -328,13 +326,8 @@ test_expect_success 'push with weak ambiguity (2)' '
- test_expect_success 'push with ambiguity' '
- 
- 	mk_test heads/frotz tags/frotz &&
--	if git push testrepo master:frotz
--	then
--		echo "Oops, should have failed"
--		false
--	else
--		check_push_result $the_first_commit heads/frotz tags/frotz
--	fi
-+	test_must_fail git push testrepo master:frotz &&
-+	check_push_result $the_first_commit heads/frotz tags/frotz
- 
- '
- 
--- 
-1.8.2.rc3
+> [url "git://github.com/"]
+>     insteadOf = github:
+> [url "git://github.com/myuser/"]
+>     insteadOf = mygithub:
+> [url "git@github.com:myuser/"]
+>     pushInsteadOf = mygithub:
+> [remote "origin"]
+>     url     = github:organization/project
+>     pushurl = mygithub:project
+>
+> With the above configuration, the following occurs:
+>
+> $ git push origin master
+> fatal: remote error:
+>   You can't push to git://github.com/myuser/project.git
+>   Use git@github.com:myuser/project.git
+>
+> So you can see that pushurl is being followed (it's not attempting to
+> push to git://github.com/organization/project), but insteadOf values are
+> being used as opposed to pushInsteadOf values for expanding the pushurl
+> alias.
+
+At first glance it is not always obvious how overlapping settings like
+these should interact.  Thanks for an instructive example that makes
+the right behavior obvious.
+
+Test nits:
+
+[...]
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -244,6 +244,87 @@ test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf
+>  	)
+>  '
+>  
+> +test_expect_success 'push with pushInsteadOf and explicit pushurl (pushurl + pushInsteadOf does rewrite in this case)' '
+> +	mk_empty &&
+> +	rm -rf ro rw &&
+> +	TRASH="$(pwd)/" &&
+> +	mkdir ro &&
+> +	mkdir rw &&
+> +	git init --bare rw/testrepo &&
+> +	git config "url.file://$TRASH/ro/.insteadOf" ro: &&
+> +	git config "url.file://$TRASH/rw/.pushInsteadOf" rw: &&
+
+The surrounding tests don't do this, but I wonder if it would make
+sense to use test_config instead of 'git config' here.
+
+That way, the test's settings wouldn't affect other tests, and in
+particular if someone later decides to refactor the file by reordering
+tests, she could be confident that that would not break anything.
+
+In most of the surrounding tests it does not matter because 'git
+config' is run in a subdirectory that is not reused later.  Patches
+fixing the exceptions below.
+
+> +	git config remote.r.url ro:wrong &&
+> +	git config remote.r.pushurl rw:testrepo &&
+> +	git push r refs/heads/master:refs/remotes/origin/master &&
+> +	(
+> +		cd rw/testrepo &&
+> +		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
+> +		test "z$r" = "z$the_commit" &&
+> +
+> +		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
+> +	)
+
+To produce more useful "./t5516-fetch-push.sh -v -i" output when the
+comparison fails:
+
+	echo "$the_commit commit refs/remotes/origin/master" >expect &&
+	(
+		cd rw/testrepo &&
+		git for-each-ref refs/remotes/origin
+	) >actual &&
+	test_cmp expect actual
+
+Hope that helps,
+
+Jonathan Nieder (3):
+  push test: use test_config where appropriate
+  push test: simplify check of push result
+  push test: rely on &&-chaining instead of 'if bad; then echo Oops; fi'
+
+ t/t5516-fetch-push.sh | 156 +++++++++++++++++++++-----------------------------
+ 1 file changed, 65 insertions(+), 91 deletions(-)
