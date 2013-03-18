@@ -1,74 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/4] pack-refs: add fully-peeled trait
-Date: Mon, 18 Mar 2013 08:12:38 -0700
-Message-ID: <7v8v5kpwrd.fsf@alter.siamese.dyndns.org>
-References: <20130317082139.GA29505@sigill.intra.peff.net>
- <20130317082829.GD29550@sigill.intra.peff.net> <51468615.70503@alum.mit.edu>
+From: zero modulo <zeromodulo@gmail.com>
+Subject: Re: Git build fails on `make`, undefined references in libcrypto.a.
+Date: Mon, 18 Mar 2013 10:04:17 -0600
+Message-ID: <CAA8xkYmcEqt3Bmd3gJvFVL+HeiJOVgYX_01YQ0FYmMc8RnDpuQ@mail.gmail.com>
+References: <CAA8xkY==7021SyDmeiOcHMzXbX9L0GgG9yTTED5u1r+tfAPGqg@mail.gmail.com>
+	<20130318072933.GC5434@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 18 16:13:12 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Konstantin Khomoutov <kostix+git@007spb.ru>
+X-From: git-owner@vger.kernel.org Mon Mar 18 17:04:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHbkJ-0004md-Rr
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 16:13:08 +0100
+	id 1UHcYK-0004My-CC
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 17:04:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753594Ab3CRPMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 11:12:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54206 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753518Ab3CRPMl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 11:12:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2045AAAB;
-	Mon, 18 Mar 2013 11:12:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XBey09W97dGX1H6P1UsMgb9XF94=; b=RxycS2
-	wd/vMXyooNDQLi8wPaLAHICTpPEhwtev7MJIDahH+mTFAMLM3WVk2SiUhalf1RN4
-	GlWnZRiSmrYvT2VGcNrCHZDGNDjfggeJ89D7xYzUG4U5Y6BI4gLlK5SAdRPO5ELh
-	SjAejFNiYr9kvgnBkOLwxG5j9lA5n1vH1lDts=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wHQf4ORE3U7VILpZTwwpkhh8FKMN5rlV
-	1UmfD+8Rjttr8atybJ+iRMS1yp91U+I9cOnmWZ/ryYx1Gj4WQIPAL/xe4554dzV0
-	62hjWeFwXOgR8WjIxDBXMn8h9fTsvABTivGN67649stR5Wz7OAQiQlynTDndIQ2B
-	6WZ2JrTbYKM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96EE9AAAA;
-	Mon, 18 Mar 2013 11:12:40 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 195A1AAA8; Mon, 18 Mar 2013
- 11:12:40 -0400 (EDT)
-In-Reply-To: <51468615.70503@alum.mit.edu> (Michael Haggerty's message of
- "Mon, 18 Mar 2013 04:12:21 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4665B51A-8FDE-11E2-8F3E-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753169Ab3CRQET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 12:04:19 -0400
+Received: from mail-ve0-f169.google.com ([209.85.128.169]:62586 "EHLO
+	mail-ve0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753054Ab3CRQES (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 12:04:18 -0400
+Received: by mail-ve0-f169.google.com with SMTP id 15so4458700vea.14
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 09:04:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=P6EGKrUfAW77F7XE/YiDWRIbx3QTtpaTdBtZg+G1xHw=;
+        b=IIBQRyfau+n+ZyASssQ9GDOBNGDtgIJGgnjSZq8ArkIw1uQX2rQWmNF4t+K3eG2wQE
+         +6dITuR8AS4Vg22tHFXPgkq1lhZ3qjApXiuGWdXydz2xkVdAhvPV3Uqrlwxu2Xpz1O/7
+         IA2igD6OPijRjzYPEAzUe9cD1z88UHQeqtGBgM4HhkRBlXVMB5NByans6oDGWFSzNjLk
+         QVQdV+yADeSAbQOIMA0kb3a9OuENerWRPKZAXL8sMrF7xcgHgz9QUGnL5HGMdFOD+GWx
+         yCJhmIOIjk0ImFD14eroOb72OLsHwDm+flAuwxgyTS2X1dgAeipnL7LCcNuE06PZtnj/
+         bHHA==
+X-Received: by 10.52.174.201 with SMTP id bu9mr17876940vdc.45.1363622657542;
+ Mon, 18 Mar 2013 09:04:17 -0700 (PDT)
+Received: by 10.58.210.233 with HTTP; Mon, 18 Mar 2013 09:04:17 -0700 (PDT)
+In-Reply-To: <20130318072933.GC5434@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218424>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
-
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+On Mon, Mar 18, 2013 at 1:29 AM, Konstantin Khomoutov
+<kostix+git@007spb.ru> wrote:
+> FYI, I've already tried to answer this exact question [1] with no
+> comments from the OP.
 >
-> and ACK for the whole series, once Junio's points are addressed.
->
-> Regarding Junio's readability suggestion: I agree that his versions are
-> a bit more readable, albeit at the expense of having to evaluate a bit
-> more logic for each reference rather than just once when the header line
-> is handled.  So I don't have a preference either way.
+> 1. http://serverfault.com/a/488604/118848
 
-The way the conditional is written, in the longer term we
-will almost always compare "peeled == PEELED_FULLY", and otherwise
-we will do the same !prefixcmp(refs/tags/), so I do not think there
-is "more logic" that matters compared to the original.
+It is I who posted that question. :P
 
-Thanks, both; will replace what was queued with "SQUASH???".
+I haven't made any comments yet because this issue is still a work in
+progress. I re-compiled OpenSSL taking into consideration that libdl.a
+probably wasn't linked properly to libcrypto.a, and have also tried
+re-compiling Git afterward, but with the same errors. I have also
+created a .conf file for `ld.so`, and ran `sudo ldconfig` which solved
+some other issues I was having. Running `ldd msgfmt` revealed that
+run-time libraries were not being found, and after running `sudo
+ldconfig`, `ldd msgfmt` then showed the libgettext .so was linked. So,
+I solved some of my issues, and if there was an issue with statically
+linked libraries not being found, as in this case, then, I believe
+re-compiling OpenSSL with the proper LDFLAGS and CPPFLAGS would have
+solved the issue, but they have not.
+
+I'm currently attempting to install GCC 4.7.2, which is having some
+other issues with texinfo 5.1. I can't find the link, but I someone
+said it could be the compiler version... since everything else that
+seems like might be the issue isn't fixing it, I'm going to try
+re-compiling OpenSSL with GCC 4.7.2 and see how that goes.
