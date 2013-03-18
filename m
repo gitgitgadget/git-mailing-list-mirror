@@ -1,8 +1,8 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH 2/8] dir.c: git-status --ignored: don't list files in ignored
+Subject: [PATCH 3/8] dir.c: git-status --ignored: don't list empty ignored
  directories
-Date: Mon, 18 Mar 2013 21:28:36 +0100
-Message-ID: <514778F4.3070106@gmail.com>
+Date: Mon, 18 Mar 2013 21:28:43 +0100
+Message-ID: <514778FB.20603@gmail.com>
 References: <514775FA.9080304@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,102 +15,97 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Antoine Pelisse <apelisse@gmail.com>,
 	Adam Spiers <git@adamspiers.org>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 18 21:29:06 2013
+X-From: git-owner@vger.kernel.org Mon Mar 18 21:29:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHgg5-0001pq-Sf
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 21:29:06 +0100
+	id 1UHggE-0001vP-3t
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 21:29:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754284Ab3CRU2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 16:28:38 -0400
-Received: from mail-ee0-f44.google.com ([74.125.83.44]:59367 "EHLO
-	mail-ee0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779Ab3CRU2h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 16:28:37 -0400
-Received: by mail-ee0-f44.google.com with SMTP id l10so2868538eei.31
-        for <git@vger.kernel.org>; Mon, 18 Mar 2013 13:28:36 -0700 (PDT)
+	id S1754769Ab3CRU2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 16:28:46 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:52148 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754454Ab3CRU2o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 16:28:44 -0400
+Received: by mail-ee0-f46.google.com with SMTP id e49so2748457eek.19
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 13:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:message-id:date:from:user-agent:mime-version:to:cc
          :subject:references:in-reply-to:content-type
          :content-transfer-encoding;
-        bh=ulkvGsy6Bn38WDqW+qWVFt0SZ/H1CxFugR2pCuOXOBI=;
-        b=b9oJFb6krX3UX7rOqj6x8TiHWZYAQ0wlIx9PVqWT8j8yUlgZi5Ch3za0mGYOqe5nCY
-         xgXs6Q8zlYmoel2+4N+Cb+ZhbN84l2WPwVgk9Rln968eV795CXmnAE2Jbi9E+Sgx1OVX
-         MhTvlEYWmeoL3y62Mkaks6lgqfKQIxxSCT2nR4zQ2TDWLdGuLOJO32cC67zktlt7MBzQ
-         xIiFkJfZk0euXitIwWezR20KkIrA5CnH45Srqb+MRymVCAjh54oeiFxCANujmQMyI3gd
-         b2G+695M55ukQk6zDGht/cWr0kmooZ8HAS2TNGLNLTDctp3aDwBSAnrwXf7AN+rmL8fB
-         HIyQ==
-X-Received: by 10.14.202.71 with SMTP id c47mr52176998eeo.39.1363638516450;
-        Mon, 18 Mar 2013 13:28:36 -0700 (PDT)
+        bh=5e5njoT/cDW5+cmgMjxwoOmpXJteHjweXoGhA2l4Lzc=;
+        b=VjX0+gCOe7q353BFrQfCQErf1nolL33I3yHac0PpKGfrMk+2dWCbHgepWZJsO6RpT7
+         Y/RMhUyaxtGenhwhq3v8HpIdMtqpAofc4YYl1TbM/sCRnSOCKKIReT4cSzhKUkf32j9y
+         EKegGzy9ZB+tEhUuhMqt5wkwnqj9+NKO0io1moRfos1M0efc0Ay99HJ58mPm4lU2/dik
+         bgdeXC8BVE8/3mW8jWZphJowbYCy49c6f+I8DspFEzErNQ0SqnoFr8HnMEreYbfRSgph
+         jxv2cjQnk+cmqXhPLPNNOjczgwAwnOZ6Q+4arcy+BjoIPY9dWrF533Bpw5prSkYQoVuv
+         K6Nw==
+X-Received: by 10.14.0.135 with SMTP id 7mr52368703eeb.5.1363638523613;
+        Mon, 18 Mar 2013 13:28:43 -0700 (PDT)
 Received: from [10.1.100.50] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPS id q5sm29288575eeo.17.2013.03.18.13.28.34
+        by mx.google.com with ESMTPS id u44sm29269255eel.7.2013.03.18.13.28.42
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Mar 2013 13:28:35 -0700 (PDT)
+        Mon, 18 Mar 2013 13:28:42 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
 In-Reply-To: <514775FA.9080304@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218443>
 
-'git-status --ignored' lists both the ignored directory and the ignored
-files if the files are in a tracked sub directory.
+'git-status --ignored' lists ignored tracked directories without any
+ignored files if a tracked file happens to match an exclude pattern.
 
-When recursing into sub directories in read_directory_recursive, pass on
-the check_only parameter so that we don't accidentally add the files.
+Always exclude tracked files.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 ---
- dir.c                      |  4 +---
- t/t7061-wtstatus-ignore.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 28 insertions(+), 3 deletions(-)
+ dir.c                      | 11 ++++-------
+ t/t7061-wtstatus-ignore.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 7 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index ec4eebf..7c9bc9c 100644
+index 7c9bc9c..fd1f088 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1273,7 +1273,6 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
- 		return path_ignored;
- 	case DT_DIR:
- 		strbuf_addch(path, '/');
+@@ -1109,16 +1109,13 @@ static int treat_file(struct dir_struct *dir, struct strbuf *path, int exclude,
+ 	struct path_exclude_check check;
+ 	int exclude_file = 0;
+ 
++	/* Always exclude indexed files */
++	if (index_name_exists(&the_index, path->buf, path->len, ignore_case))
++		return 1;
++
+ 	if (exclude)
+ 		exclude_file = !(dir->flags & DIR_SHOW_IGNORED);
+ 	else if (dir->flags & DIR_SHOW_IGNORED) {
+-		/* Always exclude indexed files */
+-		struct cache_entry *ce = index_name_exists(&the_index,
+-		    path->buf, path->len, ignore_case);
 -
- 		switch (treat_directory(dir, path->buf, path->len, exclude, simplify)) {
- 		case show_directory:
- 			break;
-@@ -1343,8 +1342,7 @@ static int read_directory_recursive(struct dir_struct *dir,
- 		switch (treat_path(dir, de, &path, baselen, simplify)) {
- 		case path_recurse:
- 			contents += read_directory_recursive(dir, path.buf,
--							     path.len, 0,
--							     simplify);
-+				path.len, check_only, simplify);
- 			continue;
- 		case path_ignored:
- 			continue;
+-		if (ce)
+-			return 1;
+-
+ 		path_exclude_check_init(&check, dir);
+ 
+ 		if (!is_path_excluded(&check, path->buf, path->len, dtype))
 diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index 0f1034e..4ece129 100755
+index 4ece129..28b7d95 100755
 --- a/t/t7061-wtstatus-ignore.sh
 +++ b/t/t7061-wtstatus-ignore.sh
-@@ -170,4 +170,31 @@ test_expect_success 'status ignored tracked directory with uncommitted file in u
- 	test_cmp expected actual
- '
- 
-+cat >expected <<\EOF
-+?? .gitignore
-+?? actual
-+?? expected
-+!! tracked/
+@@ -122,10 +122,34 @@ cat >expected <<\EOF
+ ?? .gitignore
+ ?? actual
+ ?? expected
 +EOF
 +
-+test_expect_success 'status ignored tracked directory with uncommitted file in tracked subdir with --ignore' '
-+	: >tracked/ignored/committed &&
-+	git add -f tracked/ignored/committed &&
-+	git commit -m. &&
++test_expect_success 'status ignored tracked directory and ignored file with --ignore' '
++	echo "committed" >>.gitignore &&
 +	git status --porcelain --ignored >actual &&
 +	test_cmp expected actual
 +'
@@ -119,14 +114,24 @@ index 0f1034e..4ece129 100755
 +?? .gitignore
 +?? actual
 +?? expected
-+!! tracked/ignored/uncommitted
 +EOF
 +
-+test_expect_success 'status ignored tracked directory with uncommitted file in tracked subdir with --ignore -u' '
++test_expect_success 'status ignored tracked directory and ignored file with --ignore -u' '
 +	git status --porcelain --ignored -u >actual &&
 +	test_cmp expected actual
 +'
 +
- test_done
++cat >expected <<\EOF
++?? .gitignore
++?? actual
++?? expected
+ !! tracked/
+ EOF
+ 
+ test_expect_success 'status ignored tracked directory and uncommitted file with --ignore' '
++	echo "tracked" >.gitignore &&
+ 	: >tracked/uncommitted &&
+ 	git status --porcelain --ignored >actual &&
+ 	test_cmp expected actual
 -- 
 1.8.1.2.8021.g7e51819
