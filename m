@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/3] push test: simplify check of push result
-Date: Mon, 18 Mar 2013 16:13:41 -0700
-Message-ID: <20130318231340.GF5062@elie.Belkin>
+Subject: [PATCH 3/3] push test: rely on &&-chaining instead of 'if bad; then
+ echo Oops; fi'
+Date: Mon, 18 Mar 2013 16:14:26 -0700
+Message-ID: <20130318231426.GG5062@elie.Belkin>
 References: <20130318220224.3b23a381@hoelz.ro>
  <20130318231043.GD5062@elie.Belkin>
 Mime-Version: 1.0
@@ -9,41 +10,41 @@ Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	josh@joshtriplett.org
 To: Rob Hoelz <rob@hoelz.ro>
-X-From: git-owner@vger.kernel.org Tue Mar 19 00:14:14 2013
+X-From: git-owner@vger.kernel.org Tue Mar 19 00:15:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHjFt-000736-Pv
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 00:14:14 +0100
+	id 1UHjGl-0007cf-OU
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 00:15:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423Ab3CRXNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 19:13:47 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:57292 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751735Ab3CRXNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 19:13:46 -0400
-Received: by mail-pb0-f52.google.com with SMTP id ma3so6805746pbc.25
-        for <git@vger.kernel.org>; Mon, 18 Mar 2013 16:13:45 -0700 (PDT)
+	id S1755569Ab3CRXOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 19:14:33 -0400
+Received: from mail-da0-f47.google.com ([209.85.210.47]:45667 "EHLO
+	mail-da0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753106Ab3CRXOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 19:14:32 -0400
+Received: by mail-da0-f47.google.com with SMTP id s35so1628996dak.20
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 16:14:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=A9MUVRkr7SIwolsJRVPtBhnMbXqm6cL2z/Ar6azsBFk=;
-        b=AEt/k6eoZl+LrB0YSwvc8md7w1gFMGCK0ic+LYJTYK9UPOc6C5sPwvPewAc7KXgWuG
-         y0kyOs+NHqM58rI6E2iMIZ8a9pNbSsULdinBAdmN9inf8ebME8LpaZ6VWMOJgIuLtYdz
-         NTXjzWHPX0OtgRlg69nRHVAq76dvGMKiz3NWl2tDEPbkliaSPNajbaPX9mW0HDi2z0Cq
-         ctQVjBG7kyqYtdPWaoKDc8Zk9bdtqV+fFu/i6kzOyze+XQZl28GYJarWivlBxt+k2HPi
-         33JTj+wSJoOSEhbYNRHvaiU84aRRyHAWHGH6tARWewmP7w58ZajLc3NlMOyh27XO+wbK
-         mU6w==
-X-Received: by 10.68.29.98 with SMTP id j2mr35934443pbh.216.1363648425839;
-        Mon, 18 Mar 2013 16:13:45 -0700 (PDT)
+        bh=MDPa4jStvrIYugpPZQVAEfb5RyoxUjqGlAC8JbpP3rc=;
+        b=1IzaZlKi+bzqlvIo4MTqdAdtF49BQg6uLOtIEYaIqsOY7RQGWEdCujVNjNL/YBxd/l
+         G0aIyQ3wmtX2GPE6eOIelpAEBeG4iBMzxVTvDgdnf/n4y51MQM1LK8m167v1ZiOXOEmp
+         237190LNH8OcmM9ZE5dWMqpeFd22CQau0ZgngOi+4TmprbiKsKZ/0J9ZxGCAV5HTAe0i
+         QAQjW3AzM39cZCtAr+S5NRx4EsTknj1YYykfDb0wl86G2q0eg5i4TeaOua7W873mvnj8
+         /Gm+I0zo8tltbW9hTXHfo+UzQEt3LiklHicUBfAyITfxVaZVoIs2mfIfvxpNa1SXab6e
+         lMAg==
+X-Received: by 10.66.40.206 with SMTP id z14mr13151880pak.216.1363648471621;
+        Mon, 18 Mar 2013 16:14:31 -0700 (PDT)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id hp1sm9873735pac.3.2013.03.18.16.13.43
+        by mx.google.com with ESMTPS id m18sm9877243pad.17.2013.03.18.16.14.29
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Mar 2013 16:13:44 -0700 (PDT)
+        Mon, 18 Mar 2013 16:14:30 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20130318231043.GD5062@elie.Belkin>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
@@ -51,258 +52,49 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218464>
 
-This test checks each ref with code like the following:
-
-	r=$(git show-ref -s --verify refs/$ref) &&
-	test "z$r" = "z$the_first_commit"
-
-Afterward it counts refs:
-
-	test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-
-Simpler to test the number and values of relevant refs in for-each-ref
-output at the same time using test_cmp.  This makes the test more
-readable and provides more helpful "./t5516-push-push.sh -v" output
-when the test fails.
+When it is unclear which command from a test has failed, usual
+practice these days is to debug by running the test again with "sh -x"
+instead of relying on debugging 'echo' statements.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- t/t5516-fetch-push.sh | 114 ++++++++++++++++++++++----------------------------
- 1 file changed, 51 insertions(+), 63 deletions(-)
+ t/t5516-fetch-push.sh | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
 diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 5b89c111..2f1255d4 100755
+index 2f1255d4..0695d570 100755
 --- a/t/t5516-fetch-push.sh
 +++ b/t/t5516-fetch-push.sh
-@@ -30,11 +30,10 @@ mk_test () {
- 		cd testrepo &&
+@@ -22,10 +22,8 @@ mk_test () {
+ 	(
  		for ref in "$@"
  		do
--			r=$(git show-ref -s --verify refs/$ref) &&
--			test "z$r" = "z$the_first_commit" || {
--				echo "Oops, refs/$ref is wrong"
+-			git push testrepo $the_first_commit:refs/$ref || {
+-				echo "Oops, push refs/$ref failure"
 -				exit 1
 -			}
-+			echo "$the_first_commit" >expect &&
-+			git show-ref -s --verify refs/$ref >actual &&
-+			test_cmp expect actual ||
++			git push testrepo $the_first_commit:refs/$ref ||
 +			exit
  		done &&
- 		git fsck --full
- 	)
-@@ -82,15 +81,13 @@ mk_child() {
- check_push_result () {
- 	(
  		cd testrepo &&
--		it="$1" &&
--		shift
-+		echo "$1" >expect &&
-+		shift &&
  		for ref in "$@"
- 		do
--			r=$(git show-ref -s --verify refs/$ref) &&
--			test "z$r" = "z$it" || {
--				echo "Oops, refs/$ref is wrong"
--				exit 1
--			}
-+			git show-ref -s --verify refs/$ref >actual &&
-+			test_cmp expect actual ||
-+			exit
- 		done &&
- 		git fsck --full
- 	)
-@@ -118,10 +115,9 @@ test_expect_success 'fetch without wildcard' '
- 		cd testrepo &&
- 		git fetch .. refs/heads/master:refs/remotes/origin/master &&
+@@ -328,13 +326,8 @@ test_expect_success 'push with weak ambiguity (2)' '
+ test_expect_success 'push with ambiguity' '
  
--		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
--		test "z$r" = "z$the_commit" &&
--
--		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
-+		git for-each-ref refs/remotes/origin >actual &&
-+		test_cmp expect actual
- 	)
+ 	mk_test heads/frotz tags/frotz &&
+-	if git push testrepo master:frotz
+-	then
+-		echo "Oops, should have failed"
+-		false
+-	else
+-		check_push_result $the_first_commit heads/frotz tags/frotz
+-	fi
++	test_must_fail git push testrepo master:frotz &&
++	check_push_result $the_first_commit heads/frotz tags/frotz
+ 
  '
  
-@@ -133,10 +129,9 @@ test_expect_success 'fetch with wildcard' '
- 		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
- 		git fetch up &&
- 
--		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
--		test "z$r" = "z$the_commit" &&
--
--		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
-+		git for-each-ref refs/remotes/origin >actual &&
-+		test_cmp expect actual
- 	)
- '
- 
-@@ -150,10 +145,9 @@ test_expect_success 'fetch with insteadOf' '
- 		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
- 		git fetch up &&
- 
--		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
--		test "z$r" = "z$the_commit" &&
--
--		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
-+		git for-each-ref refs/remotes/origin >actual &&
-+		test_cmp expect actual
- 	)
- '
- 
-@@ -167,10 +161,9 @@ test_expect_success 'fetch with pushInsteadOf (should not rewrite)' '
- 		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
- 		git fetch up &&
- 
--		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
--		test "z$r" = "z$the_commit" &&
--
--		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
-+		git for-each-ref refs/remotes/origin >actual &&
-+		test_cmp expect actual
- 	)
- '
- 
-@@ -180,10 +173,9 @@ test_expect_success 'push without wildcard' '
- 	git push testrepo refs/heads/master:refs/remotes/origin/master &&
- 	(
- 		cd testrepo &&
--		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
--		test "z$r" = "z$the_commit" &&
--
--		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
-+		git for-each-ref refs/remotes/origin >actual &&
-+		test_cmp expect actual
- 	)
- '
- 
-@@ -193,10 +185,9 @@ test_expect_success 'push with wildcard' '
- 	git push testrepo "refs/heads/*:refs/remotes/origin/*" &&
- 	(
- 		cd testrepo &&
--		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
--		test "z$r" = "z$the_commit" &&
--
--		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
-+		git for-each-ref refs/remotes/origin >actual &&
-+		test_cmp expect actual
- 	)
- '
- 
-@@ -207,10 +198,9 @@ test_expect_success 'push with insteadOf' '
- 	git push trash/testrepo refs/heads/master:refs/remotes/origin/master &&
- 	(
- 		cd testrepo &&
--		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
--		test "z$r" = "z$the_commit" &&
--
--		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
-+		git for-each-ref refs/remotes/origin >actual &&
-+		test_cmp expect actual
- 	)
- '
- 
-@@ -221,10 +211,9 @@ test_expect_success 'push with pushInsteadOf' '
- 	git push trash/testrepo refs/heads/master:refs/remotes/origin/master &&
- 	(
- 		cd testrepo &&
--		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
--		test "z$r" = "z$the_commit" &&
--
--		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
-+		git for-each-ref refs/remotes/origin >actual &&
-+		test_cmp expect actual
- 	)
- '
- 
-@@ -237,10 +226,9 @@ test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf
- 	git push r refs/heads/master:refs/remotes/origin/master &&
- 	(
- 		cd testrepo &&
--		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
--		test "z$r" = "z$the_commit" &&
--
--		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
-+		git for-each-ref refs/remotes/origin >actual &&
-+		test_cmp expect actual
- 	)
- '
- 
-@@ -827,9 +815,9 @@ test_expect_success 'fetch with branches' '
- 	(
- 		cd testrepo &&
- 		git fetch branch1 &&
--		r=$(git show-ref -s --verify refs/heads/branch1) &&
--		test "z$r" = "z$the_commit" &&
--		test 1 = $(git for-each-ref refs/heads | wc -l)
-+		echo "$the_commit commit	refs/heads/branch1" >expect &&
-+		git for-each-ref refs/heads >actual &&
-+		test_cmp expect actual
- 	) &&
- 	git checkout master
- '
-@@ -840,9 +828,9 @@ test_expect_success 'fetch with branches containing #' '
- 	(
- 		cd testrepo &&
- 		git fetch branch2 &&
--		r=$(git show-ref -s --verify refs/heads/branch2) &&
--		test "z$r" = "z$the_first_commit" &&
--		test 1 = $(git for-each-ref refs/heads | wc -l)
-+		echo "$the_first_commit commit	refs/heads/branch2" >expect &&
-+		git for-each-ref refs/heads >actual &&
-+		test_cmp expect actual
- 	) &&
- 	git checkout master
- '
-@@ -854,9 +842,9 @@ test_expect_success 'push with branches' '
- 	git push branch1 &&
- 	(
- 		cd testrepo &&
--		r=$(git show-ref -s --verify refs/heads/master) &&
--		test "z$r" = "z$the_first_commit" &&
--		test 1 = $(git for-each-ref refs/heads | wc -l)
-+		echo "$the_first_commit commit	refs/heads/master" >expect &&
-+		git for-each-ref refs/heads >actual &&
-+		test_cmp expect actual
- 	)
- '
- 
-@@ -866,9 +854,9 @@ test_expect_success 'push with branches containing #' '
- 	git push branch2 &&
- 	(
- 		cd testrepo &&
--		r=$(git show-ref -s --verify refs/heads/branch3) &&
--		test "z$r" = "z$the_first_commit" &&
--		test 1 = $(git for-each-ref refs/heads | wc -l)
-+		echo "$the_first_commit commit	refs/heads/branch3" >expect &&
-+		git for-each-ref refs/heads >actual &&
-+		test_cmp expect actual
- 	) &&
- 	git checkout master
- '
-@@ -951,9 +939,9 @@ test_expect_success 'push --porcelain' '
- 	git push >.git/bar --porcelain  testrepo refs/heads/master:refs/remotes/origin/master &&
- 	(
- 		cd testrepo &&
--		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
--		test "z$r" = "z$the_commit" &&
--		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+		echo "$the_commit commit	refs/remotes/origin/master" >expect &&
-+		git for-each-ref refs/remotes/origin >actual &&
-+		test_cmp expect actual
- 	) &&
- 	test_cmp .git/foo .git/bar
- '
 -- 
 1.8.2.rc3
