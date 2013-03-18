@@ -1,150 +1,257 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC] http_init: only initialize SSL for https
-Date: Mon, 18 Mar 2013 11:38:48 +0100
-Message-ID: <CABPQNSasFV-vZSMygu16xc-C2d3jTt7mtzFsYQyNUhS5jL-EoQ@mail.gmail.com>
-References: <1363269079-6124-1-git-send-email-kusmabite@gmail.com>
- <alpine.DEB.1.00.1303141621340.3794@s15462909.onlinehome-server.info>
- <CABPQNSZNdGea9Nn91emWhfRGAZjZXm755UKArNr3EUy9CrSKHg@mail.gmail.com>
- <7vmwu6x72q.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1303142333170.3794@s15462909.onlinehome-server.info>
- <7vk3p9wqh5.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1303151054130.32216@tvnag.unkk.fr>
- <7v4ngcwt4w.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1303151719170.32216@tvnag.unkk.fr>
- <20130316120300.GA2626@sigill.intra.peff.net> <alpine.DEB.2.00.1303162355120.21738@tvnag.unkk.fr>
- <CALWbr2wQNM=7vUcoragNmKGpSeXkOCsmsM5y1AMhj95i15A4bw@mail.gmail.com>
- <alpine.DEB.2.00.1303172305230.21738@tvnag.unkk.fr> <7vli9lpsqe.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Jeff King <peff@peff.net>
+Subject: [PATCH v3 4/4] pack-refs: add fully-peeled trait
+Date: Mon, 18 Mar 2013 07:37:32 -0400
+Message-ID: <20130318113732.GA14789@sigill.intra.peff.net>
+References: <20130317082139.GA29505@sigill.intra.peff.net>
+ <20130317082829.GD29550@sigill.intra.peff.net>
+ <7vli9lre1j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Daniel Stenberg <daniel@haxx.se>, Antoine Pelisse <apelisse@gmail.com>, Jeff King <peff@peff.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, git <git@vger.kernel.org>, 
-	msysgit@googlegroups.com
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBDR53PPJ7YHRBYO5TOFAKGQE57WHRGA@googlegroups.com Mon Mar 18 11:39:56 2013
-Return-path: <msysgit+bncBDR53PPJ7YHRBYO5TOFAKGQE57WHRGA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-oa0-f64.google.com ([209.85.219.64])
+X-From: git-owner@vger.kernel.org Mon Mar 18 12:38:12 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBYO5TOFAKGQE57WHRGA@googlegroups.com>)
-	id 1UHXTt-0006nZ-RJ
-	for gcvm-msysgit@m.gmane.org; Mon, 18 Mar 2013 11:39:54 +0100
-Received: by mail-oa0-f64.google.com with SMTP id l20sf2363755oag.19
-        for <gcvm-msysgit@m.gmane.org>; Mon, 18 Mar 2013 03:39:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:received-spf:x-received
-         :mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:x-google-group-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type;
-        bh=BFf0Dst2lhFTJOTjDvTXEZrPp1qf4/fqkUVewKEQ6uU=;
-        b=UkpjHhjSYuWIpPCNaPuHI8fuYFx9UDR9UcbvLHtukUZsf4hdTewfv77x2QkaqBKGx3
-         NupFBXJBOcV7E0bT+nbMmNmrpAYmziIC93F30yYulcWFa+a8l95Holrvg0b3LDyYHE/G
-         dMSQhVq+/lsbspF9TiMr4dOlpusAsJkHv4JWcpC3nwGyw7+S5fQ579sOOVpHMrPcJxFt
-         JAh7JHkaLiT+naBq8wbKu2eg3SXzlYE0NSGbu0QQs66p6bq3YdnxaNJfe5YFY0D4hR12
-         RfvH4GwHOWM8m3+1oQdXgigAr5w0vcT8cnGhT4CyY8t 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:x-beenthere:x-received:received-spf:x-received
-         :mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:x-google-group-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type;
-        bh=BFf0Dst2lhFTJOTjDvTXEZrPp1qf4/fqkUVewKEQ6uU=;
-        b=NbdPIO7ZA/uj+tzYrex5L99GIiqi+ABZ2HMYEYOkVSoK4DwgXOsATcmmaVWHEqAcIP
-         g4c7N7oFNAWOicOT55WMLs9c6F2omyugYdJeCccuLnBkRxe6qk1dezVJKaCCdUNd3zeq
-         yu5QYBJmICVduRPchT42qduMbWCQhzU0ek529I7BKiJOuVtkCQyhVTkY8kEHX/smyYCZ
-         rNs3LR6nmZGrt1+rogEx98z3coAPJF7rxBiWh4KgHoTSP8j0OnWN8+bNLDrJYXo1Tv1x
-         MtrVDJvvs0MQt2tTce+4mzxpjnRiCApp6ShxK9N3J8C6zbJgif 
-X-Received: by 10.50.140.65 with SMTP id re1mr1099798igb.13.1363603170063;
-        Mon, 18 Mar 2013 03:39:30 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.88.129 with SMTP id bg1ls965897igb.13.gmail; Mon, 18 Mar
- 2013 03:39:29 -0700 (PDT)
-X-Received: by 10.50.183.164 with SMTP id en4mr6932506igc.2.1363603169213;
-        Mon, 18 Mar 2013 03:39:29 -0700 (PDT)
-Received: from mail-ie0-x231.google.com (mail-ie0-x231.google.com [2607:f8b0:4001:c03::231])
-        by gmr-mx.google.com with ESMTPS id j7si344124igc.3.2013.03.18.03.39.29
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Mar 2013 03:39:29 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::231 as permitted sender) client-ip=2607:f8b0:4001:c03::231;
-Received: by mail-ie0-x231.google.com with SMTP id 16so6515874iea.8
-        for <msysgit@googlegroups.com>; Mon, 18 Mar 2013 03:39:29 -0700 (PDT)
-X-Received: by 10.50.7.211 with SMTP id l19mr2508511iga.53.1363603169118; Mon,
- 18 Mar 2013 03:39:29 -0700 (PDT)
-Received: by 10.64.44.47 with HTTP; Mon, 18 Mar 2013 03:38:48 -0700 (PDT)
-In-Reply-To: <7vli9lpsqe.fsf@alter.siamese.dyndns.org>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::231
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218402>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UHYOF-0000Y3-RA
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 12:38:08 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751581Ab3CRLhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 07:37:40 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55924 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750899Ab3CRLhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 07:37:39 -0400
+Received: (qmail 15652 invoked by uid 107); 18 Mar 2013 11:39:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Mar 2013 07:39:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Mar 2013 07:37:32 -0400
+Content-Disposition: inline
+In-Reply-To: <7vli9lre1j.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218403>
 
-On Sun, Mar 17, 2013 at 11:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Daniel Stenberg <daniel@haxx.se> writes:
->
->> On Sun, 17 Mar 2013, Antoine Pelisse wrote:
->>
->>>> With redirects taken into account, I can't think of any really good way
->>>> around avoiding this init...
->>>
->>> Is there any way for curl to initialize SSL on-demand ?
->>
->> Yes, but not without drawbacks.
->>
->> If you don't call curl_global_init() at all, libcurl will notice that
->> on first use and then libcurl will call global_init by itself with a
->> default bitmask.
->>
->> That automatic call of course will prevent the application from being
->> able to set its own bitmask choice, and also the global_init function
->> is not (necessarily) thread safe while all other libcurl functions are
->> so the internal call to global_init from an otherwise thread-safe
->> function is unfortunate.
->
-> So in short, unless you are writing a custom application to talk to
-> servers that you know will never redirect you to HTTPS, passing
-> custom masks such as ALL&~SSL to global-init is not going to be a
-> valid optimization.
->
-> I think that is a reasonable API; your custom application may want
-> to go around your intranet servers all of which serve their status
-> over plain HTTP, and it is a valid optimization to initialize the
-> library with ALL&~SSL.  It is just that such an optimization does
-> not apply to us---we let our users go to random hosts we have no
-> control over, and they may redirect us in ways we cannot anticipate.
->
+On Sun, Mar 17, 2013 at 01:01:44PM -0700, Junio C Hamano wrote:
 
-I wonder. Our libcurl is build with "-winssl" (USE_WINDOWS_SSPI=1), it
-seems. Perhaps switching to openssl (which we already have libraries
-for) would make the init-time better?
+> > + *      All references in the file that can be peeled are peeled.
+> > + *      Inversely (and this is more important, any references in the
+> 
+> A missing closing paren after "more important".  Also the e-mail
+> quote reveals there is some inconsistent indentation (HTs vs runs of
+> SPs) here.
 
+Thanks, will fix (the whitespace damage is due to me cutting and pasting
+from Michael's commit).
+
+> 
+> > + *      file for which no peeled value is recorded is not peelable. This
+> > + *      trait should typically be written alongside "fully-peeled" for
+> 
+> Alongside "peeled", no?
+
+Urgh, yes. Will fix.
+
+> [...]
+> I am not sure why you find this any more readable.
+
+I was trying to avoid the "set PEELED globally, but sometimes unset it
+for specific refs" pattern which I think is confusing to the reader. But
+I think what you wrote is even better. I used an enum rather than two
+variables to make it clear that only ones takes effect. I had wanted to
+use a switch, also, but you end up either repeating yourself, or doing
+this gross fall-through:
+
+  switch (peeled) {
+  case PEELED_TAGS:
+          if (prefixcmp(refname, "refs/tags/"))
+                  break;
+          /* fall-through */
+  case PEELED_FULLY:
+          last->ref |= REF_KNOWS_PEELED;
+          break;
+  default:
+          /* we know nothing */
+  }
+
+So I just stuck with the conditional.
+
+Here's the re-roll.
+
+-- >8 --
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH] pack-refs: add fully-peeled trait
+
+Older versions of pack-refs did not write peel lines for
+refs outside of refs/tags. This meant that on reading the
+pack-refs file, we might set the REF_KNOWS_PEELED flag for
+such a ref, even though we do not know anything about its
+peeled value.
+
+The previous commit updated the writer to always peel, no
+matter what the ref is. That means that packed-refs files
+written by newer versions of git are fine to be read by both
+old and new versions of git. However, we still have the
+problem of reading packed-refs files written by older
+versions of git, or by other implementations which have not
+yet learned the same trick.
+
+The simplest fix would be to always unset the
+REF_KNOWS_PEELED flag for refs outside of refs/tags that do
+not have a peel line (if it has a peel line, we know it is
+valid, but we cannot assume a missing peel line means
+anything). But that loses an important optimization, as
+upload-pack should not need to load the object pointed to by
+refs/heads/foo to determine that it is not a tag.
+
+Instead, we add a "fully-peeled" trait to the packed-refs
+file. If it is set, we know that we can trust a missing peel
+line to mean that a ref cannot be peeled. Otherwise, we fall
+back to assuming nothing.
+
+[commit message and tests by Jeff King <peff@peff.net>]
+
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ pack-refs.c         |  2 +-
+ refs.c              | 49 ++++++++++++++++++++++++++++++++++++++++++++-----
+ t/t3211-peel-ref.sh | 22 ++++++++++++++++++++++
+ 3 files changed, 67 insertions(+), 6 deletions(-)
+
+diff --git a/pack-refs.c b/pack-refs.c
+index ebde785..4461f71 100644
+--- a/pack-refs.c
++++ b/pack-refs.c
+@@ -128,7 +128,7 @@ int pack_refs(unsigned int flags)
+ 		die_errno("unable to create ref-pack file structure");
+ 
+ 	/* perhaps other traits later as well */
+-	fprintf(cbdata.refs_file, "# pack-refs with: peeled \n");
++	fprintf(cbdata.refs_file, "# pack-refs with: peeled fully-peeled \n");
+ 
+ 	for_each_ref(handle_one_ref, &cbdata);
+ 	if (ferror(cbdata.refs_file))
+diff --git a/refs.c b/refs.c
+index 175b9fc..e2b760d 100644
+--- a/refs.c
++++ b/refs.c
+@@ -803,11 +803,38 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 	return line;
+ }
+ 
++/*
++ * Read f, which is a packed-refs file, into dir.
++ *
++ * A comment line of the form "# pack-refs with: " may contain zero or
++ * more traits. We interpret the traits as follows:
++ *
++ *   No traits:
++ *
++ *      Probably no references are peeled. But if the file contains a
++ *      peeled value for a reference, we will use it.
++ *
++ *   peeled:
++ *
++ *      References under "refs/tags/", if they *can* be peeled, *are*
++ *      peeled in this file. References outside of "refs/tags/" are
++ *      probably not peeled even if they could have been, but if we find
++ *      a peeled value for such a reference we will use it.
++ *
++ *   fully-peeled:
++ *
++ *      All references in the file that can be peeled are peeled.
++ *      Inversely (and this is more important), any references in the
++ *      file for which no peeled value is recorded is not peelable. This
++ *      trait should typically be written alongside "peeled" for
++ *      compatibility with older clients, but we do not require it
++ *      (i.e., "peeled" is a no-op if "fully-peeled" is set).
++ */
+ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ {
+ 	struct ref_entry *last = NULL;
+ 	char refline[PATH_MAX];
+-	int flag = REF_ISPACKED;
++	enum { PEELED_NONE, PEELED_TAGS, PEELED_FULLY } peeled = PEELED_NONE;
+ 
+ 	while (fgets(refline, sizeof(refline), f)) {
+ 		unsigned char sha1[20];
+@@ -816,15 +843,20 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 
+ 		if (!strncmp(refline, header, sizeof(header)-1)) {
+ 			const char *traits = refline + sizeof(header) - 1;
+-			if (strstr(traits, " peeled "))
+-				flag |= REF_KNOWS_PEELED;
++			if (strstr(traits, " fully-peeled "))
++				peeled = PEELED_FULLY;
++			else if (strstr(traits, " peeled "))
++				peeled = PEELED_TAGS;
+ 			/* perhaps other traits later as well */
+ 			continue;
+ 		}
+ 
+ 		refname = parse_ref_line(refline, sha1);
+ 		if (refname) {
+-			last = create_ref_entry(refname, sha1, flag, 1);
++			last = create_ref_entry(refname, sha1, REF_ISPACKED, 1);
++			if (peeled == PEELED_FULLY ||
++			    (peeled == PEELED_TAGS && !prefixcmp(refname, "refs/tags/")))
++				last->flag |= REF_KNOWS_PEELED;
+ 			add_ref(dir, last);
+ 			continue;
+ 		}
+@@ -832,8 +864,15 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 		    refline[0] == '^' &&
+ 		    strlen(refline) == 42 &&
+ 		    refline[41] == '\n' &&
+-		    !get_sha1_hex(refline + 1, sha1))
++		    !get_sha1_hex(refline + 1, sha1)) {
+ 			hashcpy(last->u.value.peeled, sha1);
++			/*
++			 * Regardless of what the file header said,
++			 * we definitely know the value of *this*
++			 * reference:
++			 */
++			last->flag |= REF_KNOWS_PEELED;
++		}
+ 	}
+ }
+ 
+diff --git a/t/t3211-peel-ref.sh b/t/t3211-peel-ref.sh
+index 85f09be..d4d7792 100755
+--- a/t/t3211-peel-ref.sh
++++ b/t/t3211-peel-ref.sh
+@@ -39,4 +39,26 @@ test_expect_success 'refs are peeled outside of refs/tags (packed)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'create old-style pack-refs without fully-peeled' '
++	# Git no longer writes without fully-peeled, so we just write our own
++	# from scratch; we could also munge the existing file to remove the
++	# fully-peeled bits, but that seems even more prone to failure,
++	# especially if the format ever changes again. At least this way we
++	# know we are emulating exactly what an older git would have written.
++	{
++		echo "# pack-refs with: peeled " &&
++		print_ref "refs/heads/master" &&
++		print_ref "refs/outside/foo" &&
++		print_ref "refs/tags/base" &&
++		print_ref "refs/tags/foo" &&
++		echo "^$(git rev-parse "refs/tags/foo^{}")"
++	} >tmp &&
++	mv tmp .git/packed-refs
++'
++
++test_expect_success 'refs are peeled outside of refs/tags (old packed)' '
++	git show-ref -d >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+1.8.2.rc2.7.gef06216
