@@ -1,119 +1,161 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Proposal: sharing .git/config
-Date: Mon, 18 Mar 2013 07:48:05 -0400
-Message-ID: <20130318114805.GB14789@sigill.intra.peff.net>
-References: <CALkWK0npW6TLdMNd5_zw-RAB0bjF9DDoyAVSx4Zx=7AmvdEo3w@mail.gmail.com>
- <CACsJy8Ch70gZMkT7ScY3R-FNQU4QjtUe8UhoGRzE27cH9mu0HA@mail.gmail.com>
- <20130219153600.GA5338@sigill.intra.peff.net>
- <CALkWK0kZiYmbh-dSr-c2mzK2Mzhf3iZ_T3hFNuR57F0b5tptGw@mail.gmail.com>
- <20130312085342.GA11340@sigill.intra.peff.net>
- <CALkWK0nWXCO_EXfx69m8XbrFe=ABBodPdFbSrS9v3VqgfbnQ+w@mail.gmail.com>
+Subject: random server hacks on top of git
+Date: Mon, 18 Mar 2013 08:12:43 -0400
+Message-ID: <20130318121243.GC14789@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 18 12:48:47 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Mar 18 13:13:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHYYQ-0008Im-8e
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 12:48:38 +0100
+	id 1UHYwF-0000ac-Rt
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 13:13:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752651Ab3CRLsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 07:48:10 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55936 "EHLO
+	id S1751940Ab3CRMMs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Mar 2013 08:12:48 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55961 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751001Ab3CRLsJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 07:48:09 -0400
-Received: (qmail 15759 invoked by uid 107); 18 Mar 2013 11:49:52 -0000
+	id S1751129Ab3CRMMr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 08:12:47 -0400
+Received: (qmail 15860 invoked by uid 107); 18 Mar 2013 12:14:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Mar 2013 07:49:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Mar 2013 07:48:05 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Mar 2013 08:14:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Mar 2013 08:12:43 -0400
 Content-Disposition: inline
-In-Reply-To: <CALkWK0nWXCO_EXfx69m8XbrFe=ABBodPdFbSrS9v3VqgfbnQ+w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218405>
 
-On Mon, Mar 18, 2013 at 02:30:23PM +0530, Ramkumar Ramachandra wrote:
+[Re-titled, as we are off-topic from the original patch series]
 
-> Jeff King wrote:
-> > I don't think you can avoid the 3-step problem and retain the safety in
-> > the general case.  Forgetting implementation details for a minute, you
-> > have either a 1-step system:
-> >
-> >   1. Fetch and start using config from the remote.
-> >
-> > which is subject to fetching and executing malicious config, or:
-> >
-> >   1. Fetch config from remote.
-> >   2. Inspect it.
-> >   3. Integrate it into the current config.
-> 
-> I don't understand your emphasis on step 2.  Isn't the configuration
-> written by me?  Why would it be malicious?
+On Sun, Mar 17, 2013 at 05:38:59PM +0100, Ren=C3=A9 Scharfe wrote:
 
-Maybe I am misunderstanding the use case, but when people talk about
-share config, they are often talking about pushing project-wide config
-out to developers. So the config is not necessarily written by you, but
-by somebody who had write access to the upstream repository.
+> Am 17.03.2013 06:40, schrieb Jeff King:
+> >We do have the capability to roll out to one or a few of our servers
+> >(the granularity is not 0.2%, but it is still small). I'm going to t=
+ry
+> >to keep us more in sync with upstream git, but I don't know if I wil=
+l
+> >get to the point of ever deploying "master" or "next", even for a sm=
+all
+> >portion of the population. We are accumulating more hacks[1] on top =
+of
+> >git, so it is not just "run master for an hour on this server"; I ha=
+ve
+> >to actually merge our fork.
+>=20
+> Did you perhaps intend to list these hacks in a footnote or link to a
+> repository containing them?  (I can't find the counterpart of that
+> [1].)
 
-The obvious counterpoint is that people usually run "make" right after
-fetching, so they are trusting what they fetched already. And the
-counter-counterpoint is that yes, that's true, but at least with the
-"make" case they can use git to inspect the differences before running
-them. You may be able to tell that this is not the first time this
-discussion has happened. :)
+I was actually just going to say "some of which are gross hacks that
+will never see the light of day, some of which have already gone
+upstream, and some of which I am planning on submitting upstream".
 
-Personally, I do not think it is the end of the world for people to opt
-into the "automatically fetch and respect config" method for certain
-repositories (and that's why I wrote include.ref support a while ago).
-It's a security tradeoff that the user may want to make. But I also
-respect the argument that we should not be endorsing risky behavior by
-advertising such a feature (especially when the risk is quite subtle, as
-many users may not realize that git config can execute arbitrary code).
+But since I happened to be cataloguing them recently, here is the list
+of things that have not yet gone upstream.  If anybody is interested in
+a particular topic, I'm happy to discuss and/or prioritize moving it
+forward.
 
-> I've just started thinking about how to design something that will
-> allow us to share configuration elegantly [1].  Essentially, the
-> metadata repository will consist of *.layout files, one for each
-> repository to clone, containing the .git/config to write after cloning
-> that repository.  So, a git.layout might look like:
-> 
-> [layout]
-> 	directory = git
-> [remote "origin"]
-> 	url = git://github.com/git/git
-> [remote "ram"]
-> 	url = git@github.com:artagnon/git
-> [remote "junio"]
-> 	url = git://github.com/gitster/git
-> 
-> As you can see the [layout] is a special section which will tell our
-> fetcher where to place the repository.  Everything else is meant to be
-> inserted into the repository's .git/config.  However, I can foresee a
-> problem in scaling: when I ask a specific directory like a/b/c to be
-> populated (equivalent of repo sync `a/b/c`), it'll have to parse the
-> layout.directory variable of all the .layout files, and this can be
-> slow.  So, maybe we should have a special _manifest.layout listing all
-> the paths?
-> 
-> Further, I see this as a way to work with projects that would
-> otherwise require nested submodules like the Android project.  What do
-> you think?
+  - blame-tree; re-rolled from my submission last year to build on top
+    of the revision machinery, handle merges sanely, etc. Mostly this
+    needs documentation and a clean-up of the output format (which is
+    very utilitarian, but probably should share output with git-blame).
 
-Yeah, reading your layout description, this is less about git config in
-particular, and more about managing hierarchies of repos. Which I think
-is a fine thing to do, and is a sensible place to put config management
-(since you are probably executing arbitrary code as part of the layout
-tool anyway). But I don't have a real opinion on the design of such a
-tool. I have used repo only once or twice to deal with Android. For my
-own menagerie of small repos, I have a hacky custom tool that is mostly
-about deciding when there are items to be committed, pushed, or fetched
-in each repo; I never found the need to handle git config at all.
+  - diff --max-depth; this is a requirement to do blame-tree efficientl=
+y
+    if you want to do GitHub-style listings (you must recurse to find
+    the history of some/subdir, but you do not want to recurse past tha=
+t
+    for efficiency reasons). This is hung up on two things:
+
+      1. It does not integrate with the pathspec max-depth code, becaus=
+e
+         we do not use struct pathspec in the tree diff (but I think
+         Duy's patches are changing that).
+
+      2. My definition of --max-depth is subtly different from that of
+         "git grep".  But I think mine is more useful, and I haven't
+         decided how to reconcile it.
+
+  - share ref selection code between "git branch", "git tag", and "git
+    for-each-ref". This includes cleaning up the "tag --contains" code
+    to be safer for general use (so that "branch --contains" can benefi=
+t
+    from the speedup), and then getting the same options for all three
+    commands (tag doesn't know about --merged, and for-each-ref
+    doesn't know about --contains or --merged).
+
+   - receive.maxsize; index-pack will happily spool data to disk
+     forever, and you never even get a chance to make a policy decision
+     like "hey, this is too big". This patch lets index-pack cut off th=
+e
+     client after a certain number of bytes. It's not elegant because
+     the cutoff transfer is not resumable, but we use it is as a
+     last-ditch for DoS protection (the client can reconnect and send
+     more, of course, but at that point we have the opportunity to make
+     external policy decisions like locking their account). Not sure if
+     other sites would want this or not.
+
+   - receive.advertisealternates; basically turn off ".have"
+     advertisement. Some of our alternates networks are so huge that
+     the cost of collecting all of the alternate refs is very high (eve=
+n
+     though it can save some transfer bandwidth). Not sure if other
+     sites want this or not (and I think it would be more elegant to
+     have a small static set of common refs that people build off of,
+     and advertise those. e.g., if you fork rails/rails, then we should
+     advertise rails/rails/refs/heads/master as a ".have", but not
+     anybody else's fork).
+
+    - receive.hiderefs; this is going to become redundant with Junio's
+      implementation
+
+    - an audit reflog; we keep a reflog for all refs at the root of the
+      repository. It differs from a regular reflog in that:
+
+        1. It never expires.
+
+        2. It is not part of reachability analysis.
+
+        3. It includes the refname for each entry, so you can see
+           deletions.
+
+      It's mostly useful for forensics when somebody has screwed up
+      their repository (or we're chasing down a git bug; it helped me
+      find the pack-refs race recently). Probably too GitHub-specific
+      for other people to want it (especially because it grows without
+      bound).
+
+    - statistics instrumentation; we keep counters for various things i=
+n
+      code (e.g., which phase of protocol upload-pack is in, how many
+      bytes sent, etc) and expose them in a few ways. One is over a
+      socket to run a "top"-like interface. Another is to tweak the arg=
+v
+      array of the process so that "ps" shows the process state. I thin=
+k
+      it would be useful to other people running git servers, but the
+      code is currently quite nasty and invasive. I have a
+      work-in-progress to clean it up, but it's got a ways to go.
+
+    - hacks to set niceness and io-priority; this should be done by a
+      wrapper, but in our case it was simpler to catch all processes by
+      just building it into git. Too gross to go upstream.
+
+    - ignore some fsck warnings under transfer.fsckobjects; some of the=
+m
+      are annoyingly common when people pull old history from an
+      existing project and try to push it back up. It's not indicative
+      of a new bug in an implementation, but we have to live with the
+      broken history forever (e.g., zero-padded modes in trees).
 
 -Peff
