@@ -1,145 +1,105 @@
-From: Rob Hoelz <rob@hoelz.ro>
-Subject: Re: [PATCH] push: Alias pushurl from push rewrites
-Date: Mon, 18 Mar 2013 11:01:44 +0100
-Message-ID: <5146E608.9070506@hoelz.ro>
-References: <20130317235040.4cdc9ef2@hoelz.ro> <7vd2uxppk0.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [RFC/PATCH] Documentation/technical/api-fswatch.txt: start with outline
+Date: Mon, 18 Mar 2013 11:07:55 +0100
+Message-ID: <87r4jdt404.fsf@pctrast.inf.ethz.ch>
+References: <1362946623-23649-1-git-send-email-artagnon@gmail.com>
+	<513FB85C.5010106@gmail.com>
+	<CACsJy8CBru+Z0+oYVKGdwjiF4DDH3w4vCjunaoCnoDQ6AizwWg@mail.gmail.com>
+	<5140BC80.4000201@gmail.com> <7vtxof146d.fsf@alter.siamese.dyndns.org>
+	<87ehffv30f.fsf@pctrast.inf.ethz.ch>
+	<CALkWK0=0+HYn=bSrGC5sMQOE-53As0h9dG3N9wvUB2=NW3=98A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, josh@joshtriplett.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 18 11:02:05 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"Erik Faye-Lund" <kusmabite@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 18 11:08:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHWtI-0001tN-Do
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 11:02:04 +0100
+	id 1UHWzS-0006o1-MC
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 11:08:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119Ab3CRKBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 06:01:37 -0400
-Received: from hoelz.ro ([66.228.44.67]:55541 "EHLO mail.hoelz.ro"
+	id S1754115Ab3CRKH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 06:07:59 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:31412 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752008Ab3CRKBg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 06:01:36 -0400
-Received: from Robs-MacBook-Pro.local (localhost [127.0.0.1])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.hoelz.ro (Postfix) with ESMTPSA id 429B5280EE;
-	Mon, 18 Mar 2013 06:01:35 -0400 (EDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20130216 Thunderbird/17.0.3
-In-Reply-To: <7vd2uxppk0.fsf@alter.siamese.dyndns.org>
+	id S1752355Ab3CRKH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 06:07:59 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 18 Mar
+ 2013 11:07:55 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
+ cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 18 Mar 2013 11:07:56 +0100
+In-Reply-To: <CALkWK0=0+HYn=bSrGC5sMQOE-53As0h9dG3N9wvUB2=NW3=98A@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 18 Mar 2013 13:54:03 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218401>
 
-On 3/18/13 12:35 AM, Junio C Hamano wrote:
-> Rob Hoelz <rob@hoelz.ro> writes:
->
->> git push currently doesn't consider pushInsteadOf when
->> using pushurl; this tests and fixes that.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> Junio C Hamano wrote:
+>> Yes, and you would need one inotify per directory but you do not
+>> have an infinite supply of outstanding inotify watch (wasn't the
+>> limit like 8k per a single uid or something?), so the daemon must be
+>> prepared to say "I'll watch this, that and that directories, but the
+>> consumers should check other directories themselves."
 >>
->> If you use pushurl with an alias that has a pushInsteadOf configuration
->> value, Git does not take advantage of it.  For example:
->>
->> [url "git://github.com/"]
->>     insteadOf = github:
->> [url "git://github.com/myuser/"]
->>     insteadOf = mygithub:
->> [url "git@github.com:myuser/"]
->>     pushInsteadOf = mygithub:
->> [remote "origin"]
->>     url     = github:organization/project
->>     pushurl = mygithub:project
-> Incomplete sentence?  For example [this is an example configuration]
-> and then what happens?  Something like "with the sample
-> configuration, 'git push origin' should follow pushurl and then turn
-> it into X, but instead it ends up accessing Y".
+>> FWIW, I share your suspicion that an effort in the direction this
+>> thread suggests may end up duplicating what the caching vfs layer
+>> already does, and doing so poorly.
 >
-> If there is no pushInsteadOf, does it still follow insteadOf?  Is it
-> tested already?
+> Thomas Rast wrote:
+>>   $ cat /proc/sys/fs/inotify/max_user_watches
+>>   65536
+>>   $ cat /proc/sys/fs/inotify/max_user_instancest
+>>   128
 >
-> Wouldn't you want to cover all the combinations to negative cases
-> (i.e. making sure the codepath to support a new case does not affect
-> behaviour of the code outside the new case)?  A remote with and
-> without pushurl (two combinations) and a pseudo URL scheme with and
-> without pushInsteadOf (again, two combinations) will give you four
-> cases.
->
->
-> Thanks.
-Sorry; that's a good point.  With the above configuration, the following
-fails:
+> From Junio's and Thomas' observations, I'm inclined to think that
+> inotify is ill-suited for the problem we are trying to solve.  It is
+> designed as a per-directory watch, because VFS can quickly supply the
+> inodes for a directory entry.  As such, I think the ideal usecase for
+> inotify is to execute something immediately when a change takes place
+> in a directory: it's well-suited for solutions like Dropbox (which I
+> think is poorly designed to begin with, but that's offtopic).  It
+> doesn't substitute of augment VFS caching.  I suspect the VFS cache
+> works by caching the inodes in a frequently used directory entry, thus
+> optimizing calls like lstat() on them.
 
-$ git push origin master
+I have three objections to changing the kernel to fit us, as opposed to
+just using inotify:
 
-With the following message:
+* inotify works.  I can watch most of my $HOME with the hack I linked
+  earlier[1].  Yes, it's a lot of coding around the problem that it is
+  nonrecursive, but we already have a lot of code around the problem
+  that we can't ask the VFS for diffs between points in time (namely,
+  the whole business with an index and lstat() loops).
 
-fatal: remote error:
-  You can't push to git://github.com/myuser/project.git
-  Use git@github.com:myuser/project.git
+* inotify is here today.  Even if you got a hypothetical notifier into
+  the kernel today, you'd have to wait months/years until it is
+  available in distros, and years until everyone has it.
 
-So you can see that pushurl is being followed (it's not attempting to
-push to git://github.com/organization/project), but insteadOf values are
-being used as opposed to pushInsteadOf values for expanding the pushurl
-alias.
+* I'll bet you a beer that the kernel folks already had the same
+  discussion when they made inotify.  There has to be a reason why it's
+  better than providing for recursive watches.
 
-I haven't tried without pushInsteadOf; I will add a test for it later
-today.  I assume that if pushInsteadOf isn't found, insteadOf should be
-used?  I will also consider the other test cases you described.
 
-Thanks again for the feedback!
->
->> Signed-off-by: Rob Hoelz <rob@hoelz.ro>
->> ---
->>  remote.c              |  2 +-
->>  t/t5516-fetch-push.sh | 20 ++++++++++++++++++++
->>  2 files changed, 21 insertions(+), 1 deletion(-)
->>
->> diff --git a/remote.c b/remote.c
->> index ca1f8f2..de7a915 100644
->> --- a/remote.c
->> +++ b/remote.c
->> @@ -465,7 +465,7 @@ static void alias_all_urls(void)
->>  		if (!remotes[i])
->>  			continue;
->>  		for (j = 0; j < remotes[i]->pushurl_nr; j++) {
->> -			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
->> +			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites_push);
->>  		}
->>  		add_pushurl_aliases = remotes[i]->pushurl_nr == 0;
->>  		for (j = 0; j < remotes[i]->url_nr; j++) {
->> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
->> index b5417cc..272e225 100755
->> --- a/t/t5516-fetch-push.sh
->> +++ b/t/t5516-fetch-push.sh
->> @@ -244,6 +244,26 @@ test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf
->>  	)
->>  '
->>  
->> +test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf does rewrite in this case)' '
->> +	mk_empty &&
->> +	TRASH="$(pwd)/" &&
->> +	mkdir ro &&
->> +	mkdir rw &&
->> +	git init --bare rw/testrepo &&
->> +	git config "url.file://$TRASH/ro/.insteadOf" ro: &&
->> +	git config "url.file://$TRASH/rw/.pushInsteadOf" rw: &&
->> +	git config remote.r.url ro:wrong &&
->> +	git config remote.r.pushurl rw:testrepo &&
->> +	git push r refs/heads/master:refs/remotes/origin/master &&
->> +	(
->> +		cd rw/testrepo &&
->> +		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
->> +		test "z$r" = "z$the_commit" &&
->> +
->> +		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
->> +	)
->> +'
->> +
->>  test_expect_success 'push with matching heads' '
->>  
->>  	mk_test heads/master &&
+[1]  https://github.com/trast/watch
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
