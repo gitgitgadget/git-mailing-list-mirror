@@ -1,118 +1,109 @@
-From: Joydeep Bakshi <joydeep.bakshi@infoservices.in>
-Subject: Re: building git ; need suggestion
-Date: Mon, 18 Mar 2013 17:54:26 +0530
-Message-ID: <9E0367AC-617A-440B-925E-5796CF2E1ADF@infoservices.in>
-References: <868B103B-690E-477B-BF75-8F954F893E6F@infoservices.in> <20130315124415.GA23122@paksenarrion.iveqy.com> <00107242-04EB-423F-90FE-A6DCDEE7E262@infoservices.in> <20130315131403.GA27022@google.com> <C8080BF5-DC87-421D-97A1-DF5CF403A03A@infoservices.in>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
-Content-Type: text/plain; charset=iso-8859-1
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] read-cache: avoid memcpy in expand_name_field in index v4
+Date: Mon, 18 Mar 2013 19:58:02 +0700
+Message-ID: <1363611482-1015-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-To: =?iso-8859-1?Q?Magnus_B=E4ck?= <baeck@google.com>
-X-From: git-owner@vger.kernel.org Mon Mar 18 13:25:10 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 18 13:58:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHZ7j-0000lp-78
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 13:25:07 +0100
+	id 1UHZeA-0008Lt-CX
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 13:58:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751120Ab3CRMYk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Mar 2013 08:24:40 -0400
-Received: from static.88-198-19-49.clients.your-server.de ([88.198.19.49]:38695
-	"EHLO zimbra.infoservices.in" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750985Ab3CRMYj convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 08:24:39 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.infoservices.in (Postfix) with ESMTP id E824CE21730;
-	Mon, 18 Mar 2013 17:54:37 +0530 (IST)
-X-Virus-Scanned: amavisd-new at zimbra.infoservices.in
-Received: from zimbra.infoservices.in ([127.0.0.1])
-	by localhost (zimbra.infoservices.in [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QXUOdkRBRa+T; Mon, 18 Mar 2013 17:54:36 +0530 (IST)
-Received: from [192.168.1.116] (unknown [122.176.30.116])
-	by zimbra.infoservices.in (Postfix) with ESMTPSA id 63304E2172B;
-	Mon, 18 Mar 2013 17:54:35 +0530 (IST)
-In-Reply-To: <C8080BF5-DC87-421D-97A1-DF5CF403A03A@infoservices.in>
-X-Mailer: Apple Mail (2.1499)
+	id S1751922Ab3CRM6L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Mar 2013 08:58:11 -0400
+Received: from mail-da0-f46.google.com ([209.85.210.46]:36967 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751651Ab3CRM6K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 08:58:10 -0400
+Received: by mail-da0-f46.google.com with SMTP id y19so4048dan.33
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 05:58:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=oWfCvP1kGnvpvp/RGhaFeb5HJD49r54ORiohSeuN7DU=;
+        b=oV4rmq8iHvEGo6TBN/diN6JOCx5hsI2AlOtfkavjGTyKKGYrhOpJils5Rz9CbqwLkt
+         /5dAmz4iT1a3jSHVJTUZqQUmzS2a32/AAjBfie4P7lEJJ3oKePJWf8D88PxK6peshkFS
+         NQW1u3kDXivrD/FIeg8Qj/1qE5h0pdI0gtRih6ZrhRsYLvV4mYkZJ1szlNQHAIOTQC00
+         OyUz8gFOADOfHZA2sdWpvGSCnaemLsxuUA+cVIniART2m3maU1Jd+y0ggJj968X/ZJOt
+         R6Ss6CxiJeZ2ZCIj8JBtamhM5PRuyE5t5MGaVfBX+LaIWiPCZKtfKbWPiFnFkbA0I4a3
+         uhag==
+X-Received: by 10.68.204.164 with SMTP id kz4mr32704441pbc.158.1363611489802;
+        Mon, 18 Mar 2013 05:58:09 -0700 (PDT)
+Received: from lanh ([115.74.61.42])
+        by mx.google.com with ESMTPS id yr10sm8161837pab.6.2013.03.18.05.58.06
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 18 Mar 2013 05:58:08 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 18 Mar 2013 19:58:03 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218409>
 
-I'm closer to my requirement. I have found gitweb simply provide a GUI =
- for history check
-and code comparison. And the git itself is good enough to do the ACL st=
-uff with hooks.
+perf reports memcpy at the the 6th position [1] in "git status -uno"
+using index v4, and strbuf_remove() in expand_name_field() accounts
+for 25% of that. What we need here is a simple string cut and a
+cheaper strbuf_setlen() should be enough. After this change, memcpy
+drops down to the 13th position [2] and is dominated by
+read_index_from.
 
-I already have the following code to deploy the push into its work-tree
+[1] before
++     15.74%   git  git                [.] blk_SHA1_Block
++     13.22%   git  [kernel.kallsyms]  [k] link_path_walk
++     10.91%   git  [kernel.kallsyms]  [k] __d_lookup
++      8.17%   git  [kernel.kallsyms]  [k] strncpy_from_user
++      4.75%   git  [kernel.kallsyms]  [k] memcmp
++      2.42%   git  libc-2.11.2.so     [.] memcpy
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-#!/bin/bash
+[2] after
++     16.30%   git  git                [.] blk_SHA1_Block
++     13.43%   git  [kernel.kallsyms]  [k] link_path_walk
++     11.45%   git  [kernel.kallsyms]  [k] __d_lookup
++      8.73%   git  [kernel.kallsyms]  [k] strncpy_from_user
++      5.14%   git  [kernel.kallsyms]  [k] memcmp
++      2.29%   git  [kernel.kallsyms]  [k] do_lookup
++      2.21%   git  libc-2.11.2.so     [.] 0x6daf6
++      1.98%   git  [kernel.kallsyms]  [k] _atomic_dec_and_lock
++      1.98%   git  [kernel.kallsyms]  [k] _raw_spin_lock
++      1.86%   git  [kernel.kallsyms]  [k] acl_permission_check
++      1.61%   git  [kernel.kallsyms]  [k] kmem_cache_free
++      1.59%   git  git                [.] unpack_trees
++      1.47%   git  libc-2.11.2.so     [.] memcpy
 
-while read oldrev newrev ref
-do
-  branch=3D`echo $ref | cut -d/ -f3`
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ I was after something else when I noticed this. Seems like a simple
+ and safe change.
 
-  if [ "master" =3D=3D "$branch" ]; then
-    git --work-tree=3D/path/under/root/dir/live-site/ checkout -f $bran=
-ch
-    echo 'Changes pushed live.'
-  fi
+ read-cache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  if [ "dev" =3D=3D "$branch" ]; then
-    git --work-tree=3D/path/under/root/dir/dev-site/ checkout -f $branc=
-h
-    echo 'Changes pushed to dev.'
-  fi
-done
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-
-This code can be extended for as many branches as you have.
-
-I now need a mechanism to restrict the user to it's own branch so that =
-user can't push into
-any other branch in mistake.
-
-Say I have
-
-master branch -> only admin user can push here.
-dev branch -> only user dev1 , dev2  and master can push here.=20
-testing branch -> only user test1 and test2 can push here.
-
-I think this can also be done with pre-receive hook. Any suggestion on =
-the hook design is
-welcome. Also this can be implemented on the above hook or in a separat=
-e hook.
-A separate hook is better due to maintainability and then I need to cal=
-l multiple
-pre-receive hook. Please suggest.
-
-Thanks
-
-
-
-On 18-Mar-2013, at 11:14 AM, Joydeep Bakshi <joydeep.bakshi@infoservice=
-s.in> wrote:
-
->=20
-> On 15-Mar-2013, at 6:44 PM, Magnus B=E4ck <baeck@google.com> wrote:
->>>=20
->>=20
->> Right, but that's R/W permissions. Almost any piece of Git hosting
->> software supports restriction of pushes. Discriminating *read* acces=
-s
->> between developers and maintenance people sounds like a disaster if =
-it's
->> the same organisation.=20
->=20
-> Just restriction on push access is what required.
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/read-cache.c b/read-cache.c
+index 827ae55..8c443aa 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1354,7 +1354,7 @@ static unsigned long expand_name_field(struct str=
+buf *name, const char *cp_)
+=20
+ 	if (name->len < len)
+ 		die("malformed name field in the index");
+-	strbuf_remove(name, name->len - len, len);
++	strbuf_setlen(name, name->len - len);
+ 	for (ep =3D cp; *ep; ep++)
+ 		; /* find the end */
+ 	strbuf_add(name, cp, ep - cp);
+--=20
+1.8.2.83.gc99314b
