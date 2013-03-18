@@ -1,161 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: random server hacks on top of git
-Date: Mon, 18 Mar 2013 08:12:43 -0400
-Message-ID: <20130318121243.GC14789@sigill.intra.peff.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH/RFC] http_init: only initialize SSL for https
+Date: Mon, 18 Mar 2013 13:14:15 +0100
+Message-ID: <CABPQNSZVptZ9RMQSe8ypgcBH1hmQ6Edg-27JT7-qp4H-46UfQA@mail.gmail.com>
+References: <1363269079-6124-1-git-send-email-kusmabite@gmail.com>
+ <alpine.DEB.1.00.1303141621340.3794@s15462909.onlinehome-server.info>
+ <CABPQNSZNdGea9Nn91emWhfRGAZjZXm755UKArNr3EUy9CrSKHg@mail.gmail.com>
+ <7vmwu6x72q.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1303142333170.3794@s15462909.onlinehome-server.info>
+ <7vk3p9wqh5.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1303151054130.32216@tvnag.unkk.fr>
+ <7v4ngcwt4w.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1303151719170.32216@tvnag.unkk.fr>
+ <20130316120300.GA2626@sigill.intra.peff.net> <alpine.DEB.2.00.1303162355120.21738@tvnag.unkk.fr>
+ <CALWbr2wQNM=7vUcoragNmKGpSeXkOCsmsM5y1AMhj95i15A4bw@mail.gmail.com>
+ <alpine.DEB.2.00.1303172305230.21738@tvnag.unkk.fr> <7vli9lpsqe.fsf@alter.siamese.dyndns.org>
+ <CABPQNSasFV-vZSMygu16xc-C2d3jTt7mtzFsYQyNUhS5jL-EoQ@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Mar 18 13:13:17 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Daniel Stenberg <daniel@haxx.se>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>, msysgit@googlegroups.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 18 13:15:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHYwF-0000ac-Rt
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 13:13:16 +0100
+	id 1UHYyJ-00028V-PR
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 13:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751940Ab3CRMMs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Mar 2013 08:12:48 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55961 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751129Ab3CRMMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 08:12:47 -0400
-Received: (qmail 15860 invoked by uid 107); 18 Mar 2013 12:14:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Mar 2013 08:14:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Mar 2013 08:12:43 -0400
-Content-Disposition: inline
+	id S1752370Ab3CRMO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 08:14:57 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:64189 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752102Ab3CRMO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 08:14:56 -0400
+Received: by mail-ie0-f175.google.com with SMTP id c12so6872977ieb.34
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 05:14:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:reply-to:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=RLMjE3L7ALwPo0OTDp/IHRa2cTVkQ6tCFJy69yRYiYs=;
+        b=r0D0ROFr4lcCtT8aCoZh2TZj3kNuGmavkXuXY7Gq1u7Bp32KZGLVt+dyB5fFsVxIZH
+         3Tcy01MvqBFTRbca4Wc4XzKyXn0NOnVhm208HnZkOhzNyNy+L4eAiqQQWZQufXoDgTLH
+         enTNJHeSUdtDSkL/x37nn8FPHtmk75+DhmTNRoW/sv+BvM/BjNJ6+ob0MD26cjdGzl8W
+         /qwxgUHTlkZfg9xZGhoUdyFLGz/D9HV+a+b1VX2zTC390dSHLpZBojE8StceAeAbqEgf
+         4PrKopgCfcmXpnoivd6SPoVlpEY0iaMleb8ZfiGeYDHgImNv/3ixz8LsMpRyY5dEsbPD
+         XJgQ==
+X-Received: by 10.50.202.6 with SMTP id ke6mr6122750igc.30.1363608895793; Mon,
+ 18 Mar 2013 05:14:55 -0700 (PDT)
+Received: by 10.64.44.47 with HTTP; Mon, 18 Mar 2013 05:14:15 -0700 (PDT)
+In-Reply-To: <CABPQNSasFV-vZSMygu16xc-C2d3jTt7mtzFsYQyNUhS5jL-EoQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218406>
 
-[Re-titled, as we are off-topic from the original patch series]
+On Mon, Mar 18, 2013 at 11:38 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> On Sun, Mar 17, 2013 at 11:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Daniel Stenberg <daniel@haxx.se> writes:
+>>
+>>> On Sun, 17 Mar 2013, Antoine Pelisse wrote:
+>>>
+>>>>> With redirects taken into account, I can't think of any really good way
+>>>>> around avoiding this init...
+>>>>
+>>>> Is there any way for curl to initialize SSL on-demand ?
+>>>
+>>> Yes, but not without drawbacks.
+>>>
+>>> If you don't call curl_global_init() at all, libcurl will notice that
+>>> on first use and then libcurl will call global_init by itself with a
+>>> default bitmask.
+>>>
+>>> That automatic call of course will prevent the application from being
+>>> able to set its own bitmask choice, and also the global_init function
+>>> is not (necessarily) thread safe while all other libcurl functions are
+>>> so the internal call to global_init from an otherwise thread-safe
+>>> function is unfortunate.
+>>
+>> So in short, unless you are writing a custom application to talk to
+>> servers that you know will never redirect you to HTTPS, passing
+>> custom masks such as ALL&~SSL to global-init is not going to be a
+>> valid optimization.
+>>
+>> I think that is a reasonable API; your custom application may want
+>> to go around your intranet servers all of which serve their status
+>> over plain HTTP, and it is a valid optimization to initialize the
+>> library with ALL&~SSL.  It is just that such an optimization does
+>> not apply to us---we let our users go to random hosts we have no
+>> control over, and they may redirect us in ways we cannot anticipate.
+>>
+>
+> I wonder. Our libcurl is build with "-winssl" (USE_WINDOWS_SSPI=1), it
+> seems. Perhaps switching to openssl (which we already have libraries
+> for) would make the init-time better?
 
-On Sun, Mar 17, 2013 at 05:38:59PM +0100, Ren=C3=A9 Scharfe wrote:
-
-> Am 17.03.2013 06:40, schrieb Jeff King:
-> >We do have the capability to roll out to one or a few of our servers
-> >(the granularity is not 0.2%, but it is still small). I'm going to t=
-ry
-> >to keep us more in sync with upstream git, but I don't know if I wil=
-l
-> >get to the point of ever deploying "master" or "next", even for a sm=
-all
-> >portion of the population. We are accumulating more hacks[1] on top =
-of
-> >git, so it is not just "run master for an hour on this server"; I ha=
-ve
-> >to actually merge our fork.
->=20
-> Did you perhaps intend to list these hacks in a footnote or link to a
-> repository containing them?  (I can't find the counterpart of that
-> [1].)
-
-I was actually just going to say "some of which are gross hacks that
-will never see the light of day, some of which have already gone
-upstream, and some of which I am planning on submitting upstream".
-
-But since I happened to be cataloguing them recently, here is the list
-of things that have not yet gone upstream.  If anybody is interested in
-a particular topic, I'm happy to discuss and/or prioritize moving it
-forward.
-
-  - blame-tree; re-rolled from my submission last year to build on top
-    of the revision machinery, handle merges sanely, etc. Mostly this
-    needs documentation and a clean-up of the output format (which is
-    very utilitarian, but probably should share output with git-blame).
-
-  - diff --max-depth; this is a requirement to do blame-tree efficientl=
-y
-    if you want to do GitHub-style listings (you must recurse to find
-    the history of some/subdir, but you do not want to recurse past tha=
-t
-    for efficiency reasons). This is hung up on two things:
-
-      1. It does not integrate with the pathspec max-depth code, becaus=
-e
-         we do not use struct pathspec in the tree diff (but I think
-         Duy's patches are changing that).
-
-      2. My definition of --max-depth is subtly different from that of
-         "git grep".  But I think mine is more useful, and I haven't
-         decided how to reconcile it.
-
-  - share ref selection code between "git branch", "git tag", and "git
-    for-each-ref". This includes cleaning up the "tag --contains" code
-    to be safer for general use (so that "branch --contains" can benefi=
-t
-    from the speedup), and then getting the same options for all three
-    commands (tag doesn't know about --merged, and for-each-ref
-    doesn't know about --contains or --merged).
-
-   - receive.maxsize; index-pack will happily spool data to disk
-     forever, and you never even get a chance to make a policy decision
-     like "hey, this is too big". This patch lets index-pack cut off th=
-e
-     client after a certain number of bytes. It's not elegant because
-     the cutoff transfer is not resumable, but we use it is as a
-     last-ditch for DoS protection (the client can reconnect and send
-     more, of course, but at that point we have the opportunity to make
-     external policy decisions like locking their account). Not sure if
-     other sites would want this or not.
-
-   - receive.advertisealternates; basically turn off ".have"
-     advertisement. Some of our alternates networks are so huge that
-     the cost of collecting all of the alternate refs is very high (eve=
-n
-     though it can save some transfer bandwidth). Not sure if other
-     sites want this or not (and I think it would be more elegant to
-     have a small static set of common refs that people build off of,
-     and advertise those. e.g., if you fork rails/rails, then we should
-     advertise rails/rails/refs/heads/master as a ".have", but not
-     anybody else's fork).
-
-    - receive.hiderefs; this is going to become redundant with Junio's
-      implementation
-
-    - an audit reflog; we keep a reflog for all refs at the root of the
-      repository. It differs from a regular reflog in that:
-
-        1. It never expires.
-
-        2. It is not part of reachability analysis.
-
-        3. It includes the refname for each entry, so you can see
-           deletions.
-
-      It's mostly useful for forensics when somebody has screwed up
-      their repository (or we're chasing down a git bug; it helped me
-      find the pack-refs race recently). Probably too GitHub-specific
-      for other people to want it (especially because it grows without
-      bound).
-
-    - statistics instrumentation; we keep counters for various things i=
-n
-      code (e.g., which phase of protocol upload-pack is in, how many
-      bytes sent, etc) and expose them in a few ways. One is over a
-      socket to run a "top"-like interface. Another is to tweak the arg=
-v
-      array of the process so that "ps" shows the process state. I thin=
-k
-      it would be useful to other people running git servers, but the
-      code is currently quite nasty and invasive. I have a
-      work-in-progress to clean it up, but it's got a ways to go.
-
-    - hacks to set niceness and io-priority; this should be done by a
-      wrapper, but in our case it was simpler to catch all processes by
-      just building it into git. Too gross to go upstream.
-
-    - ignore some fsck warnings under transfer.fsckobjects; some of the=
-m
-      are annoyingly common when people pull old history from an
-      existing project and try to push it back up. It's not indicative
-      of a new bug in an implementation, but we have to live with the
-      broken history forever (e.g., zero-padded modes in trees).
-
--Peff
+It does indeed. So this is probably a better solution, and is
+something we're considering doing in Git for Windows anyway (for a
+different reason). Thanks for all the feed-back!
