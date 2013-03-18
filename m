@@ -1,67 +1,145 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH] Introduce remote.pushdefault
-Date: Mon, 18 Mar 2013 14:32:46 +0530
-Message-ID: <CALkWK0niFD81e_GnMDf-bY89J=GdyNbyi9sr-BruHs9wTzsZEg@mail.gmail.com>
-References: <7v1ucr43mk.fsf@alter.siamese.dyndns.org> <1360314123-1259-1-git-send-email-artagnon@gmail.com>
- <7v4nhm1s85.fsf@alter.siamese.dyndns.org> <CALkWK0m2N=D47WJLk1F4j1GsGGWHyfxVF_WGXBbG3vyrfQ-oLA@mail.gmail.com>
- <20130317054803.GB16070@sigill.intra.peff.net>
+From: Rob Hoelz <rob@hoelz.ro>
+Subject: Re: [PATCH] push: Alias pushurl from push rewrites
+Date: Mon, 18 Mar 2013 11:01:44 +0100
+Message-ID: <5146E608.9070506@hoelz.ro>
+References: <20130317235040.4cdc9ef2@hoelz.ro> <7vd2uxppk0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 18 10:03:36 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, josh@joshtriplett.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 18 11:02:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHVyh-0004zx-7M
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 10:03:35 +0100
+	id 1UHWtI-0001tN-Do
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Mar 2013 11:02:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009Ab3CRJDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 05:03:08 -0400
-Received: from mail-ia0-f171.google.com ([209.85.210.171]:56428 "EHLO
-	mail-ia0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751946Ab3CRJDH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 05:03:07 -0400
-Received: by mail-ia0-f171.google.com with SMTP id z13so5076843iaz.30
-        for <git@vger.kernel.org>; Mon, 18 Mar 2013 02:03:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=fD4Q7R0ODXRCUGdegncITPBrRBzTX3S3ew/CUGTHggM=;
-        b=E+0RNKNlEsN46zTyKIKrlQJP7jxFvVaU5nmkpisAgf2OC7NvdfKH6YoH35egXxI4pt
-         y9Ye9G8ke8rZ+lv5lcvlbaWdp9CJT3bXqIbjOvb29SR/hHbcOHyjwYTivRZ+lRkmzlLU
-         eTwrZ5sUJ5tiFWxS7qOIKQsoKMxZCnwRYs2DEwI2VrDmEFDQh3vZ4AN/FDQfS3JpgehW
-         vZmLB0bEYLR0T7KuAew1/2iF4tlNtv9IrQSG5SGnvTw+ldE4T3dVW6BmDFvhf+r/+70s
-         eiol1xJRVF1GpjSJ/DIwt/2g0Wn01kgfPz6BGkbTg+0dejAbpr0/Iub67MTv1XKX1hdF
-         YcLA==
-X-Received: by 10.50.119.102 with SMTP id kt6mr5715135igb.12.1363597386677;
- Mon, 18 Mar 2013 02:03:06 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Mon, 18 Mar 2013 02:02:46 -0700 (PDT)
-In-Reply-To: <20130317054803.GB16070@sigill.intra.peff.net>
+	id S1752119Ab3CRKBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 06:01:37 -0400
+Received: from hoelz.ro ([66.228.44.67]:55541 "EHLO mail.hoelz.ro"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752008Ab3CRKBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 06:01:36 -0400
+Received: from Robs-MacBook-Pro.local (localhost [127.0.0.1])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.hoelz.ro (Postfix) with ESMTPSA id 429B5280EE;
+	Mon, 18 Mar 2013 06:01:35 -0400 (EDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20130216 Thunderbird/17.0.3
+In-Reply-To: <7vd2uxppk0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218400>
 
-Jeff King wrote:
-> So the push lookup list is (in order of precedence):
+On 3/18/13 12:35 AM, Junio C Hamano wrote:
+> Rob Hoelz <rob@hoelz.ro> writes:
 >
->   1. branch.*.pushremote
->   2. remote.pushdefault
->   3. branch.*.remote
->   4. remote.default
->   5. origin
+>> git push currently doesn't consider pushInsteadOf when
+>> using pushurl; this tests and fixes that.
+>>
+>> If you use pushurl with an alias that has a pushInsteadOf configuration
+>> value, Git does not take advantage of it.  For example:
+>>
+>> [url "git://github.com/"]
+>>     insteadOf = github:
+>> [url "git://github.com/myuser/"]
+>>     insteadOf = mygithub:
+>> [url "git@github.com:myuser/"]
+>>     pushInsteadOf = mygithub:
+>> [remote "origin"]
+>>     url     = github:organization/project
+>>     pushurl = mygithub:project
+> Incomplete sentence?  For example [this is an example configuration]
+> and then what happens?  Something like "with the sample
+> configuration, 'git push origin' should follow pushurl and then turn
+> it into X, but instead it ends up accessing Y".
 >
-> and it solves Junio's issue because the way to say "override my
-> remote.pushdefault for this branch" is not to set "branch.*.remote", but
-> to set "branch.*.pushremote".
+> If there is no pushInsteadOf, does it still follow insteadOf?  Is it
+> tested already?
+>
+> Wouldn't you want to cover all the combinations to negative cases
+> (i.e. making sure the codepath to support a new case does not affect
+> behaviour of the code outside the new case)?  A remote with and
+> without pushurl (two combinations) and a pseudo URL scheme with and
+> without pushInsteadOf (again, two combinations) will give you four
+> cases.
+>
+>
+> Thanks.
+Sorry; that's a good point.  With the above configuration, the following
+fails:
 
-Right, thanks for clearing that up Jeff.  I'll re-roll with
-remote.pushdefault overriding branch.<name>.remote.
+$ git push origin master
 
-Ram
+With the following message:
+
+fatal: remote error:
+  You can't push to git://github.com/myuser/project.git
+  Use git@github.com:myuser/project.git
+
+So you can see that pushurl is being followed (it's not attempting to
+push to git://github.com/organization/project), but insteadOf values are
+being used as opposed to pushInsteadOf values for expanding the pushurl
+alias.
+
+I haven't tried without pushInsteadOf; I will add a test for it later
+today.  I assume that if pushInsteadOf isn't found, insteadOf should be
+used?  I will also consider the other test cases you described.
+
+Thanks again for the feedback!
+>
+>> Signed-off-by: Rob Hoelz <rob@hoelz.ro>
+>> ---
+>>  remote.c              |  2 +-
+>>  t/t5516-fetch-push.sh | 20 ++++++++++++++++++++
+>>  2 files changed, 21 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/remote.c b/remote.c
+>> index ca1f8f2..de7a915 100644
+>> --- a/remote.c
+>> +++ b/remote.c
+>> @@ -465,7 +465,7 @@ static void alias_all_urls(void)
+>>  		if (!remotes[i])
+>>  			continue;
+>>  		for (j = 0; j < remotes[i]->pushurl_nr; j++) {
+>> -			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
+>> +			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites_push);
+>>  		}
+>>  		add_pushurl_aliases = remotes[i]->pushurl_nr == 0;
+>>  		for (j = 0; j < remotes[i]->url_nr; j++) {
+>> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+>> index b5417cc..272e225 100755
+>> --- a/t/t5516-fetch-push.sh
+>> +++ b/t/t5516-fetch-push.sh
+>> @@ -244,6 +244,26 @@ test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf
+>>  	)
+>>  '
+>>  
+>> +test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf does rewrite in this case)' '
+>> +	mk_empty &&
+>> +	TRASH="$(pwd)/" &&
+>> +	mkdir ro &&
+>> +	mkdir rw &&
+>> +	git init --bare rw/testrepo &&
+>> +	git config "url.file://$TRASH/ro/.insteadOf" ro: &&
+>> +	git config "url.file://$TRASH/rw/.pushInsteadOf" rw: &&
+>> +	git config remote.r.url ro:wrong &&
+>> +	git config remote.r.pushurl rw:testrepo &&
+>> +	git push r refs/heads/master:refs/remotes/origin/master &&
+>> +	(
+>> +		cd rw/testrepo &&
+>> +		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
+>> +		test "z$r" = "z$the_commit" &&
+>> +
+>> +		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
+>> +	)
+>> +'
+>> +
+>>  test_expect_success 'push with matching heads' '
+>>  
+>>  	mk_test heads/master &&
