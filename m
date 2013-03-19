@@ -1,98 +1,130 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Make GIT_USE_LOOKUP default?
-Date: Tue, 19 Mar 2013 22:43:40 +0700
-Message-ID: <CACsJy8BxbJU9-7Q-Ef3cG2VV2cW8YbBGcjNT9wjT+JywDOxyNg@mail.gmail.com>
-References: <CACsJy8AihriCDfN=cz7FjdHzZAhnPPGML_w8yWcVVrmTQLZyjw@mail.gmail.com>
- <7vd2uxrdh7.fsf@alter.siamese.dyndns.org> <20130318073229.GA5551@sigill.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: regression in multi-threaded git-pack-index
+Date: Tue, 19 Mar 2013 16:45:55 +0100
+Message-ID: <87620n4clo.fsf@pctrast.inf.ethz.ch>
+References: <20130315224240.50AA340839@wince.sfo.corp.google.com>
+	<87hak74cse.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Ingo Molnar <mingo@elte.hu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 19 16:44:42 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stefan Zager <szager@google.com>, <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Mar 19 16:46:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHyiP-0000s4-Nq
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 16:44:42 +0100
+	id 1UHyk5-0002Lv-JA
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 16:46:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932339Ab3CSPoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 11:44:12 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:55671 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756730Ab3CSPoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 11:44:11 -0400
-Received: by mail-oa0-f50.google.com with SMTP id l20so633727oag.37
-        for <git@vger.kernel.org>; Tue, 19 Mar 2013 08:44:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=at7Oxt0wclsFWXGVQc6VWQl0LaZjPwHBClYeYQbwLaY=;
-        b=Fpg95QFsXMk4VoRiWvbA4W07IDh3rIq5+bZ+ZnowZkPiOmPRD19O6/ZspCSIiJyzyx
-         W5qo1cGCyV+1ewx5CVPLj3RrNHmEtnXM67Hafqwgzo8wb1JwePESsjQcyGVKIaDQY0+y
-         3WRWDETNOruL7FtYm2ISXdZWUZ4caUaggzXuDAdidc5fMxLjJIP8DXMVQ13YcmWaVX00
-         zr3IKzj31IAp8wyuoIDJnUb10+q5ZxzJCttIgbxiyv8/WiAl8iu8kI3MYA9NnAOqpShV
-         5MXsNLqwtWajr/zVLV0+vZXCCrocdsmf2w1hQ23+/Ry0h5LZmD9etjKMvNY1TtMRlaXO
-         dKrA==
-X-Received: by 10.60.29.72 with SMTP id i8mr1568138oeh.93.1363707850639; Tue,
- 19 Mar 2013 08:44:10 -0700 (PDT)
-Received: by 10.76.27.200 with HTTP; Tue, 19 Mar 2013 08:43:40 -0700 (PDT)
-In-Reply-To: <20130318073229.GA5551@sigill.intra.peff.net>
+	id S932137Ab3CSPp6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Mar 2013 11:45:58 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:40692 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754171Ab3CSPp5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Mar 2013 11:45:57 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Mar
+ 2013 16:45:51 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.171.78) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Mar
+ 2013 16:45:55 +0100
+In-Reply-To: <87hak74cse.fsf@pctrast.inf.ethz.ch> (Thomas Rast's message of
+	"Tue, 19 Mar 2013 16:41:53 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.171.78]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218528>
 
-On Mon, Mar 18, 2013 at 2:32 PM, Jeff King <peff@peff.net> wrote:
-> By the way, looking at that made me think for a few minutes about
-> hashcmp, and I was surprised to find that we use an open-coded
-> comparison loop. That dates back to this thread by Ingo:
->
->   http://article.gmane.org/gmane.comp.version-control.git/172286
->
-> I could not replicate his benchmarks at all. In fact, my measurements
-> showed a slight slowdown with 1a812f3 (hashcmp(): inline memcmp() by
-> hand to optimize, 2011-04-28).
->
-> Here are my best-of-five numbers for running "git rev-list --objects
-> --all >/dev/null" on linux-2.6.git:
->
->   [current master, compiled with -O2]
->   real    0m45.612s
->   user    0m45.140s
->   sys     0m0.300s
->
->   [current master, compiled with -O3 for comparison]
->   real    0m45.588s
->   user    0m45.088s
->   sys     0m0.312s
->
->   [revert 1a812f3 (i.e., go back to memcmp), -O2]
->   real    0m44.358s
->   user    0m43.876s
->   sys     0m0.316s
->
->   [open-code first byte, fall back to memcmp, -O2]
->   real    0m43.963s
->   user    0m43.568s
->   sys     0m0.284s
->
-> I wonder why we get such different numbers. Ingo said his tests are on a
-> Nehalem CPU, as are mine (mine is an i7-840QM). I wonder if we should be
-> wrapping the optimization in an #ifdef, but I'm not sure which flag we
-> should be checking.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-What gcc and glibc versions are you using? With gcc 4.5.3 I got "repz
-cmpsb" after reverting the patch, just like what Ingo described
-(although interestingly it ran a bit faster than current master, glibc
-2.11.2 on Atom D510 32 bit). gcc 4.6.3 -O2 (on another machine, 64
-bit) produced a call to libc's memcmp instead of "repz cmpsb". I guess
-if "repz cmpsb" is what we are against, then we could pass
--fno-builtin-memcmp (potential impact to other parts of git though).
--- 
-Duy
+>   (gdb) r index-pack --keep --stdin -v --pack_header=3D2,50757 <borke=
+d
+>   Starting program: /Users/trast/.local/bin/git index-pack --keep
+> --stdin -v --pack_header=3D2,50757 <borked
+>   Reading symbols for shared libraries +++........................ do=
+ne
+>   Receiving objects: 100% (50757/50757), 24.52 MiB | 13.06 MiB/s, don=
+e.
+>   Resolving deltas:  25% (10568/42272)  =20
+>   Program received signal EXC_BAD_ACCESS, Could not access memory.
+>   Reason: KERN_PROTECTION_FAILURE at address: 0x000000014484dfe8
+>   [Switching to process 96573 thread 0x10f]
+>   0x000000010017ee20 in use_pack (p=3D0x100500f30, w_cursor=3D0x14484=
+e1a0,
+> offset=3D69638148, left=3D0x0) at sha1_file.c:866
+>   866             if (!win || !in_window(win, offset)) {
+>
+> This seems to be a SIGBUS triggered by stack overflow, largely based =
+on
+> the observation that
+>
+>   (gdb) p &p
+>   $6 =3D (struct packed_git **) 0x144748058
+
+Actually, scratch that; the stack depth is the same no matter what
+ulimits I put (up to 64MB).  Roughly speaking
+
+  (gdb) bt 10
+  #0  0x000000010017ee20 in use_pack (p=3D0x100500f30, w_cursor=3D0x144=
+84e1a0, offset=3D69638148, left=3D0x0) at sha1_file.c:866
+  #1  0x000000010018180c in get_delta_base (p=3D0x100500f30, w_curs=3D0=
+x14484e1a0, curpos=3D0x14484e138, type=3DOBJ_OFS_DELTA, delta_obj_offse=
+t=3D69638146) at sha1_file.c:1609
+  #2  0x00000001001819e6 in packed_delta_info (p=3D0x100500f30, w_curs=3D=
+0x14484e1a0, curpos=3D69638148, type=3DOBJ_OFS_DELTA, obj_offset=3D6963=
+8146, sizep=3D0x0) at sha1_file.c:1655
+  #3  0x0000000100181c97 in packed_object_info (p=3D0x100500f30, obj_of=
+fset=3D69638146, sizep=3D0x0, rtype=3D0x0) at sha1_file.c:1727
+  #4  0x0000000100181a25 in packed_delta_info (p=3D0x100500f30, w_curs=3D=
+0x14484e2a0, curpos=3D69638193, type=3DOBJ_OFS_DELTA, obj_offset=3D6963=
+8190, sizep=3D0x0) at sha1_file.c:1658
+  #5  0x0000000100181c97 in packed_object_info (p=3D0x100500f30, obj_of=
+fset=3D69638190, sizep=3D0x0, rtype=3D0x0) at sha1_file.c:1727
+  #6  0x0000000100181a25 in packed_delta_info (p=3D0x100500f30, w_curs=3D=
+0x14484e3a0, curpos=3D69638240, type=3DOBJ_OFS_DELTA, obj_offset=3D6963=
+8237, sizep=3D0x0) at sha1_file.c:1658
+  #7  0x0000000100181c97 in packed_object_info (p=3D0x100500f30, obj_of=
+fset=3D69638237, sizep=3D0x0, rtype=3D0x0) at sha1_file.c:1727
+  #8  0x0000000100181a25 in packed_delta_info (p=3D0x100500f30, w_curs=3D=
+0x14484e4a0, curpos=3D69638285, type=3DOBJ_OFS_DELTA, obj_offset=3D6963=
+8282, sizep=3D0x0) at sha1_file.c:1658
+  #9  0x0000000100181c97 in packed_object_info (p=3D0x100500f30, obj_of=
+fset=3D69638282, sizep=3D0x0, rtype=3D0x0) at sha1_file.c:1727
+  (More stack frames follow...)
+  (gdb) bt -10
+  #4088 0x00000001001835f9 in sha1_object_info_extended (sha1=3D0x1011b=
+0900 "D=3DL\022eO=EF=BF=BD=EF=BF=BD=EF=BF=BD=EF=BF=BD}=EF=BF=BDr\fW\036=
+=46=EF=BF=BDQ\\Q;t=EF=BF=BD8", oi=3D0x1448cdc50) at sha1_file.c:2264
+  #4089 0x00000001001836eb in sha1_object_info (sha1=3D0x1011b0900 "D=3D=
+L\022eO=EF=BF=BD=EF=BF=BD=EF=BF=BD=EF=BF=BD}=EF=BF=BDr\fW\036F=EF=BF=BD=
+Q\\Q;t=EF=BF=BD8", sizep=3D0x1448cdd28) at sha1_file.c:2286
+  #4090 0x0000000100053c44 in sha1_object (data=3D0x146002400, obj_entr=
+y=3D0x0, size=3D1992, type=3DOBJ_TREE, sha1=3D0x1011b0900 "D=3DL\022eO=EF=
+=BF=BD=EF=BF=BD=EF=BF=BD=EF=BF=BD}=EF=BF=BDr\fW\036F=EF=BF=BDQ\\Q;t=EF=BF=
+=BD8") at index-pack.c:722
+  #4091 0x000000010005457f in resolve_delta (delta_obj=3D0x1011b0900, b=
+ase=3D0x144e00000, result=3D0x144e00040) at index-pack.c:866
+  #4092 0x00000001000548b6 in find_unresolved_deltas_1 (base=3D0x144e00=
+000, prev_base=3D0x0) at index-pack.c:914
+  #4093 0x0000000100054947 in find_unresolved_deltas (base=3D0x144e0000=
+0) at index-pack.c:930
+  #4094 0x0000000100054a79 in resolve_base (obj=3D0x1011b08c0) at index=
+-pack.c:961
+  #4095 0x0000000100054ba5 in threaded_second_pass (data=3D0x100537dd0)=
+ at index-pack.c:984
+  #4096 0x00007fff8ec8b8bf in _pthread_start ()
+  #4097 0x00007fff8ec8eb75 in thread_start ()
+
+That leaves me stumped as to the cause of that SIGBUS, however.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
