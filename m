@@ -1,110 +1,80 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] git-p4: support exclusively locked files
-Date: Tue, 19 Mar 2013 15:23:12 -0400
-Message-ID: <20130319192312.GA16872@padd.com>
-References: <20130317200437.GA29115@padd.com>
- <CD6CC10C.1DE4E%danny.thomas@blackboard.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] add -u: only show pathless 'add -u' warning when
+ changes exist outside cwd
+Date: Tue, 19 Mar 2013 12:47:15 -0700
+Message-ID: <7vd2uvi33w.fsf@alter.siamese.dyndns.org>
+References: <20130313040845.GA5057@sigill.intra.peff.net>
+ <20130313041037.GB5378@sigill.intra.peff.net>
+ <20130319034415.GI5062@elie.Belkin> <20130319034822.GL5062@elie.Belkin>
+ <vpq1ubb3o5g.fsf@grenoble-inp.fr> <7v620nl99g.fsf@alter.siamese.dyndns.org>
+ <20130319190624.GB3655@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Danny Thomas <Danny.Thomas@blackboard.com>
-X-From: git-owner@vger.kernel.org Tue Mar 19 20:21:16 2013
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 19 20:47:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UI25z-0000jC-1H
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 20:21:15 +0100
+	id 1UI2Vl-0002sf-Q5
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 20:47:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932155Ab3CSTUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 15:20:47 -0400
-Received: from honk.padd.com ([74.3.171.149]:51920 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754586Ab3CSTUq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 15:20:46 -0400
-Received: from tic.padd.com (unknown [216.115.121.27])
-	by honk.padd.com (Postfix) with ESMTPSA id 22E6DE9A;
-	Tue, 19 Mar 2013 12:20:45 -0700 (PDT)
-Received: by tic.padd.com (Postfix, from userid 1000)
-	id 4FC6710071F; Tue, 19 Mar 2013 15:23:12 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CD6CC10C.1DE4E%danny.thomas@blackboard.com>
+	id S1754586Ab3CSTrT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 15:47:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49523 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751542Ab3CSTrS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 15:47:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBE88A8DB;
+	Tue, 19 Mar 2013 15:47:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=c6YJz93wBjdgADrovL8QpYkCHfg=; b=NHevL/
+	Brpf5xkt/HaSOG4AwIGFbh0Yrgk3gHz/QO1wEqJxX/lLdhVRPrZXPg/nWJlVl2sA
+	Wvt/l2tDNphVpmLYU4hk4VV2b2vz6TrFsRdxowvgpH5WC62iy4+7SR8lf5mZVHN/
+	54J6rI7NRlA2wyNHF5yUJWN7Vxvq1DUwYAfM8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=csPY9e12dRq1ktYQrUh2/glN3QYsNPYt
+	ILgjad8ZHCPIwPYo9jm+pY4YJdjv1712AXtSJ5dp7BJKrEX4q5h+eQfgn1NBUgHj
+	tyhi8dFNMYr3Sm/Ltjm4/Mgl+w0kO3H+ue78FRRPbom5wYpxZ1gR9rMfyTxl6pWg
+	PlHKzD3SC9Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D05D7A8D9;
+	Tue, 19 Mar 2013 15:47:17 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4DC23A8D8; Tue, 19 Mar 2013
+ 15:47:17 -0400 (EDT)
+In-Reply-To: <20130319190624.GB3655@google.com> (Jonathan Nieder's message of
+ "Tue, 19 Mar 2013 12:06:24 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CDFF1904-90CD-11E2-8C06-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218551>
 
-Danny.Thomas@blackboard.com wrote on Mon, 18 Mar 2013 09:26 -0400:
-> Interesting. 'Implementing sitewide pessimistic locking with p4 typemap',
-> http://www.perforce.com/perforce/doc.current/manuals/p4sag/03_superuser.htm
-> l seems to suggest this is all that's needed. I believe we're using the
-> default configuration, the exclusive lock on all files behaviour was
-> researching the exclusive locking problem,
-> http://ericlathrop.com/2012/12/how-to-set-up-git-p4-in-windows/, so I
-> thought I'd mention it.
-> 
-> You might be onto something w/ fstat, it doesn't include the exclusive
-> indicator:
-> 
-> ... type binary+l
-> 
-> Latest P4 client, and fairly recent server build:
-> 
-> P4/DARWIN90X86_64/2012.2/536738 (2012/10/16)
-> P4D/LINUX26X86_64/2012.2/538478 (2012/10/16)
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Great, thanks for the pointer and explanation.  Do you want to
-reroll your patch to use fstat?  I'll work on the tests, and
-also look into potential failure modes of "git p4 submit" when somebody
-else has the exclusive file open.
+> ...  So I
+> find myself being trained to ignore the warning.
+> ...  Running a full-tree diff which slows down
+> the code that decides whether to print a warning is a good way to
+> train people regarding how long to expect a plain "git add -u" to
+> take.
 
-		-- Pete
+Ok, fair enough.
 
-> On 17/03/2013 20:04, "Pete Wyckoff" <pw@padd.com> wrote:
-> 
-> >Danny.Thomas@blackboard.com wrote on Wed, 13 Mar 2013 13:51 -0400:
-> >> By default, newly added binary files are exclusively locked by Perforce:
-> >>
-> >> 'add default change (binary+l) *exclusive*'
-> >>
-> >> This results in a 'Could not determine file type' error as the regex
-> >> expects
-> >> the line to end after the file type matching group. Some repositories
-> >>are
-> >> also configured to always require exclusive locks, so may be a problem
-> >>for
-> >> all revisions in some cases.
-> >
-> >Can you explain how to configure p4d to default everything to
-> >binary+l?  Also, what version are you using ("p4 info")?  I'm
-> >trying to write a test case for this.
-> >
-> >I did find a way to play with typemap to get +l, as:
-> >
-> >    ( p4 typemap -o ; printf "\tbinary+l\t//.../bash*" ) | p4 typemap -i
-> >
-> >With this, the 2011.1 here just says:
-> >0
-> >    tic-git-test$ p4 opened bash
-> >    //depot/bash#1 - add default change (binary+l)
-> >
-> >I've not been able to make it say " *exclusive*" too.
-> >
-> >>      result = p4_read_pipe(["opened", wildcard_encode(file)])
-> >> -    match = re.match(".*\((.+)\)\r?$", result)
-> >> +    match = re.match(".*\((.+)\)(?:.+)?\r?$", result)
-> >
-> >I think this whole function would be less brittle
-> >using p4's "-G" output, like:
-> >
-> >    d = p4Cmd(["fstat", "-T", "type", wildcard_encode(file)])
-> >    # some error checking
-> >    return d['type']
-> >
-> >But I'm curious if your p4d includes " *exclusive*" in the
-> >type there too, in which case we'll have to strip it.
-> >
-> >Thanks for starting the patch on this.  It's good if we can keep
-> >others from running into the same problem.
+Incidentally, I am rebuilding the 'next' by kicking many of the
+topics back to 'pu' (essentially, only the ones marked as "Safe" in
+the latest issue of "What's cooking" are kept in 'next'), so perhaps
+we can rebuild the jc/add-2.0-u-A-sans-pathspec topic with your
+series at the bottom, or something?  I do not think I have time to
+get around to it myself until later in the evening, though.
