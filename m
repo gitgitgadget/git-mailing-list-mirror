@@ -1,92 +1,149 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v1 27/45] Convert run_add_interactive to use struct pathspec
-Date: Tue, 19 Mar 2013 08:58:23 +0700
-Message-ID: <CACsJy8AMcfwx5UurNQs1-uJLw_Xt+PAHFU_Tjizf2zOsYECyvg@mail.gmail.com>
-References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
- <1363327620-29017-28-git-send-email-pclouds@gmail.com> <20130318182602.GA2164@serenity.lan>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: building git ; need suggestion
+Date: Mon, 18 Mar 2013 19:11:50 -0700
+Message-ID: <CAJDDKr6bmH6gDSBPN+U6LbSNrFw-adsfv0ZESDAOG7H2nuZapg@mail.gmail.com>
+References: <868B103B-690E-477B-BF75-8F954F893E6F@infoservices.in>
+	<20130315124415.GA23122@paksenarrion.iveqy.com>
+	<00107242-04EB-423F-90FE-A6DCDEE7E262@infoservices.in>
+	<20130315131403.GA27022@google.com>
+	<C8080BF5-DC87-421D-97A1-DF5CF403A03A@infoservices.in>
+	<9E0367AC-617A-440B-925E-5796CF2E1ADF@infoservices.in>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Mar 19 02:59:22 2013
+Cc: =?UTF-8?B?TWFnbnVzIELDpGNr?= <baeck@google.com>,
+	Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
+To: Joydeep Bakshi <joydeep.bakshi@infoservices.in>
+X-From: git-owner@vger.kernel.org Tue Mar 19 03:12:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHlph-0007Ny-Ep
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 02:59:21 +0100
+	id 1UHm2F-0006dB-Ut
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 03:12:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933182Ab3CSB6y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Mar 2013 21:58:54 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:40540 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932391Ab3CSB6x convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Mar 2013 21:58:53 -0400
-Received: by mail-ob0-f181.google.com with SMTP id ni5so6088043obc.12
-        for <git@vger.kernel.org>; Mon, 18 Mar 2013 18:58:53 -0700 (PDT)
+	id S1757580Ab3CSCLw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Mar 2013 22:11:52 -0400
+Received: from mail-we0-f171.google.com ([74.125.82.171]:42576 "EHLO
+	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754184Ab3CSCLw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Mar 2013 22:11:52 -0400
+Received: by mail-we0-f171.google.com with SMTP id u54so5283517wey.2
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 19:11:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=BTSCqsDYzaNlB/eB3FAXhNEnt5+VGIuFVie4nD4WIKk=;
-        b=FYMg+pAXnqBTfiY7jEfDQeewPwlfQFD9BM0+dSkZHdaxBJ8S+JS8WKi5DXf5tbhcPX
-         BQZ6PcibdyDUP3h9BlU6tSobANatYa1adyw2XC2O9iRSI4Z0gIBpPpd6tU3UkhGbP7fz
-         lv5NRhQu5EwXje/bXk+9DBgotM0hU/D+KXZHM25jCPfWZtd2jzEBtYWWgwB2l4GRl751
-         E6FEEYjo7D34aTjMxVMSb9LtGvKjFR8GGIu5pmOGH1FGEDmkRcSWYFIHHfZY1ll1yj6c
-         cfpjFVOxl8DiwMHwzTGw/TjyIjAe0pYKBOcRQ6zl2uK95zHiNoOAgutDuH1eNub/R9es
-         57JQ==
-X-Received: by 10.182.147.2 with SMTP id tg2mr173435obb.47.1363658333457; Mon,
- 18 Mar 2013 18:58:53 -0700 (PDT)
-Received: by 10.76.27.200 with HTTP; Mon, 18 Mar 2013 18:58:23 -0700 (PDT)
-In-Reply-To: <20130318182602.GA2164@serenity.lan>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=IGeipRgjPZDQ2vmGxLbpKCDxdCQXjs6PtDHPRR9MIh8=;
+        b=ZUDA9Z+AQB2vAfjZTefYYXyaBRspUyON7icVUW9HxPULl6HCZygaR3/OCTQvLN0frK
+         OcPu0Hv76lRSKVx9xYNWxk00HD3D6yAIhJvUF545wnjpFGlZ88v6O5JPDWypLvaZHn3C
+         EbfvJCwgFbAtrvO2OJ0VSHRcF3jXRNwrVlCOnOS81Zrqv488Tjhy5DL3klyTEu3DVOMu
+         Tsk+8TtF5hMiQNoDjxjaLbavj48z651hffgvck4aVm89YlLEm5sWc4WpROqlX4Hw0c81
+         PvX+r6TltkOgeFMfCC7i3fYiCHK0CHm9sBlH3rq9fk2QO+xZPACE1IhSmcunfcvAMYRX
+         RZtw==
+X-Received: by 10.194.91.211 with SMTP id cg19mr144369wjb.43.1363659110584;
+ Mon, 18 Mar 2013 19:11:50 -0700 (PDT)
+Received: by 10.194.13.129 with HTTP; Mon, 18 Mar 2013 19:11:50 -0700 (PDT)
+In-Reply-To: <9E0367AC-617A-440B-925E-5796CF2E1ADF@infoservices.in>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218472>
 
-On Tue, Mar 19, 2013 at 1:26 AM, John Keeping <john@keeping.me.uk> wrot=
+On Mon, Mar 18, 2013 at 5:24 AM, Joydeep Bakshi
+<joydeep.bakshi@infoservices.in> wrote:
+> I'm closer to my requirement. I have found gitweb simply provide a GU=
+I  for history check
+> and code comparison. And the git itself is good enough to do the ACL =
+stuff with hooks.
+>
+> I already have the following code to deploy the push into its work-tr=
+ee
+
+You should try gitolite.  It has very flexible rules,
+and it's already been implemented for you ;-)
+
+https://github.com/sitaramc/gitolite
+
+
+
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+> #!/bin/bash
+>
+> while read oldrev newrev ref
+> do
+>   branch=3D`echo $ref | cut -d/ -f3`
+>
+>   if [ "master" =3D=3D "$branch" ]; then
+>     git --work-tree=3D/path/under/root/dir/live-site/ checkout -f $br=
+anch
+>     echo 'Changes pushed live.'
+>   fi
+>
+>   if [ "dev" =3D=3D "$branch" ]; then
+>     git --work-tree=3D/path/under/root/dir/dev-site/ checkout -f $bra=
+nch
+>     echo 'Changes pushed to dev.'
+>   fi
+> done
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+>
+> This code can be extended for as many branches as you have.
+>
+> I now need a mechanism to restrict the user to it's own branch so tha=
+t user can't push into
+> any other branch in mistake.
+>
+> Say I have
+>
+> master branch -> only admin user can push here.
+> dev branch -> only user dev1 , dev2  and master can push here.
+> testing branch -> only user test1 and test2 can push here.
+>
+> I think this can also be done with pre-receive hook. Any suggestion o=
+n the hook design is
+> welcome. Also this can be implemented on the above hook or in a separ=
+ate hook.
+> A separate hook is better due to maintainability and then I need to c=
+all multiple
+> pre-receive hook. Please suggest.
+>
+> Thanks
+>
+>
+>
+> On 18-Mar-2013, at 11:14 AM, Joydeep Bakshi <joydeep.bakshi@infoservi=
+ces.in> wrote:
+>
+>>
+>> On 15-Mar-2013, at 6:44 PM, Magnus B=C3=A4ck <baeck@google.com> wrot=
 e:
-> On Fri, Mar 15, 2013 at 01:06:42PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
-=E1=BB=8Dc Duy wrote:
->> This passes the pathspec, more or less unmodified, to
->> git-add--interactive. The command itself does not process pathspec. =
-It
->> simply passes the pathspec to other builtin commands. So if all thos=
-e
->> commands support pathspec, we're good.
+>>>>
+>>>
+>>> Right, but that's R/W permissions. Almost any piece of Git hosting
+>>> software supports restriction of pushes. Discriminating *read* acce=
+ss
+>>> between developers and maintenance people sounds like a disaster if=
+ it's
+>>> the same organisation.
+>>
+>> Just restriction on push access is what required.
+>>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 >
-> This breaks "git reset --keep" in a subdirectory for me.
->
-> I ran "git reset --keep <branch>" in a subdirectory and got:
->
->     fatal: BUG: parse_pathspec cannot take no argument in this case
->
-> Bisecting points to this commit.
->
-> The simplest test case is:
->
->     ( cd t && ../bin-wrappers/git reset --keep HEAD )
->
-> which works on master but not pu.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-Beautiful. I got messed up with C operator precedence. This should fix
-it. I'll check the rest of parse_pathspec calls later.
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index ab3917d..b665218 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -219,7 +219,7 @@ static void parse_args(struct pathspec *pathspec,
-        *rev_ret =3D rev;
-        parse_pathspec(pathspec, 0,
-                       PATHSPEC_PREFER_FULL |
--                      patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0,
-+                      (patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0),
-                       prefix, argv);
- }
 
 --=20
-Duy
+David
