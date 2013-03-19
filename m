@@ -1,110 +1,110 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/4] add -u: only show pathless 'add -u' warning when
- changes exist outside cwd
-Date: Tue, 19 Mar 2013 12:06:24 -0700
-Message-ID: <20130319190624.GB3655@google.com>
-References: <20130313040845.GA5057@sigill.intra.peff.net>
- <20130313041037.GB5378@sigill.intra.peff.net>
- <20130319034415.GI5062@elie.Belkin>
- <20130319034822.GL5062@elie.Belkin>
- <vpq1ubb3o5g.fsf@grenoble-inp.fr>
- <7v620nl99g.fsf@alter.siamese.dyndns.org>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH] git-p4: support exclusively locked files
+Date: Tue, 19 Mar 2013 15:23:12 -0400
+Message-ID: <20130319192312.GA16872@padd.com>
+References: <20130317200437.GA29115@padd.com>
+ <CD6CC10C.1DE4E%danny.thomas@blackboard.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 19 20:06:58 2013
+Cc: git@vger.kernel.org
+To: Danny Thomas <Danny.Thomas@blackboard.com>
+X-From: git-owner@vger.kernel.org Tue Mar 19 20:21:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UI1s9-0007am-Pw
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 20:06:58 +0100
+	id 1UI25z-0000jC-1H
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 20:21:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755806Ab3CSTGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 15:06:30 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:37019 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751005Ab3CSTG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 15:06:29 -0400
-Received: by mail-pb0-f49.google.com with SMTP id xa12so680939pbc.36
-        for <git@vger.kernel.org>; Tue, 19 Mar 2013 12:06:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=3iVPOxutD1QkOAL5ny21XqnSex++pCNtpmdHXDtT8VM=;
-        b=veNK42BdhsRPahVxzQquwdkTH6q9o/nGpQmvba7MO8WPk55coH4CHE2l2pZEO1eUct
-         Dx93KK5PWsVOfgt62cB4kiRXxXOLrumtz5UCF1el7qCjNCcB5BO8F8kiAX5l0Ti/3nRV
-         83NJFFEEDWK/1grvmVkReASUQGhkFdb8yaRDN6msxpXD3T501XzR0PJBtbRn1AJ5TxOz
-         mZWTfRVV6oWLfqE7/cJzrbkxYIIPIplGGv0kQzoh0Zad2RVZ2Qv0a1alQar6+o2EXzQq
-         hVnXoqPBBlVwvW83EM4a0KJ6rNWPdqY7DfF9NA0rtiP+WFB9B5aKROETnWo/OjIY56it
-         DjgA==
-X-Received: by 10.66.190.104 with SMTP id gp8mr5053121pac.84.1363719989417;
-        Tue, 19 Mar 2013 12:06:29 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id vd4sm25258037pbc.35.2013.03.19.12.06.27
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 19 Mar 2013 12:06:28 -0700 (PDT)
+	id S932155Ab3CSTUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 15:20:47 -0400
+Received: from honk.padd.com ([74.3.171.149]:51920 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754586Ab3CSTUq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 15:20:46 -0400
+Received: from tic.padd.com (unknown [216.115.121.27])
+	by honk.padd.com (Postfix) with ESMTPSA id 22E6DE9A;
+	Tue, 19 Mar 2013 12:20:45 -0700 (PDT)
+Received: by tic.padd.com (Postfix, from userid 1000)
+	id 4FC6710071F; Tue, 19 Mar 2013 15:23:12 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <7v620nl99g.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CD6CC10C.1DE4E%danny.thomas@blackboard.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218550>
 
-Junio C Hamano wrote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Danny.Thomas@blackboard.com wrote on Mon, 18 Mar 2013 09:26 -0400:
+> Interesting. 'Implementing sitewide pessimistic locking with p4 typemap',
+> http://www.perforce.com/perforce/doc.current/manuals/p4sag/03_superuser.htm
+> l seems to suggest this is all that's needed. I believe we're using the
+> default configuration, the exclusive lock on all files behaviour was
+> researching the exclusive locking problem,
+> http://ericlathrop.com/2012/12/how-to-set-up-git-p4-in-windows/, so I
+> thought I'd mention it.
+> 
+> You might be onto something w/ fstat, it doesn't include the exclusive
+> indicator:
+> 
+> ... type binary+l
+> 
+> Latest P4 client, and fairly recent server build:
+> 
+> P4/DARWIN90X86_64/2012.2/536738 (2012/10/16)
+> P4D/LINUX26X86_64/2012.2/538478 (2012/10/16)
 
->> No time to review the code now. I thought about implementing something
->> like that, but did not do it because I didn't want the change in the
->> code to be too big. At some point, we'll have to remove the warning and
->> it's easier with my version than with yours. But the "damage" to the
->> code do not seem too big, so that's probably OK and will actually reduce
->> the pain for some users.
->
-> Getting these warnings is a *good* thing.
->
-> You may happen to have no changed path outside the current directory
-> with this particular invocation of "git add -u", or you may do, or
-> you may not *even* remember if you touched the paths outside.
->
-> Training your fingers to type "git add -u ." without having to even
-> think, is primarily to help the last case.
+Great, thanks for the pointer and explanation.  Do you want to
+reroll your patch to use fstat?  I'll work on the tests, and
+also look into potential failure modes of "git p4 submit" when somebody
+else has the exclusive file open.
 
-The problem is that these warnings are triggering way too often.  It
-is like the story of the boy who cried "wolf": instead of training
-people to type "git add -u .", we are training them to ignore
-warnings.
+		-- Pete
 
-I personally often find myself in the following situation:
-
-	$ cd repowithdeepsubdirs/third_party/git
-	$ ... hack hack hack ...
-	$ git add -u
-
-The result is a pile of warning text that I cannot convince myself not
-to ignore because I already *knew* that the only changes present were
-under the cwd.  The old and new "git add -u" behaviors always have the
-same effect in this case, so the warning is not relevant to me.  So I
-find myself being trained to ignore the warning.
-
-Presumably habitual Java hackers that do their work in a
-com/long/package/name subdirectory of the toplevel would find this
-even more annoying.
-
-One important exception is that if "git add -u :/" is slow, users need
-to learn to run "git add -u ." to speed the operation up.  But I think
-that is intuitive already.  Running a full-tree diff which slows down
-the code that decides whether to print a warning is a good way to
-train people regarding how long to expect a plain "git add -u" to
-take.
-
-Hoping that clarifies,
-Jonathan
+> On 17/03/2013 20:04, "Pete Wyckoff" <pw@padd.com> wrote:
+> 
+> >Danny.Thomas@blackboard.com wrote on Wed, 13 Mar 2013 13:51 -0400:
+> >> By default, newly added binary files are exclusively locked by Perforce:
+> >>
+> >> 'add default change (binary+l) *exclusive*'
+> >>
+> >> This results in a 'Could not determine file type' error as the regex
+> >> expects
+> >> the line to end after the file type matching group. Some repositories
+> >>are
+> >> also configured to always require exclusive locks, so may be a problem
+> >>for
+> >> all revisions in some cases.
+> >
+> >Can you explain how to configure p4d to default everything to
+> >binary+l?  Also, what version are you using ("p4 info")?  I'm
+> >trying to write a test case for this.
+> >
+> >I did find a way to play with typemap to get +l, as:
+> >
+> >    ( p4 typemap -o ; printf "\tbinary+l\t//.../bash*" ) | p4 typemap -i
+> >
+> >With this, the 2011.1 here just says:
+> >0
+> >    tic-git-test$ p4 opened bash
+> >    //depot/bash#1 - add default change (binary+l)
+> >
+> >I've not been able to make it say " *exclusive*" too.
+> >
+> >>      result = p4_read_pipe(["opened", wildcard_encode(file)])
+> >> -    match = re.match(".*\((.+)\)\r?$", result)
+> >> +    match = re.match(".*\((.+)\)(?:.+)?\r?$", result)
+> >
+> >I think this whole function would be less brittle
+> >using p4's "-G" output, like:
+> >
+> >    d = p4Cmd(["fstat", "-T", "type", wildcard_encode(file)])
+> >    # some error checking
+> >    return d['type']
+> >
+> >But I'm curious if your p4d includes " *exclusive*" in the
+> >type there too, in which case we'll have to strip it.
+> >
+> >Thanks for starting the patch on this.  It's good if we can keep
+> >others from running into the same problem.
