@@ -1,149 +1,81 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: building git ; need suggestion
-Date: Mon, 18 Mar 2013 19:11:50 -0700
-Message-ID: <CAJDDKr6bmH6gDSBPN+U6LbSNrFw-adsfv0ZESDAOG7H2nuZapg@mail.gmail.com>
-References: <868B103B-690E-477B-BF75-8F954F893E6F@infoservices.in>
-	<20130315124415.GA23122@paksenarrion.iveqy.com>
-	<00107242-04EB-423F-90FE-A6DCDEE7E262@infoservices.in>
-	<20130315131403.GA27022@google.com>
-	<C8080BF5-DC87-421D-97A1-DF5CF403A03A@infoservices.in>
-	<9E0367AC-617A-440B-925E-5796CF2E1ADF@infoservices.in>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/4] make pathless 'add [-u|-A]' warning less noisy
+Date: Mon, 18 Mar 2013 20:44:15 -0700
+Message-ID: <20130319034415.GI5062@elie.Belkin>
+References: <20130313040845.GA5057@sigill.intra.peff.net>
+ <20130313041037.GB5378@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?TWFnbnVzIELDpGNr?= <baeck@google.com>,
-	Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-To: Joydeep Bakshi <joydeep.bakshi@infoservices.in>
-X-From: git-owner@vger.kernel.org Tue Mar 19 03:12:21 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 19 04:44:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHm2F-0006dB-Ut
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 03:12:20 +0100
+	id 1UHnTk-00019J-S8
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 04:44:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757580Ab3CSCLw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Mar 2013 22:11:52 -0400
-Received: from mail-we0-f171.google.com ([74.125.82.171]:42576 "EHLO
-	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754184Ab3CSCLw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Mar 2013 22:11:52 -0400
-Received: by mail-we0-f171.google.com with SMTP id u54so5283517wey.2
-        for <git@vger.kernel.org>; Mon, 18 Mar 2013 19:11:50 -0700 (PDT)
+	id S1752228Ab3CSDoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 23:44:21 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:58252 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750839Ab3CSDoU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 23:44:20 -0400
+Received: by mail-pb0-f41.google.com with SMTP id um15so39091pbc.28
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 20:44:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=IGeipRgjPZDQ2vmGxLbpKCDxdCQXjs6PtDHPRR9MIh8=;
-        b=ZUDA9Z+AQB2vAfjZTefYYXyaBRspUyON7icVUW9HxPULl6HCZygaR3/OCTQvLN0frK
-         OcPu0Hv76lRSKVx9xYNWxk00HD3D6yAIhJvUF545wnjpFGlZ88v6O5JPDWypLvaZHn3C
-         EbfvJCwgFbAtrvO2OJ0VSHRcF3jXRNwrVlCOnOS81Zrqv488Tjhy5DL3klyTEu3DVOMu
-         Tsk+8TtF5hMiQNoDjxjaLbavj48z651hffgvck4aVm89YlLEm5sWc4WpROqlX4Hw0c81
-         PvX+r6TltkOgeFMfCC7i3fYiCHK0CHm9sBlH3rq9fk2QO+xZPACE1IhSmcunfcvAMYRX
-         RZtw==
-X-Received: by 10.194.91.211 with SMTP id cg19mr144369wjb.43.1363659110584;
- Mon, 18 Mar 2013 19:11:50 -0700 (PDT)
-Received: by 10.194.13.129 with HTTP; Mon, 18 Mar 2013 19:11:50 -0700 (PDT)
-In-Reply-To: <9E0367AC-617A-440B-925E-5796CF2E1ADF@infoservices.in>
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=uCnKykscwdD8KLmnVuOCRpiwSsWoizflRQCEFuKie0M=;
+        b=YCE4MG0vi4aNMv4el5bFSsYuFe770l/Pc19nLHwjupYPuo4aN2bOxH+Ni2So4fg1fj
+         Af0ybbv+Apau+L7k8niuRPVRfJcT9DVVK2A7EsCRcBwzIiNYWEmBCTR5ltY1gGp7DfpW
+         VyaJtLa3PpU8GNne5fk4qkLhStaQblYSVvemtkcmsZaSOB+nldg5anJ7tKc4godvQvL2
+         zeKfiXrapbmHYcJr8+JuS5eLRtgMRuSc5xz877Q7/UJmS+8XspB1qlkesRQdUdMW8Frr
+         9POvqsy1GkW57QbWw0hBPCVoIITrUFDKk0JK/boEm6b8usCF5t4k9vEDZkwZMsk68tjY
+         611Q==
+X-Received: by 10.66.164.4 with SMTP id ym4mr992542pab.92.1363664660480;
+        Mon, 18 Mar 2013 20:44:20 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPS id rl3sm22481993pbb.28.2013.03.18.20.44.18
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 18 Mar 2013 20:44:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130313041037.GB5378@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218473>
 
-On Mon, Mar 18, 2013 at 5:24 AM, Joydeep Bakshi
-<joydeep.bakshi@infoservices.in> wrote:
-> I'm closer to my requirement. I have found gitweb simply provide a GU=
-I  for history check
-> and code comparison. And the git itself is good enough to do the ACL =
-stuff with hooks.
->
-> I already have the following code to deploy the push into its work-tr=
-ee
+Hi,
 
-You should try gitolite.  It has very flexible rules,
-and it's already been implemented for you ;-)
+Jeff King wrote:
 
-https://github.com/sitaramc/gitolite
+>                                                          The
+> config option added by this patch gives them such an option.
 
+I suspect the need for this config option is a sign that the warning
+is too eager.  After all, the whole idea of the change being safe is
+that it shouldn't make a difference the way people usually use git,
+no?
 
+In other words, how about the following patches?  With them applied,
+hopefully no one would mind even if the warning becomes a fatal error.
 
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-> #!/bin/bash
->
-> while read oldrev newrev ref
-> do
->   branch=3D`echo $ref | cut -d/ -f3`
->
->   if [ "master" =3D=3D "$branch" ]; then
->     git --work-tree=3D/path/under/root/dir/live-site/ checkout -f $br=
-anch
->     echo 'Changes pushed live.'
->   fi
->
->   if [ "dev" =3D=3D "$branch" ]; then
->     git --work-tree=3D/path/under/root/dir/dev-site/ checkout -f $bra=
-nch
->     echo 'Changes pushed to dev.'
->   fi
-> done
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
->
-> This code can be extended for as many branches as you have.
->
-> I now need a mechanism to restrict the user to it's own branch so tha=
-t user can't push into
-> any other branch in mistake.
->
-> Say I have
->
-> master branch -> only admin user can push here.
-> dev branch -> only user dev1 , dev2  and master can push here.
-> testing branch -> only user test1 and test2 can push here.
->
-> I think this can also be done with pre-receive hook. Any suggestion o=
-n the hook design is
-> welcome. Also this can be implemented on the above hook or in a separ=
-ate hook.
-> A separate hook is better due to maintainability and then I need to c=
-all multiple
-> pre-receive hook. Please suggest.
->
-> Thanks
->
->
->
-> On 18-Mar-2013, at 11:14 AM, Joydeep Bakshi <joydeep.bakshi@infoservi=
-ces.in> wrote:
->
->>
->> On 15-Mar-2013, at 6:44 PM, Magnus B=C3=A4ck <baeck@google.com> wrot=
-e:
->>>>
->>>
->>> Right, but that's R/W permissions. Almost any piece of Git hosting
->>> software supports restriction of pushes. Discriminating *read* acce=
-ss
->>> between developers and maintenance people sounds like a disaster if=
- it's
->>> the same organisation.
->>
->> Just restriction on push access is what required.
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Looking forward to your thoughts,
 
+Jonathan Nieder (4):
+  add: make pathless 'add [-u|-A]' warning a file-global function
+  add: make warn_pathless_add() a no-op after first call
+  add -u: only show pathless 'add -u' warning when changes exist outside cwd
+  add -A: only show pathless 'add -A' warning when changes exist outside cwd
 
-
---=20
-David
+ builtin/add.c | 142 ++++++++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 99 insertions(+), 43 deletions(-)
