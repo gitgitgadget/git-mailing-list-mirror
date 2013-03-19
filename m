@@ -1,99 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t7811 (grep-open): remove test_config() redefinition
-Date: Tue, 19 Mar 2013 09:09:07 -0700
-Message-ID: <7vk3p3jrrw.fsf@alter.siamese.dyndns.org>
-References: <1363689794-25974-1-git-send-email-artagnon@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: regression in multi-threaded git-pack-index
+Date: Tue, 19 Mar 2013 17:11:22 +0100
+Message-ID: <87obef2wut.fsf@pctrast.inf.ethz.ch>
+References: <20130315224240.50AA340839@wince.sfo.corp.google.com>
+	<87hak74cse.fsf@pctrast.inf.ethz.ch>
+	<87620n4clo.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 19 17:09:48 2013
+Content-Type: text/plain
+Cc: Stefan Zager <szager@google.com>, <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Mar 19 17:11:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHz6d-0004Qu-G1
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 17:09:43 +0100
+	id 1UHz8k-0006Dl-20
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 17:11:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756933Ab3CSQJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 12:09:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54118 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756865Ab3CSQJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 12:09:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C556DBAC0;
-	Tue, 19 Mar 2013 12:09:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VigHe+mcj2zHEzhQwMe+DndHyzM=; b=o/Y8w2
-	UrOx39jZmXJ3KLeS9ZtHkomPckbvKwMULmSaqwPkP6NAgIzsj+McpD4hclr8uiIB
-	c38VqrE51fwqE81OhXaTtQTvmF+UXzlyfRng3AkD3TXFptWtuVfSYYxZG5caTa4l
-	qxd0k/WRyGmdqAynWLoOOEZB6beDV+D2Q9ZLE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RN5oNn+4cTwE+OvKbkCPh/+1bh51m8fz
-	zq9wj7LFcxrIvT2H38b5+iYki0QHFq3rDQ6JEMWRHOhhHsRWvSTxE/aK/xUvT4hV
-	brdmZ8oeR+xYbGG2/RgdSqgKmILFrdW1i0Y4gxswIZRphjCDvyW7XOduSudt/DFo
-	y4Vw2fIE9QQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7D38BABF;
-	Tue, 19 Mar 2013 12:09:14 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 144B3BAB9; Tue, 19 Mar 2013
- 12:09:13 -0400 (EDT)
-In-Reply-To: <1363689794-25974-1-git-send-email-artagnon@gmail.com> (Ramkumar
- Ramachandra's message of "Tue, 19 Mar 2013 16:13:14 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 57C79F9A-90AF-11E2-A690-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932656Ab3CSQL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 12:11:26 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:42808 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932436Ab3CSQLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 12:11:25 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Mar
+ 2013 17:11:18 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.171.78) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Mar
+ 2013 17:11:22 +0100
+In-Reply-To: <87620n4clo.fsf@pctrast.inf.ethz.ch> (Thomas Rast's message of
+	"Tue, 19 Mar 2013 16:45:55 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.171.78]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218535>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-> test_config() is already a well-defined function in
-> test-lib-functions.sh.  Don't duplicate it unnecessarily.
-
-There are other instances of it in t7810 and t4018, with slightly
-different styles.
-
-t/t4018-diff-funcname.sh:test_config () {
-t/t7810-grep.sh:test_config() {
-t/t7811-grep-open.sh:test_config() {
-t/test-lib-functions.sh:test_config () {
-
-Incidentally, this is why a consistent coding style helps.  It
-should be possible to catch all ofhtme with a single
-
-	git grep 'test_config () {' t/
-
-but the ones in t78xx wouldn't have been found.
-
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  Found this while randomly grep'ping around.
+> Thomas Rast <trast@student.ethz.ch> writes:
 >
->  t/t7811-grep-open.sh | 5 -----
->  1 file changed, 5 deletions(-)
+>>   (gdb) r index-pack --keep --stdin -v --pack_header=2,50757 <borked
+>>   Starting program: /Users/trast/.local/bin/git index-pack --keep
+>> --stdin -v --pack_header=2,50757 <borked
+>>   Reading symbols for shared libraries +++........................ done
+>>   Receiving objects: 100% (50757/50757), 24.52 MiB | 13.06 MiB/s, done.
+>>   Resolving deltas:  25% (10568/42272)   
+>>   Program received signal EXC_BAD_ACCESS, Could not access memory.
+>>   Reason: KERN_PROTECTION_FAILURE at address: 0x000000014484dfe8
+>>   [Switching to process 96573 thread 0x10f]
+>>   0x000000010017ee20 in use_pack (p=0x100500f30, w_cursor=0x14484e1a0,
+>> offset=69638148, left=0x0) at sha1_file.c:866
+>>   866             if (!win || !in_window(win, offset)) {
+>>
+>> This seems to be a SIGBUS triggered by stack overflow, largely based on
+>> the observation that
+>>
+>>   (gdb) p &p
+>>   $6 = (struct packed_git **) 0x144748058
 >
-> diff --git a/t/t7811-grep-open.sh b/t/t7811-grep-open.sh
-> index a895778..e1951a5 100755
-> --- a/t/t7811-grep-open.sh
-> +++ b/t/t7811-grep-open.sh
-> @@ -125,11 +125,6 @@ test_expect_success 'modified file' '
->  	test_cmp empty out
->  '
->  
-> -test_config() {
-> -	git config "$1" "$2" &&
-> -	test_when_finished "git config --unset $1"
-> -}
-> -
->  test_expect_success 'copes with color settings' '
->  	rm -f actual &&
->  	echo grep.h >expect &&
+> Actually, scratch that; the stack depth is the same no matter what
+> ulimits I put (up to 64MB).
+
+Actually scratch that again.  It *is* a stack overflow, except that this
+is a thread stack, for which the OS X defaults are 512kB apparently, as
+opposed to 2MB on linux.
+
+To wit:
+
+  (gdb) p &p
+  $11 = (struct packed_git **) 0x14484e058
+  (gdb) bt -5
+  #4093 0x0000000100054947 in find_unresolved_deltas (base=0x144e00000) at index-pack.c:930
+  #4094 0x0000000100054a79 in resolve_base (obj=0x1011b08c0) at index-pack.c:961
+  #4095 0x0000000100054ba5 in threaded_second_pass (data=0x100537dd0) at index-pack.c:984
+  #4096 0x00007fff8ec8b8bf in _pthread_start ()
+  #4097 0x00007fff8ec8eb75 in thread_start ()
+  (gdb) f 4094
+  #4094 0x0000000100054a79 in resolve_base (obj=0x1011b08c0) at index-pack.c:961
+  961             find_unresolved_deltas(base_obj);
+  (gdb) p &obj
+  $12 = (struct object_entry **) 0x1448cdec8
+  (gdb) p 0x14484e058-0x1448cdec8
+  $13 = -523888
+  (gdb) p 512*1024
+  $14 = 524288
+
+And indeed the following patch fixes it.  Sounds like the delta
+unpacking needs a rewrite to support stackless operation.  Sigh.
+
+diff --git i/builtin/index-pack.c w/builtin/index-pack.c
+index 6be99e2..f73291f 100644
+--- i/builtin/index-pack.c
++++ w/builtin/index-pack.c
+@@ -1075,13 +1075,17 @@ static void resolve_deltas(void)
+ 	nr_dispatched = 0;
+ 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
+ 		init_thread();
++		pthread_attr_t attr;
++		pthread_attr_init(&attr);
++		pthread_attr_setstacksize(&attr, 2*1024*1024);
+ 		for (i = 0; i < nr_threads; i++) {
+-			int ret = pthread_create(&thread_data[i].thread, NULL,
++			int ret = pthread_create(&thread_data[i].thread, &attr,
+ 						 threaded_second_pass, thread_data + i);
+ 			if (ret)
+ 				die(_("unable to create thread: %s"),
+ 				    strerror(ret));
+ 		}
++		pthread_attr_destroy(&attr);
+ 		for (i = 0; i < nr_threads; i++)
+ 			pthread_join(thread_data[i].thread, NULL);
+ 		cleanup_thread();
+
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
