@@ -1,71 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push: Alias pushurl from push rewrites
-Date: Mon, 18 Mar 2013 18:46:43 -0700
-Message-ID: <7v38vsma9o.fsf@alter.siamese.dyndns.org>
-References: <20130318220224.3b23a381@hoelz.ro>
- <20130318231043.GD5062@elie.Belkin>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: =?UTF-8?B?UmU6IOWbnuWkje+8miBnaXQ6IGhvdyB0aGUgcGFjay1vYmplY3RzLmMgZmluZCB0aGUgbw==?=
+	=?UTF-8?B?YmplY3QncyBkZWx0YQ==?=
+Date: Tue, 19 Mar 2013 08:53:20 +0700
+Message-ID: <CACsJy8DzXWDOXUKxF8Mj9VUWG_rVQpkS=hxrtLYokG10AkjO0w@mail.gmail.com>
+References: <tencent_334CD10A3AA16B201938BF85@qq.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rob Hoelz <rob@hoelz.ro>, git@vger.kernel.org,
-	josh@joshtriplett.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 19 02:47:14 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?B?5pa55qCL?= <fangdong@pipul.org>
+X-From: git-owner@vger.kernel.org Tue Mar 19 02:54:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHldx-0000H2-FW
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 02:47:13 +0100
+	id 1UHlkn-0004Nm-Rc
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 02:54:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933049Ab3CSBqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 21:46:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57943 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757492Ab3CSBqp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 21:46:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50977B750;
-	Mon, 18 Mar 2013 21:46:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lRUfaJBYtSIlhHXKffL1/O4qIg0=; b=adgtXp
-	HgG+SLIYVPYYjzdc8T5GE7YLV1JTeAI1cESHQpW9QKBjea+6/kS+e8K6A3C47VWE
-	KyiGXidQSkerK7EbR5ElpUFA1leuzVxUp0xVKsg9rk7SGAScLXe6xOUop8rXJsvT
-	J4l2Tndv7mYTO/JJi8jaW+uHEgYYFylVeS4jI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mLXeZ6xvlh5tKbOS5X4QhnOIsURZKjEc
-	J9Qb1aJl1XH8DmYLwAk4/W3D1GHcPssUCZcCmx1/H3B6ln822dsICEeWzSmTxPBd
-	PiPlJ4oKhHRVaG+TwVjY+93iDFHyI6cL57YvrxIZs3/GqBT/yap9ZUwszjgdIod3
-	z/tXprUstBo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45127B74F;
-	Mon, 18 Mar 2013 21:46:45 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B2487B74E; Mon, 18 Mar 2013
- 21:46:44 -0400 (EDT)
-In-Reply-To: <20130318231043.GD5062@elie.Belkin> (Jonathan Nieder's message
- of "Mon, 18 Mar 2013 16:10:43 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DAC2F652-9036-11E2-A421-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757503Ab3CSBxv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Mar 2013 21:53:51 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:40204 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754672Ab3CSBxu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Mar 2013 21:53:50 -0400
+Received: by mail-oa0-f42.google.com with SMTP id i18so6432327oag.1
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 18:53:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=kNGtqo/+iXYsxdA73I3ywfNe7R6M4PseB1SyaTwR9VA=;
+        b=wYe9nV6s4MNckoHvd+9KZ+pvhn9e5/m/FN7Mn6jQbuxK+BQduYq+Pfcrlx/bD5KYlm
+         NGGnxSyxUYVpmZfwXiZKbPk0vDyaKB0AdUb0OE6sOYn7iRjNLojCNmix/z2i+cwQi1qn
+         HOXOqkpr7WTq7S7WF8YyjWLctdaA/+ThPAbeUpUIHzGFzbQmTB6yHSe4oxaT3nU36A2b
+         uHUbFL2kqboQDTsmDB83PpcKGAg2V9ZWjcVSlnWw0QOLvAsH6QnENs3ASA2/PDXgxQoT
+         SZWhPKrHMx/5O9J6g4Usq0e/yWGpYWBCvk2pPziI983XC4BmrKKSf5XNvY7ttA91i3fR
+         NPzg==
+X-Received: by 10.60.171.167 with SMTP id av7mr156478oec.77.1363658030128;
+ Mon, 18 Mar 2013 18:53:50 -0700 (PDT)
+Received: by 10.76.27.200 with HTTP; Mon, 18 Mar 2013 18:53:20 -0700 (PDT)
+In-Reply-To: <tencent_334CD10A3AA16B201938BF85@qq.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218469>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Mon, Mar 18, 2013 at 1:09 PM, =E6=96=B9=E6=A0=8B <fangdong@pipul.org=
+> wrote:
+> do you known the delta_data format?
+> i want to know more details, thx
 
-> Test nits:
-> ...
-> Hope that helps,
->
-> Jonathan Nieder (3):
->   push test: use test_config where appropriate
->   push test: simplify check of push result
->   push test: rely on &&-chaining instead of 'if bad; then echo Oops; fi'
-
-Are these supposed to be follow-up patches?  Preparatory steps that
-Rob can reroll on top?  Something else?
+check out patch-delta.c:patch_delta(). I believe that function applies
+a delta. You can figure out the format by reading how it applies.
+--=20
+Duy
