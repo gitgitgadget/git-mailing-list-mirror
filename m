@@ -1,122 +1,98 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: git merge <tag> behavior
-Date: Tue, 19 Mar 2013 15:55:14 +0100
-Organization: OPTEYA
-Message-ID: <1363704914.6289.39.camel@test.quest-ce.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] add -u: only show pathless 'add -u' warning when
+ changes exist outside cwd
+Date: Tue, 19 Mar 2013 07:57:38 -0700
+Message-ID: <7va9pzl9nh.fsf@alter.siamese.dyndns.org>
+References: <20130313040845.GA5057@sigill.intra.peff.net>
+ <20130313041037.GB5378@sigill.intra.peff.net>
+ <20130319034415.GI5062@elie.Belkin> <20130319034822.GL5062@elie.Belkin>
+ <7vli9kkoci.fsf@alter.siamese.dyndns.org> <20130319052805.GO5062@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 19 15:57:47 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 19 15:58:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHxyz-0005zD-OX
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 15:57:46 +0100
+	id 1UHxzx-0006oV-Gb
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 15:58:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932214Ab3CSO4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 10:56:08 -0400
-Received: from smtpfb1-g21.free.fr ([212.27.42.9]:47271 "EHLO
-	smtpfb1-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756841Ab3CSO4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 10:56:06 -0400
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 43D3877C9AD
-	for <git@vger.kernel.org>; Tue, 19 Mar 2013 15:56:03 +0100 (CET)
-Received: from [192.168.20.20] (unknown [37.161.111.80])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 08BF74C8231
-	for <git@vger.kernel.org>; Tue, 19 Mar 2013 15:55:22 +0100 (CET)
-X-Mailer: Evolution 3.4.4 (3.4.4-2.fc17) 
+	id S932260Ab3CSO5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 10:57:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36644 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932545Ab3CSO5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 10:57:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7793BB228;
+	Tue, 19 Mar 2013 10:57:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=J+Y7FN3BZImj3ENp/32Mmm1rGgY=; b=XqppDM
+	twzCag9cvUwWUuwztqYKFgtIzm5Cc6oUo4fLcE5wu3swdk1skf1x04+e0pEtM6R/
+	ocrEYV8WOXBgjW8iGw07x9p6wnyFQohnC6EkOn71sWME0mZfnKZS/puWRUwez9I4
+	l+awmNNNEdCR1nyOLmYJdYWU9rsMBavLqqVu4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ySkiWLHjnrToiVR7G3eDG6SMeByoqpqP
+	JLkUBQZ+mholctlFZqiH87l6Z7Fy7nUq4PnIANGfhvEnRvAuPyxuzLierij4QtvA
+	iAJfZdqyEB45/KC1u7/eggLw88+YC3pE2hcOV7f0kveh2MreHAL5uAVmpL/Zo/M+
+	HJ4+V+bIBnM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C34AB227;
+	Tue, 19 Mar 2013 10:57:41 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C018EB225; Tue, 19 Mar 2013
+ 10:57:40 -0400 (EDT)
+In-Reply-To: <20130319052805.GO5062@elie.Belkin> (Jonathan Nieder's message
+ of "Mon, 18 Mar 2013 22:28:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 58C7019C-90A5-11E2-8B71-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218520>
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-While trying to reproduce/understand the problems[1][2] I was facing
-when using Google's Git repo tool[3], I've found minor problems in Git:
+> Yes, that can work, for example like this (replacing the patch you're
+> replying to).
 
-1) there's no mention of the git merge <tag> behavior in git-merge.1
+I think that would be a better approach if we were to do this.  I
+still have the same reservation that "this is fundamentally not
+worse but still hurts the users more".
 
-When asking Git to merge a tag (such as a signed tag or annotated tag),
-it will always create a merge commit even if fast-forward was possible.
-It's like having --no-ff present on the command line.
+> +		/*
+> +		 * Check if "git add -A" or "git add -u" was run from a
+> +		 * subdirectory with a modified file outside that directory,
+> +		 * and warn if so.
+> +		 *
+> +		 * "git add -u" will behave like "git add -u :/" instead of
+> +		 * "git add -u ." in the future.  This warning prepares for
+> +		 * that change.
+> +		 */
+> +		if (implicit_dot &&
+> +		    !match_pathspec(implicit_dot, path, strlen(path), 0, NULL)) {
 
-It's a difference from the default behavior described in git-merge.1[4].
-It should be documented as an exception of "FAST-FORWARD MERGE" section
-and "--ff" option description.
+This one really should *not* use match_pathspec(), I think.
 
-2) git merge <tag> VS git merge <object-id>
+It is a special case where we were asked to limit to our directory
+but decided to grab everything instead and filtering the outcome
+outselves.  We should have a "path to the starting directory" aka
+"prefix" in implicit_dot and check if path is covered by the prefix
+instead.
 
-If <tag> is an object (not a lightweight/reference tag), git merge <tag>
-will by default create a merge commit with the tag message.
-Additionally, the signature check will be reported as comment, for
-example:
-
-    Merge tag 'v1.12.2' into branch-v1.12.2
-
-    repo 1.12.2
-
-    # gpg: Signature made Fri Mar  1 18:36:42 2013 CET using DSA key ID 920F5C65
-    # gpg: Good signature from "Repo Maintainer <repo@android.kernel.org>"
-    # gpg: WARNING: This key is not certified with a trusted signature!
-    # gpg:          There is no indication that the signature belongs to the owner.
-    # Primary key fingerprint: 8BB9 AD79 3E8E 6153 AF0F  9A44 1653 0D5E 920F 5C65
-
-But, if you use the tag object-id instead of its name, for example using
-git merge `git show-ref <tag>`, the tag is not recognized and the
-signature is not checked. Git still create a merge commit, but doesn't
-prepare a commit message with the tag message and the signature:
-
-    Merge commit 'ac22c7ae2e652f63366b65ee23122292d3564fff' into
-branch-ac22c7ae2e652f63366b65ee23122292d3564fff
-
-It would be great to have Git using the tag message and check the
-signature.
-
-3) Merge options can't be overridden.
-
-If I modify .git/config to set a merge option, for example forcing
-fast-forward merge, this option cannot be overridden on command line:
-
-Example 1:
-
-    $ cat .git/config:
-    [branch "master"]
-            mergeoptions = --ff-only
-
-    $ git merge --no-ff <tag>
-    fatal: You cannot combine --no-ff with --ff-only
-
-Example 2:
-
-    $ cat .git/config:
-    [merge]
-           ff = only
-
-    $ git merge --no-ff <tag>
-    fatal: You cannot combine --no-ff with --ff-only
-
-Setting the merge options in config should overridden by command line.
-
-Regards.
-
-[1] issue 135: repo: repo sync should force fast-forward merge
-https://code.google.com/p/git-repo/issues/detail?id=135
-
-[2] Issue 136: repo: repo sync should use the tag name instead of object identifier of the tag
-https://code.google.com/p/git-repo/issues/detail?id=136
-
-[3] git-repo - repo - The multiple repository tool 
-http://code.google.com/p/git-repo/
-
-[4] git-merge(1) Manual Page
-https://www.kernel.org/pub/software/scm/git/docs/git-merge.html
-
--- 
-Yann Droneaud
-OPTEYA
+> +			warn_pathless_add();
+> +			continue;
+> +		}
+>  		switch (fix_unmerged_status(p, data)) {
+>  		default:
+>  			die(_("unexpected diff status %c"), p->status);
