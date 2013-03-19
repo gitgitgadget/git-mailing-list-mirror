@@ -1,95 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git merge <tag> behavior
-Date: Tue, 19 Mar 2013 09:19:38 -0700
-Message-ID: <7vfvzrjrad.fsf@alter.siamese.dyndns.org>
-References: <1363704914.6289.39.camel@test.quest-ce.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v2] index-pack: always zero-initialize object_entry list
+Date: Tue, 19 Mar 2013 17:27:01 +0100
+Message-ID: <87ehfb2w4q.fsf@pctrast.inf.ethz.ch>
+References: <20130319102422.GB6341@sigill.intra.peff.net>
+	<20130319105852.GA15182@sigill.intra.peff.net>
+	<8738vr5rqh.fsf@pctrast.inf.ethz.ch>
+	<20130319154353.GA10010@sigill.intra.peff.net>
+	<20130319155244.GA16532@sigill.intra.peff.net>
+	<20130319161722.GA17445@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Yann Droneaud <ydroneaud@opteya.com>
-X-From: git-owner@vger.kernel.org Tue Mar 19 17:20:10 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Zager <szager@google.com>, <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 19 17:27:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHzGj-0006Mp-II
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 17:20:09 +0100
+	id 1UHzNt-0003uy-I7
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 17:27:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757028Ab3CSQTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 12:19:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62930 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751682Ab3CSQTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 12:19:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F57EA2CB;
-	Tue, 19 Mar 2013 12:19:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tDRPSZUQNOfJBw06oQv1YoO/3y4=; b=uyNn+X
-	oPjj3N/qSUg7O+P7Z+HzNS3dqmZSre0IASy6MlTX+zZAXsTy+4MJDd9cjg+mplzb
-	ihMbII7UQ/5Vtk2zvTCCUGn/8RtLZQ4SgdcIYLutFxCPCKH0E0htklwjYNhqVDfd
-	YdhKV9o/H4t7c2W0KHv7v31ExyXYGZTZBBOfo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pOfeBvkoKumnSWvjr5VLoqik9rRIadO/
-	LlToSVYOU9/BiwhxvRBQYFsv6vL+eie5rx4BosGgSsEiv4k++sIVqzuvc74ZOhC1
-	AaoPhpaCbXFIsFrXcxhgH9Th2rhhQ6uZGQ9I+2+Am/bK+cJfU+ARREN5OSn4by/Q
-	2yvceAo8zpo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 742A4A2C9;
-	Tue, 19 Mar 2013 12:19:40 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D19B4A2C6; Tue, 19 Mar 2013
- 12:19:39 -0400 (EDT)
-In-Reply-To: <1363704914.6289.39.camel@test.quest-ce.net> (Yann Droneaud's
- message of "Tue, 19 Mar 2013 15:55:14 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CCC547A6-90B0-11E2-9CA3-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756849Ab3CSQ1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 12:27:05 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:43831 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754480Ab3CSQ1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 12:27:04 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Mar
+ 2013 17:26:57 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.171.78) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Mar
+ 2013 17:27:01 +0100
+In-Reply-To: <20130319161722.GA17445@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 19 Mar 2013 12:17:22 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.171.78]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218538>
 
-Yann Droneaud <ydroneaud@opteya.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> 1) there's no mention of the git merge <tag> behavior in git-merge.1
+> On Tue, Mar 19, 2013 at 11:52:44AM -0400, Jeff King wrote:
 >
-> When asking Git to merge a tag (such as a signed tag or annotated tag),
-> it will always create a merge commit even if fast-forward was possible.
-> It's like having --no-ff present on the command line.
+>> > > > Commit 38a4556 (index-pack: start learning to emulate
+>> > > > "verify-pack -v", 2011-06-03) added a "delta_depth" counter
+>> > > > to each "struct object_entry". Initially, all object entries
+>> > > > have their depth set to 0; in resolve_delta, we then set the
+>> > > > depth of each delta to "base + 1". Base entries never have
+>> > > > their depth touched, and remain at 0.
+>> > > 
+>> > > This patch causes index-pack to fail on the pack that triggered the
+>> > > whole discussion.  More in a minute in another side thread, but
+>> > > meanwhile: NAK until we understand what is really going on here.
+>> > 
+>> > Odd; that's what I was testing with, and it worked fine.
+>> 
+>> Ah, interesting. I built the fix on top of d1a0ed1, the first commit
+>> that shows the problem. And it works fine there. But when it is
+>> forward-ported to the current master, it breaks as you saw.
+>> 
+>> More bisection fun.
 >
-> It's a difference from the default behavior described in git-merge.1[4].
-> It should be documented as an exception of "FAST-FORWARD MERGE" section
-> and "--ff" option description.
-
-Yes; we welcome documentation patches.
-
-> 2) git merge <tag> VS git merge <object-id>
+> So after bisecting, I realize that it is indeed broken on top of
+> d1a0ed1. I have no idea why I didn't notice that before; I'm guessing it
+> was because I was running it under valgrind and paying attention only to
+> valgrind errors.
 >
-> If <tag> is an object (not a lightweight/reference tag), git merge <tag>
-> ...
-> But, if you use the tag object-id instead of its name, for example using
-> git merge `git show-ref <tag>`,
+> Anyway, the problem is simple and stupid. The original object array is
+> not nr_objects item long; it is (nr_objects + 1) long, though I'm not
+> clear why (1-indexing?).
 
-"git show-ref <tag>" gives you something like
+It apparently relates to the use of .idx.offset to compute the "next"
+offset, cf. append_obj_to_pack():
 
-    572a535454612a046e7dd7404dcca94d6243c788 refs/tags/v1.8.2
+	struct object_entry *obj = &objects[nr_objects++];
+   ...
+	obj[1].idx.offset = obj[0].idx.offset + n;
+	obj[1].idx.offset += write_compressed(f, buf, size);
 
-which is an invalid thing to merge with.  Perhaps you meant
+So you trashed the offset of the first object after all the objects that
+are actually *in* the patch.
 
-	git merge $(git rev-parse v1.12.2)
+And with that: ACK.
 
-> signature is not checked. Git still create a merge commit, but doesn't
-> prepare a commit message with the tag message and the signature:
->
-> It would be great to have Git using the tag message and check the
-> signature.
-
-Perhaps, but if you feed the $(git rev-parse v1.12.2) to merge, your
-subject will not be able to say "Merge tag 'v1.12.2'" in the first
-place, so I do not think you would want to encourage such usage in
-the first place.
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
