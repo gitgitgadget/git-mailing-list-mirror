@@ -1,126 +1,117 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: regression in multi-threaded git-pack-index
-Date: Tue, 19 Mar 2013 17:11:22 +0100
-Message-ID: <87obef2wut.fsf@pctrast.inf.ethz.ch>
-References: <20130315224240.50AA340839@wince.sfo.corp.google.com>
-	<87hak74cse.fsf@pctrast.inf.ethz.ch>
-	<87620n4clo.fsf@pctrast.inf.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH v2] index-pack: always zero-initialize object_entry list
+Date: Tue, 19 Mar 2013 12:17:22 -0400
+Message-ID: <20130319161722.GA17445@sigill.intra.peff.net>
+References: <20130319102422.GB6341@sigill.intra.peff.net>
+ <20130319105852.GA15182@sigill.intra.peff.net>
+ <8738vr5rqh.fsf@pctrast.inf.ethz.ch>
+ <20130319154353.GA10010@sigill.intra.peff.net>
+ <20130319155244.GA16532@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Zager <szager@google.com>, <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Mar 19 17:11:56 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Zager <szager@google.com>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Mar 19 17:18:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHz8k-0006Dl-20
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 17:11:54 +0100
+	id 1UHzEd-0004ah-7z
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 17:17:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932656Ab3CSQL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 12:11:26 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:42808 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932436Ab3CSQLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 12:11:25 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Mar
- 2013 17:11:18 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.171.78) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Mar
- 2013 17:11:22 +0100
-In-Reply-To: <87620n4clo.fsf@pctrast.inf.ethz.ch> (Thomas Rast's message of
-	"Tue, 19 Mar 2013 16:45:55 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.171.78]
+	id S932699Ab3CSQR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 12:17:27 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58568 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751682Ab3CSQR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 12:17:27 -0400
+Received: (qmail 31463 invoked by uid 107); 19 Mar 2013 16:19:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 19 Mar 2013 12:19:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Mar 2013 12:17:22 -0400
+Content-Disposition: inline
+In-Reply-To: <20130319155244.GA16532@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218536>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On Tue, Mar 19, 2013 at 11:52:44AM -0400, Jeff King wrote:
 
-> Thomas Rast <trast@student.ethz.ch> writes:
->
->>   (gdb) r index-pack --keep --stdin -v --pack_header=2,50757 <borked
->>   Starting program: /Users/trast/.local/bin/git index-pack --keep
->> --stdin -v --pack_header=2,50757 <borked
->>   Reading symbols for shared libraries +++........................ done
->>   Receiving objects: 100% (50757/50757), 24.52 MiB | 13.06 MiB/s, done.
->>   Resolving deltas:  25% (10568/42272)   
->>   Program received signal EXC_BAD_ACCESS, Could not access memory.
->>   Reason: KERN_PROTECTION_FAILURE at address: 0x000000014484dfe8
->>   [Switching to process 96573 thread 0x10f]
->>   0x000000010017ee20 in use_pack (p=0x100500f30, w_cursor=0x14484e1a0,
->> offset=69638148, left=0x0) at sha1_file.c:866
->>   866             if (!win || !in_window(win, offset)) {
->>
->> This seems to be a SIGBUS triggered by stack overflow, largely based on
->> the observation that
->>
->>   (gdb) p &p
->>   $6 = (struct packed_git **) 0x144748058
->
-> Actually, scratch that; the stack depth is the same no matter what
-> ulimits I put (up to 64MB).
+> > > > Commit 38a4556 (index-pack: start learning to emulate
+> > > > "verify-pack -v", 2011-06-03) added a "delta_depth" counter
+> > > > to each "struct object_entry". Initially, all object entries
+> > > > have their depth set to 0; in resolve_delta, we then set the
+> > > > depth of each delta to "base + 1". Base entries never have
+> > > > their depth touched, and remain at 0.
+> > > 
+> > > This patch causes index-pack to fail on the pack that triggered the
+> > > whole discussion.  More in a minute in another side thread, but
+> > > meanwhile: NAK until we understand what is really going on here.
+> > 
+> > Odd; that's what I was testing with, and it worked fine.
+> 
+> Ah, interesting. I built the fix on top of d1a0ed1, the first commit
+> that shows the problem. And it works fine there. But when it is
+> forward-ported to the current master, it breaks as you saw.
+> 
+> More bisection fun.
 
-Actually scratch that again.  It *is* a stack overflow, except that this
-is a thread stack, for which the OS X defaults are 512kB apparently, as
-opposed to 2MB on linux.
+So after bisecting, I realize that it is indeed broken on top of
+d1a0ed1. I have no idea why I didn't notice that before; I'm guessing it
+was because I was running it under valgrind and paying attention only to
+valgrind errors.
 
-To wit:
+Anyway, the problem is simple and stupid. The original object array is
+not nr_objects item long; it is (nr_objects + 1) long, though I'm not
+clear why (1-indexing?). So my previous patch was zeroing the final
+entry, which was supposed to contain actual data. Oops.
 
-  (gdb) p &p
-  $11 = (struct packed_git **) 0x14484e058
-  (gdb) bt -5
-  #4093 0x0000000100054947 in find_unresolved_deltas (base=0x144e00000) at index-pack.c:930
-  #4094 0x0000000100054a79 in resolve_base (obj=0x1011b08c0) at index-pack.c:961
-  #4095 0x0000000100054ba5 in threaded_second_pass (data=0x100537dd0) at index-pack.c:984
-  #4096 0x00007fff8ec8b8bf in _pthread_start ()
-  #4097 0x00007fff8ec8eb75 in thread_start ()
-  (gdb) f 4094
-  #4094 0x0000000100054a79 in resolve_base (obj=0x1011b08c0) at index-pack.c:961
-  961             find_unresolved_deltas(base_obj);
-  (gdb) p &obj
-  $12 = (struct object_entry **) 0x1448cdec8
-  (gdb) p 0x14484e058-0x1448cdec8
-  $13 = -523888
-  (gdb) p 512*1024
-  $14 = 524288
+Here's the corrected patch.
 
-And indeed the following patch fixes it.  Sounds like the delta
-unpacking needs a rewrite to support stackless operation.  Sigh.
+-- >8 --
+Subject: [PATCH] index-pack: always zero-initialize object_entry list
 
-diff --git i/builtin/index-pack.c w/builtin/index-pack.c
-index 6be99e2..f73291f 100644
---- i/builtin/index-pack.c
-+++ w/builtin/index-pack.c
-@@ -1075,13 +1075,17 @@ static void resolve_deltas(void)
- 	nr_dispatched = 0;
- 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
- 		init_thread();
-+		pthread_attr_t attr;
-+		pthread_attr_init(&attr);
-+		pthread_attr_setstacksize(&attr, 2*1024*1024);
- 		for (i = 0; i < nr_threads; i++) {
--			int ret = pthread_create(&thread_data[i].thread, NULL,
-+			int ret = pthread_create(&thread_data[i].thread, &attr,
- 						 threaded_second_pass, thread_data + i);
- 			if (ret)
- 				die(_("unable to create thread: %s"),
- 				    strerror(ret));
- 		}
-+		pthread_attr_destroy(&attr);
- 		for (i = 0; i < nr_threads; i++)
- 			pthread_join(thread_data[i].thread, NULL);
- 		cleanup_thread();
+Commit 38a4556 (index-pack: start learning to emulate
+"verify-pack -v", 2011-06-03) added a "delta_depth" counter
+to each "struct object_entry". Initially, all object entries
+have their depth set to 0; in resolve_delta, we then set the
+depth of each delta to "base + 1". Base entries never have
+their depth touched, and remain at 0.
 
+To ensure that all depths start at 0, that commit changed
+calls to xmalloc the object_entry list into calls to
+xcalloc.  However, it forgot that we grow the list with
+xrealloc later. These extra entries are used when we add an
+object from elsewhere pack to complete a thin pack. If we
+add a non-delta object, its depth value will just be
+uninitialized heap data.
 
+This patch fixes it by zero-initializing entries we add to
+the objects list via the xrealloc.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/index-pack.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 43d364b..5860085 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1107,6 +1107,8 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
+ 		objects = xrealloc(objects,
+ 				   (nr_objects + nr_unresolved + 1)
+ 				   * sizeof(*objects));
++		memset(objects + nr_objects + 1, 0,
++		       nr_unresolved * sizeof(*objects));
+ 		f = sha1fd(output_fd, curr_pack);
+ 		fix_unresolved_deltas(f, nr_unresolved);
+ 		sprintf(msg, _("completed with %d local objects"),
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.8.2.22.g4863f63
