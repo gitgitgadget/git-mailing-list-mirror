@@ -1,144 +1,101 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] push: Alias pushurl from push rewrites
-Date: Mon, 18 Mar 2013 16:10:43 -0700
-Message-ID: <20130318231043.GD5062@elie.Belkin>
-References: <20130318220224.3b23a381@hoelz.ro>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] read-cache: avoid memcpy in expand_name_field in index v4
+Date: Tue, 19 Mar 2013 08:29:01 +0700
+Message-ID: <CACsJy8DhMpQsNY3f4U3FmE1Bd1PvrxDLTYWT6boycrJVtv8WVg@mail.gmail.com>
+References: <1363611482-1015-1-git-send-email-pclouds@gmail.com> <7vboagoav9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	josh@joshtriplett.org
-To: Rob Hoelz <rob@hoelz.ro>
-X-From: git-owner@vger.kernel.org Tue Mar 19 00:17:57 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 19 02:30:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHjJU-000155-Lq
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 00:17:56 +0100
+	id 1UHlNK-0006qH-Nv
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 02:30:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755853Ab3CRXR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 19:17:29 -0400
-Received: from mail-da0-f45.google.com ([209.85.210.45]:46086 "EHLO
-	mail-da0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752100Ab3CRXR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 19:17:29 -0400
-Received: by mail-da0-f45.google.com with SMTP id v40so1625730dad.32
-        for <git@vger.kernel.org>; Mon, 18 Mar 2013 16:17:28 -0700 (PDT)
+	id S1757141Ab3CSB3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 21:29:33 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:43842 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754629Ab3CSB3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 21:29:33 -0400
+Received: by mail-ob0-f178.google.com with SMTP id wd20so6007198obb.37
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 18:29:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=NpmAEUoghBEsmOUiUIDfru+1uXBASReWkvkgghVrhBg=;
-        b=wWWGEAOwT/7l7M+XuGn9A1xuoQ/YrzApA3gIJvrq/fYNqpw3lFiHAr4Fc0+N5GKGbg
-         EeN0tP2bbucNMLLeP6KOqCZZF8amOizgeuHuo/UuP9BjWxoz3anj9A18faEnXJ+Nmzpd
-         86cmYzll7VluAk2j8PPd+7DCvR4EvTKPxNWZeDcYKdOR5kwYCa+tIYlMjM+wn3N4dHp3
-         t1xByCqqc2RAy45byVZbOROJzFX2W0/CdR6ksUzQWCu/a/e2rLJ+eijHVzVEtcdCPocx
-         GFZwbpea6Je5jcrKW6QR6gMGUMCg/dP+vNk9cRDGdp7/yKdkgRMcYAj8e12wt6dLMEKs
-         N/OA==
-X-Received: by 10.66.72.37 with SMTP id a5mr12877097pav.193.1363648247957;
-        Mon, 18 Mar 2013 16:10:47 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id vd4sm21689098pbc.35.2013.03.18.16.10.45
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Mar 2013 16:10:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130318220224.3b23a381@hoelz.ro>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=coRSky9E0DImfbdlSvKLvyeXSJj0S3w/2LESdzmFMRE=;
+        b=Yp6Nqe68d+viCRLBe2CXg6JkaGq+wc1g8HTgE+ZOVmpexUZqlj8wow+sKSYUGCC1LZ
+         ace25nnHb9kA/AJqVq1Q4Euk875YQfEasVxNDEZm3uXPQ5l74cU6dI+Bcye296mAX9FV
+         ZYxt+mOiiRX9gR1wMXZVT7/Wd/hpK6pQvxoH3jQ7/wGOwayecd800KF0T0ri0DoyY2xz
+         a/jcjZzwjeXsTefCOxzshTZ6N8MlO01IbgI1gFCaIAERTxuIP48G4XRJmSkaYANtWbya
+         Q0uCj7PBICyXR0li3xwNF1vuBUcytvQWc/UKAbNU7ENV9DMBLVLf7zkR4DsAnZ3tgcZe
+         EggQ==
+X-Received: by 10.60.171.230 with SMTP id ax6mr156876oec.25.1363656572449;
+ Mon, 18 Mar 2013 18:29:32 -0700 (PDT)
+Received: by 10.76.27.200 with HTTP; Mon, 18 Mar 2013 18:29:01 -0700 (PDT)
+In-Reply-To: <7vboagoav9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218466>
 
-Hi,
-
-Rob Hoelz wrote:
-
-> [url "git://github.com/"]
->     insteadOf = github:
-> [url "git://github.com/myuser/"]
->     insteadOf = mygithub:
-> [url "git@github.com:myuser/"]
->     pushInsteadOf = mygithub:
-> [remote "origin"]
->     url     = github:organization/project
->     pushurl = mygithub:project
+On Tue, Mar 19, 2013 at 12:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> While it is true that strbuf_remove(&sb, sb.len - trim, trim) is
+> equivalent to strbuf_setlen(&sb, sb.len - trim), I wonder why we see
+> any memcpy() in the first place.
 >
-> With the above configuration, the following occurs:
+> strbuf_remove(&sb, sb.len - trim, trim) is turned into
+> strbuf_splice(&sb, sb.len - trim, trim, NULL, 0) and then in turn it
+> does these two:
 >
-> $ git push origin master
-> fatal: remote error:
->   You can't push to git://github.com/myuser/project.git
->   Use git@github.com:myuser/project.git
+>         memmove(sb.buf + (sb.len - trim) + 0,
+>                 sb.buf + sb.len, 0);
+>         memcpy(sb.buf + (sb.len - trim), NULL, 0);
 >
-> So you can see that pushurl is being followed (it's not attempting to
-> push to git://github.com/organization/project), but insteadOf values are
-> being used as opposed to pushInsteadOf values for expanding the pushurl
-> alias.
+> both of which should be a no-op, no?
 
-At first glance it is not always obvious how overlapping settings like
-these should interact.  Thanks for an instructive example that makes
-the right behavior obvious.
+Apparently my memcpy does not bail out early when the third arg is
+zero (glibc 2.11.2 on gentoo, x86). It cares more about memory
+alignment. This is the beginning of memcpy:
 
-Test nits:
+mov    %edi,%eax
+mov    0x4(%esp),%edi
+mov    %esi,%edx
+mov    0x8(%esp),%esi
+mov    %edi,%ecx
+xor    %esi,%ecx
+and    $0x3,%ecx
+mov    0xc(%esp),%ecx
+cld
+jne    75946 <memcpy+0x56>
+cmp    $0x3,%ecx
+jbe    75946 <memcpy+0x56>
 
-[...]
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -244,6 +244,87 @@ test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf
->  	)
->  '
->  
-> +test_expect_success 'push with pushInsteadOf and explicit pushurl (pushurl + pushInsteadOf does rewrite in this case)' '
-> +	mk_empty &&
-> +	rm -rf ro rw &&
-> +	TRASH="$(pwd)/" &&
-> +	mkdir ro &&
-> +	mkdir rw &&
-> +	git init --bare rw/testrepo &&
-> +	git config "url.file://$TRASH/ro/.insteadOf" ro: &&
-> +	git config "url.file://$TRASH/rw/.pushInsteadOf" rw: &&
 
-The surrounding tests don't do this, but I wonder if it would make
-sense to use test_config instead of 'git config' here.
+> There also is this call that has the same "trim at the right end":
+>
+>     pretty.c:       strbuf_remove(sb, sb->len - trimlen, trimlen);
+>
+> It almost makes me suggest that it may be a better solution to make
+> strbuf_remove() more intelligent about such a call pattern _if_
+> these empty memmove/memcpy are so expensive, perhaps like the
+> attached.  It could be that strbuf_splice() should be the one that
+> ought to be more intelligent, but I'll leave it up to you to
+> benchmark to find out where the best place to optimize is.
 
-That way, the test's settings wouldn't affect other tests, and in
-particular if someone later decides to refactor the file by reordering
-tests, she could be confident that that would not break anything.
+memcpy is not expensive per-se, but this is (again) webkit, where
+expand_name_field (and memcpy) is called ~200k times. At that quantity
+I still prefer fixing in the "hot" call site expand_name_field(), and
+because strbuf_setlen is an inline function, we make no extra calls.
 
-In most of the surrounding tests it does not matter because 'git
-config' is run in a subdirectory that is not reused later.  Patches
-fixing the exceptions below.
-
-> +	git config remote.r.url ro:wrong &&
-> +	git config remote.r.pushurl rw:testrepo &&
-> +	git push r refs/heads/master:refs/remotes/origin/master &&
-> +	(
-> +		cd rw/testrepo &&
-> +		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
-> +		test "z$r" = "z$the_commit" &&
-> +
-> +		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-> +	)
-
-To produce more useful "./t5516-fetch-push.sh -v -i" output when the
-comparison fails:
-
-	echo "$the_commit commit refs/remotes/origin/master" >expect &&
-	(
-		cd rw/testrepo &&
-		git for-each-ref refs/remotes/origin
-	) >actual &&
-	test_cmp expect actual
-
-Hope that helps,
-
-Jonathan Nieder (3):
-  push test: use test_config where appropriate
-  push test: simplify check of push result
-  push test: rely on &&-chaining instead of 'if bad; then echo Oops; fi'
-
- t/t5516-fetch-push.sh | 156 +++++++++++++++++++++-----------------------------
- 1 file changed, 65 insertions(+), 91 deletions(-)
+Making strbuf_remove/strbuf_splice more intelligent may be good (or
+may make it harder to read), I don't know. But I think it could be a
+separate topic.
+-- 
+Duy
