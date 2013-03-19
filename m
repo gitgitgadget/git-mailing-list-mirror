@@ -1,93 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] index-pack: always zero-initialize object_entry list
-Date: Tue, 19 Mar 2013 06:58:52 -0400
-Message-ID: <20130319105852.GA15182@sigill.intra.peff.net>
-References: <20130319102422.GB6341@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [ITCH] Specify refspec without remote
+Date: Tue, 19 Mar 2013 18:33:12 +0700
+Message-ID: <CACsJy8Ad7rKtMd-6BoBtbVa70F0AaJ+OUjEykNh344tPw7F7Vg@mail.gmail.com>
+References: <CALkWK0nYECHZaxit9jR-tS=7fXyOP5dy6mqUz0DKmbTRU-xRNw@mail.gmail.com>
+ <20130318170804.GA15924@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Zager <szager@google.com>, git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Mar 19 11:59:30 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 19 12:34:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHuGL-0004eV-Tz
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 11:59:26 +0100
+	id 1UHunz-0005RG-GX
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 12:34:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423Ab3CSK66 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 06:58:58 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58207 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751077Ab3CSK65 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 06:58:57 -0400
-Received: (qmail 27834 invoked by uid 107); 19 Mar 2013 11:00:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 19 Mar 2013 07:00:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Mar 2013 06:58:52 -0400
-Content-Disposition: inline
-In-Reply-To: <20130319102422.GB6341@sigill.intra.peff.net>
+	id S1751144Ab3CSLdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 07:33:44 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:51465 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750779Ab3CSLdn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 07:33:43 -0400
+Received: by mail-ob0-f178.google.com with SMTP id wd20so297870obb.37
+        for <git@vger.kernel.org>; Tue, 19 Mar 2013 04:33:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=QhTZkDiaR5HZNyMp5+qQYJ0ZbLXttLbKsSKjNfzwn8E=;
+        b=MwdzuA3+74q4zqw7Zs13oAMGYxwgITU+cb5TCJFZFKU90b5WSUiP3QmkryFGLbyPdW
+         JhLoT6exUNnHodr9ocHoerM9M670/OIytHxYF1F55BfotbsRY46MRXQkeVWCmzT5xNIQ
+         PxNd2HQloZt5woVd1VsRIbaxSkhk6QDj5SYo1S5kTxGLyL6/stbEVj3hBp6oUhLThEBA
+         gX6s715fHVewr/KUOalkrJL+qshLlhpMFEuHv8C2d9srZR6Zew3HyofahcR/ppHu0Vq3
+         KU0BuzCvZJb26JDaw7tyMmTZbc2gJofs7T9MV9smd6z1mpL4hPW6o8w5pjYYb+axcmtL
+         C5Mw==
+X-Received: by 10.182.118.104 with SMTP id kl8mr968757obb.54.1363692822949;
+ Tue, 19 Mar 2013 04:33:42 -0700 (PDT)
+Received: by 10.76.27.200 with HTTP; Tue, 19 Mar 2013 04:33:12 -0700 (PDT)
+In-Reply-To: <20130318170804.GA15924@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218505>
 
-Commit 38a4556 (index-pack: start learning to emulate
-"verify-pack -v", 2011-06-03) added a "delta_depth" counter
-to each "struct object_entry". Initially, all object entries
-have their depth set to 0; in resolve_delta, we then set the
-depth of each delta to "base + 1". Base entries never have
-their depth touched, and remain at 0.
+On Tue, Mar 19, 2013 at 12:08 AM, Jeff King <peff@peff.net> wrote:
+>> Is there a reason for the remote not being optional, or are we just
+>> waiting for a patch?  The only problem I can foresee is very minor:
+>> there is a ref with the same name as a remote; in this case, we'd have
+>> to specify both the remote and the ref.
+>
+> I think the ambiguity is a little more complex than that, because we
+> cannot enumerate the universe of all remotes. Keep in mind that we can
+> take either a configured remote or a URL (or ssh host). So what does:
+>
+>   git push foo:bar
+>
+> mean? Is it pushing "refs/heads/foo" to "refs/heads/bar" on "origin"? Or
+> is it using the default refspecs to push to the "bar" repo on the host
+> "foo" over ssh?
+>
+> So you would need some heuristics based on whether something was a valid
+> refspec, or could be a valid remote name or URL.
 
-To ensure that all depths start at 0, that commit changed
-calls to xmalloc the object_entry list into calls to
-xcalloc.  However, it forgot that we grow the list with
-xrealloc later. These extra entries are used when we add an
-object from elsewhere pack to complete a thin pack. If we
-add a non-delta object, its depth value will just be
-uninitialized heap data.
+Assume that we agree on what remote is implied, we could simplify
+parsing by specifying the remote with "." (or something short and
+unambiguous). So the above command would become
 
-This patch fixes it by zero-initializing entries we add to
-the objects list via the xrealloc.
+git push . foo:bar
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Another solution would be to say "only look at delta_depth
-if the object is a delta"; we follow that rule already in
-the output histogram code path, but just do not when
-checking a delta's base. So it would similarly be a
-one-liner.  But I think given the switch to xcalloc in the
-original patch, the intent was to just always zero each
-object, as I described above.
-
-This would be more readable if we had an "xrecalloc" or
-similar, which realloc'd a pointer and set just the _new_
-space to zeros. I do not recall ever hearing of such a
-function, though. I figured since it is a one-off, it is
-simpler to just say what we mean with memset here than
-invent a new allocation function that will leave people
-scratching their heads about its semantics.
-
- builtin/index-pack.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 43d364b..ca62443 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1107,6 +1107,8 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
- 		objects = xrealloc(objects,
- 				   (nr_objects + nr_unresolved + 1)
- 				   * sizeof(*objects));
-+		memset(objects + nr_objects, 0,
-+		       (nr_unresolved + 1) * sizeof(*objects));
- 		f = sha1fd(output_fd, curr_pack);
- 		fix_unresolved_deltas(f, nr_unresolved);
- 		sprintf(msg, _("completed with %d local objects"),
+Not too much to type
 -- 
-1.8.2.4.g2ed830d
+Duy
