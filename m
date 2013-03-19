@@ -1,79 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/4] add -u: only show pathless 'add -u' warning when
- changes exist outside cwd
-Date: Mon, 18 Mar 2013 22:44:10 -0700
-Message-ID: <20130319054410.GQ5062@elie.Belkin>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/4] add -u: only show pathless 'add -u' warning when changes exist outside cwd
+Date: Tue, 19 Mar 2013 07:21:47 +0100
+Message-ID: <vpq1ubb3o5g.fsf@grenoble-inp.fr>
 References: <20130313040845.GA5057@sigill.intra.peff.net>
- <20130313041037.GB5378@sigill.intra.peff.net>
- <20130319034415.GI5062@elie.Belkin>
- <20130319034822.GL5062@elie.Belkin>
- <7vli9kkoci.fsf@alter.siamese.dyndns.org>
- <CACsJy8AjqwGVRRiQGMG0AN5qqtvxLk8FHKfUzCZB-7BykrHfjg@mail.gmail.com>
+	<20130313041037.GB5378@sigill.intra.peff.net>
+	<20130319034415.GI5062@elie.Belkin>
+	<20130319034822.GL5062@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 19 06:44:49 2013
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 19 07:22:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHpLn-0005xT-M2
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 06:44:43 +0100
+	id 1UHpwY-0004AD-Ev
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 07:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756744Ab3CSFoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 01:44:16 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:63477 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754917Ab3CSFoQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 01:44:16 -0400
-Received: by mail-pb0-f43.google.com with SMTP id md12so120759pbc.30
-        for <git@vger.kernel.org>; Mon, 18 Mar 2013 22:44:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=DF62wF379564K3Bt8WwQKquJHSDgFw3pK5qsFzqz+Go=;
-        b=cen1Ka5/Q9r5b5UDisQFYoqxopqnt/Qxc+5vARiOo5atrLMbOnHs9tmvEu1W4xeyTS
-         hiaWPifII4u5OvRDnNZxwkOZO1aIwOSZzfn+HCw5qNEtWqbsFVHQ1SgZ/3l4Du7dtOQj
-         jVS7m5rD7ysN8HZixbanIgQ/UBLSikWldTHEENj+RB6mLVRK+tlZmlK4XFPHAIDB8x7V
-         K9SJvnJek/r7iGQCKG3pAhPbrhbrpVyMEGY4AasfXDCJxBW49E/stY7/PIrRdRWc6Ha+
-         TOsXdBaVBxytpfSh8E8PHxbSQX+rfw3MiyjKi+8y9IR+t0jSFEfwFSQAEsdGueUMuFns
-         JL9w==
-X-Received: by 10.66.150.198 with SMTP id uk6mr1418971pab.57.1363671855755;
-        Mon, 18 Mar 2013 22:44:15 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id 4sm22891832pbn.23.2013.03.18.22.44.13
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Mar 2013 22:44:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AjqwGVRRiQGMG0AN5qqtvxLk8FHKfUzCZB-7BykrHfjg@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S932331Ab3CSGWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 02:22:14 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34665 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755582Ab3CSGWO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 02:22:14 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r2J6LkY3006738
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 19 Mar 2013 07:21:47 +0100
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UHpvf-0007II-DK; Tue, 19 Mar 2013 07:21:47 +0100
+In-Reply-To: <20130319034822.GL5062@elie.Belkin> (Jonathan Nieder's message of
+	"Mon, 18 Mar 2013 20:48:22 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 19 Mar 2013 07:21:48 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r2J6LkY3006738
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1364278912.93495@7sBlMhlHYH7J1jSP+s0Idw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218486>
 
-Duy Nguyen wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> My concern is run full-tree diff can be expensive on large repos (one
-> of the reasons the user may choose to work from within a
-> subdirectory). We can exit as soon as we find a difference outside
-> $prefix. But in case we find nothing, we need to diff the whole
-> worktree.
+> The warning about use of 'git add -u' with no pathspec is annoying
+> because it serves no purpose in this case.  So suppress the warning
+> unless there are changes outside the cwd that are not being added.
 
-Yes.  This is an argument for the single-diff approach that Junio
-suggested, since at least it's not significantly slower than the
-future default behavior ("git add -u :/").
+No time to review the code now. I thought about implementing something
+like that, but did not do it because I didn't want the change in the
+code to be too big. At some point, we'll have to remove the warning and
+it's easier with my version than with yours. But the "damage" to the
+code do not seem too big, so that's probably OK and will actually reduce
+the pain for some users.
 
-Sysadmins and others helping to train users will need to make sure
-people working on large repos understand that they can use "git add -u ."
-to avoid a speed penalty.
+Discussions showed that many people were already using "git add -u"
+without knowing whether it was full tree or not, so for these people the
+change is somehow harmless anyway ;-).
 
-Thanks for looking it over,
-Jonathan
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
