@@ -1,101 +1,87 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] read-cache: avoid memcpy in expand_name_field in index v4
-Date: Tue, 19 Mar 2013 08:29:01 +0700
-Message-ID: <CACsJy8DhMpQsNY3f4U3FmE1Bd1PvrxDLTYWT6boycrJVtv8WVg@mail.gmail.com>
-References: <1363611482-1015-1-git-send-email-pclouds@gmail.com> <7vboagoav9.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] submodule: add 'deinit' command
+Date: Mon, 18 Mar 2013 18:45:40 -0700
+Message-ID: <7v7gl4mabf.fsf@alter.siamese.dyndns.org>
+References: <5112C6F6.4030607@web.de>
+ <CABURp0pC2FELxM5aUwxuTqS1roZm+fwkCQA+BoXjrd0+yQMmbg@mail.gmail.com>
+ <7v1ubk8u6o.fsf@alter.siamese.dyndns.org> <51477EFF.2010505@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 19 02:30:03 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 19 02:46:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHlNK-0006qH-Nv
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 02:30:03 +0100
+	id 1UHlcx-000856-Tv
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 02:46:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757141Ab3CSB3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Mar 2013 21:29:33 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:43842 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754629Ab3CSB3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Mar 2013 21:29:33 -0400
-Received: by mail-ob0-f178.google.com with SMTP id wd20so6007198obb.37
-        for <git@vger.kernel.org>; Mon, 18 Mar 2013 18:29:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=coRSky9E0DImfbdlSvKLvyeXSJj0S3w/2LESdzmFMRE=;
-        b=Yp6Nqe68d+viCRLBe2CXg6JkaGq+wc1g8HTgE+ZOVmpexUZqlj8wow+sKSYUGCC1LZ
-         ace25nnHb9kA/AJqVq1Q4Euk875YQfEasVxNDEZm3uXPQ5l74cU6dI+Bcye296mAX9FV
-         ZYxt+mOiiRX9gR1wMXZVT7/Wd/hpK6pQvxoH3jQ7/wGOwayecd800KF0T0ri0DoyY2xz
-         a/jcjZzwjeXsTefCOxzshTZ6N8MlO01IbgI1gFCaIAERTxuIP48G4XRJmSkaYANtWbya
-         Q0uCj7PBICyXR0li3xwNF1vuBUcytvQWc/UKAbNU7ENV9DMBLVLf7zkR4DsAnZ3tgcZe
-         EggQ==
-X-Received: by 10.60.171.230 with SMTP id ax6mr156876oec.25.1363656572449;
- Mon, 18 Mar 2013 18:29:32 -0700 (PDT)
-Received: by 10.76.27.200 with HTTP; Mon, 18 Mar 2013 18:29:01 -0700 (PDT)
-In-Reply-To: <7vboagoav9.fsf@alter.siamese.dyndns.org>
+	id S1757011Ab3CSBpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Mar 2013 21:45:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57053 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754724Ab3CSBpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Mar 2013 21:45:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 040EEB6B8;
+	Mon, 18 Mar 2013 21:45:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KDUCoTzBNdjT5hZ72BY1T+vWvww=; b=uo8DGT
+	4toi6EAFqcWlqrJoIYQ8F9BnsvPhZOdBYvLFfMBP9awLIC6XUy7vxoAchW3ody34
+	kCz7hYZz1ZTYrbAxZGSOF9sgMatwuOiHz/8Kr+ZoNiJZbIuGn0ij9xWIhWe5WHku
+	9nfJ2U4+6yuspBCibhXGt/8pU5XrAfaIFNRjM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ea444q91FhkAscFPkOPxKuoOys9VMGUs
+	bpPPyj4uPrMPYJhB4+J10OJUVJG7/OKn+ODH8PMrIWN0b2coxPw1HHJ5CuFGI2Ou
+	EW9qm/kfR1FfjnDEc7m5pxQ78FhDvkJO1EMNIwWaslY1bC61vR/fjototity2hDC
+	MAOegKUBlyE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EBC2BB6B6;
+	Mon, 18 Mar 2013 21:45:42 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5DD9AB6B3; Mon, 18 Mar 2013
+ 21:45:42 -0400 (EDT)
+In-Reply-To: <51477EFF.2010505@web.de> (Jens Lehmann's message of "Mon, 18
+ Mar 2013 21:54:23 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B59DF6CE-9036-11E2-8D40-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218467>
 
-On Tue, Mar 19, 2013 at 12:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> While it is true that strbuf_remove(&sb, sb.len - trim, trim) is
-> equivalent to strbuf_setlen(&sb, sb.len - trim), I wonder why we see
-> any memcpy() in the first place.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
+
+> Am 12.03.2013 17:22, schrieb Junio C Hamano:
+>> Phil Hord <phil.hord@gmail.com> writes:
+>> 
+>>> I think this would be clearer if 'git deinit' said
+>>>
+>>>     rm 'submodule/*'
+>>>
+>>> or maybe
+>>>
+>>>     Removed workdir for 'submodule'
+>>>
+>>> Is it just me?
+>> 
+>> The latter may probably be better.  
 >
-> strbuf_remove(&sb, sb.len - trim, trim) is turned into
-> strbuf_splice(&sb, sb.len - trim, trim, NULL, 0) and then in turn it
-> does these two:
+> Hmm, it doesn't really remove the directory but only empties it
+> (it recreates it a few lines after removing it together with its
+> contents). So what about
 >
->         memmove(sb.buf + (sb.len - trim) + 0,
->                 sb.buf + sb.len, 0);
->         memcpy(sb.buf + (sb.len - trim), NULL, 0);
->
-> both of which should be a no-op, no?
+>     Cleared directory 'submodule'
 
-Apparently my memcpy does not bail out early when the third arg is
-zero (glibc 2.11.2 on gentoo, x86). It cares more about memory
-alignment. This is the beginning of memcpy:
-
-mov    %edi,%eax
-mov    0x4(%esp),%edi
-mov    %esi,%edx
-mov    0x8(%esp),%esi
-mov    %edi,%ecx
-xor    %esi,%ecx
-and    $0x3,%ecx
-mov    0xc(%esp),%ecx
-cld
-jne    75946 <memcpy+0x56>
-cmp    $0x3,%ecx
-jbe    75946 <memcpy+0x56>
-
-
-> There also is this call that has the same "trim at the right end":
->
->     pretty.c:       strbuf_remove(sb, sb->len - trimlen, trimlen);
->
-> It almost makes me suggest that it may be a better solution to make
-> strbuf_remove() more intelligent about such a call pattern _if_
-> these empty memmove/memcpy are so expensive, perhaps like the
-> attached.  It could be that strbuf_splice() should be the one that
-> ought to be more intelligent, but I'll leave it up to you to
-> benchmark to find out where the best place to optimize is.
-
-memcpy is not expensive per-se, but this is (again) webkit, where
-expand_name_field (and memcpy) is called ~200k times. At that quantity
-I still prefer fixing in the "hot" call site expand_name_field(), and
-because strbuf_setlen is an inline function, we make no extra calls.
-
-Making strbuf_remove/strbuf_splice more intelligent may be good (or
-may make it harder to read), I don't know. But I think it could be a
-separate topic.
--- 
-Duy
+Sounds the cleanest among the suggested phrasing so far.
