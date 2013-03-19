@@ -1,95 +1,103 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 0/6] make pathless 'add [-u|-A]' warning less noisy
-Date: Tue, 19 Mar 2013 15:44:00 -0700
-Message-ID: <20130319224400.GA19014@google.com>
+Subject: [PATCH 1/6] t2200: check that "add -u" limits itself to subdirectory
+Date: Tue, 19 Mar 2013 15:44:51 -0700
+Message-ID: <20130319224451.GB19014@google.com>
 References: <1362786889-28688-1-git-send-email-gitster@pobox.com>
+ <20130319224400.GA19014@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Jeff King <peff@peff.net>, git@vger.kernel.org,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 19 23:44:43 2013
+X-From: git-owner@vger.kernel.org Tue Mar 19 23:45:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UI5Go-0007wW-Ah
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 23:44:38 +0100
+	id 1UI5HX-0008NQ-Hm
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 23:45:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934159Ab3CSWoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 18:44:10 -0400
-Received: from mail-pb0-f48.google.com ([209.85.160.48]:61598 "EHLO
-	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933289Ab3CSWoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 18:44:08 -0400
-Received: by mail-pb0-f48.google.com with SMTP id wy12so801144pbc.35
-        for <git@vger.kernel.org>; Tue, 19 Mar 2013 15:44:08 -0700 (PDT)
+	id S934421Ab3CSWo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 18:44:56 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:34390 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933289Ab3CSWoz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 18:44:55 -0400
+Received: by mail-pb0-f49.google.com with SMTP id xa12so810362pbc.36
+        for <git@vger.kernel.org>; Tue, 19 Mar 2013 15:44:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=TvPDCMVekgwh5K8cavC8aLYXAxZ2JARPuTzZjLNTkTo=;
-        b=NH6Ck8hhIMIDoK0fBdFhPYaV6Mwbth5FAH5hdEfIjz5oPSaav4TubElPpot5QktXjQ
-         WIH8Ddkow40FG/Xc5dTJ09M3HMGd8Pjp48GvNC/7ZASjFPPPru1ZBT+wl+qvWueOyEFN
-         KF4Ter8JQ6c78hdIY0DXk4qwOH0ej6kk6DTw6lw1ANFkYlATWBFZ7xPSRX41Stpd0P3u
-         5E5N9BiX5fHCqY8GmNkAzXlcoTIw2hgseCJKWZR2tJ3yhy26KM0+n8zEzqu+s9wKQRrM
-         n6dfObmOGI67xrx5xLlwLkofSHBRm0YW5Q7H33j8iJxuVnppF5NSdbsW0Hur9hywLxtV
-         JyNw==
-X-Received: by 10.66.155.67 with SMTP id vu3mr5995582pab.70.1363733048319;
-        Tue, 19 Mar 2013 15:44:08 -0700 (PDT)
+        bh=h6JjZWllQe0AL/EAqxNm45h+FFcndEaO9MZa//gvsko=;
+        b=W8VR/onp7xRcCB17d6cDoUBOeeZprOg1LvFHssbYH0Q2fLBC4ZQnut7B0aUk2uPb8o
+         CXAqbH164xel+VZ7nWQdJvAPFbodD3b5z9GIHMKj+tMEh5tFCrS7dmbX7A6PTOLw9moi
+         RG7QWdJcES5FuaB/zGXF97EnI3tehEMG5dXG9qdYun05ktB8Hj5FedclFpQ9Zw/t9dgo
+         xk8Q7pElaO2IQYQLW57pJXCynId9cALEjzPpPwFhdxXJtkypTUwlevu+gInoqDW/Yls7
+         jEd8YHFP0EFGxsmpmK0H8SnpTsVP12w+JdXRkMcmv3tmGJ00k7wnoeYjBibU+3ynRQDv
+         ypdA==
+X-Received: by 10.66.234.33 with SMTP id ub1mr200012pac.29.1363733095381;
+        Tue, 19 Mar 2013 15:44:55 -0700 (PDT)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id rt13sm14235999pac.14.2013.03.19.15.44.05
+        by mx.google.com with ESMTPS id y13sm25795718pbv.0.2013.03.19.15.44.53
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 19 Mar 2013 15:44:06 -0700 (PDT)
+        Tue, 19 Mar 2013 15:44:54 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1362786889-28688-1-git-send-email-gitster@pobox.com>
+In-Reply-To: <20130319224400.GA19014@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218561>
 
-As promised, here is a rerolled version of the "make pathless 'add
-[-u|-A]' warning less noisy", incorporating patches from
-jc/add-2.0-u-A-sans-pathspec.  Thanks for your help so far.
+From: Jeff King <peff@peff.net>
+Date: Thu, 14 Mar 2013 02:44:04 -0400
 
-Just like jc/add-2.0-u-A-sans-pathspec, the only transition in this
-series is the "pull the bandaid" kind.  That is, there are two steps:
+This behavior is due to change in the future, but let's test
+it anyway. That helps make sure we do not accidentally
+switch the behavior too soon while we are working in the
+area, and it means that we can easily verify the change when
+we do make it.
 
- 0. the current state, where the warning is a little too noisy
- 1. the current state but with the warning only firing in cases
-    where the user will be affected by the change to default
-    'git add -u' behavior
- 2. no more warning, 'git add -u' defaulting to 'git add -u :/'
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Unchanged, only included for reference.
 
-Patch 1 is the same as in jc/add-2.0-u-A-sans-pathspec, included for
-reference.
+ t/t2200-add-update.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-Patches 2-5 correspond to the original patches 1-4.  Any changes are
-described after the '---' in each patch.
-
-Patch 6 is just the patch from the tip of jc/add-2.0-u-A-sans-pathspec,
-rebased.  It is meant to be applied in the 2.0 cycle.
-
-Jeff King (1):
-  t2200: check that "add -u" limits itself to subdirectory
-
-Jonathan Nieder (4):
-  add: make pathless 'add [-u|-A]' warning a file-global function
-  add: make warn_pathless_add() a no-op after first call
-  add -u: only show pathless 'add -u' warning when changes exist outside
-    cwd
-  add -A: only show pathless 'add -A' warning when changes exist outside
-    cwd
-
-Junio C Hamano (1):
-  git add: -u/-A now affects the entire working tree
-
- Documentation/git-add.txt | 16 +++++++-------
- builtin/add.c             | 56 ++++++++---------------------------------------
- t/t2200-add-update.sh     | 11 ++++++++++
- 3 files changed, 28 insertions(+), 55 deletions(-)
+diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
+index 4cdebda..c317254 100755
+--- a/t/t2200-add-update.sh
++++ b/t/t2200-add-update.sh
+@@ -80,6 +80,22 @@ test_expect_success 'change gets noticed' '
+ 
+ '
+ 
++# Note that this is scheduled to change in Git 2.0, when
++# "git add -u" will become full-tree by default.
++test_expect_success 'non-limited update in subdir leaves root alone' '
++	(
++		cd dir1 &&
++		echo even more >>sub2 &&
++		git add -u
++	) &&
++	cat >expect <<-\EOF &&
++	check
++	top
++	EOF
++	git diff-files --name-only >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success SYMLINKS 'replace a file with a symlink' '
+ 
+ 	rm foo &&
+-- 
+1.8.2.rc3
