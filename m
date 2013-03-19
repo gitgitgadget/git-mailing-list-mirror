@@ -1,102 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] add -u: only show pathless 'add -u' warning when
- changes exist outside cwd
-Date: Mon, 18 Mar 2013 21:25:33 -0700
-Message-ID: <7vli9kkoci.fsf@alter.siamese.dyndns.org>
-References: <20130313040845.GA5057@sigill.intra.peff.net>
- <20130313041037.GB5378@sigill.intra.peff.net>
- <20130319034415.GI5062@elie.Belkin> <20130319034822.GL5062@elie.Belkin>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 0/8] Improve git-status --ignored
+Date: Tue, 19 Mar 2013 12:20:39 +0700
+Message-ID: <CACsJy8DShce6bXfyWyHk7pqg4PA-cAn1bKh0hgFYX=s486nwaA@mail.gmail.com>
+References: <514778E4.1040607@gmail.com> <7vsj3skp5b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 19 05:26:03 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Karsten Blees <karsten.blees@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Adam Spiers <git@adamspiers.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 19 06:21:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UHo7f-0008El-IS
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 05:26:03 +0100
+	id 1UHozS-0000YS-Jv
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 06:21:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755139Ab3CSEZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 00:25:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54343 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755106Ab3CSEZg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 00:25:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85FE58E2F;
-	Tue, 19 Mar 2013 00:25:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nVlmTJ2Q/hv4m7wbopwoO+CVdfI=; b=sg05bV
-	poPc9RH/2yNcXVlUKgRVqFBX5MjTpAkojBuyaTu3TYldj8CQTz5JqEBcMS2rxiqZ
-	halkdO6adFQMOTtT1lo/Zst1I2+UlltuvctNmb5ueu52wIJv6hDuih88zPS+Qefe
-	BLZJMBdhnR0GjR+zViNYcc5rkkwC9kq+160yw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BnKALFZTckBbPZFOTNgI0yOAUas/El2G
-	YlPDVwS76fQ1FRjo4aqwYnb5/TKB7ZLx+tDmA+n2JTbQ/Iv7W/p77pRJEOl3CA2y
-	FbScMbNyMipLGqnvb6GUhnkzhBsfmYcY7j3+zclpjas+Yhs3TdGgCilSxPgx8mHd
-	FKJvIzLgm+g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A5688E2E;
-	Tue, 19 Mar 2013 00:25:35 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EF4B08E2C; Tue, 19 Mar 2013
- 00:25:34 -0400 (EDT)
-In-Reply-To: <20130319034822.GL5062@elie.Belkin> (Jonathan Nieder's message
- of "Mon, 18 Mar 2013 20:48:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0B3BE058-904D-11E2-AE1F-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756344Ab3CSFVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 01:21:11 -0400
+Received: from mail-oa0-f51.google.com ([209.85.219.51]:52029 "EHLO
+	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755696Ab3CSFVL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 01:21:11 -0400
+Received: by mail-oa0-f51.google.com with SMTP id h2so70869oag.38
+        for <git@vger.kernel.org>; Mon, 18 Mar 2013 22:21:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=wT8ejZyNZ1LJIuJlO3KsWU8EaShl48AntPaLYFSh5e4=;
+        b=JFOWTQavafVNu9sDJX+wiPcwpvrLTTColRFiqHtIK2p0m7c1OyQAHJN20H2TqrDwmZ
+         6yvFje7sL6NMqwADpJhC/1v7zeRhc0U51BG0s/8K+YukRnQDcUXs5VPJmod2A2Qun+Sp
+         7Aum7mrcr0h4y2KvHR3Occ742BIPl8ubB3C7afjq4LTW3p8eAD2kDLfuQ+TAlLz5G3We
+         wpoj7+tpu0LwiyA2CCWnKbTtGz2wtByuCJLOldywtNUAx3TrX23fIfNZiMVGCsyOl70j
+         4cxqCn2HWmoWArScxc89mfYoO6+4dlpP/5e0P7krj34DUngnYGy2hfsCtMSS4QKowNTX
+         AwCw==
+X-Received: by 10.182.147.2 with SMTP id tg2mr407565obb.47.1363670470436; Mon,
+ 18 Mar 2013 22:21:10 -0700 (PDT)
+Received: by 10.76.27.200 with HTTP; Mon, 18 Mar 2013 22:20:39 -0700 (PDT)
+In-Reply-To: <7vsj3skp5b.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218481>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> A common workflow in large projects is to chdir into a subdirectory of
-> interest and only do work there:
+On Tue, Mar 19, 2013 at 11:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karsten Blees <karsten.blees@gmail.com> writes:
 >
-> 	cd src
-> 	vi foo.c
-> 	make test
-> 	git add -u
-> 	git commit
+>> This patch series addresses several bugs and performance issues in
+>> .gitignore processing that came up in the inotify discussion.
 >
-> The upcoming change to 'git add -u' behavior would not affect such a
-> workflow: when the only changes present are in the current directory,
-> 'git add -u' will add all changes, and whether that happens via an
-> implicit "." or implicit ":/" parameter is an unimportant
-> implementation detail.
+> Thanks.
 >
-> The warning about use of 'git add -u' with no pathspec is annoying
-> because it serves no purpose in this case.  So suppress the warning
-> unless there are changes outside the cwd that are not being added.
+> How does this interact with the nd/read-directory-recursive-optim
+> topic that has been cooking for a while?
 
-That is a logical extension of the reason why we do not emit
-warnings when run at the top level.  A user who has known about and
-is very much accustomed to the "current directory only" behaviour
-may run "git add -u/-A" always from the top in the current project
-she happens to be working on until Git 2.0 happens, and will not get
-any warnings.  We are already robbing the chance to learn about and
-prepare for the upcoming change from her.  And this patch makes it
-even more so.  It does not make things fundamentally worse, but it
-makes it more likely to hurt such a user.
-
-The implemenation appears to run an extra diff_files() in addition
-to the one we already have to run in order to implement the "add -u"
-to collect modified/deleted paths.  Is that the best we can do?  
-
-I am wondering if we can special case the no-pathspec case to have
-add_files_to_cache() call underlying run_diff_files() without any
-pathspec, inspect the paths that are modified and/or deleted in the
-update_callback, add ones that are under the $prefix while noticing
-the ones outside as warning worthy events.
+I think 8/8 is another version of nd/read-directory-recursive-optim
+-- 
+Duy
