@@ -1,142 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] test-lib.sh: No POSIXPERM for cygwin
-Date: Tue, 19 Mar 2013 14:10:02 -0700
-Message-ID: <7vvc8ngkph.fsf@alter.siamese.dyndns.org>
-References: <201303192049.58755.tboegi@web.de>
- <7v620nhzle.fsf@alter.siamese.dyndns.org>
+From: Josh Rowe <Joshua.Rowe@microsoft.com>
+Subject: RE: FW: Windows. Git, and Dedupe
+Date: Tue, 19 Mar 2013 21:36:12 +0000
+Message-ID: <614e174a0b4548a1bcdc6c24c2682829@BLUPR03MB019.namprd03.prod.outlook.com>
+References: <02803146dc74414191fab53b0de33fa1@BLUPR03MB019.namprd03.prod.outlook.com>
+ <5148D3BD.4040608@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
-	j6t@kdbg.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 19 22:10:43 2013
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"msysgit@googlegroups.com" <msysgit@googlegroups.com>
+To: =?utf-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Mar 19 22:37:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UI3nn-00019Z-LT
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 22:10:35 +0100
+	id 1UI4Dx-00010v-Ch
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Mar 2013 22:37:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757506Ab3CSVKG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Mar 2013 17:10:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33353 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751542Ab3CSVKF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Mar 2013 17:10:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D1586B9A;
-	Tue, 19 Mar 2013 17:10:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=a+KE5xF40h43
-	UCTAllW8Lsr+S84=; b=mX2WacZKAElIsI/QDzeXsVyhbD0TfClNLHNy9+imnQWq
-	Bq6M+u6/fzOW1FLJuwbBUWGThvXvBxoCiUFbS0j7h3I6mwM+vClByyfwgIoN2zKM
-	e1Wyl34PJDuTsr6cvBrmvQrgXZhXT2Pgogj5jf3sK/UfmxkVBg8BD6AZUDo2Ji0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=bXkZT5
-	ZC67gKv7yRcZamI777hDjCSI0evN6BBevUYqCsmyd5/wxz0r5Jy+rF291dgtBdx+
-	cmPBvg4Arq9WyCNIDJZ0VaqbDmBoekh51FrJFCZ2gvYU8eslEIS8roXvk1W+qEZm
-	xF+e2TLLXPRynayEbEqcs5UpN2vQ74HwU67dc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 903B66B98;
-	Tue, 19 Mar 2013 17:10:04 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EAE036B93; Tue, 19 Mar 2013
- 17:10:03 -0400 (EDT)
-In-Reply-To: <7v620nhzle.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 19 Mar 2013 14:03:09 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5E588250-90D9-11E2-AC34-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S965022Ab3CSVhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 17:37:07 -0400
+Received: from mail-bn1lp0157.outbound.protection.outlook.com ([207.46.163.157]:27387
+	"EHLO na01-bn1-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756801Ab3CSVhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 17:37:05 -0400
+Received: from BL2FFO11FD008.protection.gbl (10.173.161.203) by
+ BL2FFO11HUB034.protection.gbl (10.173.161.114) with Microsoft SMTP Server
+ (TLS) id 15.0.641.9; Tue, 19 Mar 2013 21:37:01 +0000
+Received: from TK5EX14HUBC107.redmond.corp.microsoft.com (131.107.125.37) by
+ BL2FFO11FD008.mail.protection.outlook.com (10.173.161.4) with Microsoft SMTP
+ Server (TLS) id 15.0.641.9 via Frontend Transport; Tue, 19 Mar 2013 21:37:01
+ +0000
+Received: from CO9EHSOBE020.bigfish.com (157.54.51.80) by mail.microsoft.com
+ (157.54.80.67) with Microsoft SMTP Server (TLS) id 14.2.318.3; Tue, 19 Mar
+ 2013 21:36:38 +0000
+Received: from mail146-co9-R.bigfish.com (10.236.132.246) by
+ CO9EHSOBE020.bigfish.com (10.236.130.83) with Microsoft SMTP Server id
+ 14.1.225.23; Tue, 19 Mar 2013 21:36:17 +0000
+Received: from mail146-co9 (localhost [127.0.0.1])	by
+ mail146-co9-R.bigfish.com (Postfix) with ESMTP id 7C3895001C0	for
+ <git@vger.kernel.org.FOPE.CONNECTOR.OVERRIDE>; Tue, 19 Mar 2013 21:36:17
+ +0000 (UTC)
+X-Forefront-Antispam-Report-Untrusted: CIP:157.56.240.21;KIP:(null);UIP:(null);(null);H:BL2PRD0310HT004.namprd03.prod.outlook.com;R:internal;EFV:INT
+X-SpamScore: -7
+X-BigFish: PS-7(zz9371Ic89bh15bfK146fI542Izz1f42h1ee6h1de0h1202h1e76h1d1ah1d2ahzz17326ah186M1954cbh8275bhz31h2a8h668h839h93fhd24hf0ah1288h12a5h12a9h12bdh137ah13b6h1441h1504h1537h153bh162dh1631h1758h18e1h1946h19b5h1ad9h1b0ah17ej9a9j1155h)
+Received-SPF: softfail (mail146-co9: transitioning domain of microsoft.com does not designate 157.56.240.21 as permitted sender) client-ip=157.56.240.21; envelope-from=Joshua.Rowe@microsoft.com; helo=BL2PRD0310HT004.namprd03.prod.outlook.com ;.outlook.com ;
+X-Forefront-Antispam-Report-Untrusted: SFV:SKI;SFS:;DIR:OUT;SFP:;SCL:-1;SRVR:BLUPR03MB018;H:BLUPR03MB019.namprd03.prod.outlook.com;LANG:en;
+Received: from mail146-co9 (localhost.localdomain [127.0.0.1]) by mail146-co9
+ (MessageSwitch) id 1363728975306028_11131; Tue, 19 Mar 2013 21:36:15 +0000
+ (UTC)
+Received: from CO9EHSMHS015.bigfish.com (unknown [10.236.132.228])	by
+ mail146-co9.bigfish.com (Postfix) with ESMTP id 3FEA45C0057;	Tue, 19 Mar 2013
+ 21:36:15 +0000 (UTC)
+Received: from BL2PRD0310HT004.namprd03.prod.outlook.com (157.56.240.21) by
+ CO9EHSMHS015.bigfish.com (10.236.130.25) with Microsoft SMTP Server (TLS) id
+ 14.1.225.23; Tue, 19 Mar 2013 21:36:15 +0000
+Received: from BLUPR03MB018.namprd03.prod.outlook.com (10.255.208.40) by
+ BL2PRD0310HT004.namprd03.prod.outlook.com (10.255.97.39) with Microsoft SMTP
+ Server (TLS) id 14.16.287.3; Tue, 19 Mar 2013 21:36:13 +0000
+Received: from BLUPR03MB019.namprd03.prod.outlook.com (10.255.208.41) by
+ BLUPR03MB018.namprd03.prod.outlook.com (10.255.208.40) with Microsoft SMTP
+ Server (TLS) id 15.0.620.20; Tue, 19 Mar 2013 21:36:13 +0000
+Received: from BLUPR03MB019.namprd03.prod.outlook.com ([169.254.1.13]) by
+ BLUPR03MB019.namprd03.prod.outlook.com ([169.254.1.13]) with mapi id
+ 15.00.0620.020; Tue, 19 Mar 2013 21:36:12 +0000
+Thread-Topic: FW: Windows. Git, and Dedupe
+Thread-Index: Ac4kHWwJ1TuRv71UTiaX6E7A5Ky1SQAAHxSwADH9ZoAAAGeYUA==
+In-Reply-To: <5148D3BD.4040608@lsrfire.ath.cx>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2001:4898:0:fff:0:5efe:10.123.144.173]
+X-OrganizationHeadersPreserved: BLUPR03MB018.namprd03.prod.outlook.com
+X-FOPE-CONNECTOR: Id%0$Dn%*$RO%0$TLS%0$FQDN%$TlsDn%
+X-FOPE-CONNECTOR: Id%59$Dn%GOOGLEGROUPS.COM$RO%2$TLS%6$FQDN%corpf5vips-237160.customer.frontbridge.com$TlsDn%
+X-FOPE-CONNECTOR: Id%59$Dn%VGER.KERNEL.ORG$RO%2$TLS%6$FQDN%corpf5vips-237160.customer.frontbridge.com$TlsDn%
+X-FOPE-CONNECTOR: Id%59$Dn%LSRFIRE.ATH.CX$RO%2$TLS%6$FQDN%corpf5vips-237160.customer.frontbridge.com$TlsDn%
+X-CrossPremisesHeadersPromoted: TK5EX14HUBC107.redmond.corp.microsoft.com
+X-CrossPremisesHeadersFiltered: TK5EX14HUBC107.redmond.corp.microsoft.com
+X-Forefront-Antispam-Report: CIP:131.107.125.37;CTRY:US;IPV:CAL;IPV:NLI;EFV:NLI;SFV:NSPM;SFS:(189002)(199002)(47446002)(44976002)(54316002)(46102001)(73894001)(51856001)(54356001)(4396001)(56816002)(621065001)(31966008)(74662001)(33646001)(47976001)(50466001)(74502001)(6806001)(76482001)(53806001)(56776001)(69226001)(23676001)(49866001)(20776003)(16676001)(65816001)(59766001)(47736001)(77982001)(47776003)(50986001)(80022001)(79102001)(63696002)(24736002)(3826001);DIR:OUT;SFP:;SCL:1;SRVR:BL2FFO11HUB034;H:TK5EX14HUBC107.redmond.corp.microsoft.com;RD:InfoDomainNonexistent;MX:1;A:1;LANG:en;
+X-OriginatorOrg: microsoft.onmicrosoft.com
+X-Forefront-PRVS: 0790FB1F33
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218558>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->
->> Use a compile switch IGNORECYGWINFSTRICKS to disable the usage
->> of cygwin_lstat_fn() only in path.c
->
-> The analysis of the problem and the basic idea to disable the
-> fast-but-lying fstricks in the code that matters may be good, but
-> the implementation is questionable.
->
-> What if we later need to move functions around, etc., so that some
-> other calls in path.c still do want to use the fstricks bit while
-> the existing ones in the file want the real lstat() information?
->
-> Actually, that already is the case.  The call to lstat() in
-> validate_headref() only cares about the S_ISXXX() type and can
-> afford to use the fast-and-lying one, no?
->
-> How about doing something like this in the generic codepath, and
-> implement your own cygwin_true_mode_bits() function at the cygwin
-> compatibility layer, and add
->
->     #define true_mode_bits cygwin_true_mode_bits
->
-> in the compat/cygwin.h file?  The change has the documentation value
-> to clarify what each lstat() is used for, too.
->
-> Ideally, the "#ifndef true_mode_bits" part may want to become a
-> generic helper function if there are lstat() calls in other files
-> that cygwin wants to use the real lstat() not the fast-but-lying
-> one, but one step at a time.
->
-> Hrm?
->
->  path.c | 18 ++++++++++++++++--
->  1 file changed, 16 insertions(+), 2 deletions(-)
->
-> diff --git a/path.c b/path.c
-> index d3d3f8b..d0b31e5 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -14,6 +14,21 @@
->  #include "strbuf.h"
->  #include "string-list.h"
-> =20
-> +#ifndef true_mode_bits
-> +/*
-> + * The replacement lstat(2) we use on Cygwin is incomplete and
-> + * lies about permission bits; most of the time we do not care,
-> + * but the callsites of this wrpper do care.
-> + */
-> +static int true_mode_bits(const char *path, int *mode)
-> +{
-> +	struct stat st;
-> +	if (lstat(path, &st) < 0)
-> +		return -1;
-> +	return st.st_mode;
-
-Of course this should be more like
-
-	*mode =3D st.st_mode;
-        return 0;
-
-but I think you got the idea ;-)
-
-> +}
-> +#endif
-> +
->  static char bad_path[] =3D "/bad-path/";
-> =20
->  static char *get_pathname(void)
-> @@ -400,9 +415,8 @@ int set_shared_perm(const char *path, int mode)
->  		return 0;
->  	}
->  	if (!mode) {
-> -		if (lstat(path, &st) < 0)
-> +		if (true_mode_bits(path, &mode) < 0)
->  			return -1;
-> -		mode =3D st.st_mode;
->  		orig_mode =3D mode;
->  	} else
->  		orig_mode =3D 0;
+WWVzLCBEZWR1cCBpcyBpbiBmYWN0IGEgU2VydmVyLW9ubHkgZmVhdHVyZS4gIEhvd2V2ZXIsIHRo
+ZXJlIGFyZSBsb3RzIG9mIHBlb3BsZSB1c2luZyB0aGUgU2VydmVyIFNLVSBhcyBkZXZlbG9wbWVu
+dCB3b3Jrc3RhdGlvbnMgKGVzcGVjaWFsbHkgaGVyZSBhdCBNaWNyb3NvZnQgPGc+KS4gIFRoZXJl
+IGFyZSBhbHNvIHNvbWUgc3lzYWRtaW5zIHRoYXQgSSBrbm93IG9mIHdobyB1c2UgZ2l0IGFuZCBk
+b3dubG9hZCBzeXNhZG1pbiBzY3JpcHRzIHZpYSBnaXQgdG8gU2VydmVycy4gIEZpbmFsbHksIEkg
+d291bGQgaGF6YXJkIGEgZ3Vlc3MgdGhhdCBpdCdzIHBvc3NpYmxlIHRvIG1vdW50IGFuIE5URlMg
+ZmlsZXN5c3RlbSBjb250YWluaW5nIGRlZHVwZWQgZmlsZXMgZnJvbSBhIFNlcnZlciBtYWNoaW5l
+IG9udG8gYSBjbGllbnQgU0tVIGFuZCBhY2Nlc3MgdGhvc2UgZmlsZXMuICAoSSdtIG5vdCBvbiB0
+aGUgTlRGUyB0ZWFtLCBhbmQgaGF2ZW4ndCB0cmllZCBpdC4pICBTbyBJIHRoaW5rIHRoZXJlIGFy
+ZSBnb29kIHJlYXNvbnMgdG8gc3VwcG9ydCByZXBhcnNlIHBvaW50cyBvbiBXaW5kb3dzLiAgDQoN
+ClRoZSByZXBhcnNlIHBvaW50IGNvdWxkIGJlIGRlY29kZWQgYXMgYmVpbmcgYSBub24tc3ltbGlu
+ayByZXBhcnNlIGl0ZW0gdXNpbmc7IGluIHRob3NlIGNhc2VzLCB0cmVhdGluZyB0aGUgZmlsZSBh
+cyBhbiAib3JkaW5hcnkiIGZpbGUgd291bGQgYmUgYXBwcm9wcmlhdGUuDQoNCkZvciBleGFtcGxl
+LCBzZWUgdGhlIGZvbGxvd2luZy4gIFRoZSByZXBhcnNlIHRhZyB2YWx1ZSBmb3Igc3ltbGlua3Mg
+aXMgSU9fUkVQQVJTRV9UQUdfU1lNTElOSyAoMHhhMDAwMDAwYykgYW5kIGZvciBkZWR1cGVkIGZp
+bGVzIGlzIChJT19SRVBBUlNFX1RBR19ERURVUCkgMHg4MDAwMDAxMy4gIFRoZSB2YWx1ZSBjYW4g
+YmUgZGlzY292ZXJlZCBmcm9tIHRoZSBpbmZvcm1hdGlvbiBhdCBbMV0uICANCg0KSSBhZG1pbiB0
+byBub3QgaGF2aW5nIGxvb2tlZCBhdCB0aGUgZ2l0IGNvZGUgbm9yIGJlaW5nIGZhbWlsaWFyIHdp
+dGggbWluZ3cuICBBcmUgbmF0aXZlIFdpbjMyIGNhbGxzIHN1cHBvcnRlZCBpbiB0aGUgZ2l0IGNv
+ZGViYXNlPw0KDQpKbXINCg0KDQpbMV0gaHR0cDovL21zZG4ubWljcm9zb2Z0LmNvbS9lbi11cy9s
+aWJyYXJ5L3dpbmRvd3MvZGVza3RvcC9hYTM2NTc0MCh2PXZzLjg1KS5hc3B4DQoNCg0KUFMgSTpc
+dGVtcD4gY21kIC9jIG1rbGluayB4IHkNCnN5bWJvbGljIGxpbmsgY3JlYXRlZCBmb3IgeCA8PD09
+PT4+IHkNClBTIEk6XHRlbXA+IGZzdXRpbCByZXBhcnNlcG9pbnQgcXVlcnkgeA0KUmVwYXJzZSBU
+YWcgVmFsdWUgOiAweGEwMDAwMDBjDQpUYWcgdmFsdWU6IE1pY3Jvc29mdA0KVGFnIHZhbHVlOiBO
+YW1lIFN1cnJvZ2F0ZQ0KVGFnIHZhbHVlOiBTeW1ib2xpYyBMaW5rDQoNClJlcGFyc2UgRGF0YSBM
+ZW5ndGg6IDB4MDAwMDAwMTANClJlcGFyc2UgRGF0YToNCjAwMDA6ICAwMiAwMCAwMiAwMCAwMCAw
+MCAwMiAwMCAgMDEgMDAgMDAgMDAgNzkgMDAgNzkgMDAgIC4uLi4uLi4uLi4uLnkueS4NClBTIEk6
+XHRlbXA+IGZzdXRpbCByZXBhcnNlcG9pbnQgcXVlcnkgeC50eHQNClJlcGFyc2UgVGFnIFZhbHVl
+IDogMHg4MDAwMDAxMw0KVGFnIHZhbHVlOiBNaWNyb3NvZnQNCg0KUmVwYXJzZSBEYXRhIExlbmd0
+aDogMHgwMDAwMDA3Yw0KUmVwYXJzZSBEYXRhOg0KMDAwMDogIDAxIDAyIDdjIDAwIDAwIDAwIDAw
+IDAwICA2NiA5YyAxYSAwMSAwMCAwMCAwMCAwMCAgLi58Li4uLi5mLi4uLi4uLg0KMDAxMDogIDAw
+IDAwIDAxIDAwIDAwIDAwIDAwIDAwICBjYiBlYiBjNSAwMCA2YSA5NyA2MyA0ZCAgLi4uLi4uLi4u
+Li4uai5jTQ0KMDAyMDogIDk3IDljIDEzIDBjIDQxIDhlIGVkIDhiICA0MCAwMCA0MCAwMCA0MCAw
+MCAwMCAwMCAgLi4uLkEuLi5ALkAuQC4uLg0KMDAzMDogIGQzIGI5IGE4IGQ0IGU0IGM2IGNkIDAx
+ICA1NSBjYSAwMiAwMCAwMCAwMCAwNSAwMCAgLi4uLi4uLi5VLi4uLi4uLg0KMDA0MDogIDcwIGFj
+IDIxIDA0IDAwIDAwIDA1IDAwICAwMSAwMCAwMCAwMCA4OCA4ZCAwMCAwMCAgcC4hLi4uLi4uLi4u
+Li4uLg0KMDA1MDogIGM4IDMwIDAwIDAwIDAwIDAwIDAwIDAwICBjOCA0NCBkYiA5NCA2YyA4OCA5
+YSBkNCAgLjAuLi4uLi4uRC4ubC4uLg0KMDA2MDogIDBhIGE5IDAxIDNhIDFmIDgwIDgwIDhkICBl
+YSAwZCA1MyBkNyAzNiA0OSBiOSBhNCAgLi4uOi4uLi4uLlMuNkkuLg0KMDA3MDogIDgyIGEyIGI5
+IDRlIDJhIDE2IDRiIGExICAyZSBkOSBmMyBkZCAgICAgICAgICAgICAgLi4uTiouSy4uLi4uDQoN
+Ci0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBSZW7DqSBTY2hhcmZlIFttYWlsdG86
+cmVuZS5zY2hhcmZlQGxzcmZpcmUuYXRoLmN4XSANClNlbnQ6IFR1ZXNkYXksIE1hcmNoIDE5LCAy
+MDEzIDI6MDggUE0NClRvOiBKb3NoIFJvd2UNCkNjOiBnaXRAdmdlci5rZXJuZWwub3JnOyBtc3lz
+Z2l0QGdvb2dsZWdyb3Vwcy5jb20NClN1YmplY3Q6IFJlOiBGVzogV2luZG93cy4gR2l0LCBhbmQg
+RGVkdXBlDQoNCkFtIDE4LjAzLjIwMTMgMjI6MjAsIHNjaHJpZWIgSm9zaCBSb3dlOg0KPiBPbiBX
+aW5kb3dzIHdpdGggYW4gTlRGUyB2b2x1bWUgd2l0aCBEZWR1cGxpY2F0aW9uIGVuYWJsZWQsIEdp
+dCANCj4gYmVsaWV2ZXMgdGhhdCBkZWR1cGxpY2F0ZWQgZmlsZXMgYXJlIHN5bWxpbmtzLiAgSXQg
+dGhlbiBmYWlscyB0byBiZSANCj4gYWJsZSB0byBkbyBhbnl0aGluZyB3aXRoIHRoZSBmaWxlLiAg
+VGhpcyBjYW4gYmUgcmVwcm8tZWQgYnkgY3JlYXRpbmcgDQo+IGFuIE5URlMgdm9sdW1lIHdpdGgg
+ZGVkdXAsIGNyZWF0aW5nIHNvbWUgZHVwbGljYXRlIGZpbGVzLCB2ZXJpZnlpbmcgDQo+IHRoYXQg
+YSBmZXcgZmlsZXMgYXJlIGRlZHVwZWQsIGFuZCB0cnlpbmcgdG8gYWRkIGFuZCBjb21taXQgdGhl
+IGZpbGVzIA0KPiB2aWEgZ2l0Lg0KDQpCb3RoIFNpbmdsZSBJbnN0YW5jZSBTdG9yYWdlWzFdIGFu
+ZCBEYXRhIERlZHVwbGljYXRpb25bMl0gKGludHJvZHVjZWQgd2l0aCBXaW5kb3dzIFNlcnZlciAy
+MDEyKSBzZWVtIHRvIGJlIHNlcnZlci1vbmx5IGZlYXR1cmVzLiAgSG93IGFib3V0IGtlZXBpbmcg
+cmVndWxhciBnaXQgcmVwb3NpdG9yaWVzIHdpdGggY2hlY2tlZC1vdXQgZmlsZXMgb24gY2xpZW50
+IGRpc2tzIGFuZCB1c2UgdGhlIHNlcnZlciBvbmx5IGZvciBiYXJlIHJlcG9zaXRvcmllcyAod2l0
+aG91dCB3b3JraW5nIHRyZWUpPw0KDQpXaGVuIEkgdHJpZWQgdG8gYWRkIGEgc3ltYm9saWMgbGlu
+ayBjcmVhdGVkIHdpdGggbWtsaW5rIG9uIFdpbmRvd3MgOCwgdGhlIG1pbmd3IHZlcnNpb24gb2Yg
+Z2l0IHJlZnVzZWQgYmVjYXVzZSByZWFkbGluaygyKSBpcyBub3Qgc3VwcG9ydGVkLiAgVGhpcyBz
+ZWVtcyB0byBiZSBzdWZmaWNpZW50IHRvIHJlcHJvZHVjZSB0aGUgaXNzdWUuDQoNCkkgY291bGRu
+J3QgdGVzdCB0aGUgQ3lnd2luIHZlcnNpb24sIHRob3VnaCwgYmVjYXVzZSBodHRwOi8vY3lnd2lu
+LmNvbSBkb2Vzbid0IHJlc3BvbmQgYXQgdGhlIG1vbWVudC4NCg0KQnV0IGEgd29ya2luZyByZWFk
+bGluaygyKSB3b3VsZG4ndCBoZWxwIGFueXdheSwgSSBndWVzcy4gIEkgaW1hZ2luZSB0aGF0IHRo
+ZSByZXBhcnNlIHBvaW50cyB1c2VkIGZvciBkZWR1cGxpY2F0aW9uIHBvaW50IGludG8gYSBtYWdp
+YyBibG9jayBzdG9yZSB3aGljaCBwZXJmb3JtcyBnYXJiYWdlIGNvbGxlY3Rpb24gb2YgY29udGVu
+dCB0aGF0IGlzIG5vIGxvbmdlciByZWZlcmVuY2VkIC0tIHdoaWNoIHByb2JhYmx5IG1lYW5zIHRo
+YXQgYSByZWNyZWF0ZWQgInN5bWxpbmsiDQptYXkgcG9pbnQgdG8gYmxvY2tzIHRoYXQgaGF2ZSBi
+ZWVuIGRlbGV0ZWQgaW4gdGhlIG1lYW50aW1lLg0KDQpQZXJoYXBzIHlvdSBuZWVkIGEgd2F5IHRv
+IGFzayBnaXQgdG8gYWx3YXlzIGZvbGxvdyBzeW1saW5rcyBpbnN0ZWFkIG9mIHRyeWluZyB0byBz
+dG9yZSB0aGVpciB0YXJnZXQgc3BlY2lmaWNhdGlvbi4NCg0KUmVuw6kNCg0KDQpbMV0gaHR0cDov
+L3RlY2huZXQubWljcm9zb2Z0LmNvbS9lbi11cy9saWJyYXJ5L2RkNTczMzA4JTI4dj13cy4xMCUy
+OS5hc3B4DQpbMl0gaHR0cDovL21zZG4ubWljcm9zb2Z0LmNvbS9lbi11cy9saWJyYXJ5L3dpbmRv
+d3MvZGVza3RvcC9oaDc2OTMwMyUyOHY9dnMuODUlMjkuYXNweA0KDQoNCg0K
