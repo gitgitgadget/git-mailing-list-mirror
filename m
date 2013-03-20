@@ -1,115 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: merging a tag is a special case
-Date: Wed, 20 Mar 2013 12:07:35 -0700
-Message-ID: <7vboadevpk.fsf@alter.siamese.dyndns.org>
-References: <1363704914.6289.39.camel@test.quest-ce.net>
- <7vfvzrjrad.fsf@alter.siamese.dyndns.org>
- <1363802033-26868-1-git-send-email-ydroneaud@opteya.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] index-pack: always zero-initialize object_entry list
+Date: Wed, 20 Mar 2013 15:12:07 -0400
+Message-ID: <CAPig+cQobu8GoqSNjVw8498e8D3vEJKU+UVUqkYbwypLyPTNhQ@mail.gmail.com>
+References: <20130319102422.GB6341@sigill.intra.peff.net>
+	<20130319105852.GA15182@sigill.intra.peff.net>
+	<8738vr5rqh.fsf@pctrast.inf.ethz.ch>
+	<20130319154353.GA10010@sigill.intra.peff.net>
+	<20130319155244.GA16532@sigill.intra.peff.net>
+	<20130319161722.GA17445@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Yann Droneaud <ydroneaud@opteya.com>
-X-From: git-owner@vger.kernel.org Wed Mar 20 20:08:09 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Thomas Rast <trast@inf.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Zager <szager@google.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 20 20:12:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIOMn-0001Na-JE
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 20:08:05 +0100
+	id 1UIORC-0004F4-VV
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 20:12:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932260Ab3CTTHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 15:07:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50727 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757752Ab3CTTHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 15:07:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D8D6A25B;
-	Wed, 20 Mar 2013 15:07:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AqBG0qm9JsPPzwdsygK0or2qEJQ=; b=uYpT8T
-	t5C8bXBBtYM7XmwOdusdq7YXw+6wJY9rR76nbCRGaYzeuCE/1ZzFYoujyHXA+AW9
-	5/RuVZ53xX27dYWxOjIZjTC1m7tak6FcHm3YsHq0ben6IjBr1IJUh4XP1efadfXC
-	7/wklvothXF5C+B/gc++kdpvY2wQlCgxRydWE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HCDX3IiEiBHjxxs79R2YTmxmB0KzxLZ1
-	WdgNBTDPzXUhFlB8lT7Jj1NbBu/I+sR3y2W1ZJ3b503lZ8KmLU4WOJ2DCivdmgcD
-	5QUd+5I7sweicGP9JTfcljGzDIke+y3zSyZtbibCkvxWOZFsNctOS/1cfSGo1UYa
-	GTsbYTpVTgQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B102A25A;
-	Wed, 20 Mar 2013 15:07:37 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 80E17A259; Wed, 20 Mar 2013
- 15:07:36 -0400 (EDT)
-In-Reply-To: <1363802033-26868-1-git-send-email-ydroneaud@opteya.com> (Yann
- Droneaud's message of "Wed, 20 Mar 2013 18:53:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6D594BC8-9191-11E2-8D2C-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757795Ab3CTTML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 15:12:11 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:49281 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756079Ab3CTTMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 15:12:09 -0400
+Received: by mail-la0-f46.google.com with SMTP id fq12so3576643lab.5
+        for <git@vger.kernel.org>; Wed, 20 Mar 2013 12:12:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=B1X+xzkCRMHnYStqrmSCSEf8/CzwmANYpUiGjHZnkCk=;
+        b=antFkd72+fHGnVK7sQQ/XAMWs0h9kr0iEj/t5ugPVCjA4M/nzDsCM+600aE8sAs8kl
+         es6lHfBpOA/6QTqsumz8nzeYeqdCmblvt1Sq/qgnk7ahSBHnsa5lgLya2jwvOa1kfqbU
+         LnPhYFGQMrHTs0uPmJ6h+da35mdlz6nHWElIxUJzifVE8uL3KsvKmx+bmleoz4i0KynG
+         qz2/qAgi6Em8AQkOZExDlSTPMyhL0EzA+ly7vwCaTRZ2i//1dyhutOL3+mPHS6CeS0Ui
+         J8N8zqTuPsL8RsX73C0xK22ocps+Km0+3EySWVEyOHEQyLRWAPLRqF2+bD6pp0fv6KfP
+         6J+g==
+X-Received: by 10.112.88.35 with SMTP id bd3mr10264507lbb.56.1363806727617;
+ Wed, 20 Mar 2013 12:12:07 -0700 (PDT)
+Received: by 10.114.1.43 with HTTP; Wed, 20 Mar 2013 12:12:07 -0700 (PDT)
+In-Reply-To: <20130319161722.GA17445@sigill.intra.peff.net>
+X-Google-Sender-Auth: ilw-qzSJfdlHj3HhUlFOcqMkccc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218660>
 
-Yann Droneaud <ydroneaud@opteya.com> writes:
+On Tue, Mar 19, 2013 at 12:17 PM, Jeff King <peff@peff.net> wrote:
+> To ensure that all depths start at 0, that commit changed
+> calls to xmalloc the object_entry list into calls to
+> xcalloc.  However, it forgot that we grow the list with
+> xrealloc later. These extra entries are used when we add an
+> object from elsewhere pack to complete a thin pack. If we
 
-> When asking Git to merge a tag (such as a signed tag or annotated tag),
-> it will always create a merge commit even if fast-forward was possible.
-> It's like having --no-ff present on the command line.
->
-> It's a difference from the default behavior described in git-merge.txt.
-> It should be documented as an exception of "FAST-FORWARD MERGE" section
-> and "--ff" option description.
->
-> Signed-off-by: Yann Droneaud <ydroneaud@opteya.com>
-> ---
->  Documentation/git-merge.txt     | 9 +++++++++
->  Documentation/merge-options.txt | 2 +-
->  2 files changed, 10 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-> index c852a26..84bc873 100644
-> --- a/Documentation/git-merge.txt
-> +++ b/Documentation/git-merge.txt
-> @@ -170,6 +170,15 @@ happens:
->  If you tried a merge which resulted in complex conflicts and
->  want to start over, you can recover with `git merge --abort`.
->  
-> +MERGING TAG
-> +-----------
-> +
-> +When merging a tag (annotated or signed), Git will create a merge commit
-> +even if a fast-forward merge is possible (see above).
-> +The commit message template will be created from the tag message.
-> +Additionally, the signature check will be reported as a comment
-> +if the tag was signed. See also linkgit:git-tag[1].
-> +
+s/elsewhere pack/pack/
 
-It would make it more helpful to readers to describe how _not_ to
-create such a merge commit if it is unwanted, and how the request to
-merge a tag interacts with --ff-only option.
-
->  HOW CONFLICTS ARE PRESENTED
->  ---------------------------
->  
-> diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-> index 0bcbe0a..70d1ec0 100644
-> --- a/Documentation/merge-options.txt
-> +++ b/Documentation/merge-options.txt
-> @@ -26,7 +26,7 @@ set to `no` at the beginning of them.
->  --ff::
->  	When the merge resolves as a fast-forward, only update the branch
->  	pointer, without creating a merge commit.  This is the default
-> -	behavior.
-> +	behavior (except when merging a tag).
-
-With this update, the reader will be left wondering what would be
-the default when she asks Git to merge a tag, no?
-
->  --no-ff::
->  	Create a merge commit even when the merge resolves as a
+> add a non-delta object, its depth value will just be
+> uninitialized heap data.
