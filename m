@@ -1,8 +1,8 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH 6/6] remote.c: introduce branch.<name>.pushremote
-Date: Wed, 20 Mar 2013 21:03:10 +0800
-Message-ID: <CALUzUxobybPOqsLgEFVOCK2OLOvyqHtAiuyi8wozOSYeWzkhNg@mail.gmail.com>
-References: <1363783501-27981-1-git-send-email-artagnon@gmail.com> <1363783501-27981-7-git-send-email-artagnon@gmail.com>
+Subject: Re: [PATCH v2 0/6] Support triangular workflows
+Date: Wed, 20 Mar 2013 21:06:32 +0800
+Message-ID: <CALUzUxq1gJY_gSQt4iffrVzawx6Qk4=BWnPoCsZqFeHUpkgwCg@mail.gmail.com>
+References: <1363783501-27981-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
@@ -10,80 +10,55 @@ Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 20 14:04:03 2013
+X-From: git-owner@vger.kernel.org Wed Mar 20 14:07:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIIgT-0004gq-A1
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 14:04:01 +0100
+	id 1UIIjh-0006WG-GF
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 14:07:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755875Ab3CTNDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 09:03:33 -0400
-Received: from mail-bk0-f42.google.com ([209.85.214.42]:35804 "EHLO
-	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754201Ab3CTNDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 09:03:32 -0400
-Received: by mail-bk0-f42.google.com with SMTP id jk7so824788bkc.29
-        for <git@vger.kernel.org>; Wed, 20 Mar 2013 06:03:31 -0700 (PDT)
+	id S1754738Ab3CTNGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 09:06:54 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:50557 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753080Ab3CTNGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 09:06:53 -0400
+Received: by mail-la0-f43.google.com with SMTP id ek20so2873464lab.2
+        for <git@vger.kernel.org>; Wed, 20 Mar 2013 06:06:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=mXeN9K44ma084SfEnlH3eNuoBrCiQqSMG7f/gMKnJ3E=;
-        b=cLG6cESl9ygYzPB1o8OzWiuMnGd6xMK/t9SdLmuCQATCty00T/pr6bOcby4GuqtBG0
-         OvptFZ+2i1bIK3+Xu+94B3RucyQE1ksLiglEoAOlchq2Utefmldyv1qu1EAOGEVuimwB
-         vQG5Lws7eVrMu+VXbXH5wCNh1hXPCTw5ZoGA4yHRfo8458vUNbOg6oh1wHZQ23WO9BbA
-         M+VVcZ9hsZGHxiZQvOwYj74i+UZWClS3911tgZ7SqOyR7NOyfaNVsgyrp5wlVMlV8IaT
-         w5Cuj82+VegcYEl37IL5VeVVC0L3GXYgqO5Qb8AUK+ythugky4haAIa15eEEy4jwUJ7M
-         8I5w==
-X-Received: by 10.112.9.104 with SMTP id y8mr9396370lba.132.1363784611089;
- Wed, 20 Mar 2013 06:03:31 -0700 (PDT)
-Received: by 10.114.57.41 with HTTP; Wed, 20 Mar 2013 06:03:10 -0700 (PDT)
-In-Reply-To: <1363783501-27981-7-git-send-email-artagnon@gmail.com>
+        bh=j/8qETMnzUWWm0t2HMDRzXFSBM+nHa2JI//0fppA0C8=;
+        b=NfQkrpm+/XrrTPhrOwSnvKJ0JzUcHRl5wdMrOXSdw3Q+kJn8hxxiy1B1w3OYEQK81E
+         mKg+A+4xqm1oaNyyd6xqDfLhK5/sj7Ua71M0Zdnt4wWACW3oBQgJXG+53vPnVRAKgfDg
+         a2VRuCDM6VKxe91HCKbPMEuiicOFv36EI00+fbxp3X9kwEJygPEHhL18JDG6fDZ/LTKl
+         whB9fq0BGFuT59wpLzUbt0jzw3cmoY0mbN59N7EfhyyIqXCc2Xm5L/GeTvOp6YqVa5ns
+         upVBKMvdJxlE7zSli9xF/Z+l/LS82vi++rcbidTABSBfgDd4NpMrpVweMb/MptgLFWyS
+         yG8w==
+X-Received: by 10.152.111.5 with SMTP id ie5mr5330951lab.31.1363784812279;
+ Wed, 20 Mar 2013 06:06:52 -0700 (PDT)
+Received: by 10.114.57.41 with HTTP; Wed, 20 Mar 2013 06:06:32 -0700 (PDT)
+In-Reply-To: <1363783501-27981-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218606>
 
-On Wed, Mar 20, 2013 at 8:45 PM, Ramkumar Ramachandra
+On Wed, Mar 20, 2013 at 8:44 PM, Ramkumar Ramachandra
 <artagnon@gmail.com> wrote:
-> This new configuration variable overrides `remote.pushdefault` and
-> `branch.<name>.remote` for pushes.  In a typical triangular-workflow
-> setup, you would want to set `remote.pushdefault` to specify the
-> remote to push to for all branches, and use this option to override it
-> for a specific branch.
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  Documentation/config.txt | 18 ++++++++++++++----
->  remote.c                 |  3 +++
->  t/t5516-fetch-push.sh    | 15 +++++++++++++++
->  3 files changed, 32 insertions(+), 4 deletions(-)
+>   remote.c: introduce remote.pushdefault
+>   remote.c: introduce branch.<name>.pushremote
 
-Shouldn't this patch be squashed into 5/6 because of...
+Perhaps we should clarify how this differs from remote.pushurl in the
+documentation for it, in git-config and/or git-push. Maybe even
+include the design decisions behind it from [1]. :)
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index e813c33..4b9647a 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -726,9 +726,18 @@ branch.<name>.remote::
->         When on branch <name>, it tells 'git fetch' and 'git push'
->         which remote to fetch from/push to.  The remote to push to
->         may be overridden with `remote.pushdefault` (for all branches).
-> -       If no remote is configured, or if you are not on any branch,
-> -       it defaults to `origin` for fetching and `remote.pushdefault`
-> -       for pushing.
-> +       The remote to push to, for the current branch, may be further
-> +       overridden by `branch.<name>.pushremote`.  If no remote is
-> +       configured, or if you are not on any branch, it defaults to
-> +       `origin` for fetching and `remote.pushdefault` for pushing.
-> +
+http://thread.gmane.org/gmane.comp.version-control.git/215702/focus=215717
 
-...this? (Since this description was introduced in 5/6)
-
--- 
+--
 Cheers,
 Ray Chuan
