@@ -1,110 +1,79 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: [RFC] Add posibility to preload stat information.
-Date: Wed, 20 Mar 2013 13:15:32 +0100
-Message-ID: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
-Cc: git@vger.kernel.org, pclouds@gmail.com, iveqy@iveqy.com
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Mar 20 13:15:00 2013
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 00/45] parse_pathspec and :(glob) magic
+Date: Wed, 20 Mar 2013 19:16:13 +0700
+Message-ID: <1363781779-14947-1-git-send-email-pclouds@gmail.com>
+References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 20 13:16:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIHuz-00024Z-Vk
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 13:14:58 +0100
+	id 1UIHwu-0003Cf-5J
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 13:16:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756869Ab3CTMOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 08:14:30 -0400
-Received: from mail-la0-f49.google.com ([209.85.215.49]:53063 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756115Ab3CTMO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 08:14:28 -0400
-Received: by mail-la0-f49.google.com with SMTP id fs13so2768849lab.22
-        for <git@vger.kernel.org>; Wed, 20 Mar 2013 05:14:27 -0700 (PDT)
+	id S932491Ab3CTMQ3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Mar 2013 08:16:29 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:52459 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407Ab3CTMQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 08:16:26 -0400
+Received: by mail-pd0-f176.google.com with SMTP id t12so584907pdi.7
+        for <git@vger.kernel.org>; Wed, 20 Mar 2013 05:16:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=0P1E1T3C0YyCuPc5mMSTy1KnUB0lcjjHk/2PrdaRegg=;
-        b=bf3FI5AL9fxiUZUm6jPJxxgIzSQ4z4ii0cemWrJbPA1APb4inm3jxOB/8PEgPtZD/p
-         5Yp5+txr/rHPuuOnUkIouk8bGoY9MstCao4L2SnbocHytPSIFivbl1Jd+jkg+H+rbkM5
-         kmEoSmoMzTOadXU+h7+S3N+o/FTVNeJQ1mf8x6fRZ8Xg19+XASFVRF6Matja12rmWQ9x
-         uS5eFfTR+tyGkclPpkVP/Zl2IfkQ6tlt/ZkqZp2R4B2vnSdigBsCd7iTEFsQtFJfcakt
-         jxENOfEm3PKMNUnhL5hid18/PPpxKhYfR2vri3Yev925fXnBfKm6BfP7vhWiBh+GYliu
-         2dow==
-X-Received: by 10.152.134.40 with SMTP id ph8mr5097762lab.39.1363781667274;
-        Wed, 20 Mar 2013 05:14:27 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPS id v7sm469443lbg.13.2013.03.20.05.14.25
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 20 Mar 2013 05:14:26 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UIHvi-0002yN-DL; Wed, 20 Mar 2013 13:15:42 +0100
-X-Mailer: git-send-email 1.8.1.5
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=z6kBx0YufmwYHFnAQ1jtQEBvqjeJoj4NZ4ChLooTM6A=;
+        b=SnfoGGBRU/UbhiZpAvpBWda5K5HotRyKSIZ2rAgqn5/eSNof6W4S3kxWhM+OSAyJl2
+         070JKk/Q/8tp4378zqV8xSjSOHbVJZx8fhQU6CP6g5/Bma2tQJ5WRpu577lqtP5CWexd
+         3w6CyaUipSfdGf2gapMcT2Bm5IEKewaACI0R43E8Uk0y+AIrebGJ5Os+bqlU2Tm6bAuv
+         IUwGfvznBdT1Jl3y97ijqBIEdjywyqEYacGO63ZSaJjFdyfvCapUK74D5Py0Q6l8UYL1
+         Mb6m4TfI+jt9vDIFapcCsajdy2YDqpm0tUNcV/OuUQ3UV62pc27iHVVPeZhXuuLwhnIP
+         9PrA==
+X-Received: by 10.66.196.209 with SMTP id io17mr8769010pac.22.1363781786248;
+        Wed, 20 Mar 2013 05:16:26 -0700 (PDT)
+Received: from lanh ([115.74.40.216])
+        by mx.google.com with ESMTPS id xs10sm2072395pac.8.2013.03.20.05.16.22
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 20 Mar 2013 05:16:25 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 20 Mar 2013 19:16:20 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
+In-Reply-To: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218588>
 
-When entering a git working dir, optionally run a forked process that
-stat all files in the whole workdir and therefore loads stat information
-to RAM which will speedup things like git status and so on.
+Junio please pull the series from github [1]. I don't want to spam the
+list with 45 patches again so I only send patches that are substantiall=
+y
+different from v1:
 
-The feature is optional and by default it's off.
+ - documentation for parse_pathspec
+ - fix wrong operator precendence in git-reset
+ - fix initialization that may lead to crashes in git-grep (and
+   probably the failure in t7300-clean.sh)
 
-Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
----
- contrib/completion/git-prompt.sh | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+Typos found by Eric are also fixed, just not sent here.
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 341422a..e67bc97 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -78,6 +78,12 @@
- # If you would like a colored hint about the current dirty state, set
- # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
- # the colored output of "git status -sb".
-+#
-+# When enter a git work dir you can have a forked process run
-+# stat on all files in the top level directory for git and down.
-+# This will decrease later calls to git status and alike because
-+# stat info will already be loaded into RAM. set GIT_PRE_STAT to
-+# a nonempty value.
- 
- # __gitdir accepts 0 or 1 arguments (i.e., location)
- # returns location of .git repo
-@@ -222,6 +228,19 @@ __git_ps1_show_upstream ()
- 
- }
- 
-+# Forks and recursive do a stat from the toplevel git dir.
-+# This will load inodes into RAM for faster access when running
-+# A git command, like git show.
-+__git_recursive_stat ()
-+{
-+	if test ! -e /tmp/gitbash.lock
-+	then
-+		touch /tmp/gitbash.lock
-+		cd $(git rev-parse --show-toplevel)
-+		find . | xargs stat 2&> /dev/null
-+		rm /tmp/gitbash.lock
-+	fi
-+}
- 
- # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
- # when called from PS1 using command substitution
-@@ -320,6 +339,10 @@ __git_ps1 ()
- 				b="GIT_DIR!"
- 			fi
- 		elif [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
-+			if [ -n "${GIT_PRE_STAT-}" ];
-+			then
-+				(__git_recursive_stat 2&> /dev/null &)
-+			fi
- 			if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
- 			   [ "$(git config --bool bash.showDirtyState)" != "false" ]
- 			then
--- 
-1.8.1.5
+[1] https://github.com/pclouds/git/commits/parse-pathspec
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (6):
+  Add parse_pathspec() that converts cmdline args to struct pathspec
+  parse_pathspec: support stripping submodule trailing slashes
+  parse_pathspec: support stripping/checking submodule paths
+  Guard against new pathspec magic in pathspec matching code
+  Convert run_add_interactive to use struct pathspec
+  parse_pathspec: make sure the prefix part is wildcard-free
+--=20
+1.8.0.rc0.19.g7bbb31d
