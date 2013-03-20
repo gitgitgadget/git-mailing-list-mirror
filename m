@@ -1,67 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC] Add posibility to preload stat information.
-Date: Wed, 20 Mar 2013 22:45:22 +0530
-Message-ID: <CALkWK0=b80U5dxGMpwKwL+jFURisEuSapWuuNRFcP+5R2f3+GA@mail.gmail.com>
+Date: Wed, 20 Mar 2013 10:15:39 -0700
+Message-ID: <7vhak6f0w4.fsf@alter.siamese.dyndns.org>
 References: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
+ <20130320164806.GA10752@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: spearce@spearce.org, git@vger.kernel.org, pclouds@gmail.com,
-	Jeff King <peff@peff.net>
-To: Fredrik Gustafsson <iveqy@iveqy.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, spearce@spearce.org,
+	git@vger.kernel.org, pclouds@gmail.com
+To: Jeff King <peff@peff.net>
 X-From: git-owner@vger.kernel.org Wed Mar 20 18:16:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIMcV-0003W9-Q0
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 18:16:12 +0100
+	id 1UIMcV-0003W9-8g
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 18:16:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751566Ab3CTRPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 13:15:43 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:61730 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751207Ab3CTRPm (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751540Ab3CTRPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 20 Mar 2013 13:15:42 -0400
-Received: by mail-ie0-f173.google.com with SMTP id 9so2367461iec.32
-        for <git@vger.kernel.org>; Wed, 20 Mar 2013 10:15:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=6r4gmN/Ii6lshmZsFPPHx4GjJ6akqWuTvjqEUsNQ7Ao=;
-        b=TpoomYgq2wEQ90eL6JPectNbvvDlMMEEQgqyfl7L7Q8SGzrs0GSGpeIfoVTb7LU0KJ
-         HjOQG7aI8ZjWUVIYzIohagfg970rw3qVKPPQjGaZ8z2PjogBbw5S73IG4s5tqCDRn/CS
-         fvrk21Hb5FBtbQ/Awz0V5qGpnaPKaEcC6Kw46Fh97u/58TjI3Qz1+gmWSBJC1duJmKsB
-         hQ0g+YTd1lJm2i7Rqdth80+1z8ePn2JyalhzEmhdnOefmBrHLAlyE/ecWZS8QchdIvt9
-         tELfET55YrR2SvgH0bhkG3glloIRJPwmOhCBJuc2Ab2o3WeIDQoO+iCK9PJf5J2oXTdd
-         MXsg==
-X-Received: by 10.50.108.235 with SMTP id hn11mr4619319igb.107.1363799742140;
- Wed, 20 Mar 2013 10:15:42 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Wed, 20 Mar 2013 10:15:22 -0700 (PDT)
-In-Reply-To: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43803 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751071Ab3CTRPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 13:15:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB31CAEC3;
+	Wed, 20 Mar 2013 13:15:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6l9GJELv/2x2KIK8Avwgb8pFHNk=; b=tCXovI
+	oBe0FY7UKys9bpNTlZVVBHvLmbVG+EbGz9bT1hSYzx434iMjfW6M7TXlEIVh5zNk
+	Nn6bqk79ehfiNUJ4cOKJswYA/iHoMREmNLgOtZ2iZYEkkNbuGT3u9x72dh/BqX+a
+	gpt0BiOTEXiXfQqeUM9M++ZlpyuHxvxGkLKcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VGCZoudbN+HFpuMFq4it5xjK+Cn3R3BO
+	HqE+S3bLDxYby+QucJX9UKF2hyENP3sPkqsiTS+rkW4r7kW7u0loLpVGI8NKL4B9
+	RzhnMIURS2MgxCIf52mXSNDOs/GALLLV4zkBQ2urDWQ8xT44j0Q1ZzQ5Yzr5Ups5
+	R5oyeVweNYo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B073EAEC2;
+	Wed, 20 Mar 2013 13:15:41 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D4D65AEBE; Wed, 20 Mar 2013
+ 13:15:40 -0400 (EDT)
+In-Reply-To: <20130320164806.GA10752@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 20 Mar 2013 12:48:06 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CA813686-9181-11E2-BC33-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218623>
 
-Fredrik Gustafsson wrote:
-> When entering a git working dir, optionally run a forked process that
-> stat all files in the whole workdir and therefore loads stat information
-> to RAM which will speedup things like git status and so on.
+Jeff King <peff@peff.net> writes:
 
-This is misleading.  You just execute the equivalent of `git status`
-everytime I request a prompt inside a git working directory.  And this
-is if I'm using __git_ps1() to augment my prompt, which I'm not- I use
-ZSH's vcs_info, which is arguably better.  Also, you forgot to say how
-to turn on the feature.
+> So maybe just run "git status >/dev/null"?
 
-That said, this feature is extremely gross; it thrashes my filesystem
-and hard drive.  Modern software is written to minimize IO, not
-maximize it!  I'm completely against the inclusion of this patch.
+In the background?  How often would it run?  I do not think a single
+lockfile solves anything.  It may prevent simultaneous runs of two
+such "prime the well" processes, but the same user may be working in
+two separate repositories.
 
-However, I would not mind a feature that runs `git status` the very
-first time I enter a git working directory: when I enter my clone of
-linux.git, it takes my first `git status` invocation a good ten
-seconds to complete, and we can fix this pretty easily.
+I do not see anything that prevents it from running in the same
+repository over and over again, either.  "prompt" is a bad place to
+do this kind of thing.
