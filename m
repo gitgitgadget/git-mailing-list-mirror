@@ -1,91 +1,76 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v2 0/6] Support triangular workflows
-Date: Wed, 20 Mar 2013 23:04:01 -0000
-Organization: OPDS
-Message-ID: <26A2BE0824FE4C999592D392FCBEF988@PhilipOakley>
-References: <1363783501-27981-1-git-send-email-artagnon@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Simon Ruderich <simon@ruderich.org>
+Subject: [PATCH] git-am: fix "Applying" message when applypatch-hook was run
+Date: Thu, 21 Mar 2013 00:18:29 +0100
+Message-ID: <b978a77f8a37c47b2d6c2201d1f7cfffa01f8443.1363820289.git.simon@ruderich.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
-	"Eric Sunshine" <sunshine@sunshineco.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>
-To: "Ramkumar Ramachandra" <artagnon@gmail.com>,
-	"Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 21 00:04:27 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 21 00:24:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIS3V-0007GY-H5
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 00:04:25 +0100
+	id 1UISMS-0008Ha-Vh
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 00:24:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754729Ab3CTXD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 19:03:58 -0400
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:51439 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752632Ab3CTXD5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Mar 2013 19:03:57 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Al8JAKU/SlFOl3xZ/2dsb2JhbABDjVi3VAQBgVEXdIIfBQEBBAEIAQEuHgEBIQUGAgMFAgEDDgcBCyUUAQQIEgYHFwYBEggCAQIDAYdxAwkKCLhmDYlbjEeBOBZ7gmZhA4g/hW2GVIJ/ikmFGoEvgVs8
-X-IronPort-AV: E=Sophos;i="4.84,880,1355097600"; 
-   d="scan'208";a="412777118"
-Received: from host-78-151-124-89.as13285.net (HELO PhilipOakley) ([78.151.124.89])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 20 Mar 2013 23:03:55 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755005Ab3CTXXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 19:23:34 -0400
+Received: from zucker2.schokokeks.org ([178.63.68.90]:39078 "EHLO
+	zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753612Ab3CTXXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 19:23:33 -0400
+X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Mar 2013 19:23:33 EDT
+Received: from localhost (p54B5F8CF.dip.t-dialin.net [::ffff:84.181.248.207])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by zucker.schokokeks.org with ESMTPSA; Thu, 21 Mar 2013 00:18:29 +0100
+  id 0000000000000057.00000000514A43C5.0000674C
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2013-03-19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218687>
 
-From: "Ramkumar Ramachandra" <artagnon@gmail.com>
-Sent: Wednesday, March 20, 2013 12:44 PM
-> This follows-up [1], with three important differences:
->
-> 1. pushremote_get() and remote_get() share code better.  Thanks Jeff.
->
-> 2. All spelling mistakes have been corrected.  Thanks Eric.
->
-> 3. One new test for each of the new configuration variables.  The
-> extra two parts [2/6] and [3/6] preprare the file for introducing
-> tests.  However, I've not gone overboard in this preparation; I don't
-> replicate the work done by Jonathan in [2].
->
-> Thanks for reading.
->
-> [1]: http://thread.gmane.org/gmane.comp.version-control.git/218410
-> [2]: 
-> http://thread.gmane.org/gmane.comp.version-control.git/218451/focus=218465
->
-> Ramkumar Ramachandra (6):
->  remote.c: simplify a bit of code using git_config_string()
->  t5516 (fetch-push): update test description
->  t5516 (fetch-push): introduce mk_test_with_name()
->  remote.c: introduce a way to have different remotes for fetch/push
->  remote.c: introduce remote.pushdefault
->  remote.c: introduce branch.<name>.pushremote
->
-> Documentation/config.txt | 23 +++++++++++++++---
+---
+Hello,
 
-Shouldn't Documentation/gitworkflows.txt also be updated with the 
-triangular workflow and its configuration?
+This patch fixes a minor issue with git-am. When the
+applypatch-hook modifies the commit message, git-am displays the
+original message. This patch updates the message to use the
+modified version.
 
-> builtin/push.c           |  2 +-
-> remote.c                 | 36 +++++++++++++++++++++------
-> remote.h                 |  1 +
-> t/t5516-fetch-push.sh    | 63 
-> ++++++++++++++++++++++++++++++++++++++++--------
-> 5 files changed, 104 insertions(+), 21 deletions(-)
->
-> -- 
-> 1.8.2
->
+Regards
+Simon
+
+ git-am.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/git-am.sh b/git-am.sh
+index 202130f..0997077 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -795,6 +795,14 @@ To restore the original branch and stop patching run \"\$cmdline --abort\"."
+ 	then
+ 		"$GIT_DIR"/hooks/applypatch-msg "$dotest/final-commit" ||
+ 		stop_here $this
++
++		# applypatch-msg can update the commit message.
++		if test -f "$dotest/final-commit"
++		then
++			FIRSTLINE=$(sed 1q "$dotest/final-commit")
++		else
++			FIRSTLINE=""
++		fi
+ 	fi
+ 
+ 	say "$(eval_gettext "Applying: \$FIRSTLINE")"
+-- 
+1.8.2
+
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
