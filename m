@@ -1,83 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: USE_NSEC bug?
-Date: Wed, 20 Mar 2013 10:04:14 -0700
-Message-ID: <7vppyuf1f5.fsf@alter.siamese.dyndns.org>
-References: <CABFQKmP6=Thhph4Ug+4LOBmzsVK42qBQYW2QHw87QD3019n+Kw@mail.gmail.com>
- <20130320075344.GA8159@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH jk/pkt-line-cleanup] t5700-clone-reference: send trace to
+ fd 2, not 3, to please Windows git
+Date: Wed, 20 Mar 2013 13:06:07 -0400
+Message-ID: <20130320170607.GB10752@sigill.intra.peff.net>
+References: <5149724C.3060105@viscovery.net>
+ <20130320093313.GA9482@sigill.intra.peff.net>
+ <51499DE7.2030404@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Rodland <andrew@cleverdomain.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 20 18:04:51 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Mar 20 18:06:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIMRQ-0004Dc-Vi
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 18:04:45 +0100
+	id 1UIMTJ-0005fP-Oo
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 18:06:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753701Ab3CTRER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 13:04:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34615 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752082Ab3CTREQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 13:04:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35B71A837;
-	Wed, 20 Mar 2013 13:04:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=az5nvXCr9jDzo396n8z/poEUOMU=; b=ALiqcX
-	ufmZhNvg29hzi3wEl9JXn0rhrXFJNHUoQ6NQ8QqN+tURlxmfh+9VVo1ugfpRDj43
-	41+DQcBkwgA9PDw6DHCGxpuQ7+ZGnBpMPa/D5wBng4rDe/qcaZd3ccWCfeFXdtOz
-	hw7/7RjRW2Fcx6MyrG3+Z+NT0QZnBK6JNqKhI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fPzgxs60o0e4SElCLtUIUtHAYRMMS9uf
-	XLTZugFYyzHv4k2sdyblhvmiAkY+qaF4wweNFP0/fcNN6qEwbD/RU/a3hrWW62MB
-	FWkGFTY8QnGHArgH2GWxBIEg9b+eGReBCZD+l0ZuylHGfbz1J63nEaATvOpHUd5w
-	NWlpmlgoHzg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E8B5A835;
-	Wed, 20 Mar 2013 13:04:16 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D90FA834; Wed, 20 Mar 2013
- 13:04:15 -0400 (EDT)
-In-Reply-To: <20130320075344.GA8159@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 20 Mar 2013 03:53:44 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3209D92C-9180-11E2-AA5E-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755523Ab3CTRGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 13:06:14 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60244 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752051Ab3CTRGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 13:06:13 -0400
+Received: (qmail 9478 invoked by uid 107); 20 Mar 2013 17:07:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Mar 2013 13:07:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Mar 2013 13:06:07 -0400
+Content-Disposition: inline
+In-Reply-To: <51499DE7.2030404@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218619>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Mar 20, 2013 at 12:30:47PM +0100, Johannes Sixt wrote:
 
-> But maybe there is some subtle reason I'm missing for having the two
-> options separate.
+> > I think that is OK, but I'm curious why this is a problem _now_, and not
+> > with the code prior to 97a83fa8. The old GIT_DEBUG_SEND_PACK was also
+> > just calling write() to descriptor 3.
+> 
+> Before this change, both affected commands completed and the trace file
+> was empty. Notice that in both test cases we only check for the absence of
+> certain lines, which is naturally true for an empty file, so that the
+> tests pass.
 
-The closest I found was c06ff4908bf9 (Record ns-timestamps if
-possible, but do not use it without USE_NSEC, 2009-03-04).
+Hmm. The code in t5503 is similar, but before my patch used to actually
+use "test -s" to make sure that some trace output was written. Did it
+fail before 97a83fa8 (and does it pass now)?
 
-commit c06ff4908bf9ad8bf2448439a3574321c9399b17
-Author: Kjetil Barvik <barvik@broadpark.no>
-Date:   Wed Mar 4 18:47:40 2009 +0100
+We should probably be adjusting t5503, too. And possibly adding back in
+the "test -s" checks (which I removed as redundant, but I guess the
+double-checking might have caught a platform error in this case).
 
-    Record ns-timestamps if possible, but do not use it without USE_NSEC
-    
-    Traditionally, the lack of USE_NSEC meant "do not record nor use the
-    nanosecond resolution part of the file timestamps".  To avoid problems on
-    filesystems that lose the ns part when the metadata is flushed to the disk
-    and then later read back in, disabling USE_NSEC has been a good idea in
-    general.
-    
-    If you are on a filesystem without such an issue, it does not hurt to read
-    and store them in the cached stat data in the index entries even if your
-    git is compiled without USE_NSEC.  The index left with such a version of
-    git can be read by git compiled with USE_NSEC and it can make use of the
-    nanosecond part to optimize the check to see if the path on the filesystem
-    hsa been modified since we last looked at.
+Also, though I think your use of stderr is probably OK, might it be a
+little more robust against future output changes to use:
+
+  GIT_TRACE_PACKET=$PWD/$U.D git clone ...
+
+to write directly to the file. The original GIT_DEBUG_SEND_PACK did not
+support such niceties, but GIT_TRACE gives them to us for free.
+
+> With the updated code, 'git fetch' hung, which is how I noticed the
+> problem. As I said, I didn't investigate where and why this happens.
+
+Thinking on it more, almost certainly what is happening is that fd 3 is
+being used for the actual protocol, and we are jamming random bytes over
+it. Since we have changed the bytes, the code is reacting in a different
+way (but the actual reaction doesn't matter; we should stop the cause,
+not worry about the symptom).
+
+-Peff
