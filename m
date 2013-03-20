@@ -1,120 +1,137 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: FW: Windows. Git, and Dedupe
-Date: Wed, 20 Mar 2013 22:45:20 +0100
-Message-ID: <514A2DF0.2080708@lsrfire.ath.cx>
-References: <02803146dc74414191fab53b0de33fa1@BLUPR03MB019.namprd03.prod.outlook.com> <5148D3BD.4040608@lsrfire.ath.cx> <614e174a0b4548a1bcdc6c24c2682829@BLUPR03MB019.namprd03.prod.outlook.com> <514A140C.1040901@lsrfire.ath.cx> <2156b5b7b012490490c1b52637a6164a@BLUPR03MB019.namprd03.prod.outlook.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v3 3/4] t7800: modernize tests
+Date: Wed, 20 Mar 2013 15:59:19 -0700
+Message-ID: <CAJDDKr4O-OU57j0f7F2E2_4EvtCTE1gFP5uLv+fvD6VcpPiifg@mail.gmail.com>
+References: <1361419428-22410-1-git-send-email-davvid@gmail.com>
+	<1361419428-22410-2-git-send-email-davvid@gmail.com>
+	<1361419428-22410-3-git-send-email-davvid@gmail.com>
+	<514985FB.8080806@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>, 
- "msysgit@googlegroups.com" <msysgit@googlegroups.com>
-To: Josh Rowe <Joshua.Rowe@microsoft.com>
-X-From: msysgit+bncBCJMNOMZRUPBB5O3VCFAKGQEMJW374Y@googlegroups.com Wed Mar 20 22:45:49 2013
-Return-path: <msysgit+bncBCJMNOMZRUPBB5O3VCFAKGQEMJW374Y@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f187.google.com ([209.85.212.187])
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 20 23:59:54 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJMNOMZRUPBB5O3VCFAKGQEMJW374Y@googlegroups.com>)
-	id 1UIQpR-0007kl-6b
-	for gcvm-msysgit@m.gmane.org; Wed, 20 Mar 2013 22:45:49 +0100
-Received: by mail-wi0-f187.google.com with SMTP id hm14sf842702wib.24
-        for <gcvm-msysgit@m.gmane.org>; Wed, 20 Mar 2013 14:45:26 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UIRz3-0004v1-J8
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 23:59:49 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752274Ab3CTW7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 18:59:22 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:40423 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751779Ab3CTW7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 18:59:21 -0400
+Received: by mail-wg0-f51.google.com with SMTP id 8so1755048wgl.6
+        for <git@vger.kernel.org>; Wed, 20 Mar 2013 15:59:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-received:x-beenthere:x-received:received-spf:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:x-google-group-id:list-post:list-help
-         :list-archive:sender:list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=0UfWT/hkKx0I+07z2otstwCXcVq7Q3FImAH0TS83a2s=;
-        b=qavD9gta/StuzWYtEsy8G0usx7Q9RMp1OzT/v43/iWe7/m/wNq4wwi7oT+ODCh++LQ
-         1bwXYGEsl2cB4gyQNAGIyDW1crvwUJB0NLX+oyGv8CV/AQjfFJeMq01YDr3fyAlBz3MV
-         VgM1RKZGpjNEDIdyQRsgkgMnLKehuolLu4T/8VLUecvTjpFatwEZ1RLtjlWQ7+9ttpSa
-         tZwMFrdsabZS1aownzcj1/asQKTY2NrL+ngihfKswolDMZtEwxv6ve7MTB81uD9C6Lom
-         cuswldtGoxsykSzqvPig+rMa6D 
-X-Received: by 10.180.19.66 with SMTP id c2mr116298wie.4.1363815925839;
-        Wed, 20 Mar 2013 14:45:25 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.84.161 with SMTP id a1ls734287wiz.4.gmail; Wed, 20 Mar
- 2013 14:45:24 -0700 (PDT)
-X-Received: by 10.15.21.137 with SMTP id d9mr35695097eeu.1.1363815924978;
-        Wed, 20 Mar 2013 14:45:24 -0700 (PDT)
-Received: from india601.server4you.de (india601.server4you.de. [85.25.151.105])
-        by gmr-mx.google.com with ESMTP id 6si1159557eej.0.2013.03.20.14.45.23;
-        Wed, 20 Mar 2013 14:45:23 -0700 (PDT)
-Received-SPF: neutral (google.com: 85.25.151.105 is neither permitted nor denied by best guess record for domain of rene.scharfe@lsrfire.ath.cx) client-ip=85.25.151.105;
-Received: from [192.168.2.105] (p4FFDB75E.dip.t-dialin.net [79.253.183.94])
-	by india601.server4you.de (Postfix) with ESMTPSA id 13C131DD;
-	Wed, 20 Mar 2013 22:45:23 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <2156b5b7b012490490c1b52637a6164a@BLUPR03MB019.namprd03.prod.outlook.com>
-X-Original-Sender: rene.scharfe@lsrfire.ath.cx
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 85.25.151.105 is neither permitted nor denied by best guess
- record for domain of rene.scharfe@lsrfire.ath.cx) smtp.mail=rene.scharfe@lsrfire.ath.cx
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218684>
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=jxrHlO6UpMqNw99RsvzYmlw0Zib51Cfm7qSukKAVCFU=;
+        b=LeO4mq/4jw2wNvREPRH84dF/8f0gdm5eF0rcAWYHmv9plTM+6g1V+j2bUjQixxPi2v
+         gdDMh7eETHkZvTuu8NV5dyszHcUQaDZZX7BlemO1SAvO7VGiMyO6rhRXAWvdHKgArhDh
+         jhyYbrcS2LHU6PDsQok5YU/YszT4iDILJAnDAShQ1WozKRVUVnrOOTteHyO7qh7qZ5M5
+         wDicX9Ep7zfJltoXLpJINJpINOQPHPVvItGaQxfUno09ZibgJo6SXfji4/I9LeZr+nR4
+         SBK/8vOnC8LpkpaoCriS8bm/2s22DquTViGLPg0vo87XgS+I/6E+cOXKDg5dUgbPK7nz
+         gHYw==
+X-Received: by 10.180.84.8 with SMTP id u8mr1458143wiy.1.1363820360085; Wed,
+ 20 Mar 2013 15:59:20 -0700 (PDT)
+Received: by 10.194.13.129 with HTTP; Wed, 20 Mar 2013 15:59:19 -0700 (PDT)
+In-Reply-To: <514985FB.8080806@viscovery.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218685>
 
-Am 20.03.2013 21:43, schrieb Josh Rowe:
-> If you have Win8 or HyperV 2012, I can ship you a small NTFS .vhd
-> with some deduped files.  I'm not sure if that will be readable, but
-> I would hazard a guess that it would be.  It definitely will not be
-> readable on Win7.
-
-It would be nice if you could upload it to an FTP server or website and=20
-post a public link so that the real git-on-Windows developers can get it=20
-as well.  You can also send it to me personally and I'll see if I can=20
-mount it using Windows 8 and where I get from there.  In any case,=20
-please make sure there's no sensitive or private data in the VHD file.
-
-How big is it after compression using (preferably) 7-Zip or ZIP?
-
-> I'm using:
+On Wed, Mar 20, 2013 at 2:48 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Am 2/21/2013 5:03, schrieb David Aguilar:
+>>  test_expect_success PERL 'difftool -d' '
+>> -     diff=$(git difftool -d --extcmd ls branch) &&
+>> -     echo "$diff" | stdin_contains sub &&
+>> -     echo "$diff" | stdin_contains file
+>> +     git difftool -d --extcmd ls branch >output &&
+>> +     stdin_contains sub <output &&
+>> +     stdin_contains file <output
+>>  '
 >
-> PS C:\> git version git version 1.8.0.msysgit.0
+> This test is broken on Windows. There is this code in git-difftool.perl
+>
+>         for my $file (@worktree) {
+> ...
+>                         copy("$b/$file", "$workdir/$file") or
+>                         exit_cleanup($tmpdir, 1);
+> ...
+>         }
+>
+> @worktree is populated with all files in the worktree. At this point,
+> "output" is among them. Then follows an attempt to copy a file over
+> "$workdir/$file". I guess that is some link+remove magic going on behind
+> the scenes. At any rate, this fails on Windows with
+> "D:/Src/mingw-git/t/trash directory.t7800-difftool/../../git-difftool line
+> 408: Bad file number", because files that are open cannot be written from
+> outside (the file is open due to the redirection in the test snippet).
+>
+> What is going on here? Why can this ever succeed even on Unix?
 
-That means compat/mingw.c is directly relevant to you; more about MinGW,=20
-MSys and git at http://msysgit.github.com/ and http://mingw.org/.
+Thanks for the report.  Yes, these do pass on Unix.
 
-> The file sizes show up as their original size with Windows tools
-> (powershell, Win32, cmd, .Net, etc).  git ls-tree -r HEAD does not
-> show that hash code for files that are not intentionally empty.
+Hmm I wonder what's going on here?
 
-So we can likely (hopefully) get the sizes of deduped files with the=20
-same API calls as for regular ones.  Which makes me even more puzzled=20
-over the question of why git makes a difference between the two kinds.
+I started digging in and the @worktree_files (aka @worktree above)
+is populated from the output of "git diff --raw ...".
 
-Ren=E9
+Seeing the "output" filename in "diff --raw" implies that one of the
+tests added "output" to the index somehow.  I do not see that
+happening anywhere, though, so I do not know how it would end up in
+the @worktree array if it is not reported by "diff --raw".
 
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+My current understanding of how it could possibly be open twice:
 
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+1. via the >output redirect
+2. via the copy() perl code which is fed by @worktree
+
+So I'm confused.  Why would we get different results on Windows?
+
+I just re-ran these tests from "next" to check my sanity and they
+passed on both Linux and OS X.
+
+> Same for some later tests.
+
+Ditto.
+
+> BTW, while debugging this, I found the use of the helper function
+> stdin_contains() highly unhelpful; it just resolves to a 'grep' that on
+> top of all hides stdout. Please don't do that. Just use unadorned grep
+> like we do everywhere else.
+
+I'm not too opposed to that.
+The one small advantage to the helper is that you can tweak the redirect
+in one central place, so it's not all for naught.
+
+Sitaram, you added this back in:
+
+ba959de1 git-difftool: allow skipping file by typing 'n' at prompt
+
+Do you have any thoughts?
+
+It seems like removing the stdout redirect could be helpful for debugging,
+and if we did that then there's really no point in having the helper
+(aside from the indirection which can sometimes help during debugging).
+I don't really feel too strongly either way, but it did bother you
+while debugging the test script, so unadorned grep seems like the way to go.
+
+I'll wait and see if anybody else has any Windows-specific clues that
+we can use to narrow down this problem.
+
+In lieu of an immediate fix, are there any test prerequisite we can
+use to skip these tests on windows?  One or both of NOT_CYGWIN,NOT_MINGW?
+-- 
+David
