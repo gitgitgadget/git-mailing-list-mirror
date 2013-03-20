@@ -1,100 +1,101 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Documentation: merging a tag is a special case
-Date: Wed, 20 Mar 2013 11:54:34 -0700
-Message-ID: <20130320185434.GP3655@google.com>
-References: <1363704914.6289.39.camel@test.quest-ce.net>
- <7vfvzrjrad.fsf@alter.siamese.dyndns.org>
- <1363802033-26868-1-git-send-email-ydroneaud@opteya.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/6] t5516 (fetch-push): introduce mk_test_with_name()
+Date: Wed, 20 Mar 2013 14:58:45 -0400
+Message-ID: <20130320185844.GB30165@sigill.intra.peff.net>
+References: <1363783501-27981-1-git-send-email-artagnon@gmail.com>
+ <1363783501-27981-4-git-send-email-artagnon@gmail.com>
+ <20130320182830.GJ3655@google.com>
+ <CALkWK0mCVb6N76QU+U3iTO_gmU4PmhrTOgU53DAMd5x1bCQEtA@mail.gmail.com>
+ <20130320184157.GO3655@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Yann Droneaud <ydroneaud@opteya.com>
-X-From: git-owner@vger.kernel.org Wed Mar 20 19:55:09 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 20 19:59:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIOAF-0001od-Kh
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 19:55:07 +0100
+	id 1UIOEI-0004SD-TT
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 19:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755643Ab3CTSyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 14:54:40 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:33020 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751381Ab3CTSyj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 14:54:39 -0400
-Received: by mail-pb0-f46.google.com with SMTP id uo15so1583254pbc.33
-        for <git@vger.kernel.org>; Wed, 20 Mar 2013 11:54:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=/3H76GSkZ/sNKeFikyQEZrV7MA7sPWybfS23Q/jZhkY=;
-        b=WYNwQx8uSYyso1yEBlkWHfVlTN1eYs5WSC8MVFiHelcvWcis25yQspW9TB5YvXjeMd
-         S7YGORKEvudd/ChWykwPbY9tDNKy/+fGGfdwzknzIHieZBcS7LNDGJw/n7yR2GKoTfPd
-         FkhalYsuGWcDBk6xpVrc7lempFr5B2g4B3Dh3UoCFMTJNcC2dz9JEB1TdjGTropx55vG
-         UIoyzffTmMuW6InTYqFzD58VMlgDASLpo6OpvdVFaJh/jSKPbAzX4Wes0xjKwx/DxzDM
-         SKMaj7G4wZGVw7RNg6FNvpBxRS/hrlTgcJmD/sVh43ccfHws2UGQHaoPFmhNP7Y3gAd2
-         RIxA==
-X-Received: by 10.66.228.194 with SMTP id sk2mr11071644pac.51.1363805679401;
-        Wed, 20 Mar 2013 11:54:39 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id ab1sm3002439pbd.37.2013.03.20.11.54.37
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 20 Mar 2013 11:54:38 -0700 (PDT)
+	id S1752430Ab3CTS6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 14:58:52 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60399 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750902Ab3CTS6v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 14:58:51 -0400
+Received: (qmail 11477 invoked by uid 107); 20 Mar 2013 19:00:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Mar 2013 15:00:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Mar 2013 14:58:45 -0400
 Content-Disposition: inline
-In-Reply-To: <1363802033-26868-1-git-send-email-ydroneaud@opteya.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20130320184157.GO3655@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218656>
 
-Yann Droneaud wrote:
+On Wed, Mar 20, 2013 at 11:41:57AM -0700, Jonathan Nieder wrote:
 
-> When asking Git to merge a tag (such as a signed tag or annotated tag),
-> it will always create a merge commit even if fast-forward was possible.
-> It's like having --no-ff present on the command line.
+> Ramkumar Ramachandra wrote:
+> > Jonathan Nieder wrote:
+> 
+> >> I dunno.  The helper functions at the top of this test are already
+> >> intimidating, so I guess I am looking for a way to avoid making that
+> >> problem worse.
+> [...]
+> > My patch does not make the situation worse in any way:
+> 
+> Um, yes it does.  It adds another function to learn to an already
+> intimidating list.
 
-Thanks.  This looks good, modulo some nitpicks.
+Personally I do not find the set of helper functions intimidating. I
+tend to read the tests in a top-down manner: a test is interesting
+(usually because it fails), and then I want to see what it is doing, so
+I look at any functions it calls, and so forth.
 
-[...]
-> --- a/Documentation/git-merge.txt
-> +++ b/Documentation/git-merge.txt
-> @@ -170,6 +170,15 @@ happens:
->  If you tried a merge which resulted in complex conflicts and
->  want to start over, you can recover with `git merge --abort`.
->  
-> +MERGING TAG
-> +-----------
-> +
-> +When merging a tag (annotated or signed), Git will create a merge commit
+What I usually find _much_ harder to debug is when there is hidden state
+leftover from other tests. So even though it is longer to write, I would
+much rather see:
 
-How about something like "When merging an annotated or signed tag" or
-"When merging an annotated (and possibly signed) tag"?  The above text
-can be misread as meaning "When merging any tag, no matter whether it
-is annotated or signed", which is needlessly confusing for people who
-don't know about unannotated tags.
+  test_expect_success 'check that frob only affects foo' '
+          set_state_of foo &&
+          set_state_of bar &&
+          git frob &&
+          check_state_of foo &&
+          check_state_of bar
+  '
 
-[...]
-> --- a/Documentation/merge-options.txt
-> +++ b/Documentation/merge-options.txt
-> @@ -26,7 +26,7 @@ set to `no` at the beginning of them.
->  --ff::
->  	When the merge resolves as a fast-forward, only update the branch
->  	pointer, without creating a merge commit.  This is the default
-> -	behavior.
-> +	behavior (except when merging a tag).
+than for the test to assume the state of "foo" or "bar" prior to the
+test. And I think helper functions can help make writing those sorts of
+pre-conditions more reasonable (and without looking too hard, I think
+t5516 does an OK job of that).
 
-s/a tag/an annotated tag/ here as well.
+Related to that is when the helper functions operate on hidden state. In
+this instance, we have tests that do things like:
 
-By the way, what about the possibility of dropping this implicit
---no-ff?  I think Linus could get used to passing --no-ff explicitly
-when responding to pull requests.  I could go either way on it.
+    mk_empty &&
+    git push testrepo refs/heads/master:refs/remotes/origin/master
 
-It is certainly useful to document the current state before
-considering changing it, so with the tweaks mentioned above,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+and as a reader I say "wait, what's in testrepo?". I can follow mk_empty
+and see that it hardcodes testrepo, but it is even better if the
+function and its arguments are named in a way that I don't have to. So
+even though it is more typing, I would argue that:
+
+  mk_empty testrepo &&
+  git push testrepo ...
+
+is better, because the test script is more readable as a unit.
+
+None of this is that huge a deal to me (and yet I seem to have written a
+page about it :) ), but I figure while we are bikeshedding about test
+style...
+
+-Peff
