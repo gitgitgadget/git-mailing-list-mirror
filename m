@@ -1,72 +1,86 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/6] remote.c: simplify a bit of code using git_config_string()
-Date: Wed, 20 Mar 2013 23:42:35 +0530
-Message-ID: <CALkWK0mKKRmVdvvLmrqCPdPQoeYxWaFcuixyonnDM6o8Nt7ppg@mail.gmail.com>
-References: <1363783501-27981-1-git-send-email-artagnon@gmail.com>
- <1363783501-27981-2-git-send-email-artagnon@gmail.com> <20130320180707.GH3655@google.com>
+From: Yann Droneaud <yann@droneaud.fr>
+Subject: Re: git merge <tag> behavior
+Date: Wed, 20 Mar 2013 19:12:52 +0100
+Message-ID: <1363803172.6289.49.camel@test.quest-ce.net>
+References: <1363704914.6289.39.camel@test.quest-ce.net>
+	 <7vfvzrjrad.fsf@alter.siamese.dyndns.org>
+	 <1363802682.6289.46.camel@test.quest-ce.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 20 19:13:30 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 20 19:13:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UINVw-00008z-8X
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 19:13:28 +0100
+	id 1UINW4-0000Fv-E2
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 19:13:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932154Ab3CTSM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 14:12:58 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:46414 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752503Ab3CTSM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 14:12:56 -0400
-Received: by mail-ie0-f180.google.com with SMTP id a11so2271841iee.11
-        for <git@vger.kernel.org>; Wed, 20 Mar 2013 11:12:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=fHKzyFtkwfOk9TXT4TUi7+9lakJZHLcaQwQJXhAEl2w=;
-        b=I+BtPYhAW/dmq2rAVfdxHgx8R2RO4XxhhOBe5ps33suKKLb1MYFMx+So5icvQNS8BM
-         anukD4UCTBZp+nxflhANYsryoz8UzYVTVxpN4jXzBkDA6YtRc8zfnYOMwB3EvlIm11HL
-         4OdyBnfjs/nf7mRMkurBgIlPyK6b+rIlunxtVPkIbsB7HFDw7eQLKGSr3ZFfzlIVtZFR
-         5/+IYYcgN5Qod4x5yI1rPVeeqkkDyRmZUGxM2BC4PMJh7qVXeMbH7zskuorSWZhzRNXC
-         DW4rLexSI7sJ8KE6AEhkMV8mRwF30uDhY5sHYq7L4NObR9TiJL5txbv4hovPcn3AUTvO
-         ep1A==
-X-Received: by 10.50.119.102 with SMTP id kt6mr45886igb.12.1363803175206; Wed,
- 20 Mar 2013 11:12:55 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Wed, 20 Mar 2013 11:12:35 -0700 (PDT)
-In-Reply-To: <20130320180707.GH3655@google.com>
+	id S1757297Ab3CTSND convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Mar 2013 14:13:03 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:41723 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752503Ab3CTSNC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 14:13:02 -0400
+Received: from [192.168.20.20] (unknown [37.161.174.182])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id AEE0B9401E1;
+	Wed, 20 Mar 2013 19:12:54 +0100 (CET)
+In-Reply-To: <1363802682.6289.46.camel@test.quest-ce.net>
+X-Mailer: Evolution 3.4.4 (3.4.4-2.fc17) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218636>
 
-Jonathan Nieder wrote:
-> Ramkumar Ramachandra wrote:
->
->> --- a/remote.c
->> +++ b/remote.c
->> @@ -356,9 +356,7 @@ static int handle_config(const char *key, const char *value, void *cb)
->>                       return 0;
->>               branch = make_branch(name, subkey - name);
->>               if (!strcmp(subkey, ".remote")) {
->> -                     if (!value)
->> -                             return config_error_nonbool(key);
->> -                     branch->remote_name = xstrdup(value);
->> +                     git_config_string(&branch->remote_name, key, value);
->
-> Shouldn't this say
->
->                         if (git_config_string(&branch->remote_name, key, value))
->                                 return -1;
->
-> or something?
+Hi,
+=20
+Le mercredi 20 mars 2013 =C3=A0 19:04 +0100, Yann Droneaud a =C3=A9crit=
+ :
+> > > 2) git merge <tag> VS git merge <object-id>
+> > >
+> > > If <tag> is an object (not a lightweight/reference tag), git merg=
+e <tag>
+> > > ...
+> > > But, if you use the tag object-id instead of its name, for exampl=
+e using
+> > > git merge `git parse-rev <tag>`,
+> [EDIT]
+> > > signature is not checked. Git still create a merge commit, but do=
+esn't
+> > > prepare a commit message with the tag message and the signature:
+> > >
+> > > It would be great to have Git using the tag message and check the
+> > > signature.
+> >=20
+> > Perhaps, but if you feed the $(git rev-parse v1.12.2) to merge, you=
+r
+> > subject will not be able to say "Merge tag 'v1.12.2'" in the first
+> > place, so I do not think you would want to encourage such usage in
+> > the first place.
+>=20
+> I think if someone want to merge the tag object-id instead of the tag=
+,
+> the commit subject/message should probably not make a reference to th=
+e
+> tag.
+>=20
+> The only use case for such tag merging by commit-id would be to get
+> consistent behavior in case of tag deletion. The named tag could be
+> recreated to point to another point in time. So when looking at the
+> merge commit message and searching for the tag (by name) could be
+> misleading.
+>=20
 
-Yes, and so should the instances in [5/6] and [6/6].  Thanks for catching it.
+But but do not take those remarks as a feature request.
+I was just asking for clarification/comment on the behavior difference
+between merging tag/tag object-id.
+
+Regards
+
+--=20
+Yann Droneaud
+OPTEYA
