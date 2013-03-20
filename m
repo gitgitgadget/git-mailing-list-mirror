@@ -1,90 +1,97 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/6] t5516 (fetch-push): introduce mk_test_with_name()
-Date: Thu, 21 Mar 2013 00:08:54 +0530
-Message-ID: <CALkWK0mCVb6N76QU+U3iTO_gmU4PmhrTOgU53DAMd5x1bCQEtA@mail.gmail.com>
-References: <1363783501-27981-1-git-send-email-artagnon@gmail.com>
- <1363783501-27981-4-git-send-email-artagnon@gmail.com> <20130320182830.GJ3655@google.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: [RFC] Add posibility to preload stat information.
+Date: Wed, 20 Mar 2013 19:40:32 +0100
+Message-ID: <20130320184032.GC32426@paksenarrion.iveqy.com>
+References: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
+ <20130320164806.GA10752@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 20 19:39:47 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, spearce@spearce.org,
+	git@vger.kernel.org, pclouds@gmail.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 20 19:39:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UINvO-0000G1-7X
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 19:39:46 +0100
+	id 1UINva-0000Ns-G6
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 19:39:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750902Ab3CTSjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 14:39:17 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:42434 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756159Ab3CTSjP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 14:39:15 -0400
-Received: by mail-ie0-f176.google.com with SMTP id x14so2473073ief.21
-        for <git@vger.kernel.org>; Wed, 20 Mar 2013 11:39:14 -0700 (PDT)
+	id S932434Ab3CTSje convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Mar 2013 14:39:34 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:60460 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755882Ab3CTSjQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 14:39:16 -0400
+Received: by mail-la0-f52.google.com with SMTP id fs12so3510442lab.25
+        for <git@vger.kernel.org>; Wed, 20 Mar 2013 11:39:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=zoNkqPPOD4NxDxb7YBGIkrHjVwKDYDSPUD5fhkUqlJQ=;
-        b=FYT6mbGojcubZQ4ED4/WeaYzSCywfYN3KZOVeVcnBZq9ZNJihtlZeQ3X6D9SrPWRZK
-         dBdXneCyo0+J4X1yFdFZZ7x0n6iPDWP4MTQo/DgMnt8qT5dmjLyc8QV4ffh9P+3bZr8R
-         +HfoB8WsI/p7/vzwOami4qOVn2G1mRaZmiDyh/OSL+0i6AVQEDxS/BwjspjXea+VyzR8
-         Q6Y7Fu7SrAVszuRHYxKV38mPO6jH4FXfufdOTBsGqsk+V5bgAt9kopnp8osx8GOAsen4
-         Z1VcDbxOrxWVsGLFvI3JMOetX5zfSeGreFLlGDfRpR69nfTWzjjj/g77CCnKq6poclPG
-         aM8A==
-X-Received: by 10.50.17.71 with SMTP id m7mr111018igd.14.1363804754759; Wed,
- 20 Mar 2013 11:39:14 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Wed, 20 Mar 2013 11:38:54 -0700 (PDT)
-In-Reply-To: <20130320182830.GJ3655@google.com>
+        h=x-received:sender:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ZE/nmVLiU53CgaNDb2Lrezljn4VIvtdz7Qzg9lKstj4=;
+        b=Nbkdd1adED323P6lPbg1IhHxF/4bM+Rh+lHd5pzYESh278//5kSapJE1XWfxd9WAOR
+         2vSypgnhPJUZatkglG9FPVrn6iowf1kBRKew2EMgpeaMa3ORxfP8rWJ61Fx8F3y+dS4k
+         hAmYg6AAVQ1hUdFaIWtgiSxIFV4nGBisb0MojnP+NE68zGCAq5gfLrpzu/wi0+HKDNeD
+         MyelnnR72KVBXyfBkVUvWBRHi0fjLznIcyjjaGojzVBqP+cuuCdM1IOeOw7T7kbkCBLN
+         LpyOs2V0HVpq0TS5MdxcVZ19WHeRsCC1tfGEqRo0M25UOwa5Vc8zggSziLtUZH38PnIO
+         7mgQ==
+X-Received: by 10.152.111.5 with SMTP id ie5mr6057074lab.31.1363804755301;
+        Wed, 20 Mar 2013 11:39:15 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPS id fm8sm929763lbb.17.2013.03.20.11.39.14
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 20 Mar 2013 11:39:14 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UINw8-0001ZC-SM; Wed, 20 Mar 2013 19:40:32 +0100
+Content-Disposition: inline
+In-Reply-To: <20130320164806.GA10752@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218647>
 
-Jonathan Nieder wrote:
-> Ramkumar Ramachandra wrote:
->
->> mk_test() creates a repository with the constant name "testrepo", and
->> this may be limiting for tests that need to create more than one
->> repository for testing.  To fix this, create a new mk_test_with_name()
->> which accepts the repository name as $1.  Reimplement mk_test() as a
->> special case of this function, making sure that no tests need to be
->> rewritten.
->
-> Why not give mk_test an optional parameter?
->
->         repo_name=${1:-testrepo}
->
-> Oh, it is because mk_test already takes arguments naming refs to push.
-> I suppose the change description could make this clearer.
+On Wed, Mar 20, 2013 at 12:48:06PM -0400, Jeff King wrote:
+> Kind of gross, but I guess it is useful to some people.
 
-Isn't it obvious?
+Yes it is. The questions is if it's gross enough to never
+leave my computer, or if someone else can find this useful.
 
-> Why not use mk_test and then rename, like so?
->
->         mk_test ...refs... &&
->         mv testrepo testrepo-a &&
->
->         mk_test ...refs... &&
->         mv testrepo testrepo-b &&
->         ...
+>=20
+> > +__git_recursive_stat ()
+> > +{
+> > +	if test ! -e /tmp/gitbash.lock
+> > +	then
+> > +		touch /tmp/gitbash.lock
+>=20
+> This is a tmp-race security hole. E.g., do:
+>=20
+>   ln -s /etc/nologin /tmp/gitbash.lock
+>=20
+> as a user; when root runs __git_recursive_stat, it will create
+> /etc/nologin. It's not quite as bad as some other holes, because we o=
+nly
+> "touch" the file, not overwrite its contents, but you can see that it=
+'s
+> possible to do some mischief.
+>=20
+> Should this maybe just be ~/.gitbash.lock or something?
 
-No.  This is ugly.  mk_test() should not hardcode "testrepo".
+Thank you! I totally missed that.
 
-> I dunno.  The helper functions at the top of this test are already
-> intimidating, so I guess I am looking for a way to avoid making that
-> problem worse.  One way would be to add an opening comment before
-> the function definition explaining how it is meant to be used.  See
-> t/test-lib-functions.sh for examples, such as test_cmp.
+I guess a new solution would be to keep an access time-stamp in each
+repository and with certain intervall run git status on that repository=
+=2E
 
-My patch does not make the situation worse in any way: it just adds
-one line that passes $1 as a parameter to existing code.  Yes, the
-functions and tests can be improved greatly, but I refrained from
-doing so because of your series.  We can save it for later.
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
+
+tel: 0733-608274
+e-post: iveqy@iveqy.com
