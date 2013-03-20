@@ -1,82 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git merge <tag> behavior
-Date: Wed, 20 Mar 2013 11:46:16 -0700
-Message-ID: <7vwqt1ewp3.fsf@alter.siamese.dyndns.org>
-References: <1363704914.6289.39.camel@test.quest-ce.net>
- <7vfvzrjrad.fsf@alter.siamese.dyndns.org>
- <1363802682.6289.46.camel@test.quest-ce.net>
- <1363803172.6289.49.camel@test.quest-ce.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] Add posibility to preload stat information.
+Date: Wed, 20 Mar 2013 14:46:43 -0400
+Message-ID: <20130320184643.GA30165@sigill.intra.peff.net>
+References: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
+ <CALkWK0=b80U5dxGMpwKwL+jFURisEuSapWuuNRFcP+5R2f3+GA@mail.gmail.com>
+ <20130320174120.GA32426@paksenarrion.iveqy.com>
+ <CALkWK0nCY3o_KW8ykq9TkzfHeVj6NKDkOFuym9UmSWLH0ZFxBw@mail.gmail.com>
+ <20130320183641.GB32426@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Yann Droneaud <yann@droneaud.fr>
-X-From: git-owner@vger.kernel.org Wed Mar 20 19:46:51 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, spearce@spearce.org,
+	git@vger.kernel.org, pclouds@gmail.com
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Wed Mar 20 19:47:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIO2C-0004tv-70
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 19:46:48 +0100
+	id 1UIO2f-0005E9-42
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 19:47:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933268Ab3CTSqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 14:46:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63157 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932773Ab3CTSqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 14:46:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5625A1E7;
-	Wed, 20 Mar 2013 14:46:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wOAfArxaHer4rpMS2rztMhO8kVs=; b=EyUlRG
-	k06XfCgr6Y7cegVW6onRc6jdqSLE+fsccwnqcXefR4MnuUi9BxepGHKPXRAbrRXU
-	y/dxeMvvEzJMTeiJ9LPgBjiMXXGpKU+CkjGjUslF+W2q3H3oP7TYu5JnS5u/FQX2
-	f8asnBRCKeqFLHty9NTovnu5A4qodPoqGuOpQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NSGMlX3E8V2bZRbKlp4SDl7Zu72kRQWZ
-	R4ILJSM9+M9fOQ0ebztcwVP1BkM5TCujbpA5rubobL10YNr4vxqGCMHSrRYLONgi
-	m3frp2BOMG60cVC5Mhbrty+jjf4wQ/kgLNVzqnUB1TUAkaqnsiyjouDIKqAW1jlN
-	HAyJSx2jhrk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A92A8A1E6;
-	Wed, 20 Mar 2013 14:46:18 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 29C8DA1E4; Wed, 20 Mar 2013
- 14:46:18 -0400 (EDT)
-In-Reply-To: <1363803172.6289.49.camel@test.quest-ce.net> (Yann Droneaud's
- message of "Wed, 20 Mar 2013 19:12:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 73630D04-918E-11E2-9939-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932773Ab3CTSqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 14:46:50 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60379 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751208Ab3CTSqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 14:46:49 -0400
+Received: (qmail 11325 invoked by uid 107); 20 Mar 2013 18:48:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Mar 2013 14:48:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Mar 2013 14:46:43 -0400
+Content-Disposition: inline
+In-Reply-To: <20130320183641.GB32426@paksenarrion.iveqy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218651>
 
-Yann Droneaud <yann@droneaud.fr> writes:
+On Wed, Mar 20, 2013 at 07:36:41PM +0100, Fredrik Gustafsson wrote:
 
-> But but do not take those remarks as a feature request.
-> I was just asking for clarification/comment on the behavior difference
-> between merging tag/tag object-id.
+> > Yes, I would certainly like my git startup time to be improved.  But I
+> > don't want to trade my hard drive's life for it.
+> 
+> Does this really increase disk-reads? The fs-cache would make sure that
+> the disk reads is almost the same, we only do them before we usually do
+> them.
 
-If you are asking why things are as they are, the answer is simply
-because "git merge $(git rev-parse v1.2.3)" was not even considered
-while adding the support to pull signed tags.
+It shouldn't. But if you are running "stat" on every file in the repo
+for each prompt, that is going to take measurable CPU time for large
+repos (e.g., WebKit).
 
-We did find the use case for "git merge v1.2.3" interesting and
-important enough to give it a proper support with defined semantics.
-"git merge $(git rev-parse v1.2.3)" may behave differently but it
-was not because we found the use case for it important and designed
-a behaviour that is different from merging the tag by name that
-suits that use case.
+> > What I meant by "first time" is "chpwd() into the git repository, not
+> > further chpwd()s when already inside the git repository".
+> 
+> That's a good point. I'm not sure how to solve that though. Because it's
+> not a fact that you always go to the root git-dir first.
+> 
+> The only way I see this is with a lock-file that's kept and we only run
+> git status every 5 minutes when doing something inside a work dir. That
+> would add a lot of meta-data (the lock files), to store. (I hope I
+> successfully explained that).
 
-It is just we didn't even think giving the bare object name to name
-an annotated or signed tag on the command line is interesting, and
-the command does whatever the implementation happens to do to such
-an input.
+How about something like:
 
-I think I sent out a "how about this" patch.  Have you tried it?
+  __git_primed_toplevel=
+  __git_prime_dir() {
+          local toplevel=`git rev-parse --show-toplevel 2>/dev/null`
+          if test -n "$toplevel" &&
+             test "$toplevel" != "$git_primed_toplevel"; then
+                  git status >/dev/null 2>&1
+                  git_primed_toplevel=$toplevel
+          fi
+  }
+
+that would prime the whole repo the first time you enter it, but otherwise do
+nothing (and you could run it from each prompt). If you switched back and forth
+between two repos a lot, you would end up priming them both a lot, but that is
+not that common a mode of operation (and you could keep an list of recently
+primed repos instead of a single one, if you really wanted to deal with that).
+You would also prime twice if you used two different terminals, but that's OK.
+The subsequent ones are much faster due to disk cache, so this is really just
+about not paying the extra stat penalty on _every_ prompt.
+
+-Peff
