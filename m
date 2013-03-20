@@ -1,97 +1,67 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [RFC] Add posibility to preload stat information.
-Date: Wed, 20 Mar 2013 19:40:32 +0100
-Message-ID: <20130320184032.GC32426@paksenarrion.iveqy.com>
-References: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
- <20130320164806.GA10752@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t: don't redefine test_config() in various places
+Date: Wed, 20 Mar 2013 11:40:21 -0700
+Message-ID: <20130320184021.GN3655@google.com>
+References: <7vk3p3jrrw.fsf@alter.siamese.dyndns.org>
+ <1363767703-12936-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, spearce@spearce.org,
-	git@vger.kernel.org, pclouds@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 20 19:39:59 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 20 19:41:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UINva-0000Ns-G6
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 19:39:58 +0100
+	id 1UINwa-0001C4-HL
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 19:41:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932434Ab3CTSje convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Mar 2013 14:39:34 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:60460 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755882Ab3CTSjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 14:39:16 -0400
-Received: by mail-la0-f52.google.com with SMTP id fs12so3510442lab.25
-        for <git@vger.kernel.org>; Wed, 20 Mar 2013 11:39:15 -0700 (PDT)
+	id S1757570Ab3CTSk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 14:40:28 -0400
+Received: from mail-da0-f44.google.com ([209.85.210.44]:48261 "EHLO
+	mail-da0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754263Ab3CTSk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 14:40:26 -0400
+Received: by mail-da0-f44.google.com with SMTP id z20so1145890dae.31
+        for <git@vger.kernel.org>; Wed, 20 Mar 2013 11:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:sender:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=ZE/nmVLiU53CgaNDb2Lrezljn4VIvtdz7Qzg9lKstj4=;
-        b=Nbkdd1adED323P6lPbg1IhHxF/4bM+Rh+lHd5pzYESh278//5kSapJE1XWfxd9WAOR
-         2vSypgnhPJUZatkglG9FPVrn6iowf1kBRKew2EMgpeaMa3ORxfP8rWJ61Fx8F3y+dS4k
-         hAmYg6AAVQ1hUdFaIWtgiSxIFV4nGBisb0MojnP+NE68zGCAq5gfLrpzu/wi0+HKDNeD
-         MyelnnR72KVBXyfBkVUvWBRHi0fjLznIcyjjaGojzVBqP+cuuCdM1IOeOw7T7kbkCBLN
-         LpyOs2V0HVpq0TS5MdxcVZ19WHeRsCC1tfGEqRo0M25UOwa5Vc8zggSziLtUZH38PnIO
-         7mgQ==
-X-Received: by 10.152.111.5 with SMTP id ie5mr6057074lab.31.1363804755301;
-        Wed, 20 Mar 2013 11:39:15 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPS id fm8sm929763lbb.17.2013.03.20.11.39.14
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 20 Mar 2013 11:39:14 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UINw8-0001ZC-SM; Wed, 20 Mar 2013 19:40:32 +0100
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=OAhDf3PGjhlk6yc+yiZDAV20ucH1Yp3SK/AeIj1vEAI=;
+        b=fIzMMDZ3+SMksi0G3ewQmWHzGrtLIktdGdTrJsgie7MpCL9Aqp7RTL5E2IWyyODgyW
+         tlQ4OCl8474MiwBOva1vOP6HLcr0t5XM8MHweWDhewUbJ3jL8EQesxmVQ0RCyVqnL+3m
+         0sb9uX+XINJmRtxMtg8tsqe+Qc32Uk80qgtD5kmc+aRiB2CiJJOeGgjMmv5iSMtvVLwo
+         WofqsXx2w/4U8EKZLEk0HoymjCQglj23z1RP50UecdMcC4GUseRTQdhtDywT0Kx4nX2w
+         eNwlzDi80Z0mBiGNKJou5BLOLf0sIOgB0R3DBzp4R6rSlDTlHqPhaNmErSfUeee53/PT
+         EbAw==
+X-Received: by 10.66.121.133 with SMTP id lk5mr10670166pab.171.1363804825925;
+        Wed, 20 Mar 2013 11:40:25 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id dl1sm2982603pbc.17.2013.03.20.11.40.23
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 20 Mar 2013 11:40:24 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20130320164806.GA10752@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <1363767703-12936-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218648>
 
-On Wed, Mar 20, 2013 at 12:48:06PM -0400, Jeff King wrote:
-> Kind of gross, but I guess it is useful to some people.
+Ramkumar Ramachandra wrote:
 
-Yes it is. The questions is if it's gross enough to never
-leave my computer, or if someone else can find this useful.
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  Thanks, Junio.
+>
+>  t/t4018-diff-funcname.sh | 5 -----
+>  t/t7810-grep.sh          | 5 -----
+>  t/t7811-grep-open.sh     | 5 -----
+>  3 files changed, 15 deletions(-)
 
->=20
-> > +__git_recursive_stat ()
-> > +{
-> > +	if test ! -e /tmp/gitbash.lock
-> > +	then
-> > +		touch /tmp/gitbash.lock
->=20
-> This is a tmp-race security hole. E.g., do:
->=20
->   ln -s /etc/nologin /tmp/gitbash.lock
->=20
-> as a user; when root runs __git_recursive_stat, it will create
-> /etc/nologin. It's not quite as bad as some other holes, because we o=
-nly
-> "touch" the file, not overwrite its contents, but you can see that it=
-'s
-> possible to do some mischief.
->=20
-> Should this maybe just be ~/.gitbash.lock or something?
-
-Thank you! I totally missed that.
-
-I guess a new solution would be to keep an access time-stamp in each
-repository and with certain intervall run git status on that repository=
-=2E
-
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+Yeah, that looks like all of them.  FWIW,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
