@@ -1,76 +1,87 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] index-pack: always zero-initialize object_entry list
-Date: Wed, 20 Mar 2013 15:14:22 -0400
-Message-ID: <CAPig+cSqnXeqfYnAm1Nct6UF4DcpP2hxzCUeTytrNENvpuBk2A@mail.gmail.com>
-References: <20130319102422.GB6341@sigill.intra.peff.net>
-	<20130319105852.GA15182@sigill.intra.peff.net>
-	<8738vr5rqh.fsf@pctrast.inf.ethz.ch>
-	<20130319154353.GA10010@sigill.intra.peff.net>
-	<20130319155244.GA16532@sigill.intra.peff.net>
-	<20130319161722.GA17445@sigill.intra.peff.net>
-	<CAPig+cQobu8GoqSNjVw8498e8D3vEJKU+UVUqkYbwypLyPTNhQ@mail.gmail.com>
-	<20130320191327.GA31383@sigill.intra.peff.net>
+Subject: Re: [PATCH v2 06/45] Add parse_pathspec() that converts cmdline args
+ to struct pathspec
+Date: Wed, 20 Mar 2013 15:40:41 -0400
+Message-ID: <CAPig+cSkxq=3dhgeYNKa9VjqMZkxrpLZEqKP63mAwjziz6m-LA@mail.gmail.com>
+References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
+	<1363781779-14947-1-git-send-email-pclouds@gmail.com>
+	<1363781779-14947-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Zager <szager@google.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 20 20:14:53 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 20 20:41:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIOTM-0005dI-2e
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 20:14:52 +0100
+	id 1UIOsu-0005Id-Mm
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 20:41:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757520Ab3CTTOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 15:14:25 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:55891 "EHLO
+	id S1756178Ab3CTTkr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Mar 2013 15:40:47 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:51719 "EHLO
 	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757254Ab3CTTOY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 15:14:24 -0400
-Received: by mail-la0-f42.google.com with SMTP id fe20so3664461lab.15
-        for <git@vger.kernel.org>; Wed, 20 Mar 2013 12:14:22 -0700 (PDT)
+	with ESMTP id S1752466Ab3CTTkn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Mar 2013 15:40:43 -0400
+Received: by mail-la0-f42.google.com with SMTP id fe20so3703592lab.29
+        for <git@vger.kernel.org>; Wed, 20 Mar 2013 12:40:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=Zkzq3TB8Fns/bxF/d5EWZaGqr6JT0sMDcW1Cgss0iGc=;
-        b=PuelEHHpeONWe4Qs7H+jDx1uDRGmpw7Zj33nadb5EuheRek95bY+1rz4P4u9nr7kto
-         zuCoFy+1T8TRIhTgAhvtkmKA2U+uLAawQGq+IHVBu7hOwLYvrTO0H/YdZE3/DghMllpO
-         C9hPhm+ibanPvLNz4RM6W/gg+s9/CbLFjpCvq5wORcy1BShN8dYZG4Z6ASMHae/b77bn
-         FfDlWDyDIVbkx3ve8wrHXeWAnIIvM5wG7iw+G07qLfygr7/quE+Bcw5VdONMg0bxZv6e
-         azsKde7vC2cdSZLBaYGv6EsZqqST23EFBW6m0A5lxPSoDtEUOHrqRtwQnnhF4+hgfb3b
-         Ok8Q==
-X-Received: by 10.112.162.65 with SMTP id xy1mr9886710lbb.105.1363806862475;
- Wed, 20 Mar 2013 12:14:22 -0700 (PDT)
-Received: by 10.114.1.43 with HTTP; Wed, 20 Mar 2013 12:14:22 -0700 (PDT)
-In-Reply-To: <20130320191327.GA31383@sigill.intra.peff.net>
-X-Google-Sender-Auth: GyJkgHQq5wJRCg6ZS_-HQc5q71A
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=c/5rnEN6vv1080jTpZ+SSIRo4N9l1EgCZQaKG7dhzJU=;
+        b=LQWwbU6MkX+rbdUjWXytJGOJdBjR6USNJyMzUTUExX2N+W38g6rTxQIxY8np0/2egi
+         I1KaDFqQxVYjzAxSeDYRu770q18PfFpoorZXeaouqwf8wnaDGyqZ/iqsI/KvwASetqIO
+         ZJy2X6LV3VLOcWLgrQXh4i4QSRzPVEhbeFP6Jnrhz/jbFQHXRvITIexzqF0oZTkXWMA7
+         xP7XGa8I1pcTkTxF22nERIi7jpjiyVjOfelo3rBjJ0LvK1/2tlp9h6/73j+O0tKUiAXp
+         U1MDHnsHDmGFqSh6GX86f1nXyjgNvi+ExYP3irFAH7SCjUdKi4Yhk8vrtve9vf3zf+mW
+         wblQ==
+X-Received: by 10.152.104.199 with SMTP id gg7mr6136690lab.14.1363808441560;
+ Wed, 20 Mar 2013 12:40:41 -0700 (PDT)
+Received: by 10.114.1.43 with HTTP; Wed, 20 Mar 2013 12:40:41 -0700 (PDT)
+In-Reply-To: <1363781779-14947-2-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: ZS9GVvTkcpXJf_eeKMQ4yTc5Dx4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218663>
 
-On Wed, Mar 20, 2013 at 3:13 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Mar 20, 2013 at 03:12:07PM -0400, Eric Sunshine wrote:
->
->> On Tue, Mar 19, 2013 at 12:17 PM, Jeff King <peff@peff.net> wrote:
->> > To ensure that all depths start at 0, that commit changed
->> > calls to xmalloc the object_entry list into calls to
->> > xcalloc.  However, it forgot that we grow the list with
->> > xrealloc later. These extra entries are used when we add an
->> > object from elsewhere pack to complete a thin pack. If we
->>
->> s/elsewhere pack/pack/
->
-> I think it is supposed to be s/elsewhere pack/elsewhere/.
+On Wed, Mar 20, 2013 at 8:16 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> +static void NORETURN unsupported_magic(const char *pattern,
+> +                                      unsigned magic,
+> +                                      unsigned short_magic)
+> +{
+> +       struct strbuf sb =3D STRBUF_INIT;
+> +       int i, n;
+> +       for (n =3D i =3D 0; i < ARRAY_SIZE(pathspec_magic); i++) {
+> +               const struct pathspec_magic *m =3D pathspec_magic + i=
+;
+> +               if (!(magic & m->bit))
+> +                       continue;
+> +               if (sb.len)
+> +                       strbuf_addstr(&sb, " ");
+> +               if (short_magic & m->bit)
+> +                       strbuf_addf(&sb, "'%c'", m->mnemonic);
+> +               else
+> +                       strbuf_addf(&sb, "'%s'", m->name);
+> +               n++;
+> +       }
+> +       /*
+> +        * We may want to substitue "this command" with a command
 
-Sorry, yes.
+s/substitue/substitute/
 
--- ES
+> +        * name. E.g. when add--interactive dies when running
+> +        * "checkout -p"
+> +        */
+> +       die(_("%s: pathspec magic not supported by this command: %s")=
+,
+> +           pattern, sb.buf);
+> +}
