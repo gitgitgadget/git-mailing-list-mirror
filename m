@@ -1,55 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [Notice] The tip of 'next' rewound, 1st wave of topics graduated
-Date: Tue, 19 Mar 2013 16:31:37 -0700
-Message-ID: <7vr4jbge5i.fsf@alter.siamese.dyndns.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: regression in multi-threaded git-pack-index
+Date: Wed, 20 Mar 2013 08:17:18 +0700
+Message-ID: <CACsJy8ARYEtU4_6zJQXGDyE4FunbV3Gk0BocNW3cZtV-uSVFOg@mail.gmail.com>
+References: <20130315224240.50AA340839@wince.sfo.corp.google.com>
+ <87hak74cse.fsf@pctrast.inf.ethz.ch> <87620n4clo.fsf@pctrast.inf.ethz.ch> <87obef2wut.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 20 00:32:13 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Zager <szager@google.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Mar 20 02:18:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UI60o-00028Z-UK
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 00:32:11 +0100
+	id 1UI7fW-0003uv-8F
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 02:18:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934090Ab3CSXbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 19:31:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47771 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755048Ab3CSXbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 19:31:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7C066760;
-	Tue, 19 Mar 2013 19:31:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=F
-	6ZM29Y2Sy+BRpZMTepqwUVHo1Y=; b=cZXyDe3rn+SSG3JwHCEmF99Q0mteFfq+R
-	Cl1iIjXHtcxt3knBUj54d9dyOysF9WAqZHVkVjCJm+ynintU1BPIFJf/s7ThaXOv
-	oOi7/90YLQ30js2Tdz9NjHRB0+hJ4ViI1Os3qML+lHCHo4gIhAS8c5doOVH4OhYB
-	Nbs5zBjUPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Xgp
-	w4HuIwa8OIjDC0/nQhnx6OKOgS+Bt44OEUpB7eWWZl2ZqgEBJAaq43jDLPdlpCJf
-	AdWgAA7nkmrqELunkp2EtdL/mFG8VLn7L+3x7ApRAvv7mTV6eRRssAXXxZ7du1mX
-	BdPMmAVJ+BLlfnG9JoMuu6kzfftdIYkn3z1oZ0oQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBC52675F;
-	Tue, 19 Mar 2013 19:31:39 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59075675E; Tue, 19 Mar 2013
- 19:31:39 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 25FFF938-90ED-11E2-87F1-4AAA2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932430Ab3CTBRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 21:17:51 -0400
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:38750 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932137Ab3CTBRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 21:17:50 -0400
+Received: by mail-oa0-f45.google.com with SMTP id o6so1253320oag.32
+        for <git@vger.kernel.org>; Tue, 19 Mar 2013 18:17:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=8Ygod9qc7IHkLRJCpAszEBwwXhjOENxpo5p5yx2Deow=;
+        b=bV3jzkNRMwhI9hlLxZFBzTKp+9K/GgDJqZqwctiYOHPIuu+nBwMBQvNpSWQMzCYFXz
+         naxcHSRcufqG2lw8tf5gA/7KN7ci7KFCZ5lxv8DzMrO6zM9PaBS6kII+aP2TGX0wzZpl
+         oFis+uRtRNjGM2BsqOJJnd+slz7zE/fhEzcpUQdP+fr2anmDveH1Ma0RFFFYaB6kRI9U
+         c0i9Y6CvSHBJw9dMz8cZ87hl6GU9N41g1oBoYLoMfTOkYTFb7Be/+hPATyua7L/MFBK0
+         GEBP3DCf1JZMrSAsY3jGZ16/PFW+x4wjpFwfREmO54dTpEe7pTUzW+Y1+/PBLjWXxndb
+         CGlQ==
+X-Received: by 10.60.6.199 with SMTP id d7mr2841369oea.137.1363742269662; Tue,
+ 19 Mar 2013 18:17:49 -0700 (PDT)
+Received: by 10.76.27.200 with HTTP; Tue, 19 Mar 2013 18:17:18 -0700 (PDT)
+In-Reply-To: <87obef2wut.fsf@pctrast.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218568>
 
-The subject says it all.  I didn't get around to Jonathan's
-add-u/-A, Thomas's packed_object_info() work, .gitattributes
-regression that made plain pattern not to match directories, or
-longstanding apply --whitespace=fix breakage today.
+On Tue, Mar 19, 2013 at 11:11 PM, Thomas Rast <trast@student.ethz.ch> wrote:
+> Actually scratch that again.  It *is* a stack overflow, except that this
+> is a thread stack, for which the OS X defaults are 512kB apparently, as
+> opposed to 2MB on linux.
+
+Thanks. I was scratching my head last night wondering if there was
+unprotected access to the object database and probably would have
+continued this morning.
+-- 
+Duy
