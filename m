@@ -1,87 +1,95 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 06/45] Add parse_pathspec() that converts cmdline args
- to struct pathspec
-Date: Wed, 20 Mar 2013 15:40:41 -0400
-Message-ID: <CAPig+cSkxq=3dhgeYNKa9VjqMZkxrpLZEqKP63mAwjziz6m-LA@mail.gmail.com>
-References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
-	<1363781779-14947-1-git-send-email-pclouds@gmail.com>
-	<1363781779-14947-2-git-send-email-pclouds@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 4/6] remote.c: introduce a way to have different remotes
+ for fetch/push
+Date: Thu, 21 Mar 2013 01:13:58 +0530
+Message-ID: <CALkWK0=29fu92A8_XQCmW86U2y-ktNAOy4qMmJAhyYHo8FgX1Q@mail.gmail.com>
+References: <1363783501-27981-1-git-send-email-artagnon@gmail.com>
+ <1363783501-27981-5-git-send-email-artagnon@gmail.com> <7vfvzpevwf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 20 20:41:18 2013
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 20 20:44:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIOsu-0005Id-Mm
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 20:41:17 +0100
+	id 1UIOwI-0007P4-Iu
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 20:44:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756178Ab3CTTkr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Mar 2013 15:40:47 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:51719 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752466Ab3CTTkn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Mar 2013 15:40:43 -0400
-Received: by mail-la0-f42.google.com with SMTP id fe20so3703592lab.29
-        for <git@vger.kernel.org>; Wed, 20 Mar 2013 12:40:41 -0700 (PDT)
+	id S1756606Ab3CTToT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 15:44:19 -0400
+Received: from mail-ia0-f182.google.com ([209.85.210.182]:60145 "EHLO
+	mail-ia0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751120Ab3CTToS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 15:44:18 -0400
+Received: by mail-ia0-f182.google.com with SMTP id u8so1737431iag.41
+        for <git@vger.kernel.org>; Wed, 20 Mar 2013 12:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=c/5rnEN6vv1080jTpZ+SSIRo4N9l1EgCZQaKG7dhzJU=;
-        b=LQWwbU6MkX+rbdUjWXytJGOJdBjR6USNJyMzUTUExX2N+W38g6rTxQIxY8np0/2egi
-         I1KaDFqQxVYjzAxSeDYRu770q18PfFpoorZXeaouqwf8wnaDGyqZ/iqsI/KvwASetqIO
-         ZJy2X6LV3VLOcWLgrQXh4i4QSRzPVEhbeFP6Jnrhz/jbFQHXRvITIexzqF0oZTkXWMA7
-         xP7XGa8I1pcTkTxF22nERIi7jpjiyVjOfelo3rBjJ0LvK1/2tlp9h6/73j+O0tKUiAXp
-         U1MDHnsHDmGFqSh6GX86f1nXyjgNvi+ExYP3irFAH7SCjUdKi4Yhk8vrtve9vf3zf+mW
-         wblQ==
-X-Received: by 10.152.104.199 with SMTP id gg7mr6136690lab.14.1363808441560;
- Wed, 20 Mar 2013 12:40:41 -0700 (PDT)
-Received: by 10.114.1.43 with HTTP; Wed, 20 Mar 2013 12:40:41 -0700 (PDT)
-In-Reply-To: <1363781779-14947-2-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: ZS9GVvTkcpXJf_eeKMQ4yTc5Dx4
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=EikWFbHI3/9XDvWadKdV7Ulwc86494sJLTRAYmR4Ngo=;
+        b=th6+AJH8ENBJIttiEq7POQgJaaWum6nLGj9s+Uoihaw7VgzsIrmAiQPsA9404nVaXo
+         S06a7AcbhN3H7lu5btVNxSr4aikZsf4QoNA2IU5/Cgh2jo6oOG5WlmZZqldqceUFv+eO
+         yfMjTu+PzKhBa/9C342AGosZK9KtshHkKqv3l/vu7zZnhPkxZ8q8FQc+wsbNW4suOZLO
+         9azYO7JAptN3kAw63CbOJxh3obBExn/269lxGukaC0PHQoiH4tdDvoL7TI/AUCLFOLhi
+         MOG+Eo2Gb6DVAOAbqExSQS+QQPTo9soqum2ojKFoheO7FGBTejwm+MHSq5uMhJ8XeZRx
+         O9zA==
+X-Received: by 10.50.50.71 with SMTP id a7mr245646igo.14.1363808658471; Wed,
+ 20 Mar 2013 12:44:18 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Wed, 20 Mar 2013 12:43:58 -0700 (PDT)
+In-Reply-To: <7vfvzpevwf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218664>
 
-On Wed, Mar 20, 2013 at 8:16 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> +static void NORETURN unsupported_magic(const char *pattern,
-> +                                      unsigned magic,
-> +                                      unsigned short_magic)
-> +{
-> +       struct strbuf sb =3D STRBUF_INIT;
-> +       int i, n;
-> +       for (n =3D i =3D 0; i < ARRAY_SIZE(pathspec_magic); i++) {
-> +               const struct pathspec_magic *m =3D pathspec_magic + i=
-;
-> +               if (!(magic & m->bit))
-> +                       continue;
-> +               if (sb.len)
-> +                       strbuf_addstr(&sb, " ");
-> +               if (short_magic & m->bit)
-> +                       strbuf_addf(&sb, "'%c'", m->mnemonic);
-> +               else
-> +                       strbuf_addf(&sb, "'%s'", m->name);
-> +               n++;
-> +       }
-> +       /*
-> +        * We may want to substitue "this command" with a command
+Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>>       if (name)
+>>               name_given = 1;
+>>       else {
+>> -             name = default_remote_name;
+>> -             name_given = explicit_default_remote_name;
+>> +             if (pushremote_name) {
+>> +                     name = pushremote_name;
+>> +                     name_given = 1;
+>> +             } else {
+>> +                     name = default_remote_name;
+>> +                     name_given = explicit_default_remote_name;
+>> +             }
+>>       }
+>
+> The code to read branch.$name.remote configuration flips
+> explicit_default_remote_name to one when it is used to set the
+> default_remote_name, and that controls the value of name_given in
+> this codepath.  At this point in the series, you do not have a
+> corresponding branch.$name.pushremote, but your [6/6] does not seem
+> to do the same.
+>
+> Why isn't it necessary to add explicit_default_pushremote_name and
+> do the same here in patch [6/6]?
 
-s/substitue/substitute/
+Sorry, I'm still trying to understand your comment.  Okay, yes:
+branch.$name.remote does flip explicit_default_remote_name, because we
+need to know if the default remote name was explicitly given.  Wait,
+how is explicit_default_remote_name used to set default_remote_name?
+Don't you mean name_given?  It controls name_give, yes.  At this point
+I don't have .pushremote, yes: I'm setting up for [5/6] and [6/6].  My
+[6/6] doesn't seem to do the "same"?  The same thing as .remote?  Are
+you asking why .pushremote doesn't flip explicit_default_remote_name
+like .remote does?  Because .pushremote can only ever be specified
+explicitly: otherwise, it falls back to the .remote logic.
 
-> +        * name. E.g. when add--interactive dies when running
-> +        * "checkout -p"
-> +        */
-> +       die(_("%s: pathspec magic not supported by this command: %s")=
-,
-> +           pattern, sb.buf);
-> +}
+Okay, next paragraph.  Why isn't it necessary to add
+explicit_default_pushremote_name?  Like I said, .pushremote can only
+ever be specified explicitly.  There is no implicit fallback (like
+"origin"): it just falls back to the .remote codepath, if not
+explicitly specified.  In other words, it's just a small override on
+the .remote codepath.
