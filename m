@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 14/45] Guard against new pathspec magic in pathspec matching code
-Date: Wed, 20 Mar 2013 19:16:17 +0700
-Message-ID: <1363781779-14947-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 27/45] Convert run_add_interactive to use struct pathspec
+Date: Wed, 20 Mar 2013 19:16:18 +0700
+Message-ID: <1363781779-14947-6-git-send-email-pclouds@gmail.com>
 References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
  <1363781779-14947-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,185 +12,200 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 20 13:17:21 2013
+X-From: git-owner@vger.kernel.org Wed Mar 20 13:17:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIHxH-0003Sm-Ux
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 13:17:20 +0100
+	id 1UIHxO-0003WC-L2
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 13:17:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933698Ab3CTMQw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Mar 2013 08:16:52 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:38421 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932159Ab3CTMQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 08:16:51 -0400
-Received: by mail-pd0-f174.google.com with SMTP id 10so591192pdi.19
-        for <git@vger.kernel.org>; Wed, 20 Mar 2013 05:16:50 -0700 (PDT)
+	id S933813Ab3CTMQ6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Mar 2013 08:16:58 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:33046 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933759Ab3CTMQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 08:16:57 -0400
+Received: by mail-pb0-f41.google.com with SMTP id um15so1319340pbc.14
+        for <git@vger.kernel.org>; Wed, 20 Mar 2013 05:16:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=3jTuTu7VN6X5s7hXaXRwE8Keb7M+Njvrk0wGo+9FjOQ=;
-        b=TqdVl0NogsAQiKfAPhK0RG7d+ir4uAwFrPyuo+M+XSBwrp4L/fFDDhW+YD7YqXbmJ1
-         J543yTENAfB/+Kr5M7nMjnXhz4F8IdDU/X7oV0zsJ9/t4u5PZNDyORB5V1IxSsjJy0Tu
-         ZEsA6vabHWRMku7H1fLhQSOubJtQj+zB+LcQKmqNka9RPXPEo6O0GK35wEmn62GqdOa+
-         5CYH2PmdXdaffgTniwJqOPbrIBRSev78W1Q5+u2HHoc4Vxk3fmO/hD7bJq7ueFRBY/kE
-         jIrgJaf4AUd2/8z8wULS7vNQ+487MjUcgUpVjqxfGLyyRT8PxhTRWjzXJsSpjvEc0FoB
-         Ikpg==
-X-Received: by 10.68.237.100 with SMTP id vb4mr8639763pbc.202.1363781810845;
-        Wed, 20 Mar 2013 05:16:50 -0700 (PDT)
+        bh=5Y60wY+7Da5og3EA66Uou92OPtxRVQKPDJl6p9SYcC8=;
+        b=zy0q9n6pZX5JsnkwrEfDirGJBk1JLAUOzD6KXKbBzziZ38mXAS5BxZ3yK5z+AEjFzk
+         mw7PqRYL8iFJWUNVddFmj3RMOkhiSEdu/ZuvAAGbGKYAo1+Z/XgeU5XjvmCDwFlWls5v
+         ka3gEhrdhhPXNtCEaxrjuSE9nF1AnGtwcOXsB6jN7FVWRbzVbR3lB9u7LSvAxeiYrQ/x
+         xsZiD37Yr+5mp2mpUQkfLc2OgFSbY0YdJ5J895/3silJqIxWAVrES0pAZ/j1H/6P/s/q
+         K3M2xMyXY/Wonzzp5NocZ/1ETKMNyLv9SpNHR3W90Niwsna1nTWU/tzOtUUMXYMdjRf1
+         Iv7g==
+X-Received: by 10.68.136.138 with SMTP id qa10mr8617657pbb.20.1363781817369;
+        Wed, 20 Mar 2013 05:16:57 -0700 (PDT)
 Received: from lanh ([115.74.40.216])
-        by mx.google.com with ESMTPS id pv7sm1933768pbb.33.2013.03.20.05.16.47
+        by mx.google.com with ESMTPS id wi7sm2073398pac.9.2013.03.20.05.16.54
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 20 Mar 2013 05:16:50 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 20 Mar 2013 19:16:46 +0700
+        Wed, 20 Mar 2013 05:16:56 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 20 Mar 2013 19:16:52 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1363781779-14947-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218593>
 
-GUARD_PATHSPEC() marks pathspec-sensitive code, basically all those
-that touch anything in 'struct pathspec' except fields "nr" and
-"original". GUARD_PATHSPEC() is not supposed to fail. It's mainly to
-help the designers to catch unsupported codepaths.
+This passes the pathspec, more or less unmodified, to
+git-add--interactive. The command itself does not process pathspec. It
+simply passes the pathspec to other builtin commands. So if all those
+commands support pathspec, we're good.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/technical/api-setup.txt | 19 +++++++++++++++++++
- builtin/diff.c                        |  2 ++
- dir.c                                 |  2 ++
- pathspec.h                            |  7 +++++++
- tree-diff.c                           | 19 +++++++++++++++++++
- tree-walk.c                           |  2 ++
- 6 files changed, 51 insertions(+)
+ builtin/add.c      | 26 ++++++++++----------------
+ builtin/checkout.c |  9 ++++-----
+ builtin/reset.c    |  8 ++++----
+ commit.h           |  2 +-
+ 4 files changed, 19 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/technical/api-setup.txt b/Documentation/tech=
-nical/api-setup.txt
-index 59a947e..f62528e 100644
---- a/Documentation/technical/api-setup.txt
-+++ b/Documentation/technical/api-setup.txt
-@@ -28,3 +28,22 @@ parse_pathspec(). This function takes several argume=
-nts:
- - prefix and args come from cmd_* functions
+diff --git a/builtin/add.c b/builtin/add.c
+index ec6fbe3..2b20d7d 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -139,16 +139,12 @@ static void refresh(int verbose, const char **pat=
+hspec)
+ }
 =20
- get_pathspec() is obsolete and should never be used in new code.
-+
-+parse_pathspec() helps catch unsupported features and reject it
-+politely. At a lower level, different pathspec-related functions may
-+not support the same set of features. Such pathspec-sensitive
-+functions are guarded with GUARD_PATHSPEC(), which will die in an
-+unfriendly way when an unsupported feature is requested.
-+
-+The command designers are supposed to make sure that GUARD_PATHSPEC()
-+never dies. They have to make sure all unsupported features are caught
-+by parse_pathspec(), not by GUARD_PATHSPEC. grepping GUARD_PATHSPEC()
-+should give the designers all pathspec-sensitive codepaths and what
-+features they support.
-+
-+A similar process is applied when a new pathspec magic is added. The
-+designer lifts the GUARD_PATHSPEC restriction in the functions that
-+support the new magic. At the same time (s)he has to make sure this
-+new feature will be caught at parse_pathspec() in commands that cannot
-+handle the new magic in some cases. grepping parse_pathspec() should
-+help.
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 8c2af6c..d237e0a 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -371,6 +371,8 @@ int cmd_diff(int argc, const char **argv, const cha=
-r *prefix)
- 		die(_("unhandled object '%s' given."), name);
- 	}
- 	if (rev.prune_data.nr) {
-+		/* builtin_diff_b_f() */
-+		GUARD_PATHSPEC(&rev.prune_data, PATHSPEC_FROMTOP);
- 		if (!path)
- 			path =3D rev.prune_data.items[0].match;
- 		paths +=3D rev.prune_data.nr;
-diff --git a/dir.c b/dir.c
-index 1e9db41..6094ba8 100644
---- a/dir.c
-+++ b/dir.c
-@@ -297,6 +297,8 @@ int match_pathspec_depth(const struct pathspec *ps,
+ int run_add_interactive(const char *revision, const char *patch_mode,
+-			const char **pathspec)
++			const struct pathspec *pathspec)
  {
- 	int i, retval =3D 0;
+-	int status, ac, pc =3D 0;
++	int status, ac, i;
+ 	const char **args;
 =20
-+	GUARD_PATHSPEC(ps, PATHSPEC_FROMTOP | PATHSPEC_MAXDEPTH);
-+
- 	if (!ps->nr) {
- 		if (!ps->recursive ||
- 		    !(ps->magic & PATHSPEC_MAXDEPTH) ||
-diff --git a/pathspec.h b/pathspec.h
-index 3ca6636..7068f7d 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -27,6 +27,13 @@ struct pathspec {
- 	} *items;
- };
+-	if (pathspec)
+-		while (pathspec[pc])
+-			pc++;
+-
+-	args =3D xcalloc(sizeof(const char *), (pc + 5));
++	args =3D xcalloc(sizeof(const char *), (pathspec->nr + 6));
+ 	ac =3D 0;
+ 	args[ac++] =3D "add--interactive";
+ 	if (patch_mode)
+@@ -156,11 +152,9 @@ int run_add_interactive(const char *revision, cons=
+t char *patch_mode,
+ 	if (revision)
+ 		args[ac++] =3D revision;
+ 	args[ac++] =3D "--";
+-	if (pc) {
+-		memcpy(&(args[ac]), pathspec, sizeof(const char *) * pc);
+-		ac +=3D pc;
+-	}
+-	args[ac] =3D NULL;
++	for (i =3D 0; i < pathspec->nr; i++)
++		/* pass original pathspec, to be re-parsed */
++		args[ac++] =3D pathspec->items[i].original;
 =20
-+#define GUARD_PATHSPEC(ps, mask) \
-+	do { \
-+		if ((ps)->magic & ~(mask))	       \
-+			die("BUG:%s:%d: unsupported magic %x",	\
-+			    __FILE__, __LINE__, (ps)->magic & ~(mask)); \
-+	} while (0)
-+
- /* parse_pathspec flags */
- #define PATHSPEC_PREFER_CWD (1<<0) /* No args means match cwd */
- #define PATHSPEC_PREFER_FULL (1<<1) /* No args means match everything =
-*/
-diff --git a/tree-diff.c b/tree-diff.c
-index 826512e..5a87614 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -198,6 +198,25 @@ static void try_to_follow_renames(struct tree_desc=
- *t1, struct tree_desc *t2, co
- 	const char *paths[1];
- 	int i;
+ 	status =3D run_command_v_opt(args, RUN_GIT_CMD);
+ 	free(args);
+@@ -175,17 +169,17 @@ int interactive_add(int argc, const char **argv, =
+const char *prefix, int patch)
+ 	 * git-add--interactive itself does not parse pathspec. It
+ 	 * simply passes the pathspec to other builtin commands. Let's
+ 	 * hope all of them support all magic, or we'll need to limit
+-	 * the magic here. There is still a problem with prefix. But
+-	 * that'll be worked on later on.
++	 * the magic here.
+ 	 */
+ 	parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP,
+ 		       PATHSPEC_PREFER_FULL |
+-		       PATHSPEC_SYMLINK_LEADING_PATH,
++		       PATHSPEC_SYMLINK_LEADING_PATH |
++		       PATHSPEC_PREFIX_ORIGIN,
+ 		       prefix, argv);
 =20
-+	/*
-+	 * follow-rename code is very specific, we need exactly one
-+	 * path. Magic that matches more than one path is not
-+	 * supported.
-+	 */
-+	GUARD_PATHSPEC(&opt->pathspec, PATHSPEC_FROMTOP);
-+#if 0
-+	/*
-+	 * We should reject wildcards as well. Unfortunately we
-+	 * haven't got a reliable way to detect that 'foo\*bar' in
-+	 * fact has no wildcards. nowildcard_len is merely a hint for
-+	 * optimization. Let it slip for now until wildmatch is taught
-+	 * about dry-run mode and returns wildcard info.
-+	 */
-+	if (opt->pathspec.has_wildcard)
-+		die("BUG:%s:%d: wildcards are not supported",
-+		    __FILE__, __LINE__);
-+#endif
-+
- 	/* Remove the file creation entry from the diff queue, and remember i=
-t */
- 	choice =3D q->queue[0];
- 	q->nr =3D 0;
-diff --git a/tree-walk.c b/tree-walk.c
-index d399ca9..37b157e 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -636,6 +636,8 @@ enum interesting tree_entry_interesting(const struc=
-t name_entry *entry,
- 	enum interesting never_interesting =3D ps->has_wildcard ?
- 		entry_not_interesting : all_entries_not_interesting;
+ 	return run_add_interactive(NULL,
+ 				   patch ? "--patch" : NULL,
+-				   pathspec.raw);
++				   &pathspec);
+ }
 =20
-+	GUARD_PATHSPEC(ps, PATHSPEC_FROMTOP | PATHSPEC_MAXDEPTH);
-+
- 	if (!ps->nr) {
- 		if (!ps->recursive ||
- 		    !(ps->magic & PATHSPEC_MAXDEPTH) ||
+ static int edit_patch(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 3c19cb4..2ddff95 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -256,7 +256,7 @@ static int checkout_paths(const struct checkout_opt=
+s *opts,
+=20
+ 	if (opts->patch_mode)
+ 		return run_add_interactive(revision, "--patch=3Dcheckout",
+-					   opts->pathspec.raw);
++					   &opts->pathspec);
+=20
+ 	lock_file =3D xcalloc(1, sizeof(struct lock_file));
+=20
+@@ -1115,10 +1115,9 @@ int cmd_checkout(int argc, const char **argv, co=
+nst char *prefix)
+ 		 * cannot handle. Magic mask is pretty safe to be
+ 		 * lifted for new magic when opts.patch_mode =3D=3D 0.
+ 		 */
+-		parse_pathspec(&opts.pathspec,
+-			       opts.patch_mode =3D=3D 0 ? 0 :
+-			       (PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP),
+-			       0, prefix, argv);
++		parse_pathspec(&opts.pathspec, 0,
++			       opts.patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0,
++			       prefix, argv);
+=20
+ 		if (!opts.pathspec.nr)
+ 			die(_("invalid path specification"));
+diff --git a/builtin/reset.c b/builtin/reset.c
+index da7282e..1c8e4a5 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -216,9 +216,9 @@ static void parse_args(struct pathspec *pathspec,
+ 		}
+ 	}
+ 	*rev_ret =3D rev;
+-	parse_pathspec(pathspec,
+-		       patch_mode ? PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP : 0,
+-		       PATHSPEC_PREFER_FULL,
++	parse_pathspec(pathspec, 0,
++		       PATHSPEC_PREFER_FULL |
++		       (patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0),
+ 		       prefix, argv);
+ }
+=20
+@@ -296,7 +296,7 @@ int cmd_reset(int argc, const char **argv, const ch=
+ar *prefix)
+ 	if (patch_mode) {
+ 		if (reset_type !=3D NONE)
+ 			die(_("--patch is incompatible with --{hard,mixed,soft}"));
+-		return run_add_interactive(sha1_to_hex(sha1), "--patch=3Dreset", pat=
+hspec.raw);
++		return run_add_interactive(sha1_to_hex(sha1), "--patch=3Dreset", &pa=
+thspec);
+ 	}
+=20
+ 	/* git reset tree [--] paths... can be used to
+diff --git a/commit.h b/commit.h
+index 4138bb4..9448fda 100644
+--- a/commit.h
++++ b/commit.h
+@@ -179,7 +179,7 @@ int in_merge_bases(struct commit *, struct commit *=
+);
+=20
+ extern int interactive_add(int argc, const char **argv, const char *pr=
+efix, int patch);
+ extern int run_add_interactive(const char *revision, const char *patch=
+_mode,
+-			       const char **pathspec);
++			       const struct pathspec *pathspec);
+=20
+ static inline int single_parent(struct commit *commit)
+ {
 --=20
 1.8.0.rc0.19.g7bbb31d
