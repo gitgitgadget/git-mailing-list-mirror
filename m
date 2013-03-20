@@ -1,98 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH jk/checkout-attribute-lookup] t2003: work around path
- mangling issue on Windows
-Date: Wed, 20 Mar 2013 10:10:10 -0700
-Message-ID: <7vli9if159.fsf@alter.siamese.dyndns.org>
-References: <514977BD.6060604@viscovery.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC] Add posibility to preload stat information.
+Date: Wed, 20 Mar 2013 22:45:22 +0530
+Message-ID: <CALkWK0=b80U5dxGMpwKwL+jFURisEuSapWuuNRFcP+5R2f3+GA@mail.gmail.com>
+References: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Mar 20 18:10:45 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: spearce@spearce.org, git@vger.kernel.org, pclouds@gmail.com,
+	Jeff King <peff@peff.net>
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Wed Mar 20 18:16:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIMXE-0008N5-GF
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 18:10:44 +0100
+	id 1UIMcV-0003W9-Q0
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 18:16:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757314Ab3CTRKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 13:10:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39417 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932082Ab3CTRKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 13:10:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A079AB4F;
-	Wed, 20 Mar 2013 13:10:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5rJ+tFz2oK0sfY2MTCkLcXFfXnI=; b=r8hZ5S
-	Sx+kXKQ/L8qTOKo9HTXXsBoV0cPGQOaZnUw/HLSMrDsk+1wjSZEpNbtdqopzt6tB
-	ZypXbrjUhXseNZwOd9pAaGQXhYJJCC9OA7whLnJow3Da5MmlqriNyd0zkg2PNwzc
-	x9cdhjoLcSa5C7kbANcWgl2gmn4wKGzbjplTs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=R3cx0U1QAcb6I0p5JKiHyaAj2KDhYkDa
-	4T4MRO70643PIowlrAK8Io62FcmGJhuQU+rbTCc3stMqO89ATnz8andIFgkWmBFc
-	VeH0RgmNcxA0hZbumkKyVeTKfDgdUR3hz50yyLQkBJtvwaNz3dHOP/T0ThEBeeYP
-	L269c2yWRog=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E3FAAB4D;
-	Wed, 20 Mar 2013 13:10:13 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D645AB4A; Wed, 20 Mar 2013
- 13:10:12 -0400 (EDT)
-In-Reply-To: <514977BD.6060604@viscovery.net> (Johannes Sixt's message of
- "Wed, 20 Mar 2013 09:47:57 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 06B57C30-9181-11E2-865C-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751566Ab3CTRPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 13:15:43 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:61730 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751207Ab3CTRPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 13:15:42 -0400
+Received: by mail-ie0-f173.google.com with SMTP id 9so2367461iec.32
+        for <git@vger.kernel.org>; Wed, 20 Mar 2013 10:15:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=6r4gmN/Ii6lshmZsFPPHx4GjJ6akqWuTvjqEUsNQ7Ao=;
+        b=TpoomYgq2wEQ90eL6JPectNbvvDlMMEEQgqyfl7L7Q8SGzrs0GSGpeIfoVTb7LU0KJ
+         HjOQG7aI8ZjWUVIYzIohagfg970rw3qVKPPQjGaZ8z2PjogBbw5S73IG4s5tqCDRn/CS
+         fvrk21Hb5FBtbQ/Awz0V5qGpnaPKaEcC6Kw46Fh97u/58TjI3Qz1+gmWSBJC1duJmKsB
+         hQ0g+YTd1lJm2i7Rqdth80+1z8ePn2JyalhzEmhdnOefmBrHLAlyE/ecWZS8QchdIvt9
+         tELfET55YrR2SvgH0bhkG3glloIRJPwmOhCBJuc2Ab2o3WeIDQoO+iCK9PJf5J2oXTdd
+         MXsg==
+X-Received: by 10.50.108.235 with SMTP id hn11mr4619319igb.107.1363799742140;
+ Wed, 20 Mar 2013 10:15:42 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Wed, 20 Mar 2013 10:15:22 -0700 (PDT)
+In-Reply-To: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218622>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Fredrik Gustafsson wrote:
+> When entering a git working dir, optionally run a forked process that
+> stat all files in the whole workdir and therefore loads stat information
+> to RAM which will speedup things like git status and so on.
 
-> From: Johannes Sixt <j6t@kdbg.org>
->
-> MSYS bash considers the part "/g" in the sed expression "s/./=/g" as an
-> absolute path after an assignment, and mangles it to a C:/something
-> string. Do not attract bash's attention by avoiding the equals sign.
+This is misleading.  You just execute the equivalent of `git status`
+everytime I request a prompt inside a git working directory.  And this
+is if I'm using __git_ps1() to augment my prompt, which I'm not- I use
+ZSH's vcs_info, which is arguably better.  Also, you forgot to say how
+to turn on the feature.
 
-If this breakage is about path mangling, I suspect it may be cleaner
-to work it around by not using / as the pattern separator, e.g.
+That said, this feature is extremely gross; it thrashes my filesystem
+and hard drive.  Modern software is written to minimize IO, not
+maximize it!  I'm completely against the inclusion of this patch.
 
-	sed -e s!.!=!g
-
-Or perhaps use SHELL_PATH to point at a more reasonable
-implementation of shell that does not have such an idiocy?
-
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  t/t2003-checkout-cache-mkdir.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t2003-checkout-cache-mkdir.sh b/t/t2003-checkout-cache-mkdir.sh
-> index 4c97468..ff163cf 100755
-> --- a/t/t2003-checkout-cache-mkdir.sh
-> +++ b/t/t2003-checkout-cache-mkdir.sh
-> @@ -94,14 +94,14 @@ test_expect_success 'apply filter from working tree .gitattributes with --prefix
->  	rm -fr path0 path1 path2 tmp* &&
->  	mkdir path1 &&
->  	mkdir tmp &&
-> -	git config filter.replace-all.smudge "sed -e s/./=/g" &&
-> +	git config filter.replace-all.smudge "sed -e s/./,/g" &&
->  	git config filter.replace-all.clean cat &&
->  	git config filter.replace-all.required true &&
->  	echo "file1 filter=replace-all" >path1/.gitattributes &&
->  	git checkout-index --prefix=tmp/ -f -a &&
->  	echo frotz >expected &&
->  	test_cmp expected tmp/path0 &&
-> -	echo ====== >expected &&
-> +	echo ,,,,,, >expected &&
->  	test_cmp expected tmp/path1/file1
->  '
+However, I would not mind a feature that runs `git status` the very
+first time I enter a git working directory: when I enter my clone of
+linux.git, it takes my first `git status` invocation a good ten
+seconds to complete, and we can fix this pretty easily.
