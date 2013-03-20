@@ -1,59 +1,55 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: regression in multi-threaded git-pack-index
-Date: Wed, 20 Mar 2013 08:17:18 +0700
-Message-ID: <CACsJy8ARYEtU4_6zJQXGDyE4FunbV3Gk0BocNW3cZtV-uSVFOg@mail.gmail.com>
-References: <20130315224240.50AA340839@wince.sfo.corp.google.com>
- <87hak74cse.fsf@pctrast.inf.ethz.ch> <87620n4clo.fsf@pctrast.inf.ethz.ch> <87obef2wut.fsf@pctrast.inf.ethz.ch>
+Subject: Re: [PATCH v1 39/45] parse_pathspec: make sure the prefix part is wildcard-free
+Date: Wed, 20 Mar 2013 08:32:00 +0700
+Message-ID: <CACsJy8DjrB45kDRiOs9b=VS5Z5=_sdh37Z3Q20sT6iDacLmM+Q@mail.gmail.com>
+References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
+ <1363327620-29017-40-git-send-email-pclouds@gmail.com> <7vli9ji6gu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Zager <szager@google.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Mar 20 02:18:19 2013
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 20 02:33:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UI7fW-0003uv-8F
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 02:18:18 +0100
+	id 1UI7tj-0003TQ-2k
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Mar 2013 02:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932430Ab3CTBRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Mar 2013 21:17:51 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:38750 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932137Ab3CTBRu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Mar 2013 21:17:50 -0400
-Received: by mail-oa0-f45.google.com with SMTP id o6so1253320oag.32
-        for <git@vger.kernel.org>; Tue, 19 Mar 2013 18:17:49 -0700 (PDT)
+	id S1754888Ab3CTBcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Mar 2013 21:32:32 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:44943 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753258Ab3CTBcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Mar 2013 21:32:31 -0400
+Received: by mail-ob0-f173.google.com with SMTP id dn14so1144025obc.18
+        for <git@vger.kernel.org>; Tue, 19 Mar 2013 18:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=8Ygod9qc7IHkLRJCpAszEBwwXhjOENxpo5p5yx2Deow=;
-        b=bV3jzkNRMwhI9hlLxZFBzTKp+9K/GgDJqZqwctiYOHPIuu+nBwMBQvNpSWQMzCYFXz
-         naxcHSRcufqG2lw8tf5gA/7KN7ci7KFCZ5lxv8DzMrO6zM9PaBS6kII+aP2TGX0wzZpl
-         oFis+uRtRNjGM2BsqOJJnd+slz7zE/fhEzcpUQdP+fr2anmDveH1Ma0RFFFYaB6kRI9U
-         c0i9Y6CvSHBJw9dMz8cZ87hl6GU9N41g1oBoYLoMfTOkYTFb7Be/+hPATyua7L/MFBK0
-         GEBP3DCf1JZMrSAsY3jGZ16/PFW+x4wjpFwfREmO54dTpEe7pTUzW+Y1+/PBLjWXxndb
-         CGlQ==
-X-Received: by 10.60.6.199 with SMTP id d7mr2841369oea.137.1363742269662; Tue,
- 19 Mar 2013 18:17:49 -0700 (PDT)
-Received: by 10.76.27.200 with HTTP; Tue, 19 Mar 2013 18:17:18 -0700 (PDT)
-In-Reply-To: <87obef2wut.fsf@pctrast.inf.ethz.ch>
+        bh=MrDFl4mSGwIsYCuWSyAFx+G9XtwEgsT+188o7Mb+v0U=;
+        b=fMw36/eMg2dYyaL3lyVAnJtlpOu2m6/GihfAjUSueImF1t8DzpEBhxIaOQAswRcJnz
+         jay2or0MMTa1ibN3Q8GTq14iYqF99P91XvynMl1cjUQlwCSEWxMcWQsE/I+ALEOjlj/+
+         dGOD4PuA6do1wuKHh7OTTATvuj9hkJfWLH7DCy8jL5HL5IfTtRXk2BeZyQ1iONkC4+YU
+         L2H5FVmbtmsmEhHypd6OkkAH5v3aO5F4lDldn6UYMdiUJzSDHDzKqTaH+mR1wDK5AY5N
+         CRgBTcVsiGPfHXEywksZ60n+5+MVw7w1KHfNeHe2Au7QeNacEECaOG5qPMgnR5EzPIYN
+         wJdw==
+X-Received: by 10.182.147.2 with SMTP id tg2mr2949929obb.47.1363743150837;
+ Tue, 19 Mar 2013 18:32:30 -0700 (PDT)
+Received: by 10.76.27.200 with HTTP; Tue, 19 Mar 2013 18:32:00 -0700 (PDT)
+In-Reply-To: <7vli9ji6gu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218569>
 
-On Tue, Mar 19, 2013 at 11:11 PM, Thomas Rast <trast@student.ethz.ch> wrote:
-> Actually scratch that again.  It *is* a stack overflow, except that this
-> is a thread stack, for which the OS X defaults are 512kB apparently, as
-> opposed to 2MB on linux.
+On Wed, Mar 20, 2013 at 1:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> This seems to break t7300-clean.sh #8
 
-Thanks. I was scratching my head last night wondering if there was
-unprotected access to the object database and probably would have
-continued this morning.
+Repeatedly? I saw some t7300-clean.sh failures when running tests in
+parallel, but never been able to reproduce it alone.
 -- 
 Duy
