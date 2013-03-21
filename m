@@ -1,99 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v9 3/5] Implement line-history search (git log -L)
-Date: Thu, 21 Mar 2013 12:05:37 -0700
-Message-ID: <7vr4j8a7zy.fsf@alter.siamese.dyndns.org>
-References: <cover.1363865444.git.trast@student.ethz.ch>
- <b8cabd5ca63a17577fca524891046e5a3d3dfc60.1363865444.git.trast@student.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/4] wt-status: fix possible use of uninitialized variable
+Date: Thu, 21 Mar 2013 12:49:50 -0700
+Message-ID: <20130321194949.GG29311@google.com>
+References: <20130321110338.GA18552@sigill.intra.peff.net>
+ <20130321110527.GA18819@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	"Will Palmer" <wmpalmer@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Mar 21 20:06:12 2013
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 21 20:51:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIkoS-0007kg-Tw
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 20:06:09 +0100
+	id 1UIlVr-0006X6-CW
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 20:50:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752081Ab3CUTFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 15:05:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48998 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751527Ab3CUTFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 15:05:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53684A5C0;
-	Thu, 21 Mar 2013 15:05:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GgfQ+7/9VyavU2/gI6iiQdU9gZA=; b=MvkFmH
-	V98gHL1+9vkBTB4tfv9wYSjIiqwlH6RBXEJLKhrZRbuakxJA6J7WqBLk092uHhV3
-	lfwHc8EjMH7gRB394dc8JbYg0MNnJfYhUP+9+5UoZxgwjKSZJsFwS/8Q/H6fdXXl
-	sbZebBEErAxgvGbD1phe9IR85d9GTplbOZtqI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VLzJQ+gYcB0KzXnnHn732xg7pOICgiOy
-	pUMhlzW3kRDX6T5gjD6rtpBdGBCdVK3QfsgdD/ro3m0eDEFuWIdHSwnLQncORK7i
-	FJidJAAAlpdEZSo3IyZbk2pn1C+djLuvl4hS/tFwEcGwQLCZfUmFTUwbVpulYOMM
-	vjNVwpXl0Rw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44A2BA5BE;
-	Thu, 21 Mar 2013 15:05:39 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9111EA5BA; Thu, 21 Mar 2013
- 15:05:38 -0400 (EDT)
-In-Reply-To: <b8cabd5ca63a17577fca524891046e5a3d3dfc60.1363865444.git.trast@student.ethz.ch> (Thomas Rast's message of "Thu, 21 Mar 2013 13:52:38 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 51777CA8-925A-11E2-B8A1-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752615Ab3CUTuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 15:50:03 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:55263 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752394Ab3CUTty (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 15:49:54 -0400
+Received: by mail-pb0-f52.google.com with SMTP id ma3so2493852pbc.25
+        for <git@vger.kernel.org>; Thu, 21 Mar 2013 12:49:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=LKTNhm2D9Dap6hXBHEpsCoMHiidH1roIXxoX6yc0FEc=;
+        b=TwAGNiQ25e7RjzyerSePPeEqZd9OT8jcGBOzn27RlSmoh8AVxwxxrKwreex2owJQJg
+         NUNR0vWy7Hv5FrMvuXG4XseGYRvFXkPRY84bEBd0qeGwjldFnj2NVgHkEuk1G4CyBKDN
+         MpBS0jH5CoLW/zpESHH/IvP9ecsWuKTjPabINkV4psbuf6Z+EE5du9xG0g6QvN3Ah4C1
+         mmUwil7R/c9HweU8YoQQaLprZpjGgKvbSj7GTlxxwqP3Tspgi2QkjJMzJs8m8DuKs2X5
+         HDcJdyIwWSApv9kO9AC0MSFgqHCgPDH6FPuO1JoSx2XaMWsmEHIT14QGnXNGylzeGJkq
+         LlqA==
+X-Received: by 10.68.180.162 with SMTP id dp2mr7591384pbc.214.1363895394498;
+        Thu, 21 Mar 2013 12:49:54 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id rr14sm7126719pbb.34.2013.03.21.12.49.52
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 21 Mar 2013 12:49:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130321110527.GA18819@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218748>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Jeff King wrote:
 
-> +void line_log_init(struct rev_info *rev, const char *prefix, struct string_list *args)
-> +{
-> +	struct commit *commit = NULL;
-> +	struct line_log_data *range;
-> +
-> +	commit = check_single_commit(rev);
-> +	range = parse_lines(commit, prefix, args);
-> +	add_line_range(rev, commit, range);
-> +
-> +	if (!rev->diffopt.detect_rename) {
-> +		int i, count = 0;
-> +		struct line_log_data *r = range;
-> +		const char **paths;
-> +		while (r) {
-> +			count++;
-> +			r = r->next;
-> +		}
-> +		paths = xmalloc((count+1)*sizeof(char *));
-> +		r = range;
-> +		for (i = 0; i < count; i++) {
-> +			paths[i] = xstrdup(r->spec->path);
-> +			r = r->next;
-> +		}
-> +		paths[count] = NULL;
-> +		init_pathspec(&rev->diffopt.pathspec, paths);
-> +		free(paths);
-> +	}
-> +}
+> Instead of using the "x = x" hack, let's handle the default
+> case in the switch() statement with a die("BUG"). That tells
+> the compiler and any readers of the code exactly what the
+> function's input assumptions are.
 
-Why not do the pathspec limitation under "-M"?
+Sounds reasonable.
 
-It is not like you are picking up origins of blocks of lines copied
-or moved from other files like "blame -C" does, so I suspect it
-would be simpler to mimic what --follow does, which is to (1) use
-the pathspec to follow the paths you care about, and then (2) when
-you find one or more of the paths you were following disappear in a
-commit, only at that point you re-check to see if there are other
-paths that existed in the parent that the disappeared paths were
-renamed from, and match with that one.
+> We could also convert the flag to an enum, which would
+> provide a compile-time check on the function input.
+
+Unfortunately C permits out-of-bounds values for enums.
+
+[...]
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -264,7 +264,7 @@ static void wt_status_print_change_data(struct wt_status *s,
+>  {
+>  	struct wt_status_change_data *d = it->util;
+>  	const char *c = color(change_type, s);
+> -	int status = status;
+> +	int status;
+>  	char *one_name;
+>  	char *two_name;
+>  	const char *one, *two;
+> @@ -292,6 +292,9 @@ static void wt_status_print_change_data(struct wt_status *s,
+>  		}
+>  		status = d->worktree_status;
+>  		break;
+> +	default:
+> +		die("BUG: unhandled change_type %d in wt_status_print_change_data",
+> +		    change_type);
+
+Micronit: s/unhandled/invalid/.
+
+Thanks,
+Jonathan
