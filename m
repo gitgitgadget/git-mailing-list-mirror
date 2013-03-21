@@ -1,65 +1,84 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [BUG] git send-email and SSL_verify_mode
-Date: Thu, 21 Mar 2013 15:18:27 +0530
-Message-ID: <CALkWK0mgA8kb6LLANV78geTOnW0ON7H=hBV2VPkg62-9pFG68Q@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC] Add posibility to preload stat information.
+Date: Thu, 21 Mar 2013 11:41:48 +0100
+Message-ID: <87vc8lyqz7.fsf@pctrast.inf.ethz.ch>
+References: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
+	<20130320164806.GA10752@sigill.intra.peff.net>
+	<7vhak6f0w4.fsf@alter.siamese.dyndns.org>
+	<20130320174759.GA29349@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 21 10:49:16 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Fredrik Gustafsson <iveqy@iveqy.com>, <spearce@spearce.org>,
+	<git@vger.kernel.org>, <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 21 11:42:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIc7Y-0005OF-2s
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 10:49:16 +0100
+	id 1UIcwt-000565-Ut
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 11:42:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754414Ab3CUJss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 05:48:48 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:48857 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753011Ab3CUJsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 05:48:47 -0400
-Received: by mail-ie0-f180.google.com with SMTP id a11so3005399iee.39
-        for <git@vger.kernel.org>; Thu, 21 Mar 2013 02:48:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=3XlJnERJEduL4QriMIFJSBga4QBqi4tE/Gle2rGWT4I=;
-        b=I15KvZTCUAuemoSPYx8lKHpU6fTQ7v2QfLPbTstlTaoslJWArj4Aq6uSVRT3EBwmht
-         0SUphFkGg0csZf+eejEAnVsQWPMS1sYkuAMs6dtmuoNFWh2xVAgSR2emxz0Fg9yhgExO
-         Ejdp9VbLlV9u0j0jiEjRMsgCLBdqrL75feL81G2RorKjL0X3riFsHIh/ldZGqLMOcgGz
-         SDYDR8lMdPaF5+gAHU77Ff2Lt42TkEDVSVgSwL3ub9qOI/Vg8WTWLjMDidz32yt5msqd
-         HsEV9OCV5WqHWGhzE1s7+iZdK+mkzbJYxLqg0XWJ5C1yq4M6DecjjXPYlIUNSuECKRM5
-         X/mw==
-X-Received: by 10.50.108.235 with SMTP id hn11mr1566153igb.107.1363859327448;
- Thu, 21 Mar 2013 02:48:47 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Thu, 21 Mar 2013 02:48:27 -0700 (PDT)
+	id S1753895Ab3CUKlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 06:41:53 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:2681 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753358Ab3CUKlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 06:41:52 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 21 Mar
+ 2013 11:41:47 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
+ CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Thu, 21 Mar 2013 11:41:49 +0100
+In-Reply-To: <20130320174759.GA29349@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 20 Mar 2013 13:47:59 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218706>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-With recent (I'm how recent exactly) versions of IO::Socket::SSL, git
-send-email:1169 spits out the following warning, which originates in
-Net::SMTP::SSL:
+> On Wed, Mar 20, 2013 at 10:15:39AM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > So maybe just run "git status >/dev/null"?
+>> 
+>> In the background?  How often would it run?  I do not think a single
+>> lockfile solves anything.  It may prevent simultaneous runs of two
+>> such "prime the well" processes, but the same user may be working in
+>> two separate repositories.
+>
+> Yes, in the background (he invokes __git_recursive_stat already in the
+> background). I'd think you would want to run it whenever you enter a
+> repository.
+>
+>> I do not see anything that prevents it from running in the same
+>> repository over and over again, either.  "prompt" is a bad place to
+>> do this kind of thing.
+>
+> Yeah, I did not look closely at that. The commit message claims "When
+> entering a git working dir", but the implementation runs it on each
+> prompt invocation, which is awful. I think you'd want to check to use
+> rev-parse to see if you have changed into a new git repo, and only run
+> it once then.
 
-*******************************************************************
- Using the default of SSL_verify_mode of SSL_VERIFY_NONE for client
- is depreciated! Please set SSL_verify_mode to SSL_VERIFY_PEER
- together with SSL_ca_file|SSL_ca_path for verification.
- If you really don't want to verify the certificate and keep the
- connection open to Man-In-The-Middle attacks please set
- SSL_verify_mode explicitly to SSL_VERIFY_NONE in your application.
-*******************************************************************
+I think it would actually be a somewhat interesting feature if it
+interacted with GIT_PS1_SHOW*.  If you use these settings (I personally
+use SHOWDIRTYSTATE but not SHOWUNTRACKEDFILES), the prompt hangs while
+__git_ps1 runs git-status.  It should be possible to run a git-status
+process in the background when entering a repository, and displaying
+some marker ('??' maybe) in the prompt instead of the dirty-state info
+until git-status has finished.  That way the user doesn't have his shell
+blocked by cding to a big repo.
 
-Nevertheless, it does manage to send the email successfully.  I'm not
-sure how to fix this bug, since my Perl-foo is weak.  Please advise.
-
-Thanks.
-
-Ram
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
