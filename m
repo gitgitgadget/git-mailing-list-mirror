@@ -1,96 +1,95 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] git-send-email.perl: implement suggestions made by perlcritic
-Date: Thu, 21 Mar 2013 22:21:38 +0530
-Message-ID: <CALkWK0kkWAkiANL-vL-OthKSDkoU2b_Q68frkGc06QNG7RbSFQ@mail.gmail.com>
-References: <1363869587-10462-1-git-send-email-artagnon@gmail.com> <7vd2usbwkn.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/45] parse_pathspec and :(glob) magic
+Date: Thu, 21 Mar 2013 10:28:41 -0700
+Message-ID: <7v4ng4br1y.fsf@alter.siamese.dyndns.org>
+References: <1363327620-29017-1-git-send-email-pclouds@gmail.com>
+ <1363781779-14947-1-git-send-email-pclouds@gmail.com>
+ <7v1ubaeyph.fsf@alter.siamese.dyndns.org>
+ <20130321053326.GA17446@duynguyen-vnpc.dek-tpc.internal>
+ <20130321054349.GA18101@duynguyen-vnpc.dek-tpc.internal>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 21 17:52:31 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 21 18:29:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIij6-0000Ob-M4
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 17:52:28 +0100
+	id 1UIjIe-0002Lv-J6
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 18:29:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932923Ab3CUQwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 12:52:00 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:55487 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754724Ab3CUQv7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 12:51:59 -0400
-Received: by mail-ia0-f174.google.com with SMTP id b35so2706331iac.33
-        for <git@vger.kernel.org>; Thu, 21 Mar 2013 09:51:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=kDlJZ9OxH37bu4mXH+AqYNwuC5t2qNm6TRJ57X0tb6c=;
-        b=N53cw598NGBth0lnDuSpNor//ws6IzTeZ75GTBmJj4XtPD6vDpEX4Z2+sJDaIhVC/5
-         /0FPGCZ5XXnqJEOEpcYkq05FJIQWCF/cjbFYVYELSpeRghObzFiC3KTWODPC6vB+2Eco
-         NO9atobEz5r/8X7TfcI7Z+qg76h0lgCvUWgkUObzZXZC1Wa71guEX0CBujdO7fZIxsx/
-         FN+ou6hNV0hyK8jhKd1jUM+r86EEt9cNUJ29DD/n57dhnAbav7VYdQ4bmXYuYrw3lYv8
-         n4MiYzcYK8IRyjEhZnjwkbIayciHLvOSTItkE5Sd8lUh0qGq45LMY8YmsKn4zW7M/pg0
-         Eq/w==
-X-Received: by 10.50.50.71 with SMTP id a7mr2587536igo.14.1363884718737; Thu,
- 21 Mar 2013 09:51:58 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Thu, 21 Mar 2013 09:51:38 -0700 (PDT)
-In-Reply-To: <7vd2usbwkn.fsf@alter.siamese.dyndns.org>
+	id S1751362Ab3CUR2p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 13:28:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52017 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751206Ab3CUR2o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 13:28:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4313A81F;
+	Thu, 21 Mar 2013 13:28:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1hqTHZ6LFMjLXNu1fAvCZrkhk5Q=; b=dMwPwC
+	TTZedLzTarayaEJ2CJfm+mimbRS2Zqjme+mVZ3K0aDKgyueH0kcqTdzJxBm18PH7
+	AiV0CNmSRbgLjlmsFspLYJ6B8Z08CtN7SuAXuJwky9iTEVVSc9ZIAz8B/+ELMljE
+	Eze8CUFh1bPGkeluOUmqTVONq9MbponL/zzLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Piia3mkfScoQjYROEGJsyTSG01iAxDZf
+	iiWpYgJ2vU3QFkfDYOWycxaCSYY1LSqMnTqGi8snQa3W1xFac4S/BiJ2qXMJTmYE
+	8jWP9eVW93cb5TaBEzRfKyp/efHJUk3B/Zc30BgAZFMryj1ykxVnTR1JSEIIOYlC
+	yhxjMF9m/w0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4DB0A81E;
+	Thu, 21 Mar 2013 13:28:43 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 16C03A81C; Thu, 21 Mar 2013
+ 13:28:43 -0400 (EDT)
+In-Reply-To: <20130321054349.GA18101@duynguyen-vnpc.dek-tpc.internal> (Duy
+ Nguyen's message of "Thu, 21 Mar 2013 12:43:49 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C728521E-924C-11E2-B4BA-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218744>
 
-Junio C Hamano wrote:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
+
+>> I still can't reproduce it. But I think I found a bug that
+>> miscalculates prefix length from absolute paths. Does this "fix" your
+>> test?
+>>  ...
+> Nope, that one could cause more crashes. Try this
 >
->> diff --git a/git-send-email.perl b/git-send-email.perl
->> index be809e5..e974b11 100755
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
->> @@ -513,7 +513,7 @@ if (@alias_files and $aliasfiletype and defined $parse_alias{$aliasfiletype}) {
->>  ($sender) = expand_aliases($sender) if defined $sender;
->>
->>  # returns 1 if the conflict must be solved using it as a format-patch argument
->> -sub check_file_rev_conflict($) {
->> +sub check_file_rev_conflict {
->
-> Have you verified that the callers of this sub are OK with this
-> change?  It used to force scalar context on its arguments but now it
-> does not.
->
-> I am not saying I know the callers will get broken.  I am trying to
-> make sure that this is *not* the result of blindly following
-> perlcritic output without understanding the ramifications of the
-> change.
+> -- 8< --
+> diff --git a/setup.c b/setup.c
+> index 3584f22..3d8eb97 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -14,6 +14,8 @@ char *prefix_path_gently(const char *prefix, int *p_len, const char *path)
+>  		const char *temp = real_path(path);
+>  		sanitized = xmalloc(len + strlen(temp) + 1);
+>  		strcpy(sanitized, temp);
+> +		if (p_len)
+> +			*p_len = 0;
 
-No Junio, I haven't blindly followed the perlcritic output.  I've
-considered the ramifications, audited the callers, and run the tests
-to make sure that nothing breaks.
+Yes, this one seems to. "$(pwd)/../src" was not handled correctly.
 
->> @@ -1438,7 +1438,7 @@ sub recipients_cmd {
->>
->>       my $sanitized_sender = sanitize_address($sender);
->>       my @addresses = ();
->> -     open my $fh, "$cmd \Q$file\E |"
->> +     open my $fh, q{-|}, "$cmd \Q$file\E"
->
-> Strange quoting (why not just say "-|"?) aside
+The callchain to this locaiton would look like
 
-Intentional.  I thought it was a pretty way to differentiate between a
-mode string (which can only be <, >, or -|) and a filename string.  If
-you don't share my taste, feel free to use quotes instead.
+	parse_pathspec() with prefix="docs/", prefixlen set to 5
+        -> prefix_pathspec(), &prefixlen passed down
+          -> prefix_path_gently(), p_len points at the above prefixlen
+	     your "this should fix" patch sets *p_len to 0,
+             original leaves *p_len as 5.
+             -> normalize_path_copy_len() with p_len
+	        *p_len is used here.
 
-> , if you are moving
-> away from the two-param form of open(), it would be a sane thing to
-> do to also stop concatenating the arguments to commands to avoid
-> shell metacharacter gotcha.  It will make the resulting code much
-> safer.
-
-Yes, the file can be improved in many ways, but that is not the topic
-of this series.  This series just makes the changes suggested by
-perlcritic gentle.
+Why could the test pass for you without it?  It doesn't look like a
+bug that depended on uninitialized memory or something from the
+above observation.
