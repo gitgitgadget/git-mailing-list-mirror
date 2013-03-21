@@ -1,55 +1,45 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] do not use GIT_TRACE_PACKET=3 in tests
-Date: Thu, 21 Mar 2013 07:36:13 +0100
-Message-ID: <514AAA5D.4000803@viscovery.net>
-References: <20130320172640.GC10752@sigill.intra.peff.net> <20130320174347.GA28548@sigill.intra.peff.net>
+From: steven Loker <stevenlokerr@gmail.com>
+Subject: Re: gitk says "file name too long"
+Date: Wed, 20 Mar 2013 23:39:15 -0700 (PDT)
+Message-ID: <1363847955088-7580237.post@n2.nabble.com>
+References: <hm5usf$6ba$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 21 07:36:54 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 21 07:39:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIZ7K-0007Xo-KF
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 07:36:50 +0100
+	id 1UIZAA-0000i8-Pc
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 07:39:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756449Ab3CUGgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 02:36:22 -0400
-Received: from so.liwest.at ([212.33.55.24]:19072 "EHLO so.liwest.at"
+	id S1757421Ab3CUGjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 02:39:17 -0400
+Received: from sam.nabble.com ([216.139.236.26]:55026 "EHLO sam.nabble.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757389Ab3CUGgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 02:36:21 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UIZ6k-0007pe-EN; Thu, 21 Mar 2013 07:36:15 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 09FD01660F;
-	Thu, 21 Mar 2013 07:36:13 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <20130320174347.GA28548@sigill.intra.peff.net>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1756323Ab3CUGjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 02:39:15 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <stevenlokerr@gmail.com>)
+	id 1UIZ9f-0002qb-3j
+	for git@vger.kernel.org; Wed, 20 Mar 2013 23:39:15 -0700
+In-Reply-To: <hm5usf$6ba$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218697>
 
-Am 3/20/2013 18:43, schrieb Jeff King:
-> Now that we are using the GIT_TRACE mechanism, we can
-> improve both scripts by asking git to write directly to a
-> file rather than a descriptor. That fixes the hang in t5700,
-> and should allow t5503 to successfully run on Windows.
+Use LongPathTool. If u had problem with files i suggest this software. 
 
-Well spotted, and, right, both tests pass with this patch.
+http://LongPathTool.com
 
-Tested-by: Johannes Sixt <j6t@kdbg.org>
 
-Thanks,
--- Hannes
+
+--
+View this message in context: http://git.661346.n2.nabble.com/gitk-says-file-name-too-long-tp4632510p7580237.html
+Sent from the git mailing list archive at Nabble.com.
