@@ -1,86 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/4] run-command: always set failed_errno in start_command
-Date: Thu, 21 Mar 2013 11:45:00 -0400
-Message-ID: <20130321154500.GB2075@sigill.intra.peff.net>
-References: <20130321154402.GA25907@sigill.intra.peff.net>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: Git on Mac OS and precomposed unicode
+Date: Thu, 21 Mar 2013 17:04:40 +0100
+Message-ID: <514B2F98.30409@web.de>
+References: <64B4EB934AFE4B358B94EB717103887E@leo-koppelkamm.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 21 16:45:40 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: Leo Koppelkamm <hello@leo-koppelkamm.de>
+X-From: git-owner@vger.kernel.org Thu Mar 21 17:05:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIhgQ-0000HZ-DL
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 16:45:38 +0100
+	id 1UIhzO-0006Ur-AC
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 17:05:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932739Ab3CUPpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 11:45:08 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33941 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932453Ab3CUPpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 11:45:08 -0400
-Received: (qmail 24402 invoked by uid 107); 21 Mar 2013 15:46:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Mar 2013 11:46:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Mar 2013 11:45:00 -0400
-Content-Disposition: inline
-In-Reply-To: <20130321154402.GA25907@sigill.intra.peff.net>
+	id S933762Ab3CUQEr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Mar 2013 12:04:47 -0400
+Received: from mout.web.de ([212.227.15.4]:55767 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756390Ab3CUQEo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 12:04:44 -0400
+Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb103) with
+ ESMTPA (Nemesis) id 0MV4bp-1UCyIu0rdt-00Y6Gn; Thu, 21 Mar 2013 17:04:41 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <64B4EB934AFE4B358B94EB717103887E@leo-koppelkamm.de>
+X-Provags-ID: V02:K0:maXveN87JXBhdznjgyLSSfalo7aE30IUx2YJXzhoXj6
+ e1oRKTKlRbAW8Vaomy7cF2H7Z/nsIN2QCCHTEKazvKH1EXsC0O
+ 4658VpEuZZh2ycY9nYr5UdBuk2egVxkShQp+GEY1Dc4OZEfFPV
+ StvilOoj0/Jf5bicdk+/d2BLjErit/jpefi7TpX1/i1SIT14cM
+ SIIaEy60uSpZXXG9RVaNw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218740>
 
-When we fail to fork, we set the failed_errno variable to
-the value of errno so it is not clobbered by later syscalls.
-However, we do so in a conditional, and it is hard to see
-later under what conditions the variable has a valid value.
+On 21.03.13 14:00, Leo Koppelkamm wrote:
+> Torsten B=C3=B6gershausen added a patch for this a while ago.
+> It seems it only works for files, not for folders with unicode in it.
+>
+> Eg. on ubuntu box:
+> git init
+> mkdir h=C3=A4
+> touch h=C3=A4/file
+> git add h=C3=A4
+> git commit=20
+>
+> Later on Mac
+> git clone =E2=80=A6=E2=80=A6=E2=80=A6
+> git status
+>
+> # On branch master=20
+> # Untracked files:=20
+> # (use "git add <file>..." to include in what will be committed)=20
+> #=20
+> # h=C3=A4/
+>
+> Regards Leo
+That is what I read from the commit message:
 
-Instead of setting it only when fork fails, let's just
-always set it after forking. This is more obvious for human
-readers (as we are no longer setting it as a side effect of
-a strerror call), and it is more obvious to gcc, which no
-longer generates a spurious -Wuninitialized warning. It also
-happens to match what the WIN32 half of the #ifdef does.
+   When creating a new git repository with "git init" or "git clone",
+    "core.precomposedunicode" will be set "false".
+  =20
+    The user needs to activate this feature manually.  She typically
+    sets core.precomposedunicode to "true" on HFS and VFAT, or file
+    systems mounted via SAMBA.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- run-command.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+(Which is slighty wrong, because the name of the config variable
+is core.precomposeunicode)
 
-diff --git a/run-command.c b/run-command.c
-index 07e27ff..765c2ce 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -273,7 +273,7 @@ int start_command(struct child_process *cmd)
- {
- 	int need_in, need_out, need_err;
- 	int fdin[2], fdout[2], fderr[2];
--	int failed_errno = failed_errno;
-+	int failed_errno;
- 	char *str;
- 
- 	/*
-@@ -341,6 +341,7 @@ fail_pipe:
- 		notify_pipe[0] = notify_pipe[1] = -1;
- 
- 	cmd->pid = fork();
-+	failed_errno = errno;
- 	if (!cmd->pid) {
- 		/*
- 		 * Redirect the channel to write syscall error messages to
-@@ -420,7 +421,7 @@ fail_pipe:
- 	}
- 	if (cmd->pid < 0)
- 		error("cannot fork() for %s: %s", cmd->argv[0],
--			strerror(failed_errno = errno));
-+			strerror(errno));
- 	else if (cmd->clean_on_exit)
- 		mark_child_for_cleanup(cmd->pid);
- 
--- 
-1.8.2.rc2.8.g2161951
+What does
+git config core.precomposeunicode
+say ?
+
+You may consider to set it to set it to true globally,
+git config --global core.precomposeunicode true,
+and the next "git clone" will work as expected.
+
+On the other hand,
+could/should we consider to change the default to true in Git 2.0?
+
+HTH
+/Torsten
+
+
+
+=20
+
+
+
+
+
+
+What does git config
