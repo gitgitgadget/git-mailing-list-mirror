@@ -1,124 +1,65 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v9 2/5] Export rewrite_parents() for 'log -L'
-Date: Thu, 21 Mar 2013 13:52:37 +0100
-Message-ID: <e995dd0279409040190317005953fdb216f6f6af.1363865444.git.trast@student.ethz.ch>
-References: <cover.1363865444.git.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: Which file is older in history?
+Date: Thu, 21 Mar 2013 09:26:20 -0400
+Message-ID: <20130321132620.GB23162@sigill.intra.peff.net>
+References: <CALkWK0nTjoR9qBY-hnkrDKnyf8088ZDJ1LK_zNqAoAB7ndvaww@mail.gmail.com>
+ <7vobeddcjq.fsf@alter.siamese.dyndns.org>
+ <CALkWK0nRgzNYViKSx97OyHVOQmFN61Ex9EUvr1JK-0=GX=uX0w@mail.gmail.com>
+ <20130321122130.GA22607@sigill.intra.peff.net>
+ <20130321122428.GB22607@sigill.intra.peff.net>
+ <CALkWK0nOzUXk0cFh8GCHc=YqLkRJ2XNFgU_tOsua81ROK99mXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Bo Yang <struggleyb.nku@gmail.com>,
-	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	"Will Palmer" <wmpalmer@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 21 13:54:13 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 21 14:26:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIf0V-0005Uq-JX
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 13:54:11 +0100
+	id 1UIfWC-0002AO-A4
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 14:26:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757173Ab3CUMxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 08:53:43 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:22138 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758190Ab3CUMwq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 08:52:46 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 21 Mar
- 2013 13:52:39 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 21 Mar
- 2013 13:52:41 +0100
-X-Mailer: git-send-email 1.8.2.241.gee8bb87
-In-Reply-To: <cover.1363865444.git.trast@student.ethz.ch>
-X-Originating-IP: [129.132.153.233]
+	id S1758149Ab3CUN03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 09:26:29 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33819 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753140Ab3CUN02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 09:26:28 -0400
+Received: (qmail 22656 invoked by uid 107); 21 Mar 2013 13:28:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Mar 2013 09:28:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Mar 2013 09:26:20 -0400
+Content-Disposition: inline
+In-Reply-To: <CALkWK0nOzUXk0cFh8GCHc=YqLkRJ2XNFgU_tOsua81ROK99mXw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218726>
 
-From: Bo Yang <struggleyb.nku@gmail.com>
+On Thu, Mar 21, 2013 at 06:02:32PM +0530, Ramkumar Ramachandra wrote:
 
-The function rewrite_one is used to rewrite a single
-parent of the current commit, and is used by rewrite_parents
-to rewrite all the parents.
+> >   git log --format=%H --name-status --diff-filter=A -- path1 path2 |
+> >   grep ^A |
+> >   tail -1
+> 
+> Great!  I just learnt about --name-status now.
 
-Decouple the dependence between them by making rewrite_one
-a callback function that is passed to rewrite_parents. Then
-export rewrite_parents for reuse by the line history browser.
+You can also use "--name-only", but the parsing is a little less robust.
 
-We will use this function in line-log.c.
+> Nit: tail -<n> is deprecated in favor of tail -n <n>, I think.  It's
+> nicer to have definite fixed command line options, as opposed to
+> parsing an arbitrary -(*) and deciding if \1 is a \d+.
 
-Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- revision.c | 13 ++++---------
- revision.h | 10 ++++++++++
- 2 files changed, 14 insertions(+), 9 deletions(-)
+Yeah, POSIX has always specified "-n" for tail, as well as for head.  I
+remember in the late 90's and early 00's running into systems where
+POSIX "head -n" did not work, and you _had_ to use "head -1". I don't
+recall now if that was the case for tail, too, nor what system that was
+on (but if I had to guess, I'd say pre-Solaris SunOS).
 
-diff --git a/revision.c b/revision.c
-index ef60205..46319d5 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2173,12 +2173,6 @@ int prepare_revision_walk(struct rev_info *revs)
- 	return 0;
- }
- 
--enum rewrite_result {
--	rewrite_one_ok,
--	rewrite_one_noparents,
--	rewrite_one_error
--};
--
- static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp)
- {
- 	struct commit_list *cache = NULL;
-@@ -2200,12 +2194,13 @@ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp
- 	}
- }
- 
--static int rewrite_parents(struct rev_info *revs, struct commit *commit)
-+int rewrite_parents(struct rev_info *revs, struct commit *commit,
-+	rewrite_parent_fn_t rewrite_parent)
- {
- 	struct commit_list **pp = &commit->parents;
- 	while (*pp) {
- 		struct commit_list *parent = *pp;
--		switch (rewrite_one(revs, &parent->item)) {
-+		switch (rewrite_parent(revs, &parent->item)) {
- 		case rewrite_one_ok:
- 			break;
- 		case rewrite_one_noparents:
-@@ -2371,7 +2366,7 @@ enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit)
- 	if (action == commit_show &&
- 	    !revs->show_all &&
- 	    revs->prune && revs->dense && want_ancestry(revs)) {
--		if (rewrite_parents(revs, commit) < 0)
-+		if (rewrite_parents(revs, commit, rewrite_one) < 0)
- 			return commit_error;
- 	}
- 	return action;
-diff --git a/revision.h b/revision.h
-index 5da09ee..640110d 100644
---- a/revision.h
-+++ b/revision.h
-@@ -241,4 +241,14 @@ enum commit_action {
- extern enum commit_action get_commit_action(struct rev_info *revs, struct commit *commit);
- extern enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit);
- 
-+enum rewrite_result {
-+	rewrite_one_ok,
-+	rewrite_one_noparents,
-+	rewrite_one_error
-+};
-+
-+typedef enum rewrite_result (*rewrite_parent_fn_t)(struct rev_info *revs, struct commit **pp);
-+
-+extern int rewrite_parents(struct rev_info *revs, struct commit *commit,
-+	rewrite_parent_fn_t rewrite_parent);
- #endif
--- 
-1.8.2.241.gee8bb87
+So yeah. Using "tail -n 1" is probably a better idea in the long run.
+
+-Peff
