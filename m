@@ -1,79 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Simon Ruderich <simon@ruderich.org>
 Subject: Re: [PATCH] git-am: fix "Applying" message when applypatch-hook was
  run
-Date: Wed, 20 Mar 2013 16:52:43 -0700
-Message-ID: <7v1ub9d3xw.fsf@alter.siamese.dyndns.org>
-References: <b978a77f8a37c47b2d6c2201d1f7cfffa01f8443.1363820289.git.simon@ruderich.org>
- <vpqli9hmyov.fsf@grenoble-inp.fr>
+Date: Thu, 21 Mar 2013 03:40:17 +0100
+Message-ID: <20130321024017.GA17205@ruderich.org>
+References: <7v1ub9d3xw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Simon Ruderich <simon@ruderich.org>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Mar 21 00:53:15 2013
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 21 03:40:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UISoj-0005Vt-UX
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 00:53:14 +0100
+	id 1UIVQu-0007iz-VY
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 03:40:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071Ab3CTXwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Mar 2013 19:52:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64569 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751151Ab3CTXwq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Mar 2013 19:52:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57EEBA539;
-	Wed, 20 Mar 2013 19:52:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vTsUV609Hn4vo36U4/UnvVOWaJI=; b=ALVBCY
-	OhZK0QhWCjZ22aw4tTxp9EuOxYq4u8z5qCxzAJHWtasdok1hUYB8aQhKMmylprKs
-	E9lH01ow58bGixCFWedqCX4AmIgQT1R8tDK98iRmD68Dk26Nf3GogJbQL/odIgE7
-	IQh3TaIzJv23+jvJZTFtpnlTMwTNWGAD4BeDI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=he0bqeYfd78aQdbxMbQey4LnpqBkikOE
-	VJfqpTEpc3LLxXyEWTLD5Rl0LJwPBMMzf20ZzDuZzerIT/qm68VtiDZKwgpEhD7p
-	qxU6D70u57uJoXge7BzcmXQS57DzPalam1fVzrgxPWeNuIAWTYUzlA0NBHkeP04y
-	pmGJWb4tgT0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BBA2A538;
-	Wed, 20 Mar 2013 19:52:45 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9527A537; Wed, 20 Mar 2013
- 19:52:44 -0400 (EDT)
-In-Reply-To: <vpqli9hmyov.fsf@grenoble-inp.fr> (Matthieu Moy's message of
- "Thu, 21 Mar 2013 00:36:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 42A5BC90-91B9-11E2-A657-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754241Ab3CUCkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Mar 2013 22:40:21 -0400
+Received: from zucker2.schokokeks.org ([178.63.68.90]:56390 "EHLO
+	zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752298Ab3CUCkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Mar 2013 22:40:20 -0400
+Received: from localhost (p54B5F8CF.dip.t-dialin.net [::ffff:84.181.248.207])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by zucker.schokokeks.org with ESMTPSA; Thu, 21 Mar 2013 03:40:18 +0100
+  id 000000000000003C.00000000514A7312.00005845
+Content-Disposition: inline
+In-Reply-To: <7v1ub9d3xw.fsf@alter.siamese.dyndns.org>
+ <vpqli9hmyov.fsf@grenoble-inp.fr>
+User-Agent: Mutt/1.5.21 (2013-03-19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218692>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+applypatch-hook can modify the commit message. Display the updated
+commit message instead of the original one.
 
+Signed-off-by: Simon Ruderich <simon@ruderich.org>
+---
+
+On Thu, Mar 21, 2013 at 12:36:00AM +0100, Matthieu Moy wrote:
 > Please, read SubmittingPatches in the Documentation directory of Git's
 > source tree. Your text above should be a commit message (hence, no
 > hello), and should not be below the --- line.
 >
 > Also, read about signed-off-by in the same document.
-> ...
+
+Hello Matthieu,
+
+Thank you for the suggestions. I've adapted the patch message and
+added the signed-off.
+
 > This copy/paste a piece of code that is already a few lines above. Is
 > there any reason not to _move_ the assignment to FIRSTLINE after the "if
 > test -x "$GIT_DIR"/hooks/applypatch-msg", to avoid duplicating?
 
-More importantly, is this change even desirable?
+No, there wasn't a reason not to move the code. I just wasn't
+sure if it had any side effects. But I rechecked and it should
+work fine. Updating version attached.
 
-The original motivation behind the "Applying:" message was to help
-the user identify which one of the 100+ patches being fed to the
-command, and it was not about showing what we ended up committing.
-When you are running the command interactively, we do grab the
-edited result since f23272f3fd84 (git-am -i: report rewritten title,
-2007-12-04), but I tend to feel that the automated munging done by
-applypatch-msg falls into a different category.
+On Wed, Mar 20, 2013 at 04:52:43PM -0700, Junio C Hamano wrote:
+> More importantly, is this change even desirable?
+>
+> The original motivation behind the "Applying:" message was to help
+> the user identify which one of the 100+ patches being fed to the
+> command, and it was not about showing what we ended up committing.
+> When you are running the command interactively, we do grab the
+> edited result since f23272f3fd84 (git-am -i: report rewritten title,
+> 2007-12-04), but I tend to feel that the automated munging done by
+> applypatch-msg falls into a different category.
+
+When I first used the applypatch-msg hook I was confused because
+the messages were different and I thought the hook wasn't
+working, hence the patch.
+
+I'm not sure how extensive most applypatch-msg hooks modify the
+commit message (in my case just a number prepended), but I think
+it's more natural and less confusing to see the message which is
+being applied.
+
+If the original behaviour is preferred, a short comment in
+githooks(5) should prevent any confusion.
+
+Regards
+Simon
+
+ git-am.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index 202130f..c092855 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -778,13 +778,6 @@ To restore the original branch and stop patching run \"\$cmdline --abort\"."
+ 	    action=yes
+ 	fi
+ 
+-	if test -f "$dotest/final-commit"
+-	then
+-		FIRSTLINE=$(sed 1q "$dotest/final-commit")
+-	else
+-		FIRSTLINE=""
+-	fi
+-
+ 	if test $action = skip
+ 	then
+ 		go_next
+@@ -797,6 +790,13 @@ To restore the original branch and stop patching run \"\$cmdline --abort\"."
+ 		stop_here $this
+ 	fi
+ 
++	if test -f "$dotest/final-commit"
++	then
++		FIRSTLINE=$(sed 1q "$dotest/final-commit")
++	else
++		FIRSTLINE=""
++	fi
++
+ 	say "$(eval_gettext "Applying: \$FIRSTLINE")"
+ 
+ 	case "$resolved" in
+-- 
+1.8.2
+
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
