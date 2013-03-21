@@ -1,65 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Which file is older in history?
-Date: Thu, 21 Mar 2013 09:26:20 -0400
-Message-ID: <20130321132620.GB23162@sigill.intra.peff.net>
-References: <CALkWK0nTjoR9qBY-hnkrDKnyf8088ZDJ1LK_zNqAoAB7ndvaww@mail.gmail.com>
- <7vobeddcjq.fsf@alter.siamese.dyndns.org>
- <CALkWK0nRgzNYViKSx97OyHVOQmFN61Ex9EUvr1JK-0=GX=uX0w@mail.gmail.com>
- <20130321122130.GA22607@sigill.intra.peff.net>
- <20130321122428.GB22607@sigill.intra.peff.net>
- <CALkWK0nOzUXk0cFh8GCHc=YqLkRJ2XNFgU_tOsua81ROK99mXw@mail.gmail.com>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: Re: [PATCH 0/4] drop some "int x = x" hacks to silence gcc warnings
+Date: Thu, 21 Mar 2013 14:44:51 +0100
+Message-ID: <kif2so$2ug$1@ger.gmane.org>
+References: <20130321110338.GA18552@sigill.intra.peff.net> <514AF2E1.7020409@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 21 14:26:57 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 21 14:45:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIfWC-0002AO-A4
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 14:26:56 +0100
+	id 1UIfoP-0006e0-Ml
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 14:45:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758149Ab3CUN03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 09:26:29 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33819 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753140Ab3CUN02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 09:26:28 -0400
-Received: (qmail 22656 invoked by uid 107); 21 Mar 2013 13:28:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Mar 2013 09:28:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Mar 2013 09:26:20 -0400
-Content-Disposition: inline
-In-Reply-To: <CALkWK0nOzUXk0cFh8GCHc=YqLkRJ2XNFgU_tOsua81ROK99mXw@mail.gmail.com>
+	id S1757531Ab3CUNpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 09:45:16 -0400
+Received: from plane.gmane.org ([80.91.229.3]:42906 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756329Ab3CUNpP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 09:45:15 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UIfoD-0006V0-P8
+	for git@vger.kernel.org; Thu, 21 Mar 2013 14:45:33 +0100
+Received: from dsdf-4d0a073f.pool.mediaways.net ([77.10.7.63])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Mar 2013 14:45:33 +0100
+Received: from jojo by dsdf-4d0a073f.pool.mediaways.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Mar 2013 14:45:33 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dsdf-4d0a073f.pool.mediaways.net
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218727>
 
-On Thu, Mar 21, 2013 at 06:02:32PM +0530, Ramkumar Ramachandra wrote:
+Johannes Sixt wrote:
+> Am 3/21/2013 12:03, schrieb Jeff King:
+>> I was fooling around with clang and noticed that it complains about
+>> the "int x = x" construct under -Wall. That is IMHO a deficiency in
+>> clang, since the idiom has a well-defined use in silencing
+>> -Wuninitialized warnings.
+>
+> IMO, that's a myth. The construct invokes undefined behavior at least
+> since C99, and the compilers are right to complain about it.
 
-> >   git log --format=%H --name-status --diff-filter=A -- path1 path2 |
-> >   grep ^A |
-> >   tail -1
-> 
-> Great!  I just learnt about --name-status now.
+And I complained about this a couple months ago, as the compiler on 
+HP-NonStop stumbles across this too (by emitting a warning)
 
-You can also use "--name-only", but the parsing is a little less robust.
-
-> Nit: tail -<n> is deprecated in favor of tail -n <n>, I think.  It's
-> nicer to have definite fixed command line options, as opposed to
-> parsing an arbitrary -(*) and deciding if \1 is a \d+.
-
-Yeah, POSIX has always specified "-n" for tail, as well as for head.  I
-remember in the late 90's and early 00's running into systems where
-POSIX "head -n" did not work, and you _had_ to use "head -1". I don't
-recall now if that was the case for tail, too, nor what system that was
-on (but if I had to guess, I'd say pre-Solaris SunOS).
-
-So yeah. Using "tail -n 1" is probably a better idea in the long run.
-
--Peff
+Bye, Jojo 
