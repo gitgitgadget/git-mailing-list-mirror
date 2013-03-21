@@ -1,100 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] wt-status: fix possible use of uninitialized
- variable
-Date: Thu, 21 Mar 2013 12:55:12 -0700
-Message-ID: <7vip4ka5pb.fsf@alter.siamese.dyndns.org>
-References: <20130321110338.GA18552@sigill.intra.peff.net>
- <20130321110527.GA18819@sigill.intra.peff.net>
- <20130321194949.GG29311@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Documentation: merging a tag is a special case
+Date: Thu, 21 Mar 2013 12:56:24 -0700
+Message-ID: <20130321195624.GH29311@google.com>
+References: <1363704914.6289.39.camel@test.quest-ce.net>
+ <7vfvzrjrad.fsf@alter.siamese.dyndns.org>
+ <1363802033-26868-1-git-send-email-ydroneaud@opteya.com>
+ <7vboadevpk.fsf@alter.siamese.dyndns.org>
+ <7vmwtwa5xa.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 21 20:56:01 2013
+Cc: Yann Droneaud <ydroneaud@opteya.com>, Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 21 20:56:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIlai-0001Yr-9L
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 20:56:00 +0100
+	id 1UIlbc-0002La-VS
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 20:56:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752526Ab3CUTzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 15:55:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60110 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752369Ab3CUTzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 15:55:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35EBFB64B;
-	Thu, 21 Mar 2013 15:55:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=S6nunw9ia6a8F48bfuMdLje2F4A=; b=ExmBRW
-	BQ24uQ8+stCbpxX5paYDUQ4njwtRCbT9AQ5eiHaF8pZ7gtLamIV4elnq8EOIXTwP
-	HA4AWsoDLsy2/zkGkqNn6cPLTCom9spatv/raJFvS5Wbcq4ssJxg2NPQ9qeSxevV
-	MVrcfLUfY2YvT2hTFtMFArHrXDiSC3dy51MA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Tm00sWfBSkwSLcTkQAtygjlRPAhnXoXx
-	6PAAEaio1O4lpkXocWoNv8w7uG50ni3G1LsDHtqIHxT8qwLRM9m4wkoXAIefMEhF
-	MhKAV1aU/Oh/tOPINvfNvR8N1japoRlvYBBQx787/T8meN4cKMNcXo1a86FpogZt
-	jEuzlUdEvWw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2934BB64A;
-	Thu, 21 Mar 2013 15:55:14 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9AA3BB649; Thu, 21 Mar 2013
- 15:55:13 -0400 (EDT)
-In-Reply-To: <20130321194949.GG29311@google.com> (Jonathan Nieder's message
- of "Thu, 21 Mar 2013 12:49:50 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3EBA3F22-9261-11E2-BD81-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752445Ab3CUT4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 15:56:30 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:41542 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751219Ab3CUT43 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 15:56:29 -0400
+Received: by mail-pb0-f52.google.com with SMTP id ma3so2505144pbc.11
+        for <git@vger.kernel.org>; Thu, 21 Mar 2013 12:56:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=9rCEdK1DvqfoXO9ZBkAFTdrViBudZYI7QG4pXVu9ecI=;
+        b=k0upG2H5jBh56mOcLAzZRhiYh/RjAPGVS97HC80oEqu14cVvV696cfu9+liB6ija2n
+         8gj9D64b6wE1zkANGrtnRNHdOfBWhhYp1NpuenC+vQm1025exDdHzikwGGM3au6daFRu
+         +etEJvBCfQ6hnU89KAy7x2Wc19si7BV4RAPTUgdn0h78h8bg/NswuKExRdVlWBfQjRXM
+         f6kn4QkdYh2hGaS4pGlscUYm+GpGpYSoRXaiQmGdTH/x1241oIi2OL1PFy+7NlpdaohC
+         hHq5mrjAT7YZOwX/9qIlr1R9psQ5mMoTzgtvP0aPBTCf8hntvH7Lz8s897zAvKIlbENN
+         /qQw==
+X-Received: by 10.68.194.8 with SMTP id hs8mr16471203pbc.44.1363895789003;
+        Thu, 21 Mar 2013 12:56:29 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id xs10sm7656153pac.8.2013.03.21.12.56.26
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 21 Mar 2013 12:56:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vmwtwa5xa.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218752>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano wrote:
 
-> Jeff King wrote:
->
->> Instead of using the "x = x" hack, let's handle the default
->> case in the switch() statement with a die("BUG"). That tells
->> the compiler and any readers of the code exactly what the
->> function's input assumptions are.
->
-> Sounds reasonable.
->
->> We could also convert the flag to an enum, which would
->> provide a compile-time check on the function input.
->
-> Unfortunately C permits out-of-bounds values for enums.
->
-> [...]
->> --- a/wt-status.c
->> +++ b/wt-status.c
->> @@ -264,7 +264,7 @@ static void wt_status_print_change_data(struct wt_status *s,
->>  {
->>  	struct wt_status_change_data *d = it->util;
->>  	const char *c = color(change_type, s);
->> -	int status = status;
->> +	int status;
->>  	char *one_name;
->>  	char *two_name;
->>  	const char *one, *two;
->> @@ -292,6 +292,9 @@ static void wt_status_print_change_data(struct wt_status *s,
->>  		}
->>  		status = d->worktree_status;
->>  		break;
->> +	default:
->> +		die("BUG: unhandled change_type %d in wt_status_print_change_data",
->> +		    change_type);
->
-> Micronit: s/unhandled/invalid/.
+> +Consequently a request `git merge --ff-only v1.2.3` to merge such a
+> +tag would fail.
+> +
+> +When you want to just integrate with the work leading to the commit
+> +that happens to be tagged, e.g. synchronizing with an upstream
+> +release point, you may not want to make an unnecessary merge commit
+> +especially when you do not have any work on your own.  In such a
+> +case, you can "unwrap" the tag yourself before feeding it to `git
+> +merge`, e.g.
+> +
+> +---
+> +git fetch origin
+> +git merge [--ff-only] v1.2.3^0
+> +---
 
-I actually think "unhandled" is more correct for this one; we may
-add new change_type later in the caller, and we do not want to
-forget to add a new case arm that handles the new value.
+Nice and clear, but doesn't this contradict b5c9f1c1b0ed (merge: do
+not create a signed tag merge under --ff-only option, 2012-02-05)?
