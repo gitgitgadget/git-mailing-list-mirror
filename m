@@ -1,83 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3 3/4] t7800: modernize tests
-Date: Thu, 21 Mar 2013 08:41:25 +0100
-Message-ID: <514AB9A5.3050601@viscovery.net>
-References: <1361419428-22410-1-git-send-email-davvid@gmail.com> <1361419428-22410-2-git-send-email-davvid@gmail.com> <1361419428-22410-3-git-send-email-davvid@gmail.com> <514985FB.8080806@viscovery.net> <CAJDDKr4O-OU57j0f7F2E2_4EvtCTE1gFP5uLv+fvD6VcpPiifg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 21 08:42:07 2013
+From: Kirill Likhodedov <kirill.likhodedov@gmail.com>
+Subject: Re: Bug? git show behaves incorrectly when called on a stash object
+Date: Thu, 21 Mar 2013 12:10:34 +0400
+Message-ID: <813B5421-0876-40B3-8152-9DCA5D234FD7@gmail.com>
+References: <AF060B6D-27F7-45BE-9BC3-85FAF3487481@gmail.com> <vpqsj3qoyj2.fsf@grenoble-inp.fr>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Mar 21 09:11:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIa8O-0003eN-0S
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 08:42:00 +0100
+	id 1UIaag-0004AZ-KI
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 09:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756323Ab3CUHlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 03:41:32 -0400
-Received: from so.liwest.at ([212.33.55.24]:18544 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753131Ab3CUHlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 03:41:32 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UIa7p-0003vw-GE; Thu, 21 Mar 2013 08:41:25 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 362AB1660F;
-	Thu, 21 Mar 2013 08:41:25 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <CAJDDKr4O-OU57j0f7F2E2_4EvtCTE1gFP5uLv+fvD6VcpPiifg@mail.gmail.com>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1757857Ab3CUIKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 04:10:43 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:54341 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757434Ab3CUIKk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Mar 2013 04:10:40 -0400
+Received: by mail-la0-f54.google.com with SMTP id gw10so4644103lab.13
+        for <git@vger.kernel.org>; Thu, 21 Mar 2013 01:10:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:subject:mime-version:content-type:from:in-reply-to:date
+         :cc:content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=wW/zVRFtUYr4qmu0/fp2dosLOm9UlagN32BbBCi3h6w=;
+        b=MqGJO57nxmBeWqPmrMc2NlNB5cs1sA/UmpH+0BP8QaEl6L8DCiYD3L+6lLsulFDdQ0
+         JwnAFw+6+Il45hz96zz8rYlCx0jOPQbCtr6EUxyYEXwxPQmfsn9MAwvFbQZkpEpemn6O
+         IIO96TBAx0xOqAwrMXOM0JKDMqwqrQg8hx46Xecep9DJ550wpaXANviGrTOj1AnMZf6K
+         PAScsuhJCtmZ2I4Idi0usU36P24nWz+e3sCW3S0YfR4ySG5zA7swPx939TlPQZ5TSQBM
+         2UBL4+zOf1siq82BvAWkqlc5W4WgAE9tAhPv4ofY/fgTZErxUqRpYa5CdVgG3zpMO3yB
+         e07A==
+X-Received: by 10.112.104.103 with SMTP id gd7mr11068458lbb.54.1363853438591;
+        Thu, 21 Mar 2013 01:10:38 -0700 (PDT)
+Received: from loki.labs.intellij.net (gw.intellij.net. [195.5.138.42])
+        by mx.google.com with ESMTPS id m1sm1681546lbh.5.2013.03.21.01.10.35
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 21 Mar 2013 01:10:36 -0700 (PDT)
+In-Reply-To: <vpqsj3qoyj2.fsf@grenoble-inp.fr>
+X-Mailer: Apple Mail (2.1283)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218704>
 
-Am 3/20/2013 23:59, schrieb David Aguilar:
-> I started digging in and the @worktree_files (aka @worktree above)
-> is populated from the output of "git diff --raw ...".
-> 
-> Seeing the "output" filename in "diff --raw" implies that one of the
-> tests added "output" to the index somehow.  I do not see that
-> happening anywhere, though, so I do not know how it would end up in
-> the @worktree array if it is not reported by "diff --raw".
-> 
-> 
-> My current understanding of how it could possibly be open twice:
-> 
-> 1. via the >output redirect
-> 2. via the copy() perl code which is fed by @worktree
-> 
-> So I'm confused.  Why would we get different results on Windows?
 
-I tracked down the difference between Windows and Linux, and it is...
+On 20.03.2013, at 19:56, Matthieu Moy wrote:
 
-	for my $file (@worktree) {
-		next if $symlinks && -l "$b/$file";
+> stash objects are commits with 2 parents (ie. merge commits). One commit
+> is the HEAD you stashed from, and the other is the saved state of the
+> index.
+...
+> Use git show --first-parent --name-status, it should do what you expect
 
-... this line in sub dir_diff. On Linux, we take the short-cut, but on
-Windows we proceed through the rest of the loop, which ultimately finds a
-difference here:
+Thanks a lot for clarifying that. It is actually mentioned in git help stash, but I've missed this.
+With "--first-parent" I get the expected result. Thanks for your help.
 
-		my $diff = compare("$b/$file", "$workdir/$file");
+> I'm not sure from the doc what the semantics of --name-status is
+> for merge commits, but it seems it shows only files modified in both
+> parents.
 
-and attempts to copy a file here:
+I think I've found the reason of this behavior.
+git help show mentiones that:
+> It also presents the merge commit in a special
+> format as produced by git diff-tree --cc.
+And git help diff-tree says that --cc implies -c, while -c "lists only files which were modified from all parents".
 
-			copy("$b/$file", "$workdir/$file") or
-
-where one of the files is the locked "output" file.
-
-I don't know how essential symlinks are for the operation of git-difftool
-and whether something can be done about it. The immediate fix is
-apparently to protect the tests with SYMLINKS.
-
--- Hannes
+-- Kirill.
