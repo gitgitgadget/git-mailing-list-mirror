@@ -1,71 +1,105 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/4] wt-status: fix possible use of uninitialized variable
-Date: Thu, 21 Mar 2013 12:58:04 -0700
-Message-ID: <20130321195804.GI29311@google.com>
-References: <20130321110338.GA18552@sigill.intra.peff.net>
- <20130321110527.GA18819@sigill.intra.peff.net>
- <20130321194949.GG29311@google.com>
- <7vip4ka5pb.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: merging a tag is a special case
+Date: Thu, 21 Mar 2013 13:10:45 -0700
+Message-ID: <7vehf8a4ze.fsf@alter.siamese.dyndns.org>
+References: <1363704914.6289.39.camel@test.quest-ce.net>
+ <7vfvzrjrad.fsf@alter.siamese.dyndns.org>
+ <1363802033-26868-1-git-send-email-ydroneaud@opteya.com>
+ <7vboadevpk.fsf@alter.siamese.dyndns.org>
+ <7vmwtwa5xa.fsf@alter.siamese.dyndns.org> <20130321195624.GH29311@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 21 20:58:39 2013
+Cc: Yann Droneaud <ydroneaud@opteya.com>, Git <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 21 21:11:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIldG-0003cs-D8
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 20:58:38 +0100
+	id 1UIlpU-0003zh-Az
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 21:11:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752459Ab3CUT6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 15:58:10 -0400
-Received: from mail-da0-f50.google.com ([209.85.210.50]:44053 "EHLO
-	mail-da0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751219Ab3CUT6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 15:58:09 -0400
-Received: by mail-da0-f50.google.com with SMTP id t1so315656dae.23
-        for <git@vger.kernel.org>; Thu, 21 Mar 2013 12:58:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=OcJd/edyb7M79qUI9RTiuZ/RL1mDodH6woANTk5Lxek=;
-        b=gjsjIO0yYLL5sDj9p5S0jhehP+ZkA0LGsyfJkk3gr7bnrnYxK4QwjGqIpPGNswa0BR
-         NMDORGSH13BLENqx8JBuRPWOB/zREU1USkp2ByLLThBx0OvFsqUibjKoyhSk4EFdFw8U
-         YUc8xzq5At65iJyEf4uh+4vxx02vXGTlEpoGHuA6lFUk9psecf2uOQq8pIoHGaP47f2y
-         0mHmGB6ClJuY4KLTplwtMTQtMQqRk1RrX8/pKkI9O94sQO0tqRY5ykaTj17sg1ryt2eD
-         NaogoOyzs7wArEkOPVq2mIOAxnYF/LfJil7vrxG6OeicAXKB2vhW1lU9TpE2Ov2cC8pg
-         VkUA==
-X-Received: by 10.66.76.135 with SMTP id k7mr16298334paw.180.1363895889070;
-        Thu, 21 Mar 2013 12:58:09 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id ax3sm7139800pbd.42.2013.03.21.12.58.06
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 21 Mar 2013 12:58:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vip4ka5pb.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751980Ab3CUUKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 16:10:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42762 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751276Ab3CUUKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 16:10:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55B7BA0EB;
+	Thu, 21 Mar 2013 16:10:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ck14xxzooMru9e/9w3xwPkCsUKc=; b=H0ydpY
+	yOq5MgFp7f9IlZbUh0t7Wzwktu1dmdpE0hVP0x4G4N67HDM5jrguxyS0zQDTPjSk
+	FuSi6airZb1Fm4DLU5k46GC67VrOWGfk0kGoZxLOpaYjLZNE/GZLG2ZOR+N4m5u6
+	hSGjciLT09jmKsISarexlXzZp/96T03WFmrts=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gSVoRalcwU6qN5vBtS5He4VxSQRsmr08
+	TttES8YhUM6Q38Ew4LOwG4XYPUJD+qAQl+/dAzGN2TQ7vVpFv3rw96dFoLpjRw8R
+	WHxfCJvlx4iZZQV+IkpWBTasn+qsHZlZoTA2eXMldHxQv6w2I47G8x/ToUwD0jQl
+	gmYdn8ZwWKY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 484CEA0EA;
+	Thu, 21 Mar 2013 16:10:47 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5DC6A0E8; Thu, 21 Mar 2013
+ 16:10:46 -0400 (EDT)
+In-Reply-To: <20130321195624.GH29311@google.com> (Jonathan Nieder's message
+ of "Thu, 21 Mar 2013 12:56:24 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6ADDDFDA-9263-11E2-A0A7-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218754>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->> Jeff King wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->>> +	default:
->>> +		die("BUG: unhandled change_type %d in wt_status_print_change_data",
->>> +		    change_type);
->>
->> Micronit: s/unhandled/invalid/.
->
-> I actually think "unhandled" is more correct for this one; we may
-> add new change_type later in the caller, and we do not want to
-> forget to add a new case arm that handles the new value.
+> Nice and clear, but doesn't this contradict b5c9f1c1b0ed (merge: do
+> not create a signed tag merge under --ff-only option, 2012-02-05)?
 
-Ok.  Makes sense.
+It does X-<.  Here is a replacement.
+
+The "--ff-only v1.2.3 will fail" can be left unsaid because it would
+fail (and succeed) under the same condition "-ff-only v1.2.3^0"
+would.
+
+ Documentation/git-merge.txt | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index df2d28d..d1f3df9 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -179,19 +179,18 @@ the commit message template is prepared with the tag message.
+ Additionally, the signature check is reported as a comment
+ if the tag is signed.  See also linkgit:git-tag[1].
+ 
+-Consequently a request `git merge --ff-only v1.2.3` to merge such a
+-tag would fail.
+-
+ When you want to just integrate with the work leading to the commit
+ that happens to be tagged, e.g. synchronizing with an upstream
+-release point, you may not want to make an unnecessary merge commit
+-especially when you do not have any work on your own.  In such a
+-case, you can "unwrap" the tag yourself before feeding it to `git
+-merge`, e.g.
++release point, you may not want to make an unnecessary merge commit.
++
++In such a case, you can "unwrap" the tag yourself before feeding it
++to `git merge`, or pass `--ff-only` when you do not have any work on
++your own. e.g.
+ 
+ ---
+ git fetch origin
+-git merge [--ff-only] v1.2.3^0
++git merge v1.2.3^0
++git merge --ff-only v1.2.3
+ ---
+ 
+ 
