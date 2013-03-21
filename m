@@ -1,7 +1,8 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v9 0/5] git log -L
-Date: Thu, 21 Mar 2013 13:52:35 +0100
-Message-ID: <cover.1363865444.git.trast@student.ethz.ch>
+Subject: [PATCH v9 4/5] log -L: :pattern:file syntax to find by funcname
+Date: Thu, 21 Mar 2013 13:52:39 +0100
+Message-ID: <153eaec7aff9618de3c30aa0b21556e1ed512e12.1363865444.git.trast@student.ethz.ch>
+References: <cover.1363865444.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -9,125 +10,352 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
 	"Will Palmer" <wmpalmer@gmail.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 21 13:53:17 2013
+X-From: git-owner@vger.kernel.org Thu Mar 21 13:53:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIeza-0004tz-Sp
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 13:53:15 +0100
+	id 1UIezw-00059L-S6
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 13:53:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758206Ab3CUMwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 08:52:47 -0400
+	id S932238Ab3CUMww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 08:52:52 -0400
 Received: from edge10.ethz.ch ([82.130.75.186]:22138 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756438Ab3CUMwo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 08:52:44 -0400
+	id S1758189Ab3CUMwt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 08:52:49 -0400
 Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
  (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 21 Mar
- 2013 13:52:38 +0100
+ 2013 13:52:39 +0100
 Received: from pctrast.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
  (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 21 Mar
  2013 13:52:41 +0100
 X-Mailer: git-send-email 1.8.2.241.gee8bb87
+In-Reply-To: <cover.1363865444.git.trast@student.ethz.ch>
 X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218721>
 
-Compared to the previous round at
+This new syntax finds a funcname matching /pattern/, and then takes from there
+up to (but not including) the next funcname.  So you can say
 
-  http://thread.gmane.org/gmane.comp.version-control.git/217236
+  git log -L:main:main.c
 
-I made the following changes (numbers from v8):
+and it will dig up the main() function and show its line-log, provided
+there are no other funcnames matching 'main'.
 
-[1/5] Refactor parse_loc
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ Documentation/blame-options.txt     |   2 +-
+ Documentation/git-blame.txt         |   6 +-
+ Documentation/git-log.txt           |  11 +--
+ Documentation/line-range-format.txt |   7 ++
+ builtin/blame.c                     |   2 +-
+ line-log.c                          |   5 +-
+ line-range.c                        | 130 +++++++++++++++++++++++++++++++++++-
+ line-range.h                        |   3 +-
+ t/t4211-line-log.sh                 |   2 +
+ 9 files changed, 154 insertions(+), 14 deletions(-)
 
-  Based on Junio's suggestions, the refactoring is now to a new file
-  line-range.c that line-log.c will later use.  (It still irks me too
-  much to call straight into builtin/blame.c.)
-
-  I also re-copied the existing functions, to make sure that they are
-  the same.  Junio correctly spotted some differences, and since we
-  claim to only refactor those are bad.
-
-[2/5] Export rewrite_parents() for 'log -L'
-
-  Unchanged.
-
-[2.5/5] blame: introduce $ as "end of file" in -L syntax
-
-  Dropped.  As Junio remarked, omitting the end is already a valid way
-  of saying the same.
-
-[3/5] Implement line-history search (git log -L)
-
-  Integrated Ramsay's fixes and Junio's remarks.  Also made some minor
-  cleanups.  Added a perf test.
-
-[4/5] log -L: :pattern:file syntax to find by funcname
-
-  Adjusted for changes in the earlier patches; otherwise the same.
-
-[5/5] Speed up log -L... -M
-
-  Added to this series, I posted the same patch earlier in the side
-  thread about the bad performance.  The perf test from 4/5 neatly
-  shows the difference.
-
-Bo Yang (2):
-  Refactor parse_loc
-  Export rewrite_parents() for 'log -L'
-
-Thomas Rast (3):
-  Implement line-history search (git log -L)
-  log -L: :pattern:file syntax to find by funcname
-  Speed up log -L... -M
-
- Documentation/blame-options.txt     |   21 +-
- Documentation/git-blame.txt         |    6 +-
- Documentation/git-log.txt           |   23 +
- Documentation/line-range-format.txt |   25 +
- Makefile                            |    4 +
- builtin/blame.c                     |   99 +--
- builtin/log.c                       |   31 +
- line-log.c                          | 1228 +++++++++++++++++++++++++++++++++++
- line-log.h                          |   49 ++
- line-range.c                        |  237 +++++++
- line-range.h                        |   36 +
- log-tree.c                          |    4 +
- revision.c                          |   22 +-
- revision.h                          |   16 +-
- t/perf/p4211-line-log.sh            |   34 +
- t/t4211-line-log.sh                 |   40 ++
- t/t4211/expect.beginning-of-file    |   43 ++
- t/t4211/expect.end-of-file          |   62 ++
- t/t4211/expect.move-support-f       |   40 ++
- t/t4211/expect.simple-f             |   59 ++
- t/t4211/expect.simple-main          |   68 ++
- t/t4211/expect.two-ranges           |  102 +++
- t/t4211/expect.vanishes-early       |   39 ++
- t/t4211/history.export              |  330 ++++++++++
- t/t8003-blame-corner-cases.sh       |    6 +
- 25 files changed, 2501 insertions(+), 123 deletions(-)
- create mode 100644 Documentation/line-range-format.txt
- create mode 100644 line-log.c
- create mode 100644 line-log.h
- create mode 100644 line-range.c
- create mode 100644 line-range.h
- create mode 100755 t/perf/p4211-line-log.sh
- create mode 100755 t/t4211-line-log.sh
- create mode 100644 t/t4211/expect.beginning-of-file
- create mode 100644 t/t4211/expect.end-of-file
- create mode 100644 t/t4211/expect.move-support-f
- create mode 100644 t/t4211/expect.simple-f
- create mode 100644 t/t4211/expect.simple-main
- create mode 100644 t/t4211/expect.two-ranges
- create mode 100644 t/t4211/expect.vanishes-early
- create mode 100644 t/t4211/history.export
-
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 6998d9f..e9f984b 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -9,7 +9,7 @@
+ --show-stats::
+ 	Include additional statistics at the end of blame output.
+ 
+--L <start>,<end>::
++-L <start>,<end>, -L :<regex>::
+ 	Annotate only the given line range.  <start> and <end> can take
+ 	one of these forms:
+ 
+diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+index 9a05c2b..6cea7f1 100644
+--- a/Documentation/git-blame.txt
++++ b/Documentation/git-blame.txt
+@@ -8,9 +8,9 @@ git-blame - Show what revision and author last modified each line of a file
+ SYNOPSIS
+ --------
+ [verse]
+-'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental] [-L n,m]
+-	    [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>] [--abbrev=<n>]
+-	    [<rev> | --contents <file> | --reverse <rev>] [--] <file>
++'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental]
++	    [-L n,m | -L :fn] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
++	    [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>] [--] <file>
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 8727c60..4850226 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -69,12 +69,13 @@ produced by --stat etc.
+ 	Note that only message is considered, if also a diff is shown
+ 	its size is not included.
+ 
+--L <start>,<end>:<file>::
++-L <start>,<end>:<file>, -L :<regex>:<file>::
++
+ 	Trace the evolution of the line range given by "<start>,<end>"
+-	within the <file>.  You may not give any pathspec limiters.
+-	This is currently limited to a walk starting from a single
+-	revision, i.e., you may only give zero or one positive
+-	revision arguments.
++	(or the funcname regex <regex>) within the <file>.  You may
++	not give any pathspec limiters.  This is currently limited to
++	a walk starting from a single revision, i.e., you may only
++	give zero or one positive revision arguments.
+ 
+ <start> and <end> can take one of these forms:
+ 
+diff --git a/Documentation/line-range-format.txt b/Documentation/line-range-format.txt
+index 265bc23..3e7ce72 100644
+--- a/Documentation/line-range-format.txt
++++ b/Documentation/line-range-format.txt
+@@ -16,3 +16,10 @@ starting at the line given by <start>.
+ This is only valid for <end> and will specify a number
+ of lines before or after the line given by <start>.
+ +
++
++- :regex
+++
++If the option's argument is of the form :regex, it denotes the range
++from the first funcname line that matches <regex>, up to the next
++funcname line.
+++
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 20eb439..1c09d55 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1940,7 +1940,7 @@ static void prepare_blame_range(struct scoreboard *sb,
+ 				long lno,
+ 				long *bottom, long *top)
+ {
+-	if (parse_range_arg(bottomtop, nth_line_cb, sb, lno, bottom, top))
++	if (parse_range_arg(bottomtop, nth_line_cb, sb, lno, bottom, top, sb->path))
+ 		usage(blame_usage);
+ }
+ 
+diff --git a/line-log.c b/line-log.c
+index 29162fc..81c8d74 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -12,6 +12,7 @@
+ #include "strbuf.h"
+ #include "log-tree.h"
+ #include "graph.h"
++#include "userdiff.h"
+ #include "line-log.h"
+ 
+ static void range_set_grow(struct range_set *rs, size_t extra)
+@@ -438,7 +439,6 @@ static void range_set_map_across_diff(struct range_set *out,
+ 	*touched_out = touched;
+ }
+ 
+-
+ static struct commit *check_single_commit(struct rev_info *revs)
+ {
+ 	struct object *commit = NULL;
+@@ -559,7 +559,8 @@ static const char *nth_line(void *data, long line)
+ 		cb_data.line_ends = ends;
+ 
+ 		if (parse_range_arg(range_part, nth_line, &cb_data,
+-				    lines, &begin, &end))
++				    lines, &begin, &end,
++				    spec->path))
+ 			die("malformed -L argument '%s'", range_part);
+ 		if (begin < 1)
+ 			begin = 1;
+diff --git a/line-range.c b/line-range.c
+index d0c7dac..ea141ab 100644
+--- a/line-range.c
++++ b/line-range.c
+@@ -1,5 +1,8 @@
+ #include "git-compat-util.h"
+ #include "line-range.h"
++#include "xdiff-interface.h"
++#include "strbuf.h"
++#include "userdiff.h"
+ 
+ /*
+  * Parse one item in the -L option
+@@ -84,9 +87,131 @@ static const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
+ 	}
+ }
+ 
++static int match_funcname(xdemitconf_t *xecfg, const char *bol, const char *eol)
++{
++	if (xecfg) {
++		char buf[1];
++		return xecfg->find_func(bol, eol - bol, buf, 1,
++					xecfg->find_func_priv) >= 0;
++	}
++
++	if (bol == eol)
++		return 0;
++	if (isalpha(*bol) || *bol == '_' || *bol == '$')
++		return 1;
++	return 0;
++}
++
++static const char *find_funcname_matching_regexp(xdemitconf_t *xecfg, const char *start,
++						 regex_t *regexp)
++{
++	int reg_error;
++	regmatch_t match[1];
++	while (1) {
++		const char *bol, *eol;
++		reg_error = regexec(regexp, start, 1, match, 0);
++		if (reg_error == REG_NOMATCH)
++			return NULL;
++		else if (reg_error) {
++			char errbuf[1024];
++			regerror(reg_error, regexp, errbuf, 1024);
++			die("-L parameter: regexec() failed: %s", errbuf);
++		}
++		/* determine extent of line matched */
++		bol = start+match[0].rm_so;
++		eol = start+match[0].rm_eo;
++		while (bol > start && *bol != '\n')
++			bol--;
++		if (*bol == '\n')
++			bol++;
++		while (*eol && *eol != '\n')
++			eol++;
++		if (*eol == '\n')
++			eol++;
++		/* is it a funcname line? */
++		if (match_funcname(xecfg, (char*) bol, (char*) eol))
++			return bol;
++		start = eol;
++	}
++}
++
++static const char *parse_range_funcname(const char *arg, nth_line_fn_t nth_line_cb,
++					void *cb_data, long lines, long *begin, long *end,
++					const char *path)
++{
++	const char *pattern;
++	const char *term;
++	struct userdiff_driver *drv;
++	xdemitconf_t *xecfg = NULL;
++	const char *start;
++	const char *p;
++	int reg_error;
++	regex_t regexp;
++
++	pattern = arg+1;
++	term = (char*) strchr(pattern, ':');
++	if (term) {
++		assert(!begin);
++		return term;
++	}
++	/* all of the rest is the regex */
++	term = pattern + strlen(pattern);
++
++	start = nth_line_cb(cb_data, 0);
++
++	drv = userdiff_find_by_path(path);
++	if (drv && drv->funcname.pattern) {
++		const struct userdiff_funcname *pe = &drv->funcname;
++		xecfg = xcalloc(1, sizeof(*xecfg));
++		xdiff_set_find_func(xecfg, pe->pattern, pe->cflags);
++	}
++
++	reg_error = regcomp(&regexp, pattern, REG_NEWLINE);
++	if (reg_error) {
++		char errbuf[1024];
++		regerror(reg_error, &regexp, errbuf, 1024);
++		die("-L parameter '%s': %s", pattern, errbuf);
++	}
++
++	p = find_funcname_matching_regexp(xecfg, (char*) start, &regexp);
++	if (!p)
++		die("-L parameter '%s': no match", pattern);
++	*begin = 0;
++	while (p > nth_line_cb(cb_data, *begin))
++		(*begin)++;
++
++	if (*begin >= lines)
++		die("-L parameter '%s' matches at EOF", pattern);
++
++	*end = *begin+1;
++	while (*end < lines) {
++		const char *bol = nth_line_cb(cb_data, *end);
++		const char *eol = nth_line_cb(cb_data, *end+1);
++		if (match_funcname(xecfg, bol, eol))
++			break;
++		(*end)++;
++	}
++
++	regfree(&regexp);
++	free(xecfg);
++
++	/* compensate for 1-based numbering */
++	(*begin)++;
++
++	return term;
++}
++
+ int parse_range_arg(const char *arg, nth_line_fn_t nth_line_cb,
+-		    void *cb_data, long lines, long *begin, long *end)
++		    void *cb_data, long lines, long *begin, long *end,
++		    const char *path)
+ {
++	if (*arg == ':') {
++		arg = parse_range_funcname(arg, nth_line_cb, cb_data, lines, begin, end, path);
++		if (*arg)
++			return -1;
++		return 0;
++	}
++
+ 	arg = parse_loc(arg, nth_line_cb, cb_data, lines, 1, begin);
+ 
+ 	if (*arg == ',')
+@@ -100,6 +225,9 @@ int parse_range_arg(const char *arg, nth_line_fn_t nth_line_cb,
+ 
+ const char *skip_range_arg(const char *arg)
+ {
++	if (*arg == ':')
++		return parse_range_funcname(arg, NULL, NULL, 0, NULL, NULL, NULL);
++
+ 	arg = parse_loc(arg, NULL, NULL, 0, -1, NULL);
+ 
+ 	if (*arg == ',')
+diff --git a/line-range.h b/line-range.h
+index 88aaf08..ae3d012 100644
+--- a/line-range.h
++++ b/line-range.h
+@@ -19,7 +19,8 @@
+ extern int parse_range_arg(const char *arg,
+ 			   nth_line_fn_t nth_line_cb,
+ 			   void *cb_data, long lines,
+-			   long *begin, long *end);
++			   long *begin, long *end,
++			   const char *path);
+ 
+ /*
+  * Scan past a range argument that could be parsed by
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index 286390d..096679d 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -18,8 +18,10 @@ canned_test () {
+ canned_test "-L 4,12:a.c simple" simple-f
+ canned_test "-L 4,+9:a.c simple" simple-f
+ canned_test "-L '/long f/,/^}/:a.c' simple" simple-f
++canned_test "-L :f:a.c simple" simple-f-to-main
+ 
+ canned_test "-L '/main/,/^}/:a.c' simple" simple-main
++canned_test "-L :main:a.c simple" simple-main-to-end
+ 
+ canned_test "-L 1,+4:a.c simple" beginning-of-file
+ 
 -- 
 1.8.2.241.gee8bb87
