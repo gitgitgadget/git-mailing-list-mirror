@@ -1,84 +1,59 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC] Add posibility to preload stat information.
-Date: Thu, 21 Mar 2013 11:41:48 +0100
-Message-ID: <87vc8lyqz7.fsf@pctrast.inf.ethz.ch>
-References: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
-	<20130320164806.GA10752@sigill.intra.peff.net>
-	<7vhak6f0w4.fsf@alter.siamese.dyndns.org>
-	<20130320174759.GA29349@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/4] drop some "int x = x" hacks to silence gcc warnings
+Date: Thu, 21 Mar 2013 07:03:38 -0400
+Message-ID: <20130321110338.GA18552@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Fredrik Gustafsson <iveqy@iveqy.com>, <spearce@spearce.org>,
-	<git@vger.kernel.org>, <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 21 11:42:20 2013
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 21 12:04:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIcwt-000565-Ut
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 11:42:20 +0100
+	id 1UIdI9-0002CR-9i
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 12:04:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753895Ab3CUKlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 06:41:53 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:2681 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753358Ab3CUKlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 06:41:52 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 21 Mar
- 2013 11:41:47 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.153.233) by
- CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Thu, 21 Mar 2013 11:41:49 +0100
-In-Reply-To: <20130320174759.GA29349@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 20 Mar 2013 13:47:59 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1756684Ab3CULDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 07:03:49 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33658 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754555Ab3CULDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 07:03:49 -0400
+Received: (qmail 20632 invoked by uid 107); 21 Mar 2013 11:05:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Mar 2013 07:05:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Mar 2013 07:03:38 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218707>
 
-Jeff King <peff@peff.net> writes:
+I was fooling around with clang and noticed that it complains about the
+"int x = x" construct under -Wall. That is IMHO a deficiency in clang,
+since the idiom has a well-defined use in silencing -Wuninitialized
+warnings. But I've also always been nervous about the idiom, because
+it's easy to get the analysis wrong (after all, the compiler gets these
+cases wrong because they're complex), and it's possible for the code to
+change later, introducing a new problem.
 
-> On Wed, Mar 20, 2013 at 10:15:39AM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > So maybe just run "git status >/dev/null"?
->> 
->> In the background?  How often would it run?  I do not think a single
->> lockfile solves anything.  It may prevent simultaneous runs of two
->> such "prime the well" processes, but the same user may be working in
->> two separate repositories.
->
-> Yes, in the background (he invokes __git_recursive_stat already in the
-> background). I'd think you would want to run it whenever you enter a
-> repository.
->
->> I do not see anything that prevents it from running in the same
->> repository over and over again, either.  "prompt" is a bad place to
->> do this kind of thing.
->
-> Yeah, I did not look closely at that. The commit message claims "When
-> entering a git working dir", but the implementation runs it on each
-> prompt invocation, which is awful. I think you'd want to check to use
-> rev-parse to see if you have changed into a new git repo, and only run
-> it once then.
+So I investigated our uses of the idiom. Many of them are correct and
+still necessary. Some are correct but no longer necessary with modern
+gcc. And some are technically correct, but the code and its assumptions
+can be made clearer (to both a reader and the compiler) with a simple
+rewrite. Patches are below for the latter two types.
 
-I think it would actually be a somewhat interesting feature if it
-interacted with GIT_PS1_SHOW*.  If you use these settings (I personally
-use SHOWDIRTYSTATE but not SHOWUNTRACKEDFILES), the prompt hangs while
-__git_ps1 runs git-status.  It should be possible to run a git-status
-process in the background when entering a repository, and displaying
-some marker ('??' maybe) in the prompt instead of the dirty-state info
-until git-status has finished.  That way the user doesn't have his shell
-blocked by cding to a big repo.
+Note that none of these fixes an actual bug in the current code; this is
+purely maintenance hygiene. Nor do any of the patches depend on each
+other; we can drop any of them that do not look they are providing a net
+benefit.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+  [1/4]: wt-status: fix possible use of uninitialized variable
+  [2/4]: fast-import: use pointer-to-pointer to keep list tail
+  [3/4]: drop some obsolete "x = x" compiler warning hacks
+  [4/4]: transport: drop "int cmp = cmp" hack
+
+-Peff
