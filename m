@@ -1,69 +1,77 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: Re: [PATCH 0/4] drop some "int x = x" hacks to silence gcc warnings
-Date: Thu, 21 Mar 2013 14:56:28 +0100
-Message-ID: <kif3ig$au5$1@ger.gmane.org>
-References: <20130321110338.GA18552@sigill.intra.peff.net> <514AF2E1.7020409@viscovery.net> <kif2so$2ug$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Add posibility to preload stat information.
+Date: Thu, 21 Mar 2013 07:44:35 -0700
+Message-ID: <7vtxo4byng.fsf@alter.siamese.dyndns.org>
+References: <1363781732-11396-1-git-send-email-iveqy@iveqy.com>
+ <20130320164806.GA10752@sigill.intra.peff.net>
+ <7vhak6f0w4.fsf@alter.siamese.dyndns.org>
+ <20130320174759.GA29349@sigill.intra.peff.net>
+ <87vc8lyqz7.fsf@pctrast.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 21 14:57:17 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Fredrik Gustafsson <iveqy@iveqy.com>,
+	<spearce@spearce.org>, <git@vger.kernel.org>, <pclouds@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Mar 21 15:45:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIfzY-000607-F5
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 14:57:16 +0100
+	id 1UIgjq-0005XP-FZ
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 15:45:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932364Ab3CUN4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 09:56:49 -0400
-Received: from plane.gmane.org ([80.91.229.3]:36728 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755858Ab3CUN4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 09:56:48 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UIfzS-0005sO-3g
-	for git@vger.kernel.org; Thu, 21 Mar 2013 14:57:10 +0100
-Received: from dsdf-4d0a073f.pool.mediaways.net ([77.10.7.63])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Mar 2013 14:57:10 +0100
-Received: from jojo by dsdf-4d0a073f.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Mar 2013 14:57:10 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsdf-4d0a073f.pool.mediaways.net
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S932687Ab3CUOoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 10:44:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62548 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753538Ab3CUOoi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 10:44:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AFE8CAF88;
+	Thu, 21 Mar 2013 10:44:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Zg8zYwj9cHxldHAVVezcUcJrvTk=; b=UAS6wF
+	gUXGLakYFSFhBPIcmKDeaC9uOaYBETZ6dWId12FX92thwS42hvIsDsglDEhv3xyM
+	t/8zOmtWmfNPFcK7dAgBj69C6a87ugP479SukTZi9YhPL9wXQEAMfhwQJguI2DC6
+	YbaUziZKhOCasjZ5bqB9lZCeQybQxoeaysWXk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z5OMXDYdoudbpvGw9ip0Ak9E21qdNUzG
+	WXlPNE0rE7D4tNqswdlw0YBFfaEDHiOzaW2lL+MSNSMZxuCHpyylI5TrPwIZDLQX
+	OiT6BI7M8VLV9qgYsZ1NBLxuQpQX+NDhKLXFn/W9j+IBx5+/0hElwAhYePwWEuXu
+	P25E5FMW1k8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2F21AF87;
+	Thu, 21 Mar 2013 10:44:37 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1FF58AF85; Thu, 21 Mar 2013
+ 10:44:37 -0400 (EDT)
+In-Reply-To: <87vc8lyqz7.fsf@pctrast.inf.ethz.ch> (Thomas Rast's message of
+ "Thu, 21 Mar 2013 11:41:48 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DA85D88E-9235-11E2-BC64-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218730>
 
-Joachim Schmitz wrote:
-> Johannes Sixt wrote:
->> Am 3/21/2013 12:03, schrieb Jeff King:
->>> I was fooling around with clang and noticed that it complains about
->>> the "int x = x" construct under -Wall. That is IMHO a deficiency in
->>> clang, since the idiom has a well-defined use in silencing
->>> -Wuninitialized warnings.
->> 
->> IMO, that's a myth. The construct invokes undefined behavior at least
->> since C99, and the compilers are right to complain about it.
-> 
-> And I complained about this a couple months ago, as the compiler on
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Actually on August 20th, 2012...
+> I think it would actually be a somewhat interesting feature if it
+> interacted with GIT_PS1_SHOW*.  If you use these settings (I personally
+> use SHOWDIRTYSTATE but not SHOWUNTRACKEDFILES), the prompt hangs while
+> __git_ps1 runs git-status.  It should be possible to run a git-status
+> process in the background when entering a repository, and displaying
+> some marker ('??' maybe) in the prompt instead of the dirty-state info
+> until git-status has finished.
 
-> HP-NonStop stumbles across this too (by emitting a warning)
+This is somewhat interesting.
 
-
-Bye, Jojo
+Perhaps we can introduce a helper binary that does what __git_ps1()
+does, with a --timeout=500ms option to say "I dunno (yet)", and keep
+priming the well in the background when it takes more than the
+specified amount of time?
