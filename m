@@ -1,92 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff.c: diff.renamelimit => diff.renameLimit in message
-Date: Thu, 21 Mar 2013 13:43:14 -0700
-Message-ID: <7va9pwa3h9.fsf@alter.siamese.dyndns.org>
-References: <CAM998vHDay2o55Q3v4tfh=tvcmpOHHCPX-Ya5KxVxsn3=jzs3A@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/4] fast-import: use pointer-to-pointer to keep list tail
+Date: Thu, 21 Mar 2013 13:43:55 -0700
+Message-ID: <20130321204355.GK29311@google.com>
+References: <20130321110338.GA18552@sigill.intra.peff.net>
+ <20130321110817.GB18819@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Max Nanasy <max.nanasy@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 21 21:43:47 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 21 21:44:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UImKu-0006Vl-QI
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 21:43:45 +0100
+	id 1UImLc-0006xs-79
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 21:44:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752965Ab3CUUnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 16:43:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43438 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752746Ab3CUUnQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 16:43:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B842B8C9;
-	Thu, 21 Mar 2013 16:43:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EgbxhJNu5V4Q290VkfUvtNVueo0=; b=VKBrJp
-	XRrz2jyNUhCHHCnXTPkRCFCDrjE98fHk36hrGW39xycRaekyMUYnKuaOLp/QxBBg
-	uYQSKXjfnH2gK/pJosvTXpaHJkIyN+FGgN7Tnb8NdI9j0HCiHwzoQpc8VGkP6n8J
-	6gr+rwvVtQL6Qwbfq2GnLndBzKcjMOO5U8V9k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eauNRMk0fTKJAPT9gnlR/JOQ+TJS4v6F
-	11F8jcvBaRMWJ6MTXPLHvOPe31VUMsitxQpppRRiz1p1Sok2oeNvHnPj9uYvZ9hR
-	Q16HYBM8SAL1TcSJnr8Wqw611Buw3VAmmj6dWAvkmT1c6CvPy5mh9dIQAlzV+wFU
-	He0v67bAiSQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1022BB8C8;
-	Thu, 21 Mar 2013 16:43:16 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 775E9B8C4; Thu, 21 Mar 2013
- 16:43:15 -0400 (EDT)
-In-Reply-To: <CAM998vHDay2o55Q3v4tfh=tvcmpOHHCPX-Ya5KxVxsn3=jzs3A@mail.gmail.com> (Max
- Nanasy's message of "Thu, 21 Mar 2013 12:53:38 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F472A56A-9267-11E2-B46D-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753152Ab3CUUoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 16:44:01 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:40650 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753114Ab3CUUoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 16:44:00 -0400
+Received: by mail-pd0-f169.google.com with SMTP id 3so1265458pdj.0
+        for <git@vger.kernel.org>; Thu, 21 Mar 2013 13:43:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=KvQ0r9mygJwuvTP2qIxPJ8TuP9GE7UhSGzvcx6+vN4A=;
+        b=AJu+QJfWMGLob0Rhxlr+n8f8iOs1nZu5dOspQJ0Q5vRFQKDdl1p4uCWm93xEFIZbjJ
+         yhDEwhkTrjkg2p0ForgqXlr4GCbTckuhbo8fSPvqdioXNrmjMCuWe5byDoZfDE+5/XYK
+         iq0D0wc3cm2ypEimQdFZO/IPVCDqonwN4gXkfrj/mWLYMpMCGb2cNw7KtGBl+GgUc4x2
+         8VUQRvKaq6yhDDwJPG2wP7uYBwZd0TH02ZcxJea/Iri62G4z2gR4AqMuKs5HgYp4D+VG
+         ynwXUp/rw5Vl4Ogb5jJpD1IU53vdrQYp0agGWRf5ZO+0ychc13VBjnFeM8CLrs0fNmHG
+         j0Lw==
+X-Received: by 10.68.129.135 with SMTP id nw7mr16698692pbb.58.1363898639828;
+        Thu, 21 Mar 2013 13:43:59 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id tm1sm7263129pbc.11.2013.03.21.13.43.57
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 21 Mar 2013 13:43:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130321110817.GB18819@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218758>
 
-Max Nanasy <max.nanasy@gmail.com> writes:
+Jeff King wrote:
 
-> In the warning message printed when rename or unmodified copy
-> detection was skipped due to too many files, change "diff.renamelimit"
-> to "diff.renameLimit", in order to make it consistent with git
-> documentation, which consistently uses "diff.renameLimit".
+> This is shorter, idiomatic, and it means the compiler does
+> not get confused about whether our "e" pointer is valid,
+> letting us drop the "e = e" hack.
 >
-> Signed-off-by: Max Nanasy <max.nanasy@gmail.com>
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
+> And it fixes an instance of Linus's "people do not understand pointers"
 
-I "git grep"ed around and it tells me that this is the only such
-place.  Thanks.
-
-The patch is severely whitespace damaged.  If you plan to keep
-contributing to Git, I'd like to make sure that your mail toolchain
-is sane, so that we do not have to keep hand-adjusting patches
-submitted by you before applying.
-
->  diff.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/diff.c b/diff.c
-> index 156fec4..052974e 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -4662,7 +4662,7 @@ int diff_result_code(struct diff_options *opt, int status)
->  {
->   int result = 0;
->
-> - diff_warn_rename_limit("diff.renamelimit",
-> + diff_warn_rename_limit("diff.renameLimit",
->         opt->needed_rename_limit,
->         opt->degraded_cc_to_c);
->   if (!DIFF_OPT_TST(opt, EXIT_WITH_STATUS) &&
-> --
-> 1.8.1.3
+Heh.  Yes, looks correct.  For what it's worth,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
