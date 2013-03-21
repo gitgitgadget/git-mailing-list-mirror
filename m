@@ -1,7 +1,7 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v9 5/5] Speed up log -L... -M
-Date: Thu, 21 Mar 2013 13:52:40 +0100
-Message-ID: <72a500432c0e6fde830f505204a1d02180710656.1363865444.git.trast@student.ethz.ch>
+Subject: [PATCH v9 2/5] Export rewrite_parents() for 'log -L'
+Date: Thu, 21 Mar 2013 13:52:37 +0100
+Message-ID: <e995dd0279409040190317005953fdb216f6f6af.1363865444.git.trast@student.ethz.ch>
 References: <cover.1363865444.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -10,27 +10,27 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
 	"Will Palmer" <wmpalmer@gmail.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 21 13:54:12 2013
+X-From: git-owner@vger.kernel.org Thu Mar 21 13:54:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIf0V-0005Uq-2B
+	id 1UIf0V-0005Uq-JX
 	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 13:54:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758208Ab3CUMxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 08:53:38 -0400
+	id S1757173Ab3CUMxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 08:53:43 -0400
 Received: from edge10.ethz.ch ([82.130.75.186]:22138 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754724Ab3CUMwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 08:52:51 -0400
+	id S1758190Ab3CUMwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 08:52:46 -0400
 Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
  (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 21 Mar
  2013 13:52:39 +0100
 Received: from pctrast.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
  (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 21 Mar
- 2013 13:52:42 +0100
+ 2013 13:52:41 +0100
 X-Mailer: git-send-email 1.8.2.241.gee8bb87
 In-Reply-To: <cover.1363865444.git.trast@student.ethz.ch>
 X-Originating-IP: [129.132.153.233]
@@ -38,117 +38,87 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218725>
 
-So far log -L only used the implicit diff filtering by pathspec.  If
-the user specifies -M, we cannot do that, and so we simply handed the
-whole diff queue (which is approximately 'git show --raw') to
-diffcore_std().
+From: Bo Yang <struggleyb.nku@gmail.com>
 
-Unfortunately this is very slow.  We can optimize a lot if we throw
-out files that we know cannot possibly be interesting, in the same
-spirit that the pathspec filtering reduces the number of files.
+The function rewrite_one is used to rewrite a single
+parent of the current commit, and is used by rewrite_parents
+to rewrite all the parents.
 
-However, in this case, we have to be more careful.  Because we want to
-look out for renames, we need to keep all filepairs where something
-was deleted.
+Decouple the dependence between them by making rewrite_one
+a callback function that is passed to rewrite_parents. Then
+export rewrite_parents for reuse by the line history browser.
 
-This is a bit hacky and should really be replaced by equivalent
-support in --follow, and just using that.  However, in the meantime it
-speeds up 'log -M -L' by an order of magnitude.
+We will use this function in line-log.c.
 
+Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- line-log.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 52 insertions(+), 4 deletions(-)
+ revision.c | 13 ++++---------
+ revision.h | 10 ++++++++++
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/line-log.c b/line-log.c
-index 81c8d74..4327327 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -750,7 +750,50 @@ static void move_diff_queue(struct diff_queue_struct *dst,
- 	DIFF_QUEUE_CLEAR(src);
+diff --git a/revision.c b/revision.c
+index ef60205..46319d5 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2173,12 +2173,6 @@ int prepare_revision_walk(struct rev_info *revs)
+ 	return 0;
  }
  
--static void queue_diffs(struct diff_options *opt,
-+static void filter_diffs_for_paths(struct line_log_data *range, int keep_deletions)
-+{
-+	int i;
-+	struct diff_queue_struct outq;
-+	DIFF_QUEUE_CLEAR(&outq);
-+
-+	for (i = 0; i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+		struct line_log_data *rg = NULL;
-+
-+		if (!DIFF_FILE_VALID(p->two)) {
-+			if (keep_deletions)
-+				diff_q(&outq, p);
-+			else
-+				diff_free_filepair(p);
-+			continue;
-+		}
-+		for (rg = range; rg; rg = rg->next) {
-+			if (!strcmp(rg->spec->path, p->two->path))
-+				break;
-+		}
-+		if (rg)
-+			diff_q(&outq, p);
-+		else
-+			diff_free_filepair(p);
-+	}
-+	free(diff_queued_diff.queue);
-+	diff_queued_diff = outq;
-+}
-+
-+static inline int diff_might_be_rename(void)
-+{
-+	int i;
-+	for (i = 0; i < diff_queued_diff.nr; i++)
-+		if (!DIFF_FILE_VALID(diff_queued_diff.queue[i]->one)) {
-+			/* fprintf(stderr, "diff_might_be_rename found creation of: %s\n", */
-+			/* 	diff_queued_diff.queue[i]->two->path); */
-+			return 1;
-+		}
-+	return 0;
-+}
-+
-+static void queue_diffs(struct line_log_data *range,
-+			struct diff_options *opt,
- 			struct diff_queue_struct *queue,
- 			struct commit *commit, struct commit *parent)
+-enum rewrite_result {
+-	rewrite_one_ok,
+-	rewrite_one_noparents,
+-	rewrite_one_error
+-};
+-
+ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp)
  {
-@@ -766,7 +809,12 @@ static void queue_diffs(struct diff_options *opt,
- 
- 	DIFF_QUEUE_CLEAR(&diff_queued_diff);
- 	diff_tree(&desc1, &desc2, "", opt);
--	diffcore_std(opt);
-+	if (opt->detect_rename) {
-+		filter_diffs_for_paths(range, 1);
-+		if (diff_might_be_rename())
-+			diffcore_std(opt);
-+		filter_diffs_for_paths(range, 0);
-+	}
- 	move_diff_queue(queue, &diff_queued_diff);
- 
- 	if (tree1)
-@@ -1050,7 +1098,7 @@ static int process_ranges_ordinary_commit(struct rev_info *rev, struct commit *c
- 	if (commit->parents)
- 		parent = commit->parents->item;
- 
--	queue_diffs(&rev->diffopt, &queue, commit, parent);
-+	queue_diffs(range, &rev->diffopt, &queue, commit, parent);
- 	changed = process_all_files(&parent_range, rev, &queue, range);
- 	if (parent)
- 		add_line_range(rev, parent, parent_range);
-@@ -1075,7 +1123,7 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
- 	for (i = 0; i < nparents; i++) {
- 		parents[i] = p->item;
- 		p = p->next;
--		queue_diffs(&rev->diffopt, &diffqueues[i], commit, parents[i]);
-+		queue_diffs(range, &rev->diffopt, &diffqueues[i], commit, parents[i]);
+ 	struct commit_list *cache = NULL;
+@@ -2200,12 +2194,13 @@ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp
  	}
+ }
  
- 	for (i = 0; i < nparents; i++) {
+-static int rewrite_parents(struct rev_info *revs, struct commit *commit)
++int rewrite_parents(struct rev_info *revs, struct commit *commit,
++	rewrite_parent_fn_t rewrite_parent)
+ {
+ 	struct commit_list **pp = &commit->parents;
+ 	while (*pp) {
+ 		struct commit_list *parent = *pp;
+-		switch (rewrite_one(revs, &parent->item)) {
++		switch (rewrite_parent(revs, &parent->item)) {
+ 		case rewrite_one_ok:
+ 			break;
+ 		case rewrite_one_noparents:
+@@ -2371,7 +2366,7 @@ enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit)
+ 	if (action == commit_show &&
+ 	    !revs->show_all &&
+ 	    revs->prune && revs->dense && want_ancestry(revs)) {
+-		if (rewrite_parents(revs, commit) < 0)
++		if (rewrite_parents(revs, commit, rewrite_one) < 0)
+ 			return commit_error;
+ 	}
+ 	return action;
+diff --git a/revision.h b/revision.h
+index 5da09ee..640110d 100644
+--- a/revision.h
++++ b/revision.h
+@@ -241,4 +241,14 @@ enum commit_action {
+ extern enum commit_action get_commit_action(struct rev_info *revs, struct commit *commit);
+ extern enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit);
+ 
++enum rewrite_result {
++	rewrite_one_ok,
++	rewrite_one_noparents,
++	rewrite_one_error
++};
++
++typedef enum rewrite_result (*rewrite_parent_fn_t)(struct rev_info *revs, struct commit **pp);
++
++extern int rewrite_parents(struct rev_info *revs, struct commit *commit,
++	rewrite_parent_fn_t rewrite_parent);
+ #endif
 -- 
 1.8.2.241.gee8bb87
