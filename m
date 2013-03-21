@@ -1,64 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: add a README file
-Date: Thu, 21 Mar 2013 08:31:33 -0700
-Message-ID: <7v8v5gbwh6.fsf@alter.siamese.dyndns.org>
-References: <1363873555-8274-1-git-send-email-ydroneaud@opteya.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/4] drop some "int x = x" hacks to silence gcc warnings
+Date: Thu, 21 Mar 2013 11:44:02 -0400
+Message-ID: <20130321154402.GA25907@sigill.intra.peff.net>
+References: <20130321110338.GA18552@sigill.intra.peff.net>
+ <514AF2E1.7020409@viscovery.net>
+ <20130321115545.GB21319@sigill.intra.peff.net>
+ <7vppysbxzo.fsf@alter.siamese.dyndns.org>
+ <7vhak4bx0w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Yann Droneaud <ydroneaud@opteya.com>
-X-From: git-owner@vger.kernel.org Thu Mar 21 16:32:04 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 21 16:44:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIhTI-00066n-1P
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 16:32:04 +0100
+	id 1UIhfS-0007xr-AX
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 16:44:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932639Ab3CUPbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 11:31:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35700 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932210Ab3CUPbg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 11:31:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B19F8ACDD;
-	Thu, 21 Mar 2013 11:31:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N6FWW8DltGTXxAM4cRR9HF4otuk=; b=Oz8ANs
-	G16b77RZ9OZXq34ME5TY/cP6Z3e2P7UgstTZsxsTBRZ806dOs2sHxlxNVA1C6fKp
-	6ND42HKCZWigJcSahu+W7X8Sh5ZRKWupo2G1O9yonP4F02Hud7/5J3TlOXvjwqr4
-	xjorbPebzgpWBtfP2G2+NhhW7/vsWCqX1FDO0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TQGMSxyPRV0XBoG4Ss/4XIy0NQyrSUrZ
-	NRx5Yk0X+CajHRkIKGFwcVxm3Rtcy8R6j+qZ9bMesJocfGfeb19rDQ9m3xuRTJ9y
-	gT7V1xuOB444oYX16JbBMyE9iTt/MfcXlo2ecvBzx8ugiJ9JNB7nk28bANoO/bn+
-	CpApquoBf1g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A76C0ACDC;
-	Thu, 21 Mar 2013 11:31:35 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2BD07ACDA; Thu, 21 Mar 2013
- 11:31:35 -0400 (EDT)
-In-Reply-To: <1363873555-8274-1-git-send-email-ydroneaud@opteya.com> (Yann
- Droneaud's message of "Thu, 21 Mar 2013 14:45:55 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6A31A50C-923C-11E2-889E-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932706Ab3CUPoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 11:44:11 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33931 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932453Ab3CUPoK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Mar 2013 11:44:10 -0400
+Received: (qmail 24326 invoked by uid 107); 21 Mar 2013 15:45:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Mar 2013 11:45:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Mar 2013 11:44:02 -0400
+Content-Disposition: inline
+In-Reply-To: <7vhak4bx0w.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218737>
 
-Yann Droneaud <ydroneaud@opteya.com> writes:
+On Thu, Mar 21, 2013 at 08:19:43AM -0700, Junio C Hamano wrote:
 
-> The documentation is in AsciiDoc format: it should be written somewhere
-> with links to AsciiDoc documentation so that it became easy to find
-> how to write documentation for Git.
+> >     $ git grep '#define uninitialized_var' include/
+> >     include/linux/compiler-gcc.h:#define uninitialized_var(x) x = x
+> >     include/linux/compiler-intel.h:#define uninitialized_var(x) x
+> >
+> > but they recently had a discussion, e.g.
+> >
+> >     http://thread.gmane.org/gmane.linux.kernel.openipmi/1998/focus=1383705
+> >
+> > so...
+> 
+> While flipping the paragraphs around before sending the message out
+> I managed to lose the important one.  Here is roughly what I wrote:
+> 
+>     I am for dropping "= x" and leaving it uninitialized at the
+>     declaration site, or explicitly initializing it to some
+>     reasonable starting value (e.g. NULL if it is a pointer) and
+>     adding a comment to say that the initialization is to squelch
+>     compiler warnings.
 
-Certainly this does not deserve a *new* file to hold it.
-Isn't this inferrable from the top-level INSTALL already?
+I'd be in favor of that, too. In many cases, I think the fact that gcc
+cannot trace the control flow is a good indication that it is hard for a
+human to trace it, too. And in those cases we would be better off
+restructuring the code slightly to make it more obvious to both types of
+readers.
+
+Two patches to follow.
+
+  [5/4]: fast-import: clarify "inline" logic in file_change_m
+  [6/4]: run-command: always set failed_errno in start_command
+
+-Peff
