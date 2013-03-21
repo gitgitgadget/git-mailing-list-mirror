@@ -1,70 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/4] drop some "int x = x" hacks to silence gcc warnings
-Date: Thu, 21 Mar 2013 07:55:45 -0400
-Message-ID: <20130321115545.GB21319@sigill.intra.peff.net>
-References: <20130321110338.GA18552@sigill.intra.peff.net>
- <514AF2E1.7020409@viscovery.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Which file is older in history?
+Date: Thu, 21 Mar 2013 17:29:39 +0530
+Message-ID: <CALkWK0nRgzNYViKSx97OyHVOQmFN61Ex9EUvr1JK-0=GX=uX0w@mail.gmail.com>
+References: <CALkWK0nTjoR9qBY-hnkrDKnyf8088ZDJ1LK_zNqAoAB7ndvaww@mail.gmail.com>
+ <7vobeddcjq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 21 12:56:21 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 21 13:00:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIe6W-0001fs-Mi
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 12:56:21 +0100
+	id 1UIeAd-0004JO-V7
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Mar 2013 13:00:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757723Ab3CULzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 07:55:53 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33712 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754254Ab3CULzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 07:55:52 -0400
-Received: (qmail 21553 invoked by uid 107); 21 Mar 2013 11:57:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Mar 2013 07:57:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Mar 2013 07:55:45 -0400
-Content-Disposition: inline
-In-Reply-To: <514AF2E1.7020409@viscovery.net>
+	id S1753982Ab3CUMAD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Mar 2013 08:00:03 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:43670 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752530Ab3CUMAB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Mar 2013 08:00:01 -0400
+Received: by mail-ie0-f178.google.com with SMTP id bn7so964958ieb.9
+        for <git@vger.kernel.org>; Thu, 21 Mar 2013 05:00:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=aPN3trEunGQ8i6CxJOr7K3nX5aMNj4sY80ro3yzLDxY=;
+        b=a4aZTkZ4L+r5sTm7aIjHr6WaYWAGnWocgJBQC1p6hDeVVRFetu2FXL1W/4oXde1uqA
+         xvVuqwsc1viY1ICXJjN6sTK4akxFuzRVYSSLFW4G0Yn0eXOX1hLziWoFN5FNhXfVYZME
+         KL0HlAcOyQcwkMqAvyo0kfkt4SETBY53EOMZYdE5ALiUMTq54EY4Wj9E6oyItyMNnpmU
+         YztR8hrciH0tZn5TZCyB/OgJ1RHYu2RLK86rpOpyz3P8rTpITPf7KskfHu8TNybHRVbA
+         uQwNMHWoq7A/dCP45N4BYu9wB68XAqpANzrueyjz9PurG0xykpOrlgO4rzFyOmE8hTpj
+         s8xg==
+X-Received: by 10.50.119.102 with SMTP id kt6mr2015483igb.12.1363867201136;
+ Thu, 21 Mar 2013 05:00:01 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Thu, 21 Mar 2013 04:59:39 -0700 (PDT)
+In-Reply-To: <7vobeddcjq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218714>
 
-On Thu, Mar 21, 2013 at 12:45:37PM +0100, Johannes Sixt wrote:
+Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>> I want to compare two files in a git repository and tell which one w=
+as
+>> introduced into the repository earlier, assuming that they're in the
+>> same history line (by ancestry, not timestamp).  The naive way to do
+>> this is to find the individual commits that introduced the files
+>> (`rev-list HEAD -- <filename> | tail -n 1`), and...
+>
+> This must be a trick question but the na=C3=AFve way I think of is
+>
+>         git log --diff-filter=3DA -- path1 path2
 
-> Am 3/21/2013 12:03, schrieb Jeff King:
-> > I was fooling around with clang and noticed that it complains about the
-> > "int x = x" construct under -Wall. That is IMHO a deficiency in clang,
-> > since the idiom has a well-defined use in silencing -Wuninitialized
-> > warnings.
-> 
-> IMO, that's a myth. The construct invokes undefined behavior at least
-> since C99, and the compilers are right to complain about it.
-
-While undefined behavior does leave the compiler free to do anything,
-including nasal demons, it would be a very poor implementation that did
-anything except leave random bytes in the value. And it also means that
-gcc is free to take it as a hint to silence the warning; given that
-clang tries to be compatible with gcc, I'd think it would want to do the
-same. But I may be wrong that the behavior from gcc is intentional or
-common (see below).
-
-> But you might just say that standards are not worth the paper they are
-> printed on, and you may possibly be right for practical reasons. But I
-> still consider it a myth that "int x = x" is an idiom. I'm in the C
-> business since more than 25 years, and the first time I saw the "idiom"
-> was in git code. Is there any evidence that the construct is used
-> elsewhere? Have I been in the wrong corner of the C world for such a long
-> time?
-
-Git code was my introduction to it, too, and I was led to believe it was
-idiomatic, so I can't speak further on that. I think it was Junio who
-introduced me to it, so maybe he can shed more light on the history.
-
--Peff
+Thanks, I didn't know about --diff-filter.  I'll need one extra step
+to figure out which commit corresponds to the introduction of which
+file, no?
