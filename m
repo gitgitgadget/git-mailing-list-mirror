@@ -1,98 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 8/4] match-trees: drop "x = x" initializations
-Date: Fri, 22 Mar 2013 12:21:55 -0400
-Message-ID: <20130322162155.GB25857@sigill.intra.peff.net>
-References: <20130322161837.GG3083@sigill.intra.peff.net>
+From: Josh Sharpe <josh.m.sharpe@gmail.com>
+Subject: feature request - have git honor nested .gitconfig files
+Date: Fri, 22 Mar 2013 12:50:07 -0400
+Message-ID: <CAM2RUGOOWnxRd2=04-NmKTC+tvnCD=ebgmmiexHas5bwyYrm4w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 22 17:22:37 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 22 17:50:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJ4ji-000590-9J
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 17:22:34 +0100
+	id 1UJ5BA-0003Gr-Lw
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 17:50:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933914Ab3CVQWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Mar 2013 12:22:06 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35855 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933862Ab3CVQWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 12:22:05 -0400
-Received: (qmail 2132 invoked by uid 107); 22 Mar 2013 16:23:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Mar 2013 12:23:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Mar 2013 12:21:55 -0400
-Content-Disposition: inline
-In-Reply-To: <20130322161837.GG3083@sigill.intra.peff.net>
+	id S1161019Ab3CVQu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Mar 2013 12:50:29 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:55198 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1160998Ab3CVQu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Mar 2013 12:50:28 -0400
+Received: by mail-ie0-f170.google.com with SMTP id c11so5140845ieb.15
+        for <git@vger.kernel.org>; Fri, 22 Mar 2013 09:50:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=zSn4fXN4BAy9Lb//lv1Ox+SYp0a8OshM6RknzrgZtzs=;
+        b=zm2RWbbJF3SJE/XL+5/pYt73g0unAXruoz1Nd7VD6SEkN96kf0MV2CikxxYfQuWDDP
+         eisZM4GPtJ4ImyApycDDp0ZqWXeM6WMXRPn2rl/5bG9C2/9DXUlRYLLWvG5L18k2R3Dn
+         m/aKyuEjmEg11+LhTy91uyzh1/m2kHyh2xpFPxZNL/BYQwS5lN85WMn//VpdZrELE/7U
+         njNK0DskCaYYGRhH7EguaMSPrp7xnKIza75Rk5diTQRvnLQ9bHop9ndxVSunkTlU2vKd
+         VyZcwEWcqejp8Wy2uqiTqf9QGKS1I6MaOyBfhbMrKrcyoTJKG5jgokBvpv5lC3j0ndyi
+         8Ugg==
+X-Received: by 10.50.217.230 with SMTP id pb6mr5320634igc.43.1363971028017;
+ Fri, 22 Mar 2013 09:50:28 -0700 (PDT)
+Received: by 10.231.169.136 with HTTP; Fri, 22 Mar 2013 09:50:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218820>
 
-These nonsense assignments are meant to squelch gcc warnings
-that the variables might be used uninitialized. However, gcc
-gets it mostly right, realizing that we will either
-extract tree entries from both sides, or we will hit a
-"continue" statement and go to the top of the loop.
+It'd be cool if I were able to override config settings at every
+nested directory.
 
-However, while getting this right for the "elem" and "path"
-variables, it does not do so for the "mode" variables. Let's
-drop the nonsense initialization where modern gcc does not
-need them, and just set the modes to "0", along with a
-comment. These values should never be used, but it makes
-both gcc, as well as any compiler which does not like the "x
-= x" initializations, happy.
+For example, I have my ~/.gitconfig that has one email address in it,
+but I also have multiple repos inside ~/dev which I want to use a
+different email address for.  The only way to do that now is to edit
+all of these: ~/dev/*/.git/conf -- and there are lots of them, and new
+repos get added all the time - and I forget.
 
-While we're in the area, let's also update the loop
-condition to use logical-OR rather than bitwise-OR. They should
-be equivalent in this case, and the use of the latter was
-probably a typo.
+If I could add ~/dev/.gitconfig and have the settings in that override
+~/.gitconfig then this would be way more manageable.  Obviously,
+individual repo's .git/config should take ultimate precedence.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Of the 8 patches, this is the one I find the least satisfying, if only
-because I do not think gcc's failure is because of complicated control
-flow, and rearranging the code would only hurt readability. And I'm
-quite curious why it complains about "mode", but not about the other
-variables, which are set in the exact same place (and why it would not
-be able to handle such a simple control flow at all).
-
-It makes me wonder if I am missing something, or there is some subtle
-bug. But I can't see it. Other eyes appreciated.
-
- match-trees.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/match-trees.c b/match-trees.c
-index 26f7ed1..4360f10 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -71,13 +71,13 @@ static int score_trees(const unsigned char *hash1, const unsigned char *hash2)
- 	if (type != OBJ_TREE)
- 		die("%s is not a tree", sha1_to_hex(hash2));
- 	init_tree_desc(&two, two_buf, size);
--	while (one.size | two.size) {
--		const unsigned char *elem1 = elem1;
--		const unsigned char *elem2 = elem2;
--		const char *path1 = path1;
--		const char *path2 = path2;
--		unsigned mode1 = mode1;
--		unsigned mode2 = mode2;
-+	while (one.size || two.size) {
-+		const unsigned char *elem1;
-+		const unsigned char *elem2;
-+		const char *path1;
-+		const char *path2;
-+		unsigned mode1 = 0; /* make gcc happy */
-+		unsigned mode2 = 0; /* make gcc happy */
- 		int cmp;
- 
- 		if (one.size)
--- 
-1.8.2.13.g0f18d3c
+Thanks for the consideration!
