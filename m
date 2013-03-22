@@ -1,129 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/4] submodule: clarify logic in show_submodule_summary
-Date: Fri, 22 Mar 2013 14:10:42 -0700
-Message-ID: <7v620j6sz1.fsf@alter.siamese.dyndns.org>
-References: <20130322161837.GG3083@sigill.intra.peff.net>
- <20130322161955.GA25857@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/6] t5516 (fetch-push): introduce mk_test_with_name()
+Date: Fri, 22 Mar 2013 14:14:15 -0700
+Message-ID: <20130322211415.GI12223@google.com>
+References: <1363938756-13722-1-git-send-email-artagnon@gmail.com>
+ <1363938756-13722-4-git-send-email-artagnon@gmail.com>
+ <20130322144454.GA3083@sigill.intra.peff.net>
+ <7vmwtv8p1c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 22 22:11:19 2013
+Cc: Jeff King <peff@peff.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 22 22:14:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJ9F3-0004HN-Li
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 22:11:14 +0100
+	id 1UJ9IY-0006db-94
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 22:14:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423072Ab3CVVKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Mar 2013 17:10:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52241 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422967Ab3CVVKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 17:10:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4F6FBBD2;
-	Fri, 22 Mar 2013 17:10:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lZWhLo2/1+YiOzhMiDPHxEoZo40=; b=rhXqWP
-	Z4WsjgHiNfznjcwDR+S9Ojh5SCQ2mjqLq46iNdGpmCaOJ1MQhQDnThUp/5H/zZkH
-	R3qfkWGv3La9jGtCawo0QMpWmIdwhEu+btvonyVYFJffn94P/qtWwiQR1G5Iwt3T
-	31Lto1jZe0BANZCSbXrKJvfVs/6ShoYMlJblw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B6bigNuwhVH+/xjLNAVMlWN0lF2cBCk2
-	G98nk8Bc192Tgwx1IVR8KzDO6n4IF1YPY4fMEdIekrdUUpqz39TlyMMWUTWS9nGo
-	7tImxyzC+Za0IyXy/6sBlSLIUg9TFTUU5Q5g69awqdWKxqb3zHJWmghX6ZZUYSju
-	h3vSI3skZC8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9EE5BBD1;
-	Fri, 22 Mar 2013 17:10:44 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 392F3BBCA; Fri, 22 Mar 2013
- 17:10:44 -0400 (EDT)
-In-Reply-To: <20130322161955.GA25857@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 22 Mar 2013 12:19:56 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F596CF20-9334-11E2-98AC-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1423144Ab3CVVOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Mar 2013 17:14:22 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:44063 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423169Ab3CVVOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Mar 2013 17:14:21 -0400
+Received: by mail-pa0-f43.google.com with SMTP id rl6so58444pac.16
+        for <git@vger.kernel.org>; Fri, 22 Mar 2013 14:14:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=yVP54n4Z6cfUUkXQDal3gL2jiDSsZyjx2efMtUeeiGM=;
+        b=pnltnvZKE6FhLzBZwOTw1euhzsPfZFjPXbQ+8Bq79/QPkTHHL1PRTeAxtsECSDkQmB
+         keq7XJTsM6z53m74YLnHAKce9j9/IM0fYUgKs7pMhaY9Nq3ing7mAr228ePg22MuLxwY
+         Bgrlx08n0YSkLHrz8JeAT0jHczqzv5QX61srp3bJYT0naGndsKQM0JD1xA57eOUnnl/W
+         v9XR8vM4peiyH+BvXk9NAGafblXTT6HLr3D63P2geiQsH1OtBwiFyJgi7TOKDJnwcsSv
+         q/fsV6QeV/rEZFk106eX9xSNabCrwOBRXc/iomOp1yUIsaLoJUN+xk4KWYOIWfdyj/l2
+         L1jA==
+X-Received: by 10.66.13.35 with SMTP id e3mr5513124pac.186.1363986860646;
+        Fri, 22 Mar 2013 14:14:20 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id 4sm3600414pbn.23.2013.03.22.14.14.17
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 22 Mar 2013 14:14:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vmwtv8p1c.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218847>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano wrote:
 
-> There are two uses of the "left" and "right" commit
-> variables that make it hard to be sure what values they
-> have (both for the reader, and for gcc, which wrongly
-> complains that they might be used uninitialized).
->
-> The functions starts with a cascading if statement, checking
-> that the input sha1s exist, and finally working up to
-> preparing a revision walk. We only prepare the walk if the
-> cascading conditional did not find any problems, which we
-> check by seeing whether it set the "message" variable or
-> not. It's simpler and more obvious to just add a condition
-> to the end of the cascade.
->
-> Later, we check the same "message" variable when deciding
-> whether to clear commit marks on the left/right commits; if
-> it is set, we presumably never started the walk. This is
-> wrong, though; we might have started the walk and munged
-> commit flags, only to encounter an error afterwards. We
-> should always clear the flags on left/right if they exist,
-> whether the walk was successful or not.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+> I would prefer to see a preparatory patch to teach mk_test/mk_empty
+> to _always_ take the new name (i.e. the result of your patch) and
+> then do whatever new things on top.
 
-Looks good.  Thanks.
+Yes, that sounds like a good way to go.
 
->  submodule.c | 13 ++++++-------
->  1 file changed, 6 insertions(+), 7 deletions(-)
->
-> diff --git a/submodule.c b/submodule.c
-> index 9ba1496..975bc87 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -261,7 +261,7 @@ void show_submodule_summary(FILE *f, const char *path,
->  		const char *del, const char *add, const char *reset)
->  {
->  	struct rev_info rev;
-> -	struct commit *left = left, *right = right;
-> +	struct commit *left = NULL, *right = NULL;
->  	const char *message = NULL;
->  	struct strbuf sb = STRBUF_INIT;
->  	int fast_forward = 0, fast_backward = 0;
-> @@ -275,10 +275,8 @@ void show_submodule_summary(FILE *f, const char *path,
->  	else if (!(left = lookup_commit_reference(one)) ||
->  		 !(right = lookup_commit_reference(two)))
->  		message = "(commits not present)";
-> -
-> -	if (!message &&
-> -	    prepare_submodule_summary(&rev, path, left, right,
-> -					&fast_forward, &fast_backward))
-> +	else if (prepare_submodule_summary(&rev, path, left, right,
-> +					   &fast_forward, &fast_backward))
->  		message = "(revision walker failed)";
->  
->  	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
-> @@ -302,11 +300,12 @@ void show_submodule_summary(FILE *f, const char *path,
->  		strbuf_addf(&sb, "%s:%s\n", fast_backward ? " (rewind)" : "", reset);
->  	fwrite(sb.buf, sb.len, 1, f);
->  
-> -	if (!message) {
-> +	if (!message) /* only NULL if we succeeded in setting up the walk */
->  		print_submodule_summary(&rev, f, del, add, reset);
-> +	if (left)
->  		clear_commit_marks(left, ~0);
-> +	if (right)
->  		clear_commit_marks(right, ~0);
-> -	}
->  
->  	strbuf_release(&sb);
->  }
+> By the way, I am planning to _not_ look at new stuff today. I'd
+> rather see known recent regressions addressed (and unknown ones
+> discovered and squashed) before we move forward, and I would
+> appreciate if regular contributors did the same.
+
+I've been flushing out my thoughts to avoid forgetting them. ;-)
+Agreed, though.  Thanks.
