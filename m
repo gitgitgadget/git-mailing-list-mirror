@@ -1,111 +1,64 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: [PATCH v2] Fix revision walk for commits with the same dates
-Date: Fri, 22 Mar 2013 19:38:19 +0100
-Message-ID: <20130322183819.GA18210@camk.edu.pl>
-References: <20130307180321.GA26756@camk.edu.pl>
+From: "Senthil Natarajan" <snatarajan@stoke.com>
+Subject: git merge heuristic
+Date: Fri, 22 Mar 2013 11:53:04 -0700
+Message-ID: <ECEA5ACFB4B2BC4A81A93F032519ABCAD47F79@minsk.us.stoke.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 22 19:39:14 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 22 19:53:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJ6rx-00073w-6W
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 19:39:13 +0100
+	id 1UJ75s-0008Mh-Up
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 19:53:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754575Ab3CVSip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Mar 2013 14:38:45 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:50851 "EHLO moat.camk.edu.pl"
+	id S1754803Ab3CVSxI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Mar 2013 14:53:08 -0400
+Received: from mail1.stoke.com ([209.78.40.3]:45394 "EHLO mail1.stoke.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754499Ab3CVSio (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 14:38:44 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id CE4A65F0001
-	for <git@vger.kernel.org>; Fri, 22 Mar 2013 19:38:54 +0100 (CET)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id yjFFUjYL+gUT for <git@vger.kernel.org>;
-	Fri, 22 Mar 2013 19:38:37 +0100 (CET)
-Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id B98285F0004
-	for <git@vger.kernel.org>; Fri, 22 Mar 2013 19:38:31 +0100 (CET)
-Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
-	id 89D744838A; Fri, 22 Mar 2013 19:38:19 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20130307180321.GA26756@camk.edu.pl>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754565Ab3CVSxH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Mar 2013 14:53:07 -0400
+X-ASG-Debug-ID: 1363978386-04870b01e91857840001-QuoKaX
+Received: from minsk.us.stoke.com ([172.16.4.20]) by mail1.stoke.com with ESMTP id VYEgIKS1hrWwI5Ux for <git@vger.kernel.org>; Fri, 22 Mar 2013 11:53:06 -0700 (PDT)
+X-Barracuda-Envelope-From: snatarajan@stoke.com
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: git merge heuristic
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git merge heuristic
+Thread-Index: Ac4nKxBfzbHH9MmETKGUj3nbF0j1XQAA1nqQ
+X-Barracuda-Connect: UNKNOWN[172.16.4.20]
+X-Barracuda-Start-Time: 1363978386
+X-Barracuda-URL: http://mail1.stoke.com:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at stoke.com
+X-Barracuda-Spam-Score: 0.00
+X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.125932
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218836>
 
-Logic in still_interesting function allows to stop the commits
-traversing if the oldest processed commit is not older then the
-youngest commit on the list to process and the list contains only
-commits marked as not interesting ones. It can be premature when dealing
-with a set of coequal commits. For example git rev-list A^! --not B
-provides wrong answer if all commits in the range A..B had the same
-commit time and there are more then 7 of them.
+Hi all,
 
-To fix this problem the relevant part of the logic in still_interesting
-is changed to: the walk can be stopped if the oldest processed commit is
-younger then the youngest commit on the list to processed.
+I want to learn about how Git compares patches while doing a merge.=A0 =
+=46or example, if a patch has been cherry-picked from branch A to branc=
+h B, and then downstream we do a "git merge" from A to B, how does Git =
+know to skip the cherry-picked patch?=A0 It would have a different SHA-=
+1, so what is the comparison algorithm/heuristic?=A0 What happens if th=
+e comment is different, but the actual patch is identical?
 
-Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
----
+I searched around, but couldn't find information on this.=A0 I would ap=
+preciate it if someone could point me in the right direction.
 
-I don't know whether the first version was overlooked or deemed as not
-worthy. So just in case I resend it. Changes since the first version:
+Thanks!
 
-1. The test has been added
-2. The commit log has been rewritten
-
-
- revision.c                 |  2 +-
- t/t6009-rev-list-parent.sh | 13 +++++++++++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/revision.c b/revision.c
-index ef60205..cf620c6 100644
---- a/revision.c
-+++ b/revision.c
-@@ -709,7 +709,7 @@ static int still_interesting(struct commit_list *src, unsigned long date, int sl
- 	 * Does the destination list contain entries with a date
- 	 * before the source list? Definitely _not_ done.
- 	 */
--	if (date < src->item->date)
-+	if (date <= src->item->date)
- 		return SLOP;
- 
- 	/*
-diff --git a/t/t6009-rev-list-parent.sh b/t/t6009-rev-list-parent.sh
-index 3050740..66cda17 100755
---- a/t/t6009-rev-list-parent.sh
-+++ b/t/t6009-rev-list-parent.sh
-@@ -133,4 +133,17 @@ test_expect_success 'dodecapus' '
- 	check_revlist "--min-parents=13" &&
- 	check_revlist "--min-parents=4 --max-parents=11" tetrapus
- '
-+
-+test_expect_success 'ancestors with the same commit time' '
-+
-+	test_tick_keep=$test_tick &&
-+	for i in 1 2 3 4 5 6 7 8; do
-+		test_tick=$test_tick_keep
-+		test_commit t$i
-+	done &&
-+	git rev-list t1^! --not t$i >result &&
-+	>expect &&
-+	test_cmp expect result
-+'
-+
- test_done
--- 
-1.8.2
-
--- 
-  Kacper Kornet
+-Senthil
