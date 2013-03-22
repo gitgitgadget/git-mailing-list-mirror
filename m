@@ -1,145 +1,90 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3 3/4] t7800: modernize tests
-Date: Fri, 22 Mar 2013 08:13:46 +0100
-Message-ID: <514C04AA.6030305@viscovery.net>
-References: <1361419428-22410-1-git-send-email-davvid@gmail.com> <1361419428-22410-2-git-send-email-davvid@gmail.com> <1361419428-22410-3-git-send-email-davvid@gmail.com> <514985FB.8080806@viscovery.net> <CAJDDKr4O-OU57j0f7F2E2_4EvtCTE1gFP5uLv+fvD6VcpPiifg@mail.gmail.com> <514AB9A5.3050601@viscovery.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2 0/6] Support triangular workflows
+Date: Fri, 22 Mar 2013 13:11:30 +0530
+Message-ID: <CALkWK0=Mca1YiT0HVVrLrzmN2hGWuMJZPvNKNzb=0H7TxXuYwQ@mail.gmail.com>
+References: <1363783501-27981-1-git-send-email-artagnon@gmail.com> <26A2BE0824FE4C999592D392FCBEF988@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 22 08:14:22 2013
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Mar 22 08:42:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIwBB-0004Z6-NA
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 08:14:22 +0100
+	id 1UIwcO-0004NT-08
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 08:42:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933122Ab3CVHNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Mar 2013 03:13:54 -0400
-Received: from so.liwest.at ([212.33.55.24]:2267 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932464Ab3CVHNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 03:13:53 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UIwAc-0007wH-RQ; Fri, 22 Mar 2013 08:13:47 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 653B31660F;
-	Fri, 22 Mar 2013 08:13:46 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <514AB9A5.3050601@viscovery.net>
-X-Spam-Score: -1.0 (-)
+	id S1753667Ab3CVHlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Mar 2013 03:41:51 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:51077 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751724Ab3CVHlu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Mar 2013 03:41:50 -0400
+Received: by mail-ie0-f182.google.com with SMTP id at1so537013iec.13
+        for <git@vger.kernel.org>; Fri, 22 Mar 2013 00:41:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=EYJ9nkneR1hQ2HFstFfzF31WpjIAOp1U5M57FyofOxI=;
+        b=ZO2RxgTHRBbL249OrCCC0Vx2xJNgAAj8hiwqDCMqCYE3h1ggw1NNfsuuEGQehqd5hH
+         l4HwFQeecRmkiEb2ysHUHxUzK8WHviWIbxXZkWFqb+GbOsHmNQ5u8hWgX4DXgORPEKof
+         zZ53v9KXtuFwHG6NlvJMgYqxpdeefWKnqu+CVQQh4ulH35nfJNAYy9S6kuUYZVL3G5AX
+         cypFE86oAyhrem1WpeQwhSM2K2rMEYAYiEdJQMDrghJ2+KisDoh70grNEM94f/FVRLCP
+         eL+26pO8r0qmqGsgiT36zhN0i4+N7CZeXhbopOdwdCrJa9/z7o8cj0QLYdxnqJ5pRzrK
+         QxyQ==
+X-Received: by 10.42.204.79 with SMTP id fl15mr387962icb.57.1363938110064;
+ Fri, 22 Mar 2013 00:41:50 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Fri, 22 Mar 2013 00:41:30 -0700 (PDT)
+In-Reply-To: <26A2BE0824FE4C999592D392FCBEF988@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218776>
 
-Am 3/21/2013 8:41, schrieb Johannes Sixt:
-> Am 3/20/2013 23:59, schrieb David Aguilar:
->> I started digging in and the @worktree_files (aka @worktree above)
->> is populated from the output of "git diff --raw ...".
+Philip Oakley wrote:
+> From: "Ramkumar Ramachandra" <artagnon@gmail.com>
+> Sent: Wednesday, March 20, 2013 12:44 PM
+>
+>> This follows-up [1], with three important differences:
 >>
->> Seeing the "output" filename in "diff --raw" implies that one of the
->> tests added "output" to the index somehow.  I do not see that
->> happening anywhere, though, so I do not know how it would end up in
->> the @worktree array if it is not reported by "diff --raw".
+>> 1. pushremote_get() and remote_get() share code better.  Thanks Jeff.
 >>
+>> 2. All spelling mistakes have been corrected.  Thanks Eric.
 >>
->> My current understanding of how it could possibly be open twice:
+>> 3. One new test for each of the new configuration variables.  The
+>> extra two parts [2/6] and [3/6] preprare the file for introducing
+>> tests.  However, I've not gone overboard in this preparation; I don't
+>> replicate the work done by Jonathan in [2].
 >>
->> 1. via the >output redirect
->> 2. via the copy() perl code which is fed by @worktree
+>> Thanks for reading.
 >>
->> So I'm confused.  Why would we get different results on Windows?
-> 
-> I tracked down the difference between Windows and Linux, and it is...
-> 
-> 	for my $file (@worktree) {
-> 		next if $symlinks && -l "$b/$file";
-> 
-> ... this line in sub dir_diff. On Linux, we take the short-cut, but on
-> Windows we proceed through the rest of the loop,
+>> [1]: http://thread.gmane.org/gmane.comp.version-control.git/218410
+>> [2]:
+>> http://thread.gmane.org/gmane.comp.version-control.git/218451/focus=218465
+>>
+>> Ramkumar Ramachandra (6):
+>>  remote.c: simplify a bit of code using git_config_string()
+>>  t5516 (fetch-push): update test description
+>>  t5516 (fetch-push): introduce mk_test_with_name()
+>>  remote.c: introduce a way to have different remotes for fetch/push
+>>  remote.c: introduce remote.pushdefault
+>>  remote.c: introduce branch.<name>.pushremote
+>>
+>> Documentation/config.txt | 23 +++++++++++++++---
+>
+>
+> Shouldn't Documentation/gitworkflows.txt also be updated with the triangular
+> workflow and its configuration?
 
-And that is likely by design. From the docs:
-
---symlinks
---no-symlinks
-
-    git difftool's default behavior is create symlinks to the working
-    tree when run in --dir-diff mode.
-
-    Specifying `--no-symlinks` instructs 'git difftool' to create
-    copies instead.  `--no-symlinks` is the default on Windows.
-
-And indeed, we have this initialization:
-
-	my %opts = (
-		...
-		symlinks => $^O ne 'cygwin' &&
-				$^O ne 'MSWin32' && $^O ne 'msys',
-		...
-	);
-
-Can the --dir-diff tests case pass on Cygwin when neither --symlinks nor
---no-symlinks is passed?
-
-Perhaps the right solution is this:
-
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index c6d6b1c..19238f6 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -328,14 +328,16 @@ test_expect_success PERL 'setup change in subdirectory' '
- 	git commit -m "modified both"
- '
- 
--test_expect_success PERL 'difftool -d' '
--	git difftool -d --extcmd ls branch >output &&
-+# passing --symlinks helps Cygwin, which defaults to --no-symlinks
-+
-+test_expect_success PERL,SYMLINKS 'difftool -d' '
-+	git difftool -d --symlinks --extcmd ls branch >output &&
- 	stdin_contains sub <output &&
- 	stdin_contains file <output
- '
- 
--test_expect_success PERL 'difftool --dir-diff' '
--	git difftool --dir-diff --extcmd ls branch >output &&
-+test_expect_success PERL,SYMLINKS 'difftool --dir-diff' '
-+	git difftool --dir-diff --symlinks --extcmd ls branch >output &&
- 	stdin_contains sub <output &&
- 	stdin_contains file <output
- '
-@@ -362,16 +364,16 @@ test_expect_success PERL,SYMLINKS 'difftool --dir-diff --symlink without unstage
- 	test_cmp actual expect
- '
- 
--test_expect_success PERL 'difftool --dir-diff ignores --prompt' '
--	git difftool --dir-diff --prompt --extcmd ls branch >output &&
-+test_expect_success PERL,SYMLINKS 'difftool --dir-diff ignores --prompt' '
-+	git difftool --dir-diff --symlinks --prompt --extcmd ls branch >output &&
- 	stdin_contains sub <output &&
- 	stdin_contains file <output
- '
- 
--test_expect_success PERL 'difftool --dir-diff from subdirectory' '
-+test_expect_success PERL,SYMLINKS 'difftool --dir-diff from subdirectory' '
- 	(
- 		cd sub &&
--		git difftool --dir-diff --extcmd ls branch >output &&
-+		git difftool --dir-diff --symlinks --extcmd ls branch >output &&
- 		stdin_contains sub <output &&
- 		stdin_contains file <output
- 	)
-
-(Only tested on MinGW, which skips the tests.) I leave it to you
-to write --no-symlinks tests.
-
--- Hannes
+Currently, Documentation/gitworkflows.txt makes no effort to explain
+how to set up configuration variables for centralized or distributed
+workflows.  I don't see how I could patch the existing document to
+include this workflow, without changing the entire structure of the
+document (left as an exercise for future patches).
