@@ -1,105 +1,104 @@
-From: =?ISO-8859-1?Q?Kirill_M=FCller?= <kirill.mueller@ivt.baug.ethz.ch>
-Subject: Hard reset of a subdirectory in a sparse checkout setting
-Date: Fri, 22 Mar 2013 11:28:25 +0100
-Message-ID: <514C3249.7000100@ivt.baug.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 22 11:35:06 2013
+From: y@quest-ce.net
+Subject: [PATCH] t7600: merge tag shoud create a merge commit
+Date: Fri, 22 Mar 2013 11:57:30 +0100
+Message-ID: <12567.1632391915$1363949912@news.gmane.org>
+References: <1363704914.6289.39.camel@test.quest-ce.net>
+Cc: Yann Droneaud <ydroneaud@opteya.com>, Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 22 11:58:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIzJQ-0005ZX-Eb
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 11:35:04 +0100
+	id 1UIzg6-00043G-2A
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 11:58:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753922Ab3CVKeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Mar 2013 06:34:37 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:10207 "EHLO edge10.ethz.ch"
+	id S932544Ab3CVK6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Mar 2013 06:58:01 -0400
+Received: from smtp6-g21.free.fr ([212.27.42.6]:44540 "EHLO smtp6-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753806Ab3CVKeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 06:34:36 -0400
-X-Greylist: delayed 368 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Mar 2013 06:34:36 EDT
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 22 Mar
- 2013 11:28:23 +0100
-Received: from [129.132.210.153] (129.132.210.153) by mail.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 22 Mar
- 2013 11:28:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
-X-Originating-IP: [129.132.210.153]
+	id S932324Ab3CVK6A (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Mar 2013 06:58:00 -0400
+X-Greylist: delayed 2875 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Mar 2013 06:57:59 EDT
+Received: from test.quest-ce.net (unknown [37.161.251.30])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 58BFE8226B;
+	Fri, 22 Mar 2013 11:57:51 +0100 (CET)
+Received: from test.quest-ce.net (localhost.localdomain [127.0.0.1])
+	by test.quest-ce.net (8.14.5/8.14.5) with ESMTP id r2MAvkf8011965;
+	Fri, 22 Mar 2013 11:57:48 +0100
+Received: (from ydroneaud@localhost)
+	by test.quest-ce.net (8.14.5/8.14.5/Submit) id r2MAvf0Q011964;
+	Fri, 22 Mar 2013 11:57:41 +0100
+X-Mailer: git-send-email 1.7.11.7
+In-Reply-To: <1363704914.6289.39.camel@test.quest-ce.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218790>
 
-Hi
+From: Yann Droneaud <ydroneaud@opteya.com>
 
-I can't find a neat way to "git reset --hard" a subdirectory of a 
-checkout without reading in directories or files which are excluded by a 
-sparse checkout. This has been asked on StackOverflow in greater detail, 
-but the "right" answer is still missing: 
-http://stackoverflow.com/q/15404535/946850
+This test ensures a merge commit is always created
+when merging an annotated (signed) tag without --ff-only option.
 
-The options I see are:
+Signed-off-by: Yann Droneaud <ydroneaud@opteya.com>
+---
 
-- git checkout . (will restore excluded directories)
+Here's a proposition for a test tath check the creation of a merge commit
+when merging a tag.
 
-- git reset --hard (won't accept a path argument)
+It's not in final shape: the line 
 
-- git diff | patch -R (awkward)
+    EDITOR=false test_must_fail git merge signed
 
-What's the proper way to do this in Git?
+should failed, but doesn't: the commit merge is created with
+the default message, just like --no-edit was given.
 
-The script below illustrates the problem. The proper command should be 
-inserted below the "How to make files ..." comment -- the current 
-command "git checkout -- a" will restore the file a/c/ac which is 
-supposed to be excluded by the sparse checkout. Note that I do not want 
-to explicitly restore a/a and a/b, I only "know" a and want to restore 
-everything below. And I also don't "know" b, or which other directories 
-reside on the same level as a.
+I'm making a mistake somewhere, since the EDITOR=false trick
+works, it's even used in the next test, for --no-edit testing.
 
-Thank you for your help.
+Regards.
 
+ t/t7600-merge.sh | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-Cheers
-
-Kirill
-
-
-#!/bin/sh
-
-rm -rf repo; git init repo; cd repo
-for f in a b; do
-   for g in a b c; do
-     mkdir -p $f/$g
-     touch $f/$g/$f$g
-     git add $f/$g
-     git commit -m "added $f/$g"
-   done
-done
-git config core.sparsecheckout true
-echo a/a > .git/info/sparse-checkout
-echo a/b >> .git/info/sparse-checkout
-echo b/a >> .git/info/sparse-checkout
-git read-tree -m -u HEAD
-echo "After read-tree:"
-find * -type f
-
-rm a/a/aa
-rm a/b/ab
-echo >> b/a/ba
-echo "After modifying:"
-find * -type f
-git status
-
-# How to make files a/* reappear without changing b and without 
-recreating a/c?
-git checkout -- a
-
-echo "After checkout:"
-git status
-find * -type f
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index b524bdb..486f1bf 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -697,10 +697,30 @@ test_expect_success 'merge --no-ff --edit' '
+ 	test_cmp actual expected
+ '
+ 
++test_expect_failure GPG 'merge tag should create a merge commit' '
++	git reset --hard c0 &&
++	git commit --allow-empty -m "A newer commit" &&
++	git tag -f -s -m "A newer commit" signed &&
++	git reset --hard c0 &&
++
++	git merge signed &&
++	git rev-parse signed^0 >expect &&
++	git rev-parse HEAD^0 >actual &&
++	! test_cmp actual expect &&
++
++	git reset --hard c0 &&
++	git commit --allow-empty -m "An other newer commit" &&
++	git tag -f -s -m "An other newer commit" signed &&
++	git reset --hard c0 &&
++
++	EDITOR=false test_must_fail git merge signed &&
++	verify_head "$c0"
++'
++
+ test_expect_success GPG 'merge --ff-only tag' '
+ 	git reset --hard c0 &&
+ 	git commit --allow-empty -m "A newer commit" &&
+-	git tag -s -m "A newer commit" signed &&
++	git tag -f -s -m "A newer commit" signed &&
+ 	git reset --hard c0 &&
+ 
+ 	git merge --ff-only signed &&
+-- 
+1.7.11.7
