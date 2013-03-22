@@ -1,154 +1,106 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=2.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_NOFQDN1,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-Received: (qmail 16289 invoked by uid 107); 14 Jun 2012 08:20:32 -0000
+Received: (qmail 31785 invoked by uid 107); 22 Mar 2013 10:59:53 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.84) with ESMTP; Thu, 14 Jun 2012 04:20:31 -0400
+    by peff.net (qpsmtpd/0.84) with ESMTP; Fri, 22 Mar 2013 06:59:52 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754925Ab2FNIUW (ORCPT <rfc822;peff@peff.net>);
-	Thu, 14 Jun 2012 04:20:22 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48929 "EHLO rominette.imag.fr"
+	id S932544Ab3CVK6B (ORCPT <rfc822;peff@peff.net>);
+	Fri, 22 Mar 2013 06:58:01 -0400
+Received: from smtp6-g21.free.fr ([212.27.42.6]:44540 "EHLO smtp6-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753056Ab2FNIUU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 04:20:20 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5E8B2JU023608
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 14 Jun 2012 10:11:02 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Sf5Hr-0006X7-VI; Thu, 14 Jun 2012 10:20:16 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Sf5Hr-0007rJ-Sg; Thu, 14 Jun 2012 10:20:15 +0200
-From:	y@imag.fr
-To:	git@vger.kernel.org, gitster@pobox.com
-Cc:	Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/2] fixup! 8e00b48 don't allocate struct wt_status_state dynamically
-Date:	Thu, 14 Jun 2012 10:20:13 +0200
-Message-Id: <1339662014-30173-1-git-send-email-y>
-X-Mailer: git-send-email 1.7.11.rc0.57.g84a04c7
-In-Reply-To: <7vk3zag6jg.fsf@alter.siamese.dyndns.org>
-References: <7vk3zag6jg.fsf@alter.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 14 Jun 2012 10:11:02 +0200 (CEST)
-X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5E8B2JU023608
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check:	1340266263.03484@aWzg1QdnAlaPtmfLH7aaog
+	id S932324Ab3CVK6A (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Mar 2013 06:58:00 -0400
+X-Greylist: delayed 2875 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Mar 2013 06:57:59 EDT
+Received: from test.quest-ce.net (unknown [37.161.251.30])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 58BFE8226B;
+	Fri, 22 Mar 2013 11:57:51 +0100 (CET)
+Received: from test.quest-ce.net (localhost.localdomain [127.0.0.1])
+	by test.quest-ce.net (8.14.5/8.14.5) with ESMTP id r2MAvkf8011965;
+	Fri, 22 Mar 2013 11:57:48 +0100
+Received: (from ydroneaud@localhost)
+	by test.quest-ce.net (8.14.5/8.14.5/Submit) id r2MAvf0Q011964;
+	Fri, 22 Mar 2013 11:57:41 +0100
+From:	y@quest-ce.net
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Yann Droneaud <ydroneaud@opteya.com>, Git <git@vger.kernel.org>
+Subject: [PATCH] t7600: merge tag shoud create a merge commit
+Date:	Fri, 22 Mar 2013 11:57:30 +0100
+Message-Id: <1363949850-11927-1-git-send-email-y>
+X-Mailer: git-send-email 1.7.11.7
+References: <1363704914.6289.39.camel@test.quest-ce.net>
+In-Reply-To: <1363704914.6289.39.camel@test.quest-ce.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Yann Droneaud <ydroneaud@opteya.com>
 
-The common
+This test ensures a merge commit is always created
+when merging an annotated (signed) tag without --ff-only option.
 
-void function() {
-	struct wt_status_state *state = calloc(...);
-	...
-	free(state);
-}
-
-is essentially a less efficient, and more error prone way of allocating a
-variable on the stack (plus, the calloc should have been a xcalloc).
-Replace it with an on-stack variable.
-
-While we're there, also replace the individual initializations of fields
-with memset(..., 0, ...).
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Signed-off-by: Yann Droneaud <ydroneaud@opteya.com>
 ---
 
-(BTW, I didn't find a way to have both --autosquash-compliant and
-meaningfull titles)
+Here's a proposition for a test tath check the creation of a merge commit
+when merging a tag.
 
- wt-status.c | 49 +++++++++++++++++++++----------------------------
- 1 file changed, 21 insertions(+), 28 deletions(-)
+It's not in final shape: the line 
 
-diff --git a/wt-status.c b/wt-status.c
-index ed28b4f..e65716d 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -932,49 +932,42 @@ static void show_bisect_in_progress(struct wt_status *s,
- static void wt_status_print_state(struct wt_status *s)
- {
- 	const char *state_color = color(WT_STATUS_IN_PROGRESS, s);
--	struct wt_status_state *state = calloc(1, sizeof(*state));
-+	struct wt_status_state state;
- 	struct stat st;
+    EDITOR=false test_must_fail git merge signed
+
+should failed, but doesn't: the commit merge is created with
+the default message, just like --no-edit was given.
+
+I'm making a mistake somewhere, since the EDITOR=false trick
+works, it's even used in the next test, for --no-edit testing.
+
+Regards.
+
+ t/t7600-merge.sh | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index b524bdb..486f1bf 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -697,10 +697,30 @@ test_expect_success 'merge --no-ff --edit' '
+ 	test_cmp actual expected
+ '
  
--	state->merge_in_progress = 0;
--	state->am_in_progress = 0;
--	state->am_empty_patch = 0;
--	state->rebase_in_progress = 0;
--	state->rebase_interactive_in_progress = 0;
--	state->cherry_pick_in_progress = 0;
--	state->bisect_in_progress = 0;
-+	memset(&state, 0, sizeof(state));
- 
- 	if (!stat(git_path("MERGE_HEAD"), &st)) {
--		state->merge_in_progress = 1;
-+		state.merge_in_progress = 1;
- 	} else if (!stat(git_path("rebase-apply"), &st)) {
- 		if (!stat(git_path("rebase-apply/applying"), &st)) {
--			state->am_in_progress = 1;
-+			state.am_in_progress = 1;
- 			if (!stat(git_path("rebase-apply/patch"), &st) && !st.st_size)
--				state->am_empty_patch = 1;
-+				state.am_empty_patch = 1;
- 		} else {
--			state->rebase_in_progress = 1;
-+			state.rebase_in_progress = 1;
- 		}
- 	} else if (!stat(git_path("rebase-merge"), &st)) {
- 		if (!stat(git_path("rebase-merge/interactive"), &st))
--			state->rebase_interactive_in_progress = 1;
-+			state.rebase_interactive_in_progress = 1;
- 		else
--			state->rebase_in_progress = 1;
-+			state.rebase_in_progress = 1;
- 	} else if (!stat(git_path("CHERRY_PICK_HEAD"), &st)) {
--		state->cherry_pick_in_progress = 1;
-+		state.cherry_pick_in_progress = 1;
- 	}
- 	if (!stat(git_path("BISECT_LOG"), &st))
--		state->bisect_in_progress = 1;
--
--	if (state->merge_in_progress)
--		show_merge_in_progress(s, state, state_color);
--	else if (state->am_in_progress)
--		show_am_in_progress(s, state, state_color);
--	else if (state->rebase_in_progress || state->rebase_interactive_in_progress)
--		show_rebase_in_progress(s, state, state_color);
--	else if (state->cherry_pick_in_progress)
--		show_cherry_pick_in_progress(s, state, state_color);
--	if (state->bisect_in_progress)
--		show_bisect_in_progress(s, state, state_color);
--	free(state);
-+		state.bisect_in_progress = 1;
++test_expect_failure GPG 'merge tag should create a merge commit' '
++	git reset --hard c0 &&
++	git commit --allow-empty -m "A newer commit" &&
++	git tag -f -s -m "A newer commit" signed &&
++	git reset --hard c0 &&
 +
-+	if (state.merge_in_progress)
-+		show_merge_in_progress(s, &state, state_color);
-+	else if (state.am_in_progress)
-+		show_am_in_progress(s, &state, state_color);
-+	else if (state.rebase_in_progress || state.rebase_interactive_in_progress)
-+		show_rebase_in_progress(s, &state, state_color);
-+	else if (state.cherry_pick_in_progress)
-+		show_cherry_pick_in_progress(s, &state, state_color);
-+	if (state.bisect_in_progress)
-+		show_bisect_in_progress(s, &state, state_color);
- }
++	git merge signed &&
++	git rev-parse signed^0 >expect &&
++	git rev-parse HEAD^0 >actual &&
++	! test_cmp actual expect &&
++
++	git reset --hard c0 &&
++	git commit --allow-empty -m "An other newer commit" &&
++	git tag -f -s -m "An other newer commit" signed &&
++	git reset --hard c0 &&
++
++	EDITOR=false test_must_fail git merge signed &&
++	verify_head "$c0"
++'
++
+ test_expect_success GPG 'merge --ff-only tag' '
+ 	git reset --hard c0 &&
+ 	git commit --allow-empty -m "A newer commit" &&
+-	git tag -s -m "A newer commit" signed &&
++	git tag -f -s -m "A newer commit" signed &&
+ 	git reset --hard c0 &&
  
- void wt_status_print(struct wt_status *s)
+ 	git merge --ff-only signed &&
 -- 
-1.7.11.rc0.57.g84a04c7
+1.7.11.7
 
