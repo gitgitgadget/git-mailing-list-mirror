@@ -1,67 +1,96 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: Re: [PATCH] t7600: merge tag shoud create a merge commit
-Date: Fri, 22 Mar 2013 15:56:15 +0100
-Organization: OPTEYA
-Message-ID: <831c87ad325075b6049ef52c24477da2@meuh.org>
-References: <1363704914.6289.39.camel@test.quest-ce.net>
- <7vr4j78p8a.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/6] remote.c: introduce remote.pushdefault
+Date: Fri, 22 Mar 2013 10:56:40 -0400
+Message-ID: <20130322145640.GB3083@sigill.intra.peff.net>
+References: <1363938756-13722-1-git-send-email-artagnon@gmail.com>
+ <1363938756-13722-6-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 22 15:56:57 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 22 15:57:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJ3Oo-0006MH-Iz
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 15:56:54 +0100
+	id 1UJ3PJ-0006mf-DV
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 15:57:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933845Ab3CVO4X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Mar 2013 10:56:23 -0400
-Received: from mx-out.ocsa-data.net ([194.36.166.37]:58384 "EHLO
-	mx-out.ocsa-data.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933754Ab3CVO4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 10:56:19 -0400
-Received: from [192.168.111.12] (helo=rc.ouvaton.coop)
-	by mx-out.ocsa-data.net with esmtpa (Exim - FreeBSD Rulez)
-	id 1UJ3OB-000G5M-84; Fri, 22 Mar 2013 15:56:15 +0100
-In-Reply-To: <7vr4j78p8a.fsf@alter.siamese.dyndns.org>
-X-Sender: ydroneaud@opteya.com
-User-Agent: Roundcube Webmail/0.8.4
-X-abuse-contact: abuse@ocsa-data.net
+	id S933754Ab3CVO4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Mar 2013 10:56:50 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35752 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933657Ab3CVO4s (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Mar 2013 10:56:48 -0400
+Received: (qmail 1303 invoked by uid 107); 22 Mar 2013 14:58:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Mar 2013 10:58:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Mar 2013 10:56:40 -0400
+Content-Disposition: inline
+In-Reply-To: <1363938756-13722-6-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218808>
 
-Le 22.03.2013 15:48, Junio C Hamano a =C3=A9crit=C2=A0:
->>
->> It's not in final shape: the line
->>
->>     EDITOR=3Dfalse test_must_fail git merge signed
->
-> Because test_must_fail is a shell function, single-shot environment
-> assignment like this should not be used.
+On Fri, Mar 22, 2013 at 01:22:35PM +0530, Ramkumar Ramachandra wrote:
 
-It's used throughout the test. The test 'merge --no-edit tag should=20
-skip editor' is using it.
+> diff --git a/remote.c b/remote.c
+> index 185ac11..bdb542c 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -350,6 +350,11 @@ static int handle_config(const char *key, const char *value, void *cb)
+>  	const char *subkey;
+>  	struct remote *remote;
+>  	struct branch *branch;
+> +	if (!prefixcmp(key, "remote.")) {
+> +		if (!strcmp(key + 7, "pushdefault"))
+> +			if (git_config_string(&pushremote_name, key, value))
+> +				return -1;
+> +	}
+>  	if (!prefixcmp(key, "branch.")) {
+>  		name = key + 7;
+>  		subkey = strrchr(name, '.');
 
-Before posting my half useful test, I used "EDITOR=3Dfalse test_must_fa=
-il=20
-set" in --verbose mode to find if EDITOR was correctly defined passed=20
-test_must_fail, and it was.
+I was going to say "shouldn't we return 0" here, both on successful read
+of pushdefault, but also just when we have remote.*. But the answer is
+"yes" to the first one (we know we have handled the key), but "no" to
+the second, because we end up parsing remote.*.* later.
 
-So it's still not clear why it's failing at failing. And it's making me=
-=20
-angry.
+So I think this should at least be:
 
-Regards.
+  if (!prefixcmp(key, "remote.")) {
+          if (!strcmp(key + 7, "pushdefault"))
+                  return git_config_string(&pushremote_name, key, value));
+          /* do not return; we handle other remote.* below */
+  }
 
---=20
-Yann Droneaud
-OPTEYA
+but also possibly just move it with the other remote parsing, like:
+
+diff --git a/remote.c b/remote.c
+index 02e6c4c..d3d740a 100644
+--- a/remote.c
++++ b/remote.c
+@@ -388,9 +388,16 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 			add_instead_of(rewrite, xstrdup(value));
+ 		}
+ 	}
++
+ 	if (prefixcmp(key,  "remote."))
+ 		return 0;
+ 	name = key + 7;
++
++	/* Handle any global remote.* variables */
++	if (!strcmp(name, "pushdefault"))
++		return git_config_string(&pushremote_name, key, value);
++
++	/* Now handle any remote.NAME.* variables */
+ 	if (*name == '/') {
+ 		warning("Config remote shorthand cannot begin with '/': %s",
+ 			name);
+
+-Peff
