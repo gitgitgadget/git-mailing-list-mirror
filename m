@@ -1,83 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: feature request - have git honor nested .gitconfig files
-Date: Fri, 22 Mar 2013 14:33:06 -0400
-Message-ID: <20130322183306.GA32448@sigill.intra.peff.net>
-References: <CAM2RUGOOWnxRd2=04-NmKTC+tvnCD=ebgmmiexHas5bwyYrm4w@mail.gmail.com>
- <20130322182211.GD12223@google.com>
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: [PATCH v2] Fix revision walk for commits with the same dates
+Date: Fri, 22 Mar 2013 19:38:19 +0100
+Message-ID: <20130322183819.GA18210@camk.edu.pl>
+References: <20130307180321.GA26756@camk.edu.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Josh Sharpe <josh.m.sharpe@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 22 19:33:47 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 22 19:39:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJ6md-0003Qp-0g
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 19:33:43 +0100
+	id 1UJ6rx-00073w-6W
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 19:39:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422876Ab3CVSdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Mar 2013 14:33:15 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:35979 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422817Ab3CVSdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 14:33:15 -0400
-Received: (qmail 3934 invoked by uid 107); 22 Mar 2013 18:34:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Mar 2013 14:34:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Mar 2013 14:33:06 -0400
+	id S1754575Ab3CVSip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Mar 2013 14:38:45 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:50851 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754499Ab3CVSio (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Mar 2013 14:38:44 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id CE4A65F0001
+	for <git@vger.kernel.org>; Fri, 22 Mar 2013 19:38:54 +0100 (CET)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id yjFFUjYL+gUT for <git@vger.kernel.org>;
+	Fri, 22 Mar 2013 19:38:37 +0100 (CET)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id B98285F0004
+	for <git@vger.kernel.org>; Fri, 22 Mar 2013 19:38:31 +0100 (CET)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id 89D744838A; Fri, 22 Mar 2013 19:38:19 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <20130322182211.GD12223@google.com>
+In-Reply-To: <20130307180321.GA26756@camk.edu.pl>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218835>
 
-On Fri, Mar 22, 2013 at 11:22:11AM -0700, Jonathan Nieder wrote:
+Logic in still_interesting function allows to stop the commits
+traversing if the oldest processed commit is not older then the
+youngest commit on the list to process and the list contains only
+commits marked as not interesting ones. It can be premature when dealing
+with a set of coequal commits. For example git rev-list A^! --not B
+provides wrong answer if all commits in the range A..B had the same
+commit time and there are more then 7 of them.
 
->  * Maintaining configuration per repository to record a rather simple
->    is more complicated than ideal.  It would be easier to understand
->    the configuration if ~/.gitconfig could spell out the rule
->    explicitly:
-> 
-> 	[include]
-> 		path = cond(starts_with($GIT_DIR, ~/dev/),
-> 			    ~/.config/git/dev-config,
-> 			    ~/.config/git/nondev-config)
-> 
->    This means supporting an extension language in the config file.
->    It sounds hard to do right, especially considering use cases like
->    "User runs into trouble, asks a privileged sysadmin to try running
->    a command in her untrusted repository", but it is worth thinking
->    about how to do.
+To fix this problem the relevant part of the logic in still_interesting
+is changed to: the walk can be stopped if the oldest processed commit is
+younger then the youngest commit on the list to processed.
 
-I'd rather not invent a new language. It will either not be featureful
-enough, or will end up bloated. Or both. How about something like:
+Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+---
 
-  [include]
-       exec = "
-         case \"$GIT_DIR\" in)
-           */dev/*) cat ~/.config/git/dev-config ;;
-                 *) cat ~/.config/git/nondev-config ;;
-          esac
-       "
+I don't know whether the first version was overlooked or deemed as not
+worthy. So just in case I resend it. Changes since the first version:
 
-It involves a shell invocation, but it's not like we parse config in a
-tight loop. Bonus points if git provides the name of the current config
-file, so exec can use relative paths like:
+1. The test has been added
+2. The commit log has been rewritten
 
-  cat "$(dirname $GIT_CONFIG_FILE)"/dev-config
 
->  * The "Includes" facility is annoyingly close to being helpful.
->    An include.path setting from ~/.gitconfig cannot refer to $GIT_DIR
->    by name.
+ revision.c                 |  2 +-
+ t/t6009-rev-list-parent.sh | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-Yeah, we do not allow variable expansion at all beyond the usual path
-mechanisms. I think if you had $GIT_DIR, though, it would end up
-annoying.  You do not want one file in ~/.config/git per $GIT_DIR, so
-you would need some way of munging $GIT_DIR into your naming scheme.
+diff --git a/revision.c b/revision.c
+index ef60205..cf620c6 100644
+--- a/revision.c
++++ b/revision.c
+@@ -709,7 +709,7 @@ static int still_interesting(struct commit_list *src, unsigned long date, int sl
+ 	 * Does the destination list contain entries with a date
+ 	 * before the source list? Definitely _not_ done.
+ 	 */
+-	if (date < src->item->date)
++	if (date <= src->item->date)
+ 		return SLOP;
+ 
+ 	/*
+diff --git a/t/t6009-rev-list-parent.sh b/t/t6009-rev-list-parent.sh
+index 3050740..66cda17 100755
+--- a/t/t6009-rev-list-parent.sh
++++ b/t/t6009-rev-list-parent.sh
+@@ -133,4 +133,17 @@ test_expect_success 'dodecapus' '
+ 	check_revlist "--min-parents=13" &&
+ 	check_revlist "--min-parents=4 --max-parents=11" tetrapus
+ '
++
++test_expect_success 'ancestors with the same commit time' '
++
++	test_tick_keep=$test_tick &&
++	for i in 1 2 3 4 5 6 7 8; do
++		test_tick=$test_tick_keep
++		test_commit t$i
++	done &&
++	git rev-list t1^! --not t$i >result &&
++	>expect &&
++	test_cmp expect result
++'
++
+ test_done
+-- 
+1.8.2
 
--Peff
+-- 
+  Kacper Kornet
