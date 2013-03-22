@@ -1,77 +1,74 @@
-From: Dan Bornstein <danfuzz@milk.com>
-Subject: [PATCH] Correct the docs about GIT_SSH.
-Date: Thu, 21 Mar 2013 23:06:40 +0000
-Message-ID: <1363907200-12850-1-git-send-email-danfuzz@milk.com>
-Cc: Dan Bornstein <danfuzz@milk.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 22 00:07:22 2013
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: What's cooking in git.git (Mar 2013, #06; Thu, 21)
+Date: Fri, 22 Mar 2013 00:11:22 -0000
+Organization: OPDS
+Message-ID: <46A741281AFC4C56B3FBDEFB531FD7D2@PhilipOakley>
+References: <7vzjxw8icr.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 22 01:11:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIoZu-0003BY-3M
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 00:07:22 +0100
+	id 1UIpa9-0001CB-Gw
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 01:11:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754047Ab3CUXGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Mar 2013 19:06:54 -0400
-Received: from mail-vb0-f50.google.com ([209.85.212.50]:57868 "EHLO
-	mail-vb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754037Ab3CUXGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Mar 2013 19:06:53 -0400
-Received: by mail-vb0-f50.google.com with SMTP id ft2so2309792vbb.9
-        for <git@vger.kernel.org>; Thu, 21 Mar 2013 16:06:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=MsUyNakPHiZOrFOfWmbJul1XuFITrOP7B5oYlDIu8j0=;
-        b=fGrLiVZ/bDOe9840+IHaCq+5syiHhMEFLKdY43k19qUO0Q1mTwP/tnPczL8o/MchS9
-         nVR8Zy9GDB/36Kjy4XjE+u3vWIj9/PcRajSzXonFFZKVz7zw8TV4LPyfw0sCXK3PXik3
-         +fu7jFDSVIcMoQ8mMoV/5LBEFhFMfXTQAKHXqA8N4llWy6/vFESlW+7CYD+lYQw9034J
-         pQsGQQOztWEolfVDos9YWU2XXIEjuwzYu7iQZAR3PDAnCKB8SgwU5Q/X4+/fzsSpFq6u
-         Qd1fakLifDRqDC8//gxc3w39mQmAgrp/TurdGHqfskGvipJ10n97Nc+aAChcW0Dmb6Pr
-         NMHQ==
-X-Received: by 10.52.93.20 with SMTP id cq20mr13731264vdb.38.1363907212532;
-        Thu, 21 Mar 2013 16:06:52 -0700 (PDT)
-Received: from localhost.localdomain (postham.org. [107.20.239.204])
-        by mx.google.com with ESMTPS id l18sm43932602vdh.10.2013.03.21.16.06.51
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 21 Mar 2013 16:06:52 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.5
+	id S932260Ab3CVALO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Mar 2013 20:11:14 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:14963 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753776Ab3CVALN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Mar 2013 20:11:13 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AlUJAAWhS1FOl3xZ/2dsb2JhbABDjWG3dwSBXBd0gh8FAQEFCAEBLh4BASwCAwUCAQMVAQslFAEEGgYHFwYBEggCAQIDAYgHwiiOABaDYWEDiD+FcJk3gS+BWzw
+X-IronPort-AV: E=Sophos;i="4.84,888,1355097600"; 
+   d="scan'208";a="404031996"
+Received: from host-78-151-124-89.as13285.net (HELO PhilipOakley) ([78.151.124.89])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 22 Mar 2013 00:11:11 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218773>
 
-In particular, it can get called with four arguments if you happen to
-be referring to a repo using the ssh:// scheme with a non-default port
-number.
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Thursday, March 21, 2013 11:04 PM
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.
+>
+[...]
+> --------------------------------------------------
+> [Stalled]
+>
+[...]
+>
+> * po/help-guides (2013-03-03) 5 commits
+> - help doc: include --guide option description
+> - help.c: add list_common_guides_help() function
+> - help.c: add --guide option
+> - help.c: use OPT_COUNTUP
+> - show 'git help <guide>' usage, with examples
+>
+> Give more visibility to "concept guides" to help "git help" users.
+>
+> Expecting a reroll.
+> $gmane/217384
+>
 
-Signed-off-by: Dan Bornstein <danfuzz@milk.com>
----
- Documentation/git.txt |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
+I'm still planning to do this. Unfortunately my test machine is still 
+out of action.
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 7efaa59..4307d62 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -774,9 +774,12 @@ other
- 	If this environment variable is set then 'git fetch'
- 	and 'git push' will use this command instead
- 	of 'ssh' when they need to connect to a remote system.
--	The '$GIT_SSH' command will be given exactly two arguments:
--	the 'username@host' (or just 'host') from the URL and the
--	shell command to execute on that remote system.
-+	The '$GIT_SSH' command will be given exactly two or
-+	four arguments: the 'username@host' (or just 'host')
-+	from the URL and the shell command to execute on that
-+	remote system, optionally preceded by '-p' (literally) and
-+	the 'port' from the URL when it specifies something other
-+	than the default SSH port.
- +
- To pass options to the program that you want to list in GIT_SSH
- you will need to wrap the program and options into a shell script,
--- 
-1.7.4.5
+Philip 
