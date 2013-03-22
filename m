@@ -1,88 +1,167 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: Re: git merge <tag> behavior
-Date: Fri, 22 Mar 2013 10:16:20 +0100
-Organization: OPTEYA
-Message-ID: <cdc4f45e7520ce1fc48588c260214717@meuh.org>
-References: <1363704914.6289.39.camel@test.quest-ce.net>
- <loom.20130321T212911-611@post.gmane.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v3 3/4] t7800: modernize tests
+Date: Fri, 22 Mar 2013 10:00:30 +0000
+Message-ID: <20130322100030.GH2283@serenity.lan>
+References: <1361419428-22410-1-git-send-email-davvid@gmail.com>
+ <1361419428-22410-2-git-send-email-davvid@gmail.com>
+ <1361419428-22410-3-git-send-email-davvid@gmail.com>
+ <514985FB.8080806@viscovery.net>
+ <CAJDDKr4O-OU57j0f7F2E2_4EvtCTE1gFP5uLv+fvD6VcpPiifg@mail.gmail.com>
+ <514AB9A5.3050601@viscovery.net>
+ <514C04AA.6030305@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: Max Nanasy <max.nanasy@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 22 10:16:54 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Mar 22 11:01:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UIy5l-0004zj-6g
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 10:16:53 +0100
+	id 1UIymg-0008AJ-5S
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 11:01:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754201Ab3CVJQY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Mar 2013 05:16:24 -0400
-Received: from mx-out.ocsa-data.net ([194.36.166.37]:60644 "EHLO
-	mx-out.ocsa-data.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753945Ab3CVJQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 05:16:23 -0400
-Received: from [192.168.111.12] (helo=rc.ouvaton.coop)
-	by mx-out.ocsa-data.net with esmtpa (Exim - FreeBSD Rulez)
-	id 1UIy5E-000A96-8j; Fri, 22 Mar 2013 10:16:20 +0100
-In-Reply-To: <loom.20130321T212911-611@post.gmane.org>
-X-Sender: ydroneaud@opteya.com
-User-Agent: Roundcube Webmail/0.8.4
-X-abuse-contact: abuse@ocsa-data.net
+	id S1753465Ab3CVKAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Mar 2013 06:00:45 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:38715 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751698Ab3CVKAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Mar 2013 06:00:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 5B0C8CDA5DB;
+	Fri, 22 Mar 2013 10:00:43 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0riaTv6xJEHr; Fri, 22 Mar 2013 10:00:42 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 5DA93CDA594;
+	Fri, 22 Mar 2013 10:00:32 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <514C04AA.6030305@viscovery.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218787>
 
-Hi,
+On Fri, Mar 22, 2013 at 08:13:46AM +0100, Johannes Sixt wrote:
+> Am 3/21/2013 8:41, schrieb Johannes Sixt:
+> > Am 3/20/2013 23:59, schrieb David Aguilar:
+> >> I started digging in and the @worktree_files (aka @worktree above)
+> >> is populated from the output of "git diff --raw ...".
+> >>
+> >> Seeing the "output" filename in "diff --raw" implies that one of the
+> >> tests added "output" to the index somehow.  I do not see that
+> >> happening anywhere, though, so I do not know how it would end up in
+> >> the @worktree array if it is not reported by "diff --raw".
+> >>
+> >>
+> >> My current understanding of how it could possibly be open twice:
+> >>
+> >> 1. via the >output redirect
+> >> 2. via the copy() perl code which is fed by @worktree
+> >>
+> >> So I'm confused.  Why would we get different results on Windows?
+> > 
+> > I tracked down the difference between Windows and Linux, and it is...
+> > 
+> > 	for my $file (@worktree) {
+> > 		next if $symlinks && -l "$b/$file";
+> > 
+> > ... this line in sub dir_diff. On Linux, we take the short-cut, but on
+> > Windows we proceed through the rest of the loop,
+> 
+> And that is likely by design. From the docs:
+> 
+> --symlinks
+> --no-symlinks
+> 
+>     git difftool's default behavior is create symlinks to the working
+>     tree when run in --dir-diff mode.
+> 
+>     Specifying `--no-symlinks` instructs 'git difftool' to create
+>     copies instead.  `--no-symlinks` is the default on Windows.
+> 
+> And indeed, we have this initialization:
+> 
+> 	my %opts = (
+> 		...
+> 		symlinks => $^O ne 'cygwin' &&
+> 				$^O ne 'MSWin32' && $^O ne 'msys',
+> 		...
+> 	);
+> 
+> Can the --dir-diff tests case pass on Cygwin when neither --symlinks nor
+> --no-symlinks is passed?
+> 
+> Perhaps the right solution is this:
 
-Le 21.03.2013 21:31, Max Nanasy a =C3=A9crit=C2=A0:
-> Yann Droneaud <ydroneaud <at> opteya.com> writes:
->
->>
->> 3) Merge options can't be overridden.
->>
->> If I modify .git/config to set a merge option, for example forcing
->> fast-forward merge, this option cannot be overridden on command=20
->> line:
->>
->
-> (git merge --no-ff-only --no-ff) should work.  The --no-ff-only=20
-> overrides
-> the --ff-only configuration setting, and the --no-ff ensures that the=
-=20
-> merge
-> is not a fast-forward.
->
+We already have tests that explicitly pass '--symlinks'.  I wonder if it
+would be better to change "output" to ".git/output", which should avoid
+the problem by moving the output file out of the working tree.
 
-Thanks. I wasn't aware of the --no-ff-only option and
-thought --no-ff would be the opposite of --ff-only,
-or at least disable it given the order of the options.
-
-Please find a patch to document option --no-ff-only
-
-   Documentation/merge-options.txt | 4 ++++
-   1 file changed, 4 insertions(+)
-
-diff --git a/Documentation/merge-options.txt
-b/Documentation/merge-options.txt
-index 0bcbe0a..20a31cf 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -37,6 +37,10 @@ set to `no` at the beginning of them.
-  	current `HEAD` is already up-to-date or the merge can be
-  	resolved as a fast-forward.
-
-+--no-ff-only::
-+	Disable `--ff-only` behavior, eg. allows creation of merge commit.
-+	This is the default behavior.
-+
-   --log[=3D<n>]::
-   --no-log::
-  	In addition to branch names, populate the log message with
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index c6d6b1c..19238f6 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -328,14 +328,16 @@ test_expect_success PERL 'setup change in subdirectory' '
+>  	git commit -m "modified both"
+>  '
+>  
+> -test_expect_success PERL 'difftool -d' '
+> -	git difftool -d --extcmd ls branch >output &&
+> +# passing --symlinks helps Cygwin, which defaults to --no-symlinks
+> +
+> +test_expect_success PERL,SYMLINKS 'difftool -d' '
+> +	git difftool -d --symlinks --extcmd ls branch >output &&
+>  	stdin_contains sub <output &&
+>  	stdin_contains file <output
+>  '
+>  
+> -test_expect_success PERL 'difftool --dir-diff' '
+> -	git difftool --dir-diff --extcmd ls branch >output &&
+> +test_expect_success PERL,SYMLINKS 'difftool --dir-diff' '
+> +	git difftool --dir-diff --symlinks --extcmd ls branch >output &&
+>  	stdin_contains sub <output &&
+>  	stdin_contains file <output
+>  '
+> @@ -362,16 +364,16 @@ test_expect_success PERL,SYMLINKS 'difftool --dir-diff --symlink without unstage
+>  	test_cmp actual expect
+>  '
+>  
+> -test_expect_success PERL 'difftool --dir-diff ignores --prompt' '
+> -	git difftool --dir-diff --prompt --extcmd ls branch >output &&
+> +test_expect_success PERL,SYMLINKS 'difftool --dir-diff ignores --prompt' '
+> +	git difftool --dir-diff --symlinks --prompt --extcmd ls branch >output &&
+>  	stdin_contains sub <output &&
+>  	stdin_contains file <output
+>  '
+>  
+> -test_expect_success PERL 'difftool --dir-diff from subdirectory' '
+> +test_expect_success PERL,SYMLINKS 'difftool --dir-diff from subdirectory' '
+>  	(
+>  		cd sub &&
+> -		git difftool --dir-diff --extcmd ls branch >output &&
+> +		git difftool --dir-diff --symlinks --extcmd ls branch >output &&
+>  		stdin_contains sub <output &&
+>  		stdin_contains file <output
+>  	)
+> 
+> (Only tested on MinGW, which skips the tests.) I leave it to you
+> to write --no-symlinks tests.
+> 
+> -- Hannes
