@@ -1,164 +1,165 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] t7800: fix tests when difftool uses --no-symlinks
-Date: Fri, 22 Mar 2013 15:53:38 -0700
-Message-ID: <7v8v5f59n1.fsf@alter.siamese.dyndns.org>
-References: <20130322115352.GI2283@serenity.lan>
- <cover.1363980749.git.john@keeping.me.uk>
- <cover.1363980749.git.john@keeping.me.uk>
- <5fc134f6c4a88232c78240539084e9d35db3a6cb.1363980749.git.john@keeping.me.uk>
+Subject: Re: [PATCH] merge/pull: verify GPG signatures of commits being
+ merged
+Date: Fri, 22 Mar 2013 16:02:47 -0700
+Message-ID: <7v4ng3597s.fsf@alter.siamese.dyndns.org>
+References: <514CD26C.2070702@physik.tu-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
-	David Aguilar <davvid@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Mar 22 23:54:10 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sebastian =?utf-8?Q?G=C3=B6tte?= <jaseg@physik.tu-berlin.de>
+X-From: git-owner@vger.kernel.org Sat Mar 23 00:03:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJAqg-0004mw-55
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Mar 2013 23:54:10 +0100
+	id 1UJAzX-0002V8-1n
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 00:03:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423471Ab3CVWxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Mar 2013 18:53:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53322 "EHLO
+	id S1423468Ab3CVXCv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Mar 2013 19:02:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58666 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423395Ab3CVWxl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 18:53:41 -0400
+	id S1423377Ab3CVXCu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Mar 2013 19:02:50 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6CC9A608;
-	Fri, 22 Mar 2013 18:53:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01CADA9BC;
+	Fri, 22 Mar 2013 19:02:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OGpExGtMrSJa5Zk5+jc5oXLgafA=; b=GISerS
-	nqQ6cMpZjKUhTS4jgx/cd9NOY220DQ+th2Krc//IqPtIgxNe1xPEA8P/e6Jg2GqQ
-	Ln8O95MFAB9G1HgLxaNo7CKnKyeR7sTRywQRismzjxxwWIS9Yi2fTTG2+Gf0e30q
-	KGFsTEt7COKYzghrvDasLvJb4xy5WgTcS0Ykk=
+	:content-type:content-transfer-encoding; s=sasl; bh=kA+qcdecEF31
+	VSnWDGBLvP6BG5g=; b=dR4Di9VAwrwqZQmek+dOssWyu6hXOLygU+W1g8RT3YIV
+	j4nMJr6DNHz4Zm1x5Fyg8oMNC1RVAn/RFaPUROCi/tOX74dl2UQSzSQfXEWaMjPA
+	Adtrg48/rIJpiXXYZ8VpDdT5bs2Jf08af9yaDfAYCCa3YMK3q8+6tdSTWKF8JRE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fw+4so7D/zqcUCeFpmLzBe0ZvQnGcVM0
-	IUsl/3W+LVJdf/vNTXuOOx3OIdKBoFull56Ixb8bEVNLVEMAs7ixyB2HG43Y+xUP
-	m8LGawwTaLFl00/oTVAdl0KC/k+ci6NPvOwMEVVWSQSvN2ogQtHYDv5Du2Og4/Mc
-	1g/rQW1Eqi0=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=F9PjrL
+	67whIRz+NHtWhHBWNKQyy8R2wCZBl3/w1B12IUWtkG8WNFE7wEGA85Rvy+/TXNYg
+	7mLC/lddPmjAHJHCKmOaIdwBeFqVDHhuHXUErWgDB1m4uUibOf7Bu6J7EkX4TJqm
+	ambRGfgrdtjORS4UXSkRH8NYQoB7LK2ZK7Wvs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA93AA607;
-	Fri, 22 Mar 2013 18:53:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EADCBA9BB;
+	Fri, 22 Mar 2013 19:02:49 -0400 (EDT)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19417A605; Fri, 22 Mar 2013
- 18:53:40 -0400 (EDT)
-In-Reply-To: <5fc134f6c4a88232c78240539084e9d35db3a6cb.1363980749.git.john@keeping.me.uk>
- (John Keeping's message of "Fri, 22 Mar 2013 19:36:32 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 22B95A9BA; Fri, 22 Mar 2013
+ 19:02:49 -0400 (EDT)
+In-Reply-To: <514CD26C.2070702@physik.tu-berlin.de> ("Sebastian
+ =?utf-8?Q?G=C3=B6tte=22's?= message of "Fri, 22 Mar 2013 22:51:40 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 56B1F47A-9343-11E2-8ABB-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9DF24CF8-9344-11E2-AA6F-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218864>
 
-John Keeping <john@keeping.me.uk> writes:
+Sebastian G=C3=B6tte <jaseg@physik.tu-berlin.de> writes:
 
-> When 'git difftool --dir-diff' is using --no-symlinks (either explicitly
-> or implicitly because it's running on Windows), any working tree files
-> that have been copied to the temporary directory are copied back after
-> the difftool completes.  This includes untracked files in the working
-> tree.
-
-Hmph.  Why do we populate the temporary directory with a copy of an
-untracked path in the first place?  I thought the point of dir-diff
-was to materialize only the relevant paths to two temporaries and
-compare these temporaries with a tool that knows how to compare two
-directories?
-
-Even if you had path F in HEAD that you are no longer tracking in
-the working tree, a normal
-
-	$ git diff HEAD
-
-would report the path F to have been deleted, so I would imagine
-that the preimage side of the temporary directory should get a copy
-of HEAD:F at path F, while the postimage side of the temporary
-directory should not even have anything at path F, when dir-diff
-runs, no?
-
-Isn't that the real reason why the test fails?  The path 'output' is
-not being tracked at any revision or in the index that is involved
-in the test, is it?
-
-> During the tests, this means that the following sequence occurs:
+> git merge/pull:
+> When --verify-signatures is specified on the command-line of git-merg=
+e
+> or git-pull, check whether the commits being merged have good gpg
+> signatures and abort the merge in case they do not. This allows e.g.
+> auto-deployment from untrusted repo hosts.
 >
-> 1) the shell opens "output" to redirect the difftool output
-> 2) difftool copies the empty "output" to the temporary directory
-> 3) difftool runs "ls" which writes to "output"
-> 4) difftool copies the empty "output" file back over the output of the
->    command
-> 5) the output files doesn't contain the expected output, causing the
->    test to fail
+> pretty printing:
+> Tell about an "untrusted good signature" in addition to the previous
+> "good signature" and "bad signature". In case of a missing signature,
+> expand the pretty format string "%G?" to "N" in since this eases the
+> wirting of anything parsing git-log output.
 >
-> Avoid this by writing the output into .git/ which will not be copied or
-> overwritten.
-
-It is a good idea to move these test output and expect test vectore
-files to a different place to make it easier to distinguish them
-from test input (e.g. "sub", "file", etc.) in general, but the
-description of the original problem sounds like it is just working
-around a bug to me.  What am I missing?
-
-> In the longer term, difftool probably needs to learn to warn the user
-> instead of overwrite any changes that have been made to the working tree
-> file.
->
-> Signed-off-by: John Keeping <john@keeping.me.uk>
+> Signed-off-by: Sebastian G=C3=B6tte <jaseg@physik-pool.tu-berlin.de>
 > ---
->  t/t7800-difftool.sh | 24 ++++++++++++------------
->  1 file changed, 12 insertions(+), 12 deletions(-)
+> I moved the commit signature verification code from pretty.c to commi=
+t.c
+> because it is used from pretty.c and builtin/merge.c. I include that =
+pretty
+> printing change here because I needed to add the good/untrusted check=
+ for the
+> merge --verify-signatures option to really make sense.
 >
-> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> index e694972..1eed439 100755
-> --- a/t/t7800-difftool.sh
-> +++ b/t/t7800-difftool.sh
-> @@ -319,29 +319,29 @@ test_expect_success PERL 'setup change in subdirectory' '
->  '
->  
->  test_expect_success PERL 'difftool -d' '
-> -	git difftool -d --extcmd ls branch >output &&
-> -	grep sub output &&
-> -	grep file output
-> +	git difftool -d --extcmd ls branch >.git/output &&
-> +	grep sub .git/output &&
-> +	grep file .git/output
->  '
->  
->  test_expect_success PERL 'difftool --dir-diff' '
-> -	git difftool --dir-diff --extcmd ls branch >output &&
-> -	grep sub output &&
-> -	grep file output
-> +	git difftool --dir-diff --extcmd ls branch >.git/output &&
-> +	grep sub .git/output &&
-> +	grep file .git/output
->  '
->  
->  test_expect_success PERL 'difftool --dir-diff ignores --prompt' '
-> -	git difftool --dir-diff --prompt --extcmd ls branch >output &&
-> -	grep sub output &&
-> -	grep file output
-> +	git difftool --dir-diff --prompt --extcmd ls branch >.git/output &&
-> +	grep sub .git/output &&
-> +	grep file .git/output
->  '
->  
->  test_expect_success PERL 'difftool --dir-diff from subdirectory' '
->  	(
->  		cd sub &&
-> -		git difftool --dir-diff --extcmd ls branch >output &&
-> -		grep sub output &&
-> -		grep file output
-> +		git difftool --dir-diff --extcmd ls branch >../.git/output &&
-> +		grep sub ../.git/output &&
-> +		grep file ../.git/output
->  	)
->  '
+> Those new %G? options are implicitly tested by t7612-merge-verify-sig=
+natures.sh
+> because %G? is just replaced by the passed-through output of the comm=
+it
+> verification function.
+
+While I think the new --verify-signature option may be a good
+addition, I wonder if you can split this patch down a bit for easier
+review and validation.
+
+Perhaps this needs to be done in at least three steps:
+
+    (1) first move the code without changing anything (most
+        importantly, do not add 'U' or 'N' at this step); then
+
+    (2) teach 'merge' and 'pull' to understand the new option, and
+        finally;
+
+    (3) introduce 'U' and 'N'.
+
+The existing users of '%G?' placeholders are not expecting to see
+'N' but turning it into an empty string, so if the third step turns
+out to be problematic to these users, we can discard the third step
+and still benefit from the first two, for example.
+
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-=
+formats.txt
+> index 105f18a..7297b1b 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -131,7 +131,7 @@ The placeholders are:
+>  - '%B': raw body (unwrapped subject and body)
+>  - '%N': commit notes
+>  - '%GG': raw verification message from GPG for a signed commit
+> -- '%G?': show either "G" for Good or "B" for Bad for a signed commit
+> +- '%G?': show "G" for a Good signature, "B" for a Bad signature, "U"=
+ for a good, untrusted signature and "N" for no signature
+
+Even though this is a source that is turned into html and manpages,
+people do read these in the original text format (that is the whole
+point of using AsciiDoc as the source format), so please see if you
+can avoid this overly long line.
+
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 7c8922c..37ece3d 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -49,7 +49,7 @@ static const char * const builtin_merge_usage[] =3D=
+ {
+>  static int show_diffstat =3D 1, shortlog_len =3D -1, squash;
+>  static int option_commit =3D 1, allow_fast_forward =3D 1;
+>  static int fast_forward_only, option_edit =3D -1;
+> -static int allow_trivial =3D 1, have_message;
+> +static int allow_trivial =3D 1, have_message, verify_signatures =3D =
+0;
+
+Avoid initializing static variables to 0, and instead let BSS take
+care of them.
+
+> @@ -199,6 +199,8 @@ static struct option builtin_merge_options[] =3D =
+{
+>  	OPT_BOOLEAN(0, "ff-only", &fast_forward_only,
+>  		N_("abort if fast-forward is not possible")),
+>  	OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
+> +	OPT_BOOLEAN(0, "verify-signatures", &verify_signatures,
+> +		N_("Verify that the named commit has a valid GPG signature")),
+>  	OPT_CALLBACK('s', "strategy", &use_strategies, N_("strategy"),
+>  		N_("merge strategy to use"), option_parse_strategy),
+>  	OPT_CALLBACK('X', "strategy-option", &xopts, N_("option=3Dvalue"),
+> @@ -1233,6 +1235,35 @@ int cmd_merge(int argc, const char **argv, con=
+st char *prefix)
+>  		usage_with_options(builtin_merge_usage,
+>  			builtin_merge_options);
+> =20
+> +	if (verify_signatures) {
+> +		//Verify the commit signatures
+
+No // C99/C++ comments.
+
+The rest of the patch not reviewed; expecting a split reroll.
+
+Thanks.
