@@ -1,85 +1,130 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2 0/6] Support triangular workflows
-Date: Sat, 23 Mar 2013 18:12:38 +0530
-Message-ID: <CALkWK0=fOxuWvXKL4fQ9cd0Rs2S71_9GB=eP8PXbwk_+Ke8wtQ@mail.gmail.com>
-References: <1363783501-27981-1-git-send-email-artagnon@gmail.com>
- <26A2BE0824FE4C999592D392FCBEF988@PhilipOakley> <7v7gkz8nyf.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 3/3] git-pull.sh: introduce --[no-]autostash and pull.autostash
+Date: Sat, 23 Mar 2013 18:18:00 +0530
+Message-ID: <CALkWK0=oOt0teGqCjpDkerR3-t1cY=qKyK-AtoLLCz9L1-+vyw@mail.gmail.com>
+References: <1363955399-13153-1-git-send-email-artagnon@gmail.com>
+ <1363955399-13153-4-git-send-email-artagnon@gmail.com> <7vtxo374h6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
+Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 23 13:43:26 2013
+X-From: git-owner@vger.kernel.org Sat Mar 23 13:48:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJNnC-0008N0-6g
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 13:43:26 +0100
+	id 1UJNsP-00036v-QW
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 13:48:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750910Ab3CWMm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Mar 2013 08:42:59 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:58199 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750781Ab3CWMm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Mar 2013 08:42:58 -0400
-Received: by mail-ie0-f182.google.com with SMTP id at1so1898320iec.41
-        for <git@vger.kernel.org>; Sat, 23 Mar 2013 05:42:58 -0700 (PDT)
+	id S1750990Ab3CWMsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Mar 2013 08:48:22 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:64737 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750806Ab3CWMsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Mar 2013 08:48:21 -0400
+Received: by mail-ie0-f169.google.com with SMTP id qd14so4387235ieb.14
+        for <git@vger.kernel.org>; Sat, 23 Mar 2013 05:48:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=XrEyd4LcDfTQurZ3WtacHsL5HE8UOknsMVINpxz45Sw=;
-        b=Mj9P03gs1RRby271/WmQfk+fDr1FlSIk0nsFDx1dSs7YFCwmhYlcc9gq8WOlCAzylp
-         u5cmgQ2NYq9Na5O7qfHw3PD/EQI5TJQJIcC8Ex+rudaS5+7kMUT0dPC5+nSFpL4Brygd
-         w3wBkbGsMAbgfHOqD/aO6K6/uLxbzyFgQoGThtlggRn5MsSCAGmT7q2IU70V5xsGd5dY
-         +xHGos6e1AUFt0StthE6J0qucDrZu1o4Lm4uFjswE1Ir6NMd2VZF/cBYtUKbTisbybOC
-         2QAAhdMw4KWgwp4bkh4ERKqhXMVpq025MDwI7ccZuho2Wfb1ZCeHCK40sgTLM88nQEuw
-         wN7g==
-X-Received: by 10.50.17.71 with SMTP id m7mr3547356igd.14.1364042578142; Sat,
- 23 Mar 2013 05:42:58 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Sat, 23 Mar 2013 05:42:38 -0700 (PDT)
-In-Reply-To: <7v7gkz8nyf.fsf@alter.siamese.dyndns.org>
+        bh=PlR3bDggJuVUlEJJynYe8lqnI9vmHeTZnIAF1cev0Yc=;
+        b=QTKHmZV4PBt+F+LP8YbV7Ybl+IjDuAZZFHY+zFjigAQH4VaYtJ1if5CpHHQq3Fx83/
+         eUpYSp//9uHYeA37cVEe4udHs9nT1XfEUpX1eV3ZDXPdawTGlyx87OHtnRynR0amJZCi
+         0fjvpWV/5EZ+qegcJUUEvMc3oKvxnsg6UpYG7ZN1bftr9dv6/ydVqLLWQYuGrwNi3ybi
+         4iqbz37zmY5OjjU775i+Gq/+ispkugyOyQKhQapgzmO7OhG2S94TSwZome7ntAVD2CNf
+         ZnMq3VWufZW58/fy5pX6m/N1yeTUaYnWd6Dnz9DJakThlrTaAb6b6Kp4RfWjJt4gIv0b
+         XUzQ==
+X-Received: by 10.50.50.71 with SMTP id a7mr7074509igo.14.1364042900698; Sat,
+ 23 Mar 2013 05:48:20 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Sat, 23 Mar 2013 05:48:00 -0700 (PDT)
+In-Reply-To: <7vtxo374h6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218912>
 
 Junio C Hamano wrote:
-> "Philip Oakley" <philipoakley@iee.org> writes:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 >
->> Shouldn't Documentation/gitworkflows.txt also be updated with the
->> triangular workflow and its configuration?
+>> @@ -1786,6 +1786,11 @@ pull.rebase::
+>>       of merging the default branch from the default remote when "git
+>>       pull" is run. See "branch.<name>.rebase" for setting this on a
+>>       per-branch basis.
+>> +
+>> +pull.autostash::
+>> +     When true, automatically stash all changes before attempting to
+>> +     merge/rebase, and pop the stash after a successful
+>> +     merge/rebase.
+>>  +
+>>  *NOTE*: this is a possibly dangerous operation; do *not* use
+>>  it unless you understand the implications (see linkgit:git-rebase[1]
 >
-> What is missing from gitworkflows documentation is actually a
-> non-triangular workflow, where people pull from and push into the
-> same central repository.
->
-> The "merge workflow" part in the "distributed workflows" section
-> teaches:
->
->  * fetching others' work from <remote> and merging it to yours;
->  * publishing your work to <remote>; and
->  * advertising your work.
->
-> and it is written for the triangular workflow.
->
-> Two triangles are involved.  The maintainer may pull from you but
-> pushes to her own, which is one triangle, and you pull from the
-> maintainer and push to your own, which is another.
->
-> As to your suggestion, I do think it is reasonable to clarify these
-> triangles with an illustration, and to even add descriptions for
-> short-cut configurations as a side note.
+> Is autosquash a possibly dangerous operation?
 
-I think the gitworkflows document should be rewritten with focus on
-setting up remotes and configuration variables for specific workflows.
- Once these are set up, pushing/ pulling (git pull is currently
-broken, although I'm working on fixing it) should Just Work.  To push
-to a different remote/ refspec, the user can read the manpage of git
-push/ git pull.  A workflow is about setting up good defaults that
-work 90% of the time with no additional effort.
+Oops.  I must admit I was in a bit of a hurry with the documentation.
+I was eager to send out the series seeing that the tests were passing.
+
+>> @@ -196,7 +203,8 @@ test true = "$rebase" && {
+>>               then
+>>                       die "$(gettext "updating an unborn branch with changes added to the index")"
+>>               fi
+>> -     else
+>> +     elif test "$autostash" = false
+>> +     then
+>>               require_clean_work_tree "pull with rebase" "Please commit or stash them."
+>>       fi
+>
+> A safety net, after you run "git stash", to validate that the
+> added "git stash" indeed made the working tree clean, is necessary
+> below, but there does not seem to be any.
+
+Um, isn't that part of the "git stash" testsuite?
+
+>>       oldremoteref= &&
+>> @@ -213,6 +221,12 @@ test true = "$rebase" && {
+>>               fi
+>>       done
+>>  }
+>> +
+>> +stash_required () {
+>> +     ! (git diff-files --quiet --ignore-submodules &&
+>> +     git diff-index --quiet --cached HEAD --ignore-submodules)
+>> +}
+>> +
+>>  orig_head=$(git rev-parse -q --verify HEAD)
+>>  git fetch $verbosity $progress $dry_run $recurse_submodules --update-head-ok "$@" || exit 1
+>>  test -z "$dry_run" || exit 0
+>> @@ -288,4 +302,12 @@ true)
+>>       eval="$eval \"\$merge_name\" HEAD $merge_head"
+>>       ;;
+>>  esac
+>> -eval "exec $eval"
+>> +
+>> +if test "$autostash" = true && stash_required
+>> +then
+>> +     git stash
+>> +     eval "$eval"
+>> +     test $? = 0 && git stash pop
+>> +else
+>> +     eval "exec $eval"
+>> +fi
+>
+> Delaying to run "git stash" as much as possible is fine, but with
+> the above, can the user tell if something was stashed and she has
+> to "stash pop" once she is done helping the command to resolve the
+> conflicts, or she shouldn't run "stash pop" after she is done
+> (because if nothing is stashed at this point, that "pop" will pop an
+> unrelated stash)?
+
+I could easily tell, from the "git pull" output: if conflict, then
+stash hasn't been applied.  Otherwise, yes.  Should we print a message
+guarded by an advice variable?
+
+> What protects the "git stash" from failing and how is its error
+> handled?
+
+Oh, this is my stupidity.  I should've just &&-chained the git stash,
+eval $eval, and git stash pop.
