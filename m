@@ -1,104 +1,73 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 4/6] remote.c: introduce a way to have different remotes
- for fetch/push
-Date: Sat, 23 Mar 2013 18:48:41 +0530
-Message-ID: <CALkWK0npDrfcSDCX2OrUh1yNnKDa--04YT5UjAkbbG9HO4g-Zw@mail.gmail.com>
-References: <1363938756-13722-1-git-send-email-artagnon@gmail.com>
- <1363938756-13722-5-git-send-email-artagnon@gmail.com> <20130322212159.GJ12223@google.com>
- <7vli9f5bho.fsf@alter.siamese.dyndns.org> <20130322234108.GL12223@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 23 14:19:31 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH v2 0/3] difftool --dir-diff test improvements
+Date: Sat, 23 Mar 2013 13:31:38 +0000
+Message-ID: <cover.1364045138.git.john@keeping.me.uk>
+References: <cover.1363980749.git.john@keeping.me.uk>
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	David Aguilar <davvid@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 23 14:32:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJOM6-0004iX-UD
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 14:19:31 +0100
+	id 1UJOYn-0003XJ-84
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 14:32:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149Ab3CWNTD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Mar 2013 09:19:03 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:35531 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751077Ab3CWNTC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Mar 2013 09:19:02 -0400
-Received: by mail-ie0-f170.google.com with SMTP id c11so5906837ieb.1
-        for <git@vger.kernel.org>; Sat, 23 Mar 2013 06:19:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=SUIdkRVI6czbKKnnptFO+n+G4mLp9pZgIADdufP373o=;
-        b=yBSztNl8o9ziBxbuVzssxF6Ni9WBRG9l+M+WluqOYCZYX7n4zCFQSR8iIZebu7KQpR
-         ew5G8REYtAPQT8M5T+k9wwErCSEKt5Tc7UWpI18RjjzpE3LMmZYUPpf2MAnbYKbe844E
-         Pk136OPVN2tbqEDiQBNQP/6QkuyBcStzyWdGV5+CtefsyPB+PGtlMoM2/aEaHl9KtTmG
-         ESP+WbpvG04YIpU94o5i8hIJFaGZD1D29N09UESUlOJfU/wiFb2Ls4C8TuX53MqipVJG
-         gQG0474vum0QbnA8vWsRcKhbPYZIv2tV7Dj/2f62audLkqlyeM2eoONvXjmWG39foKmy
-         OQ8w==
-X-Received: by 10.50.50.71 with SMTP id a7mr7125263igo.14.1364044741230; Sat,
- 23 Mar 2013 06:19:01 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Sat, 23 Mar 2013 06:18:41 -0700 (PDT)
-In-Reply-To: <20130322234108.GL12223@google.com>
+	id S1750973Ab3CWNb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Mar 2013 09:31:58 -0400
+Received: from pichi.aluminati.org ([72.9.246.58]:55596 "EHLO
+	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750806Ab3CWNb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Mar 2013 09:31:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 7C143161E036;
+	Sat, 23 Mar 2013 13:31:57 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id F4xjP5omeS8w; Sat, 23 Mar 2013 13:31:57 +0000 (GMT)
+Received: from river.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 18914161E2F4;
+	Sat, 23 Mar 2013 13:31:46 +0000 (GMT)
+X-Mailer: git-send-email 1.8.2.324.ga64ebd9
+In-Reply-To: <cover.1363980749.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218917>
 
-Jonathan Nieder wrote:
-> Junio C Hamano wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->>>> -   struct remote *remote = remote_get(repo);
->>>> +   struct remote *remote = pushremote_get(repo);
->>>
->>> "struct remote" has url and pushurl fields.  What do they mean in the
->>> context of these two accessors?  /me is confused.
->>>
->>> Is the idea that now I should not use pushurl any more, and that I
->>> should use pushremote_get and use url instead?
-> [...]
->>               At the programming level, you would still ask what the
->> URL to be pushed to to the remote obtained here, and would use
->> pushurl if defined, or url otherwise.
->
-> Ah, I think I see.  It might be more convenient to the caller if
-> pushremote_get returned a remote with url set to the pushurl, but
-> that would prevent sharing the struct with other callers that want
-> that remote for fetching.
+This version fixes the actual cause of the test failure (not being
+specific enough when adding files).  This is done with a new version of
+patch 2.
 
-We started off with a generic "remote" (for both fetching and
-pushing), then added .pushurl on top of this remote.  Now we've
-introduced something called a pushremote, a logically distinct remote
-from "remote"; pushremote_get() is meant to return this logically
-different remote, falling back to the remote_get() codepath if not
-present.  This is a perfect migration that trivially preserves
-backward compatibility.
+Patch 1 is unchanged and patch 3 only contains a minor change.
 
+This is built on da/difftool-fixes.  There may be a small textual
+conflict with jk/difftool-dir-diff-edit-fix in the context lines but I
+don't believe there is any logical conflict.
 
-> So instead, the idea is something like
->
->         remote: support a different default remote for pushing
->
->         Teach remote_get() to accept an argument FOR_FETCH or FOR_PUSH
->         that determines, when no remote is passed to it, whether to use
->         the default remote for fetching or the default for pushing.
->
->         The default remote for fetching is stored in the static var
->         "default_remote_name", while the default for pushing, if set,
->         is in "default_push_remote_name".
->
->         Currently there is never a different default for pushing set
->         but later patches will change that.
->
-> If remote_get() gained a new required parameter, that would force all
-> call sites to be examined (even any potential call sites added by new
-> patches in flight) and there would no longer be need for the
-> remote_get_1() function.
+John Keeping (3):
+  t7800: don't hide grep output
+  t7800: fix tests when difftool uses --no-symlinks
+  t7800: run --dir-diff tests with and without symlinks
 
-I like this, but let's save it for a future patch as it requires some
-extensive refactoring.
+ t/t7800-difftool.sh | 73 +++++++++++++++++++++++++++--------------------------
+ 1 file changed, 37 insertions(+), 36 deletions(-)
+
+-- 
+1.8.2.324.ga64ebd9
