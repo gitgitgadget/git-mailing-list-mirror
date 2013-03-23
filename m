@@ -1,72 +1,83 @@
-From: Vadim Zeitlin <vz-git@zeitlins.org>
-Subject: Re: [PATCH] Avoid false positives in label detection in cpp diff hunk header regex.
-Date: Sat, 23 Mar 2013 00:38:37 +0000 (UTC)
-Message-ID: <loom.20130323T011153-345@post.gmane.org>
-References: <loom.20130322T144107-601@post.gmane.org> <7vehf78olw.fsf@alter.siamese.dyndns.org> <514CD34F.70107@kdbg.org> <7vhak35ami.fsf@alter.siamese.dyndns.org> <514CE53F.3080308@kdbg.org>
+From: =?ISO-8859-1?Q?Sebastian_G=F6tte?= <jaseg@physik.tu-berlin.de>
+Subject: [PATCH v2 4/4] pretty printing: extend %G? to include 'N' and 'U'
+Date: Sat, 23 Mar 2013 02:57:50 +0100
+Message-ID: <514D0C1E.9080908@physik.tu-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 23 01:39:22 2013
+X-From: git-owner@vger.kernel.org Sat Mar 23 02:58:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJCUT-0004zL-U8
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 01:39:22 +0100
+	id 1UJDiy-0004pW-6X
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 02:58:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422701Ab3CWAiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Mar 2013 20:38:54 -0400
-Received: from plane.gmane.org ([80.91.229.3]:44815 "EHLO plane.gmane.org"
+	id S1423111Ab3CWB56 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Mar 2013 21:57:58 -0400
+Received: from mail.tu-berlin.de ([130.149.7.33]:29630 "EHLO mail.tu-berlin.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933549Ab3CWAiy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 20:38:54 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UJCUM-0004xA-66
-	for git@vger.kernel.org; Sat, 23 Mar 2013 01:39:14 +0100
-Received: from ip-208.net-89-3-60.rev.numericable.fr ([89.3.60.208])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Mar 2013 01:39:14 +0100
-Received: from vz-git by ip-208.net-89-3-60.rev.numericable.fr with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Mar 2013 01:39:14 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 89.3.60.208 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0)
+	id S1423088Ab3CWB5w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Mar 2013 21:57:52 -0400
+X-tubIT-Incoming-IP: 130.149.58.163
+Received: from mail.physik-pool.tu-berlin.de ([130.149.58.163] helo=mail.physik.tu-berlin.de)
+	by mail.tu-berlin.de (exim-4.75/mailfrontend-2) with esmtp 
+	id 1UJDiQ-0006Do-J8; Sat, 23 Mar 2013 02:57:51 +0100
+Received: from [192.168.0.103] (cable-124-189.zeelandnet.nl [82.176.124.189])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.physik.tu-berlin.de (Postfix) with ESMTPSA id AB4E111402;
+	Sat, 23 Mar 2013 02:57:50 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218872>
 
-Johannes Sixt <j6t <at> kdbg.org> writes:
+Expand %G? in pretty format strings to 'N' in case of no GPG signature
+and 'U' in case of a good but untrusted GPG signature in addition to
+the previous 'G'ood and 'B'ad. This eases writing anyting parsing
+git-log output.
 
-> > I also wonder if 
-> > 
-> > 	label :
-> > 
-> > should also be caught, or is it too weird format to be worth
-> > supporting?
-> 
-> It's easy to support, by inserting another [ \t] before the first colon.
-> So, why not?
+Signed-off-by: Sebastian G=F6tte <jaseg@physik-pool.tu-berlin.de>
+---
+ Documentation/pretty-formats.txt | 3 ++-
+ pretty.c                         | 2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
- This is really nitpicking, but if we do it, then it should be "[ \t]*". And the
-"*" after the label should actually be a "+". So the full line becomes
-
-
-  "!^[ \t]*[A-Za-z_][A-Za-z_0-9]+[ \t]*:([^:]|$)\n"
-
-
- But then I've never actually seen git putting labels incorrectly into the hunk
-headers while I did see the problem this patch tries to fix, with wrong method
-appearing in the header because the correct one was skipped due to this ignore
-regex, quite a few times in the past.
-
- Regards,
-VZ
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
+rmats.txt
+index 105f18a..69bd77a 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -131,7 +131,8 @@ The placeholders are:
+ - '%B': raw body (unwrapped subject and body)
+ - '%N': commit notes
+ - '%GG': raw verification message from GPG for a signed commit
+-- '%G?': show either "G" for Good or "B" for Bad for a signed commit
++- '%G?': show "G" for a Good signature, "B" for a Bad signature, "U" f=
+or a good,
++  untrusted signature and "N" for no signature
+ - '%GS': show the name of the signer for a signed commit
+ - '%gD': reflog selector, e.g., `refs/stash@{1}`
+ - '%gd': shortened reflog selector, e.g., `stash@{1}`
+diff --git a/pretty.c b/pretty.c
+index 0547df1..875a1db 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1136,6 +1136,8 @@ static size_t format_commit_one(struct strbuf *sb=
+, const char *placeholder,
+ 			switch (c->signature.check_result) {
+ 			case 'G':
+ 			case 'B':
++			case 'U':
++			case 'N':
+ 				strbuf_addch(sb, c->signature.check_result);
+ 			}
+ 			break;
+--=20
+1.8.1.5
