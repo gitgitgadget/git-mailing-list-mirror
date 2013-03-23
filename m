@@ -1,109 +1,99 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [FEATURE-REQUEST] difftool --dir-diff: use the commit names as
- directory names instead of left/right
-Date: Sat, 23 Mar 2013 12:36:03 +0000
-Message-ID: <20130323123603.GL2283@serenity.lan>
-References: <1363971156.20287.5.camel@heisenberg.scientia.net>
- <CAJDDKr6fmvb8AN8AcyO+t=7wqte+6ryhtt_o0CN92Vm-xSdn+A@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/3] t5521 (pull-options): use test_commit() where appropriate
+Date: Sat, 23 Mar 2013 18:08:22 +0530
+Message-ID: <CALkWK0n4CT-Pfm22vTToVp2kZqT7h9kBtF-1NoPOg3vOc+MSog@mail.gmail.com>
+References: <1363955399-13153-1-git-send-email-artagnon@gmail.com>
+ <1363955399-13153-3-git-send-email-artagnon@gmail.com> <7vy5df74yt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christoph Anton Mitterer <calestyo@scientia.net>,
-	git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 23 13:36:44 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 23 13:39:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJNgg-0004Tz-Hf
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 13:36:42 +0100
+	id 1UJNj4-0005tz-Tt
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 13:39:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751115Ab3CWMgP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Mar 2013 08:36:15 -0400
-Received: from pichi.aluminati.org ([72.9.246.58]:58770 "EHLO
-	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751028Ab3CWMgO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Mar 2013 08:36:14 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 5493B161E2EF;
-	Sat, 23 Mar 2013 12:36:13 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YKv14VgEDiUQ; Sat, 23 Mar 2013 12:36:10 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 6AB0E161E036;
-	Sat, 23 Mar 2013 12:36:05 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CAJDDKr6fmvb8AN8AcyO+t=7wqte+6ryhtt_o0CN92Vm-xSdn+A@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750795Ab3CWMin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Mar 2013 08:38:43 -0400
+Received: from mail-ia0-f170.google.com ([209.85.210.170]:55019 "EHLO
+	mail-ia0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750725Ab3CWMin (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Mar 2013 08:38:43 -0400
+Received: by mail-ia0-f170.google.com with SMTP id h8so4335800iaa.15
+        for <git@vger.kernel.org>; Sat, 23 Mar 2013 05:38:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=RhbxsWp2NgwWeJVy1w3sQB7C2dVsS1mn6ptadN+NK+k=;
+        b=FQdG7orT/QQUVdb6TF0f95DoHkmzwby1t2zlPxqbdV8RL6wHkM424XwxU4DOisxCLa
+         ECnBroDptuWxLl//hdoaePwQ94BLag/u+MCBgHn6nzNI9xLfUGsL/l8uwpCY8hRzVOjm
+         8gN+W52W5AWRMB/rVVyzCUZYjybLxpB0Sfja41iBgS6jliDZaEa7VpkffOPPsatlXfIz
+         g96GrzCxbJAi1Obf6GT3VXZfqwNy0wi7Zz7oH1mgT3S0ODSlf53F99XgMRAzfG37JYOe
+         lp9LCmyOO2uiXKGlKiw6HZ6GCtm4o7vi9eLYdqPA8uj2UYZq94lilOGhthNzSyeDUIAo
+         PKVg==
+X-Received: by 10.42.204.79 with SMTP id fl15mr2956139icb.57.1364042322814;
+ Sat, 23 Mar 2013 05:38:42 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Sat, 23 Mar 2013 05:38:22 -0700 (PDT)
+In-Reply-To: <7vy5df74yt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218909>
 
-On Fri, Mar 22, 2013 at 09:56:17PM -0700, David Aguilar wrote:
-> On Fri, Mar 22, 2013 at 9:52 AM, Christoph Anton Mitterer
-> <calestyo@scientia.net> wrote:
-> > Hi.
-> >
-> > Right now, when I use difftool --dir-diff, the temp dirs are creates as
-> > e.g.:
-> > /tmp/git-difftool.QqP8x/left
-> > /tmp/git-difftool.QqP8x/right
-> >
-> > Wouldn't it be nice, if instead of left/right... the specified commit
-> > name would be used?
-> >
-> > e.g.
-> > /tmp/git-difftool.QqP8x/r1.1.1
-> > /tmp/git-difftool.QqP8x/HEAD
-> > or
-> > /tmp/git-difftool.QqP8x/fd4e4005a4b7b3e638bc405be020b867f8881e72
-> > /tmp/git-difftool.QqP8x/ce0747b74fccd20707b6f495068503e69e5473df
-> >
-> > Cause then, one would see in the difftool which side is what, without
-> > the need to remember how git difftool was invoked.
-> >
-> >
-> > Of course one might probably need to escape the commit names if they
-> > contain stuff like "/" or "..", etc.
-> 
-> I can see that being pretty helpful.
-> If we do it we should go all the way.
-> 
-> What do you all think about something like the output of
-> "git describe --always" instead of the SHA-1?
+Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>> test_commit() is a well-defined function in test-lib-functions.sh that
+>> allows you to create commits with a terse syntax.  Prefer using it
+>> over creating commits by hand.
+>>
+>> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+>> ---
+>>  t/t5521-pull-options.sh | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
+>> index 1b06691..4a804f0 100755
+>> --- a/t/t5521-pull-options.sh
+>> +++ b/t/t5521-pull-options.sh
+>> @@ -7,8 +7,8 @@ test_description='pull options'
+>>  test_expect_success 'setup' '
+>>       mkdir parent &&
+>>       (cd parent && git init &&
+>> -      echo one >file && git add file &&
+>> -      git commit -m one)
+>> +      test_commit "one" file "one"
+>> +     )
+>>  '
+>
+> In this test script perhaps it is OK, but I'd prefer people being
+> careful *not* to use test_commit in tests that involve refs (i.e.
+> pushing, pulling, ls-remote, for-each-ref, describe...) and paths
+> (i.e.  ls-files, diff, ...).
 
-I think Christoph was suggesting that it should use the revision as
-specified by the user, presumably falling back to HEAD when only one
-revision has been specified.
+Okay.
 
-That's likely to be the easiest to understand since git-describe could
-show "v1.8.2-134-g328455f" (or "remotes/origin/maint-121-g328455f" with
---all) where the user specified HEAD^.  I suspect in that case we have
-to be careful about special characters, perhaps it's best to just fall
-back to the SHA1 if we encounter something like
-"origin/master^{/^diff.c}" which is likely to cause issues with shell
-quoting.
+> There is one good point in the helper: it creates a commit with a
+> predictable timestamp.
 
-The interesting question around this is precisely how commit specifiers
-map to directory names and at what point (if ever) we give up and use
-the SHA1.  At the very least we need to translate '/' to something else
-('~' maybe?).
+Yes, test_tick.  I've noticed that several tests call test_tick by
+hand before invoking "git commit".
 
-> BTW there are some patches in-flight around difftool so
-> you'll probably want to apply them first if you're going to
-> give it a try.  patches very much appreciated! ;-)
-> If no one beats me to it, I can give it a try after the weekend.
-> -- 
-> David
+> But it does a lot other *bad* things than that single good thing.
+> It adds a new path, and adds a new tag; neither of which is not
+> desirable in many circumstances.
+>
+> A better future direction would be to first make these "frill"
+> features into options to test_commit helper, fix the users that
+> depend on these additional tags and stuff to explicitly ask for
+> them, and then start advocating it for wider use, I think.
+
+Agreed.  In fact, the commit message is constrained, because of this;
+you can't create a commit with a commit message involving spaces,
+because that would result in an invalid tag name.
