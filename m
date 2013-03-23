@@ -1,64 +1,100 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH v9 5/5] Speed up log -L... -M
-Date: Sat, 23 Mar 2013 06:58:48 +0100
-Message-ID: <87k3oyzmg7.fsf@pctrast.inf.ethz.ch>
+Subject: Re: [PATCH v9 3/5] Implement line-history search (git log -L)
+Date: Sat, 23 Mar 2013 07:00:45 +0100
+Message-ID: <87fvzmzmcy.fsf@pctrast.inf.ethz.ch>
 References: <cover.1363865444.git.trast@student.ethz.ch>
-	<72a500432c0e6fde830f505204a1d02180710656.1363865444.git.trast@student.ethz.ch>
-	<CAPig+cSG1gYohpZQZxnCpKgkUPs=Dwfokx+3OhiqdGKX8fajBw@mail.gmail.com>
+	<b8cabd5ca63a17577fca524891046e5a3d3dfc60.1363865444.git.trast@student.ethz.ch>
+	<7vr4j8a7zy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Git List <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
+Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>,
 	Bo Yang <struggleyb.nku@gmail.com>,
 	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
 	Will Palmer <wmpalmer@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat Mar 23 06:59:24 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 23 07:01:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJHUB-0003LK-LL
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 06:59:23 +0100
+	id 1UJHW1-0004OD-2W
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 07:01:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755694Ab3CWF6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Mar 2013 01:58:54 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:18471 "EHLO edge10.ethz.ch"
+	id S1755713Ab3CWGAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Mar 2013 02:00:50 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:56763 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751536Ab3CWF6x (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Mar 2013 01:58:53 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 23 Mar
- 2013 06:58:47 +0100
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.211.48) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 23 Mar
- 2013 06:58:50 +0100
-In-Reply-To: <CAPig+cSG1gYohpZQZxnCpKgkUPs=Dwfokx+3OhiqdGKX8fajBw@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 21 Mar 2013 17:11:28 -0400")
+	id S1755702Ab3CWGAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Mar 2013 02:00:49 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 23 Mar
+ 2013 07:00:42 +0100
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.211.48) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 23 Mar
+ 2013 07:00:46 +0100
+In-Reply-To: <7vr4j8a7zy.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 21 Mar 2013 12:05:37 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 X-Originating-IP: [129.132.211.48]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218888>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, Mar 21, 2013 at 8:52 AM, Thomas Rast <trast@student.ethz.ch> wrote:
->> This is a bit hacky and should really be replaced by equivalent
->> support in --follow, and just using that.  However, in the meantime it
+> Thomas Rast <trast@student.ethz.ch> writes:
 >
-> s/using/use/
+>> +void line_log_init(struct rev_info *rev, const char *prefix, struct
+>> string_list *args)
+>> +{
+>> +	struct commit *commit = NULL;
+>> +	struct line_log_data *range;
+>> +
+>> +	commit = check_single_commit(rev);
+>> +	range = parse_lines(commit, prefix, args);
+>> +	add_line_range(rev, commit, range);
+>> +
+>> +	if (!rev->diffopt.detect_rename) {
+>> +		int i, count = 0;
+>> +		struct line_log_data *r = range;
+>> +		const char **paths;
+>> +		while (r) {
+>> +			count++;
+>> +			r = r->next;
+>> +		}
+>> +		paths = xmalloc((count+1)*sizeof(char *));
+>> +		r = range;
+>> +		for (i = 0; i < count; i++) {
+>> +			paths[i] = xstrdup(r->spec->path);
+>> +			r = r->next;
+>> +		}
+>> +		paths[count] = NULL;
+>> +		init_pathspec(&rev->diffopt.pathspec, paths);
+>> +		free(paths);
+>> +	}
+>> +}
+>
+> Why not do the pathspec limitation under "-M"?
+>
+> It is not like you are picking up origins of blocks of lines copied
+> or moved from other files like "blame -C" does, so I suspect it
+> would be simpler to mimic what --follow does, which is to (1) use
+> the pathspec to follow the paths you care about, and then (2) when
+> you find one or more of the paths you were following disappear in a
+> commit, only at that point you re-check to see if there are other
+> paths that existed in the parent that the disappeared paths were
+> renamed from, and match with that one.
 
-I'm not a native speaker, but I really think 'using' is more correct
-here.  But feel free to suggest a better wording.  The intention is that
-we should proceed in two steps: 'git log --follow' first needs to learn
-to adjust its pathspec filter as it walks revisions, much like I did
-here.  Then this patch should be reverted in favor of just enabling
---follow.
+It's acting too soon though.  The way log -L is currently wired, we do
+one revision walk with the pathspec filter already enabled to do the
+topo sorting.  Wiring it in *at that point* would be equivalent to
+fixing --follow.
+
+Which I plan to do Real Soon Now(tm).  But let's not open too many cans
+of worms at the same time.
 
 -- 
 Thomas Rast
