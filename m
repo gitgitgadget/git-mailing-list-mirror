@@ -1,65 +1,75 @@
-From: Ilya Kulakov <kulakov.ilya@gmail.com>
-Subject: Bug: =?utf-8?b?YGdpdA==?= =?utf-8?b?c3VibW9kdWxlYA==?= does not list modules with unicode characters
-Date: Sat, 23 Mar 2013 16:28:46 +0000 (UTC)
-Message-ID: <loom.20130323T171809-46@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 23 17:30:14 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH] refs.c: fix fread error handling
+Date: Sat, 23 Mar 2013 17:16:46 +0000
+Message-ID: <ba7cd71b0ac9a885bd894a0bed608cf682afed6d.1364058591.git.john@keeping.me.uk>
+Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 23 18:17:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJRKd-0000bX-HZ
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 17:30:11 +0100
+	id 1UJS4P-0003Hj-6e
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 18:17:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751504Ab3CWQ3n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Mar 2013 12:29:43 -0400
-Received: from plane.gmane.org ([80.91.229.3]:45130 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751346Ab3CWQ3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Mar 2013 12:29:43 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UJRKV-0000VM-It
-	for git@vger.kernel.org; Sat, 23 Mar 2013 17:30:03 +0100
-Received: from 109x194x123x31.dynamic.omsk.ertelecom.ru ([109x194x123x31.dynamic.omsk.ertelecom.ru])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Mar 2013 17:30:03 +0100
-Received: from kulakov.ilya by 109x194x123x31.dynamic.omsk.ertelecom.ru with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Mar 2013 17:30:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 109.194.123.31 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10)
+	id S1751759Ab3CWRQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Mar 2013 13:16:59 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:55022 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751623Ab3CWRQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Mar 2013 13:16:59 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 4EDB822CBE;
+	Sat, 23 Mar 2013 17:16:58 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id EQ8lQybs9aP0; Sat, 23 Mar 2013 17:16:57 +0000 (GMT)
+Received: from river.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id 4AB4D22B46;
+	Sat, 23 Mar 2013 17:16:52 +0000 (GMT)
+X-Mailer: git-send-email 1.8.2.411.g65a544e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218923>
 
-The `git submodule` commands seem to ignore modules which paths contain
-unicode characters.
+fread returns the number of items read, with no special error return.
 
-Consider the following steps to reproduce the problem:
+Commit 98f85ff (reflog: add for_each_reflog_ent_reverse() API -
+2013-03-08) introduced a call to fread which checks for an error with
+"nread < 0" which is tautological since nread is unsigned.  The correct
+check in this case (which tries to read a single item) is "nread != 1".
 
-  1. Create a directory with name that contains at least one unicode ch=
-aracter
-     (e.g. "=C3=BB=C3=B1=C3=AF=C3=A7=C3=B6d=C3=A9-r=C3=A8p=C3=B8")
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+I found this because Clang generated a tautological comparison warning
+on this line.
 
-  2. Initialize git repository within this directory
+ refs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  3. Add this repository as a submodule to another repository so that
-     unicode characters will appear in the path to the module
-     (e.g. "../=C3=BB=C3=B1=C3=AF=C3=A7=C3=B6d=C3=A9-r=C3=A8p=C3=B8")
-
-  4. Check that .gitmodules file is updated and contains record
-     about just added module
-
-  5. List submodules with using `git submodule` and find out
-     that just added module is not listed
+diff --git a/refs.c b/refs.c
+index 56cc93d..de2d8eb 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2399,7 +2399,7 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void
+ 			return error("cannot seek back reflog for %s: %s",
+ 				     refname, strerror(errno));
+ 		nread = fread(buf, cnt, 1, logfp);
+-		if (nread < 0)
++		if (nread != 1)
+ 			return error("cannot read %d bytes from reflog for %s: %s",
+ 				     cnt, refname, strerror(errno));
+ 		pos -= cnt;
+-- 
+1.8.2.411.g65a544e
