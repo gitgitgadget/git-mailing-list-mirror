@@ -1,134 +1,130 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 2/3] t7800: fix tests when difftool uses --no-symlinks
-Date: Fri, 22 Mar 2013 20:24:08 -0700
-Message-ID: <CAJDDKr4658zFCZ8JpXUZUrS4URTb7zX0xGR4AeODDLOVjkzDGA@mail.gmail.com>
-References: <20130322115352.GI2283@serenity.lan>
-	<cover.1363980749.git.john@keeping.me.uk>
-	<5fc134f6c4a88232c78240539084e9d35db3a6cb.1363980749.git.john@keeping.me.uk>
-	<7v8v5f59n1.fsf@alter.siamese.dyndns.org>
-	<20130322230516.GK2283@serenity.lan>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] status, branch: fix the misleading "bisecting" message
+Date: Sat, 23 Mar 2013 10:52:44 +0700
+Message-ID: <1364010764-972-1-git-send-email-pclouds@gmail.com>
+References: <7vfvzqgms9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sat Mar 23 04:24:39 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 23 04:53:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJF4R-0001xW-5i
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 04:24:39 +0100
+	id 1UJFWO-0004G0-NK
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Mar 2013 04:53:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422743Ab3CWDYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Mar 2013 23:24:11 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:62041 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755332Ab3CWDYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Mar 2013 23:24:10 -0400
-Received: by mail-wi0-f182.google.com with SMTP id hi18so5018310wib.3
-        for <git@vger.kernel.org>; Fri, 22 Mar 2013 20:24:08 -0700 (PDT)
+	id S1422709Ab3CWDxD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Mar 2013 23:53:03 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:55646 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755381Ab3CWDxC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Mar 2013 23:53:02 -0400
+Received: by mail-pb0-f43.google.com with SMTP id md12so3387467pbc.16
+        for <git@vger.kernel.org>; Fri, 22 Mar 2013 20:53:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=8mPQQi0dTyEypbOPxxE+dPAAyR0DH+S88rMfNLAJhfc=;
-        b=d1EFSDacVgdpQXcxcH75khY0qt/7HSRer0fE/FIYwJs/qMZbcFa/FU1lrAPyGjAUTd
-         1DfzsskF7shOokZHZdDP5x78+fwRnj/TUfKdSsAY1/spbFeJp++7bwdwIGvCeYVc6Vm8
-         1pxX7oeOGsCxVKeOsCDMUVs5/bZwqQyJCQhaI6ApVc4n0Om9Bpx3CwgaA5+apwqoPGTS
-         jfVCnkUkORQdilgu+CbBnW5yXiZJwOYLegstybQ258qmB9RLOBX/wIjV8HjCulo70QMZ
-         ZUf7Ih7Exsp0sNIUtKuzBOFlNrJl8JYWJozj+JMh22vz58RpWaqX/PxJ6usK4pUfsfky
-         N7iQ==
-X-Received: by 10.180.84.8 with SMTP id u8mr14918522wiy.1.1364009048721; Fri,
- 22 Mar 2013 20:24:08 -0700 (PDT)
-Received: by 10.194.13.129 with HTTP; Fri, 22 Mar 2013 20:24:08 -0700 (PDT)
-In-Reply-To: <20130322230516.GK2283@serenity.lan>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=PsYZfpFfDU6UU5jFsX4plVZU8S+IQX7O3/vy7fFJZLE=;
+        b=jU1Z6Y9UvfeTmj4lRW1tfhvS5DIS9WF6fGLefqxapz4MrRpeziWvV9UihhzFAKc7xV
+         D6Zhd0gZvpWMJquk1CZXPB6fXJQE2hm/bE6anPSuLTVq4LS0EQwJRF/JchnG8jFCGPJw
+         L9l9IvbQI/lNLNSGrimCWVCLpE3qPMf2IrjaG5ETo1easwzdXcULyXz9SbN77UM39xb1
+         Te7EUOaONqhE8Gryl/KOHj9uxzHxEw+ZJQeTO8dSaS44AJ8niwskJEh0RiCO9zOEJnEW
+         oeotG4Y6DtyekBhMKOTEeYi2uydrNxY9EZ7oGAMJhMYYJ5cHsfS/tTD/H7vgo8BKgY+r
+         32Dw==
+X-Received: by 10.68.9.67 with SMTP id x3mr6031497pba.219.1364010781958;
+        Fri, 22 Mar 2013 20:53:01 -0700 (PDT)
+Received: from lanh ([115.74.37.60])
+        by mx.google.com with ESMTPS id gf1sm4600030pbc.24.2013.03.22.20.52.58
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 22 Mar 2013 20:53:01 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 23 Mar 2013 10:53:00 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
+In-Reply-To: <7vfvzqgms9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218882>
 
-On Fri, Mar 22, 2013 at 4:05 PM, John Keeping <john@keeping.me.uk> wrote:
-> On Fri, Mar 22, 2013 at 03:53:38PM -0700, Junio C Hamano wrote:
->> John Keeping <john@keeping.me.uk> writes:
->>
->> > When 'git difftool --dir-diff' is using --no-symlinks (either explicitly
->> > or implicitly because it's running on Windows), any working tree files
->> > that have been copied to the temporary directory are copied back after
->> > the difftool completes.  This includes untracked files in the working
->> > tree.
->>
->> Hmph.  Why do we populate the temporary directory with a copy of an
->> untracked path in the first place?  I thought the point of dir-diff
->> was to materialize only the relevant paths to two temporaries and
->> compare these temporaries with a tool that knows how to compare two
->> directories?
->>
->> Even if you had path F in HEAD that you are no longer tracking in
->> the working tree, a normal
->>
->>       $ git diff HEAD
->>
->> would report the path F to have been deleted, so I would imagine
->> that the preimage side of the temporary directory should get a copy
->> of HEAD:F at path F, while the postimage side of the temporary
->> directory should not even have anything at path F, when dir-diff
->> runs, no?
->>
->> Isn't that the real reason why the test fails?  The path 'output' is
->> not being tracked at any revision or in the index that is involved
->> in the test, is it?
->
-> Actually it is, which is what I missed earlier.
->
-> A couple of tests before this 'setup change in subdirectory' does 'git
-> add .' which is far more general than it needs.  Perhaps this is a
-> better change:
->
-> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> index bba8a9d..561c993 100755
-> --- a/t/t7800-difftool.sh
-> +++ b/t/t7800-difftool.sh
-> @@ -314,7 +314,7 @@ test_expect_success PERL 'setup change in subdirectory' '
->         git commit -m "added sub/sub" &&
->         echo test >>file &&
->         echo test >>sub/sub &&
-> -       git add . &&
-> +       git add file sub/sub &&
->         git commit -m "modified both"
->  '
->
->
->> > During the tests, this means that the following sequence occurs:
->> >
->> > 1) the shell opens "output" to redirect the difftool output
->> > 2) difftool copies the empty "output" to the temporary directory
->> > 3) difftool runs "ls" which writes to "output"
->> > 4) difftool copies the empty "output" file back over the output of the
->> >    command
->> > 5) the output files doesn't contain the expected output, causing the
->> >    test to fail
->> >
->> > Avoid this by writing the output into .git/ which will not be copied or
->> > overwritten.
->>
->> It is a good idea to move these test output and expect test vectore
->> files to a different place to make it easier to distinguish them
->> from test input (e.g. "sub", "file", etc.) in general, but the
->> description of the original problem sounds like it is just working
->> around a bug to me.  What am I missing?
->
-> I think there is a bug, as described in the paragraph below, and this
-> test should be made independent of that.  In light of the above I think
-> we can drop this patch and do this with that change instead.
+The current message is "bisecting %s" (or "bisecting branch %s").
+"%s" is the current branch when we started bisecting. Clarify that to
+avoid confusion with good and bad refs passed to "bisect" command.
 
-I, too, was scratching my head when the Windows issue was first reported.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/branch.c            | 2 +-
+ t/t6030-bisect-porcelain.sh | 2 +-
+ t/t7512-status-help.sh      | 2 +-
+ wt-status.c                 | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-Thanks for clearing this up; fixing the blind "add ."
-certainly seems like the way to go.
--- 
-David
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 99105f8..8f00203 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -562,7 +562,7 @@ static char *get_head_description(void)
+ 		strbuf_addf(&desc, _("(no branch, rebasing %s)"),
+ 			    state.branch);
+ 	else if (state.bisect_in_progress)
+-		strbuf_addf(&desc, _("(no branch, bisecting %s)"),
++		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
+ 			    state.branch);
+ 	else if (state.detached_from)
+ 		strbuf_addf(&desc, _("(detached from %s)"),
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 9b6f0d0..2fce99a 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -164,7 +164,7 @@ test_expect_success 'bisect start: existing ".git/B=
+ISECT_START" not modified if
+ 	cp .git/BISECT_START saved &&
+ 	test_must_fail git bisect start $HASH4 foo -- &&
+ 	git branch > branch.output &&
+-	test_i18ngrep "* (no branch, bisecting other)" branch.output > /dev/n=
+ull &&
++	test_i18ngrep "* (no branch, bisect started on other)" branch.output =
+> /dev/null &&
+ 	test_cmp saved .git/BISECT_START
+ '
+ test_expect_success 'bisect start: no ".git/BISECT_START" if mistaken =
+rev' '
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 5adba4f..c35d01d 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -578,7 +578,7 @@ test_expect_success 'status when bisecting' '
+ 	TGT=3D$(git rev-parse --short two_bisect) &&
+ 	cat >expected <<-EOF &&
+ 	# HEAD detached at $TGT
+-	# You are currently bisecting branch '\''bisect'\''.
++	# You are currently bisecting, started from branch '\''bisect'\''.
+ 	#   (use "git bisect reset" to get back to the original branch)
+ 	#
+ 	nothing to commit (use -u to show untracked files)
+diff --git a/wt-status.c b/wt-status.c
+index 32a51e1..cf3d81a 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -953,7 +953,7 @@ static void show_bisect_in_progress(struct wt_statu=
+s *s,
+ {
+ 	if (state->branch)
+ 		status_printf_ln(s, color,
+-				 _("You are currently bisecting branch '%s'."),
++				 _("You are currently bisecting, started from branch '%s'."),
+ 				 state->branch);
+ 	else
+ 		status_printf_ln(s, color,
+--=20
+1.8.2.83.gc99314b
