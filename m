@@ -1,80 +1,104 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Bug: git web--browse doesn't recognise browser on OS X
-Date: Sun, 24 Mar 2013 22:05:53 +0100
-Message-ID: <CAP8UFD2m8n5RHN-CgyDP1ir_AorpJGnWwNhXuRxDa=DbHfsdiw@mail.gmail.com>
-References: <CAMxBVSs6dJFnK78E2Da7t4V9ndJFRVDZEd1fR5QuCFz=u2Bnpw@mail.gmail.com>
-	<CAMxBVStw-b3J_Fm9x=h3==9ebdLUkpjBSQ9-W4+zJ9N20ojfxg@mail.gmail.com>
-	<CAP8UFD2oR5tnYuw7Nbe-CzGx7fw-OpAFW+reN+1Nroh1jXjfsQ@mail.gmail.com>
-	<CAMxBVStVXZGGrjHzN7kukVP6_ZGo0miyJaE2FVYPVV4Jb5U82w@mail.gmail.com>
-	<CAEBDL5VNodcTGBOvQjyL30qiXhshxhnUH-Vd9xy9=RxZQgH-Yw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Timo Sand <timo.j.sand@gmail.com>, git <git@vger.kernel.org>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Sun Mar 24 22:06:25 2013
+From: Yann Droneaud <ydroneaud@opteya.com>
+Subject: [PATCH 00/15] Use test_config
+Date: Sun, 24 Mar 2013 22:05:59 +0100
+Message-ID: <cover.1364158574.git.ydroneaud@opteya.com>
+References: <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
+Cc: Yann Droneaud <ydroneaud@opteya.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 24 22:07:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJs7S-0006tR-Mz
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:06:23 +0100
+	id 1UJs8B-0007Yh-Rs
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:07:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546Ab3CXVFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 17:05:54 -0400
-Received: from mail-vc0-f170.google.com ([209.85.220.170]:33928 "EHLO
-	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754161Ab3CXVFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 17:05:54 -0400
-Received: by mail-vc0-f170.google.com with SMTP id lf10so4372767vcb.15
-        for <git@vger.kernel.org>; Sun, 24 Mar 2013 14:05:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=5FAG8vURB5kEMuauoQ6Flybg4zRH7v1Tj6C822GzWSY=;
-        b=aD2XmzAgYEp+G0oiHc69TEl0yJJ4JvZe0mFpl3Yl0dXqQDdOn4hBnCTgyEnkVCcz4X
-         3Y5sGMxjXbYCdt2VvREhhn80dAvSdQf+ogOnePR/p2zxgu/uJx6T8tSoeYpG3y2jvt/o
-         NT0dNmZ1qz0SalAL/EieRKDy6PY5Eq7VlZZBB6zdT76BKKyYwaQKEuJSz0kKiJLUC5Fu
-         G8/dh6i0QAaEpK/Nmg3AVLxUSQlr5ssNofHg0s4hIEIXhh9FkS5hQrpprSu16Zs+z1dJ
-         +I+oFQJhcUVO0fjk7icjOPPuwQHP1kMgUw2fuskmqVKw1nrLcUu0wGh5dZaQMDBxn4Wx
-         1uwQ==
-X-Received: by 10.58.46.134 with SMTP id v6mr12557692vem.45.1364159153192;
- Sun, 24 Mar 2013 14:05:53 -0700 (PDT)
-Received: by 10.58.120.97 with HTTP; Sun, 24 Mar 2013 14:05:53 -0700 (PDT)
-In-Reply-To: <CAEBDL5VNodcTGBOvQjyL30qiXhshxhnUH-Vd9xy9=RxZQgH-Yw@mail.gmail.com>
+	id S1754382Ab3CXVGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 17:06:40 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:51015 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754027Ab3CXVGk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 17:06:40 -0400
+Received: from test.quest-ce.net (unknown [IPv6:2a01:e35:2e9f:6ac0:c8b1:2f86:54cb:a84a])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id DA85E940194;
+	Sun, 24 Mar 2013 22:06:29 +0100 (CET)
+Received: from test.quest-ce.net (localhost.localdomain [127.0.0.1])
+	by test.quest-ce.net (8.14.5/8.14.5) with ESMTP id r2OL6R9J007251;
+	Sun, 24 Mar 2013 22:06:27 +0100
+Received: (from ydroneaud@localhost)
+	by test.quest-ce.net (8.14.5/8.14.5/Submit) id r2OL6Qw2007248;
+	Sun, 24 Mar 2013 22:06:26 +0100
+X-Mailer: git-send-email 1.7.11.7
+In-Reply-To: <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
+References: <1363704914.6289.39.camel@test.quest-ce.net> <loom.20130321T212911-611@post.gmane.org> <cdc4f45e7520ce1fc48588c260214717@meuh.org> <1363946943-30269-1-git-send-email-ydroneaud@opteya.com> <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218980>
 
-On Fri, Mar 22, 2013 at 6:36 PM, John Szakmeister <john@szakmeister.net> wrote:
-> On Fri, Mar 22, 2013 at 12:19 PM, Timo Sand <timo.j.sand@gmail.com> wrote:
->> Hi,
->>
->> well my use case is actually that I'm trying to use the gem
->> 'gem-browse' which uses 'git web--browse'
->> I'm not using Apple Terminal, I'm using iTerm2 and there doesn't seem
->> to be a SECURITYSESSIONID set, at least echo didn't find any. But
->> neither did I find it on Apple Terminal either.
->
-> I noticed this the other day, but I think SECURITYSESSIONID only gets
-> set when Screen Sharing is enabled.  I had Screen Sharing enabled,
-> launched iTerm2 and saw the variable.  I closed iTerm2, turned off
-> Screen Sharing, and relaunched iTerm2 to find the variable missing.
-> As a result, I'm not SECURITYSESSIONID is a good mechanism for
-> determining whether the terminal is associated a GUI or not.
-> Unfortunately, I don't know of a better way.
->
->> What troubles me is that this issue has only arisen recently, earlier
->> this worked fine for me
->
-> The following patch fixes the issue by recognizing iTerm2 as a GUI terminal.
+Please find some patches to use test_config/test_unconfig
 
-Your patch looks good to me, and I cannot really test it as I don't have a Mac.
-Could you just had some of the explanations you gave above to the
-commit message?
+Instead of using construct such as:
+   test_when_finished "git config --unset <key>"
+   git config <key> <value>
+uses
+   test_config <key> <value>
+The latter takes care of removing <key> at the end of the test.
+    
+Additionally, instead of
+   git config <key> ""
+or
+   git config --unset <key>
+ uses
+   test_unconfig <key>
+The latter doesn't failed if <key> is not defined.
 
-Thanks,
-Christian.
+Patch "t7600: use test_config to set/unset git config variables"
+is more important than the other and must be carefully reviewed
+regarded to the --no-log --no-ff behavior.
+
+Others patches are fairly simple.
+
+Testsuite results are the same after the patches.
+Tested against master, 7b592fadf1e23b10b913e0771b9f711770597266
+
+Yann Droneaud (15):
+  t4018: remove test_config implementation
+  t7810: remove test_config implementation
+  t7811: remove test_config implementation
+  t3400: use test_config to set/unset git config variables
+  t4304: use test_config to set/unset git config variables
+  t4034: use test_config/test_unconfig to set/unset git config
+    variables
+  t4202: use test_config/test_unconfig to set/unset git config
+    variables
+  t5520: use test_config to set/unset git config variables
+  t5541: use test_config to set/unset git config variables
+  t7500: use test_config to set/unset git config variables
+  t7502: use test_config to set/unset git config variables
+  t7508: use test_config to set/unset git config variables
+  t7600: use test_config to set/unset git config variables
+  t9500: use test_config to set/unset git config variables
+  t7502: remove clear_config
+
+ t/t3400-rebase.sh                      |  3 +-
+ t/t3404-rebase-interactive.sh          |  3 +-
+ t/t4018-diff-funcname.sh               |  5 ---
+ t/t4034-diff-words.sh                  |  7 ++--
+ t/t4202-log.sh                         | 28 +++++-----------
+ t/t5520-pull.sh                        | 12 +++----
+ t/t5541-http-push.sh                   |  3 +-
+ t/t7500-commit.sh                      |  6 ++--
+ t/t7502-commit.sh                      | 40 +++++------------------
+ t/t7508-status.sh                      | 46 +++++++++-----------------
+ t/t7600-merge.sh                       | 60 +++++++++++++++-------------------
+ t/t7810-grep.sh                        |  5 ---
+ t/t7811-grep-open.sh                   |  5 ---
+ t/t9500-gitweb-standalone-no-errors.sh |  3 +-
+ 14 files changed, 72 insertions(+), 154 deletions(-)
+
+-- 
+1.7.11.7
