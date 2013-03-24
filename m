@@ -1,111 +1,68 @@
 From: Paul Campbell <pcampbell@kemitix.net>
-Subject: [PATCH 3/3] contrib/subtree: replace echo options with printf
-Date: Sun, 24 Mar 2013 19:37:43 +0000
-Message-ID: <1364153863-27437-4-git-send-email-pcampbell@kemitix.net>
-References: <1364153863-27437-1-git-send-email-pcampbell@kemitix.net>
-Cc: greened@obbligato.org, Paul Campbell <pcampbell@kemitix.net>,
-	"Avery Pennarun" <apenwarr@gmail.com>
+Subject: [PATCH 0/3] Improve POSIX compatibility and general portablity
+Date: Sun, 24 Mar 2013 19:37:40 +0000
+Message-ID: <1364153863-27437-1-git-send-email-pcampbell@kemitix.net>
+Cc: greened@obbligato.org, Paul Campbell <pcampbell@kemitix.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 24 20:38:54 2013
+X-From: git-owner@vger.kernel.org Sun Mar 24 20:46:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJqko-0001BB-0r
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 20:38:54 +0100
+	id 1UJqrk-00078V-NZ
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 20:46:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754674Ab3CXTiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 15:38:20 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:50068 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754577Ab3CXTiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 15:38:07 -0400
-Received: by mail-wi0-f173.google.com with SMTP id ez12so1323489wid.6
-        for <git@vger.kernel.org>; Sun, 24 Mar 2013 12:38:06 -0700 (PDT)
+	id S1754722Ab3CXTpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 15:45:31 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:63392 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754706Ab3CXTpR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 15:45:17 -0400
+Received: by mail-wi0-f177.google.com with SMTP id hm14so5955095wib.4
+        for <git@vger.kernel.org>; Sun, 24 Mar 2013 12:45:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:x-gm-message-state;
-        bh=cNpjWfZFTPWiOi2aX7cLxrprIoE9E+FjKSztV1Sqnog=;
-        b=IL9D+TVepKzkP8pmBJ4UDuUG+iRLDY376v2xFcDFwXsgGi93TsKMIymhmVrf/67HB6
-         DI/EbKo8oOA/eJSs9O2EFy4s5FqZaldFmQoiJjoqibj86cRv9w59SThEl2SGCVksFYjW
-         UO0kuQKcYSnBUsFthSHmkNmctwgWfr5N0KJ2N4YOcq6cDYL97u4+fBxpDPreygvr5rA6
-         QjXXKRJD+mOeoeGNfteOYw88A00oUvtlsMw9gMt4XuEviRkpsBD8N+KH49d9/xzaiSST
-         WFwiwNoJZd9e8s3/nLevTTTdHJHkLQxxOBy7K6PIGnUvRC69+rt1o/xKOynK0pJ5zChR
-         RXHQ==
-X-Received: by 10.180.7.133 with SMTP id j5mr13477949wia.15.1364153886299;
-        Sun, 24 Mar 2013 12:38:06 -0700 (PDT)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer
+         :x-gm-message-state;
+        bh=WpyUEHVei00kNG4eMFG3EEDULPIAFgbXhe5FFMECvTI=;
+        b=Whh5GeOZUnZGQ+t2WQHfzWPKKtjtqajyKWzyn/7+I4W5rIeegMtnkeCVt31KEIOyb8
+         kJkgw8giieyA02SDNfe8pcvRL6zrx6I3RuLyVLPbtQ7WJue+LJCvOQMioxg0iJyGtpkP
+         6iLBTRrwyvayFhoGzsEvd8FgU8Mwe2tCvCoE+5QBf9onUacVE87xHz7VpQmUzEpS2W/r
+         8sa1CxL6x9KnKtXBDntG0KU+LN3G8rtGXzDWlS2Z8HAU5BTVCxzP4kwVTpIjjHYn3h6i
+         Uf+R1i/tkn789YJS3uBU1nh9nif6ISTvMPpGs/GRKjFHUqYiZ6oqYSrAqnbLmZuSfs9M
+         G04w==
+X-Received: by 10.194.173.167 with SMTP id bl7mr13812974wjc.50.1364153880915;
+        Sun, 24 Mar 2013 12:38:00 -0700 (PDT)
 Received: from coyote.home (host-2-102-87-178.as13285.net. [2.102.87.178])
-        by mx.google.com with ESMTPS id ek4sm23825220wib.11.2013.03.24.12.38.04
+        by mx.google.com with ESMTPS id ek4sm23825220wib.11.2013.03.24.12.37.59
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 24 Mar 2013 12:38:05 -0700 (PDT)
+        Sun, 24 Mar 2013 12:38:00 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2
-In-Reply-To: <1364153863-27437-1-git-send-email-pcampbell@kemitix.net>
-X-Gm-Message-State: ALoCoQlvhloy7UnKfNlZXrPbYB1biYinEvS781PGp4G6WRuYyQhVSHP+mD28pf+AMa9ukmUsGSwF
+X-Gm-Message-State: ALoCoQkw5NYBpgl5GHxjYF4nD2cltWX9uYOnVkyMABHUtSqJ8ApGjEjy5ucenPTcxhEVs/+Ji8+W
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218971>
 
-Options to echo are not portable. In particular, the echo -e option is
-implemented by some shells, including bash, to expand escape sequences.
+git-subtree is considered to be a Bash only script and not POSIX
+compatibile.
 
-Use the printf command instead, which is portable and much more reliable.
+I removed the /bin/bash and tested with dash. All the tests 
+passed.
 
-Only instances of echo and say (a wrapper for echo) where they are used
-with options have been replaced with printf.
+I also followed some of the advice found in 
+https://wiki.ubuntu.com/DashAsBinSh for converting a bash script to be 
+more portable.
 
-say_progress() is added to mirror the behaviour of say() in respecting
-the -q/--quiet option.
+Paul Campbell (3):
+  contrib/subtree: stop explicitly using a bash shell
+  contrib/subtree: remove use of -a/-o in [ commands
+  contrib/subtree: replace echo options with printf
 
-Signed-off-by: Paul Campbell <pcampbell@kemitix.net>
----
+ contrib/subtree/git-subtree.sh | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-This is a better version of the previously submitted patch 
-(http://article.gmane.org/gmane.comp.version-control.git/218103) which
-added another option to echo.
-
- contrib/subtree/git-subtree.sh | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 884cbfb..35caf12 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -61,6 +61,13 @@ say()
- 	fi
- }
- 
-+say_progress()
-+{
-+	if [ -z "$quiet" ]; then
-+		printf "%s\r" "$@" >&2
-+	fi
-+}
-+
- assert()
- {
- 	if "$@"; then
-@@ -311,7 +318,7 @@ copy_commit()
- 			GIT_COMMITTER_NAME \
- 			GIT_COMMITTER_EMAIL \
- 			GIT_COMMITTER_DATE
--		(echo -n "$annotate"; cat ) |
-+		(printf "$annotate"; cat ) |
- 		git commit-tree "$2" $3  # reads the rest of stdin
- 	) || die "Can't copy commit $1"
- }
-@@ -592,7 +599,7 @@ cmd_split()
- 	eval "$grl" |
- 	while read rev parents; do
- 		revcount=$(($revcount + 1))
--		say -n "$revcount/$revmax ($createcount)
-"
-+		say_progress "$revcount/$revmax ($createcount)"
- 		debug "Processing commit: $rev"
- 		exists=$(cache_get $rev)
- 		if [ -n "$exists" ]; then
 -- 
 1.8.2
