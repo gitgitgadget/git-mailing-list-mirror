@@ -1,115 +1,111 @@
 From: Paul Campbell <pcampbell@kemitix.net>
-Subject: [PATCH 2/3] contrib/subtree: remove use of -a/-o in [ commands
-Date: Sun, 24 Mar 2013 19:37:42 +0000
-Message-ID: <1364153863-27437-3-git-send-email-pcampbell@kemitix.net>
+Subject: [PATCH 3/3] contrib/subtree: replace echo options with printf
+Date: Sun, 24 Mar 2013 19:37:43 +0000
+Message-ID: <1364153863-27437-4-git-send-email-pcampbell@kemitix.net>
 References: <1364153863-27437-1-git-send-email-pcampbell@kemitix.net>
 Cc: greened@obbligato.org, Paul Campbell <pcampbell@kemitix.net>,
-	"Avery Pennarun" <apenwarr@gmail.com>,
-	"Pelle Wessman" <pelle@kodfabrik.se>,
-	"Win Treese" <treese@acm.org>, "Wayne Walter" <wayne@tickzoom.com>
+	"Avery Pennarun" <apenwarr@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 24 20:38:48 2013
+X-From: git-owner@vger.kernel.org Sun Mar 24 20:38:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJqkh-00016y-02
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 20:38:47 +0100
+	id 1UJqko-0001BB-0r
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 20:38:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754664Ab3CXTiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 15:38:10 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:33424 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754576Ab3CXTiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 15:38:05 -0400
-Received: by mail-wi0-f176.google.com with SMTP id hm14so9436743wib.15
-        for <git@vger.kernel.org>; Sun, 24 Mar 2013 12:38:04 -0700 (PDT)
+	id S1754674Ab3CXTiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 15:38:20 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:50068 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754577Ab3CXTiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 15:38:07 -0400
+Received: by mail-wi0-f173.google.com with SMTP id ez12so1323489wid.6
+        for <git@vger.kernel.org>; Sun, 24 Mar 2013 12:38:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:x-gm-message-state;
-        bh=rLYGTBjtSBmcHhCKnkFB/ENuwigdGadUl3TO+Y9PvRM=;
-        b=LiyeZTIB5yu/t/6wmIMmbz24Poz2kzfIjgM2TRBzpR1Ud4xtax+3Kna+q+H+Vgfima
-         Pv8tqUvX1nIZ0ri9tJoEAJTBGfpJKOVmt1FF4g5Vd0w19qbOdQuWLyrk7+WbTVedPh+1
-         3H9AtU8na6zKUzhurJQGEJXyAmVhKayOvSx1ANEzXCPiLeY5exFxqpJqLyQo0LAeTPG6
-         LtNnJuck0w/JBrqf31lhgBXv3WBOXtmLdbmgpoHS2BWFQrXWRMyqi0SZrQ0/r7rFGY6z
-         yOVsYkj2KCNLvuuNC0RkTNbifR4hHXa4rIEtfgDG3UVvWcJvcqsRWm3Tq1kG00SLvQYB
-         /Ctw==
-X-Received: by 10.180.94.135 with SMTP id dc7mr21646295wib.11.1364153884559;
-        Sun, 24 Mar 2013 12:38:04 -0700 (PDT)
+        bh=cNpjWfZFTPWiOi2aX7cLxrprIoE9E+FjKSztV1Sqnog=;
+        b=IL9D+TVepKzkP8pmBJ4UDuUG+iRLDY376v2xFcDFwXsgGi93TsKMIymhmVrf/67HB6
+         DI/EbKo8oOA/eJSs9O2EFy4s5FqZaldFmQoiJjoqibj86cRv9w59SThEl2SGCVksFYjW
+         UO0kuQKcYSnBUsFthSHmkNmctwgWfr5N0KJ2N4YOcq6cDYL97u4+fBxpDPreygvr5rA6
+         QjXXKRJD+mOeoeGNfteOYw88A00oUvtlsMw9gMt4XuEviRkpsBD8N+KH49d9/xzaiSST
+         WFwiwNoJZd9e8s3/nLevTTTdHJHkLQxxOBy7K6PIGnUvRC69+rt1o/xKOynK0pJ5zChR
+         RXHQ==
+X-Received: by 10.180.7.133 with SMTP id j5mr13477949wia.15.1364153886299;
+        Sun, 24 Mar 2013 12:38:06 -0700 (PDT)
 Received: from coyote.home (host-2-102-87-178.as13285.net. [2.102.87.178])
-        by mx.google.com with ESMTPS id ek4sm23825220wib.11.2013.03.24.12.38.02
+        by mx.google.com with ESMTPS id ek4sm23825220wib.11.2013.03.24.12.38.04
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 24 Mar 2013 12:38:03 -0700 (PDT)
+        Sun, 24 Mar 2013 12:38:05 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2
 In-Reply-To: <1364153863-27437-1-git-send-email-pcampbell@kemitix.net>
-X-Gm-Message-State: ALoCoQlcHZfneFb405zIwmIg1CFolQoSpkNuASGcQ2MMIdEfTP6XBWu/6LYeRjMB9pCDzr1iPaAx
+X-Gm-Message-State: ALoCoQlvhloy7UnKfNlZXrPbYB1biYinEvS781PGp4G6WRuYyQhVSHP+mD28pf+AMa9ukmUsGSwF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218970>
 
-Use of -a and -o in the [ command can have confusing semantics.
+Options to echo are not portable. In particular, the echo -e option is
+implemented by some shells, including bash, to expand escape sequences.
 
-Use a separate test invocation for each single test, combining them with
-&& and ||, and use ordinary parentheses for grouping.
+Use the printf command instead, which is portable and much more reliable.
+
+Only instances of echo and say (a wrapper for echo) where they are used
+with options have been replaced with printf.
+
+say_progress() is added to mirror the behaviour of say() in respecting
+the -q/--quiet option.
 
 Signed-off-by: Paul Campbell <pcampbell@kemitix.net>
 ---
- contrib/subtree/git-subtree.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+
+This is a better version of the previously submitted patch 
+(http://article.gmane.org/gmane.comp.version-control.git/218103) which
+added another option to echo.
+
+ contrib/subtree/git-subtree.sh | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 5701376..884cbfb 100755
+index 884cbfb..35caf12 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -119,7 +119,7 @@ esac
- 
- dir="$(dirname "$prefix/.")"
- 
--if [ "$command" != "pull" -a "$command" != "add" -a "$command" != "push" ]; then
-+if ( test "$command" != "pull" ) && ( test "$command" != "add" ) && ( test "$command" != "push" ); then
- 	revs=$(git rev-parse $default --revs-only "$@") || exit $?
- 	dirs="$(git rev-parse --no-revs --no-flags "$@")" || exit $?
- 	if [ -n "$dirs" ]; then
-@@ -181,9 +181,9 @@ cache_set()
- {
- 	oldrev="$1"
- 	newrev="$2"
--	if [ "$oldrev" != "latest_old" \
--	     -a "$oldrev" != "latest_new" \
--	     -a -e "$cachedir/$oldrev" ]; then
-+	if ( test "$oldrev" != "latest_old" ) \
-+	     && ( test "$oldrev" != "latest_new" ) \
-+	     && ( test -e "$cachedir/$oldrev" ); then
- 		die "cache for $oldrev already exists!"
+@@ -61,6 +61,13 @@ say()
  	fi
- 	echo "$newrev" >"$cachedir/$oldrev"
-@@ -273,12 +273,12 @@ find_existing_splits()
- 			git-subtree-split:) sub="$b" ;;
- 			END)
- 				debug "  Main is: '$main'"
--				if [ -z "$main" -a -n "$sub" ]; then
-+				if ( test -z "$main" ) && ( test -n "$sub" ); then
- 					# squash commits refer to a subtree
- 					debug "  Squash: $sq from $sub"
- 					cache_set "$sq" "$sub"
- 				fi
--				if [ -n "$main" -a -n "$sub" ]; then
-+				if ( test -n "$main" ) && (test -n "$sub" ); then
- 					debug "  Prior: $main -> $sub"
- 					cache_set $main $sub
- 					cache_set $sub $sub
-@@ -541,7 +541,7 @@ cmd_add_commit()
- 	tree=$(git write-tree) || exit $?
- 	
- 	headrev=$(git rev-parse HEAD) || exit $?
--	if [ -n "$headrev" -a "$headrev" != "$rev" ]; then
-+	if ( test -n "$headrev" ) && ( test "$headrev" != "$rev" ); then
- 		headp="-p $headrev"
- 	else
- 		headp=
+ }
+ 
++say_progress()
++{
++	if [ -z "$quiet" ]; then
++		printf "%s\r" "$@" >&2
++	fi
++}
++
+ assert()
+ {
+ 	if "$@"; then
+@@ -311,7 +318,7 @@ copy_commit()
+ 			GIT_COMMITTER_NAME \
+ 			GIT_COMMITTER_EMAIL \
+ 			GIT_COMMITTER_DATE
+-		(echo -n "$annotate"; cat ) |
++		(printf "$annotate"; cat ) |
+ 		git commit-tree "$2" $3  # reads the rest of stdin
+ 	) || die "Can't copy commit $1"
+ }
+@@ -592,7 +599,7 @@ cmd_split()
+ 	eval "$grl" |
+ 	while read rev parents; do
+ 		revcount=$(($revcount + 1))
+-		say -n "$revcount/$revmax ($createcount)
+"
++		say_progress "$revcount/$revmax ($createcount)"
+ 		debug "Processing commit: $rev"
+ 		exists=$(cache_get $rev)
+ 		if [ -n "$exists" ]; then
 -- 
 1.8.2
