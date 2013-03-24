@@ -1,287 +1,115 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: [PATCH 13/15] t7600: use test_config to set/unset git config variables
-Date: Sun, 24 Mar 2013 22:06:12 +0100
-Message-ID: <48e5b9a14fdebd7257d859eda05477dc2956d525.1364158574.git.ydroneaud@opteya.com>
-References: <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
- <cover.1364158574.git.ydroneaud@opteya.com>
-Cc: Yann Droneaud <ydroneaud@opteya.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 24 22:27:11 2013
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2 2/3] t7800: fix tests when difftool uses --no-symlinks
+Date: Sun, 24 Mar 2013 14:29:40 -0700
+Message-ID: <CAJDDKr7Uz44TQ8y2jpjhNadWUCD5Mo=GLdaLLh99eENARQSwcw@mail.gmail.com>
+References: <cover.1363980749.git.john@keeping.me.uk>
+	<cover.1364045138.git.john@keeping.me.uk>
+	<e44349728c07d8ae22d4b73527b1d124b49cc4a9.1364045138.git.john@keeping.me.uk>
+	<7vd2up4bo7.fsf@alter.siamese.dyndns.org>
+	<20130324123620.GA2286@serenity.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Mar 24 22:30:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJsRX-00088J-L9
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:27:08 +0100
+	id 1UJsUU-0002JI-7K
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:30:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755054Ab3CXV0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 17:26:39 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:43921 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755026Ab3CXV0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 17:26:38 -0400
-Received: from test.quest-ce.net (unknown [IPv6:2a01:e35:2e9f:6ac0:c8b1:2f86:54cb:a84a])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id CAB4D9401D1;
-	Sun, 24 Mar 2013 22:26:28 +0100 (CET)
-Received: from test.quest-ce.net (localhost.localdomain [127.0.0.1])
-	by test.quest-ce.net (8.14.5/8.14.5) with ESMTP id r2OL6obL007315;
-	Sun, 24 Mar 2013 22:06:50 +0100
-Received: (from ydroneaud@localhost)
-	by test.quest-ce.net (8.14.5/8.14.5/Submit) id r2OL6ogX007314;
-	Sun, 24 Mar 2013 22:06:50 +0100
-X-Mailer: git-send-email 1.7.11.7
-In-Reply-To: <cover.1364158574.git.ydroneaud@opteya.com>
-In-Reply-To: <cover.1364158574.git.ydroneaud@opteya.com>
-References: <cover.1364158574.git.ydroneaud@opteya.com>
+	id S1754814Ab3CXV3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 17:29:42 -0400
+Received: from mail-we0-f177.google.com ([74.125.82.177]:40630 "EHLO
+	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754735Ab3CXV3l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 17:29:41 -0400
+Received: by mail-we0-f177.google.com with SMTP id d7so4569436wer.36
+        for <git@vger.kernel.org>; Sun, 24 Mar 2013 14:29:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=je0YABhbqrb6X9Frs2sad7Q0jakkSeR0vQhhgLa3HEo=;
+        b=wb/teLw4khqjCmupaEBNUXD7GRZtp4E1gRG6V/epVVRUxSYZxNg1XD7StbdTH7fcs0
+         59djJzMkkZNOL09V/zpx0ejeymJ/2bU6hA4HzS/YnrSg+nuL/hoKd+9Zh6DLLvJ22lTn
+         oVe02jwg5CUaaJpdKtPIo/2LQfPiN7o/zdfpZZl1BKOo249qJnoA88myZkReBl7nTjSm
+         OjwSiohnS8ZdDlyyUE2ECOqUewJxIIrgC1XO9PjCBuJqNKeqEqu9p2ktFW8RnsyuJg7f
+         IJ95HaTr6+FafJO+kbeSo1KhDy6Ek0Au6I1gm4zdP/Je1dwD0ofr9f7ZbTaXtjrQSBBs
+         L3Sg==
+X-Received: by 10.180.185.204 with SMTP id fe12mr13722211wic.2.1364160580471;
+ Sun, 24 Mar 2013 14:29:40 -0700 (PDT)
+Received: by 10.194.13.129 with HTTP; Sun, 24 Mar 2013 14:29:40 -0700 (PDT)
+In-Reply-To: <20130324123620.GA2286@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218999>
 
-Instead of using construct such as:
-    test_when_finished "git config --unset <key>"
-    git config <key> <value>
-uses
-    test_config <key> <value>
-The latter takes care of removing <key> at the end of the test.
+On Sun, Mar 24, 2013 at 5:36 AM, John Keeping <john@keeping.me.uk> wrote:
+> On Sat, Mar 23, 2013 at 10:19:36PM -0700, Junio C Hamano wrote:
+>> > In the longer term, difftool probably needs to learn to warn the user
+>> > instead of overwrite any changes that have been made to the working tree
+>> > file.
+>>
+>> Questionable.
+>>
+>> Admittedly I do not use difftool myself, and I have long assumed
+>> that difftool users are using the tools to _view_ the changes, but
+>> apparently some of the tools let the user muck with what is shown,
+>> and also apparently people seem to like the fact that they can make
+>> changes.  So I've led to believe the "update in difftool, take the
+>> change back to working tree, either by making symbolic links or
+>> copying them back" behaviour was a _feature_.
+>
+> Yes it is.  I think my explanation wasn't clear enough here.
+>
+> What currently happens is that after the user's tool has finished
+> running the working tree file and temporary file are compared and if
+> they are different then the temporary file is copied over the working
+> tree file.
+>
+> This is good if the user has edited the temporary file, but what if they
+> edit they working tree file while using the tool to examine the
+> differences?  I think we need to at the very least look at the mtime of
+> the files and refuse to copy over the temporary file if that of the
+> working tree file is newer.
+>
+> Obviously none of this matters if we can use symlinks, but in the
+> non-symlink case I think a user might find it surprising if the
+> (unmodified) file used by their diff tool were suddenly copied over the
+> working tree wiping out the changes they have just made.
 
-Tests are modified to assume default configuration at entry,
-and to reset the modified configuration variables at the end.
+Thanks, this adds a little more safety to the operation, which is good.
+The downside is that it's a performance hit since we end up running
+an additional hash-object on every worktree file.
+I would definitely choose safety/correctness in this situation.
 
-Test 'merge log message' was relying on the presence of option `--no-ff`
-in the configuration. With the option, git show -s --pretty=format:%b HEAD
-produces an empty line and without the option, it produces an empty file.
-The test is modified to check with and without `--no-ff` option.
+This makes me wonder whether the modifiable mode should be made
+more explicit, either in the documentation or via a flag.
 
-Signed-off-by: Yann Droneaud <ydroneaud@opteya.com>
----
- t/t7600-merge.sh | 60 ++++++++++++++++++++++++--------------------------------
- 1 file changed, 26 insertions(+), 34 deletions(-)
+Imagine if --dir-diff also honored --edit and --no-edit flags.
 
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 5e19598..2f70433 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -56,7 +56,8 @@ create_merge_msgs () {
- 		echo &&
- 		git log --no-merges ^HEAD c2 c3
- 	} >squash.1-5-9 &&
--	echo >msg.nolog &&
-+	: >msg.nologff &&
-+	echo >msg.nolognoff &&
- 	{
- 		echo "* tag 'c3':" &&
- 		echo "  commit 3" &&
-@@ -244,8 +245,7 @@ test_expect_success 'merges with --ff-only' '
- test_expect_success 'merges with merge.ff=only' '
- 	git reset --hard c1 &&
- 	test_tick &&
--	test_when_finished "git config --unset merge.ff" &&
--	git config merge.ff only &&
-+	test_config merge.ff "only" &&
- 	test_must_fail git merge c2 &&
- 	test_must_fail git merge c3 &&
- 	test_must_fail git merge c2 c3 &&
-@@ -336,7 +336,7 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c2 (no-commit in config)' '
- 	git reset --hard c1 &&
--	git config branch.master.mergeoptions "--no-commit" &&
-+	test_config branch.master.mergeoptions "--no-commit" &&
- 	git merge c2 &&
- 	verify_merge file result.1-5 &&
- 	verify_head $c1 &&
-@@ -346,12 +346,11 @@ test_expect_success 'merge c1 with c2 (no-commit in config)' '
- test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c2 (log in config)' '
--	git config branch.master.mergeoptions "" &&
- 	git reset --hard c1 &&
- 	git merge --log c2 &&
- 	git show -s --pretty=tformat:%s%n%b >expect &&
- 
--	git config branch.master.mergeoptions --log &&
-+	test_config branch.master.mergeoptions "--log" &&
- 	git reset --hard c1 &&
- 	git merge c2 &&
- 	git show -s --pretty=tformat:%s%n%b >actual &&
-@@ -360,17 +359,12 @@ test_expect_success 'merge c1 with c2 (log in config)' '
- '
- 
- test_expect_success 'merge c1 with c2 (log in config gets overridden)' '
--	test_when_finished "git config --remove-section branch.master" &&
--	test_when_finished "git config --remove-section merge" &&
--	test_might_fail git config --remove-section branch.master &&
--	test_might_fail git config --remove-section merge &&
--
- 	git reset --hard c1 &&
- 	git merge c2 &&
- 	git show -s --pretty=tformat:%s%n%b >expect &&
- 
--	git config branch.master.mergeoptions "--no-log" &&
--	git config merge.log true &&
-+	test_config branch.master.mergeoptions "--no-log" &&
-+	test_config merge.log "true" &&
- 	git reset --hard c1 &&
- 	git merge c2 &&
- 	git show -s --pretty=tformat:%s%n%b >actual &&
-@@ -380,7 +374,7 @@ test_expect_success 'merge c1 with c2 (log in config gets overridden)' '
- 
- test_expect_success 'merge c1 with c2 (squash in config)' '
- 	git reset --hard c1 &&
--	git config branch.master.mergeoptions "--squash" &&
-+	test_config branch.master.mergeoptions "--squash" &&
- 	git merge c2 &&
- 	verify_merge file result.1-5 &&
- 	verify_head $c1 &&
-@@ -392,7 +386,7 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'override config option -n with --summary' '
- 	git reset --hard c1 &&
--	git config branch.master.mergeoptions "-n" &&
-+	test_config branch.master.mergeoptions "-n" &&
- 	test_tick &&
- 	git merge --summary c2 >diffstat.txt &&
- 	verify_merge file result.1-5 msg.1-5 &&
-@@ -406,7 +400,7 @@ test_expect_success 'override config option -n with --summary' '
- 
- test_expect_success 'override config option -n with --stat' '
- 	git reset --hard c1 &&
--	git config branch.master.mergeoptions "-n" &&
-+	test_config branch.master.mergeoptions "-n" &&
- 	test_tick &&
- 	git merge --stat c2 >diffstat.txt &&
- 	verify_merge file result.1-5 msg.1-5 &&
-@@ -422,7 +416,7 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'override config option --stat' '
- 	git reset --hard c1 &&
--	git config branch.master.mergeoptions "--stat" &&
-+	test_config branch.master.mergeoptions "--stat" &&
- 	test_tick &&
- 	git merge -n c2 >diffstat.txt &&
- 	verify_merge file result.1-5 msg.1-5 &&
-@@ -438,7 +432,7 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c2 (override --no-commit)' '
- 	git reset --hard c1 &&
--	git config branch.master.mergeoptions "--no-commit" &&
-+	test_config branch.master.mergeoptions "--no-commit" &&
- 	test_tick &&
- 	git merge --commit c2 &&
- 	verify_merge file result.1-5 msg.1-5 &&
-@@ -449,7 +443,7 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c2 (override --squash)' '
- 	git reset --hard c1 &&
--	git config branch.master.mergeoptions "--squash" &&
-+	test_config branch.master.mergeoptions "--squash" &&
- 	test_tick &&
- 	git merge --no-squash c2 &&
- 	verify_merge file result.1-5 msg.1-5 &&
-@@ -460,7 +454,6 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c0 with c1 (no-ff)' '
- 	git reset --hard c0 &&
--	git config branch.master.mergeoptions "" &&
- 	test_tick &&
- 	git merge --no-ff c1 &&
- 	verify_merge file result.1 &&
-@@ -471,10 +464,9 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c0 with c1 (merge.ff=false)' '
- 	git reset --hard c0 &&
--	git config merge.ff false &&
-+	test_config merge.ff "false" &&
- 	test_tick &&
- 	git merge c1 &&
--	git config --remove-section merge &&
- 	verify_merge file result.1 &&
- 	verify_parents $c0 $c1
- '
-@@ -482,22 +474,19 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'combine branch.master.mergeoptions with merge.ff' '
- 	git reset --hard c0 &&
--	git config branch.master.mergeoptions --ff &&
--	git config merge.ff false &&
-+	test_config branch.master.mergeoptions "--ff" &&
-+	test_config merge.ff "false" &&
- 	test_tick &&
- 	git merge c1 &&
--	git config --remove-section "branch.master" &&
--	git config --remove-section "merge" &&
- 	verify_merge file result.1 &&
- 	verify_parents "$c0"
- '
- 
- test_expect_success 'tolerate unknown values for merge.ff' '
- 	git reset --hard c0 &&
--	git config merge.ff something-new &&
-+	test_config merge.ff "something-new" &&
- 	test_tick &&
- 	git merge c1 2>message &&
--	git config --remove-section "merge" &&
- 	verify_head "$c1" &&
- 	test_cmp empty message
- '
-@@ -515,7 +504,7 @@ test_expect_success 'combining --ff-only and --no-ff is refused' '
- 
- test_expect_success 'merge c0 with c1 (ff overrides no-ff)' '
- 	git reset --hard c0 &&
--	git config branch.master.mergeoptions "--no-ff" &&
-+	test_config branch.master.mergeoptions "--no-ff" &&
- 	git merge --ff c1 &&
- 	verify_merge file result.1 &&
- 	verify_head $c1
-@@ -525,14 +514,20 @@ test_expect_success 'merge log message' '
- 	git reset --hard c0 &&
- 	git merge --no-log c2 &&
- 	git show -s --pretty=format:%b HEAD >msg.act &&
--	test_cmp msg.nolog msg.act &&
-+	test_cmp msg.nologff msg.act &&
-+
-+	git reset --hard c0 &&
-+	test_config branch.master.mergeoptions "--no-ff" &&
-+	git merge --no-log c2 &&
-+	git show -s --pretty=format:%b HEAD >msg.act &&
-+	test_cmp msg.nolognoff msg.act &&
- 
- 	git merge --log c3 &&
- 	git show -s --pretty=format:%b HEAD >msg.act &&
- 	test_cmp msg.log msg.act &&
- 
- 	git reset --hard HEAD^ &&
--	git config merge.log yes &&
-+	test_config merge.log "yes" &&
- 	git merge c3 &&
- 	git show -s --pretty=format:%b HEAD >msg.act &&
- 	test_cmp msg.log msg.act
-@@ -542,7 +537,6 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c0, c2, c0, and c1' '
-        git reset --hard c1 &&
--       git config branch.master.mergeoptions "" &&
-        test_tick &&
-        git merge c0 c2 c0 c1 &&
-        verify_merge file result.1-5 &&
-@@ -553,7 +547,6 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c0, c2, c0, and c1' '
-        git reset --hard c1 &&
--       git config branch.master.mergeoptions "" &&
-        test_tick &&
-        git merge c0 c2 c0 c1 &&
-        verify_merge file result.1-5 &&
-@@ -564,7 +557,6 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c1 and c2' '
-        git reset --hard c1 &&
--       git config branch.master.mergeoptions "" &&
-        test_tick &&
-        git merge c1 c2 &&
-        verify_merge file result.1-5 &&
+Right now --edit is the default.  If we had foreseen these various
+edge cases and unintended copy-backs then we may have initially
+chosen --no-edit as the default, but that's not really my point.
+
+What I'm thinking is that it might be good for the tool to
+learn --edit/--no-edit so that the symlink/copy-back heuristic
+can be documented alongside that option.  Users can then know
+what to expect when using this mode.  --no-edit would also be
+faster since it can avoid all these extra steps.
+
+It could also learn "difftool.dirDiffEditable" to control the
+default, which would eliminate the pain in needing to supply
+the flag on every invocation.
+
+What do you think about officially supporting a read-only mode?
 -- 
-1.7.11.7
+David
