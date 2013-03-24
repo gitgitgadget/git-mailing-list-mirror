@@ -1,123 +1,120 @@
-From: Simon Ruderich <simon@ruderich.org>
-Subject: Re: [PATCH 2/3] contrib/subtree: remove use of -a/-o in [ commands
-Date: Sun, 24 Mar 2013 22:17:13 +0100
-Message-ID: <20130324211713.GA6155@ruderich.org>
-References: <1364153863-27437-1-git-send-email-pcampbell@kemitix.net>
- <1364153863-27437-3-git-send-email-pcampbell@kemitix.net>
+From: Paul Campbell <pcampbell@kemitix.net>
+Subject: Re: [PATCH v2 04/23] contrib/subtree: Teach push and pull to use
+ .gittrees for defaults
+Date: Sun, 24 Mar 2013 21:22:30 +0000
+Message-ID: <CALeLG_=pV1Y0Qabw9C=3PACWUWPw2=ajacFG++djBxaO4S6z7g@mail.gmail.com>
+References: <1362958891-26941-1-git-send-email-pcampbell@kemitix.net>
+	<1362958891-26941-5-git-send-email-pcampbell@kemitix.net>
+	<7vobeqbobz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Paul Campbell <pcampbell@kemitix.net>
-X-From: git-owner@vger.kernel.org Sun Mar 24 22:17:50 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>, David Greene <greened@obbligato.org>,
+	bibendi <bibendi@bk.ru>, Avery Pennarun <apenwarr@gmail.com>,
+	Wayne Walter <wayne@tickzoom.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 24 22:23:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJsIV-0000B8-9D
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:17:47 +0100
+	id 1UJsNY-0004ZT-FW
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:23:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754832Ab3CXVRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 17:17:19 -0400
-Received: from zucker2.schokokeks.org ([178.63.68.90]:33922 "EHLO
-	zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754763Ab3CXVRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 17:17:18 -0400
-Received: from localhost (pD9E97571.dip.t-dialin.net [::ffff:217.233.117.113])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by zucker.schokokeks.org with ESMTPSA; Sun, 24 Mar 2013 22:17:14 +0100
-  id 00000000000000B0.00000000514F6D5A.00005DC7
-Content-Disposition: inline
-In-Reply-To: <1364153863-27437-3-git-send-email-pcampbell@kemitix.net>
-User-Agent: Mutt/1.5.21 (2013-03-19)
+	id S1754886Ab3CXVWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 17:22:32 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:56640 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754808Ab3CXVWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 17:22:31 -0400
+Received: by mail-oa0-f49.google.com with SMTP id j6so5706369oag.22
+        for <git@vger.kernel.org>; Sun, 24 Mar 2013 14:22:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:x-originating-ip:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type:x-gm-message-state;
+        bh=tTn8R0H1I5vl5r6OsAzpAn5//eXJGC9lecgw2Z5QTBo=;
+        b=ELRmGQjwjKUVDcTCije5JV4RaCL+kIawHWu+rTMi6CdiCFQz+HtGU/Cvee4Lp1dkYQ
+         aTCThB5to3hHKLUwMsEju3JEAEsqaTDzCQAnsv65FRbnYu8TmcYL+FZxDAqsciSUir8s
+         2VOYNtrtKD5+Ey7iI1ydix7ZOXM6k2lIjzQaRRYBGi3H+eeQD5dci2UUGqV5baekyWt4
+         lU+VUYmk/Mvi8Oba+INkCwSjF64gGEBkFvFTIaMlGd2xf5Ek37RV946KpBm3HA/DGVFD
+         mnPDkNA96+y2n4kXzgnQamJf1weJ6UloFHURBd0wFlLsFGdO15mlBcTdeLXfClOvO+bX
+         TDFQ==
+X-Received: by 10.60.172.36 with SMTP id az4mr8956611oec.29.1364160150076;
+ Sun, 24 Mar 2013 14:22:30 -0700 (PDT)
+Received: by 10.76.13.2 with HTTP; Sun, 24 Mar 2013 14:22:30 -0700 (PDT)
+X-Originating-IP: [2.102.87.178]
+In-Reply-To: <7vobeqbobz.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQm8Y9pRKxNq/rdu/i9IruQUeAZDJKRlVScjYiuICY5/FF2jvnjHVSz1so823k73FThz8Vax
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218988>
 
-From: Paul Campbell <pcampbell@kemitix.net>
+On Mon, Mar 11, 2013 at 3:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> From: bibendi <bibendi@bk.ru>
+>>
+>> Look in the config file .gittrees for a default repository and
+>> refspec or commit when they are not provided on the command line.
+>>
+>> Uses the .gittrees config file in a similar way to how git-submodule
+>> uses the .gitmodules file.
+>
+> What the patch does can be read from the code, but what benefit
+> would users get by the extra file?
 
-Use of -a and -o in the [ command can have confusing semantics.
+How about:
 
-Use a separate test invocation for each single test, combining them with
-&& and ||.
+"Usually push and pull are to the same repository/branch that they were
+originally added from. Add stores the repository/branch in .gittrees
+which push and pull can now default to if not provided on the command
+line."
 
-Signed-off-by: Paul Campbell <pcampbell@kemitix.net>
-Signed-off-by: Simon Ruderich <simon@ruderich.org>
----
+>>  cmd_pull()
+>>  {
+>> -     ensure_clean
+>> -     git fetch "$@" || exit $?
+>> -     revs=FETCH_HEAD
+>> -     set -- $revs
+>> -     cmd_merge "$@"
+>> +    if [ $# -ne 1 ]; then
+>
+> Broken indentation?
+>
+>> +         die "You must provide <branch>"
+>> +     fi
+>
+> It used to allow "git fetch $there" and let the configured
+> remote.$there.fetch refspec to decide what gets fetched, and also it
+> used to allow "git fetch $there $that_branch" to explicitly fetch
+> the named branch.  But this change insists that the user has to give
+> what gets fetched from the command line and forbids the user from
+> giving where to fetch from, it seems.  Isn't it a regression?  Why
+> is it a good idea to forbid such uses that the script used to
+> accept?
+>
+> The proposed log message does not explain why it is not a
+> regression, or why accepting some use patterns that the script used
+> to allow was a bug that needs to be diagnosed with this new
+> conditional.
 
-On Sun, Mar 24, 2013 at 07:37:42PM +0000, Paul Campbell wrote:
-> Use a separate test invocation for each single test, combining them with
-> && and ||, and use ordinary parentheses for grouping.
+I think the patch was based on an older version of git-subtree before
+"git fetch $there" support was added. Will need to update it.
 
-Hello Paul,
+>> +     if [ -e "$dir" ]; then
+>> +         ensure_clean
+>> +         repository=$(git config -f .gittrees subtree.$prefix.url)
+>> +         refspec=$1
+>> +         git fetch $repository $refspec || exit $?
+>> +         echo "git fetch using: " $repository $refspec
+>
+> Why are these variable references outside the dq pair?
+>
 
-Parentheses are only necessary if both && and || are used to
-enforce precedence; the shell can split the commands without
-needing the parentheses. In these cases they can all be removed.
+They're inside now.
 
-Regards
-Simon
-
- contrib/subtree/git-subtree.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 5701376..d02e6c5 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -119,7 +119,7 @@ esac
- 
- dir="$(dirname "$prefix/.")"
- 
--if [ "$command" != "pull" -a "$command" != "add" -a "$command" != "push" ]; then
-+if test "$command" != "pull" && test "$command" != "add" && test "$command" != "push"; then
- 	revs=$(git rev-parse $default --revs-only "$@") || exit $?
- 	dirs="$(git rev-parse --no-revs --no-flags "$@")" || exit $?
- 	if [ -n "$dirs" ]; then
-@@ -181,9 +181,9 @@ cache_set()
- {
- 	oldrev="$1"
- 	newrev="$2"
--	if [ "$oldrev" != "latest_old" \
--	     -a "$oldrev" != "latest_new" \
--	     -a -e "$cachedir/$oldrev" ]; then
-+	if test "$oldrev" != "latest_old" \
-+	     && test "$oldrev" != "latest_new" \
-+	     && test -e "$cachedir/$oldrev"; then
- 		die "cache for $oldrev already exists!"
- 	fi
- 	echo "$newrev" >"$cachedir/$oldrev"
-@@ -273,12 +273,12 @@ find_existing_splits()
- 			git-subtree-split:) sub="$b" ;;
- 			END)
- 				debug "  Main is: '$main'"
--				if [ -z "$main" -a -n "$sub" ]; then
-+				if test -z "$main" && test -n "$sub"; then
- 					# squash commits refer to a subtree
- 					debug "  Squash: $sq from $sub"
- 					cache_set "$sq" "$sub"
- 				fi
--				if [ -n "$main" -a -n "$sub" ]; then
-+				if test -n "$main" && test -n "$sub"; then
- 					debug "  Prior: $main -> $sub"
- 					cache_set $main $sub
- 					cache_set $sub $sub
-@@ -541,7 +541,7 @@ cmd_add_commit()
- 	tree=$(git write-tree) || exit $?
- 	
- 	headrev=$(git rev-parse HEAD) || exit $?
--	if [ -n "$headrev" -a "$headrev" != "$rev" ]; then
-+	if test -n "$headrev" && test "$headrev" != "$rev"; then
- 		headp="-p $headrev"
- 	else
- 		headp=
--- 
-1.8.2
+Rerolling once I figure out the update for "git fetch $there" support.
 
 -- 
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
+Paul [W] Campbell
