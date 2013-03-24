@@ -1,218 +1,82 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: [PATCH 12/15] t7508: use test_config to set/unset git config variables
-Date: Sun, 24 Mar 2013 22:06:11 +0100
-Message-ID: <b067bae5607f94705b4e12a1911bebc48ebb96f3.1364158574.git.ydroneaud@opteya.com>
-References: <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
- <cover.1364158574.git.ydroneaud@opteya.com>
-Cc: Yann Droneaud <ydroneaud@opteya.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 24 22:07:38 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 3/3] git-pull.sh: introduce --[no-]autostash and pull.autostash
+Date: Mon, 25 Mar 2013 02:42:24 +0530
+Message-ID: <CALkWK0k0Ek0Dqxrrv7dAzUgF2X2hCcz2SodcPEgiRdLFgc-gXA@mail.gmail.com>
+References: <1363955399-13153-1-git-send-email-artagnon@gmail.com>
+ <1363955399-13153-4-git-send-email-artagnon@gmail.com> <7vtxo374h6.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=oOt0teGqCjpDkerR3-t1cY=qKyK-AtoLLCz9L1-+vyw@mail.gmail.com>
+ <7va9pt2r4e.fsf@alter.siamese.dyndns.org> <CALkWK0k=jei8Z+n-4O92obQOR88FR6iFCSifVhDDS8jv37rOjA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 24 22:13:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJs8b-0007x5-Nh
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:07:34 +0100
+	id 1UJsE7-0004UX-1Q
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:13:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754688Ab3CXVHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 17:07:01 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:52442 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754757Ab3CXVHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 17:07:00 -0400
-Received: from test.quest-ce.net (unknown [IPv6:2a01:e35:2e9f:6ac0:c8b1:2f86:54cb:a84a])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 1E35F94025A;
-	Sun, 24 Mar 2013 22:06:50 +0100 (CET)
-Received: from test.quest-ce.net (localhost.localdomain [127.0.0.1])
-	by test.quest-ce.net (8.14.5/8.14.5) with ESMTP id r2OL6n0k007311;
-	Sun, 24 Mar 2013 22:06:49 +0100
-Received: (from ydroneaud@localhost)
-	by test.quest-ce.net (8.14.5/8.14.5/Submit) id r2OL6neX007310;
-	Sun, 24 Mar 2013 22:06:49 +0100
-X-Mailer: git-send-email 1.7.11.7
-In-Reply-To: <cover.1364158574.git.ydroneaud@opteya.com>
-In-Reply-To: <cover.1364158574.git.ydroneaud@opteya.com>
-References: <cover.1364158574.git.ydroneaud@opteya.com>
+	id S1754757Ab3CXVMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 17:12:46 -0400
+Received: from mail-ia0-f179.google.com ([209.85.210.179]:49284 "EHLO
+	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754161Ab3CXVMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 17:12:45 -0400
+Received: by mail-ia0-f179.google.com with SMTP id x24so4979519iak.10
+        for <git@vger.kernel.org>; Sun, 24 Mar 2013 14:12:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=ycQ5oTGBfgnNsJMX60OFotDEqTQnP1XmfwDt4MvYAf8=;
+        b=g4duJPKyYERH+0R57+4RZWSbkodCSf+t3aVbHtpTVKgi65NX9x+1pBxbC+TjEct8o1
+         /yEelODC9Yi07ullqPjMp/jfb7fVdP37tOHvRqpi19oZdVuZOzANpSzD4euBrkmxAFRM
+         Yp+Mf1NfI/Tg4ZvNUjqwbHr9X8at56i2aYrA4cdgpiLm+3V0mxseeLc6EBU4SJoKGVcC
+         rl5AdLscScAkN8YVgFsPIClpYLN+UpHgJx0ww3QgVsXvFfZFOcgSmIgljEyVnAPc3ps4
+         TiC+eLcFFx5kztQPLN6LSQnwW6j2/CYnhxwNHksBXlsO7xnhEoLeITZD1r3c2xjk6JqT
+         lN4Q==
+X-Received: by 10.50.17.71 with SMTP id m7mr6260257igd.14.1364159565344; Sun,
+ 24 Mar 2013 14:12:45 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Sun, 24 Mar 2013 14:12:24 -0700 (PDT)
+In-Reply-To: <CALkWK0k=jei8Z+n-4O92obQOR88FR6iFCSifVhDDS8jv37rOjA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218986>
 
-Instead of using construct such as:
-    test_when_finished "git config --unset <key>"
-    git config <key> <value>
-uses
-    test_config <key> <value>
-The latter takes care of removing <key> at the end of the test.
+Ramkumar Ramachandra wrote:
+> Junio C Hamano wrote:
+>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>
+>>>>> +     elif test "$autostash" = false
+>>>>> +     then
+>>>>>               require_clean_work_tree "pull with rebase" "Please commit or stash them."
+>>>>>       fi
+>>>>
+>>>> A safety net, after you run "git stash", to validate that the
+>>>> added "git stash" indeed made the working tree clean, is necessary
+>>>> below, but there does not seem to be any.
+>>>
+>>> Um, isn't that part of the "git stash" testsuite?
+>>
+>> You should always "trust but verify" what other commands do at key
+>> points of the operation; and I think this "require-clean-work-tree"
+>> is a key precondition for this mode of operation to work correctly.
+>>
+>> Especially because you do not even bother to check the result of
+>> "git stash" before continuing ;-).
+>
+> If you think it's enough to replicate the codepath that precedes the
+> actual saving in 'git stash' (which is essentially
+> require-clean-work-tree), I'm in agreement with you.  I thought you
+> were implying a wider safety net, that wouldn't even assume the basic
+> sanity of stash.
 
-Signed-off-by: Yann Droneaud <ydroneaud@opteya.com>
----
- t/t7508-status.sh | 46 ++++++++++++++++------------------------------
- 1 file changed, 16 insertions(+), 30 deletions(-)
+Er, s/codepath that precedes the actual saving in 'git stash'/codepath
+that precedes the actual pulling or merging in 'git pull'/
 
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index aecb4d1..e2ffdac 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -131,8 +131,7 @@ cat >expect <<\EOF
- EOF
- 
- test_expect_success 'status (advice.statusHints false)' '
--	test_when_finished "git config --unset advice.statusHints" &&
--	git config advice.statusHints false &&
-+	test_config advice.statusHints false &&
- 	git status >output &&
- 	test_i18ncmp expect output
- 
-@@ -332,8 +331,7 @@ test_expect_success 'status -uno' '
- '
- 
- test_expect_success 'status (status.showUntrackedFiles no)' '
--	git config status.showuntrackedfiles no
--	test_when_finished "git config --unset status.showuntrackedfiles" &&
-+	test_config status.showuntrackedfiles no &&
- 	git status >output &&
- 	test_i18ncmp expect output
- '
-@@ -348,12 +346,11 @@ cat >expect <<EOF
- #
- # Untracked files not listed
- EOF
--git config advice.statusHints false
- test_expect_success 'status -uno (advice.statusHints false)' '
-+	test_config advice.statusHints false &&
- 	git status -uno >output &&
- 	test_i18ncmp expect output
- '
--git config --unset advice.statusHints
- 
- cat >expect << EOF
-  M dir1/modified
-@@ -400,8 +397,7 @@ test_expect_success 'status -unormal' '
- '
- 
- test_expect_success 'status (status.showUntrackedFiles normal)' '
--	git config status.showuntrackedfiles normal
--	test_when_finished "git config --unset status.showuntrackedfiles" &&
-+	test_config status.showuntrackedfiles normal
- 	git status >output &&
- 	test_i18ncmp expect output
- '
-@@ -459,8 +455,7 @@ test_expect_success 'status -uall' '
- '
- 
- test_expect_success 'status (status.showUntrackedFiles all)' '
--	git config status.showuntrackedfiles all
--	test_when_finished "git config --unset status.showuntrackedfiles" &&
-+	test_config status.showuntrackedfiles all
- 	git status >output &&
- 	test_i18ncmp expect output
- '
-@@ -485,10 +480,9 @@ test_expect_success 'status -s -uall' '
- 	test_cmp expect output
- '
- test_expect_success 'status -s (status.showUntrackedFiles all)' '
--	git config status.showuntrackedfiles all
-+	test_config status.showuntrackedfiles all &&
- 	git status -s >output &&
- 	rm -rf dir3 &&
--	git config --unset status.showuntrackedfiles &&
- 	test_cmp expect output
- '
- 
-@@ -588,15 +582,13 @@ cat >expect <<\EOF
- EOF
- 
- test_expect_success 'status with color.ui' '
--	git config color.ui always &&
--	test_when_finished "git config --unset color.ui" &&
-+	test_config color.ui always &&
- 	git status | test_decode_color >output &&
- 	test_i18ncmp expect output
- '
- 
- test_expect_success 'status with color.status' '
--	git config color.status always &&
--	test_when_finished "git config --unset color.status" &&
-+	test_config color.status always &&
- 	git status | test_decode_color >output &&
- 	test_i18ncmp expect output
- '
-@@ -720,8 +712,7 @@ EOF
- 
- test_expect_success 'status without relative paths' '
- 
--	git config status.relativePaths false &&
--	test_when_finished "git config --unset status.relativePaths" &&
-+	test_config status.relativePaths false &&
- 	(cd dir1 && git status) >output &&
- 	test_i18ncmp expect output
- 
-@@ -740,8 +731,7 @@ EOF
- 
- test_expect_success 'status -s without relative paths' '
- 
--	git config status.relativePaths false &&
--	test_when_finished "git config --unset status.relativePaths" &&
-+	test_config status.relativePaths false &&
- 	(cd dir1 && git status -s) >output &&
- 	test_cmp expect output
- 
-@@ -1038,15 +1028,14 @@ test_expect_success '--ignore-submodules=untracked suppresses submodules with un
- '
- 
- test_expect_success '.gitmodules ignore=untracked suppresses submodules with untracked content' '
--	git config diff.ignoreSubmodules dirty &&
-+	test_config diff.ignoreSubmodules dirty &&
- 	git status >output &&
- 	test_i18ncmp expect output &&
- 	git config --add -f .gitmodules submodule.subname.ignore untracked &&
- 	git config --add -f .gitmodules submodule.subname.path sm &&
- 	git status >output &&
- 	test_i18ncmp expect output &&
--	git config -f .gitmodules  --remove-section submodule.subname &&
--	git config --unset diff.ignoreSubmodules
-+	git config -f .gitmodules  --remove-section submodule.subname
- '
- 
- test_expect_success '.git/config ignore=untracked suppresses submodules with untracked content' '
-@@ -1066,15 +1055,14 @@ test_expect_success '--ignore-submodules=dirty suppresses submodules with untrac
- '
- 
- test_expect_success '.gitmodules ignore=dirty suppresses submodules with untracked content' '
--	git config diff.ignoreSubmodules dirty &&
-+	test_config diff.ignoreSubmodules dirty &&
- 	git status >output &&
- 	! test -s actual &&
- 	git config --add -f .gitmodules submodule.subname.ignore dirty &&
- 	git config --add -f .gitmodules submodule.subname.path sm &&
- 	git status >output &&
- 	test_i18ncmp expect output &&
--	git config -f .gitmodules  --remove-section submodule.subname &&
--	git config --unset diff.ignoreSubmodules
-+	git config -f .gitmodules  --remove-section submodule.subname
- '
- 
- test_expect_success '.git/config ignore=dirty suppresses submodules with untracked content' '
-@@ -1291,15 +1279,13 @@ cat > expect << EOF
- EOF
- 
- test_expect_success "status (core.commentchar with submodule summary)" '
--	test_when_finished "git config --unset core.commentchar" &&
--	git config core.commentchar ";" &&
-+	test_config core.commentchar ";" &&
- 	git status >output &&
- 	test_i18ncmp expect output
- '
- 
- test_expect_success "status (core.commentchar with two chars with submodule summary)" '
--	test_when_finished "git config --unset core.commentchar" &&
--	git config core.commentchar ";;" &&
-+	test_config core.commentchar ";;" &&
- 	git status >output &&
- 	test_i18ncmp expect output
- '
--- 
-1.7.11.7
+I'm feeling a little muddled up today; weekends are usually bad.
