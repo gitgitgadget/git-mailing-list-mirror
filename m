@@ -1,115 +1,218 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v2 2/3] t7800: fix tests when difftool uses --no-symlinks
-Date: Sun, 24 Mar 2013 14:29:40 -0700
-Message-ID: <CAJDDKr7Uz44TQ8y2jpjhNadWUCD5Mo=GLdaLLh99eENARQSwcw@mail.gmail.com>
-References: <cover.1363980749.git.john@keeping.me.uk>
-	<cover.1364045138.git.john@keeping.me.uk>
-	<e44349728c07d8ae22d4b73527b1d124b49cc4a9.1364045138.git.john@keeping.me.uk>
-	<7vd2up4bo7.fsf@alter.siamese.dyndns.org>
-	<20130324123620.GA2286@serenity.lan>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH] git-p4: support exclusively locked files
+Date: Sun, 24 Mar 2013 18:19:05 -0400
+Message-ID: <20130324221905.GA32504@padd.com>
+References: <20130319192312.GA16872@padd.com>
+ <CD6F44FF.1DFE4%danny.thomas@blackboard.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Mar 24 22:30:11 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Danny Thomas <Danny.Thomas@blackboard.com>
+X-From: git-owner@vger.kernel.org Sun Mar 24 23:19:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJsUU-0002JI-7K
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:30:10 +0100
+	id 1UJtGL-0003tD-Ch
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 23:19:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754814Ab3CXV3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 17:29:42 -0400
-Received: from mail-we0-f177.google.com ([74.125.82.177]:40630 "EHLO
-	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754735Ab3CXV3l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 17:29:41 -0400
-Received: by mail-we0-f177.google.com with SMTP id d7so4569436wer.36
-        for <git@vger.kernel.org>; Sun, 24 Mar 2013 14:29:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=je0YABhbqrb6X9Frs2sad7Q0jakkSeR0vQhhgLa3HEo=;
-        b=wb/teLw4khqjCmupaEBNUXD7GRZtp4E1gRG6V/epVVRUxSYZxNg1XD7StbdTH7fcs0
-         59djJzMkkZNOL09V/zpx0ejeymJ/2bU6hA4HzS/YnrSg+nuL/hoKd+9Zh6DLLvJ22lTn
-         oVe02jwg5CUaaJpdKtPIo/2LQfPiN7o/zdfpZZl1BKOo249qJnoA88myZkReBl7nTjSm
-         OjwSiohnS8ZdDlyyUE2ECOqUewJxIIrgC1XO9PjCBuJqNKeqEqu9p2ktFW8RnsyuJg7f
-         IJ95HaTr6+FafJO+kbeSo1KhDy6Ek0Au6I1gm4zdP/Je1dwD0ofr9f7ZbTaXtjrQSBBs
-         L3Sg==
-X-Received: by 10.180.185.204 with SMTP id fe12mr13722211wic.2.1364160580471;
- Sun, 24 Mar 2013 14:29:40 -0700 (PDT)
-Received: by 10.194.13.129 with HTTP; Sun, 24 Mar 2013 14:29:40 -0700 (PDT)
-In-Reply-To: <20130324123620.GA2286@serenity.lan>
+	id S1754844Ab3CXWTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 18:19:09 -0400
+Received: from honk.padd.com ([74.3.171.149]:60063 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754812Ab3CXWTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 18:19:08 -0400
+Received: from arf.padd.com (unknown [50.55.134.154])
+	by honk.padd.com (Postfix) with ESMTPSA id 828ED620D;
+	Sun, 24 Mar 2013 15:19:07 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 4E5AC2261C; Sun, 24 Mar 2013 18:19:05 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CD6F44FF.1DFE4%danny.thomas@blackboard.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219000>
 
-On Sun, Mar 24, 2013 at 5:36 AM, John Keeping <john@keeping.me.uk> wrote:
-> On Sat, Mar 23, 2013 at 10:19:36PM -0700, Junio C Hamano wrote:
->> > In the longer term, difftool probably needs to learn to warn the user
->> > instead of overwrite any changes that have been made to the working tree
->> > file.
->>
->> Questionable.
->>
->> Admittedly I do not use difftool myself, and I have long assumed
->> that difftool users are using the tools to _view_ the changes, but
->> apparently some of the tools let the user muck with what is shown,
->> and also apparently people seem to like the fact that they can make
->> changes.  So I've led to believe the "update in difftool, take the
->> change back to working tree, either by making symbolic links or
->> copying them back" behaviour was a _feature_.
->
-> Yes it is.  I think my explanation wasn't clear enough here.
->
-> What currently happens is that after the user's tool has finished
-> running the working tree file and temporary file are compared and if
-> they are different then the temporary file is copied over the working
-> tree file.
->
-> This is good if the user has edited the temporary file, but what if they
-> edit they working tree file while using the tool to examine the
-> differences?  I think we need to at the very least look at the mtime of
-> the files and refuse to copy over the temporary file if that of the
-> working tree file is newer.
->
-> Obviously none of this matters if we can use symlinks, but in the
-> non-symlink case I think a user might find it surprising if the
-> (unmodified) file used by their diff tool were suddenly copied over the
-> working tree wiping out the changes they have just made.
+Danny.Thomas@blackboard.com wrote on Wed, 20 Mar 2013 07:33 -0400:
+> Sounds good to me. I've got a couple of busy days coming up, but should
+> have time this week.
 
-Thanks, this adds a little more safety to the operation, which is good.
-The downside is that it's a performance hit since we end up running
-an additional hash-object on every worktree file.
-I would definitely choose safety/correctness in this situation.
+Here's what I'm playing with for test cases, by the way.  The fix
+you're working on is definitely part of it, but there are more
+issues as well.  I'll address them once you've taken care of the
+opened/fstat issue.  Thanks,
 
-This makes me wonder whether the modifiable mode should be made
-more explicit, either in the documentation or via a flag.
+		-- Pete
 
-Imagine if --dir-diff also honored --edit and --no-edit flags.
+--- 8< ---
 
-Right now --edit is the default.  If we had foreseen these various
-edge cases and unintended copy-backs then we may have initially
-chosen --no-edit as the default, but that's not really my point.
+>From c6691126ae75c364763ab4d774c75045285b8ddd Mon Sep 17 00:00:00 2001
+From: Pete Wyckoff <pw@padd.com>
+Date: Sun, 17 Mar 2013 16:05:07 -0400
+Subject: [PATCH] git p4 test: examine behavior with locked (+l) files
 
-What I'm thinking is that it might be good for the tool to
-learn --edit/--no-edit so that the symlink/copy-back heuristic
-can be documented alongside that option.  Users can then know
-what to expect when using this mode.  --no-edit would also be
-faster since it can avoid all these extra steps.
+The p4 server can enforce file locking, so that only one user
+can edit a file at a time.  Git p4 is unable to submit changes
+to locked files.  Currently it exits poorly.  Ideally it would
+notice the locked condition and clean up nicely.
+---
+ t/t9816-git-p4-locked.sh | 145 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 145 insertions(+)
+ create mode 100755 t/t9816-git-p4-locked.sh
 
-It could also learn "difftool.dirDiffEditable" to control the
-default, which would eliminate the pain in needing to supply
-the flag on every invocation.
-
-What do you think about officially supporting a read-only mode?
+diff --git a/t/t9816-git-p4-locked.sh b/t/t9816-git-p4-locked.sh
+new file mode 100755
+index 0000000..e71e543
+--- /dev/null
++++ b/t/t9816-git-p4-locked.sh
+@@ -0,0 +1,145 @@
++#!/bin/sh
++
++test_description='git p4 locked file behavior'
++
++. ./lib-git-p4.sh
++
++test_expect_success 'start p4d' '
++	start_p4d
++'
++
++# See
++# http://www.perforce.com/perforce/doc.current/manuals/p4sag/03_superuser.html#1088563
++# for suggestions on how to configure "sitewide pessimistic locking"
++# where only one person can have a file open for edit at a time.
++test_expect_success 'init depot' '
++	(
++		cd "$cli" &&
++		echo "TypeMap: +l //depot/..." | p4 typemap -i &&
++		echo file1 >file1 &&
++		p4 add file1 &&
++		p4 submit -d "add file1"
++	)
++'
++
++test_expect_success 'edit with lock not taken' '
++	test_when_finished cleanup_git &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		echo line2 >>file1 &&
++		git add file1 &&
++		git commit -m "line2 in file1" &&
++		git config git-p4.skipSubmitEdit true &&
++		git p4 submit
++	)
++'
++
++test_expect_failure 'add with lock not taken' '
++	test_when_finished cleanup_git &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		echo line1 >>add-lock-not-taken &&
++		git add file2 &&
++		git commit -m "add add-lock-not-taken" &&
++		git config git-p4.skipSubmitEdit true &&
++		git p4 submit --verbose
++	)
++'
++
++lock_in_another_client() {
++	# build a different client
++	cli2="$TRASH_DIRECTORY/cli2" &&
++	mkdir -p "$cli2" &&
++	test_when_finished "p4 client -f -d client2 && rm -rf \"$cli2\"" &&
++	(
++		cd "$cli2" &&
++		P4CLIENT=client2 &&
++		cli="$cli2" &&
++		client_view "//depot/... //client2/..." &&
++		p4 sync &&
++		p4 open file1
++	)
++}
++
++test_expect_failure 'edit with lock taken' '
++	lock_in_another_client &&
++	test_when_finished cleanup_git &&
++	test_when_finished "cd \"$cli\" && p4 sync -f file1" &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		echo line3 >>file1 &&
++		git add file1 &&
++		git commit -m "line3 in file1" &&
++		git config git-p4.skipSubmitEdit true &&
++		git p4 submit --verbose
++	)
++'
++
++test_expect_failure 'delete with lock taken' '
++	lock_in_another_client &&
++	test_when_finished cleanup_git &&
++	test_when_finished "cd \"$cli\" && p4 sync -f file1" &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		git rm file1 &&
++		git commit -m "delete file1" &&
++		git config git-p4.skipSubmitEdit true &&
++		git p4 submit --verbose
++	)
++'
++
++test_expect_failure 'chmod with lock taken' '
++	lock_in_another_client &&
++	test_when_finished cleanup_git &&
++	test_when_finished "cd \"$cli\" && p4 sync -f file1" &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		chmod +x file1 &&
++		git add file1 &&
++		git commit -m "chmod +x file1" &&
++		git config git-p4.skipSubmitEdit true &&
++		git p4 submit --verbose
++	)
++'
++
++test_expect_failure 'copy with lock taken' '
++	lock_in_another_client &&
++	test_when_finished cleanup_git &&
++	test_when_finished "cd \"$cli\" && p4 revert file2 && rm -f file2" &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		cp file1 file2 &&
++		git add file2 &&
++		git commit -m "cp file1 to file2" &&
++		git config git-p4.skipSubmitEdit true &&
++		git config git-p4.detectCopies true &&
++		git p4 submit --verbose
++	)
++'
++
++test_expect_failure 'move with lock taken' '
++	lock_in_another_client &&
++	test_when_finished cleanup_git &&
++	test_when_finished "cd \"$cli\" && p4 sync file1 && rm -f file2" &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		git mv file1 file2 &&
++		git commit -m "mv file1 to file2" &&
++		git config git-p4.skipSubmitEdit true &&
++		git config git-p4.detectRenames true &&
++		git p4 submit --verbose
++	)
++'
++
++test_expect_success 'kill p4d' '
++	kill_p4d
++'
++
++test_done
 -- 
-David
+1.8.2.rc2.65.g92f3e2d
