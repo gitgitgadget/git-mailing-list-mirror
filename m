@@ -1,67 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] transport: drop "int cmp = cmp" hack
-Date: Sat, 23 Mar 2013 21:00:05 -0700
-Message-ID: <CAPc5daVOksx56js_ascEr348PTLAZB9OeBrf3sELJUpdyB_kMg@mail.gmail.com>
-References: <20130321110338.GA18552@sigill.intra.peff.net> <20130321111333.GD18819@sigill.intra.peff.net>
+Subject: Re: [PATCH 8/4] match-trees: drop "x = x" initializations
+Date: Sat, 23 Mar 2013 21:55:53 -0700
+Message-ID: <7vli9d4crq.fsf@alter.siamese.dyndns.org>
+References: <20130322161837.GG3083@sigill.intra.peff.net>
+ <20130322162155.GB25857@sigill.intra.peff.net>
+ <514DFB1A.8040102@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 24 05:01:07 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
+	git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Mar 24 05:56:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJc7G-0001oK-OT
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 05:01:07 +0100
+	id 1UJcym-0007Bc-Tm
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 05:56:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750742Ab3CXEA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 00:00:28 -0400
-Received: from mail-la0-f43.google.com ([209.85.215.43]:36607 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750696Ab3CXEA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 00:00:28 -0400
-Received: by mail-la0-f43.google.com with SMTP id ek20so9537533lab.30
-        for <git@vger.kernel.org>; Sat, 23 Mar 2013 21:00:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=22cHes9ySUM9IPP9xIqZKHQMypdfiU3Wo/wSU5xmQiY=;
-        b=yMaAJS4oo+nFrN7PkGim+ZdeamnnCx/5gJF5S8tatT6GaDX6NAKAPEci93CH8NElnx
-         L9PyWPl0oCerkQqkxPQvak/SfkGBHjyjza1jx+9gH1nPxx9J9PVJe2dIONLfbNgNp3IG
-         qv1/jlc7ROVsb1TN3K2vKIa+fZa4W/ZF0bit6c8oGV5Tku6BWrlWFKIp/AGfNULMqtm2
-         CdqGhQF2s1k8wKJnVEDdVLdeMFIvI2a9S+I4Qxp30P11G3HjCx3duk+feijJMLqiIEbd
-         zpG/CFoKa2ul/Bv7piwBCVfFzdqh6iIIZQtLXnFLaBWr2COYteksiT31bG9lpZKvxYdC
-         1cnw==
-X-Received: by 10.112.20.68 with SMTP id l4mr3678849lbe.58.1364097626408; Sat,
- 23 Mar 2013 21:00:26 -0700 (PDT)
-Received: by 10.112.46.169 with HTTP; Sat, 23 Mar 2013 21:00:05 -0700 (PDT)
-In-Reply-To: <20130321111333.GD18819@sigill.intra.peff.net>
-X-Google-Sender-Auth: MyoI0M4Av7o4APocGG6QCuG6Sc0
+	id S1751556Ab3CXEz4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Mar 2013 00:55:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40760 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750887Ab3CXEz4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Mar 2013 00:55:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77C0B81EA;
+	Sun, 24 Mar 2013 00:55:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=y63mthC4l90d
+	MN6Mgj3c2w1SXKA=; b=UBrvrPPs0osETkR0aaq8Aj5VdLzB61W2lQw0CG3D6MG9
+	1zLcGI/qJ7wqGcO+Gir1kolC/CZL23SvLntZznd+wqqsSFvRfn+hLGT0EXqqTTOE
+	n8DbkXswYBZZ2Zua4eE2M/Lbx4gDb7oF+XAci55jBnB0kGQgAVqn7hzMQHQTpGQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PIaNmt
+	KDLgXOWxD8nZVgh3o2UmKaHLf5tKQ5fNCwrMIalf4fVBK/vlaLDmLrmsckF6fEUe
+	TnNwD9P0m2bJLw8f2T8sVTEQ04WXzQw6HCS6/IUZLyYQpuZB7Dhfgs8GzQfokIf+
+	JXO7Oh69KctTGngvi9HHOO/2DzaIL9hC6pskQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CB7981E9;
+	Sun, 24 Mar 2013 00:55:55 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA4E481E7; Sun, 24 Mar 2013
+ 00:55:54 -0400 (EDT)
+In-Reply-To: <514DFB1A.8040102@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Sat, 23 Mar 2013 19:57:30 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1C035826-943F-11E2-9A93-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218932>
 
-On Thu, Mar 21, 2013 at 4:13 AM, Jeff King <peff@peff.net> wrote:
->
-> According to 47ec794, this initialization is meant to
-> squelch an erroneous uninitialized variable warning from gcc
-> 4.0.1.  That version is quite old at this point, and gcc 4.1
-> and up handle it fine, with one exception. There seems to be
-> a regression in gcc 4.6.3, which produces the warning;
-> however, gcc versions 4.4.7 and 4.7.2 do not.
->
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-transport.c: In function 'get_refs_via_rsync':
-transport.c:127:29: error: 'cmp' may be used uninitialized in this
-function [-Werror=uninitialized]
-transport.c:109:7: note: 'cmp' was declared here
+> Hmm, let's see if we can help the compiler follow the code without
+> making it harder for people to understand.  The patch looks a bit
+> jumbled, but the resulting code is OK in my biased opinion.
 
-gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
+I actually think the result is much better than a mere "OK"; the
+duplicated "at this point we know path1 (or path2) is missing from
+the other side" has been bothering me and I was about to suggest a
+similar rewrite before I read your message ;-)
 
+However, the same compiler still thinks {elem,path,mode}1 can be
+used uninitialized (but not {elem,path,mode}2).  The craziness I
+reported in the previous message is also the same.  With this patch
+on top to swap the side we inspect first, the compiler thinks
+{elem,path,mode}2 can be used uninitialized but not the other three
+variables X-<.
 
-Sigh...
+So I like your change for readability, but for GCC 4.4.5 we still
+need the unnecessary initialization.
+
+ match-trees.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/match-trees.c b/match-trees.c
+index c0c66bb..9ea2c80 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -77,16 +77,16 @@ static int score_trees(const unsigned char *hash1, =
+const unsigned char *hash2)
+ 		unsigned mode1, mode2;
+ 		int cmp =3D 0;
+=20
+-		if (one.size)
+-			elem1 =3D tree_entry_extract(&one, &path1, &mode1);
+-		else
+-			/* two has more entries */
+-			cmp =3D 1;
+ 		if (two.size)
+ 			elem2 =3D tree_entry_extract(&two, &path2, &mode2);
+ 		else
+ 			/* two lacks this entry */
+ 			cmp =3D -1;
++		if (one.size)
++			elem1 =3D tree_entry_extract(&one, &path1, &mode1);
++		else
++			/* two has more entries */
++			cmp =3D 1;
+=20
+ 		if (!cmp)
+ 			cmp =3D base_name_compare(path1, strlen(path1), mode1,
