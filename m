@@ -1,84 +1,70 @@
-From: Jeff King <peff@peff.net>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 Subject: Re: propagating repo corruption across clone
-Date: Sun, 24 Mar 2013 15:23:50 -0400
-Message-ID: <20130324192350.GA20688@sigill.intra.peff.net>
+Date: Sun, 24 Mar 2013 21:16:14 +0200
+Message-ID: <20130324191614.GA15275@LK-Perkele-VII>
 References: <20130324183133.GA11200@sigill.intra.peff.net>
- <CACBZZX6czzJRF9TEsc8c+=LND6SxaVvrZdbcZ+TfUZTWQOpW0Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 24 20:24:32 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 24 20:24:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJqWs-000605-SX
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 20:24:31 +0100
+	id 1UJqWz-000688-Hq
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 20:24:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754577Ab3CXTXx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Mar 2013 15:23:53 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:38119 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754556Ab3CXTXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 15:23:52 -0400
-Received: (qmail 18735 invoked by uid 107); 24 Mar 2013 19:25:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 24 Mar 2013 15:25:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Mar 2013 15:23:50 -0400
+	id S1754603Ab3CXTYG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 15:24:06 -0400
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:47327 "EHLO
+	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754583Ab3CXTYA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 15:24:00 -0400
+X-Greylist: delayed 463 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Mar 2013 15:24:00 EDT
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh04.mail.saunalahti.fi (Postfix) with SMTP id BC8D91A25D8;
+	Sun, 24 Mar 2013 21:16:15 +0200 (EET)
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A0419AB02B0; Sun, 24 Mar 2013 21:16:15 +0200
+Received: from LK-Perkele-VII (a88-112-44-140.elisa-laajakaista.fi [88.112.44.140])
+	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id 82D84188781;
+	Sun, 24 Mar 2013 21:16:15 +0200 (EET)
 Content-Disposition: inline
-In-Reply-To: <CACBZZX6czzJRF9TEsc8c+=LND6SxaVvrZdbcZ+TfUZTWQOpW0Q@mail.gmail.com>
+In-Reply-To: <20130324183133.GA11200@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218967>
 
-On Sun, Mar 24, 2013 at 08:01:33PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+On Sun, Mar 24, 2013 at 02:31:33PM -0400, Jeff King wrote:
+> 
+> Fscking the incoming objects does work, but of course it comes at a cost
+> in the normal case (for linux-2.6, I measured an increase in CPU time
+> with "index-pack --strict" from ~2.5 minutes to ~4 minutes). And I think
+> it is probably overkill for finding corruption; index-pack already
+> recognizes bit corruption inside an object, and
+> check_everything_connected can detect object graph problems much more
+> cheaply.
 
-> On Sun, Mar 24, 2013 at 7:31 PM, Jeff King <peff@peff.net> wrote:
-> >
-> > I don't have details on the KDE corruption, or why it wasn't detect=
-ed
-> > (if it was one of the cases I mentioned above, or a more subtle iss=
-ue).
->=20
-> One thing worth mentioning is this part of the article:
->=20
-> "Originally, mirrored clones were in fact not used, but non-mirrored
-> clones on the anongits come with their own set of issues, and are mor=
-e
-> prone to getting stopped up by legitimate, authenticated force pushes=
-,
-> ref deletions, and so on =E2=80=93 and if we set the refspec such tha=
-t those
-> are allowed through silently, we don=E2=80=99t gain much. "
->=20
-> So the only reason they were even using --mirror was because they wer=
-e
-> running into those problems with fetching.
+AFAIK, standard checks index-pack has to do + checking that the object
+graph has no broken links (and every ref points to something valid) will
+catch everything except:
 
-I think the --mirror thing is a red herring. It should not be changing
-the transport used, and that is the part of git that is expected to
-catch such corruption.
+- SHA-1 collisions between corrupt objects and clean ones.
+- Corrupted refs (that still point to something valid).
+- "Born-corrupted" objects.
 
-But I haven't seen exactly what the corruption is, nor exactly what
-commands they used to clone. I've invited the blog author to give more
-details in this thread.
+> One thing I didn't check is bit corruption inside a packed object that
+> still correctly zlib inflates. check_everything_connected will end up
+> reading all of the commits and trees (to walk them), but not the blobs.
 
-> So aside from the problems with --mirror I think we should have
-> something that updates your local refs to be exactly like they are on
-> the other end, i.e. deletes some, non-fast-forwards others etc.
-> (obviously behind several --force options and so on). But such an
-> option *wouldn't* accept corrupted objects.
+Checking that everything is connected will (modulo SHA-1 collisions) save
+you there, at least if packv3 is used as transport stream.
 
-That _should_ be how "git fetch --prune +refs/*:refs/*" behaves (and
-that refspec is set up when you use "--mirror"; we should probably have
-it turn on --prune, too, but I do not think you can do so via a config
-option currently).
-
--Peff
+-Ilari
