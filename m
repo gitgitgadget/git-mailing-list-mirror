@@ -1,68 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: feature request - have git honor nested .gitconfig files
-Date: Sun, 24 Mar 2013 00:14:45 -0700
-Message-ID: <7vehf52rru.fsf@alter.siamese.dyndns.org>
-References: <CAM2RUGOOWnxRd2=04-NmKTC+tvnCD=ebgmmiexHas5bwyYrm4w@mail.gmail.com>
- <20130322182211.GD12223@google.com>
- <20130322183306.GA32448@sigill.intra.peff.net>
- <20130323000628.GM12223@google.com>
- <20130323080341.GA29768@sigill.intra.peff.net>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 3/4] drop some obsolete "x = x" compiler warning hacks
+Date: Sun, 24 Mar 2013 08:17:26 +0100
+Message-ID: <514EA886.3090801@web.de>
+References: <20130321110338.GA18552@sigill.intra.peff.net> <20130321111028.GC18819@sigill.intra.peff.net> <20130321204709.GL29311@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Josh Sharpe <josh.m.sharpe@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 24 08:15:30 2013
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 24 08:18:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJf9I-0000uk-LQ
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 08:15:24 +0100
+	id 1UJfC0-0002WO-Q4
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 08:18:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766Ab3CXHOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 03:14:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44608 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752748Ab3CXHOr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 03:14:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DEBC91A5;
-	Sun, 24 Mar 2013 03:14:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lK3tkzKwvnAW2m70UOnyiWF84+k=; b=Lna/UY
-	NO9VYf6FwsPMk/FpLfQzujzdlFBs6gH3dxgNPpvDB2cxd1Ys/ENc/j0OVF4f6hDM
-	i0O6zYXsIo7Kc6i+oG239aR++A6tTYtSIjZNkWdgJRzRixuZe6ABNVT2fhKeMI+V
-	0vjHob3MOEa62gPLimzoaxUb3ey/ooL1N6HDk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Aj+bvQMGtFxmV16MyRV4Jsd378zTVheW
-	30v3V4qkJ67wTNb+U0pgc/9/yONK07+qvHlFsSbh/9g9rNsKnk6JrclcYtJLeFOS
-	KsENpg3S/pKDHiMJJCZtuNdMdXQ4kUNIT9z5mNLmQ1Mff4jPVBvGQ+VRlngeSx4W
-	TYwMSEBE35w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6376691A4;
-	Sun, 24 Mar 2013 03:14:47 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DCE6591A3; Sun, 24 Mar 2013
- 03:14:46 -0400 (EDT)
-In-Reply-To: <20130323080341.GA29768@sigill.intra.peff.net> (Jeff King's
- message of "Sat, 23 Mar 2013 04:03:41 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 82515EBC-9452-11E2-85E2-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752774Ab3CXHRo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Mar 2013 03:17:44 -0400
+Received: from mout.web.de ([212.227.17.12]:65168 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752719Ab3CXHRo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 03:17:44 -0400
+Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0Mf0pJ-1U4cNK1pRB-00OLvS; Sun, 24 Mar 2013 08:17:27 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <20130321204709.GL29311@google.com>
+X-Provags-ID: V02:K0:dOfomtUola7aAcF4evjeZx4fyDDji6PbnbaQYd1QrlH
+ zXHnp3UlpX8hs0mIku5y2+cpgyh/hXbdVvrvRN5IBtpx9Rhmay
+ VjtcVJleluta9OGyZ2MYx/6eNWN6u70KccivY1CzV3l9YfBxOp
+ 2nDP0isjRwOkZhtrGq0xrf8R7RsykFnrAh1jluMxS9kAc/T00z
+ +V+vefd9N6HXYByT/mpUQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218943>
 
-Jeff King <peff@peff.net> writes:
+On 21.03.13 21:47, Jonathan Nieder wrote:
+> Jeff King wrote:
+>=20
+>> And 4.3 was old enough for me to say "I do not care if you can run w=
+ith
+>> -Wall -Werror or not", let alone 4.2.
+>=20
+> Changes like this can only reveal bugs (in git or optimizers) that
+> were hidden before, without regressing actual runtime behavior, so fo=
+r
+> what it's worth I like them.
+>=20
+> I think perhaps we should encourage people to use
+> -Wno-error=3Duninitialized, in addition to cleaning up our code where
+> reasonably recent optimizers reveal it to be confusing.
+>=20
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-> Yeah, I'm not planning to work on this, but I'd be happy to review
-> patches if somebody else wants to.
+I got 2 warnings, but reading the comments I feel that
 
-I am not planning to work on this, and honestly speaking I would not
-be very happy to see any patch in this area.
+Mac OS 10.6 and i686-apple-darwin10-gcc-4.2.1 (GCC) 4.2.1 (Apple Inc. b=
+uild 5666) (dot 3)
+
+is outdated ;-)
+
+
+builtin/cat-file.c: In function ~cmd_cat_file~:
+builtin/cat-file.c:196: warning: ~contents~ may be used uninitialized i=
+n this function
+builtin/cat-file.c:196: note: ~contents~ was declared here
+
+
+fast-import.c: In function =91parse_new_commit=92:
+fast-import.c:2438: warning: =91oe=92 may be used uninitialized in this=
+ function
+fast-import.c:2438: note: =91oe=92 was declared here
