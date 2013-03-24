@@ -1,93 +1,209 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] checkout: add --sparse for restoring files in sparse
- checkout mode
-Date: Sun, 24 Mar 2013 11:17:52 -0700
-Message-ID: <20130324181752.GA4543@elie.Belkin>
-References: <514C3249.7000100@ivt.baug.ethz.ch>
- <1364101583-6035-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: propagating repo corruption across clone
+Date: Sun, 24 Mar 2013 14:31:33 -0400
+Message-ID: <20130324183133.GA11200@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, kirill.mueller@ivt.baug.ethz.ch
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 24 19:18:44 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 24 19:32:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJpVD-0003A5-3v
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 19:18:43 +0100
+	id 1UJpi9-0006H9-Cr
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 19:32:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753558Ab3CXSSD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Mar 2013 14:18:03 -0400
-Received: from mail-da0-f44.google.com ([209.85.210.44]:61248 "EHLO
-	mail-da0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752781Ab3CXSSC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Mar 2013 14:18:02 -0400
-Received: by mail-da0-f44.google.com with SMTP id z20so2901056dae.31
-        for <git@vger.kernel.org>; Sun, 24 Mar 2013 11:18:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Hxe/pU7qnk21chl3fGPPVeCSk4COGu15nCF7WYhs3Hk=;
-        b=GVdy1t9TvY3VDik2dy3I2zfuUhxQJ/2+K+RjMp+eAnRpXuBitN0p7PAfy5FZwwPig2
-         0wyYz2kxKFwQjsru7cUuRrsV9QhsKKQkAKjDBse2jsieiNTvv7Nc7H4eYpN/J53TyaRV
-         d7ykemNKbQcCpRynswj3I8H7ff/vSWaOmuXGqg1BUEkepS/izTW5r439JjcGVUmNASS8
-         vU8rTvJ5JDMQGz3iOMmD7kBoZOJtvpLGPA9uJkv2gO8eYkgWWfdCjaWZLt4SodJSFiYV
-         z0IrtD3CjZ29dU+LodslivHYzdtVVsW0kWc/fB3TfYBNC+iD7pjbm77+2VN62WTSDyLI
-         nc+Q==
-X-Received: by 10.66.148.136 with SMTP id ts8mr14018052pab.12.1364149081459;
-        Sun, 24 Mar 2013 11:18:01 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id xc4sm10302996pbc.41.2013.03.24.11.17.58
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 24 Mar 2013 11:17:59 -0700 (PDT)
+	id S1754166Ab3CXSbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 14:31:36 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:38074 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753558Ab3CXSbg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 14:31:36 -0400
+Received: (qmail 17909 invoked by uid 107); 24 Mar 2013 18:33:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 24 Mar 2013 14:33:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Mar 2013 14:31:33 -0400
 Content-Disposition: inline
-In-Reply-To: <1364101583-6035-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218964>
 
-Hi,
+I saw this post-mortem on recent disk corruption seen on git.kde.org:
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+  http://jefferai.org/2013/03/24/too-perfect-a-mirror/
 
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -180,6 +180,13 @@ branch by running "git rm -rf ." from the top le=
-vel of the working tree.
->  Afterwards you will be ready to prepare your new files, repopulating=
- the
->  working tree, by copying them from elsewhere, extracting a tarball, =
-etc.
->
-> +
-> +--sparse::
-> +	In sparse checkout mode, `git checkout -- <paths>` would
-> +	update all entries matched by <paths> regardless sparse
-> +	patterns. This option only updates entries matched by <paths>
-> +	and sparse patterns.
+The interesting bit to me is that object corruption propagated across a
+clone (and oddly, that --mirror made complaints about corruption go
+away). I did a little testing and found some curious results (this ended
+up long; skip to the bottom for my conclusions).
 
-Hm, should this be the default?
+Here's a fairly straight-forward corruption recipe:
 
-In principle, I would expect
+-- >8 --
+obj_to_file() {
+  echo ".git/objects/$(echo $1 | sed 's,..,&/,')"
+}
 
-	git checkout -- .
+# corrupt a single byte inside the object
+corrupt_object() {
+  fn=$(obj_to_file "$1") &&
+  chmod +w "$fn" &&
+  printf '\0' | dd of="$fn" bs=1 conv=notrunc seek=10
+}
 
-to make the worktree match the index, respecting the sparse checkout.
-And something like
+git init repo &&
+cd repo &&
+echo content >file &&
+git add file &&
+git commit -m one &&
+corrupt_object $(git rev-parse HEAD:file)
+-- 8< --
 
-	git checkout --widen -- .
+report git clone . fast-local
+report git clone --no-local . no-local
+report git -c transfer.unpackLimit=1 clone --no-local . index-pack
+report git -c fetch.fsckObjects=1 clone --no-local . fsck
 
-to change the sparse checkout pattern.  But of course it is easily
-possible that I am missing some details of how sparse checkout is
-used in practice.
+and here is how clone reacts in a few situations:
 
-What do you think?
-Jonathan
+  $ git clone --bare . local-bare && echo WORKED
+  Cloning into bare repository 'local-bare'...
+  done.
+  WORKED
+
+We don't notice the problem during the transport phase, which is to be
+expected; we're using the fast "just hardlink it" code path. So that's
+OK.
+
+  $ git clone . local-tree && echo WORKED
+  Cloning into 'local-tree'...
+  done.
+  error: inflate: data stream error (invalid distance too far back)
+  error: unable to unpack d95f3ad14dee633a758d2e331151e950dd13e4ed header
+  WORKED
+
+We _do_ see a problem during the checkout phase, but we don't propagate
+a checkout failure to the exit code from clone.  That is bad in general,
+and should probably be fixed. Though it would never find corruption of
+older objects in the history, anyway, so checkout should not be relied
+on for robustness.
+
+  $ git clone --no-local . non-local && echo WORKED
+  Cloning into 'non-local'...
+  remote: Counting objects: 3, done.
+  remote: error: inflate: data stream error (invalid distance too far back)
+  remote: error: unable to unpack d95f3ad14dee633a758d2e331151e950dd13e4ed header
+  remote: error: inflate: data stream error (invalid distance too far back)
+  remote: fatal: loose object d95f3ad14dee633a758d2e331151e950dd13e4ed (stored in ./objects/d9/5f3ad14dee633a758d2e331151e950dd13e4ed) is corrupt
+  error: git upload-pack: git-pack-objects died with error.
+  fatal: git upload-pack: aborting due to possible repository corruption on the remote side.
+  remote: aborting due to possible repository corruption on the remote side.
+  fatal: early EOF
+  fatal: index-pack failed
+
+Here we detect the error. It's noticed by pack-objects on the remote
+side as it tries to put the bogus object into a pack. But what if we
+already have a pack that's been corrupted, and pack-objects is just
+pushing out entries without doing any recompression?
+
+Let's change our corrupt_object to:
+
+  corrupt_object() {
+    git repack -ad &&
+    pack=`echo .git/objects/pack/*.pack` &&
+    chmod +w "$pack" &&
+    printf '\0' | dd of="$pack" bs=1 conv=notrunc seek=175
+  }
+
+and try again:
+
+  $ git clone --no-local . non-local && echo WORKED
+  Cloning into 'non-local'...
+  remote: Counting objects: 3, done.
+  remote: Total 3 (delta 0), reused 3 (delta 0)
+  error: inflate: data stream error (invalid distance too far back)
+  fatal: pack has bad object at offset 169: inflate returned -3
+  fatal: index-pack failed
+
+Great, we still notice the problem in unpack-objects on the receiving
+end. But what if there's a more subtle corruption, where filesystem
+corruption points the directory entry for one object at the inode of
+another. Like:
+
+  corrupt_object() {
+    corrupt=$(echo corrupted | git hash-object -w --stdin) &&
+    mv -f $(obj_to_file $corrupt) $(obj_to_file $1)
+  }
+
+This is going to be more subtle, because the object in the packfile is
+self-consistent but the object graph as a whole is broken.
+
+  $ git clone --no-local . non-local && echo WORKED
+  Cloning into 'non-local'...
+  remote: Counting objects: 3, done.
+  remote: Total 3 (delta 0), reused 0 (delta 0)
+  Receiving objects: 100% (3/3), done.
+  error: unable to find d95f3ad14dee633a758d2e331151e950dd13e4ed
+  WORKED
+
+Like the --local cases earlier, we notice the missing object during the
+checkout phase, but do not correctly propagate the error.
+
+We do not notice the sha1 mis-match on the sending side (which we could,
+if we checked the sha1 as we were sending). We do not notice the broken
+object graph during the receive process either. I would have expected
+check_everything_connected to handle this, but we don't actually call it
+during clone! If you do this:
+
+  $ git init non-local && cd non-local && git fetch ..
+  remote: Counting objects: 3, done.
+  remote: Total 3 (delta 0), reused 3 (delta 0)
+  Unpacking objects: 100% (3/3), done.
+  fatal: missing blob object 'd95f3ad14dee633a758d2e331151e950dd13e4ed'
+  error: .. did not send all necessary objects
+
+we do notice.
+
+And one final check:
+
+  $ git -c transfer.fsckobjects=1 clone --no-local . fsck
+  Cloning into 'fsck'...
+  remote: Counting objects: 3, done.
+  remote: Total 3 (delta 0), reused 3 (delta 0)
+  Receiving objects: 100% (3/3), done.
+  error: unable to find d95f3ad14dee633a758d2e331151e950dd13e4ed
+  fatal: object of unexpected type
+  fatal: index-pack failed
+
+Fscking the incoming objects does work, but of course it comes at a cost
+in the normal case (for linux-2.6, I measured an increase in CPU time
+with "index-pack --strict" from ~2.5 minutes to ~4 minutes). And I think
+it is probably overkill for finding corruption; index-pack already
+recognizes bit corruption inside an object, and
+check_everything_connected can detect object graph problems much more
+cheaply.
+
+One thing I didn't check is bit corruption inside a packed object that
+still correctly zlib inflates. check_everything_connected will end up
+reading all of the commits and trees (to walk them), but not the blobs.
+And I don't think that we explicitly re-sha1 every incoming object (only
+if we detect a possible collision). So it may be that
+transfer.fsckObjects would save us there (it also introduces new
+problems if there are ignorable warnings in the objects you receive,
+like zero-padded trees).
+
+So I think at the very least we should:
+
+  1. Make sure clone propagates errors from checkout to the final exit
+     code.
+
+  2. Teach clone to run check_everything_connected.
+
+I don't have details on the KDE corruption, or why it wasn't detected
+(if it was one of the cases I mentioned above, or a more subtle issue).
+
+-Peff
