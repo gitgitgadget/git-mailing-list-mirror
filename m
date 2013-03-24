@@ -1,82 +1,123 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/3] git-pull.sh: introduce --[no-]autostash and pull.autostash
-Date: Mon, 25 Mar 2013 02:42:24 +0530
-Message-ID: <CALkWK0k0Ek0Dqxrrv7dAzUgF2X2hCcz2SodcPEgiRdLFgc-gXA@mail.gmail.com>
-References: <1363955399-13153-1-git-send-email-artagnon@gmail.com>
- <1363955399-13153-4-git-send-email-artagnon@gmail.com> <7vtxo374h6.fsf@alter.siamese.dyndns.org>
- <CALkWK0=oOt0teGqCjpDkerR3-t1cY=qKyK-AtoLLCz9L1-+vyw@mail.gmail.com>
- <7va9pt2r4e.fsf@alter.siamese.dyndns.org> <CALkWK0k=jei8Z+n-4O92obQOR88FR6iFCSifVhDDS8jv37rOjA@mail.gmail.com>
+From: Simon Ruderich <simon@ruderich.org>
+Subject: Re: [PATCH 2/3] contrib/subtree: remove use of -a/-o in [ commands
+Date: Sun, 24 Mar 2013 22:17:13 +0100
+Message-ID: <20130324211713.GA6155@ruderich.org>
+References: <1364153863-27437-1-git-send-email-pcampbell@kemitix.net>
+ <1364153863-27437-3-git-send-email-pcampbell@kemitix.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 24 22:13:16 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Paul Campbell <pcampbell@kemitix.net>
+X-From: git-owner@vger.kernel.org Sun Mar 24 22:17:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJsE7-0004UX-1Q
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:13:15 +0100
+	id 1UJsIV-0000B8-9D
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Mar 2013 22:17:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754757Ab3CXVMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 17:12:46 -0400
-Received: from mail-ia0-f179.google.com ([209.85.210.179]:49284 "EHLO
-	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754161Ab3CXVMp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 17:12:45 -0400
-Received: by mail-ia0-f179.google.com with SMTP id x24so4979519iak.10
-        for <git@vger.kernel.org>; Sun, 24 Mar 2013 14:12:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=ycQ5oTGBfgnNsJMX60OFotDEqTQnP1XmfwDt4MvYAf8=;
-        b=g4duJPKyYERH+0R57+4RZWSbkodCSf+t3aVbHtpTVKgi65NX9x+1pBxbC+TjEct8o1
-         /yEelODC9Yi07ullqPjMp/jfb7fVdP37tOHvRqpi19oZdVuZOzANpSzD4euBrkmxAFRM
-         Yp+Mf1NfI/Tg4ZvNUjqwbHr9X8at56i2aYrA4cdgpiLm+3V0mxseeLc6EBU4SJoKGVcC
-         rl5AdLscScAkN8YVgFsPIClpYLN+UpHgJx0ww3QgVsXvFfZFOcgSmIgljEyVnAPc3ps4
-         TiC+eLcFFx5kztQPLN6LSQnwW6j2/CYnhxwNHksBXlsO7xnhEoLeITZD1r3c2xjk6JqT
-         lN4Q==
-X-Received: by 10.50.17.71 with SMTP id m7mr6260257igd.14.1364159565344; Sun,
- 24 Mar 2013 14:12:45 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Sun, 24 Mar 2013 14:12:24 -0700 (PDT)
-In-Reply-To: <CALkWK0k=jei8Z+n-4O92obQOR88FR6iFCSifVhDDS8jv37rOjA@mail.gmail.com>
+	id S1754832Ab3CXVRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 17:17:19 -0400
+Received: from zucker2.schokokeks.org ([178.63.68.90]:33922 "EHLO
+	zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754763Ab3CXVRS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 17:17:18 -0400
+Received: from localhost (pD9E97571.dip.t-dialin.net [::ffff:217.233.117.113])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by zucker.schokokeks.org with ESMTPSA; Sun, 24 Mar 2013 22:17:14 +0100
+  id 00000000000000B0.00000000514F6D5A.00005DC7
+Content-Disposition: inline
+In-Reply-To: <1364153863-27437-3-git-send-email-pcampbell@kemitix.net>
+User-Agent: Mutt/1.5.21 (2013-03-19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/218987>
 
-Ramkumar Ramachandra wrote:
-> Junio C Hamano wrote:
->> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->>
->>>>> +     elif test "$autostash" = false
->>>>> +     then
->>>>>               require_clean_work_tree "pull with rebase" "Please commit or stash them."
->>>>>       fi
->>>>
->>>> A safety net, after you run "git stash", to validate that the
->>>> added "git stash" indeed made the working tree clean, is necessary
->>>> below, but there does not seem to be any.
->>>
->>> Um, isn't that part of the "git stash" testsuite?
->>
->> You should always "trust but verify" what other commands do at key
->> points of the operation; and I think this "require-clean-work-tree"
->> is a key precondition for this mode of operation to work correctly.
->>
->> Especially because you do not even bother to check the result of
->> "git stash" before continuing ;-).
->
-> If you think it's enough to replicate the codepath that precedes the
-> actual saving in 'git stash' (which is essentially
-> require-clean-work-tree), I'm in agreement with you.  I thought you
-> were implying a wider safety net, that wouldn't even assume the basic
-> sanity of stash.
+From: Paul Campbell <pcampbell@kemitix.net>
 
-Er, s/codepath that precedes the actual saving in 'git stash'/codepath
-that precedes the actual pulling or merging in 'git pull'/
+Use of -a and -o in the [ command can have confusing semantics.
 
-I'm feeling a little muddled up today; weekends are usually bad.
+Use a separate test invocation for each single test, combining them with
+&& and ||.
+
+Signed-off-by: Paul Campbell <pcampbell@kemitix.net>
+Signed-off-by: Simon Ruderich <simon@ruderich.org>
+---
+
+On Sun, Mar 24, 2013 at 07:37:42PM +0000, Paul Campbell wrote:
+> Use a separate test invocation for each single test, combining them with
+> && and ||, and use ordinary parentheses for grouping.
+
+Hello Paul,
+
+Parentheses are only necessary if both && and || are used to
+enforce precedence; the shell can split the commands without
+needing the parentheses. In these cases they can all be removed.
+
+Regards
+Simon
+
+ contrib/subtree/git-subtree.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 5701376..d02e6c5 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -119,7 +119,7 @@ esac
+ 
+ dir="$(dirname "$prefix/.")"
+ 
+-if [ "$command" != "pull" -a "$command" != "add" -a "$command" != "push" ]; then
++if test "$command" != "pull" && test "$command" != "add" && test "$command" != "push"; then
+ 	revs=$(git rev-parse $default --revs-only "$@") || exit $?
+ 	dirs="$(git rev-parse --no-revs --no-flags "$@")" || exit $?
+ 	if [ -n "$dirs" ]; then
+@@ -181,9 +181,9 @@ cache_set()
+ {
+ 	oldrev="$1"
+ 	newrev="$2"
+-	if [ "$oldrev" != "latest_old" \
+-	     -a "$oldrev" != "latest_new" \
+-	     -a -e "$cachedir/$oldrev" ]; then
++	if test "$oldrev" != "latest_old" \
++	     && test "$oldrev" != "latest_new" \
++	     && test -e "$cachedir/$oldrev"; then
+ 		die "cache for $oldrev already exists!"
+ 	fi
+ 	echo "$newrev" >"$cachedir/$oldrev"
+@@ -273,12 +273,12 @@ find_existing_splits()
+ 			git-subtree-split:) sub="$b" ;;
+ 			END)
+ 				debug "  Main is: '$main'"
+-				if [ -z "$main" -a -n "$sub" ]; then
++				if test -z "$main" && test -n "$sub"; then
+ 					# squash commits refer to a subtree
+ 					debug "  Squash: $sq from $sub"
+ 					cache_set "$sq" "$sub"
+ 				fi
+-				if [ -n "$main" -a -n "$sub" ]; then
++				if test -n "$main" && test -n "$sub"; then
+ 					debug "  Prior: $main -> $sub"
+ 					cache_set $main $sub
+ 					cache_set $sub $sub
+@@ -541,7 +541,7 @@ cmd_add_commit()
+ 	tree=$(git write-tree) || exit $?
+ 	
+ 	headrev=$(git rev-parse HEAD) || exit $?
+-	if [ -n "$headrev" -a "$headrev" != "$rev" ]; then
++	if test -n "$headrev" && test "$headrev" != "$rev"; then
+ 		headp="-p $headrev"
+ 	else
+ 		headp=
+-- 
+1.8.2
+
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
