@@ -1,72 +1,115 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git ate my home directory :-(
-Date: Mon, 25 Mar 2013 14:43:43 -0700
-Message-ID: <20130325214343.GF1414@google.com>
-References: <5150C3EC.6010608@nod.at>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-web--browse: recognize iTerm as a GUI terminal on OS
+ X
+Date: Mon, 25 Mar 2013 14:44:17 -0700
+Message-ID: <7vtxnzw3wu.fsf@alter.siamese.dyndns.org>
+References: <CAMxBVSs6dJFnK78E2Da7t4V9ndJFRVDZEd1fR5QuCFz=u2Bnpw@mail.gmail.com>
+ <CAMxBVStw-b3J_Fm9x=h3==9ebdLUkpjBSQ9-W4+zJ9N20ojfxg@mail.gmail.com>
+ <CAP8UFD2oR5tnYuw7Nbe-CzGx7fw-OpAFW+reN+1Nroh1jXjfsQ@mail.gmail.com>
+ <CAMxBVStVXZGGrjHzN7kukVP6_ZGo0miyJaE2FVYPVV4Jb5U82w@mail.gmail.com>
+ <CAEBDL5VNodcTGBOvQjyL30qiXhshxhnUH-Vd9xy9=RxZQgH-Yw@mail.gmail.com>
+ <CAP8UFD2m8n5RHN-CgyDP1ir_AorpJGnWwNhXuRxDa=DbHfsdiw@mail.gmail.com>
+ <20130325101318.GA31409@yoda.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Richard Weinberger <richard@nod.at>
-X-From: git-owner@vger.kernel.org Mon Mar 25 22:44:21 2013
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Timo Sand <timo.j.sand@gmail.com>, git <git@vger.kernel.org>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Mon Mar 25 22:44:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKFBj-0004Tq-Pz
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:44:20 +0100
+	id 1UKFCD-0005GG-A7
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:44:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933254Ab3CYVnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 17:43:51 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:42572 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933102Ab3CYVnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 17:43:50 -0400
-Received: by mail-pd0-f169.google.com with SMTP id 10so168534pdc.14
-        for <git@vger.kernel.org>; Mon, 25 Mar 2013 14:43:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=fiFNYoo2SfS0hAxms8w5+WYzBgWqE2Pue7TdzQ7jXsA=;
-        b=UY8qkDatZ6+3JbRp6gAd7PSpHjCiJl1UY85qeEP0wBldx4uETaFT/Rp3plQllDoGDE
-         ycsuTpo0PqynCIJnm7RgTtPZuH30sqcTi4WnoLD/e5ZPc/BX8rhW2ByUwwCfC3eT/k/H
-         JOIKCb1/mfzqegpqg3e5ELoWu+v7ExelGqRCFUhSXkqZIr46YJYAzqg18YUdwl7atFxb
-         0F4dTgsqRxO+qvK+LOjOJWo6uXwcsOzHizsqZlwu8op/ZWJJyLv1FD0Rtvy6Ac6rZIxK
-         hKVYU89MeFkjSdbiFl/PX6LZ6aAyczDhQVX1C4qP2Igyn7D+hAUu/X47mZUSQgfwcdVx
-         Ym4g==
-X-Received: by 10.68.242.132 with SMTP id wq4mr19391818pbc.160.1364247829796;
-        Mon, 25 Mar 2013 14:43:49 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id t1sm16252536pab.12.2013.03.25.14.43.45
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 25 Mar 2013 14:43:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <5150C3EC.6010608@nod.at>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758954Ab3CYVoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 17:44:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46920 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758928Ab3CYVoU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 17:44:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BECD7AB5A;
+	Mon, 25 Mar 2013 17:44:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LMvTSHBK/E9nmosy/dPdWq2rUV0=; b=Q6v6O9
+	rwt/GkCakQXvvNhNbvp/QTFF5Q58FAdUZkxoVxzNMwa7+QhCexufaSooqebFIYE4
+	AXDp1W2rEnh2meWwkaHeKh+4r8RxULnlAMfRwCo8neZV9ibOF6Na09pUCIep24PM
+	oElokS9MPYsMAutCwgNRZQMhl5RHxXM1sGNPY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wZe5vuWpzYHlWUARMw7wsAyNWxc/E+YV
+	0w7b55MeSahdwnsrWuLw6Sera3LKNBGAPvXm1FVjxoEvjDFx7tbO12V2iqKmtLTx
+	C+I4uf3strPbK7JVDcYxYpo7u/z5mar65xgYVv3VXu5pXT3JH+j0/fsuofXNHOHA
+	mtbp5xLTGBs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2FF6AB58;
+	Mon, 25 Mar 2013 17:44:19 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 11404AB55; Mon, 25 Mar 2013
+ 17:44:18 -0400 (EDT)
+In-Reply-To: <20130325101318.GA31409@yoda.local> (John Szakmeister's message
+ of "Mon, 25 Mar 2013 06:13:18 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 25C3D456-9595-11E2-9E81-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219099>
 
-Hi,
+John Szakmeister <john@szakmeister.net> writes:
 
-Richard Weinberger wrote:
+> It turns out that the presence of SECURITYSESSIONID is not sufficient
+> for detecting the presence of a GUI under Mac OS X.  SECURITYSESSIONID
+> appears to only be set when the user has Screen Sharing enabled.
+> Disabling Screen Sharing and relaunching the shell showed that the
+> variable was missing, at least under Mac OS X 10.6.8.  As a result,
+> let's check for iTerm directly via TERM_PROGRAM.
+>
+> Signed-off-by: John Szakmeister <john@szakmeister.net>
+> ---
+>
+> On Sun, Mar 24, 2013 at 10:05:53PM +0100, Christian Couder wrote:
+> [snip]
+>> Your patch looks good to me, and I cannot really test it as I don't have a Mac.
+>> Could you just had some of the explanations you gave above to the
+>> commit message?
+>
+> Here's an updated patch.  I also noticed that git-bisect.sh is
+> also trying to determine if a GUI is present by looking for
+> SECURITYSESSIONID as well.  I wonder if it would be better to
+> create a shell function in git-sh-setup.sh that the two scripts
+> could use?
 
-> In my scripts I'm setting GIT_DIR to use git-fetch and git-reset without changing the
-> current working directory all the time.
+Yes, but that can come later once this settles.
 
-Yeah, for historical reasons GIT_WORK_TREE defaults to $(pwd) when
-GIT_DIR is explicitly set.
+Your patch makes me wonder if
 
-In git versions including the patch 2cd83d10bb6b (setup: suppress
-implicit "." work-tree for bare repos, 2013-03-08, currently in "next"
-but not "master"), you can set GIT_IMPLICIT_WORK_TREE=0 to avoid this
-behavior.
+	test -n "$TERM_PROGRAM"
 
-Thanks for a useful example, and sorry for the trouble.
+without any SECURITYSESSIONID or explicit program name checks should
+suffice, though.
 
-Sincerely,
-Jonathan
+>
+> -John
+>
+> git-web--browse.sh | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/git-web--browse.sh b/git-web--browse.sh
+> index 1e82726..1ff5379 100755
+> --- a/git-web--browse.sh
+> +++ b/git-web--browse.sh
+> @@ -120,6 +120,7 @@ if test -z "$browser" ; then
+>  	fi
+>  	# SECURITYSESSIONID indicates an OS X GUI login session
+>  	if test -n "$SECURITYSESSIONID" \
+> +		-o "$TERM_PROGRAM" = "iTerm.app" \
+>  		-o "$TERM_PROGRAM" = "Apple_Terminal" ; then
+>  		browser_candidates="open $browser_candidates"
+>  	fi
