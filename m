@@ -1,127 +1,72 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 6/9] streaming_write_entry: propagate streaming errors
-Date: Mon, 25 Mar 2013 14:39:34 -0700
-Message-ID: <20130325213934.GE1414@google.com>
-References: <20130325201427.GA15798@sigill.intra.peff.net>
- <20130325202216.GF16019@sigill.intra.peff.net>
+Subject: Re: git ate my home directory :-(
+Date: Mon, 25 Mar 2013 14:43:43 -0700
+Message-ID: <20130325214343.GF1414@google.com>
+References: <5150C3EC.6010608@nod.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 25 22:40:08 2013
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Richard Weinberger <richard@nod.at>
+X-From: git-owner@vger.kernel.org Mon Mar 25 22:44:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKF7f-0006MS-GW
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:40:07 +0100
+	id 1UKFBj-0004Tq-Pz
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933149Ab3CYVjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 17:39:39 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:47944 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758642Ab3CYVjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 17:39:39 -0400
-Received: by mail-pb0-f49.google.com with SMTP id um15so626794pbc.8
-        for <git@vger.kernel.org>; Mon, 25 Mar 2013 14:39:38 -0700 (PDT)
+	id S933254Ab3CYVnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 17:43:51 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:42572 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933102Ab3CYVnu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 17:43:50 -0400
+Received: by mail-pd0-f169.google.com with SMTP id 10so168534pdc.14
+        for <git@vger.kernel.org>; Mon, 25 Mar 2013 14:43:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=UDaLGWT9TtgzRGoQqvu1Zow2qSCWJax3JThvv25wHew=;
-        b=s1cN6CsMlRmkmTcMsoZNmQx9oymTbWloc8fRreCmeenWlbShUzXTrrj5ce4RQe+p9e
-         i1e4Wn6etCv+Q7YKzC6FAM70TN2IfbBbrTGVXdOBo9KZX6k9fc4VcqHnui1Eakc14M+Z
-         +7SfarTfWw2hfi3mpu79HDfCGdVrQG1DXaK/FOq3dWNU0H+d6xlmjPhOaSJo3DdFA14b
-         Qgp/hi1iMnZu9r850LqoTJYAPLIb9D6848zWjRW16Wy+Olnc6VcZCcWozewuM1EEuGfn
-         oB8KshrizQGsUURqmDIW2Yswv3olgIB5qpHA6IGlXyvangsvD8Je8maUv7L3UlH8CFQQ
-         26Ew==
-X-Received: by 10.68.39.129 with SMTP id p1mr20111094pbk.19.1364247578747;
-        Mon, 25 Mar 2013 14:39:38 -0700 (PDT)
+        bh=fiFNYoo2SfS0hAxms8w5+WYzBgWqE2Pue7TdzQ7jXsA=;
+        b=UY8qkDatZ6+3JbRp6gAd7PSpHjCiJl1UY85qeEP0wBldx4uETaFT/Rp3plQllDoGDE
+         ycsuTpo0PqynCIJnm7RgTtPZuH30sqcTi4WnoLD/e5ZPc/BX8rhW2ByUwwCfC3eT/k/H
+         JOIKCb1/mfzqegpqg3e5ELoWu+v7ExelGqRCFUhSXkqZIr46YJYAzqg18YUdwl7atFxb
+         0F4dTgsqRxO+qvK+LOjOJWo6uXwcsOzHizsqZlwu8op/ZWJJyLv1FD0Rtvy6Ac6rZIxK
+         hKVYU89MeFkjSdbiFl/PX6LZ6aAyczDhQVX1C4qP2Igyn7D+hAUu/X47mZUSQgfwcdVx
+         Ym4g==
+X-Received: by 10.68.242.132 with SMTP id wq4mr19391818pbc.160.1364247829796;
+        Mon, 25 Mar 2013 14:43:49 -0700 (PDT)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id pb3sm14755516pbc.7.2013.03.25.14.39.36
+        by mx.google.com with ESMTPS id t1sm16252536pab.12.2013.03.25.14.43.45
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 25 Mar 2013 14:39:37 -0700 (PDT)
+        Mon, 25 Mar 2013 14:43:48 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20130325202216.GF16019@sigill.intra.peff.net>
+In-Reply-To: <5150C3EC.6010608@nod.at>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219098>
 
-Jeff King wrote:
+Hi,
 
-> When we are streaming an index blob to disk, we store the
-> error from stream_blob_to_fd in the "result" variable, and
-> then immediately overwrite that with the return value of
-> "close".
+Richard Weinberger wrote:
 
-Good catch.
+> In my scripts I'm setting GIT_DIR to use git-fetch and git-reset without changing the
+> current working directory all the time.
 
-[...]
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -126,8 +126,10 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
->  	fd = open_output_fd(path, ce, to_tempfile);
->  	if (0 <= fd) {
->  		result = stream_blob_to_fd(fd, ce->sha1, filter, 1);
-> -		*fstat_done = fstat_output(fd, state, statbuf);
-> -		result = close(fd);
-> +		if (!result) {
-> +			*fstat_done = fstat_output(fd, state, statbuf);
-> +			result = close(fd);
-> +		}
+Yeah, for historical reasons GIT_WORK_TREE defaults to $(pwd) when
+GIT_DIR is explicitly set.
 
-Should this do something like
+In git versions including the patch 2cd83d10bb6b (setup: suppress
+implicit "." work-tree for bare repos, 2013-03-08, currently in "next"
+but not "master"), you can set GIT_IMPLICIT_WORK_TREE=0 to avoid this
+behavior.
 
+Thanks for a useful example, and sorry for the trouble.
 
-	{
-		int fd, result = 0;
-
-		fd = open_output_fd(path, ce, to_tempfile);
-		if (fd < 0)
-			return -1;
-
-		result = stream_blob_to_fd(fd, ce->sha1, filter, 1);
-		if (result)
-			goto close_fd;
-
-		*fstat_done = fstat_output(fd, state, statbuf);
-	close_fd:
-		result |= close(fd);
-	unlink_path:
-		if (result)
-			unlink(path);
-		return result;
-	}
-
-to avoid leaking the file descriptor?
-
-> @@ -31,4 +40,20 @@ test_expect_success 'streaming a corrupt blob fails' '
->  	)
->  '
->  
-> +test_expect_success 'read-tree -u detects bit-errors in blobs' '
-> +	(
-> +		cd bit-error &&
-> +		rm content.t &&
-> +		test_must_fail git read-tree --reset -u FETCH_HEAD
-> +	)
-
-Makes sense.  Might make sense to use "rm -f" instead of "rm" to avoid
-failures if content.t is removed already.
-
-> +'
-> +
-> +test_expect_success 'read-tree -u detects missing objects' '
-> +	(
-> +		cd missing &&
-> +		rm content.t &&
-
-Especially here.
-
-Thanks,
+Sincerely,
 Jonathan
