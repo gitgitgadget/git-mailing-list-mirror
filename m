@@ -1,127 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] transport: drop "int cmp = cmp" hack
-Date: Mon, 25 Mar 2013 17:06:25 -0400
-Message-ID: <20130325210625.GA16386@sigill.intra.peff.net>
-References: <20130321110338.GA18552@sigill.intra.peff.net>
- <20130321111333.GD18819@sigill.intra.peff.net>
- <CAPc5daVOksx56js_ascEr348PTLAZB9OeBrf3sELJUpdyB_kMg@mail.gmail.com>
- <20130324093212.GA28234@sigill.intra.peff.net>
- <7vfvzjxnq9.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 5/9] add test for streaming corrupt blobs
+Date: Mon, 25 Mar 2013 14:10:38 -0700
+Message-ID: <20130325211038.GD1414@google.com>
+References: <20130325201427.GA15798@sigill.intra.peff.net>
+ <20130325202134.GE16019@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 25 22:06:59 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 25 22:11:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKEbZ-0007Dd-TA
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:06:58 +0100
+	id 1UKEff-0005Qz-HD
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758671Ab3CYVG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 17:06:29 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39395 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751600Ab3CYVG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 17:06:28 -0400
-Received: (qmail 28357 invoked by uid 107); 25 Mar 2013 21:08:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Mar 2013 17:08:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Mar 2013 17:06:25 -0400
+	id S1758616Ab3CYVKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 17:10:44 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:55832 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752112Ab3CYVKn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 17:10:43 -0400
+Received: by mail-pa0-f51.google.com with SMTP id jh10so601079pab.38
+        for <git@vger.kernel.org>; Mon, 25 Mar 2013 14:10:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=FOxeZcq0IW+IQmgxGPcHjb5iSFTCz3TNquL8nae039w=;
+        b=QoPr8TtjaB25O8G/XH8pdDr5afdaFDHrOLkWRVJBBxct3gKIQtO4wdxrcpCjW3UnAo
+         x/JnKcnM+L9nANJ7fJG7HYhvQWTRfXjiIgVsZDWbZV8Eh4sRb2riB0P99pSwT73dB2SU
+         Uh2buSYGye6ilg3Edh+/8vK1fnuQA4iek67Z3IdZzyx9kLT7mejP1ifxpQnBD9xuwrZG
+         8pb7q7uLsPu8VxK359mvFOEE2CXYwkqPHJDw5EgfzzqIv/HqiGYVmiTDjb4ObBKxoRZs
+         JJ0aEZa4IhV8ZXpRvxuM+BIWYteYMFJbdHpSkZWT3IEZOoyeNaaghqRYWqeZnYTHyJC4
+         ujXw==
+X-Received: by 10.68.227.97 with SMTP id rz1mr18904950pbc.45.1364245843095;
+        Mon, 25 Mar 2013 14:10:43 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id mz8sm14689285pbc.9.2013.03.25.14.10.40
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 25 Mar 2013 14:10:41 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vfvzjxnq9.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20130325202134.GE16019@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219091>
 
-On Mon, Mar 25, 2013 at 12:50:54PM -0700, Junio C Hamano wrote:
+Jeff King wrote:
 
-> >> transport.c: In function 'get_refs_via_rsync':
-> >> transport.c:127:29: error: 'cmp' may be used uninitialized in this
-> >> function [-Werror=uninitialized]
-> >> transport.c:109:7: note: 'cmp' was declared here
-> >> 
-> >> gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
-> >
-> > Right, that's the same version I noted above. Is 4.6.3 the default
-> > compiler under a particular release of Ubuntu, or did you use their
-> > gcc-4.6 package?
-> 
-> I'll check later with one of my VMs.  The copy of U 12.04 I happened
-> to have handy has that version installed.
+> We do not have many tests for handling corrupt objects. This
+> new test at least checks that we detect a byte error in a
+> corrupt blob object while streaming it out with cat-file.
 
-Ah, if you didn't explicitly run "gcc-4.6", then it was probably the
-default version in 12.04 (as it was for a while in Debian testing, but
-they never actually made a release with it, so everybody is now on 4.7
-by default).
+Thanks.
 
-> By the way, I find this piece of code less than pleasant:
-> 
->  * It uses "struct ref dummy = { NULL }, *tail = &dummy", and then
->    accumulates things by appending to "&tail" and then returns
->    dummy.next.  Why doesn't it do
-> 
-> 	struct ref *retval = NULL, **tail = &retval;
-> 
->    and pass tail around to append things, like everybody else?  Is
->    this another instance of "People do not understand linked list"
->    problem?  Perhaps fixing that may unconfuse the compiler?
+[...]
+> +# convert "1234abcd" to ".git/objects/12/34abcd"
+> +obj_to_file() {
+> +	echo "$(git rev-parse --git-dir)/objects/$(git rev-parse "$1" | sed 's,..,&/,')"
+> +}
 
-Ugh, that is horrible. At first I thought it was even wrong, as we pass
-&tail and not &dummy.next to read_loose_refs. But two wrongs _do_ make a
-right, because read_loose_refs, rather than do:
+Maybe this would be clearer in multiple lines?
 
-  *tail = new;
-  tail = &new->next;
+	commit=$(git rev-parse --verify "$1") &&
+	git_dir=$(git rev-parse --git-dir) &&
+	tail=${commit#??} &&
+	echo "$git_dir/objects/${commit%$tail}/$tail"
 
-does:
+> +
+> +# Convert byte at offset "$2" of object "$1" into '\0'
+> +corrupt_byte() {
+> +	obj_file=$(obj_to_file "$1") &&
+> +	chmod +w "$obj_file" &&
+> +	printf '\0' | dd of="$obj_file" bs=1 seek="$2"
 
-  (*tail)->next = new;
-  *tail = new;
+Some other tests such as t4205 also rely on "printf" being
+binary-safe.  Phew.
 
->    Later, the tail of the same list is passed to insert_packed_refs(),
->    which does in-place merging of this list and the contents of the
->    packed_refs file.  These two data sources have to be sorted the
->    same way for this merge to work correctly, but there is no
->    validating the order of the entries it reads from the packed-refs
->    file.  At least, it should barf when the file is not sorted.  It
->    could be lenient and accept a mal-sorted input, but I do not think
->    that is advisable.
+> +}
+> +
+> +test_expect_success 'setup corrupt repo' '
+> +	git init bit-error &&
+> +	(
+> +		cd bit-error &&
+> +		test_commit content &&
+> +		corrupt_byte HEAD:content.t 10
+> +	)
+> +'
+> +
+> +test_expect_success 'streaming a corrupt blob fails' '
 
-Actually, it is the head of the loose list (though it is hard to
-realize, because it is called tail!).
+"fails gracefully", maybe, to be more precise.
 
-> I'll apply the attached on 'maint' for now, as rsync is not worth
-> spending too many cycles on worrying about; I need to go to the
-> bathroom to wash my eyes after staring this code for 20 minutes X-<.
-
-Yeah, it's quite ugly. I really wonder if it is time to drop rsync
-support. I'd be really surprised if anybody is actively using it.
-
-I wonder, though, what made you look at this. It did not come up in my
-list of -Wuninitialized warnings. Did it get triggered by one of the
-other gcc versions?
-
-> diff --git a/transport.c b/transport.c
-> index 87b8f14..e6f9346 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -106,7 +106,8 @@ static void insert_packed_refs(const char *packed_refs, struct ref **list)
->  		return;
->  
->  	for (;;) {
-> -		int cmp, len;
-> +		int cmp = 0; /* assigned before used */
-> +		int len;
->  
->  		if (!fgets(buffer, sizeof(buffer), f)) {
->  			fclose(f);
-
-I think that's fine.
-
--Peff
+With or without the two changes suggested above,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
