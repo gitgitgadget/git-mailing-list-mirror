@@ -1,128 +1,127 @@
-From: Hans Brigman <hbrigman@openspan.com>
-Subject: [PATCH] log: make "show --show-signature" use gpg.program setting
-Date: Mon, 25 Mar 2013 13:03:52 -0500
-Message-ID: <8C726954D36902459248B0627BF2E66F45D7029930@AUSP01VMBX10.collaborationhost.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sha1_file: remove recursion in packed_object_info
+Date: Mon, 25 Mar 2013 11:17:38 -0700
+Message-ID: <7vtxnzxs1p.fsf@alter.siamese.dyndns.org>
+References: <7v1ubbjmq7.fsf@alter.siamese.dyndns.org>
+ <c5fc1d2040544965ad3cc09e7b82b6013f06b7fa.1363729774.git.trast@student.ethz.ch> <7vtxo6f27l.fsf@alter.siamese.dyndns.org> <87620faky3.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="_002_8C726954D36902459248B0627BF2E66F45D7029930AUSP01VMBX10c_"
-Cc: "gitster@pobox.com" <gitster@pobox.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 25 19:11:52 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Zager <szager@google.com>, <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: thomas <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Mar 25 19:18:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKBs7-0007VI-Uo
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 19:11:52 +0100
+	id 1UKByE-0008U1-Ft
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 19:18:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932507Ab3CYSLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 14:11:24 -0400
-Received: from mail1.bemta7.messagelabs.com ([216.82.254.110]:60786 "EHLO
-	mail1.bemta7.messagelabs.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932333Ab3CYSLX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Mar 2013 14:11:23 -0400
-X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Mar 2013 14:11:23 EDT
-Received: from [216.82.255.3:48103] by server-14.bemta-7.messagelabs.com id B5/E5-00330-EA190515; Mon, 25 Mar 2013 18:04:30 +0000
-X-Env-Sender: hbrigman@openspan.com
-X-Msg-Ref: server-7.tower-209.messagelabs.com!1364234653!6146844!34
-X-Originating-IP: [216.166.12.97]
-X-StarScan-Received: 
-X-StarScan-Version: 6.8.6.1; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 11203 invoked from network); 25 Mar 2013 18:04:29 -0000
-Received: from out001.collaborationhost.net (HELO out001.collaborationhost.net) (216.166.12.97)
-  by server-7.tower-209.messagelabs.com with RC4-SHA encrypted SMTP; 25 Mar 2013 18:04:29 -0000
-Received: from AUSP01VMBX10.collaborationhost.net ([10.2.8.162]) by
- AUSP01MHUB06.collaborationhost.net ([10.2.8.241]) with mapi; Mon, 25 Mar 2013
- 13:04:26 -0500
-Thread-Topic: [PATCH] log: make "show --show-signature" use gpg.program
- setting
-Thread-Index: Ac4nP8jrUBjTr+5aTa2AsL+eoASzqQ==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S932521Ab3CYSRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 14:17:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54994 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932314Ab3CYSRl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 14:17:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4BC4BAA0;
+	Mon, 25 Mar 2013 14:17:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7rMsrJ41WDI334mVjiHN5LPRmds=; b=iVSCXg
+	hhjbOBcs+LeGuFb6ATv/Jcveze0VTpw3AIphuHfI1CNC3fceGt5LogpGBqN69OkW
+	KoWsnRKnfN0vZWdEj8O8UwE1n3p5RqaYvAdfFQxvs6zEG/7SZs9D+nlkgA1BCeDV
+	shwzZTIZLGjzwDksAe7MYnOw3X1w7Vb0rLUCE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=otd4Cil168TR+M+94kBKt9CRvDPog5TO
+	qdSUmy+hr9VY6E3Qh4Jb36OmHQL8UBFaMv2mGh4D8UbAHNQiUWZYPEFAtvUjQcI0
+	YKbZXp9PZAYY2B+Ija+DO7/E508GXap7I1061UBH6EvtQxb/tBnty6bmWROWaxfq
+	lG0r9PkK1Dc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9163BA9F;
+	Mon, 25 Mar 2013 14:17:40 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 366DDBA9B; Mon, 25 Mar 2013
+ 14:17:40 -0400 (EDT)
+In-Reply-To: <87620faky3.fsf@linux-k42r.v.cablecom.net> (thomas's message of
+ "Mon, 25 Mar 2013 10:27:16 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 477E31BC-9578-11E2-A128-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219059>
 
---_002_8C726954D36902459248B0627BF2E66F45D7029930AUSP01VMBX10c_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+thomas <trast@student.ethz.ch> writes:
 
-"show --show-signature" doesn't currently use the gpg.program setting.  Com=
-mit signing, tag signing, and tag verification currently use this setting p=
-roperly, so the logic has been added to handle it here as well.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The following comment is also lost but...
+>>
+>>> -	/* We choose to only get the type of the base object and
+>>> -	 * ignore potentially corrupt pack file that expects the delta
+>>> -	 * based on a base with a wrong size.  This saves tons of
+>>> -	 * inflate() calls.
+>>> -	 */
+>>> -	if (sizep) {
+>>> -		*sizep = get_size_from_delta(p, w_curs, curpos);
+>>> -		if (*sizep == 0)
+>>> -			type = OBJ_BAD;
+>>
+>> ... is this check correct?  There is an equivalent check at the
+>> beginning of the new packed_object_info() to error out a deltified
+>> result.  Why is an object whose size is 0 bad?
+>
+> Cc'ing Nicolas, but I think there are several reasons:
+>
+> If it's a delta, then according to docs[1] it starts with the SHA1 of
+> the base object, plus the deflated data.  So it is at least 20 bytes.
 
-Signed-off-by: Hans Brigman <hbrigman@openspan.com>
----
- builtin/log.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+get_size_from_delta() grabs the size, the number you would get in
+the third parameter of read_sha1_file(), of the result of applying
+the delta we are looking at.  The part that stores this information
+is called the "compressed delta data" in the document you are
+looking at.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 8f0b2e8..a6c5576 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -23,6 +23,7 @@
- #include "streaming.h"
- #include "version.h"
- #include "mailmap.h"
-+#include "gpg-interface.h"
-=20
- /* Set a default date-time format for git log ("log.date" config variable)=
- */
- static const char *default_date_mode =3D NULL;
-@@ -364,7 +365,8 @@ static int git_log_config(const char *var, const char *=
-value, void *cb)
- 		use_mailmap_config =3D git_config_bool(var, value);
- 		return 0;
- 	}
--
-+	if (!prefixcmp(var, "gpg."))
-+		return git_gpg_config(var, value, NULL);=20
- 	if (grep_config(var, value, cb) < 0)
- 		return -1;
- 	return git_diff_ui_config(var, value, cb);
---=20
-1.7.11.msysgit.0
+The function you want to look at is patch_delta(), where it grabs
+two such sizes from the delta stream with get_delta_hdr_size().
 
+A delta stream begins with:
 
---_002_8C726954D36902459248B0627BF2E66F45D7029930AUSP01VMBX10c_
-Content-Type: application/octet-stream;
-	name="0001-log-make-show-show-signature-use-gpg.program-setting.patch"
-Content-Description: 0001-log-make-show-show-signature-use-gpg.program-setting.patch
-Content-Disposition: attachment;
-	filename="0001-log-make-show-show-signature-use-gpg.program-setting.patch";
-	size=1286; creation-date="Fri, 22 Mar 2013 20:48:46 GMT";
-	modification-date="Fri, 22 Mar 2013 20:48:46 GMT"
-Content-Transfer-Encoding: base64
+    * preimage length, expressed as a 7-bit-per-byte varint;
+    * postimage length, expressed as a 7-bit-per-byte varint;
 
-RnJvbSA1ZTBiM2RlOTNlOTA3NTBlYThkM2Y1Yzg5Nzg2MTg4NjY0NzY3MmI0IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBIYW5zIEJyaWdtYW4gPGRhdHllZHllZ3V5QGdtYWlsLmNvbT4K
-RGF0ZTogRnJpLCAyMiBNYXIgMjAxMyAxNjo0MTowNiAtMDQwMApTdWJqZWN0OiBbUEFUQ0hdIGxv
-ZzogbWFrZSAic2hvdyAtLXNob3ctc2lnbmF0dXJlIiB1c2UgZ3BnLnByb2dyYW0gc2V0dGluZwoK
-InNob3cgLS1zaG93LXNpZ25hdHVyZSIgZG9lc24ndCBjdXJyZW50bHkgdXNlIHRoZSBncGcucHJv
-Z3JhbSBzZXR0aW5nLiAgQ29tbWl0IHNpZ25pbmcsIHRhZyBzaWduaW5nLCBhbmQgdGFnIHZlcmlm
-aWNhdGlvbiBjdXJyZW50bHkgdXNlIHRoaXMgc2V0dGluZyBwcm9wZXJseSwgc28gdGhlIGxvZ2lj
-IGhhcyBiZWVuIGFkZGVkIHRvIGhhbmRsZSBpdCBoZXJlIGFzIHdlbGwuCgpTaWduZWQtb2ZmLWJ5
-OiBIYW5zIEJyaWdtYW4gPGRhdHllZHllZ3V5QGdtYWlsLmNvbT4KLS0tCiBidWlsdGluL2xvZy5j
-IHwgNCArKystCiAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0p
-CgpkaWZmIC0tZ2l0IGEvYnVpbHRpbi9sb2cuYyBiL2J1aWx0aW4vbG9nLmMKaW5kZXggOGYwYjJl
-OC4uYTZjNTU3NiAxMDA2NDQKLS0tIGEvYnVpbHRpbi9sb2cuYworKysgYi9idWlsdGluL2xvZy5j
-CkBAIC0yMyw2ICsyMyw3IEBACiAjaW5jbHVkZSAic3RyZWFtaW5nLmgiCiAjaW5jbHVkZSAidmVy
-c2lvbi5oIgogI2luY2x1ZGUgIm1haWxtYXAuaCIKKyNpbmNsdWRlICJncGctaW50ZXJmYWNlLmgi
-CiAKIC8qIFNldCBhIGRlZmF1bHQgZGF0ZS10aW1lIGZvcm1hdCBmb3IgZ2l0IGxvZyAoImxvZy5k
-YXRlIiBjb25maWcgdmFyaWFibGUpICovCiBzdGF0aWMgY29uc3QgY2hhciAqZGVmYXVsdF9kYXRl
-X21vZGUgPSBOVUxMOwpAQCAtMzY0LDcgKzM2NSw4IEBAIHN0YXRpYyBpbnQgZ2l0X2xvZ19jb25m
-aWcoY29uc3QgY2hhciAqdmFyLCBjb25zdCBjaGFyICp2YWx1ZSwgdm9pZCAqY2IpCiAJCXVzZV9t
-YWlsbWFwX2NvbmZpZyA9IGdpdF9jb25maWdfYm9vbCh2YXIsIHZhbHVlKTsKIAkJcmV0dXJuIDA7
-CiAJfQotCisJaWYgKCFwcmVmaXhjbXAodmFyLCAiZ3BnLiIpKQorCQlyZXR1cm4gZ2l0X2dwZ19j
-b25maWcodmFyLCB2YWx1ZSwgTlVMTCk7IAogCWlmIChncmVwX2NvbmZpZyh2YXIsIHZhbHVlLCBj
-YikgPCAwKQogCQlyZXR1cm4gLTE7CiAJcmV0dXJuIGdpdF9kaWZmX3VpX2NvbmZpZyh2YXIsIHZh
-bHVlLCBjYik7Ci0tIAoxLjcuMTEubXN5c2dpdC4wCgo=
+followed by number of records, each prefixed by a command byte.
 
---_002_8C726954D36902459248B0627BF2E66F45D7029930AUSP01VMBX10c_--
+    * Command byte with its 8th bit set records source offset and
+      size (max 32 and 24 bits, respectively---other 7 bits in the
+      command byte tells us how large the offset and size are) and
+      tells us to insert a copy of that region at the current point.
+
+    * Command byte between 1-127 (inclusive) tells us to add that
+      many bytes that follow the command byte from the delta stream
+      at the current point.
+
+    * Command byte 0 is an error.
+
+And get_size_from_delta() skips the preimage length, grabs postimage
+length and returns the latter.  It is how we decide how many bytes
+we need to allocate to hold the result of applying the delta.
+
+> If it's not a delta, then it must start with '<type> <size>\0', which
+> even after compression cannot possibly be 0 bytes.
+>
+> Either way, get_size_from_delta() also uses 0 as the error return.
+
+Yes, that is why I said "is this check correct?".  As I already
+said, I think the only two things that protects us from creating a
+delta whose postimage size is 0 are the fact that we do not even
+attempt to deltify anything smaller than 50 bytes in pack-objects,
+and create_delta() refuses to create a delta to produce an empty
+postimage.
