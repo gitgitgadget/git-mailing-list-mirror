@@ -1,80 +1,66 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 3/3] git-merge-one-file: revise merge error reporting
-Date: Mon, 25 Mar 2013 15:24:12 -0400
-Message-ID: <CAPig+cRu8-6pNWbDXrPqU-yW5NDKY9WsE2wFY65303t2RpzZvQ@mail.gmail.com>
-References: <CAJDDKr4swZzzv3e+Huz72CVmisFKU8T74jFj3-uGmZHReRGVBw@mail.gmail.com>
-	<1364127985-13366-1-git-send-email-kevin@bracey.fi>
-	<1364127985-13366-4-git-send-email-kevin@bracey.fi>
-	<7vk3ovz9zb.fsf@alter.siamese.dyndns.org>
-	<7vfvzjz9ej.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Kevin Bracey <kevin@bracey.fi>, Git List <git@vger.kernel.org>,
-	David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 25 20:24:45 2013
+From: Brad King <brad.king@kitware.com>
+Subject: [PATCH] Documentation/commit-tree: mention -S option
+Date: Mon, 25 Mar 2013 15:39:00 -0400
+Message-ID: <14b024f9ee5c6319a0ff1f700f52d29b2464764f.1364240065.git.brad.king@kitware.com>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 25 20:39:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKD0e-0001AL-Kh
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 20:24:44 +0100
+	id 1UKDF8-0000NF-3F
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 20:39:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758862Ab3CYTYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 15:24:15 -0400
-Received: from mail-la0-f43.google.com ([209.85.215.43]:56026 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758853Ab3CYTYO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 15:24:14 -0400
-Received: by mail-la0-f43.google.com with SMTP id ek20so12152958lab.30
-        for <git@vger.kernel.org>; Mon, 25 Mar 2013 12:24:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=L4MIMyDZH/YSko4HyrBg8p8qpEVpb8WyvGpf6KgfUyY=;
-        b=DE9SaE5UgqqOfUKvfjOfb93i56uiTMpN/Ps4pST8jp7r/jlPSNghuPwBLIT0+/Da7g
-         YEdgGzooroyleGkLZ1QjQSE4ZHRShRiKmqZhl/dMccNE4Zllk04nJqjt17+1cho6dTvK
-         HSaRdixxoRhGQpQGzoFo7st/mZZyD/SN1/Nq7SguUGQLrcnRR9/xty/jjdDoSP1GWb0T
-         Rg/QwjSfLcj4GNT2kyFF0DL4cr8/bYWnUS6klO8eWyyoe1vKbYLK53hDK7NhRTXpi4BZ
-         txNnYZ5lFwTPSmeAGBXgm+xEzqAI+nwTtszWUMEsAjAZgOuh7Z9NRU9V4kIi4HKljMxG
-         4sDQ==
-X-Received: by 10.112.143.129 with SMTP id se1mr730181lbb.120.1364239452375;
- Mon, 25 Mar 2013 12:24:12 -0700 (PDT)
-Received: by 10.114.1.43 with HTTP; Mon, 25 Mar 2013 12:24:12 -0700 (PDT)
-In-Reply-To: <7vfvzjz9ej.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: rHsQrodkntNQWWAFkYFcYeJhsKk
+	id S1758877Ab3CYTjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 15:39:14 -0400
+Received: from 66-194-253-20.static.twtelecom.net ([66.194.253.20]:48691 "EHLO
+	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757999Ab3CYTjN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 15:39:13 -0400
+Received: by vesper.kitware.com (Postfix, from userid 1000)
+	id 744309AA7; Mon, 25 Mar 2013 15:39:00 -0400 (EDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219069>
 
-On Mon, Mar 25, 2013 at 1:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Subject: [PATCH] merge-one-file: force content conflict for "both side added" case
+Commit ba3c69a9 (commit: teach --gpg-sign option, 2011-10-05) added the
+-S option and documented it in the command usage.  Then commit 098bbdc3
+(Add -S, --gpg-sign option to manpage of "git commit", 2012-10-21)
+documented it in the porcelain manpage.  Use wording from the porcelain
+to document the option in the plumbing manpage too.
+---
+ Documentation/git-commit-tree.txt |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-s/both side/both sides/
-
-> Historically, we tried to be lenient to "both side added, slightly
-
-Ditto.
-
-> differently" case and as long as the files can be merged using a
-> made-up common ancestor cleanly, since f7d24bbefb06 (merge with
-> /dev/null as base, instead of punting O==empty case, 2005-11-07).
-> This was later further refined to use a better made-up common file
-> with fd66dbf5297a (merge-one-file: use empty- or common-base
-> condintionally in two-stage merge., 2005-11-10), but the spirit has
-> been the same.
->
-> But the original fix in f7d24bbefb06 to avoid punging on "both sides
-
-s/punging/punting/
-
-> added" case had a code to unconditionally error out the merge.  When
-> this triggers, even though the content-level merge can be done
-> cleanly, we end up not saying "content conflict" in the message, but
-> still issue the error message, showing "ERROR:  in <pathname>".
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
+index 86ef56e..62f7b53 100644
+--- a/Documentation/git-commit-tree.txt
++++ b/Documentation/git-commit-tree.txt
+@@ -10,7 +10,9 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git commit-tree' <tree> [(-p <parent>)...] < changelog
+-'git commit-tree' [(-p <parent>)...] [(-m <message>)...] [(-F <file>)...] <tree>
++'git commit-tree' [(-p <parent>)...] [-S<keyid>] [(-m <message>)...]
++		  [(-F <file>)...] <tree>
++
+ 
+ DESCRIPTION
+ -----------
+@@ -52,6 +54,9 @@ OPTIONS
+ 	Read the commit log message from the given file. Use `-` to read
+ 	from the standard input.
+ 
++-S<keyid>::
++	GPG-sign commit.
++
+ 
+ Commit Information
+ ------------------
+-- 
+1.7.10.4
