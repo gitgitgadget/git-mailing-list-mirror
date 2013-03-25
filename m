@@ -1,57 +1,87 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Why does 'submodule add' stage the relevant portions?
-Date: Mon, 25 Mar 2013 23:32:25 +0530
-Message-ID: <CALkWK0mRnDMFLeVoG85CUZ48rf7X_jHV=0XP73WL7zp2OGpezQ@mail.gmail.com>
-References: <CALkWK0=PHNmT5zfjEaWh_5=aV7wcPdGgyCWFhjaeVrrWhL0OBw@mail.gmail.com>
- <7v38vjz7sx.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v2 0/3] Recursion-free unpack_entry and packed_object_info
+Date: Mon, 25 Mar 2013 19:07:38 +0100
+Message-ID: <cover.1364234154.git.trast@student.ethz.ch>
+References: <87620faky3.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 25 19:03:16 2013
+Content-Type: text/plain
+Cc: Stefan Zager <szager@google.com>, Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	"Nicolas Pitre" <nico@fluxnic.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 25 19:08:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKBjn-0004Du-2y
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 19:03:15 +0100
+	id 1UKBoc-0002Ip-4W
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 19:08:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932396Ab3CYSCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 14:02:47 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:61192 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932242Ab3CYSCq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 14:02:46 -0400
-Received: by mail-ie0-f175.google.com with SMTP id c12so7659461ieb.20
-        for <git@vger.kernel.org>; Mon, 25 Mar 2013 11:02:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=/fxioZ+qNyUatdRKLjNviCtadc9LBysBfpeM/vuPVfA=;
-        b=0umgRJfgwgzGdRIshxcVSVw5iRV1UxIxqZ9GtNv0y0rH+lM5K2dHd5JY0k7meAA+3P
-         Obiv5ZU96qlDj3gmyWfvGgrbg7+5Kn2a03OidK0SISNhRy3s7VeQFbzmwqlIp70DFDsk
-         vvqIIbkw2YYQ2R550Tjp8+ViRjBzsqiiKkb0Qgi+CniGAMYiGhjQRXubJi1WXvuGiXL8
-         E9Unw+CfZoOOvZQtI6hJWThaAM0aksfQbStGm1bWgc5gp1SI9ZH/UrjLgLdqQRbcP+Ur
-         IJjmIbCgs8ZYOmaSPuMWcuFZlRVYf2IMLyYt2ImRLuixaHVOchMs6eB2K12UOHG0bbA/
-         PmzQ==
-X-Received: by 10.50.108.235 with SMTP id hn11mr8245302igb.107.1364234565947;
- Mon, 25 Mar 2013 11:02:45 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Mon, 25 Mar 2013 11:02:25 -0700 (PDT)
-In-Reply-To: <7v38vjz7sx.fsf@alter.siamese.dyndns.org>
+	id S932450Ab3CYSHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 14:07:45 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:34151 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932314Ab3CYSHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 14:07:44 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 25 Mar
+ 2013 19:07:41 +0100
+Received: from linux-k42r.v.cablecom.net (129.132.10.215) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 25 Mar
+ 2013 19:07:41 +0100
+X-Mailer: git-send-email 1.8.2.266.g8176668
+In-Reply-To: <87620faky3.fsf@linux-k42r.v.cablecom.net>
+X-Originating-IP: [129.132.10.215]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219054>
 
-Junio C Hamano wrote:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->
->> Git 2.0 is coming soon, so I'm excited about breaking a lot of
->> backward compatibility ;)
->
-> Don't.
+This is a fixed version of the initial patch, plus a two-patch
+implementation of a recursion-free unpack_entry.  (I narrowly resisted
+using "unrecursify" to describe it.)
 
-push.default is the necessary exception?
+I wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The stack/recursion is used _only_ for error recovery, no?  If we do
+>> not care about retrying with a different copy of an object we find
+>> in the delta chain, we can just update obj_offset with base_offset
+>> and keep digging.  It almost makes me wonder if a logical follow-up
+>> to this patch may be to do so, and rewrite the error recovery
+>> codepath to just mark the bad copy and jump back to the very top,
+>> retrying everything from scratch.
+>
+> I totally agree.  I'll try this again -- my last attempt just didn't
+> work out...
+
+Now I remember why it wasn't possible: we would have to go through the
+blacklists at every iteration, whereas now we only check them in the
+initial lookups.
+
+I'm not sure it makes that much sense.  If we need to shave off some
+speed in these functions, I would rather:
+
+- write packed_object_info so that it runs with constant space, and
+  restarts another implementation _with_ the recovery stack if it hits
+  a problem;
+
+- write unpack_entry so that it reuses the stack.  It can't do so by
+  using a static buffer because it needs to be reentrant in the error
+  case.
+
+
+Thomas Rast (3):
+  sha1_file: remove recursion in packed_object_info
+  Refactor parts of in_delta_base_cache/cache_or_unpack_entry
+  sha1_file: remove recursion in unpack_entry
+
+ sha1_file.c | 411 +++++++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 266 insertions(+), 145 deletions(-)
+
+-- 
+1.8.2.266.g8176668
