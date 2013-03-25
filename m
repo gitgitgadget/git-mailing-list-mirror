@@ -1,72 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Brandon Casey <drafnel@gmail.com>
 Subject: Re: git ate my home directory :-(
-Date: Mon, 25 Mar 2013 15:20:16 -0700
-Message-ID: <7v38vjw28v.fsf@alter.siamese.dyndns.org>
-References: <5150C3EC.6010608@nod.at> <20130325214343.GF1414@google.com>
- <7vboa7w2vm.fsf@alter.siamese.dyndns.org> <5150CB34.1030008@nod.at>
+Date: Mon, 25 Mar 2013 15:21:11 -0700
+Message-ID: <CA+sFfMexDR50b5FnJ-4MS8pxPXmg0CCbzCLVc3vx5XjfqdY1nQ@mail.gmail.com>
+References: <5150C3EC.6010608@nod.at>
+	<20130325214343.GF1414@google.com>
+	<7vboa7w2vm.fsf@alter.siamese.dyndns.org>
+	<20130325221355.GH1414@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Richard Weinberger <richard@nod.at>, git@vger.kernel.org,
 	Jeff King <peff@peff.net>
-To: Richard Weinberger <richard@nod.at>
-X-From: git-owner@vger.kernel.org Mon Mar 25 23:20:48 2013
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 25 23:21:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKFl1-0006or-Jc
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 23:20:47 +0100
+	id 1UKFls-0008NO-0m
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 23:21:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933468Ab3CYWUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 18:20:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41610 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933448Ab3CYWUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 18:20:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B01EBE80;
-	Mon, 25 Mar 2013 18:20:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1KJNRd000NO16CtT7BQdrcX4qpg=; b=N3JRZu
-	li8VHGbXX8sPNA2UEjz9pL4d9MmxWF+71qF/x/L4htwig3IbniT+E52B5GZmP5ho
-	4UGWwaSAx8al0DR3JWUG3Mo4eBG0gvJj4ZwNqXJbdi2gtXDi6kXNuxk9oC6tDsJH
-	OLEyYeRBqFuTFk54uB3xZVjmCb0X/Uadcc8Zg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ToqH+mnWQjLI1paJ/HslW7wjzKnJ8Qc3
-	HhVNJl3Q+UbrEesR+684qZMIRp28ORK2yNBFHEM+yuFGD1EteA3FkOhQwX7KXJ//
-	IYBgqvotx2kg4vJqkYLC63oTVFUBQsSJQHvoFEAmo5rpRLxdw40KskZzr7+dwGKI
-	D1PCxpQ/NLU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D34DBE7F;
-	Mon, 25 Mar 2013 18:20:18 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DAF2DBE7B; Mon, 25 Mar 2013
- 18:20:17 -0400 (EDT)
-In-Reply-To: <5150CB34.1030008@nod.at> (Richard Weinberger's message of "Mon,
- 25 Mar 2013 23:09:56 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2C867B68-959A-11E2-9D27-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758937Ab3CYWVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 18:21:13 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:50928 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752248Ab3CYWVM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 18:21:12 -0400
+Received: by mail-wi0-f177.google.com with SMTP id hm14so7290328wib.4
+        for <git@vger.kernel.org>; Mon, 25 Mar 2013 15:21:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=hfXo+5hXdXHyJ2m6vtyvCOCN7QTFCVavUoNt1fzFWd4=;
+        b=P0+JVDGXa5HjXQEqAcS5Bd8yAYjpJFsLcWBYFVq1jQlCXC7j6zjndwxqcFTUVkIIiy
+         Jp6vZ/ZYvKiJOq8ERcTcOjsu0a6KwdJth1N9BD0lWnbBeAvPLvKBAE1s+paPr/3iAco1
+         aw4m+Ll3FBzP+oAjWwoeDSJ3KWzZ1xJTssXHmDPCxw3TE8oqigpyubEP2NQmOKQUSXtg
+         v/iEVa8IteWh7SSXjnYlW366v4hJ88lApxn511hAmuFL9vhmWGwvl/sSxOKb9hexLXXu
+         rynIICZTboHLcGaekOzDSIedXP/tLn5GJ+NI4GElQdHqAtk4XHe9iqysGyL6stCTuKIv
+         rtWw==
+X-Received: by 10.194.10.129 with SMTP id i1mr8609674wjb.21.1364250071172;
+ Mon, 25 Mar 2013 15:21:11 -0700 (PDT)
+Received: by 10.194.143.10 with HTTP; Mon, 25 Mar 2013 15:21:11 -0700 (PDT)
+In-Reply-To: <20130325221355.GH1414@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219112>
 
-Richard Weinberger <richard@nod.at> writes:
+On Mon, Mar 25, 2013 at 3:13 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Junio C Hamano wrote:
+>
+>>                                                            I do not
+>> know how things will break when the end user sets and exports it to
+>> the environment, and I do not think we would want to make any
+>> promise on how it works.
+>
+> That's a reasonable desire, and it means it's a good thing we noticed
+> this before the envvar escaped to "master".  People *will* use such
+> exposed interfaces unless they are clearly marked as internal.  That's
+> just a fact of life.
+>
+> Here's a rough patch to hopefully improve matters.
+>
+> Longer term, it would be nice to have something like
+> GIT_IMPLICIT_WORK_TREE exposed to let scripts cache the result of the
+> search for .git.  Maybe something like "GIT_BARE=(arbitrary value)"
+> would be a good interface.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+>
+> diff --git a/cache.h b/cache.h
+> index 59e5b53..8f92b6d 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -377,7 +377,7 @@ static inline enum object_type object_type(unsigned int mode)
+>   * of this, but we use it internally to communicate to sub-processes that we
+>   * are in a bare repo. If not set, defaults to true.
+>   */
+> -#define GIT_IMPLICIT_WORK_TREE_ENVIRONMENT "GIT_IMPLICIT_WORK_TREE"
+> +#define GIT_IMPLICIT_WORK_TREE_ENVIRONMENT "GIT_INTERNAL_IMPLICIT_WORK_TREE"
 
-> Okay, I have to set GIT_DIR _and_ GIT_WORK_TREE to make my scripts safe again?
-> I've always set only GIT_DIR because it just worked (till today...).
+Maybe the environment variable for internal-use-only should be
+prefixed with an underscore?
 
-That means you never run your script inside a subdirectory ;-)
-
-If your $GIT_DIR is tied to a single working tree, a simpler way
-would be to add
-
-	[core]
-		worktree = /path/to/the/work/tree/
-
-to $GIT_DIR/config.
+-Brandon
