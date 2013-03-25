@@ -1,57 +1,80 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: git problems at kde
-Date: Mon, 25 Mar 2013 00:22:33 +0100
-Message-ID: <514F8AB9.9000806@googlemail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] checkout: add --sparse for restoring files in sparse
+ checkout mode
+Date: Mon, 25 Mar 2013 08:34:52 +0700
+Message-ID: <CACsJy8ByH8U0wYuaKaMKd3bauLBbS52peMs1eiGz++2vj2JKTA@mail.gmail.com>
+References: <514C3249.7000100@ivt.baug.ethz.ch> <1364101583-6035-1-git-send-email-pclouds@gmail.com>
+ <20130324181752.GA4543@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 25 00:22:57 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, kirill.mueller@ivt.baug.ethz.ch
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 25 02:36:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UJuFb-0005VX-7r
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 00:22:55 +0100
+	id 1UJwKn-0007Jh-8L
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 02:36:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754434Ab3CXXW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Mar 2013 19:22:27 -0400
-Received: from mail-ea0-f177.google.com ([209.85.215.177]:43452 "EHLO
-	mail-ea0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753153Ab3CXXW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Mar 2013 19:22:27 -0400
-Received: by mail-ea0-f177.google.com with SMTP id r16so2049013ead.36
-        for <git@vger.kernel.org>; Sun, 24 Mar 2013 16:22:25 -0700 (PDT)
+	id S1756704Ab3CYBf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Mar 2013 21:35:56 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:47396 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756475Ab3CYBfX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Mar 2013 21:35:23 -0400
+Received: by mail-ob0-f176.google.com with SMTP id er7so1929381obc.7
+        for <git@vger.kernel.org>; Sun, 24 Mar 2013 18:35:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=NdZfngT5DwArw5lLpPkds+xQo/S1XMXXg7Lt68QYc5Q=;
-        b=a4kZR1FraPMyWA9iycL+sQWRdSuJmpyLNmUM5OQhFVmztP2dszMBC61hITTuZL75A3
-         LwHhy78Vfp5IHUAmF/PZab9BaRV8pMf0LxRzHgDFyZcWQVV7hr7zrKgQYZGweSqUPysN
-         qUR+bpb+k8AwROSnTItDuMUwOadnXaqLa0DDp8DyQyiGPaPkQ6tDfiMMRmiM6SieqYxK
-         Pa3WAmkECf5ZhG1zhYxBiDZXXJSU2YOelxBtY971QUIHkOJKBinCyZuyuR7+WpoNh3so
-         LvuEWhM7GAc29whgvdnXk6kHHq74t87c774ouu2gIwxpLZuzEtmphxadg34WvUAh9bz2
-         KqOw==
-X-Received: by 10.14.207.200 with SMTP id n48mr33568eeo.4.1364167345801;
-        Sun, 24 Mar 2013 16:22:25 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-111-92.unitymediagroup.de. [109.91.111.92])
-        by mx.google.com with ESMTPS id s47sm4527290eeg.8.2013.03.24.16.22.24
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 24 Mar 2013 16:22:24 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=cQGe1grWp2uvUadiGru0Rqg56bwyg9gmM/71A+XVfYA=;
+        b=uxULBIW4eCo2rbYlhXqnibA7dfQNA/YxqELqWvNjZ4Zm0NG8ORIShX/rR4fV+YEoM+
+         6hYUTpQoMaHaKOpL8QZjVHH/1is2v9PP8G2OqyBPAO5Wt4sPLxiR8h6cS2ZM31Vx1//i
+         X2RZh//V6YqO2mUSsdAvd7LPDba4Quhnjkd9pH1rHAUWRmNFCU/Gzew6GOcoG/0rQiP2
+         4to1h/CTuk78y7bEVvbb9BXIwXOaR/ZliHCjSkmPOaiBZsvcMlygvA/GOrxni9guYLfM
+         T6yKl+m6qFaA+kG6HzlJqKEn0G8kkdvVufk0HU+bqkPqs1nXquohtnEHxMVpRqdkxO7w
+         hJYg==
+X-Received: by 10.60.13.39 with SMTP id e7mr9215798oec.74.1364175322319; Sun,
+ 24 Mar 2013 18:35:22 -0700 (PDT)
+Received: by 10.76.27.137 with HTTP; Sun, 24 Mar 2013 18:34:52 -0700 (PDT)
+In-Reply-To: <20130324181752.GA4543@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219003>
 
-Hi,
+On Mon, Mar 25, 2013 at 1:17 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> +--sparse::
+>> +     In sparse checkout mode, `git checkout -- <paths>` would
+>> +     update all entries matched by <paths> regardless sparse
+>> +     patterns. This option only updates entries matched by <paths>
+>> +     and sparse patterns.
+>
+> Hm, should this be the default?
+>
+> In principle, I would expect
+>
+>         git checkout -- .
+>
+> to make the worktree match the index, respecting the sparse checkout.
+> And something like
+>
+>         git checkout --widen -- .
+>
+> to change the sparse checkout pattern.  But of course it is easily
+> possible that I am missing some details of how sparse checkout is
+> used in practice.
+>
+> What do you think?
 
-I personally found this an interesting read:
-http://jefferai.org/2013/03/24/too-perfect-a-mirror/
-
-It discusses git and apparently some failures of it.
-
-Stefan
+Changing the default may involve a painful transition phase (e.g. "add
+-u"). I think making it the default via alias should be good enough in
+most cases. We also need to think how it impacts checkout usage in
+scripts. I think it might be ok, but I haven't finished my morning
+coffee yet, so..
+-- 
+Duy
