@@ -1,59 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 3/3] t7800: run --dir-diff tests with and without symlinks
-Date: Mon, 25 Mar 2013 11:59:12 +0100
-Message-ID: <51502E00.7070904@viscovery.net>
-References: <cover.1363980749.git.john@keeping.me.uk> <cover.1364045138.git.john@keeping.me.uk> <cf71cc8757c7cb59e93d762fba922635c077376d.1364045138.git.john@keeping.me.uk> <514FFC3C.3010203@viscovery.net> <20130325103516.GC2286@serenity.lan>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH] Documentation/technical/api-fswatch.txt: start with outline
+Date: Mon, 25 Mar 2013 17:59:15 +0700
+Message-ID: <CACsJy8Bx83P=HK1pcy7ASnP5t+_snERxnVxji9_TGW-3fuUq-w@mail.gmail.com>
+References: <1362946623-23649-1-git-send-email-artagnon@gmail.com>
+ <513FB85C.5010106@gmail.com> <CACsJy8CBru+Z0+oYVKGdwjiF4DDH3w4vCjunaoCnoDQ6AizwWg@mail.gmail.com>
+ <5140BC80.4000201@gmail.com> <7vtxof146d.fsf@alter.siamese.dyndns.org>
+ <87ehffv30f.fsf@pctrast.inf.ethz.ch> <CALkWK0=0+HYn=bSrGC5sMQOE-53As0h9dG3N9wvUB2=NW3=98A@mail.gmail.com>
+ <87r4jdt404.fsf@pctrast.inf.ethz.ch> <CALkWK0nt22NW=_iH2u8iiOMofoF6k+1sZLp-NsoYZtbADfCEuQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Rast <trast@inf.ethz.ch>,
 	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Mar 25 11:59:49 2013
+	Karsten Blees <karsten.blees@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Robert Zeh <robert.allan.zeh@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Drew Northup <n1xim.email@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 25 12:00:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UK57z-0000T0-RI
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 11:59:48 +0100
+	id 1UK58V-0000yy-0V
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 12:00:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754999Ab3CYK7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 06:59:20 -0400
-Received: from so.liwest.at ([212.33.55.24]:20178 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752180Ab3CYK7U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 06:59:20 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UK57S-0006uK-Ni; Mon, 25 Mar 2013 11:59:14 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 6F7CA1660F;
-	Mon, 25 Mar 2013 11:59:12 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <20130325103516.GC2286@serenity.lan>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1756007Ab3CYK7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 06:59:48 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:33183 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755262Ab3CYK7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 06:59:46 -0400
+Received: by mail-oa0-f44.google.com with SMTP id h1so6236461oag.17
+        for <git@vger.kernel.org>; Mon, 25 Mar 2013 03:59:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=NEby0JQJmRtFvJI7SRTtxAVmd61Vr/Ok4XnysQm9yuk=;
+        b=DEwMTJ6dPfHD4cmi0dOFCVGMUhGNIw3m4UB/cqwlo9O1wu3hjKUOvpnkEZubc+wQMt
+         4zAEthHoejc2wXyex375UslgNEKD3SWG7xEJS3Km1FJXBN7Vfz+28cE2bls3O1YEMGLC
+         Nvvr4IJjChqmAqMHTaQ+QRyb1uAK/CU03Dl9G1Wv7hw0A6PexiYQaxPKwPcA1VkDVfef
+         +5we2cBIhK0cvGz3uTChvEbB8DX8JboUJTamfFDfF0MwzyPZqAD++VmNjRulEm4OH2OJ
+         bsu8Nc5aHA3L+EzLsE4BePdY+dRGxm0wAdGk/PHqukPj5HCyAlXoeZkviTVGBQZekgvE
+         VxUA==
+X-Received: by 10.60.125.1 with SMTP id mm1mr10361601oeb.52.1364209185482;
+ Mon, 25 Mar 2013 03:59:45 -0700 (PDT)
+Received: by 10.76.27.137 with HTTP; Mon, 25 Mar 2013 03:59:15 -0700 (PDT)
+In-Reply-To: <CALkWK0nt22NW=_iH2u8iiOMofoF6k+1sZLp-NsoYZtbADfCEuQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219029>
 
-Am 3/25/2013 11:35, schrieb John Keeping:
-> On Mon, Mar 25, 2013 at 08:26:52AM +0100, Johannes Sixt wrote:
->> The series looks good, but I can't test it because it does not apply
->> anywhere here.
-> 
-> It's built on top of da/difftool-fixes, is there some problem that stops
-> it applying cleanly on top of that?
+On Mon, Mar 25, 2013 at 5:44 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Just a small heads-up for people using Emacs.  24.4 has inotify
+> support, and magit-inotify.el [1] has already started using it.  From
+> initial impressions, I'm quite impressed with it.
 
-Thanks. I had only tried trees that were "contaminated" by
-jk/difftool-dir-diff-edit-fix, which is in conflict with da/difftool-fixes.
+Have you tried it? From a quick look, it seems to watch all
+directories. I wonder how it performs on webkit (at least 5k dirs)
 
-t7800 passes on Windows with these patches.
-
--- Hannes
+> [1]: https://github.com/magit/magit/blob/master/contrib/magit-inotify.el
+-- 
+Duy
