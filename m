@@ -1,183 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 6/9] streaming_write_entry: propagate streaming errors
-Date: Mon, 25 Mar 2013 17:49:36 -0400
-Message-ID: <20130325214936.GA22419@sigill.intra.peff.net>
-References: <20130325201427.GA15798@sigill.intra.peff.net>
- <20130325202216.GF16019@sigill.intra.peff.net>
- <20130325213934.GE1414@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] t7800: run --dir-diff tests with and without
+ symlinks
+Date: Mon, 25 Mar 2013 14:50:38 -0700
+Message-ID: <7vobe7w3m9.fsf@alter.siamese.dyndns.org>
+References: <cover.1363980749.git.john@keeping.me.uk>
+ <cover.1364045138.git.john@keeping.me.uk>
+ <cf71cc8757c7cb59e93d762fba922635c077376d.1364045138.git.john@keeping.me.uk>
+ <514FFC3C.3010203@viscovery.net> <20130325103516.GC2286@serenity.lan>
+ <51502E00.7070904@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 25 22:50:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Mar 25 22:51:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKFHP-0005Ho-Dg
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:50:11 +0100
+	id 1UKFIM-0006oa-KR
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:51:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933263Ab3CYVtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 17:49:41 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39452 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933102Ab3CYVtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 17:49:40 -0400
-Received: (qmail 29032 invoked by uid 107); 25 Mar 2013 21:51:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Mar 2013 17:51:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Mar 2013 17:49:36 -0400
-Content-Disposition: inline
-In-Reply-To: <20130325213934.GE1414@google.com>
+	id S933330Ab3CYVum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 17:50:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51667 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933283Ab3CYVul (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 17:50:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1F49AEF4;
+	Mon, 25 Mar 2013 17:50:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RSOBjQfAQXL199jlFyYFGO+NzkM=; b=kbkjgK
+	c0TNGznjDcPRb5EBc9U4dADBy0fcUf8b0yhsBUijccrlLtiBnRGVnOTzX+UUblvs
+	U1IU2Ei3ebv6i4Tx4ot5w/p4AVDyF/zyQrTrh1LzJ5xjn5EP1hgTDvCkT1Pr7nyR
+	XvPeJwfcg9cOM3nbt79cZqMxBiJYMYR5Dn1fg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=G++iPKPFI+/BviC5iFfwpeQ2F4XfFDep
+	0R/MSXYUgGULW7yIrpt80UJBxztszPWa2acLOi/6wdSQSrK0cKMAap4wSc3CVldy
+	/viumLkTpo+gz1ZgQT3XivdTHhFoQfN5mMiK+eXv4DrafycPInc2dc7rbPxGkIQk
+	flHt+CAgzFw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4751AEF3;
+	Mon, 25 Mar 2013 17:50:40 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 531F7AEF2; Mon, 25 Mar 2013
+ 17:50:40 -0400 (EDT)
+In-Reply-To: <51502E00.7070904@viscovery.net> (Johannes Sixt's message of
+ "Mon, 25 Mar 2013 11:59:12 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 090C236C-9596-11E2-BB70-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219102>
 
-On Mon, Mar 25, 2013 at 02:39:34PM -0700, Jonathan Nieder wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> > --- a/entry.c
-> > +++ b/entry.c
-> > @@ -126,8 +126,10 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
-> >  	fd = open_output_fd(path, ce, to_tempfile);
-> >  	if (0 <= fd) {
-> >  		result = stream_blob_to_fd(fd, ce->sha1, filter, 1);
-> > -		*fstat_done = fstat_output(fd, state, statbuf);
-> > -		result = close(fd);
-> > +		if (!result) {
-> > +			*fstat_done = fstat_output(fd, state, statbuf);
-> > +			result = close(fd);
-> > +		}
-> 
-> Should this do something like
-> [...]
-> to avoid leaking the file descriptor?
+> Am 3/25/2013 11:35, schrieb John Keeping:
+>> On Mon, Mar 25, 2013 at 08:26:52AM +0100, Johannes Sixt wrote:
+>>> The series looks good, but I can't test it because it does not apply
+>>> anywhere here.
+>> 
+>> It's built on top of da/difftool-fixes, is there some problem that stops
+>> it applying cleanly on top of that?
+>
+> Thanks. I had only tried trees that were "contaminated" by
+> jk/difftool-dir-diff-edit-fix, which is in conflict with da/difftool-fixes.
 
-Yes, Eric Sunshine noticed this, too. Re-rolled patch is below, which I
-think is even a little cleaner.
-
-> > +test_expect_success 'read-tree -u detects bit-errors in blobs' '
-> > +	(
-> > +		cd bit-error &&
-> > +		rm content.t &&
-> > +		test_must_fail git read-tree --reset -u FETCH_HEAD
-> > +	)
-> 
-> Makes sense.  Might make sense to use "rm -f" instead of "rm" to avoid
-> failures if content.t is removed already.
-
-Yeah, good point. My original test looked like:
-
-  git init bit-error &&
-  git fetch .. &&
-  corrupt ...
-  test_must_fail ...
-
-but I ended up refactoring it to re-use the corrupted directories, and
-added the "rm" after the fact. The use of FETCH_HEAD is also bogus
-(read-tree is failing, but because we are giving it a bogus ref, not
-because of the corruption, so we are not actually testing anything
-anymore, even though it still passes).
-
-Both fixed in my re-roll.
-
--- >8 --
-Subject: [PATCH] streaming_write_entry: propagate streaming errors
-
-When we are streaming an index blob to disk, we store the
-error from stream_blob_to_fd in the "result" variable, and
-then immediately overwrite that with the return value of
-"close". That means we catch errors on close (e.g., problems
-committing the file to disk), but miss anything which
-happened before then.
-
-We can fix this by using bitwise-OR to accumulate errors in
-our result variable.
-
-While we're here, we can also simplify the error handling
-with an early return, which makes it easier to see under
-which circumstances we need to clean up.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- entry.c                      | 16 +++++++++-------
- t/t1060-object-corruption.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 34 insertions(+), 7 deletions(-)
-
-diff --git a/entry.c b/entry.c
-index 17a6bcc..a20bcbc 100644
---- a/entry.c
-+++ b/entry.c
-@@ -120,16 +120,18 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
- 				 const struct checkout *state, int to_tempfile,
- 				 int *fstat_done, struct stat *statbuf)
- {
--	int result = -1;
-+	int result = 0;
- 	int fd;
- 
- 	fd = open_output_fd(path, ce, to_tempfile);
--	if (0 <= fd) {
--		result = stream_blob_to_fd(fd, ce->sha1, filter, 1);
--		*fstat_done = fstat_output(fd, state, statbuf);
--		result = close(fd);
--	}
--	if (result && 0 <= fd)
-+	if (fd < 0)
-+		return -1;
-+
-+	result |= stream_blob_to_fd(fd, ce->sha1, filter, 1);
-+	*fstat_done = fstat_output(fd, state, statbuf);
-+	result |= close(fd);
-+
-+	if (result)
- 		unlink(path);
- 	return result;
- }
-diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
-index d36994a..2945395 100755
---- a/t/t1060-object-corruption.sh
-+++ b/t/t1060-object-corruption.sh
-@@ -24,6 +24,15 @@ test_expect_success 'setup corrupt repo' '
- 	)
- '
- 
-+test_expect_success 'setup repo with missing object' '
-+	git init missing &&
-+	(
-+		cd missing &&
-+		test_commit content &&
-+		rm -f "$(obj_to_file HEAD:content.t)"
-+	)
-+'
-+
- test_expect_success 'streaming a corrupt blob fails' '
- 	(
- 		cd bit-error &&
-@@ -31,4 +40,20 @@ test_expect_success 'streaming a corrupt blob fails' '
- 	)
- '
- 
-+test_expect_success 'read-tree -u detects bit-errors in blobs' '
-+	(
-+		cd bit-error &&
-+		rm -f content.t &&
-+		test_must_fail git read-tree --reset -u HEAD
-+	)
-+'
-+
-+test_expect_success 'read-tree -u detects missing objects' '
-+	(
-+		cd missing &&
-+		rm -f content.t &&
-+		test_must_fail git read-tree --reset -u HEAD
-+	)
-+'
-+
- test_done
--- 
-1.8.2.13.g0f18d3c
+Yes, the conflict was unpleasant to deal with.  John, I think what
+is queued on 'pu' is OK, but please double check after I push it out
+in a few hours.
