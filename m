@@ -1,115 +1,276 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-web--browse: recognize iTerm as a GUI terminal on OS
- X
-Date: Mon, 25 Mar 2013 14:44:17 -0700
-Message-ID: <7vtxnzw3wu.fsf@alter.siamese.dyndns.org>
-References: <CAMxBVSs6dJFnK78E2Da7t4V9ndJFRVDZEd1fR5QuCFz=u2Bnpw@mail.gmail.com>
- <CAMxBVStw-b3J_Fm9x=h3==9ebdLUkpjBSQ9-W4+zJ9N20ojfxg@mail.gmail.com>
- <CAP8UFD2oR5tnYuw7Nbe-CzGx7fw-OpAFW+reN+1Nroh1jXjfsQ@mail.gmail.com>
- <CAMxBVStVXZGGrjHzN7kukVP6_ZGo0miyJaE2FVYPVV4Jb5U82w@mail.gmail.com>
- <CAEBDL5VNodcTGBOvQjyL30qiXhshxhnUH-Vd9xy9=RxZQgH-Yw@mail.gmail.com>
- <CAP8UFD2m8n5RHN-CgyDP1ir_AorpJGnWwNhXuRxDa=DbHfsdiw@mail.gmail.com>
- <20130325101318.GA31409@yoda.local>
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH v2] difftool: don't overwrite modified files
+Date: Mon, 25 Mar 2013 21:44:30 +0000
+Message-ID: <20130325214430.GG2286@serenity.lan>
+References: <cover.1363980749.git.john@keeping.me.uk>
+ <cover.1364045138.git.john@keeping.me.uk>
+ <e44349728c07d8ae22d4b73527b1d124b49cc4a9.1364045138.git.john@keeping.me.uk>
+ <7vd2up4bo7.fsf@alter.siamese.dyndns.org>
+ <20130324123620.GA2286@serenity.lan>
+ <CAJELnLEhcY4Oc-EB=Mi7PKBQQF+EiVpW_dNH6G-abjZj0MAdNw@mail.gmail.com>
+ <20130324151557.GB2286@serenity.lan>
+ <514FFFC7.3090004@viscovery.net>
+ <20130325104219.GD2286@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Timo Sand <timo.j.sand@gmail.com>, git <git@vger.kernel.org>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Mon Mar 25 22:44:51 2013
+Cc: Matt McClure <matthewlmcclure@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Mar 25 22:45:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKFCD-0005GG-A7
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:44:49 +0100
+	id 1UKFCb-0005sb-3p
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:45:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758954Ab3CYVoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 17:44:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46920 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758928Ab3CYVoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 17:44:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BECD7AB5A;
-	Mon, 25 Mar 2013 17:44:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LMvTSHBK/E9nmosy/dPdWq2rUV0=; b=Q6v6O9
-	rwt/GkCakQXvvNhNbvp/QTFF5Q58FAdUZkxoVxzNMwa7+QhCexufaSooqebFIYE4
-	AXDp1W2rEnh2meWwkaHeKh+4r8RxULnlAMfRwCo8neZV9ibOF6Na09pUCIep24PM
-	oElokS9MPYsMAutCwgNRZQMhl5RHxXM1sGNPY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wZe5vuWpzYHlWUARMw7wsAyNWxc/E+YV
-	0w7b55MeSahdwnsrWuLw6Sera3LKNBGAPvXm1FVjxoEvjDFx7tbO12V2iqKmtLTx
-	C+I4uf3strPbK7JVDcYxYpo7u/z5mar65xgYVv3VXu5pXT3JH+j0/fsuofXNHOHA
-	mtbp5xLTGBs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2FF6AB58;
-	Mon, 25 Mar 2013 17:44:19 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 11404AB55; Mon, 25 Mar 2013
- 17:44:18 -0400 (EDT)
-In-Reply-To: <20130325101318.GA31409@yoda.local> (John Szakmeister's message
- of "Mon, 25 Mar 2013 06:13:18 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 25C3D456-9595-11E2-9E81-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933280Ab3CYVop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 17:44:45 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:55040 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933102Ab3CYVoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 17:44:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id D0BCB22C87;
+	Mon, 25 Mar 2013 21:44:43 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id htQRgl7o3Uni; Mon, 25 Mar 2013 21:44:42 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id 8BE6322F63;
+	Mon, 25 Mar 2013 21:44:32 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <20130325104219.GD2286@serenity.lan>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219100>
 
-John Szakmeister <john@szakmeister.net> writes:
+After running the user's diff tool, git-difftool will copy any files
+that differ between the working tree and the temporary tree.  This is
+useful when the user edits the file in their diff tool but is wrong if
+they edit the working tree file while examining the diff.
 
-> It turns out that the presence of SECURITYSESSIONID is not sufficient
-> for detecting the presence of a GUI under Mac OS X.  SECURITYSESSIONID
-> appears to only be set when the user has Screen Sharing enabled.
-> Disabling Screen Sharing and relaunching the shell showed that the
-> variable was missing, at least under Mac OS X 10.6.8.  As a result,
-> let's check for iTerm directly via TERM_PROGRAM.
->
-> Signed-off-by: John Szakmeister <john@szakmeister.net>
-> ---
->
-> On Sun, Mar 24, 2013 at 10:05:53PM +0100, Christian Couder wrote:
-> [snip]
->> Your patch looks good to me, and I cannot really test it as I don't have a Mac.
->> Could you just had some of the explanations you gave above to the
->> commit message?
->
-> Here's an updated patch.  I also noticed that git-bisect.sh is
-> also trying to determine if a GUI is present by looking for
-> SECURITYSESSIONID as well.  I wonder if it would be better to
-> create a shell function in git-sh-setup.sh that the two scripts
-> could use?
+Instead of copying unconditionally when the files differ, create and
+index from the working tree files and only copy the temporary file back
+if it was modified and the working tree file was not.  If both files
+have been modified, print a warning and exit with an error.
 
-Yes, but that can come later once this settles.
+Note that we cannot use an existing index in git-difftool since those
+contain the modified files that need to be checked out but here we are
+looking at those files which are copied from the working tree and not
+checked out.  These are precisely the files which are not in the
+existing indices.
 
-Your patch makes me wonder if
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+On Mon, Mar 25, 2013 at 10:42:19AM +0000, John Keeping wrote:
+> On Mon, Mar 25, 2013 at 08:41:59AM +0100, Johannes Sixt wrote:
+> > This is gross. Can't we do much better here? Difftool already keeps a
+> > GIT_INDEX of the files in the temporary tree ($tmpdir/rindex). Running
+> > git-diff-files should be sufficient to tell which ones where edited via
+> > the users's diff-tool. Then you can restrict calling hash-object to only
+> > those worktree files where an "edit collision" needs to be checked for.
+> 
+> That's only the case for files that are not copied from the working
+> tree, so the temporary index doesn't contain the files that are of
+> interest here.
+> 
+> > You could also keep a parallel index that keeps the state of the same set
+> > of files in the worktree. Then another git-diff-files call could replace
+> > the other half of hash-object calls.
+> 
+> I like the idea of creating an index from the working tree files and
+> using it here.  If we create a "starting state" index for these files,
+> we should be able to run git-diff-files against both the working tree
+> and the temporary tree at this point and compare the output.
 
-	test -n "$TERM_PROGRAM"
+Here's an attempt at taking this approach, built on
+jk/difftool-dir-diff-edit-fix.
 
-without any SECURITYSESSIONID or explicit program name checks should
-suffice, though.
+ git-difftool.perl   | 73 +++++++++++++++++++++++++++++++++++++++++++----------
+ t/t7800-difftool.sh | 26 +++++++++++++++++++
+ 2 files changed, 85 insertions(+), 14 deletions(-)
 
->
-> -John
->
-> git-web--browse.sh | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/git-web--browse.sh b/git-web--browse.sh
-> index 1e82726..1ff5379 100755
-> --- a/git-web--browse.sh
-> +++ b/git-web--browse.sh
-> @@ -120,6 +120,7 @@ if test -z "$browser" ; then
->  	fi
->  	# SECURITYSESSIONID indicates an OS X GUI login session
->  	if test -n "$SECURITYSESSIONID" \
-> +		-o "$TERM_PROGRAM" = "iTerm.app" \
->  		-o "$TERM_PROGRAM" = "Apple_Terminal" ; then
->  		browser_candidates="open $browser_candidates"
->  	fi
+diff --git a/git-difftool.perl b/git-difftool.perl
+index c433e86..d10f7d2 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -13,9 +13,9 @@
+ use 5.008;
+ use strict;
+ use warnings;
++use Error qw(:try);
+ use File::Basename qw(dirname);
+ use File::Copy;
+-use File::Compare;
+ use File::Find;
+ use File::stat;
+ use File::Path qw(mkpath rmtree);
+@@ -88,14 +88,45 @@ sub use_wt_file
+ 	my ($repo, $workdir, $file, $sha1, $symlinks) = @_;
+ 	my $null_sha1 = '0' x 40;
+ 
+-	if ($sha1 eq $null_sha1) {
+-		return 1;
+-	} elsif (not $symlinks) {
++	if ($sha1 ne $null_sha1 and not $symlinks) {
+ 		return 0;
+ 	}
+ 
+ 	my $wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
+-	return $sha1 eq $wt_sha1;
++	my $use = ($sha1 eq $null_sha1) || ($sha1 eq $wt_sha1);
++	return ($use, $wt_sha1);
++}
++
++sub changed_files
++{
++	my ($repo_path, $index, $worktree) = @_;
++	$ENV{GIT_INDEX_FILE} = $index;
++	$ENV{GIT_WORK_TREE} = $worktree;
++	my $must_unset_git_dir = 0;
++	if (not defined($ENV{GIT_DIR})) {
++		$must_unset_git_dir = 1;
++		$ENV{GIT_DIR} = $repo_path;
++	}
++
++	my @refreshargs = qw/update-index --really-refresh -q --unmerged/;
++	my @gitargs = qw/diff-files --name-only -z/;
++	try {
++		Git::command_oneline(@refreshargs);
++	} catch Git::Error::Command with {};
++
++	my $line = Git::command_oneline(@gitargs);
++	my @files;
++	if (defined $line) {
++		@files = split('\0', $line);
++	} else {
++		@files = ();
++	}
++
++	delete($ENV{GIT_INDEX_FILE});
++	delete($ENV{GIT_WORK_TREE});
++	delete($ENV{GIT_DIR}) if ($must_unset_git_dir);
++
++	return map { $_ => 1 } @files;
+ }
+ 
+ sub setup_dir_diff
+@@ -121,6 +152,7 @@ sub setup_dir_diff
+ 	my $null_sha1 = '0' x 40;
+ 	my $lindex = '';
+ 	my $rindex = '';
++	my $wtindex = '';
+ 	my %submodule;
+ 	my %symlink;
+ 	my @working_tree = ();
+@@ -174,8 +206,12 @@ EOF
+ 		}
+ 
+ 		if ($rmode ne $null_mode) {
+-			if (use_wt_file($repo, $workdir, $dst_path, $rsha1, $symlinks)) {
+-				push(@working_tree, $dst_path);
++			my ($use, $wt_sha1) = use_wt_file($repo, $workdir,
++							  $dst_path, $rsha1,
++							  $symlinks);
++			if ($use) {
++				push @working_tree, $dst_path;
++				$wtindex .= "$rmode $wt_sha1\t$dst_path\0";
+ 			} else {
+ 				$rindex .= "$rmode $rsha1\t$dst_path\0";
+ 			}
+@@ -218,6 +254,12 @@ EOF
+ 	$rc = system('git', 'checkout-index', '--all', "--prefix=$rdir/");
+ 	exit_cleanup($tmpdir, $rc) if $rc != 0;
+ 
++	$ENV{GIT_INDEX_FILE} = "$tmpdir/wtindex";
++	($inpipe, $ctx) =
++		$repo->command_input_pipe(qw(update-index --info-only -z --index-info));
++	print($inpipe $wtindex);
++	$repo->command_close_pipe($inpipe, $ctx);
++
+ 	# If $GIT_DIR was explicitly set just for the update/checkout
+ 	# commands, then it should be unset before continuing.
+ 	delete($ENV{GIT_DIR}) if ($must_unset_git_dir);
+@@ -390,19 +432,22 @@ sub dir_diff
+ 	# should be copied back to the working tree.
+ 	# Do not copy back files when symlinks are used and the
+ 	# external tool did not replace the original link with a file.
++	my %wt_modified = changed_files($repo->repo_path(),
++		"$tmpdir/wtindex", "$workdir");
++	my %tmp_modified = changed_files($repo->repo_path(),
++		"$tmpdir/wtindex", "$b");
+ 	for my $file (@worktree) {
+ 		next if $symlinks && -l "$b/$file";
+ 		next if ! -f "$b/$file";
+ 
+-		my $diff = compare("$b/$file", "$workdir/$file");
+-		if ($diff == 0) {
+-			next;
+-		} elsif ($diff == -1) {
+-			my $errmsg = "warning: Could not compare ";
+-			$errmsg += "'$b/$file' with '$workdir/$file'\n";
++		if (exists $wt_modified{$file} and exists $tmp_modified{$file}) {
++			my $errmsg = "warning: Both files modified: ";
++			$errmsg .= "'$workdir/$file' and '$b/$file'.\n";
++			$errmsg .= "warning: Working tree file has been left.\n";
++			$errmsg .= "warning:\n";
+ 			warn $errmsg;
+ 			$error = 1;
+-		} elsif ($diff == 1) {
++		} elsif ($tmp_modified{$file}) {
+ 			my $mode = stat("$b/$file")->mode;
+ 			copy("$b/$file", "$workdir/$file") or
+ 			exit_cleanup($tmpdir, 1);
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index db3d3d6..be2042d 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -407,4 +407,30 @@ test_expect_success PERL 'difftool --dir-diff from subdirectory' '
+ 	)
+ '
+ 
++write_script modify-file <<\EOF
++echo "new content" >file
++EOF
++
++test_expect_success PERL 'difftool --no-symlinks does not overwrite working tree file ' '
++	echo "orig content" >file &&
++	git difftool --dir-diff --no-symlinks --extcmd "$(pwd)/modify-file" branch &&
++	echo "new content" >expect &&
++	test_cmp expect file
++'
++
++write_script modify-both-files <<\EOF
++echo "wt content" >file &&
++echo "tmp content" >"$2/file" &&
++echo "$2" >tmpdir
++EOF
++
++test_expect_success PERL 'difftool --no-symlinks detects conflict ' '
++	echo "orig content" >file &&
++	test_must_fail git difftool --dir-diff --no-symlinks --extcmd "$(pwd)/modify-both-files" branch &&
++	echo "wt content" >expect &&
++	test_cmp expect file &&
++	echo "tmp content" >expect &&
++	test_cmp expect "$(cat tmpdir)/file"
++'
++
+ test_done
+-- 
+1.8.2.411.g65a544e
