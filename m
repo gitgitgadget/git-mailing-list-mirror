@@ -1,77 +1,64 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 4/4] attr.c: fix matching "subdir" without the trailing slash
-Date: Mon, 25 Mar 2013 14:20:31 +0700
-Message-ID: <CACsJy8CNjKP1y925mb8_t_hs0QCZwaY6mYTe6EMvbJk2pPifew@mail.gmail.com>
-References: <20130319175756.GA13760@sigill.intra.peff.net> <1364191510-8900-1-git-send-email-pclouds@gmail.com>
- <1364191510-8900-5-git-send-email-pclouds@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2 3/3] t7800: run --dir-diff tests with and without symlinks
+Date: Mon, 25 Mar 2013 08:26:52 +0100
+Message-ID: <514FFC3C.3010203@viscovery.net>
+References: <cover.1363980749.git.john@keeping.me.uk> <cover.1364045138.git.john@keeping.me.uk> <cf71cc8757c7cb59e93d762fba922635c077376d.1364045138.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, avila.jn@gmail.com,
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 25 08:21:45 2013
+	Jonathan Nieder <jrnieder@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Mar 25 08:27:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UK1iw-0005dX-Vt
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 08:21:43 +0100
+	id 1UK1oi-0001h6-Sv
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 08:27:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752784Ab3CYHVD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Mar 2013 03:21:03 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:51286 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752547Ab3CYHVB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Mar 2013 03:21:01 -0400
-Received: by mail-oa0-f46.google.com with SMTP id k1so6123758oag.33
-        for <git@vger.kernel.org>; Mon, 25 Mar 2013 00:21:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=tnz2aFETsIY22dMgZP33K80CJ5oDxd72tY56D1NO0lQ=;
-        b=rRaitxcdcnSPZ4CtgEIF6CMAtwjA3aa+Scj7iyoHnW8Bk7DFo0zf8mJNx/r22u3Sp6
-         AKIOgV6f7fyVX/XsmkMIvypHaqa1dJ4QPRkJLpFNIqvFIEz8PGrZPMt8to3Xu8n4dIEy
-         b5yUbUDO9IHsM55iXSBAnG2eVilc3TPf7Oapegd3n0AYW0DRhRK/mb6wbGGQKZ8AquSj
-         i7qY7l5XxmnuVufqWihVTiRB4hwv/abS0p/IlynOZ1KC5fYiiOlZTkSRNVWI47WypR4p
-         LUE8cY9M3VQw0rbr+PhgHs2M1FHoFf5TZcUPSS/P7VpPcNy2zh8iRKLMvPy9GRBAq/yZ
-         J7Wg==
-X-Received: by 10.60.125.1 with SMTP id mm1mr9771293oeb.52.1364196061196; Mon,
- 25 Mar 2013 00:21:01 -0700 (PDT)
-Received: by 10.76.27.137 with HTTP; Mon, 25 Mar 2013 00:20:31 -0700 (PDT)
-In-Reply-To: <1364191510-8900-5-git-send-email-pclouds@gmail.com>
+	id S1752712Ab3CYH1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 03:27:13 -0400
+Received: from so.liwest.at ([212.33.55.24]:50672 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751267Ab3CYH1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 03:27:12 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1UK1o9-0008Ks-7Q; Mon, 25 Mar 2013 08:27:05 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id C9F1A1660F;
+	Mon, 25 Mar 2013 08:27:04 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <cf71cc8757c7cb59e93d762fba922635c077376d.1364045138.git.john@keeping.me.uk>
+X-Enigmail-Version: 1.5.1
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219015>
 
-On Mon, Mar 25, 2013 at 1:05 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> The story goes back to 94bc671 (Add directory pattern matching to
-> attributes - 2012-12-08). Before this commit, directories are passed
-> to path_matches without the trailing slash. This is fine for matching
-> pattern "subdir" with "foo/subdir".
->
-> Patterns like "subdir/" (i.e. match _directory_ subdir) won't work
-> though. So paths are now passed to path_matches with the trailing
-> slash (i.e. "subdir/"). The trailing slash is used as the directory
-> indicator (similar to dtype in exclude case). This makes pattern
-> "subdir/" match directory "subdir/". Pattern "subdir" no longer match
-> subdir, which is now "subdir/".
->
-> As the trailing slash in pathname is the directory indicator, we do
-> not need to keep it in the pathname for matching. The trailing slash
-> should be turned to dtype "DT_DIR" and stripped out of pathname. This
-> keeps the code pattern similar to exclude.
+The series looks good, but I can't test it because it does not apply
+anywhere here.
 
-On second thought, maybe we should not pass path "subdir/" at all.
-Instead we create a fake dtype based on the trailing slash and pass it
-down to attr.c:fill() -> path_matches(), just like how
-last_exclude_matching_from_list() is called.
---=20
-Duy
+Am 3/23/2013 14:31, schrieb John Keeping:
+> Currently the difftool --dir-diff tests may or may not use symlinks
+> depending on the operating system on which they are run.  In one case
+> this has caused a test failure to be noticed only on Windows when the
+> test also fails on Linux when difftool is invoked with --no-symlinks.
+> 
+> Rewrite these tests so that they do not depend on the environment but
+> run explicitly with both --symlinks and --no-symlinks, protecting the
+> --symlinks version with a SYMLINKS prerequisite.
+
+At first, I wondered what the point of having --symlinks and --no-symlinks
+was when there is no discernable difference. But 1f229345 (difftool: Use
+symlinks when diffing against the worktree) makes it pretty clear: It's an
+optimization, and --no-symlinks is only intended as an escape hatch.
+
+-- Hannes
