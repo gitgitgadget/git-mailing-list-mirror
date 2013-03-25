@@ -1,81 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Why does 'submodule add' stage the relevant portions?
-Date: Mon, 25 Mar 2013 12:13:56 -0700
-Message-ID: <20130325191356.GC1414@google.com>
-References: <CALkWK0=PHNmT5zfjEaWh_5=aV7wcPdGgyCWFhjaeVrrWhL0OBw@mail.gmail.com>
- <7v38vjz7sx.fsf@alter.siamese.dyndns.org>
- <CALkWK0mRnDMFLeVoG85CUZ48rf7X_jHV=0XP73WL7zp2OGpezQ@mail.gmail.com>
- <20130325182023.GA1414@google.com>
- <CALkWK0kx_uQy-97nByNXBOU4UruhvdjOeXCpKHR9mNUQHs5o=A@mail.gmail.com>
- <7vppynxre7.fsf@alter.siamese.dyndns.org>
- <CALkWK0kOHPrid3V5tPWBaf5eh1t7tM_oXqsQFnXugBKUGKGpUA@mail.gmail.com>
- <20130325185032.GB1414@google.com>
- <CALkWK0nFVOhTjY3dfcwPvjqLZgJrENo6Ha=cv-x6io_Np8FfoA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 3/3] git-merge-one-file: revise merge error reporting
+Date: Mon, 25 Mar 2013 15:24:12 -0400
+Message-ID: <CAPig+cRu8-6pNWbDXrPqU-yW5NDKY9WsE2wFY65303t2RpzZvQ@mail.gmail.com>
+References: <CAJDDKr4swZzzv3e+Huz72CVmisFKU8T74jFj3-uGmZHReRGVBw@mail.gmail.com>
+	<1364127985-13366-1-git-send-email-kevin@bracey.fi>
+	<1364127985-13366-4-git-send-email-kevin@bracey.fi>
+	<7vk3ovz9zb.fsf@alter.siamese.dyndns.org>
+	<7vfvzjz9ej.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 25 20:14:34 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Kevin Bracey <kevin@bracey.fi>, Git List <git@vger.kernel.org>,
+	David Aguilar <davvid@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 25 20:24:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKCqk-0000Rw-BF
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 20:14:30 +0100
+	id 1UKD0e-0001AL-Kh
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 20:24:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758840Ab3CYTOC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 15:14:02 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:35766 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756888Ab3CYTOB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 15:14:01 -0400
-Received: by mail-pd0-f174.google.com with SMTP id p12so706549pdj.19
-        for <git@vger.kernel.org>; Mon, 25 Mar 2013 12:14:00 -0700 (PDT)
+	id S1758862Ab3CYTYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 15:24:15 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:56026 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758853Ab3CYTYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 15:24:14 -0400
+Received: by mail-la0-f43.google.com with SMTP id ek20so12152958lab.30
+        for <git@vger.kernel.org>; Mon, 25 Mar 2013 12:24:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=V1muies4GsTcug66POoTZPuu5KlimleXn+J3E/Fq4WM=;
-        b=UqeVegruyHdTz3UZxDcvrziiEc20HoNGKU3GkM3U+Si5hejO9kPb4RvZFtU/D7GhCh
-         26YKeunameg0IheM/YAi7Kl+YGkzE+BfvnbgoHOkTnRSlYZQgwAxzhVWc5MFRnEOuI7p
-         +ibKCL95olKuZWJFZhRqaontFtmQiQI3KvpxZAkDMIgyvdffg39sO8Xfd7PgrgX9XSKf
-         giQ09zqywUDC8yGUf8Ks0BYRewp9xX34dShW94lAYDi4zfxdeaYa+rk9L1WYINq/SDT3
-         dTpHrWaECm5zTKC1JL4zjwxLoBXpUg6le8wlNL6IqqRT3i3hXoY0riyKdelWJ7APtdDY
-         Qc9g==
-X-Received: by 10.68.225.73 with SMTP id ri9mr19368078pbc.70.1364238840589;
-        Mon, 25 Mar 2013 12:14:00 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id ql7sm14431164pbb.2.2013.03.25.12.13.58
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 25 Mar 2013 12:13:59 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0nFVOhTjY3dfcwPvjqLZgJrENo6Ha=cv-x6io_Np8FfoA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=L4MIMyDZH/YSko4HyrBg8p8qpEVpb8WyvGpf6KgfUyY=;
+        b=DE9SaE5UgqqOfUKvfjOfb93i56uiTMpN/Ps4pST8jp7r/jlPSNghuPwBLIT0+/Da7g
+         YEdgGzooroyleGkLZ1QjQSE4ZHRShRiKmqZhl/dMccNE4Zllk04nJqjt17+1cho6dTvK
+         HSaRdixxoRhGQpQGzoFo7st/mZZyD/SN1/Nq7SguUGQLrcnRR9/xty/jjdDoSP1GWb0T
+         Rg/QwjSfLcj4GNT2kyFF0DL4cr8/bYWnUS6klO8eWyyoe1vKbYLK53hDK7NhRTXpi4BZ
+         txNnYZ5lFwTPSmeAGBXgm+xEzqAI+nwTtszWUMEsAjAZgOuh7Z9NRU9V4kIi4HKljMxG
+         4sDQ==
+X-Received: by 10.112.143.129 with SMTP id se1mr730181lbb.120.1364239452375;
+ Mon, 25 Mar 2013 12:24:12 -0700 (PDT)
+Received: by 10.114.1.43 with HTTP; Mon, 25 Mar 2013 12:24:12 -0700 (PDT)
+In-Reply-To: <7vfvzjz9ej.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: rHsQrodkntNQWWAFkYFcYeJhsKk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219068>
 
-Ramkumar Ramachandra wrote:
+On Mon, Mar 25, 2013 at 1:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Subject: [PATCH] merge-one-file: force content conflict for "both side added" case
 
-> This whole "backward compatibility" thing is not black-or-white: it's
-> shades of gray.  Can I ask about how "backward incompatible" the other
-> suggestions I listed were, just so I get a rough idea of your scale?
+s/both side/both sides/
 
-It depends on how important the change is and how painful the proposed
-transition is.
+> Historically, we tried to be lenient to "both side added, slightly
 
-Please don't gratuitously break things.  If there is a smooth way to
-accomplish the intended effect without much downside, that is
-generally preferred, even if it is harder to write the code.
+Ditto.
 
-There are no absolutes here.  It is about helping people in the
-real world who never asked for such-and-such feature to avoid
-suffering real breakage.
+> differently" case and as long as the files can be merged using a
+> made-up common ancestor cleanly, since f7d24bbefb06 (merge with
+> /dev/null as base, instead of punting O==empty case, 2005-11-07).
+> This was later further refined to use a better made-up common file
+> with fd66dbf5297a (merge-one-file: use empty- or common-base
+> condintionally in two-stage merge., 2005-11-10), but the spirit has
+> been the same.
+>
+> But the original fix in f7d24bbefb06 to avoid punging on "both sides
 
-Hope that helps,
-Jonathan
+s/punging/punting/
+
+> added" case had a code to unconditionally error out the merge.  When
+> this triggers, even though the content-level merge can be done
+> cleanly, we end up not saying "content conflict" in the message, but
+> still issue the error message, showing "ERROR:  in <pathname>".
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
