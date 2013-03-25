@@ -1,67 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] log: make "show --show-signature" use gpg.program setting
-Date: Mon, 25 Mar 2013 17:34:53 -0400
-Message-ID: <20130325213453.GB19303@sigill.intra.peff.net>
-References: <8C726954D36902459248B0627BF2E66F45D7029930@AUSP01VMBX10.collaborationhost.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 6/9] streaming_write_entry: propagate streaming errors
+Date: Mon, 25 Mar 2013 17:35:51 -0400
+Message-ID: <CAPig+cRjK6mrRm+K4Qzf2CsjT3SYGotZ2PrVLniYzdBRC1Mv2A@mail.gmail.com>
+References: <20130325201427.GA15798@sigill.intra.peff.net>
+	<20130325202216.GF16019@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"gitster@pobox.com" <gitster@pobox.com>
-To: Hans Brigman <hbrigman@openspan.com>
-X-From: git-owner@vger.kernel.org Mon Mar 25 22:35:30 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 25 22:36:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKF36-0008A8-E2
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:35:24 +0100
+	id 1UKF43-0000s6-92
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:36:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758931Ab3CYVe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 17:34:57 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39424 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758501Ab3CYVe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 17:34:56 -0400
-Received: (qmail 28636 invoked by uid 107); 25 Mar 2013 21:36:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Mar 2013 17:36:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Mar 2013 17:34:53 -0400
-Content-Disposition: inline
-In-Reply-To: <8C726954D36902459248B0627BF2E66F45D7029930@AUSP01VMBX10.collaborationhost.net>
+	id S1758960Ab3CYVfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 17:35:55 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:62729 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758686Ab3CYVfy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 17:35:54 -0400
+Received: by mail-la0-f41.google.com with SMTP id fo12so12403982lab.0
+        for <git@vger.kernel.org>; Mon, 25 Mar 2013 14:35:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=ygLUPWYEbHs7908VojZLjFpqMdUNLB0UXRe/IFlMMFk=;
+        b=emVPxcDRdq6RCJVWYauVzu8XY8msSe8PanqrI88QEknGRqibsQzmwX4gEL+/rgmIEk
+         x+96iFRAFQWOMOHm7xl3ONP26iewcMsNpz8K/egMtSdSUHKixlG+GAUCmz4RDgKticLo
+         MGj9q1+rwRC0LgjK9r79aMlKXp4/pgR1WLCnq/vU+e0ABvBuozOBOCnNjcP7zJDxgdLY
+         6IF7yKlNLsU9WYFvUSRxafcsCOf2JSEzxedWrkuMVO89SbARtclcCgnTtMrWAA9weMMY
+         LQO6wu63KGpMgnkEETquzTvYbVVRMW8wjsY0alcZKL5K8GqEbFwB3eDmy4+2Q0R3ZN+Y
+         lTBA==
+X-Received: by 10.112.134.166 with SMTP id pl6mr6851423lbb.68.1364247351786;
+ Mon, 25 Mar 2013 14:35:51 -0700 (PDT)
+Received: by 10.114.1.43 with HTTP; Mon, 25 Mar 2013 14:35:51 -0700 (PDT)
+In-Reply-To: <20130325202216.GF16019@sigill.intra.peff.net>
+X-Google-Sender-Auth: J72_urbvrdqypr1auiXAULqMQFk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219094>
 
-On Mon, Mar 25, 2013 at 01:03:52PM -0500, Hans Brigman wrote:
+On Mon, Mar 25, 2013 at 4:22 PM, Jeff King <peff@peff.net> wrote:
+> diff --git a/entry.c b/entry.c
+> index 17a6bcc..002b2f2 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -126,8 +126,10 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
+>         fd = open_output_fd(path, ce, to_tempfile);
+>         if (0 <= fd) {
+>                 result = stream_blob_to_fd(fd, ce->sha1, filter, 1);
+> -               *fstat_done = fstat_output(fd, state, statbuf);
+> -               result = close(fd);
+> +               if (!result) {
+> +                       *fstat_done = fstat_output(fd, state, statbuf);
+> +                       result = close(fd);
+> +               }
 
-> "show --show-signature" doesn't currently use the gpg.program setting.  Commit signing, tag signing, and tag verification currently use this setting properly, so the logic has been added to handle it here as well.
+Is this intentionally leaking the opened 'fd' when stream_blob_to_fd()
+returns an error?
 
-Please wrap your commit messages at something reasonable (70 is probably
-as high as you want to go, given that log output is often shown
-indented).
+>         }
+>         if (result && 0 <= fd)
+>                 unlink(path);
 
-> @@ -364,7 +365,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
->  		use_mailmap_config = git_config_bool(var, value);
->  		return 0;
->  	}
-> -
-> +	if (!prefixcmp(var, "gpg."))
-> +		return git_gpg_config(var, value, NULL); 
->  	if (grep_config(var, value, cb) < 0)
->  		return -1;
+Won't the unlink() now fail on Windows since 'fd' is still open?
 
-The gpg config can also be other places than "gpg.*". Right now it is
-just user.signingkey, which log would not care about, but it feels like
-we are depending an unnecessary detail here. We also don't know whether
-it would care about the callback data. Is there a reason not to do:
-
-  if (git_gpg_config(var, value, cb) < 0)
-          return -1;
-
-just like the grep_config call below?
-
--Peff
+-- ES
