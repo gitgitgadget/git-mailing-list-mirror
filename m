@@ -1,276 +1,183 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v2] difftool: don't overwrite modified files
-Date: Mon, 25 Mar 2013 21:44:30 +0000
-Message-ID: <20130325214430.GG2286@serenity.lan>
-References: <cover.1363980749.git.john@keeping.me.uk>
- <cover.1364045138.git.john@keeping.me.uk>
- <e44349728c07d8ae22d4b73527b1d124b49cc4a9.1364045138.git.john@keeping.me.uk>
- <7vd2up4bo7.fsf@alter.siamese.dyndns.org>
- <20130324123620.GA2286@serenity.lan>
- <CAJELnLEhcY4Oc-EB=Mi7PKBQQF+EiVpW_dNH6G-abjZj0MAdNw@mail.gmail.com>
- <20130324151557.GB2286@serenity.lan>
- <514FFFC7.3090004@viscovery.net>
- <20130325104219.GD2286@serenity.lan>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH v2 6/9] streaming_write_entry: propagate streaming errors
+Date: Mon, 25 Mar 2013 17:49:36 -0400
+Message-ID: <20130325214936.GA22419@sigill.intra.peff.net>
+References: <20130325201427.GA15798@sigill.intra.peff.net>
+ <20130325202216.GF16019@sigill.intra.peff.net>
+ <20130325213934.GE1414@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matt McClure <matthewlmcclure@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Mar 25 22:45:15 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 25 22:50:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKFCb-0005sb-3p
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:45:13 +0100
+	id 1UKFHP-0005Ho-Dg
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 22:50:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933280Ab3CYVop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 17:44:45 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:55040 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933102Ab3CYVoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 17:44:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id D0BCB22C87;
-	Mon, 25 Mar 2013 21:44:43 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id htQRgl7o3Uni; Mon, 25 Mar 2013 21:44:42 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 8BE6322F63;
-	Mon, 25 Mar 2013 21:44:32 +0000 (GMT)
+	id S933263Ab3CYVtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Mar 2013 17:49:41 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39452 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933102Ab3CYVtk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 17:49:40 -0400
+Received: (qmail 29032 invoked by uid 107); 25 Mar 2013 21:51:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Mar 2013 17:51:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Mar 2013 17:49:36 -0400
 Content-Disposition: inline
-In-Reply-To: <20130325104219.GD2286@serenity.lan>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20130325213934.GE1414@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219101>
 
-After running the user's diff tool, git-difftool will copy any files
-that differ between the working tree and the temporary tree.  This is
-useful when the user edits the file in their diff tool but is wrong if
-they edit the working tree file while examining the diff.
+On Mon, Mar 25, 2013 at 02:39:34PM -0700, Jonathan Nieder wrote:
 
-Instead of copying unconditionally when the files differ, create and
-index from the working tree files and only copy the temporary file back
-if it was modified and the working tree file was not.  If both files
-have been modified, print a warning and exit with an error.
+> > --- a/entry.c
+> > +++ b/entry.c
+> > @@ -126,8 +126,10 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
+> >  	fd = open_output_fd(path, ce, to_tempfile);
+> >  	if (0 <= fd) {
+> >  		result = stream_blob_to_fd(fd, ce->sha1, filter, 1);
+> > -		*fstat_done = fstat_output(fd, state, statbuf);
+> > -		result = close(fd);
+> > +		if (!result) {
+> > +			*fstat_done = fstat_output(fd, state, statbuf);
+> > +			result = close(fd);
+> > +		}
+> 
+> Should this do something like
+> [...]
+> to avoid leaking the file descriptor?
 
-Note that we cannot use an existing index in git-difftool since those
-contain the modified files that need to be checked out but here we are
-looking at those files which are copied from the working tree and not
-checked out.  These are precisely the files which are not in the
-existing indices.
+Yes, Eric Sunshine noticed this, too. Re-rolled patch is below, which I
+think is even a little cleaner.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
+> > +test_expect_success 'read-tree -u detects bit-errors in blobs' '
+> > +	(
+> > +		cd bit-error &&
+> > +		rm content.t &&
+> > +		test_must_fail git read-tree --reset -u FETCH_HEAD
+> > +	)
+> 
+> Makes sense.  Might make sense to use "rm -f" instead of "rm" to avoid
+> failures if content.t is removed already.
+
+Yeah, good point. My original test looked like:
+
+  git init bit-error &&
+  git fetch .. &&
+  corrupt ...
+  test_must_fail ...
+
+but I ended up refactoring it to re-use the corrupted directories, and
+added the "rm" after the fact. The use of FETCH_HEAD is also bogus
+(read-tree is failing, but because we are giving it a bogus ref, not
+because of the corruption, so we are not actually testing anything
+anymore, even though it still passes).
+
+Both fixed in my re-roll.
+
+-- >8 --
+Subject: [PATCH] streaming_write_entry: propagate streaming errors
+
+When we are streaming an index blob to disk, we store the
+error from stream_blob_to_fd in the "result" variable, and
+then immediately overwrite that with the return value of
+"close". That means we catch errors on close (e.g., problems
+committing the file to disk), but miss anything which
+happened before then.
+
+We can fix this by using bitwise-OR to accumulate errors in
+our result variable.
+
+While we're here, we can also simplify the error handling
+with an early return, which makes it easier to see under
+which circumstances we need to clean up.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-On Mon, Mar 25, 2013 at 10:42:19AM +0000, John Keeping wrote:
-> On Mon, Mar 25, 2013 at 08:41:59AM +0100, Johannes Sixt wrote:
-> > This is gross. Can't we do much better here? Difftool already keeps a
-> > GIT_INDEX of the files in the temporary tree ($tmpdir/rindex). Running
-> > git-diff-files should be sufficient to tell which ones where edited via
-> > the users's diff-tool. Then you can restrict calling hash-object to only
-> > those worktree files where an "edit collision" needs to be checked for.
-> 
-> That's only the case for files that are not copied from the working
-> tree, so the temporary index doesn't contain the files that are of
-> interest here.
-> 
-> > You could also keep a parallel index that keeps the state of the same set
-> > of files in the worktree. Then another git-diff-files call could replace
-> > the other half of hash-object calls.
-> 
-> I like the idea of creating an index from the working tree files and
-> using it here.  If we create a "starting state" index for these files,
-> we should be able to run git-diff-files against both the working tree
-> and the temporary tree at this point and compare the output.
+ entry.c                      | 16 +++++++++-------
+ t/t1060-object-corruption.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 7 deletions(-)
 
-Here's an attempt at taking this approach, built on
-jk/difftool-dir-diff-edit-fix.
-
- git-difftool.perl   | 73 +++++++++++++++++++++++++++++++++++++++++++----------
- t/t7800-difftool.sh | 26 +++++++++++++++++++
- 2 files changed, 85 insertions(+), 14 deletions(-)
-
-diff --git a/git-difftool.perl b/git-difftool.perl
-index c433e86..d10f7d2 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -13,9 +13,9 @@
- use 5.008;
- use strict;
- use warnings;
-+use Error qw(:try);
- use File::Basename qw(dirname);
- use File::Copy;
--use File::Compare;
- use File::Find;
- use File::stat;
- use File::Path qw(mkpath rmtree);
-@@ -88,14 +88,45 @@ sub use_wt_file
- 	my ($repo, $workdir, $file, $sha1, $symlinks) = @_;
- 	my $null_sha1 = '0' x 40;
+diff --git a/entry.c b/entry.c
+index 17a6bcc..a20bcbc 100644
+--- a/entry.c
++++ b/entry.c
+@@ -120,16 +120,18 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
+ 				 const struct checkout *state, int to_tempfile,
+ 				 int *fstat_done, struct stat *statbuf)
+ {
+-	int result = -1;
++	int result = 0;
+ 	int fd;
  
--	if ($sha1 eq $null_sha1) {
--		return 1;
--	} elsif (not $symlinks) {
-+	if ($sha1 ne $null_sha1 and not $symlinks) {
- 		return 0;
- 	}
- 
- 	my $wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
--	return $sha1 eq $wt_sha1;
-+	my $use = ($sha1 eq $null_sha1) || ($sha1 eq $wt_sha1);
-+	return ($use, $wt_sha1);
-+}
+ 	fd = open_output_fd(path, ce, to_tempfile);
+-	if (0 <= fd) {
+-		result = stream_blob_to_fd(fd, ce->sha1, filter, 1);
+-		*fstat_done = fstat_output(fd, state, statbuf);
+-		result = close(fd);
+-	}
+-	if (result && 0 <= fd)
++	if (fd < 0)
++		return -1;
 +
-+sub changed_files
-+{
-+	my ($repo_path, $index, $worktree) = @_;
-+	$ENV{GIT_INDEX_FILE} = $index;
-+	$ENV{GIT_WORK_TREE} = $worktree;
-+	my $must_unset_git_dir = 0;
-+	if (not defined($ENV{GIT_DIR})) {
-+		$must_unset_git_dir = 1;
-+		$ENV{GIT_DIR} = $repo_path;
-+	}
++	result |= stream_blob_to_fd(fd, ce->sha1, filter, 1);
++	*fstat_done = fstat_output(fd, state, statbuf);
++	result |= close(fd);
 +
-+	my @refreshargs = qw/update-index --really-refresh -q --unmerged/;
-+	my @gitargs = qw/diff-files --name-only -z/;
-+	try {
-+		Git::command_oneline(@refreshargs);
-+	} catch Git::Error::Command with {};
-+
-+	my $line = Git::command_oneline(@gitargs);
-+	my @files;
-+	if (defined $line) {
-+		@files = split('\0', $line);
-+	} else {
-+		@files = ();
-+	}
-+
-+	delete($ENV{GIT_INDEX_FILE});
-+	delete($ENV{GIT_WORK_TREE});
-+	delete($ENV{GIT_DIR}) if ($must_unset_git_dir);
-+
-+	return map { $_ => 1 } @files;
++	if (result)
+ 		unlink(path);
+ 	return result;
  }
- 
- sub setup_dir_diff
-@@ -121,6 +152,7 @@ sub setup_dir_diff
- 	my $null_sha1 = '0' x 40;
- 	my $lindex = '';
- 	my $rindex = '';
-+	my $wtindex = '';
- 	my %submodule;
- 	my %symlink;
- 	my @working_tree = ();
-@@ -174,8 +206,12 @@ EOF
- 		}
- 
- 		if ($rmode ne $null_mode) {
--			if (use_wt_file($repo, $workdir, $dst_path, $rsha1, $symlinks)) {
--				push(@working_tree, $dst_path);
-+			my ($use, $wt_sha1) = use_wt_file($repo, $workdir,
-+							  $dst_path, $rsha1,
-+							  $symlinks);
-+			if ($use) {
-+				push @working_tree, $dst_path;
-+				$wtindex .= "$rmode $wt_sha1\t$dst_path\0";
- 			} else {
- 				$rindex .= "$rmode $rsha1\t$dst_path\0";
- 			}
-@@ -218,6 +254,12 @@ EOF
- 	$rc = system('git', 'checkout-index', '--all', "--prefix=$rdir/");
- 	exit_cleanup($tmpdir, $rc) if $rc != 0;
- 
-+	$ENV{GIT_INDEX_FILE} = "$tmpdir/wtindex";
-+	($inpipe, $ctx) =
-+		$repo->command_input_pipe(qw(update-index --info-only -z --index-info));
-+	print($inpipe $wtindex);
-+	$repo->command_close_pipe($inpipe, $ctx);
-+
- 	# If $GIT_DIR was explicitly set just for the update/checkout
- 	# commands, then it should be unset before continuing.
- 	delete($ENV{GIT_DIR}) if ($must_unset_git_dir);
-@@ -390,19 +432,22 @@ sub dir_diff
- 	# should be copied back to the working tree.
- 	# Do not copy back files when symlinks are used and the
- 	# external tool did not replace the original link with a file.
-+	my %wt_modified = changed_files($repo->repo_path(),
-+		"$tmpdir/wtindex", "$workdir");
-+	my %tmp_modified = changed_files($repo->repo_path(),
-+		"$tmpdir/wtindex", "$b");
- 	for my $file (@worktree) {
- 		next if $symlinks && -l "$b/$file";
- 		next if ! -f "$b/$file";
- 
--		my $diff = compare("$b/$file", "$workdir/$file");
--		if ($diff == 0) {
--			next;
--		} elsif ($diff == -1) {
--			my $errmsg = "warning: Could not compare ";
--			$errmsg += "'$b/$file' with '$workdir/$file'\n";
-+		if (exists $wt_modified{$file} and exists $tmp_modified{$file}) {
-+			my $errmsg = "warning: Both files modified: ";
-+			$errmsg .= "'$workdir/$file' and '$b/$file'.\n";
-+			$errmsg .= "warning: Working tree file has been left.\n";
-+			$errmsg .= "warning:\n";
- 			warn $errmsg;
- 			$error = 1;
--		} elsif ($diff == 1) {
-+		} elsif ($tmp_modified{$file}) {
- 			my $mode = stat("$b/$file")->mode;
- 			copy("$b/$file", "$workdir/$file") or
- 			exit_cleanup($tmpdir, 1);
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index db3d3d6..be2042d 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -407,4 +407,30 @@ test_expect_success PERL 'difftool --dir-diff from subdirectory' '
+diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
+index d36994a..2945395 100755
+--- a/t/t1060-object-corruption.sh
++++ b/t/t1060-object-corruption.sh
+@@ -24,6 +24,15 @@ test_expect_success 'setup corrupt repo' '
  	)
  '
  
-+write_script modify-file <<\EOF
-+echo "new content" >file
-+EOF
-+
-+test_expect_success PERL 'difftool --no-symlinks does not overwrite working tree file ' '
-+	echo "orig content" >file &&
-+	git difftool --dir-diff --no-symlinks --extcmd "$(pwd)/modify-file" branch &&
-+	echo "new content" >expect &&
-+	test_cmp expect file
++test_expect_success 'setup repo with missing object' '
++	git init missing &&
++	(
++		cd missing &&
++		test_commit content &&
++		rm -f "$(obj_to_file HEAD:content.t)"
++	)
 +'
 +
-+write_script modify-both-files <<\EOF
-+echo "wt content" >file &&
-+echo "tmp content" >"$2/file" &&
-+echo "$2" >tmpdir
-+EOF
+ test_expect_success 'streaming a corrupt blob fails' '
+ 	(
+ 		cd bit-error &&
+@@ -31,4 +40,20 @@ test_expect_success 'streaming a corrupt blob fails' '
+ 	)
+ '
+ 
++test_expect_success 'read-tree -u detects bit-errors in blobs' '
++	(
++		cd bit-error &&
++		rm -f content.t &&
++		test_must_fail git read-tree --reset -u HEAD
++	)
++'
 +
-+test_expect_success PERL 'difftool --no-symlinks detects conflict ' '
-+	echo "orig content" >file &&
-+	test_must_fail git difftool --dir-diff --no-symlinks --extcmd "$(pwd)/modify-both-files" branch &&
-+	echo "wt content" >expect &&
-+	test_cmp expect file &&
-+	echo "tmp content" >expect &&
-+	test_cmp expect "$(cat tmpdir)/file"
++test_expect_success 'read-tree -u detects missing objects' '
++	(
++		cd missing &&
++		rm -f content.t &&
++		test_must_fail git read-tree --reset -u HEAD
++	)
 +'
 +
  test_done
 -- 
-1.8.2.411.g65a544e
+1.8.2.13.g0f18d3c
