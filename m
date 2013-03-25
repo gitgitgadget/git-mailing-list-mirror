@@ -1,73 +1,58 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: propagating repo corruption across clone
-Date: Mon, 25 Mar 2013 22:31:04 +0700
-Message-ID: <CACsJy8A0eOWEJ2aqPSLof_CodJM6BadFxQHy5Vb0kAwwTSTS3w@mail.gmail.com>
-References: <20130324183133.GA11200@sigill.intra.peff.net> <CACBZZX6czzJRF9TEsc8c+=LND6SxaVvrZdbcZ+TfUZTWQOpW0Q@mail.gmail.com>
- <20130324192350.GA20688@sigill.intra.peff.net> <CAOx6V3YtM-e8-S41v1KnC+uSymYwZw8QBwiCJRYw0MYJXRjj-w@mail.gmail.com>
- <20130325145644.GA16576@sigill.intra.peff.net>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [RFC] test-lib.sh: No POSIXPERM for cygwin
+Date: Mon, 25 Mar 2013 16:53:04 +0100
+Message-ID: <515072E0.4030103@web.de>
+References: <201303231340.29687.tboegi@web.de> <CAPig+cR0HdQq4P=MWg7xkFLMzNimitty_Bj7mVx+w3eoi9bZ3g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff Mitchell <jeffrey.mitchell@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 25 16:32:07 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>, j6t@kdbg.org,
+	Git List <git@vger.kernel.org>, ramsay@ramsay1.demon.co.uk
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Mar 25 16:53:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UK9NV-0003j4-7L
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 16:32:05 +0100
+	id 1UK9iM-0005fI-Jx
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Mar 2013 16:53:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757976Ab3CYPbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Mar 2013 11:31:37 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:44547 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757434Ab3CYPbh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Mar 2013 11:31:37 -0400
-Received: by mail-oa0-f45.google.com with SMTP id o6so6447690oag.4
-        for <git@vger.kernel.org>; Mon, 25 Mar 2013 08:31:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=TLa/Ygj0Q8q484pak3u7uUGrokrCt3Jyk92AaGh4NK4=;
-        b=VuQJhX3cw4V8heR7jsWgS6mVpH7DsJywDYHI64d/KQHMwMERKIk4wRGxv3rgSArkXS
-         PLzeJ6brCh0UYp4c66KJpbj/FFH8TfZz70L96dZiwEtkCYSxHWUWKtsLnBNpOI+9HL+V
-         rkOB//Adz8uMKmLw8rNHN+1gh6Gm/YKhecDbz5VWhFmPTD1shIvUJS+Qtm9VdTpBgts4
-         nc2zHSBDqyk6Lb9WFf5SiOWWVCMGrvNmHNz7pXBk65FEYpV2bFwiKAvHQ54Fpvrz6C1s
-         yYoU36XCF0DsT+vjKOa6Nibju1cDMmsLlNA7Tg0/0BoYWf4qCZ63/9MHCPeVKOjv2EvK
-         mdjQ==
-X-Received: by 10.60.8.197 with SMTP id t5mr12028782oea.4.1364225494348; Mon,
- 25 Mar 2013 08:31:34 -0700 (PDT)
-Received: by 10.76.27.137 with HTTP; Mon, 25 Mar 2013 08:31:04 -0700 (PDT)
-In-Reply-To: <20130325145644.GA16576@sigill.intra.peff.net>
+	id S1758604Ab3CYPxJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Mar 2013 11:53:09 -0400
+Received: from mout.web.de ([212.227.15.3]:63332 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758602Ab3CYPxI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Mar 2013 11:53:08 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0MejSy-1U0HNZ14ki-00OIuS; Mon, 25 Mar 2013 16:53:05
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <CAPig+cR0HdQq4P=MWg7xkFLMzNimitty_Bj7mVx+w3eoi9bZ3g@mail.gmail.com>
+X-Provags-ID: V02:K0:fm+M97sp7KsAqQtg5Gy/hUTDt04IVy3sZWOI7GgPe8U
+ h9J0s2CtwLlue+eIgR5nLV9412/4onPlm+rA1b1ekD612n2uDT
+ Pq644pLkDZnpeRxEz9v0IOLOvWwF8xRNARy0OtgDI2BFdNHRyX
+ B6XiCvJnbkzD2crdmYPrEOj8pB8k694PzFIO/OBtePcjaY2gAc
+ Q6NHoTYyS8M2CMuohllSw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219036>
 
-On Mon, Mar 25, 2013 at 9:56 PM, Jeff King <peff@peff.net> wrote:
-> There are basically three levels of transport that can be used on a
-> local machine:
->
->   1. Hard-linking (very fast, no redundancy).
->
->   2. Byte-for-byte copy (medium speed, makes a separate copy of the
->      data, but does not check the integrity of the original).
->
->   3. Regular git transport, creating a pack (slowest, but should include
->      redundancy checks).
->
-> Using --no-hardlinks turns off (1), but leaves (2) as an option.  I
-> think the documentation in "git clone" could use some improvement in
-> that area.
+On 24.03.13 03:49, Eric Sunshine wrote:
+> On Sat, Mar 23, 2013 at 8:40 AM, Torsten B=F6gershausen <tboegi@web.d=
+e> wrote:
+>> Subject: [PATCH] Make core.sharedRepository work under cygwin 1.7
+[..]
+>=20
+> s/failes/fails/
+>=20
+Thanks for review,
+I will send a new patch in a minute.
 
-Not only git-clone. How git-fetch and git-push verify the new pack
-should also be documented. I don't think many people outside the
-contributor circle know what is done (and maybe how) when data is
-received from outside.
--- 
-Duy
+It is actually 2 patches,
+- The fix as discussed here
+- A small refactoring of set_shared_perm() in path.c,
+  which I found while digging in the code.
