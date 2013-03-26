@@ -1,84 +1,104 @@
-From: =?UTF-8?B?U2ViYXN0aWFuIEfDtnR0ZQ==?= <jaseg@physik.tu-berlin.de>
-Subject: Re: [PATCH v4 0/5] Verify GPG signatures when merging and extend
- %G? pretty string
-Date: Tue, 26 Mar 2013 17:43:18 +0100
-Message-ID: <5151D026.7090403@physik.tu-berlin.de>
-References: <7vli9bue40.fsf@alter.siamese.dyndns.org> <515180FD.7090906@physik.tu-berlin.de> <7vvc8et9dv.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: propagating repo corruption across clone
+Date: Tue, 26 Mar 2013 12:55:53 -0400
+Message-ID: <20130326165553.GA7282@sigill.intra.peff.net>
+References: <20130324183133.GA11200@sigill.intra.peff.net>
+ <CACBZZX6czzJRF9TEsc8c+=LND6SxaVvrZdbcZ+TfUZTWQOpW0Q@mail.gmail.com>
+ <20130324192350.GA20688@sigill.intra.peff.net>
+ <CAOx6V3YtM-e8-S41v1KnC+uSymYwZw8QBwiCJRYw0MYJXRjj-w@mail.gmail.com>
+ <20130325145644.GA16576@sigill.intra.peff.net>
+ <CACsJy8A0eOWEJ2aqPSLof_CodJM6BadFxQHy5Vb0kAwwTSTS3w@mail.gmail.com>
+ <20130325155600.GA18216@sigill.intra.peff.net>
+ <CAOx6V3a6vGJvJ4HEmAXdTRKKCzRJS23OYd_em1b3aQLzPNEtQA@mail.gmail.com>
+ <20130325200752.GB3902@sigill.intra.peff.net>
+ <CAOx6V3ZWB1ZpmXcaBeSaPOvHqmAMF3U1rTXuwinFGmEZQwFGYQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 26 17:43:54 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Jeff Mitchell <jeffrey.mitchell@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 26 17:57:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKWyW-0005eO-0x
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 17:43:52 +0100
+	id 1UKXAq-0007DS-Q6
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 17:56:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933988Ab3CZQnX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Mar 2013 12:43:23 -0400
-Received: from mail.tu-berlin.de ([130.149.7.33]:11891 "EHLO mail.tu-berlin.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755850Ab3CZQnW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Mar 2013 12:43:22 -0400
-X-tubIT-Incoming-IP: 130.149.58.163
-Received: from mail.physik-pool.tu-berlin.de ([130.149.58.163] helo=mail.physik.tu-berlin.de)
-	by mail.tu-berlin.de (exim-4.75/mailfrontend-3) with esmtp 
-	for <git@vger.kernel.org>
-	id 1UKWxz-0004bT-Fn; Tue, 26 Mar 2013 17:43:21 +0100
-Received: from [192.168.0.101] (cable-124-189.zeelandnet.nl [82.176.124.189])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.physik.tu-berlin.de (Postfix) with ESMTPSA id 294D811402
-	for <git@vger.kernel.org>; Tue, 26 Mar 2013 17:43:19 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
-In-Reply-To: <7vvc8et9dv.fsf@alter.siamese.dyndns.org>
+	id S1751879Ab3CZQz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Mar 2013 12:55:59 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40386 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751643Ab3CZQz6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Mar 2013 12:55:58 -0400
+Received: (qmail 4874 invoked by uid 107); 26 Mar 2013 16:57:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Mar 2013 12:57:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Mar 2013 12:55:53 -0400
+Content-Disposition: inline
+In-Reply-To: <CAOx6V3ZWB1ZpmXcaBeSaPOvHqmAMF3U1rTXuwinFGmEZQwFGYQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219169>
 
-On 03/26/2013 05:26 PM, Junio C Hamano wrote:
-> Sebastian G=C3=B6tte <jaseg@physik.tu-berlin.de> writes:
->=20
->> On 03/26/2013 02:46 AM, Junio C Hamano wrote:> Sebastian G=C3=B6tte =
-<jaseg@physik.tu-berlin.de> writes:
->>>> Rebased it onto the current 'master'. The second patch fixes that =
-the GPG
->>>> status parser ignores the first line of GPG status output (that wo=
-uld be caught
->>>> by the new merge signature verification test case).
->>>
->>> Thanks.
->>>
->>> Does it still make sure that it won't be fooled by the expected
->>> string appearing in the middle of a line, not at the beginning?
->>
->> I thought that would not be a problem until I noticed it checks for =
-GOODSIG
->> before it checks for BADSIG. Here is a fix.
->=20
-> What does the order of checking have to do with it?  I am confused...
->=20
-> I was more worried about a case where you may end up misinterpreting
->=20
-> [GNUPG:] BADSIG B0B5E88696AFE6CB [GNUPG:] GOODSIG B0B5E88696AFE6CB <y=
-@xz>
->=20
-> as showing goodsig when the signer's name was set to "[GNUPG:]
-> GOODSIG B0B5E88696AFE6CB"
->=20
-> The "\n" in the original was to make sure the expected message is at
-> the beginning of a line.
-I was assuming only a malicious user would use a name containing "[GNUP=
-G:] SOMETHING_ALLCAPS". In this case, if the code would check for BADSI=
-G/TRUST_NEVER/TRUST_UNKNOWN messages first, the signature would still b=
-e rejected. Of course, in that case a non-malicious user with a name co=
-ntaining "[GNUPG:] BADSIG" etc. would still run into problems.
+On Tue, Mar 26, 2013 at 09:43:01AM -0400, Jeff Mitchell wrote:
 
-This 4th version fixes that by checking whether the search string is at=
- the beginning of the status buffer (index 0) or at the beginning of a =
-line (prefixed by '\n').
+> On Mon, Mar 25, 2013 at 4:07 PM, Jeff King <peff@peff.net> wrote:
+> > On Mon, Mar 25, 2013 at 12:32:50PM -0400, Jeff Mitchell wrote:
+> >> For commit corruptions, the --no-hardlinks, non --mirror case refused
+> >> to create the new repository and exited with an error code of 128. The
+> >> --no-hardlinks, --mirror case spewed errors to the console, yet
+> >> *still* created the new clone *and* returned an error code of zero.
+> >
+> > I wasn't able to reproduce this; can you post a succint test case?
+>
+> [...link to tar.gz...]
+> Once you extract that, you should be able to run a clone using paths
+> (not file://) with --no-hardlinks --mirror and replicate the behavior
+> I saw. FYI, I'm on Git 1.8.2.
+
+Thanks for providing an example.
+
+The difference is the same "--mirror implies --bare" issue; the non-bare
+case dies during the checkout (even before my patches, as the corruption
+is not in a blob, but rather in the HEAD commit object itself). You can
+replace --mirror with --bare and see the same behavior.
+
+The troubling part is that we see errors in the bare case, but do not
+die. Those errors all come from upload-pack, the "sending" side of a
+clone/fetch. Even though we do not transfer the objects via the git
+protocol, we still invoke upload-pack to get the ref list (and then copy
+the objects themselves out-of-band).
+
+What happens is that upload-pack sees the errors while trying to see if
+the object is a tag that can be peeled (the server advertises both tags
+and the objects they point to). It does not distinguish between "errors
+did not let me peel this object" and "this object is not a tag, and
+therefore there is nothing to peel".
+
+We could change that, but I'm not sure whether it is a good idea. I
+think the intent is that upload-pack's ref advertisement would remain
+resilient to corruption in the repository (e.g., even if that commit is
+corrupt, you can still fetch the rest of the data). We should not worry
+about advertising broken objects, because we will encounter the same
+error when we actually do try to send the objects. Dying at the
+advertisement phase would be premature, since we do not yet know what
+the client will request.
+
+The problem, of course, is that the --local optimization _skips_ the
+part where we actually ask upload-pack for data, and instead blindly
+copies it. So this is the same issue as usual, which is that the local
+transport is not thorough enough to catch corruption. It seems like a
+failing in this case, because upload-pack does notice the problem, but
+that is only luck; if the corruption were in a non-tip object, it would
+not notice it at all. So trying to die on errors in the ref
+advertisement would just be a band-aid. Fundamentally the problem is
+that the --local transport is not safe from propagating corruption, and
+should not be used if that's a requirement.
+
+-Peff
