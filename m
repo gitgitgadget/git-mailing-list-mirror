@@ -1,113 +1,178 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git ate my home directory :-(
-Date: Tue, 26 Mar 2013 11:20:58 -0700
-Message-ID: <7vfvzit439.fsf@alter.siamese.dyndns.org>
-References: <5150C3EC.6010608@nod.at> <20130325214343.GF1414@google.com>
- <7vboa7w2vm.fsf@alter.siamese.dyndns.org>
- <384BCFE976364F1EA6E56306566D003A@PhilipOakley> <51519DA0.4090201@nod.at>
- <20130326145637.GA3822@sigill.intra.peff.net> <5151D589.2000002@nod.at>
- <20130326174059.GA10383@sigill.intra.peff.net>
+From: Edward Thomson <ethomson@microsoft.com>
+Subject: RE: Rename conflicts in the index
+Date: Tue, 26 Mar 2013 18:30:29 +0000
+Message-ID: <A54CE3E330039942B33B670D971F857403A0AA7A@TK5EX14MBXC253.redmond.corp.microsoft.com>
+References: <A54CE3E330039942B33B670D971F857403995D93@TK5EX14MBXC252.redmond.corp.microsoft.com>
+ <7va9q72n1u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Richard Weinberger <richard@nod.at>,
-	Philip Oakley <philipoakley@iee.org>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 26 19:21:33 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 26 19:31:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKYV2-0006pd-3O
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 19:21:32 +0100
+	id 1UKYev-00075n-Im
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 19:31:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755308Ab3CZSVD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Mar 2013 14:21:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45588 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754400Ab3CZSVB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Mar 2013 14:21:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52C5AACDA;
-	Tue, 26 Mar 2013 14:21:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PZ7M5xbH5RuahjcaBwdAxq00/B4=; b=dGG9jP
-	WEl+WD6nWr5AJS0CEPt0hRaoBIhbLylW+3+4wSOk4ACY+ijS8Tu9UkLz5/OKJ4kh
-	47S8cDdjY8x9JMrGI7vvA5WgAdPqAuGKdJVNyTEGK4MZp5Z8rYWlXk4HFqs8cltg
-	JUBkOjDe9Sbnf0JX7iE4T0SOyccvw3puqBg44=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nIYrC2CIvZzRVy6uPcNukPuYjKTVbSyN
-	MWlbuOYnJ1jM9teyrAkIn3qob+2Gg6C0Toss9KiaCWKFF3q41G5931ISjbzPcRcK
-	+84Z9/sebmUiKYvi3bh+VDe0bBb0IK0dytqXOG4nOVP36phQYbKLqElfCIBpfIIX
-	7erlFqI2iJc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 472A7ACD9;
-	Tue, 26 Mar 2013 14:21:00 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A2A5FACD6; Tue, 26 Mar 2013
- 14:20:59 -0400 (EDT)
-In-Reply-To: <20130326174059.GA10383@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 26 Mar 2013 13:41:00 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8C42DD2-9641-11E2-B118-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753603Ab3CZSbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Mar 2013 14:31:19 -0400
+Received: from mail-bl2lp0206.outbound.protection.outlook.com ([207.46.163.206]:24092
+	"EHLO na01-bl2-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750977Ab3CZSbS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Mar 2013 14:31:18 -0400
+Received: from BL2FFO11FD007.protection.gbl (10.1.15.200) by
+ BY2FFO11HUB011.protection.gbl (10.1.14.82) with Microsoft SMTP Server (TLS)
+ id 15.0.651.3; Tue, 26 Mar 2013 18:30:56 +0000
+Received: from TK5EX14HUBC107.redmond.corp.microsoft.com (131.107.125.37) by
+ BL2FFO11FD007.mail.protection.outlook.com (10.173.161.3) with Microsoft SMTP
+ Server (TLS) id 15.0.651.3 via Frontend Transport; Tue, 26 Mar 2013 18:30:55
+ +0000
+Received: from TK5EX14MBXC253.redmond.corp.microsoft.com ([169.254.3.151]) by
+ TK5EX14HUBC107.redmond.corp.microsoft.com ([157.54.80.67]) with mapi id
+ 14.02.0318.003; Tue, 26 Mar 2013 18:30:30 +0000
+Thread-Topic: Rename conflicts in the index
+Thread-Index: Ac4f8fcF2rzNm40zS7GBMxbrAtW2UQAI1oifAoxQUOA=
+In-Reply-To: <7va9q72n1u.fsf@alter.siamese.dyndns.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [157.54.51.35]
+X-Forefront-Antispam-Report: CIP:131.107.125.37;CTRY:US;IPV:CAL;IPV:NLI;EFV:NLI;SFV:NSPM;SFS:(51704002)(199002)(189002)(24454001)(20776003)(76482001)(50986001)(44976002)(23726001)(46102001)(47976001)(77982001)(5343635001)(80022001)(50466001)(51856001)(74502001)(33656001)(54316002)(47736001)(55846006)(74662001)(79102001)(69226001)(53806001)(561944001)(56776001)(4396001)(65816001)(56816002)(63696002)(54356001)(46406002)(47446002)(59766001)(31966008)(66066001)(49866001)(16406001)(47776003);DIR:OUT;SFP:;SCL:1;SRVR:BY2FFO11HUB011;H:TK5EX14HUBC107.redmond.corp.microsoft.com;RD:InfoDomainNonexistent;A:1;MX:1;LANG:en;
+X-OriginatorOrg: microsoft.onmicrosoft.com
+X-Forefront-PRVS: 079756C6B9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219176>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano [mailto:gitster@pobox.com] wrote:
+> Edward Thomson <ethomson@microsoft.com> writes:
+> 
+> > I would propose that we store the data about the file in conflict as
+> > it occurred through the renames.  For example, in a rename 1->2
+> > conflict where A was renamed to both B and C, you would have a single
+> > conflict entry containing the data for A, B and C.  This would allow
+> > us to provide more detailed information to the user - and allow them
+> > to (say) choose a single name to proceed with.
+> >
+> > Is this something that has value to core git as well?  Alternately, is
+> > there something particularly stupid about this proposal?
+> 
+> I do not offhand see anything particularly stupid; a new optional index extension
+> section CACHE_EXT_RENAME_CONFLICT might be a good addition.
+> 
+> Is "one side moves A to B while the other side moves it to C" the only case, or is
+> it just an example?  Off the top of my head, "one side moves A to x while the
+> other side moves B to x/y" would also be something we would want to know.  I
+> am sure there are other cases that need to be considered.
+> 
+> I do not think we can discuss the design at the concrete level until the proposal
+> spells out to cover all interesting cases in order for implementations to agree on
+> the common semantics.
 
-> Yes, setting GIT_DIR but not GIT_WORK_TREE has always been a valid way
-> to work on a repository where you do not want the working tree polluted
-> with your .git file. It's not a common setup, but people do use it.
-> E.g., you might keep ~/mail as a git repo, but do not want the presence
-> of ~/mail/.git to confuse your mail tools. You can keep ~/git/mail.git
-> as just a repository, and do "cd ~/mail && GIT_DIR=~/git/mail.git git
-> foo" (or "git --git-dir=~git/mail.git foo").
->
-> Later, we introduced GIT_WORK_TREE (and core.worktree), which provided
-> another way of doing the same thing (instead of the "cd", you could set
-> GIT_WORK_TREE).
+Sorry about the delay here:  besides getting busy with some other things,
+I wanted both a complete writeup and to have taken a pass at a test
+implementation this in libgit2 to make sure seemed like a reasonably sensible
+approach.
 
-A small correction is necessary as the above invites confusion.
+I would propose a new extension, 'CONF', to handle conflict data, differing
+from the stage >0 entries in the index in that this extension tracks the
+conflicting file across names if the underlying merge engine has support
+for renames.
 
-When you are in ~/mail/subdir, because GIT_DIR alone does not give
-you to specify where the root-level of the working tree is, you had
-to "cd .." before running "GIT_DIR=~/git/mail.git git ...".  By
-setting GIT_WORK_TREE to point at ~/mail once, you can freely chdir
-around inside subdirectories of ~/mail without losing sight of where
-the root-level is, and if your ~/git/mail.git is tied to a single
-working tree (and that is true in this example, it is always ~/mail),
-you can even set core.worktree in ~/git/mail.git/config.
+I made an attempt to keep the entry data similar to other entries in the
+index.  I would propose that entries in the conflict are as follows:
 
-These two mechanisms are *not* about allowing you to run git from
-any random place, e.g. "/tmp".
+Flags
+  Four octets that describe the conflict.  Data includes:
 
-> For the most part, I'd expect setting core.worktree to be the
-> simplest for such setups, as once it is set, you can just do "cd
-> ~/git/mail.git git foo", and everything should just work.
+  0x01  HAS_ANCESTOR
+    There is a file in the common ancestor branch that contributes
+    to this conflict.  Its data will follow.
+  0x02  HAS_OURS
+    There is a file in "our" branch that contributes to this conflict.
+    Its data will follow.
+  0x04  HAS_THEIRS
+    There is a file in "their" branch that contributes to this conflict.
+    Its data will follow.
 
-Yes.
+  0x08  NAME_CONFLICT_OURS
+    This item has a path in "our" branch that overlaps a different
+    item in "their" branch.  (Eg, this conflict represents the "our"
+    side of a rename/add conflict.)
+  0x10  NAME_CONFLICT_THEIRS
+    This item has a path in "their" branch that overlaps a different
+    item in "our" branch.  (Eg, this conflict represents the "theirs"
+    side of a rename/add conflict.)
 
-> We could do so now, as long as we provide an escape hatch (and I think
-> spelling that hatch as GIT_WORK_TREE=. is probably sane, but I am open
-> to other suggestions).
+  0x20  DF_CONFLICT_FILE
+    This is the file involved in a directory/file conflict.
+  0x40  DF_CONFLICT_CHILD
+    This is a child of a directory involved in a directory/file conflict.
 
-If we were to do so, GIT_WORK_TREE=. would be the most sensible, but
-I do not think it is worth breaking.  Why do these people set GIT_DIR
-without setting GIT_WORK_TREE in the first place?
+  Other bits are reserved.
 
-That is the source of the confusion.  Perhaps some random but
-popular websites are spreading bad pieces of advice?
+Conflict Sides
+  The data about one side of a conflict will contain:
+  mode (ASCII string representation of octal, null-terminated)
+  path (null terminated)
+  sha1 (raw bytes)
 
-> The problem is not with "clean", which just happens to be a destructive
-> command, but rather with the notion of what the git tree is when you
-> provide GIT_DIR.
+The conflict sides will be written in this order:
+  Ancestor (if HAS_ANCESTOR is set)
+  Ours (if HAS_OURS is set)
+  Theirs (if HAS_THEIRS is set)
 
-Yes, "git add ." would happily add random cruft to your index, which
-is equally bad.
+I would propose that this not simply track rename conflicts, but all
+conflicts.  Having a single canonical location is preferable - if the index
+contains a CONF section (and the client supports it), it would use that.
+Otherwise, the client would look at stage >0 entries.
+
+I would propose that another extension, 'RSVD', track these conflicts once
+they are resolved.  The format would be the same - when a conflict is
+resolved from the CONF the entry will be placed as-is in the RSVD.
+
+Examples are not an exhaustive list, but should help elucidate the name
+and d/f conflicts:
+
+Normal edit / edit conflict, where A is edited in ours and theirs:
+
+  Conflict one:
+    Flags = HAS_ANCESTOR|HAS_OURS|HAS_THEIRS
+    Entry 1 = A [Ancestor]
+    Entry 2 = B [Ancestor]
+    Entry 3 = C [Ancestor]
+
+Rename / add conflict, where A is renamed to B in ours and B is added in
+theirs:
+
+  Conflict one:
+    Flags = HAS_ANCESTOR|HAS_OURS|NAME_CONFLICT_OURS
+    Entry 1 = A [Ancestor]
+    Entry 2 = B [Ours]
+    Entry 3 = A [Theirs]
+  Conflict two:
+    Flags = HAS_THEIRS|NAME_CONFLICT_THEIRS
+    Entry 1 = File B [Theirs]
+
+D/F conflict, where some file A is deleted in theirs, and a directory
+A is created with file child:
+
+  Conflict one:
+    Flags = HAS_ANCESTOR|HAS_OURS|HAS_THEIRS|DF_CONFLICT_FILE
+    Entry 1 = A [Ancestor]
+    Entry 2 = A [Ours]
+  Conflict two:
+    Flags = HAS_THEIRS|DF_CONFLICT_CHILD
+    Entry 1 = A/child [Theirs]
+
+Thanks for your input on this.
+
+-ed
