@@ -1,84 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/4] dir.c::match_basename(): pay attention to the length
- of string parameters
-Date: Tue, 26 Mar 2013 17:29:48 -0400
-Message-ID: <20130326212948.GA1340@sigill.intra.peff.net>
-References: <20130323083927.GA25600@sigill.intra.peff.net>
- <1364323171-20299-1-git-send-email-gitster@pobox.com>
- <1364323171-20299-3-git-send-email-gitster@pobox.com>
- <20130326185559.GB26462@sigill.intra.peff.net>
- <20130326203914.GA29167@sigill.intra.peff.net>
- <7v7gktubsp.fsf@alter.siamese.dyndns.org>
+From: Eric Kom <erickom@metropolitancollege.co.za>
+Subject: Change the committer username
+Date: Tue, 26 Mar 2013 22:42:29 +0200
+Message-ID: <51520835.8080407@metropolitancollege.co.za>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, pclouds@gmail.com, avila.jn@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 26 22:30:26 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 26 22:33:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKbRl-0002yU-Po
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 22:30:22 +0100
+	id 1UKbUz-0005ny-ES
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 22:33:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696Ab3CZV3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Mar 2013 17:29:53 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40722 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751378Ab3CZV3x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Mar 2013 17:29:53 -0400
-Received: (qmail 8142 invoked by uid 107); 26 Mar 2013 21:31:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Mar 2013 17:31:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Mar 2013 17:29:48 -0400
-Content-Disposition: inline
-In-Reply-To: <7v7gktubsp.fsf@alter.siamese.dyndns.org>
+	id S1751789Ab3CZVdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Mar 2013 17:33:15 -0400
+Received: from serve11.serve-hosting.net ([207.45.178.42]:35315 "EHLO
+	serve11.serve-hosting.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822Ab3CZVdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Mar 2013 17:33:14 -0400
+X-Greylist: delayed 3006 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Mar 2013 17:33:13 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=metropolitancollege.co.za; s=default;
+	h=Content-Transfer-Encoding:Content-Type:Subject:To:MIME-Version:From:Date:Message-ID; bh=yVl+9ZJ2b5qwaKSTlOs49MmAZVz2NmxXpwKoQyoXgy8=;
+	b=RaR1vONnpA0ughSfO/tUsnzKDldHjjifTnCd9GSA086Vc7tR9KP/MOe3Z7Jpva9iKtPAK72UGqhgTeakfsXaT1L51KOVmFpmWeP9HmOXGt6hLh9IYdplu/129xDKLFTe;
+Received: from 41-134-194-89.dsl.mweb.co.za ([41.134.194.89]:43917 helo=[10.0.0.103])
+	by serve11.serve-hosting.net with esmtp (Exim 4.80)
+	(envelope-from <erickom@metropolitancollege.co.za>)
+	id 1UKaht-000eb6-VF
+	for git@vger.kernel.org; Tue, 26 Mar 2013 22:42:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/17.0 Icedove/17.0
+X-ACL-Warn: {
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - serve11.serve-hosting.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - metropolitancollege.co.za
+X-Get-Message-Sender-Via: serve11.serve-hosting.net: acl_c_relayhosts_text_entry: erickom@metropolitancollege.co.za|metropolitancollege.co.za
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219212>
 
-On Tue, Mar 26, 2013 at 01:49:10PM -0700, Junio C Hamano wrote:
+Good day,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I timed this doing "git archive HEAD" on webkit.git before and after. It
-> > actually ended up not mattering much (I think because it is only the
-> > directories which are affected, not each individually path, so it's a
-> > much smaller number than you'd think). The best-of-five timing was
-> > slightly slower, but was within the noise.
-> 
-> Interesting.  Because "archive" has to incur a large I/O cost
-> anyway, I expected extra allocation for correctness for only the
-> directory paths would be dwarfed in the noise.
-> 
-> I actually care more about cases other than "archive", though.  Do
-> we even feed directory paths to the machinery?
+Please how can I change the committer username from system default to 
+personalize?
 
-In general, no, I don't think so. That's why I tested "archive", since I
-knew it did. In the normal case, we should just feed file paths, meaning
-we only run into this code path when somebody has "foo/" in their
-pattern. Testing like:
+-- 
+Kind Regards
 
-  git ls-files -z >files
-  time git check-attr --stdin -z -a <files >/dev/null
+Eric Kom
 
-showed a difference well within the noise.
+System Administrator & Programmer - Metropolitan College
+  _________________________________________
+/ You are scrupulously honest, frank, and \
+| straightforward. Therefore you have few |
+\ friends.                                /
+  -----------------------------------------
+    \
+     \
+         .--.
+        |o_o |
+        |:_/ |
+       //   \ \
+      (| Kom | )
+     /'\_   _/`\
+     \___)=(___/
 
-> > So I do still think it would make sense to go to a byte-limited version
-> > of fnmatch eventually, just for code cleanliness and predictability of
-> > performance, but this is really not a bad solution in the interim.
-> 
-> Yes, what we do with wildmatch is a separate issue for 'master' and
-> upwards.
+2 Hennie Van Till, White River, 1240
+Tel: 013 750 2255 | Fax: 013 750 0105 | Cell: 078 879 1334
+erickom@kom.za.net | erickom@metropolitancollege.co.za
+www.kom.za.net | www.kom.za.org | www.erickom.co.za
 
-Oh, agreed. I just wanted to see how much performance would be impacted
-for the interim. But it seems that it's not.
-
-So I think your series is the right direction, but we would want to
-factor out the allocation code and use it from match_pathname, as well.
-
--Peff
+Key fingerprint: 513E E91A C243 3020 8735 09BB 2DBC 5AD7 A9DA 1EF5
