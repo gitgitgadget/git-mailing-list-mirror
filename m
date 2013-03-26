@@ -1,82 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] dir.c::match_basename(): pay attention to the length
- of string parameters
-Date: Tue, 26 Mar 2013 13:49:10 -0700
-Message-ID: <7v7gktubsp.fsf@alter.siamese.dyndns.org>
-References: <20130323083927.GA25600@sigill.intra.peff.net>
- <1364323171-20299-1-git-send-email-gitster@pobox.com>
- <1364323171-20299-3-git-send-email-gitster@pobox.com>
- <20130326185559.GB26462@sigill.intra.peff.net>
- <20130326203914.GA29167@sigill.intra.peff.net>
+From: Matt McClure <matthewlmcclure@gmail.com>
+Subject: Re: [PATCH v2] difftool: don't overwrite modified files
+Date: Tue, 26 Mar 2013 16:52:02 -0400
+Message-ID: <CAJELnLFxEa6v39ocVD+VLj9b86HhURsnFa+UKc+r3xYPLStSNw@mail.gmail.com>
+References: <cover.1363980749.git.john@keeping.me.uk>
+	<cover.1364045138.git.john@keeping.me.uk>
+	<e44349728c07d8ae22d4b73527b1d124b49cc4a9.1364045138.git.john@keeping.me.uk>
+	<7vd2up4bo7.fsf@alter.siamese.dyndns.org>
+	<20130324123620.GA2286@serenity.lan>
+	<CAJELnLEhcY4Oc-EB=Mi7PKBQQF+EiVpW_dNH6G-abjZj0MAdNw@mail.gmail.com>
+	<20130324151557.GB2286@serenity.lan>
+	<514FFFC7.3090004@viscovery.net>
+	<20130325104219.GD2286@serenity.lan>
+	<20130325214430.GG2286@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, pclouds@gmail.com, avila.jn@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 26 21:49:47 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Mar 26 21:52:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKaoP-0007fy-PE
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 21:49:42 +0100
+	id 1UKarC-0007vs-H5
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 21:52:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754784Ab3CZUtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Mar 2013 16:49:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36105 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752848Ab3CZUtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Mar 2013 16:49:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6EAFA77A;
-	Tue, 26 Mar 2013 16:49:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GxBPpq5DtvKF+d45Uv+SQ/RgFSk=; b=PHAJJJ
-	VJBVtzP9pQQLWFwDLQpc9ZImEComiyfufwCXsyIZnJn+ZjF9NOHYBRMr9QnMenBe
-	PPUj8Vc5QbUxWhRXKRF3OgLfe5fTOToSK8lSpY0QrabHGENMrGZQ0pD9wE8pf7+v
-	3Ag/ozIv+M+eMa8pZ92b1ifG1pyK1hd9vZduM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vdP2mSFN2dCelfvM/MmOqa+uLCCCggzo
-	pdNOTjgpGj01z86sop1vVkrpUaLTwITfIV1T9/DSz5njsk0rnolMPyqprk3oLA4u
-	qFFTuww+3QyxwGlXRxB9a+9f1BlmGbT7nRiYqyGS0BXQxSvLxdthTI6l82E2K/qq
-	2IMDhyYzO1c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9FC3A778;
-	Tue, 26 Mar 2013 16:49:12 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 39EB2A773; Tue, 26 Mar 2013
- 16:49:12 -0400 (EDT)
-In-Reply-To: <20130326203914.GA29167@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 26 Mar 2013 16:39:14 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9D277752-9656-11E2-A412-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755367Ab3CZUwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Mar 2013 16:52:05 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:52724 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754915Ab3CZUwD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Mar 2013 16:52:03 -0400
+Received: by mail-pd0-f182.google.com with SMTP id 3so107773pdj.27
+        for <git@vger.kernel.org>; Tue, 26 Mar 2013 13:52:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=b5+JETbZ8Kh3rpwIv2yss1E5YW5kw3wypfjmlMgVFQc=;
+        b=e6o8zHVIbwCTsaLNqv0e0HI8UFRqnq78YA5sv8KGnsbsSMt+pfFplS+GzUPj9o3tau
+         DCjlvifc1XFBECfMzWOk0+LHo8L+qGptclQon114ULCu1Of+AA1kmq/5PueGhNqGMbPv
+         fccCy+0ywGieTQGQomd0KJ0PuZM6/j/Lsybmq+PRFgiazAtfgWDz22fsg3vT1x0NC9w0
+         FB8eDEKAAfb29LLLmqI9aCi/V5AP07mnUmMsFm4a+FGdcKPbWoJiMQs5XdOIZHEX3wK/
+         hJbYTHRuubT6psq/7yub0rPvBJyrnf4HLdx0bkqNrtIrHRJTY1NxvcEzOI4WMvcNGGN1
+         n5ig==
+X-Received: by 10.66.163.69 with SMTP id yg5mr25829788pab.109.1364331122814;
+ Tue, 26 Mar 2013 13:52:02 -0700 (PDT)
+Received: by 10.68.0.66 with HTTP; Tue, 26 Mar 2013 13:52:02 -0700 (PDT)
+In-Reply-To: <20130325214430.GG2286@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219206>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Mar 25, 2013 at 5:44 PM, John Keeping <john@keeping.me.uk> wrote:
+> Instead of copying unconditionally when the files differ, create and
+> index from the working tree files and only copy the temporary file back
+> if it was modified and the working tree file was not.  If both files
+> have been modified, print a warning and exit with an error.
 
-> I timed this doing "git archive HEAD" on webkit.git before and after. It
-> actually ended up not mattering much (I think because it is only the
-> directories which are affected, not each individually path, so it's a
-> much smaller number than you'd think). The best-of-five timing was
-> slightly slower, but was within the noise.
+When there's a conflict, does difftool save both conflicting files? Or
+only the working tree copy? I think it should preserve both copies on
+disk.
 
-Interesting.  Because "archive" has to incur a large I/O cost
-anyway, I expected extra allocation for correctness for only the
-directory paths would be dwarfed in the noise.
-
-I actually care more about cases other than "archive", though.  Do
-we even feed directory paths to the machinery?
-
-> So I do still think it would make sense to go to a byte-limited version
-> of fnmatch eventually, just for code cleanliness and predictability of
-> performance, but this is really not a bad solution in the interim.
-
-Yes, what we do with wildmatch is a separate issue for 'master' and
-upwards.
+-- 
+Matt McClure
+http://www.matthewlmcclure.com
+http://www.mapmyfitness.com/profile/matthewlmcclure
