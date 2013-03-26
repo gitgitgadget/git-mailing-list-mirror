@@ -1,70 +1,90 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH] git-svn: Support custom tunnel schemes instead of SSH only
-Date: Tue, 26 Mar 2013 22:24:38 +0100
-Message-ID: <51521216.2050309@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/9] stream_blob_to_fd: detect errors reading from stream
+Date: Tue, 26 Mar 2013 14:27:19 -0700
+Message-ID: <7v38vhua14.fsf@alter.siamese.dyndns.org>
+References: <20130325201427.GA15798@sigill.intra.peff.net>
+ <20130325201650.GA16019@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: normalperson@yhbt.net, Eric Wieser <wieser.eric@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 26 22:25:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 26 22:28:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKbN7-0005GO-DH
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 22:25:33 +0100
+	id 1UKbPR-0003yG-Kf
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 22:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751478Ab3CZVZC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Mar 2013 17:25:02 -0400
-Received: from plane.gmane.org ([80.91.229.3]:45703 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750932Ab3CZVZB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Mar 2013 17:25:01 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UKbMu-0004eA-0y
-	for git@vger.kernel.org; Tue, 26 Mar 2013 22:25:20 +0100
-Received: from p4fc97c64.dip.t-dialin.net ([79.201.124.100])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Mar 2013 22:25:20 +0100
-Received: from sschuberth by p4fc97c64.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Mar 2013 22:25:20 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p4fc97c64.dip.t-dialin.net
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+	id S1752052Ab3CZV10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Mar 2013 17:27:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35589 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750822Ab3CZV1Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Mar 2013 17:27:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5A55BC83;
+	Tue, 26 Mar 2013 17:27:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3j3E6EMoQWHJIJLBnQAy3Ag2wsw=; b=c7fjaP
+	smqixVB6zqBQX1EZ+BuN1qn62blevd/Ws4PBQ2A5e3SHuobhfbk7CRXMnhhFtQoY
+	KCvhp/SGN7yHq39MPz7WGP6Eq2tuKj/ZCD+j6dzpGLJVOW+dsM18QReaN4g9a7gj
+	UqFUJmlOgtNcuPUe/InxY92CzInr70QHDH2OA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CvptQFKqVYSkdJsj8lKxVvEPypxD2G23
+	buNIblreLOTaQo6Hohc1tMSAoaA57cr4VTLupYyXADstcg53B0hktaDnK5UyxAtJ
+	HmmerUOCntdGwtWpU9xyqAmnxjAAk/EfLHqXT2ve/RubRZuNy0ivrec+kZMrYFCU
+	fr4VyKai9uE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9359BC81;
+	Tue, 26 Mar 2013 17:27:21 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3CBA6BC7D; Tue, 26 Mar 2013
+ 17:27:21 -0400 (EDT)
+In-Reply-To: <20130325201650.GA16019@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 25 Mar 2013 16:16:50 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F182248C-965B-11E2-B6BB-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219210>
 
-This originates from an msysgit pull request, see:
+Jeff King <peff@peff.net> writes:
 
-https://github.com/msysgit/git/pull/58
+> We call read_istream, but never check its return value for
+> errors. This can lead to us looping infinitely, as we just
+> keep trying to write "-1" bytes (and we do not notice the
+> error, as we simply check that write_in_full reports the
+> same number of bytes we fed it, which of course is also -1).
 
-Signed-off-by: Eric Wieser <wieser.eric@gmail.com>
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- perl/Git/SVN/Ra.pm | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Looks sane.  Thanks.
 
-diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
-index 049c97b..6a212eb 100644
---- a/perl/Git/SVN/Ra.pm
-+++ b/perl/Git/SVN/Ra.pm
-@@ -295,7 +295,7 @@ sub gs_do_switch {
- 	my $full_url = add_path_to_url( $self->url, $path );
- 	my ($ra, $reparented);
- 
--	if ($old_url =~ m#^svn(\+ssh)?://# ||
-+	if ($old_url =~ m#^svn(\+\w+)?://# ||
- 	    ($full_url =~ m#^https?://# &&
- 	     canonicalize_url($full_url) ne $full_url)) {
- 		$_[0] = undef;
--- 
-1.8.1.msysgit.1
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> No test yet, as my method for triggering this causes _another_ infinite
+> loop. So the test comes after the fixes, to avoid infinite loops when
+> bisecting the history later. :)
+>
+>  streaming.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/streaming.c b/streaming.c
+> index 4d978e5..f4126a7 100644
+> --- a/streaming.c
+> +++ b/streaming.c
+> @@ -514,6 +514,8 @@ int stream_blob_to_fd(int fd, unsigned const char *sha1, struct stream_filter *f
+>  		ssize_t wrote, holeto;
+>  		ssize_t readlen = read_istream(st, buf, sizeof(buf));
+>  
+> +		if (readlen < 0)
+> +			goto close_and_exit;
+>  		if (!readlen)
+>  			break;
+>  		if (can_seek && sizeof(buf) == readlen) {
