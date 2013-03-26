@@ -1,85 +1,71 @@
-From: =?UTF-8?B?U2ViYXN0aWFuIEfDtnR0ZQ==?= <jaseg@physik.tu-berlin.de>
-Subject: [PATCH v4 5/5] pretty printing: extend %G? to include 'N' and 'U'
-Date: Tue, 26 Mar 2013 12:05:56 +0100
-Message-ID: <51518114.9050902@physik.tu-berlin.de>
-References: <7vli9bue40.fsf@alter.siamese.dyndns.org> <cover.1364295502.git.jaseg@physik-pool.tu-berlin.de>
+From: thomas <trast@student.ethz.ch>
+Subject: Re: [PATCH v2 2/3] Refactor parts of in_delta_base_cache/cache_or_unpack_entry
+Date: Tue, 26 Mar 2013 12:09:59 +0100
+Message-ID: <87y5da8liw.fsf@linux-k42r.v.cablecom.net>
+References: <cover.1364234154.git.trast@student.ethz.ch>
+	<987ab8138000d0aaa7d1bb6242cced1344e4d339.1364234154.git.trast@student.ethz.ch>
+	<7vtxnzul42.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 26 12:06:34 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Stefan Zager <szager@google.com>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 26 12:10:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKRi5-0002IN-Hl
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 12:06:33 +0100
+	id 1UKRly-0000a7-4E
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 12:10:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756426Ab3CZLF7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Mar 2013 07:05:59 -0400
-Received: from mail.tu-berlin.de ([130.149.7.33]:55491 "EHLO mail.tu-berlin.de"
+	id S1754614Ab3CZLKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Mar 2013 07:10:03 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:47864 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754969Ab3CZLF6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Mar 2013 07:05:58 -0400
-X-tubIT-Incoming-IP: 130.149.58.163
-Received: from mail.physik-pool.tu-berlin.de ([130.149.58.163] helo=mail.physik.tu-berlin.de)
-	by mail.tu-berlin.de (exim-4.75/mailfrontend-2) with esmtp 
-	id 1UKRhV-00044f-GZ; Tue, 26 Mar 2013 12:05:57 +0100
-Received: from [192.168.0.100] (cable-124-189.zeelandnet.nl [82.176.124.189])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.physik.tu-berlin.de (Postfix) with ESMTPSA id DD73811401;
-	Tue, 26 Mar 2013 12:05:56 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
-In-Reply-To: <cover.1364295502.git.jaseg@physik-pool.tu-berlin.de>
+	id S1753441Ab3CZLKC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Mar 2013 07:10:02 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 26 Mar
+ 2013 12:09:57 +0100
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Tue, 26 Mar 2013 12:09:59 +0100
+In-Reply-To: <7vtxnzul42.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 25 Mar 2013 16:15:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219157>
 
-Expand %G? in pretty format strings to 'N' in case of no GPG signature
-and 'U' in case of a good but untrusted GPG signature in addition to
-the previous 'G'ood and 'B'ad. This eases writing anyting parsing
-git-log output.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Sebastian G=C3=B6tte <jaseg@physik-pool.tu-berlin.de>
----
- Documentation/pretty-formats.txt | 3 ++-
- pretty.c                         | 2 ++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+> Thomas Rast <trast@student.ethz.ch> writes:
+>
+>> The delta base cache lookup and test were shared.  Refactor them;
+>> we'll need both parts again.  Also, we'll use the clearing routine
+>> later.
+>>
+>> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+>> ---
+>
+> Looks like a very straight-forward rewrite.
+>
+> The only little concern I may have is this cmp_* function tells us
+> "I found it!" by returning true, which is counter-intuitive to the
+> readers of the caller (not the callee).
+>
+> I think it makes sense to compare delta-base-cache entries only for
+> equality, so eq-delta-base-cache-entry might be a better name for
+> it, perhaps?
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
-rmats.txt
-index 2939655..afac703 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -131,7 +131,8 @@ The placeholders are:
- - '%B': raw body (unwrapped subject and body)
- - '%N': commit notes
- - '%GG': raw verification message from GPG for a signed commit
--- '%G?': show either "G" for Good or "B" for Bad for a signed commit
-+- '%G?': show "G" for a Good signature, "B" for a Bad signature, "U" f=
-or a good,
-+  untrusted signature and "N" for no signature
- - '%GS': show the name of the signer for a signed commit
- - '%GK': show the key used to sign a signed commit
- - '%gD': reflog selector, e.g., `refs/stash@{1}`
-diff --git a/pretty.c b/pretty.c
-index 3aac5d8..fc74795 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1135,6 +1135,8 @@ static size_t format_commit_one(struct strbuf *sb=
-, const char *placeholder,
- 			switch (c->signature.check_result) {
- 			case 'G':
- 			case 'B':
-+			case 'U':
-+			case 'N':
- 				strbuf_addch(sb, c->signature.check_result);
- 			}
- 			break;
---=20
-1.8.1.5
+True.  I'll resend.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
