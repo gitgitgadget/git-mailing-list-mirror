@@ -1,80 +1,89 @@
-From: Jeff Mitchell <jeffrey.mitchell@gmail.com>
-Subject: Re: propagating repo corruption across clone
-Date: Tue, 26 Mar 2013 09:43:01 -0400
-Message-ID: <CAOx6V3ZWB1ZpmXcaBeSaPOvHqmAMF3U1rTXuwinFGmEZQwFGYQ@mail.gmail.com>
-References: <20130324183133.GA11200@sigill.intra.peff.net> <CACBZZX6czzJRF9TEsc8c+=LND6SxaVvrZdbcZ+TfUZTWQOpW0Q@mail.gmail.com>
- <20130324192350.GA20688@sigill.intra.peff.net> <CAOx6V3YtM-e8-S41v1KnC+uSymYwZw8QBwiCJRYw0MYJXRjj-w@mail.gmail.com>
- <20130325145644.GA16576@sigill.intra.peff.net> <CACsJy8A0eOWEJ2aqPSLof_CodJM6BadFxQHy5Vb0kAwwTSTS3w@mail.gmail.com>
- <20130325155600.GA18216@sigill.intra.peff.net> <CAOx6V3a6vGJvJ4HEmAXdTRKKCzRJS23OYd_em1b3aQLzPNEtQA@mail.gmail.com>
- <20130325200752.GB3902@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Correct the docs about GIT_SSH.
+Date: Tue, 26 Mar 2013 07:52:19 -0700
+Message-ID: <7v8v5ausbg.fsf@alter.siamese.dyndns.org>
+References: <1363907200-12850-1-git-send-email-danfuzz@milk.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 26 14:43:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dan Bornstein <danfuzz@milk.com>
+X-From: git-owner@vger.kernel.org Tue Mar 26 15:52:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKUAM-0004CT-GW
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 14:43:54 +0100
+	id 1UKVF5-0002AS-9o
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 15:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934351Ab3CZNnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Mar 2013 09:43:25 -0400
-Received: from mail-vc0-f178.google.com ([209.85.220.178]:62285 "EHLO
-	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933906Ab3CZNnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Mar 2013 09:43:23 -0400
-Received: by mail-vc0-f178.google.com with SMTP id hz11so5582384vcb.9
-        for <git@vger.kernel.org>; Tue, 26 Mar 2013 06:43:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=dxrRruU7Y+iSFMuC1xo9qqCPhpZ1gahdhOIdZCmN9tU=;
-        b=gEnGHM4ZL+vd6zznqJlKBSgnard6gH2TfhqyydkwHdJK3SBPVuGOyXsbUc+X9dIg7G
-         WEvvYkQTOkSXEnjxIlZaLS/g2Wk+RnAbbewEoLxAW4WgSiwENYiBnLrmNJl+XTkO2XaM
-         IxGza8DCHFrorbQW4MeqLu3imC8e0g9lyIXtg0Ln8mqLFBgFzgaux7IeEApWmdMrF68l
-         rArKEjPbPUaFL6cvsIRxQocuSENo5Msp5kNNxXIzFr04FvbZm+D+aQ4+RBUyXzMv2a/z
-         lpAj43Nd/l+pr4OFHHdVu4qg9zFMhPLmREWodX7GxYViq/hi+/t49Pg0I9xS64Y0iRJL
-         ltMA==
-X-Received: by 10.58.205.179 with SMTP id lh19mr19098667vec.7.1364305402393;
- Tue, 26 Mar 2013 06:43:22 -0700 (PDT)
-Received: by 10.59.7.37 with HTTP; Tue, 26 Mar 2013 06:43:01 -0700 (PDT)
-In-Reply-To: <20130325200752.GB3902@sigill.intra.peff.net>
+	id S1759794Ab3CZOwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Mar 2013 10:52:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50326 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758311Ab3CZOwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Mar 2013 10:52:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EAE8A442;
+	Tue, 26 Mar 2013 10:52:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bZ7bxqJ9TriS5wt0trETROn3u/Y=; b=qY7qcT
+	+5opGdPHQwkH0Qs4VdkI9frAcpDb1onWDNF2QhaXxHALJDqP5HTAVnMSACGhJJFd
+	7En64zdayx6duarMK+ktbxDvVoN39pA0zq2GIaLhypcYfvs5dFxPAE4DZ9274wJ7
+	mg9GASMYny20EqGY3lmC6hrfmKGJesHS++yOQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EqUUz//L5fWulnQx0Nuyd57Q/6ptk1WL
+	0T+uwNaL/pCdK5Ez1O0b1GMSa8YXG+lAq/xQLJgeUBpwJ/mmcp+8IgYbIEsYgBS4
+	s9m4pIZ9hbHlx1dCr1DdaIiUWh6Qjgj5kYtRH6tkaKrQcLmcmHhJ0kWR+I/QG8zM
+	1jvuGtzdpBE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03B63A441;
+	Tue, 26 Mar 2013 10:52:22 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6DC80A440; Tue, 26 Mar 2013
+ 10:52:21 -0400 (EDT)
+In-Reply-To: <1363907200-12850-1-git-send-email-danfuzz@milk.com> (Dan
+ Bornstein's message of "Thu, 21 Mar 2013 23:06:40 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C3544644-9624-11E2-8BDE-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219160>
 
-On Mon, Mar 25, 2013 at 4:07 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Mar 25, 2013 at 12:32:50PM -0400, Jeff Mitchell wrote:
->> For commit corruptions, the --no-hardlinks, non --mirror case refused
->> to create the new repository and exited with an error code of 128. The
->> --no-hardlinks, --mirror case spewed errors to the console, yet
->> *still* created the new clone *and* returned an error code of zero.
+Dan Bornstein <danfuzz@milk.com> writes:
+
+> In particular, it can get called with four arguments if you happen to
+> be referring to a repo using the ssh:// scheme with a non-default port
+> number.
 >
-> I wasn't able to reproduce this; can you post a succint test case?
+> Signed-off-by: Dan Bornstein <danfuzz@milk.com>
+> ---
+>  Documentation/git.txt |    9 ++++++---
+>  1 files changed, 6 insertions(+), 3 deletions(-)
 
-This actually seems hard to reproduce. I found this during testing
-with an existing repository on-disk, but when I tried creating a new
-repository with some commit objects, and modifying one of the commit
-objects the same way I modified the an object in the previous
-repository, I was unable to reproduce it.
+Looks good.  Thanks.
 
-I do have the original repository though, so I'll tar.gz it up so that
-you can have exactly the same content as I do. It's about 40MB and you
-can grab it here:
-https://www.dropbox.com/s/e8dhedmpd1a1axs/tomahawk-corrupt.tar.gz (MD5
-sum: cde8a43233db5d649932407891f8366b).
-
-Once you extract that, you should be able to run a clone using paths
-(not file://) with --no-hardlinks --mirror and replicate the behavior
-I saw. FYI, I'm on Git 1.8.2.
-
-Thanks,
-Jeff
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 7efaa59..4307d62 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -774,9 +774,12 @@ other
+>  	If this environment variable is set then 'git fetch'
+>  	and 'git push' will use this command instead
+>  	of 'ssh' when they need to connect to a remote system.
+> -	The '$GIT_SSH' command will be given exactly two arguments:
+> -	the 'username@host' (or just 'host') from the URL and the
+> -	shell command to execute on that remote system.
+> +	The '$GIT_SSH' command will be given exactly two or
+> +	four arguments: the 'username@host' (or just 'host')
+> +	from the URL and the shell command to execute on that
+> +	remote system, optionally preceded by '-p' (literally) and
+> +	the 'port' from the URL when it specifies something other
+> +	than the default SSH port.
+>  +
+>  To pass options to the program that you want to list in GIT_SSH
+>  you will need to wrap the program and options into a shell script,
