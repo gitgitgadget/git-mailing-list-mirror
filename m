@@ -1,85 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 8/9] clone: die on errors from unpack_trees
-Date: Tue, 26 Mar 2013 14:40:57 -0700
-Message-ID: <7vtxnxsuty.fsf@alter.siamese.dyndns.org>
-References: <20130325201427.GA15798@sigill.intra.peff.net>
- <20130325202359.GH16019@sigill.intra.peff.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: git ate my home directory :-(
+Date: Tue, 26 Mar 2013 21:47:11 -0000
+Organization: OPDS
+Message-ID: <460E50A0F7A14FA796D6D74E25DA78F3@PhilipOakley>
+References: <5150C3EC.6010608@nod.at> <20130325214343.GF1414@google.com> <7vboa7w2vm.fsf@alter.siamese.dyndns.org> <384BCFE976364F1EA6E56306566D003A@PhilipOakley> <20130326094844.GA32583@duynguyen-vnpc.dek-tpc.internal>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 26 22:41:34 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	reply-type=original
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Jonathan Nieder" <jrnieder@gmail.com>,
+	"Richard Weinberger" <richard@nod.at>,
+	"Git List" <git@vger.kernel.org>, "Jeff King" <peff@peff.net>
+To: "Duy Nguyen" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 26 22:47:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKbcX-0003kX-D6
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 22:41:29 +0100
+	id 1UKbiQ-00053i-Qw
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 22:47:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751939Ab3CZVlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Mar 2013 17:41:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45948 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751783Ab3CZVlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Mar 2013 17:41:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F12AA40D;
-	Tue, 26 Mar 2013 17:40:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AsDrDHwPjH2hHEfQMQVzNeVb2Mo=; b=BoJmnE
-	rntos3v/rBiEY3+FrzXY+gTouxwOtAhfU0boiJNsEBsqyymPSP2MJZsdgzFgpvmh
-	uCJb6hpjkfJyOmrBQsSirl33a0Q/5JeOEFURMq2HletbDedjvn81oyk8zZ9ba00K
-	3XzrvqomcrLi8f2nnl8Wg0SzXKxymPlKNjTjo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RB0h/8/QQwZXaYlDefJrTTkmHMtgcGhT
-	D7472f6W1u3BHfFebqzVEkc3IVZLI9r6NYUiiwzE21EFCVxCTHHim/P/bNkLHGjM
-	KWUHsrj+87miU6ah6kZ/oATV3mFuiYg7Kqx/XuWvQtUw7Oyt3CB939pEBz/KySnR
-	3k0fvA4WWZg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 82F87A40B;
-	Tue, 26 Mar 2013 17:40:59 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E5E05A407; Tue, 26 Mar 2013
- 17:40:58 -0400 (EDT)
-In-Reply-To: <20130325202359.GH16019@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 25 Mar 2013 16:23:59 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D8E4272A-965D-11E2-BC64-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751996Ab3CZVrG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Mar 2013 17:47:06 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:6667 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751940Ab3CZVrE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Mar 2013 17:47:04 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Al8JAPsWUlFOl3N//2dsb2JhbABDhliFP7d9BAGBBheBKoIaBQEBBQgBARkPAQUeAQEhCwIDBQIBAw4DBAEBAQICBSECAhQBBAgSBgcPCAYTCAIBAgMBh3EDE65DgkCGDA2JW4EjiySBNQUWcAsNgicyYQOOMYZWjUyFG4EvgVw8
+X-IronPort-AV: E=Sophos;i="4.84,913,1355097600"; 
+   d="scan'208";a="404693294"
+Received: from host-78-151-115-127.as13285.net (HELO PhilipOakley) ([78.151.115.127])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 26 Mar 2013 21:47:01 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219216>
 
-Jeff King <peff@peff.net> writes:
-
-> When clone is populating the working tree, it ignores the
-> return status from unpack_trees; this means we may report a
-> successful clone, even when the checkout fails.
+=46rom: "Duy Nguyen" <pclouds@gmail.com>
+Sent: Tuesday, March 26, 2013 9:48 AM
+> On Tue, Mar 26, 2013 at 08:02:30AM -0000, Philip Oakley wrote:
+>> >> Yeah, for historical reasons GIT_WORK_TREE defaults to $(pwd) whe=
+n
+>> >> GIT_DIR is explicitly set.
+>> >
+>> > And it *WILL* be that way til the end of time.  Unless you are at
+>> > the top level of your working tree, you are supposed to tell where
+>> > the top level is with GIT_WORK_TREE when you use GIT_DIR.  Always.
+>>
+>> Should this important warning be part of the git(1) documentation on
+>> the
+>> environment variables (and possibly other places) given the
+>> consequences
+>> of this case? It wasn't something I'd appreciated from a simple
+>> reading.
 >
-> When checkout fails, we may want to leave the $GIT_DIR in
-> place, as it might be possible to recover the data through
-> further use of "git checkout" (e.g., if the checkout failed
-> due to a transient error, disk full, etc). However, we
-> already die on a number of other checkout-related errors, so
-> this patch follows that pattern.
+> Something like this, maybe?
 >
-> In addition to marking a now-passing test, we need to adjust
-> t5710, which blindly assumed it could make bogus clones of
-> very deep alternates hierarchies. By using "--bare", we can
-> avoid it actually touching any objects.
+> -- 8< --
+> Subject: [PATCH] git.txt: document the implicit working tree setting
+> with GIT_DIR
 >
-> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 > ---
+> Documentation/git.txt | 2 ++
+> 1 file changed, 2 insertions(+)
+>
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 7efaa59..ce55abf 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -671,6 +671,8 @@ Git so take care if using Cogito etc.
+>  specifies a path to use instead of the default `.git`
+>  for the base of the repository.
+>  The '--git-dir' command-line option also sets this value.
+> + If neither GIT_WORK_TREE nor '--work-tree' is set, the
+> + current directory will become the working tree.
 
-Thanks.
+I didn't feel this conveyed the Dire Warning effect that would be neede=
+d
+to avoid the original misunderstanding.
 
-> I think the "leave the data behind" fix may be to just set "junk_pid =
-> 0" a little sooner in cmd_clone (i.e., before checkout()). Then we
-> would still die, but at least leave the fetched objects intact.
+It is easy to miss some of the potential consequences when other
+priorities are pressing.
 
-Yeah, perhaps, but I agree that is a much lower priority change.
+As Junio wondered, perhaps rhetorically, in a later message  "Why do
+these people set GIT_DIR without setting GIT_WORK_TREE in the first
+place?"
+
+Perhaps
+"If the GIT_DIR environment variable is set then it specifies a path to
+use instead of the default `.git` for the base of the repository. Note
+that the current directory `.` will be used as the working
+GIT_WORK_TREE, if not set elsewhere. The --git-dir command-line
+option also sets the GIT_DIR environment variable."
+
+
+>
+> 'GIT_WORK_TREE'::
+>  Set the path to the working tree.  The value will not be
+> --=20
+> 1.8.2.82.gc24b958
+> -- 8< --
+> --
+Philip=20
