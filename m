@@ -1,72 +1,70 @@
-From: Matt McClure <matthewlmcclure@gmail.com>
-Subject: patch series vs. multiple files changed in a commit; storytelling
- history vs. literal creation history
-Date: Tue, 26 Mar 2013 17:21:43 -0400
-Message-ID: <CAJELnLE0FLrSYGHgS-cZmyQWO122-MuN7AeczUUVVposUg+qjw@mail.gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH] git-svn: Support custom tunnel schemes instead of SSH only
+Date: Tue, 26 Mar 2013 22:24:38 +0100
+Message-ID: <51521216.2050309@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: normalperson@yhbt.net, Eric Wieser <wieser.eric@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 26 22:22:14 2013
+X-From: git-owner@vger.kernel.org Tue Mar 26 22:25:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKbJt-0003Vc-85
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 22:22:13 +0100
+	id 1UKbN7-0005GO-DH
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 22:25:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751984Ab3CZVVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Mar 2013 17:21:44 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:41158 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751146Ab3CZVVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Mar 2013 17:21:44 -0400
-Received: by mail-pa0-f45.google.com with SMTP id kl13so1817025pab.32
-        for <git@vger.kernel.org>; Tue, 26 Mar 2013 14:21:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to
-         :content-type;
-        bh=OfwknhNN2iZ60jF22y3Tf5W5U7lU6XPnmc+vm0YHX/Q=;
-        b=M3vj31AwzDAvkzRx5PRR7h+YvWhss71F34P76jh9bT/h/D0mZbZE8OEiLn2PGbuwrX
-         BJf9bmzG5px67277AuWLxpRNJ8izC0glfU19DlwoYz8FGmti5haN4NwIJplyQjI+Pddh
-         E+6Ya4PeSn83m4Swo5Qlcl4CvCgag5x/P7X3CIceCSxZtZDx16gVdKDQpZRzogifV0cs
-         fRW8n+fWCBGP+8+y0yNh/Nledwo6Tllc5DjQQlyvxy+UwYf8wU+f4+QrEcLNGf0yVdZB
-         EHlsdBfWrfMJc1xaNpqt3I6l5aeKC87ezmrs8jNJmx85NKk3vb4m782/aDK2dlsc00Wg
-         d48A==
-X-Received: by 10.68.243.66 with SMTP id ww2mr25340271pbc.109.1364332903792;
- Tue, 26 Mar 2013 14:21:43 -0700 (PDT)
-Received: by 10.68.0.66 with HTTP; Tue, 26 Mar 2013 14:21:43 -0700 (PDT)
+	id S1751478Ab3CZVZC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Mar 2013 17:25:02 -0400
+Received: from plane.gmane.org ([80.91.229.3]:45703 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750932Ab3CZVZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Mar 2013 17:25:01 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UKbMu-0004eA-0y
+	for git@vger.kernel.org; Tue, 26 Mar 2013 22:25:20 +0100
+Received: from p4fc97c64.dip.t-dialin.net ([79.201.124.100])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 26 Mar 2013 22:25:20 +0100
+Received: from sschuberth by p4fc97c64.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 26 Mar 2013 22:25:20 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p4fc97c64.dip.t-dialin.net
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219209>
 
-I've read Documentation/SubmittingPatches, followed some of the
-discussion on this list, and looked over some of the recent commit
-history. I'm impressed by the strong culture of review that produces
-readable patches and commit messages, but I think there are some gaps
-in my understanding of the prevailing process here.
+This originates from an msysgit pull request, see:
 
-Most of the code I've worked on has been closed source, and the commit
-histories tend to reflect what I'd call the literal "creation
-history". Reading the Git history, my impression is that it reflects a
-different "storytelling" history. In some cases, that might be the
-same as the creation history, but in general the emphasis is on
-telling a coherent story of the changes to the other developers rather
-than communicating all the messy details of how you arrived at the
-order of that story. Is that right?
+https://github.com/msysgit/git/pull/58
 
-What are the Git project's rules of thumb for when to create a patch
-series vs. putting changes to multiple files in a single commit/patch?
+Signed-off-by: Eric Wieser <wieser.eric@gmail.com>
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ perl/Git/SVN/Ra.pm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-As a patch series evolves before landing on an upstream branch, do you
-typically make corrections to the original series in new commits, or
-update the respective commits from the original series in a new series
-of analogous commits?
-
+diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
+index 049c97b..6a212eb 100644
+--- a/perl/Git/SVN/Ra.pm
++++ b/perl/Git/SVN/Ra.pm
+@@ -295,7 +295,7 @@ sub gs_do_switch {
+ 	my $full_url = add_path_to_url( $self->url, $path );
+ 	my ($ra, $reparented);
+ 
+-	if ($old_url =~ m#^svn(\+ssh)?://# ||
++	if ($old_url =~ m#^svn(\+\w+)?://# ||
+ 	    ($full_url =~ m#^https?://# &&
+ 	     canonicalize_url($full_url) ne $full_url)) {
+ 		$_[0] = undef;
 -- 
-Matt McClure
-http://www.matthewlmcclure.com
-http://www.mapmyfitness.com/profile/matthewlmcclure
+1.8.1.msysgit.1
