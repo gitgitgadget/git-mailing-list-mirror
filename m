@@ -1,84 +1,79 @@
-From: Richard Weinberger <richard@nod.at>
+From: demerphq <demerphq@gmail.com>
 Subject: Re: git ate my home directory :-(
-Date: Tue, 26 Mar 2013 18:06:17 +0100
-Message-ID: <5151D589.2000002@nod.at>
-References: <5150C3EC.6010608@nod.at> <20130325214343.GF1414@google.com> <7vboa7w2vm.fsf@alter.siamese.dyndns.org> <384BCFE976364F1EA6E56306566D003A@PhilipOakley> <51519DA0.4090201@nod.at> <20130326145637.GA3822@sigill.intra.peff.net>
+Date: Tue, 26 Mar 2013 18:20:09 +0100
+Message-ID: <CANgJU+Wihp=rSQevij6R7SnZtW8UpDtRpFYE00aKKAwiYi9Q_Q@mail.gmail.com>
+References: <5150C3EC.6010608@nod.at>
+	<20130325214343.GF1414@google.com>
+	<7vboa7w2vm.fsf@alter.siamese.dyndns.org>
+	<384BCFE976364F1EA6E56306566D003A@PhilipOakley>
+	<51519DA0.4090201@nod.at>
+	<20130326145637.GA3822@sigill.intra.peff.net>
+	<5151D589.2000002@nod.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Philip Oakley <philipoakley@iee.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 26 18:07:01 2013
+To: Richard Weinberger <richard@nod.at>
+X-From: git-owner@vger.kernel.org Tue Mar 26 18:20:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKXKt-0003K5-Ul
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 18:07:00 +0100
+	id 1UKXY9-0003VT-Rm
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Mar 2013 18:20:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752529Ab3CZRGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Mar 2013 13:06:31 -0400
-Received: from a.ns.miles-group.at ([95.130.255.143]:47834 "EHLO radon.swed.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752268Ab3CZRGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Mar 2013 13:06:30 -0400
-Received: (qmail 12197 invoked by uid 89); 26 Mar 2013 17:06:29 -0000
-Received: by simscan 1.3.1 ppid: 12188, pid: 12193, t: 0.0742s
-         scanners: attach: 1.3.1 clamav: 0.96.5/m:
-Received: from unknown (HELO ?192.168.0.19?) (richard@nod.at@212.186.22.124)
-  by radon.swed.at with ESMTPA; 26 Mar 2013 17:06:29 -0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-In-Reply-To: <20130326145637.GA3822@sigill.intra.peff.net>
+	id S1752692Ab3CZRUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Mar 2013 13:20:11 -0400
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:61320 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751683Ab3CZRUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Mar 2013 13:20:10 -0400
+Received: by mail-qc0-f176.google.com with SMTP id n41so3202960qco.21
+        for <git@vger.kernel.org>; Tue, 26 Mar 2013 10:20:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=B+A2iCDhadpOZu/TbBWqUciJYN/DcbZb3NG5TPUOZK8=;
+        b=sHQbfp70sTsHjZ0mbEqTHaVSSajJYckjyZhepyMnOg43lZd6HgmVGRbNr9Q16VvDfH
+         KCdtwudrpXEozxf80E6AoCwMh6CZTt6cpJxd96oSeUNxEWUMkhOiVMuN5LaTEYk+0ysC
+         ftI2wgt1A+MWp1b5GIStHZYmhdjnVTs2O3DvCAMvYvpEXrOEpz6vu5A9ZAEiBhSAzAiA
+         GqZ33DydHLFXNtpO4Az5nWxNrEU1iX4Lp9Ed9UvVxQRXS8L+sEV+RnJX393JundxNmfU
+         12QVyqteq41wipUJ1W7oBcvI7F0QzfWt007ay40obxlyt09lPeznoFrjTER3KG1mcAKn
+         4GXg==
+X-Received: by 10.229.76.37 with SMTP id a37mr2875641qck.130.1364318409252;
+ Tue, 26 Mar 2013 10:20:09 -0700 (PDT)
+Received: by 10.49.6.103 with HTTP; Tue, 26 Mar 2013 10:20:09 -0700 (PDT)
+In-Reply-To: <5151D589.2000002@nod.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219172>
 
-Am 26.03.2013 15:56, schrieb Jeff King:
-> On Tue, Mar 26, 2013 at 02:07:44PM +0100, Richard Weinberger wrote:
->
->>> Should this important warning be part of the git(1) documentation on
->>> the environment variables (and possibly other places) given the
->>> consequences of this case? It wasn't something
->>> I'd appreciated from a simple reading.
->>
->> BTW: Can't we change git-clean such that it will not delete any files
->> if GIT_DIR is set and GIT_WORK_TREE is "."?s
->
-> We could, but that would break the existing behavior for other people
-> (and I assume you mean "when GIT_WORK_TREE is not set at all", as I
-> would think GIT_WORK_TREE=. is explicit enough).
+On 26 March 2013 18:06, Richard Weinberger <richard@nod.at> wrote:
+> P.s: I've told this story to some friends and co-workers which use git like
+> me very day.
+> All of them were shocked about the behavior of git-clean and GIT_DIR.
 
-Is there a valid use case to call git-clean with GIT_DIR set but GIT_WORK_TREE
-not (or to ."")?
-It will delete "." ;)
+Seconded. At $work lots of people started asking anxious questions
+about this. It was suggested it is a potential security hole, although
+I am not sure I agree, but the general idea being that if you could
+manage to set this var in someones environment then they might use git
+to do real damage to a system. (The counterargument being that if you
+can set that in someones environment you can do worse already... But
+im a not a security type so I cant say)
 
-> I am sympathetic to your data loss, but I wonder how common a problem it
-> is in practice. Git-clean already does a dry-run by default; you have to
-> give it `-f`. This is the first such report we've had. This seems more
-> akin to "oops, I accidentally ran `rm -rf` in the wrong directory". Yes,
-> it's catastrophic, but at some point you have to accept that deleting
-> files is what rm (and git-clean) does; you can only put so many safety
-> hoops in place.
+As a knee-jerk response we will be armoring various scripts we have
+that use git automatically to refuse to run if GIT_DIR is set. I
+suspect a lot of people will be doing the same.
 
-The data loss was not too bad. I was able to restore anything within 2 hours.
-But was kinda shocked that git-clean deletes files outside my git tree.
-I'm aware of -d. But in my case it happened within a fully automated script.
-I simply thought GIT_DIR=.. git-clean -f -d does the right thing...
+cheers,
+Yves
 
-> I don't know. It's an uncommon enough case that we could deprecate
-> "GIT_WORK_TREE is implicitly `.`" entirely, but I think it would need a
-> deprecation period, and a way to get the same behavior (e.g., allowing
-> "GIT_WORK_TREE=.").
 
-Yeah, this sounds sane.
 
-Thanks,
-//richard
-
-P.s: I've told this story to some friends and co-workers which use git like me very day.
-All of them were shocked about the behavior of git-clean and GIT_DIR.
+-- 
+perl -Mre=debug -e "/just|another|perl|hacker/"
