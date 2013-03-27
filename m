@@ -1,75 +1,85 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/4] attribute regression fix for maint-1.8.1 and upward
-Date: Wed, 27 Mar 2013 11:01:14 +0700
-Message-ID: <CACsJy8BtmyPvU1Zrhdm9mEWTwk9GBuMEs-8ycpBHM79dGyCrMw@mail.gmail.com>
-References: <20130323083927.GA25600@sigill.intra.peff.net> <1364323171-20299-1-git-send-email-gitster@pobox.com>
- <20130327011309.GA10946@duynguyen-vnpc.dek-tpc.internal> <7vmwtpqyui.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: Support custom tunnel schemes instead of SSH
+ only
+Date: Wed, 27 Mar 2013 04:32:55 +0000
+Message-ID: <20130327043255.GA3667@dcvr.yhbt.net>
+References: <51521216.2050309@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, peff@peff.net, avila.jn@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wieser <wieser.eric@gmail.com>, git@vger.kernel.org,
+	Sebastian Schuberth <sschuberth@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 05:02:17 2013
+X-From: git-owner@vger.kernel.org Wed Mar 27 05:33:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKhZ0-0004Vd-Np
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 05:02:15 +0100
+	id 1UKi3A-0002aI-5s
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 05:33:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750809Ab3C0EBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 00:01:46 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:50361 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695Ab3C0EBp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 00:01:45 -0400
-Received: by mail-ob0-f182.google.com with SMTP id ef5so5197436obb.13
-        for <git@vger.kernel.org>; Tue, 26 Mar 2013 21:01:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=FhkYmx8WkPdg5T45e1BJM1aIuLBzp/xhhPd4UeSvBI0=;
-        b=g8vBO7xcxIq7F5SFrwvBo5DMDkX6O57OLIS7Y9q38DQsvAsDvua38Mgnps/xajlJ5+
-         jrU5YpZwjxorvl+mHM7Qo4FBEAlyw+afJuAAZVv8mbkv2mxqhBA9g6/8P0my8RBTVREO
-         cpJq64u0kbzfMNP/LCL+vKTSgIOA9PY+3XFfeOmJRcT1w0ShhgksS6m2S/bM5qqizvD3
-         4XrCurZbxfw4mn+TAMiy+Ic4Fm2+mU2eoJdRdUPxdppF51qxOAP7TBVhSK6TzO0fe2BA
-         98/3Z3WYPWNWmWqBfhcah1rYULwRL1s7VPYN9capO2Fkw7BP33io2CTbh4mDYcnM1g0d
-         w/6g==
-X-Received: by 10.60.12.202 with SMTP id a10mr15222862oec.16.1364356904907;
- Tue, 26 Mar 2013 21:01:44 -0700 (PDT)
-Received: by 10.76.27.137 with HTTP; Tue, 26 Mar 2013 21:01:14 -0700 (PDT)
-In-Reply-To: <7vmwtpqyui.fsf@alter.siamese.dyndns.org>
+	id S1754866Ab3C0Ec4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 00:32:56 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:39176 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751526Ab3C0Ecz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 00:32:55 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E09A1F442;
+	Wed, 27 Mar 2013 04:32:55 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <51521216.2050309@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219239>
 
-On Wed, Mar 27, 2013 at 10:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> How about this? git_check_attr() now takes dtype as an argument
->> and the caller must not add the trailing slash.  This could be
->> split into two patches, one for git_check_attr prototype change,
->> and the other the real meat.
->
-> "git check-attr" fundamentally cannot know, but aside from that do
-> all the callsites know if the path in question is a directory or
-> not?  My impression was that there are some cases you do not
-> necessarily know.
->
-> "Add slash when you _know_ it is a directory, but otherwise pass the
-> path without trailing slash." is easier to understand than "Pass
-> 040000 if you know it is a directory, but otherwise pass 100644",
-> exactly because "otherwise" in both of these instructions include
-> the case where the path in question _is_ a directory (you just do
-> not know what it is).
->
-> I do not particularly like the "trailing slash on the basename"
-> approach, but it feels less bad than passing dtype down.
+Sebastian Schuberth <sschuberth@gmail.com> wrote:
+> This originates from an msysgit pull request, see:
+> 
+> https://github.com/msysgit/git/pull/58
+> 
+> Signed-off-by: Eric Wieser <wieser.eric@gmail.com>
+> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
 
-Fair enough. I'll rebase my changes on top of yours as long term
-cleanup. Maybe I can make nwildmatch take patternlen too.
--- 
-Duy
+Thanks, looks obviously correct.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+
+> diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
+> index 049c97b..6a212eb 100644
+> --- a/perl/Git/SVN/Ra.pm
+> +++ b/perl/Git/SVN/Ra.pm
+> @@ -295,7 +295,7 @@ sub gs_do_switch {
+>  	my $full_url = add_path_to_url( $self->url, $path );
+>  	my ($ra, $reparented);
+>  
+> -	if ($old_url =~ m#^svn(\+ssh)?://# ||
+> +	if ($old_url =~ m#^svn(\+\w+)?://# ||
+>  	    ($full_url =~ m#^https?://# &&
+>  	     canonicalize_url($full_url) ne $full_url)) {
+>  		$_[0] = undef;
+> -- 
+
+Junio:
+
+The following changes since commit 2bba2f0e6542d541e9f27653d8c9d5fc8d0e679c:
+
+  More topics from the second batch for 1.8.3 (2013-03-26 13:16:11 -0700)
+
+are available in the git repository at:
+
+  git://git.bogomips.org/git-svn.git master
+
+for you to fetch changes up to 3747c015704399dea1aa7ae6569a507e5727e20b:
+
+  git-svn: Support custom tunnel schemes instead of SSH only (2013-03-27 04:28:04 +0000)
+
+----------------------------------------------------------------
+Sebastian Schuberth (1):
+      git-svn: Support custom tunnel schemes instead of SSH only
+
+ perl/Git/SVN/Ra.pm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
