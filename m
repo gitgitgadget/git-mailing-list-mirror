@@ -1,70 +1,58 @@
-From: Charlie Smurthwaite <charlie@atechmedia.com>
-Subject: Re: Segfault with merge-tree on multiple Git versions
-Date: Wed, 27 Mar 2013 17:52:50 +0000
-Message-ID: <515331F2.3060703@atechmedia.com>
-References: <51531059.8000407@atechmedia.com> <7vsj3gn55b.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Fixed typo in git-pull manual
+Date: Wed, 27 Mar 2013 11:01:25 -0700
+Message-ID: <7vboa4n2mi.fsf@alter.siamese.dyndns.org>
+References: <7vmwtoomav.fsf@alter.siamese.dyndns.org>
+ <1364403956-20443-1-git-send-email-mihai@mihaic.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, John Keeping <john@keeping.me.uk>,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 18:53:26 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mihai =?utf-8?Q?Capot=C4=83?= <mihai@mihaic.ro>
+X-From: git-owner@vger.kernel.org Wed Mar 27 19:02:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKuXI-0002B8-SH
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 18:53:21 +0100
+	id 1UKufe-0003YJ-4V
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 19:01:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753719Ab3C0Rww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 13:52:52 -0400
-Received: from smtp.atechmedia.net ([109.104.109.18]:35051 "EHLO
-	smtp.atechmedia.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753687Ab3C0Rww (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 13:52:52 -0400
-Received: by smtp.atechmedia.net (Postfix, from userid 2002)
-	id D5309C11F8; Wed, 27 Mar 2013 17:51:11 +0000 (GMT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on smtp.atechmedia.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=5.0 tests=BAYES_00,HELO_NO_DOMAIN
-	autolearn=no version=3.3.1
-Received: from exchange.atechmedia.net (exchange.atechmedia.net [109.104.109.9])
-	by smtp.atechmedia.net (Postfix) with ESMTP id AFB5BC01D8;
-	Wed, 27 Mar 2013 17:51:11 +0000 (GMT)
-Received: from [IPv6:2a01:348:311:2:5e:d904:8f9b:f458]
- (2a01:348:311:2:5e:d904:8f9b:f458) by exchange.atechmedia.net
- (2001:9d8:2005:1::9) with Microsoft SMTP Server (TLS) id 14.1.438.0; Wed, 27
- Mar 2013 17:52:50 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
-In-Reply-To: <7vsj3gn55b.fsf@alter.siamese.dyndns.org>
-X-Originating-IP: [2a01:348:311:2:5e:d904:8f9b:f458]
+	id S1752645Ab3C0SBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 14:01:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44400 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752234Ab3C0SB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 14:01:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5284ACD9;
+	Wed, 27 Mar 2013 14:01:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=NMm+0b
+	Co7rwv5CiJT1DAn08kjVq7FuD5aQuWr9RdzTQAh8uTnGwLFlFnLdhAvSnygHb4uH
+	dAvDYpWn4fhd9YvbE3QuKfQibPNt/M5KT65Wu+7A1PASCU7ByIf3EfTDG4yCAz4J
+	7CrNpkzpddkCcbT67q6OLVwmeU1KuqP/fZWhA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=D22tlrEtSdQ5gz5WmkE+5gecyE9JPw3b
+	Wv7ZvocpaTan6CotG51Ig9+B7iKtghC0gs645rJlkRc5kKL1VAKBQXHEcc8eTMj7
+	YxEGWPAxTX1gS8jwmQlxQjBFm9p4rX3lYU4ARP8wELtO/ULaxX1fUpCPG+wgzKoW
+	wAUegpj2eW0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C95E5ACD8;
+	Wed, 27 Mar 2013 14:01:28 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C54CACD7; Wed, 27 Mar 2013
+ 14:01:28 -0400 (EDT)
+In-Reply-To: <1364403956-20443-1-git-send-email-mihai@mihaic.ro> ("Mihai
+ =?utf-8?Q?Capot=C4=83=22's?= message of "Wed, 27 Mar 2013 18:05:56 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 58FF7702-9708-11E2-AC13-B1692E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219292>
 
-On 27/03/13 17:06, Junio C Hamano wrote:
-> Charlie Smurthwaite <charlie@atechmedia.com> writes:
->
->> I am experiencing a segmentation fault in various versions of Git using
->> different repositories.
->> ...
->> Test Command
->> git merge-tree 26bb22a052fef9f74063afd4fc6fc11fe200b19f
->> 8d6bdf012941d876b2279994e02f1bb0d5c26e7d
->> d5ef97ac407d945f231cd7c8fb1cfe48b3a12083
-> Thanks for a report (and thanks to John and Thomas for finding the
-> typo).
->
-> Nobody I know uses merge-tree; the last real change we did was back
-> from July 2010, and the only reason I was looking at it recently was
-> because I was planning to write a new merge strategy using it.
->
-> Mind if I ask what you are using it for?
-
-I am also using this to obtain a diff that would be applied if a merge 
-were to be run. Is there a better way to obtain this information that is 
-more commonly used?
+Thanks.
