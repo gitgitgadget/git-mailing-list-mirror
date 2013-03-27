@@ -1,73 +1,80 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: Segfault with merge-tree on multiple Git versions
-Date: Wed, 27 Mar 2013 17:05:01 +0100
-Message-ID: <874nfw7rrm.fsf@linux-k42r.v.cablecom.net>
-References: <51531059.8000407@atechmedia.com>
-	<87boa47saw.fsf@linux-k42r.v.cablecom.net>
-	<20130327155850.GN2286@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Composing git repositories
+Date: Wed, 27 Mar 2013 09:06:06 -0700
+Message-ID: <7vvc8comj5.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
+ <7vmwtqt8rs.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-	"Charlie Smurthwaite" <charlie@atechmedia.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Mar 27 17:05:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 27 17:06:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKsr1-0008Rt-UW
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 17:05:36 +0100
+	id 1UKss3-0003Wb-4u
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 17:06:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751890Ab3C0QFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 12:05:05 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:47360 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751391Ab3C0QFF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 12:05:05 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 27 Mar
- 2013 17:04:58 +0100
-Received: from linux-k42r.v.cablecom.net.ethz.ch (46.126.8.85) by
- CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Wed, 27 Mar 2013 17:05:02 +0100
-In-Reply-To: <20130327155850.GN2286@serenity.lan> (John Keeping's message of
-	"Wed, 27 Mar 2013 15:58:50 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S1752392Ab3C0QGK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 12:06:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45494 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752115Ab3C0QGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 12:06:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 763A29DE7;
+	Wed, 27 Mar 2013 12:06:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZB0n64BjmE57zJFfzkCh7ulS7A0=; b=T6Qri5
+	xWO8pf8KNnFqz80Jm3u8DQzLPrkdl+nTq/mMM3LOIkkmgSlPdTxXEnNXsVSv7dej
+	BCYspUJIv7U/fxVjSawrQR5+RV+iD25j35o3uITnDhk6Bj+YajtDbu+JEZK/OkBL
+	Ynkto9SW4bKCq1Oosc8oeuRr1EJiEkEdlwsn0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vddUXdxyoaap7UT9KhIPhPZ248YT6ATA
+	wuMNC1+ylcXJN5JasQehCGNG/PFm9BA8cKSdt4Sa1crzla1GZvpr1TkW/cdZGaIP
+	LSCsgUCPuQrKvRAVkH7OdgGkRkGZXrpUT9YouBNpwS34h8rhRU72XARANgQQWrkB
+	dKaUFvG66E4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B0C99DE6;
+	Wed, 27 Mar 2013 12:06:08 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB3319DE4; Wed, 27 Mar 2013
+ 12:06:07 -0400 (EDT)
+In-Reply-To: <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
+ (Ramkumar Ramachandra's message of "Wed, 27 Mar 2013 17:19:38 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3C1205F2-96F8-11E2-8C43-B1692E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219264>
 
-John Keeping <john@keeping.me.uk> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> merge-tree: fix typo in merge-tree.c::unresolved
+> Junio C Hamano wrote:
+>> So you have to stash it somewhere.  We could have made it to move
+>> them to $HOME/.safeplace or somewhere totally unrelated to the
+>> superproject.  So in that sense, the repositories are *not* owned by
+>> the superproject in any way.  However, you are working within the
+>> context of the superproject on the submodule after all, and
+>> somewhere under $GIT_DIR/ of the superorject is not too wrong a
+>> place to use as such a safe place.
 >
-> When calculating whether there is a d/f conflict, the calculation of
-> whether both sides are directories generates an incorrect references
-> mask because it does not use the loop index to set the correct bit.
-> Fix this typo.
->
-> Signed-off-by: John Keeping <john@keeping.me.uk>
->
-> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> index e0d0b7d..bc912e3 100644
-> --- a/builtin/merge-tree.c
-> +++ b/builtin/merge-tree.c
-> @@ -245,7 +245,7 @@ static void unresolved(const struct traverse_info *info, struct name_entry n[3])
->  	unsigned dirmask = 0, mask = 0;
->  
->  	for (i = 0; i < 3; i++) {
-> -		mask |= (1 << 1);
-> +		mask |= (1 << i);
->  		if (n[i].mode && S_ISDIR(n[i].mode))
->  			dirmask |= (1 << i);
->  	}
+> Thanks for the explanation.
 
-Indeed, that fixes it.
+What do you _exactly_ mean by that?  You understood why things are
+arranged in that way, and no longer think that it is unnecessary,
+ugly and unwieldy to stash the real copy of $GIT_DIR of submodules
+away from their working trees and store them inside $GIT_DIR/modules
+of the superproject?
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+> The paths in .git/modules are unnecessary ugly and unwieldy,
+> especially in the case of multiple levels of nesting...
