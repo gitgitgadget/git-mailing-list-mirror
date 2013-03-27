@@ -1,100 +1,97 @@
-From: Rob Hoelz <rob@hoelz.ro>
-Subject: Re: [PATCH] push: Alias pushurl from push rewrites
-Date: Wed, 27 Mar 2013 17:48:45 -0500
-Message-ID: <20130327174845.5e3081d1@hoelz.ro>
-References: <20130327122216.5de0c336@hoelz.ro>
-	<20130327182345.GD28148@google.com>
-	<20130327211554.GH28148@google.com>
-	<7vsj3gjy3t.fsf@alter.siamese.dyndns.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: What's cooking in git.git (Mar 2013, #07; Tue, 26)
+Date: Wed, 27 Mar 2013 22:52:15 +0000
+Message-ID: <20130327225215.GS2286@serenity.lan>
+References: <7v620dss3j.fsf@alter.siamese.dyndns.org>
+ <20130327203535.GA5220@sigill.intra.peff.net>
+ <878v58worp.fsf@linux-k42r.v.cablecom.net>
+ <7vy5d8jz0y.fsf@alter.siamese.dyndns.org>
+ <20130327220723.GR2286@serenity.lan>
+ <7vobe4jxpr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	josh@joshtriplett.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
+	git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Matthew Blissett <matt@blissett.me.uk>,
+	David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 23:49:32 2013
+X-From: git-owner@vger.kernel.org Wed Mar 27 23:53:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKz9g-0004F9-68
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 23:49:16 +0100
+	id 1UKzDL-00073C-2Y
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 23:53:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754482Ab3C0Wss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 18:48:48 -0400
-Received: from hoelz.ro ([66.228.44.67]:40320 "EHLO mail.hoelz.ro"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754297Ab3C0Wss (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 18:48:48 -0400
-Received: from localhost.localdomain (108-234-129-20.lightspeed.milwwi.sbcglobal.net [108.234.129.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	id S1754500Ab3C0Wwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 18:52:35 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:43774 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754057Ab3C0Wwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 18:52:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 60B566064E2;
+	Wed, 27 Mar 2013 22:52:34 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -10.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GLv9jihJIwmh; Wed, 27 Mar 2013 22:52:34 +0000 (GMT)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mail.hoelz.ro (Postfix) with ESMTPSA id 231F7280F3;
-	Wed, 27 Mar 2013 18:48:47 -0400 (EDT)
-In-Reply-To: <7vsj3gjy3t.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.9.0 (GTK+ 2.24.16; x86_64-unknown-linux-gnu)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id F343A6064E7;
+	Wed, 27 Mar 2013 22:52:17 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vobe4jxpr.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219348>
 
-On Wed, 27 Mar 2013 15:07:18 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
-
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+On Wed, Mar 27, 2013 at 03:15:44PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
 > 
-> > Sorry, typo.  The configuration in the example above should have
-> > been
+> > On Wed, Mar 27, 2013 at 02:47:25PM -0700, Junio C Hamano wrote:
+> >> > * jk/difftool-dir-diff-edit-fix (2013-03-14) 3 commits
+> >> >   (merged to 'next' on 2013-03-19 at e68014a)
+> >> >  + difftool --dir-diff: symlink all files matching the working tree
+> >> >  + difftool: avoid double slashes in symlink targets
+> >> >  + git-difftool(1): fix formatting of --symlink description
+> >> 
+> >> I lost track of various discussions on "difftool" and its "symlink
+> >> so that the user can edit working tree files in the tool".
 > >
-> > 	[url "git://anongit.myserver.example.com/"]
-> > 		insteadOf = myserver.example.com:
-> > 	[url "myserver.example.com:"]
-> > 		pushInsteadOf = myserver.example.com:
-> >
-> > In other words, suppose I set url.*.insteadof to point to a faster
-> > address for fetching alongside url.*.pushinsteadof requesting that
-> > the original address should still be used for pushing.
+> > Would it be easiest if I send a new series incorporating
+> > jk/difftool-dirr-diff-edit-fix and the proposed change to not overwrite
+> > modified working tree files, built on top of t7800-modernize?
 > 
-> I didn't know we were even shooting for supporting the identity
-> mapping:
-> 
-> 	url.X.pushinsteadof=X
-> 
-> but that would certainly be nice.
-> 
-> By the way, it seems that the original commit 1c2eafb89bca (Add
-> url.<base>.pushInsteadOf: URL rewriting for push only, 2009-09-07)
-> wanted to explicitly avoid use of pushInsteadOf aliasing for a
-> pushURL and it is also documented in config.txt from day one.
-> 
-> I think the intent is "You have a normal URL, and a way to override
-> it explicitly with pushURL, or a way to rewrite it via the aliasing
-> the normal URL with pushInsteadOf. Either one or the other, but not
-> both, as having many levels of indirection would be confusing."
-> 
-> Which I can understand and sympathise.
-> 
-> In anay case, the change proposed in this thread seems to change
-> that, so the documentation would need to be updated.  Also the tests
-> the original commit adds explicitly checks that pushInsteadOf is
-> ignored, which may have to be updated (unless that test is already
-> broken).
-> 
+> I am somewhat reluctant to rewind a topic that has been cooking in
+> 'next' for over a week (the above says 19th).  Rebuilding the
+> style-fixes on top of the above is fine---that topic is much
+> younger.
 
-My use case is that I use Github for my personal development.  I have a
-prefix for my personal repos (hoelzro: -> git://github.com/hoelzro for
-fetch, git@github.com:hoelzro/ for push) and one for all other Git repos
-(github: -> git://github.com/)  I have a few projects where I work in a
-fork, but I want to fetch updates from the original project.  So my url
-for the origin remote is github:org/project, but my pushurl is
-hoelzro:project.  This behavior in Git currently doesn't allow me to
-work that way.  I used to work with two remotes; origin for my repo and
-base for the official one, but I've found that I prefer this other way.
+Sadly that's easier said than done, since it just introduces further
+conflicts as jk/difftool-dir-diff-edit-fix doesn't include
+da/difftool-fixes (now in master).
 
-The test that checked that pushInsteadOf + pushurl shouldn't work as I
-expect was actually broken; I have removed it, updated the
-documentation, and sent a new patch to the list.
+So I think the best thing may be to:
 
--Rob
+    1) take only the middle patch from jk/t7800-modernize for now (which
+       fixes a test failure on Windows and shouldn't conflict with
+       anything else) and discard the other two patches there, to be
+       re-sent after other topics in flight graduate
+
+    2) add the "don't overwrite modified working tree files" patch built
+       on top of jk/difftool-dir-diff-edit-fix (presumably as a new
+       topic)
