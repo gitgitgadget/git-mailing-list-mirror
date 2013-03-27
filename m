@@ -1,95 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push: Alias pushurl from push rewrites
-Date: Wed, 27 Mar 2013 15:07:18 -0700
-Message-ID: <7vsj3gjy3t.fsf@alter.siamese.dyndns.org>
-References: <20130327122216.5de0c336@hoelz.ro>
- <20130327182345.GD28148@google.com> <20130327211554.GH28148@google.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: What's cooking in git.git (Mar 2013, #07; Tue, 26)
+Date: Wed, 27 Mar 2013 22:07:23 +0000
+Message-ID: <20130327220723.GR2286@serenity.lan>
+References: <7v620dss3j.fsf@alter.siamese.dyndns.org>
+ <20130327203535.GA5220@sigill.intra.peff.net>
+ <878v58worp.fsf@linux-k42r.v.cablecom.net>
+ <7vy5d8jz0y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Rob Hoelz <rob@hoelz.ro>, git@vger.kernel.org,
-	josh@joshtriplett.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 23:07:58 2013
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
+	git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Matthew Blissett <matt@blissett.me.uk>,
+	David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 27 23:08:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKyVg-00040g-HL
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 23:07:56 +0100
+	id 1UKyVu-0004ls-1y
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 23:08:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754659Ab3C0WHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 18:07:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64757 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753483Ab3C0WHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 18:07:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5BE8A453;
-	Wed, 27 Mar 2013 18:07:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bwVWiPDXrk2HJcc07IdV07u5puE=; b=i17lrT
-	N8cQ9FxsbcQJ1oVojCy1iPShHQ6ys4G+wvuhjq9sD85lgXRqbB0HDE2PfGUhMEyA
-	rrxjwzJvxWY0JYLhH2n2+wKES5A32R5Lc/TEcUFWuD50Fct6UHuM+b92ginVYmjs
-	ahn1NM5qCnT0mKL5wRYD6EL7zMs2g39YEeD2U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AZpHNCzT3PYn4pO3wUZdglsIuWh6kr5X
-	ASv//yfGEAruysEkYeqWoVos9jZgnkgx2K4vu+sN2g/YyoCXsulwszZ/LlxA3ahO
-	3U1N1qpMOEjhadHN6Hb8TKnocQUMKi/As6PpSQ4+M7biCx/fa47rYRIYhjcaZFai
-	L+uzvviMh80=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA215A452;
-	Wed, 27 Mar 2013 18:07:20 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2A155A451; Wed, 27 Mar 2013
- 18:07:20 -0400 (EDT)
-In-Reply-To: <20130327211554.GH28148@google.com> (Jonathan Nieder's message
- of "Wed, 27 Mar 2013 14:15:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B1CA9DC2-972A-11E2-B5D9-CBA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754661Ab3C0WHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 18:07:42 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:38684 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752685Ab3C0WHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 18:07:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id CAE4C23034;
+	Wed, 27 Mar 2013 22:07:40 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id id4ol5ParK21; Wed, 27 Mar 2013 22:07:40 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id D050122FEE;
+	Wed, 27 Mar 2013 22:07:25 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <7vy5d8jz0y.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219338>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Wed, Mar 27, 2013 at 02:47:25PM -0700, Junio C Hamano wrote:
+> > * jk/difftool-dir-diff-edit-fix (2013-03-14) 3 commits
+> >   (merged to 'next' on 2013-03-19 at e68014a)
+> >  + difftool --dir-diff: symlink all files matching the working tree
+> >  + difftool: avoid double slashes in symlink targets
+> >  + git-difftool(1): fix formatting of --symlink description
+> 
+> I lost track of various discussions on "difftool" and its "symlink
+> so that the user can edit working tree files in the tool".
 
-> Sorry, typo.  The configuration in the example above should have been
->
-> 	[url "git://anongit.myserver.example.com/"]
-> 		insteadOf = myserver.example.com:
-> 	[url "myserver.example.com:"]
-> 		pushInsteadOf = myserver.example.com:
->
-> In other words, suppose I set url.*.insteadof to point to a faster
-> address for fetching alongside url.*.pushinsteadof requesting that the
-> original address should still be used for pushing.
+Would it be easiest if I send a new series incorporating
+jk/difftool-dirr-diff-edit-fix and the proposed change to not overwrite
+modified working tree files, built on top of t7800-modernize?
 
-I didn't know we were even shooting for supporting the identity
-mapping:
-
-	url.X.pushinsteadof=X
-
-but that would certainly be nice.
-
-By the way, it seems that the original commit 1c2eafb89bca (Add
-url.<base>.pushInsteadOf: URL rewriting for push only, 2009-09-07)
-wanted to explicitly avoid use of pushInsteadOf aliasing for a
-pushURL and it is also documented in config.txt from day one.
-
-I think the intent is "You have a normal URL, and a way to override
-it explicitly with pushURL, or a way to rewrite it via the aliasing
-the normal URL with pushInsteadOf. Either one or the other, but not
-both, as having many levels of indirection would be confusing."
-
-Which I can understand and sympathise.
-
-In anay case, the change proposed in this thread seems to change
-that, so the documentation would need to be updated.  Also the tests
-the original commit adds explicitly checks that pushInsteadOf is
-ignored, which may have to be updated (unless that test is already
-broken).
+The "overwrite modified working tree files" issue isn't new, but
+jk/difftool-dir-diff-edit-fix makes it more likely to happen so it might
+be best to include those in one topic, and building on
+jk/t7800-modernize will avoid conflicts in the tests.
