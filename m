@@ -1,88 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-web--browse: recognize iTerm as a GUI terminal on OS
- X
-Date: Wed, 27 Mar 2013 07:43:56 -0700
-Message-ID: <7vfvzgrjgz.fsf@alter.siamese.dyndns.org>
-References: <CAMxBVSs6dJFnK78E2Da7t4V9ndJFRVDZEd1fR5QuCFz=u2Bnpw@mail.gmail.com>
- <CAMxBVStw-b3J_Fm9x=h3==9ebdLUkpjBSQ9-W4+zJ9N20ojfxg@mail.gmail.com>
- <CAP8UFD2oR5tnYuw7Nbe-CzGx7fw-OpAFW+reN+1Nroh1jXjfsQ@mail.gmail.com>
- <CAMxBVStVXZGGrjHzN7kukVP6_ZGo0miyJaE2FVYPVV4Jb5U82w@mail.gmail.com>
- <CAEBDL5VNodcTGBOvQjyL30qiXhshxhnUH-Vd9xy9=RxZQgH-Yw@mail.gmail.com>
- <CAP8UFD2m8n5RHN-CgyDP1ir_AorpJGnWwNhXuRxDa=DbHfsdiw@mail.gmail.com>
- <20130325101318.GA31409@yoda.local> <7vtxnzw3wu.fsf@alter.siamese.dyndns.org>
- <CAEBDL5Vx0vjAKUeFrXgpx7mYxk8B+OQC5yrEii9RMP-5-Sjhsw@mail.gmail.com>
+Subject: Re: propagating repo corruption across clone
+Date: Wed, 27 Mar 2013 08:03:58 -0700
+Message-ID: <7v1ub0rijl.fsf@alter.siamese.dyndns.org>
+References: <CACBZZX6czzJRF9TEsc8c+=LND6SxaVvrZdbcZ+TfUZTWQOpW0Q@mail.gmail.com>
+ <20130324192350.GA20688@sigill.intra.peff.net>
+ <CAOx6V3YtM-e8-S41v1KnC+uSymYwZw8QBwiCJRYw0MYJXRjj-w@mail.gmail.com>
+ <20130325145644.GA16576@sigill.intra.peff.net>
+ <CACsJy8A0eOWEJ2aqPSLof_CodJM6BadFxQHy5Vb0kAwwTSTS3w@mail.gmail.com>
+ <20130325155600.GA18216@sigill.intra.peff.net>
+ <CAOx6V3a6vGJvJ4HEmAXdTRKKCzRJS23OYd_em1b3aQLzPNEtQA@mail.gmail.com>
+ <20130325200752.GB3902@sigill.intra.peff.net>
+ <CAOx6V3ZWB1ZpmXcaBeSaPOvHqmAMF3U1rTXuwinFGmEZQwFGYQ@mail.gmail.com>
+ <20130326165553.GA7282@sigill.intra.peff.net>
+ <1364340037755-7580771.post@n2.nabble.com>
+ <7vr4j1qzao.fsf@alter.siamese.dyndns.org>
+ <CAMK1S_jZcoA9sy+ixXmy8uj2E9E4Q6W2pLQVFStZMgH9eRoo6g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Timo Sand <timo.j.sand@gmail.com>, git <git@vger.kernel.org>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Wed Mar 27 15:44:31 2013
+Cc: Rich Fromm <richard_fromm@yahoo.com>, git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 27 16:04:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKraY-0006SR-9Z
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 15:44:30 +0100
+	id 1UKrtx-0003xI-B3
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 16:04:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752672Ab3C0OoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 10:44:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33500 "EHLO
+	id S1751297Ab3C0PED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 11:04:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51759 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751428Ab3C0OoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 10:44:00 -0400
+	id S1751270Ab3C0PEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 11:04:01 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EB17ABDA;
-	Wed, 27 Mar 2013 10:43:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 626E3AB01;
+	Wed, 27 Mar 2013 11:04:01 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8RoZr2ZKUWIsHXAlSGlGdcYQWp8=; b=VQ8XL0
-	A4XusgO3nbd3D0vzu0HcOa/S1ZjapjeK6g/FaFVgNpSzdVVBP8YDfHK5qBGzMOEl
-	ZdgNvP12H5yMdHzDG7SSD4tk4TmB7GB7C14E/aC0pcmje/57saSNQtp785YTHYux
-	p9zOVYTqd76ed0b/mWcVjPLlqf3a2AJkCNW0c=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=SkQ57IK0yOa65u7Pc2UjlziBVAk=; b=PxTNm750lCVBMbBRuHic
+	hMZKkNoNVJhJ8O7mgd50RDdFOdejI4uLv95sJ880tDeg+BT5CpOmxH43gUmNSsRI
+	UmgSohG5Ol3lSS5bmgWHCAp+jQtD0MXurwFw75JbykKoNQChAOjPw50ET9vmNY2j
+	6bDnKAAckaLokFb6kGyTxFI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OPSPpctEy0Vn9TTvjmSgJsiPuox65Du5
-	zeyelcmxbQbprUssmuFyPJDBa0b0EZi44w4ibSM/y5mad5nGX4tC3SLLLcvHmLg+
-	YCz5T6eNHYnH7HEKVGEWZ1n8jFSR6CduMvgdVrT1K5ULIrIue4+A7nl3ViPXGVtj
-	UVBADCA7VOs=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=aSnO9OfVFStxu4osXwF3tfK+alcbZaCfwnq0RVkwHKWgyI
+	7TCvWWrKv/rI4s4xtSQ9WyCz0l1LCECZQm7x22F0GQu/FWsrP71C7cD2RvokuNwd
+	gCBsa1sJcKb8GVvI5J3+mI8Wvwd0pdI2IK8suqcbZ5GmOLhyYkY56Do9lqBvU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5300DABD2;
-	Wed, 27 Mar 2013 10:43:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55C68AB00;
+	Wed, 27 Mar 2013 11:04:01 -0400 (EDT)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B894FABCD; Wed, 27 Mar 2013
- 10:43:58 -0400 (EDT)
-In-Reply-To: <CAEBDL5Vx0vjAKUeFrXgpx7mYxk8B+OQC5yrEii9RMP-5-Sjhsw@mail.gmail.com> (John
- Szakmeister's message of "Tue, 26 Mar 2013 04:54:42 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E4F9AAF9; Wed, 27 Mar 2013
+ 11:04:00 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C21CADD4-96EC-11E2-978E-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8E60E598-96EF-11E2-831E-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219253>
 
-John Szakmeister <john@szakmeister.net> writes:
+Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-> Sorry about the repeat Junio, I meant to hit "Reply to All".
+> On Wed, Mar 27, 2013 at 9:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Mon, Mar 25, 2013 at 5:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> [snip]
->> Your patch makes me wonder if
->>
->>         test -n "$TERM_PROGRAM"
->>
->> without any SECURITYSESSIONID or explicit program name checks should
->> suffice, though.
+>> To be paranoid, you may want to set transfer.fsckObjects to true,
+>> perhaps in your ~/.gitconfig.
 >
-> So, after downloading a couple of other terminals and trying things
-> out, I think you're suggestion does suffice.  Should I send an updated
-> patch?
+> do we have any numbers on the overhead of this?
+>
+> Even a "guesstimate" will do...
 
-If that approach is better than what you originally sent, then yes.
+On a reasonably slow machine:
 
-But I do not use OS X, so you may need to pay attention to possible
-complaints and comments from other Mac users on this list for a
-while---there may be people who run the program in question without
-that environment variable.
+$ cd /project/git/git.git && git repack -a -d
+$ ls -hl .git/objects/pack/*.pack
+-r--r--r-- 1 junio src 44M Mar 26 13:18 .git/objects/pack/pack-c40635e5ee2b7094eb0e2c416e921a2b129bd8d2.pack
+
+$ cd .. && git --bare init junk && cd junk
+$ time git index-pack --strict --stdin <../git.git/.git/objects/pack/*.pack
+real    0m13.873s
+user    0m21.345s
+sys     0m2.248s
+
+That's about 3.2 Mbps?
+
+Compare that with the speed your other side feeds you (or your line
+speed could be the limiting factor) and decide how much you value
+your data.
