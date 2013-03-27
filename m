@@ -1,105 +1,130 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: propagating repo corruption across clone
-Date: Wed, 27 Mar 2013 21:17:38 +0530
-Message-ID: <CAMK1S_jH-OJnH=XeCnEKvY6TkjZHZg_DLJ3KaVHNi9k0WA1REA@mail.gmail.com>
-References: <CACBZZX6czzJRF9TEsc8c+=LND6SxaVvrZdbcZ+TfUZTWQOpW0Q@mail.gmail.com>
-	<20130324192350.GA20688@sigill.intra.peff.net>
-	<CAOx6V3YtM-e8-S41v1KnC+uSymYwZw8QBwiCJRYw0MYJXRjj-w@mail.gmail.com>
-	<20130325145644.GA16576@sigill.intra.peff.net>
-	<CACsJy8A0eOWEJ2aqPSLof_CodJM6BadFxQHy5Vb0kAwwTSTS3w@mail.gmail.com>
-	<20130325155600.GA18216@sigill.intra.peff.net>
-	<CAOx6V3a6vGJvJ4HEmAXdTRKKCzRJS23OYd_em1b3aQLzPNEtQA@mail.gmail.com>
-	<20130325200752.GB3902@sigill.intra.peff.net>
-	<CAOx6V3ZWB1ZpmXcaBeSaPOvHqmAMF3U1rTXuwinFGmEZQwFGYQ@mail.gmail.com>
-	<20130326165553.GA7282@sigill.intra.peff.net>
-	<1364340037755-7580771.post@n2.nabble.com>
-	<7vr4j1qzao.fsf@alter.siamese.dyndns.org>
-	<CAMK1S_jZcoA9sy+ixXmy8uj2E9E4Q6W2pLQVFStZMgH9eRoo6g@mail.gmail.com>
-	<7v1ub0rijl.fsf@alter.siamese.dyndns.org>
+From: thomas <trast@student.ethz.ch>
+Subject: Re: Segfault with merge-tree on multiple Git versions
+Date: Wed, 27 Mar 2013 16:53:27 +0100
+Message-ID: <87boa47saw.fsf@linux-k42r.v.cablecom.net>
+References: <51531059.8000407@atechmedia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Rich Fromm <richard_fromm@yahoo.com>, git@vger.kernel.org
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Charlie Smurthwaite <charlie@atechmedia.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 16:48:13 2013
+X-From: git-owner@vger.kernel.org Wed Mar 27 16:54:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKsa8-0003zH-Vk
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 16:48:09 +0100
+	id 1UKsfm-0005Rq-JZ
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 16:53:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752459Ab3C0Prk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 11:47:40 -0400
-Received: from mail-we0-f179.google.com ([74.125.82.179]:45448 "EHLO
-	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751684Ab3C0Prj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 11:47:39 -0400
-Received: by mail-we0-f179.google.com with SMTP id p43so1757544wea.10
-        for <git@vger.kernel.org>; Wed, 27 Mar 2013 08:47:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=w+SAO7rdIxkSRFineniUv0lDowjhe71LfEfIOhYUpZU=;
-        b=EnOwWkNVqYbfORpjWMftDGZGhwd659Mf1H+/CWrEVJh0Hn4iEjxpsPBjKrs41zhYZw
-         ar5oJkzg3yIQkrFzk5JT5dtEy2DntWjIYwVQMVY2ar8WOVMEnNq5xVGngunk1dBWL8kb
-         rVe632nptDlvszFvkhQiu4CpByUKwoteduaTEykLSGRm7SvciKtiqTSDexgh1wtZwIo3
-         Krj0Z94ufk4vWGDuLFr2UAxVv1pbgBVMkWs3Nszz0ZitqOWB47Aj/FtDpV/lGiCTR143
-         vtlE/8l4zTHxAxLCS1dacLjz8RIDYsTuXz5v/UoRMfbWcMaTaAYukMjr/e6+VjBnrtDp
-         ao3Q==
-X-Received: by 10.180.81.232 with SMTP id d8mr10616813wiy.25.1364399258530;
- Wed, 27 Mar 2013 08:47:38 -0700 (PDT)
-Received: by 10.194.153.161 with HTTP; Wed, 27 Mar 2013 08:47:38 -0700 (PDT)
-In-Reply-To: <7v1ub0rijl.fsf@alter.siamese.dyndns.org>
+	id S1751890Ab3C0Pxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 11:53:30 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:46395 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750798Ab3C0Pxa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 11:53:30 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 27 Mar
+ 2013 16:53:23 +0100
+Received: from linux-k42r.v.cablecom.net.ethz.ch (46.126.8.85) by
+ cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Wed, 27 Mar 2013 16:53:27 +0100
+In-Reply-To: <51531059.8000407@atechmedia.com> (Charlie Smurthwaite's message
+	of "Wed, 27 Mar 2013 15:29:29 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219260>
 
-On Wed, Mar 27, 2013 at 8:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Sitaram Chamarty <sitaramc@gmail.com> writes:
->
->> On Wed, Mar 27, 2013 at 9:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>> To be paranoid, you may want to set transfer.fsckObjects to true,
->>> perhaps in your ~/.gitconfig.
->>
->> do we have any numbers on the overhead of this?
->>
->> Even a "guesstimate" will do...
->
-> On a reasonably slow machine:
->
-> $ cd /project/git/git.git && git repack -a -d
-> $ ls -hl .git/objects/pack/*.pack
-> -r--r--r-- 1 junio src 44M Mar 26 13:18 .git/objects/pack/pack-c40635e5ee2b7094eb0e2c416e921a2b129bd8d2.pack
->
-> $ cd .. && git --bare init junk && cd junk
-> $ time git index-pack --strict --stdin <../git.git/.git/objects/pack/*.pack
-> real    0m13.873s
-> user    0m21.345s
-> sys     0m2.248s
->
-> That's about 3.2 Mbps?
->
-> Compare that with the speed your other side feeds you (or your line
-> speed could be the limiting factor) and decide how much you value
-> your data.
+Charlie Smurthwaite <charlie@atechmedia.com> writes:
 
-Thanks.  I was also interested in overhead on the server just as a %-age.
+> I am experiencing a segmentation fault in various versions of Git using
+> different repositories. Specifically, I have reproduced it using a
+> public repo and the latest stable Git version. Other repos trigger the
+> error on different versions.
+>
+> Full info can be found below. Thanks,
+>
+> Charlie
+>
+>
+> Test repository:
+> https://github.com/atech/mail
+>
+> Test Command
+> git merge-tree 26bb22a052fef9f74063afd4fc6fc11fe200b19f
+> 8d6bdf012941d876b2279994e02f1bb0d5c26e7d
+> d5ef97ac407d945f231cd7c8fb1cfe48b3a12083
 
-I have no idea why but when I did some tests a long time ago I got
-upwards of 40% or so, but now when I try these tests for git.git
+I happened to walk past on IRC and found I could easily reproduce it, so
+I bisected:
 
-    cd <some empty dir>
-    git init --bare
-    # git config transfer.fsckobjects true
-    git fetch file:///full/path/to/git.git refs/*:refs/*
+  35ffe7583108ab236dcf81226690388491d9962f is the first bad commit
+  commit 35ffe7583108ab236dcf81226690388491d9962f
+  Author: Junio C Hamano <gitster@pobox.com>
+  Date:   Thu Dec 13 15:51:29 2012 -0800
 
-then, the difference in elapsed time 18s -> 22s, so about 22%, and CPU
-time is 31 -> 37, so about 20%.  I didn't measure disk access
-increases, but I guess 20% is not too bad.
+      merge-tree: fix d/f conflicts
+      
+      The previous commit documented two known breakages revolving around
+      a case where one side flips a tree into a blob (or vice versa),
+      where the original code simply gets confused and feeds a mixture of
+      trees and blobs into either the recursive merge-tree (and recursing
+      into the blob will fail) or three-way merge (and merging tree contents
+      together with blobs will fail).
+      
+      Fix it by feeding trees (and only trees) into the recursive
+      merge-tree machinery and blobs (and only blobs) into the three-way
+      content level merge machinery separately; when this happens, the
+      entire merge has to be marked as conflicting at the structure level.
+      
+      Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Is it likely to be linear in the size of the repo, by and large?
+It seems to be a vanilla null dereference:
+
+  Program received signal SIGSEGV, Segmentation fault.
+  0x0000000000453bf9 in add_merge_entry (entry=0x0) at builtin/merge-tree.c:24
+  24              *merge_result_end = entry;
+  (gdb) bt
+  #0  0x0000000000453bf9 in add_merge_entry (entry=0x0) at builtin/merge-tree.c:24
+  #1  0x00000000004545f4 in unresolved (info=0x7fffffffce90, n=0x7ff7f0) at builtin/merge-tree.c:265
+  #2  0x0000000000454741 in threeway_callback (n=3, mask=7, dirmask=7, entry=0x7ff7f0, 
+      info=0x7fffffffce90) at builtin/merge-tree.c:330
+  #3  0x00000000005233f3 in traverse_trees (n=3, t=0x7fffffffcf10, info=0x7fffffffce90)
+      at tree-walk.c:407
+  #4  0x0000000000454792 in merge_trees_recursive (t=0x7fffffffcf10, base=0x800530 "lib/mail", 
+      df_conflict=1) at builtin/merge-tree.c:341
+  #5  0x0000000000454382 in unresolved_directory (info=0x7fffffffd120, n=0x800420, df_conflict=1)
+      at builtin/merge-tree.c:216
+  #6  0x0000000000454507 in unresolved (info=0x7fffffffd120, n=0x800420) at builtin/merge-tree.c:253
+  #7  0x0000000000454741 in threeway_callback (n=3, mask=7, dirmask=7, entry=0x800420, 
+      info=0x7fffffffd120) at builtin/merge-tree.c:330
+  #8  0x00000000005233f3 in traverse_trees (n=3, t=0x7fffffffd1a0, info=0x7fffffffd120)
+      at tree-walk.c:407
+  #9  0x0000000000454792 in merge_trees_recursive (t=0x7fffffffd1a0, base=0x7fd170 "lib", df_conflict=1)
+      at builtin/merge-tree.c:341
+  #10 0x0000000000454382 in unresolved_directory (info=0x7fffffffd3b0, n=0x8069f0, df_conflict=1)
+      at builtin/merge-tree.c:216
+  #11 0x0000000000454507 in unresolved (info=0x7fffffffd3b0, n=0x8069f0) at builtin/merge-tree.c:253
+  #12 0x0000000000454741 in threeway_callback (n=3, mask=7, dirmask=7, entry=0x8069f0, 
+      info=0x7fffffffd3b0) at builtin/merge-tree.c:330
+  #13 0x00000000005233f3 in traverse_trees (n=3, t=0x7fffffffd450, info=0x7fffffffd3b0)
+      at tree-walk.c:407
+  #14 0x0000000000454792 in merge_trees_recursive (t=0x7fffffffd450, base=0x5510fc "", df_conflict=0)
+      at builtin/merge-tree.c:341
+  #15 0x00000000004547bc in merge_trees (t=0x7fffffffd450, base=0x5510fc "") at builtin/merge-tree.c:346
+  #16 0x00000000004548ef in cmd_merge_tree (argc=4, argv=0x7fffffffd728, prefix=0x0)
+      at builtin/merge-tree.c:373
+  #17 0x00000000004056ec in run_builtin (p=0x7a1c88 <commands.20888+1416>, argc=4, argv=0x7fffffffd728)
+      at git.c:273
+  #18 0x000000000040587f in handle_internal_command (argc=4, argv=0x7fffffffd728) at git.c:434
+  #19 0x0000000000405a4b in main (argc=4, argv=0x7fffffffd728) at git.c:523
+
+Unfortunately I'm not familiar with the merge code, but if you can't
+reproduce at your end let me know.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
