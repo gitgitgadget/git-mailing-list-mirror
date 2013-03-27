@@ -1,74 +1,75 @@
-From: =?UTF-8?q?Mihai=20Capot=C4=83?= <mihai@mihaic.ro>
-Subject: [PATCH v2] Fixed typo in git-pull manual
-Date: Wed, 27 Mar 2013 18:05:56 +0100
-Message-ID: <1364403956-20443-1-git-send-email-mihai@mihaic.ro>
-References: <7vmwtoomav.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Segfault with merge-tree on multiple Git versions
+Date: Wed, 27 Mar 2013 10:06:56 -0700
+Message-ID: <7vsj3gn55b.fsf@alter.siamese.dyndns.org>
+References: <51531059.8000407@atechmedia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 27 18:06:39 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, John Keeping <john@keeping.me.uk>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Charlie Smurthwaite <charlie@atechmedia.com>
+X-From: git-owner@vger.kernel.org Wed Mar 27 18:07:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKto4-00043J-1B
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 18:06:36 +0100
+	id 1UKtot-0006fj-NX
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 18:07:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212Ab3C0RGH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Mar 2013 13:06:07 -0400
-Received: from mail-we0-f177.google.com ([74.125.82.177]:39279 "EHLO
-	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750799Ab3C0RGG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 13:06:06 -0400
-Received: by mail-we0-f177.google.com with SMTP id o45so2585309wer.8
-        for <git@vger.kernel.org>; Wed, 27 Mar 2013 10:06:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=TAHYPE6YzD5X/46TSrF9mmQtrk3VbPTU6vArYSE86CE=;
-        b=BTqjNTd1LhuLwAGfLh3f4G3+fODqq3y3RbsWX1YTrI8xmQKRoOZcVL2IMfJKpnshAE
-         rwMJcO7rC48rq0snwFfym6GgCq1YpsZEnLZXN7yWIfZc47qkpqCS4ayTp0ikEaMuQE8L
-         xICFc7783eZKfc5d9NJb6gTymhoOjE6/cKSLckmXn1Q8Xw6zhfh13Y/WJhIIKeqltRPp
-         3ZRofM6PXV0DCyoWJtC3bfyihHeIkhXuDzx9k5wKkro0Hh4+IFG9BoZBKMJpMs/JUg4h
-         lJVjKxPYWXcunYF2BAN72Xf5f2LkCnsHrG/edLdAZ/Q8tZJfJYk8A9Sn8tYu2xGjGLF7
-         p17w==
-X-Received: by 10.180.79.6 with SMTP id f6mr10998735wix.26.1364403964171;
-        Wed, 27 Mar 2013 10:06:04 -0700 (PDT)
-Received: from dutier.st.ewi.tudelft.nl (dutier.st.ewi.tudelft.nl. [130.161.159.51])
-        by mx.google.com with ESMTPS id f1sm10901769wib.0.2013.03.27.10.06.02
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 27 Mar 2013 10:06:03 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <7vmwtoomav.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQmU2POTQ9bBRaeq9QL/MPbYOQNQbXqzk0jaAeHPF7tMiDzuLjwOYn25hoH56fvVaEAJSvt/
+	id S1751758Ab3C0RG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 13:06:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34890 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750799Ab3C0RG7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 13:06:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9F74AAB9;
+	Wed, 27 Mar 2013 13:06:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MckrnGW9hUueG+NiiVvHJohktmk=; b=iF4Gxv
+	1eexQ4fcjkR2OrE8oDhWu+fQv4Vh1nGztB3CXUT6y7W5Zdxof+9si9CgIUuctXWR
+	gSihIg1mZELNEvUCgIkFoMusqb0YQHGi5bxB/Rz9Q7tEAuDMEXXQvV4nlbB3dujx
+	5yGd+2Rol9Y285TBf79iNvPTddcJkly6eMgO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C2p+hzic55/DXBdh1mV8R5lcyMm7scib
+	FoDqEIR5+edDMzt4SqSLf/ALJLb74CwXOAN2ci0+gpgeRsohx4sCX1GDMksd3CME
+	NXoYn3kwelqQ62ollaDR3bmN3kvMaotMZ0plIYgJQuJCMRdDWB6VHNI8s2ugbZwE
+	pkZClHr7FkE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD7A5AAB7;
+	Wed, 27 Mar 2013 13:06:58 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 31E53AAB4; Wed, 27 Mar 2013
+ 13:06:58 -0400 (EDT)
+In-Reply-To: <51531059.8000407@atechmedia.com> (Charlie Smurthwaite's message
+ of "Wed, 27 Mar 2013 15:29:29 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BBDCD6EC-9700-11E2-9CF1-B1692E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219280>
 
-Signed-off-by: Mihai Capot=C4=83 <mihai@mihaic.ro>
----
- Documentation/git-pull.txt |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Charlie Smurthwaite <charlie@atechmedia.com> writes:
 
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index c975743..24ab07a 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -218,7 +218,7 @@ $ git merge origin/next
- ------------------------------------------------
-=20
-=20
--If you tried a pull which resulted in a complex conflicts and
-+If you tried a pull which resulted in complex conflicts and
- would want to start over, you can recover with 'git reset'.
-=20
-=20
---=20
-1.7.9.5
+> I am experiencing a segmentation fault in various versions of Git using
+> different repositories.
+> ...
+> Test Command
+> git merge-tree 26bb22a052fef9f74063afd4fc6fc11fe200b19f
+> 8d6bdf012941d876b2279994e02f1bb0d5c26e7d
+> d5ef97ac407d945f231cd7c8fb1cfe48b3a12083
+
+Thanks for a report (and thanks to John and Thomas for finding the
+typo).
+
+Nobody I know uses merge-tree; the last real change we did was back
+from July 2010, and the only reason I was looking at it recently was
+because I was planning to write a new merge strategy using it.
+
+Mind if I ask what you are using it for?
