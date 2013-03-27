@@ -1,7 +1,7 @@
-From: Josh Triplett <josh@joshtriplett.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] push: Alias pushurl from push rewrites
-Date: Wed, 27 Mar 2013 16:17:21 -0700
-Message-ID: <20130327231720.GB5204@jtriplet-mobl1>
+Date: Wed, 27 Mar 2013 16:18:19 -0700
+Message-ID: <20130327231819.GL28148@google.com>
 References: <20130327122216.5de0c336@hoelz.ro>
  <20130327182345.GD28148@google.com>
  <20130327211554.GH28148@google.com>
@@ -10,36 +10,44 @@ References: <20130327122216.5de0c336@hoelz.ro>
  <20130327230943.GA5204@jtriplet-mobl1>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Rob Hoelz <rob@hoelz.ro>
-X-From: git-owner@vger.kernel.org Thu Mar 28 00:18:07 2013
+Cc: Rob Hoelz <rob@hoelz.ro>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Thu Mar 28 00:19:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKzbZ-00026E-Fq
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 00:18:05 +0100
+	id 1UKzcQ-00059E-7h
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 00:18:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754851Ab3C0XRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 19:17:31 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:41569 "EHLO
-	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754843Ab3C0XRa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 19:17:30 -0400
-Received: from mfilter3-d.gandi.net (mfilter3-d.gandi.net [217.70.178.133])
-	by relay3-d.mail.gandi.net (Postfix) with ESMTP id F3CD2A80D3;
-	Thu, 28 Mar 2013 00:17:27 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter3-d.gandi.net
-Received: from relay3-d.mail.gandi.net ([217.70.183.195])
-	by mfilter3-d.gandi.net (mfilter3-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id vgzqRS47-tt7; Thu, 28 Mar 2013 00:17:26 +0100 (CET)
-X-Originating-IP: 173.246.103.110
-Received: from jtriplet-mobl1 (joshtriplett.org [173.246.103.110])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id EE69AA80CF;
-	Thu, 28 Mar 2013 00:17:22 +0100 (CET)
+	id S1754918Ab3C0XSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 19:18:24 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:63753 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754897Ab3C0XSX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 19:18:23 -0400
+Received: by mail-pd0-f177.google.com with SMTP id y14so3808351pdi.36
+        for <git@vger.kernel.org>; Wed, 27 Mar 2013 16:18:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=blf9JFAiHkq5C4Jlmr1OFBu9zC/9yvC7O9v/QfFyvKk=;
+        b=QOjncEer/+sUo6/VnxaPwO0PB0w4I4QLkIIYfBURPjKngSlIHK5RLiQ0q3j9M1cnrr
+         UL4W741oO8qO4Iym8TbiHl3SrqpeRCm2ImoWn5qGhOfP35oFVrc603FrsHKUrGs8dRLt
+         lE9AZryhXDeo849020NlANoqLDhZTLk+y9qGzx207O4SaRQjpNWIXvsaB+33DB/gQ5fl
+         XERHPyVxRSoKcDWOhRD3YWaH8lx4MpEraVCnrZFuBGNVfPvaBfrZMQIaZ93Almh6gWSi
+         EhXP5ZZDvXfJYXeD0VeBgTv/3/o7we2M/qGSstyyjh76Y38dai9/HsLxIRqKuuh1b6jY
+         YVGw==
+X-Received: by 10.68.244.1 with SMTP id xc1mr31313986pbc.165.1364426303500;
+        Wed, 27 Mar 2013 16:18:23 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id ti8sm23037484pbc.12.2013.03.27.16.18.21
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 27 Mar 2013 16:18:22 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20130327230943.GA5204@jtriplet-mobl1>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -47,79 +55,11 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219358>
 
-On Wed, Mar 27, 2013 at 04:09:43PM -0700, Josh Triplett wrote:
-> On Wed, Mar 27, 2013 at 05:48:45PM -0500, Rob Hoelz wrote:
-> > On Wed, 27 Mar 2013 15:07:18 -0700
-> > Junio C Hamano <gitster@pobox.com> wrote:
-> > 
-> > > Jonathan Nieder <jrnieder@gmail.com> writes:
-> > > 
-> > > > Sorry, typo.  The configuration in the example above should have
-> > > > been
-> > > >
-> > > > 	[url "git://anongit.myserver.example.com/"]
-> > > > 		insteadOf = myserver.example.com:
-> > > > 	[url "myserver.example.com:"]
-> > > > 		pushInsteadOf = myserver.example.com:
-> > > >
-> > > > In other words, suppose I set url.*.insteadof to point to a faster
-> > > > address for fetching alongside url.*.pushinsteadof requesting that
-> > > > the original address should still be used for pushing.
-> > > 
-> > > I didn't know we were even shooting for supporting the identity
-> > > mapping:
-> > > 
-> > > 	url.X.pushinsteadof=X
-> > > 
-> > > but that would certainly be nice.
-> > > 
-> > > By the way, it seems that the original commit 1c2eafb89bca (Add
-> > > url.<base>.pushInsteadOf: URL rewriting for push only, 2009-09-07)
-> > > wanted to explicitly avoid use of pushInsteadOf aliasing for a
-> > > pushURL and it is also documented in config.txt from day one.
-> > > 
-> > > I think the intent is "You have a normal URL, and a way to override
-> > > it explicitly with pushURL, or a way to rewrite it via the aliasing
-> > > the normal URL with pushInsteadOf. Either one or the other, but not
-> > > both, as having many levels of indirection would be confusing."
-> > > 
-> > > Which I can understand and sympathise.
-> > > 
-> > > In anay case, the change proposed in this thread seems to change
-> > > that, so the documentation would need to be updated.  Also the tests
-> > > the original commit adds explicitly checks that pushInsteadOf is
-> > > ignored, which may have to be updated (unless that test is already
-> > > broken).
-> > > 
-> > 
-> > My use case is that I use Github for my personal development.  I have a
-> > prefix for my personal repos (hoelzro: -> git://github.com/hoelzro for
-> > fetch, git@github.com:hoelzro/ for push) and one for all other Git repos
-> > (github: -> git://github.com/)  I have a few projects where I work in a
-> > fork, but I want to fetch updates from the original project.  So my url
-> > for the origin remote is github:org/project, but my pushurl is
-> > hoelzro:project.  This behavior in Git currently doesn't allow me to
-> > work that way.  I used to work with two remotes; origin for my repo and
-> > base for the official one, but I've found that I prefer this other way.
-> > 
-> > The test that checked that pushInsteadOf + pushurl shouldn't work as I
-> > expect was actually broken; I have removed it, updated the
-> > documentation, and sent a new patch to the list.
-> 
-> There's an argument for either behavior as valid.  My original patch
-> specifically documented and tested for the opposite behavior, namely
-> that pushurl overrides any pushInsteadOf, because I intended
-> pushInsteadOf as a fallback if you don't have an explicit pushurl set.
-> For instance, you could use pushInsteadOf to rewrite a family of
-> anonymous git URLs to corresponding pushable repositories, but then use
-> an explicit pushurl to override that for a specific repository.  This
-> change would break the ability to use pushurl for its original intended
-> purpose, namely having a local repository where fetch comes from one
-> remote repo and push goes to another.
-> 
-> One use case of mine: I have a .gitconfig in my git-managed home
+Josh Triplett wrote:
+
+>                       I have a .gitconfig in my git-managed home
 > directory which sets pushInsteadOf so that I can clone via git:// and
 > immediately have working push.  I work with a number of systems that
 > don't have inbound access to each other but do have outbound access to
@@ -128,19 +68,21 @@ On Wed, Mar 27, 2013 at 04:09:43PM -0700, Josh Triplett wrote:
 > pushurl in .git/config for that repository, which overrides the
 > pushInsteadOf.  This change would break that configuration.
 
-Clarifying this use case a bit: note that it's been a while since I had
-many such boxes, so I don't actually have any systems currently using
-that pushurl configuration.  Still a regression in defined behavior,
-though.
+Would it?  As long as your pushurl does not start with git://, I think
+your configuration would still work fine.
 
-Why not just use insteadOf for your personal github prefix hoelzro:, and
-both insteadOf and pushInsteadOf for github: in general?  Then, a
-repository cloned via github: would work for pull and push (if you have
-push access), and you can change pushurl to your personal github alias
-if needed.
+After this patch, neither pushInsteadOf nor pushUrl overrides the
+other one.  The rule is:
 
-Though, as Junio said, the modern push-updates-remote-heads behavior of
-git means that both of our configurations arguably seem wrong, and we
-should both just use separate remotes for separate repos.
+	1. First, get the URL from the remote's configuration, based
+	   on whether you are fetching or pushing.
 
-- Josh Triplett
+	   (At this step, in your setup git chooses the URL specified
+	   with pushurl in your .git/config.)
+	
+	2. Next, apply the most appropriate url.*.insteadOf or
+	   url.*.pushInsteadOf rule, based on whether you are fetching
+	   or pushing.
+
+	   (At this step, no rewrite rules apply, so the URL is used
+	   as is.)
