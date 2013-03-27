@@ -1,92 +1,102 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Composing git repositories
-Date: Wed, 27 Mar 2013 12:26:30 -0700
-Message-ID: <20130327192630.GF28148@google.com>
-References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
- <7vmwtqt8rs.fsf@alter.siamese.dyndns.org>
- <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
- <7vvc8comj5.fsf@alter.siamese.dyndns.org>
- <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git status takes 30 seconds on Windows 7. Why?
+Date: Wed, 27 Mar 2013 12:27:23 -0700
+Message-ID: <CA+55aFypcwbLwPLq++AU9FggCKLYkgkuN6i-gOD9pRioH1Dz2g@mail.gmail.com>
+References: <CAFT1WNyyXbCOQWMt8nYife7Tix_mJzDQrj5e+N=GKbDR8OyYzQ@mail.gmail.com>
+	<vpqr4j0rccf.fsf@grenoble-inp.fr>
+	<CAFT1WNxm0Kx9vHx+NB92_tZV6KsVhefiVXa-K69YbWOkpCXSgA@mail.gmail.com>
+	<20130327184657.GP2286@serenity.lan>
+	<20130327190425.GA26380@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 20:27:05 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: John Keeping <john@keeping.me.uk>,
+	Jim Kinsman <jakinsman@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 27 20:27:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKw00-0007LH-8y
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 20:27:04 +0100
+	id 1UKw0n-0001kh-9V
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 20:27:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754008Ab3C0T0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 15:26:36 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:48653 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753849Ab3C0T0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 15:26:35 -0400
-Received: by mail-pa0-f44.google.com with SMTP id bi5so2303810pad.31
-        for <git@vger.kernel.org>; Wed, 27 Mar 2013 12:26:35 -0700 (PDT)
+	id S1754114Ab3C0T1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 15:27:25 -0400
+Received: from mail-ve0-f178.google.com ([209.85.128.178]:39305 "EHLO
+	mail-ve0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753849Ab3C0T1Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 15:27:24 -0400
+Received: by mail-ve0-f178.google.com with SMTP id db10so3230843veb.37
+        for <git@vger.kernel.org>; Wed, 27 Mar 2013 12:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=b5ckFnbrk3kAjsCUnDrhevdTI1FvtL/rvMrcG2/rV3A=;
-        b=yuJBUYJq2FMjBAX3TeojN3R+EADnw+nQZv50SLrWLGqd87Zx4rN/g7YOaMCGSVLBs4
-         1ETLAus/RkRHoIKpIkdfRU0qSXzxopiMILD8w8EP7XiOKfoR4bS0vlkYctP+P7Cqxk6k
-         81MEVPq4YLIlOU97lIEaWI4VFFrQS5VnuvgHaRvI/FJFDsLAEM1piswjFR+20wDUzP8y
-         /qbPDhNvpzfQch5zf9F7TuC/4Md90daLZA/c03lEq+RUEFAQUZKSxzwsPc/dIBYQID4v
-         7e2mKx2r4bswOh3tvlvGsuG3d2CvGJvE6qpmu2e56kjm7fwWl02mwF3KX26oWPn8MSZq
-         g95A==
-X-Received: by 10.68.42.134 with SMTP id o6mr31453134pbl.52.1364412395133;
-        Wed, 27 Mar 2013 12:26:35 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id i9sm24472499paa.7.2013.03.27.12.26.32
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 27 Mar 2013 12:26:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=Au6XuurPWjz+Z65fIt5DVRi07qr9mGUmST1rjk1d+Mc=;
+        b=0r+L9hjPJm5YrXFLW1cc6IzpVJ7i7SVIpKSUNAq35i9yAfJT3nF8kvVkEY2Toji0j+
+         JcHJUclo3yXxygbdV9/GRMvoUR4bWpAwEgUXaiQ7qusNfuN2m1Fg3LFRPi9S8CCzF3FT
+         Zfwkp0CXqBR1ZSs31+I+BKP8IloYFgMm0dUxYNyV8bXveDpqUQPpvrScpc6oS0J8x8r8
+         pnciaGBLOQxqeLCJfhiCFtFbgC0qhTwjNJTyzjbfs+HMpSS+3h1+BID4SADK5Yxgxd1/
+         2hmfdQGs2/fA1I0E6HNM5v4tZetHtw4Z/M6zqoRbpkqka6p2Zt5K07kdrZuX885eV/46
+         yKfg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=Au6XuurPWjz+Z65fIt5DVRi07qr9mGUmST1rjk1d+Mc=;
+        b=gGRmCxwCj+vFKL/hfLUCOcyOX4K/cK3JI+i7H0vuIlurN2fhkMzgNweeACzEodoWN4
+         lqQ1yV3BPHIqUQZeG/AYhGYOXMVVsKvlGfRfYZkde+Z61qqIVAH90UfW9QjfWWhtG1Qd
+         xGrCmV0bYPObbYxyCIzdBhnCPOPi4U33YgK4s=
+X-Received: by 10.52.25.99 with SMTP id b3mr20506282vdg.99.1364412443676; Wed,
+ 27 Mar 2013 12:27:23 -0700 (PDT)
+Received: by 10.220.148.211 with HTTP; Wed, 27 Mar 2013 12:27:23 -0700 (PDT)
+In-Reply-To: <20130327190425.GA26380@sigill.intra.peff.net>
+X-Google-Sender-Auth: YAP1PsPoDwtzpphXdZb6Nogiw4E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219310>
 
-Ramkumar Ramachandra wrote:
+On Wed, Mar 27, 2013 at 12:04 PM, Jeff King <peff@peff.net> wrote:
+>
+> Yes, I think that's pretty much the case (though most of my
+> Git-on-Windows experience is from cygwin long ago, where the stat
+> performance was truly horrendous). Have you tried setting
+> core.preloadindex, which should run the stats in parallel?
 
->                        Even then, working with one worktree embedded
-> inside another is something git never designed for: it explains why I
-> have to literally fight with git when using submodules
+I wonder if preloadindex shouldn't be enabled by default.. It's a huge
+deal on NFS, and the only real downside is that it expects threading
+to work. It potentially slows things down a tiny bit for single-CPU
+cases with everything cached, but that isn't likely to be a relevant
+case.
 
-Do you mean that you wish you could ignore subrepository boundaries
-and use commands like
+Of course, it can trigger filesystem scalability issues, and as a
+result it will often not help very much if you have the bulk of your
+files in one (or a few) directories. But anybody who has so many files
+that performance is an issue is not likely to have them all in one
+place.
 
-	git clone --recurse-submodules http://git.zx2c4.com/cgit
-	cd cgit
-	vi git/cache.h
-	... edit edit edit ...
-	git add --recurse-submodules git/cache.h
-	git commit --recurse-submodules
-	git push --recurse-submodules
+And apparently the Windows FS metadata caching sucks, and things fall
+out of the cache for large trees. Color me not-very-surprised. It's
+probably some size limit on the metadata that you can tweak. So I';m
+sure there's some registry setting or other that would make windows
+able to cache more than a few thousand filenames, and it would
+probably improve performance a lot, but I do think preloadindex has
+been around long enough that it could just be the default.
 
-, possibly with configuration to allow the --recurse-submodules to be
-implied, and have everything work out well?
+Of course, Jim should verify that preloadindex actually does solve his
+problem.  With 20k+ files, it should max out the 20 IO threads for
+preloading, and assuming the filesystem IO scales reasonably well, it
+should fix the problem. But we do do a number of metadata ops
+synchronously even with preloadindex, so things won't scale perfectly.
 
-I think something like that is a goal for submodules in the long term,
-with a caveat that there are complications in that different projects
-(the parent project and subproject) can have different contribution
-guidelines, review and release schedules, and so on.
+(In particular: do open each directory and do the readdir stuff and
+try to open .gitignore whether it exists or not. So you'll get
+synchronous IO for each directory, but at least the per-file IO to
+check all the file stat data should scale).
 
-If submodules are not working for you today, you may find some of
-Jens's submodule improvement patches interesting, or you may want to
-look into alternatives that make different assumptions, such as
-entirely independent repositories and tools like "mr" that iterate
-over them.
-
-Hope that helps,
-Jonathan
+             Linus
