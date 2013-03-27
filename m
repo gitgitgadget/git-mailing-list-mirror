@@ -1,110 +1,100 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Composing git repositories
-Date: Wed, 27 Mar 2013 17:19:38 +0530
-Message-ID: <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
-References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
- <7vmwtqt8rs.fsf@alter.siamese.dyndns.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git ate my home directory :-(
+Date: Wed, 27 Mar 2013 20:05:07 +0700
+Message-ID: <CACsJy8C9NM9BJHAftjWFby5EG7Yx3ofR7W3zQC9-KBgmpcWn2A@mail.gmail.com>
+References: <5150C3EC.6010608@nod.at> <20130325214343.GF1414@google.com>
+ <7vboa7w2vm.fsf@alter.siamese.dyndns.org> <384BCFE976364F1EA6E56306566D003A@PhilipOakley>
+ <20130326094844.GA32583@duynguyen-vnpc.dek-tpc.internal> <20130326150428.GA3847@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 12:50:37 2013
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Richard Weinberger <richard@nod.at>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 27 14:06:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKos8-000515-Lh
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 12:50:28 +0100
+	id 1UKq3R-00022V-K0
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 14:06:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753955Ab3C0Lt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 07:49:59 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:47915 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752780Ab3C0Lt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 07:49:58 -0400
-Received: by mail-ie0-f178.google.com with SMTP id bn7so7560960ieb.23
-        for <git@vger.kernel.org>; Wed, 27 Mar 2013 04:49:58 -0700 (PDT)
+	id S1753036Ab3C0NFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 09:05:40 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:48198 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752600Ab3C0NFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 09:05:38 -0400
+Received: by mail-ob0-f175.google.com with SMTP id va7so5078482obc.34
+        for <git@vger.kernel.org>; Wed, 27 Mar 2013 06:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=iKHxBepuBmtZAUzAkX1TJeR5ST7TpaJzzWCLOmBfqc4=;
-        b=o8JhIA3g51R+Ohn0sL2XWcm5nZXaBv/Hff0mPXmr1xgtSU6GPmhdnQti0Tn2pgML9e
-         gJyytOp9rGroUdaTv30qWcRSbLX5Y8cvLH6w7CJ1cuYpsQO1yDr5laMhkZgKhvJdoQ2m
-         fiGlHyXOfo7WSDwY/OnT//FvbC9VS5kF0rddsFjsO1rGSJPE/AbmNAk9wcEAQrhWwn7f
-         atbXPYtg2CZSJYxiGQ3ISBcJSJJYjLD4FnKNjKm6Zgk1RBrzxU2oQJzOT4sCihDbQGqW
-         PZW3/Skcy58am3RXP5i+oWPWirfhk9LgviqlqeMUsIL5Dw8/Dypb/SUg8sVUpXuyrv1z
-         jJTQ==
-X-Received: by 10.50.119.102 with SMTP id kt6mr4141085igb.12.1364384998270;
- Wed, 27 Mar 2013 04:49:58 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Wed, 27 Mar 2013 04:49:38 -0700 (PDT)
-In-Reply-To: <7vmwtqt8rs.fsf@alter.siamese.dyndns.org>
+        bh=fvX+VLQMAreXLG3VBBnd+ipj8P/FvaG4yNeFeLNeLt4=;
+        b=uPUTDha3L4Oc77moM4Tzfya05tkC7USv99lfxl70Wbe7GojoBFjh7zlQWnxdbHxLOV
+         C9VdARt6O5d7gKYObRnDxA+1/xFI2OOsGDIzY40kvh2llg1OX+DTOxRCkJ2X9znSvR2K
+         LscQH8/aURcYBWSANIlsaaM5dEUwBCfjvrAIbb0Ao6r0K0HkLJ/dT780Ri0aM6uRUWYD
+         ulHebhApMY/RtWRW8Rj1EMXhYVu16cAp4sU6ak6AGnTXFbFdKk1azztSQ1iXsA7kCREW
+         qJRo7gBYnwjynyBhajXjr0OGq7lygwxHsXHun34sQ31Dcmkr4WdDcFdluwKLPpHkVUU5
+         EDsA==
+X-Received: by 10.60.99.68 with SMTP id eo4mr2260315oeb.126.1364389537962;
+ Wed, 27 Mar 2013 06:05:37 -0700 (PDT)
+Received: by 10.76.27.137 with HTTP; Wed, 27 Mar 2013 06:05:07 -0700 (PDT)
+In-Reply-To: <20130326150428.GA3847@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219246>
 
-Junio C Hamano wrote:
-> So you have to stash it somewhere.  We could have made it to move
-> them to $HOME/.safeplace or somewhere totally unrelated to the
-> superproject.  So in that sense, the repositories are *not* owned by
-> the superproject in any way.  However, you are working within the
-> context of the superproject on the submodule after all, and
-> somewhere under $GIT_DIR/ of the superorject is not too wrong a
-> place to use as such a safe place.
+On Tue, Mar 26, 2013 at 10:04 PM, Jeff King <peff@peff.net> wrote:
+>>       specifies a path to use instead of the default `.git`
+>>       for the base of the repository.
+>>       The '--git-dir' command-line option also sets this value.
+>> +     If neither GIT_WORK_TREE nor '--work-tree' is set, the
+>> +     current directory will become the working tree.
+>
+> I think this is a good thing to mention, but a few nits:
+>
+>   1. core.worktree is another way of setting it
+>
+>   2. This can also be overridden by --bare (at least in "next").
+>
+>   3. I think having core.bare set will also override this
 
-Thanks for the explanation.  The paths in .git/modules are unnecessary
-ugly and unwieldy, especially in the case of multiple levels of
-nesting: I'll look into converting it to a flat structure using
-<repository name>.git, while handling name conflicts.  I'll also look
-into adding a feature to relocate this/ using an object store from an
-existing clone.
+Yeah, I looked back at t1510 and gave up. I think it's still true:
 
-> Look for floating submodules in the list archive.
+-- 8< --
+A few rules for repo setup:
 
-The most relevant message thread I could find was [1], back from 2011.
- You argue that floating submodules are Wrong, and that there is no
-real usecase for it.
+1. GIT_DIR is relative to user's cwd. --git-dir is equivalent to
+   GIT_DIR.
 
-Like I explained earlier, I'm looking at one tool that solves a
-superset of the problems mr, repo, submodules, subtrees, and other
-tools solve.  I really like the way repo allows me to work on a meta
-project like Android or ChromiumOS, but hate that it allows for zero
-composition.
+2. .git file is relative to parent directory. .git file is basically
+   symlink in disguise. The directory where .git file points to will
+   become new git_dir.
 
-To move forward, I have the following design thoughts (elaborating on
-my previous email):
+3. core.worktree is relative to git_dir.
 
-1. If .gitmodules is tracked like a normal file, it is absolutely
-impossible to tell the possible dependencies of the superproject
-without cloning it entirely, and looking at the .gitmodules file in
-each of the branches.  Can't we have it as a special ref instead, so I
-can `git fetch` just that ref to figure out the dependencies?
+4. GIT_WORK_TREE is relative to user's cwd. --work-tree is
+   equivalent to GIT_WORK_TREE.
 
-2. True composition requires that I be able to specify the entire
-manifest (for nested submodules) in the toplevel .gitmodules, or break
-it up as I see fit.  This is currently impossible, and brings us back
-to #1: the manifest for b/, b/c are in the toplevel repo's special
-ref, and I need to fetch c's special ref to figure out what d is (or
-error out if no such thing exists).
+5. GIT_WORK_TREE/core.worktree was originally meant to work only if
+   GIT_DIR is set, but earlier git didn't enforce it, and some scripts
+   depend on the implementation that happened to first discover .git by
+   going up from the users $cwd and then using the specified working tree
+   that may or may not have any relation to where .git was found in.  This
+   historical behaviour must be kept.
 
-3. True floating submodules are impossible, because a change in the
-submodule means a change in the commit object referenced by the
-superproject's tree object; diff-tree will see that some content has
-changed in the repository.  We can represent that diff however we want
-(using diff.submodule), but we can't change the fact that the change
-has to be committed.  Fixing this will require nothing short of
-introducing a new kind of object (say "submodule" object which can be
-a concrete SHA-1 or point to a ref).
+6. Effective GIT_WORK_TREE overrides core.worktree and core.bare
 
-Do you think thinking about these things is worthwhile?  I see more
-complaints like [2] as git adoption in the industry increases, but we
-have no solution: we can't make git scale to super-large repositories,
-and we have no real way to compose smaller repositories.  Hacks like
-repo sadden me.
+7. Effective core.worktree conflicts with core.bare
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/185164
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/189776
+8. If GIT_DIR is set but neither worktree nor bare setting is given,
+   original cwd becomes worktree.
+-- 8< --
+-- 
+Duy
