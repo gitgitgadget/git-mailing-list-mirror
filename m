@@ -1,73 +1,54 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [DONOTAPPLY PATCH 2/3] setup: warn about implicit worktree with $GIT_DIR
-Date: Wed, 27 Mar 2013 09:24:28 +0100
-Message-ID: <vpq38vh1c8z.fsf@grenoble-inp.fr>
-References: <20130326200851.GA22080@sigill.intra.peff.net>
-	<20130326201208.GB22522@sigill.intra.peff.net>
-	<20130326202142.GL1414@google.com>
-	<20130326202722.GA22769@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 5/6] remote.c: introduce remote.pushdefault
+Date: Wed, 27 Mar 2013 15:09:21 +0530
+Message-ID: <CALkWK0=mTOcHTLAqhF0JpqkrXuO5s3HHfxA-V_gsBv92W=HSMA@mail.gmail.com>
+References: <1363938756-13722-1-git-send-email-artagnon@gmail.com>
+ <1363938756-13722-6-git-send-email-artagnon@gmail.com> <20130322145640.GB3083@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Richard Weinberger <richard@nod.at>,
-	Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 27 09:25:31 2013
+X-From: git-owner@vger.kernel.org Wed Mar 27 10:40:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKlfk-0002KS-OH
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 09:25:29 +0100
+	id 1UKmq5-0008UF-2m
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 10:40:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751827Ab3C0IY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 04:24:59 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47765 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751601Ab3C0IY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 04:24:57 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r2R8OS6E029971
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 27 Mar 2013 09:24:28 +0100
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UKlen-000848-0s; Wed, 27 Mar 2013 09:24:29 +0100
-In-Reply-To: <20130326202722.GA22769@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 26 Mar 2013 16:27:22 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 27 Mar 2013 09:24:29 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r2R8OS6E029971
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1364977473.84533@eVC+jXUEOItinPsbdD0jRw
+	id S1752620Ab3C0Jjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 05:39:44 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:61051 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751774Ab3C0Jjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 05:39:42 -0400
+Received: by mail-ie0-f174.google.com with SMTP id aq17so7046906iec.33
+        for <git@vger.kernel.org>; Wed, 27 Mar 2013 02:39:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=TbcibQUft+O3ravo4e+H2so7nqcCphNV4vSO0PJH+88=;
+        b=MK5NVC0m3cjzy41qDZE43Aaa2NDcg1KftBZpSYzn9lgs81kwVSvaxGjHuwrQjEL9A2
+         mZrUjfrp5b7ESoXdDBJzNi9xBARF60FGW/z0nWbYk8thSqckDy9oV0TfEIsIMwc6qnvA
+         MGziA3h2Qms1knN2DmIu9xuNh6/0tc1MyxVaBwSNDgfrnTxlPFzS8V1nnFrpQU8hfxgA
+         DmgbJdUmEnzJRCJa4u30XG7vcNTZdTRAZcfhAnfzUnk03Smj/12xItH7cBLh3NZ8SVkg
+         k9yqugcm1LeFTKhPBTiCDrcCABe4lPmRZSYux7dZ1Phc17Zb9n9lwL7tAWSgMXykji8t
+         3Q5w==
+X-Received: by 10.50.17.166 with SMTP id p6mr3748094igd.12.1364377181848; Wed,
+ 27 Mar 2013 02:39:41 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Wed, 27 Mar 2013 02:39:21 -0700 (PDT)
+In-Reply-To: <20130322145640.GB3083@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219243>
 
-Jeff King <peff@peff.net> writes:
+Jeff King wrote:
+> but also possibly just move it with the other remote parsing, like:
+> [...]
 
-> I probably shouldn't have included this middle patch at all, because
-> the interesting thing is what happens when we do turn it off.
-
-Actually, I think the warning is the most important part. With the
-warning enabled, people should notice they are doing something
-potentially wrong and dangerous, so the warning essentially fixes the
-issue in the short term.
-
-I also think that changing the default behavior later makes sense (but I
-agree that replacing "in Git 2.0" with "in a future version of Git" is
-better, there's no urgency for this change and people start looking
-forward 2.0).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Done.  Thanks for the dose of sanity.
