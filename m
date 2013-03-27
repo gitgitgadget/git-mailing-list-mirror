@@ -1,84 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: propagating repo corruption across clone
-Date: Wed, 27 Mar 2013 12:13:38 -0700
-Message-ID: <7v7gksmza5.fsf@alter.siamese.dyndns.org>
-References: <CAOx6V3YtM-e8-S41v1KnC+uSymYwZw8QBwiCJRYw0MYJXRjj-w@mail.gmail.com>
- <20130325145644.GA16576@sigill.intra.peff.net>
- <CACsJy8A0eOWEJ2aqPSLof_CodJM6BadFxQHy5Vb0kAwwTSTS3w@mail.gmail.com>
- <20130325155600.GA18216@sigill.intra.peff.net>
- <CAOx6V3a6vGJvJ4HEmAXdTRKKCzRJS23OYd_em1b3aQLzPNEtQA@mail.gmail.com>
- <20130325200752.GB3902@sigill.intra.peff.net>
- <CAOx6V3ZWB1ZpmXcaBeSaPOvHqmAMF3U1rTXuwinFGmEZQwFGYQ@mail.gmail.com>
- <20130326165553.GA7282@sigill.intra.peff.net>
- <1364340037755-7580771.post@n2.nabble.com>
- <7vr4j1qzao.fsf@alter.siamese.dyndns.org>
- <1364410309241-7580845.post@n2.nabble.com>
+From: Jed Brown <jed@59A2.org>
+Subject: Re: Segfault with merge-tree on multiple Git versions
+Date: Wed, 27 Mar 2013 14:16:24 -0500
+Message-ID: <87zjxo3b7b.fsf@59A2.org>
+References: <51531059.8000407@atechmedia.com> <7vsj3gn55b.fsf@alter.siamese.dyndns.org> <515331F2.3060703@atechmedia.com> <874nfw4t0r.fsf@59A2.org> <51533E8D.5050206@atechmedia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Rich Fromm <richard_fromm@yahoo.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 20:14:11 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	John Keeping <john@keeping.me.uk>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Charlie Smurthwaite <charlie@atechmedia.com>
+X-From: git-owner@vger.kernel.org Wed Mar 27 20:17:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKvnW-0000Ph-RL
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 20:14:11 +0100
+	id 1UKvqE-0000vU-G2
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 20:16:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754090Ab3C0TNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 15:13:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39147 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754022Ab3C0TNl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 15:13:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06F0F9C9F;
-	Wed, 27 Mar 2013 15:13:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/PEk49bWdKr1wFvqG/P4zawBtTo=; b=lHVpgK
-	Nh99umm2Ef9BtQkA9wD61vALB3v3vkN255fuDA3wJWusmabtnDV3UHBrsVjOD1FY
-	0TBCCKBE4Db5MpBs25fAe3w1YoBlXO5CLg4/qpnfDW9CPT25Cf4EnG7l6O9FhVNX
-	HfiLHjN8Tbp2dNgqIx7aPXYlCrYHZALgOZtUw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wNWUM0HQwjTWLPDhgHu1uUY5tVK5lY2B
-	YcepLy5WZF7TSyL2kKG6ZLi17sFnWNvwp398OLrMhPzstZWN2ZEydMuvqD22Iwrl
-	dzTTYSl/G6+XBQCN6tdLeth63BAnNNGo3ERTt13xhIccK7cGlKmcowWHV7FTA0FT
-	7fbfbIHYyEY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFCE29C9D;
-	Wed, 27 Mar 2013 15:13:40 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 546FA9C9C; Wed, 27 Mar 2013
- 15:13:40 -0400 (EDT)
-In-Reply-To: <1364410309241-7580845.post@n2.nabble.com> (Rich Fromm's message
- of "Wed, 27 Mar 2013 11:51:49 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6F17262A-9712-11E2-978E-B1692E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754022Ab3C0TQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 15:16:30 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:41526 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753677Ab3C0TQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 15:16:30 -0400
+Received: by mail-ie0-f178.google.com with SMTP id bn7so8177690ieb.23
+        for <git@vger.kernel.org>; Wed, 27 Mar 2013 12:16:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:in-reply-to:references
+         :user-agent:date:message-id:mime-version:content-type;
+        bh=9zRaf4fL1qR4qLBpoOdgOHILCPCUG5uswYqC3LnkZLs=;
+        b=AbLBAaWakk3xEnfWNGsoxR4HjPG1xG6PG0t+LZVvaS+wwoXKPgw/qxQoJmH5vY22wn
+         eqKSjNzyuabKnroh0SSx05mIAtvEkOl90O+jIYh2Mf02N8AWn8hpOOfqP5v4bqMcx/k0
+         IMQbEkZoUgx5N/Wiu7VyPHga7CBHAiEy4SCfiCKUuVABuuRB0klyVHoqmDkp7VxqBa7n
+         bvODFkBrMvjUFayjeApHK7BPjwbn/t4a3TlZFtCHYT2SgCTt8fz0v3gNGK5AQL0Wr6E+
+         1nQ8G/QNHoNDqukGlrEf3mW9u22JPdU1NFMA4V13oJ0e4l8KE4AfVoiwUZwSNDJz580L
+         SYjw==
+X-Received: by 10.43.117.136 with SMTP id fm8mr12634582icc.33.1364411789567;
+        Wed, 27 Mar 2013 12:16:29 -0700 (PDT)
+Received: from batura (vis-v410v070.mcs.anl-external.org. [130.202.17.70])
+        by mx.google.com with ESMTPS id xd4sm8419969igb.3.2013.03.27.12.16.25
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 27 Mar 2013 12:16:25 -0700 (PDT)
+In-Reply-To: <51533E8D.5050206@atechmedia.com>
+User-Agent: Notmuch/0.15.2 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219308>
 
-Rich Fromm <richard_fromm@yahoo.com> writes:
+Charlie Smurthwaite <charlie@atechmedia.com> writes:
 
-> Apologies if my questions are considered slightly off topic -- I'm not
-> positive if this is supposed to be a list for developers, and not users.
+> Yes, I would need to be able to do this on a bare repo for my use case. 
 
-The list is both for users and developers.
+And if it's on the server, you don't want this to be observable, so
+you don't want HEAD to move around. I don't know a better way than:
 
-> However, I think there may be room for some additional clarity in the docs. 
-> The --local option in git-config(1) says "When the repository to clone from
-> is on a local machine, this flag bypasses the normal "git aware" transport
-> mechanism".  But there's no mention of the consequences of this transport
-> bypass.
+  $ git clone --shared -b upstream-branch bare-repo.git /tmp/merge-repo
+  $ cd /tmp/merge-repo
+  $ git pull URL incoming-branch
 
-Yeah, I would not mind a patch to update the documentation for
-"clone --local" and rsync transport to say something about
-byte-for-byte copying of broken repository.
+Cloning with --shared just writes a path into .git/objects/info/alternatives
+and it doesn't need to be on the same file system (unlike --local).
 
-Thanks.
+Since 'git merge-tree' just works with trees, it has less information
+than 'git merge'.
