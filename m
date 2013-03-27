@@ -1,140 +1,85 @@
-From: Hans Brigman <hbrigman@openspan.com>
-Subject: [PATCH v2] log: Read gpg settings for signed commit verification
-Date: Wed, 27 Mar 2013 10:13:39 -0500
-Message-ID: <8C726954D36902459248B0627BF2E66F45D70C3E4E@AUSP01VMBX10.collaborationhost.net>
+From: Charlie Smurthwaite <charlie@atechmedia.com>
+Subject: Segfault with merge-tree on multiple Git versions
+Date: Wed, 27 Mar 2013 15:29:29 +0000
+Message-ID: <51531059.8000407@atechmedia.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="_002_8C726954D36902459248B0627BF2E66F45D70C3E4EAUSP01VMBX10c_"
-Cc: "peff@peff.net" <peff@peff.net>,
-	"gitster@pobox.com" <gitster@pobox.com>,
-	Jacob Sarvis <jsarvis@openspan.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 27 16:22:12 2013
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 27 16:36:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKsB0-00087E-JC
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 16:22:11 +0100
+	id 1UKsOy-000079-IO
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 16:36:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751824Ab3C0PVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 11:21:42 -0400
-Received: from mail1.bemta8.messagelabs.com ([216.82.243.197]:22452 "EHLO
-	mail1.bemta8.messagelabs.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751601Ab3C0PVl (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Mar 2013 11:21:41 -0400
-X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Mar 2013 11:21:41 EDT
-Received: from [216.82.242.115:15593] by server-5.bemta-8.messagelabs.com id B8/E4-00429-8DC03515; Wed, 27 Mar 2013 15:14:32 +0000
-X-Env-Sender: hbrigman@openspan.com
-X-Msg-Ref: server-13.tower-132.messagelabs.com!1364397241!11953538!37
-X-Originating-IP: [216.166.12.180]
-X-StarScan-Received: 
-X-StarScan-Version: 6.8.6.1; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 28563 invoked from network); 27 Mar 2013 15:14:31 -0000
-Received: from out001.collaborationhost.net (HELO out001.collaborationhost.net) (216.166.12.180)
-  by server-13.tower-132.messagelabs.com with RC4-SHA encrypted SMTP; 27 Mar 2013 15:14:31 -0000
-Received: from AUSP01VMBX10.collaborationhost.net ([10.2.8.162]) by
- AUSP01MHUB05.collaborationhost.net ([10.2.8.172]) with mapi; Wed, 27 Mar 2013
- 10:14:19 -0500
-Thread-Topic: [PATCH v2] log: Read gpg settings for signed commit
- verification
-Thread-Index: Ac4q/WDQpHnEkgoVQQ+zhwlUvvkKtQ==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1752365Ab3C0PgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 11:36:04 -0400
+Received: from smtp.atechmedia.net ([109.104.109.18]:33936 "EHLO
+	smtp.atechmedia.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752321Ab3C0PgB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Mar 2013 11:36:01 -0400
+X-Greylist: delayed 388 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Mar 2013 11:36:01 EDT
+Received: by smtp.atechmedia.net (Postfix, from userid 2002)
+	id 84317C0215; Wed, 27 Mar 2013 15:27:51 +0000 (GMT)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on smtp.atechmedia.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.9 required=5.0 tests=BAYES_00,HELO_NO_DOMAIN
+	autolearn=no version=3.3.1
+Received: from exchange.atechmedia.net (exchange.atechmedia.net [109.104.109.9])
+	by smtp.atechmedia.net (Postfix) with ESMTP id 37645C0211
+	for <git@vger.kernel.org>; Wed, 27 Mar 2013 15:27:51 +0000 (GMT)
+Received: from [IPv6:2a01:348:311:2:98d8:7ad8:33d4:9b08]
+ (2a01:348:311:2:98d8:7ad8:33d4:9b08) by exchange.atechmedia.net
+ (2001:9d8:2005:1::9) with Microsoft SMTP Server (TLS) id 14.1.438.0; Wed, 27
+ Mar 2013 15:29:30 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
+X-Originating-IP: [2a01:348:311:2:98d8:7ad8:33d4:9b08]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219257>
 
---_002_8C726954D36902459248B0627BF2E66F45D70C3E4EAUSP01VMBX10c_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+I am experiencing a segmentation fault in various versions of Git using
+different repositories. Specifically, I have reproduced it using a
+public repo and the latest stable Git version. Other repos trigger the
+error on different versions.
 
-RnJvbTogSmFjb2IgU2FydmlzPGpzYXJ2aXNAb3BlbnNwYW4uY29tPg0KDQpsb2c6IFJlYWQgZ3Bn
-IHNldHRpbmdzIGZvciBzaWduZWQgY29tbWl0IHZlcmlmaWNhdGlvbg0KDQpDb21taXQgc2lnbmF0
-dXJlIHZlcmlmaWNhdGlvbiBmYWlscyB3aGVuIGFsdGVybmF0aXZlIGdwZy5wcm9ncmFtDQpzaWdu
-cyB0aGUgY29tbWl0LCBidXQgZ3BnIGF0dGVtcHRzIHRvIHZlcmlmeSB0aGUgc2lnbmF0dXJlLg0K
-InNob3cgLS1zaG93LXNpZ25hdHVyZSIgYW5kICJsb2cgLS1zaG93LXNpZ25hdHVyZSIgZG8gbm90
-IHJlYWQNCnRoZSBncGcucHJvZ3JhbSBzZXR0aW5nIGZyb20gZ2l0IGNvbmZpZy4NCkNvbW1pdCBz
-aWduaW5nLCB0YWcgc2lnbmluZywgYW5kIHRhZyB2ZXJpZmljYXRpb24gdXNlIHRoaXMgc2V0dGlu
-Zw0KcHJvcGVybHkuDQoNCk1ha2UgbG9nIGFuZCBzaG93IGNvbW1hbmRzIHBhc3MgdGhyb3VnaCBz
-ZXR0aW5ncyB0byBncGcgaW50ZXJmYWNlLg0KDQpTaWduZWQtb2ZmLWJ5OiBIYW5zIEJyaWdtYW4g
-PGhicmlnbWFuQG9wZW5zcGFuLmNvbT4NCi0tLQ0KIGJ1aWx0aW4vbG9nLmMgfCA0ICsrKy0NCiAx
-IGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQoNCmRpZmYgLS1n
-aXQgYS9idWlsdGluL2xvZy5jIGIvYnVpbHRpbi9sb2cuYw0KaW5kZXggOGYwYjJlOC4uMzFmNWE5
-ZSAxMDA2NDQNCi0tLSBhL2J1aWx0aW4vbG9nLmMNCisrKyBiL2J1aWx0aW4vbG9nLmMNCkBAIC0y
-Myw2ICsyMyw3IEBADQogI2luY2x1ZGUgInN0cmVhbWluZy5oIg0KICNpbmNsdWRlICJ2ZXJzaW9u
-LmgiDQogI2luY2x1ZGUgIm1haWxtYXAuaCINCisjaW5jbHVkZSAiZ3BnLWludGVyZmFjZS5oIg0K
-IA0KIC8qIFNldCBhIGRlZmF1bHQgZGF0ZS10aW1lIGZvcm1hdCBmb3IgZ2l0IGxvZyAoImxvZy5k
-YXRlIiBjb25maWcgdmFyaWFibGUpICovDQogc3RhdGljIGNvbnN0IGNoYXIgKmRlZmF1bHRfZGF0
-ZV9tb2RlID0gTlVMTDsNCkBAIC0zNjQsNyArMzY1LDggQEAgc3RhdGljIGludCBnaXRfbG9nX2Nv
-bmZpZyhjb25zdCBjaGFyICp2YXIsIGNvbnN0IGNoYXIgKnZhbHVlLCB2b2lkICpjYikNCiAJCXVz
-ZV9tYWlsbWFwX2NvbmZpZyA9IGdpdF9jb25maWdfYm9vbCh2YXIsIHZhbHVlKTsNCiAJCXJldHVy
-biAwOw0KIAl9DQotDQorCWlmIChnaXRfZ3BnX2NvbmZpZyh2YXIsIHZhbHVlLCBjYikgPCAwKQ0K
-KwkJcmV0dXJuIC0xOw0KIAlpZiAoZ3JlcF9jb25maWcodmFyLCB2YWx1ZSwgY2IpIDwgMCkNCiAJ
-CXJldHVybiAtMTsNCiAJcmV0dXJuIGdpdF9kaWZmX3VpX2NvbmZpZyh2YXIsIHZhbHVlLCBjYik7
-DQotLSANCjEuNy4xMS5tc3lzZ2l0LjANCg0KDQpPbiBNb24sIE1hciAyNSwgMjAxMyBhdCAwMTow
-Mzo1MlBNIC0wNTAwLCBIYW5zIEJyaWdtYW4gd3JvdGU6DQoNCj4gInNob3cgLS1zaG93LXNpZ25h
-dHVyZSIgZG9lc24ndCBjdXJyZW50bHkgdXNlIHRoZSBncGcucHJvZ3JhbSBzZXR0aW5nLiAgQ29t
-bWl0IHNpZ25pbmcsIHRhZyBzaWduaW5nLCBhbmQgdGFnIHZlcmlmaWNhdGlvbiBjdXJyZW50bHkg
-dXNlIHRoaXMgc2V0dGluZyBwcm9wZXJseSwgc28gdGhlIGxvZ2ljIGhhcyBiZWVuIGFkZGVkIHRv
-IGhhbmRsZSBpdCBoZXJlIGFzIHdlbGwuDQoNClBsZWFzZSB3cmFwIHlvdXIgY29tbWl0IG1lc3Nh
-Z2VzIGF0IHNvbWV0aGluZyByZWFzb25hYmxlICg3MCBpcyBwcm9iYWJseSBhcyBoaWdoIGFzIHlv
-dSB3YW50IHRvIGdvLCBnaXZlbiB0aGF0IGxvZyBvdXRwdXQgaXMgb2Z0ZW4gc2hvd24gaW5kZW50
-ZWQpLg0KDQo+IEBAIC0zNjQsNyArMzY1LDggQEAgc3RhdGljIGludCBnaXRfbG9nX2NvbmZpZyhj
-b25zdCBjaGFyICp2YXIsIGNvbnN0IGNoYXIgKnZhbHVlLCB2b2lkICpjYikNCj4gIAkJdXNlX21h
-aWxtYXBfY29uZmlnID0gZ2l0X2NvbmZpZ19ib29sKHZhciwgdmFsdWUpOw0KPiAgCQlyZXR1cm4g
-MDsNCj4gIAl9DQo+IC0NCj4gKwlpZiAoIXByZWZpeGNtcCh2YXIsICJncGcuIikpDQo+ICsJCXJl
-dHVybiBnaXRfZ3BnX2NvbmZpZyh2YXIsIHZhbHVlLCBOVUxMKTsNCj4gIAlpZiAoZ3JlcF9jb25m
-aWcodmFyLCB2YWx1ZSwgY2IpIDwgMCkNCj4gIAkJcmV0dXJuIC0xOw0KDQpUaGUgZ3BnIGNvbmZp
-ZyBjYW4gYWxzbyBiZSBvdGhlciBwbGFjZXMgdGhhbiAiZ3BnLioiLiBSaWdodCBub3cgaXQgaXMg
-anVzdCB1c2VyLnNpZ25pbmdrZXksIHdoaWNoIGxvZyB3b3VsZCBub3QgY2FyZSBhYm91dCwgYnV0
-IGl0IGZlZWxzIGxpa2Ugd2UgYXJlIGRlcGVuZGluZyBhbiB1bm5lY2Vzc2FyeSBkZXRhaWwgaGVy
-ZS4gV2UgYWxzbyBkb24ndCBrbm93IHdoZXRoZXIgaXQgd291bGQgY2FyZSBhYm91dCB0aGUgY2Fs
-bGJhY2sgZGF0YS4gSXMgdGhlcmUgYSByZWFzb24gbm90IHRvIGRvOg0KDQogIGlmIChnaXRfZ3Bn
-X2NvbmZpZyh2YXIsIHZhbHVlLCBjYikgPCAwKQ0KICAgICAgICAgIHJldHVybiAtMTsNCg0KanVz
-dCBsaWtlIHRoZSBncmVwX2NvbmZpZyBjYWxsIGJlbG93Pw0KDQotUGVmZg0K
+Full info can be found below. Thanks,
 
---_002_8C726954D36902459248B0627BF2E66F45D70C3E4EAUSP01VMBX10c_
-Content-Type: application/octet-stream;
-	name="0001-log-Read-gpg-settings-for-signed-commit-verification.patch"
-Content-Description: 0001-log-Read-gpg-settings-for-signed-commit-verification.patch
-Content-Disposition: attachment;
-	filename="0001-log-Read-gpg-settings-for-signed-commit-verification.patch";
-	size=1424; creation-date="Wed, 27 Mar 2013 13:55:25 GMT";
-	modification-date="Wed, 27 Mar 2013 13:55:25 GMT"
-Content-Transfer-Encoding: base64
+Charlie
 
-RnJvbSA5NjAxNzVjYjMzMjZhMTJlMDM4ODA1MTIxZWRiZGM4MTE5ZmJiMTA0IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBKYWNvYiBTYXJ2aXMgPGpzYXJ2aXNAb3BlbnNwYW4uY29tPgpE
-YXRlOiBGcmksIDIyIE1hciAyMDEzIDEyOjU0OjMyIC0wNDAwClN1YmplY3Q6IFtQQVRDSCAxLzJd
-IGxvZzogUmVhZCBncGcgc2V0dGluZ3MgZm9yIHNpZ25lZCBjb21taXQgdmVyaWZpY2F0aW9uCgpD
-b21taXQgc2lnbmF0dXJlIHZlcmlmaWNhdGlvbiBmYWlscyB3aGVuIGFsdGVybmF0aXZlIGdwZy5w
-cm9ncmFtCnNpZ25zIHRoZSBjb21taXQsIGJ1dCBncGcgYXR0ZW1wdHMgdG8gdmVyaWZ5IHRoZSBz
-aWduYXR1cmUuCiJzaG93IC0tc2hvdy1zaWduYXR1cmUiIGFuZCAibG9nIC0tc2hvdy1zaWduYXR1
-cmUiIGRvIG5vdCByZWFkCnRoZSBncGcucHJvZ3JhbSBzZXR0aW5nIGZyb20gZ2l0IGNvbmZpZy4K
-Q29tbWl0IHNpZ25pbmcsIHRhZyBzaWduaW5nLCBhbmQgdGFnIHZlcmlmaWNhdGlvbiB1c2UgdGhp
-cyBzZXR0aW5nCnByb3Blcmx5LgoKTWFrZSBsb2cgYW5kIHNob3cgY29tbWFuZHMgcGFzcyB0aHJv
-dWdoIHNldHRpbmdzIHRvIGdwZyBpbnRlcmZhY2UuCgpTaWduZWQtb2ZmLWJ5OiBKYWNvYiBTYXJ2
-aXMgPGpzYXJ2aXNAb3BlbnNwYW4uY29tPgotLS0KIGJ1aWx0aW4vbG9nLmMgfCA0ICsrKy0KIDEg
-ZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQg
-YS9idWlsdGluL2xvZy5jIGIvYnVpbHRpbi9sb2cuYwppbmRleCA4ZjBiMmU4Li4zMWY1YTllIDEw
-MDY0NAotLS0gYS9idWlsdGluL2xvZy5jCisrKyBiL2J1aWx0aW4vbG9nLmMKQEAgLTIzLDYgKzIz
-LDcgQEAKICNpbmNsdWRlICJzdHJlYW1pbmcuaCIKICNpbmNsdWRlICJ2ZXJzaW9uLmgiCiAjaW5j
-bHVkZSAibWFpbG1hcC5oIgorI2luY2x1ZGUgImdwZy1pbnRlcmZhY2UuaCIKIAogLyogU2V0IGEg
-ZGVmYXVsdCBkYXRlLXRpbWUgZm9ybWF0IGZvciBnaXQgbG9nICgibG9nLmRhdGUiIGNvbmZpZyB2
-YXJpYWJsZSkgKi8KIHN0YXRpYyBjb25zdCBjaGFyICpkZWZhdWx0X2RhdGVfbW9kZSA9IE5VTEw7
-CkBAIC0zNjQsNyArMzY1LDggQEAgc3RhdGljIGludCBnaXRfbG9nX2NvbmZpZyhjb25zdCBjaGFy
-ICp2YXIsIGNvbnN0IGNoYXIgKnZhbHVlLCB2b2lkICpjYikKIAkJdXNlX21haWxtYXBfY29uZmln
-ID0gZ2l0X2NvbmZpZ19ib29sKHZhciwgdmFsdWUpOwogCQlyZXR1cm4gMDsKIAl9Ci0KKwlpZiAo
-Z2l0X2dwZ19jb25maWcodmFyLCB2YWx1ZSwgY2IpIDwgMCkKKwkJcmV0dXJuIC0xOwogCWlmIChn
-cmVwX2NvbmZpZyh2YXIsIHZhbHVlLCBjYikgPCAwKQogCQlyZXR1cm4gLTE7CiAJcmV0dXJuIGdp
-dF9kaWZmX3VpX2NvbmZpZyh2YXIsIHZhbHVlLCBjYik7Ci0tIAoxLjcuMTEubXN5c2dpdC4wCgo=
 
---_002_8C726954D36902459248B0627BF2E66F45D70C3E4EAUSP01VMBX10c_--
+Test repository:
+https://github.com/atech/mail
+
+Test Command
+git merge-tree 26bb22a052fef9f74063afd4fc6fc11fe200b19f
+8d6bdf012941d876b2279994e02f1bb0d5c26e7d
+d5ef97ac407d945f231cd7c8fb1cfe48b3a12083
+
+Environment:
+Linux codebase-staging 2.6.32-41-server #91-Ubuntu SMP Wed Jun 13
+11:58:56 UTC 2012 x86_64 GNU/Linux
+
+Git:
+git version 1.8.2
+
+Output:
+charlie@codebase-staging:~/mail$ git merge-tree
+26bb22a052fef9f74063afd4fc6fc11fe200b19f
+8d6bdf012941d876b2279994e02f1bb0d5c26e7d
+d5ef97ac407d945f231cd7c8fb1cfe48b3a12083
+Segmentation fault
+
+
+
+Charlie Smurthwaite aTech Media
+
+tel. 01202 901 222 (ext. 603) email. charlie@atechmedia.com<mailto:charlie@atechmedia.com> web. atechmedia.com<http://atechmedia.com>
+
+aTech Media Limited is a registered company in England and Wales. Registration Number 5523199. Registered Office: Unit 9 Winchester Place, North Street, Poole, Dorset, BH15 1NX. VAT Registration Number: GB 868 861 560. This e-mail is confidential and for the intended recipient only. If you are not the intended recipient, be advised that you have received this e-mail in error and that any use, dissemination, forwarding, printing, or copying of this e-mail is prohibited. If you have received this e-mail in error, please notify the sender.
