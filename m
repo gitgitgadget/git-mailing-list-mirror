@@ -1,66 +1,111 @@
-From: Charlie Smurthwaite <charlie@atechmedia.com>
-Subject: Re: Segfault with merge-tree on multiple Git versions
-Date: Wed, 27 Mar 2013 18:46:37 +0000
-Message-ID: <51533E8D.5050206@atechmedia.com>
-References: <51531059.8000407@atechmedia.com> <7vsj3gn55b.fsf@alter.siamese.dyndns.org> <515331F2.3060703@atechmedia.com> <874nfw4t0r.fsf@59A2.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: git status takes 30 seconds on Windows 7. Why?
+Date: Wed, 27 Mar 2013 18:46:57 +0000
+Message-ID: <20130327184657.GP2286@serenity.lan>
+References: <CAFT1WNyyXbCOQWMt8nYife7Tix_mJzDQrj5e+N=GKbDR8OyYzQ@mail.gmail.com>
+ <vpqr4j0rccf.fsf@grenoble-inp.fr>
+ <CAFT1WNxm0Kx9vHx+NB92_tZV6KsVhefiVXa-K69YbWOkpCXSgA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-	John Keeping <john@keeping.me.uk>,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Jed Brown <jed@59A2.org>
-X-From: git-owner@vger.kernel.org Wed Mar 27 19:47:17 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Jim Kinsman <jakinsman@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 27 19:47:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKvNR-0000zq-He
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 19:47:13 +0100
+	id 1UKvNr-0002PX-Ai
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 19:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753108Ab3C0Sqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 14:46:45 -0400
-Received: from smtp.atechmedia.net ([109.104.109.18]:35390 "EHLO
-	smtp.atechmedia.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753328Ab3C0Sqo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 14:46:44 -0400
-Received: by smtp.atechmedia.net (Postfix, from userid 2002)
-	id 8CE53C11EA; Wed, 27 Mar 2013 18:45:01 +0000 (GMT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on smtp.atechmedia.net
+	id S1753623Ab3C0SrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 14:47:06 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:60886 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753364Ab3C0SrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 14:47:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 99FF622BA3;
+	Wed, 27 Mar 2013 18:47:04 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=5.0 tests=BAYES_00,HELO_NO_DOMAIN
-	autolearn=no version=3.3.1
-Received: from exchange.atechmedia.net (exchange.atechmedia.net [109.104.109.9])
-	by smtp.atechmedia.net (Postfix) with ESMTP id 74471C01BC;
-	Wed, 27 Mar 2013 18:45:01 +0000 (GMT)
-Received: from [IPv6:2001:9d8:2005:12::3] (2001:9d8:2005:12::3) by
- exchange.atechmedia.net (2001:9d8:2005:1::9) with Microsoft SMTP Server (TLS)
- id 14.1.438.0; Wed, 27 Mar 2013 18:46:40 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
-In-Reply-To: <874nfw4t0r.fsf@59A2.org>
-X-Originating-IP: [2001:9d8:2005:12::3]
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RZX6qBwth+Va; Wed, 27 Mar 2013 18:47:04 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id BBCC922F4F;
+	Wed, 27 Mar 2013 18:46:59 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <CAFT1WNxm0Kx9vHx+NB92_tZV6KsVhefiVXa-K69YbWOkpCXSgA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219301>
 
-On 27/03/13 18:06, Jed Brown wrote:
-> Charlie Smurthwaite <charlie@atechmedia.com> writes:
->
->> I am also using this to obtain a diff that would be applied if a merge
->> were to be run. Is there a better way to obtain this information that is
->> more commonly used?
-> You can do an actual merge using detached HEAD:
->
->    $ git checkout --detach upstream-branch
->    $ git merge topic-branch
->
-> This has the benefit that if there are conflicts, you can resolve them
-> here and commit the result so that rerere can auto-resolve them later.
->
-> Are you looking for something that can be run in a bare repo?
+On Wed, Mar 27, 2013 at 01:15:43PM -0500, Jim Kinsman wrote:
+> The only anti-virus I have installed is Microsoft Security Essentials
+> I turned off and it was still the same:
+> $ cat /usr/bin/gitstatus
+> start_time=`date +%s`
+> git status && echo run time is $(expr `date +%s` - $start_time) s
+> 
+> 
+> $ gitstatus
+> # On branch test
+> # Changes not staged for commit:
+> #   (use "git add <file>..." to update what will be committed)
+> #   (use "git checkout -- <file>..." to discard changes in working directory)
+> #
+> #       modified:   orgoptions.php
+> #       modified:   update_import_contacts.php
+> #
+> no changes added to commit (use "git add" and/or "git commit -a")
+> run time is 10 s
 
-Yes, I would need to be able to do this on a bare repo for my use case. 
-Thanks!
+That doesn't seem hugely surprising to me.  I have a moderately sized
+repository (3047 files, although it's Java so there are some deep trees)
+and I get the following (Vista on a reasonably old laptop, best of 3,
+Git version 1.8.1.msysgit.1):
+
+$ time git ls-files >/dev/null
+
+real	0m0.047s
+user	0m0.015s
+sys	0m0.015s
+
+$ time git status >/dev/null
+
+real	0m2.715s
+user	0m0.000s
+sys	0m0.031s
+
+
+I'm not sure the "user" and "sys" times are correct, but the "real"
+times feel right.  By comparison, on Linux on a much newer machine (so
+not much of a comparison) on the same repository:
+
+$ time git status >/dev/null
+
+real	0m0.347s
+user	0m0.171s
+sys	0m0.167s
+
+
+I think the simple reality is that Git was written with the assumption
+that stat is cheap and that isn't really the case on Windows, where the
+filesystem cache doesn't seem to do that well with this.  It may be that
+Git's Windows compatibility code could do be made more efficient but I
+know nothing about that, although a quick look in compat/mingw.c
+indicates that Git does already use its own stat implementations in
+place of the MSys ones in search of speed.
+
+
+John
