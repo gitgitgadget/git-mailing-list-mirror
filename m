@@ -1,94 +1,113 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] push: Alias pushurl from push rewrites
-Date: Wed, 27 Mar 2013 14:15:54 -0700
-Message-ID: <20130327211554.GH28148@google.com>
-References: <20130327122216.5de0c336@hoelz.ro>
- <20130327182345.GD28148@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	josh@joshtriplett.org
-To: Rob Hoelz <rob@hoelz.ro>
-X-From: git-owner@vger.kernel.org Wed Mar 27 22:16:34 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH] merge-tree: fix "same file added in subdir"
+Date: Wed, 27 Mar 2013 21:34:36 +0000
+Message-ID: <0a6a0c978569906b8c8d9209a85338554e503236.1364419952.git.john@keeping.me.uk>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 27 22:36:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKxht-0008Fo-8P
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 22:16:29 +0100
+	id 1UKy0c-0007Tj-Nf
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 22:35:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754160Ab3C0VQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 17:16:00 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:47545 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753377Ab3C0VP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 17:15:59 -0400
-Received: by mail-pa0-f42.google.com with SMTP id kq13so1705305pab.29
-        for <git@vger.kernel.org>; Wed, 27 Mar 2013 14:15:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=zB9oebqOsItsfjRXLBI5BwoPWBBM0eP/Kurm//XPrEA=;
-        b=0iAAB0VZiBhg+uB5hIld/oRrpkbIZulvq7TR6/xKyuZfdwY+lKggDEA2ZHWGEk7KHy
-         IA1546OscQ38u5JMfMkk6znxmA9Wt0YE0EEBIk5401F+TV6pI1hk2PBectIuMQQ3PuLx
-         B5ERG4RmMY1usHVRctqDAjyYk+EdmwPi7yJ6AcpChQukrIdKIWjD6gkPDV4NXlpnrSrs
-         /vE2j6HROVkEGPfysVQ7DceQDS5GfoWPWyEy+9cEPRKK0D1fmcLVXcgU3nmImxX8h5M+
-         0BMx6TxgaweC0QgtDa0M1tyIR4ZTwNZPMucSXuf2/SOy3c16JGkpvktCWwyoKGACGavI
-         uyJg==
-X-Received: by 10.66.163.132 with SMTP id yi4mr32041810pab.104.1364418959360;
-        Wed, 27 Mar 2013 14:15:59 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id mz8sm22743893pbc.9.2013.03.27.14.15.57
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 27 Mar 2013 14:15:58 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130327182345.GD28148@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754275Ab3C0VfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 17:35:17 -0400
+Received: from pichi.aluminati.org ([72.9.246.58]:55517 "EHLO
+	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751485Ab3C0VfP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 17:35:15 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id E3566161E3F4;
+	Wed, 27 Mar 2013 21:35:14 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id pigWrroFRKHh; Wed, 27 Mar 2013 21:34:54 +0000 (GMT)
+Received: from river.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 0586D161E409;
+	Wed, 27 Mar 2013 21:34:48 +0000 (GMT)
+X-Mailer: git-send-email 1.8.2.411.g65a544e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219334>
 
-Jonathan Nieder wrote:
-> Rob Hoelz wrote:
+When the same file is added with identical content at the top level,
+git-merge-tree prints "added in both" with the details.  But if the file
+is added in an existing subdirectory, threeway_callback() bails out early
+because the two trees have been modified identically.
 
->> --- a/remote.c
->> +++ b/remote.c
->> @@ -465,7 +465,11 @@ static void alias_all_urls(void)
-[...]
->> -			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
->> +			char *copy = xstrdup(remotes[i]->pushurl[j]);
->> +			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites_push);
->> +			if (!strcmp(copy, remotes[i]->pushurl[j]))
->> +				remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
->> +			free(copy);
->
-> Interesting.
->
-> Suppose I configure
-> 
-> 	[url "git://anongit.myserver.example.com/"]
-> 		insteadOf = myserver.example.com:
-> 	[url "myserver:"]
-> 		pushInsteadOf = myserver.example.com:
->
-> The above code would make the insteadOf rule apply instead of
-> pushInsteadOf, even when pushing.
+In order to detect this, we need to fall through and recurse into the
+subtree in this case.
 
-Sorry, typo.  The configuration in the example above should have been
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ builtin/merge-tree.c  |  9 +++++++--
+ t/t4300-merge-tree.sh | 17 +++++++++++++++++
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-	[url "git://anongit.myserver.example.com/"]
-		insteadOf = myserver.example.com:
-	[url "myserver.example.com:"]
-		pushInsteadOf = myserver.example.com:
-
-In other words, suppose I set url.*.insteadof to point to a faster
-address for fetching alongside url.*.pushinsteadof requesting that the
-original address should still be used for pushing.
-
-Thanks again for tackling this.
-Jonathan
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index e0d0b7d..ca97fbd 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -298,12 +298,17 @@ static int threeway_callback(int n, unsigned long mask, unsigned long dirmask, s
+ {
+ 	/* Same in both? */
+ 	if (same_entry(entry+1, entry+2)) {
+-		if (entry[0].sha1) {
++		if (entry[0].sha1 && !S_ISDIR(entry[0].mode)) {
+ 			/* Modified identically */
+ 			resolve(info, NULL, entry+1);
+ 			return mask;
+ 		}
+-		/* "Both added the same" is left unresolved */
++		/*
++		 * "Both added the same" is left unresolved.  We also leave
++		 * "Both directories modified identically" unresolved in
++		 * order to catch changes where the same file (with the same
++		 * content) has been added to both directories.
++		 */
+ 	}
+ 
+ 	if (same_entry(entry+0, entry+1)) {
+diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
+index d0b2a45..be0737e 100755
+--- a/t/t4300-merge-tree.sh
++++ b/t/t4300-merge-tree.sh
+@@ -298,4 +298,21 @@ test_expect_success 'turn tree to file' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'add identical files to subdir' '
++	cat >expected <<\EXPECTED &&
++added in both
++  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d sub/ONE
++  their  100644 43d5a8ed6ef6c00ff775008633f95787d088285d sub/ONE
++EXPECTED
++
++	git reset --hard initial &&
++	mkdir sub &&
++	test_commit "sub-initial" "sub/initial" "initial" &&
++	test_commit "sub-add-a-b-same-A" "sub/ONE" "AAA" &&
++	git reset --hard sub-initial &&
++	test_commit "sub-add-a-b-same-B" "sub/ONE" "AAA" &&
++	git merge-tree sub-initial sub-add-a-b-same-A sub-add-a-b-same-B >actual &&
++	test_cmp expected actual
++'
++
+ test_done
+-- 
+1.8.2.411.g65a544e
