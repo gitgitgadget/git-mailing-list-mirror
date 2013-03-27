@@ -1,58 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Fixed typo in git-pull manual
-Date: Wed, 27 Mar 2013 11:01:25 -0700
-Message-ID: <7vboa4n2mi.fsf@alter.siamese.dyndns.org>
-References: <7vmwtoomav.fsf@alter.siamese.dyndns.org>
- <1364403956-20443-1-git-send-email-mihai@mihaic.ro>
+From: Jed Brown <jed@59A2.org>
+Subject: Re: Segfault with merge-tree on multiple Git versions
+Date: Wed, 27 Mar 2013 13:06:12 -0500
+Message-ID: <874nfw4t0r.fsf@59A2.org>
+References: <51531059.8000407@atechmedia.com> <7vsj3gn55b.fsf@alter.siamese.dyndns.org> <515331F2.3060703@atechmedia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mihai =?utf-8?Q?Capot=C4=83?= <mihai@mihaic.ro>
-X-From: git-owner@vger.kernel.org Wed Mar 27 19:02:00 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Charlie Smurthwaite <charlie@atechmedia.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 27 19:06:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKufe-0003YJ-4V
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 19:01:58 +0100
+	id 1UKukG-0001ce-9K
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 19:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752645Ab3C0SBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 14:01:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44400 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752234Ab3C0SB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 14:01:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5284ACD9;
-	Wed, 27 Mar 2013 14:01:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=NMm+0b
-	Co7rwv5CiJT1DAn08kjVq7FuD5aQuWr9RdzTQAh8uTnGwLFlFnLdhAvSnygHb4uH
-	dAvDYpWn4fhd9YvbE3QuKfQibPNt/M5KT65Wu+7A1PASCU7ByIf3EfTDG4yCAz4J
-	7CrNpkzpddkCcbT67q6OLVwmeU1KuqP/fZWhA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=D22tlrEtSdQ5gz5WmkE+5gecyE9JPw3b
-	Wv7ZvocpaTan6CotG51Ig9+B7iKtghC0gs645rJlkRc5kKL1VAKBQXHEcc8eTMj7
-	YxEGWPAxTX1gS8jwmQlxQjBFm9p4rX3lYU4ARP8wELtO/ULaxX1fUpCPG+wgzKoW
-	wAUegpj2eW0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C95E5ACD8;
-	Wed, 27 Mar 2013 14:01:28 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C54CACD7; Wed, 27 Mar 2013
- 14:01:28 -0400 (EDT)
-In-Reply-To: <1364403956-20443-1-git-send-email-mihai@mihaic.ro> ("Mihai
- =?utf-8?Q?Capot=C4=83=22's?= message of "Wed, 27 Mar 2013 18:05:56 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 58FF7702-9708-11E2-AC13-B1692E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752590Ab3C0SGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 14:06:15 -0400
+Received: from mail-ia0-f173.google.com ([209.85.210.173]:50425 "EHLO
+	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751914Ab3C0SGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 14:06:15 -0400
+Received: by mail-ia0-f173.google.com with SMTP id h37so7615040iak.32
+        for <git@vger.kernel.org>; Wed, 27 Mar 2013 11:06:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:in-reply-to:references
+         :user-agent:date:message-id:mime-version:content-type;
+        bh=J6bK3fzFtnWKCfNsf+WEMskscvj5J9xm8IUhVM78tds=;
+        b=rcI3FGJqRm4Mu5ZMQCiD56lWZcGy5/lQHWQrQu5FR+jq5PKyf+ML2PrhiS3GRbTKDT
+         Ftfi223j0/B5BXsbFVQ5MnJeQZcYGCnai9SWvThz9SjwH+r8O6U0nNGEmrjGbr1kDXb4
+         iwWlk52Rv5jx0U8h2RhfoFVSvEaYQBvWeysCuvgCXba+BjAdsrnDXAKfkhHOVNPdA3Zq
+         JKtH8XxFm1EAzdNsmPaSTElfaJ5aRbxRZLgUYARX1/pmWfCaMbkM34aHy35ySg6ATVdt
+         aI5vPV30kS5hlMtD0qdV2kf1xo6g9sVCLcgqJXPfgu1vEr1C+8yUPai+dvOwH7jd26P7
+         zPzQ==
+X-Received: by 10.43.103.195 with SMTP id dj3mr12362604icc.3.1364407574891;
+        Wed, 27 Mar 2013 11:06:14 -0700 (PDT)
+Received: from batura (vis-v410v070.mcs.anl-external.org. [130.202.17.70])
+        by mx.google.com with ESMTPS id hi4sm8138655igc.6.2013.03.27.11.06.13
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 27 Mar 2013 11:06:14 -0700 (PDT)
+In-Reply-To: <515331F2.3060703@atechmedia.com>
+User-Agent: Notmuch/0.15.2 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219293>
 
-Thanks.
+Charlie Smurthwaite <charlie@atechmedia.com> writes:
+
+> I am also using this to obtain a diff that would be applied if a merge 
+> were to be run. Is there a better way to obtain this information that is 
+> more commonly used?
+
+You can do an actual merge using detached HEAD:
+
+  $ git checkout --detach upstream-branch
+  $ git merge topic-branch
+
+This has the benefit that if there are conflicts, you can resolve them
+here and commit the result so that rerere can auto-resolve them later.
+
+Are you looking for something that can be run in a bare repo?
