@@ -1,89 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/15] Use test_config
-Date: Wed, 27 Mar 2013 08:05:04 -0700
-Message-ID: <7vmwtoq3xb.fsf@alter.siamese.dyndns.org>
-References: <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
- <1363704914.6289.39.camel@test.quest-ce.net>
- <loom.20130321T212911-611@post.gmane.org>
- <cdc4f45e7520ce1fc48588c260214717@meuh.org>
- <1363946943-30269-1-git-send-email-ydroneaud@opteya.com>
- <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
- <cover.1364158574.git.ydroneaud@opteya.com>
+From: Hans Brigman <hbrigman@openspan.com>
+Subject: [PATCH v2] log: Read gpg settings for signed commit verification
+Date: Wed, 27 Mar 2013 10:13:39 -0500
+Message-ID: <8C726954D36902459248B0627BF2E66F45D70C3E4E@AUSP01VMBX10.collaborationhost.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Yann Droneaud <ydroneaud@opteya.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 16:05:50 2013
+Content-Type: multipart/mixed;
+	boundary="_002_8C726954D36902459248B0627BF2E66F45D70C3E4EAUSP01VMBX10c_"
+Cc: "peff@peff.net" <peff@peff.net>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	Jacob Sarvis <jsarvis@openspan.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 27 16:22:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKrv2-0007Sj-7V
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 16:05:40 +0100
+	id 1UKsB0-00087E-JC
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 16:22:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751834Ab3C0PFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 11:05:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52836 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751552Ab3C0PFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 11:05:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0102FABE4;
-	Wed, 27 Mar 2013 11:05:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=qXUV+QOTxtFPSKLAlOMZz0UVOwk=; b=M23WoMNsVZA3JSSpgEOO
-	F59lTPZI4jEQLH7UgHQlKnlwYYgschpX7uaer/rAo0nRqN1ogBClIl7BtuXzPmxc
-	ReT/vOkfKnJW+yUVJ9Lg3besNtFTY03TJuGPk8RZIJtc9Zoerv4mW0XPd7P3KefS
-	l8ghiGOvmD7b+9dd8djDYPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=w7PvGh5JFrMvOb3vxGV7Vz1eaietqz5VpD4KLI/Sevdb/o
-	rCZMiSuEs7UKeYJsCYbxFEdB9G+e95qrjIAZ4fozE3ZbTblma8e9X5dwLFlaA/Sh
-	j4rKbIAk6Qmyf4yKhTRfMBV/O1BGc6vOuatIbwK+63NbH+UOBGoqsomCBxElA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E9949ABE3;
-	Wed, 27 Mar 2013 11:05:06 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 511D9ABDF; Wed, 27 Mar 2013
- 11:05:06 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B5A5D9BA-96EF-11E2-9B91-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751824Ab3C0PVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 11:21:42 -0400
+Received: from mail1.bemta8.messagelabs.com ([216.82.243.197]:22452 "EHLO
+	mail1.bemta8.messagelabs.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751601Ab3C0PVl (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Mar 2013 11:21:41 -0400
+X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Mar 2013 11:21:41 EDT
+Received: from [216.82.242.115:15593] by server-5.bemta-8.messagelabs.com id B8/E4-00429-8DC03515; Wed, 27 Mar 2013 15:14:32 +0000
+X-Env-Sender: hbrigman@openspan.com
+X-Msg-Ref: server-13.tower-132.messagelabs.com!1364397241!11953538!37
+X-Originating-IP: [216.166.12.180]
+X-StarScan-Received: 
+X-StarScan-Version: 6.8.6.1; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 28563 invoked from network); 27 Mar 2013 15:14:31 -0000
+Received: from out001.collaborationhost.net (HELO out001.collaborationhost.net) (216.166.12.180)
+  by server-13.tower-132.messagelabs.com with RC4-SHA encrypted SMTP; 27 Mar 2013 15:14:31 -0000
+Received: from AUSP01VMBX10.collaborationhost.net ([10.2.8.162]) by
+ AUSP01MHUB05.collaborationhost.net ([10.2.8.172]) with mapi; Wed, 27 Mar 2013
+ 10:14:19 -0500
+Thread-Topic: [PATCH v2] log: Read gpg settings for signed commit
+ verification
+Thread-Index: Ac4q/WDQpHnEkgoVQQ+zhwlUvvkKtQ==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219256>
 
-Yann Droneaud <ydroneaud@opteya.com> writes:
+--_002_8C726954D36902459248B0627BF2E66F45D70C3E4EAUSP01VMBX10c_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-> Tested against master, 7b592fadf1e23b10b913e0771b9f711770597266
+RnJvbTogSmFjb2IgU2FydmlzPGpzYXJ2aXNAb3BlbnNwYW4uY29tPg0KDQpsb2c6IFJlYWQgZ3Bn
+IHNldHRpbmdzIGZvciBzaWduZWQgY29tbWl0IHZlcmlmaWNhdGlvbg0KDQpDb21taXQgc2lnbmF0
+dXJlIHZlcmlmaWNhdGlvbiBmYWlscyB3aGVuIGFsdGVybmF0aXZlIGdwZy5wcm9ncmFtDQpzaWdu
+cyB0aGUgY29tbWl0LCBidXQgZ3BnIGF0dGVtcHRzIHRvIHZlcmlmeSB0aGUgc2lnbmF0dXJlLg0K
+InNob3cgLS1zaG93LXNpZ25hdHVyZSIgYW5kICJsb2cgLS1zaG93LXNpZ25hdHVyZSIgZG8gbm90
+IHJlYWQNCnRoZSBncGcucHJvZ3JhbSBzZXR0aW5nIGZyb20gZ2l0IGNvbmZpZy4NCkNvbW1pdCBz
+aWduaW5nLCB0YWcgc2lnbmluZywgYW5kIHRhZyB2ZXJpZmljYXRpb24gdXNlIHRoaXMgc2V0dGlu
+Zw0KcHJvcGVybHkuDQoNCk1ha2UgbG9nIGFuZCBzaG93IGNvbW1hbmRzIHBhc3MgdGhyb3VnaCBz
+ZXR0aW5ncyB0byBncGcgaW50ZXJmYWNlLg0KDQpTaWduZWQtb2ZmLWJ5OiBIYW5zIEJyaWdtYW4g
+PGhicmlnbWFuQG9wZW5zcGFuLmNvbT4NCi0tLQ0KIGJ1aWx0aW4vbG9nLmMgfCA0ICsrKy0NCiAx
+IGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQoNCmRpZmYgLS1n
+aXQgYS9idWlsdGluL2xvZy5jIGIvYnVpbHRpbi9sb2cuYw0KaW5kZXggOGYwYjJlOC4uMzFmNWE5
+ZSAxMDA2NDQNCi0tLSBhL2J1aWx0aW4vbG9nLmMNCisrKyBiL2J1aWx0aW4vbG9nLmMNCkBAIC0y
+Myw2ICsyMyw3IEBADQogI2luY2x1ZGUgInN0cmVhbWluZy5oIg0KICNpbmNsdWRlICJ2ZXJzaW9u
+LmgiDQogI2luY2x1ZGUgIm1haWxtYXAuaCINCisjaW5jbHVkZSAiZ3BnLWludGVyZmFjZS5oIg0K
+IA0KIC8qIFNldCBhIGRlZmF1bHQgZGF0ZS10aW1lIGZvcm1hdCBmb3IgZ2l0IGxvZyAoImxvZy5k
+YXRlIiBjb25maWcgdmFyaWFibGUpICovDQogc3RhdGljIGNvbnN0IGNoYXIgKmRlZmF1bHRfZGF0
+ZV9tb2RlID0gTlVMTDsNCkBAIC0zNjQsNyArMzY1LDggQEAgc3RhdGljIGludCBnaXRfbG9nX2Nv
+bmZpZyhjb25zdCBjaGFyICp2YXIsIGNvbnN0IGNoYXIgKnZhbHVlLCB2b2lkICpjYikNCiAJCXVz
+ZV9tYWlsbWFwX2NvbmZpZyA9IGdpdF9jb25maWdfYm9vbCh2YXIsIHZhbHVlKTsNCiAJCXJldHVy
+biAwOw0KIAl9DQotDQorCWlmIChnaXRfZ3BnX2NvbmZpZyh2YXIsIHZhbHVlLCBjYikgPCAwKQ0K
+KwkJcmV0dXJuIC0xOw0KIAlpZiAoZ3JlcF9jb25maWcodmFyLCB2YWx1ZSwgY2IpIDwgMCkNCiAJ
+CXJldHVybiAtMTsNCiAJcmV0dXJuIGdpdF9kaWZmX3VpX2NvbmZpZyh2YXIsIHZhbHVlLCBjYik7
+DQotLSANCjEuNy4xMS5tc3lzZ2l0LjANCg0KDQpPbiBNb24sIE1hciAyNSwgMjAxMyBhdCAwMTow
+Mzo1MlBNIC0wNTAwLCBIYW5zIEJyaWdtYW4gd3JvdGU6DQoNCj4gInNob3cgLS1zaG93LXNpZ25h
+dHVyZSIgZG9lc24ndCBjdXJyZW50bHkgdXNlIHRoZSBncGcucHJvZ3JhbSBzZXR0aW5nLiAgQ29t
+bWl0IHNpZ25pbmcsIHRhZyBzaWduaW5nLCBhbmQgdGFnIHZlcmlmaWNhdGlvbiBjdXJyZW50bHkg
+dXNlIHRoaXMgc2V0dGluZyBwcm9wZXJseSwgc28gdGhlIGxvZ2ljIGhhcyBiZWVuIGFkZGVkIHRv
+IGhhbmRsZSBpdCBoZXJlIGFzIHdlbGwuDQoNClBsZWFzZSB3cmFwIHlvdXIgY29tbWl0IG1lc3Nh
+Z2VzIGF0IHNvbWV0aGluZyByZWFzb25hYmxlICg3MCBpcyBwcm9iYWJseSBhcyBoaWdoIGFzIHlv
+dSB3YW50IHRvIGdvLCBnaXZlbiB0aGF0IGxvZyBvdXRwdXQgaXMgb2Z0ZW4gc2hvd24gaW5kZW50
+ZWQpLg0KDQo+IEBAIC0zNjQsNyArMzY1LDggQEAgc3RhdGljIGludCBnaXRfbG9nX2NvbmZpZyhj
+b25zdCBjaGFyICp2YXIsIGNvbnN0IGNoYXIgKnZhbHVlLCB2b2lkICpjYikNCj4gIAkJdXNlX21h
+aWxtYXBfY29uZmlnID0gZ2l0X2NvbmZpZ19ib29sKHZhciwgdmFsdWUpOw0KPiAgCQlyZXR1cm4g
+MDsNCj4gIAl9DQo+IC0NCj4gKwlpZiAoIXByZWZpeGNtcCh2YXIsICJncGcuIikpDQo+ICsJCXJl
+dHVybiBnaXRfZ3BnX2NvbmZpZyh2YXIsIHZhbHVlLCBOVUxMKTsNCj4gIAlpZiAoZ3JlcF9jb25m
+aWcodmFyLCB2YWx1ZSwgY2IpIDwgMCkNCj4gIAkJcmV0dXJuIC0xOw0KDQpUaGUgZ3BnIGNvbmZp
+ZyBjYW4gYWxzbyBiZSBvdGhlciBwbGFjZXMgdGhhbiAiZ3BnLioiLiBSaWdodCBub3cgaXQgaXMg
+anVzdCB1c2VyLnNpZ25pbmdrZXksIHdoaWNoIGxvZyB3b3VsZCBub3QgY2FyZSBhYm91dCwgYnV0
+IGl0IGZlZWxzIGxpa2Ugd2UgYXJlIGRlcGVuZGluZyBhbiB1bm5lY2Vzc2FyeSBkZXRhaWwgaGVy
+ZS4gV2UgYWxzbyBkb24ndCBrbm93IHdoZXRoZXIgaXQgd291bGQgY2FyZSBhYm91dCB0aGUgY2Fs
+bGJhY2sgZGF0YS4gSXMgdGhlcmUgYSByZWFzb24gbm90IHRvIGRvOg0KDQogIGlmIChnaXRfZ3Bn
+X2NvbmZpZyh2YXIsIHZhbHVlLCBjYikgPCAwKQ0KICAgICAgICAgIHJldHVybiAtMTsNCg0KanVz
+dCBsaWtlIHRoZSBncmVwX2NvbmZpZyBjYWxsIGJlbG93Pw0KDQotUGVmZg0K
 
-Is this because I suggested you to clean things up while you were
-touching in a vicinity of something that could use this clean-up?
+--_002_8C726954D36902459248B0627BF2E66F45D70C3E4EAUSP01VMBX10c_
+Content-Type: application/octet-stream;
+	name="0001-log-Read-gpg-settings-for-signed-commit-verification.patch"
+Content-Description: 0001-log-Read-gpg-settings-for-signed-commit-verification.patch
+Content-Disposition: attachment;
+	filename="0001-log-Read-gpg-settings-for-signed-commit-verification.patch";
+	size=1424; creation-date="Wed, 27 Mar 2013 13:55:25 GMT";
+	modification-date="Wed, 27 Mar 2013 13:55:25 GMT"
+Content-Transfer-Encoding: base64
 
-If so, please first clean _that_ script in a patch, and then add the
-change you wanted to do in another patch, as a single two-patch
-series, without touching anything else that is not related to that
-change.  The patch to t7600 is the one that needs to become two
-patches, one to clean up and the other to add tests for --no-ff.
+RnJvbSA5NjAxNzVjYjMzMjZhMTJlMDM4ODA1MTIxZWRiZGM4MTE5ZmJiMTA0IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBKYWNvYiBTYXJ2aXMgPGpzYXJ2aXNAb3BlbnNwYW4uY29tPgpE
+YXRlOiBGcmksIDIyIE1hciAyMDEzIDEyOjU0OjMyIC0wNDAwClN1YmplY3Q6IFtQQVRDSCAxLzJd
+IGxvZzogUmVhZCBncGcgc2V0dGluZ3MgZm9yIHNpZ25lZCBjb21taXQgdmVyaWZpY2F0aW9uCgpD
+b21taXQgc2lnbmF0dXJlIHZlcmlmaWNhdGlvbiBmYWlscyB3aGVuIGFsdGVybmF0aXZlIGdwZy5w
+cm9ncmFtCnNpZ25zIHRoZSBjb21taXQsIGJ1dCBncGcgYXR0ZW1wdHMgdG8gdmVyaWZ5IHRoZSBz
+aWduYXR1cmUuCiJzaG93IC0tc2hvdy1zaWduYXR1cmUiIGFuZCAibG9nIC0tc2hvdy1zaWduYXR1
+cmUiIGRvIG5vdCByZWFkCnRoZSBncGcucHJvZ3JhbSBzZXR0aW5nIGZyb20gZ2l0IGNvbmZpZy4K
+Q29tbWl0IHNpZ25pbmcsIHRhZyBzaWduaW5nLCBhbmQgdGFnIHZlcmlmaWNhdGlvbiB1c2UgdGhp
+cyBzZXR0aW5nCnByb3Blcmx5LgoKTWFrZSBsb2cgYW5kIHNob3cgY29tbWFuZHMgcGFzcyB0aHJv
+dWdoIHNldHRpbmdzIHRvIGdwZyBpbnRlcmZhY2UuCgpTaWduZWQtb2ZmLWJ5OiBKYWNvYiBTYXJ2
+aXMgPGpzYXJ2aXNAb3BlbnNwYW4uY29tPgotLS0KIGJ1aWx0aW4vbG9nLmMgfCA0ICsrKy0KIDEg
+ZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQg
+YS9idWlsdGluL2xvZy5jIGIvYnVpbHRpbi9sb2cuYwppbmRleCA4ZjBiMmU4Li4zMWY1YTllIDEw
+MDY0NAotLS0gYS9idWlsdGluL2xvZy5jCisrKyBiL2J1aWx0aW4vbG9nLmMKQEAgLTIzLDYgKzIz
+LDcgQEAKICNpbmNsdWRlICJzdHJlYW1pbmcuaCIKICNpbmNsdWRlICJ2ZXJzaW9uLmgiCiAjaW5j
+bHVkZSAibWFpbG1hcC5oIgorI2luY2x1ZGUgImdwZy1pbnRlcmZhY2UuaCIKIAogLyogU2V0IGEg
+ZGVmYXVsdCBkYXRlLXRpbWUgZm9ybWF0IGZvciBnaXQgbG9nICgibG9nLmRhdGUiIGNvbmZpZyB2
+YXJpYWJsZSkgKi8KIHN0YXRpYyBjb25zdCBjaGFyICpkZWZhdWx0X2RhdGVfbW9kZSA9IE5VTEw7
+CkBAIC0zNjQsNyArMzY1LDggQEAgc3RhdGljIGludCBnaXRfbG9nX2NvbmZpZyhjb25zdCBjaGFy
+ICp2YXIsIGNvbnN0IGNoYXIgKnZhbHVlLCB2b2lkICpjYikKIAkJdXNlX21haWxtYXBfY29uZmln
+ID0gZ2l0X2NvbmZpZ19ib29sKHZhciwgdmFsdWUpOwogCQlyZXR1cm4gMDsKIAl9Ci0KKwlpZiAo
+Z2l0X2dwZ19jb25maWcodmFyLCB2YWx1ZSwgY2IpIDwgMCkKKwkJcmV0dXJuIC0xOwogCWlmIChn
+cmVwX2NvbmZpZyh2YXIsIHZhbHVlLCBjYikgPCAwKQogCQlyZXR1cm4gLTE7CiAJcmV0dXJuIGdp
+dF9kaWZmX3VpX2NvbmZpZyh2YXIsIHZhbHVlLCBjYik7Ci0tIAoxLjcuMTEubXN5c2dpdC4wCgo=
 
-The rest, as a separate "only cleaning up, doing nothing else"
-series, are fine as a follow-up, but please make sure that they do
-not touch anything in-flight (one easy way to check is to see "git
-diff --name-only maint pu -- t/").  I would prefer to see "clean-up
-only" changes that introduce unnecessary conflicts with other real
-features and fixes held off until the dust settles.
-
-> Yann Droneaud (15):
->   t4018: remove test_config implementation
->   t7810: remove test_config implementation
->   t7811: remove test_config implementation
-
-We already have equivalents of these in-flight.
-
->   t7600: use test_config to set/unset git config variables
-
-Needs to be split into two.
+--_002_8C726954D36902459248B0627BF2E66F45D70C3E4EAUSP01VMBX10c_--
