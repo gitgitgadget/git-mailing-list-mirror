@@ -1,69 +1,92 @@
-From: Jed Brown <jed@59A2.org>
-Subject: Re: Segfault with merge-tree on multiple Git versions
-Date: Wed, 27 Mar 2013 14:16:24 -0500
-Message-ID: <87zjxo3b7b.fsf@59A2.org>
-References: <51531059.8000407@atechmedia.com> <7vsj3gn55b.fsf@alter.siamese.dyndns.org> <515331F2.3060703@atechmedia.com> <874nfw4t0r.fsf@59A2.org> <51533E8D.5050206@atechmedia.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Composing git repositories
+Date: Wed, 27 Mar 2013 12:26:30 -0700
+Message-ID: <20130327192630.GF28148@google.com>
+References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
+ <7vmwtqt8rs.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
+ <7vvc8comj5.fsf@alter.siamese.dyndns.org>
+ <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	John Keeping <john@keeping.me.uk>,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Charlie Smurthwaite <charlie@atechmedia.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 20:17:05 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 27 20:27:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKvqE-0000vU-G2
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 20:16:58 +0100
+	id 1UKw00-0007LH-8y
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 20:27:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754022Ab3C0TQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 15:16:30 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:41526 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753677Ab3C0TQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 15:16:30 -0400
-Received: by mail-ie0-f178.google.com with SMTP id bn7so8177690ieb.23
-        for <git@vger.kernel.org>; Wed, 27 Mar 2013 12:16:29 -0700 (PDT)
+	id S1754008Ab3C0T0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 15:26:36 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:48653 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753849Ab3C0T0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 15:26:35 -0400
+Received: by mail-pa0-f44.google.com with SMTP id bi5so2303810pad.31
+        for <git@vger.kernel.org>; Wed, 27 Mar 2013 12:26:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version:content-type;
-        bh=9zRaf4fL1qR4qLBpoOdgOHILCPCUG5uswYqC3LnkZLs=;
-        b=AbLBAaWakk3xEnfWNGsoxR4HjPG1xG6PG0t+LZVvaS+wwoXKPgw/qxQoJmH5vY22wn
-         eqKSjNzyuabKnroh0SSx05mIAtvEkOl90O+jIYh2Mf02N8AWn8hpOOfqP5v4bqMcx/k0
-         IMQbEkZoUgx5N/Wiu7VyPHga7CBHAiEy4SCfiCKUuVABuuRB0klyVHoqmDkp7VxqBa7n
-         bvODFkBrMvjUFayjeApHK7BPjwbn/t4a3TlZFtCHYT2SgCTt8fz0v3gNGK5AQL0Wr6E+
-         1nQ8G/QNHoNDqukGlrEf3mW9u22JPdU1NFMA4V13oJ0e4l8KE4AfVoiwUZwSNDJz580L
-         SYjw==
-X-Received: by 10.43.117.136 with SMTP id fm8mr12634582icc.33.1364411789567;
-        Wed, 27 Mar 2013 12:16:29 -0700 (PDT)
-Received: from batura (vis-v410v070.mcs.anl-external.org. [130.202.17.70])
-        by mx.google.com with ESMTPS id xd4sm8419969igb.3.2013.03.27.12.16.25
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=b5ckFnbrk3kAjsCUnDrhevdTI1FvtL/rvMrcG2/rV3A=;
+        b=yuJBUYJq2FMjBAX3TeojN3R+EADnw+nQZv50SLrWLGqd87Zx4rN/g7YOaMCGSVLBs4
+         1ETLAus/RkRHoIKpIkdfRU0qSXzxopiMILD8w8EP7XiOKfoR4bS0vlkYctP+P7Cqxk6k
+         81MEVPq4YLIlOU97lIEaWI4VFFrQS5VnuvgHaRvI/FJFDsLAEM1piswjFR+20wDUzP8y
+         /qbPDhNvpzfQch5zf9F7TuC/4Md90daLZA/c03lEq+RUEFAQUZKSxzwsPc/dIBYQID4v
+         7e2mKx2r4bswOh3tvlvGsuG3d2CvGJvE6qpmu2e56kjm7fwWl02mwF3KX26oWPn8MSZq
+         g95A==
+X-Received: by 10.68.42.134 with SMTP id o6mr31453134pbl.52.1364412395133;
+        Wed, 27 Mar 2013 12:26:35 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id i9sm24472499paa.7.2013.03.27.12.26.32
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 27 Mar 2013 12:16:25 -0700 (PDT)
-In-Reply-To: <51533E8D.5050206@atechmedia.com>
-User-Agent: Notmuch/0.15.2 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+        Wed, 27 Mar 2013 12:26:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219309>
 
-Charlie Smurthwaite <charlie@atechmedia.com> writes:
+Ramkumar Ramachandra wrote:
 
-> Yes, I would need to be able to do this on a bare repo for my use case. 
+>                        Even then, working with one worktree embedded
+> inside another is something git never designed for: it explains why I
+> have to literally fight with git when using submodules
 
-And if it's on the server, you don't want this to be observable, so
-you don't want HEAD to move around. I don't know a better way than:
+Do you mean that you wish you could ignore subrepository boundaries
+and use commands like
 
-  $ git clone --shared -b upstream-branch bare-repo.git /tmp/merge-repo
-  $ cd /tmp/merge-repo
-  $ git pull URL incoming-branch
+	git clone --recurse-submodules http://git.zx2c4.com/cgit
+	cd cgit
+	vi git/cache.h
+	... edit edit edit ...
+	git add --recurse-submodules git/cache.h
+	git commit --recurse-submodules
+	git push --recurse-submodules
 
-Cloning with --shared just writes a path into .git/objects/info/alternatives
-and it doesn't need to be on the same file system (unlike --local).
+, possibly with configuration to allow the --recurse-submodules to be
+implied, and have everything work out well?
 
-Since 'git merge-tree' just works with trees, it has less information
-than 'git merge'.
+I think something like that is a goal for submodules in the long term,
+with a caveat that there are complications in that different projects
+(the parent project and subproject) can have different contribution
+guidelines, review and release schedules, and so on.
+
+If submodules are not working for you today, you may find some of
+Jens's submodule improvement patches interesting, or you may want to
+look into alternatives that make different assumptions, such as
+entirely independent repositories and tools like "mr" that iterate
+over them.
+
+Hope that helps,
+Jonathan
