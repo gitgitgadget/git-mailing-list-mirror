@@ -1,122 +1,68 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: Re: [PATCH 00/15] Use =?UTF-8?Q?test=5Fconfig?=
-Date: Wed, 27 Mar 2013 17:19:34 +0100
-Organization: OPTEYA
-Message-ID: <ec6c6b2101cf035b5dea7f7110ddf706@meuh.org>
-References: <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
- <1363704914.6289.39.camel@test.quest-ce.net>
- <loom.20130321T212911-611@post.gmane.org>
- <cdc4f45e7520ce1fc48588c260214717@meuh.org>
- <1363946943-30269-1-git-send-email-ydroneaud@opteya.com>
- <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
- <cover.1364158574.git.ydroneaud@opteya.com>
- <7vmwtoq3xb.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] log: Read gpg settings for signed commit verification
+Date: Wed, 27 Mar 2013 12:22:32 -0400
+Message-ID: <20130327162232.GB22386@sigill.intra.peff.net>
+References: <8C726954D36902459248B0627BF2E66F45D70C3E4E@AUSP01VMBX10.collaborationhost.net>
+ <7vip4com2p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Hans Brigman <hbrigman@openspan.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jacob Sarvis <jsarvis@openspan.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 17:20:11 2013
+X-From: git-owner@vger.kernel.org Wed Mar 27 17:23:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKt54-00029e-OX
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 17:20:07 +0100
+	id 1UKt7y-0002D1-A0
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 17:23:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753569Ab3C0QTi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Mar 2013 12:19:38 -0400
-Received: from mx-out.ocsa-data.net ([194.36.166.37]:59525 "EHLO
-	mx-out.ocsa-data.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752848Ab3C0QTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 12:19:37 -0400
-Received: from [192.168.111.12] (helo=rc.ouvaton.coop)
-	by mx-out.ocsa-data.net with esmtpa (Exim - FreeBSD Rulez)
-	id 1UKt4Y-00058S-7M; Wed, 27 Mar 2013 17:19:34 +0100
-In-Reply-To: <7vmwtoq3xb.fsf@alter.siamese.dyndns.org>
-X-Sender: ydroneaud@opteya.com
-User-Agent: Roundcube Webmail/0.8.4
-X-abuse-contact: abuse@ocsa-data.net
+	id S1753413Ab3C0QWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 12:22:38 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41621 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753023Ab3C0QWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 12:22:38 -0400
+Received: (qmail 15082 invoked by uid 107); 27 Mar 2013 16:24:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Mar 2013 12:24:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Mar 2013 12:22:32 -0400
+Content-Disposition: inline
+In-Reply-To: <7vip4com2p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219269>
 
-Hi,
+On Wed, Mar 27, 2013 at 09:15:58AM -0700, Junio C Hamano wrote:
 
-Le 27.03.2013 16:05, Junio C Hamano a =C3=A9crit=C2=A0:
-> Yann Droneaud <ydroneaud@opteya.com> writes:
->
->> Tested against master, 7b592fadf1e23b10b913e0771b9f711770597266
->
-> Is this because I suggested you to clean things up while you were
-> touching in a vicinity of something that could use this clean-up?
->
+> >  	}
+> > -
+> > +	if (git_gpg_config(var, value, cb) < 0)
+> > +		return -1;
+> >  	if (grep_config(var, value, cb) < 0)
+> >  		return -1;
+> 
+> Hmph.  I do not particularly like the way the call to grep_config()
+> loses information by not ignoring its return value and always
+> returning -1, but I'll let it pass for this patch.
 
-Yes, grep'ing shows others usage of the test_config pattern. I patched=20
-them all.
+That's my fault for suggesting he follow the same style as grep here.
+But I wonder if it is worth the effort. We have never cared about
+anything beyond "was there an error" in our config callbacks, and the
+value returned from the callbacks is lost in git_parse_file (i.e., we do
+not propagate the actual return value, but only check that
+"callback(var, value, data) < 0", and die if so).
 
-> If so, please first clean _that_ script in a patch, and then add the
-> change you wanted to do in another patch, as a single two-patch
-> series, without touching anything else that is not related to that
-> change.  The patch to t7600 is the one that needs to become two
-> patches, one to clean up and the other to add tests for --no-ff.
->
+Existing callbacks pass data out by writing into a struct pointed to by
+the data pointer, which is more flexible, anyway.
 
-Actually the initial patch adding test for --no-ff-only is not part of=20
-this series.
+So unless you want to overhaul the whole config system to propagate
+return codes back to the caller, I do not think there is any point in
+worrying about it.
 
-
-Patch against t7600 has a special note about a strange behavor found=20
-while testing
-test_config "anyware", that's why there's somes line added to the test=20
-and a note
-in the commit message.
-
-I was waiting for your opinion on this change in the test, but more, on=
-=20
-the difference
-of behavior exhibited in the patched test "merge log message":
-
-   git merge --no-log
-   git show -s --pretty=3Dformat:%b HEAD
-
-vs
-
-   git merge --no-ff --no-log
-   git show -s --pretty=3Dformat:%b HEAD
-
-
-=46irst produce an empty file, while the second produce an empty line.
-
-This was revealed by changing test "merge c0 with c1 (ff overrides=20
-no-ff)
--    git config branch.master.mergeoptions "--no-ff" &&
--    test_config branch.master.mergeoptions "--no-ff" &&
-
-
-I could split this patch in a first patch that add the behavor test to=20
-"merge log message" test,
-than I could rebase the patch series against.
-And later, submit my proposition for new tests in t7600 regarding=20
---no-ff-only and tags.
-
-> The rest, as a separate "only cleaning up, doing nothing else"
-> series, are fine as a follow-up, but please make sure that they do
-> not touch anything in-flight (one easy way to check is to see "git
-> diff --name-only maint pu -- t/").  I would prefer to see "clean-up
-> only" changes that introduce unnecessary conflicts with other real
-> features and fixes held off until the dust settles.
->
-
-It's a good advice that fit perfectly in=20
-Documentation/SubmittingPatches.
-
-Regards.
-
---=20
-Yann Droneaud
-OPTEYA
+-Peff
