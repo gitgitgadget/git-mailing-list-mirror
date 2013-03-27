@@ -1,133 +1,200 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge-tree: fix "same file added in subdir"
-Date: Wed, 27 Mar 2013 15:42:40 -0700
-Message-ID: <7vk3osjwgv.fsf@alter.siamese.dyndns.org>
-References: <0a6a0c978569906b8c8d9209a85338554e503236.1364419952.git.john@keeping.me.uk>
+From: Rob Hoelz <rob@hoelz.ro>
+Subject: [PATCH] push: Alias pushurl from push rewrites
+Date: Wed, 27 Mar 2013 17:42:59 -0500
+Message-ID: <20130327174259.373bafe1@hoelz.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Mar 27 23:43:20 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, josh@joshtriplett.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 27 23:43:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKz3o-0004tq-G3
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 23:43:12 +0100
+	id 1UKz48-0005ZJ-Dg
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 23:43:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754275Ab3C0Wmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 18:42:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53719 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751601Ab3C0Wmn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 18:42:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB943A35F;
-	Wed, 27 Mar 2013 18:42:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yD0Yy8SUmJaHX3L4ZO63tJN8f1g=; b=Xmaix2
-	BhIO0c8lFXf6EhneNTh2Zgu4hkbN+3JC1aU+6DLc1dsk0OA5HxxHsP+mj4LyoRa9
-	E0+ilqo+bZrqiq4dqYp9Oj+hRskoZPoIrlu0A8ONDKaK6C/6y/JpNiGhIB44otR9
-	1bmUP9bKD3q0jrybPvHUOhGHKprBmR39Svkm0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GMVdkTqslb4wvd1FjPHURI3gO5OoaUTe
-	9S0y1lR0GiQNVb1KUd2X8L3BWzaw+a6qYt/CnA+kui2jVhpkOGM4ATZhjyN/sX1W
-	XTH7uhW3PqZaATAhgm95c4ZrwpVb3XWqY0b22rXROGV3/YeK5MoOCHhsjNVvJO2d
-	h7wBiE2cWIs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E105EA35E;
-	Wed, 27 Mar 2013 18:42:42 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34A09A35C; Wed, 27 Mar 2013
- 18:42:42 -0400 (EDT)
-In-Reply-To: <0a6a0c978569906b8c8d9209a85338554e503236.1364419952.git.john@keeping.me.uk>
- (John Keeping's message of "Wed, 27 Mar 2013 21:34:36 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A2A0E09A-972F-11E2-B81E-CBA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754363Ab3C0WnD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 18:43:03 -0400
+Received: from hoelz.ro ([66.228.44.67]:40303 "EHLO mail.hoelz.ro"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752625Ab3C0WnB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 18:43:01 -0400
+Received: from localhost.localdomain (108-234-129-20.lightspeed.milwwi.sbcglobal.net [108.234.129.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mail.hoelz.ro (Postfix) with ESMTPSA id AEB10280F3;
+	Wed, 27 Mar 2013 18:43:00 -0400 (EDT)
+X-Mailer: Claws Mail 3.9.0 (GTK+ 2.24.16; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219345>
 
-John Keeping <john@keeping.me.uk> writes:
+git push currently doesn't consider pushInsteadOf when
+using pushurl; this test tests that.
 
-> When the same file is added with identical content at the top level,
-> git-merge-tree prints "added in both" with the details.  But if the file
-> is added in an existing subdirectory, threeway_callback() bails out early
-> because the two trees have been modified identically.
->
-> In order to detect this, we need to fall through and recurse into the
-> subtree in this case.
->
-> Signed-off-by: John Keeping <john@keeping.me.uk>
+If you use pushurl with an alias that has a pushInsteadOf configuration
+value, Git does not take advantage of it.  For example:
 
-The rationale the above description gives is internally consistent,
-but it is rather sad to see this optimization go.  The primary
-motivation behind this program, which does not use the usual
-unpack-trees machinery, is to allow us to cull the identical result
-at a shallow level of the traversal when the both sides changed (not
-added) a file deep in a subdirectory hierarchy.
+[url "git://github.com/"]
+    insteadOf = github:
+[url "git://github.com/myuser/"]
+    insteadOf = mygithub:
+[url "git@github.com:myuser/"]
+    pushInsteadOf = mygithub:
+[remote "origin"]
+    url     = github:organization/project
+    pushurl = mygithub:project
 
-The patch makes me wonder if we should go the other way around,
-resolving the "both added identically" case at the top cleanly
-without complaint.
+With the above configuration, the following occurs:
 
->  builtin/merge-tree.c  |  9 +++++++--
->  t/t4300-merge-tree.sh | 17 +++++++++++++++++
->  2 files changed, 24 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> index e0d0b7d..ca97fbd 100644
-> --- a/builtin/merge-tree.c
-> +++ b/builtin/merge-tree.c
-> @@ -298,12 +298,17 @@ static int threeway_callback(int n, unsigned long mask, unsigned long dirmask, s
->  {
->  	/* Same in both? */
->  	if (same_entry(entry+1, entry+2)) {
-> -		if (entry[0].sha1) {
-> +		if (entry[0].sha1 && !S_ISDIR(entry[0].mode)) {
->  			/* Modified identically */
->  			resolve(info, NULL, entry+1);
->  			return mask;
->  		}
-> -		/* "Both added the same" is left unresolved */
-> +		/*
-> +		 * "Both added the same" is left unresolved.  We also leave
-> +		 * "Both directories modified identically" unresolved in
-> +		 * order to catch changes where the same file (with the same
-> +		 * content) has been added to both directories.
-> +		 */
->  	}
->  
->  	if (same_entry(entry+0, entry+1)) {
-> diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
-> index d0b2a45..be0737e 100755
-> --- a/t/t4300-merge-tree.sh
-> +++ b/t/t4300-merge-tree.sh
-> @@ -298,4 +298,21 @@ test_expect_success 'turn tree to file' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'add identical files to subdir' '
-> +	cat >expected <<\EXPECTED &&
-> +added in both
-> +  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d sub/ONE
-> +  their  100644 43d5a8ed6ef6c00ff775008633f95787d088285d sub/ONE
-> +EXPECTED
-> +
-> +	git reset --hard initial &&
-> +	mkdir sub &&
-> +	test_commit "sub-initial" "sub/initial" "initial" &&
-> +	test_commit "sub-add-a-b-same-A" "sub/ONE" "AAA" &&
-> +	git reset --hard sub-initial &&
-> +	test_commit "sub-add-a-b-same-B" "sub/ONE" "AAA" &&
-> +	git merge-tree sub-initial sub-add-a-b-same-A sub-add-a-b-same-B >actual &&
-> +	test_cmp expected actual
-> +'
-> +
->  test_done
+$ git push origin master
+fatal: remote error:
+  You can't push to git://github.com/myuser/project.git
+  Use git@github.com:myuser/project.git
+
+So you can see that pushurl is being followed (it's not attempting to
+push to git://github.com/organization/project), but insteadOf values are
+being used as opposed to pushInsteadOf values for expanding the pushurl
+alias.
+
+This commit fixes that.
+
+Signed-off-by: Rob Hoelz <rob@hoelz.ro>
+---
+ Documentation/config.txt |  3 +-
+ remote.c                 |  6 +++-
+ t/t5516-fetch-push.sh    | 77 +++++++++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 75 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index b3023b8..5610962 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2142,8 +2142,7 @@ url.<base>.pushInsteadOf::
+ 	automatically use an appropriate URL to push, even for a
+ 	never-before-seen repository on the site.  When more than one
+ 	pushInsteadOf strings match a given URL, the longest match is
+-	used.  If a remote has an explicit pushurl, Git will ignore this
+-	setting for that remote.
++	used.
+ 
+ user.email::
+ 	Your email address to be recorded in any newly created commits.
+diff --git a/remote.c b/remote.c
+index e53a6eb..1ea240a 100644
+--- a/remote.c
++++ b/remote.c
+@@ -465,7 +465,11 @@ static void alias_all_urls(void)
+ 		if (!remotes[i])
+ 			continue;
+ 		for (j = 0; j < remotes[i]->pushurl_nr; j++) {
+-			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
++			char *copy = xstrdup(remotes[i]->pushurl[j]);
++			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites_push);
++			if (!strcmp(copy, remotes[i]->pushurl[j]))
++				remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
++			free(copy);
+ 		}
+ 		add_pushurl_aliases = remotes[i]->pushurl_nr == 0;
+ 		for (j = 0; j < remotes[i]->url_nr; j++) {
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index c31e5c1..fbe0f29 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -228,19 +228,80 @@ test_expect_success 'push with pushInsteadOf' '
+ 	)
+ '
+ 
+-test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf should not rewrite)' '
++test_expect_success 'push with pushInsteadOf and explicit pushurl (pushurl + pushInsteadOf does rewrite in this case)' '
+ 	mk_empty &&
++	rm -rf ro rw &&
+ 	TRASH="$(pwd)/" &&
+-	git config "url.trash2/.pushInsteadOf" trash/ &&
+-	git config remote.r.url trash/wrong &&
+-	git config remote.r.pushurl "$TRASH/testrepo" &&
++	mkdir ro &&
++	mkdir rw &&
++	git init --bare rw/testrepo &&
++	test_config "url.file://$TRASH/ro/.insteadOf" ro: &&
++	test_config "url.file://$TRASH/rw/.pushInsteadOf" rw: &&
++	test_config remote.r.url ro:wrong &&
++	test_config remote.r.pushurl rw:testrepo &&
+ 	git push r refs/heads/master:refs/remotes/origin/master &&
+ 	(
+-		cd testrepo &&
+-		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
+-		test "z$r" = "z$the_commit" &&
++		cd rw/testrepo &&
++		echo "$the_commit commit	refs/remotes/origin/master" > expected &&
++		git for-each-ref refs/remotes/origin > actual &&
++		test_cmp expected actual
++	)
++'
+ 
+-		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
++test_expect_success 'push without pushInsteadOf and explicit pushurl (pushurl + insteadOf is used for rewrite)' '
++	mk_empty &&
++	rm -rf ro rw &&
++	TRASH="$(pwd)/" &&
++	mkdir ro &&
++	mkdir rw &&
++	git init --bare rw/testrepo &&
++	test_config "url.file://$TRASH/ro/.insteadOf" ro: &&
++	test_config "url.file://$TRASH/rw/.insteadOf" rw: &&
++	test_config remote.r.url ro:wrong &&
++	test_config remote.r.pushurl rw:testrepo &&
++	git push r refs/heads/master:refs/remotes/origin/master &&
++	(
++		cd rw/testrepo &&
++		echo "$the_commit commit	refs/remotes/origin/master" > expected &&
++		git for-each-ref refs/remotes/origin > actual &&
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'push with pushInsteadOf but without explicit pushurl (url + pushInsteadOf is used for rewrite)' '
++	mk_empty &&
++	rm -rf ro rw &&
++	TRASH="$(pwd)/" &&
++	mkdir ro &&
++	mkdir rw &&
++	git init --bare rw/testrepo &&
++	test_config "url.file://$TRASH/ro/.insteadOf" rw: &&
++	test_config "url.file://$TRASH/rw/.pushInsteadOf" rw: &&
++	test_config remote.r.url rw:testrepo &&
++	git push r refs/heads/master:refs/remotes/origin/master &&
++	(
++		cd rw/testrepo &&
++		echo "$the_commit commit	refs/remotes/origin/master" > expected &&
++		git for-each-ref refs/remotes/origin > actual &&
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'push without pushInsteadOf and without explicit pushurl (url + insteadOf is used for rewrite)' '
++	mk_empty &&
++	rm -rf ro rw &&
++	TRASH="$(pwd)/" &&
++	mkdir ro &&
++	mkdir rw &&
++	git init --bare rw/testrepo &&
++	test_config "url.file://$TRASH/rw/.insteadOf" rw: &&
++	test_config remote.r.url rw:testrepo &&
++	git push r refs/heads/master:refs/remotes/origin/master &&
++	(
++		cd rw/testrepo &&
++		echo "$the_commit commit	refs/remotes/origin/master" > expected &&
++		git for-each-ref refs/remotes/origin > actual &&
++		test_cmp expected actual
+ 	)
+ '
+ 
+-- 
+1.8.2
