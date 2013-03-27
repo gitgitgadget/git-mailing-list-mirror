@@ -1,93 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: propagating repo corruption across clone
-Date: Wed, 27 Mar 2013 08:03:58 -0700
-Message-ID: <7v1ub0rijl.fsf@alter.siamese.dyndns.org>
-References: <CACBZZX6czzJRF9TEsc8c+=LND6SxaVvrZdbcZ+TfUZTWQOpW0Q@mail.gmail.com>
- <20130324192350.GA20688@sigill.intra.peff.net>
- <CAOx6V3YtM-e8-S41v1KnC+uSymYwZw8QBwiCJRYw0MYJXRjj-w@mail.gmail.com>
- <20130325145644.GA16576@sigill.intra.peff.net>
- <CACsJy8A0eOWEJ2aqPSLof_CodJM6BadFxQHy5Vb0kAwwTSTS3w@mail.gmail.com>
- <20130325155600.GA18216@sigill.intra.peff.net>
- <CAOx6V3a6vGJvJ4HEmAXdTRKKCzRJS23OYd_em1b3aQLzPNEtQA@mail.gmail.com>
- <20130325200752.GB3902@sigill.intra.peff.net>
- <CAOx6V3ZWB1ZpmXcaBeSaPOvHqmAMF3U1rTXuwinFGmEZQwFGYQ@mail.gmail.com>
- <20130326165553.GA7282@sigill.intra.peff.net>
- <1364340037755-7580771.post@n2.nabble.com>
- <7vr4j1qzao.fsf@alter.siamese.dyndns.org>
- <CAMK1S_jZcoA9sy+ixXmy8uj2E9E4Q6W2pLQVFStZMgH9eRoo6g@mail.gmail.com>
+Subject: Re: [PATCH 15/15] t7502: remove clear_config
+Date: Wed, 27 Mar 2013 08:04:38 -0700
+Message-ID: <7vtxnwq3y1.fsf@alter.siamese.dyndns.org>
+References: <7vvc8j8p9m.fsf@alter.siamese.dyndns.org>
+ <cover.1364158574.git.ydroneaud@opteya.com>
+ <cover.1364158574.git.ydroneaud@opteya.com>
+ <25d62be2c030306929dd11f92a7ac4be8b227ea1.1364158574.git.ydroneaud@opteya.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Rich Fromm <richard_fromm@yahoo.com>, git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 16:04:34 2013
+Cc: git@vger.kernel.org
+To: Yann Droneaud <ydroneaud@opteya.com>
+X-From: git-owner@vger.kernel.org Wed Mar 27 16:05:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKrtx-0003xI-B3
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 16:04:33 +0100
+	id 1UKruX-0005km-PE
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 16:05:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751297Ab3C0PED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 11:04:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51759 "EHLO
+	id S1751439Ab3C0PEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 11:04:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52343 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751270Ab3C0PEB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 11:04:01 -0400
+	id S1751270Ab3C0PEl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 11:04:41 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 626E3AB01;
-	Wed, 27 Mar 2013 11:04:01 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F26EBAB91;
+	Wed, 27 Mar 2013 11:04:40 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=SkQ57IK0yOa65u7Pc2UjlziBVAk=; b=PxTNm750lCVBMbBRuHic
-	hMZKkNoNVJhJ8O7mgd50RDdFOdejI4uLv95sJ880tDeg+BT5CpOmxH43gUmNSsRI
-	UmgSohG5Ol3lSS5bmgWHCAp+jQtD0MXurwFw75JbykKoNQChAOjPw50ET9vmNY2j
-	6bDnKAAckaLokFb6kGyTxFI=
+	 s=sasl; bh=62thlQxfJuZlidVsiPjU6VcGyes=; b=LiOsrwC8mYOKgSclhYC7
+	Y01ceUo4SnWjJqU2Jh8PMkLfKjLBSjPWCZGjFikuwnRXSxns4pKcOz4g1MCA23KJ
+	PGmr8VPHT2qefew1mLxI4CjzPg2YHl1SsPTVeyj1a2nBXB9oSo1U/a59cM1QllNT
+	Q1fpgi8ilhWTAtZfJAmtPpA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=aSnO9OfVFStxu4osXwF3tfK+alcbZaCfwnq0RVkwHKWgyI
-	7TCvWWrKv/rI4s4xtSQ9WyCz0l1LCECZQm7x22F0GQu/FWsrP71C7cD2RvokuNwd
-	gCBsa1sJcKb8GVvI5J3+mI8Wvwd0pdI2IK8suqcbZ5GmOLhyYkY56Do9lqBvU=
+	 q=dns; s=sasl; b=x69ew0g5isWVnS16AeUE0LuARVPlcBpOfN1Sg1lK5pJOdn
+	4hwDSb72MOJhiB81uTfo8iA7xSGyBB87/oIvm82oR01Eji0Y0rKmWj2hToTwWBND
+	NZAD/yb5OEe1FqallggpkNmr2Cg0XzCrb0gGmCcWpd0Ea84PYP9CcOmxcBgXQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55C68AB00;
-	Wed, 27 Mar 2013 11:04:01 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4E16AB90;
+	Wed, 27 Mar 2013 11:04:40 -0400 (EDT)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E4F9AAF9; Wed, 27 Mar 2013
- 11:04:00 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 66D90AB8B; Wed, 27 Mar 2013
+ 11:04:40 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8E60E598-96EF-11E2-831E-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A6339D8C-96EF-11E2-B815-EA7A2E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219254>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
+Yann Droneaud <ydroneaud@opteya.com> writes:
 
-> On Wed, Mar 27, 2013 at 9:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Using test_config ensure the configuration variable are removed
+> at the end of the test, there's no need to remove variable
+> at the beginning of the test.
 >
->> To be paranoid, you may want to set transfer.fsckObjects to true,
->> perhaps in your ~/.gitconfig.
->
-> do we have any numbers on the overhead of this?
->
-> Even a "guesstimate" will do...
+> Signed-off-by: Yann Droneaud <ydroneaud@opteya.com>
 
-On a reasonably slow machine:
+This is a good change in the longer term, but there must not be any
+other topic in-flight that adds new tests that modify configuration
+in a persistent way, which your previous patch based on 'master'
+wouldn't have addressed, for this to be a safe change (I assume that
+you already have checked that).
 
-$ cd /project/git/git.git && git repack -a -d
-$ ls -hl .git/objects/pack/*.pack
--r--r--r-- 1 junio src 44M Mar 26 13:18 .git/objects/pack/pack-c40635e5ee2b7094eb0e2c416e921a2b129bd8d2.pack
+Otherwise these apparently redundant unsets need to be left as "belt
+and suspenders" safety.  The same for the change to 4202 in [PATCH
+07/15].
 
-$ cd .. && git --bare init junk && cd junk
-$ time git index-pack --strict --stdin <../git.git/.git/objects/pack/*.pack
-real    0m13.873s
-user    0m21.345s
-sys     0m2.248s
-
-That's about 3.2 Mbps?
-
-Compare that with the speed your other side feeds you (or your line
-speed could be the limiting factor) and decide how much you value
-your data.
+Thanks.
