@@ -1,136 +1,126 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] merge-tree: fix "same file added in subdir"
-Date: Wed, 27 Mar 2013 22:57:39 +0000
-Message-ID: <20130327225739.GT2286@serenity.lan>
-References: <0a6a0c978569906b8c8d9209a85338554e503236.1364419952.git.john@keeping.me.uk>
- <7vk3osjwgv.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Composing git repositories
+Date: Thu, 28 Mar 2013 00:02:19 +0100
+Message-ID: <51537A7B.7050206@web.de>
+References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com> <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com> <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 23:58:19 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 00:03:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKzIN-0006Ec-Lb
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 23:58:15 +0100
+	id 1UKzN5-0004SL-VH
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 00:03:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755072Ab3C0W5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 18:57:47 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:49205 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754564Ab3C0W5r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 18:57:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id CF7956064CA;
-	Wed, 27 Mar 2013 22:57:46 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -10.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zRvo+YP5-s4e; Wed, 27 Mar 2013 22:57:46 +0000 (GMT)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 334BB6064E1;
-	Wed, 27 Mar 2013 22:57:41 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <7vk3osjwgv.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753052Ab3C0XCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 19:02:40 -0400
+Received: from mout.web.de ([212.227.17.11]:59209 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751804Ab3C0XCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 19:02:39 -0400
+Received: from [192.168.178.41] ([91.3.173.243]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0LvjrE-1UkIf12cA8-017iFU; Thu, 28 Mar 2013 00:02:20
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:uy9gzFwHXXN1AYhB0b2+ygA1T8LoS8MVk3klYahknJ0
+ zov0l4uWGMl1MeEv/YmSWBhG9X2JiOJl233YZpLNR1zd3kULLr
+ tkphj3RljfzXO+A01Q9fsaU4q/YqHpl/47dTjG628DB+8PHYWt
+ DX99wYnqTKyxkhHNutXfWlJ2Lp//EYTDW3rVDBGHyQ8uF8dloW
+ tuy6ienw7Uw14aJ6vnZbA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219352>
 
-On Wed, Mar 27, 2013 at 03:42:40PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
+Am 27.03.2013 18:02, schrieb Ramkumar Ramachandra:
+> Junio C Hamano wrote:
+>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>> Junio C Hamano wrote:
+>>>> So you have to stash it somewhere.  We could have made it to move
+>>>> them to $HOME/.safeplace or somewhere totally unrelated to the
+>>>> superproject.  So in that sense, the repositories are *not* owned by
+>>>> the superproject in any way.  However, you are working within the
+>>>> context of the superproject on the submodule after all, and
+>>>> somewhere under $GIT_DIR/ of the superorject is not too wrong a
+>>>> place to use as such a safe place.
+>>>
+>>> Thanks for the explanation.
+>>
+>> What do you _exactly_ mean by that?  You understood why things are
+>> arranged in that way, and no longer think that it is unnecessary,
+>> ugly and unwieldy to stash the real copy of $GIT_DIR of submodules
+>> away from their working trees and store them inside $GIT_DIR/modules
+>> of the superproject?
 > 
-> > When the same file is added with identical content at the top level,
-> > git-merge-tree prints "added in both" with the details.  But if the file
-> > is added in an existing subdirectory, threeway_callback() bails out early
-> > because the two trees have been modified identically.
-> >
-> > In order to detect this, we need to fall through and recurse into the
-> > subtree in this case.
-> >
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> 
-> The rationale the above description gives is internally consistent,
-> but it is rather sad to see this optimization go.  The primary
-> motivation behind this program, which does not use the usual
-> unpack-trees machinery, is to allow us to cull the identical result
-> at a shallow level of the traversal when the both sides changed (not
-> added) a file deep in a subdirectory hierarchy.
-> 
-> The patch makes me wonder if we should go the other way around,
-> resolving the "both added identically" case at the top cleanly
-> without complaint.
+> In essence, git commands are built to act on pure worktrees.  It's
+> trivially Correct to pretend that an object store present in the
+> toplevel directory (as .git/) of the worktree doesn't exist, but it's
+> quite non-trivial to handle a .git directory anywhere else in the
+> worktree. Since we built git ground-up to act on a single
+> repository's worktree, embedding one repository inside another is a
+> hack: as a "workaround", we simply relocate the object store of the
+> submodule repository.
 
-I don't use merge-tree so I have no opinion on this, just wanted to fix
-an inconsistency :-)
+Submodules work pretty well, no matter if you call them a "hack".
+And what you call a "workaround" allows us to move, remove and
+recreate submodules, which is one of *the* major inconveniences
+submodules currently have.
 
-I'll try to have a look at doing the other change tomorrow if no one
-else gets there first.
+>  Even then, working with one worktree embedded
+> inside another is something git never designed for: it explains why I
+> have to literally fight with git when using submodules (no offense
+> Jens; it's a very hard problem).
 
-> >  builtin/merge-tree.c  |  9 +++++++--
-> >  t/t4300-merge-tree.sh | 17 +++++++++++++++++
-> >  2 files changed, 24 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> > index e0d0b7d..ca97fbd 100644
-> > --- a/builtin/merge-tree.c
-> > +++ b/builtin/merge-tree.c
-> > @@ -298,12 +298,17 @@ static int threeway_callback(int n, unsigned long mask, unsigned long dirmask, s
-> >  {
-> >  	/* Same in both? */
-> >  	if (same_entry(entry+1, entry+2)) {
-> > -		if (entry[0].sha1) {
-> > +		if (entry[0].sha1 && !S_ISDIR(entry[0].mode)) {
-> >  			/* Modified identically */
-> >  			resolve(info, NULL, entry+1);
-> >  			return mask;
-> >  		}
-> > -		/* "Both added the same" is left unresolved */
-> > +		/*
-> > +		 * "Both added the same" is left unresolved.  We also leave
-> > +		 * "Both directories modified identically" unresolved in
-> > +		 * order to catch changes where the same file (with the same
-> > +		 * content) has been added to both directories.
-> > +		 */
-> >  	}
-> >  
-> >  	if (same_entry(entry+0, entry+1)) {
-> > diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
-> > index d0b2a45..be0737e 100755
-> > --- a/t/t4300-merge-tree.sh
-> > +++ b/t/t4300-merge-tree.sh
-> > @@ -298,4 +298,21 @@ test_expect_success 'turn tree to file' '
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > +test_expect_success 'add identical files to subdir' '
-> > +	cat >expected <<\EXPECTED &&
-> > +added in both
-> > +  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d sub/ONE
-> > +  their  100644 43d5a8ed6ef6c00ff775008633f95787d088285d sub/ONE
-> > +EXPECTED
-> > +
-> > +	git reset --hard initial &&
-> > +	mkdir sub &&
-> > +	test_commit "sub-initial" "sub/initial" "initial" &&
-> > +	test_commit "sub-add-a-b-same-A" "sub/ONE" "AAA" &&
-> > +	git reset --hard sub-initial &&
-> > +	test_commit "sub-add-a-b-same-B" "sub/ONE" "AAA" &&
-> > +	git merge-tree sub-initial sub-add-a-b-same-A sub-add-a-b-same-B >actual &&
-> > +	test_cmp expected actual
-> > +'
-> > +
-> >  test_done
+Unless you acknowledge that submodules are a different repo, you'll
+always run into problems. I believe future enhancements will make
+this less tedious, but in the end they will stay separate repos
+(which is the whole point, you'd want to use a different approach
+- e.g. subtree - if you want to put stuff from different upstreams
+into a single repo without keeping the distinction where all that
+came from).
+
+> Representing submodules as commit objects in the tree is also a hack.
+> I'm sorry, but a submodule is not a commit object.  We need a fifth
+> object type if we want them to be first-class citizens.
+
+What else than a commit object should that be??? Submodules are
+there to have a different upstream for a part of your work tree,
+and that means a commit in that repo is the only sane thing to
+record in the superproject. A lot of thought has been put into
+this, and it is definitely a good choice [1].
+
+> Sorry, I'm deviating.  I learnt why you think the hack is necessary
+> and not "too wrong".  As I explained above, the entire design is
+> asymmetric and inelegant; I think we can do much better than this.
+
+How? The "submodules suck, we should try a completely different
+approach" thingy comes up from time to time, but so far nobody
+could provide a viable alternative to what we currently do.
+
+And apart from that, let's not forget we identified some valuable
+improvements to submodules in this thread:
+
+*) Get rid of the "toplevel" requirement
+
+*) Add functionality to relocate the object store out of the work
+   tree (either "git submodule to-gitfile" or something similar,
+   maybe even as a separate script in contrib)
+
+*) Add an option to "git submodule add" (and/or maybe a config
+   option) to relocate the object store immediately on adding an
+   already present submodule
+
+All of those are topics I like to see materialize, and you are
+welcome to tackle them.
+
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/151857/
