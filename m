@@ -1,111 +1,78 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: git status takes 30 seconds on Windows 7. Why?
-Date: Wed, 27 Mar 2013 18:46:57 +0000
-Message-ID: <20130327184657.GP2286@serenity.lan>
-References: <CAFT1WNyyXbCOQWMt8nYife7Tix_mJzDQrj5e+N=GKbDR8OyYzQ@mail.gmail.com>
- <vpqr4j0rccf.fsf@grenoble-inp.fr>
- <CAFT1WNxm0Kx9vHx+NB92_tZV6KsVhefiVXa-K69YbWOkpCXSgA@mail.gmail.com>
+From: Rich Fromm <richard_fromm@yahoo.com>
+Subject: Re: propagating repo corruption across clone
+Date: Wed, 27 Mar 2013 11:51:49 -0700 (PDT)
+Message-ID: <1364410309241-7580845.post@n2.nabble.com>
+References: <CAOx6V3YtM-e8-S41v1KnC+uSymYwZw8QBwiCJRYw0MYJXRjj-w@mail.gmail.com> <20130325145644.GA16576@sigill.intra.peff.net> <CACsJy8A0eOWEJ2aqPSLof_CodJM6BadFxQHy5Vb0kAwwTSTS3w@mail.gmail.com> <20130325155600.GA18216@sigill.intra.peff.net> <CAOx6V3a6vGJvJ4HEmAXdTRKKCzRJS23OYd_em1b3aQLzPNEtQA@mail.gmail.com> <20130325200752.GB3902@sigill.intra.peff.net> <CAOx6V3ZWB1ZpmXcaBeSaPOvHqmAMF3U1rTXuwinFGmEZQwFGYQ@mail.gmail.com> <20130326165553.GA7282@sigill.intra.peff.net> <1364340037755-7580771.post@n2.nabble.com> <7vr4j1qzao.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Jim Kinsman <jakinsman@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 27 19:47:43 2013
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 27 19:52:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UKvNr-0002PX-Ai
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 19:47:39 +0100
+	id 1UKvSM-0007rs-9X
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Mar 2013 19:52:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753623Ab3C0SrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Mar 2013 14:47:06 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:60886 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753364Ab3C0SrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Mar 2013 14:47:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 99FF622BA3;
-	Wed, 27 Mar 2013 18:47:04 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RZX6qBwth+Va; Wed, 27 Mar 2013 18:47:04 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id BBCC922F4F;
-	Wed, 27 Mar 2013 18:46:59 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CAFT1WNxm0Kx9vHx+NB92_tZV6KsVhefiVXa-K69YbWOkpCXSgA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753688Ab3C0Svu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Mar 2013 14:51:50 -0400
+Received: from sam.nabble.com ([216.139.236.26]:56570 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753649Ab3C0Svt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Mar 2013 14:51:49 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <richard_fromm@yahoo.com>)
+	id 1UKvRt-0001w3-9G
+	for git@vger.kernel.org; Wed, 27 Mar 2013 11:51:49 -0700
+In-Reply-To: <7vr4j1qzao.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219302>
 
-On Wed, Mar 27, 2013 at 01:15:43PM -0500, Jim Kinsman wrote:
-> The only anti-virus I have installed is Microsoft Security Essentials
-> I turned off and it was still the same:
-> $ cat /usr/bin/gitstatus
-> start_time=`date +%s`
-> git status && echo run time is $(expr `date +%s` - $start_time) s
-> 
-> 
-> $ gitstatus
-> # On branch test
-> # Changes not staged for commit:
-> #   (use "git add <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working directory)
-> #
-> #       modified:   orgoptions.php
-> #       modified:   update_import_contacts.php
-> #
-> no changes added to commit (use "git add" and/or "git commit -a")
-> run time is 10 s
+Junio C Hamano wrote
+> If you use --local, that is equivalent to "cp -R".  Your corruption
+> in the source will faithfully be byte-for-byte copied to the
+> destination.  If you do not
+> ...
+> transport layer will notice
+> object corruption.
+> ...
+> The difference between --mirror and no --mirror is a red herring.
+> You may want to ask Jeff Mitchell to remove the mention of it; it
+> only adds to the confusion without helping users.
 
-That doesn't seem hugely surprising to me.  I have a moderately sized
-repository (3047 files, although it's Java so there are some deep trees)
-and I get the following (Vista on a reasonably old laptop, best of 3,
-Git version 1.8.1.msysgit.1):
+Just to clarify, I don't know Jeff Mitchell personally, and I'm not
+affiliated with the KDE project.  I happened to have recently implemented a
+backup strategy for a different codebase, that relies on `git clone
+--mirror` to take the actual snapshots of the live repos, and I read about
+Jeff's experiences, and that's why I started following this discussion. 
+Apologies if my questions are considered slightly off topic -- I'm not
+positive if this is supposed to be a list for developers, and not users.
 
-$ time git ls-files >/dev/null
+Nevertheless, I will try to contact Jeff and point him at this.  My initial
+reading of his blog posts definitely gave me the impression that this was a
+--mirror vs. not issue, but it really sounds like his main problem was using
+--local.
 
-real	0m0.047s
-user	0m0.015s
-sys	0m0.015s
+However, I think there may be room for some additional clarity in the docs. 
+The --local option in git-config(1) says "When the repository to clone from
+is on a local machine, this flag bypasses the normal "git aware" transport
+mechanism".  But there's no mention of the consequences of this transport
+bypass.  There's also no mention of this in the "GIT URLS" section that
+discusses transport protocols, and I also don't see anything noting it in
+either of these sections of the git book:
 
-$ time git status >/dev/null
-
-real	0m2.715s
-user	0m0.000s
-sys	0m0.031s
-
-
-I'm not sure the "user" and "sys" times are correct, but the "real"
-times feel right.  By comparison, on Linux on a much newer machine (so
-not much of a comparison) on the same repository:
-
-$ time git status >/dev/null
-
-real	0m0.347s
-user	0m0.171s
-sys	0m0.167s
+http://git-scm.com/book/en/Git-on-the-Server-The-Protocols
+http://git-scm.com/book/en/Git-Internals-Transfer-Protocols
 
 
-I think the simple reality is that Git was written with the assumption
-that stat is cheap and that isn't really the case on Windows, where the
-filesystem cache doesn't seem to do that well with this.  It may be that
-Git's Windows compatibility code could do be made more efficient but I
-know nothing about that, although a quick look in compat/mingw.c
-indicates that Git does already use its own stat implementations in
-place of the MSys ones in search of speed.
 
 
-John
+--
+View this message in context: http://git.661346.n2.nabble.com/propagating-repo-corruption-across-clone-tp7580504p7580845.html
+Sent from the git mailing list archive at Nabble.com.
