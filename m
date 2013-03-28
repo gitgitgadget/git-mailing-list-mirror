@@ -1,83 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] fast-import: Fix an gcc -Wuninitialized warning
-Date: Thu, 28 Mar 2013 14:53:57 -0400
-Message-ID: <20130328185357.GA17178@sigill.intra.peff.net>
-References: <5151F278.2040109@ramsay1.demon.co.uk>
- <20130326192822.GA28244@sigill.intra.peff.net>
- <515489ED.7070109@ramsay1.demon.co.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] git-send-email.perl: implement suggestions made by
+ perlcritic
+Date: Thu, 28 Mar 2013 11:57:07 -0700
+Message-ID: <20130328185707.GR28148@google.com>
+References: <7vfvzgn3ob.fsf@alter.siamese.dyndns.org>
+ <1364474835-23416-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Mar 28 19:54:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 19:57:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULHy5-0000g2-TQ
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 19:54:34 +0100
+	id 1ULI16-0001K5-71
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 19:57:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143Ab3C1SyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 14:54:05 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43868 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752353Ab3C1SyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 14:54:04 -0400
-Received: (qmail 27891 invoked by uid 107); 28 Mar 2013 18:55:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 14:55:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 14:53:57 -0400
+	id S1751607Ab3C1S5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 14:57:12 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:51870 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751453Ab3C1S5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 14:57:12 -0400
+Received: by mail-pa0-f45.google.com with SMTP id kl13so38126pab.18
+        for <git@vger.kernel.org>; Thu, 28 Mar 2013 11:57:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=duPqAsQIvE6jdFN1dB8IfPi9sYhklfIqY0gYQJS+Ybg=;
+        b=Pyqp8oZBcXtUXaVnTXItLDKGnv4oqEh+VIZKgqWB46yx42DExJI7VzaiQBxQhe5phe
+         EKxMtcm5qA0GbvHG1edUH8r829TBvm9mFveoOxW0NWQQccXMkvvaxd99CHkBZA32uu+3
+         c0Ao/j36csZ2GsF3QprWF/ZId7Zlmk0nIdIupAQ+S2lN9MphFzIvw4U7vfqzPpC07DNu
+         nihtH+umwp+OrAIWpNhOPyf1b0hsj1r6t79qhbZIVVhpqjCjWn1rfXM10bR4NOrm0r2h
+         PhOacZL4+UdBczlm12CHFANDB529W59Yv9z2Us9au3O5JpjSDawiH3z8Q1gA1qdNglyR
+         njUg==
+X-Received: by 10.66.248.193 with SMTP id yo1mr348993pac.120.1364497031573;
+        Thu, 28 Mar 2013 11:57:11 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id ce16sm290236pac.5.2013.03.28.11.57.09
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 28 Mar 2013 11:57:10 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <515489ED.7070109@ramsay1.demon.co.uk>
+In-Reply-To: <1364474835-23416-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219446>
 
-On Thu, Mar 28, 2013 at 06:20:29PM +0000, Ramsay Jones wrote:
+Ramkumar Ramachandra wrote:
 
-> Jeff King wrote:
-> > On Tue, Mar 26, 2013 at 07:09:44PM +0000, Ramsay Jones wrote:
-> > 
-> >> Commit cbfd5e1c ("drop some obsolete "x = x" compiler warning hacks",
-> >> 21-03-2013) removed a gcc hack that suppressed an "might be used
-> >> uninitialized" warning issued by older versions of gcc.
-> >>
-> >> However, commit 3aa99df8 ('fast-import: clarify "inline" logic in
-> >> file_change_m', 21-03-2013) addresses an (almost) identical issue
-> >> (with very similar code), but includes additional code in it's
-> >> resolution. The solution used by this commit, unlike that used by
-> >> commit cbfd5e1c, also suppresses the -Wuninitialized warning on
-> >> older versions of gcc.
-> >>
-> >> In order to suppress the warning (against the 'oe' symbol) in the
-> >> note_change_n() function, we adopt the same solution used by commit
-> >> 3aa99df8.
-> > 
-> > Yeah, they are essentially the same piece of code, so I don't mind this
-> > change.  It is odd to me that gcc gets it right in one case but not the
-> > other, but I think we are deep into the vagaries of the compiler's code
-> > flow analysis here, and we cannot make too many assumptions.
-> > 
-> > Were you actually triggering this warning, and if so, on what version of
-> > gcc? 
-> 
-> yes, with:
->     gcc v3.4.4 (cygwin)
->     gcc v4.1.2 (Linux)
->     msvc v15.00.30729.01 (VC/C++ 2008 express edition)
-> no, with:
->     gcc v4.4.0 (msysgit)
->     clang 3.2 (Linux)
->     tcc v0.9.26 (Linux)
-> [lcc can't compile git; I forget why exactly.]
+>  Junio: In future, please tell me explicitly that you're expecting a
+>  re-roll with an updated commit message.  It wasn't obvious to me at
+>  all.
 
-Thanks. I do not mind this fix, as it matches the similar code, and it
-is fairly straightforward. But I am also happy to let people running gcc
-v3.4.4 and other ancient compilers deal with not turning on -Werror. ;)
+When there are questions in response to a patch, there are two
+possibilities:
 
--Peff
+ * temporary brainfart --- sorry for the bother
+ * the clarity of the patch or commit message has room for improvement
+
+This wasn't a case of the former, so a seasoned contributor could
+safely assume that it was definitely a case of the latter.
+
+The explanation in Linux kernel's Documentation/SubmittingPatches
+item 10 ("Don't get discouraged.  Re-submit") has some fitting advice.
+
+Hope that helps,
+Jonathan
