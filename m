@@ -1,154 +1,83 @@
-From: Josh Triplett <josh@joshtriplett.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] push: Alias pushurl from push rewrites
-Date: Thu, 28 Mar 2013 09:09:37 -0700
-Message-ID: <20130328160937.GD16034@leaf>
+Date: Thu, 28 Mar 2013 09:10:59 -0700
+Message-ID: <7vy5d7v71o.fsf@alter.siamese.dyndns.org>
 References: <20130327122216.5de0c336@hoelz.ro>
- <20130327182345.GD28148@google.com>
- <20130327211554.GH28148@google.com>
- <7vsj3gjy3t.fsf@alter.siamese.dyndns.org>
- <20130327174845.5e3081d1@hoelz.ro>
- <20130327230943.GA5204@jtriplet-mobl1>
- <7vfvzfwn55.fsf@alter.siamese.dyndns.org>
+ <20130327182345.GD28148@google.com> <20130327211554.GH28148@google.com>
+ <7vsj3gjy3t.fsf@alter.siamese.dyndns.org> <20130327174845.5e3081d1@hoelz.ro>
+ <20130327230943.GA5204@jtriplet-mobl1> <20130327231819.GL28148@google.com>
+ <20130328160104.GC16034@leaf>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Rob Hoelz <rob@hoelz.ro>, Jonathan Nieder <jrnieder@gmail.com>,
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Rob Hoelz <rob@hoelz.ro>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 17:10:15 2013
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Thu Mar 28 17:11:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULFP4-0005UT-AS
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 17:10:14 +0100
+	id 1ULFQK-0001Dw-BO
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 17:11:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756336Ab3C1QJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 12:09:46 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:59547 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755204Ab3C1QJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 12:09:46 -0400
-Received: from mfilter22-d.gandi.net (mfilter22-d.gandi.net [217.70.178.150])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id F074D172089;
-	Thu, 28 Mar 2013 17:09:43 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter22-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([217.70.183.196])
-	by mfilter22-d.gandi.net (mfilter22-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id p-Jv-CvvJRTO; Thu, 28 Mar 2013 17:09:42 +0100 (CET)
-X-Originating-IP: 50.43.39.152
-Received: from leaf (static-50-43-39-152.bvtn.or.frontiernet.net [50.43.39.152])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 6C25A1720A9;
-	Thu, 28 Mar 2013 17:09:40 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vfvzfwn55.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756504Ab3C1QLD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 12:11:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38713 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756355Ab3C1QLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 12:11:01 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88D1FA54A;
+	Thu, 28 Mar 2013 12:11:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XjcpEV0i5rhknGg7T/qVfb/kGMQ=; b=UFYEQ1
+	N8Y6x552jvAdmCFWRMKROuw3CoZ4B/4jxRCSiOTu+Pnw3tNedd5t63SYUGTRHZq4
+	mrjnN+5MX/lgo6flRD0H/vX+T0/KhCOt/X7xqfYBCt5Osi/QPGHwIBDiQPl1AbmR
+	IFWdH8ytZ9WokVN6O5IVV0VOl055vsu77TD4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U3Db7Px8DRpAMqrwnAY3xlvMXji6c2uN
+	wLK+hHw/M1UKFnjzmZUjWlImupwoK91r1RuW7VSlWMZbDzZ9E5K6C9PoEBqSmBr9
+	CDmMY/hRyDLBMh522i8cZb9hzxHfv+Na0EEy/f15Ejk1bZDZBSwCB7VO7CQYZaV7
+	oAFMSO4uWz0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F005A549;
+	Thu, 28 Mar 2013 12:11:01 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04721A546; Thu, 28 Mar 2013
+ 12:11:00 -0400 (EDT)
+In-Reply-To: <20130328160104.GC16034@leaf> (Josh Triplett's message of "Thu,
+ 28 Mar 2013 09:01:04 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 153C6D9E-97C2-11E2-9AA8-CBA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219420>
 
-On Thu, Mar 28, 2013 at 08:37:58AM -0700, Junio C Hamano wrote:
-> Josh Triplett <josh@joshtriplett.org> writes:
-> 
-> > On Wed, Mar 27, 2013 at 05:48:45PM -0500, Rob Hoelz wrote:
-> > ...
-> >> The test that checked that pushInsteadOf + pushurl shouldn't work as I
-> >> expect was actually broken; I have removed it, updated the
-> >> documentation, and sent a new patch to the list.
-> >
-> > There's an argument for either behavior as valid.  My original patch
-> > specifically documented and tested for the opposite behavior, namely
-> > that pushurl overrides any pushInsteadOf, because I intended
-> > pushInsteadOf as a fallback if you don't have an explicit pushurl set.
-> 
-> For only this bit.
-> 
-> I think the test in question is this one from t5516:
-> 
-> test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf should not rewrite)' '
-> 	mk_empty &&
-> 	TRASH="$(pwd)/" &&
-> 	git config "url.trash2/.pushInsteadOf" trash/ &&
-> 	git config remote.r.url trash/wrong &&
-> 	git config remote.r.pushurl "$TRASH/testrepo" &&
-> 	git push r refs/heads/master:refs/remotes/origin/master &&
-> 	(
-> 		cd testrepo &&
-> 		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
-> 		test "z$r" = "z$the_commit" &&
-> 
-> 		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-> 	)
-> '
-> 
-> It defines a remote "r", with URL "trash/wrong" (used for fetch) and
-> pushURL "$(pwd)/testrepo" (used for push).  There is a pushInsteadOf
-> rule to rewrite anything that goes to "trash/*" to be pushed to
-> "trash2/*" instead but that shouldn't be used to rewrite an explicit
-> pushURL.
-> 
-> And then the test pushes to "r" and checks if testrepo gets updated;
-> in other words, it wants to make sure remote.r.pushURL defines the
-> final destination, without pushInsteadOf getting in the way.
-> 
-> But $(pwd)/testrepo does not match trash/* in the first place, so
-> there is no chance for a pushInsteadOf to interfere; it looks to me
-> that it is not testing what it wants to test.
+Josh Triplett <josh@joshtriplett.org> writes:
 
-That test does actually test something important: it tests that the
-result of applying pushInsteadOf to url does *not* override pushurl.
-Not the same thing as testing that pushInsteadOf does or does not apply
-to pushurl.
+> OK, I take it back.  I *can* imagine configurations that this change
+> would break, since it does change intentional and documented behavior,
+> but I don't have any such configuration.  The only such configuration I
+> can imagine involves directly counting on the non-rewriting of pushUrl,
+> by using pushInsteadOf to rewrite urls and then sometimes using pushUrl
+> to override that and point back at the un-rewritten URL.  And while
+> supported, that does seem *odd*.
+>
+> Objection withdrawn; if nobody can come up with a sensible configuration
+> that relies on the documented behavior, I don't particularly care if it
+> changes.
 
-The relevant sentence of the git-config manpage (in the documentation
-for pushInsteadOf) says:
-> If a remote has an explicit pushurl, git will ignore this setting for
-> that remote.
-That really meant what I just said above: git will prefer an explicit
-pushurl over the pushInsteadOf rewrite of url.  It says nothing about
-applying pushInsteadOf to rewrite pushurl.
+I actually do.
 
-> Perhaps we should do something like this?  We tell it to push to
-> "testrepo/" with pushURL, and set up a pushInsteadOf to rewrite
-> "testrepo/" to "trash2/", but because for this push it comes from an
-> explicit pushURL, it still goes to "testrepo/".
-> 
-> As we do not have "trash2/" repository, the test not just tests the
-> push goes to "testrepo/", but it also tests that it does not attempt
-> to push to "trash2/", checking both sides of the coin.
-
-Sensible test, assuming you want to enforce that behavior.  I don't
-strongly care either way about that one, since it only applies if your
-pushInsteadOf rewrites could apply to your pushurl, and I only ever use
-pushInsteadOf to rewrite unpushable repos to pushable ones.  However...
-
->  t/t5516-fetch-push.sh | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index d3dc5df..b5ea32c 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -230,10 +230,9 @@ test_expect_success 'push with pushInsteadOf' '
->  
->  test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf should not rewrite)' '
->  	mk_empty &&
-> -	TRASH="$(pwd)/" &&
-> -	git config "url.trash2/.pushInsteadOf" trash/ &&
-> +	git config "url.trash2/.pushInsteadOf" testrepo/ &&
->  	git config remote.r.url trash/wrong &&
-> -	git config remote.r.pushurl "$TRASH/testrepo" &&
-> +	git config remote.r.pushurl "testrepo/" &&
->  	git push r refs/heads/master:refs/remotes/origin/master &&
->  	(
->  		cd testrepo &&
-
-...the test you describe should appear in *addition* to this test, not
-replacing it, because as described above this test does test one
-critical bit of behavior, namely prefering pushurl over the
-pushInsteadOf rewrite of url.
-
-- Josh Triplett
+Given the popularity of the system, "people involved in this thread
+cannot imagine a case that existing people may get hurt" is very
+different from "this is not a regression".  After merging this
+change when people start complaining, you and Rob can hide and
+ignore them, but we collectively as the Git project have to have a
+way to help them when it happens.
