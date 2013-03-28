@@ -1,74 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: More detailed error message for 403 forbidden.
-Date: Thu, 28 Mar 2013 16:18:26 -0400
-Message-ID: <20130328201826.GA24103@sigill.intra.peff.net>
-References: <CAFT+Tg_PwAS__AYCwQQZjy4LVvAMZFJuJ+ediDJpRnxx73qMMg@mail.gmail.com>
- <20130328183601.GA11914@sigill.intra.peff.net>
- <7vk3ortk3o.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Composing git repositories
+Date: Thu, 28 Mar 2013 21:25:09 +0100
+Message-ID: <5154A725.7030609@web.de>
+References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com> <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com> <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com> <20130327192630.GF28148@google.com> <7vppyklhot.fsf@alter.siamese.dyndns.org> <CALkWK0=GcxBh9o+sF1Q8t6SC0JU=NmPyRg6tqaOKmkJ6qDvRCA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Yi, EungJun" <semtlenori@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 21:19:03 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 21:25:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULJHp-0005Ef-6C
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 21:19:01 +0100
+	id 1ULJOW-0001Ok-Ka
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 21:25:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752320Ab3C1USd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 16:18:33 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43945 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751091Ab3C1USd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 16:18:33 -0400
-Received: (qmail 29677 invoked by uid 107); 28 Mar 2013 20:20:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 16:20:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 16:18:26 -0400
-Content-Disposition: inline
-In-Reply-To: <7vk3ortk3o.fsf@alter.siamese.dyndns.org>
+	id S1753414Ab3C1UZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 16:25:25 -0400
+Received: from mout.web.de ([212.227.17.11]:51249 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752600Ab3C1UZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 16:25:24 -0400
+Received: from [192.168.178.41] ([91.3.172.174]) by smtp.web.de (mrweb003)
+ with ESMTPA (Nemesis) id 0MNLRJ-1UJPZs1ipN-007bKy; Thu, 28 Mar 2013 21:25:10
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <CALkWK0=GcxBh9o+sF1Q8t6SC0JU=NmPyRg6tqaOKmkJ6qDvRCA@mail.gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:W6WZoX1lnQuMGwToyD1CvjP6wRIShaj2l4cHKn3e5Hm
+ w2eAAt/hMZ5qqDh+g+H5rdmp2zBuceyTeMZIjT8pdf0v3W1oFT
+ u4VWgRFYL/sWhBxAV6yJg0eiAaHaoQTIqTQkHKIeE9jmDDwhnv
+ wa016O0PmistMEVDKNgPQ8I1/dwhocQbhqteGTjQendK17uyRq
+ J8an73IzTcNdwsIyXKLgQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219457>
 
-On Thu, Mar 28, 2013 at 12:11:55PM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+Am 28.03.2013 12:48, schrieb Ramkumar Ramachandra:
+> Okay, here's a first draft of the new design.  The new mediator object
+> should look like:
 > 
-> > One problem is that the content body sent along with the error is not
-> > necessarily appropriate for showing to the user (e.g., if it is HTML, it
-> > is probably not a good idea to show it on the terminal). So I think we
-> > would want to only show it when the server has indicated via the
-> > content-type that the message is meant to be shown to the user. I'm
-> > thinking the server would generate something like:
-> >
-> >    HTTP/1.1 403 Forbidden
-> >    Content-type: application/x-git-error-message
-> >
-> >    User 'me' does not have enough permission to access the repository.
-> >
-> > which would produce the example you showed above.
+>     name = git
+>     ref = v1.7.8
 > 
-> Actually, isn't the human-readable part of the server response meant
-> for this kind of thing?  I.e.
+> The name is looked up in refs/modules/<branch>, which in turn looks like:
 > 
-> 	HTTP/1.1 403 User 'me' not allowed to accept the repository.
+>     [submodule "git"]
+>         origin = gh:artagnon/git
+>         path = git
+>     [submodule "magit"]
+>         origin = gh:magit/magit
+>         path = git/extensions/magit
 
-In theory, yes. But I don't think that most servers make it very easy to
-use custom "reason phrases" (that is the rfc 2616 term for them). At
-least I could not easily figure out how to make Apache do so. You can do
-so from CGIs, but I think you'd want to customize some of this at the
-HTTP server level (e.g., overriding 404s with a custom message). There's
-much better support at that level for custom error documents (e.g.,
-Apache's ErrorDocument).
+What happens when you rename "magit" to "foo" in that branch and want
+to check out an older commit of the same branch? That is one of the
+reasons why that belongs in to a checked in .gitmodules and not
+someplace untracked.
 
-I do not configure http servers very often, though, so I could be wrong
-about what is normal practice, and what is easy to do.
+> This solves the two problems that I brought up earlier:
+> - Floating submodules (which are _necessary_ if you don't want to
+> propagate commits upwards to the root).
 
--Peff
+If you don't want that either don't use submodules or set the ignore
+config so you won't be bothered with any changes to the submodules.
+Floating up to the submodule's tip can be easily achieved with a
+script (possibly checked in in the superproject). You loose the
+reproducibility by doing that, but that's what you asked for. No
+problem here.
+
+> - Initializing a nested submodule without having to initialize all the
+> submodules in the path leading up to it.
+
+You cannot access a nested sub-submodule without its parent telling
+you what submodules it has. Otherwise the first level submodule would
+not be self-contained, so you'll need to check it out too to access
+the sub-submodules. Nothing to fix here either.
+
+> However, I suspect that we can put more information the mediator
+> object to make life easier for the parent repository and make seams
+> disappear.  I'm currently thinking about what information git core
+> needs to behave smoothly with submodules.
+
+To me your proposal is trying to fix non-issues and breaking stuff
+that works, so I see no improvement.
