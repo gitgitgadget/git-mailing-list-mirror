@@ -1,112 +1,148 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2 2/2] t5520 (pull): use test_config where appropriate
-Date: Thu, 28 Mar 2013 18:10:19 +0530
-Message-ID: <1364474419-22796-1-git-send-email-artagnon@gmail.com>
-References: <7v4nfz1ndo.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH v2] git-send-email.perl: implement suggestions made by perlcritic
+Date: Thu, 28 Mar 2013 18:17:15 +0530
+Message-ID: <1364474835-23416-1-git-send-email-artagnon@gmail.com>
+References: <7vfvzgn3ob.fsf@alter.siamese.dyndns.org>
 Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 13:39:39 2013
+X-From: git-owner@vger.kernel.org Thu Mar 28 13:46:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULC7E-00037t-5y
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 13:39:36 +0100
+	id 1ULCDu-0007gW-6G
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 13:46:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754718Ab3C1MjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 08:39:07 -0400
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:50888 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752976Ab3C1MjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 08:39:06 -0400
-Received: by mail-pb0-f47.google.com with SMTP id rp2so5779421pbb.34
-        for <git@vger.kernel.org>; Thu, 28 Mar 2013 05:39:05 -0700 (PDT)
+	id S1755368Ab3C1MqC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 08:46:02 -0400
+Received: from mail-da0-f46.google.com ([209.85.210.46]:44676 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755291Ab3C1MqA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 08:46:00 -0400
+Received: by mail-da0-f46.google.com with SMTP id y19so4517342dan.33
+        for <git@vger.kernel.org>; Thu, 28 Mar 2013 05:46:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=jKoGCEd0yX98fVEfHMB5u5slmqcg3xEWD1flNug7KNA=;
-        b=tXhwl5RZwkYQSF8X3hNDLMBsrYffFGZ/XCkArXBxGWQ0CmR+Pujx1Csd+gAxLNiKMC
-         gfht0yt8aUhCgwRt1iyiW45rfhTGnVVhVtdjtSCnlE9B7+h2hC+bt25jUxW6v30B3f0a
-         IpPY3OGAxYCmn4rSro0F4++KrFc9+zQL9tTYk9XbY0xZ+jbRHBByYv2RYlbrZIgQeOTM
-         580nK9GBvdsyUmNJ8yXVDpLWWy8UpwCB8fCjR1kgz1p0OxYS+IycjiME5ajkE2Pb5Sxt
-         mHoc50XE5+hZWcVy5MCpH3TzgA47v5Egtgc/gRRkYouHoPB7uBU9ZXYI5esun8Rt+46/
-         rcwA==
-X-Received: by 10.68.213.167 with SMTP id nt7mr34271110pbc.194.1364474345632;
-        Thu, 28 Mar 2013 05:39:05 -0700 (PDT)
+        bh=gj7HHYbp135BRJTrVSpqxaSzcvhEQyQt5g3k+3Cp9E4=;
+        b=Ds5MuqvWU940n9hXRmqTuudW7KJ4busBHh1ek6WVBG8m12/ah/TuAKtzAGFVOKRRbp
+         UP75XGJ+v9i247xnX4KI+jfuAZIL0JKhMejWQVQMPn36WFyY7d4nwamuabzBq2xCZLQ0
+         iQwSkqnECyR5BHHQcTlzb1D3BolbsHoQRVZ8WZy5K0R/jvU5sdbcj7qRG3gjTNnakGAR
+         xpV17VC8GkKtEp1Anr+9Mfxc1aYYhs65kwEir5fCJ3R5Wz100kNx633uMAT8bWBh8P8B
+         BGP/hjB1ldWON7H8rT9oSrs4NNm0U22ntNxsu2qMMxYWlR9qYvapsu/EsnVTUEOrNbCO
+         CIsw==
+X-Received: by 10.66.52.76 with SMTP id r12mr11161464pao.217.1364474760136;
+        Thu, 28 Mar 2013 05:46:00 -0700 (PDT)
 Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPS id m18sm27593854pad.17.2013.03.28.05.39.03
+        by mx.google.com with ESMTPS id vd4sm25443079pbc.35.2013.03.28.05.45.57
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 28 Mar 2013 05:39:04 -0700 (PDT)
+        Thu, 28 Mar 2013 05:45:59 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.141.g07926c6
-In-Reply-To: <7v4nfz1ndo.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vfvzgn3ob.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219383>
 
-Configuration from test_config does not last beyond the end of the
-current test assertion, making each test easier to think about in
-isolation.
+Running perlcritic with gentle severity reports six problems.  The
+following lists the line numbers on which the problems occur, along
+with a description of the problem.  This patch fixes them all, after
+carefully considering the consequences.
+
+516: Contrary to common belief, subroutine prototypes do not enable
+compile-time checks for proper arguments.  They serve the singular
+purpose of defining functions that behave like built-in functions, but
+check_file_rev_conflict was never intended to behave like one.  We
+have verified that the callers of the subroutines are alright with the
+change.
+
+714, 836, 855, 1487: Returning `undef' upon failure from a subroutine
+is pretty common. But if the subroutine is called in list context, an
+explicit `return undef;' statement will return a one-element list
+containing `(undef)'. Now if that list is subsequently put in a
+boolean context to test for failure, then it evaluates to true. But
+you probably wanted it to be false.  The solution is to just use a
+bare `return' statement whenever you want to return failure. In list
+context, Perl will then give you an empty list (which is false), and
+`undef' in scalar context (which is also false).
+
+1441: The three-argument form of `open' (introduced in Perl 5.6)
+prevents subtle bugs that occur when the filename starts with funny
+characters like '>' or '<'.  It's also more explicitly clear to define
+the input mode of the file.  This policy will not complain if the file
+explicitly states that it is compatible with a version of Perl prior
+to 5.6 via an include statement (see 'use 5.008' near the top of the
+file).
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- Removed first hunk, as per Junio's comment.
+ Junio: In future, please tell me explicitly that you're expecting a
+ re-roll with an updated commit message.  It wasn't obvious to me at
+ all.
 
- t/t5520-pull.sh | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ git-send-email.perl | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index e5adee8..87777ea 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -96,8 +96,7 @@ test_expect_success '--rebase' '
- '
- test_expect_success 'pull.rebase' '
- 	git reset --hard before-rebase &&
--	git config --bool pull.rebase true &&
--	test_when_finished "git config --unset pull.rebase" &&
-+	test_config pull.rebase true &&
- 	git pull . copy &&
- 	test $(git rev-parse HEAD^) = $(git rev-parse copy) &&
- 	test new = $(git show HEAD:file2)
-@@ -105,8 +104,7 @@ test_expect_success 'pull.rebase' '
+diff --git a/git-send-email.perl b/git-send-email.perl
+index c3501d9..633f447 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -513,7 +513,7 @@ if (@alias_files and $aliasfiletype and defined $parse_alias{$aliasfiletype}) {
+ ($sender) = expand_aliases($sender) if defined $sender;
  
- test_expect_success 'branch.to-rebase.rebase' '
- 	git reset --hard before-rebase &&
--	git config --bool branch.to-rebase.rebase true &&
--	test_when_finished "git config --unset branch.to-rebase.rebase" &&
-+	test_config branch.to-rebase.rebase true &&
- 	git pull . copy &&
- 	test $(git rev-parse HEAD^) = $(git rev-parse copy) &&
- 	test new = $(git show HEAD:file2)
-@@ -114,10 +112,8 @@ test_expect_success 'branch.to-rebase.rebase' '
+ # returns 1 if the conflict must be solved using it as a format-patch argument
+-sub check_file_rev_conflict($) {
++sub check_file_rev_conflict {
+ 	return unless $repo;
+ 	my $f = shift;
+ 	try {
+@@ -711,7 +711,7 @@ sub ask {
+ 			}
+ 		}
+ 	}
+-	return undef;
++	return;
+ }
  
- test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
- 	git reset --hard before-rebase &&
--	git config --bool pull.rebase true &&
--	test_when_finished "git config --unset pull.rebase" &&
--	git config --bool branch.to-rebase.rebase false &&
--	test_when_finished "git config --unset branch.to-rebase.rebase" &&
-+	test_config pull.rebase true &&
-+	test_config branch.to-rebase.rebase false &&
- 	git pull . copy &&
- 	test $(git rev-parse HEAD^) != $(git rev-parse copy) &&
- 	test new = $(git show HEAD:file2)
-@@ -171,9 +167,9 @@ test_expect_success 'pull --rebase dies early with dirty working directory' '
- 	git update-ref refs/remotes/me/copy copy^ &&
- 	COPY=$(git rev-parse --verify me/copy) &&
- 	git rebase --onto $COPY copy &&
--	git config branch.to-rebase.remote me &&
--	git config branch.to-rebase.merge refs/heads/copy &&
--	git config branch.to-rebase.rebase true &&
-+	test_config branch.to-rebase.remote me &&
-+	test_config branch.to-rebase.merge refs/heads/copy &&
-+	test_config branch.to-rebase.rebase true &&
- 	echo dirty >> file &&
- 	git add file &&
- 	test_must_fail git pull &&
+ my %broken_encoding;
+@@ -833,7 +833,7 @@ sub extract_valid_address {
+ 	# less robust/correct than the monster regexp in Email::Valid,
+ 	# but still does a 99% job, and one less dependency
+ 	return $1 if $address =~ /($local_part_regexp\@$domain_regexp)/;
+-	return undef;
++	return;
+ }
+ 
+ sub extract_valid_address_or_die {
+@@ -852,7 +852,7 @@ sub validate_address {
+ 			valid_re => qr/^(?:quit|q|drop|d|edit|e)/i,
+ 			default => 'q');
+ 		if (/^d/i) {
+-			return undef;
++			return;
+ 		} elsif (/^q/i) {
+ 			cleanup_compose_files();
+ 			exit(0);
+@@ -1453,7 +1453,7 @@ sub recipients_cmd {
+ 
+ 	my $sanitized_sender = sanitize_address($sender);
+ 	my @addresses = ();
+-	open my $fh, "$cmd \Q$file\E |"
++	open my $fh, q{-|}, "$cmd \Q$file\E"
+ 	    or die "($prefix) Could not execute '$cmd'";
+ 	while (my $address = <$fh>) {
+ 		$address =~ s/^\s*//g;
+@@ -1499,7 +1499,7 @@ sub validate_patch {
+ 			return "$.: patch contains a line longer than 998 characters";
+ 		}
+ 	}
+-	return undef;
++	return;
+ }
+ 
+ sub file_has_nonascii {
 -- 
 1.8.2.141.g07926c6
