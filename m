@@ -1,89 +1,93 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/6] dir.c::match_pathname(): pay attention to the length of
- string parameters
-Date: Thu, 28 Mar 2013 17:48:21 -0400
-Message-ID: <20130328214821.GD10936@sigill.intra.peff.net>
+Subject: [PATCH 5/6] attr.c::path_matches(): special case paths that end with
+ a slash
+Date: Thu, 28 Mar 2013 17:49:13 -0400
+Message-ID: <20130328214913.GE10936@sigill.intra.peff.net>
 References: <20130328214358.GA10685@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, pclouds@gmail.com, avila.jn@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 22:49:03 2013
+X-From: git-owner@vger.kernel.org Thu Mar 28 22:49:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULKgq-0000IF-Or
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 22:48:57 +0100
+	id 1ULKhg-0002uI-83
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 22:49:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754187Ab3C1Vs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 17:48:29 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44060 "EHLO
+	id S1753951Ab3C1VtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 17:49:20 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44065 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753951Ab3C1Vs2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 17:48:28 -0400
-Received: (qmail 30778 invoked by uid 107); 28 Mar 2013 21:50:15 -0000
+	id S1752927Ab3C1VtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 17:49:19 -0400
+Received: (qmail 30798 invoked by uid 107); 28 Mar 2013 21:51:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 17:50:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 17:48:21 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 17:51:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 17:49:13 -0400
 Content-Disposition: inline
 In-Reply-To: <20130328214358.GA10685@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219467>
 
-This function takes two counted strings: a <pattern, patternlen> pair
-and a <pathname, pathlen> pair. But we end up feeding the result to
-fnmatch, which expects NUL-terminated strings.
+From: Junio C Hamano <gitster@pobox.com>
 
-We can fix this by calling the fnmatch_icase_mem function, which
-handles re-allocating into a NUL-terminated string if necessary.
+The function is given a string that ends with a slash to signal that
+the path is a directory to make sure that a pattern that ends with a
+slash (i.e. MUSTBEDIR) can tell directories and non-directories
+apart.  However, the pattern itself (pat->pattern and
+pat->patternlen) that came from such a MUSTBEDIR pattern is
+represented as a string that ends with a slash, but patternlen does
+not count that trailing slash. A MUSTBEDIR pattern "element/" is
+represented as a counted string <"element/", 7> and this must match
+match pathname "element/".
 
-While we're at it, we can avoid even calling fnmatch in some cases. In
-addition to patternlen, we get "prefix", the size of the pattern that
-contains no wildcard characters. We do a straight match of the prefix
-part first, and then use fnmatch to cover the rest. But if there are
-no wildcards in the pattern at all, we do not even need to call
-fnmatch; we would simply be comparing two empty strings.
+Because match_basename() and match_pathname() want to see pathname
+"element" to match against the pattern <"element/", 7>, reduce the
+length of the path to exclude the trailing slash when calling
+these functions.
 
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-New in this iteration.
+Tweaked since v1 to also drop the trailing slash when we pass the path
+to match_pathname.
 
- dir.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ attr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index cc4ce8b..3ad44c3 100644
---- a/dir.c
-+++ b/dir.c
-@@ -624,11 +624,22 @@ int match_pathname(const char *pathname, int pathlen,
- 		if (strncmp_icase(pattern, name, prefix))
- 			return 0;
- 		pattern += prefix;
-+		patternlen -= prefix;
- 		name    += prefix;
- 		namelen -= prefix;
-+
-+		/*
-+		 * If the whole pattern did not have a wildcard,
-+		 * then our prefix match is all we need; we
-+		 * do not need to call fnmatch at all.
-+		 */
-+		if (!patternlen && !namelen)
-+			return 1;
+diff --git a/attr.c b/attr.c
+index 4cfe0ee..4d620bc 100644
+--- a/attr.c
++++ b/attr.c
+@@ -661,18 +661,18 @@ static int path_matches(const char *pathname, int pathlen,
+ {
+ 	const char *pattern = pat->pattern;
+ 	int prefix = pat->nowildcardlen;
++	int isdir = (pathlen && pathname[pathlen - 1] == '/');
+ 
+-	if ((pat->flags & EXC_FLAG_MUSTBEDIR) &&
+-	    ((!pathlen) || (pathname[pathlen-1] != '/')))
++	if ((pat->flags & EXC_FLAG_MUSTBEDIR) && !isdir)
+ 		return 0;
+ 
+ 	if (pat->flags & EXC_FLAG_NODIR) {
+ 		return match_basename(pathname + basename_offset,
+-				      pathlen - basename_offset,
++				      pathlen - basename_offset - isdir,
+ 				      pattern, prefix,
+ 				      pat->patternlen, pat->flags);
  	}
- 
--	return fnmatch_icase(pattern, name, FNM_PATHNAME) == 0;
-+	return fnmatch_icase_mem(pattern, patternlen,
-+				 name, namelen,
-+				 FNM_PATHNAME) == 0;
+-	return match_pathname(pathname, pathlen,
++	return match_pathname(pathname, pathlen - isdir,
+ 			      base, baselen,
+ 			      pattern, prefix, pat->patternlen, pat->flags);
  }
- 
- /* Scan the list and let the last match determine the fate.
 -- 
 1.8.2.13.g0f18d3c
