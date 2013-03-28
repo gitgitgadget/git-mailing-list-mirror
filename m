@@ -1,78 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git help config: s/insn/instruction/
-Date: Thu, 28 Mar 2013 08:55:14 -0700
-Message-ID: <7v7gkrwmcd.fsf@alter.siamese.dyndns.org>
-References: <1364424830-17108-1-git-send-email-matthias.krueger@famsik.de>
- <7vboa4jc9a.fsf@alter.siamese.dyndns.org> <5153FEFD.3020703@famsik.de>
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCH] push: Alias pushurl from push rewrites
+Date: Thu, 28 Mar 2013 09:01:04 -0700
+Message-ID: <20130328160104.GC16034@leaf>
+References: <20130327122216.5de0c336@hoelz.ro>
+ <20130327182345.GD28148@google.com>
+ <20130327211554.GH28148@google.com>
+ <7vsj3gjy3t.fsf@alter.siamese.dyndns.org>
+ <20130327174845.5e3081d1@hoelz.ro>
+ <20130327230943.GA5204@jtriplet-mobl1>
+ <20130327231819.GL28148@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, kumbayo84@arcor.de
-To: Matthias =?utf-8?Q?Kr=C3=BCger?= <matthias.krueger@famsik.de>
-X-From: git-owner@vger.kernel.org Thu Mar 28 16:55:51 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Rob Hoelz <rob@hoelz.ro>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 17:01:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULFB7-0002Tc-66
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 16:55:50 +0100
+	id 1ULFGo-0003yF-OV
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 17:01:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755844Ab3C1PzS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Mar 2013 11:55:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63329 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752715Ab3C1PzQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Mar 2013 11:55:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CE7DAB9C;
-	Thu, 28 Mar 2013 11:55:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=IoI6E5yiyiM9
-	vvZPtJcs7IjQSN0=; b=tmjQgzfQQAKBKwofhBVHAFVXE3BfhhVY6IEM3HsjD7CF
-	e0NxxaAUPZE7tVJ6MRZtcPcWH2vlD5HbrV7Y5rOpu9rkYGK1aHOPxPdvZo7kBzh8
-	w7FqyW+rAFJJJnkcXsh9AOUG2EWl+SpvCMz7rt5j5yGCBhw+gKHlv1pTf+65gog=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=G7u6Ns
-	/xbr3g4QvxucM2MnmbRubfzxIbWmnQwGVM+L5v0bFybVPBx9o5e7uSEUMuVrwoCR
-	e1rN3pd8zSCNWmcqEcAxrhrNgC6bsPCx7ULeBFzgrhMdaOqaSj/uGXp4jCV+VwNj
-	DbX5nyW8Pz/M5oySke7y7w2eEiKDTThyBykuA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62893AB9A;
-	Thu, 28 Mar 2013 11:55:16 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD91BAB99; Thu, 28 Mar 2013
- 11:55:15 -0400 (EDT)
-In-Reply-To: <5153FEFD.3020703@famsik.de> ("Matthias =?utf-8?Q?Kr=C3=BCger?=
- =?utf-8?Q?=22's?= message of "Thu, 28 Mar 2013 09:27:41 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E1E7ED8A-97BF-11E2-A9B7-CBA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756380Ab3C1QBN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 12:01:13 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:41995 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753761Ab3C1QBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 12:01:12 -0400
+Received: from mfilter19-d.gandi.net (mfilter19-d.gandi.net [217.70.178.147])
+	by relay4-d.mail.gandi.net (Postfix) with ESMTP id F146B172094;
+	Thu, 28 Mar 2013 17:01:09 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter19-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([217.70.183.196])
+	by mfilter19-d.gandi.net (mfilter19-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id mMHn7F7t8tr1; Thu, 28 Mar 2013 17:01:08 +0100 (CET)
+X-Originating-IP: 50.43.39.152
+Received: from leaf (static-50-43-39-152.bvtn.or.frontiernet.net [50.43.39.152])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 358361720AD;
+	Thu, 28 Mar 2013 17:01:07 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20130327231819.GL28148@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219417>
 
-Matthias Kr=C3=BCger <matthias.krueger@famsik.de> writes:
+On Wed, Mar 27, 2013 at 04:18:19PM -0700, Jonathan Nieder wrote:
+> Josh Triplett wrote:
+> 
+> >                       I have a .gitconfig in my git-managed home
+> > directory which sets pushInsteadOf so that I can clone via git:// and
+> > immediately have working push.  I work with a number of systems that
+> > don't have inbound access to each other but do have outbound access to
+> > the network; on some of these "satellite" boxes, I can't push changes
+> > directly to the server pushInsteadOf points to, so I can explicitly set
+> > pushurl in .git/config for that repository, which overrides the
+> > pushInsteadOf.  This change would break that configuration.
+> 
+> Would it?  As long as your pushurl does not start with git://, I think
+> your configuration would still work fine.
 
-> On 03/28/2013 06:59 AM, Junio C Hamano wrote:
->> Matthias Kr=C3=BCger <matthias.krueger@famsik.de> writes:
->>
->>> "insn" appears to be an in-code abbreviation and should not appear =
-in manual/help pages.
->>> ---
->> Thanks; sign-off?
-> Oops, sorry.
->
-> Signed-off-by: Matthias Kr=C3=BCger <matthias.krueger@famsik.de>
->
-> (Is this sufficient or do I have to re-send the patch with the
-> sign-off line?)
+I had to think about it for a while, but I think you're right; I
+inferred a behavior that the patch didn't actually add or have anything
+to do with, namely having the result of applying pushInsteadOf to the
+non-push URL override the pushUrl.
 
-I can squash it in, so there is no need to resend.  The more
-important thing is I won't have to for your future patches.
+OK, I take it back.  I *can* imagine configurations that this change
+would break, since it does change intentional and documented behavior,
+but I don't have any such configuration.  The only such configuration I
+can imagine involves directly counting on the non-rewriting of pushUrl,
+by using pushInsteadOf to rewrite urls and then sometimes using pushUrl
+to override that and point back at the un-rewritten URL.  And while
+supported, that does seem *odd*.
 
-Thanks.
+Objection withdrawn; if nobody can come up with a sensible configuration
+that relies on the documented behavior, I don't particularly care if it
+changes.
+
+> After this patch, neither pushInsteadOf nor pushUrl overrides the
+> other one.  The rule is:
+> 
+> 	1. First, get the URL from the remote's configuration, based
+> 	   on whether you are fetching or pushing.
+> 
+> 	   (At this step, in your setup git chooses the URL specified
+> 	   with pushurl in your .git/config.)
+> 	
+> 	2. Next, apply the most appropriate url.*.insteadOf or
+> 	   url.*.pushInsteadOf rule, based on whether you are fetching
+> 	   or pushing.
+> 
+> 	   (At this step, no rewrite rules apply, so the URL is used
+> 	   as is.)
