@@ -1,76 +1,95 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Bug in "git rev-parse --verify"
-Date: Thu, 28 Mar 2013 16:52:15 +0100
-Message-ID: <5154672F.10303@alum.mit.edu>
-References: <51543FDB.9010109@alum.mit.edu> <CAPc5daUqzz=9TBmj2Q0MHqEc6gMHxXoGr9+JV3hq76zDKJAyCw@mail.gmail.com> <515462FB.9040605@alum.mit.edu> <20130328153808.GB3337@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] push: Alias pushurl from push rewrites
+Date: Thu, 28 Mar 2013 08:52:28 -0700
+Message-ID: <7vboa3wmgz.fsf@alter.siamese.dyndns.org>
+References: <20130327122216.5de0c336@hoelz.ro>
+ <20130327182345.GD28148@google.com> <20130327211554.GH28148@google.com>
+ <7vsj3gjy3t.fsf@alter.siamese.dyndns.org> <20130327174845.5e3081d1@hoelz.ro>
+ <20130327230943.GA5204@jtriplet-mobl1> <20130327231819.GL28148@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junio@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 28 16:52:51 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Josh Triplett <josh@joshtriplett.org>, Rob Hoelz <rob@hoelz.ro>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 16:53:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULF8D-0001lm-5i
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 16:52:49 +0100
+	id 1ULF8O-0002U0-7W
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 16:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756050Ab3C1PwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 11:52:21 -0400
-Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:59956 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756089Ab3C1PwU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Mar 2013 11:52:20 -0400
-X-AuditID: 1207440f-b7f466d0000009dc-0d-5154673110fa
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 8B.6C.02524.13764515; Thu, 28 Mar 2013 11:52:18 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r2SFqFKW027607
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 28 Mar 2013 11:52:17 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
-In-Reply-To: <20130328153808.GB3337@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqGuUHhJoMDXQoutKN5PFiin3WCx+
-	tPQwOzB7POvdw+hx8ZKyx+dNcgHMUdw2SYklZcGZ6Xn6dgncGY2d7WwFvawV0/9+ZW1gbGbp
-	YuTkkBAwkdi7qZUdwhaTuHBvPVsXIxeHkMBlRolfK/eyQzjHmSSezV/KDFLFK6ApcWbpLjCb
-	RUBV4kTvfbBJbAK6Eot6mplAbFGBMIm9F6axQdQLSpyc+QSsRkRAVuL74Y2MIDazgI/E5197
-	WUFsYQEdieM9HSwQy/YxSmx80ALWwClgJTHv5wKgoRxADeoS6+cJQfTKS2x/O4d5AqPALCQr
-	ZiFUzUJStYCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrolebmaJXmpK6SZGSODy72DsWi9z
-	iFGAg1GJh3dGREigEGtiWXFl7iFGSQ4mJVFejRSgEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHe
-	pjigHG9KYmVValE+TEqag0VJnFd9ibqfkEB6YklqdmpqQWoRTFaGg0NJgtc/DahRsCg1PbUi
-	LTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhSp8cXAWAVJ8QDtdQRp5y0uSMwFikK0nmLU5eha
-	9PkVoxBLXn5eqpQ4rwVIkQBIUUZpHtwKWJp6xSgO9LEwbyhIFQ8wxcFNegW0hAloyfKvwSBL
-	ShIRUlINjPxzKqPecJru6PB9Xu/kemXyi4xQLeHjntsjz/7Rb22o2713uzvTpKU6M/rzfjwW
-	nbP30ZfoZb7HDebMNHYoEXtnPOGuOiuv2c5yn0gN48b28Jlu+rKfeyVcp+19+8Zz 
+	id S1756416Ab3C1Pwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 11:52:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61979 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752615Ab3C1Pwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 11:52:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E71BA9F6;
+	Thu, 28 Mar 2013 11:52:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/0hoRdnOZlvS1sB2DzaYBP/xjKo=; b=KEN+WX
+	Ihcyg8Q1nAqD+6+11xObyvOs+3OhELknKrW2EelRHf2W1+N6mR9AG5uLokPbKfvk
+	C44qlVsqfijAGEPK+x5wYPLCA1Et3pESuIOS2ecyzkWwdVi4SipEaq17NG6zv9oB
+	WsV7yzeRVPFK+ccRNe3JRQZQ9psWW+2XEpRuQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TTjXBAUyGjZhMphMuIHlkAnhFqIUpWU5
+	RKd0kDG4nItIxzggsp1qN6K/aUq72xZV4I9A6GT8Ik6GsV+iytuL8ew+Rd5iwTAt
+	G3HS7WOhyRhOidVk5YaKxz4W76O+oowMmWrplGl9N0B66CMJ7t8HJq45UQD+lt/v
+	rb/+WX8AOlY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 63956A9F5;
+	Thu, 28 Mar 2013 11:52:30 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C031FA9F4; Thu, 28 Mar 2013
+ 11:52:29 -0400 (EDT)
+In-Reply-To: <20130327231819.GL28148@google.com> (Jonathan Nieder's message
+ of "Wed, 27 Mar 2013 16:18:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7EE40B06-97BF-11E2-BD70-CBA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219414>
 
-On 03/28/2013 04:38 PM, Jeff King wrote:
-> On Thu, Mar 28, 2013 at 04:34:19PM +0100, Michael Haggerty wrote:
-> 
->> Is there a simple way to verify an object name more strictly and convert
->> it to an SHA1?  I can only think of solutions that require two commands,
->> like
->>
->>     git cat-file -e $ARG && git rev-parse --verify $ARG
-> 
-> Is the rev-parse line doing anything there? If $ARG does not resolve to
-> a sha1, then wouldn't cat-file have failed?
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-It's outputting the SHA1, which cat-file seems incapable of providing in
-a useful way.
+> Josh Triplett wrote:
+>
+>>                       I have a .gitconfig in my git-managed home
+>> directory which sets pushInsteadOf so that I can clone via git:// and
+>> immediately have working push.  I work with a number of systems that
+>> don't have inbound access to each other but do have outbound access to
+>> the network; on some of these "satellite" boxes, I can't push changes
+>> directly to the server pushInsteadOf points to, so I can explicitly set
+>> pushurl in .git/config for that repository, which overrides the
+>> pushInsteadOf.  This change would break that configuration.
+>
+> Would it?  As long as your pushurl does not start with git://, I think
+> your configuration would still work fine.
 
-Michael
+That is a good point, especially because it is very unlikely that
+git:// was used for pushURL, given that it would not have been
+rewritten with pushInsteadOf to an authenticated transport.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+> After this patch, neither pushInsteadOf nor pushUrl overrides the
+> other one.  The rule is:
+>
+> 	1. First, get the URL from the remote's configuration, based
+> 	   on whether you are fetching or pushing.
+>
+> 	   (At this step, in your setup git chooses the URL specified
+> 	   with pushurl in your .git/config.)
+> 	
+> 	2. Next, apply the most appropriate url.*.insteadOf or
+> 	   url.*.pushInsteadOf rule, based on whether you are fetching
+> 	   or pushing.
+>
+> 	   (At this step, no rewrite rules apply, so the URL is used
+> 	   as is.)
