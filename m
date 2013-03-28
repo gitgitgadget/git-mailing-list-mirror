@@ -1,145 +1,78 @@
-From: John Koleszar <jkoleszar@google.com>
-Subject: Re: [PATCH] http-backend: respect GIT_NAMESPACE with dumb clients
-Date: Thu, 28 Mar 2013 08:54:35 -0700
-Message-ID: <CAAvHm8N8Sm-EuA5ofPp1qNJrZGqcRbzA3LFX5s0-g8oCnB8bhw@mail.gmail.com>
-References: <1364446721-13351-1-git-send-email-jkoleszar@google.com>
-	<7v38vfy48e.fsf@alter.siamese.dyndns.org>
-	<CAAvHm8NAqVHLz1wjNN-3ocpYzWfO-PDo0PAJ6pZO7KrMkhJ6Jw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git help config: s/insn/instruction/
+Date: Thu, 28 Mar 2013 08:55:14 -0700
+Message-ID: <7v7gkrwmcd.fsf@alter.siamese.dyndns.org>
+References: <1364424830-17108-1-git-send-email-matthias.krueger@famsik.de>
+ <7vboa4jc9a.fsf@alter.siamese.dyndns.org> <5153FEFD.3020703@famsik.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 16:55:08 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, kumbayo84@arcor.de
+To: Matthias =?utf-8?Q?Kr=C3=BCger?= <matthias.krueger@famsik.de>
+X-From: git-owner@vger.kernel.org Thu Mar 28 16:55:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULFAP-0000EM-AD
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 16:55:05 +0100
+	id 1ULFB7-0002Tc-66
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 16:55:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755324Ab3C1Pyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 11:54:37 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:52865 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751385Ab3C1Pyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 11:54:36 -0400
-Received: by mail-wi0-f173.google.com with SMTP id ez12so3455335wid.12
-        for <git@vger.kernel.org>; Thu, 28 Mar 2013 08:54:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=THIGJue3CDUYz5Jbr6YVjgSiwQ7n54HciGQKtE+8ySc=;
-        b=evSECfyJSr+EwYHWZfuvgPOYnN0FoESu35utSf7hDnlhEDRWelNdzsSu8Yc3+9Yu3Y
-         ++PczFrqvIIe9bAVl84oKhweT8F6ED4jW1+2AHmGlP9olEAQbEF1rus1rhP67TGxu9S9
-         CRC6e4PV9rG2RESgRAu3FIdWE4bVgFe2GwIBt+q+ANAAiZSTzA3Bs1Wi0lDIJDDeGdg9
-         /hMGoFqdttpwY73SX6DIZLWfIlDA2qUlZDDQ0TQXgdo6o/vW9nf2EE3ZWTjxNBoVjDp1
-         6wogCuyf+jXuQI0L5orGo0+Jz38dSpKcltN+LZaB/RDqUnYNUeKaZcyIl1Jh0krVTrNL
-         1xkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:x-gm-message-state;
-        bh=THIGJue3CDUYz5Jbr6YVjgSiwQ7n54HciGQKtE+8ySc=;
-        b=UMZP50/kOiNUcGIBWyN+5JNO/YFADMAp+TDvQXDj7qUX9swfkWgdg3ddXvBGU9zkbE
-         9kjkS53V8DBzYf9thusMPxLl1Z87TVzB7Nb9896F7Ew/Q+GLdec7KldYWRDeyMJLo97O
-         NvJO6QUjxSyRUXllLyxaWRs1muZnqInc60qzIHaIJQDUPXBzj1S/gvu3kX3Uh61i8Zg9
-         icrFkGBERXB/FJuL+klArYuK6k7cOwqilC12Vfg07J5HETQNR19yciReaarJReb3i4Fz
-         FXsqKmUMfLqVVRRDhYEyFtbVITUsxsKowRNo5dwz/LRfZmizLEJXp8pnbrpvL2kzWcAM
-         phzA==
-X-Received: by 10.180.90.18 with SMTP id bs18mr17212288wib.31.1364486075187;
- Thu, 28 Mar 2013 08:54:35 -0700 (PDT)
-Received: by 10.194.25.1 with HTTP; Thu, 28 Mar 2013 08:54:35 -0700 (PDT)
-In-Reply-To: <CAAvHm8NAqVHLz1wjNN-3ocpYzWfO-PDo0PAJ6pZO7KrMkhJ6Jw@mail.gmail.com>
-X-Gm-Message-State: ALoCoQnDRMjgtx3YnUY++NZhRPfpLR98ULevKmvFK2H2W+AkBvPTx3UufVsysebki/CRmDSvOknHk6tlWgXQdcsiF1Rz2HKB0Bl9pimWOjY5SG4nkk1xm2bB1hI8MpRiaUtztz9E0FAYk6Si0dqHyzQkySqMHqr0MPLWD3gBORXPtS8rYQAUF5BFkuuec7vBdBcSquo2fQS/
+	id S1755844Ab3C1PzS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Mar 2013 11:55:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63329 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752715Ab3C1PzQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Mar 2013 11:55:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CE7DAB9C;
+	Thu, 28 Mar 2013 11:55:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=IoI6E5yiyiM9
+	vvZPtJcs7IjQSN0=; b=tmjQgzfQQAKBKwofhBVHAFVXE3BfhhVY6IEM3HsjD7CF
+	e0NxxaAUPZE7tVJ6MRZtcPcWH2vlD5HbrV7Y5rOpu9rkYGK1aHOPxPdvZo7kBzh8
+	w7FqyW+rAFJJJnkcXsh9AOUG2EWl+SpvCMz7rt5j5yGCBhw+gKHlv1pTf+65gog=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=G7u6Ns
+	/xbr3g4QvxucM2MnmbRubfzxIbWmnQwGVM+L5v0bFybVPBx9o5e7uSEUMuVrwoCR
+	e1rN3pd8zSCNWmcqEcAxrhrNgC6bsPCx7ULeBFzgrhMdaOqaSj/uGXp4jCV+VwNj
+	DbX5nyW8Pz/M5oySke7y7w2eEiKDTThyBykuA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62893AB9A;
+	Thu, 28 Mar 2013 11:55:16 -0400 (EDT)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD91BAB99; Thu, 28 Mar 2013
+ 11:55:15 -0400 (EDT)
+In-Reply-To: <5153FEFD.3020703@famsik.de> ("Matthias =?utf-8?Q?Kr=C3=BCger?=
+ =?utf-8?Q?=22's?= message of "Thu, 28 Mar 2013 09:27:41 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E1E7ED8A-97BF-11E2-A9B7-CBA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219416>
 
-On Thu, Mar 28, 2013 at 8:52 AM, John Koleszar <jkoleszar@google.com> wrote:
-> On Thu, Mar 28, 2013 at 7:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Matthias Kr=C3=BCger <matthias.krueger@famsik.de> writes:
+
+> On 03/28/2013 06:59 AM, Junio C Hamano wrote:
+>> Matthias Kr=C3=BCger <matthias.krueger@famsik.de> writes:
 >>
->> John Koleszar <jkoleszar@google.com> writes:
->>
->> > diff --git a/t/t5561-http-backend.sh b/t/t5561-http-backend.sh
->> > index b5d7fbc..5a19d61 100755
->> > --- a/t/t5561-http-backend.sh
->> > +++ b/t/t5561-http-backend.sh
->> > @@ -134,6 +134,10 @@ POST /smart/repo.git/git-receive-pack HTTP/1.1 200
->> > -
->> >  ###
->> >  GET  /smart/repo.git/info/refs?service=git-receive-pack HTTP/1.1 403 -
->> >  POST /smart/repo.git/git-receive-pack HTTP/1.1 403 -
->> > +
->> > +###  namespace test
->> > +###
->> > +GET  /smart_namespace/repo.git/info/refs HTTP/1.1 200
->> >  EOF
->> >  test_expect_success 'server request log matches test results' '
->> >       sed -e "
->> > diff --git a/t/t556x_common b/t/t556x_common
->> > index 82926cf..cb9eb9d 100755
->> > --- a/t/t556x_common
->> > +++ b/t/t556x_common
->> > @@ -120,3 +120,19 @@ test_expect_success 'http.receivepack false' '
->> >       GET info/refs?service=git-receive-pack "403 Forbidden" &&
->> >       POST git-receive-pack 0000 "403 Forbidden"
->> >  '
->> > +test_expect_success 'backend respects namespaces' '
->> > +     log_div "namespace test"
->> > +     config http.uploadpack true &&
->> > +     config http.getanyfile true &&
->> > +
->> > +     GIT_NAMESPACE=ns && export GIT_NAMESPACE &&
->>
->> When other people want to enhance this test suite later, their tests
->> may not want the namespace contaminated with the environment
->> variable.  You would need to enclose from here to the end inside a
->> subshell or something.
->>
+>>> "insn" appears to be an in-code abbreviation and should not appear =
+in manual/help pages.
+>>> ---
+>> Thanks; sign-off?
+> Oops, sorry.
 >
-> Ok. I'm not familiar with the test infrastructure, I had guessed that these
-> were already running inside a subshell. I'll make this explicit.
+> Signed-off-by: Matthias Kr=C3=BCger <matthias.krueger@famsik.de>
 >
->>
->> > +     git push public master:master &&
->> > +     (cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
->> > +             git for-each-ref | grep /$GIT_NAMESPACE/ >/dev/null
->> > +     ) &&
->> > +
->> > +     git ls-remote public >exp &&
->> > +     curl "$HTTPD_URL/smart_namespace/repo.git/info/refs" >act &&
->>
->> Spell out "expect" and "actual".
->>
->
-> The exiting tests are using exp and act for this. No objection if you want
-> me to spell it out here, but having two different files for this may be
-> confusing.
->
->>
->> For some unknwon reason, I am getting an HTTPD_URL at this point,
->> causing it to fail with:
->>
->>     curl: (3) <url> malformed
->>
->
-> Ah, my fault. I only ran t5561-http-backend.sh. Will fix.
->
->> > +     test_cmp exp act &&
->> > +     (grep /ns/ exp && false || true)
->>
->> What does that last line even mean?  Both
->>
->>         false && false || true
->>         true && false || true
->>
->> will yield true.  Leftover from your debugging session?
->
->
-> Facepalm. The intent here is to invert the grep, to make sure that the /ns/
-> does not appear in the output. No idea why I wrote it that way. Will fix.
->
+> (Is this sufficient or do I have to re-send the patch with the
+> sign-off line?)
+
+I can squash it in, so there is no need to resend.  The more
+important thing is I won't have to for your future patches.
+
+Thanks.
