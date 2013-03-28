@@ -1,76 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Composing git repositories
-Date: Thu, 28 Mar 2013 11:21:40 -0700
-Message-ID: <20130328182140.GO28148@google.com>
-References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
- <7vmwtqt8rs.fsf@alter.siamese.dyndns.org>
- <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
- <7vvc8comj5.fsf@alter.siamese.dyndns.org>
- <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
- <20130327192630.GF28148@google.com>
- <CALkWK0nreJZX4msFET0a7cuUMWNbQhhqy+ezrkqYGqL4_a2duA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: More detailed error message for 403 forbidden.
+Date: Thu, 28 Mar 2013 14:36:01 -0400
+Message-ID: <20130328183601.GA11914@sigill.intra.peff.net>
+References: <CAFT+Tg_PwAS__AYCwQQZjy4LVvAMZFJuJ+ediDJpRnxx73qMMg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 19:22:19 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Yi, EungJun" <semtlenori@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 19:36:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULHSo-00088r-Vb
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 19:22:15 +0100
+	id 1ULHgk-000221-5c
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 19:36:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753414Ab3C1SVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 14:21:46 -0400
-Received: from mail-da0-f41.google.com ([209.85.210.41]:61200 "EHLO
-	mail-da0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753148Ab3C1SVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 14:21:45 -0400
-Received: by mail-da0-f41.google.com with SMTP id w4so4654561dam.0
-        for <git@vger.kernel.org>; Thu, 28 Mar 2013 11:21:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=9Y3dk4yrqacr2Rd2TW3W8Hjae4QckQOBE98NLTPZe0I=;
-        b=RPIgYJ+0lSlKzItD6ohCID7caMidPmjKDtTwFKkpSCBuRwdrbsTR64SpgYR57FUvrZ
-         m4AF6vAiueB/QY6jA75nDViort4YwqwbdiwGX/ziHBy4AQ2RNRZDtBpb4sDvB28AC1vM
-         jRYdBoD4HiK8p/fIbggFCCljElXDvK6CsCNIpni1JV0QOk3abH3SPKBQO1ar0IZ4zlqD
-         +cgM+VdUoRbbznsYt/QbORPO6v7s9PCS4y4Ggo0MHQxSzLwOwSyCscfxQOSVUHnxb1R1
-         6C/W53QeX7SFWkDVHsz+cdvovPoch4OpFK1eCGsrPmpwqNchHQfIL0Q3mNiz2qaPRPPL
-         MK+g==
-X-Received: by 10.68.243.98 with SMTP id wx2mr37583095pbc.68.1364494905357;
-        Thu, 28 Mar 2013 11:21:45 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id ab1sm26375919pbd.37.2013.03.28.11.21.42
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 28 Mar 2013 11:21:43 -0700 (PDT)
+	id S1753633Ab3C1SgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 14:36:09 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43844 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752039Ab3C1SgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 14:36:07 -0400
+Received: (qmail 27520 invoked by uid 107); 28 Mar 2013 18:37:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 14:37:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 14:36:01 -0400
 Content-Disposition: inline
-In-Reply-To: <CALkWK0nreJZX4msFET0a7cuUMWNbQhhqy+ezrkqYGqL4_a2duA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAFT+Tg_PwAS__AYCwQQZjy4LVvAMZFJuJ+ediDJpRnxx73qMMg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219439>
 
-Ramkumar Ramachandra wrote:
+On Wed, Mar 27, 2013 at 12:29:57PM +0900, Yi, EungJun wrote:
 
-> Do you realize how difficult this is to implement?  We'll need to
-> patch all the git commands to essentially do what we'd get for free if
-> the submodule were a tree object instead of a commit object (although
-> I'm not saying that's the Right thing to do).
+> Currently, if user tried to access a git repository via HTTP and it
+> fails because the user's permission is not enough to access the
+> repository, git client tells that http request failed and the error
+> was 403 forbidden.
 
-What are you talking about?  Yes, of course I realize that recursing
-over subprojects that are managed as separate git repositories
-requires writing new code.  That's why people have started to write
-such code.  They seem to think it's worth it.
+The situations in which you'll get a 403 depend on how the server is
+configured. For instance, on github.com, if you successfully
+authenticate but are not authorized to access a repository, you get a
+404 (we do this to avoid leaking information about which private
+repositories exist). But we do provide a 403 if you try to access the
+repository with a non-smart-http client.
 
-Meanwhile others with different designs in mind have written other
-tools.  Use cases even overlap a little, so they can compete.  That is
-exactly as it should be.
+So the "403 forbidden" there is not about your account, but about the
+method; if git is going to give a more verbose message, it needs to be
+careful not to mislead the user.
+
+> It would be much better if git client shows response body which might
+> include an explanation of the failure. For example,
+> [...]
+> $ git clone http://localhost/foo/bar
+> error: The requested URL returned error: 403 while accessing
+> http://localhost/foo/bar
+> remote: User 'me' does not have enough permission to access the repository.
+> fatal: HTTP request failed
+
+I agree that is the best way forward, as that means the server is
+telling us what is going on, and we are not guessing about the meaning
+of the 403.
+
+One problem is that the content body sent along with the error is not
+necessarily appropriate for showing to the user (e.g., if it is HTML, it
+is probably not a good idea to show it on the terminal). So I think we
+would want to only show it when the server has indicated via the
+content-type that the message is meant to be shown to the user. I'm
+thinking the server would generate something like:
+
+   HTTP/1.1 403 Forbidden
+   Content-type: application/x-git-error-message
+
+   User 'me' does not have enough permission to access the repository.
+
+which would produce the example you showed above.
+
+-Peff
