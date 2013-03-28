@@ -1,131 +1,149 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/6] attr.c::path_matches(): the basename is part of the
- pathname
-Date: Thu, 28 Mar 2013 17:45:00 -0400
-Message-ID: <20130328214500.GA10936@sigill.intra.peff.net>
+Subject: [PATCH 2/6] dir.c::match_basename(): pay attention to the length of
+ string parameters
+Date: Thu, 28 Mar 2013 17:47:28 -0400
+Message-ID: <20130328214728.GB10936@sigill.intra.peff.net>
 References: <20130328214358.GA10685@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, pclouds@gmail.com, avila.jn@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 22:45:40 2013
+X-From: git-owner@vger.kernel.org Thu Mar 28 22:48:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULKde-0006bI-9T
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 22:45:38 +0100
+	id 1ULKfz-0005xg-N6
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 22:48:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754099Ab3C1VpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 17:45:08 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44044 "EHLO
+	id S1754164Ab3C1Vrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 17:47:36 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44049 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753688Ab3C1VpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 17:45:07 -0400
-Received: (qmail 30712 invoked by uid 107); 28 Mar 2013 21:46:54 -0000
+	id S1753688Ab3C1Vrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 17:47:35 -0400
+Received: (qmail 30733 invoked by uid 107); 28 Mar 2013 21:49:22 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 17:46:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 17:45:00 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 17:49:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 17:47:28 -0400
 Content-Disposition: inline
 In-Reply-To: <20130328214358.GA10685@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219464>
 
 From: Junio C Hamano <gitster@pobox.com>
 
-The function takes two strings (pathname and basename) as if they
-are independent strings, but in reality, the latter is always
-pointing into a substring in the former.
+The function takes two counted strings (<basename, basenamelen> and
+<pattern, patternlen>) as parameters, together with prefix (the
+length of the prefix in pattern that is to be matched literally
+without globbing against the basename) and EXC_* flags that tells it
+how to match the pattern against the basename.
 
-Clarify this relationship by expressing the latter as an offset into
-the former.
+However, it did not pay attention to the length of these counted
+strings.  Update them to do the following:
+
+ * When the entire pattern is to be matched literally, the pattern
+   matches the basename only when the lengths of them are the same,
+   and they match up to that length.
+
+ * When the pattern is "*" followed by a string to be matched
+   literally, make sure that the basenamelen is equal or longer than
+   the "literal" part of the pattern, and the tail of the basename
+   string matches that literal part.
+
+ * Otherwise, use the new fnmatch_icase_mem helper to make
+   sure we only lookmake sure we use only look at the
+   counted part of the strings.  Because these counted strings are
+   full strings most of the time, we check for termination
+   to avoid unnecessary allocation.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This is identical to the original 1/4.
+Compared to v1:
 
- attr.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+  - This factors the fnmatch bits into a helper function so we can reuse it
+    later. As a result, the variable names are changed a bit.
 
-diff --git a/attr.c b/attr.c
-index ab2aab2..4cfe0ee 100644
---- a/attr.c
-+++ b/attr.c
-@@ -655,7 +655,7 @@ static int path_matches(const char *pathname, int pathlen,
+  - The original did:
+
+      if (use_pat)
+              strbuf_release(&pat);
+
+    but AFAICT that was a useless conditional; use_pat always points to
+    either the incoming buffer or the strbuf. But strbuf_release will
+    handle both cases for us.
+
+ dir.c | 40 ++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 36 insertions(+), 4 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index 5a83aa7..fac82c1 100644
+--- a/dir.c
++++ b/dir.c
+@@ -34,6 +34,33 @@ int fnmatch_icase(const char *pattern, const char *string, int flags)
+ 	return fnmatch(pattern, string, flags | (ignore_case ? FNM_CASEFOLD : 0));
  }
  
- static int path_matches(const char *pathname, int pathlen,
--			const char *basename,
-+			int basename_offset,
- 			const struct pattern *pat,
- 			const char *base, int baselen)
++static int fnmatch_icase_mem(const char *pattern, int patternlen,
++			     const char *string, int stringlen,
++			     int flags)
++{
++	int match_status;
++	struct strbuf pat_buf = STRBUF_INIT;
++	struct strbuf str_buf = STRBUF_INIT;
++	const char *use_pat = pattern;
++	const char *use_str = string;
++
++	if (pattern[patternlen]) {
++		strbuf_add(&pat_buf, pattern, patternlen);
++		use_pat = pat_buf.buf;
++	}
++	if (string[stringlen]) {
++		strbuf_add(&str_buf, string, stringlen);
++		use_str = str_buf.buf;
++	}
++
++	match_status = fnmatch_icase(use_pat, use_str, 0);
++
++	strbuf_release(&pat_buf);
++	strbuf_release(&str_buf);
++
++	return match_status;
++}
++
+ static size_t common_prefix_len(const char **pathspec)
  {
-@@ -667,8 +667,8 @@ static int path_matches(const char *pathname, int pathlen,
- 		return 0;
- 
- 	if (pat->flags & EXC_FLAG_NODIR) {
--		return match_basename(basename,
--				      pathlen - (basename - pathname),
-+		return match_basename(pathname + basename_offset,
-+				      pathlen - basename_offset,
- 				      pattern, prefix,
- 				      pat->patternlen, pat->flags);
- 	}
-@@ -701,7 +701,7 @@ static int fill_one(const char *what, struct match_attr *a, int rem)
- 	return rem;
- }
- 
--static int fill(const char *path, int pathlen, const char *basename,
-+static int fill(const char *path, int pathlen, int basename_offset,
- 		struct attr_stack *stk, int rem)
+ 	const char *n, *first;
+@@ -537,15 +564,20 @@ int match_basename(const char *basename, int basenamelen,
+ 		   int flags)
  {
- 	int i;
-@@ -711,7 +711,7 @@ static int fill(const char *path, int pathlen, const char *basename,
- 		struct match_attr *a = stk->attrs[i];
- 		if (a->is_macro)
- 			continue;
--		if (path_matches(path, pathlen, basename,
-+		if (path_matches(path, pathlen, basename_offset,
- 				 &a->u.pat, base, stk->originlen))
- 			rem = fill_one("fill", a, rem);
- 	}
-@@ -750,7 +750,8 @@ static void collect_all_attrs(const char *path)
- {
- 	struct attr_stack *stk;
- 	int i, pathlen, rem, dirlen;
--	const char *basename, *cp, *last_slash = NULL;
-+	const char *cp, *last_slash = NULL;
-+	int basename_offset;
- 
- 	for (cp = path; *cp; cp++) {
- 		if (*cp == '/' && cp[1])
-@@ -758,10 +759,10 @@ static void collect_all_attrs(const char *path)
- 	}
- 	pathlen = cp - path;
- 	if (last_slash) {
--		basename = last_slash + 1;
-+		basename_offset = last_slash + 1 - path;
- 		dirlen = last_slash - path;
+ 	if (prefix == patternlen) {
+-		if (!strcmp_icase(pattern, basename))
++		if (patternlen == basenamelen &&
++		    !strncmp_icase(pattern, basename, basenamelen))
+ 			return 1;
+ 	} else if (flags & EXC_FLAG_ENDSWITH) {
++		/* "*literal" matching against "fooliteral" */
+ 		if (patternlen - 1 <= basenamelen &&
+-		    !strcmp_icase(pattern + 1,
+-				  basename + basenamelen - patternlen + 1))
++		    !strncmp_icase(pattern + 1,
++				   basename + basenamelen - (patternlen - 1),
++				   patternlen - 1))
+ 			return 1;
  	} else {
--		basename = path;
-+		basename_offset = 0;
- 		dirlen = 0;
+-		if (fnmatch_icase(pattern, basename, 0) == 0)
++		if (fnmatch_icase_mem(pattern, patternlen,
++				      basename, basenamelen,
++				      0) == 0)
+ 			return 1;
  	}
- 
-@@ -771,7 +772,7 @@ static void collect_all_attrs(const char *path)
- 
- 	rem = attr_nr;
- 	for (stk = attr_stack; 0 < rem && stk; stk = stk->prev)
--		rem = fill(path, pathlen, basename, stk, rem);
-+		rem = fill(path, pathlen, basename_offset, stk, rem);
- }
- 
- int git_check_attr(const char *path, int num, struct git_attr_check *check)
+ 	return 0;
 -- 
 1.8.2.13.g0f18d3c
