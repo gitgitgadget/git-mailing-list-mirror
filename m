@@ -1,127 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push: Alias pushurl from push rewrites
-Date: Thu, 28 Mar 2013 11:50:08 -0700
-Message-ID: <7vr4iztl3z.fsf@alter.siamese.dyndns.org>
-References: <20130327122216.5de0c336@hoelz.ro>
- <20130327182345.GD28148@google.com> <20130327211554.GH28148@google.com>
- <7vsj3gjy3t.fsf@alter.siamese.dyndns.org> <20130327174845.5e3081d1@hoelz.ro>
- <20130327230943.GA5204@jtriplet-mobl1>
- <7vfvzfwn55.fsf@alter.siamese.dyndns.org> <20130328160937.GD16034@leaf>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 1/2] fast-import: Fix an gcc -Wuninitialized warning
+Date: Thu, 28 Mar 2013 18:20:29 +0000
+Message-ID: <515489ED.7070109@ramsay1.demon.co.uk>
+References: <5151F278.2040109@ramsay1.demon.co.uk> <20130326192822.GA28244@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rob Hoelz <rob@hoelz.ro>, Jonathan Nieder <jrnieder@gmail.com>,
-	git@vger.kernel.org
-To: Josh Triplett <josh@joshtriplett.org>
-X-From: git-owner@vger.kernel.org Thu Mar 28 19:50:49 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 28 19:52:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULHuQ-0005f8-5J
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 19:50:46 +0100
+	id 1ULHvk-0001oE-Qc
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 19:52:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752716Ab3C1SuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 14:50:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61054 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751718Ab3C1SuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 14:50:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7396E69F;
-	Thu, 28 Mar 2013 18:50:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=u/fiuXj8LN/fTBvveUUcaYvptAI=; b=RuNkRH
-	r74WgXwtZoiDEmotWvqvyfikgOpR+X6+gRpCpRwXDF325kp09FOyKrVMKygP9kBX
-	Gc2CxxUccSGPo6n6zy/3POnX24rP/oWuBbeafcWXeIuJv6TJxtYITkd3B6eUFUYn
-	HuP4MpnNgtv/k7YXCqtzs1Exesd/zfErIhAWQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dlsisWlr77t/wP+bXqtP6WPffaPNkGv5
-	vR56LQNCPsjpITw8kEdvGY1KmmRqDCaXa3V+MW3FlhWM5oD/ZfEPg6L8GcxodNie
-	B29uhuSsBSclDlQbxhEUtyUVxC3JL4MBexBoAUWpTeDv6s1c0tsvMEs/AGUUKEgQ
-	v8QOjwkU74c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EE81E69E;
-	Thu, 28 Mar 2013 18:50:10 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D4EEE69B; Thu, 28 Mar 2013
- 18:50:09 +0000 (UTC)
-In-Reply-To: <20130328160937.GD16034@leaf> (Josh Triplett's message of "Thu,
- 28 Mar 2013 09:09:37 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 50E815DA-97D8-11E2-9AAD-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752575Ab3C1Svk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 14:51:40 -0400
+Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:53230 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751944Ab3C1Svj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 14:51:39 -0400
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id A1BC96F8141;
+	Thu, 28 Mar 2013 18:51:37 +0000 (GMT)
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id D48F36F82C1;
+	Thu, 28 Mar 2013 18:51:36 +0000 (GMT)
+Received: from [193.237.126.196] (unknown [193.237.126.196])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
+	Thu, 28 Mar 2013 18:51:35 +0000 (GMT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <20130326192822.GA28244@sigill.intra.peff.net>
+X-MDF-HostID: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219443>
 
-Josh Triplett <josh@joshtriplett.org> writes:
+Jeff King wrote:
+> On Tue, Mar 26, 2013 at 07:09:44PM +0000, Ramsay Jones wrote:
+> 
+>> Commit cbfd5e1c ("drop some obsolete "x = x" compiler warning hacks",
+>> 21-03-2013) removed a gcc hack that suppressed an "might be used
+>> uninitialized" warning issued by older versions of gcc.
+>>
+>> However, commit 3aa99df8 ('fast-import: clarify "inline" logic in
+>> file_change_m', 21-03-2013) addresses an (almost) identical issue
+>> (with very similar code), but includes additional code in it's
+>> resolution. The solution used by this commit, unlike that used by
+>> commit cbfd5e1c, also suppresses the -Wuninitialized warning on
+>> older versions of gcc.
+>>
+>> In order to suppress the warning (against the 'oe' symbol) in the
+>> note_change_n() function, we adopt the same solution used by commit
+>> 3aa99df8.
+> 
+> Yeah, they are essentially the same piece of code, so I don't mind this
+> change.  It is odd to me that gcc gets it right in one case but not the
+> other, but I think we are deep into the vagaries of the compiler's code
+> flow analysis here, and we cannot make too many assumptions.
+> 
+> Were you actually triggering this warning, and if so, on what version of
+> gcc? 
 
-(on url.$base.pushInsteadOf)
->> If a remote has an explicit pushurl, git will ignore this setting for
->> that remote.
-> That really meant what I just said above: git will prefer an explicit
-> pushurl over the pushInsteadOf rewrite of url.
+yes, with:
+    gcc v3.4.4 (cygwin)
+    gcc v4.1.2 (Linux)
+    msvc v15.00.30729.01 (VC/C++ 2008 express edition)
+no, with:
+    gcc v4.4.0 (msysgit)
+    clang 3.2 (Linux)
+    tcc v0.9.26 (Linux)
+[lcc can't compile git; I forget why exactly.]
 
-Very correct.
+>       Or did the asymmetry just offend your sensibilities?
 
-> It says nothing about
-> applying pushInsteadOf to rewrite pushurl.
+My sensibilities were, indeed, very offended! ;-)
 
-Incorrect, I think.  If you have pushURL, pushInsteadOf is *ignored*.
-Of course, if you have both URL and pushURL, the ignored pushInsteadOf
-will not apply to _anything_.  It will not apply to URL, and it will
-certainly not apply to pushURL.
-
-You are correct to point out that with the test we would want to
-make sure that for a remote with pushURL and URL, a push goes
-
- - to pushURL;
- - not to URL;
- - not to insteadOf(URL);
- - not to pushInsteadOf(URL);
- - not to insteadOf(pushURL); and
- - not to pushInsteadOf(pushURL).
-
-I do not think it is worth checking all of them, but I agree we
-should make sure it does not go to pushInsteadOf(URL) which you
-originally meant to check, and we should also make sure it does not
-go to pushInsteadOf(pushURL).
-
->>  test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf should not rewrite)' '
->>  	mk_empty &&
->> -	TRASH="$(pwd)/" &&
->> -	git config "url.trash2/.pushInsteadOf" trash/ &&
->> +	git config "url.trash2/.pushInsteadOf" testrepo/ &&
-
-Adding
-
-	git config "url.trash3/.pusnInsteadOf" trash/wrong &&
-
-here should be sufficient for that, no?  If we mistakenly used URL
-(i.e. trash/wrong) the push would fail.  If we mistakenly used
-pushInsteadOf(URL), that is rewritten to trash3/ and again the push
-would fail.  pushInsteadOf(pushURL) would go to trash2/ and that
-would also fail.
-
-We aren't checking insteadOf(URL) and insteadOf(pushURL) but
-everything else is checked, I think, so we can do without replacing
-anything.  We can just extend it, no?
-
->>  	git config remote.r.url trash/wrong &&
->> -	git config remote.r.pushurl "$TRASH/testrepo" &&
->> +	git config remote.r.pushurl "testrepo/" &&
->>  	git push r refs/heads/master:refs/remotes/origin/master &&
->>  	(
->>  		cd testrepo &&
->
-> ...the test you describe should appear in *addition* to this test, not
-> replacing it, because as described above this test does test one
-> critical bit of behavior, namely prefering pushurl over the
-> pushInsteadOf rewrite of url.
->
-> - Josh Triplett
+ATB,
+Ramsay Jones
