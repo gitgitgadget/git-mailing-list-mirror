@@ -1,85 +1,99 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Composing git repositories
-Date: Thu, 28 Mar 2013 15:31:46 +0530
-Message-ID: <CALkWK0nreJZX4msFET0a7cuUMWNbQhhqy+ezrkqYGqL4_a2duA@mail.gmail.com>
-References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
- <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
- <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
- <20130327192630.GF28148@google.com>
+From: =?ISO-8859-1?Q?Kenneth_=D6lwing?= <kenneth@olwing.se>
+Subject: Collective wisdom about repos on NFS accessed by concurrent clients
+ (== corruption!?)
+Date: Thu, 28 Mar 2013 11:22:08 +0100
+Message-ID: <515419D0.7030107@olwing.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 11:02:39 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 28 11:31:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UL9fJ-0007dY-VL
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 11:02:38 +0100
+	id 1ULA6z-0007F2-NY
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 11:31:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755922Ab3C1KCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 06:02:09 -0400
-Received: from mail-bk0-f51.google.com ([209.85.214.51]:36986 "EHLO
-	mail-bk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752588Ab3C1KCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 06:02:08 -0400
-Received: by mail-bk0-f51.google.com with SMTP id y8so1956970bkt.24
-        for <git@vger.kernel.org>; Thu, 28 Mar 2013 03:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=jvWVpDHTK5kenuXkDFCc3Y27Wlvb1Sg3XNT8lqnKVco=;
-        b=vrvbVxbZ9JXhMX36Ky3bRdm8XLEX+AdOdmHJ6202/DVFXiqD2RXUn87KGulThAMccg
-         6aTj6SNcQp60HmbKolhA97GHYKtS6zkrJoz/yUqksOWZ06OTzMj8PSVOJEIV9egCx3nC
-         XW5kQsuuehCzN4lO4nYsDON159KNU8xyF5nGkHw2EGq8453VHhIyvju0bicnBIp/KQqg
-         IVJMSbxFh+R33cc3q8L/lcbT2hFTJfssuDtwBnypqK0UH6OW4cCB6v5BIC7yyLM6Kphe
-         9v3wdDyujTddwQwh5cGroT0vZU8VoJPEu64yxrWEV9TVDei61aRAd+Ogpbt1QPLleuQq
-         f+6w==
-X-Received: by 10.205.139.71 with SMTP id iv7mr11787989bkc.86.1364464926519;
- Thu, 28 Mar 2013 03:02:06 -0700 (PDT)
-Received: by 10.204.36.10 with HTTP; Thu, 28 Mar 2013 03:01:46 -0700 (PDT)
-In-Reply-To: <20130327192630.GF28148@google.com>
+	id S1755407Ab3C1Kah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 06:30:37 -0400
+Received: from hotelroom5.mainloop.net ([192.121.13.73]:60637 "EHLO
+	hotelroom5.mainloop.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755117Ab3C1Kag (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 06:30:36 -0400
+X-Greylist: delayed 479 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Mar 2013 06:30:36 EDT
+X-No-Relay: not in my network
+Received: from [IPv6:::1] (unknown [82.214.25.167])
+	by hotelroom5.mainloop.net (Postfix) with ESMTPSA id B0488721E5
+	for <git@vger.kernel.org>; Thu, 28 Mar 2013 11:22:33 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+X-Antivirus: AVG for E-mail 2013.0.2904 [2641/6209]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219380>
 
-Jonathan Nieder wrote:
-> Do you mean that you wish you could ignore subrepository boundaries
-> and use commands like
->
->         git clone --recurse-submodules http://git.zx2c4.com/cgit
->         cd cgit
->         vi git/cache.h
->         ... edit edit edit ...
->         git add --recurse-submodules git/cache.h
->         git commit --recurse-submodules
->         git push --recurse-submodules
->
-> , possibly with configuration to allow the --recurse-submodules to be
-> implied, and have everything work out well?
+Hi,
 
-Do you realize how difficult this is to implement?  We'll need to
-patch all the git commands to essentially do what we'd get for free if
-the submodule were a tree object instead of a commit object (although
-I'm not saying that's the Right thing to do).  Some caveats:
+I'm hoping to hear some wisdom on the subject so I can decide if I'm 
+chasing a pipe dream or if it should be expected to work and I just need 
+to work out the kinks.
 
-- If we maintain one global index, and try to emulate git-subtree
-using submodules, we've lost.  It's going to take freakin' ages to
-stat billions of files across hundreds of nested sumodules.  One major
-advantage of having repository boundaries is separate object stores,
-indexes, worktrees: little ones that git is designed to work with.
+Finding things like this makes it sound possible:
+   http://permalink.gmane.org/gmane.comp.version-control.git/122670
+but then again, in threads like this:
+   http://kerneltrap.org/mailarchive/git/2010/11/14/44799
+opinions are that it's just not reliable to trust.
 
-- Auto-splitting commits that touch multiple submodules/ superproject
-at once.  Although git-subtree does this, I think it's horribly ugly.
+My experience so far is that I eventually get repo corruption when I 
+stress it with concurrent read/write access from multiple hosts (beyond 
+any sort of likely levels, but still). Maybe I'm doing something wrong, 
+missing a configuration setting somewhere, put an unfair stress on the 
+system, there's a bona fide bug - or, given the inherent difficulty in 
+achieving perfect coherency between machines on what's visible on the 
+mount, it's just impossible (?) to truly get it working under all 
+situations.
 
-- Auto-propagating commits upwards to the superproject is another big
-challenge.  I think the current design of anchoring to a specific
-commit SHA-1 has its usecases, but is unwieldy when things become big.
- We have to fix that first.
+My eventual usecase is to set up a bunch of (gitolite) hosts that all 
+are effectively identical and all seeing the same storage and clients 
+can then be directed to any of them to get served. For the purpose of 
+this query I assume it can be boiled down to be the same as n users 
+working on their own workstations and accessing a central repo on an NFS 
+share they all have mounted, using regular file paths. Correct?
+
+I have a number of load-generating test scripts (that from humble 
+beginnings have grown to beasts), but basically, they fork a number of 
+code pieces that proceed to hammer the repo with concurrent reading and 
+writing. If necessary, the scripts can be started on different hosts, 
+too. It's all about the central repo so clients will retry in various 
+modes whenever they get an error, up to re-cloning and starting over. 
+All in all, they can yield quite a load.
+
+On a local filesystem everything seems to be holding up fine which is 
+expected. In the scenario with concurrency on top of shared NFS storage 
+however, the scripts eventually fails with various problems (when the 
+timing finally finds a hole, I guess) - possible to clone but checkouts 
+fails, errors about refs pointing wrong and errors where the original 
+repo is actually corrupted and can't be cloned from. Depending on test 
+strategy, I've also had everything going fine (ops looks fine in my 
+logs), but afterwards the repo has lost a branch or two.
+
+I've experimented with various NFS settings (e.g. turning off the 
+attribute cache), but haven't reached a conclusion. I do suspect that it 
+just is a fact of life with a remote filesystem to have coherency 
+problems with high concurrency like this but I'd be happily proven wrong 
+- I'm not an expert in either NFS or git.
+
+So, any opionions either way would be valuable, e.g. 'it should work' or 
+'it can never work 100%' is fine, as well as any suggestions. Obviously, 
+the concurrency needed to make it probable to hit this seems so unlikely 
+that maybe I just shouldn't worry...
+
+I'd be happy to share scripts and whatever if someone would like to try 
+it out themselves.
+
+Thanks for your time,
+
+ken1
