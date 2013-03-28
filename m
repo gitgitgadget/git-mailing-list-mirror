@@ -1,74 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: More detailed error message for 403 forbidden.
-Date: Thu, 28 Mar 2013 11:41:20 -0700
-Message-ID: <20130328184120.GQ28148@google.com>
+Date: Thu, 28 Mar 2013 14:45:30 -0400
+Message-ID: <20130328184530.GA14691@sigill.intra.peff.net>
 References: <CAFT+Tg_PwAS__AYCwQQZjy4LVvAMZFJuJ+ediDJpRnxx73qMMg@mail.gmail.com>
  <20130328183601.GA11914@sigill.intra.peff.net>
+ <20130328184120.GQ28148@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: "Yi, EungJun" <semtlenori@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 28 19:41:56 2013
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 19:46:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULHlq-00028J-Ht
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 19:41:54 +0100
+	id 1ULHpt-0007Uf-Cv
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 19:46:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753744Ab3C1Sl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 14:41:26 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:55918 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753335Ab3C1Sl0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 14:41:26 -0400
-Received: by mail-pb0-f52.google.com with SMTP id ma3so5935930pbc.11
-        for <git@vger.kernel.org>; Thu, 28 Mar 2013 11:41:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=AbqZza8nOka0SaUFP7Vzc6HRhJgCj2joElfMBpJ7PXY=;
-        b=kWWTkvrLnXuYnvT/ZveuaFeL8fXzwb0g2zxUCG9+H3F/dNBOsMXnsBCpNxmGkZxH1p
-         3HyKXezvPDSUWH9A9s52lqPacITPowRl0lWClKI30O3D5ycoOChcT6mLPaxaWFN77sUx
-         I3/ktpfnz86FNjJAQAloVmWPcn4IEATZ6CeAVjc3fDi1b2hJvXA6Qg77R6/p0q8UNpE7
-         qjKzqxQ0s6OnRrFO98w8m7bAcgY6qlpuWiCFr36KZ47l+EDoFuB7s8XFpYSirwIQzMUq
-         D84nJKtvm+vKO3JRC2wcZhVtgJBtd+kA9GuHVD7W7RKxYoQQF/4c6RO7iUbbIyAqTikB
-         z9Jg==
-X-Received: by 10.66.122.167 with SMTP id lt7mr228271pab.168.1364496085584;
-        Thu, 28 Mar 2013 11:41:25 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id da4sm7664576pbb.34.2013.03.28.11.41.23
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 28 Mar 2013 11:41:24 -0700 (PDT)
+	id S1753022Ab3C1Sph (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 14:45:37 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43851 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752543Ab3C1Sph (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 14:45:37 -0400
+Received: (qmail 27717 invoked by uid 107); 28 Mar 2013 18:47:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 14:47:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 14:45:30 -0400
 Content-Disposition: inline
-In-Reply-To: <20130328183601.GA11914@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20130328184120.GQ28148@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219441>
 
-Jeff King wrote:
+On Thu, Mar 28, 2013 at 11:41:20AM -0700, Jonathan Nieder wrote:
 
-> One problem is that the content body sent along with the error is not
-> necessarily appropriate for showing to the user (e.g., if it is HTML, it
-> is probably not a good idea to show it on the terminal). So I think we
-> would want to only show it when the server has indicated via the
-> content-type that the message is meant to be shown to the user. I'm
-> thinking the server would generate something like:
->
->    HTTP/1.1 403 Forbidden
->    Content-type: application/x-git-error-message
->
->    User 'me' does not have enough permission to access the repository.
->
-> which would produce the example you showed above.
+> Jeff King wrote:
+> 
+> > One problem is that the content body sent along with the error is not
+> > necessarily appropriate for showing to the user (e.g., if it is HTML, it
+> > is probably not a good idea to show it on the terminal). So I think we
+> > would want to only show it when the server has indicated via the
+> > content-type that the message is meant to be shown to the user. I'm
+> > thinking the server would generate something like:
+> >
+> >    HTTP/1.1 403 Forbidden
+> >    Content-type: application/x-git-error-message
+> >
+> >    User 'me' does not have enough permission to access the repository.
+> >
+> > which would produce the example you showed above.
+> 
+> Would it make sense to use text/plain this way?
 
-Would it make sense to use text/plain this way?
+Maybe. But I would worry somewhat about sites which provide a useless
+and verbose text/plain message. Ideally an x-git-error-message would be
+no more than few lines, suitable for the error message of a terminal
+program. I would not want a site-branded "Your page cannot be found.
+Here's a complete navigation bar" page to be spewed to the terminal.
+Those tend to be text/html, though, so we may be safe. It's just that
+we're gambling on what random servers do, and if we show useless spew
+even some of the time, that would be a regression.
 
-Curious,
-Jonathan
+-Peff
