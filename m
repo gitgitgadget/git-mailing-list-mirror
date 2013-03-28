@@ -1,115 +1,97 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Composing git repositories
-Date: Thu, 28 Mar 2013 21:40:44 +0100
-Message-ID: <5154AACC.7050006@web.de>
-References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com> <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com> <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com> <51537A7B.7050206@web.de> <CALkWK0nfNCu775MBB-Y28=V93RkV24kbTLTDKWO2dZ-0yxX=Sw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Mar 2013, #07; Tue, 26)
+Date: Thu, 28 Mar 2013 14:40:46 -0700
+Message-ID: <7vobe3ryn5.fsf@alter.siamese.dyndns.org>
+References: <7v620dss3j.fsf@alter.siamese.dyndns.org>
+ <20130327203535.GA5220@sigill.intra.peff.net>
+ <878v58worp.fsf@linux-k42r.v.cablecom.net>
+ <7vy5d8jz0y.fsf@alter.siamese.dyndns.org>
+ <20130327220723.GR2286@serenity.lan>
+ <7vobe4jxpr.fsf@alter.siamese.dyndns.org>
+ <20130327225215.GS2286@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 21:41:26 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
+	git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Matthew Blissett <matt@blissett.me.uk>,
+	David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Mar 28 22:41:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULJdS-0007WP-I5
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 21:41:22 +0100
+	id 1ULKZW-0002eH-Ic
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 22:41:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753082Ab3C1Uky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 16:40:54 -0400
-Received: from mout.web.de ([212.227.17.11]:50761 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751576Ab3C1Uky (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 16:40:54 -0400
-Received: from [192.168.178.41] ([91.3.172.174]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0LopMx-1Ut0YJ1z6x-00gnYV; Thu, 28 Mar 2013 21:40:44
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <CALkWK0nfNCu775MBB-Y28=V93RkV24kbTLTDKWO2dZ-0yxX=Sw@mail.gmail.com>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V02:K0:hIUuZhDNJEbMoOJqNCbgGVxsBshVRCLSSUVyv3Mrp6u
- J2WcLwsguXbl5n+AlSw9lUcEqEDV9F1QHEJq1v7rPjtwIGG6wZ
- e887G1Nrh6EiYGDNVg6cq/3b057fRuU3UruOm2n4Y/Qno/k9zz
- 2Grk0LCo2aulzJ7fih7yY3etEs8vCbwKh+Pvul2mSS8UxJk2Co
- LVUuICnAOLfY+YSlFWSmA==
+	id S1754243Ab3C1Vkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 17:40:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62271 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754225Ab3C1Vkt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 17:40:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB83BEE25;
+	Thu, 28 Mar 2013 21:40:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=F/5E6A06732DAAQj8l641Bcnnz8=; b=eJG3z+
+	gV9a6FmUgJVVsL/cKZHK0P9EhGoyKxFXKu0ExjY9Un3r5MKtiL/X8k5JRM2yivLY
+	3dOEe4xlN4rMjMcmXWTD47zKCuZwp82Vw8tETEXkr124LcibBkfp8THL096M9w70
+	QHqdKOgRu0BEo2OpCVZpbtsn7t1kdqcvzLlfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RjaL4I1wzZqwogW/7Z1PrEFdKj8q+aeo
+	po3kdy/+jJsZ3O0Vpgza7/L2hhJe+BLtKHDjrN7x+jMZkqexvEo4vZ2knM6gt/8u
+	tLCSEeq0XAiregMrB8vuW0Lkc7e4O9WnU1JttwtA8v2RKCyQsmXCDPX4ciEje+wQ
+	muiJn8WoLjU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC4BDEE24;
+	Thu, 28 Mar 2013 21:40:48 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A64AEE1E; Thu, 28 Mar 2013
+ 21:40:48 +0000 (UTC)
+In-Reply-To: <20130327225215.GS2286@serenity.lan> (John Keeping's message of
+ "Wed, 27 Mar 2013 22:52:15 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 276356B2-97F0-11E2-859B-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219461>
 
-Am 28.03.2013 10:16, schrieb Ramkumar Ramachandra:
-> Jens Lehmann wrote:
->> Unless you acknowledge that submodules are a different repo, you'll
->> always run into problems. I believe future enhancements will make
->> this less tedious, but in the end they will stay separate repos
->> (which is the whole point, you'd want to use a different approach
->> - e.g. subtree - if you want to put stuff from different upstreams
->> into a single repo without keeping the distinction where all that
->> came from).
-> 
-> I acknowledge that it's a different repository.  It's just that I
-> think that our current design has too many seams: why do you think
-> it's impossible to make it seamless?
-> 
-> git-subtree is not an answer to anything.  Dumping all the history
-> into one repository has its limited usecases, but it is no solution.
+John Keeping <john@keeping.me.uk> writes:
 
-Guess what: submodules are the solution for a certain set of use
-cases, and tools like subtree are a solution for another set of
-use cases. There is no silver bullet.
+> On Wed, Mar 27, 2013 at 03:15:44PM -0700, Junio C Hamano wrote:
+>> John Keeping <john@keeping.me.uk> writes:
+>> 
+>> > On Wed, Mar 27, 2013 at 02:47:25PM -0700, Junio C Hamano wrote:
+>> >> > * jk/difftool-dir-diff-edit-fix (2013-03-14) 3 commits
+>> >> >   (merged to 'next' on 2013-03-19 at e68014a)
+>> >> >  + difftool --dir-diff: symlink all files matching the working tree
+>> >> >  + difftool: avoid double slashes in symlink targets
+>> >> >  + git-difftool(1): fix formatting of --symlink description
+>> >> 
+>> >> I lost track of various discussions on "difftool" and its "symlink
+>> >> so that the user can edit working tree files in the tool".
+>> >
+>> > Would it be easiest if I send a new series incorporating
+>> > jk/difftool-dirr-diff-edit-fix and the proposed change to not overwrite
+>> > modified working tree files, built on top of t7800-modernize?
+>> 
+>> I am somewhat reluctant to rewind a topic that has been cooking in
+>> 'next' for over a week (the above says 19th).  Rebuilding the
+>> style-fixes on top of the above is fine---that topic is much
+>> younger.
+>
+> Sadly that's easier said than done, since it just introduces further
+> conflicts as jk/difftool-dir-diff-edit-fix doesn't include
+> da/difftool-fixes (now in master).
 
->> What else than a commit object should that be??? Submodules are
->> there to have a different upstream for a part of your work tree,
->> and that means a commit in that repo is the only sane thing to
->> record in the superproject. A lot of thought has been put into
->> this, and it is definitely a good choice [1].
-> 
-> Linus argues that it shouldn't be a tree object, and I agree with
-> that.  I don't see an argument that says that the commit object is a
-> perfect fit (probably because it's not).
-
-There was discussion about what to record in the index/commit of
-the superproject in early submodule days (some time before I became
-involved in Git, seems I currently cannot find a link to that). A
-commit is the thing to record here because it *is* the perfect fit,
-as some years of submodule experience show.
-
->> How? The "submodules suck, we should try a completely different
->> approach" thingy comes up from time to time, but so far nobody
->> could provide a viable alternative to what we currently do.
-> 
-> My argument is not "submodules suck; we should throw them out of the
-> window, and start from scratch" at all.  I'm merely questioning the
-> fundamental assumptions that submodules make, instead of proposing
-> that we work around everything in shell.  We don't have to be married
-> to the existing implementation of submodules and try to fix all the
-> problems in shell.
-
-You cannot simply change the fundamental assumptions of submodules
-and expect them to be the same thing afterwards. And it doesn't
-matter at all if we "fix all the problems in shell" or in C-code,
-we'll fix the remaining problems that are fixable in whatever part
-of Git it makes sense. And I don't have the impression you have an
-idea about what submodules are good at, where they can be improved
-and what problems they'll probably never solve.
-
->> And apart from that, let's not forget we identified some valuable
->> improvements to submodules in this thread:
->> [...]
->> All of those are topics I like to see materialize, and you are
->> welcome to tackle them.
-> 
-> Allow me a few days to think about changing the fundamental building
-> blocks to make our shell hackery easier.
-
-Please go ahead, but if your goal is "to make our shell hackery
-easier" I'm not interested. I want to improve the user experience
-of submodules and don't care much in what language we achieve that.
-And I can't see anything fundamental being wrong with submodules but
-strongly believe they are a perfect match for some very important
-use cases (some of which I see happening at my $dayjob for some
-years now), so I still don't see what you are trying to "fix" here.
+OK, let's make it simpler then by merging jk/difftool-dir-diff-edit-fix
+to 'master'.  The test tweaks and other work can then built on top.
