@@ -1,132 +1,115 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Git and GSoC 2013
-Date: Thu, 28 Mar 2013 21:39:23 +0100
-Message-ID: <CAP8UFD2jPSpAQQJC1sUtd5ztnMB=kou36HZUaoPOG4ht-Sj8wg@mail.gmail.com>
-References: <20130327183410.GA26066@sigill.intra.peff.net>
-	<20130327185248.GE28148@google.com>
-	<CAP8UFD1CjfJ8wM-htX8SOOveAt8zQ+qBRk_P016Y57jWnt6sCw@mail.gmail.com>
-	<7vtxnvv5gx.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Composing git repositories
+Date: Thu, 28 Mar 2013 21:40:44 +0100
+Message-ID: <5154AACC.7050006@web.de>
+References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com> <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com> <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com> <51537A7B.7050206@web.de> <CALkWK0nfNCu775MBB-Y28=V93RkV24kbTLTDKWO2dZ-0yxX=Sw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 21:39:56 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 21:41:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULJc0-0002wp-P1
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 21:39:53 +0100
+	id 1ULJdS-0007WP-I5
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 21:41:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753712Ab3C1UjY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 16:39:24 -0400
-Received: from mail-ve0-f176.google.com ([209.85.128.176]:56116 "EHLO
-	mail-ve0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752893Ab3C1UjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 16:39:24 -0400
-Received: by mail-ve0-f176.google.com with SMTP id ox1so3992175veb.35
-        for <git@vger.kernel.org>; Thu, 28 Mar 2013 13:39:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=F0XdAM2TQp1YuIVmoOyXu21Z2BOQzMgu/SyQjdgzdUE=;
-        b=vIVZrrv/8j1/XGINnjeCLEwH5FqyIRNJD4pHkK0Ih352DXfGTMIJtBAGEw9ZR3FJ1F
-         yizH0hIn6FzkTZgwVTfqLJpIXalUqJkW4U/EUeNbS7j8qX2QsQ0gdMHYSLHu1NpMLpuP
-         QUQ9/+FwAnlCHsb0eAjbWz4T9rGtMaXI/k8+REmgVaYGtb2mE8YaR4fm7jbMApIIeW1C
-         9cm83b2w9yqc9PqciO0rahZb5e2/WQ04FqmJRTf4aSn9bP+MoTW2AXjlJa6bYo3rG7oJ
-         hAUIObEeoJqLhdYxJWaWkw78bXz56hJL6Vq7vAOthiEliENdmMPxfnDL5YHmdCiTA/2X
-         59ag==
-X-Received: by 10.52.231.1 with SMTP id tc1mr32484vdc.39.1364503163198; Thu,
- 28 Mar 2013 13:39:23 -0700 (PDT)
-Received: by 10.58.120.97 with HTTP; Thu, 28 Mar 2013 13:39:23 -0700 (PDT)
-In-Reply-To: <7vtxnvv5gx.fsf@alter.siamese.dyndns.org>
+	id S1753082Ab3C1Uky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 16:40:54 -0400
+Received: from mout.web.de ([212.227.17.11]:50761 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751576Ab3C1Uky (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 16:40:54 -0400
+Received: from [192.168.178.41] ([91.3.172.174]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0LopMx-1Ut0YJ1z6x-00gnYV; Thu, 28 Mar 2013 21:40:44
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <CALkWK0nfNCu775MBB-Y28=V93RkV24kbTLTDKWO2dZ-0yxX=Sw@mail.gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:hIUuZhDNJEbMoOJqNCbgGVxsBshVRCLSSUVyv3Mrp6u
+ J2WcLwsguXbl5n+AlSw9lUcEqEDV9F1QHEJq1v7rPjtwIGG6wZ
+ e887G1Nrh6EiYGDNVg6cq/3b057fRuU3UruOm2n4Y/Qno/k9zz
+ 2Grk0LCo2aulzJ7fih7yY3etEs8vCbwKh+Pvul2mSS8UxJk2Co
+ LVUuICnAOLfY+YSlFWSmA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219460>
 
-On Thu, Mar 28, 2013 at 5:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> On Wed, Mar 27, 2013 at 7:52 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->>> Jeff King wrote:
->>>
->>>> There was a big thread about a month ago on whether Git should do Google
->>>> Summer of Code this year[1].
->>
->> I think we should do it.
->>
->> It looks strange to me to say that students are great and at the same
->> time that we should not do it.
->>
->> Let's give them and us one more chance do to well. This is the only
->> way we can improve.
->
-> Do you mean we should be doing the same thing over and over again
-> and expecting different results?  Einstein may not like it, and I
-> certainly don't.
+Am 28.03.2013 10:16, schrieb Ramkumar Ramachandra:
+> Jens Lehmann wrote:
+>> Unless you acknowledge that submodules are a different repo, you'll
+>> always run into problems. I believe future enhancements will make
+>> this less tedious, but in the end they will stay separate repos
+>> (which is the whole point, you'd want to use a different approach
+>> - e.g. subtree - if you want to put stuff from different upstreams
+>> into a single repo without keeping the distinction where all that
+>> came from).
+> 
+> I acknowledge that it's a different repository.  It's just that I
+> think that our current design has too many seams: why do you think
+> it's impossible to make it seamless?
+> 
+> git-subtree is not an answer to anything.  Dumping all the history
+> into one repository has its limited usecases, but it is no solution.
 
-No, I don't mean we should be doing the same. I agree that smaller
-projects are helpful and insisting on submitting right away on the
-mailing list is helpful.
-But if we don't even try we have no chance to see if it works. We just
-lose time.
+Guess what: submodules are the solution for a certain set of use
+cases, and tools like subtree are a solution for another set of
+use cases. There is no silver bullet.
 
-> What I gathered from the discussion so far is that everybody agrees
-> that our mentoring has been suboptimal in various ways (not enough
-> encouragement to engage with the community early, working in the
-> cave for too long, biting too much to chew etc.).  What makes you
-> think we would do better this year?
+>> What else than a commit object should that be??? Submodules are
+>> there to have a different upstream for a part of your work tree,
+>> and that means a commit in that repo is the only sane thing to
+>> record in the superproject. A lot of thought has been put into
+>> this, and it is definitely a good choice [1].
+> 
+> Linus argues that it shouldn't be a tree object, and I agree with
+> that.  I don't see an argument that says that the commit object is a
+> perfect fit (probably because it's not).
 
-The fact that we will be more conscious that we need smaller projects
-and that we need to push even more for students to send their patch
-soon on the mailing list.
+There was discussion about what to record in the index/commit of
+the superproject in early submodule days (some time before I became
+involved in Git, seems I currently cannot find a link to that). A
+commit is the thing to record here because it *is* the perfect fit,
+as some years of submodule experience show.
 
-If it doesn't work at all we will be set and we will know that there
-is not much we can do to make it work.
+>> How? The "submodules suck, we should try a completely different
+>> approach" thingy comes up from time to time, but so far nobody
+>> could provide a viable alternative to what we currently do.
+> 
+> My argument is not "submodules suck; we should throw them out of the
+> window, and start from scratch" at all.  I'm merely questioning the
+> fundamental assumptions that submodules make, instead of proposing
+> that we work around everything in shell.  We don't have to be married
+> to the existing implementation of submodules and try to fix all the
+> problems in shell.
 
-If we don't even try we will not know soon, so not be able to improve
-or decide to stop.
+You cannot simply change the fundamental assumptions of submodules
+and expect them to be the same thing afterwards. And it doesn't
+matter at all if we "fix all the problems in shell" or in C-code,
+we'll fix the remaining problems that are fixable in whatever part
+of Git it makes sense. And I don't have the impression you have an
+idea about what submodules are good at, where they can be improved
+and what problems they'll probably never solve.
 
-It's like software or science. If you don't test soon your hypothesis
-you don't progress fast.
+>> And apart from that, let's not forget we identified some valuable
+>> improvements to submodules in this thread:
+>> [...]
+>> All of those are topics I like to see materialize, and you are
+>> welcome to tackle them.
+> 
+> Allow me a few days to think about changing the fundamental building
+> blocks to make our shell hackery easier.
 
-Or do you think we just stand no chance to progress?
-
-By the way we say that students should post soon to the mailing list
-to get a feedback soon, but it looks like we don't want to try our
-hypothesis around mentoring as soon as we can.
-Doesn't it sound strange to you? Aren't we saying "do as I say not as I do"?
-
-> "We have a track record of being not great at mentoring, and we
-> haven't made an effort to improve it." is a perfectly valid and
-> humble reason to excuse ourselves from this year's GSoC.
-
-It is also a perfectly valid justification to decide to make an effort
-to improve our mentoring and to try again.
-
-> "Students are great" is immaterial.
-
-"We are not great at mentoring" is as much immaterial.
-
-> In fact, if they are great, I think it is better to give them a
-> chance to excel by working with organizations that can mentor them
-> better, instead of squandering their time and GSoC's money for
-> another failure, until _we_ are ready to take great students.
-
-How do we know we are ready if we don't try?
-
-By waiting we just lose the experience we already have, because some
-mentors might not be around next year, or they will not remember well
-about the process.
-
-And some organizations that will perhaps be accepted, if we decide not
-to do it, might have no mentoring experience at all. How do you know
-they will mentor students better than what we have been doing?
-
-Best regards,
-Christian.
+Please go ahead, but if your goal is "to make our shell hackery
+easier" I'm not interested. I want to improve the user experience
+of submodules and don't care much in what language we achieve that.
+And I can't see anything fundamental being wrong with submodules but
+strongly believe they are a perfect match for some very important
+use cases (some of which I see happening at my $dayjob for some
+years now), so I still don't see what you are trying to "fix" here.
