@@ -1,66 +1,131 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 0/6] attribute regression fix for maint-1.8.1 and upward
-Date: Thu, 28 Mar 2013 17:43:58 -0400
-Message-ID: <20130328214358.GA10685@sigill.intra.peff.net>
-References: <20130323083927.GA25600@sigill.intra.peff.net>
- <1364323171-20299-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH 1/6] attr.c::path_matches(): the basename is part of the
+ pathname
+Date: Thu, 28 Mar 2013 17:45:00 -0400
+Message-ID: <20130328214500.GA10936@sigill.intra.peff.net>
+References: <20130328214358.GA10685@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, pclouds@gmail.com, avila.jn@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 22:44:36 2013
+X-From: git-owner@vger.kernel.org Thu Mar 28 22:45:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULKcd-0003Am-8F
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 22:44:35 +0100
+	id 1ULKde-0006bI-9T
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 22:45:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753951Ab3C1VoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 17:44:06 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44038 "EHLO
+	id S1754099Ab3C1VpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 17:45:08 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44044 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752320Ab3C1VoF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 17:44:05 -0400
-Received: (qmail 30650 invoked by uid 107); 28 Mar 2013 21:45:52 -0000
+	id S1753688Ab3C1VpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 17:45:07 -0400
+Received: (qmail 30712 invoked by uid 107); 28 Mar 2013 21:46:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 17:45:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 17:43:58 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 17:46:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 17:45:00 -0400
 Content-Disposition: inline
-In-Reply-To: <1364323171-20299-1-git-send-email-gitster@pobox.com>
+In-Reply-To: <20130328214358.GA10685@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219463>
 
-On Tue, Mar 26, 2013 at 11:39:27AM -0700, Junio C Hamano wrote:
+From: Junio C Hamano <gitster@pobox.com>
 
-> So here is an attempt to fix the unintended regression, on top of
-> 9db9eecfe5c2 (attr: avoid calling find_basename() twice per path,
-> 2013-01-16).  It consists of four patches.
+The function takes two strings (pathname and basename) as if they
+are independent strings, but in reality, the latter is always
+pointing into a substring in the former.
 
-Here's my update to the series. I think this should fix all of the
-issues. And it should be very easy to drop in Duy's nwildmatch later on;
-it can just replace the fnmatch_icase_mem function added in patch 2
-below.
+Clarify this relationship by expressing the latter as an offset into
+the former.
 
-The main fix in this iteration is that match_pathname receives the same
-treatment as match_basename, which is done in patches 3 and 4 (the
-issues were subtly different enough that I didn't want to squash it all
-together; plus, gotta keep that commit count up).
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is identical to the original 1/4.
 
-  [1/6]: attr.c::path_matches(): the basename is part of the pathname
-  [2/6]: dir.c::match_basename(): pay attention to the length of string parameters
-  [3/6]: dir.c::match_pathname(): adjust patternlen when shifting pattern
-  [4/6]: dir.c::match_pathname(): pay attention to the length of string parameters
-  [5/6]: attr.c::path_matches(): special case paths that end with a slash
-  [6/6]: t: check that a pattern without trailing slash matches a directory
+ attr.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
--Peff
-
-PS I followed your subject-naming convention since I was adding into
-   your series, but it seems quite long to me. I would have just said:
-   "match_basename: pay attention...".
+diff --git a/attr.c b/attr.c
+index ab2aab2..4cfe0ee 100644
+--- a/attr.c
++++ b/attr.c
+@@ -655,7 +655,7 @@ static int path_matches(const char *pathname, int pathlen,
+ }
+ 
+ static int path_matches(const char *pathname, int pathlen,
+-			const char *basename,
++			int basename_offset,
+ 			const struct pattern *pat,
+ 			const char *base, int baselen)
+ {
+@@ -667,8 +667,8 @@ static int path_matches(const char *pathname, int pathlen,
+ 		return 0;
+ 
+ 	if (pat->flags & EXC_FLAG_NODIR) {
+-		return match_basename(basename,
+-				      pathlen - (basename - pathname),
++		return match_basename(pathname + basename_offset,
++				      pathlen - basename_offset,
+ 				      pattern, prefix,
+ 				      pat->patternlen, pat->flags);
+ 	}
+@@ -701,7 +701,7 @@ static int fill_one(const char *what, struct match_attr *a, int rem)
+ 	return rem;
+ }
+ 
+-static int fill(const char *path, int pathlen, const char *basename,
++static int fill(const char *path, int pathlen, int basename_offset,
+ 		struct attr_stack *stk, int rem)
+ {
+ 	int i;
+@@ -711,7 +711,7 @@ static int fill(const char *path, int pathlen, const char *basename,
+ 		struct match_attr *a = stk->attrs[i];
+ 		if (a->is_macro)
+ 			continue;
+-		if (path_matches(path, pathlen, basename,
++		if (path_matches(path, pathlen, basename_offset,
+ 				 &a->u.pat, base, stk->originlen))
+ 			rem = fill_one("fill", a, rem);
+ 	}
+@@ -750,7 +750,8 @@ static void collect_all_attrs(const char *path)
+ {
+ 	struct attr_stack *stk;
+ 	int i, pathlen, rem, dirlen;
+-	const char *basename, *cp, *last_slash = NULL;
++	const char *cp, *last_slash = NULL;
++	int basename_offset;
+ 
+ 	for (cp = path; *cp; cp++) {
+ 		if (*cp == '/' && cp[1])
+@@ -758,10 +759,10 @@ static void collect_all_attrs(const char *path)
+ 	}
+ 	pathlen = cp - path;
+ 	if (last_slash) {
+-		basename = last_slash + 1;
++		basename_offset = last_slash + 1 - path;
+ 		dirlen = last_slash - path;
+ 	} else {
+-		basename = path;
++		basename_offset = 0;
+ 		dirlen = 0;
+ 	}
+ 
+@@ -771,7 +772,7 @@ static void collect_all_attrs(const char *path)
+ 
+ 	rem = attr_nr;
+ 	for (stk = attr_stack; 0 < rem && stk; stk = stk->prev)
+-		rem = fill(path, pathlen, basename, stk, rem);
++		rem = fill(path, pathlen, basename_offset, stk, rem);
+ }
+ 
+ int git_check_attr(const char *path, int num, struct git_attr_check *check)
+-- 
+1.8.2.13.g0f18d3c
