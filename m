@@ -1,83 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push: Alias pushurl from push rewrites
-Date: Thu, 28 Mar 2013 09:10:59 -0700
-Message-ID: <7vy5d7v71o.fsf@alter.siamese.dyndns.org>
-References: <20130327122216.5de0c336@hoelz.ro>
- <20130327182345.GD28148@google.com> <20130327211554.GH28148@google.com>
- <7vsj3gjy3t.fsf@alter.siamese.dyndns.org> <20130327174845.5e3081d1@hoelz.ro>
- <20130327230943.GA5204@jtriplet-mobl1> <20130327231819.GL28148@google.com>
- <20130328160104.GC16034@leaf>
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@google.com>
+Subject: Re: which files will have conflicts between two branches?
+Date: Thu, 28 Mar 2013 12:17:18 -0400
+Message-ID: <20130328161717.GC23946@google.com>
+References: <5153694B.2010405@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Rob Hoelz <rob@hoelz.ro>,
-	git@vger.kernel.org
-To: Josh Triplett <josh@joshtriplett.org>
-X-From: git-owner@vger.kernel.org Thu Mar 28 17:11:34 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "J.V." <jvsrvcs@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 17:17:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULFQK-0001Dw-BO
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 17:11:32 +0100
+	id 1ULFWW-0003yQ-BR
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 17:17:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756504Ab3C1QLD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 12:11:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38713 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756355Ab3C1QLB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 12:11:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88D1FA54A;
-	Thu, 28 Mar 2013 12:11:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XjcpEV0i5rhknGg7T/qVfb/kGMQ=; b=UFYEQ1
-	N8Y6x552jvAdmCFWRMKROuw3CoZ4B/4jxRCSiOTu+Pnw3tNedd5t63SYUGTRHZq4
-	mrjnN+5MX/lgo6flRD0H/vX+T0/KhCOt/X7xqfYBCt5Osi/QPGHwIBDiQPl1AbmR
-	IFWdH8ytZ9WokVN6O5IVV0VOl055vsu77TD4w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U3Db7Px8DRpAMqrwnAY3xlvMXji6c2uN
-	wLK+hHw/M1UKFnjzmZUjWlImupwoK91r1RuW7VSlWMZbDzZ9E5K6C9PoEBqSmBr9
-	CDmMY/hRyDLBMh522i8cZb9hzxHfv+Na0EEy/f15Ejk1bZDZBSwCB7VO7CQYZaV7
-	oAFMSO4uWz0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F005A549;
-	Thu, 28 Mar 2013 12:11:01 -0400 (EDT)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04721A546; Thu, 28 Mar 2013
- 12:11:00 -0400 (EDT)
-In-Reply-To: <20130328160104.GC16034@leaf> (Josh Triplett's message of "Thu,
- 28 Mar 2013 09:01:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 153C6D9E-97C2-11E2-9AA8-CBA22E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757052Ab3C1QR0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Mar 2013 12:17:26 -0400
+Received: from mail-la0-f74.google.com ([209.85.215.74]:63508 "EHLO
+	mail-la0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757000Ab3C1QRV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 12:17:21 -0400
+X-Greylist: delayed 766 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Mar 2013 12:17:21 EDT
+Received: by mail-la0-f74.google.com with SMTP id fo13so708478lab.1
+        for <git@vger.kernel.org>; Thu, 28 Mar 2013 09:17:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=8mwWGuamw5w88mvYnUV+l29HVOh9UqEoGd+od1D7rro=;
+        b=DRY8bpLeu0iZMIs/Tt41v2AH/rYPz+Fd9WQeAUsWuADPw432yB93gPE5jXOIylf5Vf
+         3ocvbVXqjlp1AkOUoKaxggQdPg4u40CMmlyGDAcHVJ3Dxe0HC0g1IB3vKkynWHjHUxI/
+         0nVlKC0fny+3tfGyhOJTBRvhWx9tsJClDaiqZMEmqPYbMmmqtN7G3/NEtd1Yoa5oHmJm
+         MoqY8UKWfVvnmr2ocIDmmga78kKWHdVEkqSX5JyjcLYELLFSa23IC0dVibgoGL9mRFjZ
+         gYZZq2shtwqtMj7TWPCxtM1wpg1M8yqxojgXe3DIcsWYTWBOY0nHlc6kO4v9CLOCfuha
+         VLBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent:x-gm-message-state;
+        bh=8mwWGuamw5w88mvYnUV+l29HVOh9UqEoGd+od1D7rro=;
+        b=W94PEb2xiQ7SKcu6JL0uvVFczCDHsz8pq4qcpaAXHSe/yLLkefWfayBG3XQa5jHCrj
+         OxG26mS3SFgnqfHF+cJTfYDmfTuIaBZCiRDVdDwtKbpYztJPHefKauX35rGPjEWqMKmM
+         1xJfCQQmAjxsR5ATnunSy7x6Zb2MfHaQvC7uIzFxasfdRHDhuEM/qib6H4XxtCdpkSek
+         uXLSnjAFByV6zQEQn1YxOfvKspH5eVncYJwTG+YSTZsAbZ7HpSxiGEvdYUcCMZkNRtxW
+         6+U4ZHkuM7ig1WhDiLqy9xAlJAR4UuauDTiAY0XZnGYL5mmqTH5cCmwPAFkBEOvayzsF
+         bU5Q==
+X-Received: by 10.15.21.137 with SMTP id d9mr28233511eeu.1.1364487439642;
+        Thu, 28 Mar 2013 09:17:19 -0700 (PDT)
+Received: from corp2gmr1-1.eem.corp.google.com (corp2gmr1-1.eem.corp.google.com [172.25.138.99])
+        by gmr-mx.google.com with ESMTPS id 47si5651055eeh.1.2013.03.28.09.17.19
+        (version=TLSv1.1 cipher=AES128-SHA bits=128/128);
+        Thu, 28 Mar 2013 09:17:19 -0700 (PDT)
+Received: from valle.nyc.corp.google.com (valle.nyc.corp.google.com [172.26.78.170])
+	by corp2gmr1-1.eem.corp.google.com (Postfix) with ESMTP id 73ABA1CA1D6;
+	Thu, 28 Mar 2013 09:17:19 -0700 (PDT)
+Received: by valle.nyc.corp.google.com (Postfix, from userid 159662)
+	id DB2BD40658; Thu, 28 Mar 2013 12:17:18 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <5153694B.2010405@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Gm-Message-State: ALoCoQkfYcoA2l5f3R+1+4q6DgO5G6AJGr2lymXYYSt5O/zgroDBwqF07BSSQFbXXLUPQufDR5fynIgonsRQzevl7jt8+5hFs/ai7eX3+pqJY+8fKKTQHpGKcI1d0SMs5us3nUa88Mz0NUULys739PDvDDkVhCQbHf6JViq9MUCRg1X10jtkepIpw5gjyZt0BYFgCmoZMrUa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219421>
 
-Josh Triplett <josh@joshtriplett.org> writes:
+On Wednesday, March 27, 2013 at 17:48 EDT,
+     "J.V." <jvsrvcs@gmail.com> wrote:
 
-> OK, I take it back.  I *can* imagine configurations that this change
-> would break, since it does change intentional and documented behavior,
-> but I don't have any such configuration.  The only such configuration I
-> can imagine involves directly counting on the non-rewriting of pushUrl,
-> by using pushInsteadOf to rewrite urls and then sometimes using pushUrl
-> to override that and point back at the un-rewritten URL.  And while
-> supported, that does seem *odd*.
->
-> Objection withdrawn; if nobody can come up with a sensible configuration
-> that relies on the documented behavior, I don't particularly care if it
-> changes.
+> I have two local branches (tracked to remote) that are in sync (did
+> a git pull on both branches from their corresponding remote).
+>=20
+> Is this the best way to merge?
+>=20
+> I would be merging local/branch1 =3D> local/branch2 (test this branch=
+)
+> and then push local/branch2 =3D> origin/branch1  (and would expect no
+> merge conflicts if anyone has not checked in anything.
 
-I actually do.
+Except for maybe unusual corner cases I don't see how the merge order
+(branch1 into branch2 or vice versa) makes any difference. If nothing
+has happened with origin/branch1 since you merged from it to your local
+branches the push will succeed. If there have been upstream commits
+you'll have to update your local branch first (which might result in
+conflicts) before you'll be able to push.
 
-Given the popularity of the system, "people involved in this thread
-cannot imagine a case that existing people may get hurt" is very
-different from "this is not a regression".  After merging this
-change when people start complaining, you and Rob can hide and
-ignore them, but we collectively as the Git project have to have a
-way to help them when it happens.
+> Also with two local branches, Is there a way to get a list of files
+> (one line per file) of files that would have merge conflicts that
+> would need to be resolved?
+
+You'd have to perform an actual merge for that, perhaps with
+--no-commit to avoid creating the actual commit object. Inspect the
+"git status" output to find the files with conflicts. In a script,
+use "git ls-files -u" instead.
+
+--=20
+Magnus B=E4ck
+baeck@google.com
