@@ -1,125 +1,112 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Composing git repositories
-Date: Thu, 28 Mar 2013 17:18:49 +0530
-Message-ID: <CALkWK0=GcxBh9o+sF1Q8t6SC0JU=NmPyRg6tqaOKmkJ6qDvRCA@mail.gmail.com>
-References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
- <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
- <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
- <20130327192630.GF28148@google.com> <7vppyklhot.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: [PATCH v2 2/2] t5520 (pull): use test_config where appropriate
+Date: Thu, 28 Mar 2013 18:10:19 +0530
+Message-ID: <1364474419-22796-1-git-send-email-artagnon@gmail.com>
+References: <7v4nfz1ndo.fsf@alter.siamese.dyndns.org>
+Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 12:49:42 2013
+X-From: git-owner@vger.kernel.org Thu Mar 28 13:39:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULBKu-0003zp-JX
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 12:49:40 +0100
+	id 1ULC7E-00037t-5y
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 13:39:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754864Ab3C1LtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 07:49:11 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:50011 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753161Ab3C1LtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 07:49:10 -0400
-Received: by mail-ie0-f170.google.com with SMTP id c11so11680186ieb.29
-        for <git@vger.kernel.org>; Thu, 28 Mar 2013 04:49:10 -0700 (PDT)
+	id S1754718Ab3C1MjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 08:39:07 -0400
+Received: from mail-pb0-f47.google.com ([209.85.160.47]:50888 "EHLO
+	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752976Ab3C1MjG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 08:39:06 -0400
+Received: by mail-pb0-f47.google.com with SMTP id rp2so5779421pbb.34
+        for <git@vger.kernel.org>; Thu, 28 Mar 2013 05:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=8iq/pNpWf8rmkfXAIToWg0/8pWnuSIY7K/HkDi6m1lA=;
-        b=v5uHDISYAiTpSymcL7vhg97+Auyhf0qg6y/xfIbJetNluDzKbviKzzHOQjnWkc42xg
-         tkRjpascKja2klXPOcNapPdgbANEwDhlstUa94B60dTn8NfGIMYAiNDq8TQpAkMBScFC
-         tLuGwC/U4oGGCHmL/h7D/C0VTrfCx/xYsRMmnUJ4RlHTEYlCGfb3JtWRAsIFvLOT/QpA
-         879ncD3tIyucwN113jmfR0hGObK9puL80O9u9fVuScapsxyPLI+kzsHNMWOOMxLJPDv6
-         ImAY07xVqGcnK51ymQlNNeYUp2ngyKVU/GvrQV441iAwtPShJ4au+YIstdCXS33Bt6rk
-         aeIw==
-X-Received: by 10.43.9.68 with SMTP id ov4mr14214976icb.22.1364471350003; Thu,
- 28 Mar 2013 04:49:10 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Thu, 28 Mar 2013 04:48:49 -0700 (PDT)
-In-Reply-To: <7vppyklhot.fsf@alter.siamese.dyndns.org>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=jKoGCEd0yX98fVEfHMB5u5slmqcg3xEWD1flNug7KNA=;
+        b=tXhwl5RZwkYQSF8X3hNDLMBsrYffFGZ/XCkArXBxGWQ0CmR+Pujx1Csd+gAxLNiKMC
+         gfht0yt8aUhCgwRt1iyiW45rfhTGnVVhVtdjtSCnlE9B7+h2hC+bt25jUxW6v30B3f0a
+         IpPY3OGAxYCmn4rSro0F4++KrFc9+zQL9tTYk9XbY0xZ+jbRHBByYv2RYlbrZIgQeOTM
+         580nK9GBvdsyUmNJ8yXVDpLWWy8UpwCB8fCjR1kgz1p0OxYS+IycjiME5ajkE2Pb5Sxt
+         mHoc50XE5+hZWcVy5MCpH3TzgA47v5Egtgc/gRRkYouHoPB7uBU9ZXYI5esun8Rt+46/
+         rcwA==
+X-Received: by 10.68.213.167 with SMTP id nt7mr34271110pbc.194.1364474345632;
+        Thu, 28 Mar 2013 05:39:05 -0700 (PDT)
+Received: from luneth.maa.corp.collab.net ([182.71.239.158])
+        by mx.google.com with ESMTPS id m18sm27593854pad.17.2013.03.28.05.39.03
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 28 Mar 2013 05:39:04 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.141.g07926c6
+In-Reply-To: <7v4nfz1ndo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219382>
 
-Junio C Hamano wrote:
-> As I said in another thread, your top-level may be only a part in
-> somebody else's project, and what you consider just a part of your
-> project may be the whole project to somebody else.  If you pick one
-> location to store both for the above clone, e.g. cgit/.git (it could
-> be cgit/.ram-git or any other name), embedding it in a yet larger
-> project (perhaps having both cgit and gitolite to give a one-stop
-> solution for hosting services) later would face the same issue as
-> Ram seemed to be complaining.  It needs to address what happens when
-> that cgit/.git (or whatever name) gets in the way in the scope of
-> the larger project.  That is why I said Ram's rant, using subjective
-> words like "elegant", without sound technical justification, did not
-> make much sense to me.
+Configuration from test_config does not last beyond the end of the
+current test assertion, making each test easier to think about in
+isolation.
 
-I was having a lot of difficulty writing down my thoughts.  Thank you
-for providing an illustrative example.  It is terribly hard to do with
-our current implementation: we'd have to rewrite the "gitdir: " lines
-in all the .git files in the submodule trees and rebuild all the
-.git/modules paths.  I'm thinking that we need to separate the object
-stores from the worktrees for good.  For a project with no submodules,
-the object store can be present in .git/ of the toplevel directory,
-like it is now.  The moment submodules are added, all the object
-stores should be relocated to a place outside the worktree.  So my
-~/src might look like: dotfiles.git/, auto-complete.git/, magit.git/,
-git-commit-mode.git/, yasnippet.git/ and dotfiles/.  dotfiles/
-contains lots of worktrees stitched together nicely, pointing to these
-object stores in ~/src.  This would certainly get rid of the asymmetry
-for good.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Removed first hunk, as per Junio's comment.
 
-Now, we can focus our attention on composing git worktrees.  What is a
-worktree?  A tree object pointed to by the commit object referred to
-by HEAD.  What we need to do is embed one tree inside another using a
-mediating object to establish repository boundaries, while not
-introducing an ugly seam.  If you think about it, the mediator we've
-picked conveys little/ no information to the parent; it says: "there's
-a commit with this SHA-1 present in this submodule, but I can't tell
-you the commit message, tree object, branch, remote, or anything else"
-(obviously because the commit isn't present in the parent's object
-store).  So, the mediator might as well have been a SHA-1 string.  And
-we have an ugly .gitmodules conveying the remote and the branch.  Why
-can't we stuff more information into the mediating object and get rid
-of .gitmodules altogether?
+ t/t5520-pull.sh | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-Okay, here's a first draft of the new design.  The new mediator object
-should look like:
-
-    name = git
-    ref = v1.7.8
-
-The name is looked up in refs/modules/<branch>, which in turn looks like:
-
-    [submodule "git"]
-        origin = gh:artagnon/git
-        path = git
-    [submodule "magit"]
-        origin = gh:magit/magit
-        path = git/extensions/magit
-
-The ref could be 'master', 'HEAD~1', or even a commit SHA-1 (to do the
-current anchored-submodules).
-Finally, there's a .git file in the worktree, which contains a
-"gitdir: " line pointing to the object store, as before.
-
-This solves the two problems that I brought up earlier:
-- Floating submodules (which are _necessary_ if you don't want to
-propagate commits upwards to the root).
-- Initializing a nested submodule without having to initialize all the
-submodules in the path leading up to it.
-
-However, I suspect that we can put more information the mediator
-object to make life easier for the parent repository and make seams
-disappear.  I'm currently thinking about what information git core
-needs to behave smoothly with submodules.
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index e5adee8..87777ea 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -96,8 +96,7 @@ test_expect_success '--rebase' '
+ '
+ test_expect_success 'pull.rebase' '
+ 	git reset --hard before-rebase &&
+-	git config --bool pull.rebase true &&
+-	test_when_finished "git config --unset pull.rebase" &&
++	test_config pull.rebase true &&
+ 	git pull . copy &&
+ 	test $(git rev-parse HEAD^) = $(git rev-parse copy) &&
+ 	test new = $(git show HEAD:file2)
+@@ -105,8 +104,7 @@ test_expect_success 'pull.rebase' '
+ 
+ test_expect_success 'branch.to-rebase.rebase' '
+ 	git reset --hard before-rebase &&
+-	git config --bool branch.to-rebase.rebase true &&
+-	test_when_finished "git config --unset branch.to-rebase.rebase" &&
++	test_config branch.to-rebase.rebase true &&
+ 	git pull . copy &&
+ 	test $(git rev-parse HEAD^) = $(git rev-parse copy) &&
+ 	test new = $(git show HEAD:file2)
+@@ -114,10 +112,8 @@ test_expect_success 'branch.to-rebase.rebase' '
+ 
+ test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
+ 	git reset --hard before-rebase &&
+-	git config --bool pull.rebase true &&
+-	test_when_finished "git config --unset pull.rebase" &&
+-	git config --bool branch.to-rebase.rebase false &&
+-	test_when_finished "git config --unset branch.to-rebase.rebase" &&
++	test_config pull.rebase true &&
++	test_config branch.to-rebase.rebase false &&
+ 	git pull . copy &&
+ 	test $(git rev-parse HEAD^) != $(git rev-parse copy) &&
+ 	test new = $(git show HEAD:file2)
+@@ -171,9 +167,9 @@ test_expect_success 'pull --rebase dies early with dirty working directory' '
+ 	git update-ref refs/remotes/me/copy copy^ &&
+ 	COPY=$(git rev-parse --verify me/copy) &&
+ 	git rebase --onto $COPY copy &&
+-	git config branch.to-rebase.remote me &&
+-	git config branch.to-rebase.merge refs/heads/copy &&
+-	git config branch.to-rebase.rebase true &&
++	test_config branch.to-rebase.remote me &&
++	test_config branch.to-rebase.merge refs/heads/copy &&
++	test_config branch.to-rebase.rebase true &&
+ 	echo dirty >> file &&
+ 	git add file &&
+ 	test_must_fail git pull &&
+-- 
+1.8.2.141.g07926c6
