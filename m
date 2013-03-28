@@ -1,93 +1,100 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Bug in "git rev-parse --verify"
-Date: Thu, 28 Mar 2013 16:34:19 +0100
-Message-ID: <515462FB.9040605@alum.mit.edu>
-References: <51543FDB.9010109@alum.mit.edu> <CAPc5daUqzz=9TBmj2Q0MHqEc6gMHxXoGr9+JV3hq76zDKJAyCw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 0/6] Support triangular workflows
+Date: Thu, 28 Mar 2013 11:35:47 -0400
+Message-ID: <20130328153547.GA3337@sigill.intra.peff.net>
+References: <1364477202-5742-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 16:34:55 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 16:36:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULEqq-0006ot-U5
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 16:34:53 +0100
+	id 1ULEsJ-0003Jd-0X
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 16:36:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756172Ab3C1PeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 11:34:23 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:62871 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756109Ab3C1PeW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Mar 2013 11:34:22 -0400
-X-AuditID: 1207440c-b7ff06d0000008f7-ab-515462fe8000
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 62.43.02295.EF264515; Thu, 28 Mar 2013 11:34:22 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r2SFYJTJ026837
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 28 Mar 2013 11:34:21 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
-In-Reply-To: <CAPc5daUqzz=9TBmj2Q0MHqEc6gMHxXoGr9+JV3hq76zDKJAyCw@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqPsvKSTQ4FIrr0XXlW4mixVT7rFY
-	/GjpYXZg9njWu4fR4+IlZY/Pm+QCmKO4bZISS8qCM9Pz9O0SuDN+vH3BWvCQs+JTy0fmBsad
-	7F2MnBwSAiYSDZtOsULYYhIX7q1n62Lk4hASuMwosWbafiYI5ziTxNmXbcwgVbwC2hLrrl4F
-	62YRUJVY/HA9C4jNJqArsainmQnEFhUIk9h7YRobRL2gxMmZT4BqODhEBFQk+k7FgISZBVwl
-	7j+8BVYiLKAjcbynA2yMkECBxNoTK8BsToFAiacLDrCBtDILqEusnycE0Sovsf3tHOYJjAKz
-	kCyYhVA1C0nVAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6hnq5mSV6qSmlmxghYcuzg/Hb
-	OplDjAIcjEo8vDMjQgKFWBPLiitzDzFKcjApifKGJwKF+JLyUyozEosz4otKc1KLDzFKcDAr
-	ifA2xQHleFMSK6tSi/JhUtIcLErivKpL1P2EBNITS1KzU1MLUotgsjIcHEoSvEuB8SkkWJSa
-	nlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIRD4rS+GJgnIKkeID2VoC08xYXJOYCRSFaTzHq
-	cnQt+vyKUYglLz8vVUqc1xukSACkKKM0D24FLEm9YhQH+liYdzJIFQ8wwcFNegW0hAloyfKv
-	wSBLShIRUlINjIlH2LpNplup8eakpX74wXzgms1t/o4rzfOZZ21scU28vnTz/o2H0i3rGfQt
-	+SrCfyzbXqRRvfzkHvOgH1Ebvtyc9/zonK8/bC6ZT5rnfk3IpMMwh7vx3LcFOj8y 
+	id S1754297Ab3C1Pfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 11:35:55 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43663 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752615Ab3C1Pfy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 11:35:54 -0400
+Received: (qmail 25810 invoked by uid 107); 28 Mar 2013 15:37:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 11:37:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 11:35:47 -0400
+Content-Disposition: inline
+In-Reply-To: <1364477202-5742-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219410>
 
-On 03/28/2013 02:48 PM, Junio C Hamano wrote:
-> I think it has always been about "is this well formed and we can turn it
-> into a raw 20-byte object name?" and never about"does it exist?"
+On Thu, Mar 28, 2013 at 06:56:36PM +0530, Ramkumar Ramachandra wrote:
 
-That's surprising.  The man page says
+> Jeff King (1):
+>   t5516 (fetch-push): drop implicit arguments from helper functions
+> 
+> Ramkumar Ramachandra (5):
+>   remote.c: simplify a bit of code using git_config_string()
+>   t5516 (fetch-push): update test description
+>   remote.c: introduce a way to have different remotes for fetch/push
+>   remote.c: introduce remote.pushdefault
+>   remote.c: introduce branch.<name>.pushremote
 
-    --verify
-        The parameter given must be usable as a single, valid object name.
-        Otherwise barf and abort.
+Thanks, this iteration looks pretty good. I have one minor nit, which is
+that the tests in patches 5 and 6 do things like:
 
-"Valid", to me, implies that the parameter should be the name of an
-actual object, and this also seems a more useful concept to me and more
-consistent with the command's behavior when passed other arguments.
+> +	git push &&
+> +	test_must_fail check_push_result up_repo $the_commit heads/master &&
+> +	check_push_result down_repo $the_commit heads/master
 
+Using test_must_fail here caught my eye, because usually it is meant to
+check failure of a single git command. When it (or "!", for that matter)
+is used with a compound function, you end up losing robustness in corner
+cases.
 
-Is there a simple way to verify an object name more strictly and convert
-it to an SHA1?  I can only think of solutions that require two commands,
-like
+For example, imagine your function is:
 
-    git cat-file -e $ARG && git rev-parse --verify $ARG
+  check_foo() {
+          cd "$1" &&
+          git foo
+  }
 
-I suppose in most contexts where one wants to know whether an object
-name is valid, one should also verify that the object has the type that
-you expect:
+and you expect in some cases that "git foo" will succeed and in some
+cases it will fail. In the affirmative case (running "check_foo"), this
+is robust; if any of the steps fails, the test fails.
 
-    test X$(git cat-file -t $ARG) = Xcommit &&
-        git rev-parse --verify $ARG
+But if you run the negative case ("test_must_fail check_foo"), you will
+also fail if any of the preparatory steps fail. I.e., you wanted to say:
 
-or (allowing tag dereferencing)
+  cd "$1" && test_must_fail git foo
 
-    git cat-file -e $ARG^{commit} &&
-        git rev-parse --verify $ARG^{commit}
+but you actually said (applying De Morgan's laws):
 
-Michael
+  test_must_fail cd "$1" || test_must_fail git foo
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Now we probably don't expect the "cd" to fail here, but of course the
+other steps can be more complicated, too. In your case, I think the
+effect you are looking for is that "heads/master != $the_commit". But
+note that we would also fail if "git fsck" fails in the pushed
+repository, which is not what we want.
+
+Sometimes it's annoyingly verbose to break down a compound function. But
+I think in this case, you can make your tests more robust by just
+checking the affirmative that the ref is still where we expect it to be,
+like:
+
+  check_push_result up_repo $the_first_commit heads/master
+
+Sorry if that was a bit long-winded. I think that practically speaking,
+it is not a likely source of problems in this case. But it's an
+anti-pattern in our tests that I think is worth mentioning.
+
+-Peff
