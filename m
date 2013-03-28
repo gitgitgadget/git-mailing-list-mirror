@@ -1,117 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/6] t: check that a pattern without trailing slash matches a
- directory
-Date: Thu, 28 Mar 2013 17:50:04 -0400
-Message-ID: <20130328215004.GF10936@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 6/6] t: check that a pattern without trailing slash
+ matches a directory
+Date: Thu, 28 Mar 2013 18:21:08 -0400
+Message-ID: <CAPig+cRyPMg_icgK1+5-WdXeaAZ9ytYQgFLgbVohRJaC9qzZQA@mail.gmail.com>
 References: <20130328214358.GA10685@sigill.intra.peff.net>
+	<20130328215004.GF10936@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, pclouds@gmail.com, avila.jn@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 22:50:45 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, avila.jn@gmail.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 28 23:21:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULKiZ-0005Z2-1z
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 22:50:43 +0100
+	id 1ULLCV-0007Zm-F1
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 23:21:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754096Ab3C1VuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 17:50:12 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44074 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752927Ab3C1VuL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 17:50:11 -0400
-Received: (qmail 30819 invoked by uid 107); 28 Mar 2013 21:51:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 17:51:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 17:50:04 -0400
-Content-Disposition: inline
-In-Reply-To: <20130328214358.GA10685@sigill.intra.peff.net>
+	id S1753234Ab3C1WVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 18:21:10 -0400
+Received: from mail-la0-f47.google.com ([209.85.215.47]:49693 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752424Ab3C1WVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 18:21:09 -0400
+Received: by mail-la0-f47.google.com with SMTP id fj20so36498lab.6
+        for <git@vger.kernel.org>; Thu, 28 Mar 2013 15:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=nVy2ssu3Vf8SwryTMfnUoTNNZaJW+AK52RUVNMZQ/k0=;
+        b=MDsn5RS39jaWKGVGdKBqucNxGtN6B5zZ1eHnN+NHGBtmuDLLmztpHaxN83cAN7sADs
+         jVlba9tQFCXVMS7r8v9TIkZZ3YiEAYtCl37tNknbuhA+Utexx9E9nc6WANw/pZu2K0Fc
+         LFO67DotXTTWRApKMCJmMSw5c5JQKDAi900gJuRyPPkRntpBeVuws6APYTmcXUWSkH0b
+         uz1ZKRNSQLkc+ulMAAfn4QDiTX0ezUhnEFDEWXLpYWXopObp8ysrQkoLgvQ5E+dMy8Xl
+         yvUsK7emGy/lB0/Q2RZdPuyijiCPkEPcHXccqIKwcNVlYQBxrFj5moh5v/CtYE4oB/h/
+         v9/g==
+X-Received: by 10.152.47.242 with SMTP id g18mr109055lan.42.1364509268201;
+ Thu, 28 Mar 2013 15:21:08 -0700 (PDT)
+Received: by 10.114.1.43 with HTTP; Thu, 28 Mar 2013 15:21:08 -0700 (PDT)
+In-Reply-To: <20130328215004.GF10936@sigill.intra.peff.net>
+X-Google-Sender-Auth: MJ4L4EMebRjNHZ6JuF-3k2_wGcY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219469>
 
-Prior to v1.8.1.1, with:
+On Thu, Mar 28, 2013 at 5:50 PM, Jeff King <peff@peff.net> wrote:
+> A pattern "subdir" should match any path "subdir", whether it is a
+> directory or a non-diretory.  A pattern "subdir/" insists that a
 
-  git init
-  echo content >foo &&
-  mkdir subdir &&
-  echo content >subdir/bar &&
-  echo "subdir export-ignore" >.gitattributes
-  git add . &&
-  git commit -m one &&
-  git archive HEAD | tar tf -
+s/diretory/directory/  [1]
 
-the resulting archive would contain only "foo" and
-".gitattributes", not subdir.  This was broken with a recent
-change that intended to allow "subdir/ export-ignore" to
-also exclude the directory, but instead ended up _requiring_
-the trailing slash by mistake.
+> path "subdir" must be a directory for it to match.
 
-A pattern "subdir" should match any path "subdir", whether it is a
-directory or a non-diretory.  A pattern "subdir/" insists that a
-path "subdir" must be a directory for it to match.
-
-This patch adds test not just for this simple case, but also
-for deeper cross-directory cases, as well as cases with
-wildcards.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Added new tests since v1 that handle the match_pathname code path.
-
- t/t5002-archive-attr-pattern.sh | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
-
-diff --git a/t/t5002-archive-attr-pattern.sh b/t/t5002-archive-attr-pattern.sh
-index 0c847fb..6667d15 100755
---- a/t/t5002-archive-attr-pattern.sh
-+++ b/t/t5002-archive-attr-pattern.sh
-@@ -27,6 +27,25 @@ test_expect_success 'setup' '
- 	echo ignored-only-if-dir/ export-ignore >>.git/info/attributes &&
- 	git add ignored-only-if-dir &&
- 
-+	mkdir -p ignored-without-slash &&
-+	echo "ignored without slash" >ignored-without-slash/foo &&
-+	git add ignored-without-slash/foo &&
-+	echo "ignored-without-slash export-ignore" >>.git/info/attributes &&
-+
-+	mkdir -p wildcard-without-slash &&
-+	echo "ignored without slash" >wildcard-without-slash/foo &&
-+	git add wildcard-without-slash/foo &&
-+	echo "wild*-without-slash export-ignore" >>.git/info/attributes &&
-+
-+	mkdir -p deep/and/slashless &&
-+	echo "ignored without slash" >deep/and/slashless/foo &&
-+	git add deep/and/slashless/foo &&
-+	echo "deep/and/slashless export-ignore" >>.git/info/attributes &&
-+
-+	mkdir -p deep/with/wildcard &&
-+	echo "ignored without slash" >deep/with/wildcard/foo &&
-+	git add deep/with/wildcard/foo &&
-+	echo "deep/*t*/wildcard export-ignore" >>.git/info/attributes &&
- 
- 	mkdir -p one-level-lower/two-levels-lower/ignored-only-if-dir &&
- 	echo ignored by ignored dir >one-level-lower/two-levels-lower/ignored-only-if-dir/ignored-by-ignored-dir &&
-@@ -49,6 +68,14 @@ test_expect_missing	archive/ignored-ony-if-dir/ignored-by-ignored-dir
- test_expect_exists	archive/not-ignored-dir/
- test_expect_missing	archive/ignored-only-if-dir/
- test_expect_missing	archive/ignored-ony-if-dir/ignored-by-ignored-dir
-+test_expect_missing	archive/ignored-without-slash/ &&
-+test_expect_missing	archive/ignored-without-slash/foo &&
-+test_expect_missing	archive/wildcard-without-slash/
-+test_expect_missing	archive/wildcard-without-slash/foo &&
-+test_expect_missing	archive/deep/and/slashless/ &&
-+test_expect_missing	archive/deep/and/slashless/foo &&
-+test_expect_missing	archive/deep/with/wildcard/ &&
-+test_expect_missing	archive/deep/with/wildcard/foo &&
- test_expect_exists	archive/one-level-lower/
- test_expect_missing	archive/one-level-lower/two-levels-lower/ignored-only-if-dir/
- test_expect_missing	archive/one-level-lower/two-levels-lower/ignored-ony-if-dir/ignored-by-ignored-dir
--- 
-1.8.2.13.g0f18d3c
+[1]: http://article.gmane.org/gmane.comp.version-control.git/219185/
