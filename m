@@ -1,89 +1,74 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Composing git repositories
-Date: Thu, 28 Mar 2013 21:17:59 +0100
-Message-ID: <5154A577.2020103@web.de>
-References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com> <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com> <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com> <20130327192630.GF28148@google.com> <CALkWK0nreJZX4msFET0a7cuUMWNbQhhqy+ezrkqYGqL4_a2duA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: More detailed error message for 403 forbidden.
+Date: Thu, 28 Mar 2013 16:18:26 -0400
+Message-ID: <20130328201826.GA24103@sigill.intra.peff.net>
+References: <CAFT+Tg_PwAS__AYCwQQZjy4LVvAMZFJuJ+ediDJpRnxx73qMMg@mail.gmail.com>
+ <20130328183601.GA11914@sigill.intra.peff.net>
+ <7vk3ortk3o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 28 21:18:33 2013
+Content-Type: text/plain; charset=utf-8
+Cc: "Yi, EungJun" <semtlenori@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 28 21:19:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULJHL-0003Jf-S4
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 21:18:32 +0100
+	id 1ULJHp-0005Ef-6C
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Mar 2013 21:19:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752300Ab3C1USD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 16:18:03 -0400
-Received: from mout.web.de ([212.227.17.11]:50328 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751091Ab3C1USC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 16:18:02 -0400
-Received: from [192.168.178.41] ([91.3.172.174]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0LrKEG-1Umi2e0HAy-0137bd; Thu, 28 Mar 2013 21:18:00
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <CALkWK0nreJZX4msFET0a7cuUMWNbQhhqy+ezrkqYGqL4_a2duA@mail.gmail.com>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V02:K0:9TbzE0K/3oUFti+g6QI+Go1b7W6wBaTpK96xuwNjfAO
- WmQ7xWynJrEHxFjiurGRa9oOoOsqLQDGH6bdjkelCb8HRcHnKM
- Jf7yxyZyGzj+iMRIMHrYKVZsCnZMaf1iZtlKz5tFO68OsI9MR4
- F4bEaNwMrhCiEGFxM/V+kySGx4A+onWherr6CkWRQaXftXpgu1
- Fn+aS7sMka4iizM7liVQA==
+	id S1752320Ab3C1USd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 16:18:33 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43945 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751091Ab3C1USd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 16:18:33 -0400
+Received: (qmail 29677 invoked by uid 107); 28 Mar 2013 20:20:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 16:20:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 16:18:26 -0400
+Content-Disposition: inline
+In-Reply-To: <7vk3ortk3o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219456>
 
-Am 28.03.2013 11:01, schrieb Ramkumar Ramachandra:
-> Jonathan Nieder wrote:
->> Do you mean that you wish you could ignore subrepository boundaries
->> and use commands like
->>
->>         git clone --recurse-submodules http://git.zx2c4.com/cgit
->>         cd cgit
->>         vi git/cache.h
->>         ... edit edit edit ...
->>         git add --recurse-submodules git/cache.h
->>         git commit --recurse-submodules
->>         git push --recurse-submodules
->>
->> , possibly with configuration to allow the --recurse-submodules to be
->> implied, and have everything work out well?
+On Thu, Mar 28, 2013 at 12:11:55PM -0700, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
-> Do you realize how difficult this is to implement?  We'll need to
-> patch all the git commands to essentially do what we'd get for free if
-> the submodule were a tree object instead of a commit object (although
-> I'm not saying that's the Right thing to do).  Some caveats:
+> > One problem is that the content body sent along with the error is not
+> > necessarily appropriate for showing to the user (e.g., if it is HTML, it
+> > is probably not a good idea to show it on the terminal). So I think we
+> > would want to only show it when the server has indicated via the
+> > content-type that the message is meant to be shown to the user. I'm
+> > thinking the server would generate something like:
+> >
+> >    HTTP/1.1 403 Forbidden
+> >    Content-type: application/x-git-error-message
+> >
+> >    User 'me' does not have enough permission to access the repository.
+> >
+> > which would produce the example you showed above.
 > 
-> - If we maintain one global index, and try to emulate git-subtree
-> using submodules, we've lost.  It's going to take freakin' ages to
-> stat billions of files across hundreds of nested sumodules.  One major
-> advantage of having repository boundaries is separate object stores,
-> indexes, worktrees: little ones that git is designed to work with.
+> Actually, isn't the human-readable part of the server response meant
+> for this kind of thing?  I.e.
+> 
+> 	HTTP/1.1 403 User 'me' not allowed to accept the repository.
 
-Are you aware that current Git code already stats all files across
-all submodules recursive by default? So (again) no problem here, we
-do that already (unless configured otherwise).
+In theory, yes. But I don't think that most servers make it very easy to
+use custom "reason phrases" (that is the rfc 2616 term for them). At
+least I could not easily figure out how to make Apache do so. You can do
+so from CGIs, but I think you'd want to customize some of this at the
+HTTP server level (e.g., overriding 404s with a custom message). There's
+much better support at that level for custom error documents (e.g.,
+Apache's ErrorDocument).
 
-> - Auto-splitting commits that touch multiple submodules/ superproject
-> at once.  Although git-subtree does this, I think it's horribly ugly.
+I do not configure http servers very often, though, so I could be wrong
+about what is normal practice, and what is easy to do.
 
-You don't like it, but what technical argument is hidden here I'm
-missing?
-
-> - Auto-propagating commits upwards to the superproject is another big
-> challenge.  I think the current design of anchoring to a specific
-> commit SHA-1 has its usecases, but is unwieldy when things become big.
->  We have to fix that first.
-
-What??? Again there is nothing to "fix" here, "anchoring to a specific
-commit SHA-1" is *the* most prominent use case (think reproducibility
-of the whole work tree), floating submodules are the oddball here.
+-Peff
