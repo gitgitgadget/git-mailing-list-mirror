@@ -1,63 +1,86 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] rev-list: preallocate object hash table in --all --objects
-Date: Fri, 29 Mar 2013 22:29:52 +0700
-Message-ID: <CACsJy8AXUUz3=-pWeK-y0va-=d_-aCeNgH8rAtMZdq0PE+X97g@mail.gmail.com>
-References: <1364563210-28813-1-git-send-email-pclouds@gmail.com> <20130329151208.GA22744@sigill.intra.peff.net>
+From: Miklos Vajna <vmiklos@suse.cz>
+Subject: [PATCH] cherry-pick -x: improve handling of one-liner commit messages
+Date: Fri, 29 Mar 2013 16:38:18 +0100
+Message-ID: <20130329153818.GB27251@suse.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 29 16:30:55 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 29 16:38:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULbGV-0007ac-EP
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 16:30:51 +0100
+	id 1ULbOI-0004EV-44
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 16:38:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755909Ab3C2PaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Mar 2013 11:30:23 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:37908 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755628Ab3C2PaX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Mar 2013 11:30:23 -0400
-Received: by mail-ob0-f176.google.com with SMTP id er7so480002obc.21
-        for <git@vger.kernel.org>; Fri, 29 Mar 2013 08:30:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=TR8ZOyUC5Fqw/2Rya9Rxhu64as2PFMb8aswtcMnEJJo=;
-        b=B6YL7qaPTwnHkd6WSDYCzTHTORf22baoNnNBdeLMB+CLDGLbg3StK5c7+6gNmrMFex
-         g5kCyXVG2c/bNf75QnlKa0bs7L8iWRjuTefIFsqjuSrYE5w55ItI/dgtwPEIqxDd0EpX
-         xgpD2ModvXWabmxs2qmxfQyhi3OTU5cPkYb5hAqutEI0SSNwwRmURc/xJ0M/3PU5UpND
-         lkETuyniiarVuBI6PM0BzJf+/787nhNOrUo1rLfMfsOifclo53sJTsQeJzFFCQsCY6o2
-         O8jGrptNEeAdCUMDIg53ZK9hqFFXp1hrEHrwqGzVxsXSK3kKI+ayvQ6SQPQy5jrGYIM5
-         Opdw==
-X-Received: by 10.60.99.68 with SMTP id eo4mr960525oeb.126.1364571022604; Fri,
- 29 Mar 2013 08:30:22 -0700 (PDT)
-Received: by 10.76.27.137 with HTTP; Fri, 29 Mar 2013 08:29:52 -0700 (PDT)
-In-Reply-To: <20130329151208.GA22744@sigill.intra.peff.net>
+	id S1756131Ab3C2PiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Mar 2013 11:38:25 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:60620 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755628Ab3C2PiY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Mar 2013 11:38:24 -0400
+Received: from relay1.suse.de (unknown [195.135.220.254])
+	by mx2.suse.de (Postfix) with ESMTP id C792EA3A49;
+	Fri, 29 Mar 2013 16:38:20 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219503>
 
-On Fri, Mar 29, 2013 at 10:12 PM, Jeff King <peff@peff.net> wrote:
-> This feels weirdly specific, and like we should just be tuning our hash
-> table growth better. You show a 3.2% speedup here. I was able to get a
-> 2.8% speedup just by doing this:
+git cherry-pick -x normally just appends the "cherry picked from commit"
+line at the end of the message, which is fine. However, in case the
+original commit message had only one line, first append a newline,
+otherwise the second line won't be empty, which is against
+recommendations.
+---
+ sequencer.c                   | 10 ++++++++++
+ t/t3501-revert-cherry-pick.sh |  8 ++++++++
+ 2 files changed, 18 insertions(+)
 
-It also uses a lot more memory. 5.8m entries for ".. * 2" and 8.8m for
-"... * 3". Probably no big deal for modern machines..
-
-> It might be worth trying to figure out what the optimium growth rate is
-> first, which would help this use case and others. With less fragile
-> code.
-
-Agreed. Although I think it's getting out of my domain. I'm not even
-sure how many factors are involved.
+diff --git a/sequencer.c b/sequencer.c
+index aef5e8a..1ae0e43 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -496,6 +496,16 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		}
+ 
+ 		if (opts->record_origin) {
++
++			/*
++			 * If this the message is a one-liner, append a
++			 * newline, so the second line will be empty, as
++			 * recommended.
++			 */
++			p = strstr(msgbuf.buf, "\n\n");
++			if (!p)
++				strbuf_addch(&msgbuf, '\n');
++
+ 			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
+ 			strbuf_addstr(&msgbuf, sha1_to_hex(commit->object.sha1));
+ 			strbuf_addstr(&msgbuf, ")\n");
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 6f489e2..858c744 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -70,6 +70,14 @@ test_expect_success 'cherry-pick after renaming branch' '
+ 
+ '
+ 
++test_expect_success 'cherry-pick -x of one-liner commit message' '
++
++	git checkout rename2 &&
++	git cherry-pick -x added &&
++	git show -s --pretty=format:%s | test_must_fail grep "cherry picked"
++
++'
++
+ test_expect_success 'revert after renaming branch' '
+ 
+ 	git checkout rename1 &&
 -- 
-Duy
+1.8.1.4
