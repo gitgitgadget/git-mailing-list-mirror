@@ -1,70 +1,79 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH] cherry-pick -x: improve handling of one-liner commit messages
-Date: Fri, 29 Mar 2013 10:41:17 -0700
-Message-ID: <CA+sFfMet0578rLwAKBBsd8DM3thsw=8+joEAAf44TzwqUZgXzw@mail.gmail.com>
-References: <20130329153818.GB27251@suse.cz>
-	<7v8v56p1bl.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/6] dir.c::match_pathname(): pay attention to the length
+ of string parameters
+Date: Fri, 29 Mar 2013 13:44:55 -0400
+Message-ID: <20130329174455.GA13268@sigill.intra.peff.net>
+References: <20130328214358.GA10685@sigill.intra.peff.net>
+ <20130328214821.GD10936@sigill.intra.peff.net>
+ <CACsJy8DisE8UNZzqmOFxPqw=bmFiHgE5-ao83ciGNUV9Sc9-gA@mail.gmail.com>
+ <20130329120539.GA20711@sigill.intra.peff.net>
+ <20130329130230.GA25861@lanh>
+ <7vli96p34f.fsf@alter.siamese.dyndns.org>
+ <20130329170459.GB3552@sigill.intra.peff.net>
+ <7vzjxmnm7e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Miklos Vajna <vmiklos@suse.cz>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
+	avila.jn@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 29 18:41:48 2013
+X-From: git-owner@vger.kernel.org Fri Mar 29 18:45:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULdJE-0006ra-9p
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 18:41:48 +0100
+	id 1ULdMk-0007Hv-HA
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 18:45:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756221Ab3C2RlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Mar 2013 13:41:19 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:33188 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755858Ab3C2RlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Mar 2013 13:41:19 -0400
-Received: by mail-wi0-f181.google.com with SMTP id hj8so82590wib.8
-        for <git@vger.kernel.org>; Fri, 29 Mar 2013 10:41:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=1Nk2oLkEcfqPEEfOx6pFxMhF4giPcpBs5gssaXFLOpU=;
-        b=tMuv848adUi53gBBdMijqCWtj892pXVHLz/Y8hySVb+meHYt8UMsTZyag2NLQfnMR1
-         5HVCuqpb1sKNSScKgB+BMweb9JvsG5ZW07TBANo1vJk4PIBRDgOrNF/kzbaAV2WB/fTm
-         OAWORV2HJ9A1uSAJVEEWwDwTJkFBHGY+8ZoOr4p5yYcaKZXpnQDKLYfH28iP55iGPEom
-         bkmjluxhoa6fvZJ7PIsRp4+/xFXxOUVsOU0TdtDsfmFpQNenmEswnuBjz8w4+y2nWmVW
-         RShns436mXhcsMhTT45cN9euyIBh0K2iujn8b6k9Bux0S+NkoX/l0YzKlyaNWcl4IL3a
-         y/TQ==
-X-Received: by 10.194.10.129 with SMTP id i1mr4916732wjb.21.1364578878029;
- Fri, 29 Mar 2013 10:41:18 -0700 (PDT)
-Received: by 10.194.249.69 with HTTP; Fri, 29 Mar 2013 10:41:17 -0700 (PDT)
-In-Reply-To: <7v8v56p1bl.fsf@alter.siamese.dyndns.org>
+	id S1756427Ab3C2Ro6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Mar 2013 13:44:58 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48468 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755476Ab3C2Ro5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Mar 2013 13:44:57 -0400
+Received: (qmail 7614 invoked by uid 107); 29 Mar 2013 17:46:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Mar 2013 13:46:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Mar 2013 13:44:55 -0400
+Content-Disposition: inline
+In-Reply-To: <7vzjxmnm7e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219516>
 
-On Fri, Mar 29, 2013 at 10:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Miklos Vajna <vmiklos@suse.cz> writes:
->
->> git cherry-pick -x normally just appends the "cherry picked from commit"
->> line at the end of the message, which is fine. However, in case the
->> original commit message had only one line, first append a newline,
->> otherwise the second line won't be empty, which is against
->> recommendations.
->> ---
->
-> Sign-off?
->
-> I think this is part of the bc/append-signed-off-by topic that is
-> about to graduate to 'master'; more specifically, b971e04f54e7
-> (sequencer.c: always separate "(cherry picked from" from commit
-> body, 2013-02-12) does the equivalent, no?
+On Fri, Mar 29, 2013 at 10:35:17AM -0700, Junio C Hamano wrote:
 
-Yeah, I think this case is already handled.
+> This may be just the matter of naming.
+> 
+> It smelled wrong to me only because the "fnmatch" in the helper
+> fnmatch_icase_mem() told me that it should forever use fnmatch
+> semantics.  After reading its (only) two callsites, they are both
+> "the caller has transformed the inputs to this lowest level pathname
+> vs pattern matching function in order to reduce the cost of
+> matching, and now it is time to exercise the matcher".  The only
+> thing they care about is that they are calling "the lowest level
+> pathname vs pattern matching function."
+> 
+> If we pronounce "fnmatch_icase_mem()" as "match_path_with_pattern()"
+> or something in the original series, the problem may go away ;-)
 
-Miklos, can you check out next and see if your problem case is handled?
+Yes, since there are only the two new added callers, if they both want
+to switch to wildmatch, then it is fine for the helper function to
+switch. The danger is if some other caller wants to start using it; I
+added it with the name I did figuring that other spots might want to use
+it eventually. But if all of fnmatch is going to go away in favor of
+wildmatch eventually, then that helper is not all that useful (or it
+would be even more useful as "wildmatch_mem" or similar).
 
--Brandon
+> Does any caller pass FNM_* bits to a callchain that reach the new *_mem()
+> function?
+
+The series only adds two callers, and they provide constant flags;
+match_basename passes no flags, and should be OK. match_pathname uses
+FNM_PATHNAME, and would need to be converted to use WM_PATHNAME as part
+of the conflict resolution.
+
+-Peff
