@@ -1,117 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cherry-pick -x: improve handling of one-liner commit
- messages
-Date: Fri, 29 Mar 2013 10:23:26 -0700
-Message-ID: <7v8v56p1bl.fsf@alter.siamese.dyndns.org>
-References: <20130329153818.GB27251@suse.cz>
+Subject: Re: Minor bug in git branch --set-upstream-to adding superfluous
+ branch section to config
+Date: Fri, 29 Mar 2013 10:27:47 -0700
+Message-ID: <7v4nfup14c.fsf@alter.siamese.dyndns.org>
+References: <CAD7mMPW=jr6PaAc50h-Wpf42-UPrn0A5KmisqXNXqqLv78AEgg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@suse.cz>, Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 29 18:23:58 2013
+To: Phil Haack <haacked@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 29 18:28:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULd1x-00067b-SX
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 18:23:58 +0100
+	id 1ULd6A-0008Fi-TF
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 18:28:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756478Ab3C2RX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Mar 2013 13:23:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65109 "EHLO
+	id S1756380Ab3C2R1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Mar 2013 13:27:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50997 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756432Ab3C2RX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Mar 2013 13:23:28 -0400
+	id S1755826Ab3C2R1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Mar 2013 13:27:49 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5392EEEEC;
-	Fri, 29 Mar 2013 17:23:28 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09DCAF050;
+	Fri, 29 Mar 2013 17:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0eWS1fWyS8h1veho8XoLzBZLKLA=; b=q8FaB0
-	rSHmVxHOEZFR2Wgk+fVdSh10y934BFD3XsHcS7MgTf/U5wE2e4iTuQgAUfoRXGRU
-	cO9/DN3h4ByUhmpYS0jzfeE/VKYReQUhA+p1AvPAHpLrPCp1gfFEIYhzicf+rD8Z
-	DuVvkBJWSKlkL9SIZt95ZGjRCpx2z44S8USEc=
+	:content-type; s=sasl; bh=Zx757CX6/mIn2YHb54J88O3LPHA=; b=S9gNoK
+	pUgiUHbun+5qNzOFoQYB61djbcm4zglE7+zmfhcNOZcnoOA0nCijBB+/s8JBgGW6
+	Xmeq1sm+WnTSHYbznLrfud1QXbmBT5MAMlIu/DlhjoiZsZca57tayj1nbrw8gWx8
+	RFOlnID3EsLo7yYODpCEmtFN3ZGcamhcui8BA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rRd5QntCQ5YSiRdbh5YAqaCo3G7vGNhV
-	fSsWHwEs/FsA/xMypRaTnjgY20vz19JVk24QcE2qrL/0ckOGbmzOoHgVrVHp3xl+
-	bhxSfDGNPsoWvETxpT6gPiPS+UJu9Xl5DJ+0S3E0mGllVnf1IXPPRJLIP77HMZAv
-	Z9Ke2DZyKQc=
+	:content-type; q=dns; s=sasl; b=ldKNis8mhgAZ/OgenDj1SLFfmCuRKFim
+	xVyUx3AdCQpZvvwusGnSiSik0cYlswYBRUiATbdFYsrBJflu+jW53UYoo89JfwLi
+	s0fenYdJgiK1u0cp2dno9UTog5uFf+jdCsCyYsxyOBx4V5trSUt2XPdqPzHAu7HI
+	mvUb0xxzEPE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A738EEEB;
-	Fri, 29 Mar 2013 17:23:28 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F1F3CF04F;
+	Fri, 29 Mar 2013 17:27:48 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AABC4EEE8; Fri, 29 Mar 2013
- 17:23:27 +0000 (UTC)
-In-Reply-To: <20130329153818.GB27251@suse.cz> (Miklos Vajna's message of
- "Fri, 29 Mar 2013 16:38:18 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 755B6F04E; Fri, 29 Mar 2013
+ 17:27:48 +0000 (UTC)
+In-Reply-To: <CAD7mMPW=jr6PaAc50h-Wpf42-UPrn0A5KmisqXNXqqLv78AEgg@mail.gmail.com> (Phil
+ Haack's message of "Fri, 29 Mar 2013 09:29:14 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5E79201E-9895-11E2-B8DE-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F9E91E32-9895-11E2-B68D-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219513>
 
-Miklos Vajna <vmiklos@suse.cz> writes:
+Phil Haack <haacked@gmail.com> writes:
 
-> git cherry-pick -x normally just appends the "cherry picked from commit"
-> line at the end of the message, which is fine. However, in case the
-> original commit message had only one line, first append a newline,
-> otherwise the second line won't be empty, which is against
-> recommendations.
-> ---
-
-Sign-off?
-
-I think this is part of the bc/append-signed-off-by topic that is
-about to graduate to 'master'; more specifically, b971e04f54e7
-(sequencer.c: always separate "(cherry picked from" from commit
-body, 2013-02-12) does the equivalent, no?
-
->  sequencer.c                   | 10 ++++++++++
->  t/t3501-revert-cherry-pick.sh |  8 ++++++++
->  2 files changed, 18 insertions(+)
+> Hello there! Please /cc me with responses as I'm not on the mailing list.
 >
-> diff --git a/sequencer.c b/sequencer.c
-> index aef5e8a..1ae0e43 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -496,6 +496,16 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
->  		}
->  
->  		if (opts->record_origin) {
-> +
-> +			/*
-> +			 * If this the message is a one-liner, append a
-> +			 * newline, so the second line will be empty, as
-> +			 * recommended.
-> +			 */
-> +			p = strstr(msgbuf.buf, "\n\n");
-> +			if (!p)
-> +				strbuf_addch(&msgbuf, '\n');
-> +
->  			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
->  			strbuf_addstr(&msgbuf, sha1_to_hex(commit->object.sha1));
->  			strbuf_addstr(&msgbuf, ")\n");
-> diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-> index 6f489e2..858c744 100755
-> --- a/t/t3501-revert-cherry-pick.sh
-> +++ b/t/t3501-revert-cherry-pick.sh
-> @@ -70,6 +70,14 @@ test_expect_success 'cherry-pick after renaming branch' '
->  
->  '
->  
-> +test_expect_success 'cherry-pick -x of one-liner commit message' '
-> +
-> +	git checkout rename2 &&
-> +	git cherry-pick -x added &&
-> +	git show -s --pretty=format:%s | test_must_fail grep "cherry picked"
-> +
-> +'
-> +
->  test_expect_success 'revert after renaming branch' '
->  
->  	git checkout rename1 &&
+> I'm using git version 1.8.1.msysgit.1 and I ran into a very minor issue. It
+> doesn't actually seem to affect operations, but I thought I'd report it in case
+> someone felt it was worth cleaning up.
+
+I do not think this is limited to "branch --set-whatever".
+
+> If you run the following set of commands:
+>
+>     git checkout -b some-branch
+>     git push origin some-branch
+>     git branch --set-upstream-to origin/some-branch
+>     git branch --unset-upstream some-branch
+
+This step causes the removal of the last variable in a configuration
+section, which leaves an empty section.  As the code to add a new
+variable to the configuration, trying to reuse an existing section
+header, does not pay attention to an empty section, you end up with
+an empty section, followed by a new one.
+
+Either removal of configuration variable should be taught to remove
+the section header when a section becomes empty, or addition of
+configuration variable should be taught to notice an empty section
+header.
+
+
+
+>     git branch --set-upstream-to origin/some-branch
+>
+> You get the following result in the .git\config file
+>
+>     [branch "some-branch"]
+>     [branch "some-branch"]
+>         remote = origin
+>         merge = refs/heads/some-branch
