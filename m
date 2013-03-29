@@ -1,122 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t1300: document some aesthetic failures of the config
- editor
-Date: Fri, 29 Mar 2013 11:51:51 -0700
-Message-ID: <7vobe2nins.fsf@alter.siamese.dyndns.org>
-References: <CAD7mMPW=jr6PaAc50h-Wpf42-UPrn0A5KmisqXNXqqLv78AEgg@mail.gmail.com>
- <20130329170032.GA3552@sigill.intra.peff.net>
- <87ip4ayvfn.fsf@linux-k42r.v.cablecom.net>
- <20130329172307.GA11099@sigill.intra.peff.net>
- <20130329175058.GA13506@sigill.intra.peff.net>
+From: =?UTF-8?B?TWF0dGhpYXMgS3LDvGdlcg==?= <matthias.krueger@famsik.de>
+Subject: Re: gitdiffbinstat  -  git diff --shortstat -like output for changes
+ in binary files
+Date: Fri, 29 Mar 2013 20:22:48 +0100
+Message-ID: <5155EA08.60005@famsik.de>
+References: <5155D864.8040007@famsik.de> <20130329184922.GB13506@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Phil Haack <haacked@gmail.com>
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 29 19:52:24 2013
+X-From: git-owner@vger.kernel.org Fri Mar 29 20:25:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULePX-0000fj-Fm
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 19:52:23 +0100
+	id 1ULevQ-000455-4u
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 20:25:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756802Ab3C2Svz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Mar 2013 14:51:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59471 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756482Ab3C2Svy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Mar 2013 14:51:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6FE9E884;
-	Fri, 29 Mar 2013 18:51:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uAhgDlMgfW+yDxykP5w9+kKUvNU=; b=dmzlgD
-	hWgdbVLW+LJH7YjuwoMBD9W35jdqqCHbFKEgW6wEuRs54bYbvjbMKHvhnUb2U5lO
-	g5KdutWsJRi+k0a9cK0riwffAcOQN4dLWUFGtDuTYEUUN75jScvtkq6vEgWTje5S
-	4Yf6mr7RRRkFs4txnwMHdaBbqJqjD1/eQTgk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qDBSAY4qBGJ2moC/fIvdPhY9o6eOivgg
-	iu7CsKPFoUfuho75bhqzN+yrGgMN8sTp6sbUaDa2IBRlApt5hdM0oqiKrCWK19oV
-	n5lPmWZdBK3yUlvdanLEejkEhokipyyDcCi2dLiUztjdJ8FmWlmLZiYl1GlxNlsi
-	vLTU99boTYQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5DE7E883;
-	Fri, 29 Mar 2013 18:51:53 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 43409E87E; Fri, 29 Mar 2013
- 18:51:53 +0000 (UTC)
-In-Reply-To: <20130329175058.GA13506@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 29 Mar 2013 13:50:58 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B8D7F4A2-98A1-11E2-81EA-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756583Ab3C2TYv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Mar 2013 15:24:51 -0400
+Received: from www.hamsked.org ([109.75.188.246]:56661 "EHLO www.hamsked.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756235Ab3C2TYv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Mar 2013 15:24:51 -0400
+Received: from www.hamsked.org ([109.75.188.246] helo=[172.30.13.11])
+	by www.hamsked.org with esmtp (Exim 4.72)
+	(envelope-from <matthias.krueger@famsik.de>)
+	id 1ULesx-00046S-SY; Fri, 29 Mar 2013 20:22:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130311 Thunderbird/17.0.4
+In-Reply-To: <20130329184922.GB13506@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219522>
 
-Jeff King <peff@peff.net> writes:
+On 03/29/2013 07:49 PM, Jeff King wrote:
+> On Fri, Mar 29, 2013 at 07:07:32PM +0100, Matthias Kr=C3=BCger wrote:
+>
+>> I use git mostly for game-development which means I have to deal wit=
+h
+>> a lot of binary files (images, sound files etc).
+>>
+>> When I came to a point where I had run image optimization on a
+>> branch, I wanted to know of course how much smaller the new branch
+>> was in comparison to master.
+>> Problem was that 'git diff --stat' would only summerize
+>> per-binary-file size changes and 'git diff --shortstat' did skip the
+>> binary files entirely.
+> Have you tried "--summary"? Combined with --stat (or --shortstat) I
+> wonder if it would get you closer to what you want.
+>
+> -Peff
+No it doesnt.
+It appears to append stuff like
 
-> diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-> index 3c96fda..d62facb 100755
-> --- a/t/t1300-repo-config.sh
-> +++ b/t/t1300-repo-config.sh
-> @@ -1087,4 +1087,36 @@ test_expect_success 'barf on incomplete string' '
->  	grep " line 3 " error
->  '
->  
-> +# good section hygiene
-> +test_expect_failure 'unsetting the last key in a section removes header' '
-> +	cat >.git/config <<-\EOF &&
-> +	[section]
-> +	# some intervening lines
-> +	# that should be saved
-> +	key = value
-> +	EOF
-> +
-> +	cat >expect <<-\EOF &&
-> +	# some intervening lines
-> +	# that should be saved
-> +	EOF
+  delete mode 100644 sound/music/NewTutorialStage.ogg
+  delete mode 100644 src/pngfuncs.c
+  delete mode 100644 src/pngfuncs.h
+  delete mode 100644 src/widgets/widget_text_list.c
+  delete mode 100644 src/widgets/widget_text_list.h
 
-I do not know if I agree with this expectation.
-
-Most likely these comments are about the section, and possibly even
-are specific to section.key, not applicable to the section in
-general).  If we _were_ to remove the section header at this point,
-we should be removing the comment two out of three cases (if it is
-about section.key, it should go when section.key goes; if it is
-about section, it should go when section goes; if it is a more
-generic comment about this configuration file, it should stay).
-
-A better approach may be to only insist on the "when adding, reuse
-an empty section header" side of the coin.  Then we do not have to
-worry about "we keep cruft that talks about some section but what
-the comment says is illegible now the crucial bit of information,
-section name the comment talks about, is gone".
-
-> +
-> +	git config --unset section.key &&
-> +	test_cmp expect .git/config
-> +'
-> +
-> +test_expect_failure 'adding a key into an empty section reuses header' '
-> +	cat >.git/config <<-\EOF &&
-> +	[section]
-> +	EOF
-> +
-> +	q_to_tab >expect <<-\EOF &&
-> +	[section]
-> +	Qkey = value
-> +	EOF
-> +
-> +	git config section.key value
-> +	test_cmp expect .git/config
-> +'
-
-This side I would agree it is unconditionally a good thing to do.
+to the stat but does not summarize the binary file size changes.
