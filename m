@@ -1,126 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] dir.c::match_pathname(): pay attention to the length
- of string parameters
-Date: Fri, 29 Mar 2013 09:44:32 -0700
-Message-ID: <7vli96p34f.fsf@alter.siamese.dyndns.org>
-References: <20130328214358.GA10685@sigill.intra.peff.net>
- <20130328214821.GD10936@sigill.intra.peff.net>
- <CACsJy8DisE8UNZzqmOFxPqw=bmFiHgE5-ao83ciGNUV9Sc9-gA@mail.gmail.com>
- <20130329120539.GA20711@sigill.intra.peff.net> <20130329130230.GA25861@lanh>
+From: Jeff King <peff@peff.net>
+Subject: Re: Minor bug in git branch --set-upstream-to adding superfluous
+ branch section to config
+Date: Fri, 29 Mar 2013 13:00:32 -0400
+Message-ID: <20130329170032.GA3552@sigill.intra.peff.net>
+References: <CAD7mMPW=jr6PaAc50h-Wpf42-UPrn0A5KmisqXNXqqLv78AEgg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, avila.jn@gmail.com
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 29 17:45:04 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Phil Haack <haacked@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 29 18:01:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULcQJ-0002Su-W6
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 17:45:04 +0100
+	id 1ULcfs-0001Qc-OD
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 18:01:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756218Ab3C2Qog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Mar 2013 12:44:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43502 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755617Ab3C2Qof (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Mar 2013 12:44:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D48CEF13;
-	Fri, 29 Mar 2013 16:44:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mFSl9u+6gYyrhLj9/oIcYGwlrAo=; b=Vmkbod
-	y0sPNmb+Exx6NUjLszqmF3uUQGX54saKLuR6iv+8AHTqC69cy693GgHMkAG7Fq4N
-	/3Vezlte/mNvh/2PS85p/jkBU8bBE72VZuRhnqGHbq67Qh7vF+S4H1c0H0Mxt7C5
-	PcrJo2pqjf4EpyZU6ESLgaBq3KIjIxJr3PP7E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=o/eJcKYaSdtWsB1yel9zhm4USkga1wkJ
-	rCzBv6j44YyCMdNDVPUsClSPk0pse6KEPvroZ8TmmyfLBYCcIJ4pp3ycnJCKdYmR
-	k9UPpy9RaKb26tZ5qt5FFT6RZy3eNqiAHy8JhhKVyQSnoDRmupyoDlwBPaKeProe
-	uF0OBC89MVc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25475EF12;
-	Fri, 29 Mar 2013 16:44:34 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77B20EF0F; Fri, 29 Mar 2013
- 16:44:33 +0000 (UTC)
-In-Reply-To: <20130329130230.GA25861@lanh> (Duy Nguyen's message of "Fri, 29
- Mar 2013 20:02:30 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EF2CE100-988F-11E2-8D19-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755939Ab3C2RAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Mar 2013 13:00:36 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48430 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755676Ab3C2RAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Mar 2013 13:00:34 -0400
+Received: (qmail 7091 invoked by uid 107); 29 Mar 2013 17:02:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Mar 2013 13:02:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Mar 2013 13:00:32 -0400
+Content-Disposition: inline
+In-Reply-To: <CAD7mMPW=jr6PaAc50h-Wpf42-UPrn0A5KmisqXNXqqLv78AEgg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219507>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Fri, Mar 29, 2013 at 09:29:14AM -0700, Phil Haack wrote:
 
->> So we would want to do any adjustment to the fix when we merge up to
->> maint.
->
-> OK. Then Junio, you may need to resolve the conflict with something
-> like this. Originally match_basename uses fnmatch, not wildmatch. But
-> using wildmatch there too should be fine, now that both
-> match_{base,path}name share fnmatch_icase_mem().
+> If you run the following set of commands:
+> 
+>     git checkout -b some-branch
+>     git push origin some-branch
+>     git branch --set-upstream-to origin/some-branch
+>     git branch --unset-upstream some-branch
+>     git branch --set-upstream-to origin/some-branch
+> 
+> You get the following result in the .git\config file
+> 
+>     [branch "some-branch"]
+>     [branch "some-branch"]
+>         remote = origin
+>         merge = refs/heads/some-branch
+> 
+> My expectation is that the very last call to: git branch --set-upstream-to
+> would not add a new config section, but would instead insert this information
+> into the existing [branch "some-branch"].
 
-Thanks.
+Yes, this is a known issue[1] in the config-editing code. There are
+actually two separate problems. Try this:
 
-The result still smells somewhat funny, though.
+  $ git config -f foo section.one 1
+  $ cat foo
+  [section]
+          one = 1
 
-fnmatch_icase_mem() is meant to be a wrapper of fnmatch_icase() for
-counted strings and its matching semantics should be the same as
-fnmatch_icase().
+Looking good so far...
 
-With the merge-fix, fnmatch_icase_mem() calls into wildmatch(), but
-fnmatch_icase() still calls into fnmatch().
+  $ git config -f foo --unset section.one
+  $ cat foo
+  [section]
 
-The latter's flags are meant to be taken from FNM_* family, but the
-former takes flags from WM_* family of bits, no?
+Oops, it would have been nice to clean up that now-empty section. Now
+let's re-add...
 
-I think you are running with USE_WILDMATCH which may make the
-differences harder to notice, but the name fnmatch_icase_mem() that
-is not in the same family as fnmatch but is from the wildmatch()
-family smells like an accident waiting to happen.
+  $ git config -f foo section.two 2
+  $ cat foo
+  [section]
+  [section]
+          two = 2
 
-I tend to think in the longer term it may be a good idea to build
-with USE_WILDMATCH unconditionally (we can lose compat/fnmatch), so
-in the end this may not matter that much, but before that happens,
-soon after we merge the regression fix with this merge-fix, we may
-want to update the codebase as if we applied a series that were
-based on 'maint' as you suggested, i.e. using raw wildmatch()
-consistently in the match_{base,path}name() codepath.
+Oops, it would have been nice to use the existing section. What happens
+if we add again...
 
-Opinions?
+  $ git config -f foo section.three 3
+  $ cat foo
+  [section]
+  [section]
+          two = 2
+          three = 3
 
->
-> -- 8< --
-> diff --git a/dir.c b/dir.c
-> index 73a08af..84744df 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -81,7 +81,9 @@ static int fnmatch_icase_mem(const char *pattern, int patternlen,
->  		use_str = str_buf.buf;
->  	}
->  
-> -	match_status = fnmatch_icase(use_pat, use_str, flags);
-> +	if (ignore_case)
-> +		flags |= WM_CASEFOLD;
-> +	match_status = wildmatch(use_pat, use_str, flags, NULL);
->  
->  	strbuf_release(&pat_buf);
->  	strbuf_release(&str_buf);
-> @@ -564,7 +566,7 @@ int match_pathname(const char *pathname, int pathlen,
->  
->  	return fnmatch_icase_mem(pattern, patternlen,
->  				 name, namelen,
-> -				 FNM_PATHNAME) == 0;
-> +				 WM_PATHNAME) == 0;
->  }
->  
->  /*
-> -- 8< --
+Now that one worked. I think what happens is that the config editor runs
+through the files linearly, munging whatever lines necessary for the
+requested operation, and leaving everything else untouched (as it must,
+to leave comments and whitespace intact). But it does not keep a
+look-behind buffer to realize that a section name is now obsolete (which
+we don't know until we get to the next section, or to EOF). In the worst
+case, this buffer can grow arbitrarily large, like:
+
+  [foo]
+  # the above section is now empty
+  # but we have to read through all of
+  # these comments to actually
+  # realize it
+  [bar]
+
+In practice it should not be a big deal (and I do not think it is an
+interesting attack vector for somebody trying to run you out of memory).
+
+That brings up another point, which is that comments may get misplaced
+by deletion. But that's the case for any modification we do to the file,
+since we cannot understand the semantics of comments that say things
+like "the line below does X".
+
+So that's the first bug. The second one is, I suspect, just laziness. We
+notice that section.two is set, and put section.three after it. But we
+do not make the same trigger for just "section". That's probably much
+easier to fix.
+
+> In any case, from what I understand the current behavior is technically valid
+> and I haven't encountered any adverse effects. It was just something I noticed
+> while testing.
+
+Yes, the config files generated by these operations parse as you would
+expect them to. I think it's purely an aesthetic concern.
+
+-Peff
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/208113
