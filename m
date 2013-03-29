@@ -1,74 +1,77 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 2/6] dir.c::match_basename(): pay attention to the length
  of string parameters
-Date: Fri, 29 Mar 2013 08:25:00 +0700
-Message-ID: <CACsJy8CcTqkPeOZ7Xa=7J4BH4sSFD6X6hKjrLz3kf0J0E_J+cw@mail.gmail.com>
-References: <20130328214358.GA10685@sigill.intra.peff.net> <20130328214728.GB10936@sigill.intra.peff.net>
+Date: Thu, 28 Mar 2013 23:02:17 -0400
+Message-ID: <20130329030217.GA1851@sigill.intra.peff.net>
+References: <20130328214358.GA10685@sigill.intra.peff.net>
+ <20130328214728.GB10936@sigill.intra.peff.net>
+ <CACsJy8CcTqkPeOZ7Xa=7J4BH4sSFD6X6hKjrLz3kf0J0E_J+cw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	avila.jn@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 29 02:26:00 2013
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 29 04:02:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULO4t-0008MY-5u
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 02:25:59 +0100
+	id 1ULPaf-0008KD-T4
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 04:02:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754593Ab3C2BZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Mar 2013 21:25:31 -0400
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:63364 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754536Ab3C2BZa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Mar 2013 21:25:30 -0400
-Received: by mail-oa0-f42.google.com with SMTP id i18so108133oag.29
-        for <git@vger.kernel.org>; Thu, 28 Mar 2013 18:25:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=CEGJadi3sdHVpt7Hn8jUz3waVe0Zhou1dWCbZZAtJNI=;
-        b=V+UgUtXdmmKQay9I7+QMtdBEt2XtjtJg1X13vz1IIoj8X4cUFsPexJk2mLbzjsaSqk
-         9i+pvPGdFA6YBTIZZcxeWhtC+CFo03LA8htrKCa4dx6H64eZgZi+vetjIKgNOHgWvjtz
-         0TXDTcfnGWW0VonPn2nlO4Or1g4pSEROquRPYjAER2ICAExvLmWB3aylvX5yUmM1qLxB
-         yyDUmYh/PXIGYnU7AZJaiPKxU7kEC1Wbxo5/wf2yeYa7y8LCrVAk0fT7ZyNkSC/sCXaG
-         4aTRzcKo3LRFlRJfCWbfyNQTEZPIZevi2H2TSGvTXaId+1kgXce8G/4ueeOEJGV8BNfg
-         mKRg==
-X-Received: by 10.60.13.39 with SMTP id e7mr249467oec.74.1364520330111; Thu,
- 28 Mar 2013 18:25:30 -0700 (PDT)
-Received: by 10.76.27.137 with HTTP; Thu, 28 Mar 2013 18:25:00 -0700 (PDT)
-In-Reply-To: <20130328214728.GB10936@sigill.intra.peff.net>
+	id S1754146Ab3C2DCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Mar 2013 23:02:25 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44324 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753773Ab3C2DCY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Mar 2013 23:02:24 -0400
+Received: (qmail 32709 invoked by uid 107); 29 Mar 2013 03:04:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Mar 2013 23:04:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2013 23:02:17 -0400
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CcTqkPeOZ7Xa=7J4BH4sSFD6X6hKjrLz3kf0J0E_J+cw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219480>
 
-On Fri, Mar 29, 2013 at 4:47 AM, Jeff King <peff@peff.net> wrote:
-> +static int fnmatch_icase_mem(const char *pattern, int patternlen,
-> +                            const char *string, int stringlen,
-> +                            int flags)
-> +{
-> +       int match_status;
-> +       struct strbuf pat_buf = STRBUF_INIT;
-> +       struct strbuf str_buf = STRBUF_INIT;
-> +       const char *use_pat = pattern;
-> +       const char *use_str = string;
-> +
-> +       if (pattern[patternlen]) {
-> +               strbuf_add(&pat_buf, pattern, patternlen);
-> +               use_pat = pat_buf.buf;
-> +       }
-> +       if (string[stringlen]) {
-> +               strbuf_add(&str_buf, string, stringlen);
-> +               use_str = str_buf.buf;
-> +       }
-> +
-> +       match_status = fnmatch_icase(use_pat, use_str, 0);
+On Fri, Mar 29, 2013 at 08:25:00AM +0700, Nguyen Thai Ngoc Duy wrote:
 
-You should pass flags in here instead of 0.
--- 
-Duy
+> On Fri, Mar 29, 2013 at 4:47 AM, Jeff King <peff@peff.net> wrote:
+> > +static int fnmatch_icase_mem(const char *pattern, int patternlen,
+> > +                            const char *string, int stringlen,
+> > +                            int flags)
+> > +{
+> > +       int match_status;
+> > +       struct strbuf pat_buf = STRBUF_INIT;
+> > +       struct strbuf str_buf = STRBUF_INIT;
+> > +       const char *use_pat = pattern;
+> > +       const char *use_str = string;
+> > +
+> > +       if (pattern[patternlen]) {
+> > +               strbuf_add(&pat_buf, pattern, patternlen);
+> > +               use_pat = pat_buf.buf;
+> > +       }
+> > +       if (string[stringlen]) {
+> > +               strbuf_add(&str_buf, string, stringlen);
+> > +               use_str = str_buf.buf;
+> > +       }
+> > +
+> > +       match_status = fnmatch_icase(use_pat, use_str, 0);
+> 
+> You should pass flags in here instead of 0.
+
+Eek, yeah, that's obviously wrong. Thanks for catching it. Fixing that
+clears up all of the test failures outside of t5002.
+
+And if you move patch 5 ("special case paths that end with a slash")
+into position 2, it cleans up the mid-series failures of t5002, making
+the series clean for later bisecting.
+
+Thanks for looking it over.
+
+-Peff
