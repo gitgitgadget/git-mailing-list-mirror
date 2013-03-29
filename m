@@ -1,130 +1,91 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Minor bug in git branch --set-upstream-to adding superfluous
- branch section to config
-Date: Fri, 29 Mar 2013 13:00:32 -0400
-Message-ID: <20130329170032.GA3552@sigill.intra.peff.net>
-References: <CAD7mMPW=jr6PaAc50h-Wpf42-UPrn0A5KmisqXNXqqLv78AEgg@mail.gmail.com>
+Subject: Re: [PATCH 4/6] dir.c::match_pathname(): pay attention to the length
+ of string parameters
+Date: Fri, 29 Mar 2013 13:04:59 -0400
+Message-ID: <20130329170459.GB3552@sigill.intra.peff.net>
+References: <20130328214358.GA10685@sigill.intra.peff.net>
+ <20130328214821.GD10936@sigill.intra.peff.net>
+ <CACsJy8DisE8UNZzqmOFxPqw=bmFiHgE5-ao83ciGNUV9Sc9-gA@mail.gmail.com>
+ <20130329120539.GA20711@sigill.intra.peff.net>
+ <20130329130230.GA25861@lanh>
+ <7vli96p34f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Phil Haack <haacked@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 29 18:01:11 2013
+Cc: Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
+	avila.jn@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 29 18:05:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULcfs-0001Qc-OD
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 18:01:09 +0100
+	id 1ULck9-0003mq-Vc
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Mar 2013 18:05:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755939Ab3C2RAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Mar 2013 13:00:36 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48430 "EHLO
+	id S1755617Ab3C2RFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Mar 2013 13:05:03 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48437 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755676Ab3C2RAe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Mar 2013 13:00:34 -0400
-Received: (qmail 7091 invoked by uid 107); 29 Mar 2013 17:02:21 -0000
+	id S1755253Ab3C2RFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Mar 2013 13:05:01 -0400
+Received: (qmail 7123 invoked by uid 107); 29 Mar 2013 17:06:48 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Mar 2013 13:02:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Mar 2013 13:00:32 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Mar 2013 13:06:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Mar 2013 13:04:59 -0400
 Content-Disposition: inline
-In-Reply-To: <CAD7mMPW=jr6PaAc50h-Wpf42-UPrn0A5KmisqXNXqqLv78AEgg@mail.gmail.com>
+In-Reply-To: <7vli96p34f.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219508>
 
-On Fri, Mar 29, 2013 at 09:29:14AM -0700, Phil Haack wrote:
+On Fri, Mar 29, 2013 at 09:44:32AM -0700, Junio C Hamano wrote:
 
-> If you run the following set of commands:
+> Duy Nguyen <pclouds@gmail.com> writes:
 > 
->     git checkout -b some-branch
->     git push origin some-branch
->     git branch --set-upstream-to origin/some-branch
->     git branch --unset-upstream some-branch
->     git branch --set-upstream-to origin/some-branch
+> >> So we would want to do any adjustment to the fix when we merge up to
+> >> maint.
+> >
+> > OK. Then Junio, you may need to resolve the conflict with something
+> > like this. Originally match_basename uses fnmatch, not wildmatch. But
+> > using wildmatch there too should be fine, now that both
+> > match_{base,path}name share fnmatch_icase_mem().
 > 
-> You get the following result in the .git\config file
+> Thanks.
 > 
->     [branch "some-branch"]
->     [branch "some-branch"]
->         remote = origin
->         merge = refs/heads/some-branch
+> The result still smells somewhat funny, though.
 > 
-> My expectation is that the very last call to: git branch --set-upstream-to
-> would not add a new config section, but would instead insert this information
-> into the existing [branch "some-branch"].
+> fnmatch_icase_mem() is meant to be a wrapper of fnmatch_icase() for
+> counted strings and its matching semantics should be the same as
+> fnmatch_icase().
+> 
+> With the merge-fix, fnmatch_icase_mem() calls into wildmatch(), but
+> fnmatch_icase() still calls into fnmatch().
+> 
+> The latter's flags are meant to be taken from FNM_* family, but the
+> former takes flags from WM_* family of bits, no?
 
-Yes, this is a known issue[1] in the config-editing code. There are
-actually two separate problems. Try this:
+Yeah, that does not seem right. If match_pathname has learned to call
+into wildmatch instead of fnmatch_icase in the interim, then the right
+resolution is to convert its call to fnmatch_icase_mem to a new
+wildmatch_mem.  Presumably that can be done by either tweaking
+fnmatch_icase_mem, or, if wildmatch is ready to take counted strings,
+calling into it with the right options.
 
-  $ git config -f foo section.one 1
-  $ cat foo
-  [section]
-          one = 1
+> I think you are running with USE_WILDMATCH which may make the
+> differences harder to notice, but the name fnmatch_icase_mem() that is
+> not in the same family as fnmatch but is from the wildmatch() family
+> smells like an accident waiting to happen.
 
-Looking good so far...
+Agreed.
 
-  $ git config -f foo --unset section.one
-  $ cat foo
-  [section]
+> I tend to think in the longer term it may be a good idea to build with
+> USE_WILDMATCH unconditionally (we can lose compat/fnmatch), so in the
+> end this may not matter that much
 
-Oops, it would have been nice to clean up that now-empty section. Now
-let's re-add...
-
-  $ git config -f foo section.two 2
-  $ cat foo
-  [section]
-  [section]
-          two = 2
-
-Oops, it would have been nice to use the existing section. What happens
-if we add again...
-
-  $ git config -f foo section.three 3
-  $ cat foo
-  [section]
-  [section]
-          two = 2
-          three = 3
-
-Now that one worked. I think what happens is that the config editor runs
-through the files linearly, munging whatever lines necessary for the
-requested operation, and leaving everything else untouched (as it must,
-to leave comments and whitespace intact). But it does not keep a
-look-behind buffer to realize that a section name is now obsolete (which
-we don't know until we get to the next section, or to EOF). In the worst
-case, this buffer can grow arbitrarily large, like:
-
-  [foo]
-  # the above section is now empty
-  # but we have to read through all of
-  # these comments to actually
-  # realize it
-  [bar]
-
-In practice it should not be a big deal (and I do not think it is an
-interesting attack vector for somebody trying to run you out of memory).
-
-That brings up another point, which is that comments may get misplaced
-by deletion. But that's the case for any modification we do to the file,
-since we cannot understand the semantics of comments that say things
-like "the line below does X".
-
-So that's the first bug. The second one is, I suspect, just laziness. We
-notice that section.two is set, and put section.three after it. But we
-do not make the same trigger for just "section". That's probably much
-easier to fix.
-
-> In any case, from what I understand the current behavior is technically valid
-> and I haven't encountered any adverse effects. It was just something I noticed
-> while testing.
-
-Yes, the config files generated by these operations parse as you would
-expect them to. I think it's purely an aesthetic concern.
+Yeah, I think that is a sane long-term goal.
 
 -Peff
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/208113
