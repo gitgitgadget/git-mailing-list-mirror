@@ -1,85 +1,96 @@
-From: =?UTF-8?B?U2ViYXN0aWFuIEfDtnR0ZQ==?= <jaseg@physik.tu-berlin.de>
-Subject: [PATCH v6 5/5] pretty printing: extend %G? to include 'N' and 'U'
-Date: Sat, 30 Mar 2013 15:16:23 +0100
-Message-ID: <5156F3B7.20906@physik.tu-berlin.de>
-References: <7vvc89k15t.fsf@alter.siamese.dyndns.org> <cover.1364652339.git.jaseg@physik-pool.tu-berlin.de>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v2 07/12] utf8: keep NULs in reencode_string()
+Date: Sat, 30 Mar 2013 18:06:26 +0100
+Message-ID: <51571B92.80303@web.de>
+References: <1363400683-14813-1-git-send-email-pclouds@gmail.com> <1364636112-15065-1-git-send-email-pclouds@gmail.com> <1364636112-15065-8-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 30 15:17:11 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?InRibyA+PiBUb3JzdGVuIELDtmdlcnNoYXVzZW4i?= 
+	<tboegi@web.de>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 30 18:07:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULwaj-0003jB-H2
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Mar 2013 15:17:09 +0100
+	id 1ULzFG-000606-EY
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Mar 2013 18:07:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756475Ab3C3OQm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Mar 2013 10:16:42 -0400
-Received: from mail.tu-berlin.de ([130.149.7.33]:60166 "EHLO mail.tu-berlin.de"
+	id S1756889Ab3C3RGm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Mar 2013 13:06:42 -0400
+Received: from mout.web.de ([212.227.15.3]:59419 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755938Ab3C3OQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Mar 2013 10:16:41 -0400
-X-tubIT-Incoming-IP: 130.149.58.163
-Received: from mail.physik-pool.tu-berlin.de ([130.149.58.163] helo=mail.physik.tu-berlin.de)
-	by mail.tu-berlin.de (exim-4.75/mailfrontend-2) with esmtp 
-	id 1ULwaC-0003LP-HT; Sat, 30 Mar 2013 15:16:40 +0100
-Received: from [94.45.252.144] (unknown [94.45.252.144])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.physik.tu-berlin.de (Postfix) with ESMTPSA id 7515111403;
-	Sat, 30 Mar 2013 15:16:35 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
-In-Reply-To: <cover.1364652339.git.jaseg@physik-pool.tu-berlin.de>
+	id S1756706Ab3C3RGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Mar 2013 13:06:41 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0Lp7HY-1UpoCl106e-00fEPQ; Sat, 30 Mar 2013 18:06:27
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <1364636112-15065-8-git-send-email-pclouds@gmail.com>
+X-Provags-ID: V02:K0:Px7z0got82jZ5uVHitu8BxLcMfdJ8j5UGJdX9ONulvI
+ OLLEvByn0WMl46H4VOJPWEdWmut26toWxAAXRVyEaVqZBaiBJB
+ yCeenXm1lN8hqYRAHmhN+sPXCyXVSMULBQyZd/RE6+Rf7k43ES
+ 80IA+fOBw+ejIx6KyrnIYPUVHTga7BId+L1GAGnAddKaSJyGLa
+ gRzrp4E0uUPwxtoZeWk/w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219593>
 
-Expand %G? in pretty format strings to 'N' in case of no GPG signature
-and 'U' in case of a good but untrusted GPG signature in addition to
-the previous 'G'ood and 'B'ad. This eases writing anyting parsing
-git-log output.
+On 30.03.13 10:35, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+[...]
+The short version of a review:
+Would it make sense to leave  reencode_string() as it is,
+and add a new function reencode_string_len()
 
-Signed-off-by: Sebastian G=C3=B6tte <jaseg@physik-pool.tu-berlin.de>
----
- Documentation/pretty-formats.txt | 3 ++-
- pretty.c                         | 2 ++
- 2 files changed, 4 insertions(+), 1 deletion(-)
++char *reencode_string_len(const char *in, int insz,
++		      const char *out_encoding, const char *in_encoding,
++		      int *outsz)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
-rmats.txt
-index 2939655..afac703 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -131,7 +131,8 @@ The placeholders are:
- - '%B': raw body (unwrapped subject and body)
- - '%N': commit notes
- - '%GG': raw verification message from GPG for a signed commit
--- '%G?': show either "G" for Good or "B" for Bad for a signed commit
-+- '%G?': show "G" for a Good signature, "B" for a Bad signature, "U" f=
-or a good,
-+  untrusted signature and "N" for no signature
- - '%GS': show the name of the signer for a signed commit
- - '%GK': show the key used to sign a signed commit
- - '%gD': reflog selector, e.g., `refs/stash@{1}`
-diff --git a/pretty.c b/pretty.c
-index cf84d3a..840c41f 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1135,6 +1135,8 @@ static size_t format_commit_one(struct strbuf *sb=
-, const char *placeholder,
- 			switch (c->signature_check.result) {
- 			case 'G':
- 			case 'B':
-+			case 'U':
-+			case 'N':
- 				strbuf_addch(sb, c->signature_check.result);
- 			}
- 			break;
---=20
-1.8.1.5
+And I didn't manage to apply the patch on master (631bc94e67383b66da190=
+550866566f09d32)
+is there a specific commitID it should be applied on ?
+
+/Torsten
+
+
+
+
+> pretty output, which can contain NULs.
+> -		reencoded =3D reencode_string(message, "UTF-8", encoding);
+> +		reencoded =3D reencode_string(message, strlen(message),
+> +					    "UTF-8", encoding, NULL);
+
+> -	out =3D reencode_string(line->buf, metainfo_charset, charset);
+> +	out =3D reencode_string(line->buf, line->len,
+> +			      metainfo_charset, charset, NULL);
+
+> -			newarg =3D reencode_string_iconv(oldarg, namelen, ic_precompose);
+> +			newarg =3D reencode_string_iconv(oldarg, namelen, ic_precompose, =
+NULL);
+> -		char *reencoded =3D reencode_string(msg, output_encoding, utf8);
+
+> +		char *reencoded =3D reencode_string(msg, strlen(msg),
+> +						  output_encoding, utf8,
+> +						  NULL);
+
+> -		out =3D reencode_string(msg, output_encoding, use_encoding);
+> +		out =3D reencode_string(msg, strlen(msg),
+> +				      output_encoding, use_encoding, NULL);
+
+> -		out->reencoded_message =3D reencode_string(commit->buffer,
+> -					git_commit_encoding, encoding);
+> +		out->reencoded_message =3D
+> +			reencode_string(commit->buffer, strlen(commit->buffer),
+> +					git_commit_encoding, encoding, NULL);
+
+> =20
+> +char *reencode_string_len(const char *in, int insz,
+> +		      const char *out_encoding, const char *in_encoding,
+> +		      int *outsz)
+> =20
