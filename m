@@ -1,72 +1,119 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH 2/2] optimize set_shared_perm()
-Date: Sat, 30 Mar 2013 10:53:16 +0100
-Message-ID: <5156B60C.6070707@web.de>
-References: <201303251657.57222.tboegi@web.de> <7vli95nbs4.fsf@alter.siamese.dyndns.org>
+From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH 1/2] optimize set_shared_perm() in path.c:
+Date: Sat, 30 Mar 2013 10:53:32 +0100
+Message-ID: <201303301053.34555.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org, j6t@kdbg.org, kusmabite@gmail.com,
-	mlevedahl@gmail.com, ramsay@ramsay1.demon.co.uk,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, j6t@kdbg.org, kusmabite@gmail.com,
+	mlevedahl@gmail.com, ramsay@ramsay1.demon.co.uk, tboegi@web.de,
 	sunshine@sunshineco.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 30 10:53:53 2013
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Mar 30 10:54:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULsTv-0001JX-Ip
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Mar 2013 10:53:51 +0100
+	id 1ULsUN-0002f2-Rk
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Mar 2013 10:54:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755493Ab3C3JxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Mar 2013 05:53:23 -0400
-Received: from mout.web.de ([212.227.17.12]:63988 "EHLO mout.web.de"
+	id S1755303Ab3C3Jxw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Mar 2013 05:53:52 -0400
+Received: from mout.web.de ([212.227.15.3]:62162 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755303Ab3C3JxX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Mar 2013 05:53:23 -0400
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0MPGym-1UHSd21mca-004RdD; Sat, 30 Mar 2013 10:53:17
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <7vli95nbs4.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:o5YqA64npJm3G6di69qFItMeaURwTK+XNd0zV8hYHJd
- yWUb5PZgg5/0bp3lgVBGcnv5e+Sv96Gs6cxNfChc2IVU6hkj8P
- AhnamkwxZaGQmKrh8CCUVySxa7XPoKlJnWZdX/GrGpcrW5yR4V
- +7aVpcDnsKIoIMfGAbrZ1EeZSMbtfgslTDpjgHALvy4g6eMmwb
- Ca2u4NnPTuF0+e/0qmJ/g==
+	id S1754747Ab3C3Jxv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Mar 2013 05:53:51 -0400
+Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb103) with
+ ESMTPA (Nemesis) id 0MEEiK-1USQz312sa-00FkKL; Sat, 30 Mar 2013 10:53:46 +0100
+X-Provags-ID: V02:K0:es44Y2w58mwy3Pvg5t+3SCZDbCLLkOItTSrAhHkwjlh
+ 66hVv+Wba9gVNWkcmTweef3rUPwMF7glJ9YoZcBm2TNIy3N9pU
+ +3ugPEZHOQDg2nq3RqGEwSaIfgzZkCjqZuKQSy7YetsmK0Nhte
+ O4pQVdXywmsahMXFTd8YEksWcrZxh0sQtBDWb+wPFJT6kDMChs
+ 79+y+MKafbTa1Pwq3603A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219583>
 
-On 29.03.13 22:20, Junio C Hamano wrote:
-[snip]
-> The last two points can become a separate "preparation" step.  The
-> result would be easier to read.
-> 
-> Your updated adjust_shared_perm() does not begin with:
-> 
-> 	if (!shared_repository)
->         	return 0;
-> 
-> as the original, but it always first calls to get_st_mode_bits()
-> which makes a call to lstat(2).
-> 
-> That smells like a huge regression for !shared_repository case,
-> unless you have updated the existing callers of adjust_shared_perm()
-> not to call it when !shared_repository.
-> 
-Thanks for carefull review:
-The achieved effect of the code is the same,
-but the developer is to blame.
+All calls to set_shared_perm() use mode =3D=3D 0, so simplify the funct=
+ion.
 
-I send a new patch of 2/2 in a minute, splitted into 2 commits.
+All callers use the macro adjust_shared_perm(path) from cache.h,
+convert adjust_shared_perm() from a macro into a function prototype
 
-Highlights of part 2:
-a) move "if (!shared_repository)" to the right place
-b) Simplify calc_shared_perm() even more: Remove the variable "int shared"
-c) Remove calc_shared_perm_dir(), the functionality is baked into
-   adjust_shared_perm()
+Since path.c has much more functions than just mkpath(),
+improve a stale comment about path.c
+
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ cache.h |  3 +--
+ path.c  | 27 +++++++--------------------
+ 2 files changed, 8 insertions(+), 22 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index c12957b..e1e8ce8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -719,8 +719,7 @@ enum sharedrepo {
+ 	PERM_EVERYBODY      =3D 0664
+ };
+ int git_config_perm(const char *var, const char *value);
+-int set_shared_perm(const char *path, int mode);
+-#define adjust_shared_perm(path) set_shared_perm((path), 0)
++int adjust_shared_perm(const char *path);
+ int safe_create_leading_directories(char *path);
+ int safe_create_leading_directories_const(const char *path);
+ int mkdir_in_gitdir(const char *path);
+diff --git a/path.c b/path.c
+index 2fdccc2..427312e 100644
+--- a/path.c
++++ b/path.c
+@@ -1,14 +1,5 @@
+ /*
+- * I'm tired of doing "vsnprintf()" etc just to open a
+- * file, so here's a "return static buffer with printf"
+- * interface for paths.
+- *
+- * It's obviously not thread-safe. Sue me. But it's quite
+- * useful for doing things like
+- *
+- *   f =3D open(mkpath("%s/%s.git", base, name), O_RDONLY);
+- *
+- * which is what it's designed for.
++ * Different utilitiy functions for path and path names
+  */
+ #include "cache.h"
+ #include "strbuf.h"
+@@ -405,21 +396,17 @@ const char *enter_repo(const char *path, int stri=
+ct)
+ 	return NULL;
+ }
+=20
+-int set_shared_perm(const char *path, int mode)
++int adjust_shared_perm(const char *path)
+ {
+-	int tweak, shared, orig_mode;
++	int tweak, shared, orig_mode, mode;
+=20
+ 	if (!shared_repository) {
+-		if (mode)
+-			return chmod(path, mode & ~S_IFMT);
+ 		return 0;
+ 	}
+-	if (!mode) {
+-		if (get_st_mode_bits(path, &mode) < 0)
+-			return -1;
+-		orig_mode =3D mode;
+-	} else
+-		orig_mode =3D 0;
++	if (get_st_mode_bits(path, &mode) < 0)
++		return -1;
++
++	orig_mode =3D mode;
+ 	if (shared_repository < 0)
+ 		shared =3D -shared_repository;
+ 	else
+--=20
+1.8.2.341.g543621f
