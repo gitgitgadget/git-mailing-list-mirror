@@ -1,92 +1,240 @@
 From: =?UTF-8?B?U2ViYXN0aWFuIEfDtnR0ZQ==?= <jaseg@physik.tu-berlin.de>
-Subject: [PATCH v6 2/5] commit.c/GPG signature verification: Also look at
- the first GPG status line
-Date: Sat, 30 Mar 2013 15:15:31 +0100
-Message-ID: <5156F383.3040602@physik.tu-berlin.de>
+Subject: [PATCH v6 3/5] merge/pull: verify GPG signatures of commits being
+ merged
+Date: Sat, 30 Mar 2013 15:15:47 +0100
+Message-ID: <5156F393.90508@physik.tu-berlin.de>
 References: <7vvc89k15t.fsf@alter.siamese.dyndns.org> <cover.1364652339.git.jaseg@physik-pool.tu-berlin.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 30 15:16:17 2013
+X-From: git-owner@vger.kernel.org Sat Mar 30 15:16:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULwZt-00033I-BS
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Mar 2013 15:16:17 +0100
+	id 1ULwaB-0003D7-Qy
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Mar 2013 15:16:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756187Ab3C3OPt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Mar 2013 10:15:49 -0400
-Received: from mail.tu-berlin.de ([130.149.7.33]:44771 "EHLO mail.tu-berlin.de"
+	id S1756354Ab3C3OQH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Mar 2013 10:16:07 -0400
+Received: from mail.tu-berlin.de ([130.149.7.33]:47588 "EHLO mail.tu-berlin.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755702Ab3C3OPs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Mar 2013 10:15:48 -0400
+	id S1755702Ab3C3OQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Mar 2013 10:16:06 -0400
 X-tubIT-Incoming-IP: 130.149.58.163
 Received: from mail.physik-pool.tu-berlin.de ([130.149.58.163] helo=mail.physik.tu-berlin.de)
-	by mail.tu-berlin.de (exim-4.75/mailfrontend-3) with esmtp 
-	id 1ULwZL-0004Vv-Fo; Sat, 30 Mar 2013 15:15:48 +0100
+	by mail.tu-berlin.de (exim-4.75/mailfrontend-4) with esmtp 
+	id 1ULwZc-0007Ne-AK; Sat, 30 Mar 2013 15:16:04 +0100
 Received: from [94.45.252.144] (unknown [94.45.252.144])
 	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mail.physik.tu-berlin.de (Postfix) with ESMTPSA id C4F2C11403;
-	Sat, 30 Mar 2013 15:15:42 +0100 (CET)
+	by mail.physik.tu-berlin.de (Postfix) with ESMTPSA id A8B9311402;
+	Sat, 30 Mar 2013 15:15:58 +0100 (CET)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
 In-Reply-To: <cover.1364652339.git.jaseg@physik-pool.tu-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219590>
+
+When --verify-signatures is specified on the command-line of git-merge
+or git-pull, check whether the commits being merged have good gpg
+signatures and abort the merge in case they do not. This allows e.g.
+auto-deployment from untrusted repo hosts.
 
 Signed-off-by: Sebastian G=C3=B6tte <jaseg@physik-pool.tu-berlin.de>
 ---
- commit.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ Documentation/merge-options.txt    |  5 ++++
+ builtin/merge.c                    | 32 ++++++++++++++++++++++-
+ git-pull.sh                        | 10 ++++++--
+ t/t7612-merge-verify-signatures.sh | 52 ++++++++++++++++++++++++++++++=
+++++++++
+ 4 files changed, 96 insertions(+), 3 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index eb645af..ca11919 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1027,8 +1027,8 @@ static struct {
- 	char result;
- 	const char *check;
- } sigcheck_gpg_status[] =3D {
--	{ 'G', "\n[GNUPG:] GOODSIG " },
--	{ 'B', "\n[GNUPG:] BADSIG " },
-+	{ 'G', "[GNUPG:] GOODSIG " },
-+	{ 'B', "[GNUPG:] BADSIG " },
- };
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-opti=
+ons.txt
+index 0bcbe0a..31f1067 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -83,6 +83,11 @@ option can be used to override --squash.
+ 	Pass merge strategy specific option through to the merge
+ 	strategy.
 =20
- static void parse_gpg_output(struct signature_check *sigc)
-@@ -1036,13 +1036,20 @@ static void parse_gpg_output(struct signature_c=
-heck *sigc)
- 	const char *buf =3D sigc->gpg_status;
- 	int i;
-=20
-+	/* Iterate over all search strings */
- 	for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
--		const char *found =3D strstr(buf, sigcheck_gpg_status[i].check);
--		const char *next;
--		if (!found)
--			continue;
-+		const char *found, *next;
++--verify-signatures::
++--no-verify-signatures::
++	Verify that the commits being merged have good GPG signatures and abo=
+rt the
++	merge in case they do not.
 +
-+		if (!prefixcmp(buf, sigcheck_gpg_status[i].check + 1)) {
-+			/* At the very beginning of the buffer */
-+			found =3D buf + strlen(sigcheck_gpg_status[i].check + 1);
-+		} else {
-+			found =3D strstr(buf, sigcheck_gpg_status[i].check);
-+			if (!found)
-+ 				continue;
-+			found +=3D  strlen(sigcheck_gpg_status[i].check);
+ --summary::
+ --no-summary::
+ 	Synonyms to --stat and --no-stat; these are deprecated and will be
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 7c8922c..7a33d03 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -49,7 +49,7 @@ static const char * const builtin_merge_usage[] =3D {
+ static int show_diffstat =3D 1, shortlog_len =3D -1, squash;
+ static int option_commit =3D 1, allow_fast_forward =3D 1;
+ static int fast_forward_only, option_edit =3D -1;
+-static int allow_trivial =3D 1, have_message;
++static int allow_trivial =3D 1, have_message, verify_signatures;
+ static int overwrite_ignore =3D 1;
+ static struct strbuf merge_msg =3D STRBUF_INIT;
+ static struct strategy **use_strategies;
+@@ -199,6 +199,8 @@ static struct option builtin_merge_options[] =3D {
+ 	OPT_BOOLEAN(0, "ff-only", &fast_forward_only,
+ 		N_("abort if fast-forward is not possible")),
+ 	OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
++	OPT_BOOL(0, "verify-signatures", &verify_signatures,
++		N_("Verify that the named commit has a valid GPG signature")),
+ 	OPT_CALLBACK('s', "strategy", &use_strategies, N_("strategy"),
+ 		N_("merge strategy to use"), option_parse_strategy),
+ 	OPT_CALLBACK('X', "strategy-option", &xopts, N_("option=3Dvalue"),
+@@ -1233,6 +1235,34 @@ int cmd_merge(int argc, const char **argv, const=
+ char *prefix)
+ 		usage_with_options(builtin_merge_usage,
+ 			builtin_merge_options);
+=20
++	if (verify_signatures) {
++		for (p =3D remoteheads; p; p =3D p->next) {
++			struct commit *commit =3D p->item;
++			char hex[41];
++			struct signature_check signature_check;
++			memset(&signature_check, 0, sizeof(signature_check));
++
++			check_commit_signature(commit, &signature_check);
++
++			strcpy(hex, find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV)=
+);
++			switch(signature_check.result){
++				case 'G':
++					break;
++				case 'B':
++					die(_("Commit %s has a bad GPG signature allegedly by %s."), hex,=
+ signature_check.signer);
++				default: /* 'N' */
++					die(_("Commit %s does not have a GPG signature."), hex, hex);
++			}
++			if (verbosity >=3D 0 && signature_check.result =3D=3D 'G')
++				printf(_("Commit %s has a good GPG signature by %s\n"), hex, signa=
+ture_check.signer);
++
++			free(signature_check.gpg_output);
++			free(signature_check.gpg_status);
++			free(signature_check.signer);
++			free(signature_check.key);
 +		}
- 		sigc->result =3D sigcheck_gpg_status[i].result;
--		found +=3D strlen(sigcheck_gpg_status[i].check);
- 		sigc->key =3D xmemdupz(found, 16);
- 		found +=3D 17;
- 		next =3D strchrnul(found, '\n');
++	}
++
+ 	strbuf_addstr(&buf, "merge");
+ 	for (p =3D remoteheads; p; p =3D p->next)
+ 		strbuf_addf(&buf, " %s", merge_remote_util(p->item)->name);
+diff --git a/git-pull.sh b/git-pull.sh
+index 266e682..705940d 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -39,7 +39,7 @@ test -z "$(git ls-files -u)" || die_conflict
+ test -f "$GIT_DIR/MERGE_HEAD" && die_merge
+=20
+ strategy_args=3D diffstat=3D no_commit=3D squash=3D no_ff=3D ff_only=3D
+-log_arg=3D verbosity=3D progress=3D recurse_submodules=3D
++log_arg=3D verbosity=3D progress=3D recurse_submodules=3D verify_signa=
+tures=3D
+ merge_args=3D edit=3D
+ curr_branch=3D$(git symbolic-ref -q HEAD)
+ curr_branch_short=3D"${curr_branch#refs/heads/}"
+@@ -125,6 +125,12 @@ do
+ 	--no-recurse-submodules)
+ 		recurse_submodules=3D--no-recurse-submodules
+ 		;;
++	--verify-signatures)
++		verify_signatures=3D--verify-signatures
++		;;
++	--no-verify-signatures)
++		verify_signatures=3D--no-verify-signatures
++		;;
+ 	--d|--dr|--dry|--dry-|--dry-r|--dry-ru|--dry-run)
+ 		dry_run=3D--dry-run
+ 		;;
+@@ -283,7 +289,7 @@ true)
+ 	eval=3D"$eval --onto $merge_head ${oldremoteref:-$merge_head}"
+ 	;;
+ *)
+-	eval=3D"git-merge $diffstat $no_commit $edit $squash $no_ff $ff_only"
++	eval=3D"git-merge $diffstat $no_commit $verify_signatures $edit $squa=
+sh $no_ff $ff_only"
+ 	eval=3D"$eval  $log_arg $strategy_args $merge_args $verbosity $progre=
+ss"
+ 	eval=3D"$eval \"\$merge_name\" HEAD $merge_head"
+ 	;;
+diff --git a/t/t7612-merge-verify-signatures.sh b/t/t7612-merge-verify-=
+signatures.sh
+new file mode 100755
+index 0000000..6ccfbf3
+--- /dev/null
++++ b/t/t7612-merge-verify-signatures.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++
++test_description=3D'merge signature verification tests'
++. ./test-lib.sh
++. "$TEST_DIRECTORY/lib-gpg.sh"
++
++test_expect_success GPG 'create signed commits' '
++	echo 1 >file && git add file &&
++	test_tick && git commit -m initial &&
++	git tag initial &&
++
++	git checkout -b side-signed &&
++	echo 3 >elif && git add elif &&
++	test_tick && git commit -S -m "signed on side" &&
++	git checkout initial &&
++
++	git checkout -b side-unsigned &&
++	echo 3 >foo && git add foo &&
++	test_tick && git commit -m "unsigned on side" &&
++	git checkout initial &&
++
++	git checkout -b side-bad &&
++	echo 3 >bar && git add bar &&
++	test_tick && git commit -S -m "bad on side" &&
++	git cat-file commit side-bad >raw &&
++	sed -e "s/bad/forged bad/" raw >forged &&
++	git hash-object -w -t commit forged >forged.commit &&
++	git checkout initial &&
++
++	git checkout master
++'
++
++test_expect_success GPG 'merge unsigned commit with verification' '
++	test_must_fail git merge --ff-only --verify-signatures side-unsigned =
+2>mergeerror &&
++	test_i18ngrep "does not have a GPG signature" mergeerror
++'
++
++test_expect_success GPG 'merge commit with bad signature with verifica=
+tion' '
++	test_must_fail git merge --ff-only --verify-signatures $(cat forged.c=
+ommit) 2>mergeerror &&
++	test_i18ngrep "has a bad GPG signature" mergeerror
++'
++
++test_expect_success GPG 'merge signed commit with verification' '
++	git merge --verbose --ff-only --verify-signatures side-signed >mergeo=
+utput &&
++	test_i18ngrep "has a good GPG signature" mergeoutput
++'
++
++test_expect_success GPG 'merge commit with bad signature without verif=
+ication' '
++	git merge $(cat forged.commit)
++'
++
++test_done
 --=20
 1.8.1.5
