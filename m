@@ -1,179 +1,72 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 12/12] pretty: support %>> that steal trailing spaces
-Date: Sat, 30 Mar 2013 16:35:12 +0700
-Message-ID: <1364636112-15065-13-git-send-email-pclouds@gmail.com>
-References: <1363400683-14813-1-git-send-email-pclouds@gmail.com>
- <1364636112-15065-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH 2/2] optimize set_shared_perm()
+Date: Sat, 30 Mar 2013 10:53:16 +0100
+Message-ID: <5156B60C.6070707@web.de>
+References: <201303251657.57222.tboegi@web.de> <7vli95nbs4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 30 10:36:51 2013
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org, j6t@kdbg.org, kusmabite@gmail.com,
+	mlevedahl@gmail.com, ramsay@ramsay1.demon.co.uk,
+	sunshine@sunshineco.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 30 10:53:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ULsDT-0004Yn-6d
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Mar 2013 10:36:51 +0100
+	id 1ULsTv-0001JX-Ip
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Mar 2013 10:53:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756516Ab3C3JgX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Mar 2013 05:36:23 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:34356 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756492Ab3C3JgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Mar 2013 05:36:22 -0400
-Received: by mail-pa0-f52.google.com with SMTP id fb10so655635pad.25
-        for <git@vger.kernel.org>; Sat, 30 Mar 2013 02:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=xPbMUpVUvSbqTYNXilcDS4FYi/WPdFaqMl4BFj7yo+w=;
-        b=N/KAOir25CtqdSY4iyzLIxwJMbRsBaQff5SVP/jJEcT5WUa7lc1RIQFgZi/M/rSn70
-         bB/7C5bd+qfKis84SrJsH5KfBVVpHs0sXJ8tyeByZUxgvNmGiMg4YKXgspB5Ky73Q0Ix
-         ZVuQBpviIHbbsCx+VhxIQkvVZ4iI8G18ZZPY/IyXRATIukBwz5M4fcPjAYVFmWTY3VkK
-         ipGMC2HSeRkC3NDpV2GGnXEinEX6AbvTXDR6kJTtScwrMazKUUPCIatlS1SeFkeRX/fj
-         s+3YUHrW3WPJ3P+st7WAr1gd/+E2SINLbAcaGwrLwAcV4xGm1O4VDHz7tcTZGyXygRIU
-         tL6A==
-X-Received: by 10.66.162.195 with SMTP id yc3mr8733134pab.11.1364636181994;
-        Sat, 30 Mar 2013 02:36:21 -0700 (PDT)
-Received: from lanh ([115.74.55.89])
-        by mx.google.com with ESMTPS id ky10sm6794224pab.23.2013.03.30.02.36.18
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 30 Mar 2013 02:36:21 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 30 Mar 2013 16:36:27 +0700
-X-Mailer: git-send-email 1.8.2.83.gc99314b
-In-Reply-To: <1364636112-15065-1-git-send-email-pclouds@gmail.com>
+	id S1755493Ab3C3JxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Mar 2013 05:53:23 -0400
+Received: from mout.web.de ([212.227.17.12]:63988 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755303Ab3C3JxX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Mar 2013 05:53:23 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0MPGym-1UHSd21mca-004RdD; Sat, 30 Mar 2013 10:53:17
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <7vli95nbs4.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:o5YqA64npJm3G6di69qFItMeaURwTK+XNd0zV8hYHJd
+ yWUb5PZgg5/0bp3lgVBGcnv5e+Sv96Gs6cxNfChc2IVU6hkj8P
+ AhnamkwxZaGQmKrh8CCUVySxa7XPoKlJnWZdX/GrGpcrW5yR4V
+ +7aVpcDnsKIoIMfGAbrZ1EeZSMbtfgslTDpjgHALvy4g6eMmwb
+ Ca2u4NnPTuF0+e/0qmJ/g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219582>
 
-This is pretty useful in `%<(100)%s%Cred%>(20)% an' where %s does not
-use up all 100 columns and %an needs more than 20 columns. By
-replacing %>(20) with %>>(20), %an can steal spaces from %s.
+On 29.03.13 22:20, Junio C Hamano wrote:
+[snip]
+> The last two points can become a separate "preparation" step.  The
+> result would be easier to read.
+> 
+> Your updated adjust_shared_perm() does not begin with:
+> 
+> 	if (!shared_repository)
+>         	return 0;
+> 
+> as the original, but it always first calls to get_st_mode_bits()
+> which makes a call to lstat(2).
+> 
+> That smells like a huge regression for !shared_repository case,
+> unless you have updated the existing callers of adjust_shared_perm()
+> not to call it when !shared_repository.
+> 
+Thanks for carefull review:
+The achieved effect of the code is the same,
+but the developer is to blame.
 
-%>> understands escape sequences, so %Cred does not stop it from
-stealing spaces in %<(100).
+I send a new patch of 2/2 in a minute, splitted into 2 commits.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/pretty-formats.txt |  5 ++++-
- pretty.c                         | 34 ++++++++++++++++++++++++++++++++=
-++
- utf8.c                           |  2 +-
- utf8.h                           |  1 +
- 4 files changed, 40 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
-rmats.txt
-index f2df941..73ae4d6 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -170,7 +170,10 @@ The placeholders are:
-   columns, padding spaces on the right if necessary
- - '%>(<N>)', '%>|(<N>)': similar to '%<(<N>)', '%<|(<N>)'
-   respectively, but padding spaces on the left
--- '%><(<N>)', '%><|(<N>)': similar to '%<(<N>)', '%<|(<N>)'
-+- '%>>(<N>)', '%>>|(<N>)': similar to '%>(<N>)', '%>|(<N>)'
-+  respectively, except that if the next placeholder takes more spaces
-+  than given and there are spaces on its left, use those spaces
-+- '%><(<N>)', '%><|(<N>)': similar to '% <(<N>)', '%<|(<N>)'
-   respectively, but padding both sides (i.e. the text is centered)
-=20
- NOTE: Some placeholders may depend on other options given to the
-diff --git a/pretty.c b/pretty.c
-index 29384b5..892274d 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -764,6 +764,7 @@ enum flush_type {
- 	no_flush,
- 	flush_right,
- 	flush_left,
-+	flush_left_and_steal,
- 	flush_both
- };
-=20
-@@ -1037,6 +1038,9 @@ static size_t parse_padding_placeholder(struct st=
-rbuf *sb,
- 		if (*ch =3D=3D '<') {
- 			flush_type =3D flush_both;
- 			ch++;
-+		} else if (*ch =3D=3D '>') {
-+			flush_type =3D flush_left_and_steal;
-+			ch++;
- 		} else
- 			flush_type =3D flush_left;
- 		break;
-@@ -1360,6 +1364,36 @@ static size_t format_and_pad_commit(struct strbu=
-f *sb, /* in UTF-8 */
- 		total_consumed++;
- 	}
- 	len =3D utf8_strnwidth(local_sb.buf, -1, 1);
-+
-+	if (c->flush_type =3D=3D flush_left_and_steal) {
-+		const char *ch =3D sb->buf + sb->len - 1;
-+		while (len > padding && ch > sb->buf) {
-+			const char *p;
-+			if (*ch =3D=3D ' ') {
-+				ch--;
-+				padding++;
-+				continue;
-+			}
-+			/* check for trailing ansi sequences */
-+			if (*ch !=3D 'm')
-+				break;
-+			p =3D ch - 1;
-+			while (ch - p < 10 && *p !=3D '\033')
-+				p--;
-+			if (*p !=3D '\033' ||
-+			    ch + 1 - p !=3D display_mode_esc_sequence_len(p))
-+				break;
-+			/*
-+			 * got a good ansi sequence, put it back to
-+			 * local_sb as we're cutting sb
-+			 */
-+			strbuf_insert(&local_sb, 0, p, ch + 1 - p);
-+			ch =3D p - 1;
-+		}
-+		strbuf_setlen(sb, ch + 1 - sb->buf);
-+		c->flush_type =3D flush_left;
-+	}
-+
- 	if (len > padding) {
- 		switch (c->truncate) {
- 		case trunc_left:
-diff --git a/utf8.c b/utf8.c
-index 766df80..414ae49 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -9,7 +9,7 @@ struct interval {
-   int last;
- };
-=20
--static size_t display_mode_esc_sequence_len(const char *s)
-+size_t display_mode_esc_sequence_len(const char *s)
- {
- 	const char *p =3D s;
- 	if (*p++ !=3D '\033')
-diff --git a/utf8.h b/utf8.h
-index faf2f91..e913edb 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -3,6 +3,7 @@
-=20
- typedef unsigned int ucs_char_t;  /* assuming 32bit int */
-=20
-+size_t display_mode_esc_sequence_len(const char *s);
- int utf8_width(const char **start, size_t *remainder_p);
- int utf8_strnwidth(const char *string, int len, int skip_ansi);
- int utf8_strwidth(const char *string);
---=20
-1.8.2.83.gc99314b
+Highlights of part 2:
+a) move "if (!shared_repository)" to the right place
+b) Simplify calc_shared_perm() even more: Remove the variable "int shared"
+c) Remove calc_shared_perm_dir(), the functionality is baked into
+   adjust_shared_perm()
