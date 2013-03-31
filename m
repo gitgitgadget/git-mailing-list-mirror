@@ -1,128 +1,71 @@
-From: Michael Contreras <michael@inetric.com>
-Subject: [PATCH] git-svn: avoid self-referencing mergeinfo
-Date: Sat, 30 Mar 2013 18:06:42 -0400
-Message-ID: <20130330220642.GA14641@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 07/12] utf8: keep NULs in reencode_string()
+Date: Sun, 31 Mar 2013 07:23:02 +0700
+Message-ID: <CACsJy8DGPtfeAGAGXPZ0XaVNPYr=_upcR3rZojYXE2QD4cxvUA@mail.gmail.com>
+References: <1363400683-14813-1-git-send-email-pclouds@gmail.com>
+ <1364636112-15065-1-git-send-email-pclouds@gmail.com> <1364636112-15065-8-git-send-email-pclouds@gmail.com>
+ <51571B92.80303@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bryan Jacobs <bjacobs@woti.com>, Eric Wong <normalperson@yhbt.net>,
-	Avishay Lavie <avishay.lavie@gmail.com>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 30 23:07:23 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Mar 31 01:24:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UM3vj-0006o3-UM
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Mar 2013 23:07:20 +0100
+	id 1UM644-0007Bs-Er
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 01:24:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754187Ab3C3WGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Mar 2013 18:06:47 -0400
-Received: from mail-gh0-f181.google.com ([209.85.160.181]:48095 "EHLO
-	mail-gh0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752679Ab3C3WGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Mar 2013 18:06:46 -0400
-Received: by mail-gh0-f181.google.com with SMTP id 3so189319ghz.12
-        for <git@vger.kernel.org>; Sat, 30 Mar 2013 15:06:45 -0700 (PDT)
+	id S1754962Ab3CaAXf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Mar 2013 20:23:35 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:39155 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754711Ab3CaAXe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Mar 2013 20:23:34 -0400
+Received: by mail-ob0-f176.google.com with SMTP id er7so1111966obc.7
+        for <git@vger.kernel.org>; Sat, 30 Mar 2013 17:23:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=inetric.com; s=google;
-        h=x-received:date:from:to:cc:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        bh=i+3CykCXOKE5a/wVDTjyF7dCpvWEK1egoNRLHnKhBOY=;
-        b=p8uFgFY6s7hoZoBSBG2mnQnn2QRHNpNvBsrMS9GZ7+x7PS6LwzoI//gDOEhGnYEjpg
-         tShu92k7KYBwgFDleTXzDvlPSLj0c76Ll+xgXMW5LwHNjk7P7sRGd/SWsS3BQNCzI5JD
-         gf7CWCv0vcMvST9nuoqJ6XVfYl/dyZV3cKxcM=
-X-Received: by 10.236.158.194 with SMTP id q42mr4586734yhk.62.1364681205695;
-        Sat, 30 Mar 2013 15:06:45 -0700 (PDT)
-Received: from gmail.com (70-88-178-169-Atlanta.hfc.comcastbusiness.net. [70.88.178.169])
-        by mx.google.com with ESMTPS id v48sm12972294yhi.26.2013.03.30.15.06.44
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 30 Mar 2013 15:06:44 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-12-10)
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=oBKcSIi4xh/ODTjSFp5WqcfjyS2q8+28Fu9V82/KeHo=;
+        b=avsJRVu5y/tbTwwXMQ54Om+QoqhB32pj6hSjJn68WJYEnT6Tnp2dED8ZDUZ+2hQWA/
+         SLNIdZ/OWir/fwfMeMqbywaLsbyGfr+TxZt859q0Y0Y8q6HT92F4bz+6L1G/mi6Yajbc
+         JlvBL9NIY6YMGCnBfn8v7uxSXefhrcB9QPF86DBVDPLfQjFGhn41AE+Jet9Vb7CIdg1y
+         +d7LTc7EQlUDrNIJEWaF3IW9vU8Z9V5bsyuipEiYJC/K4dpt+9qbzLL6WfVGvRMeBwDO
+         maRMo/iZuj/kR7GAVkPNUBUsNqNcaINYCVq8s4Mss9Q4aGo3oy16yXLLMuehI7L3CF9e
+         x0TA==
+X-Received: by 10.60.31.79 with SMTP id y15mr2472731oeh.123.1364689412215;
+ Sat, 30 Mar 2013 17:23:32 -0700 (PDT)
+Received: by 10.76.27.137 with HTTP; Sat, 30 Mar 2013 17:23:02 -0700 (PDT)
+In-Reply-To: <51571B92.80303@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219598>
 
-When svn.pushmergeinfo is set, the target branch is included in the
-mergeinfo if it was previously merged into one of the source branches.
-SVN does not do this.
+On Sun, Mar 31, 2013 at 12:06 AM, Torsten B=C3=B6gershausen <tboegi@web=
+=2Ede> wrote:
+> On 30.03.13 10:35, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> [...]
+> The short version of a review:
+> Would it make sense to leave  reencode_string() as it is,
+> and add a new function reencode_string_len()
 
-Remove merge target branch path from resulting mergeinfo when
-svn.pushmergeinfo is set to better match the behavior of SVN. Update the
-svn-mergeinfo-push test.
+Hmm.. yeah.
 
-Signed-off-by: Michael Contreras <michael@inetric.com>
-Reported-by: Avishay Lavie <avishay.lavie@gmail.com>
----
+> +char *reencode_string_len(const char *in, int insz,
+> +                     const char *out_encoding, const char *in_encodi=
+ng,
+> +                     int *outsz)
+>
+> And I didn't manage to apply the patch on master (631bc94e67383b66da1=
+90550866566f09d32)
+> is there a specific commitID it should be applied on ?
 
-Avishay's original patch was never applied.
-http://thread.gmane.org/gmane.comp.version-control.git/193123
-
- git-svn.perl                      | 9 ++++++---
- t/t9161-git-svn-mergeinfo-push.sh | 1 -
- 2 files changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index b46795f..bd4388d 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -669,12 +669,14 @@ sub merge_revs_into_hash {
- }
- 
- sub merge_merge_info {
--	my ($mergeinfo_one, $mergeinfo_two) = @_;
-+	my ($mergeinfo_one, $mergeinfo_two, $ignore_branch) = @_;
- 	my %result_hash = ();
- 
- 	merge_revs_into_hash(\%result_hash, $mergeinfo_one);
- 	merge_revs_into_hash(\%result_hash, $mergeinfo_two);
- 
-+	delete $result_hash{$ignore_branch} if $ignore_branch;
-+
- 	my $result = '';
- 	# Sort below is for consistency's sake
- 	for my $branchname (sort keys(%result_hash)) {
-@@ -695,6 +697,7 @@ sub populate_merge_info {
- 		my $all_parents_ok = 1;
- 		my $aggregate_mergeinfo = '';
- 		my $rooturl = $gs->repos_root;
-+		my ($target_branch) = $gs->full_pushurl =~ /^\Q$rooturl\E(.*)/;
- 
- 		if (defined($rewritten_parent)) {
- 			# Replace first parent with newly-rewritten version
-@@ -726,7 +729,7 @@ sub populate_merge_info {
- 			# Merge previous mergeinfo values
- 			$aggregate_mergeinfo =
- 				merge_merge_info($aggregate_mergeinfo,
--								 $par_mergeinfo, 0);
-+								 $par_mergeinfo, $target_branch);
- 
- 			next if $parent eq $parents[0]; # Skip first parent
- 			# Add new changes being placed in tree by merge
-@@ -769,7 +772,7 @@ sub populate_merge_info {
- 			my $newmergeinfo = "$branchpath:" . join(',', @revsin);
- 			$aggregate_mergeinfo =
- 				merge_merge_info($aggregate_mergeinfo,
--								 $newmergeinfo, 1);
-+								 $newmergeinfo, $target_branch);
- 		}
- 		if ($all_parents_ok and $aggregate_mergeinfo) {
- 			return $aggregate_mergeinfo;
-diff --git a/t/t9161-git-svn-mergeinfo-push.sh b/t/t9161-git-svn-mergeinfo-push.sh
-index 6ef0c0b..1eab701 100755
---- a/t/t9161-git-svn-mergeinfo-push.sh
-+++ b/t/t9161-git-svn-mergeinfo-push.sh
-@@ -88,7 +88,6 @@ test_expect_success 'check reintegration mergeinfo' '
- 	test "$mergeinfo" = "/branches/svnb1:2-4,7-9,13-18
- /branches/svnb2:3,8,16-17
- /branches/svnb3:4,9
--/branches/svnb4:5-6,10-12
- /branches/svnb5:6,11"
- 	'
- 
--- 
-1.8.2
+v1.8.2
