@@ -1,85 +1,95 @@
-From: =?UTF-8?B?U2ViYXN0aWFuIEfDtnR0ZQ==?= <jaseg@physik.tu-berlin.de>
-Subject: [PATCH v8 5/5] pretty printing: extend %G? to include 'N' and 'U'
-Date: Sun, 31 Mar 2013 18:03:22 +0200
-Message-ID: <51585E4A.7000205@physik.tu-berlin.de>
-References: <20130331144452.GF2286@serenity.lan> <cover.1364742659.git.jaseg@physik-pool.tu-berlin.de>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Composing git repositories
+Date: Mon, 1 Apr 2013 02:04:17 +0530
+Message-ID: <CALkWK0k=g3iFjmpUQA1VkuH2kZsVX1_Hpo=LZ7CuotwHz_1++g@mail.gmail.com>
+References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
+ <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
+ <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
+ <51537A7B.7050206@web.de> <CALkWK0nfNCu775MBB-Y28=V93RkV24kbTLTDKWO2dZ-0yxX=Sw@mail.gmail.com>
+ <5154AACC.7050006@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, john@keeping.me.uk
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 31 18:04:04 2013
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Mar 31 22:35:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMKjk-0001tz-Ei
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 18:04:04 +0200
+	id 1UMOyg-0001Ao-Jr
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 22:35:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755821Ab3CaQDg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Mar 2013 12:03:36 -0400
-Received: from mail.tu-berlin.de ([130.149.7.33]:52520 "EHLO mail.tu-berlin.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755687Ab3CaQDg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Mar 2013 12:03:36 -0400
-X-tubIT-Incoming-IP: 130.149.58.163
-Received: from mail.physik-pool.tu-berlin.de ([130.149.58.163] helo=mail.physik.tu-berlin.de)
-	by mail.tu-berlin.de (exim-4.75/mailfrontend-4) with esmtp 
-	id 1UMKjD-0004gr-AQ; Sun, 31 Mar 2013 18:03:35 +0200
-Received: from [94.45.250.108] (unknown [94.45.250.108])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.physik.tu-berlin.de (Postfix) with ESMTPSA id 235B911402;
-	Sun, 31 Mar 2013 18:03:28 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
-In-Reply-To: <cover.1364742659.git.jaseg@physik-pool.tu-berlin.de>
+	id S1755719Ab3CaUe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Mar 2013 16:34:58 -0400
+Received: from mail-ia0-f173.google.com ([209.85.210.173]:57882 "EHLO
+	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755639Ab3CaUe5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Mar 2013 16:34:57 -0400
+Received: by mail-ia0-f173.google.com with SMTP id h37so1477247iak.32
+        for <git@vger.kernel.org>; Sun, 31 Mar 2013 13:34:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=nTNZmuRqEPvwP+58NJB3+7GZy/k66GQ2kLmRX6iy0ok=;
+        b=b1bbsYBBvPQtomkAUU669pdmHVpT/P7Yw815/dLFi55UOzNDDm2UCFaAPpFw76Of6v
+         DegplLwRRgMTERyedvnollGRj8Dbtv/gjqASKz3Pzl5EDrvsFhpF93cxjadqRwJ/Vx2T
+         KG/uQxVwZ0yhurzkPlS25yZJoS3cUlhXmF0gvovUGmAEVW7roQswDI8jFz7c5jZOiOu1
+         KWiBvsY1jaitnvOLOYZMblsqpu8UM+ZENC0qDIjjusf5FobRE+JrrIiLPr9LH3iVAhU6
+         QvvkmXb3ib99hJosO+WSvAMK6EC4U3bpTU6iaV2e8PzDXTdSx5pqq+azgUjER7nIFsyr
+         jJgA==
+X-Received: by 10.42.50.202 with SMTP id b10mr4283050icg.7.1364762097231; Sun,
+ 31 Mar 2013 13:34:57 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Sun, 31 Mar 2013 13:34:17 -0700 (PDT)
+In-Reply-To: <5154AACC.7050006@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219639>
 
-Expand %G? in pretty format strings to 'N' in case of no GPG signature
-and 'U' in case of a good but untrusted GPG signature in addition to
-the previous 'G'ood and 'B'ad. This eases writing anyting parsing
-git-log output.
+Thanks for taking the time and effort to review my thoughts.
 
-Signed-off-by: Sebastian G=C3=B6tte <jaseg@physik-pool.tu-berlin.de>
----
- Documentation/pretty-formats.txt | 3 ++-
- pretty.c                         | 2 ++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+Jens Lehmann wrote:
+> A
+> commit is the thing to record here because it *is* the perfect fit
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
-rmats.txt
-index 2939655..afac703 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -131,7 +131,8 @@ The placeholders are:
- - '%B': raw body (unwrapped subject and body)
- - '%N': commit notes
- - '%GG': raw verification message from GPG for a signed commit
--- '%G?': show either "G" for Good or "B" for Bad for a signed commit
-+- '%G?': show "G" for a Good signature, "B" for a Bad signature, "U" f=
-or a good,
-+  untrusted signature and "N" for no signature
- - '%GS': show the name of the signer for a signed commit
- - '%GK': show the key used to sign a signed commit
- - '%gD': reflog selector, e.g., `refs/stash@{1}`
-diff --git a/pretty.c b/pretty.c
-index cf84d3a..840c41f 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1135,6 +1135,8 @@ static size_t format_commit_one(struct strbuf *sb=
-, const char *placeholder,
- 			switch (c->signature_check.result) {
- 			case 'G':
- 			case 'B':
-+			case 'U':
-+			case 'N':
- 				strbuf_addch(sb, c->signature_check.result);
- 			}
- 			break;
---=20
-1.8.1.5
+Might be, but saying that doesn't help one bit.  I want to know why.
+
+> I want to improve the user experience
+> of submodules and don't care much in what language we achieve that.
+
+You missed the point entirely.  If git didn't have a commit object,
+would you use a special kind of blob and code around everything to
+avoid fixing a more fundamental issue?
+
+> What happens when you rename "magit" to "foo" in that branch and want
+> to check out an older commit of the same branch? That is one of the
+> reasons why that belongs in to a checked in .gitmodules and not
+> someplace untracked.
+
+Good point.  I learnt something new.
+
+> Are you aware that current Git code already stats all files across
+> all submodules recursive by default? So (again) no problem here, we
+> do that already (unless configured otherwise).
+
+I didn't know that.  Why does it do this?
+
+> Guess what: submodules are the solution for a certain set of use
+> cases, and tools like subtree are a solution for another set of
+> use cases. There is no silver bullet.
+
+That's the core of your argument: submodules already solve what it
+was meant to, and we can't get it to solve a larger class of problems.
+ In other words, you're implying that it's impossible to build a tool
+that will be able to compose git repositories in a way that solves a
+very large class of problems.  I don't see conclusive proof for this,
+so I have to disagree.
+
+To summarize, everyone seems to be elated with the current state of
+submodules and is vehemently defending it.  I'm a little unhappy, but
+am unable to express my discontent in better prose.  Let's just go
+back to writing patches, and come back to this if and when I have a
+full design.
