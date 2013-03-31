@@ -1,76 +1,102 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH v7 4/5] merge/pull Check for untrusted good GPG signatures
-Date: Sun, 31 Mar 2013 17:27:56 +0200
-Message-ID: <87ip47wpvn.fsf@linux-k42r.v.cablecom.net>
-References: <20130331133332.GD2286@serenity.lan>
-	<cover.1364738348.git.jaseg@physik-pool.tu-berlin.de>
-	<51584955.40007@physik.tu-berlin.de>
-	<20130331144452.GF2286@serenity.lan>
-	<87mwtjwqzz.fsf@linux-k42r.v.cablecom.net>
-	<51585491.1070604@physik.tu-berlin.de>
+From: =?UTF-8?B?U2ViYXN0aWFuIEfDtnR0ZQ==?= <jaseg@physik.tu-berlin.de>
+Subject: [PATCH v8 0/5] Verify GPG signatures when merging and extend %G?
+ pretty string
+Date: Sun, 31 Mar 2013 17:58:52 +0200
+Message-ID: <51585D3C.4000902@physik.tu-berlin.de>
+References: <20130331144452.GF2286@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: Sebastian =?utf-8?Q?G=C3=B6tte?= <jaseg@physik.tu-berlin.de>
-X-From: git-owner@vger.kernel.org Sun Mar 31 17:28:32 2013
+Cc: gitster@pobox.com, john@keeping.me.uk
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 31 17:59:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMKBM-0003X8-HE
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 17:28:32 +0200
+	id 1UMKfe-0008Pt-Kl
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 17:59:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755591Ab3CaP2D convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Mar 2013 11:28:03 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:8025 "EHLO edge10.ethz.ch"
+	id S1755704Ab3CaP7W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Mar 2013 11:59:22 -0400
+Received: from mail.tu-berlin.de ([130.149.7.33]:39891 "EHLO mail.tu-berlin.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755361Ab3CaP2C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Mar 2013 11:28:02 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 31 Mar
- 2013 17:27:59 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (213.55.184.251) by
- cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Sun, 31 Mar 2013 17:27:59 +0200
-In-Reply-To: <51585491.1070604@physik.tu-berlin.de> ("Sebastian
- \=\?utf-8\?Q\?G\=C3\=B6tte\=22's\?\=
-	message of "Sun, 31 Mar 2013 17:21:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [213.55.184.251]
+	id S1755687Ab3CaP7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Mar 2013 11:59:21 -0400
+X-tubIT-Incoming-IP: 130.149.58.163
+Received: from mail.physik-pool.tu-berlin.de ([130.149.58.163] helo=mail.physik.tu-berlin.de)
+	by mail.tu-berlin.de (exim-4.75/mailfrontend-3) with esmtp 
+	id 1UMKf6-0005eT-Fb; Sun, 31 Mar 2013 17:59:20 +0200
+Received: from [94.45.250.108] (unknown [94.45.250.108])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.physik.tu-berlin.de (Postfix) with ESMTPSA id 83BE211402;
+	Sun, 31 Mar 2013 17:59:06 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130221 Thunderbird/17.0.3
+In-Reply-To: <20130331144452.GF2286@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219633>
 
-Sebastian G=C3=B6tte <jaseg@physik.tu-berlin.de> writes:
+On 03/31/2013 04:41 PM, John Keeping wrote:> On Sun, Mar 31, 2013 at 04=
+:32:52PM +0200, Sebastian G=C3=B6tte wrote:
+>> +	/* Iterate over all search strings */
+>>  	for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+>> -		const char *found =3D strstr(buf, sigcheck_gpg_status[i].check);
+>> -		const char *next;
+>> -		if (!found)
+>> -			continue;
+>> +		const char *found, *next;
+>> +
+>> +		if (!prefixcmp(buf, sigcheck_gpg_status[i].check + 1)) {
+>> +			/* At the very beginning of the buffer */
+>=20
+> This seems wrong.  You're losing the "\n" in front of the status stri=
+ngs
+> above but adding a special first line check skipping the first
+> character.  Surely it should be one of these changes or the other, no=
+t
+> both?
 
-> On 03/31/2013 05:03 PM, Thomas Rast wrote:
->>>>  } sigcheck_gpg_status[] =3D {
->>>>  	{ 'G', "[GNUPG:] GOODSIG " },
->>>>  	{ 'B', "[GNUPG:] BADSIG " },
->>>> +	{ 'U', "[GNUPG:] TRUST_NEVER" },
->>>> +	{ 'U', "[GNUPG:] TRUST_UNDEFINED" },
-[...]
->> And furthermore, to use an enum instead of a char so that you can ea=
-sily
->> spell out the details in the code?  This also has the advantage that=
- the
->> compiler can check that your 'switch'es cover all cases.
-> This char is actually from Junios original code. I think we can affor=
-d
-> three chars. This could be changed if we ever need more than that.
+You're right, that does not make a whole lot of sense.
 
-*shrug*
+On 03/31/2013 04:44 PM, John Keeping wrote:
+>> +		if (sigc->result !=3D 'U') {
+>
+> This could use a comment; we know now that only GOODSIG and BADSIG
+> are followed by a signature, but someone looking at this code in the
+> future will probably appreciate an explanation.
 
-I'm tempted to count the above as an argument in favor of the enum,
-since there are in fact *four* chars... 'N' also counts. ;-)
+=46ixed.
 
-But either way... I don't care too deeply and I don't know this corner
-of the code.  I just came here because of the valgrind discovery.
+Sebastian G=C3=B6tte (5):
+  Move commit GPG signature verification to commit.c
+  commit.c/GPG signature verification: Also look at the first GPG statu=
+s
+    line
+  merge/pull: verify GPG signatures of commits being merged
+  merge/pull Check for untrusted good GPG signatures
+  pretty printing: extend %G? to include 'N' and 'U'
+
+ Documentation/merge-options.txt    |   5 ++
+ Documentation/pretty-formats.txt   |   3 +-
+ builtin/merge.c                    |  34 +++++++++++++-
+ commit.c                           |  70 ++++++++++++++++++++++++++++
+ commit.h                           |  10 ++++
+ git-pull.sh                        |  10 +++-
+ gpg-interface.h                    |  12 +++++
+ pretty.c                           |  93 ++++++-----------------------=
+--------
+ t/lib-gpg/pubring.gpg              | Bin 1164 -> 2359 bytes
+ t/lib-gpg/random_seed              | Bin 600 -> 600 bytes
+ t/lib-gpg/secring.gpg              | Bin 1237 -> 3734 bytes
+ t/lib-gpg/trustdb.gpg              | Bin 1280 -> 1360 bytes
+ t/t7612-merge-verify-signatures.sh |  61 ++++++++++++++++++++++++
+ 13 files changed, 216 insertions(+), 82 deletions(-)
+ create mode 100755 t/t7612-merge-verify-signatures.sh
 
 --=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.8.1.5
