@@ -1,99 +1,68 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 9/9] clone: run check_everything_connected
-Date: Sun, 31 Mar 2013 14:57:12 +0700
-Message-ID: <20130331075712.GA13136@lanh>
-References: <20130325201427.GA15798@sigill.intra.peff.net>
- <20130325202627.GI16019@sigill.intra.peff.net>
- <CACsJy8BMfYnFv=PL8x5JOMkjYc39h630oNEdukkjmBKBTNCibg@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH 1/3] t/README: --valgrind already implies -v
+Date: Sun, 31 Mar 2013 10:00:15 +0200
+Message-ID: <b8b1ac77b7b81a37ff2918b5d9ec1dae8e364ee1.1364716452.git.trast@inf.ethz.ch>
+References: <cover.1364716452.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 31 09:57:41 2013
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 31 10:01:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMD92-0004Fa-2L
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 09:57:40 +0200
+	id 1UMDCE-0005O3-4P
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 10:00:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754380Ab3CaH5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Mar 2013 03:57:08 -0400
-Received: from mail-da0-f53.google.com ([209.85.210.53]:39699 "EHLO
-	mail-da0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750935Ab3CaH5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Mar 2013 03:57:07 -0400
-Received: by mail-da0-f53.google.com with SMTP id n34so695104dal.12
-        for <git@vger.kernel.org>; Sun, 31 Mar 2013 00:57:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=R3EADpJvyab7J+UVaTF75Eu+boI0g9s1C1kLMtc0RzM=;
-        b=OC4J2BVUdpFUyyIIoWyVlaAA0bRTpI4QAgxltbU//wdk6h/3y2S70UXU4lvLxUWeDM
-         eDiW0ny1mn6Kmvs2yXWgylbfc4ZEYazCTZ6+bRBpyc9KiFBD50gFShIRFNrnDNfbCV4m
-         U+YscuJF72myPwvZv3jdR2HIrFcneMJls2Kyjte/77LEA+TN/T3Y+cdi2l6PER5vj/Kb
-         cqQkJqrfyCNgt1aiX7Tj5HjyriEL61+jprRjPBUAo8KfwtySQ7cSvvYbIXCBCwsttRmU
-         ZUTQkeF1bPqOEBG2/W15cftvWANp7kH9diwNwz81gpTny1vqW22zyc915Tm+0zpW6fMC
-         Zjow==
-X-Received: by 10.66.122.97 with SMTP id lr1mr12915596pab.147.1364716626499;
-        Sun, 31 Mar 2013 00:57:06 -0700 (PDT)
-Received: from lanh ([115.74.58.181])
-        by mx.google.com with ESMTPS id ux10sm10417407pab.1.2013.03.31.00.57.02
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 31 Mar 2013 00:57:05 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 31 Mar 2013 14:57:12 +0700
-Content-Disposition: inline
-In-Reply-To: <CACsJy8BMfYnFv=PL8x5JOMkjYc39h630oNEdukkjmBKBTNCibg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754575Ab3CaIAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Mar 2013 04:00:30 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:15920 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754543Ab3CaIA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Mar 2013 04:00:29 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 31 Mar
+ 2013 10:00:26 +0200
+Received: from linux-k42r.v.cablecom.net (213.55.184.251) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 31 Mar
+ 2013 10:00:26 +0200
+X-Mailer: git-send-email 1.8.2.467.gedf93a5
+In-Reply-To: <cover.1364716452.git.trast@inf.ethz.ch>
+X-Originating-IP: [213.55.184.251]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219603>
 
-On Thu, Mar 28, 2013 at 07:40:51AM +0700, Duy Nguyen wrote:
-> Maybe we could do it in index-pack to save some (wall) time. I haven't
-> tried but I think it might work. The problem is to make sure the pack
-> contains objects for all sha1 references in the pack. By that
-> description, we don't need to do standard DAG traversal. We could
-> extract sha-1 references in index-pack as we uncompress objects and
-> put all "want" sha-1 in a hash table. At the end of index-pack, we
-> check if any sha-1 in the hash table still points to non-existing
-> object.
-> 
-> This way, at least we don't need to uncompress all objects again in
-> rev-list. We could parse+hash in both phases in index-pack. The first
-> phase (parse_pack_objects) is usually I/O bound, we could hide some
-> cost there. The second phase is multithreaded, all the better.
+From: Thomas Rast <trast@inf.ethz.ch>
 
-It looks like what I describe above is exactly what index-pack
---strict does. Except that it holds the lock longer and has more
-abstraction layers to slow things down. On linux-2.6 with 3 threads:
+This was missed in 3da9365 (Tests: let --valgrind imply --verbose and
+--tee, 2009-02-04).
 
-$ rev-list --all --objects --quiet (aka check_everything_connected)
-34.26user 0.22system 0:34.56elapsed 99%CPU (0avgtext+0avgdata 2550528maxresident)k
-0inputs+0outputs (0major+208569minor)pagefaults 0swaps
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+---
+ t/README | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-$ index-pack --stdin
-214.57user 8.38system 1:31.82elapsed 242%CPU (0avgtext+0avgdata 1357328maxresident)k
-8inputs+1421016outputs (0major+1222537minor)pagefaults 0swaps
-
-$ index-pack --stdin --strict
-297.36user 13.77system 2:11.82elapsed 236%CPU (0avgtext+0avgdata 1875040maxresident)k
-0inputs+1421016outputs (0major+1308718minor)pagefaults 0swaps
-
-$ index-pack --stdin --connectivity
-231.09user 7.42system 1:37.39elapsed 244%CPU (0avgtext+0avgdata 2080816maxresident)k
-0inputs+1421016outputs (0major+540069minor)pagefaults 0swaps
-
-The last one does not hold locks by duplicating object hash table per
-thread. As you can see the consumed memory is much higher than --stdin.
-In return it only adds up 1/3 of rev-list time.
-
-Maybe you should check which one is cheaper for clone case,
-check_everything_connected() or index-pack --strict.
---
-Duy
+diff --git a/t/README b/t/README
+index e4128e5..bc7253c5 100644
+--- a/t/README
++++ b/t/README
+@@ -95,8 +95,7 @@ appropriately before running "make".
+ --valgrind::
+ 	Execute all Git binaries with valgrind and exit with status
+ 	126 on errors (just like regular tests, this will only stop
+-	the test script when running under -i).  Valgrind errors
+-	go to stderr, so you might want to pass the -v option, too.
++	the test script when running under -i).
+ 
+ 	Since it makes no sense to run the tests with --valgrind and
+ 	not see any output, this option implies --verbose.  For
+-- 
+1.8.2.467.gedf93a5
