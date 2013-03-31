@@ -1,125 +1,105 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] peel_onion(): teach $foo^{object} peeler
-Date: Sun, 31 Mar 2013 15:38:59 -0700
-Message-ID: <7vy5d3nqik.fsf_-_@alter.siamese.dyndns.org>
-References: <51543FDB.9010109@alum.mit.edu>
- <CAPc5daUqzz=9TBmj2Q0MHqEc6gMHxXoGr9+JV3hq76zDKJAyCw@mail.gmail.com>
- <515462FB.9040605@alum.mit.edu> <20130328153808.GB3337@sigill.intra.peff.net>
- <7vli97v558.fsf@alter.siamese.dyndns.org> <51565F96.1020203@alum.mit.edu>
- <7vk3opr0ke.fsf@alter.siamese.dyndns.org> <51567844.7030503@alum.mit.edu>
- <7vboa1qtnb.fsf@alter.siamese.dyndns.org>
- <7vhajtpdtc.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] rev-parse: clarify documentation for the --verify option
+Date: Sun, 31 Mar 2013 15:52:12 -0700
+Message-ID: <7vwqsnnpwj.fsf@alter.siamese.dyndns.org>
+References: <1364625865-8459-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Apr 01 00:39:33 2013
+X-From: git-owner@vger.kernel.org Mon Apr 01 00:52:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMQuS-00041a-D5
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 00:39:32 +0200
+	id 1UMR7E-0000Ya-9r
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 00:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755840Ab3CaWjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Mar 2013 18:39:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60037 "EHLO
+	id S1755988Ab3CaWwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Mar 2013 18:52:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57538 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755663Ab3CaWjC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Mar 2013 18:39:02 -0400
+	id S1755894Ab3CaWwP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Mar 2013 18:52:15 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBCEC11967;
-	Sun, 31 Mar 2013 22:39:01 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A295B11D65;
+	Sun, 31 Mar 2013 22:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0N5OaQOYw8K/ojLyYAiF02i3QEc=; b=odBv0M
-	1T2RjDfqeysnw8ilZMdW6+Iu+5OCWzLS2Cv5Vzzn979zqjZyhlgioUMgX9fFMhLp
-	RIb0qWt3sfMgHYPxjRrV4CwOPdWHnG332ciqU5DXGhI5QY4K+5UAi+empsymaW2N
-	Hkgnqpm3DCM2MygErk1h1mC2S/jXDj2QkNrlQ=
+	:content-type; s=sasl; bh=9OeCuqUxuoIZgQXFDfQU6M8KSaQ=; b=pcNbX7
+	RKEGi4XHxmMS/CF54WOgi40+gAVYcUyn5UBBuSqxLbT9hISuYPslutJRTgeKKQBq
+	9QOg3N3h89bOPJULYHLA3vXuvDljfI5YGtih5hH++F8DX2Z8frCyBgSePhkfy9wC
+	99Qbq52t8lUbX9hJkkcFrcyvAmw++TGcxAyWA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KkyiQHyOMj+DArSS/6ilStB7UdMZLExf
-	/A8niT9OZLif9A4RB4JvvIwUoAs5upWDUAPITGy06+aMu0P2st/5ZtbhtLV76fJR
-	s1QP0tN/i4yelmdzWddt54J+C7ZlQLBP837qiWhJAQM9C2VexlZT2KxFghw1eTAR
-	fGyHMPbWiaM=
+	:content-type; q=dns; s=sasl; b=jeBFGRiO2MeFhKjxQGRYKd221ChAjNIV
+	KKGnGIS2R8sKnnT/Uuu1x+Qa8jGOpNeQkydnIzbjrJ74C7lQi7wFZl2tf8mJ+Q8R
+	X8CdjYxWFPYFmij+0VShRpxMJ3W1CLwwPbXhojNlImmzENAOYAnypzxAD223l1BG
+	dhcI+/1HyOI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D01AA11966;
-	Sun, 31 Mar 2013 22:39:01 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 964A911D64;
+	Sun, 31 Mar 2013 22:52:14 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1F43611965; Sun, 31 Mar
- 2013 22:39:01 +0000 (UTC)
-In-Reply-To: <7vhajtpdtc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 30 Mar 2013 00:05:51 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB9D311D60; Sun, 31 Mar
+ 2013 22:52:13 +0000 (UTC)
+In-Reply-To: <1364625865-8459-1-git-send-email-mhagger@alum.mit.edu> (Michael
+ Haggerty's message of "Sat, 30 Mar 2013 07:44:25 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C8801EE4-9A53-11E2-AFB6-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A112436C-9A55-11E2-A77E-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219647>
 
-A string that names an object can be suffixed with ^{type} peeler to
-say "I have this object name; peel it until you get this type. If
-you cannot do so, it is an error".  v1.8.2^{commit} asks for a commit
-that is pointed at an annotated tag v1.8.2; v1.8.2^{tree} unwraps it
-further to the top-level tree object.  A special suffix ^{} (i.e. no
-type specified) means "I do not care what it unwraps to; just peel
-annotated tag until you get something that is not a tag".
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-When you have a random user-supplied string, you can turn it to a
-bare 40-hex object name, and cause it to error out if such an object
-does not exist, with:
+> ...  Though honestly, I don't see the point of using
+> --default as opposed to
+>
+>     $ git rev-parse --verify ${REV:-master}^{commit}
 
-	git rev-parse --verify "$userstring^{}"
+I would agree ${VAR:-default} is sufficient in that particular case.
 
-for most objects, but this does not yield the tag object name when
-$userstring refers to an annotated tag.
+The --default is more about the use of the pluming command not with
+--verify but as its original use of an "argument sifter" when
+composing "git rev-list" piped into "git diff-tree --stdin", i.e.
 
-Introduce a new suffix, ^{object}, that only makes sure the given
-name refers to an existing object.  Then
+	git rev-list $(git rev-parse --default HEAD --revs-only "$@") |
+        git diff-tree --stdin $(git rev-parse --no-revs "$@")
 
-	git rev-parse --verify "$userstring^{object}"
+which was the original way to write commands in the "git log" family
+using the plumbing command as a scripted Porcelain.
 
-becomes a way to make sure $userstring refers to an existing object.
+>  --verify::
+> +	If the parameter can be used as a single object name, output
+> +	that name; otherwise, emit an error message and exit with a
+> +	non-zero status.  Please note that the existence and validity
+> +	of the named object itself are not checked.
 
-This is necessary because the plumbing "rev-parse --verify" is only
-about "make sure the argument is something we can feed to get_sha1()
-and turn it into a raw 20-byte object name SHA-1" and is not about
-"make sure that 20-byte object name SHA-1 refers to an object that
-exists in our object store".  When the given $userstring is already
-a 40-hex, by definition "rev-parse --verify $userstring" can turn it
-into a raw 20-byte object name.  With "$userstring^{object}", we can
-make sure that the 40-hex string names an object that exists in our
-object store before "--verify" kicks in.
+Perhaps s/used as a single object name/turned into a raw 20-byte SHA-1/;
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- sha1_name.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Because the primary use case of this option is to implement end-user
+input validation, I think it would be helpful to clarify use of the
+peeler here.  Perhaps
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 45788df..85b6e75 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -594,7 +594,7 @@ struct object *peel_to_type(const char *name, int namelen,
- 	while (1) {
- 		if (!o || (!o->parsed && !parse_object(o->sha1)))
- 			return NULL;
--		if (o->type == expected_type)
-+		if (expected_type == OBJ_ANY || o->type == expected_type)
- 			return o;
- 		if (o->type == OBJ_TAG)
- 			o = ((struct tag*) o)->tagged;
-@@ -645,6 +645,8 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- 		expected_type = OBJ_TREE;
- 	else if (!strncmp(blob_type, sp, 4) && sp[4] == '}')
- 		expected_type = OBJ_BLOB;
-+	else if (!prefixcmp(sp, "object}"))
-+		expected_type = OBJ_ANY;
- 	else if (sp[0] == '}')
- 		expected_type = OBJ_NONE;
- 	else if (sp[0] == '/')
--- 
-1.8.2-441-g6e6f07b
+    --verify::
+            Make sure the single given parameter can be turned into a
+            raw 20-byte SHA-1, something that can be used to access the
+            object database, and emit the SHA-1 in 40-hex format (unless
+            --symbolic and other formatting option is given); otherwise,
+            error out.
+    +
+    If you want to make sure that the output from this actually
+    names an object in your object database and/or can be used
+    as a specific type of object you require, it is a good idea
+    to add "^{type}" peeling operator to the parmeter.  For
+    example, `git rev-parse "$VAR^{commit}"` will make sure $VAR
+    names an existing object that is a commit-ish (i.e. a
+    commit, or an annotated tag that points at a commit).  To
+    make sure that $VAR names an existing object of any type,
+    you can say `git rev-parse "$VAR^{object}"`.
+
+or something.
