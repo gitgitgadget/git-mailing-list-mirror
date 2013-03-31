@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/4] fetch-pack: save shallow file before fetching the pack
-Date: Sun, 31 Mar 2013 18:09:05 +0700
-Message-ID: <1364728148-7537-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 3/4] index-pack, unpack-objects: add --not-so-strict for connectivity check
+Date: Sun, 31 Mar 2013 18:09:07 +0700
+Message-ID: <1364728148-7537-4-git-send-email-pclouds@gmail.com>
 References: <1364728148-7537-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,185 +11,155 @@ Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 31 13:09:42 2013
+X-From: git-owner@vger.kernel.org Sun Mar 31 13:09:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMG8s-0007G9-5z
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 13:09:42 +0200
+	id 1UMG92-0007Lf-A6
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 13:09:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754534Ab3CaLJM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Mar 2013 07:09:12 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:53897 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753045Ab3CaLJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Mar 2013 07:09:11 -0400
-Received: by mail-pd0-f178.google.com with SMTP id w10so8279pde.23
-        for <git@vger.kernel.org>; Sun, 31 Mar 2013 04:09:10 -0700 (PDT)
+	id S1754570Ab3CaLJY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Mar 2013 07:09:24 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:64003 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753952Ab3CaLJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Mar 2013 07:09:23 -0400
+Received: by mail-pb0-f42.google.com with SMTP id up7so137718pbc.29
+        for <git@vger.kernel.org>; Sun, 31 Mar 2013 04:09:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=URH4L/LXzcxb4FMS7H/fIcOczrPV1JiVhOKaaQjdycw=;
-        b=EamVQ0FDhUc445/sDFfOkdo5XmqYeayQskx3QVghBbw0ncgSjNCIFFkaqrpZ5OEFN+
-         l7IunoW1pXp8cfAvKzfHj7QBxcZ1BrTfinquV8phddMlFXajDjudQJEylsQ0tSo65F3x
-         KZGeCTT6wwD5HaWQdF+cMOX4YFkWeo+SKJmJHU5pAHWcVQz5oxKo1uccFXCzk4Bq+T6a
-         sfHPJ2Bhw8wPt3LDTRJXg6TxR/D0prFv37FAMjSd60fpkzBfugnoggGULtmdR9V7mrKs
-         Bcmq/8sn7gjYgjgBlxoB4HeJ7qwzrEluNVB8TrnGsWxBDuByuG5LtWYRsVbTptmt+NWV
-         t0ZQ==
-X-Received: by 10.68.31.130 with SMTP id a2mr12628939pbi.213.1364728150725;
-        Sun, 31 Mar 2013 04:09:10 -0700 (PDT)
+        bh=A3W0yK/HgYcRPQo22+pXbDG/dwbvkYTSS2wpBGI3X0Q=;
+        b=VUPhJ3Sefho0GNqwt4vKllCgQ0Qv7Gk+RcmvFrhpLNsPP9S71xOUJlit0FFxDeQ3i+
+         b20Ir4krMoB0Q3n9VCPHoDlf/mC8X17BvKqQgaAWVcV/bvQwryxXOk8yJzAN0j1oejPP
+         NhFKMRhZlOgRCMiAUXYSihx5oZxUJ+j3KmGQsus36xo10OQ9QMzbk73FqApJQvFUSWxJ
+         rhqb63cxsdVMlMDlHyiiopb/LhVQcHskRJi3wQiSP58/U4sXIFyt1ehCjTTG7QxC0Hdc
+         NjjuVn8I1HZPCQBxt5lLOsAc/kY3xeHwcb6nKUDRcs/EuVlUYRbuX6rn2Q1s4VoH0pYx
+         r+gg==
+X-Received: by 10.68.212.104 with SMTP id nj8mr12724692pbc.197.1364728162861;
+        Sun, 31 Mar 2013 04:09:22 -0700 (PDT)
 Received: from lanh ([115.74.58.181])
-        by mx.google.com with ESMTPS id gj2sm9296985pbc.25.2013.03.31.04.09.06
+        by mx.google.com with ESMTPS id gf1sm9703509pbb.33.2013.03.31.04.09.19
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 31 Mar 2013 04:09:09 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 31 Mar 2013 18:09:16 +0700
+        Sun, 31 Mar 2013 04:09:22 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 31 Mar 2013 18:09:29 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1364728148-7537-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219613>
 
-index-pack --strict looks up and follows parent commits. If shallow
-information is not ready by the time index-pack is run, index-pack may
-be lead to non-existent objects. Make fetch-pack save shallow file to
-disk before invoking index-pack.
+--not-so-strict only checks if all links from objects in the pack
+point to real objects (either in current repo, or from the pack
+itself). It's like check_everything_connected() except that:
+
+ - it does not follow DAG in order
+ - it can detect incomplete object islands
+ - it seems to be faster than "rev-list --objects --all"
+
+On my box, "rev-list --objects --all" takes 34 seconds. index-pack take=
+s
+
+215.25user 8.42system 1:32.31elapsed 242%CPU (0avgtext+0avgdata 1357328=
+maxresident)k
+0inputs+1421016outputs (0major+1222987minor)pagefaults 0swaps
+
+And index-pack --not-so-strict takes
+
+pack    96a4e3befa40bf38eddc2d7c99246a59af4ad55d
+229.75user 11.31system 1:42.50elapsed 235%CPU (0avgtext+0avgdata 187681=
+6maxresident)k
+0inputs+1421016outputs (0major+1307989minor)pagefaults 0swaps
+
+The overhead is about 10 seconds, just 1/3 of rev-list, which makes it
+in a better position to replace check_everything_connected(). If this
+holds true for general case, it could reduce fetch time by a little bit=
+=2E
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- fetch-pack.c          | 70 ++++++++++++++++++++++++++++---------------=
---------
- t/t5500-fetch-pack.sh |  7 ++++++
- 2 files changed, 45 insertions(+), 32 deletions(-)
+ builtin/index-pack.c     | 7 ++++++-
+ builtin/unpack-objects.c | 9 +++++++--
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index cef8fde..1f9c5ba 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -779,11 +779,44 @@ static int cmp_ref_by_name(const void *a_, const =
-void *b_)
- 	return strcmp(a->name, b->name);
- }
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index fdac7c7..3cded32 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -77,6 +77,7 @@ static int nr_threads;
 =20
-+static void flush_shallow_to_disk(struct stat *st)
-+{
-+	static struct lock_file lock;
-+	struct cache_time mtime;
-+	struct strbuf sb =3D STRBUF_INIT;
-+	char *shallow =3D git_path("shallow");
-+	int fd;
-+
-+	mtime.sec =3D st->st_mtime;
-+	mtime.nsec =3D ST_MTIME_NSEC(*st);
-+	if (stat(shallow, st)) {
-+		if (mtime.sec)
-+			die("shallow file was removed during fetch");
-+	} else if (st->st_mtime !=3D mtime.sec
-+#ifdef USE_NSEC
-+		   || ST_MTIME_NSEC(*st) !=3D mtime.nsec
-+#endif
-+		   )
-+		die("shallow file was changed during fetch");
-+
-+	fd =3D hold_lock_file_for_update(&lock, shallow,
-+				       LOCK_DIE_ON_ERROR);
-+	if (!write_shallow_commits(&sb, 0)
-+	    || write_in_full(fd, sb.buf, sb.len) !=3D sb.len) {
-+		unlink_or_warn(shallow);
-+		rollback_lock_file(&lock);
-+	} else {
-+		commit_lock_file(&lock);
-+	}
-+	strbuf_release(&sb);
-+}
-+
- static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 				 int fd[2],
- 				 const struct ref *orig_ref,
- 				 struct ref **sought, int nr_sought,
--				 char **pack_lockfile)
-+				 char **pack_lockfile,
-+				 struct stat *shallow_st)
- {
- 	struct ref *ref =3D copy_ref_list(orig_ref);
- 	unsigned char sha1[20];
-@@ -858,6 +891,8 @@ static struct ref *do_fetch_pack(struct fetch_pack_=
-args *args,
+ static int from_stdin;
+ static int strict;
++static int do_fsck_object;
+ static int verbose;
 =20
- 	if (args->stateless_rpc)
- 		packet_flush(fd[1]);
-+	if (args->depth > 0)
-+		flush_shallow_to_disk(shallow_st);
- 	if (get_pack(args, fd, pack_lockfile))
- 		die("git fetch-pack: fetch failed.");
+ static struct progress *progress;
+@@ -744,7 +745,8 @@ static void sha1_object(const void *data, struct ob=
+ject_entry *obj_entry,
+ 			obj =3D parse_object_buffer(sha1, type, size, buf, &eaten);
+ 			if (!obj)
+ 				die(_("invalid %s"), typename(type));
+-			if (fsck_object(obj, 1, fsck_error_function))
++			if (do_fsck_object &&
++			    fsck_object(obj, 1, fsck_error_function))
+ 				die(_("Error in object"));
+ 			if (fsck_walk(obj, mark_link, NULL))
+ 				die(_("Not all child objects of %s are reachable"), sha1_to_hex(ob=
+j->sha1));
+@@ -1491,6 +1493,9 @@ int cmd_index_pack(int argc, const char **argv, c=
+onst char *prefix)
+ 				fix_thin_pack =3D 1;
+ 			} else if (!strcmp(arg, "--strict")) {
+ 				strict =3D 1;
++				do_fsck_object =3D 1;
++			} else if (!strcmp(arg, "--not-so-strict")) {
++				strict =3D 1;
+ 			} else if (!strcmp(arg, "--verify")) {
+ 				verify =3D 1;
+ 			} else if (!strcmp(arg, "--verify-stat")) {
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 2217d7b..dd0518b 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -12,7 +12,7 @@
+ #include "decorate.h"
+ #include "fsck.h"
 =20
-@@ -952,38 +987,9 @@ struct ref *fetch_pack(struct fetch_pack_args *arg=
-s,
- 		packet_flush(fd[1]);
- 		die("no matching remote head");
+-static int dry_run, quiet, recover, has_errors, strict;
++static int dry_run, quiet, recover, has_errors, strict, do_fsck_object=
+;
+ static const char unpack_usage[] =3D "git unpack-objects [-n] [-q] [-r=
+] [--strict] < pack-file";
+=20
+ /* We always read in 4kB chunks. */
+@@ -198,7 +198,7 @@ static int check_object(struct object *obj, int typ=
+e, void *data)
+ 		return 0;
  	}
--	ref_cpy =3D do_fetch_pack(args, fd, ref, sought, nr_sought, pack_lock=
-file);
 =20
--	if (args->depth > 0) {
--		static struct lock_file lock;
--		struct cache_time mtime;
--		struct strbuf sb =3D STRBUF_INIT;
--		char *shallow =3D git_path("shallow");
--		int fd;
--
--		mtime.sec =3D st.st_mtime;
--		mtime.nsec =3D ST_MTIME_NSEC(st);
--		if (stat(shallow, &st)) {
--			if (mtime.sec)
--				die("shallow file was removed during fetch");
--		} else if (st.st_mtime !=3D mtime.sec
--#ifdef USE_NSEC
--				|| ST_MTIME_NSEC(st) !=3D mtime.nsec
--#endif
--			  )
--			die("shallow file was changed during fetch");
--
--		fd =3D hold_lock_file_for_update(&lock, shallow,
--					       LOCK_DIE_ON_ERROR);
--		if (!write_shallow_commits(&sb, 0)
--		 || write_in_full(fd, sb.buf, sb.len) !=3D sb.len) {
--			unlink_or_warn(shallow);
--			rollback_lock_file(&lock);
--		} else {
--			commit_lock_file(&lock);
--		}
--		strbuf_release(&sb);
--	}
-+	ref_cpy =3D do_fetch_pack(args, fd, ref, sought, nr_sought,
-+				pack_lockfile, &st);
-=20
- 	reprepare_packed_git();
- 	return ref_cpy;
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index d574085..557b073 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -135,6 +135,13 @@ test_expect_success 'clone shallow depth 1' '
- 	test "`git --git-dir=3Dshallow0/.git rev-list --count HEAD`" =3D 1
- '
-=20
-+test_expect_success 'clone shallow depth 1 with fsck' '
-+	git config --global fetch.fsckobjects true &&
-+	git clone --no-single-branch --depth 1 "file://$(pwd)/." shallow0fsck=
- &&
-+	test "`git --git-dir=3Dshallow0fsck/.git rev-list --count HEAD`" =3D =
-1 &&
-+	git config --global --unset fetch.fsckobjects
-+'
-+
- test_expect_success 'clone shallow' '
- 	git clone --no-single-branch --depth 2 "file://$(pwd)/." shallow
- '
+-	if (fsck_object(obj, 1, fsck_error_function))
++	if (do_fsck_object && fsck_object(obj, 1, fsck_error_function))
+ 		die("Error in object");
+ 	if (fsck_walk(obj, check_object, NULL))
+ 		die("Error on reachable objects of %s", sha1_to_hex(obj->sha1));
+@@ -520,6 +520,11 @@ int cmd_unpack_objects(int argc, const char **argv=
+, const char *prefix)
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--strict")) {
++				do_fsck_object =3D 1;
++				strict =3D 1;
++				continue;
++			}
++			if (!strcmp(arg, "--not-so-strict")) {
+ 				strict =3D 1;
+ 				continue;
+ 			}
 --=20
 1.8.2.83.gc99314b
