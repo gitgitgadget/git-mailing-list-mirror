@@ -1,63 +1,73 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2] git-send-email.perl: implement suggestions made by perlcritic
-Date: Mon, 1 Apr 2013 02:29:46 +0530
-Message-ID: <CALkWK0nGZUV9umbe9UoV79QU+ojCc-=j+RFpCNn_vjM_QTPyPQ@mail.gmail.com>
-References: <7vfvzgn3ob.fsf@alter.siamese.dyndns.org> <1364474835-23416-1-git-send-email-artagnon@gmail.com>
- <7vsj3fs22i.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 0/6] Support triangular workflows
+Date: Sun, 31 Mar 2013 17:43:18 -0400
+Message-ID: <20130331214318.GA24646@sigill.intra.peff.net>
+References: <1364477202-5742-1-git-send-email-artagnon@gmail.com>
+ <20130328153547.GA3337@sigill.intra.peff.net>
+ <CALkWK0=a0wmUe-rjK8Gg8izc0FdXYzChSrgp+W-JNsECsDf+yA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 31 23:01:08 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 31 23:44:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMPNA-00025T-B7
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 23:01:04 +0200
+	id 1UMQ2h-00010i-DZ
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 23:43:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752907Ab3CaVA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Mar 2013 17:00:27 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:33411 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752844Ab3CaVA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Mar 2013 17:00:27 -0400
-Received: by mail-ie0-f172.google.com with SMTP id c10so1825153ieb.17
-        for <git@vger.kernel.org>; Sun, 31 Mar 2013 14:00:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=gsHYqecED7z1xS9KZUjOY3P9uDW+ZMw3hYfeI4ur4Os=;
-        b=jLaHQFVDEtXzYjk7wfZ/IZXBSEWMT9Bq4CAyyJ6tPWIuaK9dhctz8sZiESC+oKjrpS
-         uX7yL3j56ymc98Lim3Ws+Zn0E+UbVSVakfFSUOv9Wc44CTXbwFvtWuRm5YUTQPg5BvPM
-         zrPkHDp33tFMjOljt91CdaS/cOPaKt6MJlF5r6o84d+V+XTWCIpbv5AabrE01aSz13EN
-         Vh//QK3GrS3CY8z4AYot9FBwKTUFzZKZVKwU5WazuWpdBzCar9IOk/bVaEJYTjwPtmal
-         klOUNCPh7P/ygDBKZeKoU6gco19PWd5H928hpsTD9J2psNeVVEbXiqoht8ZYfg2AXI8p
-         T17A==
-X-Received: by 10.50.17.201 with SMTP id q9mr2369297igd.107.1364763626852;
- Sun, 31 Mar 2013 14:00:26 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Sun, 31 Mar 2013 13:59:46 -0700 (PDT)
-In-Reply-To: <7vsj3fs22i.fsf@alter.siamese.dyndns.org>
+	id S1755656Ab3CaVnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Mar 2013 17:43:21 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50170 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755614Ab3CaVnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Mar 2013 17:43:20 -0400
+Received: (qmail 26438 invoked by uid 107); 31 Mar 2013 21:45:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 31 Mar 2013 17:45:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 31 Mar 2013 17:43:18 -0400
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=a0wmUe-rjK8Gg8izc0FdXYzChSrgp+W-JNsECsDf+yA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219644>
 
-Junio C Hamano wrote:
->     sub foo ($) { my ($arg) = @_; print "$arg\n"; }
->     sub bar     { my ($arg) = @_; print "$arg\n"; }
->     my @baz = (100, 101, 102);
->     foo @baz; # says 3
->     bar @baz; # says 100
+On Mon, Apr 01, 2013 at 02:21:22AM +0530, Ramkumar Ramachandra wrote:
 
-Ouch.  Please drop this patch; I'll resubmit when I feel confident
-about my change.
+> Jeff King wrote:
+> > [...]
+> 
+> So, you're saying: don't test compound statements for failure, since
+> anything in the chain could fail and propagate failure.  I should only
+> test simple git-foo commands for failure?
 
-> This patch fell under the cracks, and reminding me with a "what
-> happened to it?" was the right thing to do.  Literally, that is what
-> I ask in the "Notes from the maintainer" message.
+Right.
 
-Right.  Thanks for clarifying.  I'll actively track the patches I submit.
+> > Sometimes it's annoyingly verbose to break down a compound function. But
+> > I think in this case, you can make your tests more robust by just
+> > checking the affirmative that the ref is still where we expect it to be,
+> > like:
+> >
+> >   check_push_result up_repo $the_first_commit heads/master
+> 
+> Doesn't that change the meaning of the test though?  I really like how
+> the original tests read.
+
+Does it? I thought the original was:
+
+  test_must_fail check_push_result up_repo $the_commit heads/master
+
+which is checking that we did _not_ push $the_commit to up_repo.
+Checking that without a negative means confirming that what _used_ to be
+there is still there, which is $the_first_commit.
+
+But I didn't actually run it, so I might be wrong about what is supposed
+to be there after the (lack of) push.
+
+-Peff
