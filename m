@@ -1,123 +1,76 @@
-From: John Keeping <john@keeping.me.uk>
+From: Thomas Rast <trast@inf.ethz.ch>
 Subject: Re: [PATCH v7 4/5] merge/pull Check for untrusted good GPG signatures
-Date: Sun, 31 Mar 2013 16:26:37 +0100
-Message-ID: <20130331152637.GH2286@serenity.lan>
+Date: Sun, 31 Mar 2013 17:27:56 +0200
+Message-ID: <87ip47wpvn.fsf@linux-k42r.v.cablecom.net>
 References: <20130331133332.GD2286@serenity.lan>
- <cover.1364738348.git.jaseg@physik-pool.tu-berlin.de>
- <51584955.40007@physik.tu-berlin.de>
- <20130331144452.GF2286@serenity.lan>
- <87mwtjwqzz.fsf@linux-k42r.v.cablecom.net>
+	<cover.1364738348.git.jaseg@physik-pool.tu-berlin.de>
+	<51584955.40007@physik.tu-berlin.de>
+	<20130331144452.GF2286@serenity.lan>
+	<87mwtjwqzz.fsf@linux-k42r.v.cablecom.net>
+	<51585491.1070604@physik.tu-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sebastian =?iso-8859-1?Q?G=F6tte?= <jaseg@physik.tu-berlin.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Mar 31 17:27:26 2013
+Cc: <git@vger.kernel.org>
+To: Sebastian =?utf-8?Q?G=C3=B6tte?= <jaseg@physik.tu-berlin.de>
+X-From: git-owner@vger.kernel.org Sun Mar 31 17:28:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMKAH-00037w-6O
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 17:27:25 +0200
+	id 1UMKBM-0003X8-HE
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Mar 2013 17:28:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755599Ab3CaP0z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Mar 2013 11:26:55 -0400
-Received: from pichi.aluminati.org ([72.9.246.58]:42337 "EHLO
-	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755563Ab3CaP0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Mar 2013 11:26:55 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 9769D161E393;
-	Sun, 31 Mar 2013 16:26:54 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Rv4A175DiZhO; Sun, 31 Mar 2013 16:26:45 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 6BB2C161E2EE;
-	Sun, 31 Mar 2013 16:26:38 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <87mwtjwqzz.fsf@linux-k42r.v.cablecom.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755591Ab3CaP2D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Mar 2013 11:28:03 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:8025 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755361Ab3CaP2C convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Mar 2013 11:28:02 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 31 Mar
+ 2013 17:27:59 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (213.55.184.251) by
+ cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Sun, 31 Mar 2013 17:27:59 +0200
+In-Reply-To: <51585491.1070604@physik.tu-berlin.de> ("Sebastian
+ \=\?utf-8\?Q\?G\=C3\=B6tte\=22's\?\=
+	message of "Sun, 31 Mar 2013 17:21:53 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [213.55.184.251]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219632>
 
-On Sun, Mar 31, 2013 at 05:03:44PM +0200, Thomas Rast wrote:
-> John Keeping <john@keeping.me.uk> writes:
->=20
-> > On Sun, Mar 31, 2013 at 04:33:57PM +0200, Sebastian G=F6tte wrote:
-> >> diff --git a/commit.c b/commit.c
-> >> index eda7f90..bb2d9ad 100644
-> >> --- a/commit.c
-> >> +++ b/commit.c
-> >> @@ -1029,6 +1029,8 @@ static struct {
-> >>  } sigcheck_gpg_status[] =3D {
-> >>  	{ 'G', "[GNUPG:] GOODSIG " },
-> >>  	{ 'B', "[GNUPG:] BADSIG " },
-> >> +	{ 'U', "[GNUPG:] TRUST_NEVER" },
-> >> +	{ 'U', "[GNUPG:] TRUST_UNDEFINED" },
-> >>  };
-> >> =20
-> >>  static void parse_gpg_output(struct signature_check *sigc)
-> >> @@ -1050,11 +1052,12 @@ static void parse_gpg_output(struct signat=
-ure_check *sigc)
-> >>  			found +=3D strlen(sigcheck_gpg_status[i].check);
-> >>  		}
-> >>  		sigc->result =3D sigcheck_gpg_status[i].result;
-> >> -		sigc->key =3D xmemdupz(found, 16);
-> >> -		found +=3D 17;
-> >> -		next =3D strchrnul(found, '\n');
-> >> -		sigc->signer =3D xmemdupz(found, next - found);
-> >> -		break;
-> >> +		if (sigc->result !=3D 'U') {
-> >
-> > This could use a comment; we know now that only GOODSIG and BADSIG
-> > are followed by a signature, but someone looking at this code in th=
-e
-> > future will probably appreciate an explanation.
->=20
-> Wouldn't it be even less magical if there was an explicit field in th=
-e
-> struct that says whether we need to read a sig from such a line?
+Sebastian G=C3=B6tte <jaseg@physik.tu-berlin.de> writes:
 
-Yeah, that would be even better.
+> On 03/31/2013 05:03 PM, Thomas Rast wrote:
+>>>>  } sigcheck_gpg_status[] =3D {
+>>>>  	{ 'G', "[GNUPG:] GOODSIG " },
+>>>>  	{ 'B', "[GNUPG:] BADSIG " },
+>>>> +	{ 'U', "[GNUPG:] TRUST_NEVER" },
+>>>> +	{ 'U', "[GNUPG:] TRUST_UNDEFINED" },
+[...]
+>> And furthermore, to use an enum instead of a char so that you can ea=
+sily
+>> spell out the details in the code?  This also has the advantage that=
+ the
+>> compiler can check that your 'switch'es cover all cases.
+> This char is actually from Junios original code. I think we can affor=
+d
+> three chars. This could be changed if we ever need more than that.
 
-> And furthermore, to use an enum instead of a char so that you can eas=
-ily
-> spell out the details in the code?  This also has the advantage that =
-the
-> compiler can check that your 'switch'es cover all cases.
->
-> That's of course assuming that I interpret the logic right; my curren=
-t
-> understanding is that:
->=20
-> * U means untrusted, which is bettern than B but worse than G;
+*shrug*
 
-Yes, although I wonder if we should split TRUST_NEVER and
-TRUST_UNDEFINED (and maybe handle TRUST_MARGINAL as well) and print
-different messages in each case.
+I'm tempted to count the above as an argument in favor of the enum,
+since there are in fact *four* chars... 'N' also counts. ;-)
 
-> * GPG guarantees that the last line matching any of the patterns is t=
-he
->   one we care about, so we can blindly override one with the other
+But either way... I don't care too deeply and I don't know this corner
+of the code.  I just came here because of the valgrind discovery.
 
-The DETAILS file in GPG says:
-
-    For each signature only one of the codes GOODSIG, BADSIG, EXPSIG,
-    EXPKEYSIG, REVKEYSIG or ERRSIG will be emitted.
-
-so we should be OK here.
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
