@@ -1,70 +1,125 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: Re: [PATCH 1/3] merge: a random object may not necssarily be a
- commit
-Date: Tue, 02 Apr 2013 00:51:15 +0200
-Organization: OPTEYA
-Message-ID: <1364856675.26812.3.camel@test.quest-ce.net>
-References: <7v7gl3jmx0.fsf_-_@alter.siamese.dyndns.org>
-	 <1364846239-8802-1-git-send-email-gitster@pobox.com>
-	 <1364846239-8802-2-git-send-email-gitster@pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/4] run-command: add new check_command helper
+Date: Mon, 1 Apr 2013 19:23:26 -0400
+Message-ID: <20130401232326.GA30935@sigill.intra.peff.net>
+References: <1364852804-31875-1-git-send-email-felipe.contreras@gmail.com>
+ <1364852804-31875-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 00:51:54 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>, Aaron Schrab <aaron@schrab.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	David Michael Barr <b@rr-dav.id.au>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 02 01:23:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMnZy-0007tG-AO
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 00:51:54 +0200
+	id 1UMo50-0004VF-Rp
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 01:23:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757604Ab3DAWv0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Apr 2013 18:51:26 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:55578 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756506Ab3DAWvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Apr 2013 18:51:25 -0400
-Received: from [IPv6:2a01:e35:2e9f:6ac0:e1ed:fda0:5d8e:1080] (unknown [IPv6:2a01:e35:2e9f:6ac0:e1ed:fda0:5d8e:1080])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 6C24B940034;
-	Tue,  2 Apr 2013 00:51:16 +0200 (CEST)
-In-Reply-To: <1364846239-8802-2-git-send-email-gitster@pobox.com>
-X-Mailer: Evolution 3.4.4 (3.4.4-2.fc17) 
+	id S1754671Ab3DAXXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Apr 2013 19:23:30 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51367 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751473Ab3DAXX3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Apr 2013 19:23:29 -0400
+Received: (qmail 3588 invoked by uid 107); 1 Apr 2013 23:25:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 01 Apr 2013 19:25:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Apr 2013 19:23:26 -0400
+Content-Disposition: inline
+In-Reply-To: <1364852804-31875-2-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219724>
 
-Hi,
+On Mon, Apr 01, 2013 at 03:46:41PM -0600, Felipe Contreras wrote:
 
-Le lundi 01 avril 2013 =C3=A0 12:57 -0700, Junio C Hamano a =C3=A9crit =
-:
-> The user could have said "git merge $(git rev-parse v1.0.0)"; we
-> shouldn't mark it as "Merge commit '15999998fb...'" as the merge
-> name, even though such an invocation might be crazy.
->=20
-> We could even read the "tag " header from the tag object and replace
-> the object name the user gave us, but let's not lose the information
-> by doing so, at least not yet.
->=20
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> And persistent_waitpid() to recover the information from the last run.
+> 
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 
-Thanks for the patch.
+A little background would be nice here...what problem are we solving?
 
-I gave it a try and found the behavior rather good.
+> -static int wait_or_whine(pid_t pid, const char *argv0)
+> +static pid_t persistent_waitpid(struct child_process *cmd, pid_t pid, int *stat_loc)
+> +{
+> +	if (cmd->last_wait.code) {
+> +		errno = cmd->last_wait.failed_errno;
+> +		*stat_loc = cmd->last_wait.status;
+> +		return errno ? -1 : pid;
+> +	} else {
+> +		pid_t waiting;
+> +		while ((waiting = waitpid(pid, stat_loc, 0)) < 0 && errno == EINTR)
+> +			;	/* nothing */
+> +		return waiting;
+> +	}
+> +}
 
-Merging a tag object by its name or by its object-id are now using the
-same behavor: it is more consistent.=20
+So it looks we are trying to save the waitpid state from a previous run
+and use the saved value. Otherwise, waitpid as normal.
 
-Tested-by: Yann Droneaud <ydroneaud@opteya.com>
+We loop on EINTR when we actually call waitpid(). But we don't check
+whether the saved errno is waitpid. What happens if we EINTR during the
+saved call to waitpid?
 
-PS: there's a typo in the commit title :)
+> +static int wait_or_whine(struct child_process *cmd, pid_t pid, const char *argv0)
+>  {
+>  	int status, code = -1;
+>  	pid_t waiting;
+>  	int failed_errno = 0;
+>  
+> -	while ((waiting = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
+> -		;	/* nothing */
+> +	waiting = persistent_waitpid(cmd, pid, &status);
+>  
+>  	if (waiting < 0) {
+>  		failed_errno = errno;
 
-Regards.
+We now take argv0 into wait_or_whine. But I don't see it being used.
+What's it for?
 
---=20
-Yann Droneaud
-OPTEYA
+> +int check_command(struct child_process *cmd)
+> +{
+> +	int status;
+> +	pid_t waiting;
+> +	int failed_errno = 0;
+> +
+> +	waiting = waitpid(cmd->pid, &status, WNOHANG);
+
+This might return the pid if it has died, -1 if there was an error, or 0
+if the process still exists but hasn't died. So...
+
+> +	if (waiting != cmd->pid)
+> +		return 1;
+> +
+> +	if (waiting < 0)
+> +		failed_errno = errno;
+
+How would we ever trigger this second conditional? It makes sense to
+return 1 when "waiting == 0", as that is saying "yes, your process is
+still running" (though documenting the return either at the top of the
+function or in the commit message would be helpful)
+
+But if we get an error from waitpid, we would also return 1, which
+doesn't make sense (especially if it is something like EINTR -- I don't
+know offhand if we can get EINTR during WNOHANG. It should not block,
+but I don't know if it can race with a signal).
+
+> +	cmd->last_wait.code = -1;
+> +	cmd->last_wait.failed_errno = failed_errno;
+> +	cmd->last_wait.status = status;
+
+Since we can only get here when waiting == cmd->pid, failed_errno is
+always 0. We do correctly record the status. Why is code set to -1?  It
+seems to be used as a flag to say "this structure is valid". Should it
+be defined as "unsigned valid:1;" instead?
+
+-Peff
