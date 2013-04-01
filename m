@@ -1,78 +1,69 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: transient build error after 'Writing MYMETA.yml and MYMETA.json'
-Date: Mon, 1 Apr 2013 12:38:46 -0400
-Message-ID: <CABURp0os62JCPCRsvQ+NneGaSobTUmgs7oZ9SqUiTH8AG0hPmQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rev-parse: clarify documentation for the --verify option
+Date: Mon, 01 Apr 2013 09:56:48 -0700
+Message-ID: <7vli92jijz.fsf@alter.siamese.dyndns.org>
+References: <1364625865-8459-1-git-send-email-mhagger@alum.mit.edu>
+ <7vwqsnnpwj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 01 18:39:37 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Apr 01 18:57:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMhlh-0002GF-D3
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 18:39:37 +0200
+	id 1UMi2r-0001wb-Kk
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 18:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759117Ab3DAQjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Apr 2013 12:39:08 -0400
-Received: from mail-ve0-f171.google.com ([209.85.128.171]:65034 "EHLO
-	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759113Ab3DAQjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Apr 2013 12:39:07 -0400
-Received: by mail-ve0-f171.google.com with SMTP id b10so2736527vea.2
-        for <git@vger.kernel.org>; Mon, 01 Apr 2013 09:39:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=f8//I2lxR2mJ063oyk6baFS0/RUXIOk+5V4MZlRYfJM=;
-        b=v76r6sAoslk12SrhdmcQwwuWaJGOMeKXq0iIT+3Pd36K5McwiA2CGBCzj+qNq9Zulq
-         JoDBAZJLHzU6V1Kve2b4LtEYxCmQ63Px1kFgiXwr8ny51Gz+ivwRg5mRbz8x+dkaXxQS
-         o9vipSWgSxiAF+bglIANTnhtS3vK4slxP5Xu6PM3xEtHBYVL7gVPYBz1M+kIvnHsSUa/
-         cyhEXNwl1qNDdbGS5zT+JWgsfx7+Tjk3NZwfJePRqVp0eULYlZIvQu39heyW2x/lXKPf
-         mpvlOIUg01hvi2NutqmkmTHKP3VHJN7gLuK+chKxBnHieBdITt4k9tDBQM5wcp7+pmkO
-         XPVA==
-X-Received: by 10.58.187.42 with SMTP id fp10mr9721280vec.46.1364834346485;
- Mon, 01 Apr 2013 09:39:06 -0700 (PDT)
-Received: by 10.58.23.135 with HTTP; Mon, 1 Apr 2013 09:38:46 -0700 (PDT)
+	id S1759088Ab3DAQ4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Apr 2013 12:56:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44223 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759028Ab3DAQ4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Apr 2013 12:56:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4BBF11C3E;
+	Mon,  1 Apr 2013 16:56:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EE2a2FbIc5jJtI0ysmYQOqhJyrk=; b=oe1LaR
+	V80yX7JOhS97gCFZz2NtAbxj5O39Y+5SrBPXuj9qHFaUQfrQvZ/jQ4/cR0buc4wh
+	DJEB9dzfXqAtEltweWRJ9juJ/v1RXhV3QXgnoEKxJp+Qj/J6U1JSHMdwmo6o4SMG
+	6VDrHIF2U0YLrFVXIbPbM87oA17Ff4I3C/h/I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yDecSBs7VX4G+XBDj5cBHeege8Ga5WsN
+	m8VMzF+201F+wxlc9B5faDK+U8WCFjtDeX1mviXhkxmIOrHwhk9J7ELxG5FqOAXY
+	6ITkWEAzR+JZ3AbepQpHpMAh0D9SrN5isXLGm+/C8OgUyOfoeHCtkyhrk6IZBMha
+	M5Z2OJ/0kAA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A90E411C3D;
+	Mon,  1 Apr 2013 16:56:50 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32AE111C3C; Mon,  1 Apr
+ 2013 16:56:50 +0000 (UTC)
+In-Reply-To: <7vwqsnnpwj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 31 Mar 2013 15:52:12 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 25884C94-9AED-11E2-A141-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219693>
 
-I have not seen this before, which makes me think it is something new
-in the makefiles.  But maybe it was a one-time fluke. When I ran
-'make' again, it proceeded as normal.
+Junio C Hamano <gitster@pobox.com> writes:
 
-My previous build was on pre-rebase 'next' at c1ece63.  I did not try
-a 'make clean' in between, but I have since.  I tried to reproduce it
-and I cannot.  I am building on Ubuntu 12.04.
+> Because the primary use case of this option is to implement end-user
+> input validation, I think it would be helpful to clarify use of the
+> peeler here.  Perhaps
+> ...
 
-I do not see any significant differences in the Makefile between my
-last build point and this one.
+A "SQUASH???" patch on top of your original is queued on 'pu',
+together with the earlier "^{object}" peeler patch.  Comments,
+improvements, etc. would be nice.
 
-Is this expected or easily explained?
-
-$ make prefix=/home/hordp all doc man
-...
-    GEN git-add--interactive
-Writing perl.mak for Git
-Writing MYMETA.yml and MYMETA.json
-make[2]: *** [perl.mak] Error 1
-make[1]: *** [instlibdir] Error 2
-make: *** [git-add--interactive] Error 2
-$ make prefix=/home/hordp all doc man
-    GEN perl/PM.stamp
-    SUBDIR perl
-/usr/bin/perl Makefile.PL PREFIX='/home/hordp' INSTALL_BASE=''
---localedir='/home/hordp/share/locale'
-Writing perl.mak for Git
-Writing MYMETA.yml and MYMETA.json
-    GEN git-add--interactive
-    GEN git-difftool
-    GEN git-archimport
-
-
-Phil
+Thanks.
