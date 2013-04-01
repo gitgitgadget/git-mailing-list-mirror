@@ -1,107 +1,100 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 3/4] tmp: remote-helper: add timers to catch errors
-Date: Mon,  1 Apr 2013 15:46:43 -0600
-Message-ID: <1364852804-31875-4-git-send-email-felipe.contreras@gmail.com>
-References: <1364852804-31875-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johannes Sixt <j6t@kdbg.org>, Aaron Schrab <aaron@schrab.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	David Michael Barr <b@rr-dav.id.au>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 01 23:48:26 2013
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH 0/3] remote-helpers: trivial test fixes
+Date: Mon, 1 Apr 2013 23:48:29 +0200
+Message-ID: <CALWbr2wAJGemYziPsOkArJveK0F+4Pv80gdR1SGUxchb0ci-sg@mail.gmail.com>
+References: <1364850872-21135-1-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 01 23:49:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMmaX-0003mS-2P
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 23:48:25 +0200
+	id 1UMmb9-000458-QB
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 23:49:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758973Ab3DAVrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Apr 2013 17:47:51 -0400
-Received: from mail-gh0-f169.google.com ([209.85.160.169]:63412 "EHLO
-	mail-gh0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758702Ab3DAVrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Apr 2013 17:47:49 -0400
-Received: by mail-gh0-f169.google.com with SMTP id r18so470615ghr.28
-        for <git@vger.kernel.org>; Mon, 01 Apr 2013 14:47:49 -0700 (PDT)
+	id S1759047Ab3DAVsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Apr 2013 17:48:32 -0400
+Received: from mail-qc0-f175.google.com ([209.85.216.175]:49177 "EHLO
+	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759021Ab3DAVs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Apr 2013 17:48:29 -0400
+Received: by mail-qc0-f175.google.com with SMTP id j3so1260918qcs.20
+        for <git@vger.kernel.org>; Mon, 01 Apr 2013 14:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=7jlsfrn3VIsxmkJVqHQ7m13p1CXSOcVt279rNw2ybY0=;
-        b=azUDOIw0n+tQewQ1bdoa4+kqVNMEI5YzQpvZjRGGHZhd734lSgBMmI0t95+QfuhvIu
-         iODem75dwLk4udTmtyF3N4e8d+ckPjXwL8BRzKmrtzbm0m2v+GOp153rHiwQPI9Z3Odo
-         fWJzrghnnbCk0fN3/shORD+q4m4NPr1lD/JZIiFiBRqHHxFQ9cyzD5bXciYJ38X9g0y3
-         GAYnd4xaFvoLKdavDLKrlCF+wfgS5L3Jk6Gr6rh64r1AR8CtogiblFtE1kC4Zlco1sUL
-         g6vKPyiX3rtYn087IYmUrYLQla1VsiwJ5DcoCGNgxPkfFurWL6vvDcCvBBR9dVWV3dvx
-         DE4w==
-X-Received: by 10.236.135.231 with SMTP id u67mr12107456yhi.135.1364852869164;
-        Mon, 01 Apr 2013 14:47:49 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id o31sm30072510yhh.21.2013.04.01.14.47.46
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 01 Apr 2013 14:47:48 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2
-In-Reply-To: <1364852804-31875-1-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=tBAKksPcSY4tmeYm4SaBwuM1EMvXGP+DvGtcQD19lRs=;
+        b=y02y3OFNZjLlT+CQgNkW//5DlVjyeX0JleW6ru5B6ZhQ3Y5cgDHbd79i2BqZJMVKd9
+         fZDc8tSvpscIVOZjwcYRBCbjQ4Z0fBYk7/bqSJxjnZxLGon3Fh3kzlmIEv5tHon3FyPJ
+         37TlKyA/c6cO2Tlx/HhMgYryHx4ls1VLXjh0MgwqpYO0+jGQWOInpYLVJXWRLQVNKeOu
+         h72vkFpvD43fz9bG2XAwJcwVmN2qDXlkOsdsONtIBGQH0ATeIXAs/Mq0vfyFzKgFMXHW
+         97eWL0QjTeVuNXAmfzlHxctOtpY6DtdVrileHrgihRMmJ6SL3HYee96/KpbCobBveYvk
+         4xKA==
+X-Received: by 10.224.52.68 with SMTP id h4mr13772080qag.17.1364852909138;
+ Mon, 01 Apr 2013 14:48:29 -0700 (PDT)
+Received: by 10.49.70.163 with HTTP; Mon, 1 Apr 2013 14:48:29 -0700 (PDT)
+In-Reply-To: <1364850872-21135-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219716>
 
-This way the test reliably succeeds (in catching the failure).
+I'm having an error in "contrib/remote-helpers/test-hg.sh" and it
+reproduces on every version I tested since you implemented it. Is it
+something in my environment that would make it wrong ?
 
-Not sure what's the proper way to do this, but here it is for the
-record.
+Cheers,
+Antoine
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- git-remote-testgit        | 1 +
- t/t5801-remote-helpers.sh | 2 +-
- transport-helper.c        | 3 +++
- 3 files changed, 5 insertions(+), 1 deletion(-)
+expecting success:
+  test_when_finished "rm -rf gitrepo*" &&
 
-diff --git a/git-remote-testgit b/git-remote-testgit
-index ca0cf09..6ae1b7f 100755
---- a/git-remote-testgit
-+++ b/git-remote-testgit
-@@ -75,6 +75,7 @@ do
- 	export)
- 		if test -n "$GIT_REMOTE_TESTGIT_FAILURE"
- 		then
-+			sleep 1 # don't let fast-export get SIGPIPE
- 			exit -1
- 		fi
- 
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 26e9a5b..5bb2ca4 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -176,7 +176,7 @@ test_expect_success 'proper failure checks for fetching' '
- '
- 
- # We sleep to give fast-export a chance to catch the SIGPIPE
--test_expect_failure 'proper failure checks for pushing' '
-+test_expect_success 'proper failure checks for pushing' '
- 	(GIT_REMOTE_TESTGIT_FAILURE=1 &&
- 	export GIT_REMOTE_TESTGIT_FAILURE &&
- 	cd local &&
-diff --git a/transport-helper.c b/transport-helper.c
-index dfdfa7a..f0d28aa 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -823,6 +823,9 @@ static int push_refs_with_export(struct transport *transport,
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
- 
-+	if (getenv("GIT_REMOTE_TESTGIT_FAILURE"))
-+		sleep(2);
-+
- 	if (!check_command(data->helper))
- 		die("Error while running helper");
- 
--- 
-1.8.2
+  (
+  cd hgrepo &&
+  hg update -r 0
+  ) &&
+
+  git clone "hg::$PWD/hgrepo" gitrepo &&
+  check gitrepo zero master
+
+1 files updated, 0 files merged, 0 files removed, 0 files unresolved
+Cloning into 'gitrepo'...
+--- expected 2013-04-01 21:46:32.086796549 +0000
++++ actual 2013-04-01 21:46:32.086796549 +0000
+@@ -1,2 +1,2 @@
+-zero
+-refs/heads/master
++feature-a
++refs/heads/feature-a
+not ok 4 - cloning with detached head
+
+On Mon, Apr 1, 2013 at 11:14 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Hi,
+>
+> Here are a few fixes for the test framework on the remote-helpers.
+>
+> Felipe Contreras (3):
+>   remote-helpers: fix the run of all tests
+>   remote-bzr: remove stale check code for tests
+>   remote-hg: fix hg-git test-case
+>
+>  contrib/remote-helpers/Makefile          |  1 +
+>  contrib/remote-helpers/test-bzr.sh       | 14 --------------
+>  contrib/remote-helpers/test-hg-hg-git.sh |  1 -
+>  3 files changed, 1 insertion(+), 15 deletions(-)
+>
+> --
+> 1.8.2
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
