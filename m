@@ -1,134 +1,78 @@
-From: Edward Thomson <ethomson@microsoft.com>
-Subject: RE: Rename conflicts in the index
-Date: Mon, 1 Apr 2013 16:14:52 +0000
-Message-ID: <A54CE3E330039942B33B670D971F857403A0E20C@TK5EX14MBXC253.redmond.corp.microsoft.com>
-References: <A54CE3E330039942B33B670D971F857403995D93@TK5EX14MBXC252.redmond.corp.microsoft.com>
- <7va9q72n1u.fsf@alter.siamese.dyndns.org>
- <A54CE3E330039942B33B670D971F857403A0AA7A@TK5EX14MBXC253.redmond.corp.microsoft.com>
- <7vboa6t14w.fsf@alter.siamese.dyndns.org>
- <A54CE3E330039942B33B670D971F857403A0BA54@TK5EX14MBXC253.redmond.corp.microsoft.com>
- <7vk3osn3vs.fsf@alter.siamese.dyndns.org>
- <A54CE3E330039942B33B670D971F857403A0BB93@TK5EX14MBXC253.redmond.corp.microsoft.com>
- <7v38vgmxty.fsf@alter.siamese.dyndns.org>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: transient build error after 'Writing MYMETA.yml and MYMETA.json'
+Date: Mon, 1 Apr 2013 12:38:46 -0400
+Message-ID: <CABURp0os62JCPCRsvQ+NneGaSobTUmgs7oZ9SqUiTH8AG0hPmQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 01 18:15:30 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 01 18:39:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMhOJ-0000vU-Ri
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 18:15:28 +0200
+	id 1UMhlh-0002GF-D3
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 18:39:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759031Ab3DAQO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Apr 2013 12:14:58 -0400
-Received: from mail-by2lp0243.outbound.protection.outlook.com ([207.46.163.243]:28003
-	"EHLO na01-by2-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1758981Ab3DAQO5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Apr 2013 12:14:57 -0400
-Received: from BY2FFO11FD023.protection.gbl (10.1.15.204) by
- BY2FFO11HUB027.protection.gbl (10.1.14.113) with Microsoft SMTP Server (TLS)
- id 15.0.651.3; Mon, 1 Apr 2013 16:14:52 +0000
-Received: from TK5EX14HUBC102.redmond.corp.microsoft.com (131.107.125.37) by
- BY2FFO11FD023.mail.protection.outlook.com (10.1.15.212) with Microsoft SMTP
- Server (TLS) id 15.0.651.3 via Frontend Transport; Mon, 1 Apr 2013 16:14:51
- +0000
-Received: from TK5EX14MBXC253.redmond.corp.microsoft.com ([169.254.3.151]) by
- TK5EX14HUBC102.redmond.corp.microsoft.com ([157.54.7.154]) with mapi id
- 14.02.0318.003; Mon, 1 Apr 2013 16:14:53 +0000
-Thread-Topic: Rename conflicts in the index
-Thread-Index: Ac4f8fcF2rzNm40zS7GBMxbrAtW2UQAI1oifAoxQUOAABEG55gAtP7SQAAEvx18AAmt9kAACJe2MAPKwK3A=
-In-Reply-To: <7v38vgmxty.fsf@alter.siamese.dyndns.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [157.54.51.32]
-X-Forefront-Antispam-Report: CIP:131.107.125.37;CTRY:US;IPV:CAL;IPV:NLI;EFV:NLI;SFV:NSPM;SFS:(24454001)(51444002)(51704002)(189002)(199002)(56776001)(79102001)(46406002)(80022001)(69226001)(54356001)(74502001)(76482001)(66066001)(65816001)(53806001)(33656001)(49866001)(77982001)(4396001)(47776003)(55846006)(63696002)(23726001)(54316002)(74662001)(20776003)(44976002)(31966008)(59766001)(50986001)(81342001)(16406001)(47446002)(47976001)(47736001)(51856001)(50466001)(56816002)(46102001);DIR:OUT;SFP:;SCL:1;SRVR:BY2FFO11HUB027;H:TK5EX14HUBC102.redmond.corp.microsoft.com;RD:InfoDomainNonexistent;MX:1;A:1;LANG:en;
-X-OriginatorOrg: microsoft.onmicrosoft.com
-X-Forefront-PRVS: 0803A0241F
+	id S1759117Ab3DAQjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Apr 2013 12:39:08 -0400
+Received: from mail-ve0-f171.google.com ([209.85.128.171]:65034 "EHLO
+	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759113Ab3DAQjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Apr 2013 12:39:07 -0400
+Received: by mail-ve0-f171.google.com with SMTP id b10so2736527vea.2
+        for <git@vger.kernel.org>; Mon, 01 Apr 2013 09:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=f8//I2lxR2mJ063oyk6baFS0/RUXIOk+5V4MZlRYfJM=;
+        b=v76r6sAoslk12SrhdmcQwwuWaJGOMeKXq0iIT+3Pd36K5McwiA2CGBCzj+qNq9Zulq
+         JoDBAZJLHzU6V1Kve2b4LtEYxCmQ63Px1kFgiXwr8ny51Gz+ivwRg5mRbz8x+dkaXxQS
+         o9vipSWgSxiAF+bglIANTnhtS3vK4slxP5Xu6PM3xEtHBYVL7gVPYBz1M+kIvnHsSUa/
+         cyhEXNwl1qNDdbGS5zT+JWgsfx7+Tjk3NZwfJePRqVp0eULYlZIvQu39heyW2x/lXKPf
+         mpvlOIUg01hvi2NutqmkmTHKP3VHJN7gLuK+chKxBnHieBdITt4k9tDBQM5wcp7+pmkO
+         XPVA==
+X-Received: by 10.58.187.42 with SMTP id fp10mr9721280vec.46.1364834346485;
+ Mon, 01 Apr 2013 09:39:06 -0700 (PDT)
+Received: by 10.58.23.135 with HTTP; Mon, 1 Apr 2013 09:38:46 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219692>
 
-Junio C Hamano [mailto:gister@pobox.com] wrote:
-> As long as
-> the format will be backward compatible to allow existing users use existing tools
-> to deal with cases the existing tools can handle, then that is OK.  I didn't get that
-> impression which is where my "non starter" came from.
+I have not seen this before, which makes me think it is something new
+in the makefiles.  But maybe it was a one-time fluke. When I ran
+'make' again, it proceeded as normal.
 
-I see now.  Thank you for the clarification.  I apologize if I was not clear
-about this; indeed, the duplication of data in my proposed extension was
-specifically to avoid any compatibility problems amongst clients.
+My previous build was on pre-rebase 'next' at c1ece63.  I did not try
+a 'make clean' in between, but I have since.  I tried to reproduce it
+and I cannot.  I am building on Ubuntu 12.04.
 
-In particular, when we have a rename in ours, edit in theirs conflict, we
-store the conflict at the new (ours) path.  If, for example, I rename a->b
-in my branch and merge a branch that edits a:
+I do not see any significant differences in the Makefile between my
+last build point and this one.
 
-mode hash 1 b
-mode hash 2 b
-mode hash 3 b
+Is this expected or easily explained?
 
-This prohibits us from storing anything else in the theirs side at that
-path, so if I were to have added b in their branch in addition to modifying
-b, I cannot record it.
+$ make prefix=/home/hordp all doc man
+...
+    GEN git-add--interactive
+Writing perl.mak for Git
+Writing MYMETA.yml and MYMETA.json
+make[2]: *** [perl.mak] Error 1
+make[1]: *** [instlibdir] Error 2
+make: *** [git-add--interactive] Error 2
+$ make prefix=/home/hordp all doc man
+    GEN perl/PM.stamp
+    SUBDIR perl
+/usr/bin/perl Makefile.PL PREFIX='/home/hordp' INSTALL_BASE=''
+--localedir='/home/hordp/share/locale'
+Writing perl.mak for Git
+Writing MYMETA.yml and MYMETA.json
+    GEN git-add--interactive
+    GEN git-difftool
+    GEN git-archimport
 
-I was assuming that any change to this behavior would be a breaking one,
-which is where the new section came from.
 
->  * Path A may have only stage #1, while path B and C has only stage
->    #2 and stage #3 (the user would have to notice these three
->    correspond to each other, and resolve manually).
-> 
->    You would want to annotate "B at stage #2 seems to have been at A
->    in the original" (similarly for C#3) if you choose to do so.
-
-If we're going to make changes to the way conflicts are recorded in the
-main index, then I would prefer this approach.  It is unambiguous and all
-data about all sides are recorded, including the names that items had in
-their respective branches.
-
-I would think that this might be a burden on current tools, however.
-Now if I rename a->b my just my branch, my conflict will be recorded as:
-
-mode hash 1 a
-mode hash 2 b
-mode hash 3 a
-
-And current git-status will not look at any rename annotations to know
-how to report this.
-
-However, maybe this is not as big a problem as I'm concerned it would be.
-
->  * You can choose to favor "our" choice, and have path B with three
->    stages (if we guessed wrong and the user wants to move it to C,
->    the user can resolve and then "git mv" the path).
-
-I think this approach suffers from the drawback that the current approach
-has, wherein this conflicts when they had path B, also, as noted above.
-
-I think that if you were to put both B and C with all three stages, this
-would be problematic for the same reason.
-
-> *1* Instead of a three-way merge that inspects only the endpoints,
->     you might get a better rename trail if you looked at the
->     histories of both branches.  It would be a lot more expensive
->     than the simple three-way, but burning CPU cycles is better than
->     burning human neurons.
-
-For the record, I like this approach very much.  It's not something that
-libgit2 will be able to tackle in the near future; we're in a sort of
-walk-before-you-can-run situation with merge at the moment, as you can
-probably see.  But any improvement that avoids burning neurons is a
-valuable one.
-
-Thanks-
-
--ed
+Phil
