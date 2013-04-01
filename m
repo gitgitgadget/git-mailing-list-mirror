@@ -1,69 +1,74 @@
-From: Seth Robertson <in-gitvger@baka.org>
-Subject: Re: Composing git repositories
-Date: Sun, 31 Mar 2013 20:16:07 -0400
-Message-ID: <201304010016.r310G79C032108@no.baka.org>
-References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-send-email.perl: implement suggestions made by
+ perlcritic
+Date: Sun, 31 Mar 2013 18:39:39 -0700
+Message-ID: <7vr4ivni5g.fsf@alter.siamese.dyndns.org>
+References: <7vfvzgn3ob.fsf@alter.siamese.dyndns.org>
+ <1364474835-23416-1-git-send-email-artagnon@gmail.com>
+ <7vsj3fs22i.fsf@alter.siamese.dyndns.org>
+ <CALkWK0nGZUV9umbe9UoV79QU+ojCc-=j+RFpCNn_vjM_QTPyPQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 01 02:22:46 2013
+X-From: git-owner@vger.kernel.org Mon Apr 01 03:40:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMSWL-0007CP-51
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 02:22:45 +0200
+	id 1UMTjJ-0000Mm-5S
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 03:40:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756197Ab3DAAWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Mar 2013 20:22:17 -0400
-Received: from tsutomu.baka.org ([66.114.72.182]:33130 "EHLO tsutomu.baka.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756032Ab3DAAWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Mar 2013 20:22:16 -0400
-X-Greylist: delayed 357 seconds by postgrey-1.27 at vger.kernel.org; Sun, 31 Mar 2013 20:22:15 EDT
-Received: from no.baka.org (ohayo.baka.org [IPv6:2001:470:88bb::1])
-	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id r310G9sa028138
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 31 Mar 2013 20:16:10 -0400
-Received: from no.baka.org (localhost [127.0.0.1])
-	by no.baka.org (8.14.4/8.14.0) with ESMTP id r310G79C032108;
-	Sun, 31 Mar 2013 20:16:07 -0400
-In-reply-to: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
-Comments: In reply to a message from "Ramkumar Ramachandra <artagnon@gmail.com>" dated "Tue, 26 Mar 2013 13:26:33 +0530."
+	id S1755745Ab3DABjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Mar 2013 21:39:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50182 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755721Ab3DABjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Mar 2013 21:39:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 93393ECD4;
+	Mon,  1 Apr 2013 01:39:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PuIIYi2ZfyDQ0TM9o0aVrRtQT84=; b=jr1HN1
+	EQZovVfiBXsMjg8E7l0siv4Wy/UzhRXIluNDFp5OYvvSvib0DGir4D9VWJ7mH5Fq
+	dp/F5jgpovbNUCC1Rtxu0GBjW2cf7aITiSF4WXDqNBPcOur8rlc+nfwNZHLzsOM3
+	Fw2RSdBhW/J1E++NQ7DSDf6H12cct0DhRPhyM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nWjRWfhc7BjU2123pLPQpH67GQibYyKl
+	EX3w8Zam0xE0M1I1VTjYGwqAbs/XBeyBBIJOLdKxEp/U3qWtwAP3SO04WhzTcnSz
+	tQYwx//rOoP+UPq07dt/5OajswFxMusMb9Xwril4hbYkHbA62JYh+TeRhrUitnFn
+	ZnJ3THBWLyU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 86E37ECD1;
+	Mon,  1 Apr 2013 01:39:41 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3DDEECCE; Mon,  1 Apr 2013
+ 01:39:40 +0000 (UTC)
+In-Reply-To: <CALkWK0nGZUV9umbe9UoV79QU+ojCc-=j+RFpCNn_vjM_QTPyPQ@mail.gmail.com>
+ (Ramkumar Ramachandra's message of "Mon, 1 Apr 2013 02:29:46 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0587E9F2-9A6D-11E2-A99A-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219651>
 
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-In message <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>, Ramkumar Ramachandra writes:
+> Junio C Hamano wrote:
+>>     sub foo ($) { my ($arg) = @_; print "$arg\n"; }
+>>     sub bar     { my ($arg) = @_; print "$arg\n"; }
+>>     my @baz = (100, 101, 102);
+>>     foo @baz; # says 3
+>>     bar @baz; # says 100
+>
+> Ouch.  Please drop this patch; I'll resubmit when I feel confident
+> about my change.
 
-    As a user inexperienced with recursive submodules (I've only used them
-    in this repository), I found it highly confusing.  Thanks for clearing
-    them up.
-
-You may want to investigate third party alternatives like gitslave
-http://gitslave.sf.net Depending on what problem you are trying to
-solve, it can be better (or worse) to use compared to submodules.
-
-It provides a usually conceptually easier method to group subprojects
-together into a superproject.  You can replace practically any git
-command you want with "gits" and it will usually work as you might
-more or less expect.  Conceptually it has a list of git repositories
-and will execute the listed git command on each in turn.
-
-It seems to resolve most of the issues that you raise, but of course
-it has some warts of its own.  Some could be resolved with sufficient
-effort, others are fundamental.  (An example of the latter, you cannot
-trivially tell what commit in other repositories a particular user was
-at when he made a commit in a specific repository (absent a gits tag
-being created).  An example of the former, if you have git output
-paging turned on and many subprojects to check out, `gits clone` pages
-the output and more to the point, blocks the clones until you page
-through the output which you must typically do many times).
-
-					-Seth Robertson
+No, let's not do that.  I will forget and end up spending time to
+read the same patch again.
