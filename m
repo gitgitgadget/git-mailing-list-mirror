@@ -1,100 +1,79 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH 0/3] remote-helpers: trivial test fixes
-Date: Mon, 1 Apr 2013 23:48:29 +0200
-Message-ID: <CALWbr2wAJGemYziPsOkArJveK0F+4Pv80gdR1SGUxchb0ci-sg@mail.gmail.com>
-References: <1364850872-21135-1-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 01 23:49:04 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/4] run-command: new check_command helper
+Date: Mon,  1 Apr 2013 15:46:40 -0600
+Message-ID: <1364852804-31875-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Johannes Sixt <j6t@kdbg.org>, Aaron Schrab <aaron@schrab.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	David Michael Barr <b@rr-dav.id.au>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 01 23:53:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMmb9-000458-QB
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 23:49:04 +0200
+	id 1UMmfp-0006O8-Cp
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Apr 2013 23:53:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759047Ab3DAVsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Apr 2013 17:48:32 -0400
-Received: from mail-qc0-f175.google.com ([209.85.216.175]:49177 "EHLO
-	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759021Ab3DAVs3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Apr 2013 17:48:29 -0400
-Received: by mail-qc0-f175.google.com with SMTP id j3so1260918qcs.20
-        for <git@vger.kernel.org>; Mon, 01 Apr 2013 14:48:29 -0700 (PDT)
+	id S1758787Ab3DAVxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Apr 2013 17:53:11 -0400
+Received: from mail-yh0-f49.google.com ([209.85.213.49]:53512 "EHLO
+	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757579Ab3DAVxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Apr 2013 17:53:10 -0400
+Received: by mail-yh0-f49.google.com with SMTP id m1so445905yhg.8
+        for <git@vger.kernel.org>; Mon, 01 Apr 2013 14:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=tBAKksPcSY4tmeYm4SaBwuM1EMvXGP+DvGtcQD19lRs=;
-        b=y02y3OFNZjLlT+CQgNkW//5DlVjyeX0JleW6ru5B6ZhQ3Y5cgDHbd79i2BqZJMVKd9
-         fZDc8tSvpscIVOZjwcYRBCbjQ4Z0fBYk7/bqSJxjnZxLGon3Fh3kzlmIEv5tHon3FyPJ
-         37TlKyA/c6cO2Tlx/HhMgYryHx4ls1VLXjh0MgwqpYO0+jGQWOInpYLVJXWRLQVNKeOu
-         h72vkFpvD43fz9bG2XAwJcwVmN2qDXlkOsdsONtIBGQH0ATeIXAs/Mq0vfyFzKgFMXHW
-         97eWL0QjTeVuNXAmfzlHxctOtpY6DtdVrileHrgihRMmJ6SL3HYee96/KpbCobBveYvk
-         4xKA==
-X-Received: by 10.224.52.68 with SMTP id h4mr13772080qag.17.1364852909138;
- Mon, 01 Apr 2013 14:48:29 -0700 (PDT)
-Received: by 10.49.70.163 with HTTP; Mon, 1 Apr 2013 14:48:29 -0700 (PDT)
-In-Reply-To: <1364850872-21135-1-git-send-email-felipe.contreras@gmail.com>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=Gh2FMn7OudkvHtmUS1zdffsobNg08Ha++sGz8M505uw=;
+        b=ZYT3Lonr2FKhxgETmBrP6Khu80bMKeMlrbZ8qTFgR4qtTuKfRV0zwnFL1YB7uYSj1E
+         ga8Ie+50W02mWGBVbZ3mdHoaQxhbEV3YzmwKo1jXuER/+OqgaShLUXwBcSkbfjj0lh+E
+         X6DA7KOmuJo9G9vwRbHCDj0Spql6tUn/RO2isapKdxGbAkOF5g6ZPr/EO8sEkaJXR6Qv
+         aKlGRMnN0ZSFqc+B8V/5l0I9mecFypoa2HBnC+KfbeLtEwcn2nW3dcjdwqIyW7cH2unK
+         8DZPsubaPCBBAuuGVtsUgBq+xc0X5RBrpY02lEPh7K5qoRgKDXFD8u87Zf1tkOEl/uoa
+         5cWA==
+X-Received: by 10.236.223.137 with SMTP id v9mr11608180yhp.166.1364852857091;
+        Mon, 01 Apr 2013 14:47:37 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id t27sm30067057yhm.20.2013.04.01.14.47.34
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 01 Apr 2013 14:47:36 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219717>
 
-I'm having an error in "contrib/remote-helpers/test-hg.sh" and it
-reproduces on every version I tested since you implemented it. Is it
-something in my environment that would make it wrong ?
+Hi,
 
-Cheers,
-Antoine
+The first patch does all the work, the second patch uses it; basically, this is
+needed so the transport-helper code is able to check if the remote-helper child
+is stilll running. Without this support, the status of the remote-helper files
+and configuration can end up very badly when errors occur, to the point where
+the user is unable to use it any more.
 
----
-expecting success:
-  test_when_finished "rm -rf gitrepo*" &&
+The rest of the patches are for testing purposes only. I ran all the tests with
+these, and I didn't see any problems.
 
-  (
-  cd hgrepo &&
-  hg update -r 0
-  ) &&
+Cheers.
 
-  git clone "hg::$PWD/hgrepo" gitrepo &&
-  check gitrepo zero master
+Felipe Contreras (4):
+  run-command: add new check_command helper
+  transport-helper: check if remote helper is alive
+  tmp: remote-helper: add timers to catch errors
+  tmp: run-command: code to exercise check_command
 
-1 files updated, 0 files merged, 0 files removed, 0 files unresolved
-Cloning into 'gitrepo'...
---- expected 2013-04-01 21:46:32.086796549 +0000
-+++ actual 2013-04-01 21:46:32.086796549 +0000
-@@ -1,2 +1,2 @@
--zero
--refs/heads/master
-+feature-a
-+refs/heads/feature-a
-not ok 4 - cloning with detached head
+ git-remote-testgit        | 12 +++++++++++
+ run-command.c             | 52 +++++++++++++++++++++++++++++++++++++++++------
+ run-command.h             |  6 ++++++
+ t/t5801-remote-helpers.sh | 19 +++++++++++++++++
+ transport-helper.c        | 11 ++++++++++
+ 5 files changed, 94 insertions(+), 6 deletions(-)
 
-On Mon, Apr 1, 2013 at 11:14 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Hi,
->
-> Here are a few fixes for the test framework on the remote-helpers.
->
-> Felipe Contreras (3):
->   remote-helpers: fix the run of all tests
->   remote-bzr: remove stale check code for tests
->   remote-hg: fix hg-git test-case
->
->  contrib/remote-helpers/Makefile          |  1 +
->  contrib/remote-helpers/test-bzr.sh       | 14 --------------
->  contrib/remote-helpers/test-hg-hg-git.sh |  1 -
->  3 files changed, 1 insertion(+), 15 deletions(-)
->
-> --
-> 1.8.2
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+1.8.2
