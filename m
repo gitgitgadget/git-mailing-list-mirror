@@ -1,70 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] inconsistent behavior with --set-upstream vs
- --set-upstream-to
-Date: Tue, 2 Apr 2013 13:23:33 -0400
-Message-ID: <20130402172333.GB24698@sigill.intra.peff.net>
-References: <F58991CB-9C83-4DA6-B82B-2E6C874C30EB@gmail.com>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: [PATCH 1/3] Remove outdated/missleading/irrelevant entries
+ from glossary-content.txt
+Date: Tue, 2 Apr 2013 19:24:57 +0200 (CEST)
+Message-ID: <559824715.741522.1364923497242.JavaMail.ngmail@webmail15.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Garrett Cooper <yaneurabeya@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 19:24:09 2013
+To: gitster@pobox.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Tue Apr 02 19:25:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN4wH-0004jM-UA
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:24:06 +0200
+	id 1UN4xd-0005gu-NW
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:25:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932918Ab3DBRXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 13:23:39 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52349 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932912Ab3DBRXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 13:23:37 -0400
-Received: (qmail 11551 invoked by uid 107); 2 Apr 2013 17:25:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Apr 2013 13:25:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Apr 2013 13:23:33 -0400
-Content-Disposition: inline
-In-Reply-To: <F58991CB-9C83-4DA6-B82B-2E6C874C30EB@gmail.com>
+	id S932932Ab3DBRY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 13:24:59 -0400
+Received: from mail-in-07.arcor-online.net ([151.189.21.47]:59454 "EHLO
+	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932078Ab3DBRY6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Apr 2013 13:24:58 -0400
+Received: from mail-in-19-z2.arcor-online.net (mail-in-19-z2.arcor-online.net [151.189.8.36])
+	by mx.arcor.de (Postfix) with ESMTP id 5332010784C;
+	Tue,  2 Apr 2013 19:24:57 +0200 (CEST)
+Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
+	by mail-in-19-z2.arcor-online.net (Postfix) with ESMTP id 4B4C73F83CC;
+	Tue,  2 Apr 2013 19:24:57 +0200 (CEST)
+Received: from webmail15.arcor-online.net (webmail15.arcor-online.net [151.189.8.68])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 3F08C10784C;
+	Tue,  2 Apr 2013 19:24:57 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-07.arcor-online.net 3F08C10784C
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1364923497; bh=Jp+WZnl4oTzSDOWB9lcEbAircRT6QoLDzdmeO9Df3KQ=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=fmiflXTWgQA2sWT3ukrU5G6FeU1z8O3CubEf5CZiPaxKF4b3txVG2YgSi4hn2yccx
+	 KPJOuaJ3TlTN2nxBFGpN5yOp4bcyH77PdGB6jrSWtVi93BBWKxB1oY+Sb3QVYMmUTy
+	 D0p1cwRpEjsGiFXt6JO9oFRB2lCNpVmlMLQJ+c7E=
+Received: from [94.217.19.243] by webmail15.arcor-online.net (151.189.8.68) with HTTP (Arcor Webmail); Tue, 2 Apr 2013 19:24:57 +0200 (CEST)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 94.217.19.243
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219810>
 
-On Tue, Apr 02, 2013 at 10:07:01AM -0700, Garrett Cooper wrote:
+ 
+> 
+> The text indeed has a room for improvement, but it probably makes
+> sense to have an entry for `directory` here, as folks who are used
+> to say "Folders" may not know what it is.
+> 
+I assumed the number of such people so low that it's not worth
+to keep this - to most people obvious - explanation.
 
-> 	It looks like git branch --set-upstream-to doesn't function with 1.8.1.3 until I run --set-upstream. Is this a known bug?
+> 
+> Which one of outdated, misleading or irrelevant category does this
+> fall into?  It certainly is not outdated (diff --cc/-c is often a
+> way to view evil merges), the text defines what an evil merge is
+> precisely and I do not think it is misleading.  Is it irrelevant?
+> 
+I considered it "irrelevant" because it tries to define 
+"evil merge" which is - at least to my experience - not used
+as some kind of well known notion. But I might of course be wrong.
 
-No, but I do not think that is exactly what is going on.
+> 
+> Even though I personally am slightly in favor of removal, I suspect
+> that is primarily because I already know what Git tag is, and it is
+> different from the type tag in the Lisp-speak.
+> 
+I assumed the cardinality of the set of Lisp users is so small that
+this addition will confuse more people than help somebody.
 
-> root@fuji-current:/usr/src # git branch --set-upstream-to origin/pjdfstest-onefs pjdfstest-onefs
-> fatal: Not a valid object name: 'origin/pjdfstest-onefs'.
 
-This is complaining that origin/pjdfstest-onefs does not actually exist
-Does it? If the pjdfstest-onefs branch exists on the remote, do you need
-to do a "git fetch" to make sure we have a local
-refs/remotes/origin/pjdfstest-onefs tracking branch locally?
-
-> root@fuji-current:/usr/src # git branch --set-upstream origin/pjdfstest-onefs pjdfstest-onefs
-> The --set-upstream flag is deprecated and will be removed. Consider using --track or --set-upstream-to
-> Branch origin/pjdfstest-onefs set up to track local branch pjdfstest-onefs.
-
-This did _not_ create the remote-tracking branch refs/remotes/origin/pjdfstest-onefs.
-It created a new local branch called "origin/pjdfstest-onefs" (i.e.,
-refs/heads/origin/pjdfstest-onefs), whose upstream is another local
-branch "pjdfstest-onefs". That "backwards" order to the arguments is why
---set-upstream is deprecated; many people have made the same mistake.
-
-> root@fuji-current:/usr/src # git branch --set-upstream-to origin/pjdfstest-onefs pjdfstest-onefs
-> Branch pjdfstest-onefs set up to track local branch origin/pjdfstest-onefs.
-
-Note how it says "local branch" here; you are not tracking anything at
-the origin. You are tracking a local branch that happens to have
-"origin/" in the name.
-
--Peff
+---
+Thomas
