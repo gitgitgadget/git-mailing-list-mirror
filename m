@@ -1,72 +1,67 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Composing git repositories
-Date: Tue, 2 Apr 2013 23:14:49 +0530
-Message-ID: <CALkWK0mgtfYFd+sT=J-hAMLq=HVF-_a-kT_xxE9-ZzfiBiFBQA@mail.gmail.com>
-References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
- <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
- <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
- <51537A7B.7050206@web.de> <CALkWK0nfNCu775MBB-Y28=V93RkV24kbTLTDKWO2dZ-0yxX=Sw@mail.gmail.com>
- <5154AACC.7050006@web.de> <CALkWK0k=g3iFjmpUQA1VkuH2kZsVX1_Hpo=LZ7CuotwHz_1++g@mail.gmail.com>
- <20130331225747.GB11704@elie.Belkin>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] test-lint-duplicates: check numbering in contrib/remote-helpers
+Date: Tue, 2 Apr 2013 11:46:05 -0600
+Message-ID: <CAMP44s05-H23pEhxtZq76S5fqTsf5Uxs1UVpPypvXnbJkeCnRQ@mail.gmail.com>
+References: <201304021853.48643.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 19:46:07 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: peff@peff.net, apelisse@gmail.com, git@vger.kernel.org
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Apr 02 19:46:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN5HY-0002yT-49
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:46:04 +0200
+	id 1UN5I6-0003N7-LE
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:46:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758889Ab3DBRpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 13:45:31 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:37494 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759325Ab3DBRpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 13:45:30 -0400
-Received: by mail-ie0-f170.google.com with SMTP id c11so735664ieb.29
-        for <git@vger.kernel.org>; Tue, 02 Apr 2013 10:45:29 -0700 (PDT)
+	id S1759304Ab3DBRqJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Apr 2013 13:46:09 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:43886 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758317Ab3DBRqG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Apr 2013 13:46:06 -0400
+Received: by mail-lb0-f179.google.com with SMTP id t1so750309lbd.38
+        for <git@vger.kernel.org>; Tue, 02 Apr 2013 10:46:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=DkLspc3xkfXpv1LbjyovnNM2s+k3P59UuKQ8Ioci6NY=;
-        b=G1xeiDdU5fFfdan3Z1d2WOXYUrnE1RRoOJYoOtbsOZ+uaBU75nS8IJSJ73lFF2uRnc
-         eTyKK+U6DsQrdEtJgYV9nsATWSteliIdhM/GJPh8KpiqCSjUSNeLzCBfVye+eHMkSlBY
-         6mU4rEm2XAaIw14eDxrZNbacMr9w9+V9ee1mOZfaI4SrVM991Kp13OX77luVH6Pathkm
-         y5SqI+Q0NDEw0ObTD2n3Yb4k815Mo5rzZpkotvvuoZnQ5UwgW4zBb8QiJZtJGZepAXyA
-         yElXbPLbe4Z8MufYeP3BvR488il7yDj76yNMTcSGB9C2bm5rk0o6dpr8uCzKMVcYsW/n
-         mLtw==
-X-Received: by 10.50.17.71 with SMTP id m7mr5690923igd.14.1364924729662; Tue,
- 02 Apr 2013 10:45:29 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Tue, 2 Apr 2013 10:44:49 -0700 (PDT)
-In-Reply-To: <20130331225747.GB11704@elie.Belkin>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=6bRpVxDOy5EbFCWzlPFdtZiuaEplVfuFEZq9DopJAdo=;
+        b=NLuBfgMILB+I7LlOs92wDZ+V2GXtMVPwAbNJ8zU3Mc2Wtec+Us+niG0FSStjEAEefP
+         fnSHEpc2ihtOr4PLpTf1jOQXdbLMcbytNBZQf6Srp3SS3hzHIVu9U6AL0Ev+RLet9b4t
+         O2kFITiGC9L1kZCRu99laUGa4yR7Tr1kuVXkmRLba4w1yhYlQE5txcRTPdeP8yFQfUec
+         j6bHedoKpDnuIMigkCFwEEneZm54osREoJ6wsTeFQwDDMdhDl9lyiFfFehYbLY2iuYKb
+         rhaEmZ20tLNLTNkSPcJNLiOjRLwsHIlp4wimLFFqUmp7RnHnJUXtKyCpm0x8VocdIxVL
+         9KFQ==
+X-Received: by 10.112.143.10 with SMTP id sa10mr4115741lbb.36.1364924765388;
+ Tue, 02 Apr 2013 10:46:05 -0700 (PDT)
+Received: by 10.114.20.36 with HTTP; Tue, 2 Apr 2013 10:46:05 -0700 (PDT)
+In-Reply-To: <201304021853.48643.tboegi@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219818>
 
-Jonathan Nieder wrote:
-> Elated is probably not the right word.  More "annoyed at being told
-> their work is ugly without an accompanying concrete and actionable bug
-> report". :)
+On Tue, Apr 2, 2013 at 10:53 AM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
 
-If I had an actionable report, I'd have started hammering patches
-instead of wasting everyone's time here.  I'm was presenting fragments
-of my thoughts, hoping that it turn into concrete actionable work
-after exchanging a few emails.  I'm also annoyed that it didn't
-happen.
+> Rename the tests in contrib/remote-helpers into
+> t5810-test-bzr.sh,
+> t5820-test-hg-bidi.sh,
+> t5821-test-hg-hg-git.sh,
+> t5830-test-hg.sh
+>
+> Feed the numbers used in contrib/remote-helpers into t/Makefile
+> and check that numbering is unique across both directories
 
-> If you are curious, at a quieter time it might be useful to ask for
-> pointers to the discussions that led to the current design, and folks
-> on the list might be glad to help.
+TBH I don't see the point of this; we don't *need* to run
+test-lint-duplicates here, the system should adapt to the situation,
+and it already does, no need to add four digit numbers just so we can
+run test-lint-duplicates.
 
-Will do.  The search on GMane is no good, and taking a local dump to
-search using real tools is just too painful; does someone already have
-a local dump?
+--=20
+=46elipe Contreras
