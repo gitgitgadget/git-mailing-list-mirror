@@ -1,125 +1,108 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/2] add: add a newline at the end of pathless 'add [-u|-A]' warning
-Date: Tue, 02 Apr 2013 16:43:55 +0200
-Message-ID: <vpqehetgfh0.fsf@grenoble-inp.fr>
-References: <vpqk3pefjs4.fsf@grenoble-inp.fr>
-	<1362988893-27539-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1362988893-27539-2-git-send-email-Matthieu.Moy@imag.fr>
-	<7v7gldc44p.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: check-attr doesn't respect recursive definitions
+Date: Tue, 2 Apr 2013 10:48:14 -0400
+Message-ID: <20130402144814.GD23828@sigill.intra.peff.net>
+References: <slrnkldd3g.1l4.jan@majutsushi.net>
+ <20130402143130.GC23828@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 16:46:23 2013
+To: Jan Larres <jan@majutsushi.net>
+X-From: git-owner@vger.kernel.org Tue Apr 02 16:48:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN2Tc-0007Er-Im
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 16:46:20 +0200
+	id 1UN2Vz-0000aW-Qi
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 16:48:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932444Ab3DBOpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 10:45:54 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:60148 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932332Ab3DBOpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 10:45:52 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r32Ehs6m021973
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 2 Apr 2013 16:43:54 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UN2RH-000356-NK; Tue, 02 Apr 2013 16:43:55 +0200
-In-Reply-To: <7v7gldc44p.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 11 Mar 2013 09:06:46 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 02 Apr 2013 16:43:54 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r32Ehs6m021973
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1365518634.79064@NmOJhtx0HzynZQ21wcbUhA
+	id S932305Ab3DBOsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 10:48:19 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52180 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759790Ab3DBOsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 10:48:18 -0400
+Received: (qmail 10007 invoked by uid 107); 2 Apr 2013 14:50:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Apr 2013 10:50:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Apr 2013 10:48:14 -0400
+Content-Disposition: inline
+In-Reply-To: <20130402143130.GC23828@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219777>
 
-Sorry for the late reply,
+On Tue, Apr 02, 2013 at 10:31:30AM -0400, Jeff King wrote:
 
-Junio C Hamano <gitster@pobox.com> writes:
+> On Sat, Mar 30, 2013 at 09:45:51AM +0000, Jan Larres wrote:
+> 
+> > I am trying to write a custom archiving script that checks the
+> > export-ignore attribute to know which files from an ls-files output it
+> > should skip. Through this I noticed that for files in directories for
+> > which the export-ignore (or any other) attribute is set, check-attr
+> > still reports 'unspecified'. More precisely:
+> > 
+> > $ git init test
+> > Initialized empty Git repository in /home/jan/test/.git/
+> > $ cd test
+> > $ mkdir foo
+> > $ touch foo/bar
+> > $ echo "foo export-ignore" > .gitattributes
+> > $ git check-attr export-ignore foo
+> > foo: export-ignore: set
+> > $ git check-attr export-ignore foo/bar
+> > foo/bar: export-ignore: unspecified
+> > 
+> > I would expect the last command to also report 'set'. I've also tried
+> > other patterns like 'foo/' and 'foo*', but it didn't make any
+> > difference. Is this expected behaviour? It does make checking the
+> > attributes of single files somewhat more difficult.
+> 
+> Yes, it is the expected behavior, though I cannot offhand think of
+> anything that would break if we did apply it recursively.
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> When the commands give an actual output (e.g. when ran with -v), the
->> output is visually mixed with the warning. The newline makes the actual
->> output more visible.
->>
->> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->> ---
->
-> It would have been easier to immediately understand what is going on
-> if you said "blank line" instead of "newline" ;-)
+Naively, such a patch might look something like this:
 
-Indeed.
+diff --git a/attr.c b/attr.c
+index de170ff..ac04188 100644
+--- a/attr.c
++++ b/attr.c
+@@ -791,8 +791,18 @@ static void collect_all_attrs(const char *path)
+ 		check_all_attr[i].value = ATTR__UNKNOWN;
+ 
+ 	rem = attr_nr;
+-	for (stk = attr_stack; 0 < rem && stk; stk = stk->prev)
++	for (stk = attr_stack; 0 < rem && stk; stk = stk->prev) {
++		last_slash = path;
++		for (cp = path; *cp; cp++) {
++			if (*cp == '/') {
++				rem = fill(path, cp - path + 1,
++					   last_slash - path,
++					   stk, rem);
++				last_slash = cp;
++			}
++		}
+ 		rem = fill(path, pathlen, basename_offset, stk, rem);
++	}
+ }
+ 
+ int git_check_attr(const char *path, int num, struct git_attr_check *check)
 
-> An obvious issues is what if user does not run with "-v" or if "-v"
-> produces no results.  We will be left with an extra blank line at
-> the end.
+which is based on current "next" (because it has some other related
+fixes for handling directories). It seems to work for me, but I suspect
+we could do it more optimally. If you have N files in "foo/", this will
+check "foo/" against the attribute stack N times, and we should be able
+to amortize that work.
 
-Right, but displaying the blank line only when there's an actual output
-does not seem easy, and I'd rather avoid too much damage in the code for
-a warning which is only temporary.
+Hmm. Actually, thinking on it more, I'm not sure this is even going to
+give the right answer anyway, as it will check "foo" against the
+"foo/.gitattributes", which is not right. I think we'd need to collect
+attributes as we walk the stack in prepare_attr_stack.
 
-> I suspect that the true reason why the warning does not stand out
-> and other output looks mixed in it may be because we only prefix the
-> first line with the "warning: " label.  In the longer term, I have a
-> feeling that we should be showing something like this instead:
->
->     $ cd t && echo >>t0000*.sh && git add -u -v
->     warning: The behavior of 'git add --update (or -u)' with no path ar...
->     warning: subdirectory of the tree will change in Git 2.0 and should...
->     warning: To add content for the whole tree, run:
+So take this as a "this is not how to do it" patch. :)
 
-I personnally do not like this kind of output, the "warning:" on the 2nd
-and 3rd lines break the flow reading the message. But that's probably a
-matter of taste.
-
-> using a logic similar to what strbuf_add_commented_lines() and
-> strbuf_add_lines() use.
-
-This would mean changing the warning() function, which would change all
-warnings.
-
-I'm fine with either dropping my patch or applying it as-is (with
-s/newline/blank line/ in the commit message); a bit reluctant to
-changing the output of warning(...), but that's an option if other
-people like it.
-
->>  builtin/add.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/builtin/add.c b/builtin/add.c
->> index ab1c9e8..620bf00 100644
->> --- a/builtin/add.c
->> +++ b/builtin/add.c
->> @@ -344,7 +344,7 @@ static void warn_pathless_add(const char *option_name, const char *short_name) {
->>  		  "  git add %s .\n"
->>  		  "  (or git add %s .)\n"
->>  		  "\n"
->> -		  "With the current Git version, the command is restricted to the current directory."),
->> +		  "With the current Git version, the command is restricted to the current directory.\n"),
->>  		option_name, short_name,
->>  		option_name, short_name,
->>  		option_name, short_name);
->
->
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
