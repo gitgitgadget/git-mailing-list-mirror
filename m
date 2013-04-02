@@ -1,123 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] send-email: use "return;" not "return undef;" on
- error codepaths
-Date: Tue, 02 Apr 2013 07:49:35 -0700
-Message-ID: <7vsj39gf7k.fsf@alter.siamese.dyndns.org>
-References: <7vr4ivni5g.fsf@alter.siamese.dyndns.org>
- <1364780442-6015-1-git-send-email-gitster@pobox.com>
- <CALkWK0muF2Nx=ykD6jt4pvpmp9c3R2KhXhQMjLAyMWiHu_6iPA@mail.gmail.com>
+Subject: Re: [PATCH] rev-parse: clarify documentation for the --verify option
+Date: Tue, 02 Apr 2013 07:57:30 -0700
+Message-ID: <7vobdxgeud.fsf@alter.siamese.dyndns.org>
+References: <1364625865-8459-1-git-send-email-mhagger@alum.mit.edu>
+ <7vwqsnnpwj.fsf@alter.siamese.dyndns.org>
+ <7vli92jijz.fsf@alter.siamese.dyndns.org> <515A8D79.6050808@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 16:50:08 2013
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Apr 02 16:58:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN2XH-0001Qc-UK
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 16:50:08 +0200
+	id 1UN2ex-0006rH-Gm
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 16:58:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932338Ab3DBOtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 10:49:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40236 "EHLO
+	id S932454Ab3DBO5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 10:57:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43281 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759790Ab3DBOtj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 10:49:39 -0400
+	id S932286Ab3DBO5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 10:57:33 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15A5312BB1;
-	Tue,  2 Apr 2013 14:49:38 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9D7F12F01;
+	Tue,  2 Apr 2013 14:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2V7BkjtRcUNEoiwsN6Ka3wdbpiE=; b=jMv/Ra
-	CtsDZxVz75JBMxt74zT1TPYRQ0MVCJztQHbJ3EOhytttlTDnEwqvXYX7kLKkTnT5
-	wBaWoc/ppwzo/Mb7zPOnUJRzGrMYWCo+q7lEVdkqWEZXFhEuDrQbKSm/8bV/Kbja
-	zPudTHRrLgGth7PIFploJOKAhR0Hr/mJq0688=
+	:content-type; s=sasl; bh=9WxFMfC3teaDNS1Wew51BkLnEKQ=; b=NcE3we
+	ScK679R46y54uF5cv5zgTLksoRl2oYv30x1AnOjv4Az9NUCbqLVdbNqnyYFm8399
+	CGEzwlYGBxyc/P7Z29FdRM6eME8dn6eSlPcjra3QnvT51TJITtoR2kj4jOP0yTfq
+	j+Ue/9d78rZicvTiSYTKMKf4L8aoixT7pswgE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dU0rIyeeft3jphLR8v53dWnneQIx5Z5k
-	4iL0r62KUQtEBSxQOGB4HJXgiSIg7sF3fYvNV9Uq6q7wW3rV29v45FNpJTOnncXL
-	TJt/eAzRLK8oW+QlP58BAYvcMyDacRk5yX/Qlr0boMjHnObmWAhudjGEgaPG/B60
-	4g0uPVAYY1w=
+	:content-type; q=dns; s=sasl; b=x3SMw3IPISsA4pz2WjREVerfo6siN7VA
+	rWHvjMemjp6wDa5/Lj8P4BO4W7JaMqhwGn0KGFgAcygjcSJP50YfCAIbE4e/w4lT
+	cslH2RtDmhINa6rmeu45bBHNMM23jSAEAFYeTzq7AR/1DJRk1NZCvz0Bsue+oICl
+	x2Y59ma5Ots=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D47312BB0;
-	Tue,  2 Apr 2013 14:49:38 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1F9012F00;
+	Tue,  2 Apr 2013 14:57:32 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72FD712BAD; Tue,  2 Apr
- 2013 14:49:37 +0000 (UTC)
-In-Reply-To: <CALkWK0muF2Nx=ykD6jt4pvpmp9c3R2KhXhQMjLAyMWiHu_6iPA@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Tue, 2 Apr 2013 13:29:01 +0530")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C9F012EFE; Tue,  2 Apr
+ 2013 14:57:32 +0000 (UTC)
+In-Reply-To: <515A8D79.6050808@alum.mit.edu> (Michael Haggerty's message of
+ "Tue, 02 Apr 2013 09:49:13 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8A7B94A0-9BA4-11E2-80D6-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A57895E0-9BA5-11E2-B7D3-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219779>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Junio C Hamano wrote:
->> Note that we leave "return undef;" in validate_address on purpose,
->> even though Perlcritic may complain.  The primary "return" site of
->> the function returns whatever is in the scaler variable $address, so
->> it is pointless to change only the other "return undef;" to "return".
->> The caller must be prepared to see an array with a single undef as
->> the return value from this subroutine anyway.
+> On 04/01/2013 06:56 PM, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>>> Because the primary use case of this option is to implement end-user
+>>> input validation, I think it would be helpful to clarify use of the
+>>> peeler here.  Perhaps
+>>> ...
+>> 
+>> A "SQUASH???" patch on top of your original is queued on 'pu',
+>> together with the earlier "^{object}" peeler patch.  Comments,
+>> improvements, etc. would be nice.
 >
-> The way I understood it:
-> All callsites only ever call validate_address via
-> validate_address_list, which in turn maps a list of addresses by
-> calling validate_address on each address.  Therefore, validate_address
-> returning an undef in one codepath is correct.
+> Yes, your version is better.  I would make one change, though.  In your
+>
+> +	Make sure the single given parameter can be turned into a
+> +	raw 20-byte SHA-1 that can be used to access the object
+> +	database, and emit it to the standard output. If it can't,
+> +	error out.
+>
+> it could be made clearer that exactly one parameter should be provided.
+> Maybe
+>
+> +	Verify that exactly one parameter is provided, and that it
 
-I think we are in agreement then.
+That is probably better (I was hoping "the single" would mean the
+same to the reader, though).  Thanks.
 
-The implication of what you just said is that anybody that calls
-this subroutine _must_ be (and indeed is) prepared to see a single
-'undef' returned from it, hence the use pattern,
+> +     can be turned into a raw 20-byte SHA-1 that can be used to
+> +	access the object database.  If so, emit the SHA-1 to the
+> +	standard output; otherwise, error out.
+>
+> But this makes it sound a little like the "raw 20-byte SHA-1" will be
+> output to stdout,...
 
-	@foo = validate_address(...);
-        if (@foo) { ... we got a valid one ... } else { ... we did not ... }
+I did consider that point, wrote "and outputs 40-hex" in my earlier
+draft, and then rejected it because it was even more misleading.
+The output follows the usual rules for "rev" parameters, e.g.
 
-cannot be used for the subroutine _anyway_.  @foo may get an invalid
-address, even with the "don't say 'return undef;' say 'return;'"
-wisdom is applied to the other return site in the subroutine.
+	git rev-parse --short --verify HEAD
+	git rev-parse --symbolic --verify v1.8.2^{tree}
 
-Now, the subroutine's body essentially is:
+and "--verify" does not mean 40-hex output.  That is why I left it
+vague as "emit it".
 
-	while (!extract_valid($address)) {
-		...
-                if (...) {
-                	return undef; # or just "return;"
-		}
-	}
-	return $address;
-
-You can prove that the "return $address" on the last line will never
-return 'undef' by proving that extract_valid() never returns true
-for 'undef' input.  With that, we can safely change the error return
-to do "return;" in the loop.
-
-When it is done, the subroutine's new interface becomes "Single
-address goes in, either a single valid address comes out and that
-will never be an undef, or nothing (not even an undef) comes out
-upon error".
-
-Which means the sole caller of the subroutine needs to be updated,
-which currently does this:
-
-	return grep { defined $_ } map { validate_address($_) } @_;
-
-As the subroutine never returns an undef as "no this is not valid",
-but acts more like a filter to cull bad ones from the input, the
-outer grep { defined $_ } becomes unnecessary.  
-
-And I think that change logically belongs to the same patch as the
-one that inspects how validate_address behaves and updates its
-"sometimes we return undef to signal a bad input" to return nothing.
-
-That is why validate_adress was excluded from [1/3] which deals with
-other simpler cases.
+I agree that the wording incorrectly hints that you may be able to
+get 20-byte raw output.  I didn't find a satisfactory phrasing.
