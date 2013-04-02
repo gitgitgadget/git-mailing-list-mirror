@@ -1,107 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: check-attr doesn't respect recursive definitions
-Date: Tue, 2 Apr 2013 15:16:41 -0400
-Message-ID: <20130402191641.GB17784@sigill.intra.peff.net>
-References: <slrnkldd3g.1l4.jan@majutsushi.net>
- <20130402143130.GC23828@sigill.intra.peff.net>
- <7vtxnogbft.fsf@alter.siamese.dyndns.org>
- <20130402163034.GA19252@sigill.intra.peff.net>
- <7vhajog9xp.fsf@alter.siamese.dyndns.org>
- <20130402165128.GA19712@sigill.intra.peff.net>
- <7v1uasg8e0.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 1/4] run-command: add new check_command helper
+Date: Tue, 02 Apr 2013 21:16:59 +0200
+Message-ID: <515B2EAB.10402@kdbg.org>
+References: <1364898709-21583-1-git-send-email-felipe.contreras@gmail.com> <1364898709-21583-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jan Larres <jan@majutsushi.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 21:17:20 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Aaron Schrab <aaron@schrab.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	David Michael Barr <b@rr-dav.id.au>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 02 21:17:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN6hn-0007Hh-E7
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 21:17:15 +0200
+	id 1UN6i4-0007VZ-VM
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 21:17:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932227Ab3DBTQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 15:16:46 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52526 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932097Ab3DBTQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 15:16:46 -0400
-Received: (qmail 13255 invoked by uid 107); 2 Apr 2013 19:18:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Apr 2013 15:18:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Apr 2013 15:16:41 -0400
-Content-Disposition: inline
-In-Reply-To: <7v1uasg8e0.fsf@alter.siamese.dyndns.org>
+	id S932309Ab3DBTRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 15:17:03 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:64111 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932097Ab3DBTRC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 15:17:02 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id EB1C513004E;
+	Tue,  2 Apr 2013 21:16:59 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 9F77019F312;
+	Tue,  2 Apr 2013 21:16:59 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <1364898709-21583-2-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219854>
 
-On Tue, Apr 02, 2013 at 10:16:55AM -0700, Junio C Hamano wrote:
+Am 02.04.2013 12:31, schrieb Felipe Contreras:
+> And persistent_waitpid() to recover the information from the last run.
 
-> > Yes, but as I explained later, the meaning of "apply an attribute to
-> > dir" in such cases is always equivalent to "apply attribute
-> > recursively to dir/*". So I do not think we are violating that rule to
-> > recursively apply all attributes.
-> 
-> I think this is where we disagree.  Attribute does not recursively
-> apply in general.  It was _never_ designed to (and that is the
-> authoritative answer, as I was who designed it in Apr 2007 ;-)).
+I'm not a fan of this new API, because it looks like a workaround
+for a problem that should have been solved in a cleaner way. But if
+we can't avoid it, please also add a paragraph to
+Documentation/technical/api-run-command.txt
 
-My argument was not that they apply recursively in general, but that we
-followed an "as if" rule where what happens in the gitignore and
-export-ignore cases are indistinguishable from recursive application.
-But...
+> +int check_command(struct child_process *cmd)
+> +{
+> +	int status;
+> +	pid_t waiting;
+> +
+> +	if (cmd->last_status.valid)
+> +		return 0;
+> +
+> +	while ((waiting = waitpid(cmd->pid, &status, WNOHANG)) < 0 && errno == EINTR)
+> +		; /* nothing */
+> +
+> +	if (!waiting)
+> +		return 1;
+> +
+> +	if (waiting == cmd->pid) {
+> +		cmd->last_status.valid = 1;
+> +		cmd->last_status.status = status;
+> +		return 0;
+> +	}
+> +
+> +	if (waiting > 0)
+> +		die("BUG: waitpid reported a random pid?");
+> +
+> +	return 0;
+> +}
+> +
+>  static void prepare_run_command_v_opt(struct child_process *cmd,
+>  				      const char **argv,
+>  				      int opt)
+> @@ -729,7 +770,7 @@ error:
+>  int finish_async(struct async *async)
+>  {
+>  #ifdef NO_PTHREADS
+> -	return wait_or_whine(async->pid, "child process");
+> +	return wait_or_whine(cmd, async->pid, "child process");
 
-> It is not even true to say that "archive" applies export-ignore to
-> the directory recursively, with or without the recent change.  Would
-> it allow everything but dir/file to be excluded and still dir/file
-> to be included in the archive if you have a .gitattribute file like
-> this?
-> 
-> 	dir/ export-ignore
->         dir/file !export-ignore
-> 
-> I do not think so.
+This breaks the NO_PTHREADS build because cmd is undeclared. Perhaps
+this on top:
 
-This is a perfect counter-example. The current behavior _is_
-distinguishable from recursive application, and my "as if" above is not
-correct.
-
-Thanks for the clarification.
-
-> > But let's take a step back. I think Jan is trying to do a very
-> > reasonable thing: come up with the same set of paths that git-archive
-> > would. What's the best way to solve that?
-> 
-> Because the attribute does not recursively apply in general, and it
-> is entirely up to the application and a particular attribute key to
-> decide how the key is applied in the context of the application,
-> "check-attr" by itself cannot know.  You need to know how "archive"
-> treats "export-ignore" attribute and then use "check-attr" with that
-> knowledge.
-
-Yeah, I had the same thought. So you would have to either:
-
-  1. Hook the feature into git-archive, which knows about how it
-     recurses, and can report the correct set of paths.
-
-or
-
-  2. Tell check-attr (or some post-processor) to apply the attribute to
-     elements below the path (or possibly to prune out such paths). This
-     is not the same as recursive application, because you cannot negate
-     it (i.e., you actually find out the final attrs for both "foo" and
-     "foo/bar", and then say "the attr for 'foo' overrides the attr for
-     'foo/bar'".
-
-I posted a patch for (1), but it felt not-very-general. But (2) also
-feels gross and not very general. Even though it could in theory be used
-for things besides git-archive, it is really just applying git-archive's
-pruning rule, which other programs likely don't care about.
-
--Peff
+diff --git a/run-command.c b/run-command.c
+index a9fa779..a02ef62 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -230,7 +230,7 @@ static pid_t persistent_waitpid(struct child_process *cmd, pid_t pid, int *statu
+ {
+ 	pid_t waiting;
+ 
+-	if (cmd->last_status.valid) {
++	if (cmd && cmd->last_status.valid) {
+ 		*status = cmd->last_status.status;
+ 		return pid;
+ 	}
+@@ -771,7 +771,7 @@ int start_async(struct async *async)
+ int finish_async(struct async *async)
+ {
+ #ifdef NO_PTHREADS
+-	return wait_or_whine(cmd, async->pid, "child process");
++	return wait_or_whine(NULL, async->pid, "child process");
+ #else
+ 	void *ret = (void *)(intptr_t)(-1);
+ 
