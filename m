@@ -1,84 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/5] branch: improve error message for missing
- --set-upstream-to ref
-Date: Tue, 2 Apr 2013 15:04:27 -0400
-Message-ID: <20130402190427.GC32316@sigill.intra.peff.net>
-References: <20130402190134.GA17784@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Garrett Cooper <yaneurabeya@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 21:05:19 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 13/13] remote-hg: update tags globally
+Date: Tue,  2 Apr 2013 13:03:02 -0600
+Message-ID: <1364929382-1399-14-git-send-email-felipe.contreras@gmail.com>
+References: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Max Horn <max@quendi.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 02 21:05:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN6W9-0007LU-Hj
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 21:05:13 +0200
+	id 1UN6WC-0007LU-Jr
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 21:05:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932959Ab3DBTEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 15:04:33 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52490 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932947Ab3DBTEb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 15:04:31 -0400
-Received: (qmail 12864 invoked by uid 107); 2 Apr 2013 19:06:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Apr 2013 15:06:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Apr 2013 15:04:27 -0400
-Content-Disposition: inline
-In-Reply-To: <20130402190134.GA17784@sigill.intra.peff.net>
+	id S933011Ab3DBTEt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 15:04:49 -0400
+Received: from mail-gh0-f175.google.com ([209.85.160.175]:57796 "EHLO
+	mail-gh0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932965Ab3DBTEr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 15:04:47 -0400
+Received: by mail-gh0-f175.google.com with SMTP id f1so115873ghb.20
+        for <git@vger.kernel.org>; Tue, 02 Apr 2013 12:04:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=Bs3wuqaj/YDSAcbVUDeuNj9n4VejU7hbSEZbwdOCmzU=;
+        b=p6JFYa2o31Nd1HSm8Kg+nxsZOKtfs9MZNV856I8fUlEH7u/4nHvkNz/nI7AEkigIF4
+         EdYHqlfZ18bxsvG7EjZDXAjp1SjpcvMOkUV8R7CUjPqspbRl7CadZT7lKZp5P9Clb/QH
+         /XfFT5FmaFeRk9O6rdzT2+8ntu5+be6TDKjCQT1O3sSPfhhZaWTyy7YLkSG/7vO4E2qT
+         wDzgI+7ohegnmHp3mnl3msJg7JyAWHZ5sKyx/QOearrDGrctT3XsJw7D16yzEG8Z+qX0
+         vQzXAPH7ORf/bP08DMuoUNvLRZmxmnPlOuBTjOjk3QXTg2mThWUB4ZvzS/V4w0UZ84Hw
+         EmDQ==
+X-Received: by 10.236.128.34 with SMTP id e22mr16376566yhi.11.1364929487181;
+        Tue, 02 Apr 2013 12:04:47 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id u19sm4839478yhh.15.2013.04.02.12.04.44
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 02 Apr 2013 12:04:46 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2
+In-Reply-To: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219842>
 
-If we are trying to set the upstream config for a branch,
-the create_branch function will check both that the name
-resolves as a ref, and that it is either a local or
-remote-tracking branch.
-
-However, before we do so we run get_sha1 on it to find out
-whether it resolves at all (since the create_branch function
-is also used to create actual branches, it wants to know
-where to start the new branch). This means that if you feed
-a ref that does not exist to "branch --set-upstream-to",
-rather than getting a helpful message about tracking, you
-only get "not a valid object name".
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- branch.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ contrib/remote-helpers/git-remote-hg | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/branch.c b/branch.c
-index 1acbd4e..060e9e3 100644
---- a/branch.c
-+++ b/branch.c
-@@ -199,6 +199,8 @@ N_("Cannot setup tracking information; starting point is not a branch.");
- 
- static const char upstream_not_branch[] =
- N_("Cannot setup tracking information; starting point is not a branch.");
-+static const char upstream_missing[] =
-+N_("Cannot setup tracking information; starting point does not exist");
- 
- void create_branch(const char *head,
- 		   const char *name, const char *start_name,
-@@ -227,8 +229,11 @@ void create_branch(const char *head,
- 	}
- 
- 	real_ref = NULL;
--	if (get_sha1(start_name, sha1))
-+	if (get_sha1(start_name, sha1)) {
-+		if (explicit_tracking)
-+			die(_(upstream_missing));
- 		die("Not a valid object name: '%s'.", start_name);
-+	}
- 
- 	switch (dwim_ref(start_name, strlen(start_name), sha1, &real_ref)) {
- 	case 0:
+diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+index 3130b23..c9d7636 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -715,7 +715,11 @@ def do_export(parser):
+             continue
+         elif ref.startswith('refs/tags/'):
+             tag = ref[len('refs/tags/'):]
+-            parser.repo.tag([tag], node, None, True, None, {})
++            if mode == 'git':
++                msg = 'Added tag %s for changeset %s' % (tag, hghex(node[:6]));
++                parser.repo.tag([tag], node, msg, False, None, {})
++            else:
++                parser.repo.tag([tag], node, None, True, None, {})
+             print "ok %s" % ref
+         else:
+             # transport-helper/fast-export bugs
 -- 
-1.8.2.rc0.33.gd915649
+1.8.2
