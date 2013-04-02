@@ -1,93 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Aw: Re: [PATCH 1/3] Remove outdated/missleading/irrelevant
- entries from glossary-content.txt
-Date: Tue, 02 Apr 2013 11:26:58 -0700
-Message-ID: <7vy5d0dc0d.fsf@alter.siamese.dyndns.org>
-References: <559824715.741522.1364923497242.JavaMail.ngmail@webmail15.arcor-online.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Composing git repositories
+Date: Wed, 3 Apr 2013 00:05:54 +0530
+Message-ID: <CALkWK0nVax9HtM-M2zo-KH6U2jWznaUH9yBn4y1wqDW8f-mfOg@mail.gmail.com>
+References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
+ <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
+ <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
+ <51537A7B.7050206@web.de> <CALkWK0nfNCu775MBB-Y28=V93RkV24kbTLTDKWO2dZ-0yxX=Sw@mail.gmail.com>
+ <5154AACC.7050006@web.de> <CALkWK0k=g3iFjmpUQA1VkuH2kZsVX1_Hpo=LZ7CuotwHz_1++g@mail.gmail.com>
+ <CABURp0q9mV+-tEtHGpE4mh9cdbhkA8fr4i7XpBtK0fpfSYg-+A@mail.gmail.com> <51597A37.1010301@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Tue Apr 02 20:27:33 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Apr 02 20:37:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN5vg-0005qH-RL
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 20:27:33 +0200
+	id 1UN64v-0004IZ-Hk
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 20:37:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760986Ab3DBS1D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 14:27:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33579 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757676Ab3DBS1C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 14:27:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A4E8121C9;
-	Tue,  2 Apr 2013 18:27:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tknmgDcU/BOIhwuYeQwNtxKcY3E=; b=o/M+CZ
-	MKY6aPJBgkGCwdlX6ZICEFmVyIA9U5URW/tJNvK5vzLGfNkHBJ9lmITYVV0qNohS
-	bGnOznHRdQXxJJAnx4cjnErpBGDyDFkxeVeZR2d25BhRNVCNKEE98FEBDMSCSv+M
-	BF+n5bKQ/bg/tyMXPr4wREMMWattNlwG+N1Kw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QYKwrXUnmcJqngBgIN/00ONREjGdOrCw
-	MD3xPVQF9BkleL5MkQbjHwMdcxIfg9khDwTKD/Ml5iAbZaUIjn0Yq6cdC0GcnfnR
-	v5UaPCqMVYiXxMk9ywKccO5EwQzINT0g762NxVUqakIHDK7BsUTZtcZa39Q0Terw
-	0+eAUoBkomI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 122AA121C8;
-	Tue,  2 Apr 2013 18:27:01 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6FE36121C6; Tue,  2 Apr
- 2013 18:27:00 +0000 (UTC)
-In-Reply-To: <559824715.741522.1364923497242.JavaMail.ngmail@webmail15.arcor-online.net>
- (Thomas Ackermann's message of "Tue, 2 Apr 2013 19:24:57 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8B51438-9BC2-11E2-9613-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1762158Ab3DBSgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 14:36:35 -0400
+Received: from mail-ia0-f172.google.com ([209.85.210.172]:35837 "EHLO
+	mail-ia0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762152Ab3DBSgf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 14:36:35 -0400
+Received: by mail-ia0-f172.google.com with SMTP id l29so583827iag.31
+        for <git@vger.kernel.org>; Tue, 02 Apr 2013 11:36:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=XHHF0Gcldw+eY/udh39XH68lRG1lSBhch7E/FbDnQYw=;
+        b=wNMielNTHetO7QPWH5L2R4sLk+Jmr4ow3vzd2twO94jYZBM9FsZeGokPvR45EIwt0t
+         ite/Gp46Wg4ko7mNUIP8UMOLqbX37rEx8vc7faviVy8No0I58Ssrzz9SnahEdu3oUsMy
+         zz33M1hY7wy8UxCTczqBBRsrM9ZcZpi3h5WB2tuDpfJEj4tDfWKz1O9z1gWClRZbeKcC
+         MozdUOiAVD9br60JTF62O2trCMm9xa+73p28K6iM34TKdqabQ5I+oV47su/IkyEYUSVm
+         RDtjeZxZlb0XLjqE+fE7CIlfq9PopADUKNj5ZPINEFqVTbEyjqgU3ePtKltJpaMGtyFS
+         K7HQ==
+X-Received: by 10.43.9.68 with SMTP id ov4mr7009163icb.22.1364927794681; Tue,
+ 02 Apr 2013 11:36:34 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Tue, 2 Apr 2013 11:35:54 -0700 (PDT)
+In-Reply-To: <51597A37.1010301@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219826>
 
-Thomas Ackermann <th.acker@arcor.de> writes:
-
->> Even though I personally am slightly in favor of removal, I suspect
->> that is primarily because I already know what Git tag is, and it is
->> different from the type tag in the Lisp-speak.
->> 
-> I assumed the cardinality of the set of Lisp users is so small that
-> this addition will confuse more people than help somebody.
+Jens Lehmann wrote:
+> But I think we recently learned to support that use case with
+> submodules. I think there are two floating models:
 >
->> The text indeed has a room for improvement, but it probably makes
->> sense to have an entry for `directory` here, as folks who are used
->> to say "Folders" may not know what it is.
->> 
-> I assumed the number of such people so low that it's not worth
-> to keep this - to most people obvious - explanation.
+> - Tracked:
+> [...]
+>
+> - Untracked:
+>   Some people just want "the newest" tip of a branch checked out in
+>   the submodule and update that from time to time (I suspect this
+>   is because they are used to SVN externals, which I believe work
+>   that way). You throw away reproducibility, which I think is not
+>   good and not the way I expect Git to work.
+> [...]
 
-For the above two (they are of the same theme) to help one audience,
-I tend to be cautious and try not to say "I don't fall into the
-target audience, and to me it is misleading/irrelevant, so let's
-remove it".
-
->> Which one of outdated, misleading or irrelevant category does this
->> fall into?  It certainly is not outdated (diff --cc/-c is often a
->> way to view evil merges), the text defines what an evil merge is
->> precisely and I do not think it is misleading.  Is it irrelevant?
->> 
-> I considered it "irrelevant" because it tries to define 
-> "evil merge" which is - at least to my experience - not used
-> as some kind of well known notion. But I might of course be wrong.
-
-In a merge-heavy workflow, evil merges have to happen from time to
-time, and it is a good concept to know about.
-
-I however think the description is too literal and it does not lead
-to the understanding of what it is used for.  I see a few questions
-on the stackoverflow with unsatisfactory literal answers, too.
+Nope, it has nothing to do with SVN externals; I've never used them.
+And no, all repositories aren't created equal.  I should be able to
+add in magit.git into my dotfiles repository without worrying about
+which commits the other repositories were at a particular commit.  If
+my project depends on the bleeding edge of poppler and girarra, I
+should always be able to tell what commits in each subproject the
+build was passing in.  In other words, I should be able to freely
+mixed floating and fixed submodules.  There's no reason for one to be
+Right, and the other to be a shunned second-class citizen.
