@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 6/6] remote.c: introduce branch.<name>.pushremote
-Date: Tue,  2 Apr 2013 13:10:34 +0530
-Message-ID: <1364888434-30388-7-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 4/6] remote.c: introduce a way to have different remotes for fetch/push
+Date: Tue,  2 Apr 2013 13:10:32 +0530
+Message-ID: <1364888434-30388-5-git-send-email-artagnon@gmail.com>
 References: <1364888434-30388-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>
@@ -12,133 +12,146 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMvp9-0007OZ-3J
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 09:40:07 +0200
+	id 1UMvp8-0007OZ-2J
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 09:40:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932111Ab3DBHjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 03:39:36 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:45392 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932103Ab3DBHjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 03:39:35 -0400
-Received: by mail-pb0-f53.google.com with SMTP id un15so91713pbc.40
-        for <git@vger.kernel.org>; Tue, 02 Apr 2013 00:39:33 -0700 (PDT)
+	id S932101Ab3DBHja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 03:39:30 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:49667 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932098Ab3DBHj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 03:39:29 -0400
+Received: by mail-pd0-f175.google.com with SMTP id t10so93770pdi.6
+        for <git@vger.kernel.org>; Tue, 02 Apr 2013 00:39:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=N5e4lbh4Jt7UAEphx9zpyXn5Krr2ubDv3mZqm0lznKM=;
-        b=PdtiGfEfKKHRci4uaw+pwrUkUwY3CtN36zROLiVr4boLZrhflDiC7h2E5JFzKox06l
-         j2wX+1ec4kfY//HEmz25MBfts8P+EkOPHiY5sDN4fMonpMsEfmRRklpvGJxmTfpex/AO
-         IPYaSAhia9UQ9dzFUdKeLBXXo+PPo0dGgk5EWzGOqCsvi39mfUAxGy5T/VMro739F+40
-         k7SjloJx4BxRUrrsxGQ0TddthYhwedU44tYcJ7MmeqqQJbXRKan7myWbBNxFzfMwsh9E
-         vyDoVp/eRZFratP1AtU4FcAptHr+a0JVeLhT7z2KDL0mDVbVFuT7XowX9rFkNd7FvIxC
-         akEA==
-X-Received: by 10.68.242.132 with SMTP id wq4mr22342733pbc.160.1364888373608;
-        Tue, 02 Apr 2013 00:39:33 -0700 (PDT)
+        bh=z/N0uoGhaMBTQK7cOBBXvIG2JCdssq+iLq93JuXuyeM=;
+        b=Y86fIvxgMozPPwLvwQJf1IoPA+npoD5PP/jgF3yQJ7D0PO/kO0wq4oIhY2q/pnHNLF
+         wIkBzc8fC7Pzq10AxoA1klzgp4NlTZ0ivH8lwFaRkEj+V5EolD34+DljirJ4iEuq4piv
+         XQOM9Y+r39xdp08eufj0rKL5p0WSSv/kdbvOjRttwMbS2joVpTwNCXYUNuVrjweTb0nV
+         zcxuDfqC1uGMnWViwIkdYUtO8QlIukWV7XKHPx4uMkc/c52tDd+mXYx3qO26OdeGQ+LE
+         Qr1fu2nq+k4RKZdXSD6ieWNWHfRp+A6uYVZVtvCvIfKYVCn7FNyIfcLp9k31l6jM8IP8
+         DLWQ==
+X-Received: by 10.66.228.194 with SMTP id sk2mr23755338pac.51.1364888368671;
+        Tue, 02 Apr 2013 00:39:28 -0700 (PDT)
 Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPS id oq3sm1259341pac.16.2013.04.02.00.39.31
+        by mx.google.com with ESMTPS id oq3sm1259341pac.16.2013.04.02.00.39.26
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 02 Apr 2013 00:39:33 -0700 (PDT)
+        Tue, 02 Apr 2013 00:39:27 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.363.g901f5bc
 In-Reply-To: <1364888434-30388-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219749>
 
-This new configuration variable overrides `remote.pushdefault` and
-`branch.<name>.remote` for pushes.  When you pull from one
-place (e.g. your upstream) and push to another place (e.g. your own
-publishing repository), you would want to set `remote.pushdefault` to
-specify the remote to push to for all branches, and use this option to
-override it for a specific branch.
+Currently, do_push() in push.c calls remote_get(), which gets the
+configured remote for fetching and pushing.  Replace this call with a
+call to pushremote_get() instead, a new function that will return the
+remote configured specifically for pushing.  This function tries to
+work with the string pushremote_name, before falling back to the
+codepath of remote_get().  This patch has no visible impact, but
+serves to enable future patches to introduce configuration variables
+to set pushremote_name.  For example, you can now do the following in
+handle_config():
+
+    if (!strcmp(key, "remote.pushdefault"))
+       git_config_string(&pushremote_name, key, value);
+
+Then, pushes will automatically go to the remote specified by
+remote.pushdefault.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- Documentation/config.txt | 19 +++++++++++++++----
- remote.c                 |  4 ++++
- t/t5516-fetch-push.sh    | 15 +++++++++++++++
- 3 files changed, 34 insertions(+), 4 deletions(-)
+ builtin/push.c |  2 +-
+ remote.c       | 25 +++++++++++++++++++++----
+ remote.h       |  1 +
+ 3 files changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9c6fd4a..3d750e0 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -730,9 +730,19 @@ branch.<name>.remote::
- 	When on branch <name>, it tells 'git fetch' and 'git push'
- 	which remote to fetch from/push to.  The remote to push to
- 	may be overridden with `remote.pushdefault` (for all branches).
--	If no remote is configured, or if you are not on any branch,
--	it defaults to `origin` for fetching and `remote.pushdefault`
--	for pushing.
-+	The remote to push to, for the current branch, may be further
-+	overridden by `branch.<name>.pushremote`.  If no remote is
-+	configured, or if you are not on any branch, it defaults to
-+	`origin` for fetching and `remote.pushdefault` for pushing.
-+
-+branch.<name>.pushremote::
-+	When on branch <name>, it overrides `branch.<name>.remote` for
-+	pushing.  It also overrides `remote.pushdefault` for pushing
-+	from branch <name>.  When you pull from one place (e.g. your
-+	upstream) and push to another place (e.g. your own publishing
-+	repository), you would want to set `remote.pushdefault` to
-+	specify the remote to push to for all branches, and use this
-+	option to override it for a specific branch.
+diff --git a/builtin/push.c b/builtin/push.c
+index 5e4a0e9..909c34d 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -322,7 +322,7 @@ static int push_with_options(struct transport *transport, int flags)
+ static int do_push(const char *repo, int flags)
+ {
+ 	int i, errs;
+-	struct remote *remote = remote_get(repo);
++	struct remote *remote = pushremote_get(repo);
+ 	const char **url;
+ 	int url_nr;
  
- branch.<name>.merge::
- 	Defines, together with branch.<name>.remote, the upstream branch
-@@ -1903,7 +1913,8 @@ receive.updateserverinfo::
- 
- remote.pushdefault::
- 	The remote to push to by default.  Overrides
--	`branch.<name>.remote` for all branches.
-+	`branch.<name>.remote` for all branches, and is overridden by
-+	`branch.<name>.pushremote` for specific branches.
- 
- remote.<name>.url::
- 	The URL of a remote repository.  See linkgit:git-fetch[1] or
 diff --git a/remote.c b/remote.c
-index 6337e11..68eb99b 100644
+index 34ddc5b..2b06e22 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -364,6 +364,10 @@ static int handle_config(const char *key, const char *value, void *cb)
- 				default_remote_name = branch->remote_name;
- 				explicit_default_remote_name = 1;
- 			}
-+		} else if (!strcmp(subkey, ".pushremote")) {
-+			if (branch == current_branch)
-+				if (git_config_string(&pushremote_name, key, value))
-+					return -1;
- 		} else if (!strcmp(subkey, ".merge")) {
- 			if (!value)
- 				return config_error_nonbool(key);
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 797b537..7bf1555 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -519,6 +519,21 @@ test_expect_success 'push with config remote.*.pushurl' '
- 	check_push_result testrepo $the_commit heads/master
- '
+@@ -49,6 +49,7 @@ static int branches_nr;
  
-+test_expect_success 'push with config branch.*.pushremote' '
-+	mk_test up_repo heads/master &&
-+	mk_test side_repo heads/master &&
-+	mk_test down_repo heads/master &&
-+	test_config remote.up.url up_repo &&
-+	test_config remote.pushdefault side_repo &&
-+	test_config remote.down.url down_repo &&
-+	test_config branch.master.remote up &&
-+	test_config branch.master.pushremote down &&
-+	git push &&
-+	check_push_result up_repo $the_first_commit heads/master &&
-+	check_push_result side_repo $the_first_commit heads/master &&
-+	check_push_result down_repo $the_commit heads/master
-+'
+ static struct branch *current_branch;
+ static const char *default_remote_name;
++static const char *pushremote_name;
+ static int explicit_default_remote_name;
+ 
+ static struct rewrites rewrites;
+@@ -670,17 +671,21 @@ static int valid_remote_nick(const char *name)
+ 	return !strchr(name, '/'); /* no slash */
+ }
+ 
+-struct remote *remote_get(const char *name)
++static struct remote *remote_get_1(const char *name, const char *pushremote_name)
+ {
+ 	struct remote *ret;
+ 	int name_given = 0;
+ 
+-	read_config();
+ 	if (name)
+ 		name_given = 1;
+ 	else {
+-		name = default_remote_name;
+-		name_given = explicit_default_remote_name;
++		if (pushremote_name) {
++			name = pushremote_name;
++			name_given = 1;
++		} else {
++			name = default_remote_name;
++			name_given = explicit_default_remote_name;
++		}
+ 	}
+ 
+ 	ret = make_remote(name, 0);
+@@ -699,6 +704,18 @@ struct remote *remote_get(const char *name)
+ 	return ret;
+ }
+ 
++struct remote *remote_get(const char *name)
++{
++	read_config();
++	return remote_get_1(name, NULL);
++}
 +
- test_expect_success 'push with dry-run' '
++struct remote *pushremote_get(const char *name)
++{
++	read_config();
++	return remote_get_1(name, pushremote_name);
++}
++
+ int remote_is_configured(const char *name)
+ {
+ 	int i;
+diff --git a/remote.h b/remote.h
+index 8743d6e..cf56724 100644
+--- a/remote.h
++++ b/remote.h
+@@ -51,6 +51,7 @@ struct remote {
+ };
  
- 	mk_test testrepo heads/master &&
+ struct remote *remote_get(const char *name);
++struct remote *pushremote_get(const char *name);
+ int remote_is_configured(const char *name);
+ 
+ typedef int each_remote_fn(struct remote *remote, void *priv);
 -- 
 1.8.2.363.g901f5bc
