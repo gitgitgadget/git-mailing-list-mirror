@@ -1,76 +1,75 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] test-lint-duplicates: check numbering in contrib/remote-helpers
-Date: Tue, 2 Apr 2013 19:10:27 +0200
-Message-ID: <CALWbr2y2Nh7HPEXHiezoWqp5s28ct2H2-Z2xCXS4dc-VaNdJ8Q@mail.gmail.com>
-References: <201304021853.48643.tboegi@web.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: ZSH segmentation fault while completing "git mv dir/"
+Date: Tue, 02 Apr 2013 19:00:53 +0200
+Message-ID: <vpqppyceuka.fsf@grenoble-inp.fr>
+References: <vpqd2v686fi.fsf@grenoble-inp.fr> <513DF4D1.6000500@gmail.com>
+	<vpq8v5uueug.fsf@grenoble-inp.fr> <513E3190.20100@gmail.com>
+	<20130312013736.GB7105@unpythonic.net>
+	<vpqwqtdkq9z.fsf@grenoble-inp.fr>
+	<CAMP44s3ocY7qpESHCDRdHJBsH1DV+k1Z5OwSqsWndMZd_s6oBQ@mail.gmail.com>
+	<vpqwqslgfzf.fsf@grenoble-inp.fr>
+	<7va9pgg9p7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
+Content-Type: text/plain
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff Epler <jepler@unpythonic.net>,
+	Manlio Perillo <manlio.perillo@gmail.com>,
 	git <git@vger.kernel.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Apr 02 19:11:01 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 02 19:12:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN4jb-0004C8-RB
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:11:00 +0200
+	id 1UN4kq-00051h-3Z
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761959Ab3DBRK3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Apr 2013 13:10:29 -0400
-Received: from mail-qe0-f53.google.com ([209.85.128.53]:56851 "EHLO
-	mail-qe0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761846Ab3DBRK2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Apr 2013 13:10:28 -0400
-Received: by mail-qe0-f53.google.com with SMTP id q19so348229qeb.40
-        for <git@vger.kernel.org>; Tue, 02 Apr 2013 10:10:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=L2cs9DGcNUNu0EyNscAiVMLizKqh3bAlveFm6BNJiRE=;
-        b=CTgyvrIRSNqA6F2ogZ6S+G4U6HIYGNBQjUeLUKPkVQ/eBhORZ+ooUjHP4/Fr7zI2ON
-         +s8wvtZNaGobb32DdkPzqgFL5Tt5NECh+q4Xkw/AIXr+CRYCAssay1pcVTFSZiju/Ikm
-         f4nRUg5Wvpv7D4lnsAmEGLhgw7gWPbBhvdixtuZvn1SPiZalSS6DCmsYc4aowcQj++Da
-         YiJ2L7XQLcHs0/10jzeJix+BsDFDHC6NUATdVOAgMJIsmtI0kRIfnvd8vKk7Ylogb+A2
-         EX07ej6SHI7wUsmSu4Hw7KRQOnsrrzxw4M/ni0uSEvQuJ9WA/979GVU/uFcUcXUAOUl/
-         YkFw==
-X-Received: by 10.224.52.68 with SMTP id h4mr16457626qag.17.1364922627672;
- Tue, 02 Apr 2013 10:10:27 -0700 (PDT)
-Received: by 10.49.70.163 with HTTP; Tue, 2 Apr 2013 10:10:27 -0700 (PDT)
-In-Reply-To: <201304021853.48643.tboegi@web.de>
+	id S1762038Ab3DBRLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 13:11:40 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50983 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761999Ab3DBRKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 13:10:47 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r32H0pwk014369
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 2 Apr 2013 19:00:51 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UN4Zp-0006Je-Ch; Tue, 02 Apr 2013 19:00:53 +0200
+In-Reply-To: <7va9pgg9p7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 02 Apr 2013 09:48:36 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 02 Apr 2013 19:00:54 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r32H0pwk014369
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1365526855.18994@TQwsOJkQh/m40RT5Iycffw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219804>
 
-On Tue, Apr 2, 2013 at 6:53 PM, Torsten B=C3=B6gershausen <tboegi@web.d=
-e> wrote:
-> ---
->  contrib/remote-helpers/Makefile                |   3 +-
->  contrib/remote-helpers/t5810-test-bzr.sh       | 143 +++++++
->  contrib/remote-helpers/t5820-test-hg-bidi.sh   | 243 +++++++++++
->  contrib/remote-helpers/t5821-test-hg-hg-git.sh | 534 +++++++++++++++=
-++++++++++
->  contrib/remote-helpers/t5830-test-hg.sh        | 121 ++++++
->  contrib/remote-helpers/test-bzr.sh             | 143 -------
->  contrib/remote-helpers/test-hg-bidi.sh         | 243 -----------
->  contrib/remote-helpers/test-hg-hg-git.sh       | 534 ---------------=
-----------
->  contrib/remote-helpers/test-hg.sh              | 121 ------
->  t/Makefile                                     |   2 +-
->  10 files changed, 1044 insertions(+), 1043 deletions(-)
->  create mode 100755 contrib/remote-helpers/t5810-test-bzr.sh
->  create mode 100755 contrib/remote-helpers/t5820-test-hg-bidi.sh
->  create mode 100755 contrib/remote-helpers/t5821-test-hg-hg-git.sh
->  create mode 100755 contrib/remote-helpers/t5830-test-hg.sh
->  delete mode 100755 contrib/remote-helpers/test-bzr.sh
->  delete mode 100755 contrib/remote-helpers/test-hg-bidi.sh
->  delete mode 100755 contrib/remote-helpers/test-hg-hg-git.sh
->  delete mode 100755 contrib/remote-helpers/test-hg.sh
+Junio C Hamano <gitster@pobox.com> writes:
 
-Don't hesitate to format patches with -M :)
+> Would it help users more to have that as part of the instruction at
+> the beginning of contrib/completion/git-completion.zsh where it
+> already says "here is how you use it via fpath", than leaving it
+> here in the list archive?
+
+Juging from the answers I got, I do not think many people are hit by the
+bug, and the problem will anyway disappear as people update their ZSH,
+so I'm not sure it's worth the trouble.
+
+This thread is already #1 on google with "git zsh segmentation fault" so
+it's not terribly difficult to find.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
