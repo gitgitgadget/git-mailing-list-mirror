@@ -1,106 +1,95 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 1/2] diffcore-break: don't divide by zero
-Date: Tue, 2 Apr 2013 22:36:51 +0100
-Message-ID: <20130402213651.GG2222@serenity.lan>
-References: <cover.1364931627.git.john@keeping.me.uk>
- <a2b6c61371ac6ff1e180c6600e57499ff94b2fd2.1364931627.git.john@keeping.me.uk>
- <7vvc84ab2y.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 0/5] branch --set-upstream-to error-message
+ improvements
+Date: Tue, 02 Apr 2013 14:50:47 -0700
+Message-ID: <7vmwtga9fs.fsf@alter.siamese.dyndns.org>
+References: <F58991CB-9C83-4DA6-B82B-2E6C874C30EB@gmail.com>
+ <20130402172333.GB24698@sigill.intra.peff.net>
+ <A4C40BCB-85DD-4BCB-8BF0-79A75DE73211@gmail.com>
+ <20130402175113.GD24698@sigill.intra.peff.net>
+ <20130402190134.GA17784@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 23:37:28 2013
+Cc: Garrett Cooper <yaneurabeya@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 02 23:51:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN8tU-00080n-C7
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 23:37:28 +0200
+	id 1UN96t-0007Is-Bj
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 23:51:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762012Ab3DBVg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 17:36:58 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:39945 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761870Ab3DBVg6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 17:36:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 52844CDA5AF;
-	Tue,  2 Apr 2013 22:36:57 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eMFInOWUjFx5; Tue,  2 Apr 2013 22:36:56 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 873A7CDA590;
-	Tue,  2 Apr 2013 22:36:53 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7vvc84ab2y.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758462Ab3DBVuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 17:50:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40151 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756703Ab3DBVut (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 17:50:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24FAF1256F;
+	Tue,  2 Apr 2013 21:50:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6leJl6clWTKMmkxuzBBPKcHl46A=; b=XEN4yi
+	liSWpgiePnU1JHfZoIjlVB4FO2LfgegsB/56IFrQWJN+5p8C+j1Vw2KK9RUNW7BT
+	/b+x/5kDH1d3WjkOFebaecO8q04V+0LXmS1pDNfPtXBCZ2t+kzS1xJ48htGjGXcC
+	GT7VqLYAj/LH7AbdBnXEuFYPtnMRA9IOAvs64=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rNJnmXXpCH0xzPonR1S2MNpVUNpofRMZ
+	1VQKjZTt5PWirc72NX5p1whyDD5ekQmDDUbF4va7/07IuWRRajk93+hTzulb6wiF
+	aaGGK04XptU5Qp+OGZh1B07ZDKCbOkzTcjgJR9qXXgRRi1KUGsDwE73BwR1F9+om
+	0E3djG5qB5U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CDEB1256E;
+	Tue,  2 Apr 2013 21:50:49 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 97DFB1256D; Tue,  2 Apr
+ 2013 21:50:48 +0000 (UTC)
+In-Reply-To: <20130402190134.GA17784@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 2 Apr 2013 15:01:34 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6142C046-9BDF-11E2-BA43-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219891>
 
-On Tue, Apr 02, 2013 at 02:15:17PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > When the source file is empty, the calculation of the merge score
-> > results in a division by zero.  Since the merge score is initialized to
-> > zero, it makes sense to just leave it as it is if the source size is
-> > zero.  This means that we still use the extent of damage metric to
-> > decide whether to break the filepair.
-> 
-> Well spotted.  An empty blob to another blob that is larger than 400
-> bytes will trigger div0, and it makes sense to leave merge-score to
-> 0 (i.e. do not show as whole-delete-then-whole-add after rename
-> detection is done and the broken filepair is merged back).
-> 
-> Actually, if src->size is 0, we probably shouldn't break the filepair
-> in the first place.  That is, if your preimage and postimage looked
-> like these:
-> 
-> 
->      == preimage ==		== postimage ==
-> 
->      F (empty file)		F (a large file)
-> 			        E (a new empty file)
-> 
-> do we want to see F renamed to E and then a new file created as F
-> while running "git diff -B -M"?  I doubt it.
-> 
-> So in that sense, this might be a better solution.  I dunno.
+Jeff King <peff@peff.net> writes:
 
-I considered this, but didn't quite understand the code well enough to
-be sure that was the right thing to do.  Does it make sense to bail out
-early if dst->size is zero as well?
+> On Tue, Apr 02, 2013 at 01:51:13PM -0400, Jeff King wrote:
+>
+>> Things slowly improve as people make suggestions. I think the thing that
+>> might have helped here is better advice when "set-upstream-to" is
+>> pointed to a ref that does not exist.
+>> 
+>> Patches coming in a minute.
+>
+> Or 60 minutes. :)
+>
+> I'm not decided on whether the last patch is overkill or not (or even if
+> it is not, whether it may end up confusing people who do not fit into
+> one of the slots it suggests).
 
-The message for commit 6dd4b66 (Fix diffcore-break total breakage)
-indicates that "don't bother to break small files" is wrong in some
-cases, but it I wonder if "don't bother to break empty files" is okay.
+Yeah, I am uneasy about 5/5 for the same reason.  
+Also I feel a bit uneasy about 1/5 as well.
 
->  diffcore-break.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/diffcore-break.c b/diffcore-break.c
-> index 44f8678..eabafd5 100644
-> --- a/diffcore-break.c
-> +++ b/diffcore-break.c
-> @@ -67,6 +67,8 @@ static int should_break(struct diff_filespec *src,
->  	max_size = ((src->size > dst->size) ? src->size : dst->size);
->  	if (max_size < MINIMUM_BREAK_SIZE)
->  		return 0; /* we do not break too small filepair */
-> +	if (src->size == 0)
-> +		return 0; /* we do not let empty files get renamed */
->  
->  	if (diffcore_count_changes(src, dst,
->  				   &src->cnt_data, &dst->cnt_data,
+>> If the user requests to --set-upstream-to a branch that does
+>> not exist, then either:
+>> 
+>>   1. It was a typo.
+>> 
+>>   2. They thought the branch should exist.
+
+Could there be the third?
+
+    3. She planned to create a branch after setting the
+       configuration.
+
+I think it is remote (no pun intended) possibility, and I may be
+worried about people's existing workflow too much (as usual).
