@@ -1,67 +1,72 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] test-lint-duplicates: check numbering in contrib/remote-helpers
-Date: Tue, 2 Apr 2013 11:46:05 -0600
-Message-ID: <CAMP44s05-H23pEhxtZq76S5fqTsf5Uxs1UVpPypvXnbJkeCnRQ@mail.gmail.com>
-References: <201304021853.48643.tboegi@web.de>
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: RFC: allowing multiple parallel sequencers
+Date: Tue, 2 Apr 2013 13:46:40 -0400
+Message-ID: <20130402174640.GA14473@neilslaptop.think-freely.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: peff@peff.net, apelisse@gmail.com, git@vger.kernel.org
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Apr 02 19:46:39 2013
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 02 19:47:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN5I6-0003N7-LE
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:46:38 +0200
+	id 1UN5Ik-0003oi-Ix
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:47:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759304Ab3DBRqJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Apr 2013 13:46:09 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:43886 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758317Ab3DBRqG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Apr 2013 13:46:06 -0400
-Received: by mail-lb0-f179.google.com with SMTP id t1so750309lbd.38
-        for <git@vger.kernel.org>; Tue, 02 Apr 2013 10:46:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=6bRpVxDOy5EbFCWzlPFdtZiuaEplVfuFEZq9DopJAdo=;
-        b=NLuBfgMILB+I7LlOs92wDZ+V2GXtMVPwAbNJ8zU3Mc2Wtec+Us+niG0FSStjEAEefP
-         fnSHEpc2ihtOr4PLpTf1jOQXdbLMcbytNBZQf6Srp3SS3hzHIVu9U6AL0Ev+RLet9b4t
-         O2kFITiGC9L1kZCRu99laUGa4yR7Tr1kuVXkmRLba4w1yhYlQE5txcRTPdeP8yFQfUec
-         j6bHedoKpDnuIMigkCFwEEneZm54osREoJ6wsTeFQwDDMdhDl9lyiFfFehYbLY2iuYKb
-         rhaEmZ20tLNLTNkSPcJNLiOjRLwsHIlp4wimLFFqUmp7RnHnJUXtKyCpm0x8VocdIxVL
-         9KFQ==
-X-Received: by 10.112.143.10 with SMTP id sa10mr4115741lbb.36.1364924765388;
- Tue, 02 Apr 2013 10:46:05 -0700 (PDT)
-Received: by 10.114.20.36 with HTTP; Tue, 2 Apr 2013 10:46:05 -0700 (PDT)
-In-Reply-To: <201304021853.48643.tboegi@web.de>
+	id S1758565Ab3DBRqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 13:46:50 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:45737 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758221Ab3DBRqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 13:46:49 -0400
+Received: from nat-pool-3-rdu.redhat.com ([66.187.233.203] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1UN5IF-0003PV-50
+	for git@vger.kernel.org; Tue, 02 Apr 2013 13:46:49 -0400
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219819>
 
-On Tue, Apr 2, 2013 at 10:53 AM, Torsten B=C3=B6gershausen <tboegi@web.=
-de> wrote:
+Hey-
+	I've recently started looking into the possibility of having git support
+multiple in-progress sequencers, and wanted to solicit opinions for how best to
+do it.  The use case is primarily for cherry-pick - i.e. I often have need to
+cherry pick a large set of commits to an older kernel, and I may do this for
+several work efforts in parallel.  As such, it would be great if I could be able
+to have multiple sequencer states in progress that could be swapped out with one
+another.  I know this could be done manually by saving the sequencer directory
+to another name and moving it back, but it would be really nice if there was
+something a bit more polished and integrated.  The thoughts I had were:
 
-> Rename the tests in contrib/remote-helpers into
-> t5810-test-bzr.sh,
-> t5820-test-hg-bidi.sh,
-> t5821-test-hg-hg-git.sh,
-> t5830-test-hg.sh
->
-> Feed the numbers used in contrib/remote-helpers into t/Makefile
-> and check that numbering is unique across both directories
+1) A per branch sequence directory - when creating the sequence directory,
+prepend the name of the branch that you are on to the sequencer directory name,
+and lookup the sequencer using that prefix.  This would fit quite well I think.
+It would allow us to maintain a sequencer per branch, and would be relatively
+easy to implement (we would need to have a generic function to return the
+current branch name, and some extra check to delete sequencers when branches are
+deleted, but nothing too difficult).  It would be problematic however, in that
+working in detached head state would preclude the use of the mechanism (we could
+work around that by using a global sequencer in detached head mode, or we could
+add an option to specify a sequencer prefix).
 
-TBH I don't see the point of this; we don't *need* to run
-test-lint-duplicates here, the system should adapt to the situation,
-and it already does, no need to add four digit numbers just so we can
-run test-lint-duplicates.
+2) Augment the git-stash command to save sequencer state optionally.  This would
+be somewhat more difficult to implement I think (we would need to add
+.git/sequencer/* to the untracked file list when creating the stash commit).  It
+would however allow arbitrary sequencers to be used on arbitrary branches
+(including detached head mode, if thats useful).
 
---=20
-=46elipe Contreras
+So, before I went implementing, I wanted to solicit opinions here.  Does anyone
+have any thoughts (including completely different directions to move in for this
+feature)?
+
+Thanks!
+Neil
