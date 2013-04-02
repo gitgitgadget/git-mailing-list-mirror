@@ -1,86 +1,77 @@
-From: Mikko Rapeli <mikko.rapeli@iki.fi>
-Subject: Re: git https transport and wrong password
-Date: Tue, 2 Apr 2013 23:20:54 +0300
-Message-ID: <20130402202054.GX30514@lakka.kapsi.fi>
-References: <20130402155440.GT30514@lakka.kapsi.fi>
- <20130402192845.GC17784@sigill.intra.peff.net>
- <20130402194751.GV30514@lakka.kapsi.fi>
- <20130402200551.GA535@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 07/13] remote-hg: redirect buggy mercurial output
+Date: Tue, 2 Apr 2013 14:22:44 -0600
+Message-ID: <CAMP44s1C37+drw3HhysO4aRgxUt=knAKnT+Bk0JCqLr=CL5yjQ@mail.gmail.com>
+References: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com>
+	<1364929382-1399-8-git-send-email-felipe.contreras@gmail.com>
+	<7vehesd7rl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 02 22:21:26 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Max Horn <max@quendi.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 02 22:23:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN7ht-0007vA-Cb
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 22:21:25 +0200
+	id 1UN7jf-0000bd-7n
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 22:23:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933201Ab3DBUU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 16:20:57 -0400
-Received: from mail.kapsi.fi ([217.30.184.167]:43431 "EHLO mail.kapsi.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932593Ab3DBUU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 16:20:56 -0400
-Received: from lakka.kapsi.fi ([2001:1bc8:1004::1] ident=Debian-exim)
-	by mail.kapsi.fi with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <mikko.rapeli@iki.fi>)
-	id 1UN7hO-0007ge-D5; Tue, 02 Apr 2013 23:20:54 +0300
-Received: from mcfrisk by lakka.kapsi.fi with local (Exim 4.72)
-	(envelope-from <mikko.rapeli@iki.fi>)
-	id 1UN7hO-0003mC-Al; Tue, 02 Apr 2013 23:20:54 +0300
-Content-Disposition: inline
-In-Reply-To: <20130402200551.GA535@sigill.intra.peff.net>
-X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
-X-SA-Exim-Mail-From: mikko.rapeli@iki.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+	id S1762224Ab3DBUWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 16:22:47 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:48490 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758662Ab3DBUWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 16:22:46 -0400
+Received: by mail-lb0-f180.google.com with SMTP id t11so882807lbi.39
+        for <git@vger.kernel.org>; Tue, 02 Apr 2013 13:22:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=R8k6Bo/ErIPMefmgweJB8Gs8vSIoHBVk1G5l9Zbl8J4=;
+        b=Rxq8Dg0tx7JkZJ7wr2YDtnWshPEoLY5p8+gv8eMn8JwQf5RrMSROwZhlJdigs7f29w
+         EbuOotDAJzhNmxoHxQFHKvQR/MWWn3+t82hLFAn9VGQS07P7dbBdF48zC6d3ZH0lUdR5
+         RjwR/WlqXdOqvDa8IZluh3JoeTwNySemrXdeDF9dctsd8JHLJDz9G7TnH96PSLsqALNA
+         PZfDi+05SjZuSTPJLMnUH6+dfCDNPO57gI7kyrfv4gN1G9fwSU+sgTywCFzLzyxC2ANo
+         bVlkUDiitYdP7isKcyvQ8IFB+dsfOY1Eg2ODDiUfGMFdAQRE7/UJlnPinYnjfKcahc5+
+         b/tw==
+X-Received: by 10.112.130.201 with SMTP id og9mr8486688lbb.65.1364934165053;
+ Tue, 02 Apr 2013 13:22:45 -0700 (PDT)
+Received: by 10.114.20.36 with HTTP; Tue, 2 Apr 2013 13:22:44 -0700 (PDT)
+In-Reply-To: <7vehesd7rl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219879>
 
-On Tue, Apr 02, 2013 at 04:05:51PM -0400, Jeff King wrote:
-> On Tue, Apr 02, 2013 at 10:47:51PM +0300, Mikko Rapeli wrote:
-> 
-> > Don't know anything about curl but maybe git could parse the url for a
-> > username and prompt for the password before the first 401 failure roundtrip
-> > that's now in place. I guess most of this logic is in http.c.
-> 
-> We used to do that but stopped, as curl might also be able to retrieve
-> the password from .netrc; the extra prompt was an annoyance to users
-> in this situation.
+On Tue, Apr 2, 2013 at 1:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> We can't use stdout for that in remote helpers.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>
+> You may want to clarify "buggy output" a bit.  Will mercurial
+> forever be broken?  Some versions of Hg emit [[[it is unclear for
+> Junio to tell what it is to fill this blank]]] to its output that
+> we want to ignore?
 
-Ok, I think I've seen this before and ended up storing passwords in .netrc.
+The problem is that mercurial's code is kind of hardcoded to run under
+mercurial's UI, so it throws messages around willynillingly, like:
 
-> Now that we have the credential subsystem, I would recommend dropping
-> usernames from all git-over-http URLs, and either:
-> 
->   1. Using a credential helper that supports secure long-term storage
->      (osxkeychain, wincred, etc).
-> 
->   2. Specifying the username to the credential subsystem explicitly, by
->      putting something like:
-> 
->        [credential "https://yourhost/"]
->               username = yourusername
-> 
->      in your git config.
-> 
-> Obviously (1) is nicer, but you may have corporate policies against
-> storing credentials. Or you may have a complicated single sign-on
-> procedure, where the password changes. In that case, I would still say
-> it is worth writing a custom helper script that can feed the temporary
-> credential to git.
+searching for changes
+no changes found
 
-Thanks, I'll have a look at these helpers. Policies we may have but in
-practice I think many just store plaintext passwords in giturls, which
-is obviously the worst case, but it works against accidental typos in
-the password prompt (though blows up when the mandatory password change
-comes along).
+And they can't be turned off. Theoretically we could override
+mercurial's UI class, but I think that has the potential to create
+more problems, it's not worth at this point in time.
 
--Mikko
+Cheers.
+
+-- 
+Felipe Contreras
