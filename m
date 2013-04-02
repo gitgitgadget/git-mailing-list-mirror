@@ -1,111 +1,175 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] diffcore-break: don't divide by zero
-Date: Tue, 02 Apr 2013 15:41:10 -0700
-Message-ID: <7va9pga73t.fsf@alter.siamese.dyndns.org>
-References: <cover.1364931627.git.john@keeping.me.uk>
- <a2b6c61371ac6ff1e180c6600e57499ff94b2fd2.1364931627.git.john@keeping.me.uk>
- <7vvc84ab2y.fsf@alter.siamese.dyndns.org>
- <20130402213651.GG2222@serenity.lan>
+Subject: Re: [PATCH V3 4/5] Help.c: add list_common_guides_help() function
+Date: Tue, 02 Apr 2013 16:10:15 -0700
+Message-ID: <7vobdw8r6w.fsf@alter.siamese.dyndns.org>
+References: <1364942392-576-1-git-send-email-philipoakley@iee.org>
+ <1364942392-576-5-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Apr 03 00:41:57 2013
+Cc: GitList <git@vger.kernel.org>, "W. Trevor King" <wking@tremily.us>,
+	David Aguilar <davvid@gmail.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Wed Apr 03 01:10:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN9tt-0003yc-0b
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 00:41:57 +0200
+	id 1UNALu-0005E3-Si
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 01:10:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757057Ab3DBWlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 18:41:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34783 "EHLO
+	id S1756999Ab3DBXKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 19:10:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39946 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751729Ab3DBWlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 18:41:20 -0400
+	id S1751334Ab3DBXKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 19:10:18 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EADE0121E1;
-	Tue,  2 Apr 2013 22:41:19 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BCC512AAA;
+	Tue,  2 Apr 2013 23:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sgW6fA2un5MJR/q8wCJkU6c1bdo=; b=QYjgkd
-	lZQkKTMI+aySdzEdN2cGNSNnEJAVhGOtSzKVKAlhwiJjtAdFKype4eBCJOZWyDyP
-	0+EFFCfDCHpTN/kUKLgmw52vKD+mQuCsafKf+qw/k5V8vTg20QmWcTQbTWeoQF8F
-	tLugjv1SQZz6sgzQVYHQk7mTr0gr0h06lul2o=
+	:content-type; s=sasl; bh=g+2EwQ/kaDge8alceo7FK/lnq9A=; b=itgRJa
+	SmhC2lfb3F6QxFnaI7Aob+4o2TdLVMNCfAHmSeDgLw4mO8Pxm4UlHMxvvNdCTqwH
+	sTjzpkjd1xTOmRGayPI3kcFcbsv3TTIvdPp6sdEOWQ61ZpqYehJ9ltmJGnk6ys9m
+	c9fnHVJX46sc9BUHca7V92cZ3P0nOgPO0/tZ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u/iox2ecUW2ymFuLL7Sr9wh+cc2SvNfi
-	7Bq9rW3f3QkRK1ddx5KIsKHDBoJsBOqpiPxqw4ZOVWIL8ATyHPOKRjSkzNhP0eEb
-	2aktl3hsMP89l4W/P4jEHK+y94PFzT9JFByGMCJD5HfVIVTWmh5ZviZZTKxGgJ62
-	ILDL5YM3OJo=
+	:content-type; q=dns; s=sasl; b=V8pvSJkNzrORXTXixgWQhDlpWps6sJNe
+	XTeGHWnJE0N/YTc3aeRkC6yi0ObVWUip0hI8Ibr1PXajtoKuJrMJrhLrbE5WwMO6
+	qUiGRe6y48qyWzB8gRLJmDnslAJGL7Xpm63kK1LLil+/luMnrNeY1dd6Ux2zS4g9
+	KXzSehZsX7M=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFA52121E0;
-	Tue,  2 Apr 2013 22:41:19 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22B6612AA9;
+	Tue,  2 Apr 2013 23:10:18 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 562CD121DB; Tue,  2 Apr
- 2013 22:41:19 +0000 (UTC)
-In-Reply-To: <20130402213651.GG2222@serenity.lan> (John Keeping's message of
- "Tue, 2 Apr 2013 22:36:51 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 40BAF12AA8; Tue,  2 Apr
+ 2013 23:10:17 +0000 (UTC)
+In-Reply-To: <1364942392-576-5-git-send-email-philipoakley@iee.org> (Philip
+ Oakley's message of "Tue, 2 Apr 2013 23:39:51 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6FB79DB6-9BE6-11E2-9FFE-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7B97B586-9BEA-11E2-BC78-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219901>
 
-John Keeping <john@keeping.me.uk> writes:
+Philip Oakley <philipoakley@iee.org> writes:
 
-> The message for commit 6dd4b66 (Fix diffcore-break total breakage)
-> indicates that "don't bother to break small files" is wrong in some
-> cases, but it I wonder if "don't bother to break empty files" is okay.
+> Re-use list_common_cmds_help but simply change the array name.
+> Candidate for future refactoring to pass a pointer to the array.
+>
+> The common-guides.h list was generated with a simple variant of the
+> generate-cmdlist.sh and command-list.txt.
+>
+> Do not list User-manual and Everday Git which not follow the naming
+> convention, nor gitrepository-layout which doesn't fit within the
+> name field size.
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> ---
+>  builtin/help.c  |  3 ++-
+>  common-guides.h | 11 +++++++++++
+>  help.c          | 18 ++++++++++++++++++
+>  help.h          |  1 +
+>  4 files changed, 32 insertions(+), 1 deletion(-)
+>  create mode 100644 common-guides.h
+>
+> diff --git a/builtin/help.c b/builtin/help.c
+> index 03d432b..91a6158 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -433,7 +433,8 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+>  	}
+>  
+>  	if (show_guides) {
+> -		/* do action - next patch */
+> +		list_common_guides_help();
+> +		printf("\n");
+>  	}
 
-This has a rather subtle ramifications, and we would need to think
-carefully.  "break" does two very different things, and the criteria
-you would want to use to decide to "break" a filepair depends on
-which one you are interested in.
+This looks funny.  If you look at list_commands() that this patch is
+mimicking, you will notice that the "trailing blank for clarity" is
+done as part of the function, not done by the caller.  I think it is
+better done the same way.
 
-The very original motivation of "break" was to show a patch that
-rewrites an existing file completely in a way different from the
-usual "diff -u" output, which will try to minimize the output by
-finding (rare) lines that happen to be the same between the preimage
-and postimage, intersparsed in many lines of "-" (deletion) and "+"
-(addition).  Such a change is often easier to understand when shown
-as a single block of "-" (deletion) of the entire original contents,
-followed by a single block of "+" (addition) of the entire new
-contents.
+> diff --git a/common-guides.h b/common-guides.h
+> new file mode 100644
+> index 0000000..0e94fdc
+> --- /dev/null
+> +++ b/common-guides.h
+> @@ -0,0 +1,11 @@
+> +/* re-use struct cmdname_help in common-commands.h */
+> +
+> +static struct cmdname_help common_guides[] = {
+> +  {"attributes", "defining attributes per path"},
+> +  {"glossary", "A GIT Glossary"},
+> +  {"ignore", "Specifies intentionally untracked files to ignore"},
+> +  {"modules", "defining submodule properties"},
+> +  {"revisions", "specifying revisions and ranges for git"},
+> +  {"tutorial", "A tutorial introduction to git (for version 1.5.1 or newer)"},
+> +  {"workflows", "An overview of recommended workflows with git"},
+> +};
 
-A totally separate motivation of "break" is the one Linus talks
-about in the log message of the said commit.  A path filename.h was
-moved to filename_32.h, and a new (and much smaller) filename.h was
-introduced, that "#include"s filename_32.h.  "diff -M" that pairs
-deleted files with created files to compute renames in such a case
-would not consider the original filename.h as a possible source of
-filename_32.h that was created.  You want to break modification of
-filename.h into (virtual) deletion and addition of filename.h.
+The _only_ reason we have common-cmds.h as a separat file even
+though it defines data (hence should not be included in more than
+one *.c file) is because it is a generated file.
 
-For the purpose of the former, you would want not to break a file
-too aggressively.  If you started from a file with 1000 lines in it,
-and deleted 910 lines and added 10 lines to result in a file with
-100 lines, you still have 90 lines of shared contents between the
-preimage and the postimage, and you do not want to show it as
-"delete 1000 lines and add 100 lines".  You would want to base your
-decision on how much common material exists between the two.
+For this array, there is no reason to have it in a separate header
+file.  Just define it immediately before list_common_guies_help()
+function that is the sole user of the array.
 
-For the purpose of the latter, however, it is better to err on the
-side of breaking than not breaking.  After breaking a suspicious
-modification into addition and deletion, if rename comparison does
-not find a suitable destination for the virtual deletion, the broken
-halves will be merged back, so breaking too little can hurt by
-missing potential renames, but breaking too much will not.  You do
-want to break the "900 deleted out of 1000 and then added 10" case,
-as that 900 lines may have gone to another file that was created in
-the same commit.  "But we have 90 lines of common material" does not
-matter for the decision to break.
+The function can live in builtin/help.c as a static, without
+touching global help.c nor help.h, no?  Is there a reason why it
+should be callable from other places?
 
-In today's code, the return value of should_break() is about the
-latter, while the score it stores in *merge_score is about the
-former.
+> diff --git a/help.c b/help.c
+> index 1dfa0b0..e0368ca 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -4,6 +4,7 @@
+>  #include "levenshtein.h"
+>  #include "help.h"
+>  #include "common-cmds.h"
+> +#include "common-guides.h"
+>  #include "string-list.h"
+>  #include "column.h"
+>  #include "version.h"
+> @@ -240,6 +241,23 @@ void list_common_cmds_help(void)
+>  	}
+>  }
+>  
+> +void list_common_guides_help(void)
+> +{
+> +	int i, longest = 0;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
+> +		if (longest < strlen(common_guides[i].name))
+> +			longest = strlen(common_guides[i].name);
+> +	}
+> +
+> +	puts(_("The common Git guides are:\n"));
+> +	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
+> +		printf("   %s   ", common_guides[i].name);
+> +		mput_char(' ', longest - strlen(common_guides[i].name));
+> +		puts(_(common_guides[i].help));
+> +	}
+> +}
+> +
+>  int is_in_cmdlist(struct cmdnames *c, const char *s)
+>  {
+>  	int i;
+> diff --git a/help.h b/help.h
+> index 0ae5a12..4ae1fd7 100644
+> --- a/help.h
+> +++ b/help.h
+> @@ -17,6 +17,7 @@ static inline void mput_char(char c, unsigned int num)
+>  }
+>  
+>  extern void list_common_cmds_help(void);
+> +extern void list_common_guides_help(void);
+>  extern const char *help_unknown_cmd(const char *cmd);
+>  extern void load_command_list(const char *prefix,
+>  			      struct cmdnames *main_cmds,
