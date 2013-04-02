@@ -1,112 +1,90 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 1/4] run-command: add new check_command helper
-Date: Tue, 02 Apr 2013 21:16:59 +0200
-Message-ID: <515B2EAB.10402@kdbg.org>
-References: <1364898709-21583-1-git-send-email-felipe.contreras@gmail.com> <1364898709-21583-2-git-send-email-felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rerere forget: grok files containing NUL
+Date: Tue, 02 Apr 2013 12:18:57 -0700
+Message-ID: <7vmwtgd9lq.fsf@alter.siamese.dyndns.org>
+References: <5159FDE4.2090409@kdbg.org>
+ <7vhajpj294.fsf@alter.siamese.dyndns.org> <515B2B6D.4050801@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Aaron Schrab <aaron@schrab.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	David Michael Barr <b@rr-dav.id.au>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 21:17:33 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Apr 02 21:19:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN6i4-0007VZ-VM
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 21:17:33 +0200
+	id 1UN6jy-0000T4-K7
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 21:19:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932309Ab3DBTRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 15:17:03 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:64111 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932097Ab3DBTRC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 15:17:02 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id EB1C513004E;
-	Tue,  2 Apr 2013 21:16:59 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 9F77019F312;
-	Tue,  2 Apr 2013 21:16:59 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <1364898709-21583-2-git-send-email-felipe.contreras@gmail.com>
+	id S1762103Ab3DBTTB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 15:19:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48287 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752353Ab3DBTTA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 15:19:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D11D312350;
+	Tue,  2 Apr 2013 19:18:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NxJqDfqFBE9mN4cMKmCovWiLzl0=; b=ADdXRm
+	20enhIvBy+aKXfJfn+Bhi9v4TPw8rBXTvCZQ6DaKY+Mnxu7iWk+w0zvaLj/KcJFl
+	5qhqctX7tEe5sAjFeXMsE6kPoknN/3PyFVHHhsVT2msnIVZzSR1JRt8kHMnIX3dy
+	MS6eDw3ZWYHeRBcq6UxpSW8AkoE4UtqXei0Vk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QewSjhfzCEGVLI5hhRG0kAiZSyOnoXjW
+	xf1Lt1lzT72VHpEvBL6YqOD3Gg0aJvO6wKyu/72odkkhj2zXDMnxrVSKlcGbOJ+1
+	oewPmA+E2pdeJu/IADQFVZ9lQ5/fa5PKCITrfjqzpbAd/tncHA/kXa/68KETwNd2
+	Vm14ZyfmRJ4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6C1D1234F;
+	Tue,  2 Apr 2013 19:18:59 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B9E11234E; Tue,  2 Apr
+ 2013 19:18:59 +0000 (UTC)
+In-Reply-To: <515B2B6D.4050801@kdbg.org> (Johannes Sixt's message of "Tue, 02
+ Apr 2013 21:03:09 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2B9BE162-9BCA-11E2-9BFA-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219855>
 
-Am 02.04.2013 12:31, schrieb Felipe Contreras:
-> And persistent_waitpid() to recover the information from the last run.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-I'm not a fan of this new API, because it looks like a workaround
-for a problem that should have been solved in a cleaner way. But if
-we can't avoid it, please also add a paragraph to
-Documentation/technical/api-run-command.txt
+>> Does the three-way merge machinery replay recorded resolution for
+>> such a binary file correctly (after your fix, that is)?
+>
+> Yes, it does. It recognizes the binary-ness and picks 'our' side. Only
+> then comes rerere_mem_getline into play.
 
-> +int check_command(struct child_process *cmd)
-> +{
-> +	int status;
-> +	pid_t waiting;
-> +
-> +	if (cmd->last_status.valid)
-> +		return 0;
-> +
-> +	while ((waiting = waitpid(cmd->pid, &status, WNOHANG)) < 0 && errno == EINTR)
-> +		; /* nothing */
-> +
-> +	if (!waiting)
-> +		return 1;
-> +
-> +	if (waiting == cmd->pid) {
-> +		cmd->last_status.valid = 1;
-> +		cmd->last_status.status = status;
-> +		return 0;
-> +	}
-> +
-> +	if (waiting > 0)
-> +		die("BUG: waitpid reported a random pid?");
-> +
-> +	return 0;
-> +}
-> +
->  static void prepare_run_command_v_opt(struct child_process *cmd,
->  				      const char **argv,
->  				      int opt)
-> @@ -729,7 +770,7 @@ error:
->  int finish_async(struct async *async)
->  {
->  #ifdef NO_PTHREADS
-> -	return wait_or_whine(async->pid, "child process");
-> +	return wait_or_whine(cmd, async->pid, "child process");
+Surely getline() needs to be fixed not to loop forever regardless of
+the binary-ness, but I was more worried about our additions of lines
+that satisfy is_cmarker(), counting of them in the callchain from
+handle_file() to handle_path() to decide if a path has already been
+resolved by the user, and recording of an resolution based on the
+return value of that callchain, all of which relies on the merged
+contents being textual and marked with the conflict marker.
 
-This breaks the NO_PTHREADS build because cmd is undeclared. Perhaps
-this on top:
-
-diff --git a/run-command.c b/run-command.c
-index a9fa779..a02ef62 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -230,7 +230,7 @@ static pid_t persistent_waitpid(struct child_process *cmd, pid_t pid, int *statu
- {
- 	pid_t waiting;
- 
--	if (cmd->last_status.valid) {
-+	if (cmd && cmd->last_status.valid) {
- 		*status = cmd->last_status.status;
- 		return pid;
- 	}
-@@ -771,7 +771,7 @@ int start_async(struct async *async)
- int finish_async(struct async *async)
- {
- #ifdef NO_PTHREADS
--	return wait_or_whine(cmd, async->pid, "child process");
-+	return wait_or_whine(NULL, async->pid, "child process");
- #else
- 	void *ret = (void *)(intptr_t)(-1);
- 
+>>> diff --git a/rerere.c b/rerere.c
+>>> index a6a5cd5..4d940cd 100644
+>>> --- a/rerere.c
+>>> +++ b/rerere.c
+>>> @@ -284,8 +284,10 @@ static int rerere_mem_getline(struct strbuf *sb, struct rerere_io *io_)
+>>>  	strbuf_release(sb);
+>>>  	if (!io->input.len)
+>>>  		return -1;
+>>> -	ep = strchrnul(io->input.buf, '\n');
+>>> -	if (*ep == '\n')
+>>> +	ep = memchr(io->input.buf, '\n', io->input.len);
+>>> +	if (!ep)
+>>> +		ep = io->input.buf + io->input.len;
+>>> +	else if (*ep == '\n')
+>>>  		ep++;
+>>>  	len = ep - io->input.buf;
+>>>  	strbuf_add(sb, io->input.buf, len);
