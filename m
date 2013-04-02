@@ -1,84 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] count-objects: output "KiB" instead of "kilobytes"
-Date: Tue, 02 Apr 2013 10:41:06 -0700
-Message-ID: <7vhajoesp9.fsf@alter.siamese.dyndns.org>
-References: <1364903010-644-1-git-send-email-mihai@mihaic.ro>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Composing git repositories
+Date: Tue, 2 Apr 2013 23:14:49 +0530
+Message-ID: <CALkWK0mgtfYFd+sT=J-hAMLq=HVF-_a-kT_xxE9-ZzfiBiFBQA@mail.gmail.com>
+References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com>
+ <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
+ <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
+ <51537A7B.7050206@web.de> <CALkWK0nfNCu775MBB-Y28=V93RkV24kbTLTDKWO2dZ-0yxX=Sw@mail.gmail.com>
+ <5154AACC.7050006@web.de> <CALkWK0k=g3iFjmpUQA1VkuH2kZsVX1_Hpo=LZ7CuotwHz_1++g@mail.gmail.com>
+ <20130331225747.GB11704@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Mihai =?utf-8?Q?Capot=C4=83?= <mihai@mihaic.ro>
-X-From: git-owner@vger.kernel.org Tue Apr 02 19:41:45 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 02 19:46:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN5DH-0008Tr-US
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:41:40 +0200
+	id 1UN5HY-0002yT-49
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757980Ab3DBRlK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Apr 2013 13:41:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39103 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757112Ab3DBRlJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Apr 2013 13:41:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B22B212F15;
-	Tue,  2 Apr 2013 17:41:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=jDz0/CKzilPN
-	3+AhLfU837OW+rA=; b=V/YEJPDt2anwQ7ACkAclcd7BnDC6s5XDcgkdIADXokZi
-	zNJcdjTKxzup6MOF4YCHokyKfL6SAMWhKNL4YXTt8kcXd2N/rPJyKar1sOkDzcO2
-	zIlbsfwmvpiNp2jknAfAPCrB7w23R0i13Xu0u6UPRJts2w8ljGpba/bb2F1ms3o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WciaBW
-	iEOu1CumNDSKgB9LLUEI9pUNbSk8YVXockkNstCxMF3eRZzjs7Hpl8XbbcU+E+sU
-	hZGNyi2LO0KqcpNLY+Ap9mBb2LN5q1FrhiWZSatDLy3s+yphCDehzICo91dPTefK
-	jhQMRRqldA9Www4M8DCCrJPBoO/4bCk4GXSSo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A750212F14;
-	Tue,  2 Apr 2013 17:41:08 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2806512F12; Tue,  2 Apr
- 2013 17:41:08 +0000 (UTC)
-In-Reply-To: <1364903010-644-1-git-send-email-mihai@mihaic.ro> ("Mihai
- =?utf-8?Q?Capot=C4=83=22's?= message of "Tue, 2 Apr 2013 13:43:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 80363C4E-9BBC-11E2-BB3A-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758889Ab3DBRpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 13:45:31 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:37494 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759325Ab3DBRpa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 13:45:30 -0400
+Received: by mail-ie0-f170.google.com with SMTP id c11so735664ieb.29
+        for <git@vger.kernel.org>; Tue, 02 Apr 2013 10:45:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=DkLspc3xkfXpv1LbjyovnNM2s+k3P59UuKQ8Ioci6NY=;
+        b=G1xeiDdU5fFfdan3Z1d2WOXYUrnE1RRoOJYoOtbsOZ+uaBU75nS8IJSJ73lFF2uRnc
+         eTyKK+U6DsQrdEtJgYV9nsATWSteliIdhM/GJPh8KpiqCSjUSNeLzCBfVye+eHMkSlBY
+         6mU4rEm2XAaIw14eDxrZNbacMr9w9+V9ee1mOZfaI4SrVM991Kp13OX77luVH6Pathkm
+         y5SqI+Q0NDEw0ObTD2n3Yb4k815Mo5rzZpkotvvuoZnQ5UwgW4zBb8QiJZtJGZepAXyA
+         yElXbPLbe4Z8MufYeP3BvR488il7yDj76yNMTcSGB9C2bm5rk0o6dpr8uCzKMVcYsW/n
+         mLtw==
+X-Received: by 10.50.17.71 with SMTP id m7mr5690923igd.14.1364924729662; Tue,
+ 02 Apr 2013 10:45:29 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Tue, 2 Apr 2013 10:44:49 -0700 (PDT)
+In-Reply-To: <20130331225747.GB11704@elie.Belkin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219817>
 
-Mihai Capot=C4=83 <mihai@mihaic.ro> writes:
+Jonathan Nieder wrote:
+> Elated is probably not the right word.  More "annoyed at being told
+> their work is ugly without an accompanying concrete and actionable bug
+> report". :)
 
-> The code uses division by 1024. Also, the manual uses "KiB".
->
-> Signed-off-by: Mihai Capot=C4=83 <mihai@mihaic.ro>
-> ---
->  builtin/count-objects.c |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-> index 9afaa88..ecc13b0 100644
-> --- a/builtin/count-objects.c
-> +++ b/builtin/count-objects.c
-> @@ -124,7 +124,7 @@ int cmd_count_objects(int argc, const char **argv=
-, const char *prefix)
->  		printf("garbage: %lu\n", garbage);
->  	}
->  	else
-> -		printf("%lu objects, %lu kilobytes\n",
-> +		printf("%lu objects, %lu KiB\n",
->  		       loose, (unsigned long) (loose_size / 1024));
->  	return 0;
->  }
+If I had an actionable report, I'd have started hammering patches
+instead of wasting everyone's time here.  I'm was presenting fragments
+of my thoughts, hoping that it turn into concrete actionable work
+after exchanging a few emails.  I'm also annoyed that it didn't
+happen.
 
-I guess nobody reads this in scripts, so it should be OK.
+> If you are curious, at a quieter time it might be useful to ask for
+> pointers to the discussions that led to the current design, and folks
+> on the list might be glad to help.
 
-Will queue. Thanks.
+Will do.  The search on GMane is no good, and taking a local dump to
+search using real tools is just too painful; does someone already have
+a local dump?
