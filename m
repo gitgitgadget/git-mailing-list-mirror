@@ -1,98 +1,80 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/4] transport-helper: check if remote helper is alive
-Date: Mon, 1 Apr 2013 23:19:42 -0600
-Message-ID: <CAMP44s3yNGfW4aoHB90_D-OFrzchgvAugzdmOYHOey3wYkUxjg@mail.gmail.com>
-References: <1364852804-31875-1-git-send-email-felipe.contreras@gmail.com>
-	<1364852804-31875-3-git-send-email-felipe.contreras@gmail.com>
-	<20130401233313.GB30935@sigill.intra.peff.net>
-	<CAMP44s0uJ4ivNLw984CXWYk5HcKevuUJmpYOiyqbT1QJDaYd0Q@mail.gmail.com>
-	<20130402023024.GB719@sigill.intra.peff.net>
-	<CAMP44s2VcLUE=PHE=iSsgd67_ZV4N6b5Ya76Rc22xtSzK-Xz0g@mail.gmail.com>
-	<20130402050154.GA21328@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: transient build error after 'Writing MYMETA.yml and MYMETA.json'
+Date: Tue, 2 Apr 2013 01:22:11 -0400
+Message-ID: <20130402052210.GA22089@sigill.intra.peff.net>
+References: <CABURp0os62JCPCRsvQ+NneGaSobTUmgs7oZ9SqUiTH8AG0hPmQ@mail.gmail.com>
+ <7vhajqjh3v.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>, Aaron Schrab <aaron@schrab.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	David Michael Barr <b@rr-dav.id.au>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 02 07:20:16 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Phil Hord <phil.hord@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 02 07:22:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMtdl-0001iz-HN
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 07:20:13 +0200
+	id 1UMtgB-0002xs-9u
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 07:22:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755151Ab3DBFTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 01:19:45 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:58598 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754107Ab3DBFTo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 01:19:44 -0400
-Received: by mail-la0-f46.google.com with SMTP id fq12so37501lab.33
-        for <git@vger.kernel.org>; Mon, 01 Apr 2013 22:19:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=QFefkFiO24p5ay7iMTqfRv8c5pu+IqR9fVHfb11OS1Y=;
-        b=o8iDwvD7EH86Y1EoCGd02UpY7nfModOcDA7sY+dJqdpsXz4pAM5DgPgYEGZMUmkqq+
-         68lsxK/5DpM5/7optNnRd7NnmOKDthi3+WFKPTHbpXvWUPg9wCATyDyPbF0+Qcpa8fC2
-         bwbPp53HJyjR2SnLs3466ReKuS+PkIapjj5In1NyMhvtjqV17XCAQOcsctojnvhj1LAP
-         fx0RfDRSiXtCMEWOdwlSO0x7cuyCOtV/YPc12YJfl8p60p06hzHrl19RxCxRsH5sT+du
-         ay7dyLOSUQIbpUnEnap+VFG9LAZNwJVDlSQ59qT7Bn2Uyc3mNDBngS0oMg4AtI3E+3N8
-         EZtg==
-X-Received: by 10.152.145.134 with SMTP id su6mr7034209lab.35.1364879982800;
- Mon, 01 Apr 2013 22:19:42 -0700 (PDT)
-Received: by 10.114.20.36 with HTTP; Mon, 1 Apr 2013 22:19:42 -0700 (PDT)
-In-Reply-To: <20130402050154.GA21328@sigill.intra.peff.net>
+	id S1759559Ab3DBFWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 01:22:15 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51690 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757172Ab3DBFWO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 01:22:14 -0400
+Received: (qmail 6859 invoked by uid 107); 2 Apr 2013 05:24:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Apr 2013 01:24:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Apr 2013 01:22:11 -0400
+Content-Disposition: inline
+In-Reply-To: <7vhajqjh3v.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219739>
 
-On Mon, Apr 1, 2013 at 11:01 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Apr 01, 2013 at 10:51:20PM -0600, Felipe Contreras wrote:
->
->> > So in fetch_with_import, we have a remote-helper, and we have a
->> > bidirectional pipe to it. We then call get_importer, which starts
->> > fast-import, whose stdin is connected to the stdout of the remote
->> > helper. We tell the remote-helper to run the import, then we wait for
->> > fast-import to finish (and complain if it fails).
->> >
->> > Then what? We seem to do some more work, which I think is what causes
->> > the errors you see; but should we instead be reaping the helper at this
->> > point unconditionally? Its stdout has presumably been flushed out to
->> > fast-import; is there anything else for us to get from it besides its
->> > exit code?
->>
->> The problem is not with import, since fast-import would generally wait
->> properly for a 'done' status, the problem is with export.
->
-> Your patch modified fetch_with_import. Are you saying that it isn't
-> necessary to do so?
+On Mon, Apr 01, 2013 at 10:28:04AM -0700, Junio C Hamano wrote:
 
-It's not, I added it for symmetry. But that's the case *if* the
-remote-helper is properly using the "done" feature.
+> Phil Hord <phil.hord@gmail.com> writes:
+> 
+> > I have not seen this before, which makes me think it is something new
+> > in the makefiles.  But maybe it was a one-time fluke. When I ran
+> > 'make' again, it proceeded as normal.
+> > ...
+> > $ make prefix=/home/hordp all doc man
+> > ...
+> >     GEN git-add--interactive
+> > Writing perl.mak for Git
+> > Writing MYMETA.yml and MYMETA.json
+> > make[2]: *** [perl.mak] Error 1
+> > make[1]: *** [instlibdir] Error 2
+> > make: *** [git-add--interactive] Error 2
+> > $ make prefix=/home/hordp all doc man
+> >     GEN perl/PM.stamp
+> >     SUBDIR perl
+> > /usr/bin/perl Makefile.PL PREFIX='/home/hordp' INSTALL_BASE=''
+> > --localedir='/home/hordp/share/locale'
+> > Writing perl.mak for Git
+> > Writing MYMETA.yml and MYMETA.json
+> >     GEN git-add--interactive
+> >     GEN git-difftool
+> >     GEN git-archimport
+> 
+> I've also seen build failure with -j<something> in perl/
+> subdirectory from time to time, but the failure has been fairly
+> elusive for me that I haven't had a chance to look into what
+> triggers it.
 
->> Also, the design is such that the remote-helper stays alive, even
->> after fast-export has finished.
->
-> So if we expect to be able to communicate with the remote-helper after
-> fast-export has exited, is it a protocol failure that the helper does
-> not say "yes, I finished the export" or similar? If so, can we fix that?
->
-> I am not too familiar with this protocol, but it looks like we read from
-> helper->out right after closing the exporter, to get the ref statuses.
-> Shouldn't we be detecting the error if the helper hangs up there?
+The one I have seen usually involves errors around "perl.mak"; this
+might be a new form of it, or it might be different.
 
-I guess that should be possible, I'll give that a try.
+Previous analysis and a patch (which I have no idea if it helps or not,
+as I can't reproduce the problem at will):
 
-Cheers.
+  http://article.gmane.org/gmane.comp.version-control.git/158251
 
--- 
-Felipe Contreras
+-Peff
