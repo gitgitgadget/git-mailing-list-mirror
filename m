@@ -1,106 +1,116 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-parse: clarify documentation for the --verify option
-Date: Tue, 02 Apr 2013 07:57:30 -0700
-Message-ID: <7vobdxgeud.fsf@alter.siamese.dyndns.org>
-References: <1364625865-8459-1-git-send-email-mhagger@alum.mit.edu>
- <7vwqsnnpwj.fsf@alter.siamese.dyndns.org>
- <7vli92jijz.fsf@alter.siamese.dyndns.org> <515A8D79.6050808@alum.mit.edu>
+Subject: Re: [PATCH 1/3] merge: a random object may not necssarily be a
+ commit
+Date: Tue, 02 Apr 2013 08:02:13 -0700
+Message-ID: <7vk3olgemi.fsf@alter.siamese.dyndns.org>
+References: <7v7gl3jmx0.fsf_-_@alter.siamese.dyndns.org>
+ <1364846239-8802-1-git-send-email-gitster@pobox.com>
+ <1364846239-8802-2-git-send-email-gitster@pobox.com>
+ <20130402053004.GC22089@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 02 16:58:04 2013
+Cc: git@vger.kernel.org, Yann Droneaud <ydroneaud@opteya.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 02 17:02:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN2ex-0006rH-Gm
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 16:58:03 +0200
+	id 1UN2jV-0001YX-1z
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 17:02:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932454Ab3DBO5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 10:57:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43281 "EHLO
+	id S932288Ab3DBPCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 11:02:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38173 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932286Ab3DBO5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 10:57:33 -0400
+	id S932131Ab3DBPCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 11:02:15 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9D7F12F01;
-	Tue,  2 Apr 2013 14:57:32 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DBB5110FC;
+	Tue,  2 Apr 2013 15:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9WxFMfC3teaDNS1Wew51BkLnEKQ=; b=NcE3we
-	ScK679R46y54uF5cv5zgTLksoRl2oYv30x1AnOjv4Az9NUCbqLVdbNqnyYFm8399
-	CGEzwlYGBxyc/P7Z29FdRM6eME8dn6eSlPcjra3QnvT51TJITtoR2kj4jOP0yTfq
-	j+Ue/9d78rZicvTiSYTKMKf4L8aoixT7pswgE=
+	:content-type; s=sasl; bh=SvOrjBXhJopcMVDfjKTFlLzZDQs=; b=F14vPp
+	jNmlTEwi3ZXE4zTfd4q2MFexXZ1PGPeypyZaNlGziNV5NQiupwSyyNDPTIF7Ncby
+	QHxaWf5qeh9kgn3F74o5s7LUIqh4C4k89sXxhjfS2/BAwxeyGloyx20sWf218BHD
+	p6vI08uv8BVZR+6m8xUVTYqhGiWJIXZyqvn18=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x3SMw3IPISsA4pz2WjREVerfo6siN7VA
-	rWHvjMemjp6wDa5/Lj8P4BO4W7JaMqhwGn0KGFgAcygjcSJP50YfCAIbE4e/w4lT
-	cslH2RtDmhINa6rmeu45bBHNMM23jSAEAFYeTzq7AR/1DJRk1NZCvz0Bsue+oICl
-	x2Y59ma5Ots=
+	:content-type; q=dns; s=sasl; b=fVS2CJB7xgxN8VHGownA3AePdytEPW0H
+	Ex9IRl/n9VnRdnBT4aTkTU3A1mtznT6c2V89UenXM++E0AYOvVl2VLUhyK3SFSO/
+	NPfg1OO9GVN7SVEWgu9AsjGjhOCEh0bIyJ+mjuHCivRIm1g5PZ2tSJZPf6ea9qGR
+	pxasxp0IIJI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1F9012F00;
-	Tue,  2 Apr 2013 14:57:32 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43A4D110FB;
+	Tue,  2 Apr 2013 15:02:15 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C9F012EFE; Tue,  2 Apr
- 2013 14:57:32 +0000 (UTC)
-In-Reply-To: <515A8D79.6050808@alum.mit.edu> (Michael Haggerty's message of
- "Tue, 02 Apr 2013 09:49:13 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A12A8110FA; Tue,  2 Apr
+ 2013 15:02:14 +0000 (UTC)
+In-Reply-To: <20130402053004.GC22089@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 2 Apr 2013 01:30:04 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A57895E0-9BA5-11E2-B7D3-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4DCD3250-9BA6-11E2-A239-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219780>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Jeff King <peff@peff.net> writes:
 
-> On 04/01/2013 06:56 PM, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
+> On Mon, Apr 01, 2013 at 12:57:17PM -0700, Junio C Hamano wrote:
+>
+>> The user could have said "git merge $(git rev-parse v1.0.0)"; we
+>> shouldn't mark it as "Merge commit '15999998fb...'" as the merge
+>> name, even though such an invocation might be crazy.
 >> 
->>> Because the primary use case of this option is to implement end-user
->>> input validation, I think it would be helpful to clarify use of the
->>> peeler here.  Perhaps
->>> ...
+>> We could even read the "tag " header from the tag object and replace
+>> the object name the user gave us, but let's not lose the information
+>> by doing so, at least not yet.
 >> 
->> A "SQUASH???" patch on top of your original is queued on 'pu',
->> together with the earlier "^{object}" peeler patch.  Comments,
->> improvements, etc. would be nice.
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  builtin/merge.c | 13 +++++++++++++
+>>  1 file changed, 13 insertions(+)
+>> 
+>> diff --git a/builtin/merge.c b/builtin/merge.c
+>> index 0ec8f0d..990e90c 100644
+>> --- a/builtin/merge.c
+>> +++ b/builtin/merge.c
+>> @@ -516,6 +516,19 @@ static void merge_name(const char *remote, struct strbuf *msg)
+>>  		strbuf_release(&line);
+>>  		goto cleanup;
+>>  	}
+>> +
+>> +	if (remote_head->util) {
+>> +		struct merge_remote_desc *desc;
+>> +		desc = merge_remote_util(remote_head);
+>> +		if (desc && desc->obj && desc->obj->type == OBJ_TAG) {
+>> +			strbuf_addf(msg, "%s\t\t%s '%s'\n",
+>> +				    sha1_to_hex(desc->obj->sha1),
+>> +				    typename(desc->obj->type),
+>> +				    remote);
+>> +			goto cleanup;
+>> +		}
+>> +	}
+>> +
+>>  	strbuf_addf(msg, "%s\t\tcommit '%s'\n",
+>>  		sha1_to_hex(remote_head->object.sha1), remote);
 >
-> Yes, your version is better.  I would make one change, though.  In your
+> I guess there is no other object type besides OBJ_TAG and OBJ_COMMIT
+> that would yield something we could merge, but it feels weird that you
+> check only for OBJ_TAG here, and otherwise still say "commit". Would the
+> intent be more clear if it just said:
 >
-> +	Make sure the single given parameter can be turned into a
-> +	raw 20-byte SHA-1 that can be used to access the object
-> +	database, and emit it to the standard output. If it can't,
-> +	error out.
+>   if (desc && desc->obj && desc->obj->type != OBJ_COMMIT) {
+>           ...
 >
-> it could be made clearer that exactly one parameter should be provided.
-> Maybe
->
-> +	Verify that exactly one parameter is provided, and that it
+> ?
 
-That is probably better (I was hoping "the single" would mean the
-same to the reader, though).  Thanks.
+I suspect not.
 
-> +     can be turned into a raw 20-byte SHA-1 that can be used to
-> +	access the object database.  If so, emit the SHA-1 to the
-> +	standard output; otherwise, error out.
->
-> But this makes it sound a little like the "raw 20-byte SHA-1" will be
-> output to stdout,...
-
-I did consider that point, wrote "and outputs 40-hex" in my earlier
-draft, and then rejected it because it was even more misleading.
-The output follows the usual rules for "rev" parameters, e.g.
-
-	git rev-parse --short --verify HEAD
-	git rev-parse --symbolic --verify v1.8.2^{tree}
-
-and "--verify" does not mean 40-hex output.  That is why I left it
-vague as "emit it".
-
-I agree that the wording incorrectly hints that you may be able to
-get 20-byte raw output.  I didn't find a satisfactory phrasing.
+The point of the added code is that it knows we want to special case
+merging a tag object, and it wants to keep any other case behaving
+the same as before.
