@@ -1,79 +1,106 @@
-From: Edward Thomson <ethomson@microsoft.com>
-Subject: RE: Rename conflicts in the index
-Date: Tue, 2 Apr 2013 21:29:30 +0000
-Message-ID: <A54CE3E330039942B33B670D971F857403A0F593@TK5EX14MBXC253.redmond.corp.microsoft.com>
-References: <A54CE3E330039942B33B670D971F857403995D93@TK5EX14MBXC252.redmond.corp.microsoft.com>
- <7va9q72n1u.fsf@alter.siamese.dyndns.org>
- <A54CE3E330039942B33B670D971F857403A0AA7A@TK5EX14MBXC253.redmond.corp.microsoft.com>
- <7vboa6t14w.fsf@alter.siamese.dyndns.org>
- <A54CE3E330039942B33B670D971F857403A0BA54@TK5EX14MBXC253.redmond.corp.microsoft.com>
- <7vk3osn3vs.fsf@alter.siamese.dyndns.org>
- <A54CE3E330039942B33B670D971F857403A0BB93@TK5EX14MBXC253.redmond.corp.microsoft.com>
- <7v38vgmxty.fsf@alter.siamese.dyndns.org>
- <A54CE3E330039942B33B670D971F857403A0E20C@TK5EX14MBXC253.redmond.corp.microsoft.com>
- <A54CE3E330039942B33B670D971F857403A0F540@TK5EX14MBXC253.redmond.corp.microsoft.com>
- <7vr4isaath.fsf@alter.siamese.dyndns.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 1/2] diffcore-break: don't divide by zero
+Date: Tue, 2 Apr 2013 22:36:51 +0100
+Message-ID: <20130402213651.GG2222@serenity.lan>
+References: <cover.1364931627.git.john@keeping.me.uk>
+ <a2b6c61371ac6ff1e180c6600e57499ff94b2fd2.1364931627.git.john@keeping.me.uk>
+ <7vvc84ab2y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 23:30:17 2013
+X-From: git-owner@vger.kernel.org Tue Apr 02 23:37:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN8mV-0003mO-3S
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 23:30:15 +0200
+	id 1UN8tU-00080n-C7
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 23:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761033Ab3DBV3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 17:29:46 -0400
-Received: from mail-bn1lp0153.outbound.protection.outlook.com ([207.46.163.153]:53380
-	"EHLO na01-bn1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1760829Ab3DBV3q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Apr 2013 17:29:46 -0400
-Received: from BN1AFFO11FD013.protection.gbl (10.58.52.201) by
- BN1BFFO11HUB026.protection.gbl (10.58.53.136) with Microsoft SMTP Server
- (TLS) id 15.0.651.3; Tue, 2 Apr 2013 21:29:40 +0000
-Received: from TK5EX14HUBC103.redmond.corp.microsoft.com (131.107.125.37) by
- BN1AFFO11FD013.mail.protection.outlook.com (10.58.52.73) with Microsoft SMTP
- Server (TLS) id 15.0.651.3 via Frontend Transport; Tue, 2 Apr 2013 21:29:39
- +0000
-Received: from TK5EX14MBXC253.redmond.corp.microsoft.com ([169.254.3.151]) by
- TK5EX14HUBC103.redmond.corp.microsoft.com ([157.54.86.9]) with mapi id
- 14.02.0318.003; Tue, 2 Apr 2013 21:29:30 +0000
-Thread-Topic: Rename conflicts in the index
-Thread-Index: Ac4f8fcF2rzNm40zS7GBMxbrAtW2UQAI1oifAoxQUOAABEG55gAtP7SQAAEvx18AAmt9kAACJe2MAPKwK3AAPU21cAABG5FgAAAQp6A=
-In-Reply-To: <7vr4isaath.fsf@alter.siamese.dyndns.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [157.54.51.37]
-X-Forefront-Antispam-Report: CIP:131.107.125.37;CTRY:US;IPV:CAL;IPV:NLI;EFV:NLI;SFV:NSPM;SFS:(24454001)(189002)(199002)(51704002)(5343635001)(69226001)(46102001)(74502001)(55846006)(49866001)(54356001)(66066001)(50986001)(23726001)(47776003)(46406002)(50466001)(74662001)(47736001)(80022001)(76482001)(47446002)(33656001)(65816001)(31966008)(47976001)(20776003)(4396001)(59766001)(16406001)(77982001)(56816002)(53806001)(79102001)(54316002)(56776001)(51856001)(63696002)(81342001);DIR:OUT;SFP:;SCL:1;SRVR:BN1BFFO11HUB026;H:TK5EX14HUBC103.redmond.corp.microsoft.com;RD:InfoDomainNonexistent;MX:1;A:1;LANG:en;
-X-OriginatorOrg: microsoft.onmicrosoft.com
-X-Forefront-PRVS: 08041D247D
+	id S1762012Ab3DBVg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 17:36:58 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:39945 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761870Ab3DBVg6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 17:36:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 52844CDA5AF;
+	Tue,  2 Apr 2013 22:36:57 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eMFInOWUjFx5; Tue,  2 Apr 2013 22:36:56 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 873A7CDA590;
+	Tue,  2 Apr 2013 22:36:53 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7vvc84ab2y.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219890>
 
-Junio C Hamano [mailto:gitster@pobox.com] wrote:
-> Edward Thomson <ethomson@microsoft.com> writes:
-> > Junio, did you have additional thoughts on this?
+On Tue, Apr 02, 2013 at 02:15:17PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
 > 
-> Not at this moment.
+> > When the source file is empty, the calculation of the merge score
+> > results in a division by zero.  Since the merge score is initialized to
+> > zero, it makes sense to just leave it as it is if the source size is
+> > zero.  This means that we still use the extent of damage metric to
+> > decide whether to break the filepair.
 > 
-> I think we have covered the principles (do not unnecessarily duplicate
-> information, do not break existing implementations unnecessarily, etc.) already,
-> and we know how we want to record "one side renamed A to B, the other side
-> renamed A to C" case, but I do not think the discussion covered all cases yet.
+> Well spotted.  An empty blob to another blob that is larger than 400
+> bytes will trigger div0, and it makes sense to leave merge-score to
+> 0 (i.e. do not show as whole-delete-then-whole-add after rename
+> detection is done and the broken filepair is merged back).
+> 
+> Actually, if src->size is 0, we probably shouldn't break the filepair
+> in the first place.  That is, if your preimage and postimage looked
+> like these:
+> 
+> 
+>      == preimage ==		== postimage ==
+> 
+>      F (empty file)		F (a large file)
+> 			        E (a new empty file)
+> 
+> do we want to see F renamed to E and then a new file created as F
+> while running "git diff -B -M"?  I doubt it.
+> 
+> So in that sense, this might be a better solution.  I dunno.
 
-Sorry, I'm not sure what you're asking for - would you just like some more
-examples of what this looks like with aforementioned exotic conflict types?
-Or are you looking for something more strict - BNF format, for example?
+I considered this, but didn't quite understand the code well enough to
+be sure that was the right thing to do.  Does it make sense to bail out
+early if dst->size is zero as well?
 
--ed
+The message for commit 6dd4b66 (Fix diffcore-break total breakage)
+indicates that "don't bother to break small files" is wrong in some
+cases, but it I wonder if "don't bother to break empty files" is okay.
+
+>  diffcore-break.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/diffcore-break.c b/diffcore-break.c
+> index 44f8678..eabafd5 100644
+> --- a/diffcore-break.c
+> +++ b/diffcore-break.c
+> @@ -67,6 +67,8 @@ static int should_break(struct diff_filespec *src,
+>  	max_size = ((src->size > dst->size) ? src->size : dst->size);
+>  	if (max_size < MINIMUM_BREAK_SIZE)
+>  		return 0; /* we do not break too small filepair */
+> +	if (src->size == 0)
+> +		return 0; /* we do not let empty files get renamed */
+>  
+>  	if (diffcore_count_changes(src, dst,
+>  				   &src->cnt_data, &dst->cnt_data,
