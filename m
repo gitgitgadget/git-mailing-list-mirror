@@ -1,86 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] count-objects: output "KiB" instead of "kilobytes"
-Date: Tue, 02 Apr 2013 15:01:42 -0700
-Message-ID: <7vip44a8xl.fsf@alter.siamese.dyndns.org>
-References: <1364903010-644-1-git-send-email-mihai@mihaic.ro>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Mihai =?utf-8?Q?Capot=C4=83?= <mihai@mihaic.ro>
-X-From: git-owner@vger.kernel.org Wed Apr 03 00:02:14 2013
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH 00/13] remote-hg: general updates
+Date: Wed, 3 Apr 2013 00:23:11 +0200
+Message-ID: <2670C2C0-E30F-47DA-8901-899FEE11059E@quendi.de>
+References: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com> <20130402200948.GF2222@serenity.lan>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Apr 03 00:24:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN9HS-00051I-CD
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 00:02:14 +0200
+	id 1UN9cg-00014U-Ch
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 00:24:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759752Ab3DBWBp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Apr 2013 18:01:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52198 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757058Ab3DBWBo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Apr 2013 18:01:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 399B212891;
-	Tue,  2 Apr 2013 22:01:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=qDZzx12JXAiH
-	zKNwR/cTUtQiidg=; b=RAo8RwwSDpEqQZY6tPMy/9xzoKZaZlxe8axw+ie0O4L8
-	EBk5qXD/U2TlrLOBiKnLkRYBpTPK/9XB6XLUI+zFffrLNbibs2ADZMy59r38ddS+
-	7B8GM8G1x9NqjQItr+gijzbXbDnBmR64D/Kd3dmNkwvtCD0yfWb3loRrZeY5Obw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=tZMfC9
-	jcuwjGpJFPniIhP8t4X+4elvWyPWM349sMMoLr83eV4RoH45/O3vzIUF49pkLaOR
-	uWes+JV4GApxp5uKgPyGUL9Jei6XDFrJLuHqUELighoUNaCvOhstwh+oRQAsYtVn
-	56HGjr7cnkGCzQ0CV8JXVBFzkyOboj3sAYVYs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E5EE12890;
-	Tue,  2 Apr 2013 22:01:44 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 864B31288E; Tue,  2 Apr
- 2013 22:01:43 +0000 (UTC)
-In-Reply-To: <1364903010-644-1-git-send-email-mihai@mihaic.ro> ("Mihai
- =?utf-8?Q?Capot=C4=83=22's?= message of "Tue, 2 Apr 2013 13:43:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E7A0F12A-9BE0-11E2-ABAD-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1762313Ab3DBWXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 18:23:36 -0400
+Received: from merkurneu.hrz.uni-giessen.de ([134.176.2.3]:62399 "EHLO
+	merkurneu.hrz.uni-giessen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762117Ab3DBWXe convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 2 Apr 2013 18:23:34 -0400
+Received: from mailgw52.hrz.uni-giessen.de by merkurneu.hrz.uni-giessen.de with ESMTP; Wed, 3 Apr 2013 00:23:17 +0200
+Received: from merkurneu.hrz.uni-giessen.de (merkurneu.hrz.uni-giessen.de [134.176.2.3])
+	by mailgw52.hrz.uni-giessen.de (Postfix) with ESMTP id 3A3621A0000A0;
+	Wed,  3 Apr 2013 00:23:10 +0200 (CEST)
+Received: from [134.176.2.3] by merkurneu.hrz.uni-giessen.de with ESMTP; Wed, 3 Apr 2013 00:23:10 +0200
+In-Reply-To: <20130402200948.GF2222@serenity.lan>
+X-Mailer: Apple Mail (2.1283)
+X-HRZ-JLUG-MailScanner-Information: Passed JLUG virus check
+X-HRZ-JLUG-MailScanner: No virus found
+X-Envelope-From: max@quendi.de
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219893>
 
-Mihai Capot=C4=83 <mihai@mihaic.ro> writes:
 
-> The code uses division by 1024. Also, the manual uses "KiB".
->
-> Signed-off-by: Mihai Capot=C4=83 <mihai@mihaic.ro>
-> ---
->  builtin/count-objects.c |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-> index 9afaa88..ecc13b0 100644
-> --- a/builtin/count-objects.c
-> +++ b/builtin/count-objects.c
-> @@ -124,7 +124,7 @@ int cmd_count_objects(int argc, const char **argv=
-, const char *prefix)
->  		printf("garbage: %lu\n", garbage);
->  	}
->  	else
-> -		printf("%lu objects, %lu kilobytes\n",
-> +		printf("%lu objects, %lu KiB\n",
->  		       loose, (unsigned long) (loose_size / 1024));
->  	return 0;
->  }
+On 02.04.2013, at 22:09, John Keeping wrote:
 
-This breaks existing tests (5301, 7408 and 5700); I noticed it too
-late and wasted 20 minutes, having to re-run today's integration
-cycle.
+> On Tue, Apr 02, 2013 at 01:02:49PM -0600, Felipe Contreras wrote:
+>> Here is the next round of patches for remote-hg, some which have been
+>> contributed through github.
+>> 
+>> Fortunately it seems to be working for the most part, but there are some
+>> considerable issues while pushing branches and tags.
+> 
+> How does this compare to the current state of gitifyhg[1]?  That's built
+> on top of this git-remote-hg script but seems to have been more actively
+> developed recently.
 
-Next time, please run the testsuite before sending a patch.
+Several bugs that were fixed in gitifyhg some time ago are now fixed in this remote-hg, too.
+
+I'll try to list some of remaining differences, mostly (in my biased opinion) improvements on the gitifyhg side. Note that some of these might be outdated with felipe's recent changes, i.e. I have not yet had time to review and/or test them all. So please bear that in mind.
+
+* added many new test cases, sadly still including some xfails. Several of these (both passing and xfailing) also apply to remote-hg (i.e. the issue is also present in contrib's remote-hg)
+
+* improved handling of hg user names (remote-hg is not able to deal with some pathological cases, failing to import commits). Sadly, mercurial allows arbitrary strings as usernames, git doesn't...
+
+* failed pushes to hg are cleanly rolled back (using mq.strip() from the mq extension), instead of resulting in inconsistent internal state. This is quite important in real life, and has bitten me several times with remote-hg (and was the initial reason why I switched to gitifyhg). A typical way to reproduce this is to push to a remote repository that has commits not yet in my local clone.
+
+* git notes are used to associate to each git commit the sha1 of the corresponding hg commit, to help users figure out that mapping
+
+* internally, the marks are using the hg sha1s instead of the hg rev ids. The latter are not necessarily invariant, and using the sha1s makes it much easier to recover from semi-broken states.
+
+* Better handling of various hg errors, see e.g. [2]. More work is still needed there with both tools, though [3].
+
+* Support for creating hg tags from git (i.e. pushing light git tags to heavy hg tags)
+
+* The gitifyhg test suite is run after each push on Travis CI against several git / mercurial combinations [4].
+In particular, unlike all other remote-hg implementations I know, we explicitly promise (and test) compatibility with a specific range of Mercurial versions (not just the one the dev happens to have installed right now). This has been a frequent issue for me with the msysgit remote-hg
+
+* Renaming a gitifyhg remote just works [5]. Doing that with remote-hg triggers a re-clone of the remote repository (if it works at all, I don't remember). 
+
+
+Sadly, while working on gitifyhg, we discovered various more design problems (from our perspective, at least) in Mercurial, e.g. the fact that commits are not necessarily normalized, in the sense that "equivalent" commits (same author, time, changed files / code) can have different hashs, with some nasty implications for import. This is potentially problematic because without extra care, these would be mapped to the same commit on the git side.
+
+Unfortunately, we also stumbled into various problems with the git remote-helper system. We are currently using the fast-import remote-helper type, but are encountering more and more of its limitations. This affects remote-hg and gitifyhg equally, and probably other remote helpers. E.g. "git push --dry-run" seems to be impossible to support with such a remote-helper (but then I might be mistaken).
+
+Thing is, for several of these I don't feel quite competent enough to come up with patches that I could submit here. And in my experience just reporting a perceived problem with the remote-helper API is not going to trigger a response here [6]. I guess that's why we stopped reporting them here for now, but if there is interest I could try to compile an overview.
+
+
+[1] https://github.com/buchuki/gitifyhg
+[2] https://github.com/buchuki/gitifyhg/commit/74b71f4
+[3] https://github.com/buchuki/gitifyhg/issues/66
+[4] https://travis-ci.org/buchuki/gitifyhg/builds
+[5] https://github.com/buchuki/gitifyhg/commit/68ce89bb32
+[6] http://thread.gmane.org/gmane.comp.version-control.git/214802
