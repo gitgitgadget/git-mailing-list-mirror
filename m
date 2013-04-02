@@ -1,79 +1,82 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] rerere forget: grok files containing NUL
-Date: Tue, 02 Apr 2013 21:03:09 +0200
-Message-ID: <515B2B6D.4050801@kdbg.org>
-References: <5159FDE4.2090409@kdbg.org> <7vhajpj294.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 21:03:44 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 00/13] remote-hg: general updates
+Date: Tue,  2 Apr 2013 13:02:49 -0600
+Message-ID: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Max Horn <max@quendi.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 02 21:04:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN6Uh-000692-V7
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 21:03:44 +0200
+	id 1UN6VN-0006iQ-8d
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 21:04:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761831Ab3DBTDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 15:03:15 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:14108 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1761551Ab3DBTDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 15:03:14 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 32C53CDF8D;
-	Tue,  2 Apr 2013 21:03:10 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 99C7419F312;
-	Tue,  2 Apr 2013 21:03:09 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <7vhajpj294.fsf@alter.siamese.dyndns.org>
+	id S1762100Ab3DBTD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 15:03:56 -0400
+Received: from mail-ye0-f173.google.com ([209.85.213.173]:57708 "EHLO
+	mail-ye0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761823Ab3DBTD4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 15:03:56 -0400
+Received: by mail-ye0-f173.google.com with SMTP id q5so112159yen.18
+        for <git@vger.kernel.org>; Tue, 02 Apr 2013 12:03:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=9e46KrhaD9KooiZZOaao8PugCw+csQdsNuAV7kksbIo=;
+        b=s95nHERrlxLTcPmFyEKATRU1iRMP88VBfwgX4PU+DBQtuYpRelJHo7XFM1sB4lxNsJ
+         436qla7vrMaa/jOymD78uw51ALdkfzuS80KnVX4oVDb3YS4eewg+3aGD0H9iSzMhV1Ts
+         zO4HGg/DZ15/DulunMh1rVzKxM9PqoutrlCMQaztD/WtVqv1Pt01zTdOA9rxgLXAY5dh
+         xfOD5CJTzranoQc9w3959vaheLYr8+3uV6vRHc92kO2iXniDwIrsxSVcQMEQCcMGnZBE
+         wYzoZihAPJhJI+geK9zOovm8kqoVonf1TbdYL+VyFWeu7IcWg8kxAa6NU18ISO1rv3WS
+         nGNA==
+X-Received: by 10.236.201.68 with SMTP id a44mr16213530yho.100.1364929435659;
+        Tue, 02 Apr 2013 12:03:55 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id w69sm4910427yhe.4.2013.04.02.12.03.53
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 02 Apr 2013 12:03:54 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219831>
 
-Am 02.04.2013 00:48, schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->> Using 'git rerere forget .' after a merge that involved binary files
->> runs into an infinite loop if the binary file contains a zero byte.
->> Replace a strchrnul by memchr because the former does not make progress
->> as soon as the NUL is encountered.
-> 
-> Hmph, thanks.
-> 
-> Is it the right behaviour for rerere to even attempt to interfere
-> with a merge that involves binary files in the first place?
+Hi,
 
-Why not? And how could rerere tell the difference? It would have to do
-the same check for binary-ness as the merge driver before it even starts
-looking closer at the files.
+Here is the next round of patches for remote-hg, some which have been
+contributed through github.
 
-> Does the three-way merge machinery replay recorded resolution for
-> such a binary file correctly (after your fix, that is)?
+Fortunately it seems to be working for the most part, but there are some
+considerable issues while pushing branches and tags.
 
-Yes, it does. It recognizes the binary-ness and picks 'our' side. Only
-then comes rerere_mem_getline into play.
+Dusty Phillips (1):
+  remote-hg: add missing config variable in doc
 
->> diff --git a/rerere.c b/rerere.c
->> index a6a5cd5..4d940cd 100644
->> --- a/rerere.c
->> +++ b/rerere.c
->> @@ -284,8 +284,10 @@ static int rerere_mem_getline(struct strbuf *sb, struct rerere_io *io_)
->>  	strbuf_release(sb);
->>  	if (!io->input.len)
->>  		return -1;
->> -	ep = strchrnul(io->input.buf, '\n');
->> -	if (*ep == '\n')
->> +	ep = memchr(io->input.buf, '\n', io->input.len);
->> +	if (!ep)
->> +		ep = io->input.buf + io->input.len;
->> +	else if (*ep == '\n')
->>  		ep++;
->>  	len = ep - io->input.buf;
->>  	strbuf_add(sb, io->input.buf, len);
+Felipe Contreras (11):
+  remote-hg: trivial cleanups
+  remote-hg: properly report errors on bookmark pushes
+  remote-hg: make sure fake bookmarks are updated
+  remote-hg: trivial test cleanups
+  remote-hg: redirect buggy mercurial output
+  remote-hg: split bookmark handling
+  remote-hg: refactor export
+  remote-hg: update remote bookmarks
+  remote-hg: force remote push
+  remote-hg: don't update bookmarks unnecessarily
+  remote-hg: update tags globally
+
+Peter van Zetten (1):
+  remote-hg: fix for files with spaces
+
+ contrib/remote-helpers/git-remote-hg     | 73 ++++++++++++++++++++++++--------
+ contrib/remote-helpers/test-hg-bidi.sh   |  6 +--
+ contrib/remote-helpers/test-hg-hg-git.sh |  4 +-
+ 3 files changed, 61 insertions(+), 22 deletions(-)
+
+-- 
+1.8.2
