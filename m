@@ -1,77 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: check-attr doesn't respect recursive definitions
-Date: Tue, 2 Apr 2013 12:51:28 -0400
-Message-ID: <20130402165128.GA19712@sigill.intra.peff.net>
-References: <slrnkldd3g.1l4.jan@majutsushi.net>
- <20130402143130.GC23828@sigill.intra.peff.net>
- <7vtxnogbft.fsf@alter.siamese.dyndns.org>
- <20130402163034.GA19252@sigill.intra.peff.net>
- <7vhajog9xp.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH 1/3] remote-helpers: fix the run of all tests
+Date: Tue, 02 Apr 2013 18:53:28 +0200
+Message-ID: <515B0D08.4020405@web.de>
+References: <1364850872-21135-1-git-send-email-felipe.contreras@gmail.com> <1364850872-21135-2-git-send-email-felipe.contreras@gmail.com> <CALWbr2wAqudzbfiSHmD1uAVQX3mtbf5vgr2JXbXEg7yzaKXJcw@mail.gmail.com> <20130401234016.GC30935@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jan Larres <jan@majutsushi.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 18:52:04 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git <git@vger.kernel.org>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 02 18:54:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN4RG-0008Kc-6b
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 18:52:02 +0200
+	id 1UN4TN-0001K8-EF
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 18:54:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761652Ab3DBQvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 12:51:33 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52304 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760598Ab3DBQvc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 12:51:32 -0400
-Received: (qmail 11054 invoked by uid 107); 2 Apr 2013 16:53:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Apr 2013 12:53:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Apr 2013 12:51:28 -0400
-Content-Disposition: inline
-In-Reply-To: <7vhajog9xp.fsf@alter.siamese.dyndns.org>
+	id S1759798Ab3DBQxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 12:53:44 -0400
+Received: from mout.web.de ([212.227.15.3]:63556 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753852Ab3DBQxn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 12:53:43 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0LbZpT-1V2Cyf0xmV-00kxJ7; Tue, 02 Apr 2013 18:53:30
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <20130401234016.GC30935@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:qxGMu6iZanWtvSYoQJgdzrU+g3xEOLId2BP73L00L02
+ NvU615jILm6iLrDxmMfF6oylL+KKwIBX3KPqwwNPKTACjMvcTm
+ jvDS7SLmzphOglHg9xFnp+SMqcw1ltMmq0MOHhHjJS9r+p9y6t
+ jTayg9zQcMbOIbLVaaG+INgdU6mKoiIbkN1S+mWCwzfC4cukHQ
+ KjQSM8UpVZX8NBI6ElPrg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219797>
 
-On Tue, Apr 02, 2013 at 09:43:30AM -0700, Junio C Hamano wrote:
-
-> > In some systems, yes, but git does not have any notion of "doc/" as an
-> > item (after all, we track content in files, not directories), so I do
-> > not see what it means to specify a directory except to say "everything
-> > under it has this property".
+On 02.04.13 01:40, Jeff King wrote:
+> On Mon, Apr 01, 2013 at 11:46:00PM +0200, Antoine Pelisse wrote:
 > 
-> That was true back when gitattributes (and ignore) was defined to
-> apply only to the paths we track.  But export-ignore abuses the
-> attrtibute system, allows a directory to be specified in the match
-> pattern, and we declared that is a kosher use by the patch that
-> caused 1.8.1.X regression, no?  So "Git does not have any notion of
-> "doc/' as an item" is no longer true, I think.
+>> On Mon, Apr 1, 2013 at 11:14 PM, Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>>> +export TEST_LINT :=
+>>
+>> I think "test-lint-executable" still makes sense here.
+> 
+> Also test-lint-shell-syntax, which finds a problem with the current
+> code:
+> 
+>   $ cd contrib/remote-helpers
+>   $ make test TEST_LINT=test-lint-shell-syntax
+>   make -e -C ../../t test
+>   make[1]: Entering directory `/home/peff/compile/git/t'
+>   rm -f -r test-results
+>   /home/peff/compile/git/contrib/remote-helpers/test-bzr.sh:139: error: echo -n is not portable (please use printf):   echo -n content > expected &&
+>   make[1]: *** [test-lint-shell-syntax] Error 1
+>   make[1]: Leaving directory `/home/peff/compile/git/t'
+>   make: *** [test] Error 2
+> 
+> I think the check for duplicate-numbers is the only one that does not
+> make sense. 
+[]
+Not sure about that, I send a suggestion of a patch in a minute.
+Highlights:
+1) - rename the contrib test cases and assigns real TC numbers
+2) - Forward the numbers into the main "test Makefile"
 
-Yes, but as I explained later, the meaning of "apply an attribute to
-dir" in such cases is always equivalent to "apply attribute
-recursively to dir/*". So I do not think we are violating that rule to
-recursively apply all attributes.
+1) Will probably collide with Felipe's changes, so we just can pick up the idea.
+2) Is for only review.
+  If we agree on the re-numbering of TC's in contrib, we can apply
+  a second round of the patch later.
 
-But let's take a step back. I think Jan is trying to do a very
-reasonable thing: come up with the same set of paths that git-archive
-would. What's the best way to solve that? Recursive application of
-attributes is one way, but is there another way we could help with
-solving that?
-
-Using:
-
-  git ls-tree --name-only -zrt HEAD |
-  git check-attr --stdin -z export-ignore
-
-means we can find out that "foo/" is ignored. But he would have to
-manually post-process the output to see that "foo/bar" is below "foo".
-Not impossible, but I just wonder if git can be more helpful in figuring
-this out.
-
--Peff
+/Torsten
