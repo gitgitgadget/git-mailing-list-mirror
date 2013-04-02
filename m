@@ -1,84 +1,107 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Composing git repositories
-Date: Wed, 3 Apr 2013 00:41:38 +0530
-Message-ID: <CALkWK0kCcSgHfmTuQc-0XGHOdm6PPaVHqFeD4bko-zq3pH8mUw@mail.gmail.com>
-References: <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com>
- <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com>
- <51537A7B.7050206@web.de> <CALkWK0nfNCu775MBB-Y28=V93RkV24kbTLTDKWO2dZ-0yxX=Sw@mail.gmail.com>
- <5154AACC.7050006@web.de> <CALkWK0k=g3iFjmpUQA1VkuH2kZsVX1_Hpo=LZ7CuotwHz_1++g@mail.gmail.com>
- <CABURp0q9mV+-tEtHGpE4mh9cdbhkA8fr4i7XpBtK0fpfSYg-+A@mail.gmail.com>
- <51597A37.1010301@web.de> <CALkWK0nVax9HtM-M2zo-KH6U2jWznaUH9yBn4y1wqDW8f-mfOg@mail.gmail.com>
- <20130402185426.GG28148@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: check-attr doesn't respect recursive definitions
+Date: Tue, 2 Apr 2013 15:16:41 -0400
+Message-ID: <20130402191641.GB17784@sigill.intra.peff.net>
+References: <slrnkldd3g.1l4.jan@majutsushi.net>
+ <20130402143130.GC23828@sigill.intra.peff.net>
+ <7vtxnogbft.fsf@alter.siamese.dyndns.org>
+ <20130402163034.GA19252@sigill.intra.peff.net>
+ <7vhajog9xp.fsf@alter.siamese.dyndns.org>
+ <20130402165128.GA19712@sigill.intra.peff.net>
+ <7v1uasg8e0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 21:12:53 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jan Larres <jan@majutsushi.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 02 21:17:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN6dU-0004Ex-3R
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 21:12:48 +0200
+	id 1UN6hn-0007Hh-E7
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 21:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932444Ab3DBTMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 15:12:19 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:34674 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932075Ab3DBTMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 15:12:18 -0400
-Received: by mail-ie0-f177.google.com with SMTP id tp5so801222ieb.8
-        for <git@vger.kernel.org>; Tue, 02 Apr 2013 12:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=73neflRrsB6Zx3SMR+u0zWiHuszrOWi7DPUiLI9yexw=;
-        b=hnSB2yqr71uj/Jg6C86JSJPtitaIXiZDYwoBXvoB4PD0aXS2oYn6r8TI2vAKqv7D5y
-         tCEHpbqghv0euBu391Njx65Muqp/7StT8Yermwvtp0lErhODOHCq4oG1gjWFe56wH7Z7
-         qDMjx9Deb9RFa7CmbnPkC6iVoZbdPn0m0fPcyAIpKGTgu+ZuHZAgkzRkOuHG/8b61Cq3
-         WTp34VUyeBV1VdXPNLteQ70sqKotnuqkUlm+wZ8+Xvsz4OgWm9Ai8XVLvayeK4wDSa/y
-         qXHi1qie7uuFiGZcQ0znWn9Lwy69Plfo3Tjkbpc48D3irzszVfVIDGhO3f74iiakHplF
-         V41Q==
-X-Received: by 10.50.50.71 with SMTP id a7mr5617068igo.14.1364929938565; Tue,
- 02 Apr 2013 12:12:18 -0700 (PDT)
-Received: by 10.64.166.33 with HTTP; Tue, 2 Apr 2013 12:11:38 -0700 (PDT)
-In-Reply-To: <20130402185426.GG28148@google.com>
+	id S932227Ab3DBTQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 15:16:46 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52526 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932097Ab3DBTQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 15:16:46 -0400
+Received: (qmail 13255 invoked by uid 107); 2 Apr 2013 19:18:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Apr 2013 15:18:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Apr 2013 15:16:41 -0400
+Content-Disposition: inline
+In-Reply-To: <7v1uasg8e0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219853>
 
-Jonathan Nieder wrote:
-> That sounds similar to what Junio does with the Meta subdirectory in
-> his git development worktree.  I don't think submodules are a good
-> fit, but it might make sense to start respecting a .motd file to allow
-> the following in a hypothetical world where everyone who clones git
-> uses the same scripts Junio does:
->
->         $ git clone git://repo.or.cz/git.git
->         Cloning into 'git'...
->         remote: Counting objects: 151283, done.
->         remote: Compressing objects: 100% (38546/38546), done.
->         remote: Total 151283 (delta 111004), reused 151073 (delta 110797)
->         Receiving objects: 100% (151283/151283), 36.39 MiB | 7.66 MiB/s, done.
->         Resolving deltas: 100% (111004/111004), done.
->
->         Don't forget to "git clone -b todo git://repo.or.cz/git.git git/Meta"
->         for maintenance scripts.
->         $
+On Tue, Apr 02, 2013 at 10:16:55AM -0700, Junio C Hamano wrote:
 
-Nope, it's not mandatory for everyone to use dotfiles.git in exactly
-the same way either.  In other words: I'm not sitting in an office and
-working with my colleagues on exactly the same things, in exactly the
-same way; wasn't that the Subversion age?  Some might decide to
-initialize a few submodules, change the URLs of some, and remove some.
- I'd want my private fork to have commits changing "initialize
-submodule quux" to "don't initialize submodule quux", and be able to
-rebase that on top of upstream.  Why are you leaning towards solutions
-for very narrow usecases?
+> > Yes, but as I explained later, the meaning of "apply an attribute to
+> > dir" in such cases is always equivalent to "apply attribute
+> > recursively to dir/*". So I do not think we are violating that rule to
+> > recursively apply all attributes.
+> 
+> I think this is where we disagree.  Attribute does not recursively
+> apply in general.  It was _never_ designed to (and that is the
+> authoritative answer, as I was who designed it in Apr 2007 ;-)).
+
+My argument was not that they apply recursively in general, but that we
+followed an "as if" rule where what happens in the gitignore and
+export-ignore cases are indistinguishable from recursive application.
+But...
+
+> It is not even true to say that "archive" applies export-ignore to
+> the directory recursively, with or without the recent change.  Would
+> it allow everything but dir/file to be excluded and still dir/file
+> to be included in the archive if you have a .gitattribute file like
+> this?
+> 
+> 	dir/ export-ignore
+>         dir/file !export-ignore
+> 
+> I do not think so.
+
+This is a perfect counter-example. The current behavior _is_
+distinguishable from recursive application, and my "as if" above is not
+correct.
+
+Thanks for the clarification.
+
+> > But let's take a step back. I think Jan is trying to do a very
+> > reasonable thing: come up with the same set of paths that git-archive
+> > would. What's the best way to solve that?
+> 
+> Because the attribute does not recursively apply in general, and it
+> is entirely up to the application and a particular attribute key to
+> decide how the key is applied in the context of the application,
+> "check-attr" by itself cannot know.  You need to know how "archive"
+> treats "export-ignore" attribute and then use "check-attr" with that
+> knowledge.
+
+Yeah, I had the same thought. So you would have to either:
+
+  1. Hook the feature into git-archive, which knows about how it
+     recurses, and can report the correct set of paths.
+
+or
+
+  2. Tell check-attr (or some post-processor) to apply the attribute to
+     elements below the path (or possibly to prune out such paths). This
+     is not the same as recursive application, because you cannot negate
+     it (i.e., you actually find out the final attrs for both "foo" and
+     "foo/bar", and then say "the attr for 'foo' overrides the attr for
+     'foo/bar'".
+
+I posted a patch for (1), but it felt not-very-general. But (2) also
+feels gross and not very general. Even though it could in theory be used
+for things besides git-archive, it is really just applying git-archive's
+pruning rule, which other programs likely don't care about.
+
+-Peff
