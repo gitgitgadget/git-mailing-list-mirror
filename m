@@ -1,202 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/2] status: show 'revert' state and status hint
-Date: Tue,  2 Apr 2013 16:20:21 +0200
-Message-ID: <1364912422-29536-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <1364689848-52647-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Apr 02 16:25:01 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: check-attr doesn't respect recursive definitions
+Date: Tue, 2 Apr 2013 10:31:30 -0400
+Message-ID: <20130402143130.GC23828@sigill.intra.peff.net>
+References: <slrnkldd3g.1l4.jan@majutsushi.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jan Larres <jan@majutsushi.net>
+X-From: git-owner@vger.kernel.org Tue Apr 02 16:32:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN28x-0000hs-V9
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 16:25:00 +0200
+	id 1UN2Fn-0005hF-Bf
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 16:32:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761033Ab3DBOYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 10:24:31 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:40560 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760231Ab3DBOYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 10:24:30 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r32EKOHJ023604
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 2 Apr 2013 16:20:24 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1UN24Y-0002Md-B5; Tue, 02 Apr 2013 16:20:26 +0200
-Received: from moy by anie with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1UN24Y-0007h8-4C; Tue, 02 Apr 2013 16:20:26 +0200
-X-Mailer: git-send-email 1.8.2.359.g6e2e2c6.dirty
-In-Reply-To: <1364689848-52647-1-git-send-email-robin.rosenberg@dewire.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 02 Apr 2013 16:20:25 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r32EKOHJ023604
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1365517356.55408@B6f6J+kp/aPQs3XBJnuBeg
+	id S932238Ab3DBObf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 10:31:35 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52163 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761133Ab3DBObe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 10:31:34 -0400
+Received: (qmail 9869 invoked by uid 107); 2 Apr 2013 14:33:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Apr 2013 10:33:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Apr 2013 10:31:30 -0400
+Content-Disposition: inline
+In-Reply-To: <slrnkldd3g.1l4.jan@majutsushi.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219774>
 
-This is the logical equivalent for "git status" of 3ee4452 (bash: teach
-__git_ps1 about REVERT_HEAD).
+On Sat, Mar 30, 2013 at 09:45:51AM +0000, Jan Larres wrote:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -282,6 +282,8 @@ __git_ps1 ()
->  				r="|MERGING"
->  			elif [ -f "$g/CHERRY_PICK_HEAD" ]; then
->  				r="|CHERRY-PICKING"
-> +			elif [ -f "$g/REVERT_HEAD" ]; then
-> +				r="|REVERTING"
+> I am trying to write a custom archiving script that checks the
+> export-ignore attribute to know which files from an ls-files output it
+> should skip. Through this I noticed that for files in directories for
+> which the export-ignore (or any other) attribute is set, check-attr
+> still reports 'unspecified'. More precisely:
+> 
+> $ git init test
+> Initialized empty Git repository in /home/jan/test/.git/
+> $ cd test
+> $ mkdir foo
+> $ touch foo/bar
+> $ echo "foo export-ignore" > .gitattributes
+> $ git check-attr export-ignore foo
+> foo: export-ignore: set
+> $ git check-attr export-ignore foo/bar
+> foo/bar: export-ignore: unspecified
+> 
+> I would expect the last command to also report 'set'. I've also tried
+> other patterns like 'foo/' and 'foo*', but it didn't make any
+> difference. Is this expected behaviour? It does make checking the
+> attributes of single files somewhat more difficult.
 
-Good.
+Yes, it is the expected behavior, though I cannot offhand think of
+anything that would break if we did apply it recursively.
 
-It makes sense to also teach "git status" about REVERT_HEAD.
+> git-archive ignores the directory as expected, but unfortunately it
+> doesn't have an option to just list the files it would archive instead
+> of actually archiving them.
 
- t/t7512-status-help.sh | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++
- wt-status.c            | 24 +++++++++++++++++++++
- wt-status.h            |  1 +
- 3 files changed, 82 insertions(+)
+Yes, git-archive feeds the directories into the attribute machinery as
+it traverses the tree, so it actually checks for attributes of "foo"
+before recursing. You can do the same, but I agree it is quite a bit
+more annoying than just piping "ls-files -z" into "check-attr --stdin
+-z".
 
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 06749a6..d745cf4 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -678,4 +678,61 @@ test_expect_success 'status showing detached from a tag' '
- 	test_i18ncmp expected actual
- '
- 
-+test_expect_success 'status while reverting commit (conflicts)' '
-+	git checkout master &&
-+	echo before >to-revert.txt &&
-+	test_commit before to-revert.txt &&
-+	echo old >to-revert.txt &&
-+	test_commit old to-revert.txt &&
-+	echo new >to-revert.txt &&
-+	test_commit new to-revert.txt &&
-+	test_must_fail git revert HEAD^ &&
-+	cat >expected <<-EOF
-+	# On branch master
-+	# You are currently reverting a commit.
-+	#   (fix conflicts and run "git revert --continue")
-+	#   (use "git revert --abort" to cancel the revert operation)
-+	#
-+	# Unmerged paths:
-+	#   (use "git reset HEAD <file>..." to unstage)
-+	#   (use "git add <file>..." to mark resolution)
-+	#
-+	#	both modified:      to-revert.txt
-+	#
-+	no changes added to commit (use "git add" and/or "git commit -a")
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+test_expect_success 'status while reverting commit (conflicts resolved)' '
-+	echo reverted >to-revert.txt &&
-+	git add to-revert.txt &&
-+	cat >expected <<-EOF
-+	# On branch master
-+	# You are currently reverting a commit.
-+	#   (all conflicts fixed: run "git revert --continue")
-+	#   (use "git revert --abort" to cancel the revert operation)
-+	#
-+	# Changes to be committed:
-+	#   (use "git reset HEAD <file>..." to unstage)
-+	#
-+	#	modified:   to-revert.txt
-+	#
-+	# Untracked files not listed (use -u option to show untracked files)
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+test_expect_success 'status after reverting commit' '
-+	git revert --continue &&
-+	cat >expected <<-\EOF
-+	# On branch master
-+	nothing to commit (use -u to show untracked files)
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
- test_done
-diff --git a/wt-status.c b/wt-status.c
-index cea8e55..5123c71 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -965,6 +965,25 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
- 	wt_status_print_trailer(s);
- }
- 
-+static void show_revert_in_progress(struct wt_status *s,
-+					struct wt_status_state *state,
-+					const char *color)
-+{
-+	status_printf_ln(s, color, _("You are currently reverting a commit."));
-+	if (advice_status_hints) {
-+		if (has_unmerged(s))
-+			status_printf_ln(s, color,
-+				_("  (fix conflicts and run \"git revert --continue\")"));
-+		else
-+			status_printf_ln(s, color,
-+				_("  (all conflicts fixed: run \"git revert --continue\")"));
-+	}
-+	if (advice_status_hints)
-+		status_printf_ln(s, color,
-+			_("  (use \"git revert --abort\" to cancel the revert operation)"));
-+	wt_status_print_trailer(s);
-+}
-+
- static void show_bisect_in_progress(struct wt_status *s,
- 				struct wt_status_state *state,
- 				const char *color)
-@@ -1113,6 +1132,9 @@ void wt_status_get_state(struct wt_status_state *state,
- 		state->bisect_in_progress = 1;
- 		state->branch = read_and_strip_branch("BISECT_START");
- 	}
-+	if (!stat(git_path("REVERT_HEAD"), &st)) {
-+		state->revert_in_progress = 1;
-+	}
- 
- 	if (get_detached_from)
- 		wt_status_get_detached_from(state);
-@@ -1130,6 +1152,8 @@ static void wt_status_print_state(struct wt_status *s,
- 		show_rebase_in_progress(s, state, state_color);
- 	else if (state->cherry_pick_in_progress)
- 		show_cherry_pick_in_progress(s, state, state_color);
-+	else if (state->revert_in_progress)
-+		show_revert_in_progress(s, state, state_color);
- 	if (state->bisect_in_progress)
- 		show_bisect_in_progress(s, state, state_color);
- }
-diff --git a/wt-status.h b/wt-status.h
-index be7a016..35cd6cb 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -80,6 +80,7 @@ struct wt_status_state {
- 	int rebase_interactive_in_progress;
- 	int cherry_pick_in_progress;
- 	int bisect_in_progress;
-+	int revert_in_progress;
- 	char *branch;
- 	char *onto;
- 	char *detached_from;
--- 
-1.8.2.359.g6e2e2c6.dirty
+-Peff
