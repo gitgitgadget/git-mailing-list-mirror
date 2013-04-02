@@ -1,187 +1,182 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] transport-helper: check if remote helper is alive
-Date: Mon, 01 Apr 2013 17:26:24 -0700
-Message-ID: <7v38v9ixqn.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/4] run-command: add new check_command helper
+Date: Mon, 1 Apr 2013 22:22:14 -0400
+Message-ID: <20130402022214.GA719@sigill.intra.peff.net>
 References: <1364852804-31875-1-git-send-email-felipe.contreras@gmail.com>
- <1364852804-31875-3-git-send-email-felipe.contreras@gmail.com>
+ <1364852804-31875-2-git-send-email-felipe.contreras@gmail.com>
+ <20130401232326.GA30935@sigill.intra.peff.net>
+ <CAMP44s3NxBexkaQa=KxJ963L29T4BAn7e+-3YVz-vgUp8jrb4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j6t@kdbg.org>, Aaron Schrab <aaron@schrab.com>,
 	Clemens Buchacher <drizzd@aon.at>,
 	David Michael Barr <b@rr-dav.id.au>,
 	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 02:27:03 2013
+X-From: git-owner@vger.kernel.org Tue Apr 02 04:22:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UMp42-0005D8-V4
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 02:27:03 +0200
+	id 1UMqs3-00056H-2o
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 04:22:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759293Ab3DBA03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Apr 2013 20:26:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54917 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754323Ab3DBA02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Apr 2013 20:26:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6688B11A3E;
-	Tue,  2 Apr 2013 00:26:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=w4oaS8AIq6NNldgvJTAghcwsHMs=; b=Ut3ICG47iDh7UnnpP2Ks
-	dqL/DHDTLd4Jw46lBvKD76RQ1fmuHAkzuKi3PtAs/XfThwp8n4Y86vutzLoJXuIK
-	llyHlJRP6eKuCtrj0PzR/+1coYV0ZB1BMamym+2Apn2sqDLXUKTBbmLHhmtx/Wq5
-	BiglDP3PgVArdh9G4m5+kjY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=Yb0IWJlDetoasQHUbfQzZCDyfcpbNcKTq3RsBddbSQUV5f
-	1TqCUgs9KIUJJ5BCGNrDhmHAt/JGeBDEAi+mOR+Kv6uQyAfiVOtVulSTk5QIKBIq
-	Ty1k12jgUIG8zk+8jlTTSqzKveLDbzDLWiNW+3zQwi+epHr08UNjo4agLBFw4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5930211A3D;
-	Tue,  2 Apr 2013 00:26:27 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78A7511A3B; Tue,  2 Apr
- 2013 00:26:26 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F4B61846-9B2B-11E2-948D-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759850Ab3DBCWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Apr 2013 22:22:18 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51519 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759396Ab3DBCWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Apr 2013 22:22:18 -0400
+Received: (qmail 4728 invoked by uid 107); 2 Apr 2013 02:24:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 01 Apr 2013 22:24:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Apr 2013 22:22:14 -0400
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3NxBexkaQa=KxJ963L29T4BAn7e+-3YVz-vgUp8jrb4A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219730>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Mon, Apr 01, 2013 at 05:58:55PM -0600, Felipe Contreras wrote:
 
-> Otherwise transport-helper will continue checking for refs and other
-> things what will confuse the user more.
-> ---
+> On Mon, Apr 1, 2013 at 5:23 PM, Jeff King <peff@peff.net> wrote:
+> > On Mon, Apr 01, 2013 at 03:46:41PM -0600, Felipe Contreras wrote:
+> 
+> >> -static int wait_or_whine(pid_t pid, const char *argv0)
+> >> +static pid_t persistent_waitpid(struct child_process *cmd, pid_t pid, int *stat_loc)
+> >> +{
+> >> +     if (cmd->last_wait.code) {
+> >> +             errno = cmd->last_wait.failed_errno;
+> >> +             *stat_loc = cmd->last_wait.status;
+> >> +             return errno ? -1 : pid;
+> >> +     } else {
+> >> +             pid_t waiting;
+> >> +             while ((waiting = waitpid(pid, stat_loc, 0)) < 0 && errno == EINTR)
+> >> +                     ;       /* nothing */
+> >> +             return waiting;
+> >> +     }
+> >> +}
+> >
+> > So it looks we are trying to save the waitpid state from a previous run
+> > and use the saved value. Otherwise, waitpid as normal.
+> >
+> > We loop on EINTR when we actually call waitpid(). But we don't check
+> > whether the saved errno is waitpid. What happens if we EINTR during the
+> > saved call to waitpid?
+> 
+> Are you saying that even if we have stored the result of a waitpid
+> command, if errno is EINTR, then we should still loop waitpid()? If
+> so, I guess this would do the trick:
 
-Sign-off?
+Yes, I think that would work. Though I wonder if it is even worth
+storing EINTR at all in the first place. It tells us nothing. In fact,
+does storing any error condition really tell us anything? The two states
+we are interested in at this point are:
 
->  git-remote-testgit        | 11 +++++++++++
->  t/t5801-remote-helpers.sh | 19 +++++++++++++++++++
->  transport-helper.c        |  8 ++++++++
->  3 files changed, 38 insertions(+)
->
-> diff --git a/git-remote-testgit b/git-remote-testgit
-> index b395c8d..ca0cf09 100755
-> --- a/git-remote-testgit
-> +++ b/git-remote-testgit
-> @@ -61,12 +61,23 @@ do
->  			echo "feature import-marks=$gitmarks"
->  			echo "feature export-marks=$gitmarks"
->  		fi
-> +
-> +		if test -n "$GIT_REMOTE_TESTGIT_FAILURE"
-> +		then
-> +			exit -1
-> +		fi
-> +
->  		echo "feature done"
->  		git fast-export "${testgitmarks_args[@]}" $refs |
->  		sed -e "s#refs/heads/#${prefix}/heads/#g"
->  		echo "done"
->  		;;
->  	export)
-> +		if test -n "$GIT_REMOTE_TESTGIT_FAILURE"
-> +		then
-> +			exit -1
-> +		fi
-> +
->  		before=$(git for-each-ref --format='%(refname) %(objectname)')
->  
->  		git fast-import "${testgitmarks_args[@]}" --quiet
-> diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-> index f387027..26e9a5b 100755
-> --- a/t/t5801-remote-helpers.sh
-> +++ b/t/t5801-remote-helpers.sh
-> @@ -166,4 +166,23 @@ test_expect_success 'push ref with existing object' '
->  	compare_refs local dup server dup
->  '
->  
-> +test_expect_success 'proper failure checks for fetching' '
-> +	(GIT_REMOTE_TESTGIT_FAILURE=1 &&
-> +	export GIT_REMOTE_TESTGIT_FAILURE &&
-> +	cd local &&
-> +	test_must_fail git fetch 2>&1 | \
-> +		grep "Error while running helper"
+  1. We have reaped the child via waitpid; here is its status.
 
-This will not care if "git fetch" succeeds or fails and returns the
-exit code from grep.  Perhaps something like this instead?
+  2. We have not (either we did not try, it was not dead yet, or we were
+     not able to due to an error). We should now try it again.
 
-	(
-		GIT_REMOTE_TESTGIT_FAILURE=1 &&
-		export GIT_REMOTE_TESTGIT_FAILURE &&
-		cd local &&
-		test_must_fail git fetch 2>error &&
-		grep "Error while running helper" error
-	)
+If we got EINTR the first time around, we would likely get the "real"
+answer this time. If we get anything else (like EINVAL or ECHILD), then
+we would get the same thing again calling waitpid() later.
 
+> > We now take argv0 into wait_or_whine. But I don't see it being used.
+> > What's it for?
+> 
+> It was there before:
+> -static int wait_or_whine(pid_t pid, const char *argv0)
+> +static int wait_or_whine(struct child_process *cmd, pid_t pid, const
+> char *argv0)
 
-> +# We sleep to give fast-export a chance to catch the SIGPIPE
-> +test_expect_failure 'proper failure checks for pushing' '
-> +	(GIT_REMOTE_TESTGIT_FAILURE=1 &&
-> +	export GIT_REMOTE_TESTGIT_FAILURE &&
-> +	cd local &&
-> +	test_must_fail git push --all 2>&1 | \
-> +		grep "Error while running helper"
+Ah, sorry, I misread the diff. We are adding "cmd", not "argv0".
 
-Ditto.
+> >> +     if (waiting != cmd->pid)
+> >> +             return 1;
+> >> +
+> >> +     if (waiting < 0)
+> >> +             failed_errno = errno;
+> >
+> > How would we ever trigger this second conditional?
+> [...]
+> How about this?
+> 
+> if (waiting >= 0 && waiting != cmd->pid)
+> 		return 1;
 
-> +	)
-> +'
-> +
->  test_done
-> diff --git a/transport-helper.c b/transport-helper.c
-> index cb3ef7d..dfdfa7a 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -460,6 +460,10 @@ static int fetch_with_import(struct transport *transport,
->  
->  	if (finish_command(&fastimport))
->  		die("Error while running fast-import");
-> +
-> +	if (!check_command(data->helper))
-> +		die("Error while running helper");
-> +
->  	argv_array_free_detached(fastimport.argv);
->  
->  	/*
-> @@ -818,6 +822,10 @@ static int push_refs_with_export(struct transport *transport,
->  
->  	if (finish_command(&exporter))
->  		die("Error while running fast-export");
-> +
-> +	if (!check_command(data->helper))
-> +		die("Error while running helper");
-> +
->  	push_update_refs_status(data, remote_refs);
->  	return 0;
->  }
+That would trigger the rest of your code in the error case, which I
+think was your original intent. But then we return "0" from
+check_command. Is that right?
 
-OK, so the idea is that fetch_with_import() does
+There are three states we can be in from calling waitpid:
 
- - get_helper(transport), which spawns a helper process;
+  1. The process is dead.
 
- - get_importer(transport, &fastimport), which spawns a fast-import
-   and make it read from the output of the helper process;
+  2. The process is not dead.
 
- - we did finish_command() to wait for the fast-import to finish,
-   expecting that the fast-import would finish when the helper stops
-   feeding it, which in turn would mean the helper would have died.
+  3. We could not determine which because waitpid returned an error.
 
-The same for the pushing side.
+It is clear that check_command is trying to tell its caller (1) or (2);
+but what should it say in case of (3)?
 
-Shouldn't transport_disconnect() have called release_helper() which
-in turn calls disconnect_helper() to call finish_command() on the
-helper to wait for that procesanyway?  Is somebody discarding return
-value from transport_disconnect() or the current calling site of
-transport_disconnect() is too late to notice the error?
+Naively, given how patch 2 uses it, I think it would actually make sense
+for it to return 1. That is, the semantics are "return 0 if and only if
+the pid is verified to be dead; otherwise return 1".
 
-Puzzled...
+But if we know from reading waitpid(3) that waitpid should only fail due
+to EINTR, or due to bogus arguments (e.g., a pid that does not exist or
+has already been reaped), then maybe something like this makes sense:
+
+  while ((waiting = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
+          ; /* nothing */
+
+  /* pid definitely still going */
+  if (!waiting)
+          return 1;
+
+  /* pid definitely died */
+  if (waiting == cmd->pid) {
+          cmd->last_status.valid = 1;
+          cmd->last_status.status = status;
+          return 0;
+  }
+
+  /*
+   * this should never happen, since we handed waitpid() a single
+   * pid, so it should either return that pid, 0, or an error.
+   */
+  if (waiting > 0)
+          die("BUG: waitpid reported a random pid?");
+
+  /*
+   * otherwise, we have an error. Assume the pid is gone, since that
+   * is the only reason for waitpid to report a problem besides EINTR.
+   * We don't bother recording errno, since we can just repeat
+   * the waitpid again later.
+   */
+   return 0;
+
+> >> +     cmd->last_wait.code = -1;
+> >> +     cmd->last_wait.failed_errno = failed_errno;
+> >> +     cmd->last_wait.status = status;
+> >
+> > Since we can only get here when waiting == cmd->pid,
+> 
+> No, also when waiting < 0.
+
+After the fix above, yes; in the original we would always have exited
+already.
+
+As an aside, should check_command be able to be called twice? That is,
+should it first check for cmd->last_status.valid and return early if
+somebody has already reaped the child? It doesn't matter for the code
+you add in patch 2, but it seems like it would give the least surprise
+to somebody trying to use it later.
+
+-Peff
