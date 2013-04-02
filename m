@@ -1,72 +1,69 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: RFC: allowing multiple parallel sequencers
-Date: Tue, 2 Apr 2013 13:46:40 -0400
-Message-ID: <20130402174640.GA14473@neilslaptop.think-freely.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] inconsistent behavior with --set-upstream vs
+ --set-upstream-to
+Date: Tue, 2 Apr 2013 13:51:13 -0400
+Message-ID: <20130402175113.GD24698@sigill.intra.peff.net>
+References: <F58991CB-9C83-4DA6-B82B-2E6C874C30EB@gmail.com>
+ <20130402172333.GB24698@sigill.intra.peff.net>
+ <A4C40BCB-85DD-4BCB-8BF0-79A75DE73211@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 02 19:47:20 2013
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Garrett Cooper <yaneurabeya@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 02 19:51:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN5Ik-0003oi-Ix
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:47:18 +0200
+	id 1UN5N6-0006iw-1M
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 19:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758565Ab3DBRqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 13:46:50 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:45737 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758221Ab3DBRqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 13:46:49 -0400
-Received: from nat-pool-3-rdu.redhat.com ([66.187.233.203] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1UN5IF-0003PV-50
-	for git@vger.kernel.org; Tue, 02 Apr 2013 13:46:49 -0400
+	id S1761207Ab3DBRvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 13:51:19 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52391 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761137Ab3DBRvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 13:51:17 -0400
+Received: (qmail 11939 invoked by uid 107); 2 Apr 2013 17:53:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Apr 2013 13:53:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Apr 2013 13:51:13 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+In-Reply-To: <A4C40BCB-85DD-4BCB-8BF0-79A75DE73211@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219820>
 
-Hey-
-	I've recently started looking into the possibility of having git support
-multiple in-progress sequencers, and wanted to solicit opinions for how best to
-do it.  The use case is primarily for cherry-pick - i.e. I often have need to
-cherry pick a large set of commits to an older kernel, and I may do this for
-several work efforts in parallel.  As such, it would be great if I could be able
-to have multiple sequencer states in progress that could be swapped out with one
-another.  I know this could be done manually by saving the sequencer directory
-to another name and moving it back, but it would be really nice if there was
-something a bit more polished and integrated.  The thoughts I had were:
+On Tue, Apr 02, 2013 at 10:30:35AM -0700, Garrett Cooper wrote:
 
-1) A per branch sequence directory - when creating the sequence directory,
-prepend the name of the branch that you are on to the sequencer directory name,
-and lookup the sequencer using that prefix.  This would fit quite well I think.
-It would allow us to maintain a sequencer per branch, and would be relatively
-easy to implement (we would need to have a generic function to return the
-current branch name, and some extra check to delete sequencers when branches are
-deleted, but nothing too difficult).  It would be problematic however, in that
-working in detached head state would preclude the use of the mechanism (we could
-work around that by using a global sequencer in detached head mode, or we could
-add an option to specify a sequencer prefix).
+> I push the branch to origin/ and then things tend to work, but since I
+> obviously had been doing things wrong what's the correct order of
+> operations for creating a branch and setting the upstream
+> appropriately?
 
-2) Augment the git-stash command to save sequencer state optionally.  This would
-be somewhat more difficult to implement I think (we would need to add
-.git/sequencer/* to the untracked file list when creating the stash commit).  It
-would however allow arbitrary sequencers to be used on arbitrary branches
-(including detached head mode, if thats useful).
+Once you have pushed it, the push creates the refs/remotes/origin/foo
+tracking branch automatically. You are then free to reference it
+wherever you like, including in set-upstream-to. However, you can also
+just ask push to do it for you with "--set-upstream" or "-u". So the
+workflow is something like:
 
-So, before I went implementing, I wanted to solicit opinions here.  Does anyone
-have any thoughts (including completely different directions to move in for this
-feature)?
+  $ git checkout -b my-topic
+  $ hack hack hack
+  $ git commit -m "looking good, time to publish"
+  $ git push -u origin HEAD
 
-Thanks!
-Neil
+> PS I love git as a tool, but I really wish the workflows were simpler
+> or more straightforward, and error messages were clearer. It seems
+> like this would help prevent usage errors like this..
+
+Things slowly improve as people make suggestions. I think the thing that
+might have helped here is better advice when "set-upstream-to" is
+pointed to a ref that does not exist.
+
+Patches coming in a minute.
+
+-Peff
