@@ -1,88 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/13] remote-hg: general updates
-Date: Tue, 02 Apr 2013 13:47:11 -0700
-Message-ID: <7v4nfobqy8.fsf@alter.siamese.dyndns.org>
-References: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com>
- <7vip44d7x0.fsf@alter.siamese.dyndns.org>
- <CAMP44s1kMrXBgg8tA+1-OtxHV4cqbQ3NfqpRF6AabDWR7fQvRQ@mail.gmail.com>
+From: Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: ZSH segmentation fault while completing "git mv dir/"
+Date: Tue, 02 Apr 2013 22:55:07 +0200
+Message-ID: <515B45AB.5030503@gmail.com>
+References: <vpqd2v686fi.fsf@grenoble-inp.fr> <513DF4D1.6000500@gmail.com>	<vpq8v5uueug.fsf@grenoble-inp.fr> <513E3190.20100@gmail.com>	<20130312013736.GB7105@unpythonic.net>	<vpqwqtdkq9z.fsf@grenoble-inp.fr>	<CAMP44s3ocY7qpESHCDRdHJBsH1DV+k1Z5OwSqsWndMZd_s6oBQ@mail.gmail.com> <vpqwqslgfzf.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Max Horn <max@quendi.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 22:47:57 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff Epler <jepler@unpythonic.net>, git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Apr 02 22:55:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN87V-00089F-BJ
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 22:47:53 +0200
+	id 1UN8FC-0005Wu-CK
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 22:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761060Ab3DBUrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 16:47:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49058 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752642Ab3DBUrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 16:47:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F23F12101;
-	Tue,  2 Apr 2013 20:47:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LXfIBuDisAPMprtJFpuS7ZrM/6k=; b=NYfbkN
-	gmFOAJUXdmqxW42gzdTbrbI9WKGLnnq8J2tXKYaA4LkoYKJqXJTzTjUDcFaWHtEd
-	sNBhE5BdJGHgNufzcrwk0Tv7K3QWxARZQBzvj0oLXCbG8dt6iPUdpkCK03er2W8p
-	Da4L3mQZzE4Fe/kyuHe7Ztt8TdH3CwbZMh7yc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Hyq3SCHZXChJZJ71V+T5MYxr0I7sVp/A
-	wHo5dcr4ZB9OY8ozur51BBArF1ZSPCecNbEPcj/gdNJ2/pdmXDL7gpgk+qS2dnaB
-	iuwLIqpyZrl6mVEKQ48IbLftpfvReAVcFMjbP83oGYxfxfqVWKJJynsXgqehqxfF
-	TH4YG3/+4x0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2785112100;
-	Tue,  2 Apr 2013 20:47:23 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 87901120FD; Tue,  2 Apr
- 2013 20:47:22 +0000 (UTC)
-In-Reply-To: <CAMP44s1kMrXBgg8tA+1-OtxHV4cqbQ3NfqpRF6AabDWR7fQvRQ@mail.gmail.com> (Felipe
- Contreras's message of "Tue, 2 Apr 2013 14:27:38 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 84AAD7AC-9BD6-11E2-8511-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1762446Ab3DBUzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 16:55:17 -0400
+Received: from mail-bk0-f51.google.com ([209.85.214.51]:36706 "EHLO
+	mail-bk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762410Ab3DBUzP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 16:55:15 -0400
+Received: by mail-bk0-f51.google.com with SMTP id y8so436723bkt.38
+        for <git@vger.kernel.org>; Tue, 02 Apr 2013 13:55:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=BbuXjDonjjTEnDDfOgE0hML4MkTheNDnXzlnuL4XKiI=;
+        b=fpUjKUaFLQSCyFPKUDkI6yoVmyMw/wqi7DNX1KA60HQYAjkgiFycjbL7p+tWCYvOkr
+         N71mUm15uyiF4BES3VIXeCb2lqtRjhF9+l7QmfLjtfnDvwlGIrohcxblBy3lo4bQpGov
+         FkwlcQ9UDGG3asX6AyWsXA5EkYKItbIdEpmJ11WMY0GPQBgDpm44mTWYNwt2ltIsuD3R
+         M1zBZjsgkjmOM68yrYu+RM8BUzTgYXtQkJlD6iv8b0Ya6eLSnKlPVsFitcR9V6KJoz3/
+         lO6356WcJ5ZfcqQTCn6z/3zTSjEb4Z1YAH+8jGWpwSzsS9ZbSs7Jm6PLerVmej8jNTvV
+         0/VQ==
+X-Received: by 10.204.169.144 with SMTP id z16mr7389981bky.109.1364936114417;
+        Tue, 02 Apr 2013 13:55:14 -0700 (PDT)
+Received: from [192.168.0.3] ([151.70.217.144])
+        by mx.google.com with ESMTPS id v2sm1243131bkw.5.2013.04.02.13.55.12
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 02 Apr 2013 13:55:13 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20121216 Icedove/3.0.11
+In-Reply-To: <vpqwqslgfzf.fsf@grenoble-inp.fr>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219884>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Tue, Apr 2, 2013 at 1:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
->>> Fortunately it seems to be working for the most part, but there are some
->>> considerable issues while pushing branches and tags.
+Il 02/04/2013 16:32, Matthieu Moy ha scritto:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+>> And this is a workaround:
 >>
->> Do you have a plan in mind what to do about "some considerable
->> issues"?
->
-> Yes, they should be fixed now with this series :) I'm still waiting
-> for the people that reported those issues to confirm, but in my tests
-> they do work.
+>> --- a/contrib/completion/git-completion.zsh
+>> +++ b/contrib/completion/git-completion.zsh
+>> @@ -66,7 +66,7 @@ __gitcomp_file ()
+>>
+>>         local IFS=$'\n'
+>>         compset -P '*[=:]'
+>> -       compadd -Q -p "${2-}" -f -- ${=1} && _ret=0
+>> +       compadd -Q -p "${2-}" -- ${=1} && _ret=0
+>>  }
+> 
+> OK, not something we want to apply to git.git, but this means a
+> workaround for users is to create a _git file with this content instead
+> instead of copying/symlinking git-completion.zsh as _git (replace
+> $GIT_ROOT_PATH with the appropriate value)
 
-Ah, I just misread the original to mean "This fixes pushes but still
-has (or even adds new) considerable issues that need to be worked
-out", hence my question.
+By the way: have you filled a bug report to Debian?
 
->> I could queue these on 'pu' and do the same, and wait until you say
->> "now it is ready, let's go to 'next'" (and same for 'master').
->
-> That might help. However, please drop the patch "don't update
-> bookmarks unnecessarily", I did not intend to push that one, and I
-> would like the rest of the patches to be tested before pushing that
-> one out.
 
-OK, then let's do that.
+Regards  Manlio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Thanks.
+iEYEARECAAYFAlFbRasACgkQscQJ24LbaUTDZQCfbfF5yhxCfUSaWdv0pE7++X3l
+Lc0AniAw5lEL6iunM+Tw8HvYxGwjuYYh
+=KpQI
+-----END PGP SIGNATURE-----
