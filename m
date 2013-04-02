@@ -1,133 +1,202 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] filter-branch: return to original dir after filtering
-Date: Tue, 2 Apr 2013 10:22:19 -0400
-Message-ID: <20130402142219.GB23828@sigill.intra.peff.net>
-References: <1364905941.19800.24.camel@mas>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin Erik Werner <martinerikwerner@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 02 16:22:52 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/2] status: show 'revert' state and status hint
+Date: Tue,  2 Apr 2013 16:20:21 +0200
+Message-ID: <1364912422-29536-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <1364689848-52647-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Apr 02 16:25:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UN26u-0007ju-B1
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 16:22:52 +0200
+	id 1UN28x-0000hs-V9
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Apr 2013 16:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761036Ab3DBOWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 10:22:24 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52153 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760688Ab3DBOWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 10:22:23 -0400
-Received: (qmail 9815 invoked by uid 107); 2 Apr 2013 14:24:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Apr 2013 10:24:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Apr 2013 10:22:19 -0400
-Content-Disposition: inline
-In-Reply-To: <1364905941.19800.24.camel@mas>
+	id S1761033Ab3DBOYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Apr 2013 10:24:31 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:40560 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760231Ab3DBOYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Apr 2013 10:24:30 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r32EKOHJ023604
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 2 Apr 2013 16:20:24 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1UN24Y-0002Md-B5; Tue, 02 Apr 2013 16:20:26 +0200
+Received: from moy by anie with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1UN24Y-0007h8-4C; Tue, 02 Apr 2013 16:20:26 +0200
+X-Mailer: git-send-email 1.8.2.359.g6e2e2c6.dirty
+In-Reply-To: <1364689848-52647-1-git-send-email-robin.rosenberg@dewire.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 02 Apr 2013 16:20:25 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r32EKOHJ023604
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1365517356.55408@B6f6J+kp/aPQs3XBJnuBeg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219773>
 
-The first thing filter-branch does is to create a temporary
-directory, either ".git-rewrite" in the current directory
-(which may be the working tree or the repository if bare),
-or in a directory specified by "-d". We then chdir to
-$tempdir/t as our temporary working directory in which to run
-tree filters.
+This is the logical equivalent for "git status" of 3ee4452 (bash: teach
+__git_ps1 about REVERT_HEAD).
 
-After finishing the filter, we then attempt to go back to
-the original directory with "cd ../..". This works in the
-.git-rewrite case, but if "-d" is used, we end up in a
-random directory. The only thing we do after this chdir is
-to run git-read-tree, but that means that:
-
-  1. The working directory is not updated to reflect the
-     filtered history.
-
-  2. We dump random files into "$tempdir/.." (e.g., if you
-     use "-d /tmp/foo", we dump junk into /tmp).
-
-Fix it by recording the full path to the original directory
-and returning there explicitly.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
-On Tue, Apr 02, 2013 at 02:32:21PM +0200, Martin Erik Werner wrote:
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -282,6 +282,8 @@ __git_ps1 ()
+>  				r="|MERGING"
+>  			elif [ -f "$g/CHERRY_PICK_HEAD" ]; then
+>  				r="|CHERRY-PICKING"
+> +			elif [ -f "$g/REVERT_HEAD" ]; then
+> +				r="|REVERTING"
 
-> I think I have stumbled on a bug in the -d option of git filter-branch.
-> 
-> It seems like in the final stage of filter-branch, regardless of where
-> -d is set, it will make updates to the "working directory" as being the
-> parent of the -d directory, and the actual working directory is left as
-> it were before the filtering.
+Good.
 
-Yep, definitely a bug. Thanks for reporting.
+It makes sense to also teach "git status" about REVERT_HEAD.
 
- git-filter-branch.sh     |  5 +++--
- t/t7003-filter-branch.sh | 14 ++++++++++++++
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ t/t7512-status-help.sh | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ wt-status.c            | 24 +++++++++++++++++++++
+ wt-status.h            |  1 +
+ 3 files changed, 82 insertions(+)
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 5314249..ac2a005 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -199,6 +199,7 @@ esac
- 	test -d "$tempdir" &&
- 		die "$tempdir already exists, please remove it"
- esac
-+orig_dir=$(pwd)
- mkdir -p "$tempdir/t" &&
- tempdir="$(cd "$tempdir"; pwd)" &&
- cd "$tempdir/t" &&
-@@ -206,7 +207,7 @@ die ""
- die ""
- 
- # Remove tempdir on exit
--trap 'cd ../..; rm -rf "$tempdir"' 0
-+trap 'cd "$orig_dir"; rm -rf "$tempdir"' 0
- 
- ORIG_GIT_DIR="$GIT_DIR"
- ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
-@@ -469,7 +470,7 @@ fi
- 	done
- fi
- 
--cd ../..
-+cd "$orig_dir"
- rm -rf "$tempdir"
- 
- trap - 0
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 1e7a209..9496736 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -64,6 +64,20 @@ test_expect_success 'correct GIT_DIR while using -d' '
- 	grep drepo "$TRASHDIR/backup-refs"
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 06749a6..d745cf4 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -678,4 +678,61 @@ test_expect_success 'status showing detached from a tag' '
+ 	test_i18ncmp expected actual
  '
  
-+test_expect_success 'tree-filter works with -d' '
-+	git init drepo-tree &&
-+	(
-+		cd drepo-tree &&
-+		test_commit one &&
-+		git filter-branch -d "$TRASHDIR/dfoo" \
-+			--tree-filter "echo changed >one.t" &&
-+		echo changed >expect &&
-+		git cat-file blob HEAD:one.t >actual &&
-+		test_cmp expect actual &&
-+		test_cmp one.t actual
-+	)
++test_expect_success 'status while reverting commit (conflicts)' '
++	git checkout master &&
++	echo before >to-revert.txt &&
++	test_commit before to-revert.txt &&
++	echo old >to-revert.txt &&
++	test_commit old to-revert.txt &&
++	echo new >to-revert.txt &&
++	test_commit new to-revert.txt &&
++	test_must_fail git revert HEAD^ &&
++	cat >expected <<-EOF
++	# On branch master
++	# You are currently reverting a commit.
++	#   (fix conflicts and run "git revert --continue")
++	#   (use "git revert --abort" to cancel the revert operation)
++	#
++	# Unmerged paths:
++	#   (use "git reset HEAD <file>..." to unstage)
++	#   (use "git add <file>..." to mark resolution)
++	#
++	#	both modified:      to-revert.txt
++	#
++	no changes added to commit (use "git add" and/or "git commit -a")
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
 +'
 +
- test_expect_success 'Fail if commit filter fails' '
- 	test_must_fail git filter-branch -f --commit-filter "exit 1" HEAD
- '
++test_expect_success 'status while reverting commit (conflicts resolved)' '
++	echo reverted >to-revert.txt &&
++	git add to-revert.txt &&
++	cat >expected <<-EOF
++	# On branch master
++	# You are currently reverting a commit.
++	#   (all conflicts fixed: run "git revert --continue")
++	#   (use "git revert --abort" to cancel the revert operation)
++	#
++	# Changes to be committed:
++	#   (use "git reset HEAD <file>..." to unstage)
++	#
++	#	modified:   to-revert.txt
++	#
++	# Untracked files not listed (use -u option to show untracked files)
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
++test_expect_success 'status after reverting commit' '
++	git revert --continue &&
++	cat >expected <<-\EOF
++	# On branch master
++	nothing to commit (use -u to show untracked files)
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
+ test_done
+diff --git a/wt-status.c b/wt-status.c
+index cea8e55..5123c71 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -965,6 +965,25 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
+ 	wt_status_print_trailer(s);
+ }
+ 
++static void show_revert_in_progress(struct wt_status *s,
++					struct wt_status_state *state,
++					const char *color)
++{
++	status_printf_ln(s, color, _("You are currently reverting a commit."));
++	if (advice_status_hints) {
++		if (has_unmerged(s))
++			status_printf_ln(s, color,
++				_("  (fix conflicts and run \"git revert --continue\")"));
++		else
++			status_printf_ln(s, color,
++				_("  (all conflicts fixed: run \"git revert --continue\")"));
++	}
++	if (advice_status_hints)
++		status_printf_ln(s, color,
++			_("  (use \"git revert --abort\" to cancel the revert operation)"));
++	wt_status_print_trailer(s);
++}
++
+ static void show_bisect_in_progress(struct wt_status *s,
+ 				struct wt_status_state *state,
+ 				const char *color)
+@@ -1113,6 +1132,9 @@ void wt_status_get_state(struct wt_status_state *state,
+ 		state->bisect_in_progress = 1;
+ 		state->branch = read_and_strip_branch("BISECT_START");
+ 	}
++	if (!stat(git_path("REVERT_HEAD"), &st)) {
++		state->revert_in_progress = 1;
++	}
+ 
+ 	if (get_detached_from)
+ 		wt_status_get_detached_from(state);
+@@ -1130,6 +1152,8 @@ static void wt_status_print_state(struct wt_status *s,
+ 		show_rebase_in_progress(s, state, state_color);
+ 	else if (state->cherry_pick_in_progress)
+ 		show_cherry_pick_in_progress(s, state, state_color);
++	else if (state->revert_in_progress)
++		show_revert_in_progress(s, state, state_color);
+ 	if (state->bisect_in_progress)
+ 		show_bisect_in_progress(s, state, state_color);
+ }
+diff --git a/wt-status.h b/wt-status.h
+index be7a016..35cd6cb 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -80,6 +80,7 @@ struct wt_status_state {
+ 	int rebase_interactive_in_progress;
+ 	int cherry_pick_in_progress;
+ 	int bisect_in_progress;
++	int revert_in_progress;
+ 	char *branch;
+ 	char *onto;
+ 	char *detached_from;
 -- 
-1.8.2.rc0.33.gd915649
+1.8.2.359.g6e2e2c6.dirty
