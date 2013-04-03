@@ -1,120 +1,87 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Behavior of git rm
-Date: Wed, 3 Apr 2013 11:58:41 -0400
-Message-ID: <20130403155841.GA16885@sigill.intra.peff.net>
-References: <1365000624535-7581485.post@n2.nabble.com>
+Subject: Re: [PATCH] http-backend: respect GIT_NAMESPACE with dumb clients
+Date: Wed, 3 Apr 2013 12:10:38 -0400
+Message-ID: <20130403161038.GB16885@sigill.intra.peff.net>
+References: <CAAvHm8N8Sm-EuA5ofPp1qNJrZGqcRbzA3LFX5s0-g8oCnB8bhw@mail.gmail.com>
+ <1365004329-15264-1-git-send-email-jkoleszar@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: jpinheiro <7jpinheiro@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 03 17:59:17 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>,
+	Josh Triplett <josh@joshtriplett.org>
+To: John Koleszar <jkoleszar@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 03 18:11:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNQ5l-0001EY-De
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 17:59:17 +0200
+	id 1UNQHI-0000nB-Cu
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 18:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762037Ab3DCP6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Apr 2013 11:58:47 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53553 "EHLO
+	id S1758736Ab3DCQKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Apr 2013 12:10:44 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53565 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761748Ab3DCP6q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Apr 2013 11:58:46 -0400
-Received: (qmail 25232 invoked by uid 107); 3 Apr 2013 16:00:35 -0000
+	id S1754857Ab3DCQKn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Apr 2013 12:10:43 -0400
+Received: (qmail 25308 invoked by uid 107); 3 Apr 2013 16:12:32 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Apr 2013 12:00:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Apr 2013 11:58:41 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Apr 2013 12:12:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Apr 2013 12:10:38 -0400
 Content-Disposition: inline
-In-Reply-To: <1365000624535-7581485.post@n2.nabble.com>
+In-Reply-To: <1365004329-15264-1-git-send-email-jkoleszar@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219952>
 
-On Wed, Apr 03, 2013 at 07:50:24AM -0700, jpinheiro wrote:
+On Wed, Apr 03, 2013 at 08:52:09AM -0700, John Koleszar wrote:
 
-> While experimenting with git we found an unexpected behavior with git rm.
-> Here is a trace of the unexpected behavior:
-> 
-> $ git init
-> $ mkdir D
-> $ echo "Hi" > D/F
-> $ git add D/F
-> $ rm -r D
-> $ echo "Hey" > D
-> $ git rm D/F
-> warning: 'D/F': Not a directory
-> rm 'D/F'
-> fatal: git rm: 'D/F': Not a directory
+> +	SMART=smart
+> +	git ls-remote public >expected &&  
+> +	grep /$NS/ expected >/dev/null &&
+> +	GET_BODY "info/refs" >actual &&
+> +	test_cmp expected actual &&
+> +	GET_BODY "info/refs?service=git-upload-pack" | grep /$NS/ >/dev/null &&
+> +
+> +	SMART=smart_namespace &&
+> +	GIT_NAMESPACE=$NS && export GIT_NAMESPACE &&
+> +	git ls-remote public >expected &&  
+> +	! grep /$NS/ expected>/dev/null &&
+> +	GET_BODY "info/refs" >actual &&
+> +	test_cmp expected actual &&
+> +	! (GET_BODY "info/refs?service=git-upload-pack" | grep /$NS/ >/dev/null)
+> +)'
 
-We drop the D/F entry from the index, but then fail to actually remove
-it from the filesystem, because it has already been replaced. It is
-impossible to tell from this toy example what the true intent was, but
-in such a situation, there is a reasonable chance that the user should
-have invoked "rm --cached" in the first place.
+Hmm. This is testing just the ref advertisement. It would be nice to see
+a complete transaction tested with namespaces turned on. Something like
+this (squashed into your patch) seems to work for me:
 
-That being said, we do try to handle files which have already gone
-missing; when unlink() fails, we do not consider it an error if we got
-ENOENT. We could perhaps add ENOTDIR to that list, as it also indicates
-that the file is gone (it just happens that one of its prefix
-directories was replaced with something else).
-
-The opposite case is also interesting:
-
-  $ git init
-  $ echo 1 >D
-  $ git add D
-  $ rm D
-  $ mkdir D
-  $ echo 2 >D/F
-  $ git rm D
-  rm 'D'
-  fatal: git rm: 'D': Is a directory
-
-We expect to see 'D' as a file, but it is now a directory. We _could_
-recursively remove the directory, but that has the potential to delete
-files that the user does not expect.
-
-So in both cases, "git rm" could certainly detect the situation and
-proceed with the destructive operation. But when there is such a
-conflict between what's in the working tree and what's in the index, I
-think we may be better off erring on the conservative side and bailing,
-and letting the user reconcile the differences themselves (using either
-"git add" or "git rm --cached" to update the index, or deciding how to
-handle the working tree contents themselves with regular "rm").
-
-Of the two situations, I think the first one is less likely to be
-destructive (noticing that a file is already gone via ENOTDIR), as we
-are only proceeding with the index deletion, and we end up not touching
-the filesystem at all. That patch would look something like:
-
-diff --git a/builtin/rm.c b/builtin/rm.c
-index dabfcf6..7b91d52 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -110,7 +110,7 @@ static int check_local_mod(unsigned char *head, int index_only)
- 		ce = active_cache[pos];
+diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
+index 47eb769..9fd8bbf 100755
+--- a/t/t5551-http-fetch.sh
++++ b/t/t5551-http-fetch.sh
+@@ -162,6 +162,18 @@ test_expect_success 'invalid Content-Type rejected' '
+ 	grep "not valid:" actual
+ '
  
- 		if (lstat(ce->name, &st) < 0) {
--			if (errno != ENOENT)
-+			if (errno != ENOENT && errno != ENOTDIR)
- 				warning("'%s': %s", ce->name, strerror(errno));
- 			/* It already vanished from the working tree */
- 			continue;
-diff --git a/dir.c b/dir.c
-index 57394e4..f9e7355 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1603,7 +1603,7 @@ int remove_path(const char *name)
- {
- 	char *slash;
++test_expect_success 'create namespaced refs' '
++	test_commit namespaced &&
++	git push public HEAD:refs/namespaces/ns/refs/heads/master
++'
++
++test_expect_success 'clone respects namespace' '
++	git clone --bare "$HTTPD_URL/smart_namespace/repo.git" ns.git &&
++	echo namespaced >expect &&
++	git --git-dir=ns.git log -1 --format=%s >actual &&
++	test_cmp expect actual
++'
++
+ test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
  
--	if (unlink(name) && errno != ENOENT)
-+	if (unlink(name) && errno != ENOENT && errno != ENOTDIR)
- 		return -1;
- 
- 	slash = strrchr(name, '/');
+ test_expect_success EXPENSIVE 'create 50,000 tags in the repo' '
+
+-Peff
