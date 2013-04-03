@@ -1,67 +1,80 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] optimize adjust_shared_perm() in path.c:
-Date: Tue, 2 Apr 2013 23:55:24 -0400
-Message-ID: <CAPig+cT1quUK52hXnQE6-jVTMi7GUjtgL9njmRvNe6+mPNNvUg@mail.gmail.com>
-References: <201303301053.49140.tboegi@web.de>
+Subject: Re: [PATCH] test-lint-duplicates: check numbering in contrib/remote-helpers
+Date: Wed, 3 Apr 2013 00:00:17 -0400
+Message-ID: <CAPig+cTCTbbA+sqJSc00OOhyxwQ-jPJ3SSGF=Hi8+P+OG=wEkQ@mail.gmail.com>
+References: <201304021853.48643.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	j6t@kdbg.org, Erik Faye-Lund <kusmabite@gmail.com>,
-	mlevedahl@gmail.com, ramsay@ramsay1.demon.co.uk
+Cc: Jeff King <peff@peff.net>, Antoine Pelisse <apelisse@gmail.com>,
+	felipe.contreras@gmail.com, Git List <git@vger.kernel.org>
 To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Apr 03 05:55:55 2013
+X-From: git-owner@vger.kernel.org Wed Apr 03 06:00:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNEnj-0008KS-87
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 05:55:55 +0200
+	id 1UNEsT-0002rP-Em
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 06:00:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759763Ab3DCDz0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Apr 2013 23:55:26 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:51647 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759571Ab3DCDz0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Apr 2013 23:55:26 -0400
-Received: by mail-lb0-f171.google.com with SMTP id v10so1159100lbd.16
-        for <git@vger.kernel.org>; Tue, 02 Apr 2013 20:55:24 -0700 (PDT)
+	id S1750841Ab3DCEAU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Apr 2013 00:00:20 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:33382 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750704Ab3DCEAT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Apr 2013 00:00:19 -0400
+Received: by mail-la0-f41.google.com with SMTP id fo12so1045231lab.0
+        for <git@vger.kernel.org>; Tue, 02 Apr 2013 21:00:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:sender:in-reply-to:references:date
          :x-google-sender-auth:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=ySpzDcFakywGAN7m3I/ZWHsmouG4LZ1ETBtrl0YlLno=;
-        b=uK9NKBz9g8KGOsUW62XOvAKhx19917BL7GaBnclfdEFmnPV5VFTecwrDg1mZR7nxC4
-         o/MMdVzaM8aAiotbIK/bn1ZytOTsxQ+dWLKBVrz7ospbzRWkQjVZ/21hUjzwdPk5NzP+
-         otSa8RweawHpttE2SY+WAPFb+0cGpC55b5yNC6kzQqDnYWb9bxRBGKj1EYgcsunuOnGP
-         8CR6iHdWwolBq3UIPKTdmBhBPFeJUwn4DF+NkJZxR4HRu/VzntpI6mmsYJk313jJORUc
-         g5KY8Tv/2QrPlkIzTtXlfW0alE1PcWk/VfeRKStzrk7CAo4CuZ+R61OnkztSIaunG4+T
-         iDRw==
-X-Received: by 10.152.105.244 with SMTP id gp20mr9792lab.34.1364961324422;
- Tue, 02 Apr 2013 20:55:24 -0700 (PDT)
-Received: by 10.114.1.43 with HTTP; Tue, 2 Apr 2013 20:55:24 -0700 (PDT)
-In-Reply-To: <201303301053.49140.tboegi@web.de>
-X-Google-Sender-Auth: ZzgOrJkPzNYT__mACTClPx2EuEU
+        bh=APxg1fRhS9ey/fXmr2VoY+Z2qUEA/SdFOtv2AYNSNNw=;
+        b=svGVVVoRlUJH5Tn3t9LwAcMtm5w7hEnZ8REisK2OYLUYvCdYAAj4C7wleth3XDUZzb
+         SEE+uL4kYnutXatwjz2727qNLxd5HwPaSPZ2c+8i95jWFaaDNFikHwC8NqZyNXji72SO
+         ERVKyzvRHwewICe71fmEz3Rfun8ZK/Fih3rm/8LpKenWYYmQDIXcCSAUdjm9gwsew7XE
+         zoEqwifOxU+6EElz51MWBOXgWrszS8RL8sTWOvfP45NzERVVUC6+QL1qf2+FecFSNW3b
+         LR9co9jJySSZxJ1wxc9dttodPqNPWob9L1rpA1Qk/eEPrFuBL+ysYxaXr7Bb1XQCAFa2
+         ur0A==
+X-Received: by 10.112.139.36 with SMTP id qv4mr219778lbb.82.1364961617663;
+ Tue, 02 Apr 2013 21:00:17 -0700 (PDT)
+Received: by 10.114.1.43 with HTTP; Tue, 2 Apr 2013 21:00:17 -0700 (PDT)
+In-Reply-To: <201304021853.48643.tboegi@web.de>
+X-Google-Sender-Auth: fXZ5QwDG8HPm8gdvi_8kZx_cV0k
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219913>
 
-On Sat, Mar 30, 2013 at 5:53 AM, Torsten B=F6gershausen <tboegi@web.de>=
+On Tue, Apr 2, 2013 at 12:53 PM, Torsten B=F6gershausen <tboegi@web.de>=
  wrote:
-> sometimes the chown() function is called even when not needed.
-> (This can be provoced by running t1301, and adding some debug code)
+> Running make inside contrib/remote-helpers failes in "test-lint-dupli=
+cates"
 
-s/provoced/provoked/
+s/failes/fails/
 
-> Save a chmod from 400 to 400, or from 600->600 on these files:
->  .git/info/refs+
->  .git/objects/info/packs+
+> This was because the regexp to check for duplicate numbers strips eve=
+rything
+> after the first "-" in the filename, including the prefix.
 >
-> Save chmod on directories from 2770 to 2770:
->  .git/refs
->  .git/refs/heads
->  .git/refs/tags
+> As a result, 2 pathnames like
+> "xxxx/contrib/remote-helpers/test-bzr.sh" and
+> "xxxx/contrib/remote-helpers/test-hg-bidi.sh"
+>
+> are both converted into
+> "xxxx/contrib/remote", and reported as duplicate.
+>
+> Improve the regexp:
+> Remove everything after tNNNN- (where X stand for a digit)
+>
+> Rename the tests in contrib/remote-helpers into
+> t5810-test-bzr.sh,
+> t5820-test-hg-bidi.sh,
+> t5821-test-hg-hg-git.sh,
+> t5830-test-hg.sh
+>
+> Feed the numbers used in contrib/remote-helpers into t/Makefile
+> and check that numbering is unique across both directories
