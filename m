@@ -1,122 +1,73 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] git-tag(1): we tag HEAD by default
-Date: Wed, 3 Apr 2013 17:11:27 +0200
-Message-ID: <877gkjvecg.fsf@linux-k42r.v.cablecom.net>
-References: <137ebfa428b16497287c55e552372df1087f1588.1364999181.git.trast@inf.ethz.ch>
-	<7vzjxf64gn.fsf@alter.siamese.dyndns.org>
+From: Dmitri Gribenko <gribozavr@gmail.com>
+Subject: Build system bugs related to handling of 'LIBS' environment variable
+Date: Wed, 3 Apr 2013 18:16:22 +0300
+Message-ID: <CA+Y5xYeghRA-Whtq6e-sskeow38jz+6UgYWP-ng3xdRn_XUHEA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 03 17:12:00 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 03 17:17:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNPLz-0002MJ-4v
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 17:11:59 +0200
+	id 1UNPR3-0006Aa-16
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 17:17:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762166Ab3DCPLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Apr 2013 11:11:30 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:26759 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761720Ab3DCPL3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Apr 2013 11:11:29 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 3 Apr
- 2013 17:11:21 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Wed, 3 Apr 2013 17:11:27 +0200
-In-Reply-To: <7vzjxf64gn.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 03 Apr 2013 08:04:08 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1761533Ab3DCPQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Apr 2013 11:16:44 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:37533 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760644Ab3DCPQn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Apr 2013 11:16:43 -0400
+Received: by mail-vb0-f46.google.com with SMTP id 11so524276vbe.5
+        for <git@vger.kernel.org>; Wed, 03 Apr 2013 08:16:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=mU0w+5HWfZF98eGRKWA5yi5n6BgNJ+7+4Og62f6Yjjo=;
+        b=rUvzm1qAO8Ky202dma4j8dqtDbEjvxM8diAI8VvglG7UHZHXhchr97yF8beD6TIfyn
+         JN3n9AEje5Q+Y03r+6T4hSVYYYjSGuimFbo6QW+AopLhm8FLj7dktXNxUw3YfPVr0e45
+         WK6+L622Te6KW4+n8B1ev/LVE5bJf8v9DAzyH/rghHlHt2zM4qoXV9+prpLMguPO0Zh9
+         k5GP+nqSVZQy1tRaG70vPGMtOuZVtSGv2IkDM3gEBZyy1m8sCCu18O3Ih2dVezDooQV3
+         JyUcCDlc9AJAUyprNP9ez1NYhY4z/WBs0p1tPRzDb4pS7HbdaT6jXjmGcquRp8UAYhkF
+         3npw==
+X-Received: by 10.58.11.133 with SMTP id q5mr1527812veb.47.1365002202650; Wed,
+ 03 Apr 2013 08:16:42 -0700 (PDT)
+Received: by 10.220.122.129 with HTTP; Wed, 3 Apr 2013 08:16:22 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219946>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello,
 
-> Thomas Rast <trast@inf.ethz.ch> writes:
->
->> +<commit>, <object>::
->> +	The object that the new tag will refer to, usually a commit.
->> +	Defaults to HEAD.
->
-> Shouldn't this be more like this:
->
->     <commit>::
->     <object>::
-> 	Your explanation here...
+Git fails to build if LIBS contains -lpthread.  To reproduce:
 
-Hmm, you're right, but we seem to be fairly inconsistent in that
-department.  There are some instances with the comma style:
+  export LIBS=-lpthread
+  ./configure
+  make V=1 git-credential-store
 
-  $ git grep ',.*::$' Documentation/*.txt
-  Documentation/blame-options.txt:-L <start>,<end>, -L :<regex>::                                        
-  Documentation/config.txt:gitcvs.dbuser, gitcvs.dbpass::                                                
-  Documentation/config.txt:http.lowSpeedLimit, http.lowSpeedTime::                                       
-  Documentation/diff-options.txt:--stat[=<width>[,<name-width>[,<count>]]]::                             
-  Documentation/diff-options.txt:--dirstat[=<param1,param2,...>]::                                       
-  Documentation/git-add.txt:-e, \--edit::                                                                
-  Documentation/git-check-attr.txt:-a, --all::                                                           
-  Documentation/git-check-ignore.txt:-q, --quiet::                                                       
-  Documentation/git-check-ignore.txt:-v, --verbose::                                                     
-  Documentation/git-index-pack.txt:--index-version=<version>[,<offset>]::                                
-  Documentation/git-log.txt:-L <start>,<end>:<file>, -L :<regex>:<file>::                                
-  Documentation/git-log.txt:git log -L '/int main/',/^}/:main.c::                                        
-  Documentation/git-p4.txt:--verbose, -v::                                                               
-  Documentation/git-p4.txt:--dry-run, -n::                                                               
-  Documentation/git-p4.txt:"//depot/my/project@1,6"::                                                    
-  Documentation/git-pack-objects.txt:--index-version=<version>[,<offset>]::                              
-  Documentation/git-remote-fd.txt:`git push fd::7,8 master (as URL)`::                                   
-  Documentation/git-remote-fd.txt:`git push fd::7,8/bar master`::
-  Documentation/git-reset.txt:Undo a commit, making it a topic branch::
-  Documentation/git-shortlog.txt:-w[<width>[,<indent1>[,<indent2>]]]::
-  Documentation/git-show-branch.txt:--reflog[=<n>[,<base>]] [<ref>]::
-  Documentation/git-tag.txt:<commit>, <object>::
-  Documentation/revisions.txt:'<sha1>', e.g. 'dae86e1950b1277e545cee180551750029cfe735', 'dae86e'::
-  Documentation/revisions.txt:'<describeOutput>', e.g. 'v1.7.4.2-679-g3bee7fb'::
-  Documentation/revisions.txt:'<refname>', e.g. 'master', 'heads/master', 'refs/heads/master'::
-  Documentation/revisions.txt:'<refname>@\{<date>\}', e.g. 'master@\{yesterday\}', 'HEAD@\{5 minutes ago\
-  Documentation/revisions.txt:'<refname>@\{<n>\}', e.g. 'master@\{1\}'::
-  Documentation/revisions.txt:'@\{<n>\}', e.g. '@\{1\}'::
-  Documentation/revisions.txt:'@\{-<n>\}', e.g. '@\{-1\}'::
-  Documentation/revisions.txt:'<branchname>@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
-  Documentation/revisions.txt:'<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
-  Documentation/revisions.txt:'<rev>{tilde}<n>', e.g. 'master{tilde}3'::
-  Documentation/revisions.txt:'<rev>{caret}\{<type>\}', e.g. 'v0.99.8{caret}\{commit\}'::
-  Documentation/revisions.txt:'<rev>{caret}\{\}', e.g. 'v0.99.8{caret}\{\}'::
-  Documentation/revisions.txt:'<rev>{caret}\{/<text>\}', e.g. 'HEAD^{/fix nasty bug}'::
-  Documentation/revisions.txt:':/<text>', e.g. ':/fix nasty bug'::
-  Documentation/revisions.txt:'<rev>:<path>', e.g. 'HEAD:README', ':README', 'master:./README'::
-  Documentation/revisions.txt:':<n>:<path>', e.g. ':0:README', ':README'::
-  Documentation/revisions.txt:'<rev>{caret}@', e.g. 'HEAD{caret}@'::
-  Documentation/revisions.txt:'<rev>{caret}!', e.g. 'HEAD{caret}!'::
+The bug is that linker command line does not contain -lpthread, so
+linking fails.
 
-But the majority uses the two-line style:
+configure respects LIBS and finds that it does not have to add
+anything for pthread:
 
-  $ git grep -A1 '::$' Documentation/*.txt | egrep '^--$|::$' | perl -ne '$lastbreak=$. if /^--/; if ($lastbreak<$.-1) {print "$last$_"; $last="";} else {$last=$_;}'
-  Documentation/blame-options.txt:-p::
-  Documentation/blame-options.txt:--porcelain::
-  Documentation/config.txt:add.ignore-errors::
-  Documentation/config.txt:add.ignoreErrors::
-  Documentation/config.txt:format.to::
-  Documentation/config.txt:format.cc::
-  Documentation/config.txt:gc.reflogexpire::
-  Documentation/config.txt:gc.<pattern>.reflogexpire::
-  Documentation/config.txt:gc.reflogexpireunreachable::
-  Documentation/config.txt:gc.<ref>.reflogexpireunreachable::
-  Documentation/config.txt:gitweb.category::
-  Documentation/config.txt:gitweb.description::
-  [snip 800+ more lines]
+checking for POSIX Threads with ''... yes
 
-Should we fix that?
+But (first bug) configure does not pass the LIBS variable in
+config.mak.autogen.  Even if it did, Makefile would overwrite (second
+bug) LIBS with:
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+  LIBS = $(GITLIBS) $(EXTLIBS)
+
+Makefile should rather append to LIBS.
+
+Dmitri Gribenko
+
+--
+main(i,j){for(i=2;;i++){for(j=2;j<i;j++){if(!(i%j)){j=0;break;}}if
+(j){printf("%d\n",i);}}} /*Dmitri Gribenko <gribozavr@gmail.com>*/
