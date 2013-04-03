@@ -1,132 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git https transport and wrong password
-Date: Wed, 3 Apr 2013 10:12:12 -0400
-Message-ID: <20130403141212.GA10494@sigill.intra.peff.net>
-References: <20130402155440.GT30514@lakka.kapsi.fi>
- <20130402192845.GC17784@sigill.intra.peff.net>
- <20130402194751.GV30514@lakka.kapsi.fi>
- <20130402200551.GA535@sigill.intra.peff.net>
- <20130402202054.GX30514@lakka.kapsi.fi>
- <20130403094302.GY30514@lakka.kapsi.fi>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: [PATCH] git-tag(1): we tag HEAD by default
+Date: Wed, 3 Apr 2013 16:27:14 +0200
+Message-ID: <137ebfa428b16497287c55e552372df1087f1588.1364999181.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Daniel Stenberg <daniel@haxx.se>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>
-To: Mikko Rapeli <mikko.rapeli@iki.fi>
-X-From: git-owner@vger.kernel.org Wed Apr 03 16:12:55 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 03 16:27:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNOQj-0001lM-1R
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 16:12:49 +0200
+	id 1UNOfE-00049v-Hc
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 16:27:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758068Ab3DCOMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Apr 2013 10:12:18 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53451 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751729Ab3DCOMR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Apr 2013 10:12:17 -0400
-Received: (qmail 24387 invoked by uid 107); 3 Apr 2013 14:14:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Apr 2013 10:14:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Apr 2013 10:12:12 -0400
-Content-Disposition: inline
-In-Reply-To: <20130403094302.GY30514@lakka.kapsi.fi>
+	id S1758495Ab3DCO1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Apr 2013 10:27:19 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:16976 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755761Ab3DCO1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Apr 2013 10:27:18 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 3 Apr
+ 2013 16:27:12 +0200
+Received: from linux-k42r.v.cablecom.net (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 3 Apr
+ 2013 16:27:14 +0200
+X-Mailer: git-send-email 1.8.2.548.g7173465
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219936>
 
-[+cc Daniel for curl questions below]
+The <commit>|<object> argument is actually not explained anywhere
+(except implicitly in the description of an unannotated tag).  Write a
+little explanation, in particular to cover the default.
 
-On Wed, Apr 03, 2013 at 12:43:02PM +0300, Mikko Rapeli wrote:
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+---
 
-> Maybe my git installation was incomplete before when running from ~/bin since
-> I was not able to set break points to http_request() and some debug code
-> was not there until I ran git through bin-wrappers in the source tree.
+Prompted by a question on IRC about the default value.  Do we actually
+read our own docs? ;-)
 
-Debugging git-over-http is somewhat difficult because the interesting
-bits happen in sub-processes. You can get much closer to the http calls
-by running the transport helper directly, like:
+ Documentation/git-tag.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-  gdb --args git-remote-https https://yourhost/
-
-which will start by reading commands from stdin (try "list" to get it to
-fetch the remote refs).
-
-> I added some debug prints to http.c functions http_request() and
-> handle_curl_result(), and now I see this chain of events:
-> 
->  http_request_reauth()
->  http_request()
->  GET ...info/refs?service=git-upload-pack
->  HTTP/1.1 401 Authorization Required
-> * Ignoring the response-body
-> * Issue another request to this URL: '...'
->  GET ...info/refs?service=git-upload-pack
->  HTTP/1.1 401 Authorization Required
->  handle_curl_result: res = 22, http_code = 401, user = ..., pass = (null)
-> Password for '...': (enter valid password)
->  GET ...info/refs?service=git-upload-pack
->  HTTP/1.1 200 OK
-> 
-> So, for some reason the first GET request is issued twice and first 401
-> is ignored. I'll try to debug run_active_slot() next...
-
-Right, I think that's curl trying to make use of the username in the
-URL. Try this (I'm using github here as a convenient http servers, but
-you should be able to replicate with your internal server):
-
-  $ GIT_CURL_VERBOSE=1 git ls-remote https://foo@github.com/requires/auth \
-      2>&1 >/dev/null | egrep '^>|^< HTTP|^Authorization|requested URL'
-  > GET /requires/auth/info/refs?service=git-upload-pack HTTP/1.1
-  < HTTP/1.1 401 Authorization Required
-  > GET /requires/auth/info/refs?service=git-upload-pack HTTP/1.1
-  Authorization: Basic Zm9vOg==
-  < HTTP/1.1 401 Authorization Required
-  * The requested URL returned error: 401
-  Password for 'https://foo@github.com': 
-  > GET /requires/auth/info/refs?service=git-upload-pack HTTP/1.1
-  Authorization: Basic Zm9vOmJhcg==
-  < HTTP/1.1 401 Authorization Required
-  * The requested URL returned error: 401
-
-So you can see that curl makes _two_ requests internally before it
-returns the 401. One unadorned, and one with just the username
-("Zm9vOg==", which decodes to "foo:") for the auth. Then git prompts for
-the password, and we retry (and of course I am feeding it a bogus
-username/password combo, so we get another 401).
-
-I would expect without the username in the URL for it to make only two
-requests: one to get the first 401, then git collects the credentials,
-then a follow-up with the credentials. But instead we get:
-
-  $ GIT_CURL_VERBOSE=1 git ls-remote https://github.com/requires/auth \
-      2>&1 >/dev/null | egrep '^>|^< HTTP|^Authorization|requested URL'
-  > GET /requires/auth/info/refs?service=git-upload-pack HTTP/1.1
-  * The requested URL returned error: 401 Authorization Required
-  Username for 'https://github.com': foo
-  Password for 'https://foo@github.com': 
-  > GET /requires/auth/info/refs?service=git-upload-pack HTTP/1.1
-  < HTTP/1.1 401 Authorization Required
-  > GET /requires/auth/info/refs?service=git-upload-pack HTTP/1.1
-  Authorization: Basic Zm9vOmJhcg==
-  < HTTP/1.1 401 Authorization Required
-  * The requested URL returned error: 401
-
-So we get a 401, as expected, git prompts for the credentials and feeds
-them directly to curl, but then we still get _two_ requests: we trigger
-another 401, and only then does curl provide the authorization header to
-the server.
-
-I'm not sure if that extra auth is intended or not.
-
-It's also possible that git is screwing up in providing the credentials
-to curl, but I don't think so. We feed them to the curl handle as soon
-as we get them, and there should be only one handle in use here.
-
--Peff
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index e3032c4..697df50 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -126,6 +126,11 @@ This option is only applicable when listing tags without annotation lines.
+ 	linkgit:git-check-ref-format[1].  Some of these checks
+ 	may restrict the characters allowed in a tag name.
+ 
++<commit>, <object>::
++	The object that the new tag will refer to, usually a commit.
++	Defaults to HEAD.
++
++
+ CONFIGURATION
+ -------------
+ By default, 'git tag' in sign-with-default mode (-s) will use your
+-- 
+1.8.2.548.g7173465
