@@ -1,64 +1,67 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH V3 4/5] Help.c: add list_common_guides_help() function
-Date: Tue, 2 Apr 2013 22:30:32 -0400
-Message-ID: <CAPig+cRv8P6jr-UaTFgo7H3JnNPDLGkW3R3B-+8_N+=+cL90_A@mail.gmail.com>
-References: <1364942392-576-1-git-send-email-philipoakley@iee.org>
-	<1364942392-576-5-git-send-email-philipoakley@iee.org>
+Subject: Re: [PATCH 2/2] optimize adjust_shared_perm() in path.c:
+Date: Tue, 2 Apr 2013 23:55:24 -0400
+Message-ID: <CAPig+cT1quUK52hXnQE6-jVTMi7GUjtgL9njmRvNe6+mPNNvUg@mail.gmail.com>
+References: <201303301053.49140.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	"W. Trevor King" <wking@tremily.us>,
-	David Aguilar <davvid@gmail.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Wed Apr 03 04:31:06 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	j6t@kdbg.org, Erik Faye-Lund <kusmabite@gmail.com>,
+	mlevedahl@gmail.com, ramsay@ramsay1.demon.co.uk
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Apr 03 05:55:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNDTd-000311-VH
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 04:31:06 +0200
+	id 1UNEnj-0008KS-87
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 05:55:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761292Ab3DCCaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Apr 2013 22:30:35 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:60538 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761268Ab3DCCae (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Apr 2013 22:30:34 -0400
-Received: by mail-lb0-f178.google.com with SMTP id q13so1111345lbi.37
-        for <git@vger.kernel.org>; Tue, 02 Apr 2013 19:30:33 -0700 (PDT)
+	id S1759763Ab3DCDz0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Apr 2013 23:55:26 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:51647 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759571Ab3DCDz0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Apr 2013 23:55:26 -0400
+Received: by mail-lb0-f171.google.com with SMTP id v10so1159100lbd.16
+        for <git@vger.kernel.org>; Tue, 02 Apr 2013 20:55:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=3APpFaL25Q8yl60T3EISGBfoclmEjLF2vqKY12VC+pE=;
-        b=YxpXCmEOeHYQF36roxF1bJfV3+2gHm5Q62QiLZZ0g8LOgPF3RdZ6SwNMBaHDLos+A/
-         cnZuG877Fpn15tM0jQ0TaktH3Htw606qTSTRsyqYZC0o8rpXNRvvmZpO655TXuHK/gzs
-         30+MxwSj1Ta7XAB2TrBjz7vTy/Hy8nn8AdSnYnuRo8jPYTI8amQ+T3FsVWXqRihxYYIS
-         E2Xg56ire3UIvrdx9StBa2KNAYGfolllA9DITbu3U7a1G1NOzyOJKUIuMwD+8hFNCdgA
-         OdHhYnsQWtV6tutmHVSyF/Nf8vGQ7el3hb1pyH7l4CXPehE0gCe04LNnKy0FLgNRJebZ
-         BJXQ==
-X-Received: by 10.152.128.98 with SMTP id nn2mr8977788lab.17.1364956232920;
- Tue, 02 Apr 2013 19:30:32 -0700 (PDT)
-Received: by 10.114.1.43 with HTTP; Tue, 2 Apr 2013 19:30:32 -0700 (PDT)
-In-Reply-To: <1364942392-576-5-git-send-email-philipoakley@iee.org>
-X-Google-Sender-Auth: 1y_7WXWwx3NWnsxgA_cy_bTOVRA
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ySpzDcFakywGAN7m3I/ZWHsmouG4LZ1ETBtrl0YlLno=;
+        b=uK9NKBz9g8KGOsUW62XOvAKhx19917BL7GaBnclfdEFmnPV5VFTecwrDg1mZR7nxC4
+         o/MMdVzaM8aAiotbIK/bn1ZytOTsxQ+dWLKBVrz7ospbzRWkQjVZ/21hUjzwdPk5NzP+
+         otSa8RweawHpttE2SY+WAPFb+0cGpC55b5yNC6kzQqDnYWb9bxRBGKj1EYgcsunuOnGP
+         8CR6iHdWwolBq3UIPKTdmBhBPFeJUwn4DF+NkJZxR4HRu/VzntpI6mmsYJk313jJORUc
+         g5KY8Tv/2QrPlkIzTtXlfW0alE1PcWk/VfeRKStzrk7CAo4CuZ+R61OnkztSIaunG4+T
+         iDRw==
+X-Received: by 10.152.105.244 with SMTP id gp20mr9792lab.34.1364961324422;
+ Tue, 02 Apr 2013 20:55:24 -0700 (PDT)
+Received: by 10.114.1.43 with HTTP; Tue, 2 Apr 2013 20:55:24 -0700 (PDT)
+In-Reply-To: <201303301053.49140.tboegi@web.de>
+X-Google-Sender-Auth: ZzgOrJkPzNYT__mACTClPx2EuEU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219912>
 
-On Tue, Apr 2, 2013 at 6:39 PM, Philip Oakley <philipoakley@iee.org> wrote:
-> Re-use list_common_cmds_help but simply change the array name.
-> Candidate for future refactoring to pass a pointer to the array.
+On Sat, Mar 30, 2013 at 5:53 AM, Torsten B=F6gershausen <tboegi@web.de>=
+ wrote:
+> sometimes the chown() function is called even when not needed.
+> (This can be provoced by running t1301, and adding some debug code)
+
+s/provoced/provoked/
+
+> Save a chmod from 400 to 400, or from 600->600 on these files:
+>  .git/info/refs+
+>  .git/objects/info/packs+
 >
-> The common-guides.h list was generated with a simple variant of the
-> generate-cmdlist.sh and command-list.txt.
->
-> Do not list User-manual and Everday Git which not follow the naming
-
-s/which not/which do not/
-
-> convention, nor gitrepository-layout which doesn't fit within the
-> name field size.
+> Save chmod on directories from 2770 to 2770:
+>  .git/refs
+>  .git/refs/heads
+>  .git/refs/tags
