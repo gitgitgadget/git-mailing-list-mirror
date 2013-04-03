@@ -1,71 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-tag(1): we tag HEAD by default
-Date: Wed, 03 Apr 2013 11:21:56 -0700
-Message-ID: <7v38v75vaz.fsf@alter.siamese.dyndns.org>
-References: <137ebfa428b16497287c55e552372df1087f1588.1364999181.git.trast@inf.ethz.ch>
- <3b24bc742b9738531d707932a9775c98@meuh.org>
- <87k3ojtz9n.fsf@linux-k42r.v.cablecom.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 2/2] bisect: avoid signed integer overflow
+Date: Wed, 3 Apr 2013 20:17:55 +0100
+Message-ID: <20130403191755.GI2222@serenity.lan>
+References: <0cb4456948b0874a1cedc5679a7b23b82e755e94.1364931627.git.john@keeping.me.uk>
+ <7vzjxgabd6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Yann Droneaud <ydroneaud@opteya.com>, <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Apr 03 20:22:31 2013
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 03 21:18:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNSKL-0007NE-Io
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 20:22:29 +0200
+	id 1UNTCk-0001tb-D1
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 21:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762929Ab3DCSV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Apr 2013 14:21:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46296 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762922Ab3DCSV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Apr 2013 14:21:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DE641228D;
-	Wed,  3 Apr 2013 18:21:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J+R+Wke6yyvrikPdWQSCx/r5Veg=; b=fXaW0v
-	Mc9GyJHnXyYsOozSYfWBCQGgRTV99Mgv7zu9xHVMoOigIBtPhDmmQyvyfNUGUeR4
-	vLMSxPc+kMtmu/yJXaexXIVnKteMZz5ISTxCy2dlJHxy2gS6aOsAJiQ/ngoHEwR3
-	f6I77apvqwJELHK/7NCDK0Hp1qogcLTIWuewA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ft8mld4a/WEoXl67TpeqL8VF5fHvAuWj
-	4IqA2pLiwuJilAcv0NyRcCfacSvBnTVzVzIU7qMZDwEPTqU86xA7HCThmVXvCyV3
-	sgUm8qoXwn9+yOVzbLQ7eWyzCCKyEFruyQDwQqgvT/0qKvrN7WdVk4FBPpL4dwQ2
-	MXEKsq58gSk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83DCC1228B;
-	Wed,  3 Apr 2013 18:21:58 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA52B1228A; Wed,  3 Apr
- 2013 18:21:57 +0000 (UTC)
-In-Reply-To: <87k3ojtz9n.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's
- message of "Wed, 3 Apr 2013 17:22:28 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5ED1161C-9C8B-11E2-AF1B-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1763219Ab3DCTSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Apr 2013 15:18:12 -0400
+Received: from pichi.aluminati.org ([72.9.246.58]:49115 "EHLO
+	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763205Ab3DCTSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Apr 2013 15:18:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 5556D161E291;
+	Wed,  3 Apr 2013 20:18:10 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vZ88z28jJBD5; Wed,  3 Apr 2013 20:18:00 +0100 (BST)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id D4109161E0F0;
+	Wed,  3 Apr 2013 20:17:57 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7vzjxgabd6.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219960>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
 
-> Yann Droneaud <ydroneaud@opteya.com> writes:
-> ...
->> Is there any other kind of object that can be tagged ... and what is
->> the purpose of this ?
->
-> Any object type, including tags.  Signed tags of other tags probably
-> make sense if you want to express extra approval on top of the original
-> signature.
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+Changes since v1:
+- Change the function signature instead of casting a value in the
+  function.
+- This lets us remove an existing cast.
 
-I looked at what "git show" implements, and it seems to peel each
-level of tags to show all of them, which is very good.
+ bisect.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/bisect.c b/bisect.c
+index bd1b7b5..374d9e2 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -525,9 +525,9 @@ struct commit_list *filter_skipped(struct commit_list *list,
+  * is increased by one between each call, but that should not matter
+  * for this application.
+  */
+-static int get_prn(int count) {
++static unsigned get_prn(unsigned count) {
+ 	count = count * 1103515245 + 12345;
+-	return ((unsigned)(count/65536) % PRN_MODULO);
++	return (count/65536) % PRN_MODULO;
+ }
+ 
+ /*
+-- 
+1.8.2.540.gf023cfe
