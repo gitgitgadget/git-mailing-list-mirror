@@ -1,123 +1,105 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] remote-helpers: fix the run of all tests
-Date: Wed, 03 Apr 2013 07:57:04 -0700
-Message-ID: <7v8v4z7jcv.fsf@alter.siamese.dyndns.org>
-References: <1364850872-21135-1-git-send-email-felipe.contreras@gmail.com>
- <1364850872-21135-2-git-send-email-felipe.contreras@gmail.com>
- <CALWbr2wAqudzbfiSHmD1uAVQX3mtbf5vgr2JXbXEg7yzaKXJcw@mail.gmail.com>
- <20130401234016.GC30935@sigill.intra.peff.net> <515B0D08.4020405@web.de>
- <20130402173652.GC24698@sigill.intra.peff.net>
+Subject: Re: [PATCH] Documentation/git-commit: reword the --amend explanation
+Date: Wed, 03 Apr 2013 08:01:29 -0700
+Message-ID: <7v4nfn7j5i.fsf@alter.siamese.dyndns.org>
+References: <1364994441-15961-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 03 16:57:39 2013
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Wed Apr 03 17:02:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNP86-0000Vp-6T
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 16:57:38 +0200
+	id 1UNPCN-0003ak-O7
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Apr 2013 17:02:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762549Ab3DCO5I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Apr 2013 10:57:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60527 "EHLO
+	id S1761357Ab3DCPBe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Apr 2013 11:01:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62682 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760353Ab3DCO5H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Apr 2013 10:57:07 -0400
+	id S1759624Ab3DCPBd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Apr 2013 11:01:33 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D447D12076;
-	Wed,  3 Apr 2013 14:57:06 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D504122BF;
+	Wed,  3 Apr 2013 15:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=LcZiYRzXj3GW
-	y6in2tmcN1rF5cc=; b=e3HGmtWcdgtH5OKYcVY4qpwFgzRBHidXTVYvUu8b5/xW
-	vEIcwczXfbNAtEcMbEsfvytntPMd984PZQE61P6uX8XeJ5JuKdmr+ER/zF5lDT5R
-	Sz0Ay3ETyMuL+a/xfqEAD42QTaxoqGbXemAMs4KxzO3owWIn4SvXUb9NOQAXN3Q=
+	:content-type:content-transfer-encoding; s=sasl; bh=68NXW4X/MgAK
+	pFlDMrMvdAJAxgI=; b=U1447hau6Xdw72KbPNXLSoxc4e7JMqJsLaaeAAwFQ5FB
+	ufg8UC1k6rc5vzGL0AJXK6tamHFhfwKSRUqCs8iQjgDHRUfViNoCw6iyIad9hPv7
+	KGUmluOav+lpSJAKvnHeSeKICTm0kHqNSLOqQnskjm5nSlAEZOI3E+bjxe7f4pc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PPkmg6
-	BrJintUEkFZFZcLSRjNa520iOsnTyatLJZ0A6JlDDXjdP/cvJhD9ZRzN8QkvcLsp
-	W/DCDDAw2HHoNrD7KGUA0JYQVHsmxdisI6YX95vrhNg90aIVBvuqTNturoqCAjEy
-	QG5hfCEKQucBw4eQhue1xib7hhJWvvY5hkIY8=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=X5Sxjf
+	200EYmdbd7CBWGmj1CKXfscE3IqA6BLSf78pbu326vK1sEbfkgMdizrgOrqWTSU0
+	1DsRXivEHSANNS0xhT3wiDWszMf+3re5tFy71QCMF028qnWRN4fHVXZD762Iay2W
+	8UQCbe8QNAEzD6ZxcDmOWz+X4UjC1eUyhBrWE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C76DB12075;
-	Wed,  3 Apr 2013 14:57:06 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12E91122BE;
+	Wed,  3 Apr 2013 15:01:33 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 47C1012073; Wed,  3 Apr
- 2013 14:57:06 +0000 (UTC)
-In-Reply-To: <20130402173652.GC24698@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 2 Apr 2013 13:36:52 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 871CB122BB; Wed,  3 Apr
+ 2013 15:01:32 +0000 (UTC)
+In-Reply-To: <1364994441-15961-1-git-send-email-cmn@elego.de> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Wed, 3 Apr 2013 15:07:21 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C06A5DF6-9C6E-11E2-A924-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5F1DBF06-9C6F-11E2-B3FB-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219942>
 
-Jeff King <peff@peff.net> writes:
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-> On Tue, Apr 02, 2013 at 06:53:28PM +0200, Torsten B=C3=B6gershausen w=
-rote:
+> The explanation for 'git commit --amend' talks about preparing a tree
+> object, which shouldn't be how user-facing documentation talks about
+> commit.
 >
->> > I think the check for duplicate-numbers is the only one that does =
-not
->> > make sense.=20
->> []
->> Not sure about that, I send a suggestion of a patch in a minute.
->> Highlights:
->> 1) - rename the contrib test cases and assigns real TC numbers
->> 2) - Forward the numbers into the main "test Makefile"
->
-> I'm not sure if this is a good idea or not.
+> Reword it to say it works as usual, but replaces the current commit.
+> ---
 
-If that's a polite way to say that this is not a good idea, I'd
-agree for all the reasons you mentioned.
+Sign-off?
 
-> It puts the
-> contrib/remote-helpers into the same "number namespace" as the rest o=
-f
-> the test scripts, and enforces uniqueness with test-lint-duplicates,
-> when "make test" is run from contrib/remote-helpers. But people worki=
-ng
-> on the main test scripts would not get any such check, and would happ=
-ily
-> break contrib/remote-helpers by adding duplicate test numbers.
->
-> It makes sense to me to either:
->
->   1. Have the contrib/remote-helpers test live in their own test
->      namespace completely, with their own numbers and test-results, a=
-nd
->      pull in relevant bits from the main test harness. We do this
->      already with contrib/subtree.  I suggested this when the tests
->      first appeared, but there was some argument, and I don't remembe=
-r
->      the details.
+> The current text is from 2006, which I guess explains the wording.
 
-This makes more sense than the alternative, given that contrib/
-material is "optional" from the main tree's point of view, at least
-to me.
+Yes, and since then we gained --no-edit option and such, so "editor
+starts off" also needs to be rethought, no?  The original wording
+with "seeded" may have a better chance of survival, I suspect, but
+still needs some adjustment.
 
-Thanks.
+Thanks for looking into this.
 
->   2. Just integrate contrib test scripts into the main repository, bu=
-t
->      leave them off by default. For example, add:
+>  Documentation/git-commit.txt | 13 +++++--------
+>  1 file changed, 5 insertions(+), 8 deletions(-)
 >
->        if test -z "$GIT_TEST_REMOTE_HELPERS"; then
->               skip_all=3D"Remote helper tests disabled (define GIT_TE=
-ST_REMOTE_HELPERS)"
->               test_done
->        fi
->
->      to the top of the scripts, and then set GIT_TEST_REMOTE_HELPERS
->      in contrib/remote-helpers/Makefile before chaining to the test
->      Makefile.
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.=
+txt
+> index 42c22bb..48dac29 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -198,14 +198,11 @@ OPTIONS
+>  	without changing its commit message.
+> =20
+>  --amend::
+> -	Used to amend the tip of the current branch. Prepare the tree
+> -	object you would want to replace the latest commit as usual
+> -	(this includes the usual -i/-o and explicit paths), and the
+> -	commit log editor is seeded with the commit message from the
+> -	tip of the current branch. The commit you create replaces the
+> -	current tip -- if it was a merge, it will have the parents of
+> -	the current tip as parents -- so the current top commit is
+> -	discarded.
+> +	Amend the tip of the current branch. The commit is prepared as
+> +	usual (including -i/-o and explicit paths) and the editor
+> +	starts off with the current tip's commit message. The new
+> +	commit has the same parents and author as the current one and
+> +	replaces it as the tip.
+>  +
+>  --
+>  It is a rough equivalent for:
