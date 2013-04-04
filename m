@@ -1,35 +1,34 @@
 From: Simon Ruderich <simon@ruderich.org>
-Subject: [PATCH v2 1/3] diffcore-pickaxe: remove unnecessary call to
- get_textconv()
-Date: Thu, 4 Apr 2013 22:20:29 +0200
-Message-ID: <ed31727421dc3000e943e62a8d82ac1af6589733.1365105971.git.simon@ruderich.org>
+Subject: [PATCH v2 2/3] diffcore-pickaxe: remove fill_one()
+Date: Thu, 4 Apr 2013 22:21:08 +0200
+Message-ID: <004969e2ef9bb8017ce66e36b60a447ab35068d0.1365105971.git.simon@ruderich.org>
 References: <7vr4iqi2uw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 04 22:21:02 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 04 22:21:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNqeb-0004MQ-IX
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 22:21:01 +0200
+	id 1UNqfE-0004qx-71
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 22:21:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764774Ab3DDUUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 16:20:33 -0400
+	id S1764781Ab3DDUVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 16:21:10 -0400
 Received: from zucker.schokokeks.org ([178.63.68.96]:34050 "EHLO
 	zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764470Ab3DDUUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 16:20:32 -0400
+	with ESMTP id S1764470Ab3DDUVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 16:21:09 -0400
 Received: from localhost (pD9E97AF7.dip.t-dialin.net [::ffff:217.233.122.247])
   (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by zucker.schokokeks.org with ESMTPSA; Thu, 04 Apr 2013 22:20:30 +0200
-  id 0000000000000022.00000000515DE08E.000038EB
+  by zucker.schokokeks.org with ESMTPSA; Thu, 04 Apr 2013 22:21:08 +0200
+  id 0000000000000022.00000000515DE0B4.00003A1A
 Content-Disposition: inline
 In-Reply-To: <7vr4iqi2uw.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.21 (2013-03-19)
@@ -37,94 +36,97 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220089>
 
-get_textconv() is called in diff_grep() to determine the textconv driver
-before calling fill_one() and then again in fill_one(). Remove this
-unnecessary call by determining the textconv driver before calling
-fill_one().
+From: Jeff King <peff@peff.net>
 
-With this change it's also no longer necessary for fill_one() to
-modify the textconv argument, therefore pass a pointer instead of
-a pointer to a pointer.
+fill_one is _almost_ identical to just calling fill_textconv; the
+exception is that for the !DIFF_FILE_VALID case, fill_textconv gives us
+an empty buffer rather than a NULL one.
 
 Signed-off-by: Simon Ruderich <simon@ruderich.org>
 ---
+On Thu, Apr 04, 2013 at 01:49:42PM -0400, Jeff King wrote:
+> [snip]
+>
+> What do you think of something like this on top (this is on top of your
+> patches, but again, I would suggest re-ordering your two, so it would
+> come as patch 2/3):
 
-Hello,
+Hello Jeff,
 
-I've reordered the patches as requested and included Jeff's
-cleanup patch.
+That's a good idea. I've added your patch, thanks. Signed-off?
 
 Regards
 Simon
 
- diffcore-pickaxe.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ diffcore-pickaxe.c | 30 ++++++++++--------------------
+ 1 file changed, 10 insertions(+), 20 deletions(-)
 
 diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index b097fa7..8f955f8 100644
+index 8f955f8..3124f49 100644
 --- a/diffcore-pickaxe.c
 +++ b/diffcore-pickaxe.c
-@@ -75,11 +75,10 @@ static void diffgrep_consume(void *priv, char *line, unsigned long len)
+@@ -74,16 +74,6 @@ static void diffgrep_consume(void *priv, char *line, unsigned long len)
+ 	line[len] = hold;
  }
  
- static void fill_one(struct diff_filespec *one,
--		     mmfile_t *mf, struct userdiff_driver **textconv)
-+		     mmfile_t *mf, struct userdiff_driver *textconv)
+-static void fill_one(struct diff_filespec *one,
+-		     mmfile_t *mf, struct userdiff_driver *textconv)
+-{
+-	if (DIFF_FILE_VALID(one)) {
+-		mf->size = fill_textconv(textconv, one, &mf->ptr);
+-	} else {
+-		memset(mf, 0, sizeof(*mf));
+-	}
+-}
+-
+ static int diff_grep(struct diff_filepair *p, struct diff_options *o,
+ 		     regex_t *regexp, kwset_t kws)
  {
- 	if (DIFF_FILE_VALID(one)) {
--		*textconv = get_textconv(one);
--		mf->size = fill_textconv(*textconv, one, &mf->ptr);
-+		mf->size = fill_textconv(textconv, one, &mf->ptr);
+@@ -99,15 +89,15 @@ static int diff_grep(struct diff_filepair *p, struct diff_options *o,
+ 	textconv_one = get_textconv(p->one);
+ 	textconv_two = get_textconv(p->two);
+ 
+-	fill_one(p->one, &mf1, textconv_one);
+-	fill_one(p->two, &mf2, textconv_two);
++	mf1.size = fill_textconv(textconv_one, p->one, &mf1.ptr);
++	mf2.size = fill_textconv(textconv_two, p->two, &mf2.ptr);
+ 
+-	if (!mf1.ptr) {
+-		if (!mf2.ptr)
++	if (!DIFF_FILE_VALID(p->one)) {
++		if (!DIFF_FILE_VALID(p->two))
+ 			return 0; /* ignore unmerged */
+ 		/* created "two" -- does it have what we are looking for? */
+ 		hit = !regexec(regexp, mf2.ptr, 1, &regmatch, 0);
+-	} else if (!mf2.ptr) {
++	} else if (!DIFF_FILE_VALID(p->two)) {
+ 		/* removed "one" -- did it have what we are looking for? */
+ 		hit = !regexec(regexp, mf1.ptr, 1, &regmatch, 0);
  	} else {
- 		memset(mf, 0, sizeof(*mf));
- 	}
-@@ -97,8 +96,11 @@ static int diff_grep(struct diff_filepair *p, struct diff_options *o,
- 	if (diff_unmodified_pair(p))
- 		return 0;
- 
--	fill_one(p->one, &mf1, &textconv_one);
--	fill_one(p->two, &mf2, &textconv_two);
-+	textconv_one = get_textconv(p->one);
-+	textconv_two = get_textconv(p->two);
-+
-+	fill_one(p->one, &mf1, textconv_one);
-+	fill_one(p->two, &mf2, textconv_two);
- 
- 	if (!mf1.ptr) {
- 		if (!mf2.ptr)
-@@ -201,14 +203,17 @@ static unsigned int contains(mmfile_t *mf, struct diff_options *o,
- static int has_changes(struct diff_filepair *p, struct diff_options *o,
- 		       regex_t *regexp, kwset_t kws)
- {
--	struct userdiff_driver *textconv_one = get_textconv(p->one);
--	struct userdiff_driver *textconv_two = get_textconv(p->two);
-+	struct userdiff_driver *textconv_one = NULL;
-+	struct userdiff_driver *textconv_two = NULL;
- 	mmfile_t mf1, mf2;
- 	int ret;
- 
- 	if (!o->pickaxe[0])
- 		return 0;
- 
-+	textconv_one = get_textconv(p->one);
-+	textconv_two = get_textconv(p->two);
-+
- 	/*
- 	 * If we have an unmodified pair, we know that the count will be the
- 	 * same and don't even have to load the blobs. Unless textconv is in
-@@ -219,8 +224,8 @@ static int has_changes(struct diff_filepair *p, struct diff_options *o,
+@@ -224,16 +214,16 @@ static int has_changes(struct diff_filepair *p, struct diff_options *o,
  	if (textconv_one == textconv_two && diff_unmodified_pair(p))
  		return 0;
  
--	fill_one(p->one, &mf1, &textconv_one);
--	fill_one(p->two, &mf2, &textconv_two);
-+	fill_one(p->one, &mf1, textconv_one);
-+	fill_one(p->two, &mf2, textconv_two);
+-	fill_one(p->one, &mf1, textconv_one);
+-	fill_one(p->two, &mf2, textconv_two);
++	mf1.size = fill_textconv(textconv_one, p->one, &mf1.ptr);
++	mf2.size = fill_textconv(textconv_two, p->two, &mf2.ptr);
  
- 	if (!mf1.ptr) {
- 		if (!mf2.ptr)
+-	if (!mf1.ptr) {
+-		if (!mf2.ptr)
++	if (!DIFF_FILE_VALID(p->one)) {
++		if (!DIFF_FILE_VALID(p->two))
+ 			ret = 0; /* ignore unmerged */
+ 		/* created */
+ 		ret = contains(&mf2, o, regexp, kws) != 0;
+ 	}
+-	else if (!mf2.ptr) /* removed */
++	else if (!DIFF_FILE_VALID(p->two)) /* removed */
+ 		ret = contains(&mf1, o, regexp, kws) != 0;
+ 	else
+ 		ret = contains(&mf1, o, regexp, kws) !=
 -- 
 1.8.2
 
