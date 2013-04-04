@@ -1,107 +1,74 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 00/13] remote-hg: general updates
-Date: Thu, 4 Apr 2013 13:45:35 -0600
-Message-ID: <CAMP44s2YbJEtpBXHyUGrPta8O8W3fT_TJJ0Cq4BhSJGk1ODPOQ@mail.gmail.com>
-References: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com>
-	<20130402200948.GF2222@serenity.lan>
-	<2670C2C0-E30F-47DA-8901-899FEE11059E@quendi.de>
-	<CAMP44s3DETFBhexPhEEMP1TZGNrc91266=t16H2t_+VB_4V38w@mail.gmail.com>
-	<871uaqrwrp.fsf@59A2.org>
-	<7vip42i1r0.fsf@alter.siamese.dyndns.org>
-	<87sj36qewa.fsf@59A2.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Fri, 5 Apr 2013 01:22:45 +0530
+Message-ID: <CALkWK0mMQJfJ7M=NGJdEs3np3Y32DwKUMVEYJf7xh+X6toWwNg@mail.gmail.com>
+References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+ <CA+55aFz1D_dMtMHHMpiGi3KL=Y-m4DVxHVr=1ZX8zYWQ2TPvwA@mail.gmail.com>
+ <CALkWK0nNjvV5VGvT_eaubFoOhMnJ-N8FECAayd5A2K3BzeRh6Q@mail.gmail.com>
+ <CA+55aFyQwJfiYo06y1bRNpKT6wOquhG9a9M_4YvLG_UT3b34-w@mail.gmail.com>
+ <CALkWK0mQt7cE0zUECDF4ZC2-9Q+pEL=XGPdaOksyWzae2_W1CA@mail.gmail.com> <CA+55aFw+2wgUufJn7BcXACBQqywAGBAcZWS6N_UV8UA91G447Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Max Horn <max@quendi.de>,
-	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Jed Brown <jed@59a2.org>
-X-From: git-owner@vger.kernel.org Thu Apr 04 21:46:08 2013
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Apr 04 21:53:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNq6p-0007Tx-5q
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 21:46:07 +0200
+	id 1UNqEN-0005sK-T0
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 21:53:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764727Ab3DDTph (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 15:45:37 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:47947 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764716Ab3DDTph (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 15:45:37 -0400
-Received: by mail-lb0-f182.google.com with SMTP id z13so3110012lbh.27
-        for <git@vger.kernel.org>; Thu, 04 Apr 2013 12:45:35 -0700 (PDT)
+	id S1764767Ab3DDTx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 15:53:27 -0400
+Received: from mail-ia0-f173.google.com ([209.85.210.173]:57646 "EHLO
+	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764763Ab3DDTx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 15:53:26 -0400
+Received: by mail-ia0-f173.google.com with SMTP id h37so2556815iak.4
+        for <git@vger.kernel.org>; Thu, 04 Apr 2013 12:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=zp77kQzncSGZG4/d4w5kwXn74d8XPM6MCsUBamdj1Nw=;
-        b=SgGIqhcQD40UtJs0Xb0i5dDOrkwmOczgFFCCs8shvmJezdQBa1E6JjcLA2r7A8sDsv
-         oFAtz0dKEIkdjeYWIiuT7V9sYmy7fEveclF0nSSTC7qi278izUnz3vvS4evyB0RQEOnP
-         9Jmr9gw3kpfP8wgEcVOnbpOk/RI302Sp/GPi4S7L+MhcnPeHKdS+PbTVjfKrwRGJl612
-         T3eOls9jl+2+p8eJEbaFjN0YssqIIwEiWSeW6n2YO7rRzn79sJOrfu6gT0oCtxVP5rJK
-         k0l5h/54NTIQcp1HDfW+rHMLMiJSZ7BKTQOc2l3humh4uDrsWVFKBTwmiHuyqilF0iwT
-         zQfA==
-X-Received: by 10.112.156.42 with SMTP id wb10mr4348170lbb.32.1365104735490;
- Thu, 04 Apr 2013 12:45:35 -0700 (PDT)
-Received: by 10.114.20.36 with HTTP; Thu, 4 Apr 2013 12:45:35 -0700 (PDT)
-In-Reply-To: <87sj36qewa.fsf@59A2.org>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=6agmOb6Z3ypRttJib6UMsH2Epc78rgQekuND+Zyg5WM=;
+        b=yOCgoctgiA2bYAJYUa3Yy3Us8Ai64ESzoxfGrfqgmuhpJBZkDypVZ/OvxdI6IQVSiM
+         aUjMik9E2xmnG5iNwYx222ha/2rb75x+Rg9eg1fab+t15QzYsDcHtG6axNFhifWcvZmQ
+         fFfN4+X9wf4eDYF+It8SDbG9ikLa/yoLE2+cQTG8PESyknkaLUC6uw8U7b1JtFVDsfV6
+         aV8EMJ2eV/H6vP2wqDjjmLPXtFN5UYosAATpZ/+pf23mnKfQoFa1rGjNlpxuRSsBGVB8
+         B2ded+6BLgcO3U9S7HW6Hn3bXCn3NMyANiajfx9dJcHZNFrkSPyKEW3WL+RvwIa3Qwl9
+         DISg==
+X-Received: by 10.50.108.235 with SMTP id hn11mr4418947igb.107.1365105206101;
+ Thu, 04 Apr 2013 12:53:26 -0700 (PDT)
+Received: by 10.64.166.33 with HTTP; Thu, 4 Apr 2013 12:52:45 -0700 (PDT)
+In-Reply-To: <CA+55aFw+2wgUufJn7BcXACBQqywAGBAcZWS6N_UV8UA91G447Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220081>
 
-On Thu, Apr 4, 2013 at 1:23 PM, Jed Brown <jed@59a2.org> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+Linus Torvalds wrote:
+> On Thu, Apr 4, 2013 at 12:36 PM, Ramkumar Ramachandra
+> <artagnon@gmail.com> wrote:
+>>
+>> Let's compare the two alternatives: .gitmodules versus link object.
+>> If I want my fork of .gitmodules, I create a commit on top.
 >
->> So,... is there a concrete proposal for _me_ to act on?  Do you want
->> to see contrib/remtote-hg out of my tree, and have it compete with
->> the other one (which also shouldn't be in my tree) in the open?
->
-> Three months ago, I would have said yes.  Now I don't know.  It looks
-> like remote-hg has improved and is perhaps stable enough to remain,
+> Or you could also just edit and carry a dirty .gitmodules around for
+> your personal use-case.
 
-Really? There have been 22 changes since 3 months ago. You think a
-project goes from droppable to decent in 22 commits? The fact that you
-hit a bug doesn't make a project unworthy. I thought you said you were
-not going to dwell in your value judgement.
+Just take the link's buffer with you everywhere.  All you have to do
+is git edit-link <name> and paste the file's contents there, instead
+of opening .gitmodules directly in your editor.
 
-> but
-> I think it needs a much more complete test suite [1] and some visible
-> documentation about its mapping semantics.
+> And I don't see what you can do with the link objects that you cannot
+> do with .gitmodules. That's what it really boils down to. .gitmodules
+> do actually work. Your extensions would work with them too.
 
-I don't see anything particularly valuable in gitifyhg's test suite.
-Show me a single test-case that remote-hg fails that would make sense
-to port, then we'll talk.
-
-> There is no way a change
-> like "force-push by default" should come without the user knowing about
-> it.  (I don't think force-push should become the default in any case,
-> but something is wrong with the process if there isn't a good way to
-> communicate such behavioral turmoil.)  A separate project making its own
-> releases has a more visible place to indicate such changes.
-
-Tell me, what is the worst case scenario a forced push will create?
-What would be this terrible turmoil?
-
-> [1] Max and I have no love for the "obfuscated shell scripting" in
-> gitifyhg's 'py.test'- and 'sh'-based test suite, and we expressed early
-> on that we'd rather have git-style shell scripts.  So while porting
-> these would provide a good start, they can't just be dropped into
-> git.git.
-
-Oh yes they can, it's very easy to port (although annoying), I ported
-quite a few of them because it was impossible to debug through py.test
-(because stderr was incompletely shown), so I was forced to do that,
-but again, I didn't see much value in them and deleted them. Maybe if
-we had some complex striping on errors, but not at the moment.
-
-I would love to be proven wrong; show me a single test that is so
-sorely needed in remote-hg.
-
-Cheers.
-
--- 
-Felipe Contreras
+If it came to that, you could write a huge Perl script to solve
+everything with a .githack.  It breaks the internal symmetry of the
+repository, which is why git-submodule is having such a field day.
+I'm trying to prove, in my series, that making fundamental changes
+lets us get rid of a huge amount of complexity.
