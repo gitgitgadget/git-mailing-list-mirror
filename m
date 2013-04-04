@@ -1,97 +1,131 @@
-From: Jeremy Rosen <jeremy.rosen@openwide.fr>
-Subject: Re: RFC: Very useful script to SVG graph the git commits from a
- file orientated view
-Date: Thu, 4 Apr 2013 14:46:57 +0200 (CEST)
-Message-ID: <759444160.1179815.1365079617652.JavaMail.root@openwide.fr>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: RFC: Very useful script to SVG graph the git commits from a file
+ orientated view
+Date: Thu, 4 Apr 2013 13:50:37 +0100
+Message-ID: <CAHQ6N+r7RpV3n+Mb3GEyJim7-bwML_OUmveLZjWcRWp_HF-rNQ@mail.gmail.com>
 References: <CAHQ6N+qLbrBKWhq8OGKco+JxiiLVOQvW09j3rLeZw265POZuMw@mail.gmail.com>
+ <759444160.1179815.1365079617652.JavaMail.root@openwide.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/mixed; boundary=90e6ba614596fa56b004d9886bfd
 Cc: Git List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 04 14:47:32 2013
+To: Jeremy Rosen <jeremy.rosen@openwide.fr>
+X-From: git-owner@vger.kernel.org Thu Apr 04 14:51:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNjZh-0004Up-L1
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 14:47:29 +0200
+	id 1UNjdX-0007fr-Gi
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 14:51:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760213Ab3DDMq7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Apr 2013 08:46:59 -0400
-Received: from zimbra3.corp.accelance.fr ([213.162.49.233]:48708 "EHLO
-	zimbra3.corp.accelance.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759889Ab3DDMq7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Apr 2013 08:46:59 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id 4E343280AA;
-	Thu,  4 Apr 2013 14:46:58 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at zimbra3.corp.accelance.fr
-Received: from zimbra3.corp.accelance.fr ([127.0.0.1])
-	by localhost (zimbra3.corp.accelance.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yR9onZ0ygJFf; Thu,  4 Apr 2013 14:46:57 +0200 (CEST)
-Received: from zimbra2.corp.accelance.fr (zimbra2.corp.accelance.fr [213.162.49.232])
-	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id C05E728001;
-	Thu,  4 Apr 2013 14:46:57 +0200 (CEST)
-In-Reply-To: <CAHQ6N+qLbrBKWhq8OGKco+JxiiLVOQvW09j3rLeZw265POZuMw@mail.gmail.com>
-X-Originating-IP: [213.162.49.238]
-X-Mailer: Zimbra 7.2.2_GA_2852 (ZimbraWebClient - GC26 (Linux)/7.2.2_GA_2852)
+	id S1760000Ab3DDMu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 08:50:58 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:45373 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759879Ab3DDMu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 08:50:57 -0400
+Received: by mail-ie0-f181.google.com with SMTP id 17so2927857iea.26
+        for <git@vger.kernel.org>; Thu, 04 Apr 2013 05:50:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=0S3xoe84HKN1CTVCgz41/2iSbrQj1Gtd6zztMjHs/M4=;
+        b=HbStrV9Tb9b4nBh0f13s9DiFkCzTpWqQIzb9/eFV9om4WpV/wIjQUXvbhMJBmMZgG0
+         F6zpZCQIIZ6w8eybbAsRyT/sG1e7j8ep0hTlPdeWRg9gR+34tTMGXt2QywIfV5ET9e8+
+         J/l7e33FSvSnOx7E2In3ga6RLJs5nLrkbF+NKzS2khSBIAQ1A00ODpJPkVRWXKsuaIaA
+         d5amkLzrTqRq/KE152q/mOMeI/5z+LR0lJyELhu5PyGRIvC/pwlNOkMjORPW7KnOwKq/
+         Ih9QJOhp7mY/61W1Z9WPd7rWqiEldu8oywZin3r5ONjblaWihi2Y52W7sgCyv39FjxrR
+         kVBA==
+X-Received: by 10.42.66.140 with SMTP id p12mr3291087ici.15.1365079857168;
+ Thu, 04 Apr 2013 05:50:57 -0700 (PDT)
+Received: by 10.64.18.168 with HTTP; Thu, 4 Apr 2013 05:50:37 -0700 (PDT)
+In-Reply-To: <759444160.1179815.1365079617652.JavaMail.root@openwide.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219999>
 
-very usefull indeed, where can I find it ? I have a big rebase/merge/re=
-organise work that is comming soon and that is going to be tremendously=
- usefull...
+--90e6ba614596fa56b004d9886bfd
+Content-Type: text/plain; charset=UTF-8
 
-    Cordialement
+Opps, somehow I forgot to actually attach it.
 
-    J=C3=A9r=C3=A9my Rosen
+It's now attached
 
-fight key loggers : write some perl using vim
+--90e6ba614596fa56b004d9886bfd
+Content-Type: application/octet-stream; name="graph_git.pl"
+Content-Disposition: attachment; filename="graph_git.pl"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_hf3x9j0g0
 
------ Mail original -----
-> Hi,
->   I made this script to help me see the logical connections between
-> commits.  It produces a .svg graph showing the commits that affected
-> a
-> file.
->=20
-> For example, say you have the commits:
->=20
-> commit1 - modify hello.c
-> commit2 - modify goodbye.c
-> commit3 - modify hello.c and goodbye.c
->=20
-> It will draw a graph showing the first two commits as siblings, and
-> commit3 as a child of commit1 and commit2.
->=20
-> I have found this very useful when squashing and rebasing development
-> branches that have got a lot of "fix typo" and "fix"  type commit
-> messages.  From the graph you can quickly see which commit they were
-> fixing (the parent, in the graph).
->=20
-> Here is an example output, running it on kwin for the last 100
-> commits:
->=20
-> $ graph_git.pl --nofiles -100
->=20
-> http://imagebin.org/252754
->=20
-> And again with files for the last 10 commits:
->=20
-> $ graph_git.pl -10
->=20
-> http://imagebin.org/252756
->=20
-> (Note that it has tooltips)
->=20
-> JohnFlux
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+IyEvdXNyL2Jpbi9wZXJsCgp1c2Ugc3RyaWN0Owp1c2Ugd2FybmluZ3M7CmV2YWwgInJlcXVpcmUg
+R2l0OjpSZXBvc2l0b3J5OyByZXF1aXJlIElQQzo6UnVuOyAxIiBvciBkaWUgIlBsZWFzZSBkbzog
+IHN1ZG8gYXB0LWdldCBpbnN0YWxsIGxpYmdpdC1yZXBvc2l0b3J5LXBlcmwgZ3JhcGh2aXogbGli
+aXBjLXJ1bi1wZXJsICAgIC0gTWlzc2luZyBsaWJyYXJpZXMiOwp1c2UgR2l0OjpSZXBvc2l0b3J5
+Owp1c2UgSVBDOjpSdW4gcXcoIHJ1biApOwpteSAkc3ZnX2ZpbGVuYW1lID0gInBsb3Quc3ZnIjsK
+CmlmICghZGVmaW5lZCgkQVJHVlswXSkgfHwgICRBUkdWWzBdIGVxICItaCIgfHwgICRBUkdWWzBd
+IGVxICItLWhlbHAiKSB7CglwcmludCA8PCJFT1QiOwpKb2huRmx1eCdzIG5pZnR5IGdpdCBncmFw
+aGluZyB0b29sCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KClRoaXMgcHJvZ3Jh
+bSBwcm9kdWNlcyBhICRzdmdfZmlsZW5hbWUgZmlsZSBpbiB0aGUgY3VycmVudCBmb2xkZXIsIGZv
+ciB0aGUKY29tbWl0cyBpbiB0aGUgZ2l2ZW4gZ2l0IHJhbmdlIGluIHRoZSBjdXJyZW50IGdpdCBy
+ZXBvc2l0b3J5LgoKSW4gdGhlIFNWRywgYSBjb21taXQncyBwYXJlbnRzIGFyZSB0aGUgY29tbWl0
+cyB0aGF0IGxhc3QgdG91Y2hlZCB0aGUgc2FtZSBmaWxlcwp0aGF0IHRoZSBjb21taXQgdG91Y2hl
+ZC4gIFRoaXMgZ3JhcGggaXMgcGFydGljdWxhcmx5IHVzZWZ1bCB3aGVuIHRyeWluZyB0byBzcXVh
+c2guCgpNdWx0aXBsZSBsaW5lcyBiZXR3ZWVuIHRoZSBzYW1lIGNvbW1pdHMgbWVhbnMgdGhhdCB0
+aG9zZSBjb21taXRzIGJvdGggbW9kaWZpZWQgdGhlIHNhbWUKbXVsdGlwbGUgc2V0IG9mIGZpbGVz
+LgoKUnVuIGFzICQwIFstaHwtLWhlbHBdCiAgICAgICAkMCBbLS1zdGRvdXRdIFstLW5vZmlsZXNd
+IDxnaXQgbG9nIG9wdGlvbnM+LgoKRXhhbXBsZXM6CgogICNzaG93IHRoZSBsYXN0IDEwMCBjb21t
+aXRzOgogICQwIC0xMDAgJiYgZmlyZWZveCBwbG90LnN2ZwoKICAjc2hvdyBhbGwgdGhlIGNvbW1p
+dHMgYmFjayB0byBicmFuY2ggZm9vOgogICQwIEhFQUQuLi5mb28gJiYgZmlyZWZveCBwbG90LnN2
+ZwoKICAjc2hvdyBhbGwgdGhlIGNvbW1pdHMgYmFjayB0byBicmFuY2ggZm9vIGFuZCBkb24ndCBz
+aG93IHRoZSBmaWxlcyBpbiBzZXBlcmF0ZSBib3hlczoKICAkMCAtLW5vZmlsZXMgSEVBRC4uLmZv
+byAmJiBmaXJlZm94IHBsb3Quc3ZnCgpFT1QKCWV4aXQ7Cn0KCm15ICRvbmx5UHJpbnRSZXN1bHQg
+PSAwOwpteSAkbm9GaWxlcyA9IDA7CgppZiAoJEFSR1ZbMF0gZXEgIi0tc3Rkb3V0IikgewoJc2hp
+ZnQ7Cgkkb25seVByaW50UmVzdWx0ID0gMTsKfQppZiAoJEFSR1ZbMF0gZXEgIi0tbm9maWxlcyIp
+IHsKCXNoaWZ0OwoJJG5vRmlsZXMgPSAxOwp9Cm15ICRnaXQgID0gR2l0OjpSZXBvc2l0b3J5LT5u
+ZXcoIHdvcmtfdHJlZSA9PiAnLicgKTsKbXkgQGxpbmVzID0gJGdpdC0+cnVuKCBsb2c9PiAnLS1u
+YW1lLW9ubHknLCAnLS1wcmV0dHk9Zm9ybWF0OiVoICVzJywgQEFSR1YpOwoJCm15ICVmaWxlc1Rv
+U2hhID0gKCk7Cm15ICVmaWxlc1RvQ29sb3JJbmRleCA9ICgpOwpteSAkbmV4dENvbG9ySW5kZXgg
+PSAxOyAKbXkgJHNoYSA9ICIiOwpteSAkdGl0bGUgPSAiIjsKbXkgJG5leHRMaW5lSXNTaGEgPSAx
+OwpteSAkb3V0cHV0ID0iIjsKJG91dHB1dCAuPSAnZGlncmFwaCAiZ2l0IiB7JyAuICJcbiI7CmZv
+ciBteSAkbGluZSAoIEBsaW5lcyApICB7CgkjRW1wdHkgbGluZSBtb3ZlcyB1cyBvbiB0byB0aGUg
+bmV4dCBjb21taXQKCWlmICgkbGluZSA9fiAvXlxzKiQvKSB7CgkJJG5leHRMaW5lSXNTaGEgPSAx
+OwoJfSBlbHNpZiAoJG5leHRMaW5lSXNTaGEpIHsKCQkkbmV4dExpbmVJc1NoYSA9IDA7CgkJKCRz
+aGEsICR0aXRsZSkgPSBzcGxpdCAnICcsICRsaW5lLCAyOwoJCW15ICRmdWxsaW5mbyA9ICRnaXQt
+PnJ1biggc2hvdyA9PiAnLS1zdGF0JywgJHNoYSApOwoJCSR0aXRsZSA9fiBzLyIvJy9nOwoJCSRm
+dWxsaW5mbyA9fiBzLyIvJy9nOwoJCSRmdWxsaW5mbyA9fiBzL1xuLyYjMTA7L2c7CgkJJGZ1bGxp
+bmZvID1+IHMvICArLyAvZzsgI3NwYWNlcyBlYXQgdXAgYSBsb3Qgc3BhY2Ugc2luY2UgdGhleSBn
+ZXQgZW5jb2RlZCB0byAmbmJzcDsgPSA2IGxldHRlcnMKCgkJIyBGaXJlZm94IGNhbid0IGNvcGUg
+d2l0aCBpdCBiZWluZyBsb25nZXIgdGhhbiBhYm91dCAzMDAwIGNoYXJhY3RlcnMKCQkjIGJ1dCBj
+aGFyYWN0ZXIgZW5jb2RpbmdzIG1lYW4gdGhhdCBhIHNpbmdsZSBjaGFyYWN0ZXIgY2FuIGV4cGFu
+ZCB0byBtYW55IGxldHRlcnMuICBTbyB3ZSBqdXN0IGhhdmUgdG8gZ3Vlc3MgYXQKCQkjIGEgbWF4
+aW11bSBsZW5ndGggaGVyZQoJCSRmdWxsaW5mbyA9IHN1YnN0cigkZnVsbGluZm8sIDAsIDEwMDAp
+OwoKCQkkb3V0cHV0IC49ICJcIiRzaGFcIiBbbGFiZWw9XCIkc2hhICR0aXRsZVwiLCB0b29sdGlw
+PVwiJGZ1bGxpbmZvXCJdXG4iOwoJfSBlbHNlIHsKCQkjICAkbGluZSBpcyBhIGZpbGVuYW1lIHRo
+YXQgdGhlIGN1cnJlbnQgJHNoYSBjb21taXQgbW9kaWZpZWQgCgoJCSMgU2VlIGh0dHA6Ly93d3cu
+Z3JhcGh2aXoub3JnL2RvYy9pbmZvL2NvbG9ycy5odG1sIGZvciBhIGxpc3Qgb2YgY29sb3Igc2No
+ZW1lcwoJCW15ICRjb2xvckluZGV4OwoJCWlmKCBkZWZpbmVkKCBteSAkcGFyZW50U2hhID0gJGZp
+bGVzVG9TaGF7ICRsaW5lIH0gKSApIHsKCQkJJGNvbG9ySW5kZXggPSAkZmlsZXNUb0NvbG9ySW5k
+ZXh7ICRsaW5lIH07CgkJCSRvdXRwdXQgLj0gIlwiJHBhcmVudFNoYVwiIC0+IHsgXCIkc2hhXCIg
+fSAiOyMgbm8gbmV3bGluZSAtIHdlIGFwcGVuZCB0aGUgZWRnZSBwcm9wZXJ0aWVzIG5leHQKCQkJ
+JG91dHB1dCAuPSAiIFtlZGdldG9vbHRpcD1cIiRsaW5lXCIsIGNvbG9yc2NoZW1lPVwicGFpcmVk
+MTJcIiwgY29sb3I9XCIkY29sb3JJbmRleFwiXVxuIjsKCQl9IGVsc2UgewoJCQkkZmlsZXNUb0Nv
+bG9ySW5kZXh7ICRsaW5lIH0gPSAkY29sb3JJbmRleCA9ICRuZXh0Q29sb3JJbmRleDsKCQkJJG5l
+eHRDb2xvckluZGV4ID0gKCRuZXh0Q29sb3JJbmRleCAlIDEyKSArMTsgIyBtb2QgMTIgYmVjYXVz
+ZSB3ZSdyZSB1c2luZyB0aGUgcGFpcmVkMTIgY29sb3JzY2hlbWUsIHdoaWNoIGhhcyAxMiBjb2xv
+cnMKCQkJaWYgKCRub0ZpbGVzID09IDApIHsKCQkJCSRvdXRwdXQgLj0gIlwiJGxpbmVcIiBbc2hh
+cGU9Ym94XVxuIjsKCQkJCSRvdXRwdXQgLj0gIlwiJGxpbmVcIiAtPiB7IFwiJHNoYVwiIH0gIjsg
+IyBubyBuZXdsaW5lIC0gd2UgYXBwZW5kIHRoZSBlZGdlIHByb3BlcnRpZXMgbmV4dAoJCQkJJG91
+dHB1dCAuPSAiIFtlZGdldG9vbHRpcD1cIiRsaW5lXCIsIGNvbG9yc2NoZW1lPVwicGFpcmVkMTJc
+IiwgY29sb3I9XCIkY29sb3JJbmRleFwiXVxuIjsKCQkJfQoJCX0KCgkJJGZpbGVzVG9TaGF7ICRs
+aW5lIH0gPSAkc2hhOwoJfQp9CiRvdXRwdXQgLj0gIn1cbiI7CgppZiAoJG9ubHlQcmludFJlc3Vs
+dCkgewoJcHJpbnQgJG91dHB1dDsKCSMgRXhhbXBsZSB1c2Ugb2Ygb3V0cHV0OgoJIyAgIGNhdCB0
+bXAuZG90IHwgZG90IC1Uc3ZnIC1vIHBsb3Quc3ZnCgkjCgkjIE9yIHRvIG1ha2UgdGhlIHJlc3Vs
+dCB0YWxsIGluc3RlYWQgb2Ygd2lkZTogCgkjICAgY2F0IHRtcC5kb3QgfCBjY29tcHMgLUN4IHwg
+ZG90ICB8IGd2cGFjayAtYXJyYXlfMSB8IG5lYXRvIC1uMiAtVHN2ZyAtbyBwbG90LnN2Zwp9IGVs
+c2UgewoJcnVuIFsgcXcoY2NvbXBzIC1DeCkgXSwgJzwnLCBcJG91dHB1dCwgInwiLCBbIHF3KGRv
+dCkgXSwgInwiLCBbIHF3KGd2cGFjayAtYXJyYXlfMSkgXSwgInwiLCBbIHF3KCBuZWF0byAtbjIg
+LVRzdmcgLW8gKSwgJHN2Z19maWxlbmFtZSBdOwp9Cgo=
+--90e6ba614596fa56b004d9886bfd--
