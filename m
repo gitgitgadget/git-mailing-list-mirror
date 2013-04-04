@@ -1,8 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 1/4] remote-bzr: avoid echo -n
-Date: Thu,  4 Apr 2013 09:36:16 -0600
-Message-ID: <1365089779-9726-2-git-send-email-felipe.contreras@gmail.com>
-References: <1365089779-9726-1-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 0/4] remote-helpers: trivial test fixes
+Date: Thu,  4 Apr 2013 09:36:15 -0600
+Message-ID: <1365089779-9726-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Max Horn <max@quendi.de>, Antoine Pelisse <apelisse@gmail.com>,
 	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
@@ -14,61 +13,55 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNmEa-0000WM-HM
+	id 1UNmEZ-0000WM-Vc
 	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 17:37:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760622Ab3DDPhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 11:37:21 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:53904 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760391Ab3DDPhT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 11:37:19 -0400
-Received: by mail-ob0-f178.google.com with SMTP id wd20so2638263obb.23
-        for <git@vger.kernel.org>; Thu, 04 Apr 2013 08:37:19 -0700 (PDT)
+	id S1760604Ab3DDPhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 11:37:18 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:49217 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760391Ab3DDPhR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 11:37:17 -0400
+Received: by mail-ob0-f170.google.com with SMTP id uy19so511557obc.1
+        for <git@vger.kernel.org>; Thu, 04 Apr 2013 08:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=h9ZNt8hvTo04LfIR+vvCDg5HVCyuoJ7U0VcQWOT0qLE=;
-        b=lbqodCJejWqQuAcNCe53OVUNS+tzyPtyLkcKw0E4iuuIXxcjXqXd4pefUcUi8g0kmx
-         j8VU+BVkGo/ZHSx9ihhfj+tUzJ7PrS3rWbM72J7lVwSVo0hzIuPEXaqqyiWH2XjUkUWi
-         gWrLJE8To9W5AerZPNdSwRQEIMJU6HseuKXEFJQOJrK+BqIp8FHGcaIP0n9oh/5UQPDK
-         KegTS+UDWwtgAnZO/QQ7vQswCRfP6ni8ybwPuxHiTgJoaENT9Xukae3nMB/gPaJIudVq
-         +IffOfz5TNP3zbyknCUlIBt+eNvwJBWXA/5rN/tKWIVUjhW3ce6/Uv+W1reMfrEYZebM
-         q6YA==
-X-Received: by 10.182.23.101 with SMTP id l5mr4681744obf.16.1365089839337;
-        Thu, 04 Apr 2013 08:37:19 -0700 (PDT)
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=NLf2WmT98aow97QJjcZ89XkOUv2h29j3GvxQreE6FE4=;
+        b=GEXh01Igk7GlDNmBl381M1kv5P3uVa7TqNdKT5wxIBa1EeY5dlSR/XgUkNWI2uWe5B
+         VGFJYjN21CvDDJehVB4QGVon8R+KxhTbLCiG3lnDe02HwLqEFgwtWoclw/0fYY1FOTlQ
+         paIiUX09M4zF8YaZL0tcqQHwUHURTjMX6WpXj7rrykjO0TcfT/+EDPHNkLpAKXrCUeod
+         kk/Q8Hw+f/BfDbKAZfKAB2lot0Jj5NNWudOqDmBJmZGMZ+9xymSCol/AUPdRvk/7FzKV
+         8P7LV5ZLfWAbjHX7LkCtVW+VJ8im6y3RBa+KI8fNio0F70KmhBS4zcqmJS52hPTFnno5
+         hl4Q==
+X-Received: by 10.60.24.197 with SMTP id w5mr4594432oef.6.1365089836204;
+        Thu, 04 Apr 2013 08:37:16 -0700 (PDT)
 Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id ri7sm7144455oeb.6.2013.04.04.08.37.17
+        by mx.google.com with ESMTPS id be1sm6812256obb.11.2013.04.04.08.37.13
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Apr 2013 08:37:18 -0700 (PDT)
+        Thu, 04 Apr 2013 08:37:15 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2
-In-Reply-To: <1365089779-9726-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220019>
 
-It's not portable, as reported by test-lint.
+Hi,
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/test-bzr.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+A reroll, now we do some checks, just avoid test-lint-duplicates, and fix the
+outsanding shell portability issue. The rest is the same.
 
-diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
-index 70aa8a0..b81052b 100755
---- a/contrib/remote-helpers/test-bzr.sh
-+++ b/contrib/remote-helpers/test-bzr.sh
-@@ -136,7 +136,7 @@ test_expect_success 'special modes' '
-   (cd gitrepo &&
-   git cat-file -p HEAD:link > ../actual) &&
- 
--  echo -n content > expected &&
-+  printf content > expected &&
-   test_cmp expected actual
- '
- 
+Felipe Contreras (4):
+  remote-bzr: avoid echo -n
+  remote-helpers: fix the run of all tests
+  remote-bzr: remove stale check code for tests
+  remote-hg: fix hg-git test-case
+
+ contrib/remote-helpers/Makefile          |  1 +
+ contrib/remote-helpers/test-bzr.sh       | 16 +---------------
+ contrib/remote-helpers/test-hg-hg-git.sh |  1 -
+ 3 files changed, 2 insertions(+), 16 deletions(-)
+
 -- 
 1.8.2
