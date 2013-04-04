@@ -1,86 +1,107 @@
-From: Chris Wilson <chris+gitscm@aptivate.org>
-Subject: Re: Possible bug: Git submodules can get into broken state
-Date: Thu, 4 Apr 2013 23:07:19 +0100 (BST)
-Message-ID: <alpine.DEB.2.02.1304042302550.965@lap-x201.fen.aptivate.org>
-References: <alpine.DEB.2.02.1304041758140.965@lap-x201.fen.aptivate.org> <7vmwtei1wu.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.02.1304042138100.965@lap-x201.fen.aptivate.org> <7vr4iqgg2w.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Thu, 04 Apr 2013 15:13:31 -0700
+Message-ID: <7vd2uagd10.fsf@alter.siamese.dyndns.org>
+References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+ <CA+55aFz1D_dMtMHHMpiGi3KL=Y-m4DVxHVr=1ZX8zYWQ2TPvwA@mail.gmail.com>
+ <CALkWK0nNjvV5VGvT_eaubFoOhMnJ-N8FECAayd5A2K3BzeRh6Q@mail.gmail.com>
+ <CA+55aFyQwJfiYo06y1bRNpKT6wOquhG9a9M_4YvLG_UT3b34-w@mail.gmail.com>
+ <515DEE86.3020301@web.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 05 00:07:55 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Apr 05 00:14:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNsK2-0004LU-3V
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 00:07:54 +0200
+	id 1UNsQ0-0000ma-4c
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 00:14:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764979Ab3DDWHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 18:07:25 -0400
-Received: from lin-mail.aptivate.org ([176.58.121.181]:51505 "EHLO
-	lin-mail.aptivate.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764968Ab3DDWHY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 18:07:24 -0400
-Received: from cpc12-cmbg17-2-0-cust878.5-4.cable.virginmedia.com ([86.30.131.111] helo=lap-x201.local)
-	by lin-mail.aptivate.org with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.72)
-	(envelope-from <chris+gitscm@aptivate.org>)
-	id 1UNsJX-0001OR-DK; Thu, 04 Apr 2013 23:07:23 +0100
-X-X-Sender: chris@lap-x201.fen.aptivate.org
-In-Reply-To: <7vr4iqgg2w.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1765007Ab3DDWNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 18:13:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44202 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760606Ab3DDWNe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 18:13:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 378B8133A1;
+	Thu,  4 Apr 2013 22:13:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QPcLspPMumoPxbSubO6V2sDj4Ks=; b=eOhnyc
+	98sEIptqIlkKuyivc3IOL9CUCOp8CPJYDdpgvlPUcrT7qonF+LaJTUvL1vBvT6jY
+	KK4LTgmcxd8QIpLbSBFOU5UQs5jwzo/dVNoyIYth6lZJDcP0NAuKyEPIyCaKTX6Z
+	0Gvj8NX1wFeuy0wqhLewLrge9jVf9s2hxuGVw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IQLfBjlhX3pQyLVmYmZb97EGeR1O6XPY
+	9S2Z6eG6qJQ56QtQgZTjMebR4cbqirMiUbsHegAyCs4U2VdtuJIeapP9uB9gOBuT
+	oIiOIXXzSfguIBYJkvfFllItXEJxicpiGBOh2lbEKAAaGRatc4Y0AGKEw/bzQjYA
+	bD6hRm2qnTE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2ECBD1339F;
+	Thu,  4 Apr 2013 22:13:33 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A50791339B; Thu,  4 Apr
+ 2013 22:13:32 +0000 (UTC)
+In-Reply-To: <515DEE86.3020301@web.de> (Jens Lehmann's message of "Thu, 04
+ Apr 2013 23:20:06 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E320CF7C-9D74-11E2-9D68-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220114>
 
-On Thu, 4 Apr 2013, Junio C Hamano wrote:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
->> I do not want to write an awk/sed script to remove all the submodules 
->> from .git/config ...
->
-> Don't do it then ;-)
->
-> I think "git config" was added exactly because people wanted to
-> customize their configuration from their scripts.
+> While starting to grok submodules I was wondering myself if the data
+> stored in .gitmodules would better be stored in an extended gitlink
+> object, but I learned soon that the scope of the data that has to be
+> stored there was not clear at that time (and still isn't). So I'm
+> not opposed per se to adding a special object containing all that
+> information, but I strongly believe we are not even close to
+> considering such a step (and won't be for quite some time and maybe
+> never will).
 
-OK, I didn't know about git config. I will investigate that. But if the 
-only automated way to fix the configuration in .git/config is by removing 
-all submodules and running submodule init again, I still think that's a 
-usability issue at least. If you won't accept it as a bug, would you 
-consider it a feature request?
+I actually think the storage is more or less an orthogonal issue.
 
->> I do, it seems bizarre that git submodule init can create this 
->> situation but cannot rectify it.
->
-> I do not see there is anything to rectify in your situation.
->
-> Whoever wrote .gitmodules may have supplied a URL you cannot access,
+The format must be defined to be extensible (nobody is perfect and
+if you wait for an exhaustive list of attributes that cover all use
+cases including the ones that haven't even been invented yet, you
+will get nowhere), and designed carefully to reduce the chance of
+allowing the extended/optional bit to express the same thing in two
+different ways to make sure the object name will not become
+unnecessarily unstable, but you can start small, keep adding
+optional fields, and be prepared to design an upgrade path when you
+need to add new mandatory fields---that cannot be helped whether you
+record the information about submodules in .gitmodules or a new
+blob-ish object at the location where the submodule tree should
+reside in the index and the tree.
 
-They originally supplied a wrong URL (one that I can't access).
+However, the current .gitmodules design, even though it originally
+was invented as a way to carry information other than what a single
+commit object name from an otherwise unrelated project can express
+without having to change anything in-core, has a few practical
+merits.  The information _about_ submodules is stored separately
+(i.e. in the .gitmodules file) from submodules themselves, and it
+may be a good thing.
 
-They fixed it by checking in a rectified .gitmodules file.
-
-In the mean time, I ran git submodule init, and now I've ended up in a 
-situation where git submodule update doesn't work, and there's no 
-submodule command to fix it, so I have to remove the broken submodules 
-from .git/config.
-
-> and the configuration mechanism is the way to use custom URL in
-> place of it.
-
-I don't want to use a custom URL, I want to use the URL which is now in 
-.gitmodules.
-
-Could submodule init at least change the URLs of submodules which are not 
-checked out? (e.g. because they couldn't be)?
-
-Cheers, Chris.
--- 
-Aptivate | http://www.aptivate.org | Phone: +44 1223 967 838
-Future Business, Cam City FC, Milton Rd, Cambridge, CB4 1UY, UK
-
-Aptivate is a not-for-profit company registered in England and Wales
-with company number 04980791.
+When you are changing information _about_ submodules (e.g. you may
+be updating the recommended URL to fetch it from), you can use the
+usual tools like "git diff" to see how it changed, just like changes
+to any other file.  If the information _about_ a submodule A is
+stored at path A, and at the same time you have a working tree that
+corresponds to the root of the submodule A at that path, it gets
+unclear what "git diff A" should report.  Should it report the
+change in the submodule itself, or should it report the change in
+the information _about_ the submodule?  By separating these two
+concepts to two different places, .gitmodules design solves the
+issue nicely.
