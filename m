@@ -1,57 +1,86 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: reverting changes
-Date: Thu, 4 Apr 2013 19:03:57 -0300
-Message-ID: <CACnwZYe45poRihJToDY5yrLeY-wc=6HSjZBanjGvtiopbuAAFw@mail.gmail.com>
+From: Chris Wilson <chris+gitscm@aptivate.org>
+Subject: Re: Possible bug: Git submodules can get into broken state
+Date: Thu, 4 Apr 2013 23:07:19 +0100 (BST)
+Message-ID: <alpine.DEB.2.02.1304042302550.965@lap-x201.fen.aptivate.org>
+References: <alpine.DEB.2.02.1304041758140.965@lap-x201.fen.aptivate.org> <7vmwtei1wu.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.02.1304042138100.965@lap-x201.fen.aptivate.org> <7vr4iqgg2w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 05 00:04:33 2013
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 05 00:07:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNsGj-0001oq-JM
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 00:04:29 +0200
+	id 1UNsK2-0004LU-3V
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 00:07:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764471Ab3DDWD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 18:03:59 -0400
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:57940 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763085Ab3DDWD6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 18:03:58 -0400
-Received: by mail-vc0-f169.google.com with SMTP id hx10so102360vcb.0
-        for <git@vger.kernel.org>; Thu, 04 Apr 2013 15:03:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:date:message-id:subject:from:to
-         :content-type;
-        bh=ZBvvWaCB/mdj6xEYDgqc3C9lSCb7IZO7q6v0NYLSkdM=;
-        b=e1B8E2isS1i3cBW2xlo0fO7EwYLAXLdzaIpLiupZAsAAHtP/vKWCuLeHJfL+ajVxqT
-         /PHOt0Z9tqPMoTBfbB2GZYN9rXn7da8S41/n9vvBZaIbJ7iMDkRXhJZwh8YG5uJEh/DD
-         C7MDTQ/FwJuBauNyVq/Xw8/oPq5StfUYCiz2DrrDR968ElLuD0ve2EA+SAnk/ZetlKMY
-         vG1xGJnYQkWelXQPsagzNhWIyCOoDsv6dwOLCrV8LHN5cnP1StzNi4irx8pfeFgXYIT1
-         NNFGPapfJE2CR/Lj1IW13zMAWF+uydiLB1rc1VYRtGM4EcMP4BqC1Cp02oRLHFPm2NP/
-         oW2Q==
-X-Received: by 10.58.90.5 with SMTP id bs5mr6127620veb.60.1365113037682; Thu,
- 04 Apr 2013 15:03:57 -0700 (PDT)
-Received: by 10.58.132.143 with HTTP; Thu, 4 Apr 2013 15:03:57 -0700 (PDT)
+	id S1764979Ab3DDWHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 18:07:25 -0400
+Received: from lin-mail.aptivate.org ([176.58.121.181]:51505 "EHLO
+	lin-mail.aptivate.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764968Ab3DDWHY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 18:07:24 -0400
+Received: from cpc12-cmbg17-2-0-cust878.5-4.cable.virginmedia.com ([86.30.131.111] helo=lap-x201.local)
+	by lin-mail.aptivate.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.72)
+	(envelope-from <chris+gitscm@aptivate.org>)
+	id 1UNsJX-0001OR-DK; Thu, 04 Apr 2013 23:07:23 +0100
+X-X-Sender: chris@lap-x201.fen.aptivate.org
+In-Reply-To: <7vr4iqgg2w.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220113>
 
-Hi,
+On Thu, 4 Apr 2013, Junio C Hamano wrote:
 
-When I want to revert a change to a file that is already committed
-what is the best way?
+>> I do not want to write an awk/sed script to remove all the submodules 
+>> from .git/config ...
+>
+> Don't do it then ;-)
+>
+> I think "git config" was added exactly because people wanted to
+> customize their configuration from their scripts.
 
-The way I found was:
+OK, I didn't know about git config. I will investigate that. But if the 
+only automated way to fix the configuration in .git/config is by removing 
+all submodules and running submodule init again, I still think that's a 
+usability issue at least. If you won't accept it as a bug, would you 
+consider it a feature request?
 
-$ git checkout HEAD /path/to/my/file
-$ git reset HEAD /path/to/my/file
+>> I do, it seems bizarre that git submodule init can create this 
+>> situation but cannot rectify it.
+>
+> I do not see there is anything to rectify in your situation.
+>
+> Whoever wrote .gitmodules may have supplied a URL you cannot access,
 
-Is this the canonical/best way or there other (easier-faster) ways?
+They originally supplied a wrong URL (one that I can't access).
 
-Thanks,
+They fixed it by checking in a rectified .gitmodules file.
+
+In the mean time, I ran git submodule init, and now I've ended up in a 
+situation where git submodule update doesn't work, and there's no 
+submodule command to fix it, so I have to remove the broken submodules 
+from .git/config.
+
+> and the configuration mechanism is the way to use custom URL in
+> place of it.
+
+I don't want to use a custom URL, I want to use the URL which is now in 
+.gitmodules.
+
+Could submodule init at least change the URLs of submodules which are not 
+checked out? (e.g. because they couldn't be)?
+
+Cheers, Chris.
+-- 
+Aptivate | http://www.aptivate.org | Phone: +44 1223 967 838
+Future Business, Cam City FC, Milton Rd, Cambridge, CB4 1UY, UK
+
+Aptivate is a not-for-profit company registered in England and Wales
+with company number 04980791.
