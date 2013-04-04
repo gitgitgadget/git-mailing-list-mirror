@@ -1,131 +1,112 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] rerere forget: do not segfault if not all stages are present
-Date: Thu, 04 Apr 2013 20:41:43 +0200
-Message-ID: <515DC967.3060108@kdbg.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Thu, 4 Apr 2013 11:47:30 -0700
+Message-ID: <20130404184730.GL30308@google.com>
+References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 04 20:42:21 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 04 20:48:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNp74-0001PI-Mn
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 20:42:19 +0200
+	id 1UNpCf-0006WX-MN
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 20:48:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762258Ab3DDSlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 14:41:49 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:19963 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1762136Ab3DDSls (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 14:41:48 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 2F482130045;
-	Thu,  4 Apr 2013 20:41:45 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 3D53019F549;
-	Thu,  4 Apr 2013 20:41:44 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+	id S1762752Ab3DDSrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 14:47:36 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:62818 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761312Ab3DDSrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 14:47:35 -0400
+Received: by mail-pa0-f51.google.com with SMTP id jh10so1625541pab.10
+        for <git@vger.kernel.org>; Thu, 04 Apr 2013 11:47:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=KcpepHTtyV01cDOcn/Vg1xGGyv2H12GdOQZkj7cCxts=;
+        b=osl9tb8diaNg21MB43qfGt8Tmun9dKyk0yBfMEyZAKFISsDRlaM0mtv6XkYp+dOpkY
+         +6ZE1zmZAAf18Al7Q8L+IIsqch1lNlrY6zG2jyo09otfKcPbqENmmOjC2XEOcgE4QlOT
+         2NAhCidPMmFW1cjVgi6W/qzi98Zc2AN6u4bujHSx5QxdUrqAcH7/5VMDhgm8qn3JGx6Y
+         6w2u6z7YlHafVZI/rKfoDxRtv44h9IrqQfiag8Sc4A86ZWUcO3W5zA9qWPX51kWc20o5
+         DhgLwpRBesg3GC7F/sPME0Yxh58j+7l97oll7uHcIm/CVN8+wTBDxgizSZrdy8Sjs5e0
+         SHSw==
+X-Received: by 10.66.246.168 with SMTP id xx8mr10999115pac.107.1365101255428;
+        Thu, 04 Apr 2013 11:47:35 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id lb8sm12476427pab.13.2013.04.04.11.47.33
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 04 Apr 2013 11:47:34 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220060>
 
-The loop that fills in the buffers that are later passed to the merge
-driver exits early when not all stages of a path are present in the index.
-But since the buffer pointers are not initialized in advance, the
-subsequent accesses are undefined.
+Ramkumar Ramachandra wrote:
 
-Initialize buffer pointers in advance to avoid undefined behavior later.
+> The purpose of this series is to convince you that we've made a lot of
+> fundamental mistakes while designing submodules, and that we should
+> fix them now.  [1/7] argues for a new object type, and this is the
+> core of the idea.
 
-That is not sufficient, though, to get correct operation of handle_cache().
-The function replays a conflicted merge to extract the part inside the
-conflict markers. As written, the loop exits early when a stage is missing.
-Consequently, the buffers for later stages that would be present in the
-index are not filled in and the merge is replayed with incomplete data.
+Oh, dear.
 
-Fix it by investigating all stages of the given path.
+Shouldn't it be possible to explain the same thing using a test
+script illustrating intended UI?
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- This patch conflicts trivially with js/rerere-forget-protect-against-NUL
- (both add a test case at the end).
+[...]
+>     $ git clone gh:artagnon/varlog
+>     $ cd varlog
+>     $ git clone gh:artagnon/clayoven
+>     # Notice how it puts clayoven.git in ~/bare
 
- rerere.c                  | 15 +++++++--------
- t/t2030-unresolve-info.sh | 13 +++++++++++++
- 2 files changed, 20 insertions(+), 8 deletions(-)
+I really would like to be able to continue doing something like
 
-diff --git a/rerere.c b/rerere.c
-index a6a5cd5..3d22cd2 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -295,7 +295,7 @@ static int rerere_mem_getline(struct strbuf *sb, struct rerere_io *io_)
- 
- static int handle_cache(const char *path, unsigned char *sha1, const char *output)
- {
--	mmfile_t mmfile[3];
-+	mmfile_t mmfile[3] = {{NULL}};
- 	mmbuffer_t result = {NULL, 0};
- 	struct cache_entry *ce;
- 	int pos, len, i, hunk_no;
-@@ -314,17 +314,16 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
- 	for (i = 0; i < 3; i++) {
- 		enum object_type type;
- 		unsigned long size;
-+		int j;
- 
--		mmfile[i].size = 0;
--		mmfile[i].ptr = NULL;
- 		if (active_nr <= pos)
- 			break;
- 		ce = active_cache[pos++];
--		if (ce_namelen(ce) != len || memcmp(ce->name, path, len)
--		    || ce_stage(ce) != i + 1)
--			break;
--		mmfile[i].ptr = read_sha1_file(ce->sha1, &type, &size);
--		mmfile[i].size = size;
-+		if (ce_namelen(ce) != len || memcmp(ce->name, path, len))
-+			continue;
-+		j = ce_stage(ce) - 1;
-+		mmfile[j].ptr = read_sha1_file(ce->sha1, &type, &size);
-+		mmfile[j].size = size;
- 	}
- 	for (i = 0; i < 3; i++) {
- 		if (!mmfile[i].ptr && !mmfile[i].size)
-diff --git a/t/t2030-unresolve-info.sh b/t/t2030-unresolve-info.sh
-index f262065..c0610b9 100755
---- a/t/t2030-unresolve-info.sh
-+++ b/t/t2030-unresolve-info.sh
-@@ -50,8 +50,11 @@ test_expect_success setup '
- 	test_commit second fi/le second &&
- 	git checkout side &&
- 	test_commit third fi/le third &&
-+	git branch add-add &&
- 	git checkout another &&
- 	test_commit fourth fi/le fourth &&
-+	git checkout add-add &&
-+	test_commit fifth add-differently &&
- 	git checkout master
- '
- 
-@@ -167,4 +170,14 @@ test_expect_success 'rerere and rerere forget (subdirectory)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'rerere forget (add-add conflict)' '
-+	git checkout -f master &&
-+	echo master >add-differently &&
-+	git add add-differently &&
-+	git commit -m "add differently" &&
-+	test_must_fail git merge fifth &&
-+	git rerere forget add-differently 2>actual &&
-+	test_i18ngrep "no remembered" actual
-+'
-+
- test_done
--- 
-1.8.2.384.g92e0289
+	git clone --recurse-submodules git://repo.or.cz/cgit.git
+	# never mind!
+	rm -fr cgit
+
+without leaving any clutter behind.  I have used systems that kept
+state in my home directory before and found them a pain in the neck to
+debug.  Others may disagree, though.
+
+[...]
+>     # Again, just works!  No cd-to-toplevel nonsense
+
+Didn't Jens mention that git-submodule requiring that one work
+at the toplevel is just a (presumably easily fixable) bug?
+
+[...]
+> If you think this is all a big waste of time, and that we should focus
+> on improving git-submodule.sh, you're probably deranged.  Because it's
+
+I don't think that *you* should focus on improving git-submodule, as
+long as you are not using it and dislike its design.  But I do think
+it's strange to at the same time
+
+ 1) tell me I'm deranged for liking submodules
+ 2) dismiss other experiments that have been created as alternatives
+
+I like experimentation, which means sometimes having tools whose
+purposes overlap, and I like when it's possible to help something
+evolve to be better, even far enough to interoperate with or replace
+uses of another tool.
+
+I also believe in "live and let live".  That means that even if
+someone is a little crazy, if they are not actively harmful, I do not
+destroy their tools.
+
+That probably marks me as deranged.
+
+Hope that helps,
+Jonathan
