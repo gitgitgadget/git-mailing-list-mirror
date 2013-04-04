@@ -1,69 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Thu, 4 Apr 2013 11:58:39 -0700
-Message-ID: <20130404185839.GN30308@google.com>
-References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
- <20130404184730.GL30308@google.com>
+From: Jed Brown <jed@59a2.org>
+Subject: Re: [PATCH 00/13] remote-hg: general updates
+Date: Thu, 04 Apr 2013 14:01:07 -0500
+Message-ID: <87vc82qfws.fsf@59A2.org>
+References: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com> <20130402200948.GF2222@serenity.lan> <2670C2C0-E30F-47DA-8901-899FEE11059E@quendi.de> <CAMP44s3DETFBhexPhEEMP1TZGNrc91266=t16H2t_+VB_4V38w@mail.gmail.com> <871uaqrwrp.fsf@59A2.org> <CAMP44s3zm+-220Xpqv_=JkJ=g2pS79hUNjacVZ=JejitcG=B8A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 04 20:59:16 2013
+Content-Type: text/plain
+Cc: Max Horn <max@quendi.de>, John Keeping <john@keeping.me.uk>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 04 21:01:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNpNT-0007yA-2D
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 20:59:15 +0200
+	id 1UNpPr-0001fK-Iv
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 21:01:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763458Ab3DDS6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 14:58:45 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:38858 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763369Ab3DDS6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 14:58:44 -0400
-Received: by mail-pb0-f44.google.com with SMTP id wz12so1597939pbc.17
-        for <git@vger.kernel.org>; Thu, 04 Apr 2013 11:58:44 -0700 (PDT)
+	id S1763787Ab3DDTBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 15:01:14 -0400
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:58597 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763729Ab3DDTBN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 15:01:13 -0400
+Received: by mail-ob0-f171.google.com with SMTP id x4so2906095obh.2
+        for <git@vger.kernel.org>; Thu, 04 Apr 2013 12:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=e7kU4LMW7dqwMufalBpSleSb2QnkQcWy2xR6sVtNg9g=;
-        b=w/45KJE4spbe82C55XX52lkHze5QrvbP8/GR3cookH8Q0DIDviQgTlNPyqgeCc4Aht
-         pb2dxZRP0qQ6wkVGQGOMcSwmBissRWeOjbwggT00/vbotX7aATUNNdKAVV9MBs8BJPvL
-         9fbpKrwUtF0VWfvUX5MHClYwyad8V+2MXg5RdJw9sKkI88zGnmubW/uQVchEmHa6h/ch
-         kcyzEMF5pwJUBWdiGFOMZ5x9hh8NgRYJdNM2LXTM7GXVPl6CtUARnQVfvm8eNo/H7F2j
-         5lFNlA542YfjCygbEkDQqvpZV+FML1r1fy2TWNs/0k/ow1zM1BnOE2JAA6vfZ1L8d0JO
-         ulQg==
-X-Received: by 10.66.2.234 with SMTP id 10mr5523515pax.180.1365101924139;
-        Thu, 04 Apr 2013 11:58:44 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id qh4sm12521927pac.8.2013.04.04.11.58.42
+        h=x-received:sender:from:to:cc:subject:in-reply-to:references
+         :user-agent:date:message-id:mime-version:content-type;
+        bh=Y0izaK4UB0UsO2YfP36nrGkM7n8JH/2DAVprJlDpKXU=;
+        b=gJTLQjsWHvvo1ydyS13kQREBR520g0g6Aj9f1REvsNgkpNHtcuLqNFWEmHVgwYrCMC
+         jlvIQccdj6ZAxFohz11kywxcuWdgOmGKBUartXKAo/RHmCsmIsSJ1IgknlSqRpNJCAlR
+         Wd91xWfe1hJe5QFRKyTKEA9AKdp5yLo0dPISO3G1KoGoP1wRgSXJzE+3SCEzzt2EegAS
+         pnH05j5tgWlZiAq9pMmS6l7/27x/SmfJPv93hMQii077+sS1gHqWs0zUXS7WEayVVB/r
+         UgW4RPRrYjklO6+ejRGSJrS1Co0KXywxiP6RzFLnDB0/8Z/7JPJUoxTpZDYSTUmzjakP
+         gTrw==
+X-Received: by 10.182.204.5 with SMTP id ku5mr5382513obc.22.1365102072441;
+        Thu, 04 Apr 2013 12:01:12 -0700 (PDT)
+Received: from localhost (vis-v410v070.mcs.anl-external.org. [130.202.17.70])
+        by mx.google.com with ESMTPS id a10sm8264071oez.1.2013.04.04.12.01.08
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Apr 2013 11:58:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130404184730.GL30308@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Thu, 04 Apr 2013 12:01:08 -0700 (PDT)
+In-Reply-To: <CAMP44s3zm+-220Xpqv_=JkJ=g2pS79hUNjacVZ=JejitcG=B8A@mail.gmail.com>
+User-Agent: Notmuch/0.15.2 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220066>
 
-Jonathan Nieder wrote:
-> Ramkumar Ramachandra wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
->> The purpose of this series is to convince you that we've made a lot of
->> fundamental mistakes while designing submodules, and
-[...]
-> Shouldn't it be possible to explain the same thing using a test
-> script illustrating intended UI?
+> Where is the evidence? You say remote-hg doesn't work, I say it does,
+> the difference is that I have evidence to prove it.
 
-Sorry, I sent this reply too quickly.  Your explanation to Linus
-clarified the idea.
+There are many projects that don't do what they claim.  I gave remote-hg
+a few minutes and moved on since (at the time) it didn't seem
+interesting enough to be worth the effort of making proper bug reports.
+There's a lot of low-quality code in the world and I'm willing to
+tolerate a certain false-positive rate.  I apologize for misdiagnosing
+your project and I'm happy to believe that you have since fixed the
+bugs.  I was merely answering you question of why some of us contributed
+to gitifyhg in preference to remote-hg.
 
-Regards,
-Jonathan
+I see no value in dwelling on the value judgement I made a few months
+ago.  Additionally, I have almost no use for either project any more.
+
+> remote-hg doesn't fail with the non-fast-forward error, in fact, it
+> doesn't fail at all, it pushes correctly, and that's reported as a
+> failure.
+
+I don't agree that force-pushing by default is "correct" behavior.
