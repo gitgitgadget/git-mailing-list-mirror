@@ -1,157 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: feature suggestion: optimize common parts for checkout
- --conflict=diff3
-Date: Thu, 4 Apr 2013 16:33:44 -0400
-Message-ID: <20130404203344.GA25330@sigill.intra.peff.net>
-References: <20130306200347.GA20312@sigill.intra.peff.net>
- <7vvc94p8hb.fsf@alter.siamese.dyndns.org>
- <20130306205400.GA29604@sigill.intra.peff.net>
- <7vr4jsp756.fsf@alter.siamese.dyndns.org>
- <7vmwugp637.fsf@alter.siamese.dyndns.org>
- <20130307080411.GA25506@sigill.intra.peff.net>
- <7v1ubrnmtu.fsf@alter.siamese.dyndns.org>
- <20130307180157.GA6604@sigill.intra.peff.net>
- <7vfw07m4sx.fsf@alter.siamese.dyndns.org>
- <20130307185046.GA11622@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 11/13] remote-hg: force remote push
+Date: Thu, 4 Apr 2013 14:35:18 -0600
+Message-ID: <CAMP44s16Yt0mL8FKXMVgLBXw7s9_S8hGyS0YNHX7GrsAXYNDfg@mail.gmail.com>
+References: <1365089422-8250-1-git-send-email-felipe.contreras@gmail.com>
+	<1365089422-8250-12-git-send-email-felipe.contreras@gmail.com>
+	<87y5cyqhya.fsf@59A2.org>
+	<CAMP44s1b_SWkVXe2Vyzs2yj1M9Z-2KcCXbp9LCJ_oWxuC+2pAg@mail.gmail.com>
+	<87ppyaqcie.fsf@59A2.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Antoine Pelisse <apelisse@gmail.com>,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git <git@vger.kernel.org>,
-	kernel@pengutronix.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 04 22:34:24 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
+To: Jed Brown <jed@59a2.org>
+X-From: git-owner@vger.kernel.org Thu Apr 04 22:35:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNqrW-0007Iu-3U
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 22:34:22 +0200
+	id 1UNqsv-00009G-Ad
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 22:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764812Ab3DDUdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 16:33:51 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56325 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764263Ab3DDUdv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 16:33:51 -0400
-Received: (qmail 6646 invoked by uid 107); 4 Apr 2013 20:35:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Apr 2013 16:35:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Apr 2013 16:33:44 -0400
-Content-Disposition: inline
-In-Reply-To: <20130307185046.GA11622@sigill.intra.peff.net>
+	id S1759565Ab3DDUfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 16:35:20 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:52876 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756978Ab3DDUfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 16:35:20 -0400
+Received: by mail-lb0-f179.google.com with SMTP id t1so3149774lbd.38
+        for <git@vger.kernel.org>; Thu, 04 Apr 2013 13:35:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=iCjephvVDazcHQQ6Xs6Eg6Qx+CO7S1QuaxNSIddXE+s=;
+        b=TH5Nh22oEWrdQ3e61NDfilvtsV3zrhuoI5wtvMulvCc6kyJhcIqRCCmudnWK7ojGzC
+         hR4GITTxvsiIqmzfDouv0vXDyPX4SkHrduSncz5oVzZG9OGxnOem4pAJgttx/ZZ6jbgq
+         k+1lnuKyJdRi3BY2DG9g7b9o2YAyuIykNJ9OD6MSlWQBktVldQZpzbXUhKIkydFG/GJ0
+         YVBE4iE+BjPGhbv5c04S9qxgfSlC8H7X1wqxsMjcSajMn8K1+EJi1/O4Tm2Zflopie/Y
+         KQE0c8Lh+JBgzSiqo9a1H9oJBwhuRPsLVKKE8lYEA3ljYZ1rmk6o+Wpt+1vAK7j+iFk4
+         lZMQ==
+X-Received: by 10.112.132.166 with SMTP id ov6mr2765803lbb.71.1365107718084;
+ Thu, 04 Apr 2013 13:35:18 -0700 (PDT)
+Received: by 10.114.20.36 with HTTP; Thu, 4 Apr 2013 13:35:18 -0700 (PDT)
+In-Reply-To: <87ppyaqcie.fsf@59A2.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220094>
 
-On Thu, Mar 07, 2013 at 01:50:46PM -0500, Jeff King wrote:
+On Thu, Apr 4, 2013 at 2:14 PM, Jed Brown <jed@59a2.org> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> If that's the case, they should disable in the server, just like some
+>> people disable non-fast-forward pushes in git.
+>
+> I don't know how to make Hg allow new branches and bookmarks, but not
+> new anonymous heads.
 
-> On Thu, Mar 07, 2013 at 10:40:46AM -0800, Junio C Hamano wrote:
-> 
-> > Where we differ is if such information loss is a good thing to have.
-> >
-> > We could say "both sides added, identically" is auto-resolved when
-> > you use the zealous option, and do so regardless of how the merge
-> > conflicts are presented.  Then it becomes perfectly fine to eject
-> > "A" and "E" out of the conflicted block and merge them to be part of
-> > pre/post contexts.  The same goes for reducing "<C|=C>" to "C".  As
-> > long as we clearly present the users what the option does and what
-> > its implications are, it is not bad to have such an option, I think.
-> 
-> Exactly. I do think it has real-world uses (see the example script I
-> posted yesterday), but it would never replace diff3. I'm going to try it
-> out for a bit. As I mentioned yesterday, I see those sorts of
-> cherry-pick-with-something-on-top conflicts when I am rebasing onto or
-> merging my topics into what you have picked up from the same topic on
-> the list.
+It's not possible to push new bookmarks without pushing new heads
+(unless they are all reusing the same commits), and all the drawbacks
+of doing that, Merucrial's UI make sure of that.
 
-I wanted to give an update on how this has been going. I've been running
-with zdiff3 for almost a month. I keep my merge.conflictstyle set to
-diff3, and when I see something that I think might benefit from the
-"both sides added" zealousness, I do a "git checkout --conflict=zdiff3"
-and examine the result.
+> Vanishly few Hg projects use a workflow anything
+> like topic branches so it's normally not a common thing to be creating
+> new heads.  If someone is using remote-hg, we can be pretty sure they
+> are not the primary maintainer, so if they are pushing, they'll be aware
+> of upstream policy and
 
-I have seen it help, and always when rebasing patches that were accepted
-upstream. For example, imagine I added a big block of text in one patch
-(e.g., an entire test script). Then I added more tests in a follow-on
-patch. Or I change some of the lines from expect_failure to
-expect_success. You can see this in t1060 of the
-jk/check-corrupt-objects-carefully topic (I didn't try, but you could
-probably reproduce by just rebasing it on top of the current master).
+> will need to play by those rules.
 
-When I rebase my version of the patches on your master with the new
-content, the conflict for the first patch is useless in diff3. I see
-that the base had nothing, upstream added a hundred lines, and my patch
-added ninety lines. But it's hard to see which lines are missing or
-modified because of the size of the conflict. It looks like:
+No, we don't. The fact that you say so doesn't make it so.
 
-       <<<<<<< ours
-       #!/bin/sh
-       test_description=whatever
-       ...
-          end of some test
-       '
-       test_done
-       ||||||| base
-       =======
-       #!/bin/sh
-       test_description=whatever
-       ...
-          end of another test
-       '
-       test_done
-       >>>>>>> theirs
+I create a branch felipec-bookmarks, and I push as many heads as I
+wish. Who will get affected? Nobody. I already explained that, and you
+conveniently avoided that paragraph in the reply.
 
-The interesting part is in the "...", which contains different lines in
-each version, but it may be hundreds of lines long. Using zdiff3, I get:
+>> The problem is Mercurial, purely and simple, without forcing the push,
+>> how do you expect this to work?
+>>
+>> % git clone hg::whatever
+>> % git checkout -b feature-a master
+>> # do stuff
+>> % git push -u origin feature-a
+>
+> There is a difference between pushing a new branch (see 'hg push
+> --new-branch -b branch-name') and creating arbitrary new heads.
 
-       #!/bin/sh
-       test_description=whatever
-       ...
-       <<<<<<< ours
-       test_expect_success 'some_new_test' '
-       ...
-       ||||||| base
-       =======
-       >>>>>>> theirs
-       '
-       test_done
+feature-a is not a branch, it's a bookmark, and bookmarks cannot be
+pushed without creating new heads (essentially).
 
-I can see that nothing was tweaked; I just didn't add any content there,
-and upstream did. Contrast this with zealous "merge" conflicts, which
-would look like:
+> Normal workflow in case of new commits upstream
 
-      #!/bin/sh
-      test_description=whatever
-      ...
-      <<<<<<< ours
-      test_expect_success 'some_new_test' '
-      ...
-      =======
-      >>>>>>> theirs
-      '
-      test_done
+And who says we are committing upstream?
 
-which similarly condenses, but is missing a piece of information: that
-there was nothing in the base. I don't know whether the conflict is
-there because my patch removed some content that got changed upstream,
-or whether upstream added some content that I did not have in my patch.
+> Note: I don't know of any way to avoid the race condition when pushing
+> a bookmark that creates a new head since there is no 'hg push --new-bookmark'.
 
-So I think it is useful when rebasing on top of what upstream took,
-specifically when:
+This is not about the race condition, and the race condition cannot be
+fixed with the current design.
 
-  1. You have a series that updates the same hunk repeatedly (because
-     from your perspective, you see only the tip of what upstream took).
-
-  2. Upstream takes your patch but tweaks it (either as a fixup, to deal
-     with a merge conflict, or whatever). You get to see the minimal
-     tweak, not the fact that you have a giant hunk which differs from
-     the upstream only by a few characters or a few lines.
-
-So I do think zdiff3 is useful, and I plan to continue using it.
-
--Peff
+-- 
+Felipe Contreras
