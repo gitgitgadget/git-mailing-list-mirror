@@ -1,91 +1,80 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 7/7] sha1_file: write ref_name to link object
-Date: Fri,  5 Apr 2013 00:00:43 +0530
-Message-ID: <1365100243-13676-8-git-send-email-artagnon@gmail.com>
-References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 04 20:30:06 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Possible bug: Git submodules can get into broken state
+Date: Thu, 04 Apr 2013 11:30:41 -0700
+Message-ID: <7vmwtei1wu.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.2.02.1304041758140.965@lap-x201.fen.aptivate.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Chris Wilson <chris+gitscm@aptivate.org>
+X-From: git-owner@vger.kernel.org Thu Apr 04 20:31:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNovE-0007fT-VR
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 20:30:05 +0200
+	id 1UNowL-0000JI-JW
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 20:31:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764557Ab3DDS3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 14:29:32 -0400
-Received: from mail-da0-f47.google.com ([209.85.210.47]:42991 "EHLO
-	mail-da0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764494Ab3DDS3a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 14:29:30 -0400
-Received: by mail-da0-f47.google.com with SMTP id s35so1242614dak.20
-        for <git@vger.kernel.org>; Thu, 04 Apr 2013 11:29:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=/tmTKDAavP363tA8cvYBHGXikplsBu0VrgVfNQSMmwU=;
-        b=lMYyIw/ZPtRqDOVLTWlZThmS1ZWzHksfZ6MILP8MJlECc3Tk2rLNk6QgnhbDLfYT0A
-         MlvTvS6r2fU6b+3C+/rJC9LjAc9R4JLe6FX/xdX4VHQlXfpmy5ATefSPPNXVCajk63pU
-         SfD959Qc1O5rm3ygl4uP76PJ+P7mXVUh+3QX4HckzXLkCArXvI3uwY+9iyYON05P0OJG
-         ov6LWsHVta8gI7MwedfO+OSDx4R/x+HQL9Dz4SxaJyr67Hz4GFhkrySne5fm3kGw5zD3
-         8QSCA/ymbyvWo3TwQBfZvd2cl+brlQ3GKHAXpFKB4ejn4QjUrxlKE8DczPSvbtmamgh2
-         ZQhw==
-X-Received: by 10.68.194.193 with SMTP id hy1mr10038627pbc.191.1365100169750;
-        Thu, 04 Apr 2013 11:29:29 -0700 (PDT)
-Received: from localhost.localdomain ([122.174.41.36])
-        by mx.google.com with ESMTPS id xl10sm12418525pac.15.2013.04.04.11.29.27
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 04 Apr 2013 11:29:28 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.380.g0d4e79b
-In-Reply-To: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+	id S1761086Ab3DDSao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 14:30:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41172 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760989Ab3DDSao (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 14:30:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 452D113ACC;
+	Thu,  4 Apr 2013 18:30:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L4n6FKkAyhZXZxX8tyJ3T1Kh3Qg=; b=oR3DYL
+	ogzS6DaC08/EYffYBaGhB8gMtUZIMXLgZXUP9zLl+gXqGwyZ61pEcw8TgkiiNewY
+	N+t0IRGaRnbcHzGXZI+ne1yo+nyZR1mSzfLtzzu/6sj+YT78HnAS3rAVakViYVhc
+	kApigCGTFGlLw3I8Vr3ZRSx6gJqXnE7zlc0kg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yX3WK6n7GTVE4JPBsFE5xSiaaogGRuLz
+	RG0nUQBi8vgoAhgoCht/gtK4lywfLHLX6GXHUYI9oryWtRNaE3A2TQlzX6o3h2NF
+	g2BBuNAmXvmewfU+lHwDqmpKH6Be9E+WXMYlxc27/vfheD0JgZX9wF55C+UDY5Kh
+	TkKdpYq5psk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39ADC13AC9;
+	Thu,  4 Apr 2013 18:30:43 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B378A13AC8; Thu,  4 Apr
+ 2013 18:30:42 +0000 (UTC)
+In-Reply-To: <alpine.DEB.2.02.1304041758140.965@lap-x201.fen.aptivate.org>
+ (Chris Wilson's message of "Thu, 4 Apr 2013 18:10:17 +0100 (BST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C20504D0-9D55-11E2-BB22-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220055>
 
-Great.  Now, we just have to write refs/modules/<branch>/* at
-commit-time.
+Chris Wilson <chris+gitscm@aptivate.org> writes:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- sha1_file.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+> If your git repo's .gitmodules contains a URL that you don't have
+> access to (for example you download someone else's code and it
+> references a submodule using their writable git@github.com URL) then:
+>
+> * git submodule init will add them to .git/config, with the wrong URLs.
+>
+> * git submodule update will fail to check out the repos, leaving an
+> empty directory for the first one, and nothing for the others.
+>
+> This state is broken (wrong URLs in .git/config), and AFAIK there's
+> nothing you can do to check out these submodules without either:
+>
+> (a) manually hacking them out of .git/config, or
 
-diff --git a/sha1_file.c b/sha1_file.c
-index a8a6d72..2ea101a 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2874,6 +2874,7 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, unsigned
- 	char pathbuf[PATH_MAX];
- 	const char *submodule_gitdir;
- 	unsigned char checkout_rev[20];
-+	char *ref_name;
- 
- 	switch (st->st_mode & S_IFMT) {
- 	case S_IFREG:
-@@ -2915,9 +2916,18 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, unsigned
- 		if (resolve_gitlink_ref(path, "HEAD", checkout_rev) < 0)
- 			die("Unable to resolve submodule HEAD");
- 
-+		/* Construct a ref_name from path */
-+		sprintf(pathbuf, "%s", path);
-+		pathbuf[strlen(pathbuf) - 1] = '\0'; /* Remove trailing slash */
-+		if (strchr(pathbuf, '/'))
-+			ref_name = xstrdup(strrchr(pathbuf, '/') + 1);
-+		else
-+			ref_name = xstrdup(pathbuf);
-+
- 		/* Add fields to the strbuf */
- 		strbuf_addf(&sb, "upstream_url = %s\n", (char *) upstream_url);
- 		strbuf_addf(&sb, "checkout_rev = %s\n", sha1_to_hex(checkout_rev));
-+		strbuf_addf(&sb, "ref_name = %s\n", ref_name);
- 		if (!(flags & HASH_WRITE_OBJECT))
- 			hash_sha1_file(sb.buf, sb.len, link_type, sha1);
- 		else if (write_sha1_file(sb.buf, sb.len, link_type, sha1))
--- 
-1.8.2.380.g0d4e79b
+I do not think updating the config is "hacking", but is a perfectly
+normal thing to do for a submodule user who wants to use a custom
+URL different from what is recorded in .gitmodules (even when the
+URL in .gitmodules is _working_, you may have a closer mirror you
+would prefer to use, for example).  It is how the configuration is
+designed to be used, if I am not mistaken.
+
+So I do not see any breakage here.
