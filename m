@@ -1,71 +1,67 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: [BUG] git log -S not respecting --no-textconv
-Date: Thu, 04 Apr 2013 10:34:17 +0200
-Message-ID: <vpqd2uay9rq.fsf@grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 04 10:34:56 2013
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH 00/13] remote-hg: general updates
+Date: Thu, 4 Apr 2013 11:07:27 +0200
+Message-ID: <836B6357-AF21-4DE7-B9D7-13CAB0170599@quendi.de>
+References: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com> <20130402200948.GF2222@serenity.lan> <2670C2C0-E30F-47DA-8901-899FEE11059E@quendi.de> <CAMP44s3DETFBhexPhEEMP1TZGNrc91266=t16H2t_+VB_4V38w@mail.gmail.com> <EF2F8946-4F60-4659-9215-6C21C9641AB0@quendi.de> <CAMP44s3qAPJtNVsb4gvYd1PunN4c-crxpVJc0K9520eiBO8iwA@mail.gmail.com> <CAMP44s3HcLji22JDoSVZG_cLca8LXTbUPuVv8SbAM1yTqn8zcw@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, gitifyhg@googlegroups.com
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 04 11:08:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNfdH-0001OZ-HS
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 10:34:55 +0200
+	id 1UNg9x-0002dl-5L
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 11:08:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763728Ab3DDIeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 04:34:25 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:42484 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763573Ab3DDIeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 04:34:23 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r348YGsB026872
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 4 Apr 2013 10:34:16 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UNfcf-0002gi-Np; Thu, 04 Apr 2013 10:34:17 +0200
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 04 Apr 2013 10:34:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r348YGsB026872
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1365669259.89334@a9BaQUOQ+IOmoJNlumkbjg
+	id S1754221Ab3DDJIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 05:08:11 -0400
+Received: from merkurneu.hrz.uni-giessen.de ([134.176.2.3]:51043 "EHLO
+	merkurneu.hrz.uni-giessen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752656Ab3DDJIK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 4 Apr 2013 05:08:10 -0400
+Received: from mailgw82.hrz.uni-giessen.de by merkurneu.hrz.uni-giessen.de with ESMTP; Thu, 4 Apr 2013 11:07:46 +0200
+Received: from merkur.hrz.uni-giessen.de (merkur.hrz.uni-giessen.de [134.176.2.12])
+	by mailgw82.hrz.uni-giessen.de (Postfix) with ESMTP id 833E14800083;
+	Thu,  4 Apr 2013 11:07:27 +0200 (CEST)
+Received: from [134.176.2.12] by merkur.hrz.uni-giessen.de with ESMTP; Thu, 4 Apr 2013 11:07:27 +0200
+In-Reply-To: <CAMP44s3HcLji22JDoSVZG_cLca8LXTbUPuVv8SbAM1yTqn8zcw@mail.gmail.com>
+X-Mailer: Apple Mail (2.1283)
+X-HRZ-JLUG-MailScanner-Information: Passed JLUG virus check
+X-HRZ-JLUG-MailScanner: No virus found
+X-Envelope-From: max@quendi.de
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219994>
 
-Hi,
 
-It seems the command "git log --no-textconv -Sfoo" still runs the
-textconv filter (noticed because I have a broken textconv filter that
-lets "git log -S" error out).
+On 04.04.2013, at 08:46, Felipe Contreras wrote:
 
-Steps to reproduce:
+> On Thu, Apr 4, 2013 at 12:42 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Wed, Apr 3, 2013 at 6:25 PM, Max Horn <max@quendi.de> wrote:
+>>> On 03.04.2013, at 03:31, Felipe Contreras wrote:
+>> 
+>>>> I only learned about it recently, I've looked at the history and to me
+>>>> it seems rather chaotic, and a lot of the code was simply copied from
+>>>> git-remote-hg without comment.
+>>> 
+>>> gitifyhg was scrapped and completely restarted from scratch at some point. Based largely on your git-remote-hg code. A bit more on its history can be read here:
+>>>  http://archlinux.me/dusty/2013/01/06/gitifyhg-rewritten/
+> 
+> Please don't CC the gitifyhg mailing list, unlike vger mailing lists
+> (or any other sane list), it doesn't accept mail from non-subscribers,
+> which makes communication with outsiders much more difficult, as
+> demonstrated by this.
 
-Create a repo with *.txt file(s) in it
-$ echo '*.txt diff=wrong' > .gitattributes
+I changed the settings of the gitifyhg list settings to accept emails from anybody.
 
-An incorrect textconv filter errors out as expected:
-
-$ git -c diff.wrong.textconv='xxx' log -Sfoo 
-error: cannot run xxx: No such file or directory
-fatal: unable to read files to diff
-
-but --no-textconv has no effect:
-
-$ git -c diff.wrong.textconv='xxx' log --no-textconv -Sfoo
-error: cannot run xxx: No such file or directory
-fatal: unable to read files to diff
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Moreover, I would appreciate if you could refrain from injecting all those snide side remarks, such as the one you just needlessly made about how moderated mailing lists are insane.
