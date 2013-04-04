@@ -1,83 +1,74 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/3] remote-helpers: fix the run of all tests
-Date: Thu, 04 Apr 2013 09:36:50 -0600
-Message-ID: <515d9e126cd2a_69fd13fde1816811@nysa.mail>
-References: <1364850872-21135-1-git-send-email-felipe.contreras@gmail.com>
- <1364850872-21135-2-git-send-email-felipe.contreras@gmail.com>
- <CALWbr2wAqudzbfiSHmD1uAVQX3mtbf5vgr2JXbXEg7yzaKXJcw@mail.gmail.com>
- <20130401234016.GC30935@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: trouble on windows network share
+Date: Thu, 4 Apr 2013 11:51:12 -0400
+Message-ID: <20130404155112.GA11622@sigill.intra.peff.net>
+References: <871B6C10EBEFE342A772D1159D1320853F63D205@umechphj.easf.csd.disa.mil>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>, Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 04 17:38:46 2013
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
+X-From: git-owner@vger.kernel.org Thu Apr 04 17:51:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNmFO-0001Gz-9N
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 17:38:42 +0200
+	id 1UNmS4-00042I-CT
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 17:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760986Ab3DDPiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 11:38:13 -0400
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:41820 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760890Ab3DDPiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 11:38:12 -0400
-Received: by mail-ob0-f170.google.com with SMTP id uy19so514439obc.15
-        for <git@vger.kernel.org>; Thu, 04 Apr 2013 08:38:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:message-id:in-reply-to:references
-         :subject:mime-version:content-type:content-transfer-encoding;
-        bh=u52gj5KtcGrME8GGk4mC5HX4B06yaiJ33JEoHvDzuyE=;
-        b=vJlMM/n+/N6TNJYy9wWzq7yA5oovLg5YN1as3qYtLvJCTsTCfVtNfcM9CFPJqtIzVa
-         S0SMX9td47jdFPutc4QiKdDLRnGpPjP5KvGztRUDIpGyqikO+IFZjISgbADepAufdnt4
-         /p6m+XK0CVift7UBWqU4EjC6ZsRAuoWQndGQEIh1IIUFEHesnO7INVc8Fevk8M8TDEgR
-         pLMrxzPpnmtSHwTj1SRHFtXTtILXS1/dJQCiA2qLfEz/GrcdGrezSZoiMcqE/QE7jba+
-         lLJRCv4l/rG+DI5xLqg2gltl09ultIOu9UZJlV9QgHj1iu8TTSwGNOYLK0jMt2gwXZaR
-         Tteg==
-X-Received: by 10.60.10.3 with SMTP id e3mr4649276oeb.51.1365089892197;
-        Thu, 04 Apr 2013 08:38:12 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id ri7sm7149104oeb.6.2013.04.04.08.38.10
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Apr 2013 08:38:11 -0700 (PDT)
-In-Reply-To: <20130401234016.GC30935@sigill.intra.peff.net>
+	id S1762035Ab3DDPvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 11:51:19 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:55999 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761862Ab3DDPvS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 11:51:18 -0400
+Received: (qmail 2355 invoked by uid 107); 4 Apr 2013 15:53:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Apr 2013 11:53:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Apr 2013 11:51:12 -0400
+Content-Disposition: inline
+In-Reply-To: <871B6C10EBEFE342A772D1159D1320853F63D205@umechphj.easf.csd.disa.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220024>
 
-Jeff King wrote:
-> On Mon, Apr 01, 2013 at 11:46:00PM +0200, Antoine Pelisse wrote:
-> 
-> > On Mon, Apr 1, 2013 at 11:14 PM, Felipe Contreras
-> > <felipe.contreras@gmail.com> wrote:
-> > > +export TEST_LINT :=
-> > 
-> > I think "test-lint-executable" still makes sense here.
-> 
-> Also test-lint-shell-syntax, which finds a problem with the current
-> code:
-> 
->   $ cd contrib/remote-helpers
->   $ make test TEST_LINT=test-lint-shell-syntax
->   make -e -C ../../t test
->   make[1]: Entering directory `/home/peff/compile/git/t'
->   rm -f -r test-results
->   /home/peff/compile/git/contrib/remote-helpers/test-bzr.sh:139: error: echo -n is not portable (please use printf):   echo -n content > expected &&
->   make[1]: *** [test-lint-shell-syntax] Error 1
->   make[1]: Leaving directory `/home/peff/compile/git/t'
->   make: *** [test] Error 2
+On Thu, Apr 04, 2013 at 03:01:36PM +0000, Pyeron, Jason J CTR (US) wrote:
 
-Indeed. I've fixed he problem, and added the two lint checks to the new version
-of the series.
+> I am having trouble when the .git folder is on a network share, given the below where should I start on my debugging?
+> [...]
+> jason.pyeron@localhost //server/share/dir/subdir/test
+> $ git add test.txt
+> 
+> jason.pyeron@localhost //server/share/dir/subdir/test
+> $ git commit -m test
+> error: unable to find 8b7323820a21ebd1360e27262b3c61283c266c23
+> fatal: 8b7323820a21ebd1360e27262b3c61283c266c23 is not a valid object
 
--- 
-Felipe Contreras
+Hmm. That message probably comes from:
+
+  static int sha1_loose_object_info(const unsigned char *sha1, unsigned long *sizep)
+  {
+  [...]
+          map = map_sha1_file(sha1, &mapsize);
+          if (!map)
+                  return error("unable to find %s", sha1_to_hex(sha1));
+
+So we have found the object and know that it is loose, but then mmap-ing
+it fails. My guess is that your system does not support mmap across
+network shares (whether this is an OS issue or a cygwin limitation, I
+don't know). You could confirm it by running your "git commit" under
+strace, which I expect would show mmap returning -ENODEV or similar.
+
+You can work around it by compiling git with NO_MMAP=1.
+
+You might also try msysgit rather than cygwin, which seems to have its
+own win32 mmap compatibility layer.
+
+Finally, I suspect we could include our emulate-mmap-with-pread
+compatibility wrapper all the time, and drop back to it automatically at
+run-time when we see ENODEV or a similar error return from mmap.
+
+-Peff
