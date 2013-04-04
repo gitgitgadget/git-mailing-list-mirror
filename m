@@ -1,62 +1,87 @@
-From: Jed Brown <jed@59A2.org>
-Subject: Re: [PATCH v2 11/13] remote-hg: force remote push
-Date: Thu, 04 Apr 2013 13:17:01 -0500
-Message-ID: <87y5cyqhya.fsf@59A2.org>
-References: <1365089422-8250-1-git-send-email-felipe.contreras@gmail.com> <1365089422-8250-12-git-send-email-felipe.contreras@gmail.com>
+From: Chris Wilson <chris+gitscm@aptivate.org>
+Subject: Possible bug: Git submodules can get into broken state
+Date: Thu, 4 Apr 2013 18:10:17 +0100 (BST)
+Message-ID: <alpine.DEB.2.02.1304041758140.965@lap-x201.fen.aptivate.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Max Horn <max@quendi.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 04 20:17:49 2013
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 04 20:18:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNojM-00059Z-Tr
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 20:17:49 +0200
+	id 1UNokH-0005xh-9X
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 20:18:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764394Ab3DDSRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 14:17:05 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:60675 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764369Ab3DDSRD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 14:17:03 -0400
-Received: by mail-oa0-f43.google.com with SMTP id l10so3123796oag.30
-        for <git@vger.kernel.org>; Thu, 04 Apr 2013 11:17:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:sender:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version:content-type;
-        bh=pQ0hICs0vaeQ15VedVDSb8oZUP+hUxjN6R1hu4qXuHU=;
-        b=OVO5b2fdRl9teuxu9stCrZ5l3atpJFyFIjvR5e0MtlZNJPiKNIuceyoXqUNJfIn/Q7
-         aAoXWAq0tTO+lg9GJucwaem3jSRbUPd3S/JBFh7gbv8XgrXiKs7DXBiQ66YMu9IWUMon
-         dhxRjLZKALtPuqQw7yGsGyEo6+JNfE02mBvC82aeXqEUgpkMo6t4nBV6SfUQx2KlrA8B
-         oDiFIykpyh+zUypGktL3zZFoOPt4JuEhKgxCN6pgw/PVYcCfElM0Ikki24K1Gvt0YiMB
-         TkCLVkBTMsZ4hN0O53j3z/IcbBFNGS9t4/o8r9TfHJmXYwx2/Mv7E1rhLglWLdQadmwQ
-         nT8w==
-X-Received: by 10.60.98.209 with SMTP id ek17mr5095512oeb.132.1365099422984;
-        Thu, 04 Apr 2013 11:17:02 -0700 (PDT)
-Received: from localhost (vis-v410v070.mcs.anl-external.org. [130.202.17.70])
-        by mx.google.com with ESMTPS id v8sm8018274oea.4.2013.04.04.11.17.01
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Apr 2013 11:17:02 -0700 (PDT)
-In-Reply-To: <1365089422-8250-12-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Notmuch/0.15.2 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+	id S1764369Ab3DDSSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 14:18:16 -0400
+Received: from lin-mail.aptivate.org ([176.58.121.181]:51262 "EHLO
+	lin-mail.aptivate.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764339Ab3DDSSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 14:18:15 -0400
+X-Greylist: delayed 4075 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Apr 2013 14:18:15 EDT
+Received: from 82-68-244-70.dsl.in-addr.zen.co.uk ([82.68.244.70] helo=lap-x201.local)
+	by lin-mail.aptivate.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.72)
+	(envelope-from <chris+gitscm@aptivate.org>)
+	id 1UNng2-0007HH-Q4
+	for git@vger.kernel.org; Thu, 04 Apr 2013 18:10:18 +0100
+X-X-Sender: chris@lap-x201.fen.aptivate.org
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220046>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-> Ideally we shouldn't do this, as it's not recommended in mercurial
-> documentation, but there's no other way to push multiple bookmarks (on
-> the same branch), which would be the behavior most similar to git.
+Hi all,
 
-The problem is that you're interacting with a Mercurial upstream, not a
-Git upstream.  When you're in their playground, you have to play by
-their rules.  Creating new heads is disruptive and not likely to be
-appreciated.
+If your git repo's .gitmodules contains a URL that you don't have access 
+to (for example you download someone else's code and it references a 
+submodule using their writable git@github.com URL) then:
+
+* git submodule init will add them to .git/config, with the wrong URLs.
+
+* git submodule update will fail to check out the repos, leaving an empty 
+directory for the first one, and nothing for the others.
+
+This state is broken (wrong URLs in .git/config), and AFAIK there's 
+nothing you can do to check out these submodules without either:
+
+(a) manually hacking them out of .git/config, or
+
+(b) doing "git submodule rm" and then "git checkout .gitmodules" to undo 
+the damage to that file.
+
+The procedure I tried, which I expected to work, was:
+
+* git submodule sync (doesn't sync them, because the directories don't 
+exist or don't contain a valid git repo?)
+
+* git submodule init (ignores them, because they're already in 
+.git/config?)
+
+* git submodule update (still fails because the URL in .git/config is 
+wrong).
+
+The new deinit command may help, but for the wrong reasons. I don't want 
+to have to deinit my modules every time in the fabric deployment script, 
+just so that if they get into this state, they will get unbroken 
+automatically.
+
+It seems wrong to me that neither "git submodule init" nor "git submodule 
+sync" will modify the URL in .git/config, if the submodule is not already 
+checked out. I think I'd expect "git submodule init" to be idempotent, so 
+it would update the URLs in .git/config if they already exist, just like 
+it adds the URLs if they don't.
+
+Any advice? Is this a real bug?
+
+Cheers, Chris.
+-- 
+Aptivate | http://www.aptivate.org | Phone: +44 1223 967 838
+Future Business, Cam City FC, Milton Rd, Cambridge, CB4 1UY, UK
+
+Aptivate is a not-for-profit company registered in England and Wales
+with company number 04980791.
