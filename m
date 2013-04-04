@@ -1,90 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 11/13] remote-hg: force remote push
-Date: Thu, 04 Apr 2013 09:44:46 -0700
-Message-ID: <7vip42jldt.fsf@alter.siamese.dyndns.org>
-References: <1365089422-8250-1-git-send-email-felipe.contreras@gmail.com>
- <1365089422-8250-12-git-send-email-felipe.contreras@gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [PATCH] Documentation/git-commit: reword the --amend explanation
+Date: Thu, 04 Apr 2013 18:49:19 +0200
+Message-ID: <1365094159.30466.60.camel@centaur.cmartin.tk>
+References: <1364994441-15961-1-git-send-email-cmn@elego.de>
+	 <7v4nfn7j5i.fsf@alter.siamese.dyndns.org>
+	 <7vtxnn4c02.fsf@alter.siamese.dyndns.org>
+	 <50CA4F4141DD484D97CA8BA571529F65@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Max Horn <max@quendi.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 04 18:45:21 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Apr 04 18:49:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNnHq-0006lO-Uj
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 18:45:19 +0200
+	id 1UNnLw-00021b-NU
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 18:49:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762945Ab3DDQou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 12:44:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40925 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762781Ab3DDQot (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 12:44:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B710A137C1;
-	Thu,  4 Apr 2013 16:44:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+F83FJ3bQfHbTJkmy2lQUw8P6cU=; b=lGJIOC
-	az/rzURZpqmA7NXOliuKpsckzTDS5EJrDzP5TfeWA7EKy6HgIIdpYfAaK+3KAvEM
-	XYbATGPEw/Wto8RdP1kM/24CE7cRkTaGfSlhHXF35keLPsipUJ376wGI+chz1U6I
-	U6NKDWREdCypxCulTgSx8EKKvUzT6na8AoCQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i/JbPfm00cwYzm1LcUR6vdGaGqo1sFdh
-	AW2rMaK44P4OZVsdP1NtiKR2ZRHjx5I03EPKnWHM/ew5XyhHiow4pXUMq331b+FC
-	tFYy+dNSK/0sPISG6+lw+NDcNiHjbaskBXTvDTOvRi92XsU8e6x14WlBplxrKLps
-	wQlbZz2Vm24=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD595137C0;
-	Thu,  4 Apr 2013 16:44:48 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC650137BC; Thu,  4 Apr
- 2013 16:44:47 +0000 (UTC)
-In-Reply-To: <1365089422-8250-12-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Thu, 4 Apr 2013 09:30:20 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F6495CC8-9D46-11E2-9112-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1763231Ab3DDQtD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Apr 2013 12:49:03 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:38551 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763188Ab3DDQtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 12:49:01 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id B0CA5DE078;
+	Thu,  4 Apr 2013 18:48:59 +0200 (CEST)
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zh7q1CTNVSMj; Thu,  4 Apr 2013 18:48:59 +0200 (CEST)
+Received: from [192.168.1.2] (p57A96DFD.dip.t-dialin.net [87.169.109.253])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 494BFDE077;
+	Thu,  4 Apr 2013 18:48:59 +0200 (CEST)
+In-Reply-To: <50CA4F4141DD484D97CA8BA571529F65@PhilipOakley>
+X-Mailer: Evolution 3.6.3-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220033>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Wed, 2013-04-03 at 23:25 +0100, Philip Oakley wrote:
+> Sent: Wednesday, April 03, 2013 9:04 PM
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> >> Yes, and since then we gained --no-edit option and such, so "edito=
+r
+> >> starts off" also needs to be rethought, no?  The original wording
+> >> with "seeded" may have a better chance of survival, I suspect, but
+> >> still needs some adjustment.
+> >
+> > So here is my attempt.  We still need a sign-off from you even if w=
+e
+> > decide to use this version.  Relative to your original patch:
 
-> Ideally we shouldn't do this, as it's not recommended in mercurial
-> documentation, but there's no other way to push multiple bookmarks (on
-> the same branch), which would be the behavior most similar to git.
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
 
-In the previous round you wanted me to exclude this one to force
-split head at the remote, and I saw you and Max Horn discussing
-(rather, shouting at each other ;-) why it is needed/desirable.
+Sorry I keep forgetting lately, it seems I've been away from core git
+too long.
 
-Have you changed your mind and you want this as part of the series,
-or is it just you forgot to exclude it?
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
 
->  contrib/remote-helpers/git-remote-hg | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-> index b54de1e..b784c54 100755
-> --- a/contrib/remote-helpers/git-remote-hg
-> +++ b/contrib/remote-helpers/git-remote-hg
-> @@ -722,7 +722,7 @@ def do_export(parser):
->              continue
->  
->      if peer:
-> -        parser.repo.push(peer, force=False)
-> +        parser.repo.push(peer, force=True)
->  
->      # handle bookmarks
->      for bmark, node in p_bmarks:
+> > -- >8 --
+> > From: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+> >
+> > The explanation for 'git commit --amend' talks about preparing a tr=
+ee
+> > object, which shouldn't be how user-facing documentation talks abou=
+t
+> > commit.
+> >
+> > Reword it to say it works as usual, but replaces the current commit=
+=2E
+> >
+> > ---
+> > Documentation/git-commit.txt | 17 +++++++++--------
+> > 1 file changed, 9 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/Documentation/git-commit.txt=20
+> > b/Documentation/git-commit.txt
+> > index 19cbb90..bc919ac 100644
+> > --- a/Documentation/git-commit.txt
+> > +++ b/Documentation/git-commit.txt
+> > @@ -190,14 +190,15 @@ OPTIONS
+> >  without changing its commit message.
+> >
+> > --amend::
+> > - Used to amend the tip of the current branch. Prepare the tree
+> > - object you would want to replace the latest commit as usual
+> > - (this includes the usual -i/-o and explicit paths), and the
+> > - commit log editor is seeded with the commit message from the
+> > - tip of the current branch. The commit you create replaces the
+> > - current tip -- if it was a merge, it will have the parents of
+> > - the current tip as parents -- so the current top commit is
+> > - discarded.
+> > + Create a new commit and replace the tip of the current
+> > + branch.
+>=20
+> I don't think we should say "Create New" at the start of the sentence=
+,
+> which may confuse some, rather we should start with the key
+> 'Replace' verb, essentially swapping the parts to say:
+>=20
+>  + Replace the tip of the current branch with a fresh commit.
+> [or updated commit, or new commit, or ...]
+
+Ack, we should lead with the goal, I'd go for the
+
+    "Replace the tip of the current branch with a new commit"
+
+wording.
+
+
+>=20
+> >                  The recorded tree is prepared as usual (including
+> > + the effect of the `-i` and `-o` options and explicit
+
+Is "recorded tree" what we want to say at porcelain level? I'd go for
+"The commit" as in my version, but maybe it's just the way I think abou=
+t
+it. I don't feel too strongly about changing it, though.
+
+> > + pathspec), and the message from the original commit is used
+> > + as the starting point, instead of an empty message, when no
+> > + other message is specified from the command line via options
+> > + such as `-m`, `-F`, `-c`, etc.  The new commit has the same
+> > + parents and author as the current one (the `--reset-author`
+> > + option can countermand this).
+> > +
+
+The rest looks great.
+
+   cmn
