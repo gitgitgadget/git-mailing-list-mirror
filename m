@@ -1,105 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] t3600: test rm of path with changed leading symlinks
-Date: Thu, 04 Apr 2013 12:42:54 -0700
-Message-ID: <7v6202hykh.fsf@alter.siamese.dyndns.org>
-References: <20130404190211.GA15912@sigill.intra.peff.net>
- <20130404190621.GA7484@sigill.intra.peff.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Thu, 4 Apr 2013 12:44:22 -0700
+Message-ID: <CA+55aFw+2wgUufJn7BcXACBQqywAGBAcZWS6N_UV8UA91G447Q@mail.gmail.com>
+References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+	<CA+55aFz1D_dMtMHHMpiGi3KL=Y-m4DVxHVr=1ZX8zYWQ2TPvwA@mail.gmail.com>
+	<CALkWK0nNjvV5VGvT_eaubFoOhMnJ-N8FECAayd5A2K3BzeRh6Q@mail.gmail.com>
+	<CA+55aFyQwJfiYo06y1bRNpKT6wOquhG9a9M_4YvLG_UT3b34-w@mail.gmail.com>
+	<CALkWK0mQt7cE0zUECDF4ZC2-9Q+pEL=XGPdaOksyWzae2_W1CA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jpinheiro <7jpinheiro@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 04 21:43:40 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 04 21:44:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNq4M-00050f-JJ
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 21:43:34 +0200
+	id 1UNq5b-000692-Ou
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 21:44:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764713Ab3DDTm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 15:42:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50019 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764578Ab3DDTm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 15:42:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19D3E13235;
-	Thu,  4 Apr 2013 19:42:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5SSGqfL5JBqQCkXtyJd0hJaHLAY=; b=n7NfeA
-	VCZCV7BZ1tly7V1/FiTDSfFH58cElKpn4SdarrbK6qRTR9ga2cQVzAJw8iz/u1zH
-	JwvGL4IQew1Hw0gulIIArvCQO/r3vTwJQ42O0TXgQ/FKYxV5ZBRZzAERUc9wdy53
-	fMRtvZh1mdo/C8HqG+pBXfABCVvv64xD1JPuU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=om0YyKQyhJ2vDd+iNczCdOAo50rHHuwt
-	rYqGCqPuAqCGoYRITcf9Ab6y7fwo/W3y2K6bg+JP1QZpWbACk83CpWvp5LRhESHa
-	QxLpl76sf9a5KBVq49hg7qjCPo4YTG6kkLPuj7i3r5UEy/6tIniThCPVJuSnoD3S
-	IIpD36c4JBg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DB3B13234;
-	Thu,  4 Apr 2013 19:42:57 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7FD1F13232; Thu,  4 Apr
- 2013 19:42:56 +0000 (UTC)
-In-Reply-To: <20130404190621.GA7484@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 4 Apr 2013 15:06:21 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D92905B2-9D5F-11E2-BB39-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1764715Ab3DDToY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 15:44:24 -0400
+Received: from mail-vc0-f177.google.com ([209.85.220.177]:58222 "EHLO
+	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764631Ab3DDToX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 15:44:23 -0400
+Received: by mail-vc0-f177.google.com with SMTP id ia10so2631514vcb.22
+        for <git@vger.kernel.org>; Thu, 04 Apr 2013 12:44:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=ZvP33gEoMTeJiS5sIxtGlyldTLhe733fbMjPgLW/ahE=;
+        b=L52zgOJIGj2Hy+8/ZMC6dsizrfl0fL1vjuUBBpq1QgSCqfxq8RAIB8U4Nc9SzfHK9d
+         LdmF1HyXYp1zbcCs16/Hs9Kl8mf1P6CiiYMNXGon3wx8nC5/MbtK72kVsXz5Pr7Xgurk
+         KVUYp8Y4gTMU1xlwCFDqJX5I1wc6ecSQzf2/3bx3v4Fh8AMlPT4Mqy+165kebqilQ8mR
+         USPRRUrKM2TlAym34hjc0ia4ccBD0hfEMVxI8uwqGdVNTP3/9ldND6lWr8Bz9SuVxbGX
+         qat1x1G6NhZtQeFgmmyTED2PiNgr4dDumWlw6uIBdZM4Q5BUV0JYKqIdmROguPYCnddY
+         fMGg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=ZvP33gEoMTeJiS5sIxtGlyldTLhe733fbMjPgLW/ahE=;
+        b=blvZWmDFPA7rP8Ry9cQ10YjRZVEHHZlpLiXOxsx9zKFEhqkmy8RJVftC3/5Lqj1/WT
+         q7q2YRYjccFx9PwkE5D+95ODAMWn9gbG21UecyBwpctHNClLFHIAFM5TvWkHDLrwPIDc
+         Weig4dTZ5QGwzMg4LhMB8Iu1GFmVyLPINAExk=
+X-Received: by 10.58.154.229 with SMTP id vr5mr5981515veb.11.1365104662536;
+ Thu, 04 Apr 2013 12:44:22 -0700 (PDT)
+Received: by 10.220.236.130 with HTTP; Thu, 4 Apr 2013 12:44:22 -0700 (PDT)
+In-Reply-To: <CALkWK0mQt7cE0zUECDF4ZC2-9Q+pEL=XGPdaOksyWzae2_W1CA@mail.gmail.com>
+X-Google-Sender-Auth: wR9ZxKKEC8390HficdVYMzjnzco
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220079>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Apr 4, 2013 at 12:36 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+>
+> Let's compare the two alternatives: .gitmodules versus link object.
+> If I want my fork of .gitmodules, I create a commit on top.
 
-> +test_expect_success SYMLINKS 'replace dir with symlink to dir (same content)' '
-> +	git reset --hard &&
-> +	rm -rf d e &&
-> +	mkdir e &&
-> +	echo content >e/f &&
-> +	ln -s e d &&
-> +	git rm d/f &&
-> +	test_must_fail git rev-parse --verify :d/f &&
-> +	test -h d &&
-> +	test_path_is_dir e
-> +'
+Or you could also just edit and carry a dirty .gitmodules around for
+your personal use-case.
 
-This does not check if e/f still exists in the working tree, and I
-suspect "git rm d/f" removes it.
+I don't know if anybody does that, but it should work fine.
 
-If you do this:
+And I don't see what you can do with the link objects that you cannot
+do with .gitmodules. That's what it really boils down to. .gitmodules
+do actually work. Your extensions would work with them too.
 
-	rm -fr d e
-        mkdir e
-        >e/f
-        ln -s e d
-        git add d/f
-
-we do complain that d/f is beyond a symlink (meaning that all you
-can add is the symlink d that may happen to point at something).
-
-Silent removal of e/f that is unrelated to the current project's
-tracked contents feels very wrong, and at the same time it looks to
-me that it is inconsistent with what we do when adding.
-
-I need a bit more persuading to understand why it is not a bug, I
-think.
-
-> +test_expect_success SYMLINKS 'replace dir with symlink to dir (new content)' '
-> +	git reset --hard &&
-> +	rm -rf d e &&
-> +	mkdir e &&
-> +	echo changed >e/f &&
-> +	ln -s e d &&
-> +	test_must_fail git rm d/f &&
-> +	git rev-parse --verify :d/f &&
-> +	test -h d &&
-> +	test_path_is_file e/f
-> +'
-> +
->  test_done
+               Linus
