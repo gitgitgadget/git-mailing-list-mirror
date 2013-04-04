@@ -1,123 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] t3600: test rm of path with changed leading symlinks
-Date: Thu, 4 Apr 2013 15:55:54 -0400
-Message-ID: <20130404195554.GA20823@sigill.intra.peff.net>
-References: <20130404190211.GA15912@sigill.intra.peff.net>
- <20130404190621.GA7484@sigill.intra.peff.net>
- <7v6202hykh.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Possible bug: Git submodules can get into broken state
+Date: Thu, 04 Apr 2013 21:56:33 +0200
+Message-ID: <515DDAF1.7080503@web.de>
+References: <alpine.DEB.2.02.1304041758140.965@lap-x201.fen.aptivate.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: jpinheiro <7jpinheiro@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 04 21:56:32 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Chris Wilson <chris+gitscm@aptivate.org>
+X-From: git-owner@vger.kernel.org Thu Apr 04 21:57:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNqGu-0008Ds-8a
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 21:56:32 +0200
+	id 1UNqHU-0000II-72
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 21:57:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763314Ab3DDT4C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 15:56:02 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56282 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762960Ab3DDT4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 15:56:01 -0400
-Received: (qmail 6063 invoked by uid 107); 4 Apr 2013 19:57:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Apr 2013 15:57:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Apr 2013 15:55:54 -0400
-Content-Disposition: inline
-In-Reply-To: <7v6202hykh.fsf@alter.siamese.dyndns.org>
+	id S1763432Ab3DDT4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 15:56:40 -0400
+Received: from mout.web.de ([212.227.15.3]:58540 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763393Ab3DDT4j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 15:56:39 -0400
+Received: from [192.168.178.41] ([79.193.90.93]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0LnSGg-1UpjEh0NkU-00h6xE; Thu, 04 Apr 2013 21:56:37
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <alpine.DEB.2.02.1304041758140.965@lap-x201.fen.aptivate.org>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:ouvz8CetLztyvGmiXKV5MRtab/1Jkd6zhCNwo6Ct3iM
+ ce5taz92p9YzKlO4Y07RJW3XHeMhLn/2N22voWbIOxiX/WTU8g
+ kHbc0MJkYZ5ts/vDTifU9EGyRMwKW24wFLjLZJTdIzTdxmCjwl
+ c9BEQGQ+bZU6EC6NS7MxSQgZS6CMhfwqoTSCUzgkutbMYdUPZS
+ LhEtjgexT8+MgCKPSdsWA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220083>
 
-On Thu, Apr 04, 2013 at 12:42:54PM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+Am 04.04.2013 19:10, schrieb Chris Wilson:
+> If your git repo's .gitmodules contains a URL that you don't have access to (for example you download someone else's code and it references a submodule using their writable git@github.com URL) then:
 > 
-> > +test_expect_success SYMLINKS 'replace dir with symlink to dir (same content)' '
-> > +	git reset --hard &&
-> > +	rm -rf d e &&
-> > +	mkdir e &&
-> > +	echo content >e/f &&
-> > +	ln -s e d &&
-> > +	git rm d/f &&
-> > +	test_must_fail git rev-parse --verify :d/f &&
-> > +	test -h d &&
-> > +	test_path_is_dir e
-> > +'
+> * git submodule init will add them to .git/config, with the wrong URLs.
 > 
-> This does not check if e/f still exists in the working tree, and I
-> suspect "git rm d/f" removes it.
-
-I guess I should have been more clear in my test; I think it _should_ be
-removed (and it is). You do not necessarily care that "d" is now the
-symlink and not the actual path; it is safe to remove d/f even though it
-is behind a symlink now, because it has the exact same content that it
-had before (it is of course important that we still remove the actual
-d/f index entry, but as far as the working tree goes, we only care that
-it is safe to remove, and that we remove it).
-
-IOW, I should have been more explicit like this:
-
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 9eaec08..3b51a63 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -687,7 +687,8 @@ test_expect_success SYMLINKS 'replace dir with symlink to dir (same content)' '
- 	git rm d/f &&
- 	test_must_fail git rev-parse --verify :d/f &&
- 	test -h d &&
--	test_path_is_dir e
-+	test_path_is_dir e &&
-+	test_path_is_missing e/f
- '
- 
- test_expect_success SYMLINKS 'replace dir with symlink to dir (new content)' '
-
-> If you do this:
+> * git submodule update will fail to check out the repos, leaving an empty directory for the first one, and nothing for the others.
 > 
-> 	rm -fr d e
->         mkdir e
->         >e/f
->         ln -s e d
->         git add d/f
+> This state is broken (wrong URLs in .git/config), and AFAIK there's nothing you can do to check out these submodules without either:
 > 
-> we do complain that d/f is beyond a symlink (meaning that all you
-> can add is the symlink d that may happen to point at something).
+> (a) manually hacking them out of .git/config, or
 
-Right, but that is because you are adding a bogus entry to the index; we
-cannot have both 'd' as a symlink and 'd/f' as a path in our git tree.
-But in the removal case, the index manipulation is perfectly reasonable.
-You are deleting the existing "d/f" entry. The only confusion comes from
-the fact that the working tree does not match that anymore.
+... or:
 
-> Silent removal of e/f that is unrelated to the current project's
-> tracked contents feels very wrong, and at the same time it looks to
-> me that it is inconsistent with what we do when adding.
+(c) Enter the correct URL in .git/config.
+
+> (b) doing "git submodule rm" and then "git checkout .gitmodules" to undo the damage to that file.
+
+Hmm ... that leaves your superproject dirty, right?
+
+(d) Update the .gitmodules file to use the correct URL (you
+    want to do a commit fixing that anyway, no? ;-) and do a
+    "git submodule sync", which will copy the corrected URL
+    into .git/config.
+
+
+> The procedure I tried, which I expected to work, was:
 > 
-> I need a bit more persuading to understand why it is not a bug, I
-> think.
+> * git submodule sync (doesn't sync them, because the directories don't exist or don't contain a valid git repo?)
 
-But that's the point of the two content tests. It _isn't_ unrelated to
-the current project's tracked contents; it's the exact same content at
-the same path (albeit accessed via symlinks now). The likely case for
-this is something like:
+No, because .gitmodules still contained the broken URL which a
+sync then copies into .git/config again.
 
-  mv dir somewhere/else
-  ln -s somewhere/else/dir dir
+> * git submodule init (ignores them, because they're already in .git/config?)
 
-I do not mind if you want to insert extra protection to not cross
-symlink boundaries (which would obviously invalidate my test).  But I
-don't think it is necessary because of the existing content-level
-protections.  Adding extra protections would disallow "git rm dir/file" in
-the above case, but I don't think it's that inconvenient; the user just
-has to make the index aware of the typechange first via "git add".
+Correct.
 
--Peff
+> * git submodule update (still fails because the URL in .git/config is wrong).
+
+Sure.
+
+> The new deinit command may help, but for the wrong reasons. I don't want to have to deinit my modules every time in the fabric deployment script, just so that if they get into this state, they will get unbroken automatically.
+
+I doubt deinit will help here (except after running that you'll
+be able to use "git submodule update" to populate the remaining
+submodules) unless you fix the broken URL in .git/config or
+.gitmodules.
+
+> It seems wrong to me that neither "git submodule init" nor "git submodule sync" will modify the URL in .git/config, if the submodule is not already checked out. I think I'd expect "git submodule init" to be idempotent, so it would update the URLs in .git/config if they already exist, just like it adds the URLs if they don't.
+> 
+> Any advice? Is this a real bug?
+
+Hmm, at first glance this looks like a pilot error. Maybe we could
+update the documentation to help other users falling into that
+trap or extend some commands to be a bit more helpful in such a
+case, but it looks like the behavior you observed is documented
+(while fixing the problem you observed isn't explicitly). Also an
+option for "git submodule update" to continue even if it fails to
+populate some submodules might help here.
