@@ -1,99 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Thu, 04 Apr 2013 12:17:38 -0700
-Message-ID: <7va9pehzql.fsf@alter.siamese.dyndns.org>
-References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
- <CA+55aFz1D_dMtMHHMpiGi3KL=Y-m4DVxHVr=1ZX8zYWQ2TPvwA@mail.gmail.com>
- <CALkWK0nNjvV5VGvT_eaubFoOhMnJ-N8FECAayd5A2K3BzeRh6Q@mail.gmail.com>
- <CA+55aFyQwJfiYo06y1bRNpKT6wOquhG9a9M_4YvLG_UT3b34-w@mail.gmail.com>
+From: Jed Brown <jed@59A2.org>
+Subject: Re: [PATCH 00/13] remote-hg: general updates
+Date: Thu, 04 Apr 2013 14:23:01 -0500
+Message-ID: <87sj36qewa.fsf@59A2.org>
+References: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com> <20130402200948.GF2222@serenity.lan> <2670C2C0-E30F-47DA-8901-899FEE11059E@quendi.de> <CAMP44s3DETFBhexPhEEMP1TZGNrc91266=t16H2t_+VB_4V38w@mail.gmail.com> <871uaqrwrp.fsf@59A2.org> <7vip42i1r0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Git List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Apr 04 21:18:14 2013
+Content-Type: text/plain
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Max Horn <max@quendi.de>, John Keeping <john@keeping.me.uk>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 04 21:23:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNpfp-0007sd-Pu
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 21:18:14 +0200
+	id 1UNpl2-0004B5-A1
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 21:23:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764546Ab3DDTRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 15:17:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59652 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764538Ab3DDTRo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 15:17:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0840134EA;
-	Thu,  4 Apr 2013 19:17:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=H+6wVe6nU3oDOLH36/pjPMYJiws=; b=fc0jTF
-	8dfJ9P6rUdBioaOacAb/nt57esoqmeRuIQSLqRdzImhi4a2F1uaIdtavO9FRCZqE
-	hQ4UqcST83S/1a7x9hMPpywMMTffR+nS4Q38CVXhaojr8QoZVsM8d5oUu5/jtnWT
-	zigQPkSE6epS3p3+GQlnAT1BdwmtItZJJrDnY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cJ2pRcC5Ex2nCH/XA+oEQjk09bK6wKUD
-	9noFKfwNzaHnh/qUxCwJqAYxvPcw0ULWACUuWQ25FU/wcGCnW13/MNy2EKfmO7x+
-	q4VgQvPXDHUWfc8rRVN3qZ9tMHK2xPcJHNSc9vnxVjvW/TSsI1uhHI+/7u5PS98v
-	TQWrJ/3HX/A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3D34134E9;
-	Thu,  4 Apr 2013 19:17:43 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05B74134DC; Thu,  4 Apr
- 2013 19:17:43 +0000 (UTC)
-In-Reply-To: <CA+55aFyQwJfiYo06y1bRNpKT6wOquhG9a9M_4YvLG_UT3b34-w@mail.gmail.com> (Linus
- Torvalds's message of "Thu, 4 Apr 2013 12:04:05 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5318D306-9D5C-11E2-9E98-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1764586Ab3DDTXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Apr 2013 15:23:06 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:64653 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764484Ab3DDTXF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Apr 2013 15:23:05 -0400
+Received: by mail-oa0-f42.google.com with SMTP id i18so3226152oag.15
+        for <git@vger.kernel.org>; Thu, 04 Apr 2013 12:23:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:sender:from:to:cc:subject:in-reply-to:references
+         :user-agent:date:message-id:mime-version:content-type;
+        bh=oS9RLsfFuuEGAmUO9+MRXHWKlzuZYzuBR8yWC+oE3O0=;
+        b=s5r3wf4EooAOV2hjftVJsDDGDBRVQKxvyGd/tF74tfZ/PjG+06KHcJPWu32I2qE5eC
+         R7hZ8qAJ8LRg0jsiuMoKkbESFohATYLfTSAnY/xVuK/MXH5x3hHedFvv8HrmElQtL8eC
+         0vxxUv/gqc03JjkaruxlMJMAVGpe/vAERkk429vlCBYbkKtE60xCNOxrJzHdpL8pR7XY
+         B5b177wd7q9k0xd+VFZcinmqJ/cMHdJ7mjNGA8ebXbAUwPQzpNEO9AtJxIlvv0nHuwC+
+         Dy/muP/wRMyyF/e2XQokKOhtgGGX/x07Hq87GIZcZUaooH/L8Bf/vutl2VLwkfZ8hRU5
+         RLxw==
+X-Received: by 10.182.19.168 with SMTP id g8mr5562526obe.21.1365103383722;
+        Thu, 04 Apr 2013 12:23:03 -0700 (PDT)
+Received: from localhost (vis-v410v070.mcs.anl-external.org. [130.202.17.70])
+        by mx.google.com with ESMTPS id t9sm8028322obk.13.2013.04.04.12.23.02
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 04 Apr 2013 12:23:03 -0700 (PDT)
+In-Reply-To: <7vip42i1r0.fsf@alter.siamese.dyndns.org>
+User-Agent: Notmuch/0.15.2 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220075>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> ... The features you seem to be after (ie that whole
-> floating/refname thing) don't seem fundamentally antithetical to the
-> current model (a "commit" SHA1 of all zeroes for floating, with a new
-> refname field in .submodules? I dunno)..
+> So,... is there a concrete proposal for _me_ to act on?  Do you want
+> to see contrib/remtote-hg out of my tree, and have it compete with
+> the other one (which also shouldn't be in my tree) in the open?
 
-Just on this part.
+Three months ago, I would have said yes.  Now I don't know.  It looks
+like remote-hg has improved and is perhaps stable enough to remain, but
+I think it needs a much more complete test suite [1] and some visible
+documentation about its mapping semantics.  There is no way a change
+like "force-push by default" should come without the user knowing about
+it.  (I don't think force-push should become the default in any case,
+but something is wrong with the process if there isn't a good way to
+communicate such behavioral turmoil.)  A separate project making its own
+releases has a more visible place to indicate such changes.
 
-I think Heiko and Jens's (by the way, why aren't they on the Cc:
-list when this topic is clearly discussing submodules?  Don't we
-want to learn how the current submodule subsystem is used to solve
-what real-world problems?) .gitmodules updates is exactly going in
-that direction.
-
- - A submodule can be marked as floating in .gitmodules and be
-   specified how (typially, "use the tip of this branch in the
-   submodule");
-
- - Running "submodule update" a floating submodule does not detach
-   the submodule working tree to commit in the index of the
-   superproject; instead it will use the specified branch tip;
-
- - A floating submodule records a concrete commit object name in the
-   index of the superproject (no need to stuff an unusual SHA-1
-   there to signal that the submodule is floating---it is recorded
-   in the .gitmodules).  Thanks to this, a release out of the
-   top-level can still describe the state of the entire tree;
-
- - It would be normal for the commit recorded in the index of the
-   superproject not to match what is checked out in the submodule
-   working tree (i.e. the tip of the branch in the submodule may
-   have advanced).  A traditional non-floating submodule has many
-   mechanisms to be noisy about this situation to prevent users from
-   making an incomplete commits, but they may have to be toned down
-   or squelched for floating submodules.
-
-Anything I missed, Jens, Heiko?
+[1] Max and I have no love for the "obfuscated shell scripting" in
+gitifyhg's 'py.test'- and 'sh'-based test suite, and we expressed early
+on that we'd rather have git-style shell scripts.  So while porting
+these would provide a good start, they can't just be dropped into
+git.git.
