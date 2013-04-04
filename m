@@ -1,73 +1,56 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] perl: redirect stderr to /dev/null instead of closing
-Date: Thu, 4 Apr 2013 01:16:53 +0000
-Message-ID: <20130404011653.GA28492@dcvr.yhbt.net>
-References: <f3d238a4c6cfbc6d68f2c4fa285aefa93acf4b7d.1365027616.git.trast@inf.ethz.ch>
+From: "relipse@gmail.com" <relipse@gmail.com>
+Subject: Recently banned from #git
+Date: Wed, 3 Apr 2013 20:28:37 -0500
+Message-ID: <CAJ2tbsdEVO7UGEqwFxeWBarL8PJ+E0_x35g51dW91CMb21tESA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Marcin Owsiany <marcin@owsiany.pl>,
-	Petr Baudis <pasky@suse.cz>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Apr 04 03:17:26 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 04 03:29:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNYnq-0002q7-PA
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 03:17:23 +0200
+	id 1UNYzG-0003Fn-Nk
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Apr 2013 03:29:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762267Ab3DDBQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Apr 2013 21:16:54 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:40090 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761846Ab3DDBQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Apr 2013 21:16:53 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C1BF1F5B8;
-	Thu,  4 Apr 2013 01:16:53 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <f3d238a4c6cfbc6d68f2c4fa285aefa93acf4b7d.1365027616.git.trast@inf.ethz.ch>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1762716Ab3DDB2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Apr 2013 21:28:38 -0400
+Received: from mail-ve0-f181.google.com ([209.85.128.181]:49775 "EHLO
+	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757332Ab3DDB2i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Apr 2013 21:28:38 -0400
+Received: by mail-ve0-f181.google.com with SMTP id pa12so2181358veb.26
+        for <git@vger.kernel.org>; Wed, 03 Apr 2013 18:28:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=XCrAinXcHMAnlGBCQwaVDfWb+Pe7aF4X39WHKj4AnBM=;
+        b=bvtOuf57gPM2T+x25MSz4OFVRtxtS+ClPILBJ2JxW3CUJI7wrXQozxfqJLvtGf7qo8
+         4OcCO7qZM36Io0BMvfJlIqVDXbM3YfIiJnpMLJT99M0MxVWBf/7D8h2SSRidYsK1e2S/
+         XLDOwO54l+e2fdsiEvF22dNX1pm9YMk9d/+vk/rND1dxJ/3je7joWs+m4x98t2QtKQPS
+         kw33Ah1lws/OfagCB3Av6TzFhJf+AJnHQF6d2uEtznj+cbHH7PiGXegZPlO6Tk5AvDbp
+         lo/NRsDzzm5RiyLeUy0Rp5j2FcbVGsZeFv2GQR3rLCuXozmkIXOvOC+4KSpo0JNibcBy
+         zOHw==
+X-Received: by 10.220.140.18 with SMTP id g18mr3229650vcu.54.1365038917321;
+ Wed, 03 Apr 2013 18:28:37 -0700 (PDT)
+Received: by 10.59.3.165 with HTTP; Wed, 3 Apr 2013 18:28:37 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/219982>
 
-Thomas Rast <trast@inf.ethz.ch> wrote:
-> Closing stderr is a bad idea anyway: there is a very real chance that
-> we print fatal error messages to some other file that just happens to
-> be opened on the now-free FD 2.  So let's not do that.
+Hello, I am somewhat new to git and I was asking a lot of questions in
+#git without properly checking the manuals or knowing enough about
+linux. I want to apologize for my behavior and explain that I will do
+everything on my part to help answer the question on my own and read
+the documentation.
 
-100% agreed.  FD 0, 1, and 2 should not be closed, way too much
-potential for triggering rare bugs and interop issues like these to be
-worth it.
+I really do need help with git and #git seems the only place I can turn.
 
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -1495,6 +1495,9 @@ sub _command_common_pipe {
->  			if ($opts{STDERR}) {
->  				open (STDERR, '>&', $opts{STDERR})
->  					or die "dup failed: $!";
-> +			} elsif (defined $opts{STDERR}) {
-> +				open (STDERR, '>', '/dev/null')
-> +					or die "opening /dev/null failed: $!";
->  			}
->  			_cmd_exec($self, $cmd, @args);
->  		}
-
-Perhaps we should also do the following:
-
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -1489,9 +1489,6 @@ sub _command_common_pipe {
- 		if (not defined $pid) {
- 			throw Error::Simple("open failed: $!");
- 		} elsif ($pid == 0) {
--			if (defined $opts{STDERR}) {
--				close STDERR;
--			}
- 			if ($opts{STDERR}) {
- 				open (STDERR, '>&', $opts{STDERR})
- 					or die "dup failed: $!";
+Would it be possible to have the ban removed?
+I've spoken to charon already and have taken his recommendations.
+Thanks
+Jim
