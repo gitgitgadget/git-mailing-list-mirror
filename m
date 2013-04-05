@@ -1,238 +1,166 @@
-From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
-Subject: RE: trouble on windows network share
-Date: Fri, 5 Apr 2013 12:44:48 +0000
-Message-ID: <871B6C10EBEFE342A772D1159D1320853F63DA3D@umechphj.easf.csd.disa.mil>
-References: <871B6C10EBEFE342A772D1159D1320853F63D205@umechphj.easf.csd.disa.mil>
- <20130404155112.GA11622@sigill.intra.peff.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH v2] submodule: print graph output next to submodule log
+Date: Fri, 5 Apr 2013 17:12:08 +0100
+Message-ID: <20130405161207.GQ2222@serenity.lan>
+References: <a6f8377623599ef8f31cc63f7e038b5e8d04aa01.1365177990.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=SHA1;
-	protocol="application/x-pkcs7-signature";
-	boundary="----=_NextPart_000_0606_01CE31D9.D27DFF20"
-Cc: Jeff King <peff@peff.net>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:02:10 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:03:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWH5-0002u6-VH
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:47:32 +0200
+	id 1UOWJx-0002u6-I4
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161147Ab3DEMo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 08:44:59 -0400
-Received: from edge-mech.mail.mil ([214.21.82.10]:26589 "EHLO
-	edge-mech.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765141Ab3DEMo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 08:44:59 -0400
-Received: from umechpji.easf.csd.disa.mil (214.21.83.159) by
- umechpik.easf.csd.disa.mil (214.21.82.10) with Microsoft SMTP Server (TLS) id
- 14.2.309.2; Fri, 5 Apr 2013 12:44:50 +0000
-Received: from UMECHPHJ.easf.csd.disa.mil ([169.254.9.58]) by
- UMECHPJI.easf.csd.disa.mil ([214.21.83.159]) with mapi id 14.03.0123.003;
- Fri, 5 Apr 2013 12:44:49 +0000
-Thread-Topic: trouble on windows network share
-Thread-Index: Ac4xRUrs8HmkEZnOSbCnphFucszy2gABvA4AAAQV9bA=
-In-Reply-To: <20130404155112.GA11622@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [214.21.83.188]
+	id S1161947Ab3DEQMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 12:12:19 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:60483 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161930Ab3DEQMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 12:12:18 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 3FFFC6064D3;
+	Fri,  5 Apr 2013 17:12:18 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8cko5mdY0seb; Fri,  5 Apr 2013 17:12:17 +0100 (BST)
+Received: from hyena.aluminati.org (hyena.aluminati.org [10.0.49.221])
+	by coyote.aluminati.org (Postfix) with ESMTP id 602B66064AA;
+	Fri,  5 Apr 2013 17:12:17 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 529212307F;
+	Fri,  5 Apr 2013 17:12:17 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qGP+btS5KjqD; Fri,  5 Apr 2013 17:12:16 +0100 (BST)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id A850D21445;
+	Fri,  5 Apr 2013 17:12:10 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <a6f8377623599ef8f31cc63f7e038b5e8d04aa01.1365177990.git.john@keeping.me.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220182>
 
-------=_NextPart_000_0606_01CE31D9.D27DFF20
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
+When running "git log -p --submodule=log", the submodule log is not
+indented by the graph output, although all other lines are.  Fix this by
+prepending the current line prefix to each line of the submodule log.
 
-[strace attachment has been removed, email being resent]
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+On Fri, Apr 05, 2013 at 05:06:30PM +0100, John Keeping wrote:
+> From: John Keeping <john@metanate.com>
 
-It looks like there is a race condition going on, especially since the location and message changes.
+That shouldn't have escaped here :-(  The email in the S-O-B is the
+right one.
 
-Could it be the file creation, file read, apply file security is happening when it should be file create, apply security, file read?
+No other change from v1.
 
-Looking at trace line: 1088001 (full trace attached)
+ diff.c      |  1 +
+ submodule.c | 13 +++++++++----
+ submodule.h |  1 +
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-1181 1087049 [main] git 9320 symlink_info::check: 0x0 = NtCreateFile (\??\UNC\server\share\dir1\dir2\test\.git\objects\68)
-   84 1087133 [main] git 9320 symlink_info::check: not a symlink
-  733 1087866 [main] git 9320 symlink_info::check: 0 = symlink.check(\\server\share\dir1\dir2\test\.git\objects\68, 0x288280) (0x4022)
-   62 1087928 [main] git 9320 path_conv::check: this->path(\\server\share\dir1\dir2\test\.git\objects\68\38761d549cf76033d2e9faf5954e62839eb25d), has_acls(1)
-   31 1087959 [main] git 9320 build_fh_pc: fh 0x61274CA0, dev 0xC3
-   21 1087980 [main] git 9320 __set_errno: int fhandler_base::fhaccess(int, bool):367 setting errno 2
-   21 1088001 [main] git 9320 fhandler_base::fhaccess: returning -1
-   19 1088020 [main] git 9320 access: returning -1
-  164 1088184 [main] git 9320 fhandler_pty_slave::write: pty0, write(50A474, 7)
-   18 1088202 [main] git 9320 fhandler_pty_slave::write: (657): pty output_mutex (0xC0): waiting -1 ms
-   20 1088222 [main] git 9320 fhandler_pty_slave::write: (657): pty output_mutex: acquired
-error: 
-   21 1088243 [main] git 9320 fhandler_pty_slave::write: (672): pty output_mutex(0xC0) released
-   18 1088261 [main] git 9320 write: 7 = write(2, 0x50A474, 7)
-   36 1088297 [main] git 9320 fhandler_pty_slave::write: pty0, write(288680, 102)
-   18 1088315 [main] git 9320 fhandler_pty_slave::write: (657): pty output_mutex (0xC0): waiting -1 ms
-   18 1088333 [main] git 9320 fhandler_pty_slave::write: (657): pty output_mutex: acquired
-Trying to write ref refs/heads/master with nonexistent object 6838761d549cf76033d2e9faf5954e62839eb25d
-
-
-
-> -----Original Message-----
-> From: Jeff King
-> Sent: Thursday, April 04, 2013 11:51 AM
-> 
-> On Thu, Apr 04, 2013 at 03:01:36PM +0000, Pyeron, Jason J CTR (US)
-> wrote:
-> 
-> > I am having trouble when the .git folder is on a network share, given
-> the below where should I start on my debugging?
-> > [...]
-> > jason.pyeron@localhost //server/share/dir/subdir/test
-> > $ git add test.txt
-> >
-> > jason.pyeron@localhost //server/share/dir/subdir/test
-> > $ git commit -m test
-> > error: unable to find 8b7323820a21ebd1360e27262b3c61283c266c23
-> > fatal: 8b7323820a21ebd1360e27262b3c61283c266c23 is not a valid object
-> 
-> Hmm. That message probably comes from:
-> 
->   static int sha1_loose_object_info(const unsigned char *sha1, unsigned
-> long *sizep)
->   {
->   [...]
->           map = map_sha1_file(sha1, &mapsize);
->           if (!map)
->                   return error("unable to find %s", sha1_to_hex(sha1));
-> 
-> So we have found the object and know that it is loose, but then mmap-
-> ing
-> it fails. My guess is that your system does not support mmap across
-> network shares (whether this is an OS issue or a cygwin limitation, I
-> don't know). You could confirm it by running your "git commit" under
-> strace, which I expect would show mmap returning -ENODEV or similar.
-> 
-> You can work around it by compiling git with NO_MMAP=1.
-> 
-> You might also try msysgit rather than cygwin, which seems to have its
-> own win32 mmap compatibility layer.
-> 
-> Finally, I suspect we could include our emulate-mmap-with-pread
-> compatibility wrapper all the time, and drop back to it automatically
-> at
-> run-time when we see ENODEV or a similar error return from mmap.
-> 
-> -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-------=_NextPart_000_0606_01CE31D9.D27DFF20
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-
-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
-GDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
-AOYpItQUJtGYGlJexYSDc37BYLOz0JS+/RyUVb/2hCybycB0c+/MwpnymcltyhTTdP++EPL3Lb/L
-uwaj7phQQWUB4VcstsvkyhysflI0DrGOByY+MjWvo2EKxeUIthJ5jFTBeunxUB9dgzpnMLMp2x06
-TDkhUNgYLI0Gde5jcnhorWKcdaSUBtMyaxKvBgcpvhOgwKfwJU+3/h+3V+AYEo0hahW5WlT7d2XY
-TD/1ujzAN+EGfsK+niOMKNGa18ZnONdzyb0HHYVv1ZUKmtzaOk4o8KXrCd/l2wvNR6+KzbtvlEDj
-WZxQn8kOqXECudzpaYA6iTtFBSIYBYS1EvA8wIECAwEAAaOCAhwwggIYMA4GA1UdDwEB/wQEAwIB
-hjAfBgNVHSMEGDAWgBRJdLsMXrp6/gJU73ugxpXGCYBwljAdBgNVHQ4EFgQUNWFmKAm8ViVbi8y/
-gV5hLDA50yEwEgYDVR0TAQH/BAgwBgEB/wIBADAMBgNVHSQEBTADgAEAMGYGA1UdIARfMF0wCwYJ
-YIZIAWUCAQsFMAsGCWCGSAFlAgELCTALBglghkgBZQIBCxEwCwYJYIZIAWUCAQsSMAsGCWCGSAFl
-AgELEzAMBgpghkgBZQMCAQMaMAwGCmCGSAFlAwIBAxswNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDov
-L2NybC5kaXNhLm1pbC9jcmwvRE9EUk9PVENBMi5jcmwwggEBBggrBgEFBQcBAQSB9DCB8TA6Bggr
-BgEFBQcwAoYuaHR0cDovL2NybC5kaXNhLm1pbC9pc3N1ZWR0by9ET0RST09UQ0EyX0lULnA3YzAg
-BggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWwwgZAGCCsGAQUFBzAChoGDbGRhcDovL2Ny
-bC5nZHMuZGlzYS5taWwvY24lM2REb0QlMjBSb290JTIwQ0ElMjAyJTJjb3UlM2RQS0klMmNvdSUz
-ZERvRCUyY28lM2RVLlMuJTIwR292ZXJubWVudCUyY2MlM2RVUz9jcm9zc0NlcnRpZmljYXRlUGFp
-cjtiaW5hcnkwDQYJKoZIhvcNAQEFBQADggEBAAqIVhylVyZaYst10N2GxVLiL/O8EWQ/jC8+EfyY
-YEDygA0ogppo/uBISyfTOgp7lfYDDIEUkUI6YGziK1Mt7N8RrvVUF/AB+ZcHp5urC9usl4kJxu/5
-BzQWAKh+EVOefC+hOKKZeTk0QW59uFgwVoie5KpkRdmgRGI6t+Ux05GA8RsQsmdw1VurWbRaSBZC
-xAJM2mxoylAdMb43mcfPU8xCKVbDnRfKA+cQWvE5PBzM+xuXCibzMd/gq1wknZ7eOH0CUWdG+ZNw
-he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
-ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
-BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbDjAJ
-BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
-MzA0MDUxMjQ0NDRaMCMGCSqGSIb3DQEJBDEWBBQF8S+uQ6XWrnhbc4j0UhMRUWtyATBYBgkqhkiG
-9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
-AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
-MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
-FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACAyLbETB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
-BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
-S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDItsRMA0GCSqGSIb3DQEBAQUABIIBAAqFmbW7
-BfgXquIUZZfHZVnYiSYcLqybbGfmYW7PE05y8/aIXSAP7gea/4/Fes2OofUoAAXD60aAF+/rEX+5
-JtL9y6aiLVDfnvJS75Ztt8L+F/4EGn6MkmnhLoEskLuSAoLm473Mu/LQ8SnIhWKApwRt0Wx95Al7
-mTPX5iSsxhGQmH9jcFm//hiJlCYqIomNW8GavCAWJNEBgXx3zaIQe7hJF5Z8nRNEQ0bqEQO11kRe
-Wt7Ra1eW1w6moi5l/540DBXyzm2wz3Aay22DBjmWeeG+Ju6YlOfEPMStdvqEwd+cVBJvY9dtcDuq
-wvnu2j0dr9mLVeb9bMsyBfbjHX1xbwYAAAAAAAA=
-
-------=_NextPart_000_0606_01CE31D9.D27DFF20--
+diff --git a/diff.c b/diff.c
+index db952a5..28a742c 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2255,6 +2255,7 @@ static void builtin_diff(const char *name_a,
+ 		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
+ 		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
+ 		show_submodule_summary(o->file, one ? one->path : two->path,
++				line_prefix,
+ 				one->sha1, two->sha1, two->dirty_submodule,
+ 				meta, del, add, reset);
+ 		return;
+diff --git a/submodule.c b/submodule.c
+index 975bc87..e728025 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -216,6 +216,7 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
+ }
+ 
+ static void print_submodule_summary(struct rev_info *rev, FILE *f,
++		const char *line_prefix,
+ 		const char *del, const char *add, const char *reset)
+ {
+ 	static const char format[] = "  %m %s";
+@@ -226,6 +227,7 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
+ 		struct pretty_print_context ctx = {0};
+ 		ctx.date_mode = rev->date_mode;
+ 		strbuf_setlen(&sb, 0);
++		strbuf_addstr(&sb, line_prefix);
+ 		if (commit->object.flags & SYMMETRIC_LEFT) {
+ 			if (del)
+ 				strbuf_addstr(&sb, del);
+@@ -256,6 +258,7 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
+ }
+ 
+ void show_submodule_summary(FILE *f, const char *path,
++		const char *line_prefix,
+ 		unsigned char one[20], unsigned char two[20],
+ 		unsigned dirty_submodule, const char *meta,
+ 		const char *del, const char *add, const char *reset)
+@@ -280,16 +283,18 @@ void show_submodule_summary(FILE *f, const char *path,
+ 		message = "(revision walker failed)";
+ 
+ 	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
+-		fprintf(f, "Submodule %s contains untracked content\n", path);
++		fprintf(f, "%sSubmodule %s contains untracked content\n",
++			line_prefix, path);
+ 	if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+-		fprintf(f, "Submodule %s contains modified content\n", path);
++		fprintf(f, "%sSubmodule %s contains modified content\n",
++			line_prefix, path);
+ 
+ 	if (!hashcmp(one, two)) {
+ 		strbuf_release(&sb);
+ 		return;
+ 	}
+ 
+-	strbuf_addf(&sb, "%sSubmodule %s %s..", meta, path,
++	strbuf_addf(&sb, "%s%sSubmodule %s %s..", line_prefix, meta, path,
+ 			find_unique_abbrev(one, DEFAULT_ABBREV));
+ 	if (!fast_backward && !fast_forward)
+ 		strbuf_addch(&sb, '.');
+@@ -301,7 +306,7 @@ void show_submodule_summary(FILE *f, const char *path,
+ 	fwrite(sb.buf, sb.len, 1, f);
+ 
+ 	if (!message) /* only NULL if we succeeded in setting up the walk */
+-		print_submodule_summary(&rev, f, del, add, reset);
++		print_submodule_summary(&rev, f, line_prefix, del, add, reset);
+ 	if (left)
+ 		clear_commit_marks(left, ~0);
+ 	if (right)
+diff --git a/submodule.h b/submodule.h
+index 3dc1b3f..c7ffc7c 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -19,6 +19,7 @@ int parse_submodule_config_option(const char *var, const char *value);
+ void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
+ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
+ void show_submodule_summary(FILE *f, const char *path,
++		const char *line_prefix,
+ 		unsigned char one[20], unsigned char two[20],
+ 		unsigned dirty_submodule, const char *meta,
+ 		const char *del, const char *add, const char *reset);
+-- 
+1.8.2.452.gb520e27
