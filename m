@@ -1,148 +1,83 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] submodule: print graph output next to submodule log
-Date: Fri,  5 Apr 2013 17:06:30 +0100
-Message-ID: <a6f8377623599ef8f31cc63f7e038b5e8d04aa01.1365177990.git.john@keeping.me.uk>
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	John Keeping <john@metanate.com>,
-	John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:04:26 2013
+From: =?UTF-8?B?S2VubmV0aCDDlmx3aW5n?= <kenneth@olwing.se>
+Subject: Re: Collective wisdom about repos on NFS accessed by concurrent clients
+ (== corruption!?)
+Date: Fri, 05 Apr 2013 16:45:33 +0200
+Message-ID: <515EE38D.2000502@olwing.se>
+References: <515419D0.7030107@olwing.se> <515EC51C.9070206@olwing.se> <87li8xrt5f.fsf@linux-k42r.v.cablecom.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@inf.ethz.ch>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:04:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWJq-0002u6-Fw
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:50:22 +0200
+	id 1UOWIz-0002u6-5S
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:49:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161945Ab3DEQG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 12:06:58 -0400
-Received: from pichi.aluminati.org ([72.9.246.58]:45032 "EHLO
-	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161943Ab3DEQG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 12:06:57 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id A44C6161E529;
-	Fri,  5 Apr 2013 17:06:56 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mWBYDhpVUavz; Fri,  5 Apr 2013 17:06:49 +0100 (BST)
-Received: from river.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id D2888161E362;
-	Fri,  5 Apr 2013 17:06:40 +0100 (BST)
-X-Mailer: git-send-email 1.8.2.452.gb520e27
+	id S1161848Ab3DEOqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 10:46:14 -0400
+Received: from hotelroom5.mainloop.net ([192.121.13.73]:47673 "EHLO
+	hotelroom5.mainloop.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161562Ab3DEOqO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 10:46:14 -0400
+X-No-Relay: not in my network
+X-No-Relay: not in my network
+Received: from [IPv6:::1] (unknown [82.214.25.167])
+	by hotelroom5.mainloop.net (Postfix) with ESMTPSA id 9090170FA0;
+	Fri,  5 Apr 2013 16:46:07 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <87li8xrt5f.fsf@linux-k42r.v.cablecom.net>
+X-Antivirus: AVG for E-mail 2013.0.2904 [2641/6225]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220184>
 
-From: John Keeping <john@metanate.com>
+On 2013-04-05 15:42, Thomas Rast wrote:
+> Can you run the same tests under strace or similar, and gather the 
+> relevant outputs? Otherwise it's probably very hard to say what is 
+> going wrong. In particular we've had some reports on lustre that 
+> boiled down to "impossible" returns from libc functions, not git 
+> issues. It's hard to say without some evidence. 
+Thomas, thanks for your reply.
 
-When running "git log -p --submodule=log", the submodule log is not
-indented by the graph output, although all other lines are.  Fix this by
-prepending the current line prefix to each line of the submodule log.
+I'm assuming I should strace the git commands as they're issued? I'm 
+already collecting regular stdout/err output in a log as I go. Is there 
+any debugging things I can turn on to make the calls issue internal 
+tracing of some sort?
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- diff.c      |  1 +
- submodule.c | 13 +++++++++----
- submodule.h |  1 +
- 3 files changed, 11 insertions(+), 4 deletions(-)
+The main issue I see is that I suspect it will generate so much data 
+that it'll overflow my disk ;-). Consider that my hammer consists of a 
+Perl script that forks a number of tasks (e.g. 15) that each loops doing 
+clone/commit/push/pull, with retrying on a few levels as errors occur 
+(usually expected ones due to the concurrency, i.e. someone else pushed 
+so a pull is necessary first, but occasionally the central repo is 
+broken enough that it can't be cloned from, or at least not checked out 
+master from...sometimes with printed errors that still give me a zero 
+exit code...). That is then also run on several machines to the same 
+repo to hopefully cause a breakage by sheer pounding...it's going to 
+generate huge collections of strace output I expect...
 
-diff --git a/diff.c b/diff.c
-index db952a5..28a742c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2255,6 +2255,7 @@ static void builtin_diff(const char *name_a,
- 		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
- 		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
- 		show_submodule_summary(o->file, one ? one->path : two->path,
-+				line_prefix,
- 				one->sha1, two->sha1, two->dirty_submodule,
- 				meta, del, add, reset);
- 		return;
-diff --git a/submodule.c b/submodule.c
-index 975bc87..e728025 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -216,6 +216,7 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
- }
- 
- static void print_submodule_summary(struct rev_info *rev, FILE *f,
-+		const char *line_prefix,
- 		const char *del, const char *add, const char *reset)
- {
- 	static const char format[] = "  %m %s";
-@@ -226,6 +227,7 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 		struct pretty_print_context ctx = {0};
- 		ctx.date_mode = rev->date_mode;
- 		strbuf_setlen(&sb, 0);
-+		strbuf_addstr(&sb, line_prefix);
- 		if (commit->object.flags & SYMMETRIC_LEFT) {
- 			if (del)
- 				strbuf_addstr(&sb, del);
-@@ -256,6 +258,7 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
- }
- 
- void show_submodule_summary(FILE *f, const char *path,
-+		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
- 		unsigned dirty_submodule, const char *meta,
- 		const char *del, const char *add, const char *reset)
-@@ -280,16 +283,18 @@ void show_submodule_summary(FILE *f, const char *path,
- 		message = "(revision walker failed)";
- 
- 	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
--		fprintf(f, "Submodule %s contains untracked content\n", path);
-+		fprintf(f, "%sSubmodule %s contains untracked content\n",
-+			line_prefix, path);
- 	if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
--		fprintf(f, "Submodule %s contains modified content\n", path);
-+		fprintf(f, "%sSubmodule %s contains modified content\n",
-+			line_prefix, path);
- 
- 	if (!hashcmp(one, two)) {
- 		strbuf_release(&sb);
- 		return;
- 	}
- 
--	strbuf_addf(&sb, "%sSubmodule %s %s..", meta, path,
-+	strbuf_addf(&sb, "%s%sSubmodule %s %s..", line_prefix, meta, path,
- 			find_unique_abbrev(one, DEFAULT_ABBREV));
- 	if (!fast_backward && !fast_forward)
- 		strbuf_addch(&sb, '.');
-@@ -301,7 +306,7 @@ void show_submodule_summary(FILE *f, const char *path,
- 	fwrite(sb.buf, sb.len, 1, f);
- 
- 	if (!message) /* only NULL if we succeeded in setting up the walk */
--		print_submodule_summary(&rev, f, del, add, reset);
-+		print_submodule_summary(&rev, f, line_prefix, del, add, reset);
- 	if (left)
- 		clear_commit_marks(left, ~0);
- 	if (right)
-diff --git a/submodule.h b/submodule.h
-index 3dc1b3f..c7ffc7c 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -19,6 +19,7 @@ int parse_submodule_config_option(const char *var, const char *value);
- void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
- int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- void show_submodule_summary(FILE *f, const char *path,
-+		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
- 		unsigned dirty_submodule, const char *meta,
- 		const char *del, const char *add, const char *reset);
--- 
-1.8.2.452.gb520e27
+I have some variations of this (e.g. all tasks are working on different 
+branches, improving concurrency in some respects, but effects there have 
+been that at the end I was missing a branch or so...). The likelihood of 
+problems seems to increase when I actually use ssh in my ultimate setup, 
+so a loadbalancer roundrobins each call to any of several hosts. In that 
+case I must admit I don't know how to get in on the action since I guess 
+I would need to strace the git-upload/receive-pack processes on the 
+server side...?
+
+Lastly, I don't know how much this will impact timings etc, or load. To 
+get a broken result I have sometimes needed to run for many hours, 
+others fairly quickly.
+
+Well...I will try, it'll probably be a blast :-)
+
+BTW, this is mostly done on Centos 6.3 and 6.4, locally built git-1.8.2.
+
+ken1
