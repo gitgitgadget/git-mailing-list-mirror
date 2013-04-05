@@ -1,74 +1,85 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] git-merge(1): document diff-algorithm option to merge-recursive
-Date: Fri,  5 Apr 2013 12:37:30 +0100
-Message-ID: <8caba965bddcffd75972c730985b04a1eef3744e.1365161840.git.john@keeping.me.uk>
-Cc: Michal Privoznik <mprivozn@redhat.com>,
-	John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 06 18:47:38 2013
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] diff: allow unstuck arguments with --diff-algorithm
+Date: Fri, 5 Apr 2013 13:43:16 +0200
+Message-ID: <876201td7v.fsf@linux-k42r.v.cablecom.net>
+References: <8fc6f21da7c876d50f2f35c73252e95d525dffb5.1365160527.git.john@keeping.me.uk>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Michal Privoznik <mprivozn@redhat.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sat Apr 06 18:48:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWFa-0002u6-AY
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:45:58 +0200
+	id 1UOWFe-0002u6-7n
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:46:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932125Ab3DELhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 07:37:42 -0400
-Received: from pichi.aluminati.org ([72.9.246.58]:39248 "EHLO
-	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765545Ab3DELhl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 07:37:41 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 26C58161E3A1;
-	Fri,  5 Apr 2013 12:37:41 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hyA3+jgqn3Eo; Fri,  5 Apr 2013 12:37:40 +0100 (BST)
-Received: from river.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 1169D161E3D3;
-	Fri,  5 Apr 2013 12:37:35 +0100 (BST)
-X-Mailer: git-send-email 1.8.2.540.gf023cfe
+	id S1756157Ab3DELnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 07:43:20 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:20741 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752337Ab3DELnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 07:43:19 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 5 Apr
+ 2013 13:43:06 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Fri, 5 Apr 2013 13:43:16 +0200
+In-Reply-To: <8fc6f21da7c876d50f2f35c73252e95d525dffb5.1365160527.git.john@keeping.me.uk>
+	(John Keeping's message of "Fri, 5 Apr 2013 12:15:27 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220163>
 
-Commit 07924d4 (diff: Introduce --diff-algorithm command line option
-2013-01-16) added diff-algorithm as a parameter to the recursive merge
-strategy but did not document it.  Do so.
+John Keeping <john@keeping.me.uk> writes:
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- Documentation/merge-strategies.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+> The argument to --diff-algorithm is mandatory, so there is no reason to
+> require the argument to be stuck to the option with '='.  Change this
+> for consistency with other Git commands.
+>
+> Note that this doesi not change the handling of diff-algorithm in
+                     ^
+strayi ;-)
 
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index 66db802..49a9a7d 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -48,6 +48,12 @@ patience;;
- 	this when the branches to be merged have diverged wildly.
- 	See also linkgit:git-diff[1] `--patience`.
- 
-+diff-algorithm=[patience|minimal|histogram|myers];;
-+	Tells 'merge-recursive' to use a different diff algorithm, which
-+	can help avoid mismerges that occur due to unimportant matching
-+	lines (such as braces from distinct functions).  See also
-+	linkgit:git-diff[1] `--diff-algorithm`.
-+
- ignore-space-change;;
- ignore-all-space;;
- ignore-space-at-eol;;
+> merge-recursive.c since the primary interface to that is via the -X
+> option to 'git merge' where the unstuck form does not make sense.
+>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  diff.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/diff.c b/diff.c
+> index db952a5..e0152f8 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3596,8 +3596,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+>  		options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
+>  	else if (!strcmp(arg, "--histogram"))
+>  		options->xdl_opts = DIFF_WITH_ALG(options, HISTOGRAM_DIFF);
+> -	else if (!prefixcmp(arg, "--diff-algorithm=")) {
+> -		long value = parse_algorithm_value(arg+17);
+> +	else if ((argcount = parse_long_opt("diff-algorithm", av, &optarg))) {
+> +		long value = parse_algorithm_value(optarg);
+>  		if (value < 0)
+>  			return error("option diff-algorithm accepts \"myers\", "
+>  				     "\"minimal\", \"patience\" and \"histogram\"");
+> @@ -3605,6 +3605,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+>  		DIFF_XDL_CLR(options, NEED_MINIMAL);
+>  		options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
+>  		options->xdl_opts |= value;
+> +		return argcount;
+>  	}
+>  
+>  	/* flags options */
+
 -- 
-1.8.2.540.gf023cfe
+Thomas Rast
+trast@{inf,student}.ethz.ch
