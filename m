@@ -1,91 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http-backend: respect GIT_NAMESPACE with dumb clients
-Date: Thu, 4 Apr 2013 22:56:55 -0400
-Message-ID: <20130405025655.GA25970@sigill.intra.peff.net>
-References: <CAAvHm8PCQx18Gk2S7dicG+_GksjFqVLfPNCbism1sHnPUMDNzg@mail.gmail.com>
- <1365091293-23758-1-git-send-email-jkoleszar@google.com>
- <7v6202jjhx.fsf@alter.siamese.dyndns.org>
- <CAAvHm8NyJ3nRZPygy+grMw5BLhLe8eWfEBNfK1tkC8Y34jRynA@mail.gmail.com>
- <20130405023516.GA32290@leaf>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] diffcore-pickaxe: remove fill_one()
+Date: Thu, 04 Apr 2013 21:43:42 -0700
+Message-ID: <7v1uapfuyp.fsf@alter.siamese.dyndns.org>
+References: <7vr4iqi2uw.fsf@alter.siamese.dyndns.org>
+ <004969e2ef9bb8017ce66e36b60a447ab35068d0.1365105971.git.simon@ruderich.org>
+ <20130405000847.GB27775@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: John Koleszar <jkoleszar@google.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>
-To: Josh Triplett <josh@joshtriplett.org>
-X-From: git-owner@vger.kernel.org Fri Apr 05 04:57:46 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Simon Ruderich <simon@ruderich.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 05 06:44:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNwqR-00005K-Th
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 04:57:40 +0200
+	id 1UNyVb-00068H-LY
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 06:44:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161471Ab3DEC5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Apr 2013 22:57:04 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56698 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161071Ab3DEC5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Apr 2013 22:57:03 -0400
-Received: (qmail 10000 invoked by uid 107); 5 Apr 2013 02:58:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Apr 2013 22:58:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Apr 2013 22:56:55 -0400
-Content-Disposition: inline
-In-Reply-To: <20130405023516.GA32290@leaf>
+	id S932474Ab3DEEnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 00:43:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53203 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751366Ab3DEEnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 00:43:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F54211AB0;
+	Fri,  5 Apr 2013 04:43:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/orAXdRxXSxJ5tiHx392yJc3ScY=; b=dTJYwv
+	l+BNRJupkzfpFmxepHITw1fcY8hnSmUx2ohi/HA/LQ2vla8MnFUP58N/TBwE2+xb
+	6BNthGoSGElH9MIA5Wesrooq29OljKCcZxRVIQzsGdKrHgCM4ARKLIyKy2iNm77r
+	OAluUcfN9lidFLHCXdvTj94V9kN2tEcziyWAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=N+h54pCS/UC+OEXBvAThVspRi5ukZDq6
+	9gm2Ueyqy6QmOkhpDdb+hlm9YeTuJ9kuLuf6oFlSNFW3CLLz0Tg5D/z5gzCBxagZ
+	SXqHqa6q33FnI9Ps/AtCoizwuuy5Pg8eYK2kVrXEfJp+XjX835Dguke+hxvSx78Y
+	EWiji7PdR8E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0650C11AAF;
+	Fri,  5 Apr 2013 04:43:45 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8114211AAB; Fri,  5 Apr
+ 2013 04:43:44 +0000 (UTC)
+In-Reply-To: <20130405000847.GB27775@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 4 Apr 2013 20:08:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 65AD713A-9DAB-11E2-91A6-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220136>
 
-On Thu, Apr 04, 2013 at 07:35:16PM -0700, Josh Triplett wrote:
+Jeff King <peff@peff.net> writes:
 
-> > Including the HEAD ref in the advertisement from /info/refs ends up
-> > duplicating it, since the dumb client unconditionally fetches the file
-> > /HEAD to use as the that ref. I think the right thing to do is
-> > generate the correct /HEAD using head_ref_namespaced(), rather than
-> > returning the bare file $GIT_DIR/HEAD, but I'm not 100% sure how HEAD
-> > and namespaces interact, since I haven't been able to produce a repo
-> > with a different HEAD in a namespace. Can you verify this approach?
-> 
-> Semantically, every namespace should act like a completely independent
-> repository, which includes having its own independent HEAD.  A namespace
-> should *not* see the HEAD of the entire repository, only its own
-> namespaced HEAD.
+> Thanks. The whole series looks good to me. I think Junio's proposed
+> cleanup is a good direction, too, but I don't mind if that comes on top.
 
-Yeah, that makes sense. I think we'd want something like the (totally
-untested) patch below. And the tests I provided for t5551 should be
-amended to set up a HEAD within the namespace, should make the resulting
-clone non-bare, and should confirm that we check out the correct HEAD.
-
-diff --git a/http-backend.c b/http-backend.c
-index 8144f3a..84ba7f9 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -376,6 +376,14 @@ static int show_text_ref(const char *name, const unsigned char *sha1,
- 	return 0;
- }
- 
-+static void get_head(char *arg)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	head_ref_namespaced(show_text_ref, &buf);
-+	send_strbuf("text/plain", &buf);
-+	strbuf_release(&buf);
-+}
-+
- static void get_info_refs(char *arg)
- {
- 	const char *service_name = get_parameter("service");
-@@ -520,7 +528,7 @@ static struct service_cmd {
- 	const char *pattern;
- 	void (*imp)(char *);
- } services[] = {
--	{"GET", "/HEAD$", get_text_file},
-+	{"GET", "/HEAD$", get_head },
- 	{"GET", "/info/refs$", get_info_refs},
- 	{"GET", "/objects/info/alternates$", get_text_file},
- 	{"GET", "/objects/info/http-alternates$", get_text_file},
+I'll send out a three-patch follow-up shortly.
