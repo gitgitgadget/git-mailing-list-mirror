@@ -1,74 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Beyond inotify recursive watches
-Date: Fri, 5 Apr 2013 22:26:15 +0530
-Message-ID: <CALkWK0ngNM-zrybHOtFGzm5aVnkFMPn1DP0h=2aUf=7b9_sh8A@mail.gmail.com>
-References: <CALkWK0nRQi+vZeVR4LVzLewhR-dUZqYANRV7yH8grp-1J7=g8Q@mail.gmail.com>
- <20130405155534.GC21852@quack.suse.cz>
+From: Simon Ruderich <simon@ruderich.org>
+Subject: Re: [PATCH v2 1/3] diffcore-pickaxe: remove unnecessary call to
+ get_textconv()
+Date: Fri, 5 Apr 2013 15:20:33 +0200
+Message-ID: <20130405132033.GB23017@ruderich.org>
+References: <7vr4iqi2uw.fsf@alter.siamese.dyndns.org>
+ <ed31727421dc3000e943e62a8d82ac1af6589733.1365105971.git.simon@ruderich.org>
+ <7vvc82ggy3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: linux-kernel@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jan Kara <jack@suse.cz>
-X-From: linux-kernel-owner@vger.kernel.org Sat Apr 06 19:11:19 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:12:02 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1UOWL6-0002u6-3T
-	for glk-linux-kernel-3@plane.gmane.org; Sat, 06 Apr 2013 18:51:40 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UOWHl-0002u6-Vm
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162240Ab3DEQ5U (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 5 Apr 2013 12:57:20 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:56572 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1162136Ab3DEQ44 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 5 Apr 2013 12:56:56 -0400
-Received: by mail-ie0-f173.google.com with SMTP id 9so4596906iec.4
-        for <multiple recipients>; Fri, 05 Apr 2013 09:56:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=TH9gH5YHZIrNSjGlp0/QH5b1PSisaPgy0bHOq2MUj9M=;
-        b=pInL3FpivxzKQMHU59tPYU2kZdyhqai8atSLvbLLz9eUipsbbkKJVgJAy5hUS+2taR
-         bhIrr9Zq1tzUFCAfw1X8hHHJia3+q0789Oel64FQF9YBDtSV0avjS8N3jbEqgbi13dRi
-         yWEXJba3NyG1QMKH9L7IOu6YFwqsc9dNAWF4iwbSw+CQvQtPSJj9XNyw+P5d4kg/St8X
-         hyGPqUmC5L+rpF0dFInb5PzxRzHPiT7ieQR2mR+0J/eKuOcoSt/a5Dsbomu73ryg8f74
-         ryEiehUfllkL0LfGj45yNrXp44fvxKC9kYVMdPDV2pXkPoGhY9/aEZLg3M1FmtU67sW3
-         adOA==
-X-Received: by 10.50.50.71 with SMTP id a7mr2094344igo.14.1365181015511; Fri,
- 05 Apr 2013 09:56:55 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Fri, 5 Apr 2013 09:56:15 -0700 (PDT)
-In-Reply-To: <20130405155534.GC21852@quack.suse.cz>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1161612Ab3DENUf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 09:20:35 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:59865 "EHLO
+	zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161475Ab3DENUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 09:20:35 -0400
+Received: from localhost (pD9E96A4A.dip.t-dialin.net [::ffff:217.233.106.74])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by zucker.schokokeks.org with ESMTPSA; Fri, 05 Apr 2013 15:20:33 +0200
+  id 0000000000000052.00000000515ECFA1.000067B6
+Content-Disposition: inline
+In-Reply-To: <7vvc82ggy3.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2013-03-19)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220195>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220196>
 
-Jan Kara wrote:
->   Hum, I have somewhat hard time to understand what do you mean by
-> 'magically optimized syscalls'. What should happen in VFS to speedup your
-> load?
+On Thu, Apr 04, 2013 at 01:48:52PM -0700, Junio C Hamano wrote:
+> If I am reading the code correctly, it is has_changes(), which is
+> used for "log -S" (not "log -G" that uses diff_grep()), that does
+> the unnecessary get_textconv() unconditionally.  The way diff_grep()
+> divides the work to make fill_one() responsible for filling the
+> textconv as necessary is internally consistent, and there is no
+> unnecessary call.
 
-In retrospect, I think this is a terrible hack to begin with.  Tuning
-the filesystem specifically for git repositories is inelegant on so
-many levels, I can't recall why I ever thought it would be a good
-idea.  Like all software, Git has scaling issues with ultra-large
-repositories.  Too many stat() calls is just one of the problems:
-there will be too many objects to do any operation at reasonable
-speed, and the overall UX would just suck.  Instead of growing to a
-huge monolithic beast that spawns off worker threads for everything
-and ultimately dying off, I've decided that git should take a
-different direction: it should work with well with many small
-easily-composable repositories.  I've started work on this already,
-and it looks very promising.
+Yes, of course. I meant has_changes() which has the unnecessary
+call.
 
-Let the filesystem people do what they do best: optimizing for all
-applications uniformly.
+> Perhaps...
+>
+> 	The fill_one() function is responsible for finding and
+> 	filling the textconv filter as necessary, and is called by
+> 	diff_grep() function that implements "git log -G<pattern>".
+>
+> 	The has_changes() function calls get_textconv() for two
+> 	sides being compared, before it checks to see if it was
+> 	asked to perform the pickaxe limiting with the -S option.
+> 	Move the code around to avoid this wastage.  After that,
+> 	fill_one() is called to use the textconv.
+>
+> 	By adding get_textconv() to diff_grep() and relieving
+> 	fill_one() of responsibility to find the textconv filter, we
+> 	can avoid calling get_textconv() twice.
+
+Sounds good to me.
+
+Regards
+Simon
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
