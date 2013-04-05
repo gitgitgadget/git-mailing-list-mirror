@@ -1,88 +1,109 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH] Documentation/git-commit: reword the --amend explanation
-Date: Fri, 05 Apr 2013 10:50:05 +0200
-Message-ID: <1365151805.2478.25.camel@flaca.cmartin.tk>
-References: <1364994441-15961-1-git-send-email-cmn@elego.de>
-	 <7v4nfn7j5i.fsf@alter.siamese.dyndns.org>
-	 <7vtxnn4c02.fsf@alter.siamese.dyndns.org>
-	 <50CA4F4141DD484D97CA8BA571529F65@PhilipOakley>
-	 <1365094159.30466.60.camel@centaur.cmartin.tk>
-	 <7va9pejkgt.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Mihai=20Capot=C4=83?= <mihai@mihaic.ro>
+Subject: [PATCH] count-objects doc: document use of kibibytes
+Date: Fri,  5 Apr 2013 11:39:23 +0200
+Message-ID: <1365154763-9875-1-git-send-email-mihai@mihaic.ro>
+References: <7vvc82jm77.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 05 10:56:58 2013
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Apr 06 18:45:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UO2S9-0005cQ-6e
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 10:56:57 +0200
+	id 1UOWEK-0002u6-R5
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161329Ab3DEI4W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Apr 2013 04:56:22 -0400
-Received: from hessy.cmartin.tk ([78.47.67.53]:39990 "EHLO hessy.dwim.me"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751130Ab3DEI4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 04:56:20 -0400
-X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Apr 2013 04:56:20 EDT
-Received: from [10.10.10.247] (i59F7870A.versanet.de [89.247.135.10])
-	by hessy.dwim.me (Postfix) with ESMTPSA id 6CC16814C6;
-	Fri,  5 Apr 2013 10:50:06 +0200 (CEST)
-In-Reply-To: <7va9pejkgt.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 3.6.3-1 
+	id S1751190Ab3DEJkU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Apr 2013 05:40:20 -0400
+Received: from mail-ea0-f182.google.com ([209.85.215.182]:38483 "EHLO
+	mail-ea0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161370Ab3DEJjb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 05:39:31 -0400
+Received: by mail-ea0-f182.google.com with SMTP id q15so1325077ead.13
+        for <git@vger.kernel.org>; Fri, 05 Apr 2013 02:39:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=A+HFdZ4wxBu1blMaQbQbBccJ0GYb1y9DHaq/j1+qLFo=;
+        b=GxHMZP+f/SDXpIJkau1/2/wRuXXDnyufnW6ssuwQmTXlqGgBhMSQy0UhXDp+BaPOdw
+         5VAJa6wMGq7JWwVlIDegRTYds2aJH/fHuCTDBYJwDjZgFTEzFXQsP1T7Zlx6qqqTpj3/
+         kIc3NJEbl6wXFEe+XJHIf5CmqvJ/xbbzdcNlxZhEjkGOOp2bWziz/2eAmFmChgCFRUTt
+         YTz8KMDc9lRe3/x9t9dngoPHin4gw+FhfKM9aPoPfeTcAOCEZYOZT3IHDd+by9FBp+Rn
+         5JgbupJdqNL41IvsONTi9o2IKN9GwOfK+l7ZAAtFypjsr+3dseNwj7K1W4DTQmsAFXhK
+         vrdA==
+X-Received: by 10.14.182.137 with SMTP id o9mr18070367eem.13.1365154770451;
+        Fri, 05 Apr 2013 02:39:30 -0700 (PDT)
+Received: from dutier.st.ewi.tudelft.nl (dutier.st.ewi.tudelft.nl. [130.161.159.51])
+        by mx.google.com with ESMTPS id n2sm14407198eeo.10.2013.04.05.02.39.28
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 05 Apr 2013 02:39:29 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <7vvc82jm77.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQk0Im8YZ4h/3fkPj18XET0RuX0X9HpRsH2yzl2iQCcBIHDLMt53UPHQ6TEdjvW42FcOyUrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220160>
 
-On Thu, 2013-04-04 at 10:04 -0700, Junio C Hamano wrote:
-> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->=20
-> > On Wed, 2013-04-03 at 23:25 +0100, Philip Oakley wrote:
-> >
-> >>  + Replace the tip of the current branch with a fresh commit.
-> >> [or updated commit, or new commit, or ...]
-> >
-> > Ack, we should lead with the goal, I'd go for the
-> >
-> >     "Replace the tip of the current branch with a new commit"
-> >
-> > wording.
->=20
-> We would want to be careful to make sure that the reader understands
-> that the "new commit" is created by running this command (i.e. it is
-> not like "git branch -f $current_branch $new_commit"), but other
-> than that, sounds sensible.
->=20
-> Perhaps like this?
->=20
->  Documentation/git-commit.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.=
-txt
-> index bc919ac..61266d8 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -190,8 +190,8 @@ OPTIONS
->  	without changing its commit message.
-> =20
->  --amend::
-> -	Create a new commit and replace the tip of the current
-> -	branch. The recorded tree is prepared as usual (including
-> +	Replace the tip of the current branch by creating a new
-> +	commit. The recorded tree is prepared as usual (including
->  	the effect of the `-i` and `-o` options and explicit
->  	pathspec), and the message from the original commit is used
->  	as the starting point, instead of an empty message, when no
->=20
+Document the use of kibibytes, not kilobytes, in the output of count-ob=
+jects
+and the reason for not correcting the output.
 
-Looks good, yeah. This should stop anybody thinking that they can
-replace the tip with an arbitrary commit.
+Also, make cvsimport comment and variable name reflect unit actually us=
+ed.
 
-   cmn
+Signed-off-by: Mihai Capot=C4=83 <mihai@mihaic.ro>
+---
+ Documentation/git-count-objects.txt |    7 +++++++
+ git-cvsimport.perl                  |    6 +++---
+ 2 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-count-objects.txt b/Documentation/git-co=
+unt-objects.txt
+index 23c80ce..d562dad 100644
+--- a/Documentation/git-count-objects.txt
++++ b/Documentation/git-count-objects.txt
+@@ -26,6 +26,13 @@ OPTIONS
+ 	and number of objects that can be removed by running
+ 	`git prune-packed`.
+=20
++
++BUGS
++----
++Consumed space is actually expressed in kibibytes, not kilobytes as st=
+ated in
++the output. The output is kept as it is for compatibility reasons.
++
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 73d367c..6803f04 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -1126,12 +1126,12 @@ unless ($opt_P) {
+ }
+=20
+ # The heuristic of repacking every 1024 commits can leave a
+-# lot of unpacked data.  If there is more than 1MB worth of
++# lot of unpacked data.  If there is more than 1MiB worth of
+ # not-packed objects, repack once more.
+ my $line =3D `git count-objects`;
+ if ($line =3D~ /^(\d+) objects, (\d+) kilobytes$/) {
+-  my ($n_objects, $kb) =3D ($1, $2);
+-  1024 < $kb
++  my ($n_objects, $kib) =3D ($1, $2);
++  1024 < $kib
+     and system(qw(git repack -a -d));
+ }
+=20
+--=20
+1.7.9.5
