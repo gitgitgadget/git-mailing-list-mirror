@@ -1,123 +1,106 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] show-branch: use strbuf instead of static buffer
-Date: Fri, 5 Apr 2013 17:15:50 -0400
-Message-ID: <20130405211550.GA4880@sigill.intra.peff.net>
+Subject: [RFC/PATCH 0/9] friendlier http error messages
+Date: Fri, 5 Apr 2013 18:13:31 -0400
+Message-ID: <20130405221331.GA21209@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Eric Roman <eroman@chromium.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:26:08 2013
+Cc: "Yi, EungJun" <semtlenori@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:26:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWPA-0001b9-CK
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:55:52 +0200
+	id 1UOWPn-0001b9-ST
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:56:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162673Ab3DEVQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 17:16:05 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58187 "EHLO
+	id S1162889Ab3DEWNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 18:13:41 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58230 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1162478Ab3DEVQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 17:16:04 -0400
-Received: (qmail 17800 invoked by uid 107); 5 Apr 2013 21:17:49 -0000
+	id S1162879Ab3DEWNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 18:13:40 -0400
+Received: (qmail 18195 invoked by uid 107); 5 Apr 2013 22:15:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Apr 2013 17:17:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2013 17:15:50 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Apr 2013 18:15:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2013 18:13:31 -0400
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220209>
 
-When we generate relative names (e.g., "master~20^2"), we
-format the name into a static buffer, then xstrdup the
-result to attach it to the commit. Since the first thing we
-add into the static buffer is the already-computed name of
-the child commit, the names may get longer and longer as
-the traversal gets deeper, and we may eventually overflow
-the fixed-size buffer.
+The error messages that git generates for routine http problems can
+sometimes be a bit verbose or confusing. They also provide no
+opportunity for the server to communicate any free-form text, even
+though the server knows much better than the git client the reason for
+the error or what the next step to suggest to the user might be.
 
-Fix this by converting the fixed-size buffer into a dynamic
-strbuf.  The performance implications should be minimal, as
-we end up allocating a heap copy of the name anyway (and now
-we can just detach the heap copy from the strbuf).
+This series provides a channel for those messages, and does some general
+cleanup and reformatting of the error messages that git itself produces.
 
-Reported-by: Eric Roman <eroman@chromium.org>
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is a fix for a bug report that came to me off-list.  A real-world
-example can be seen by running "git show-branch --all" on a fresh clone
-of:
+Here are some before-and-after examples with this series (apologies for
+the long lines, but they are part of the ugliness I want to address, so
+I am leaving them in).
 
-  https://chromium.googlesource.com/chromium/src.git
+The "remote:" bits are simulated in the output below, as I haven't yet
+updated GitHub's server side to produce more useful messages. So you can
+repeat the tests, but note that the text you get from the server will
+not be the same (e.g., our 404 currently just says "Repository not
+found" which is not all that helpful).
 
-(but that repo is 1.7G, so I don't recommend cloning it unless you're
-really interested). Its master branch consists of a strange sequence of
-merges that results in naming commits like master^2^2^2^2... and so on
-(it's unclear to me why, but it looks like maybe syncing up separate svn
-and git repositories?).  Which is odd, but looking at graph, I think the
-names show-branch is generating are correct; they're just really long.
-And of course odd history is no excuse to overflow a buffer.
+  [before]
+  $ git ls-remote https://github.com/non/existent
+  fatal: https://github.com/non/existent/info/refs?service=git-upload-pack not found: did you run git update-server-info on the server?
 
-Though this is a stack overflow, I don't know that it's exploitable for
-anything interesting; an attacker does not get to write arbitrary data,
-but rather only a sequence of "^%d" and "~%d" relative history markers.
-Perhaps in theory one could devise a history such that the sequence
-markers spelled out some malicious code, but it would be quite a
-challenge (and given that you have only ascii [^~0-9] to work with,
-probably impossible).
+  [after]
+  $ git ls-remote https://github.com/non/existent
+  remote: The remote repository was not found, or you do not have
+  remote: permission to access it.
+  fatal: repository 'https://github.com/non/existent/' not found
 
-I prepared this on "master", but it should be suitable for "maint"; the
-code dates all the way back to git v0.99.
+  [before]
+  $ GIT_SMART_HTTP=0 git ls-remote https://github.com/git/git.git
+  error: The requested URL returned error: 403 Forbidden while accessing https://github.com/git/git.git/info/refs
+  fatal: HTTP request failed
 
- builtin/show-branch.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+  [after]
+  $ GIT_SMART_HTTP=0 git ls-remote https://github.com/git/git.git
+  remote: Sorry, fetching via dumb http is forbidden.
+  remote: Please upgrade your git client to v1.6.6 or greater
+  remote: and make sure that smart-http is enabled.
+  fatal: unable to access 'https://github.com/git/git.git/': The requested URL returned error: 403
 
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index d208fd6..90fc6b1 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -162,29 +162,28 @@ static void name_commits(struct commit_list *list,
- 			nth = 0;
- 			while (parents) {
- 				struct commit *p = parents->item;
--				char newname[1000], *en;
-+				struct strbuf newname = STRBUF_INIT;
- 				parents = parents->next;
- 				nth++;
- 				if (p->util)
- 					continue;
--				en = newname;
- 				switch (n->generation) {
- 				case 0:
--					en += sprintf(en, "%s", n->head_name);
-+					strbuf_addstr(&newname, n->head_name);
- 					break;
- 				case 1:
--					en += sprintf(en, "%s^", n->head_name);
-+					strbuf_addf(&newname, "%s^", n->head_name);
- 					break;
- 				default:
--					en += sprintf(en, "%s~%d",
--						n->head_name, n->generation);
-+					strbuf_addf(&newname, "%s~%d",
-+						    n->head_name, n->generation);
- 					break;
- 				}
- 				if (nth == 1)
--					en += sprintf(en, "^");
-+					strbuf_addch(&newname, '^');
- 				else
--					en += sprintf(en, "^%d", nth);
--				name_commit(p, xstrdup(newname), 0);
-+					strbuf_addf(&newname, "^%d", nth);
-+				name_commit(p, strbuf_detach(&newname, NULL), 0);
- 				i++;
- 				name_first_parent_chain(p);
- 			}
--- 
-1.8.2.rc0.33.gd915649
+I still really hate the length of the generic http message (which you
+can see in the final 403 example). The text "The requested URL returned
+error:" comes from curl, though there is actually an opportunity to
+munge it, as you will see in the patches. However, I was unable to come
+up with a shorter text that sounded any better.
+
+Another option would be to just split it across lines with some
+indentation, like:
+
+  fatal: The requested URL returned error: 403
+    while accessing https://github.com/git/git.git
+
+I'm open to suggestions.
+
+There are a lot of little patches, as I tried to explain the rationale
+for each individual change (and it makes it easy to take or reject
+individual patches). If we do take them all, it may make sense to just
+squash patches 3-5.
+
+  [1/9]: http: add HTTP_KEEP_ERROR option
+  [2/9]: remote-curl: show server content on http errors
+  [3/9]: remote-curl: let servers override http 404 advice
+  [4/9]: remote-curl: always show friendlier 404 message
+  [5/9]: remote-curl: consistently report repo url for http errors
+  [6/9]: http: simplify http_error helper function
+  [7/9]: http: re-word http error message
+  [8/9]: remote-curl: die directly with http error messages
+  [9/9]: http: drop http_error function
+
+-Peff
