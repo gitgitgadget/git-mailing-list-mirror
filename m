@@ -1,59 +1,56 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] glossary: extend "detached HEAD" description
-Date: Fri, 5 Apr 2013 19:46:45 -0400
-Message-ID: <CAPig+cQ+4r17UK=uWcjGAa1PeFiJ-fFOfgEQJTMd+FGbVbw3yg@mail.gmail.com>
-References: <7vwqshc8ec.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: [PATCH 0/2] log -L overlapping ranges
+Date: Fri, 5 Apr 2013 16:34:46 +0200
+Message-ID: <cover.1365172322.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:14:07 2013
+Content-Type: text/plain
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:18:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWRL-0001b9-Nx
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:58:08 +0200
+	id 1UOWIt-0002u6-8S
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:49:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1163069Ab3DEXqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 19:46:47 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:64959 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1162968Ab3DEXqr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 19:46:47 -0400
-Received: by mail-lb0-f173.google.com with SMTP id w20so4262364lbh.18
-        for <git@vger.kernel.org>; Fri, 05 Apr 2013 16:46:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=e0LSp5fTlc3kNRycvjTQYMtADLdOCue8hNQua9wF2iM=;
-        b=uSENqzkwLIdW++2UGq+2ywdRICdiNfwukWgqUX6L4AHH1zPoZzVYgiDGEZBpsV1Dl0
-         yb+IVhvqpXvAVacY3sWiqc2Rtk/uuINcebGyAMXoYB6keV9q9nd4CVsB4WTkugiLuJpV
-         R+8Xmj0PMBgpAX23+VbT0G4I2HGWxnBtJHovpm5vRkW0+HRtbz3a6AGnzLyjB6Zy0A0F
-         LOVNIP3GhMult/NsCSYVrwsKa2CQponsSsWJ63GQ29AzPnsMv59P19+TIRDdQMg7moAc
-         VZXvQ6Pcn3ljCUhapaJrMjCRhOm6T4zlb7kNto55ie6FNivkzyspOHUaPMcT5zEf7lwP
-         L5Lg==
-X-Received: by 10.112.82.164 with SMTP id j4mr7243530lby.112.1365205605645;
- Fri, 05 Apr 2013 16:46:45 -0700 (PDT)
-Received: by 10.114.1.43 with HTTP; Fri, 5 Apr 2013 16:46:45 -0700 (PDT)
-In-Reply-To: <7vwqshc8ec.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: MLieHNK5MQWAdVbLggmo9IuhAWY
+	id S1161772Ab3DEOez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 10:34:55 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:34508 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161562Ab3DEOez (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 10:34:55 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 5 Apr
+ 2013 16:34:41 +0200
+Received: from linux-k42r.v.cablecom.net (213.55.184.239) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 5 Apr
+ 2013 16:34:51 +0200
+X-Mailer: git-send-email 1.8.2.662.g6b31d33
+X-Originating-IP: [213.55.184.239]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220199>
 
-On Fri, Apr 5, 2013 at 11:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Add a blanket description to the glossary to cover them instead.
-> The general principle is that operations to update the branch work
-> and affect on the HEAD, while operations to update the information
+I noticed that it doesn't like getting multiple overlapping ranges
+from the user.  This fixes it.
 
-s/work and affect on the/work on and affect the/
 
-> about a branch do not.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Thomas Rast (2):
+  log -L: check range set invariants when we look it up
+  log -L: fix overlapping input ranges
+
+ line-log.c                          |  43 +++++++--
+ t/t4211-line-log.sh                 |   6 ++
+ t/t4211/expect.multiple             | 104 ++++++++++++++++++++
+ t/t4211/expect.multiple-overlapping | 187 ++++++++++++++++++++++++++++++++++++
+ t/t4211/expect.multiple-superset    |  59 ++++++++++++
+ 5 files changed, 392 insertions(+), 7 deletions(-)
+ create mode 100644 t/t4211/expect.multiple
+ create mode 100644 t/t4211/expect.multiple-overlapping
+ create mode 100644 t/t4211/expect.multiple-superset
+
+-- 
+1.8.2.662.g6b31d33
