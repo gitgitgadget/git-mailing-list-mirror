@@ -1,61 +1,78 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Composing git repositories
-Date: Fri, 05 Apr 2013 09:15:44 +0200
-Message-ID: <515E7A20.1050003@web.de>
-References: <CALkWK0=CsuAWQwk5Guf0pbC4_ZEoZiwQpamcRvBGz5LJ0QGKHg@mail.gmail.com> <7vmwtqt8rs.fsf@alter.siamese.dyndns.org> <CALkWK0kNH2A4eLML22RTofarR3MB++OECiNXMi-bWLLMWK1GAg@mail.gmail.com> <7vvc8comj5.fsf@alter.siamese.dyndns.org> <CALkWK0nARWAtC-D3UiNLccuaSwjR6meJb+Cu590N=8Ti8O7OMg@mail.gmail.com> <51537A7B.7050206@web.de> <CALkWK0nfNCu775MBB-Y28=V93RkV24kbTLTDKWO2dZ-0yxX=Sw@mail.gmail.com> <5154AACC.7050006@web.de> <CALkWK0k=g3iFjmpUQA1VkuH2kZsVX1_Hpo=LZ7CuotwHz_1++g@mail.gmail.com> <20130331225747.GB11704@elie.Belkin> <7v7gkkern9.fsf@alter.siamese.dyndns.org> <7v7gkilry2.fsf@alter.siamese.dyndns.org> <CACsJy8C_dRqdPvAUW19zVLrJQGqFCRu_TaPMnRbkfgq+H9V2dw@mail.gmail.com> <7vwqshefyk.fsf@alter.siamese.dyndns.org> <CACsJy8DX8xAc_CUFLYtGX9Ynm-kzgrbfCRFXaZaGd_+G4_imsg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 3/3] diffcore-pickaxe: respect --no-textconv
+Date: Fri, 05 Apr 2013 09:40:21 +0200
+Message-ID: <vpq7gkhqvbu.fsf@grenoble-inp.fr>
+References: <7vr4iqi2uw.fsf@alter.siamese.dyndns.org>
+	<7d36738417942b594c185953115a244ad6f3c7a0.1365105971.git.simon@ruderich.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 05 09:16:24 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git <git@vger.kernel.org>
+To: Simon Ruderich <simon@ruderich.org>
+X-From: git-owner@vger.kernel.org Fri Apr 05 09:41:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UO0sm-00009V-SS
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 09:16:21 +0200
+	id 1UO1Gk-0005FF-W6
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 09:41:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161604Ab3DEHPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 03:15:52 -0400
-Received: from mout.web.de ([212.227.17.11]:49828 "EHLO mout.web.de"
+	id S1757349Ab3DEHki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 03:40:38 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60782 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161570Ab3DEHPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 03:15:51 -0400
-Received: from [192.168.178.41] ([79.193.90.93]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0M8QaI-1UaiEz04FW-00w075; Fri, 05 Apr 2013 09:15:47
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <CACsJy8DX8xAc_CUFLYtGX9Ynm-kzgrbfCRFXaZaGd_+G4_imsg@mail.gmail.com>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V02:K0:qtRrT7NHWjtl4fBCPO3t/SUrUItUFiUIYDTphOfG0WZ
- MmNW8vjp/RjLKGpd4QnDavtOX+Jq0+QVo57fZUIuZQM+E5Scup
- /wyeGddwjJSRxyXLsXqJbJclyJ5ZqUCexMmZrNHhJLXsgFBrHO
- yOQPejapMA0oEYoytLSAeMM7FUZIqjhAjahb9IecRKaDhmD0hB
- EnWkXqY+dfzwl1KPawH+Q==
+	id S1751130Ab3DEHki (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 03:40:38 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r357eKlJ007219
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 5 Apr 2013 09:40:20 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UO1G1-0008Mz-HR; Fri, 05 Apr 2013 09:40:21 +0200
+In-Reply-To: <7d36738417942b594c185953115a244ad6f3c7a0.1365105971.git.simon@ruderich.org>
+	(Simon Ruderich's message of "Thu, 4 Apr 2013 22:21:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 05 Apr 2013 09:40:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r357eKlJ007219
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1365752422.74527@7kNISp3552ITQe7Rahejag
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220155>
 
-Am 05.04.2013 07:27, schrieb Duy Nguyen:
-> On Fri, Apr 5, 2013 at 3:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> A brief summary or outcome from these links in the comment would
->>> be nice.
->>
->> A summary of what to consider in Documentation/technical/ somewhere
->> may be a very welcome addition.  Thanks for volunteering ;-).
-> 
-> No thanks :-) I did not really follow this thread to make such
-> contribution. Still have some work to do with other topics.
+Simon Ruderich <simon@ruderich.org> writes:
 
-I'll do that (unless someone else steps up). I had these links in
-my todo list with the intent of adding them to my github page, but
-I agree they make more sense in Documentation/technical. Will see
-when I find a time slot to read through the whole threads to give
-them meaningful captions.
+> --- a/t/t4209-log-pickaxe.sh
+> +++ b/t/t4209-log-pickaxe.sh
+> @@ -116,4 +116,18 @@ test_expect_success 'log -S -i (nomatch)' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'log -S --textconv (missing textconv tool)' '
+> +	echo "* diff=test" >.gitattributes &&
+> +	test_must_fail git -c diff.test.textconv=missing log -Sfoo &&
+> +	rm .gitattributes
+> +'
+> +
+> +test_expect_success 'log -S --no-textconv (missing textconv tool)' '
+> +	echo "* diff=test" >.gitattributes &&
+> +	git -c diff.test.textconv=missing log -Sfoo --no-textconv >actual &&
+> +	>expect &&
+> +	test_cmp expect actual &&
+> +	rm .gitattributes
+> +'
+
+While we're there, we could test -G --no-textconv too.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
