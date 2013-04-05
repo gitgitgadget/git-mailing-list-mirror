@@ -1,76 +1,80 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: Collective wisdom about repos on NFS accessed by concurrent clients (== corruption!?)
-Date: Fri, 5 Apr 2013 15:42:04 +0200
-Message-ID: <87li8xrt5f.fsf@linux-k42r.v.cablecom.net>
-References: <515419D0.7030107@olwing.se> <515EC51C.9070206@olwing.se>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 8/9] remote-curl: die directly with http error messages
+Date: Fri, 5 Apr 2013 18:22:15 -0400
+Message-ID: <20130405222215.GH22163@sigill.intra.peff.net>
+References: <20130405221331.GA21209@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Kenneth =?utf-8?Q?=C3=96lwing?= <kenneth@olwing.se>
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:09:20 2013
+Cc: "Yi, EungJun" <semtlenori@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:10:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWI8-0002u6-DP
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:48:36 +0200
+	id 1UOWQR-0001b9-OE
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161679Ab3DENmJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Apr 2013 09:42:09 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:30268 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161611Ab3DENmI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Apr 2013 09:42:08 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 5 Apr
- 2013 15:41:55 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (213.55.184.239) by
- CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Fri, 5 Apr 2013 15:42:04 +0200
-In-Reply-To: <515EC51C.9070206@olwing.se> ("Kenneth \=\?utf-8\?Q\?\=C3\=96lwing\?\=
- \=\?utf-8\?Q\?\=22's\?\= message of "Fri,
-	05 Apr 2013 14:35:40 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [213.55.184.239]
+	id S1163009Ab3DEWWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 18:22:25 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58255 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1162989Ab3DEWWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 18:22:24 -0400
+Received: (qmail 18452 invoked by uid 107); 5 Apr 2013 22:24:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Apr 2013 18:24:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2013 18:22:15 -0400
+Content-Disposition: inline
+In-Reply-To: <20130405221331.GA21209@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220192>
 
-Kenneth =C3=96lwing <kenneth@olwing.se> writes:
+When we encounter an unknown http error (e.g., a 403), we
+hand the error code to http_error, which then prints it with
+error(). After that we die with the redundant message "HTTP
+request failed".
 
-> Basically, I'm at a place where I'm considering giving up getting thi=
-s
-> to work reliably. In general, my setup work really fine, except for
-> the itty-bitty detail that when I put pressure on things I tend to ge=
-t
-> into various kinds of trouble with the central repo being corrupted.
->
-> Can anyone authoritatively state anything either way?
+Instead, let's just drop http_error entirely, which does
+nothing but pass arguments to error(), and instead die
+directly with a useful message.
 
-My non-authoritative impression was that it's supposed to work
-concurrently.  Obviously something breaks:
+So before:
 
->> My experience so far is that I eventually get repo corruption when I
->> stress it with concurrent read/write access from multiple hosts
->> (beyond any sort of likely levels, but still). Maybe I'm doing
->> something wrong, missing a configuration setting somewhere, put an
->> unfair stress on the system, there's a bona fide bug - or, given the
->> inherent difficulty in achieving perfect coherency between machines
->> on what's visible on the mount, it's just impossible (?) to truly
->> get it working under all situations.
+  $ git clone https://example.com/repo.git
+  Cloning into 'repo'...
+  error: unable to access 'https://example.com/repo.git': The requested URL returned error: 403 Forbidden
+  fatal: HTTP request failed
 
-Can you run the same tests under strace or similar, and gather the
-relevant outputs?  Otherwise it's probably very hard to say what is
-going wrong.
+and after:
 
-In particular we've had some reports on lustre that boiled down to
-"impossible" returns from libc functions, not git issues.  It's hard to
-say without some evidence.
+  $ git clone https://example.com/repo.git
+  Cloning into 'repo'...
+  fatal: unable to access 'https://example.com/repo.git': The requested URL returned error: 403 Forbidden
 
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ remote-curl.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/remote-curl.c b/remote-curl.c
+index 9abe4b7..60eda63 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -216,8 +216,7 @@ static struct discovery* discover_refs(const char *service, int for_push)
+ 		die("Authentication failed for '%s'", url);
+ 	default:
+ 		show_http_message(&type, &buffer);
+-		http_error(url);
+-		die("HTTP request failed");
++		die("unable to access '%s': %s", url, curl_errorstr);
+ 	}
+ 
+ 	last= xcalloc(1, sizeof(*last_discovery));
+-- 
+1.8.2.rc0.33.gd915649
