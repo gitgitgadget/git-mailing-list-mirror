@@ -1,88 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] perl: redirect stderr to /dev/null instead of
- closing
-Date: Fri, 05 Apr 2013 11:57:19 -0700
-Message-ID: <7vsj34byb4.fsf@alter.siamese.dyndns.org>
-References: <20130404011653.GA28492@dcvr.yhbt.net>
- <801ebb2a75d7cddfeee70eb86e8854c78d22eb3e.1365107899.git.trast@inf.ethz.ch>
- <20130405144828.GX6137@machine.or.cz>
+From: Simon Ruderich <simon@ruderich.org>
+Subject: [PATCH v3 3/3] diffcore-pickaxe: respect --no-textconv
+Date: Fri, 5 Apr 2013 15:16:30 +0200
+Message-ID: <20130405131630.GA23017@ruderich.org>
+References: <7vr4iqi2uw.fsf@alter.siamese.dyndns.org>
+ <7d36738417942b594c185953115a244ad6f3c7a0.1365105971.git.simon@ruderich.org>
+ <vpq7gkhqvbu.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>,
-	Marcin Owsiany <marcin@owsiany.pl>
-To: Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:10:48 2013
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:11:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWNF-0001b9-CV
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:53:53 +0200
+	id 1UOWHk-0002u6-DY
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:48:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162498Ab3DES5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 14:57:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38565 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1162494Ab3DES5W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 14:57:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E5031446B;
-	Fri,  5 Apr 2013 18:57:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3Se2z66msRrTbEpabKHEDMGy02Y=; b=bPECTF
-	bUMcC3EFn54f9986i71TaLdgdsEIueFXuA78GgC+o6B+JRJmlMqUCHMqjcFHe80T
-	SBb++4K6+quKIPdHJ7lXlOkJsvHWP6VZfe1W+5gKbxMiqjr11NaRflmM51UHZnWJ
-	URwXlM+V7DJkhF7uM2rZ2n2MXc61wZ1arKOFk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Hw+TaPTHo9/pxackE6ig4lVWo3+Yd1FA
-	z9KzkVdbL1/l3mlzeHL4Sxql0LUofZU4OR6JLKy0PpCVLO/T4PbFFy0y2caHbkpw
-	xCgWKz4NYs+kW2dtMS1OsBWxlq2+VEk5XJlq9yk5L26DGezeeKNMtufciAYRogan
-	uhLRzpihxKU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9560D1446A;
-	Fri,  5 Apr 2013 18:57:21 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 02C8614468; Fri,  5 Apr
- 2013 18:57:20 +0000 (UTC)
-In-Reply-To: <20130405144828.GX6137@machine.or.cz> (Petr Baudis's message of
- "Fri, 5 Apr 2013 16:48:28 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A514D63E-9E22-11E2-B1BD-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1161655Ab3DENQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 09:16:39 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:33845 "EHLO
+	zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753372Ab3DENQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 09:16:38 -0400
+Received: from localhost (pD9E96A4A.dip.t-dialin.net [::ffff:217.233.106.74])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by zucker.schokokeks.org with ESMTPSA; Fri, 05 Apr 2013 15:16:31 +0200
+  id 0000000000000023.00000000515ECEAF.000061AF
+Content-Disposition: inline
+In-Reply-To: <vpq7gkhqvbu.fsf@grenoble-inp.fr>
+User-Agent: Mutt/1.5.21 (2013-03-19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220194>
 
-Petr Baudis <pasky@ucw.cz> writes:
+git log -S doesn't respect --no-textconv:
 
->> >  		} elsif ($pid == 0) {
->> > -			if (defined $opts{STDERR}) {
->> > -				close STDERR;
->> > -			}
->> >  			if ($opts{STDERR}) {
->> >  				open (STDERR, '>&', $opts{STDERR})
->> >					or die "dup failed: $!";
->> 
->> Indeed.  Thanks for pointing that out.
->
->   I'm sorry, I don't follow. Doesn't this just break the STDERR option
-> altogether as we will try to dup2() over an already open file
-> descriptor? We do need to close STDERR if we are going to reopen it,
-> I think.
+    $ echo '*.txt diff=wrong' > .gitattributes
+    $ git -c diff.wrong.textconv='xxx' log --no-textconv -Sfoo
+    error: cannot run xxx: No such file or directory
+    fatal: unable to read files to diff
 
-When $opts{STDERR} is 2, what the three lines the proposed patch
-removes did is actively wrong, because you dup2 the fd you just
-closed.
+Reported-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Signed-off-by: Simon Ruderich <simon@ruderich.org>
+---
+On Fri, Apr 05, 2013 at 09:40:21AM +0200, Matthieu Moy wrote:
+> While we're there, we could test -G --no-textconv too.
 
-When $opts{STDERR} is 1, it seems to do the right thing with or
-without the "close STDERR" in front.  Isn't this because the usual
-"open($fd, <<<anything>>>) closes $fd as necessary" applies to this
-case as well?
+Hello Matthieu,
 
-So, I am not sure what you are viewing as a problem.  Puzzled...
+Good idea, I've added it.
+
+Regards
+Simon
+
+ diffcore-pickaxe.c     | 12 ++++++++----
+ t/t4209-log-pickaxe.sh | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 4 deletions(-)
+
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index 3124f49..26ddf00 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -86,8 +86,10 @@ static int diff_grep(struct diff_filepair *p, struct diff_options *o,
+ 	if (diff_unmodified_pair(p))
+ 		return 0;
+ 
+-	textconv_one = get_textconv(p->one);
+-	textconv_two = get_textconv(p->two);
++	if (DIFF_OPT_TST(o, ALLOW_TEXTCONV)) {
++		textconv_one = get_textconv(p->one);
++		textconv_two = get_textconv(p->two);
++	}
+ 
+ 	mf1.size = fill_textconv(textconv_one, p->one, &mf1.ptr);
+ 	mf2.size = fill_textconv(textconv_two, p->two, &mf2.ptr);
+@@ -201,8 +203,10 @@ static int has_changes(struct diff_filepair *p, struct diff_options *o,
+ 	if (!o->pickaxe[0])
+ 		return 0;
+ 
+-	textconv_one = get_textconv(p->one);
+-	textconv_two = get_textconv(p->two);
++	if (DIFF_OPT_TST(o, ALLOW_TEXTCONV)) {
++		textconv_one = get_textconv(p->one);
++		textconv_two = get_textconv(p->two);
++	}
+ 
+ 	/*
+ 	 * If we have an unmodified pair, we know that the count will be the
+diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+index eed7273..38fb80f 100755
+--- a/t/t4209-log-pickaxe.sh
++++ b/t/t4209-log-pickaxe.sh
+@@ -80,6 +80,20 @@ test_expect_success 'log -G -i (match)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'log -G --textconv (missing textconv tool)' '
++	echo "* diff=test" >.gitattributes &&
++	test_must_fail git -c diff.test.textconv=missing log -Gfoo &&
++	rm .gitattributes
++'
++
++test_expect_success 'log -G --no-textconv (missing textconv tool)' '
++	echo "* diff=test" >.gitattributes &&
++	git -c diff.test.textconv=missing log -Gfoo --no-textconv >actual &&
++	>expect &&
++	test_cmp expect actual &&
++	rm .gitattributes
++'
++
+ test_expect_success 'log -S (nomatch)' '
+ 	git log -Spicked --format=%H >actual &&
+ 	>expect &&
+@@ -116,4 +130,18 @@ test_expect_success 'log -S -i (nomatch)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'log -S --textconv (missing textconv tool)' '
++	echo "* diff=test" >.gitattributes &&
++	test_must_fail git -c diff.test.textconv=missing log -Sfoo &&
++	rm .gitattributes
++'
++
++test_expect_success 'log -S --no-textconv (missing textconv tool)' '
++	echo "* diff=test" >.gitattributes &&
++	git -c diff.test.textconv=missing log -Sfoo --no-textconv >actual &&
++	>expect &&
++	test_cmp expect actual &&
++	rm .gitattributes
++'
++
+ test_done
+-- 
+1.8.2
+
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
