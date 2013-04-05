@@ -1,118 +1,100 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 1/7] remote-bzr: fix directory renaming
-Date: Fri,  5 Apr 2013 21:49:17 -0600
-Message-ID: <1365220163-13581-2-git-send-email-felipe.contreras@gmail.com>
-References: <1365220163-13581-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christophe Simonis <christophe@kn.gl>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:22:05 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Fri, 05 Apr 2013 10:07:42 -0700
+Message-ID: <7vfvz4dhy9.fsf@alter.siamese.dyndns.org>
+References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+ <CA+55aFz1D_dMtMHHMpiGi3KL=Y-m4DVxHVr=1ZX8zYWQ2TPvwA@mail.gmail.com>
+ <CALkWK0nNjvV5VGvT_eaubFoOhMnJ-N8FECAayd5A2K3BzeRh6Q@mail.gmail.com>
+ <CA+55aFyQwJfiYo06y1bRNpKT6wOquhG9a9M_4YvLG_UT3b34-w@mail.gmail.com>
+ <515DEE86.3020301@web.de> <7vd2uagd10.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kQ8qYXHKr4e93A1dh3Y1vL+HZvMR_1xtKkUr-_7bMS6Q@mail.gmail.com>
+ <7vy5cyexuf.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kpf+AAzrLuqKQx5iv3nNKJ48R5etcBrcdoG46Z1ipgbQ@mail.gmail.com>
+ <7vli8xgahc.fsf@alter.siamese.dyndns.org>
+ <CALkWK0mcii_YGqiQTxhSOfgzn7MOHO0TEO3Rx3cRQLOi1ij5Tg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git List <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:22:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWSD-0001b9-06
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:59:01 +0200
+	id 1UOWLc-0002u6-HK
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:52:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756843Ab3DFDvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 23:51:01 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:54871 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756470Ab3DFDvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 23:51:00 -0400
-Received: by mail-oa0-f54.google.com with SMTP id n12so4617903oag.27
-        for <git@vger.kernel.org>; Fri, 05 Apr 2013 20:51:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=fb19jmACJR4S6J6w6MIw6Nb8/FoH8O5i6d3MomJevCc=;
-        b=SHlovBgjckQcaMo6vO380mhLFPi+OTaC9P/u4Jane6kFNNlxmnV2pikmJDlUTwfAtl
-         mtUvFRUrMehX6apuPcMtHsh8L8ivMLc+sHAee9hW9FZeF/L07FdE+Fz1bTpC7m51WeRn
-         Ny1UaGp5cJ2MJLyH1ebRpL3ahZmTBUrTrVXT/LYzZaFPqsfKwwYo6BGzVQWeZekgBfkj
-         h4qxWgHiHYCiRiBD3gKx+C4lmjeEOZbt/zD1NC6kTLkynamO6aEhhAwHfgTxI99Ia6zy
-         zCKGwPeOZudG2tf4BEYJN95qdxmQgz9TdXXgG4DpIMYhMAq4aVwxU8SucdE8Q1GJrDXV
-         XLfA==
-X-Received: by 10.60.37.68 with SMTP id w4mr9921741oej.62.1365220260181;
-        Fri, 05 Apr 2013 20:51:00 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id a10sm15192349oez.1.2013.04.05.20.50.41
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 05 Apr 2013 20:50:59 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2
-In-Reply-To: <1365220163-13581-1-git-send-email-felipe.contreras@gmail.com>
+	id S1162080Ab3DERHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 13:07:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54254 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1162050Ab3DERHp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 13:07:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D43321476E;
+	Fri,  5 Apr 2013 17:07:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CLygclVEr0aUvHaZHFNUcN6aM5s=; b=owz+sY
+	SMy8oXk4+Rv9bWM2ddHS/DjTWpmWhBo0q2zcdTB2RSFFe+zmSGB/arwWf3j7Ch+U
+	H0gLvSvZIrIFDlxD/PxdA3Q7wQmsP7guY3VWHIMSqW6ACUVQR1alboyzTkML1T6w
+	NNEkCmPX658cbwLkrTroosukyHrYeHNGrzGIQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WMDhUhhFH4DDCLsEDNQfHrY0jEcOupGP
+	uoqwM5+7Tm/d8TTwa8j1TPslyNuHGhY/CGRupD0NsdU2ViJQRjcfiE3BeLo/Fum5
+	un8oOXK2hbELyHLXGogaPV+c5jtYD+YqzkAFggCJ/jEVY087lR++ihiy1yy9wIJO
+	rrjuujtSmLE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C89401476D;
+	Fri,  5 Apr 2013 17:07:44 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 384F21476B; Fri,  5 Apr
+ 2013 17:07:44 +0000 (UTC)
+In-Reply-To: <CALkWK0mcii_YGqiQTxhSOfgzn7MOHO0TEO3Rx3cRQLOi1ij5Tg@mail.gmail.com>
+ (Ramkumar Ramachandra's message of "Fri, 5 Apr 2013 04:44:45 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 550403B8-9E13-11E2-82BE-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220206>
 
-From: Christophe Simonis <christophe@kn.gl>
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Git does not handle directories, renaming a directory is renaming every
-files in this directory.
+> Junio C Hamano wrote:
+>> "git log -p .gitmodules" would be a way to review what changed in
+>> the information about submodules.  Don't you need "git log-link" for
+>> exactly the same reason why you need "git diff-link" in the first
+>> place?
+>>
+>> So you may not have suggested it, but I suspect that was only
+>> because you haven't had enough time to think things through.
+>
+> What is this git log -p .gitmodules doing?  It's walking down the
+> commit history, and picking out the commits in which that blob
+> changed.  Then it's diffing the blobs in those commits with each
+> other.  Why is git log -p <link> any different?  We already know how
+> to diff blobs, and we just need a way to diff links.
 
-[fc: added tests]
+You already forget what you invented "git diff-link" as a "solution"
+for, perhaps?
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-bzr |  8 +++++++-
- contrib/remote-helpers/test-bzr.sh    | 24 ++++++++++++++++++++++++
- 2 files changed, 31 insertions(+), 1 deletion(-)
+By recording the submodules themselve and information _about_ the
+submodules separately (the latter is in .gitmodules), "git diff A"
+can show the difference in submodule A, while "git diff .gitmodules"
+can show a change, which is a possibly in-working-tree-only proposed
+change, in information about submoudules.
 
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index c5822e4..a7d041b 100755
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -191,7 +191,13 @@ def get_filechanges(cur, prev):
-         modified[path] = fid
-     for oldpath, newpath, fid, kind, mod, _ in changes.renamed:
-         removed[oldpath] = None
--        modified[newpath] = fid
-+        if kind == 'directory':
-+            lst = cur.list_files(from_dir=newpath, recursive=True)
-+            for path, file_class, kind, fid, entry in lst:
-+                if kind != 'directory':
-+                    modified[newpath + '/' + path] = fid
-+        else:
-+            modified[newpath] = fid
- 
-     return modified, removed
- 
-diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
-index 8450432..d26e5c7 100755
---- a/contrib/remote-helpers/test-bzr.sh
-+++ b/contrib/remote-helpers/test-bzr.sh
-@@ -126,4 +126,28 @@ test_expect_success 'special modes' '
-   test_cmp expected actual
- '
- 
-+cat > expected <<EOF
-+100644 blob 54f9d6da5c91d556e6b54340b1327573073030af	content
-+100755 blob 68769579c3eaadbe555379b9c3538e6628bae1eb	executable
-+120000 blob 6b584e8ece562ebffc15d38808cd6b98fc3d97ea	link
-+040000 tree 35c0caa46693cef62247ac89a680f0c5ce32b37b	movedir-new
-+EOF
-+
-+test_expect_success 'moving directory' '
-+  (cd bzrrepo &&
-+  mkdir movedir &&
-+  echo one > movedir/one &&
-+  echo two > movedir/two &&
-+  bzr add movedir &&
-+  bzr commit -m movedir &&
-+  bzr mv movedir movedir-new &&
-+  bzr commit -m movedir-new) &&
-+
-+  (cd gitrepo &&
-+  git pull &&
-+  git ls-tree HEAD > ../actual) &&
-+
-+  test_cmp expected actual
-+'
-+
- test_done
--- 
-1.8.2
+Once you start recording the latter also at path "A", it becomes
+unclear what "git diff A" should show.
+
+That is what I said in the message, to which you invented "diff-link"
+as a solution to the "unclear"-ness.
+
+Am I misremembering the flow of discussion in this thread?
