@@ -1,67 +1,85 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 00/13] remote-hg: general updates
-Date: Fri, 5 Apr 2013 05:45:13 -0600
-Message-ID: <CAMP44s3eMe9O12Jp7LRoVYy-Hf_9+cuVTcex5u51yERj+xKO8w@mail.gmail.com>
-References: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com>
-	<20130402200948.GF2222@serenity.lan>
-	<2670C2C0-E30F-47DA-8901-899FEE11059E@quendi.de>
-	<CAMP44s02PUGctgacuGRw3p8uEXhowZJWJjdq0g9aO9bBbpnv2w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, gitifyhg@googlegroups.com
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Sat Apr 06 18:55:19 2013
+Subject: [RFC/PATH 2/4] remote-hg: improve node traversing
+Date: Fri,  5 Apr 2013 05:36:17 -0600
+Message-ID: <1365161779-32170-3-git-send-email-felipe.contreras@gmail.com>
+References: <1365161779-32170-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Max Horn <max@quendi.de>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 06 18:55:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWFf-0002u6-Ms
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:46:04 +0200
+	id 1UOWFY-0002u6-QR
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:45:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765819Ab3DELpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 07:45:16 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:39699 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752308Ab3DELpP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 07:45:15 -0400
-Received: by mail-lb0-f182.google.com with SMTP id z13so3589987lbh.41
-        for <git@vger.kernel.org>; Fri, 05 Apr 2013 04:45:14 -0700 (PDT)
+	id S1753774Ab3DELhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 07:37:24 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:60366 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752332Ab3DELhX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 07:37:23 -0400
+Received: by mail-ob0-f170.google.com with SMTP id uy19so1409198obc.1
+        for <git@vger.kernel.org>; Fri, 05 Apr 2013 04:37:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=LIvFOzkuMySEJoDna9uSeGbXRoYeqeNZqcvbZSTCYQA=;
-        b=Nhm5Y6N/+Ijn3yr7tipw9mZTVOHBrR5r8wj7M4FhhmzSq/Og890/+94Lss/Gt/xPUr
-         rxZSqoqwNsUuSQ2Ey45nGmnwiDUbhm0eEFbO62ZKzPHRqSe9bGCVTZhEy0UxoxkvhhVR
-         WXqwwbosWchjB/SY88GwN7701UzEHIz7HwQu+YfxoHVtTgOJAvTsEzLyb0DgARzvQla9
-         l3LPmZ9mL+7C8FEJm4o2Dtmda+3PeSwcNciBQXUDcJ2oUdOoQRCCxLvX/LiWartJ8AZu
-         Z4iZ6TvZeapbzBFpJB7a/9VvMQAyTItup3zFRaDN8jWB7WTdOv/ap9GstL2U4XnL8N2h
-         WGbQ==
-X-Received: by 10.112.41.136 with SMTP id f8mr5698358lbl.121.1365162314059;
- Fri, 05 Apr 2013 04:45:14 -0700 (PDT)
-Received: by 10.114.20.36 with HTTP; Fri, 5 Apr 2013 04:45:13 -0700 (PDT)
-In-Reply-To: <CAMP44s02PUGctgacuGRw3p8uEXhowZJWJjdq0g9aO9bBbpnv2w@mail.gmail.com>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=cU92aHW1Np3vCMQWh4WADA/5xWToAuYcfsJ3QhDaH5Y=;
+        b=advZmH9PZroBv+K/iL+husyB6Gpg5XcfeAb6iR8HTvmu372aNx19IApbTfSttVZXOg
+         EO6clCOJWnz3bytn2VsIxguCqOebz3zJ6xtixATp1kJIjYoxl/DJaV8D+h23ggQmnBF0
+         GZbAyHMSLhe0/TnzuzMBIktbtejkLckPSaoRvnrWyT++gLUBQCsrUqJzZs+GKHCsBYDK
+         2amvycp9vhRo3PpvwRQZEKGvRzpHLGkPhsCoZzulFpP01RgIrrP6pcfu1QZAjkMpMKn6
+         SPxdS3ds/PtREF08vixi0zPjWAKQcYdvKecfZKwCaxRv0L4A+8Br9QPbXE9rMrjA+kzo
+         s56Q==
+X-Received: by 10.182.43.103 with SMTP id v7mr7651106obl.17.1365161841763;
+        Fri, 05 Apr 2013 04:37:21 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id l4sm11895407oek.3.2013.04.05.04.37.20
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 05 Apr 2013 04:37:20 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2
+In-Reply-To: <1365161779-32170-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220169>
 
-On Thu, Apr 4, 2013 at 10:14 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Tue, Apr 2, 2013 at 4:23 PM, Max Horn <max@quendi.de> wrote:
+We won't be able to count the unmarked commits, but we are not going to
+be able to do that anyway when we switch to SHA-1 ids.
 
->> * internally, the marks are using the hg sha1s instead of the hg rev ids. The latter are not necessarily invariant, and using the sha1s makes it much easier to recover from semi-broken states.
->
-> I will investigate the pros and cons of this, but either way it's not
-> something people are going to immediately need (I doubt the
-> semi-broken states will happen again).
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-helpers/git-remote-hg | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-And another one bites the dust:
-https://github.com/felipec/git/commits/fc/remote/hg-noteids
-
+diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+index a8591a2..02fda2d 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -314,12 +314,16 @@ def export_ref(repo, name, kind, head):
+     revs = xrange(tip, head.rev() + 1)
+     count = 0
+ 
+-    revs = [rev for rev in revs if not marks.is_marked(rev)]
+-
+     for rev in revs:
+ 
+         c = repo[rev]
+-        (manifest, user, (time, tz), files, desc, extra) = repo.changelog.read(c.node())
++        node = c.node()
++
++        if marks.is_marked(c.hex()):
++            count += 1
++            continue
++
++        (manifest, user, (time, tz), files, desc, extra) = repo.changelog.read(node)
+         rev_branch = extra['branch']
+ 
+         author = "%s %d %s" % (fixup_user(user), time, gittz(tz))
 -- 
-Felipe Contreras
+1.8.2
