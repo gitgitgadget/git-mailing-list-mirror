@@ -1,61 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] diffcore-pickaxe: unify setup and teardown code
- between log -S/-G
-Date: Fri, 5 Apr 2013 01:45:24 -0400
-Message-ID: <20130405054524.GB12705@sigill.intra.peff.net>
-References: <7v1uapfuyp.fsf@alter.siamese.dyndns.org>
- <1365137126-21659-1-git-send-email-gitster@pobox.com>
- <1365137126-21659-3-git-send-email-gitster@pobox.com>
- <20130405052810.GA29815@sigill.intra.peff.net>
- <7vk3ohedn1.fsf@alter.siamese.dyndns.org>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: Re: [PATCH v2 11/13] remote-hg: force remote push
+Date: Fri, 5 Apr 2013 08:31:48 +0200
+Message-ID: <kjlr4o$jil$1@ger.gmane.org>
+References: <1365089422-8250-1-git-send-email-felipe.contreras@gmail.com> <1365089422-8250-12-git-send-email-felipe.contreras@gmail.com> <87y5cyqhya.fsf@59A2.org> <CAMP44s1b_SWkVXe2Vyzs2yj1M9Z-2KcCXbp9LCJ_oWxuC+2pAg@mail.gmail.com> <87ppyaqcie.fsf@59A2.org> <CAMP44s16Yt0mL8FKXMVgLBXw7s9_S8hGyS0YNHX7GrsAXYNDfg@mail.gmail.com> <87li8yqayf.fsf@59A2.org> <CAMP44s16NcTBLWuUR9bb6KaspJYYcfsWVyF9NVO4gxP-gXr4WA@mail.gmail.com> <87eheqq6dk.fsf@59A2.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 05 07:46:02 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="Windows-1252";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 05 08:32:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNzTM-0006Ai-Jq
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 07:46:00 +0200
+	id 1UO0CV-0003Q9-QR
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 08:32:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752195Ab3DEFpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 01:45:31 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56848 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751162Ab3DEFpb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 01:45:31 -0400
-Received: (qmail 11160 invoked by uid 107); 5 Apr 2013 05:47:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Apr 2013 01:47:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2013 01:45:24 -0400
-Content-Disposition: inline
-In-Reply-To: <7vk3ohedn1.fsf@alter.siamese.dyndns.org>
+	id S1161578Ab3DEGcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 02:32:10 -0400
+Received: from plane.gmane.org ([80.91.229.3]:45511 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161148Ab3DEGcJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 02:32:09 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UO0CN-0003Iy-QK
+	for git@vger.kernel.org; Fri, 05 Apr 2013 08:32:31 +0200
+Received: from dsdf-4db54c8b.pool.mediaways.net ([77.181.76.139])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Apr 2013 08:32:31 +0200
+Received: from jojo by dsdf-4db54c8b.pool.mediaways.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Apr 2013 08:32:31 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dsdf-4db54c8b.pool.mediaways.net
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220149>
 
-On Thu, Apr 04, 2013 at 10:43:14PM -0700, Junio C Hamano wrote:
+Jed Brown wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Thu, Apr 4, 2013 at 2:48 PM, Jed Brown <jed@59a2.org> wrote:
+...
+>>> We have
+>>> to assume that every Git (remote-hg) User is dealing with Hg Team
+>>
+>> No, we don't.
+>
+> Really?  If there is no Hg Team, why bother with an Hg upstream?
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I notice that you are stuck factoring out not just the setup, but also
-> > the cleanup, and I wondered if things could be made even simpler by just
-> > encapsulating the checking logic in a callback; then the setup and
-> > cleanup flow more naturally, as they are in a single function wrapper.
-> >
-> > Like this, which ends up saving 20 lines rather than adding 7:
-> 
-> Oh, this is one of those many times I am reminded why I love having
-> you in the reviewer/contributor pool ;-)
-
-I didn't actually test that patch beyond compilation (but it's
-_obviously_ correct, right?), and I'm about to go to bed. Do you want to
-take care of adapting your commit message to it?
-
--Peff
+Huh? the counterpart of "every user" wpuld be "some users" and not "no user" 
+or "no HG team", isn't it? 
