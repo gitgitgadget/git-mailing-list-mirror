@@ -1,240 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] diffcore-pickaxe: unify setup and teardown code
- between log -S/-G
-Date: Fri, 5 Apr 2013 01:28:10 -0400
-Message-ID: <20130405052810.GA29815@sigill.intra.peff.net>
-References: <7v1uapfuyp.fsf@alter.siamese.dyndns.org>
- <1365137126-21659-1-git-send-email-gitster@pobox.com>
- <1365137126-21659-3-git-send-email-gitster@pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http-backend: respect GIT_NAMESPACE with dumb clients
+Date: Thu, 04 Apr 2013 22:34:49 -0700
+Message-ID: <7vobdtee12.fsf@alter.siamese.dyndns.org>
+References: <CAAvHm8PCQx18Gk2S7dicG+_GksjFqVLfPNCbism1sHnPUMDNzg@mail.gmail.com>
+ <1365091293-23758-1-git-send-email-jkoleszar@google.com>
+ <7v6202jjhx.fsf@alter.siamese.dyndns.org>
+ <CAAvHm8NyJ3nRZPygy+grMw5BLhLe8eWfEBNfK1tkC8Y34jRynA@mail.gmail.com>
+ <20130405023516.GA32290@leaf> <20130405025655.GA25970@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 05 07:28:53 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Josh Triplett <josh@joshtriplett.org>,
+	John Koleszar <jkoleszar@google.com>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 05 07:35:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UNzCi-00007B-PA
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 07:28:49 +0200
+	id 1UNzJI-0005dY-4Q
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Apr 2013 07:35:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161462Ab3DEF2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 01:28:18 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56819 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161033Ab3DEF2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 01:28:18 -0400
-Received: (qmail 10916 invoked by uid 107); 5 Apr 2013 05:30:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Apr 2013 01:30:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2013 01:28:10 -0400
-Content-Disposition: inline
-In-Reply-To: <1365137126-21659-3-git-send-email-gitster@pobox.com>
+	id S1161289Ab3DEFey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 01:34:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55772 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161033Ab3DEFex (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 01:34:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15D2C128F1;
+	Fri,  5 Apr 2013 05:34:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xQX0VjDIE6E1J/c8YDLBCZIjRNY=; b=CB5qC8
+	WItFk57ycCFk9HMwCSn+hWiR0r4UbszWmFpztJ1UuAVhFacHF0wG2MQs8HtsXRaw
+	yblocM1SxKKBMauPhdO6ajZ+lo0zr8cr0zxoCzn6Ejja2gXTK/qijXSjV+xr/6f8
+	5b+lgewKy1pi3EahDAinopy/g0yFt0HNbq6t0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CLKpHs+CluVPE3BnuWJJlcKhTCVOymvQ
+	nWhjxMn5MI8C7U5/+HK2CYYHtP0RN8LDh7uF2Cew5FWw6E155HUgiSwqkZyXOqzA
+	Xd2lfKbQLW9DNFXHk5OSkiyRMdhR/e/EeW+ZMsV7bDJjw7fdWBAN3HcEbMlDNWKb
+	HZPn8G/r5eU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BFA2128F0;
+	Fri,  5 Apr 2013 05:34:52 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8255C128ED; Fri,  5 Apr
+ 2013 05:34:51 +0000 (UTC)
+In-Reply-To: <20130405025655.GA25970@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 4 Apr 2013 22:56:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 89C14F9A-9DB2-11E2-8070-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220145>
 
-On Thu, Apr 04, 2013 at 09:45:26PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> The logic to decide early to do nothing and prepare the data to be
-> inspected are the same between has_changes() and diff_grep().
-> Introduce pickaxe_setup() helper to share the same code.
-> 
-> Similarly, introduce pickaxe_finish_filepair() to clean up after
-> these two functions are done with a filepair.
+> Yeah, that makes sense. I think we'd want something like the (totally
+> untested) patch below. And the tests I provided for t5551 should be
+> amended to set up a HEAD within the namespace, should make the resulting
+> clone non-bare, and should confirm that we check out the correct HEAD.
+>
+> diff --git a/http-backend.c b/http-backend.c
+> index 8144f3a..84ba7f9 100644
+> --- a/http-backend.c
+> +++ b/http-backend.c
+> @@ -376,6 +376,14 @@ static int show_text_ref(const char *name, const unsigned char *sha1,
+>  	return 0;
+>  }
+>  
+> +static void get_head(char *arg)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +	head_ref_namespaced(show_text_ref, &buf);
+> +	send_strbuf("text/plain", &buf);
+> +	strbuf_release(&buf);
+> +}
 
-All three patches look fine to me.
+You identified the right place to patch, but I think we need a bit
+more than this.
 
-I notice that you are stuck factoring out not just the setup, but also
-the cleanup, and I wondered if things could be made even simpler by just
-encapsulating the checking logic in a callback; then the setup and
-cleanup flow more naturally, as they are in a single function wrapper.
+The show_text_ref() function gives "SHA-1 <TAB> refname". It is
+likely that the dumb client will ignore the trailing part of that
+output, but let's avoid a hack that we would not want see other
+implementations imitate.
 
-Like this, which ends up saving 20 lines rather than adding 7:
+One advantage dumb clients has over smart ones is that they can read
+HEAD that is a textual symref from a dumb server and learn which
+branch is the default one (remote.c::guess_remote_head()) without
+guessing.  I think this function should:
 
----
- diffcore-pickaxe.c | 118 +++++++++++++++--------------------
- 1 file changed, 49 insertions(+), 69 deletions(-)
+ - Turn "HEAD" into a namespaced equivalent;
 
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index cadb071..63722f8 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -8,7 +8,12 @@
- #include "xdiff-interface.h"
- #include "kwset.h"
- 
--typedef int (*pickaxe_fn)(struct diff_filepair *p, struct diff_options *o, regex_t *regexp, kwset_t kws);
-+typedef int (*pickaxe_fn)(mmfile_t *one, mmfile_t *two,
-+			  struct diff_options *o,
-+			  regex_t *regexp, kwset_t kws);
-+
-+static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
-+			 regex_t *regexp, kwset_t kws, pickaxe_fn fn);
- 
- static void pickaxe(struct diff_queue_struct *q, struct diff_options *o,
- 		    regex_t *regexp, kwset_t kws, pickaxe_fn fn)
-@@ -22,7 +27,7 @@ static void pickaxe(struct diff_queue_struct *q, struct diff_options *o,
- 		/* Showing the whole changeset if needle exists */
- 		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
--			if (fn(p, o, regexp, kws))
-+			if (pickaxe_match(p, o, regexp, kws, fn))
- 				return; /* do not munge the queue */
- 		}
- 
-@@ -37,7 +42,7 @@ static void pickaxe(struct diff_queue_struct *q, struct diff_options *o,
- 		/* Showing only the filepairs that has the needle */
- 		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
--			if (fn(p, o, regexp, kws))
-+			if (pickaxe_match(p, o, regexp, kws, fn))
- 				diff_q(&outq, p);
- 			else
- 				diff_free_filepair(p);
-@@ -74,64 +79,33 @@ static int diff_grep(struct diff_filepair *p, struct diff_options *o,
- 	line[len] = hold;
- }
- 
--static int diff_grep(struct diff_filepair *p, struct diff_options *o,
-+static int diff_grep(mmfile_t *one, mmfile_t *two,
-+		     struct diff_options *o,
- 		     regex_t *regexp, kwset_t kws)
- {
- 	regmatch_t regmatch;
--	struct userdiff_driver *textconv_one = NULL;
--	struct userdiff_driver *textconv_two = NULL;
--	mmfile_t mf1, mf2;
--	int hit;
-+	struct diffgrep_cb ecbdata;
-+	xpparam_t xpp;
-+	xdemitconf_t xecfg;
- 
--	if (!o->pickaxe[0])
--		return 0;
-+	if (!one)
-+		return !regexec(regexp, two->ptr, 1, &regmatch, 0);
-+	if (!two)
-+		return !regexec(regexp, one->ptr, 1, &regmatch, 0);
- 
--	if (DIFF_OPT_TST(o, ALLOW_TEXTCONV)) {
--		textconv_one = get_textconv(p->one);
--		textconv_two = get_textconv(p->two);
--	}
--
--	if (textconv_one == textconv_two && diff_unmodified_pair(p))
--		return 0;
--
--	mf1.size = fill_textconv(textconv_one, p->one, &mf1.ptr);
--	mf2.size = fill_textconv(textconv_two, p->two, &mf2.ptr);
--
--	if (!DIFF_FILE_VALID(p->one)) {
--		if (!DIFF_FILE_VALID(p->two))
--			hit = 0; /* ignore unmerged */
--		else
--			/* created "two" -- does it have what we are looking for? */
--			hit = !regexec(regexp, mf2.ptr, 1, &regmatch, 0);
--	} else if (!DIFF_FILE_VALID(p->two)) {
--		/* removed "one" -- did it have what we are looking for? */
--		hit = !regexec(regexp, mf1.ptr, 1, &regmatch, 0);
--	} else {
--		/*
--		 * We have both sides; need to run textual diff and see if
--		 * the pattern appears on added/deleted lines.
--		 */
--		struct diffgrep_cb ecbdata;
--		xpparam_t xpp;
--		xdemitconf_t xecfg;
--
--		memset(&xpp, 0, sizeof(xpp));
--		memset(&xecfg, 0, sizeof(xecfg));
--		ecbdata.regexp = regexp;
--		ecbdata.hit = 0;
--		xecfg.ctxlen = o->context;
--		xecfg.interhunkctxlen = o->interhunkcontext;
--		xdi_diff_outf(&mf1, &mf2, diffgrep_consume, &ecbdata,
--			      &xpp, &xecfg);
--		hit = ecbdata.hit;
--	}
--	if (textconv_one)
--		free(mf1.ptr);
--	if (textconv_two)
--		free(mf2.ptr);
--	diff_free_filespec_data(p->one);
--	diff_free_filespec_data(p->two);
--	return hit;
-+	/*
-+	 * We have both sides; need to run textual diff and see if
-+	 * the pattern appears on added/deleted lines.
-+	 */
-+	memset(&xpp, 0, sizeof(xpp));
-+	memset(&xecfg, 0, sizeof(xecfg));
-+	ecbdata.regexp = regexp;
-+	ecbdata.hit = 0;
-+	xecfg.ctxlen = o->context;
-+	xecfg.interhunkctxlen = o->interhunkcontext;
-+	xdi_diff_outf(one, two, diffgrep_consume, &ecbdata,
-+		      &xpp, &xecfg);
-+	return ecbdata.hit;
- }
- 
- static void diffcore_pickaxe_grep(struct diff_options *o)
-@@ -198,9 +172,20 @@ static int has_changes(struct diff_filepair *p, struct diff_options *o,
- 	return cnt;
- }
- 
--static int has_changes(struct diff_filepair *p, struct diff_options *o,
-+static int has_changes(mmfile_t *one, mmfile_t *two,
-+		       struct diff_options *o,
- 		       regex_t *regexp, kwset_t kws)
- {
-+	if (!one)
-+		return contains(two, o, regexp, kws) != 0;
-+	if (!two)
-+		return contains(one, o, regexp, kws) != 0;
-+	return contains(one, o, regexp, kws) != contains(two, o, regexp, kws);
-+}
-+
-+static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
-+			 regex_t *regexp, kwset_t kws, pickaxe_fn fn)
-+{
- 	struct userdiff_driver *textconv_one = NULL;
- 	struct userdiff_driver *textconv_two = NULL;
- 	mmfile_t mf1, mf2;
-@@ -209,6 +194,10 @@ static int has_changes(struct diff_filepair *p, struct diff_options *o,
- 	if (!o->pickaxe[0])
- 		return 0;
- 
-+	/* ignore unmerged */
-+	if (!DIFF_FILE_VALID(p->one) && !DIFF_FILE_VALID(p->two))
-+		return 0;
-+
- 	if (DIFF_OPT_TST(o, ALLOW_TEXTCONV)) {
- 		textconv_one = get_textconv(p->one);
- 		textconv_two = get_textconv(p->two);
-@@ -227,18 +216,9 @@ static int has_changes(struct diff_filepair *p, struct diff_options *o,
- 	mf1.size = fill_textconv(textconv_one, p->one, &mf1.ptr);
- 	mf2.size = fill_textconv(textconv_two, p->two, &mf2.ptr);
- 
--	if (!DIFF_FILE_VALID(p->one)) {
--		if (!DIFF_FILE_VALID(p->two))
--			ret = 0; /* ignore unmerged */
--		else
--			/* created */
--			ret = contains(&mf2, o, regexp, kws) != 0;
--	}
--	else if (!DIFF_FILE_VALID(p->two)) /* removed */
--		ret = contains(&mf1, o, regexp, kws) != 0;
--	else
--		ret = contains(&mf1, o, regexp, kws) !=
--		      contains(&mf2, o, regexp, kws);
-+	ret = fn(DIFF_FILE_VALID(p->one) ? &mf1 : NULL,
-+		 DIFF_FILE_VALID(p->two) ? &mf2 : NULL,
-+		 o, regexp, kws);
- 
- 	if (textconv_one)
- 		free(mf1.ptr);
+ - Run resolve_ref() on the result of the above;
+
+ - Is it a symbolic ref?
+
+   . If it is, then format "ref: <target>\n" into a strbuf and send
+     it (make sure <target> is without the namespace prefix);
+
+   . Otherwise, HEAD is detached. Prepare "%s\n" % sha1_to_hex(sha1),
+     and send it.
