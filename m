@@ -1,82 +1,143 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/9] remote-curl: consistently report repo url for http errors
-Date: Fri, 5 Apr 2013 18:21:14 -0400
-Message-ID: <20130405222114.GE22163@sigill.intra.peff.net>
-References: <20130405221331.GA21209@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Yi, EungJun" <semtlenori@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:59:08 2013
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: [PATCH] fast-export: Allow pruned-references in mark file
+Date: Sat,  6 Apr 2013 19:04:31 +0200
+Message-ID: <1365267871-2904-1-git-send-email-apelisse@gmail.com>
+References: <CALWbr2x4aia4DcdnmfEEBsZwCYasTEp2Jc0jwJgvsUqWSDaWTQ@mail.gmail.com>
+Cc: Antoine Pelisse <apelisse@gmail.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 06 20:00:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWQL-0001b9-MA
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:57:06 +0200
+	id 1UOWaX-0005z6-6t
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:07:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162899Ab3DEWVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 18:21:24 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58246 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1162853Ab3DEWVX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 18:21:23 -0400
-Received: (qmail 18401 invoked by uid 107); 5 Apr 2013 22:23:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Apr 2013 18:23:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2013 18:21:14 -0400
-Content-Disposition: inline
-In-Reply-To: <20130405221331.GA21209@sigill.intra.peff.net>
+	id S1752160Ab3DFREv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Apr 2013 13:04:51 -0400
+Received: from mail-we0-f171.google.com ([74.125.82.171]:38563 "EHLO
+	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751460Ab3DFREu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Apr 2013 13:04:50 -0400
+Received: by mail-we0-f171.google.com with SMTP id d46so3631216wer.16
+        for <git@vger.kernel.org>; Sat, 06 Apr 2013 10:04:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=1toQ1lqYgVsuhesB5RTlzldHWUp4ERgewqEpczsgetU=;
+        b=0giCgFNWdpUsl/QEcot0o4eSbvNPKcidh1/IokpAo7vETwJ+8wUNmTM6oOtPQUk0Ue
+         7D5nKJvIuq55N1xdX0+5trXC8ahcAP+QaebwPLoL0KKbPZ1dBjIZ+r1sd+ykXqYAJOds
+         Yl6MrvJVXMtDS4X1nBSQa/EJ7SuqbsFc7zK+JOP30hivGjwlpiSabuHNxzDt5YcYKqGR
+         UD/Eceq4kZbeK37vtGeZ2nX09lelU+b84EOHt8W5RLLh/lGzA1wa3AYlgiHDogdTBxpa
+         fFRxLTD/6kCnvn2dLIASRF//Ie9cVE4d2e8ptKfuwauvYB29Dv2yQ3Rnq5bdnrh56Q9S
+         eh+Q==
+X-Received: by 10.180.73.212 with SMTP id n20mr4934017wiv.11.1365267889502;
+        Sat, 06 Apr 2013 10:04:49 -0700 (PDT)
+Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
+        by mx.google.com with ESMTPS id bo1sm11357559wib.0.2013.04.06.10.04.48
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 06 Apr 2013 10:04:48 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <CALWbr2x4aia4DcdnmfEEBsZwCYasTEp2Jc0jwJgvsUqWSDaWTQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220250>
 
-When we report http errors in fetching the initial ref
-advertisement, we show the full URL we attempted to use,
-including "info/refs?service=git-upload-pack". While this
-may be useful for debugging a broken server, it is
-unnecessarily verbose and confusing for most cases, in which
-the client user is not even the same person as the owner of
-the repository.
+fast-export can fail because of some pruned-reference when importing a
+mark file.
 
-Let's just show the repository URL; debugging can happen
-with GIT_CURL_VERBOSE, which shows way more useful
-information, anyway.
+The problem happens in the following scenario:
 
-At the same time, let's also make sure to mention the
-repository URL when we report failed authentication
-(previously we said only "Authentication failed"). Knowing
-the URL can help the user realize why authentication failed
-(e.g., they meant to push to remote A, not remote B).
+    $ git fast-export --export-marks=MARKS master
+    (rewrite master)
+    $ git prune
+    $ git fast-export --import-marks=MARKS master
 
-Signed-off-by: Jeff King <peff@peff.net>
+This might fail if some references have been removed by prune
+because some marks will refer to no longer existing commits.
+git-fast-export will not need these objects anyway as they were no
+longer reachable.
+
+We still need to update last_numid so we don't change the mapping
+between marks and objects for remote-helpers.
+Unfortunately, the mark file should not be rewritten without lost marks
+if no new objects has been exported, as we could lose track of the last
+last_numid.
+
+Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
 ---
-This is the same rationale as the latter half of the last patch; if we
-take them all, I'd be happy to see them squashed together.
+ Documentation/git-fast-export.txt |    2 ++
+ builtin/fast-export.c             |   11 +++++++----
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
- remote-curl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/remote-curl.c b/remote-curl.c
-index 5d9f961..6c6714b 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -213,10 +213,10 @@ static struct discovery* discover_refs(const char *service, int for_push)
- 		die("repository '%s' not found", url);
- 	case HTTP_NOAUTH:
- 		show_http_message(&type, &buffer);
--		die("Authentication failed");
-+		die("Authentication failed for '%s'", url);
- 	default:
- 		show_http_message(&type, &buffer);
--		http_error(refs_url, http_ret);
-+		http_error(url, http_ret);
- 		die("HTTP request failed");
- 	}
+diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+index d6487e1..feab7a3 100644
+--- a/Documentation/git-fast-export.txt
++++ b/Documentation/git-fast-export.txt
+@@ -66,6 +66,8 @@ produced incorrect results if you gave these options.
+ 	incremental runs.  As <file> is only opened and truncated
+ 	at completion, the same path can also be safely given to
+ 	\--import-marks.
++	The file will not be written if no new object has been
++	marked/exported.
  
+ --import-marks=<file>::
+ 	Before processing any input, load the marks specified in
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index d380155..f44b76c 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -618,9 +618,12 @@ static void import_marks(char *input_file)
+ 			|| *mark_end != ' ' || get_sha1(mark_end + 1, sha1))
+ 			die("corrupt mark line: %s", line);
+ 
++		if (last_idnum < mark)
++			last_idnum = mark;
++
+ 		object = parse_object(sha1);
+ 		if (!object)
+-			die ("Could not read blob %s", sha1_to_hex(sha1));
++			continue;
+ 
+ 		if (object->flags & SHOWN)
+ 			error("Object %s already has a mark", sha1_to_hex(sha1));
+@@ -630,8 +633,6 @@ static void import_marks(char *input_file)
+ 			continue;
+ 
+ 		mark_object(object, mark);
+-		if (last_idnum < mark)
+-			last_idnum = mark;
+ 
+ 		object->flags |= SHOWN;
+ 	}
+@@ -645,6 +646,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 	struct string_list extra_refs = STRING_LIST_INIT_NODUP;
+ 	struct commit *commit;
+ 	char *export_filename = NULL, *import_filename = NULL;
++	uint32_t lastimportid;
+ 	struct option options[] = {
+ 		OPT_INTEGER(0, "progress", &progress,
+ 			    N_("show progress after <n> objects")),
+@@ -688,6 +690,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 
+ 	if (import_filename)
+ 		import_marks(import_filename);
++	lastimportid = last_idnum;
+ 
+ 	if (import_filename && revs.prune_data.nr)
+ 		full_tree = 1;
+@@ -710,7 +713,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 
+ 	handle_tags_and_duplicates(&extra_refs);
+ 
+-	if (export_filename)
++	if (export_filename && lastimportid != last_idnum)
+ 		export_marks(export_filename);
+ 
+ 	if (use_done_feature)
 -- 
-1.8.2.rc0.33.gd915649
+1.7.9.5
