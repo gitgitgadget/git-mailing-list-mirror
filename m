@@ -1,88 +1,75 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v2 0/4] remote-helpers: trivial test fixes
-Date: Sat, 06 Apr 2013 19:45:22 +0200
-Message-ID: <51605F32.7080303@web.de>
-References: <1365089779-9726-1-git-send-email-felipe.contreras@gmail.com> <51605546.3080503@web.de> <CAMP44s0Lbg-_JKPR6WF6Qhkz7cgweHejA-T_V3mCO73a4iXpNA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 2/2] format-patch: add format.cover-letter configuration
+Date: Sat, 06 Apr 2013 19:43:00 +0200
+Message-ID: <vpq8v4vimhn.fsf@grenoble-inp.fr>
+References: <1365239012-15079-1-git-send-email-felipe.contreras@gmail.com>
+	<1365239012-15079-3-git-send-email-felipe.contreras@gmail.com>
+	<CALkWK0kMTt6wDv6sUVe9CbX-WSx=XH+PF6eQ6oXYFjcp_Yi+aQ@mail.gmail.com>
+	<CAMP44s0Zzdb-1A0ej5Ly_501sv0OOOrHi86GWT9NYkndbiggeg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>,
-	Antoine Pelisse <apelisse@gmail.com>
+Content-Type: text/plain
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Stephen Boyd <bebarino@gmail.com>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 06 20:20:17 2013
+X-From: git-owner@vger.kernel.org Sat Apr 06 20:20:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOXBI-00026r-CP
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:45:36 +0200
+	id 1UOX9D-0008C9-UP
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:43:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755242Ab3DFRp3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Apr 2013 13:45:29 -0400
-Received: from mout.web.de ([212.227.15.3]:51219 "EHLO mout.web.de"
+	id S1753832Ab3DFRnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Apr 2013 13:43:14 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:57070 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755090Ab3DFRp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Apr 2013 13:45:28 -0400
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0M1noI-1UiwRd0TcY-00u0ab; Sat, 06 Apr 2013 19:45:24
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <CAMP44s0Lbg-_JKPR6WF6Qhkz7cgweHejA-T_V3mCO73a4iXpNA@mail.gmail.com>
-X-Provags-ID: V02:K0:SNxewAeSqAz7kYkvjaGW38qb6EpBq+XgsRG1KLxfQxT
- ElxyM3O2LowuekSIc1nMgo43FYKeW+QaCXnQosxkzw8UzvzJ06
- 9e58DS6NaOr7hWWKDzZKG8ihFJ/f6iWg4dwr0lXaHV3s6wuQB6
- gzx5f65iGyak6sbWBoJwIEYnSJxonAcGH170jovUOQMDGYPetw
- 6eQdPPnEB+NEJkjgz43KA==
+	id S1753035Ab3DFRnO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Apr 2013 13:43:14 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r36Hgx4M030078
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 6 Apr 2013 19:42:59 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UOX8n-0001rm-7d; Sat, 06 Apr 2013 19:43:01 +0200
+In-Reply-To: <CAMP44s0Zzdb-1A0ej5Ly_501sv0OOOrHi86GWT9NYkndbiggeg@mail.gmail.com>
+	(Felipe Contreras's message of "Sat, 6 Apr 2013 10:02:32 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 06 Apr 2013 19:43:00 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r36Hgx4M030078
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1365874981.1019@ZsEBprm5qeCg9EboBil/wg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220260>
 
-On 06.04.13 19:29, Felipe Contreras wrote:
-> On Sat, Apr 6, 2013 at 11:03 AM, Torsten B=C3=B6gershausen <tboegi@we=
-b.de> wrote:
->> On 04.04.13 17:36, Felipe Contreras wrote:
->>> Hi,
->>>
->>> A reroll, now we do some checks, just avoid test-lint-duplicates, a=
-nd fix the
->>> outsanding shell portability issue. The rest is the same.
->>>
->>> Felipe Contreras (4):
->>>   remote-bzr: avoid echo -n
->>>   remote-helpers: fix the run of all tests
->>>   remote-bzr: remove stale check code for tests
->>>   remote-hg: fix hg-git test-case
->>>
->>>  contrib/remote-helpers/Makefile          |  1 +
->>>  contrib/remote-helpers/test-bzr.sh       | 16 +---------------
->>>  contrib/remote-helpers/test-hg-hg-git.sh |  1 -
->>>  3 files changed, 2 insertions(+), 16 deletions(-)
->>>
->> Sorry being late, now I installed bzr and hg on one of my machines
->>
->> One defect found: "\s" is not portable on all grep versions
->> A "*" is not a "basic regular expression", so we need to use egrep
->>
->>
->> diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-help=
-ers/test-hg.sh
->> index 5f81dfa..2e80c11 100755
->> --- a/contrib/remote-helpers/test-hg.sh
->> +++ b/contrib/remote-helpers/test-hg.sh
->> @@ -115,7 +115,7 @@ test_expect_success 'update bookmark' '
->>    git push
->>    ) &&
->>
->> -  hg -R hgrepo bookmarks | grep "devel\s\+3:"
->> +  hg -R hgrepo bookmarks | egrep "devel[[:space:]]+3:"
->>  '
->=20
-> I would rather use [ \t] instead.
-That doesn't work on e.g. Mac OS.
-[:space:] is actually portable
-/Torsten
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+>> Perhaps you can clarify this: Controls whether to generate a
+>> cover-letter when format-patch is invoked.  Can be true, false, or
+>> auto.  "auto" generates a cover-letter only when generating more than
+>> one patch.
+>
+> That's good, but I believe if we say it's a boolean, true and false
+> are implied, and then we have an extra "auto".
+
+At the moment, we don't say it's Boolean. I'm not sure it's a good idea
+to say Boolean here, since it would also imply that there's no value
+other than true and false.
+
+Also, you should mention the default value. Something like "Set to true
+to always generate a cover letter. Defaults to false." or so.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
