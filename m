@@ -1,263 +1,113 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Fri,  5 Apr 2013 22:07:58 +0530
-Message-ID: <1365179878-2259-1-git-send-email-artagnon@gmail.com>
-References: <CA+55aFxyyqkS4XyE1as2TdeARce9g9BTK=jdY+XcomNtMdrArg@mail.gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Apr 06 18:59:31 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/13] remote-hg: general updates
+Date: Fri, 05 Apr 2013 18:28:02 -0700
+Message-ID: <7vd2u8bg7x.fsf@alter.siamese.dyndns.org>
+References: <1364929382-1399-1-git-send-email-felipe.contreras@gmail.com>
+ <20130402200948.GF2222@serenity.lan>
+ <2670C2C0-E30F-47DA-8901-899FEE11059E@quendi.de>
+ <CAMP44s3DETFBhexPhEEMP1TZGNrc91266=t16H2t_+VB_4V38w@mail.gmail.com>
+ <EF2F8946-4F60-4659-9215-6C21C9641AB0@quendi.de>
+ <CAMP44s3qAPJtNVsb4gvYd1PunN4c-crxpVJc0K9520eiBO8iwA@mail.gmail.com>
+ <BA2657F2-708B-434E-87D2-D6371806E2D3@quendi.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, gitifyhg@googlegroups.com
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:00:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWKK-0002u6-EK
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:50:52 +0200
+	id 1UOWRi-0001b9-ED
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161999Ab3DEQiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 12:38:06 -0400
-Received: from mail-da0-f48.google.com ([209.85.210.48]:48226 "EHLO
-	mail-da0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161970Ab3DEQiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 12:38:04 -0400
-Received: by mail-da0-f48.google.com with SMTP id p8so1645533dan.7
-        for <git@vger.kernel.org>; Fri, 05 Apr 2013 09:38:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=i18dPUELWE5Iq68q1k+2u+VDLgiYZmp19CLP5cWvyYA=;
-        b=TZNUfbv26YNYmZeM2GXxD7d3CSP3YNhOItPTHBDw8gvCyKBKPwzdgaumh7wrA3PZxB
-         kGkufumx45BiseUtoV7oYCBR41w0mD07/PUhnkzEpkBYWMFxXskAks/I49JMK2NK6myt
-         IoekjqCdBU574EbaCodDs9/BJUirSndgidDAFd4j6usasZot6dVfPq3lCbxFDta2af5K
-         hhBYk2Nzn0zlG+KC31r2NbOS1hUK7yVL+lZIDCMSr0fEJT43gXOq68TOnplvTxm89dDK
-         PY2PP1ItUrl+kznZ4kLDa6X6udEsDus1w2thP1b9Fjr3JWJyDHDYjsap0JNZxqmaFf1F
-         A2qQ==
-X-Received: by 10.68.57.139 with SMTP id i11mr15642982pbq.185.1365179883188;
-        Fri, 05 Apr 2013 09:38:03 -0700 (PDT)
-Received: from localhost.localdomain ([122.174.45.110])
-        by mx.google.com with ESMTPS id is1sm15043011pbc.15.2013.04.05.09.38.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 05 Apr 2013 09:38:02 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.380.g0d4e79b
-In-Reply-To: <CA+55aFxyyqkS4XyE1as2TdeARce9g9BTK=jdY+XcomNtMdrArg@mail.gmail.com>
+	id S1756372Ab3DFB2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 21:28:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49109 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756293Ab3DFB2F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 21:28:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C616610F8D;
+	Sat,  6 Apr 2013 01:28:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oK/Ksnp+W6p67mtGOiMvSpVZVSI=; b=lGVCkg
+	0CQMLUmK3LqpVHnqPtXt06qu2BZovRTEISzY6yl2Ap8CDeWxAKH8/33E2P4RNmFm
+	FF41MC6nnVmC++PHHHNe8bOb2mNXrb9V3xMTSK7qehdqxgYyd/vvCcPsn1oN08zc
+	ZchQLLk6j1DSZV6g32YijcA46r/yPTWRdsRkw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IGHe3Z0lJvpvIU+x//H1aCQz1/YG/VNR
+	064CuCNrlYBoJfoean28bVr1tMAWvL/dfRAIwizdlFdgBcE0FesRhWFBEYawhOtP
+	/XHvjhgSzKB7ksXBpNi+EwSDYmAPu5xwUKi+USeSM0o6K74UWUb2A61TRXAniGUF
+	+iEq2lnw8JQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BCEF310F8C;
+	Sat,  6 Apr 2013 01:28:04 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3144A10F83; Sat,  6 Apr
+ 2013 01:28:04 +0000 (UTC)
+In-Reply-To: <BA2657F2-708B-434E-87D2-D6371806E2D3@quendi.de> (Max Horn's
+ message of "Sat, 6 Apr 2013 00:30:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3A4FE5B4-9E59-11E2-B405-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220178>
 
-Linus Torvalds wrote:
-> So you absolutely need a dirty worktree. You need it for testing, and
-> you need it for merging. Having a model where you don't have a
-> in-progress entity that works as a temporary is absolutely and
-> entirely wrong.
+Max Horn <max@quendi.de> writes:
 
-I agree entirely.  My comment was just a "by the way", and specific to
-how people work with .gitmodules: I didn't imply any strong notions of
-Right or Wrong with respect to dirty worktrees in general.  So, yes:
-links stage and unstage, just like blobs do.
+> OK, I'll try to keep a professional tone from now on :-).
+>
+> Please consider that the willingness of people to collaborate with
+> you in any way is directly related to how you treat them. That
+> includes bug reports. The way you acted towards Jed, who was very
+> calmly and matter-of-factly explaining things, was IMHO completely
+> inappropriate and unacceptable. Indeed, I should augment my list
+> of reasons why people might not want to contribute to remote-hg by
+> one major bullet point: You. And please, don't feel to compelled
+> to tell us that Junio is really the maintainer of remote-hg and
+> not you: Whether this is true or not doesn't matter for this
+> point.
 
-Oh, and I'm currently writing infrastructure to work with links like
-blobs.  Here's a WIP: git cat-link <link> is exactly the same as cat
-<file>, to the end user.
+Only on this point, as the top-level maintainer.  I do not have any
+opinion on technical merits between the two Hg gateways myself.
 
--- 8< --
-From d8a1de6f9075771dde6f1fde9ffa193dce386a17 Mon Sep 17 00:00:00 2001
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Date: Fri, 5 Apr 2013 19:42:56 +0530
-Subject: [PATCH] builtin/cat-link: implement new builtin
+A tool that is in contrib/ follows the contrib/README rule.
 
-This is a simple program that calls unpack_trees() with a custom
-callback that just prints the contents of whatever objects were
-matched using revs.prune_data.  Blobs can be cat'ed directly from the
-filesystem, so this program is primarily useful for links; git
-cat-link <link> shows it up like a blob.
+I do not maintain it. Maintenance is up to the person who asked to
+include it there.  I do ask the people who propose to add something
+in contrib/ to promise that they arrange it to be maintained.
 
-We will use this program to build edit-link.
+I do not even guarantee that they are the best in the breed in their
+respective category. When something is added to contrib/, others can
+raise objections by proposing alternatives, by arguing that tools of
+the nature are better kept out of my tree, etc.  When remote-hg was
+added, I didn't see specific objections against it.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Makefile           |  3 +-
- builtin.h          |  1 +
- builtin/cat-link.c | 83 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- diff-lib.c         | 10 +++----
- diff.h             |  6 ++++
- git.c              |  1 +
- 6 files changed, 98 insertions(+), 6 deletions(-)
- create mode 100644 builtin/cat-link.c
+There is one generic objection to adding anything new in contrib/ I
+have myself, though.
 
-diff --git a/Makefile b/Makefile
-index cd4b6f9..28194d7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -349,7 +349,7 @@ GIT-VERSION-FILE: FORCE
- 
- # CFLAGS and LDFLAGS are for the users to override from the command line.
- 
--CFLAGS = -g -O2 -Wall
-+CFLAGS = -g -O0 -Wall
- LDFLAGS =
- ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
-@@ -893,6 +893,7 @@ BUILTIN_OBJS += builtin/blame.o
- BUILTIN_OBJS += builtin/branch.o
- BUILTIN_OBJS += builtin/bundle.o
- BUILTIN_OBJS += builtin/cat-file.o
-+BUILTIN_OBJS += builtin/cat-link.o
- BUILTIN_OBJS += builtin/check-attr.o
- BUILTIN_OBJS += builtin/check-ignore.o
- BUILTIN_OBJS += builtin/check-ref-format.o
-diff --git a/builtin.h b/builtin.h
-index faef559..be0160d 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -49,6 +49,7 @@ extern int cmd_blame(int argc, const char **argv, const char *prefix);
- extern int cmd_branch(int argc, const char **argv, const char *prefix);
- extern int cmd_bundle(int argc, const char **argv, const char *prefix);
- extern int cmd_cat_file(int argc, const char **argv, const char *prefix);
-+extern int cmd_cat_link(int argc, const char **argv, const char *prefix);
- extern int cmd_checkout(int argc, const char **argv, const char *prefix);
- extern int cmd_checkout_index(int argc, const char **argv, const char *prefix);
- extern int cmd_check_attr(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/cat-link.c b/builtin/cat-link.c
-new file mode 100644
-index 0000000..14dd92b
---- /dev/null
-+++ b/builtin/cat-link.c
-@@ -0,0 +1,83 @@
-+/*
-+ * Copyright (c) 2013 Ramkumar Ramachandra
-+ */
-+#include "cache.h"
-+#include "tree.h"
-+#include "cache-tree.h"
-+#include "unpack-trees.h"
-+#include "commit.h"
-+#include "diff.h"
-+#include "revision.h"
-+
-+static int cat_file(struct cache_entry **src, struct unpack_trees_options *o) {
-+	int cached, match_missing = 1;
-+	unsigned dirty_submodule = 0;
-+	unsigned int mode;
-+	const unsigned char *sha1;
-+	struct cache_entry *idx = src[0];
-+	struct cache_entry *tree = src[1];
-+	struct rev_info *revs = o->unpack_data;
-+	enum object_type type;
-+	unsigned long size;
-+	char *buf;
-+
-+	cached = o->index_only;
-+	if (ce_path_match(idx ? idx : tree, &revs->prune_data)) {
-+		if (get_stat_data(idx, &sha1, &mode, cached, match_missing,
-+					&dirty_submodule, NULL) < 0)
-+			die("Something went wrong!");
-+		buf = read_sha1_file(sha1, &type, &size);
-+		printf("%s", buf);
-+	}
-+	return 0;
-+}
-+
-+int cmd_cat_link(int argc, const char **argv, const char *prefix)
-+{
-+	struct unpack_trees_options opts;
-+	int cached = 1;
-+	struct rev_info revs;
-+	struct tree *tree;
-+	struct tree_desc tree_desc;
-+	struct object_array_entry *ent;
-+
-+	if (argc < 2)
-+		die("Usage: git cat-link <link>");
-+
-+	init_revisions(&revs, prefix);
-+	setup_revisions(argc, argv, &revs, NULL); /* For revs.prune_data */
-+	add_head_to_pending(&revs);
-+
-+	/* Hack to diff against index; we create a dummy tree for the
-+	   index information */
-+	if (!revs.pending.nr) {
-+		struct tree *tree;
-+		tree = lookup_tree(EMPTY_TREE_SHA1_BIN);
-+		add_pending_object(&revs, &tree->object, "HEAD");
-+	}
-+
-+	if (read_cache() < 0)
-+		die("read_cache() failed");
-+	ent = revs.pending.objects;
-+	tree = parse_tree_indirect(ent->item->sha1);
-+	if (!tree)
-+		return error("bad tree object %s",
-+			     ent->name ? ent->name : sha1_to_hex(ent->item->sha1));
-+
-+	memset(&opts, 0, sizeof(opts));
-+	opts.head_idx = 1;
-+	opts.index_only = cached;
-+	opts.diff_index_cached = cached;
-+	opts.merge = 1;
-+	opts.fn = cat_file;
-+	opts.unpack_data = &revs;
-+	opts.src_index = &the_index;
-+	opts.dst_index = NULL;
-+	opts.pathspec = &revs.diffopt.pathspec;
-+	opts.pathspec->recursive = 1;
-+	opts.pathspec->max_depth = -1;
-+
-+	init_tree_desc(&tree_desc, tree->buffer, tree->size);
-+	unpack_trees(1, &tree_desc, &opts);
-+	return 0;
-+}
-diff --git a/diff-lib.c b/diff-lib.c
-index f35de0f..b0ba136 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -246,11 +246,11 @@ static void diff_index_show_file(struct rev_info *revs,
- 		       sha1, sha1_valid, ce->name, dirty_submodule);
- }
- 
--static int get_stat_data(struct cache_entry *ce,
--			 const unsigned char **sha1p,
--			 unsigned int *modep,
--			 int cached, int match_missing,
--			 unsigned *dirty_submodule, struct diff_options *diffopt)
-+int get_stat_data(struct cache_entry *ce,
-+		const unsigned char **sha1p,
-+		unsigned int *modep,
-+		int cached, int match_missing,
-+		unsigned *dirty_submodule, struct diff_options *diffopt)
- {
- 	const unsigned char *sha1 = ce->sha1;
- 	unsigned int mode = ce->ce_mode;
-diff --git a/diff.h b/diff.h
-index 78b4091..02ed497 100644
---- a/diff.h
-+++ b/diff.h
-@@ -326,6 +326,12 @@ extern int diff_result_code(struct diff_options *, int);
- 
- extern void diff_no_index(struct rev_info *, int, const char **, int, const char *);
- 
-+extern int get_stat_data(struct cache_entry *ce,
-+			const unsigned char **sha1p,
-+			unsigned int *modep,
-+			int cached, int match_missing,
-+			unsigned *dirty_submodule, struct diff_options *diffopt);
-+
- extern int index_differs_from(const char *def, int diff_flags);
- 
- extern size_t fill_textconv(struct userdiff_driver *driver,
-diff --git a/git.c b/git.c
-index 850d3f5..3f3f074 100644
---- a/git.c
-+++ b/git.c
-@@ -313,6 +313,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "branch", cmd_branch, RUN_SETUP },
- 		{ "bundle", cmd_bundle, RUN_SETUP_GENTLY },
- 		{ "cat-file", cmd_cat_file, RUN_SETUP },
-+		{ "cat-link", cmd_cat_link, RUN_SETUP },
- 		{ "check-attr", cmd_check_attr, RUN_SETUP },
- 		{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
- 		{ "check-ref-format", cmd_check_ref_format },
--- 
-1.8.2.380.g0d4e79b
+In early days of Git, almost all users, who might be interested in
+improving their Git experience by helping to polish third-party
+tools, had clones of my tree and did not hesitate to come to this
+list. Back then, having a copy of an emerging third-party tool in my
+tree in contrib/ was a good way to give more exposure to it, and to
+give those interested in it a place to meet and join forces to
+improve it. Because Git population was small, almost everybody was
+here, and it was an efficient distribution mechanism.
+
+Git is now reasonably well known and has big enough user base, and
+many users, even those who are inclined to help improving their Git
+experience by contributing to third-party tools, do not necessarily
+have a clone of my tree.  A third-party tool around Git, if it is
+any good, is likely to have much much better chance to thrive as a
+free-standing project with its own community, compared to those
+early days.
