@@ -1,133 +1,76 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 0/4] remote-helpers: trivial test fixes
-Date: Sat, 6 Apr 2013 11:29:36 -0600
-Message-ID: <CAMP44s0Lbg-_JKPR6WF6Qhkz7cgweHejA-T_V3mCO73a4iXpNA@mail.gmail.com>
-References: <1365089779-9726-1-git-send-email-felipe.contreras@gmail.com>
-	<51605546.3080503@web.de>
+Subject: Re: [PATCH] fast-export: Allow pruned-references in mark file
+Date: Sat, 6 Apr 2013 11:33:23 -0600
+Message-ID: <CAMP44s1n0ALFeOvYevT919iCUt_qRP-nUZn9VqNNnqLG-Xaa1Q@mail.gmail.com>
+References: <CALWbr2x4aia4DcdnmfEEBsZwCYasTEp2Jc0jwJgvsUqWSDaWTQ@mail.gmail.com>
+	<1365267871-2904-1-git-send-email-apelisse@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Apr 06 20:37:43 2013
+Cc: git@vger.kernel.org
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 06 20:43:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWvv-0002PV-GR
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:29:43 +0200
+	id 1UOWzZ-0006Rs-0j
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:33:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819Ab3DFR3j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Apr 2013 13:29:39 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:55390 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752458Ab3DFR3i convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Apr 2013 13:29:38 -0400
-Received: by mail-we0-f174.google.com with SMTP id u12so3599119wey.5
-        for <git@vger.kernel.org>; Sat, 06 Apr 2013 10:29:37 -0700 (PDT)
+	id S1752987Ab3DFRdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Apr 2013 13:33:25 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:39071 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752516Ab3DFRdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Apr 2013 13:33:24 -0400
+Received: by mail-wi0-f171.google.com with SMTP id hn17so1461226wib.10
+        for <git@vger.kernel.org>; Sat, 06 Apr 2013 10:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=UIGLv1n1kK4DnCFtLdBnYogGaTJI70F+jXOH1drMYes=;
-        b=bNGsFUm6Tl2xJy+f+jyzkzSkY0RhJoJXz3MvB/+s9B9K8El9hIjISeFBSCZMynXePM
-         tPZWmv4gAABmDyS9QaXVh6Ssyu813k+O5vuF5nUPXuLVtfzxcOpTeVZC/7PC5xw1MUm4
-         uH3qHBg7gGhae4pOwNi1JALtv3QvNOi0VgLNqPqg0vsUpnqL6H4niYu9jS7tOiZiP28j
-         YFSk8UYfweIyM3g0HWUdzUSMmGcNtrSV+02gSZkIZHv2CGf56YPoRDYaBtv5KpnAF8qI
-         iX1oQrZY9RZoq3nHx3PBJSBBi9gJfuFIVxawE1KMMhszAUvy2RCVWVGfsmjwmjj2Pl0E
-         UWPQ==
-X-Received: by 10.180.210.241 with SMTP id mx17mr5060574wic.1.1365269377062;
- Sat, 06 Apr 2013 10:29:37 -0700 (PDT)
-Received: by 10.194.41.2 with HTTP; Sat, 6 Apr 2013 10:29:36 -0700 (PDT)
-In-Reply-To: <51605546.3080503@web.de>
+         :subject:from:to:cc:content-type;
+        bh=F+Hs5LaEEgVFwJ+kvz+41G+HpEyjyzB54qh//tHUb7E=;
+        b=bCigvu5+cPBRha+Le1J67Xk/3vuogu1dp7eJvefFIApRFc+PGe2CowI/Tdh0oQeh9c
+         fzivpbxZfQ5NIXTpoYV1EsWM++VpzgXsACq66n1zGWlqYisb0KxKW+EexOmM6q6+sYn0
+         1U8xOy+HLLdR/nVY8CAyUhHbYew6r+cs/a3S4yD15TSMWGMD1Scd2U32MPz15sRjUemM
+         CUh1WFncbUCjsK37eQMn4zKJ++FRaM+2bU4sZMzlxurbgq6/qkI4sfv0hEJVFJ8eDgrg
+         H6c6IS0twxS9Fi9+8NfNj7RACwC9bSn4dGgLxqf2XVnL+TAc5V4NieAQy/xsVHYdjdwZ
+         cjZA==
+X-Received: by 10.194.82.104 with SMTP id h8mr23364107wjy.3.1365269603353;
+ Sat, 06 Apr 2013 10:33:23 -0700 (PDT)
+Received: by 10.194.41.2 with HTTP; Sat, 6 Apr 2013 10:33:23 -0700 (PDT)
+In-Reply-To: <1365267871-2904-1-git-send-email-apelisse@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220268>
 
-On Sat, Apr 6, 2013 at 11:03 AM, Torsten B=C3=B6gershausen <tboegi@web.=
-de> wrote:
-> On 04.04.13 17:36, Felipe Contreras wrote:
->> Hi,
->>
->> A reroll, now we do some checks, just avoid test-lint-duplicates, an=
-d fix the
->> outsanding shell portability issue. The rest is the same.
->>
->> Felipe Contreras (4):
->>   remote-bzr: avoid echo -n
->>   remote-helpers: fix the run of all tests
->>   remote-bzr: remove stale check code for tests
->>   remote-hg: fix hg-git test-case
->>
->>  contrib/remote-helpers/Makefile          |  1 +
->>  contrib/remote-helpers/test-bzr.sh       | 16 +---------------
->>  contrib/remote-helpers/test-hg-hg-git.sh |  1 -
->>  3 files changed, 2 insertions(+), 16 deletions(-)
->>
-> Sorry being late, now I installed bzr and hg on one of my machines
+On Sat, Apr 6, 2013 at 11:04 AM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> fast-export can fail because of some pruned-reference when importing a
+> mark file.
 >
-> One defect found: "\s" is not portable on all grep versions
-> A "*" is not a "basic regular expression", so we need to use egrep
+> The problem happens in the following scenario:
 >
+>     $ git fast-export --export-marks=MARKS master
+>     (rewrite master)
+>     $ git prune
+>     $ git fast-export --import-marks=MARKS master
 >
-> diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpe=
-rs/test-hg.sh
-> index 5f81dfa..2e80c11 100755
-> --- a/contrib/remote-helpers/test-hg.sh
-> +++ b/contrib/remote-helpers/test-hg.sh
-> @@ -115,7 +115,7 @@ test_expect_success 'update bookmark' '
->    git push
->    ) &&
+> This might fail if some references have been removed by prune
+> because some marks will refer to no longer existing commits.
+> git-fast-export will not need these objects anyway as they were no
+> longer reachable.
 >
-> -  hg -R hgrepo bookmarks | grep "devel\s\+3:"
-> +  hg -R hgrepo bookmarks | egrep "devel[[:space:]]+3:"
->  '
+> We still need to update last_numid so we don't change the mapping
+> between marks and objects for remote-helpers.
+> Unfortunately, the mark file should not be rewritten without lost marks
+> if no new objects has been exported, as we could lose track of the last
+> last_numid.
 
-I would rather use [ \t] instead.
+Makes sense to me.
 
-> 2 mninor nits:
->
-> diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-help=
-ers/test-bzr.sh
-> index 8450432..7970f9e 100755
-> --- a/contrib/remote-helpers/test-bzr.sh
-> +++ b/contrib/remote-helpers/test-bzr.sh
-> @@ -13,7 +13,7 @@ if ! test_have_prereq PYTHON; then
->  fi
->
->  if ! "$PYTHON_PATH" -c 'import bzrlib'; then
-> -       skip_all=3D'skipping remote-bzr tests; bzr not available'
-> +       skip_all=3D'skipping remote-bzr tests; python bzrlib not avai=
-lable'
+Reviewed-by: Felipe Contreras <felipe.contreras@gmail.com>
 
-"python bzrlib" is meaningless to the user; bazaar provides it;
-basically all the code is there.
-
->         test_done
->  fi
->
-> diff --git a/contrib/remote-helpers/test-hg-hg-git.sh b/contrib/remot=
-e-helpers/test-hg-hg-git.sh
-> index 3f253b7..5d87282 100755
-> --- a/contrib/remote-helpers/test-hg-hg-git.sh
-> +++ b/contrib/remote-helpers/test-hg-hg-git.sh
-> @@ -21,7 +21,7 @@ if ! "$PYTHON_PATH" -c 'import mercurial'; then
->  fi
->
->  if ! "$PYTHON_PATH" -c 'import hggit'; then
-> -       skip_all=3D'skipping remote-hg tests; hg-git not available'
-> +       skip_all=3D'skipping remote-hg tests; python hggit not availa=
-ble'
-
-Same. Google for 'python hggit' and the result is hg-git; and that's
-what you would actually tell your package manager to install.
-
-Cheers.
-
---=20
-=46elipe Contreras
+-- 
+Felipe Contreras
