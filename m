@@ -1,139 +1,172 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/9] http: simplify http_error helper function
-Date: Fri, 5 Apr 2013 18:21:34 -0400
-Message-ID: <20130405222134.GF22163@sigill.intra.peff.net>
-References: <20130405221331.GA21209@sigill.intra.peff.net>
+From: John Koleszar <jkoleszar@google.com>
+Subject: Re: [PATCH] http-backend: respect GIT_NAMESPACE with dumb clients
+Date: Fri, 5 Apr 2013 17:54:55 -0700
+Message-ID: <CAAvHm8NV4OD+QqVp-7oOzsSdAwten6gTpfUFfi85jv_VQ3soFA@mail.gmail.com>
+References: <CAAvHm8PCQx18Gk2S7dicG+_GksjFqVLfPNCbism1sHnPUMDNzg@mail.gmail.com>
+	<1365091293-23758-1-git-send-email-jkoleszar@google.com>
+	<7v6202jjhx.fsf@alter.siamese.dyndns.org>
+	<CAAvHm8NyJ3nRZPygy+grMw5BLhLe8eWfEBNfK1tkC8Y34jRynA@mail.gmail.com>
+	<20130405023516.GA32290@leaf>
+	<20130405025655.GA25970@sigill.intra.peff.net>
+	<7vobdtee12.fsf@alter.siamese.dyndns.org>
+	<20130405054328.GA12705@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Yi, EungJun" <semtlenori@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:51:23 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:51:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWQM-0001b9-W0
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:57:07 +0200
+	id 1UOWRe-0001b9-T6
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:58:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162979Ab3DEWVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 18:21:43 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58249 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1162853Ab3DEWVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 18:21:42 -0400
-Received: (qmail 18418 invoked by uid 107); 5 Apr 2013 22:23:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Apr 2013 18:23:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2013 18:21:34 -0400
-Content-Disposition: inline
-In-Reply-To: <20130405221331.GA21209@sigill.intra.peff.net>
+	id S932521Ab3DFAy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 20:54:58 -0400
+Received: from mail-wg0-f43.google.com ([74.125.82.43]:39918 "EHLO
+	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932514Ab3DFAy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 20:54:57 -0400
+Received: by mail-wg0-f43.google.com with SMTP id f12so4384168wgh.22
+        for <git@vger.kernel.org>; Fri, 05 Apr 2013 17:54:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=VmegMZz/k+zfqEbC03iuSI1OEE/Xpw4zDlmNTXIfdbQ=;
+        b=kzwoDUFhdrIrdkfWMobog6hrl5En5QMBx1XTf/3XCOCwiWkjuosE73BzX1yCfreIxo
+         3wnOtnvtXFva9/40sQ8DtpirZnrGWS6P+vut8FAnsDhcmOR9sVhOt0/4XOvdhRItqmvV
+         mEj6dDfLI/Ba1Fe/cZd4PdTyg4Vr0wzN9xQXKniP2vj6WCK7yxkNL6+5qWUtQvYIUtui
+         f2ImFfH425BYfRzcSyIiACZxGLMFqPnnsOHzd405a3wbrXkVea35iXNTxcoe2IfjD5ik
+         mXQsmSRJwoCWRcxZJKYbFsflgukhDAvue/e4luwDu5qm8neCbfBGS3v+afaYxtYyMmz/
+         hRsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:x-gm-message-state;
+        bh=VmegMZz/k+zfqEbC03iuSI1OEE/Xpw4zDlmNTXIfdbQ=;
+        b=b7YJntSjQuYaCGa8jGXvGJVX+Gu7f6tMmtbk/wYUc2XmOmkoyQ1zaMGLutdt6ku3Wu
+         eKrSEHKEJazxr4YX9XAnHVa1a+7sjv8038uE2My+8XE/m1VaZsQcGO19VAbe7du6QmsN
+         JirYr44kIEtiM7fzYllcqnse/K1+ROWXPpvW3QOtb4IATAu/VOSDZfdXFlQy4JMeQ3PK
+         Tv4KAajIDxJ30MqOy/NxkXYNLt0Izhp4th2j+sC0gzSHz7WvwzwAccrT56HSJNtHL0Ao
+         cJHy8WwZ/FdDDttaudAyelTUVBq4jbZ8q3Vf1TdCzXUF1n2JvOadkx/297hS/UpnAZby
+         S3BQ==
+X-Received: by 10.194.171.74 with SMTP id as10mr19891561wjc.0.1365209695892;
+ Fri, 05 Apr 2013 17:54:55 -0700 (PDT)
+Received: by 10.194.62.165 with HTTP; Fri, 5 Apr 2013 17:54:55 -0700 (PDT)
+In-Reply-To: <20130405054328.GA12705@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQk+ovIoZQq20V+PvO75Pj+1+r257cY2cy16u+L+sO61WyTEUIx2ev9KNBz2ynXrAIoWvfb56J5ifI7dsoZvDvNI+Vq+TVStg8LTwru69w126r7HCY3X9HOXhfra5+EyINFerTVAUWfds/LDRNwVAO9S0a0PDvgmZOAP6YpaugI2ELkNb2ISxKvB9l8EcgBRueTeDBzb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220237>
 
-This helper function should really be a one-liner that
-prints an error message, but it has ended up unnecessarily
-complicated:
+On Thu, Apr 4, 2013 at 10:43 PM, Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Apr 04, 2013 at 10:34:49PM -0700, Junio C Hamano wrote:
+>
+> > > +static void get_head(char *arg)
+> > > +{
+> > > +   struct strbuf buf = STRBUF_INIT;
+> > > +   head_ref_namespaced(show_text_ref, &buf);
+> > > +   send_strbuf("text/plain", &buf);
+> > > +   strbuf_release(&buf);
+> > > +}
+> >
+> > You identified the right place to patch, but I think we need a bit
+> > more than this.
+> >
+> > The show_text_ref() function gives "SHA-1 <TAB> refname". It is
+> > likely that the dumb client will ignore the trailing part of that
+> > output, but let's avoid a hack that we would not want see other
+> > implementations imitate.
+>
+> Oh, right. I was thinking too much about normal clients which see HEAD
+> in the ref advertisement; of course the dumb client is expecting to see
+> the actual HEAD file.
+>
+> > One advantage dumb clients has over smart ones is that they can read
+> > HEAD that is a textual symref from a dumb server and learn which
+> > branch is the default one (remote.c::guess_remote_head()) without
+> > guessing.  I think this function should:
+> >
+> >  - Turn "HEAD" into a namespaced equivalent;
+> >
+> >  - Run resolve_ref() on the result of the above;
+> >
+> >  - Is it a symbolic ref?
+> >
+> >    . If it is, then format "ref: <target>\n" into a strbuf and send
+> >      it (make sure <target> is without the namespace prefix);
+> >
+> >    . Otherwise, HEAD is detached. Prepare "%s\n" % sha1_to_hex(sha1),
+> >      and send it.
+>
+> Yes, that sounds right; it is basically just reconstructing a HEAD
+> file. What do the HEADs inside namespaces look like? Do they refer to
+> full global refs, or do they refer to refs within the namespace?
+>
+> If the latter, we could just send the HEAD file directly. But I suspect
+> it is the former, so that they can function when non-namespaced commands
+> are used.
+>
 
-  1. We call error() directly when we fail to start the curl
-     request, so we must later avoid printing a duplicate
-     error in http_error().
+Here's a quick cut at this. Seems to work ok in local testing, I
+haven't updated the test suite yet. If the namespaced HEAD is a
+symbolic ref, its target must have the namespace prefix applied, or
+the resolved ref will be from outside the namespace (eg
+refs/heads/master vs refs/namespace/ns/refs/heads/master). This seems
+to be handled at write time, not sure if we need to do more
+verification here or not.
 
-     It would be much simpler in this case to just stuff the
-     error message into our usual curl_errorstr buffer
-     rather than printing it ourselves. This means that
-     http_error does not even have to care about curl's exit
-     value (the interesting part is in the errorstr buffer
-     already).
+diff --git a/http-backend.c b/http-backend.c
+index d32128f..da4482c 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -404,13 +404,40 @@ static void get_info_refs(char *arg)
 
-  2. We return the "ret" value passed in to us, but none of
-     the callers actually cares about our return value. We
-     can just drop this entirely.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- http-push.c   |  2 +-
- http.c        | 11 ++++-------
- http.h        |  5 ++---
- remote-curl.c |  2 +-
- 4 files changed, 8 insertions(+), 12 deletions(-)
-
-diff --git a/http-push.c b/http-push.c
-index bd66f6a..439a555 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1551,7 +1551,7 @@ static int remote_exists(const char *path)
- 		ret = 0;
- 		break;
- 	case HTTP_ERROR:
--		http_error(url, HTTP_ERROR);
-+		http_error(url);
- 	default:
- 		ret = -1;
- 	}
-diff --git a/http.c b/http.c
-index 45cc7c7..5e6f67d 100644
---- a/http.c
-+++ b/http.c
-@@ -857,7 +857,8 @@ static int http_request(const char *url, struct strbuf *type,
- 		run_active_slot(slot);
- 		ret = handle_curl_result(&results);
- 	} else {
--		error("Unable to start HTTP request for %s", url);
-+		snprintf(curl_errorstr, sizeof(curl_errorstr),
-+			 "failed to start HTTP request");
- 		ret = HTTP_START_FAILED;
- 	}
- 
-@@ -940,13 +941,9 @@ int http_error(const char *url, int ret)
- 	return ret;
+        } else {
+                select_getanyfile();
+-               head_ref_namespaced(show_text_ref, &buf);
+                for_each_namespaced_ref(show_text_ref, &buf);
+                send_strbuf("text/plain", &buf);
+        }
+        strbuf_release(&buf);
  }
- 
--int http_error(const char *url, int ret)
-+void http_error(const char *url)
+
++static int show_head_ref(const char *name, const unsigned char *sha1,
++       int flag, void *cb_data)
++{
++       struct strbuf *buf = cb_data;
++
++       if (flag & REF_ISSYMREF) {
++               unsigned char sha1[20];
++               const char *target = resolve_ref_unsafe(name, sha1, 1, NULL);
++               const char *target_nons = strip_namespace(target);
++
++               strbuf_addf(buf, "ref: %s\n", target_nons);
++       } else {
++               strbuf_addf(buf, "%s\n", sha1_to_hex(sha1));
++       }
++
++       return 0;
++}
++
++static void get_head(char *arg)
++{
++       struct strbuf buf = STRBUF_INIT;
++
++       select_getanyfile();
++       head_ref_namespaced(show_head_ref, &buf);
++       send_strbuf("text/plain", &buf);
++       strbuf_release(&buf);
++}
++
+ static void get_info_packs(char *arg)
  {
--	/* http_request has already handled HTTP_START_FAILED. */
--	if (ret != HTTP_START_FAILED)
--		error("%s while accessing %s", curl_errorstr, url);
--
--	return ret;
-+	error("%s while accessing %s", curl_errorstr, url);
- }
- 
- int http_fetch_ref(const char *base, struct ref *ref)
-diff --git a/http.h b/http.h
-index 0fe54f4..fa65128 100644
---- a/http.h
-+++ b/http.h
-@@ -136,10 +136,9 @@ int http_get_strbuf(const char *url, struct strbuf *content_type, struct strbuf
- int http_get_strbuf(const char *url, struct strbuf *content_type, struct strbuf *result, int options);
- 
- /*
-- * Prints an error message using error() containing url and curl_errorstr,
-- * and returns ret.
-+ * Prints an error message using error() containing url and curl_errorstr.
-  */
--int http_error(const char *url, int ret);
-+void http_error(const char *url);
- 
- extern int http_fetch_ref(const char *base, struct ref *ref);
- 
-diff --git a/remote-curl.c b/remote-curl.c
-index 6c6714b..9abe4b7 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -216,7 +216,7 @@ static struct discovery* discover_refs(const char *service, int for_push)
- 		die("Authentication failed for '%s'", url);
- 	default:
- 		show_http_message(&type, &buffer);
--		http_error(url, http_ret);
-+		http_error(url);
- 		die("HTTP request failed");
- 	}
- 
--- 
-1.8.2.rc0.33.gd915649
+        size_t objdirlen = strlen(get_object_directory());
