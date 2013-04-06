@@ -1,64 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 0/2] send-email: couple of improvements
-Date: Sat, 06 Apr 2013 19:47:01 +0200
-Message-ID: <vpqwqsfh7qi.fsf@grenoble-inp.fr>
-References: <1365239012-15079-1-git-send-email-felipe.contreras@gmail.com>
+From: Michael Campbell <michael.campbell@gmail.com>
+Subject: Advice and repo setup
+Date: Sat, 6 Apr 2013 13:51:20 -0400
+Message-ID: <CAKtB=OAot3y8fMjAf+Vh-=wOeX5b=F_N6_BLjK0fhGxGCg3Txg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 06 20:21:28 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 06 20:21:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOXDb-0004lh-LC
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:47:59 +0200
+	id 1UOXGw-0008Nm-24
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:51:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754705Ab3DFRry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Apr 2013 13:47:54 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39882 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754609Ab3DFRry (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Apr 2013 13:47:54 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r36Hl0E6003705
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 6 Apr 2013 19:47:00 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UOXCg-0001uL-7N; Sat, 06 Apr 2013 19:47:02 +0200
-In-Reply-To: <1365239012-15079-1-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Sat, 6 Apr 2013 03:03:30 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 06 Apr 2013 19:47:00 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r36Hl0E6003705
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1365875221.90965@/j0O2zeJs0mo+Es9iLeLig
+	id S1754185Ab3DFRvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Apr 2013 13:51:22 -0400
+Received: from mail-qc0-f181.google.com ([209.85.216.181]:52615 "EHLO
+	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752450Ab3DFRvV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Apr 2013 13:51:21 -0400
+Received: by mail-qc0-f181.google.com with SMTP id a22so491237qcs.40
+        for <git@vger.kernel.org>; Sat, 06 Apr 2013 10:51:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=GBCcASAF1naRpGMu1ExyCVucQWKWto4sDFYsubIl/Wg=;
+        b=pOZX5+q5Bh0nIh5afjPcj0d7rQFhlQbQq0x7TNBO6MKx362BtD1r24LmfaGYdHTHy4
+         eGZossHNi4ZAzGJlvojENRAZJQCjmC6Lc0Mca1/lWIW0Q6DdMyzjF2H8yVp/6BjuIWS0
+         25AHoCPC92ZcJ5cRY11t3hePFXFXtoLzoZ638eezP34C2imPrY2zBVZ52uo7kxWAXVwL
+         BTTV0ruFhRGwrTItrsmTTa1Ft4qXAgdLW8cVgecxGF3bmzA2VsfqT3whofgMPGQy7N8Z
+         Ub6lCy3gsFWlGq5hJzQ6pJKPX64tnZ4clNrxFc1jlZa2pgQSZLZ6ljRnxjB/Eeu4vP4o
+         UGqQ==
+X-Received: by 10.224.181.2 with SMTP id bw2mr2184166qab.64.1365270681023;
+ Sat, 06 Apr 2013 10:51:21 -0700 (PDT)
+Received: by 10.229.69.133 with HTTP; Sat, 6 Apr 2013 10:51:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220262>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+My company is moving from CVS to git in a few weeks (and we have a
+training class scheduled with the github folks).
 
-> First patch was already sent, I just added the --no-annotate option. Second one
-> is new, it adds a configuration for --cover-letter, so it can automatically
-> determine when to generated: 1 patch, no cover, otherwise there is.
+That said our CI/build guys have already got gitorious set up (we get
+to it through ssh with ssh keys and one "git" user on the server) and
+we are in the process of migrating all new CVS checkins to a git repo.
 
-Very good. I unconditionnally run --annotate, but do that with an alias.
-And indeed, I use --cover-letter almost if and only if I have several
-patches to send. These patches do exactly what I need!
+As a business decision we have decided to pull in some "staff
+augmentation".  We don't want the remote developers to have direct
+access.  Our plan is to have some sort of external repo on which they
+can push things, and locally we can pull those changes to our
+"official" repo and check it as we go.  So far so good.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Our product has several logically separate projects, which right now
+we have in the one big mega repo (in CVS, and migrating per checkin to
+Gitorious).
+
+So... I was wondering what the best way to split up our new repo might
+be - or is it best to NOT split it?   One of the concerns we have is
+that in the one big repo we can't control access to the various
+projects.  So far we haven't needed to but this might be because we
+couldn't.
+
+So one plan is to have multiple repos, and then a mirror of those for
+the remote devs.  The other plan is to say "sod it" and have one local
+and one remote and just suffer through possible non-requirements of
+varying authorization profiles.
+
+Is there documentation I can refer to for this, or is there an obvious
+way to do these things?  Any help or pointers appreciated.
