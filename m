@@ -1,89 +1,75 @@
-From: =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
-	<dilyan.palauzov@aegee.org>
-Subject: typo in Documentation/git-rebase.txt
-Date: Sat, 06 Apr 2013 15:10:11 +0200
-Message-ID: <51601EB3.20301@aegee.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 5/7] remote-bzr: avoid unreferred tags
+Date: Fri,  5 Apr 2013 21:49:21 -0600
+Message-ID: <1365220163-13581-6-git-send-email-felipe.contreras@gmail.com>
+References: <1365220163-13581-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:43:09 2013
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:43:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWVH-0001b9-MA
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:02:12 +0200
+	id 1UOWSF-0001b9-Iy
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:59:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422917Ab3DFNbU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Apr 2013 09:31:20 -0400
-Received: from mailout-aegee.scc.kit.edu ([129.13.185.235]:60641 "EHLO
-	mailout-aegee.scc.kit.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422912Ab3DFNbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Apr 2013 09:31:19 -0400
-X-Greylist: delayed 1261 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Apr 2013 09:31:19 EDT
-Received: from smtp.aegee.org (aegeepc1.aegee.uni-karlsruhe.de [129.13.131.81])
-	by scc-mailout-02.scc.kit.edu with esmtp (Exim 4.72 #1)
-	id 1UOSsm-0007MG-On; Sat, 06 Apr 2013 15:10:12 +0200
-Authentication-Results: aegeeserv.aegee.org; auth=pass (PLAIN) smtp.auth=didopalauzov
-DKIM-Filter: OpenDKIM Filter v2.8.1 smtp.aegee.org r36DAFgU010891
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aegee.org; s=k4096;
-	t=1365253817; i=dkim+MSA-ssl@aegee.org;
-	bh=v7vVKl9i1wMlaRfHkLMEo/urUdNjqXL2EoA0qfSxOuQ=;
-	h=Date:From:To:Subject;
-	b=VTSjWTj83emubl50AH4AsR8D+xYwwiESSv+84efBxpR+4gIqODyD0rQWRt12lDa/u
-	 2XYyOc3jt+o4ISfd1iudp8Uvp2iRJg4YfXGvbjRm+/b9E7r7oCvRooCoa0IAfVDFF5
-	 nE4X2b2JgGEWeerdbK3AFziqG1Ft8sk7pHAKlX/y8sgW54BcT98lW4H10zmCgViRxz
-	 hF8wO9GQ7sARaSPmLOAJnnZ6BcFuoTCU8cwe4TEmaHlGEO6aPtM4h22pVu46LtR6hX
-	 0zKoXw2W0GwSlItyc4UQXu0ZDB+g/Eo6XNh9HQyb5GMmH+T0TD8p5uwyeq9P/bLwIp
-	 nWUWAL703LQUaZHWZrjGXOHheGoipYmapPeEkQrkFL6zfPYWZfk9/1dt73teti30YV
-	 nNW2VrDYvuwuPsi79NDk9ioGchx6OHw5SAmAiwC+cRKa/gGBin5+IKqO5OUHOlHkdX
-	 p8fJKWKP5/GM74at4ZzjqSkcqvqI4VjyrdCFktp4gWmyLFiG65kOEq3ICMRHb9F+ut
-	 8zBMo7iFcY0MG0qdgv2qKyhD5/+ncpRtMumNbg95WndViIrK/XYPo10X6Zm8WBvanE
-	 Q5XkYBrvpQDLkamkRi8kCJUfuAcdMu+UHWvEAgcZ/QouKrieG1mviDjcoi/fZOiOnW
-	 5N2m4yAiyubql3NQ 
-Received: from [192.168.0.6] (port-212-202-110-243.static.qsc.de [212.202.110.243])
-	(authenticated bits=0)
-	by smtp.aegee.org (8.14.6/8.14.5) with ESMTP id r36DAFgU010891
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sat, 6 Apr 2013 13:10:17 GMT
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-X-Virus-Scanned: clamav-milter 0.97.7 at aegeeserv
-X-Virus-Status: Clean
+	id S1163225Ab3DFDwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Apr 2013 23:52:41 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:42292 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756759Ab3DFDwk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Apr 2013 23:52:40 -0400
+Received: by mail-ob0-f173.google.com with SMTP id wn14so3324610obc.18
+        for <git@vger.kernel.org>; Fri, 05 Apr 2013 20:52:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=Fe5hYTs7PBOR3Icw6XVNee+kSNXz8kXu8fn66MiaaDc=;
+        b=0lo8dns9STAkZ8QRGOO8mY7ZUnwgZjVwnU0zLdtRrdTxDr2/sFnPm0YAR/tOZO/Sfs
+         Enmp9bhaa4RI2uSAlDFcIXiMwu6Vm+xGZqxDKmhYnd9S2ktvFhjLvxUtIUehnFq76nIB
+         IK/y3+SFh74Bf4pSaT5jhUxdQDwewT8e0gHX1Cjpw/l25k9XblA04o2WcdUtwxhw0Jjp
+         dMSXGB3aDH84EFYij8ntFjDLtATbnbLPT3EIuGXDOMCiE+0QkvCF+fhUFor3YH0DohSa
+         A98DiffLu0nNxLsNGkW9uUcl4w8xjkeZ3FQMCIqf94F7v1B9ABrMl1lrBEfumSQtuYXZ
+         BXPA==
+X-Received: by 10.182.105.2 with SMTP id gi2mr555982obb.15.1365220360491;
+        Fri, 05 Apr 2013 20:52:40 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id m7sm14678041obk.2.2013.04.05.20.52.17
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 05 Apr 2013 20:52:39 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2
+In-Reply-To: <1365220163-13581-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220227>
 
-Hello,
+They have no content, there's nothing we can do with them.
 
-please change in Documentation/git-rebase.txt, as of=20
-v1.8.2-470-g21ccebe, for --ignore-whitespace and --whitespace, line 326
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-helpers/git-remote-bzr | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-from
-         These flag are passed to the 'git apply' program
-to (add an 's')
-         These flags are passed to the 'git apply' program
-
-and in the same file, under --autosqash, --no-autosquash, last paragrap=
-h
-
-	If the '--autosquash' option is enabled by default using the
-	configuration variable `rebase.autosquash`, this option can be
-	used to override and disable this setting.
-
-please delete "by default".  With "by default" comes the question, what=
-=20
-is the default value, if rebase.autosquash is not set.  I suggest as=20
-replacement text
-	If the '--autosquash' option is enabled using the configuration
-         variable 'rebase.autosquash', '--no-autosqash' can be used to
-         override and disable this setting.
-
-Even "and disable" is redundant and can be skipped.
-
-=D0=A1=D1=8A=D1=81 =D0=B7=D0=B4=D1=80=D0=B0=D0=B2=D0=B5
-   =D0=94=D0=B8=D0=BB=D1=8F=D0=BD
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index 9466cb9..0bcf8c5 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -654,7 +654,11 @@ def do_capabilities(parser):
+ def do_list(parser):
+     global tags
+     print "? refs/heads/%s" % 'master'
++
++    history = parser.repo.revision_history()
+     for tag, revid in parser.repo.tags.get_tag_dict().items():
++        if revid not in history:
++            continue
+         print "? refs/tags/%s" % tag
+         tags[tag] = revid
+     print "@refs/heads/%s HEAD" % 'master'
+-- 
+1.8.2
