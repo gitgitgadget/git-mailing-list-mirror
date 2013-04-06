@@ -1,73 +1,62 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 0/7] remote-bzr: generic updates
-Date: Fri,  5 Apr 2013 21:49:16 -0600
-Message-ID: <1365220163-13581-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:56:16 2013
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] remote-helpers: remove --graph in hg_log()
+Date: Sat, 6 Apr 2013 18:12:02 +0200
+Message-ID: <CALWbr2yhZW46RB=8gUivcN4r5NFhk0y-0ND-X2c8ALKos6qi=Q@mail.gmail.com>
+References: <1365264055-30507-1-git-send-email-apelisse@gmail.com>
+	<CAMP44s2tdKhGuH3E7nGqU4R3jgEw4tH-=Cq6dhHwiLc=b_fm6Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:57:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWSC-0001b9-CB
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:59:00 +0200
+	id 1UOWWv-0001D7-Fn
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:03:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756816Ab3DFDuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 23:50:24 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:33924 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756470Ab3DFDuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 23:50:23 -0400
-Received: by mail-ob0-f182.google.com with SMTP id ef5so4315928obb.13
-        for <git@vger.kernel.org>; Fri, 05 Apr 2013 20:50:23 -0700 (PDT)
+	id S1423255Ab3DFQMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Apr 2013 12:12:05 -0400
+Received: from mail-qc0-f178.google.com ([209.85.216.178]:52331 "EHLO
+	mail-qc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423239Ab3DFQME (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Apr 2013 12:12:04 -0400
+Received: by mail-qc0-f178.google.com with SMTP id d10so1986660qca.23
+        for <git@vger.kernel.org>; Sat, 06 Apr 2013 09:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=slBcQHP3tbDru+rq3kj930E8Qfwtdo8yxS1gNLWCjEI=;
-        b=CosMktTJbWq3Ekk1vvtYeKBNB8APGSP+LslAY6u6BdlY6hqyP5aI7qfQ3OxvuqEU+p
-         5BmlzSTLYjHwJTXYb6tDBjiEx/oyv+PXNOPUxT4sDU+2HNzLZ7GNvALg5SQpQcUWqsaU
-         fH3AVqj2kBji3RVACc1tnJVkwTnjU9F6nSLTdlb21LzFDhvF+yOMA9mvHnQCfqoozCVX
-         7Jrs0ZChwhx/cJMRRbL0WeCx9t1lCDRuRcYslW1GmxTWB/ivyy/qe89hWtwwvkK5JWCF
-         iMQqVcLSv+F02lj2GO8Ouhtvtf1+BgGrBoXJNy7USAAjejyY3VVPkfhxgM7WHG4Xr0aw
-         7Wog==
-X-Received: by 10.60.50.102 with SMTP id b6mr9909453oeo.46.1365220223219;
-        Fri, 05 Apr 2013 20:50:23 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id a10sm15191773oez.1.2013.04.05.20.50.20
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 05 Apr 2013 20:50:22 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=EVgY5+1DaftMo/mfN7/1OV+H694X0Yl4KR607JSnFz4=;
+        b=qplexI4wkKoCQ78gJKGPIyMCQRzUXq+UNz9lWxi5s7EUIghrtvdVsnbgJZlW7CR9CL
+         p6yu3tAem6RIDjeiF/vIHFCvW3zHFMNIvHUQoBwCxP9Ehjcmpv3Tw+qxmpz2sqeOvg8f
+         i54C7nOjEXlslb8StRG6/z3HV4MLfW8Tdv5Pq3bGuLy/ZqVJVYMMQRI1MhpRKUjK0RdE
+         HwZAbLhe1uxGJMd4CLxIq7BTewDgH3CBu3DRFkvWFdAc3/N1OkLo5PXY+MCVtE2EUabH
+         w3V/JduHqTcsWbMGbSkT2gvEDX7LtM6KCplhJFBx7XYmW+0vfNBSqNSN/b0523n8TsWt
+         21oQ==
+X-Received: by 10.49.61.226 with SMTP id t2mr14059594qer.40.1365264722725;
+ Sat, 06 Apr 2013 09:12:02 -0700 (PDT)
+Received: by 10.49.70.163 with HTTP; Sat, 6 Apr 2013 09:12:02 -0700 (PDT)
+In-Reply-To: <CAMP44s2tdKhGuH3E7nGqU4R3jgEw4tH-=Cq6dhHwiLc=b_fm6Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220246>
 
-Hi,
+On Sat, Apr 6, 2013 at 6:06 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Sat, Apr 6, 2013 at 10:00 AM, Antoine Pelisse <apelisse@gmail.com> wrote:
+>> I'm not so confident that --graph is useless to the test. If it's really
+>> necessary, it would be nice either to activate it in setup() or to use
+>> it just for the command through: "--config extensions.graphlog=".
+>
+> I think it should be activated in the setup, it comes packaged with
+> mercurial, and it's likely that many users have it enabled.
 
-Here are a couple fixes for remote-bzr, some of these can be really annoying to
-certain users. I believe all of them should be safe.
-
-Christophe Simonis (2):
-  remote-bzr: fix directory renaming
-  remote-bzr: remove files before modifications
-
-David Engster (1):
-  remote-bzr: set author if available
-
-Felipe Contreras (3):
-  remote-bzr: only update workingtree on local repos
-  remote-bzr: avoid unreferred tags
-  remote-bzr: add utf-8 support for pushing
-
-Timotheus Pokorra (1):
-  remote-bzr: add utf-8 support for fetching
-
- contrib/remote-helpers/git-remote-bzr | 36 ++++++++++---
- contrib/remote-helpers/test-bzr.sh    | 95 +++++++++++++++++++++++++++++++++++
- 2 files changed, 123 insertions(+), 8 deletions(-)
-
--- 
-1.8.2
+But is it relevant to the tests ? I have the feeling that it's not
+strictly necessary to both add an extension to hgrc and a command line
+option. (and indeed, the tests still work for me, but maybe I'm
+missing something).
