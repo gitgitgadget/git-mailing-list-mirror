@@ -1,75 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 7/9] http: re-word http error message
-Date: Fri, 5 Apr 2013 18:22:01 -0400
-Message-ID: <20130405222201.GG22163@sigill.intra.peff.net>
-References: <20130405221331.GA21209@sigill.intra.peff.net>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: [PATCH 0/3] Some small fixes to glossary-content.txt
+Date: Sat, 6 Apr 2013 10:00:57 +0200 (CEST)
+Message-ID: <1045683186.817350.1365235257564.JavaMail.ngmail@webmail18.arcor-online.net>
+References: <7vbo9xgchd.fsf@alter.siamese.dyndns.org> <1481339149.727628.1364894663266.JavaMail.ngmail@webmail14.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Yi, EungJun" <semtlenori@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:28:03 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:28:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWQN-0001b9-FC
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:57:07 +0200
+	id 1UOWT1-0001b9-QB
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:59:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162984Ab3DEWWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Apr 2013 18:22:11 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58252 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1162853Ab3DEWWK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Apr 2013 18:22:10 -0400
-Received: (qmail 18435 invoked by uid 107); 5 Apr 2013 22:24:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Apr 2013 18:24:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2013 18:22:01 -0400
-Content-Disposition: inline
-In-Reply-To: <20130405221331.GA21209@sigill.intra.peff.net>
+	id S1422644Ab3DFIBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Apr 2013 04:01:00 -0400
+Received: from mail-in-05.arcor-online.net ([151.189.21.45]:46253 "EHLO
+	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932146Ab3DFIA7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Apr 2013 04:00:59 -0400
+Received: from mail-in-19-z2.arcor-online.net (mail-in-19-z2.arcor-online.net [151.189.8.36])
+	by mx.arcor.de (Postfix) with ESMTP id C3890E3B68;
+	Sat,  6 Apr 2013 10:00:57 +0200 (CEST)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-19-z2.arcor-online.net (Postfix) with ESMTP id AED7A3F83EC;
+	Sat,  6 Apr 2013 10:00:57 +0200 (CEST)
+Received: from webmail18.arcor-online.net (webmail18.arcor-online.net [151.189.8.76])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 8BE5019756E;
+	Sat,  6 Apr 2013 10:00:57 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net 8BE5019756E
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1365235257; bh=W15U63eWZwu8hxzULeMSKpAnW/AvotRrJMz+8eEZxVM=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=ifDrXx2fn/iXrweAKz2rZx4HUH9lftwUNflabbApPn9WfgZfyo/RJSxR9kdge4UQl
+	 5YKIr/fxwI/opC7xHTuAZgwmaPoU/PgzleigB1t9rcLGqkJYDJv493N4pIQ1KEbMk3
+	 2bZWyjC/RhpKpUc37nALNg3HpyCsuRDQaBhyC0KE=
+Received: from [188.98.233.28] by webmail18.arcor-online.net (151.189.8.76) with HTTP (Arcor Webmail); Sat, 6 Apr 2013 10:00:57 +0200 (CEST)
+In-Reply-To: <7vbo9xgchd.fsf@alter.siamese.dyndns.org>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 188.98.233.28
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220212>
 
-When we report an http error code, we say something like:
+ 
+> 
+> > While proof-reading the user-manual I noticed some issues with
+> glossary-content.txt:
+> >
 
-  error: The requested URL reported failure: 403 Forbidden while accessing http://example.com/repo.git
+I found now mention of my patches in the latest "What's cooking".
+Did I miss an action item on my side or got this lost in the noise?
 
-Everything between "error:" and "while" is written by curl,
-and the resulting sentence is hard to read (especially
-because there is no punctuation between curl's sentence and
-the remainder of ours). Instead, let's re-order this to give
-better flow:
 
-  error: unable to access 'http://example.com/repo.git: The requested URL reported failure: 403 Forbidden
-
-This is still annoyingly long, but at least reads more
-clearly left to right.
-
-Signed-off-by: Jeff King <peff@peff.net>
 ---
-As I mentioned in the cover letter, I'm still not that excited about the
-"after" result here. Suggestions welcome.
-
- http.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/http.c b/http.c
-index 5e6f67d..64068a2 100644
---- a/http.c
-+++ b/http.c
-@@ -943,7 +943,7 @@ void http_error(const char *url)
- 
- void http_error(const char *url)
- {
--	error("%s while accessing %s", curl_errorstr, url);
-+	error("unable to access '%s': %s", url, curl_errorstr);
- }
- 
- int http_fetch_ref(const char *base, struct ref *ref)
--- 
-1.8.2.rc0.33.gd915649
+Thomas
