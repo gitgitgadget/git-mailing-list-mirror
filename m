@@ -1,72 +1,144 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH v2 1/2] perl: redirect stderr to /dev/null instead of closing
-Date: Sat, 6 Apr 2013 10:07:40 +0200
-Message-ID: <878v4wrsj7.fsf@linux-k42r.v.cablecom.net>
-References: <20130404011653.GA28492@dcvr.yhbt.net>
-	<801ebb2a75d7cddfeee70eb86e8854c78d22eb3e.1365107899.git.trast@inf.ethz.ch>
-	<20130405144828.GX6137@machine.or.cz>
-	<7vsj34byb4.fsf@alter.siamese.dyndns.org>
-	<20130405233450.GA6137@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>,
-	Marcin Owsiany <marcin@owsiany.pl>
-To: Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:46:00 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 1/2] send-email: make annotate configurable
+Date: Sat,  6 Apr 2013 03:03:31 -0600
+Message-ID: <1365239012-15079-2-git-send-email-felipe.contreras@gmail.com>
+References: <1365239012-15079-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:46:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWT2-0001b9-QP
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:59:53 +0200
+	id 1UOWTF-0001b9-Sz
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:00:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422747Ab3DFIHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Apr 2013 04:07:46 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:39467 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422744Ab3DFIHn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Apr 2013 04:07:43 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 6 Apr
- 2013 10:07:35 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (87.231.156.75) by
- CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Sat, 6 Apr 2013 10:07:39 +0200
-In-Reply-To: <20130405233450.GA6137@machine.or.cz> (Petr Baudis's message of
-	"Sat, 6 Apr 2013 01:34:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [87.231.156.75]
+	id S932840Ab3DFJEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Apr 2013 05:04:41 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:41580 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932834Ab3DFJEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Apr 2013 05:04:39 -0400
+Received: by mail-ob0-f180.google.com with SMTP id un3so189124obb.25
+        for <git@vger.kernel.org>; Sat, 06 Apr 2013 02:04:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=+6/0q6mi2hlJBEC54owzoYjcUuslMuGiDZ4TAe+7OFQ=;
+        b=sKdh+z/QNpLx5Hz80oMS1pUBjFQkapeu2N1evyHpl7oN1KD6PLyn0H68EHa6MjoSNg
+         QGfNe6oLgMBSF/ZMpIa4AlCkvmPVe90HZjymscBtf1aoS+iFzH8CfgkPZqF8G9WkhTqb
+         JMjoOTyVZJ0eZSuslQ68TfzwtkjFp0W6TlyTW3DE7jdmEwInq7GYNrdQVE0ySvKz47Ux
+         cz5YFPs7VoTCVViFb/zJTL2eew5J/8j9NvONub8Hwf2rdfvi/aKxB2gYugpp4oNPOAk6
+         DmXVvKj7ikGRT1UJjHzKICZtV8R9ML1GdCS2aV4YAvqlZMpGcaQ6MmjnCHpE2u6EBuY6
+         yXWA==
+X-Received: by 10.60.85.35 with SMTP id e3mr10647027oez.117.1365239079352;
+        Sat, 06 Apr 2013 02:04:39 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id c4sm15241130obo.9.2013.04.06.02.04.36
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 06 Apr 2013 02:04:38 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2
+In-Reply-To: <1365239012-15079-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220232>
 
-Petr Baudis <pasky@ucw.cz> writes:
+Some people always do --annotate, lets not force them to always type
+that.
 
-> On Fri, Apr 05, 2013 at 11:57:19AM -0700, Junio C Hamano wrote:
->   The thing is, I was confused about dup2() all along as my old UNIX
-> masters taught me that I must close() the original descriptor first
-> and since that's what's commonly done anyway, I never thought to
-> double-check. Now I did and I learned something new, thanks!
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/config.txt         |  1 +
+ Documentation/git-send-email.txt |  5 +++--
+ git-send-email.perl              | 12 +++++++++---
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-Indeed, that's the crucial point here.  dup2() is defined to close the
-original FD first if needed.
-
-It's much saner this way for the case of stderr, as there is no time
-when we have no stderr available to report errors: the FD is replace
-atomically from the POV of the program.
-
-The manpage for dup2 does, however, say
-
-   If newfd was open, any errors  that  would  have  been  reported  at
-   close(2) time are lost.  A careful programmer will not use dup2() or
-   dup3() without closing newfd first.
-
-which is probably what you were referring to.
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index bbba728..c8e2178 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1994,6 +1994,7 @@ sendemail.<identity>.*::
+ 
+ sendemail.aliasesfile::
+ sendemail.aliasfiletype::
++sendemail.annotate::
+ sendemail.bcc::
+ sendemail.cc::
+ sendemail.cccmd::
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 44a1f7c..2facc18 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -45,8 +45,9 @@ Composing
+ ~~~~~~~~~
+ 
+ --annotate::
+-	Review and edit each patch you're about to send. See the
+-	CONFIGURATION section for 'sendemail.multiedit'.
++	Review and edit each patch you're about to send. Default is the value
++	of 'sendemail.annotate'. See the CONFIGURATION section for
++	'sendemail.multiedit'.
+ 
+ --bcc=<address>::
+ 	Specify a "Bcc:" value for each email. Default is the value of
+diff --git a/git-send-email.perl b/git-send-email.perl
+index be809e5..e7fe9fb 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -54,7 +54,7 @@ git send-email [options] <file | directory | rev-list options >
+     --[no-]bcc              <str>  * Email Bcc:
+     --subject               <str>  * Email "Subject:"
+     --in-reply-to           <str>  * Email "In-Reply-To:"
+-    --annotate                     * Review each patch that will be sent in an editor.
++    --[no-]annotate                * Review each patch that will be sent in an editor.
+     --compose                      * Open an editor for introduction.
+     --compose-encoding      <str>  * Encoding to assume for introduction.
+     --8bit-encoding         <str>  * Encoding to assume 8bit mails if undeclared
+@@ -143,7 +143,7 @@ my $auth;
+ # Variables we fill in automatically, or via prompting:
+ my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
+ 	$initial_reply_to,$initial_subject,@files,
+-	$author,$sender,$smtp_authpass,$annotate,$compose,$time);
++	$author,$sender,$smtp_authpass,$annotate,$no_annotate,$compose,$time);
+ 
+ my $envelope_sender;
+ 
+@@ -212,7 +212,8 @@ my %config_bool_settings = (
+     "signedoffbycc" => [\$signed_off_by_cc, undef],
+     "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
+     "validate" => [\$validate, 1],
+-    "multiedit" => [\$multiedit, undef]
++    "multiedit" => [\$multiedit, undef],
++    "annotate" => [\$annotate, undef]
+ );
+ 
+ my %config_settings = (
+@@ -305,6 +306,7 @@ my $rc = GetOptions("h" => \$help,
+ 		    "smtp-domain:s" => \$smtp_domain,
+ 		    "identity=s" => \$identity,
+ 		    "annotate" => \$annotate,
++		    "no-annotate" => \$no_annotate,
+ 		    "compose" => \$compose,
+ 		    "quiet" => \$quiet,
+ 		    "cc-cmd=s" => \$cc_cmd,
+@@ -389,6 +391,10 @@ foreach my $setting (values %config_bool_settings) {
+ 	${$setting->[0]} = $setting->[1] unless (defined (${$setting->[0]}));
+ }
+ 
++if ($no_annotate) {
++	$annotate = 0;
++}
++
+ # 'default' encryption is none -- this only prevents a warning
+ $smtp_encryption = '' unless (defined $smtp_encryption);
+ 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.8.2
