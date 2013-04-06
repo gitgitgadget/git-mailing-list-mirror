@@ -1,124 +1,72 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFD] annnotating a pair of commit objects?
-Date: Sat, 06 Apr 2013 09:55:53 +0200
-Message-ID: <515FD509.4070307@alum.mit.edu>
-References: <7vr4m2ycij.fsf@alter.siamese.dyndns.org> <50E5568A.5060909@alum.mit.edu> <CALWbr2xOt-tRy1iPJft28O1-fDVo1=DZhEZX6Me3Mt4pZjMyFw@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v2 1/2] perl: redirect stderr to /dev/null instead of closing
+Date: Sat, 6 Apr 2013 10:07:40 +0200
+Message-ID: <878v4wrsj7.fsf@linux-k42r.v.cablecom.net>
+References: <20130404011653.GA28492@dcvr.yhbt.net>
+	<801ebb2a75d7cddfeee70eb86e8854c78d22eb3e.1365107899.git.trast@inf.ethz.ch>
+	<20130405144828.GX6137@machine.or.cz>
+	<7vsj34byb4.fsf@alter.siamese.dyndns.org>
+	<20130405233450.GA6137@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:44:33 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>,
+	Marcin Owsiany <marcin@owsiany.pl>
+To: Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:46:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWT0-0001b9-46
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:59:50 +0200
+	id 1UOWT2-0001b9-QP
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:59:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932646Ab3DFH4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Apr 2013 03:56:00 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:47393 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932635Ab3DFHz7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Apr 2013 03:55:59 -0400
-X-AuditID: 1207440c-b7ff06d0000008f7-c6-515fd50e4897
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id C0.32.02295.E05DF515; Sat,  6 Apr 2013 03:55:58 -0400 (EDT)
-Received: from [192.168.69.140] (p57A25776.dip.t-dialin.net [87.162.87.118])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r367tsNP013580
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 6 Apr 2013 03:55:56 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
-In-Reply-To: <CALWbr2xOt-tRy1iPJft28O1-fDVo1=DZhEZX6Me3Mt4pZjMyFw@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAKsWRmVeSWpSXmKPExsUixO6iqMt3NT7QYGufhsWvs7tYLLqudDNZ
-	NPReYbZ4Mvcus8WPlh5mB1aPnbPusns8fNXF7vGsdw+jx8VLyh6fN8kFsEZx2yQllpQFZ6bn
-	6dslcGe07jnLXtAtVvHl/B+mBsYTgl2MnBwSAiYSrSteMELYYhIX7q1n62Lk4hASuMwose3i
-	M2YI5zSTxPGpb9hBqngFtCVe7FnECmKzCKhKnHx6AyzOJqArsainmQnEFhUIk9h7YRobRL2g
-	xMmZT1hAbBEBDYn2tudg9cwCzYwSz7bVgtjCAhYSvx/fZYJYNotR4vCDY2ALOAUCJS7vPQ90
-	BQdQg7rE+nlCEL3yEtvfzmGewAhUjLBiFkLVLCRVCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+bl
-	pRbpGurlZpbopaaUbmKEhDjPDsZv62QOMQpwMCrx8FrcjgsUYk0sK67MPcQoycGkJMqbcCk+
-	UIgvKT+lMiOxOCO+qDQntfgQowQHs5IIr+xzoHLelMTKqtSifJiUNAeLkjiv6hJ1PyGB9MSS
-	1OzU1ILUIpisDAeHkgRvzxWgoYJFqempFWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgSI0v
-	BsYqSIoHaK8hSDtvcUFiLlAUovUUoy7HyitPXjMKseTl56VKifOyXwYqEgApyijNg1sBS2iv
-	GMWBPhbmrQQZxQNMhnCTXgEtYQJawn8BbElJIkJKqoGx/H+O1zap679VZj0SbLzAvcBlcse8
-	x5xKy5onf1hx11ttyfT5i95LP5igLZz95GF7+ux9728oRzClpKWZfTs4b88+9S2L 
+	id S1422747Ab3DFIHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Apr 2013 04:07:46 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:39467 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422744Ab3DFIHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Apr 2013 04:07:43 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 6 Apr
+ 2013 10:07:35 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (87.231.156.75) by
+ CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Sat, 6 Apr 2013 10:07:39 +0200
+In-Reply-To: <20130405233450.GA6137@machine.or.cz> (Petr Baudis's message of
+	"Sat, 6 Apr 2013 01:34:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [87.231.156.75]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220231>
 
-On 04/05/2013 09:36 PM, Antoine Pelisse wrote:
-> On Thu, Jan 3, 2013 at 10:59 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> How could M be stored?  Assuming that these type of premerge merges are
->> sparse, then Jeff's analysis seems good.  Concretely, one could simply
->> store pointers to M from both X and Y; e.g.,
->>
->> * Add a note to X with the information "when merging this commit with Y,
->> use premerge M"
->>
->> * Add a note to Y with the information "when merging this commit with X,
->> use premerge M"
->>
->> Then, when merging, create the set J..B, scan all of the commits on B..J
->> for these "premerge" notes (O(|B..J|)), and for each one, look in the
->> set J..B to see if it is present.  The effort should scale like
->>
->>     O( |J..B| + |B..J| * lg(|J..B|) )
->>
->> where, of course J and B could be exchanged for either aesthetic or
->> performance reasons.  (One would also need a mechanism for preventing M
->> from being garbage-collected.)
-> 
-> I like the idea of using notes and a kind of "pre-merge". The proposal
-> seems decent to me.
-> 
-> Michael, have you started implementing such a thing ? If you did, I
-> would love to help as much as I can.
-> If you didn't, I would like to start implementing this feature (I
-> think I now have some time to do so).
-> Maybe that would require some kind of mentoring though. It could be a
-> nice opportunity for the community to improve that too as a fake
-> "gsoc" (no google, no summer, no student)
+Petr Baudis <pasky@ucw.cz> writes:
 
-No, I haven't pursued this topic per se.  We don't use such a workflow
-on my projects, so it isn't a particular itch of mine.  I am currently
-more interested in approaches to merging branches that have diverged
-"too far" from each other [1].
+> On Fri, Apr 05, 2013 at 11:57:19AM -0700, Junio C Hamano wrote:
+>   The thing is, I was confused about dup2() all along as my old UNIX
+> masters taught me that I must close() the original descriptor first
+> and since that's what's commonly done anyway, I never thought to
+> double-check. Now I did and I learned something new, thanks!
 
-There will be some overlap with this idea and my "git-mergemate" project
-[2], if I ever find the time to make progress on it.  For that project,
-I will also need to store lots of intermediate merge commits, in fact
-also merges between parts of two branches.  I had planned to
-autogenerate branch names by simply sticking the SHA1s of the parents
-together, like maybe
+Indeed, that's the crucial point here.  dup2() is defined to close the
+original FD first if needed.
 
-    refs/mergemate/NAME/SHA1-SHA1
+It's much saner this way for the case of stderr, as there is no time
+when we have no stderr available to report errors: the FD is replace
+atomically from the POV of the program.
 
-or
+The manpage for dup2 does, however, say
 
-    refs/mergemate/NAME/SHA1/SHA1
+   If newfd was open, any errors  that  would  have  been  reported  at
+   close(2) time are lost.  A careful programmer will not use dup2() or
+   dup3() without closing newfd first.
 
-where NAME is the overall name of a merge that is in progress.  These
-references would be cleaned up when the merge was complete but would
-prevent garbage collection of the intermediate results until then.
-
-I would be happy to collaborate with you but it might not turn out so
-well because my time for open-sourcing is so limited and unpredictable.
-
-Michael
-
-[1]
-http://softwareswirl.blogspot.de/2012/12/the-conflict-frontier-of-nightmare-merge.html
-
-[2] https://github.com/mhagger/git-mergemate  (yes I know the name sucks)
+which is probably what you were referring to.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Thomas Rast
+trast@{inf,student}.ethz.ch
