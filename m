@@ -1,144 +1,95 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 1/2] send-email: make annotate configurable
-Date: Sat,  6 Apr 2013 03:03:31 -0600
-Message-ID: <1365239012-15079-2-git-send-email-felipe.contreras@gmail.com>
-References: <1365239012-15079-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 06 19:46:23 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: Fwd: Delivery Status Notification (Failure)
+Date: Sat, 6 Apr 2013 00:49:11 -0400
+Message-ID: <20130406044911.GA26544@sigill.intra.peff.net>
+References: <CAECh7fANnQDfSNHvOUH7AhyVNciypCKLXadY-jFxso4etCuvrg@mail.gmail.com>
+ <047d7b3a85a201067604d9a948e8@google.com>
+ <CAECh7fD6SKtfZudByeVD_HUjxN-fHBF1bA+pVM6=gV=Jy5Uhwg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: Drew Gross <drew.a.gross@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 06 19:46:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOWTF-0001b9-Sz
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 19:00:06 +0200
+	id 1UOWSM-0001b9-Rg
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 18:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932840Ab3DFJEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Apr 2013 05:04:41 -0400
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:41580 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932834Ab3DFJEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Apr 2013 05:04:39 -0400
-Received: by mail-ob0-f180.google.com with SMTP id un3so189124obb.25
-        for <git@vger.kernel.org>; Sat, 06 Apr 2013 02:04:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=+6/0q6mi2hlJBEC54owzoYjcUuslMuGiDZ4TAe+7OFQ=;
-        b=sKdh+z/QNpLx5Hz80oMS1pUBjFQkapeu2N1evyHpl7oN1KD6PLyn0H68EHa6MjoSNg
-         QGfNe6oLgMBSF/ZMpIa4AlCkvmPVe90HZjymscBtf1aoS+iFzH8CfgkPZqF8G9WkhTqb
-         JMjoOTyVZJ0eZSuslQ68TfzwtkjFp0W6TlyTW3DE7jdmEwInq7GYNrdQVE0ySvKz47Ux
-         cz5YFPs7VoTCVViFb/zJTL2eew5J/8j9NvONub8Hwf2rdfvi/aKxB2gYugpp4oNPOAk6
-         DmXVvKj7ikGRT1UJjHzKICZtV8R9ML1GdCS2aV4YAvqlZMpGcaQ6MmjnCHpE2u6EBuY6
-         yXWA==
-X-Received: by 10.60.85.35 with SMTP id e3mr10647027oez.117.1365239079352;
-        Sat, 06 Apr 2013 02:04:39 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id c4sm15241130obo.9.2013.04.06.02.04.36
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 06 Apr 2013 02:04:38 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2
-In-Reply-To: <1365239012-15079-1-git-send-email-felipe.contreras@gmail.com>
+	id S1751855Ab3DFEtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Apr 2013 00:49:21 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58585 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751358Ab3DFEtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Apr 2013 00:49:20 -0400
+Received: (qmail 21256 invoked by uid 107); 6 Apr 2013 04:51:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 06 Apr 2013 00:51:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Apr 2013 00:49:11 -0400
+Content-Disposition: inline
+In-Reply-To: <CAECh7fD6SKtfZudByeVD_HUjxN-fHBF1bA+pVM6=gV=Jy5Uhwg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220233>
 
-Some people always do --annotate, lets not force them to always type
-that.
+On Sat, Apr 06, 2013 at 12:15:33AM -0400, Drew Gross wrote:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/config.txt         |  1 +
- Documentation/git-send-email.txt |  5 +++--
- git-send-email.perl              | 12 +++++++++---
- 3 files changed, 13 insertions(+), 5 deletions(-)
+> I'm am trying to patch git to refuse to commit if there are both staged and
+> unstaged changes, and I pass the -a flag. I expected this simple addition
+> to parse_and_validate_options() in commit.c to accomplish most of what I
+> want:
+> 
+> if (all && s->workdir_dirty)
+>     die(_("Cannot commit with -a if there are staged and unstaged changes"));
+> 
+> But when compiled, this will commit anyway even with staged and unstaged
+> files. I think I misunderstanding the workdir_dirty flag. Can someone help
+> me?
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index bbba728..c8e2178 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1994,6 +1994,7 @@ sendemail.<identity>.*::
+I am not sure if that is a good safety measure in general. But
+ignoring that question for a moment, there are a few issues with your
+proposed implementation:
+
+  1. workdir_dirty only talks about unstaged changes; it sounds like you
+     want to check for both staged and unstaged.
+
+  2. no flags in in the wt_status struct are set until wt_status_collect
+     is called; you need to put your check later. But of course by the
+     time we call it, we have already updated the index, so you would
+     not know anymore which changes were already in the index and which
+     were added by "-a".
+
+  3. we do not always run wt_collect_status (e.g., if you are not going
+     to run an editor, we do not bother going to the effort to create
+     the commit template).
+
+So you'd probably need something more like this:
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 4620437..ebb5480 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1061,6 +1061,10 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 	if (status_format != STATUS_FORMAT_NONE)
+ 		dry_run = 1;
  
- sendemail.aliasesfile::
- sendemail.aliasfiletype::
-+sendemail.annotate::
- sendemail.bcc::
- sendemail.cc::
- sendemail.cccmd::
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 44a1f7c..2facc18 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -45,8 +45,9 @@ Composing
- ~~~~~~~~~
- 
- --annotate::
--	Review and edit each patch you're about to send. See the
--	CONFIGURATION section for 'sendemail.multiedit'.
-+	Review and edit each patch you're about to send. Default is the value
-+	of 'sendemail.annotate'. See the CONFIGURATION section for
-+	'sendemail.multiedit'.
- 
- --bcc=<address>::
- 	Specify a "Bcc:" value for each email. Default is the value of
-diff --git a/git-send-email.perl b/git-send-email.perl
-index be809e5..e7fe9fb 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -54,7 +54,7 @@ git send-email [options] <file | directory | rev-list options >
-     --[no-]bcc              <str>  * Email Bcc:
-     --subject               <str>  * Email "Subject:"
-     --in-reply-to           <str>  * Email "In-Reply-To:"
--    --annotate                     * Review each patch that will be sent in an editor.
-+    --[no-]annotate                * Review each patch that will be sent in an editor.
-     --compose                      * Open an editor for introduction.
-     --compose-encoding      <str>  * Encoding to assume for introduction.
-     --8bit-encoding         <str>  * Encoding to assume 8bit mails if undeclared
-@@ -143,7 +143,7 @@ my $auth;
- # Variables we fill in automatically, or via prompting:
- my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
- 	$initial_reply_to,$initial_subject,@files,
--	$author,$sender,$smtp_authpass,$annotate,$compose,$time);
-+	$author,$sender,$smtp_authpass,$annotate,$no_annotate,$compose,$time);
- 
- my $envelope_sender;
- 
-@@ -212,7 +212,8 @@ my %config_bool_settings = (
-     "signedoffbycc" => [\$signed_off_by_cc, undef],
-     "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
-     "validate" => [\$validate, 1],
--    "multiedit" => [\$multiedit, undef]
-+    "multiedit" => [\$multiedit, undef],
-+    "annotate" => [\$annotate, undef]
- );
- 
- my %config_settings = (
-@@ -305,6 +306,7 @@ my $rc = GetOptions("h" => \$help,
- 		    "smtp-domain:s" => \$smtp_domain,
- 		    "identity=s" => \$identity,
- 		    "annotate" => \$annotate,
-+		    "no-annotate" => \$no_annotate,
- 		    "compose" => \$compose,
- 		    "quiet" => \$quiet,
- 		    "cc-cmd=s" => \$cc_cmd,
-@@ -389,6 +391,10 @@ foreach my $setting (values %config_bool_settings) {
- 	${$setting->[0]} = $setting->[1] unless (defined (${$setting->[0]}));
++	wt_status_collect(s);
++	if (all && s->change.nr && s->workdir_dirty)
++		die("Cannot use '-a' with staged and unstaged changes");
++
+ 	return argc;
  }
  
-+if ($no_annotate) {
-+	$annotate = 0;
-+}
-+
- # 'default' encryption is none -- this only prevents a warning
- $smtp_encryption = '' unless (defined $smtp_encryption);
- 
--- 
-1.8.2
+
+Note that this may run the diff-index and diff-files procedures twice
+(once here, and once later if we actually call run_status). If were
+doing this for real (and I do not think it is something we want to take
+upstream anyway), you would want to make sure that information was
+cached.
+
+-Peff
