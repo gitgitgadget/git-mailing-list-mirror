@@ -1,104 +1,85 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Sun, 7 Apr 2013 17:12:09 +0100
-Message-ID: <20130407161209.GG2222@serenity.lan>
-References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
- <CALkWK0mM9HBUvHGHPEw4Vdosp_qfu_1L49TaZrzdC5n3soWkYg@mail.gmail.com>
- <7v61zz9fu3.fsf@alter.siamese.dyndns.org>
- <CALkWK0n64BW8zQXweR38T6DjT+iYBbsZDPCLZ-4igqGJHoFwKw@mail.gmail.com>
- <7vr4im7m1y.fsf@alter.siamese.dyndns.org>
- <CALkWK0=jrO9MQotB+anAn-5YtG1RBTLWEnGL5=K4wy=yi7E-CQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 4/4] format-patch: add format.cover-letter configuration
+Date: Sun, 07 Apr 2013 18:20:57 +0200
+Message-ID: <vpqbo9qfh1y.fsf@grenoble-inp.fr>
+References: <1365318630-11882-1-git-send-email-felipe.contreras@gmail.com>
+	<1365318630-11882-5-git-send-email-felipe.contreras@gmail.com>
+	<7v4nfi92q1.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0rsWCZE=MyW3zuBoVM5ZtEGQQb+deQJB5-i6tBzFdTfw@mail.gmail.com>
+	<7vmwta7lx3.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1pMLzkQrE1iKmYyj_FOZqkUp46HRQ6kjWfNvOYA5FkVQ@mail.gmail.com>
+	<vpqwqsefl9b.fsf@grenoble-inp.fr>
+	<CAMP44s2TvC9Ek51GyhPqtv7b-w8u8kr=tQsmdWEVGOycb6MEqA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 07 18:12:26 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 07 18:21:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOsCf-0007vV-K3
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 18:12:25 +0200
+	id 1UOsLX-0003TA-Tj
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 18:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933989Ab3DGQMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 12:12:21 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:55776 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932717Ab3DGQMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 12:12:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 19ACDCDA5B0;
-	Sun,  7 Apr 2013 17:12:19 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id suip8F8GAFQT; Sun,  7 Apr 2013 17:12:18 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 378B6CDA57C;
-	Sun,  7 Apr 2013 17:12:11 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=jrO9MQotB+anAn-5YtG1RBTLWEnGL5=K4wy=yi7E-CQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S934008Ab3DGQVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 12:21:21 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57242 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934004Ab3DGQVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 12:21:20 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r37GKtq0018820
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 7 Apr 2013 18:20:55 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UOsKv-0004RS-Iz; Sun, 07 Apr 2013 18:20:57 +0200
+In-Reply-To: <CAMP44s2TvC9Ek51GyhPqtv7b-w8u8kr=tQsmdWEVGOycb6MEqA@mail.gmail.com>
+	(Felipe Contreras's message of "Sun, 7 Apr 2013 11:03:15 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 07 Apr 2013 18:20:56 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r37GKtq0018820
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1365956458.12219@m5honCTfyCZQ8+T5mDZTfQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220323>
 
-On Sun, Apr 07, 2013 at 09:21:44PM +0530, Ramkumar Ramachandra wrote:
-> I suspect you're overtly worried about the fallout of such a
-> disruptive change.  If so, you could've just said: "Ram, I like the
-> idea.  But what breakages do you estimate we'll have to deal with?"
-> instead of attacking the idea and repeatedly questioning its purpose.
-> So, I'll make a rough guess based on the first iteration I intend to
-> get merged:
-> 
-> - Not all the git submodule subcommands will work. add/ status/ init/
-> deinit are easy to rewrite, but stuff like --recursive and foreach
-> might be slightly problematic as I already pointed out earlier.  We'll
-> have to code depending on how far you think the first iteration should
-> go.  After a few iterations, we can make 'git submodule' just print
-> "This command is deprecated.  Please read `man gitsubmodules`."
-> 
-> - All existing repositories with submodules will not be supported.  My
-> plan to deal with this: Have git-core code detect commit objects
-> in-tree and disable things like diff.  As soon as the user executes
-> the first 'git submodule' command, remove all existing submodules,
-> along with .gitmodules and re-add them as link objects.  Then print a
-> message saying: "We've just migrated your submodules to the new
-> format.  Please commit this."
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Meaning that every repository using submodules need to have a flag day
-when all of the people using it switch to the new Git version at once?
+> On Sun, Apr 7, 2013 at 9:50 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> So, I'm a user that does 'git format-patch --cover-letter=auto origin'
+>>> so I don't have the format.coverletter=auto configuration. Why? Why am
+>>> I not setting that configuration, and why am I running
+>>> --cover-letter=auto?
+>>
+>> The command may well be ran from a script or alias.
+>
+> Wouldn't this work for both cases?
+>
+> % git -c format.coverletter=auto format-patch
 
-How happy do you expect users to be if they have to remember to use
-different Git version to work on different repositories because some
-have switched and some haven't?
+Then, what's the point in having a --cover-letter option?
 
->From a user's point of view, the current submodule support mostly works
-very well.  Yes there are some annoyances ("you are not at the top
-level") and some more advanced features require a bit too much work
-(moving a submodule) but in normal usage it works very well in my
-experience.
+"git -c" is a good last-chance solution, but when we provide the same
+feature as a command-line option and as a configuration option, I can
+see no reason to add subtle difference between them.
 
-I think you need a much better argument than "it makes the
-implementation more beautiful" to convince users that a flag day is
-necessary.
-
-> That's really it.  It's certainly not earth-shattering breakage;
-
-For most users, the migration you've outlined above is exactly that.
-
-Even looking just at commits sent to this list, I've seen users on
-versions of Git from 1.7.10 to builds from next/pu in just the last
-week.  Coordinating a flag day for even a slightly popular repository is
-going to cause a lot of pain.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
