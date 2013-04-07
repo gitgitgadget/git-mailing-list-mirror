@@ -1,60 +1,129 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Mon, 8 Apr 2013 00:56:56 +0530
-Message-ID: <CALkWK0kA86YgonuXv=h2hA_hV8RfWPsBjtrk6OnHXiP=qDBjwg@mail.gmail.com>
-References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
- <CALkWK0mM9HBUvHGHPEw4Vdosp_qfu_1L49TaZrzdC5n3soWkYg@mail.gmail.com>
- <7v61zz9fu3.fsf@alter.siamese.dyndns.org> <CALkWK0n64BW8zQXweR38T6DjT+iYBbsZDPCLZ-4igqGJHoFwKw@mail.gmail.com>
- <7vr4im7m1y.fsf@alter.siamese.dyndns.org> <CALkWK0=jrO9MQotB+anAn-5YtG1RBTLWEnGL5=K4wy=yi7E-CQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 07 21:27:44 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 1/2] rev-parse: add --filename-prefix option
+Date: Sun,  7 Apr 2013 20:55:20 +0100
+Message-ID: <ba2c7aa9eaa982306f1d5ad5ff2d26a6e2b8df85.1365364193.git.john@keeping.me.uk>
+References: <cover.1365364193.git.john@keeping.me.uk>
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 08 08:45:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOvFe-0003Oa-Jr
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 21:27:42 +0200
+	id 1UP5p7-0000sy-EB
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 08:45:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933157Ab3DGT1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 15:27:38 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:53962 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933063Ab3DGT1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 15:27:37 -0400
-Received: by mail-ia0-f174.google.com with SMTP id b35so4586179iac.33
-        for <git@vger.kernel.org>; Sun, 07 Apr 2013 12:27:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=X9Vrp/wwMZcvvU0x+TwT2Xd74JTW1nLe+bZZWcU9Wuo=;
-        b=lGi7i8pne12y3AdxbKEx8rRk85xSVm8QhrjdR1834I1wMJ8chIFeqP11IkDcNyXeY2
-         AjlLLxA4UqUSjSV5TUR6Q3jyLV8oWUmEgu/JgVupiPOZRFyWa9NNEfY2HFMdhtPK9bOP
-         F5g1u/+vyZ3SytOvVoENfj8gC7Bf6XAXS15Ve7diprb3Vl+TNYNvZhReSdmNJGGYZ1mO
-         wPV8tvppFQfBsFdNW+xscNwO0sZuDqHiIst7y0xaQy92EsnlFsjr/JXlOHzQQS9UkR7X
-         s+/lY/zZETFEp3h15WLgZl6r9YhWzcYHjN6sT5cu3XoKcJyfnQR/9TiG/Pv0rDfAJanU
-         pZ3g==
-X-Received: by 10.50.108.235 with SMTP id hn11mr4684064igb.107.1365362856898;
- Sun, 07 Apr 2013 12:27:36 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Sun, 7 Apr 2013 12:26:56 -0700 (PDT)
-In-Reply-To: <CALkWK0=jrO9MQotB+anAn-5YtG1RBTLWEnGL5=K4wy=yi7E-CQ@mail.gmail.com>
+	id S933793Ab3DGTzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 15:55:40 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:55068 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933430Ab3DGTzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 15:55:39 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 986E06064E0;
+	Sun,  7 Apr 2013 20:55:39 +0100 (BST)
+X-Quarantine-ID: <lKaleIshpoSn>
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
+X-Spam-Flag: NO
+X-Spam-Score: -0.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lKaleIshpoSn; Sun,  7 Apr 2013 20:55:39 +0100 (BST)
+Received: from river.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 7223C6064EA;
+	Sun,  7 Apr 2013 20:55:32 +0100 (BST)
+X-Mailer: git-send-email 1.8.2.694.ga76e9c3.dirty
+In-Reply-To: <cover.1365364193.git.john@keeping.me.uk>
+In-Reply-To: <cover.1365364193.git.john@keeping.me.uk>
+References: <cover.1365364193.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220366>
 
-This reminds me of the commit generation numbers thread.
+This adds a prefix string to any filename arguments encountered after it
+has been specified.
 
-"But how can we determine ancestry?"
-"Use the commit timestamp."
-"But what if there are clock skews?"
-"Put in a slop."
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ builtin/rev-parse.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-It breaks existing stuff, and it's hard to show any end-user benefit.
-I fear this proposal will meet with the same fate.
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index f267a1d..11501a4 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -212,11 +212,12 @@ static void show_datestring(const char *flag, const char *datestr)
+ 	show(buffer);
+ }
+ 
+-static int show_file(const char *arg)
++static int show_file(const char *arg, const char *prefix)
+ {
+ 	show_default();
+ 	if ((filter & (DO_NONFLAGS|DO_NOREV)) == (DO_NONFLAGS|DO_NOREV)) {
+-		show(arg);
++		size_t prefixlen = prefix ? strlen(prefix) : 0;
++		show(prefix_filename(prefix, prefixlen, arg));
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -470,6 +471,7 @@ N_("git rev-parse --parseopt [options] -- [<args>...]\n"
+ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, as_is = 0, verify = 0, quiet = 0, revs_count = 0, type = 0;
++	const char *filename_prefix = NULL;
+ 	unsigned char sha1[20];
+ 	const char *name = NULL;
+ 
+@@ -503,7 +505,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 		const char *arg = argv[i];
+ 
+ 		if (as_is) {
+-			if (show_file(arg) && as_is < 2)
++			if (show_file(arg, filename_prefix) && as_is < 2)
+ 				verify_filename(prefix, arg, 0);
+ 			continue;
+ 		}
+@@ -527,7 +529,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				as_is = 2;
+ 				/* Pass on the "--" if we show anything but files.. */
+ 				if (filter & (DO_FLAGS | DO_REVS))
+-					show_file(arg);
++					show_file(arg, NULL);
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--default")) {
+@@ -535,6 +537,11 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				i++;
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--filename-prefix")) {
++				filename_prefix = argv[i+1];
++				i++;
++				continue;
++			}
+ 			if (!strcmp(arg, "--revs-only")) {
+ 				filter &= ~DO_NOREV;
+ 				continue;
+@@ -754,7 +761,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 		if (verify)
+ 			die_no_single_rev(quiet);
+ 		as_is = 1;
+-		if (!show_file(arg))
++		if (!show_file(arg, filename_prefix))
+ 			continue;
+ 		verify_filename(prefix, arg, 1);
+ 	}
+-- 
+1.8.2.694.ga76e9c3.dirty
