@@ -1,146 +1,106 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 2/2] transport-helper: check if remote helper is alive
-Date: Sun,  7 Apr 2013 01:45:06 -0600
-Message-ID: <1365320706-13539-3-git-send-email-felipe.contreras@gmail.com>
-References: <1365320706-13539-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johannes Sixt <j6t@kdbg.org>, Aaron Schrab <aaron@schrab.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	David Michael Barr <b@rr-dav.id.au>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 07 09:46:20 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/4] format-patch: improve head calculation for
+ cover-letter
+Date: Sun, 07 Apr 2013 00:50:45 -0700
+Message-ID: <7vbo9q93u2.fsf@alter.siamese.dyndns.org>
+References: <1365318630-11882-1-git-send-email-felipe.contreras@gmail.com>
+ <1365318630-11882-3-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 07 09:50:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOkIs-0000uU-Fe
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 09:46:18 +0200
+	id 1UOkNI-0005zB-Ex
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 09:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161323Ab3DGHqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 03:46:13 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:59354 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756122Ab3DGHqM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 03:46:12 -0400
-Received: by mail-ob0-f182.google.com with SMTP id ef5so4908099obb.13
-        for <git@vger.kernel.org>; Sun, 07 Apr 2013 00:46:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=dBXorJjBn5MyNauQMFfQF6Oe4twxaVftpfdGG+zyacA=;
-        b=KC9np1cxpWLEN0jqIkMI1caZc0zEOuG+3JN0CwbQcL8Kv4J3/hi43Xu0vTmKxY4JUC
-         SVUXy7z/8lr8GeX5Hk3JdLT7jdgADSCmNhXAXNIXkHUWiNrwSpZqit8mdW3S6uYo3Bmf
-         Kh20h6SXIi+JiqXqQPtoIsNWORjFw1gG2SmLPg3QGr7RW7dlf01HH/54UCKEgG/iTYTx
-         Mm9vlHBkCaeFyBRerovd7Oat5zShPZORLlMgMPG20Fmbj4v9gqnc3HjkN6JhIKrSkBh/
-         cffd0HAKhAU/iJItaMdJuVpvXvTtH7YHAuNwdEcQPjLfJG9FbfGF0z57YYUebYReOKYQ
-         8V+g==
-X-Received: by 10.60.142.103 with SMTP id rv7mr11949642oeb.34.1365320771504;
-        Sun, 07 Apr 2013 00:46:11 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id m7sm19233649obk.2.2013.04.07.00.46.09
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 07 Apr 2013 00:46:10 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2
-In-Reply-To: <1365320706-13539-1-git-send-email-felipe.contreras@gmail.com>
+	id S1161287Ab3DGHus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 03:50:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60734 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932571Ab3DGHur (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 03:50:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D06510071;
+	Sun,  7 Apr 2013 07:50:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Pedg4VJtimY5dZJ0UKauP2zEvN4=; b=jNbDeo
+	eSKnec/h+bgMq+pLrepqdjmqevxmbVxiM0q4YEHuuITc8w2ulH787VZ3S2wo16mz
+	SISUhrChlCxn5z1Al/LmKuX6yhxqW/VfiEUEQYLaGzcDYhIrzCQiIatcfN2kSKbT
+	+uL/oAUrIhXEhGQDGscn0vn1voe7EQONxW/eo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=a8xgJQNAcrhmBGYPPOpLfeNxBFh6eb1n
+	llyhuuEw5YWSPXkIZ6CPZsKq+83pyUO0tE58wW4MdLWgvHvxIs6OUD3D7s2fqhXL
+	9EL/bYDOi//OvNWzL/TKE5suN0Z3+B+HBQQ14U4z/kCjXlG4HuuMCmCM15tegUG6
+	aY/upYxgeZY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40AB310070;
+	Sun,  7 Apr 2013 07:50:47 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A14E81006E; Sun,  7 Apr
+ 2013 07:50:46 +0000 (UTC)
+In-Reply-To: <1365318630-11882-3-git-send-email-felipe.contreras@gmail.com>
+ (Felipe Contreras's message of "Sun, 7 Apr 2013 01:10:28 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DB6B0696-9F57-11E2-8062-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220293>
 
-Otherwise transport-helper will continue checking for refs and other
-things what will confuse the user more.
----
- git-remote-testgit        | 11 +++++++++++
- t/t5801-remote-helpers.sh | 19 +++++++++++++++++++
- transport-helper.c        |  8 ++++++++
- 3 files changed, 38 insertions(+)
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-diff --git a/git-remote-testgit b/git-remote-testgit
-index b395c8d..ca0cf09 100755
---- a/git-remote-testgit
-+++ b/git-remote-testgit
-@@ -61,12 +61,23 @@ do
- 			echo "feature import-marks=$gitmarks"
- 			echo "feature export-marks=$gitmarks"
- 		fi
-+
-+		if test -n "$GIT_REMOTE_TESTGIT_FAILURE"
-+		then
-+			exit -1
-+		fi
-+
- 		echo "feature done"
- 		git fast-export "${testgitmarks_args[@]}" $refs |
- 		sed -e "s#refs/heads/#${prefix}/heads/#g"
- 		echo "done"
- 		;;
- 	export)
-+		if test -n "$GIT_REMOTE_TESTGIT_FAILURE"
-+		then
-+			exit -1
-+		fi
-+
- 		before=$(git for-each-ref --format='%(refname) %(objectname)')
- 
- 		git fast-import "${testgitmarks_args[@]}" --quiet
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index f387027..efe67e2 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -166,4 +166,23 @@ test_expect_success 'push ref with existing object' '
- 	compare_refs local dup server dup
- '
- 
-+test_expect_success 'proper failure checks for fetching' '
-+	(GIT_REMOTE_TESTGIT_FAILURE=1 &&
-+	export GIT_REMOTE_TESTGIT_FAILURE &&
-+	cd local &&
-+	test_must_fail git fetch 2> error &&
-+	grep "Error while running helper" error
-+	)
-+'
-+
-+# We sleep to give fast-export a chance to catch the SIGPIPE
-+test_expect_failure 'proper failure checks for pushing' '
-+	(GIT_REMOTE_TESTGIT_FAILURE=1 &&
-+	export GIT_REMOTE_TESTGIT_FAILURE &&
-+	cd local &&
-+	test_must_fail git push --all 2> error &&
-+	grep "Error while running helper" error
-+	)
-+'
-+
- test_done
-diff --git a/transport-helper.c b/transport-helper.c
-index cb3ef7d..dfdfa7a 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -460,6 +460,10 @@ static int fetch_with_import(struct transport *transport,
- 
- 	if (finish_command(&fastimport))
- 		die("Error while running fast-import");
-+
-+	if (!check_command(data->helper))
-+		die("Error while running helper");
-+
- 	argv_array_free_detached(fastimport.argv);
- 
- 	/*
-@@ -818,6 +822,10 @@ static int push_refs_with_export(struct transport *transport,
- 
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
-+
-+	if (!check_command(data->helper))
-+		die("Error while running helper");
-+
- 	push_update_refs_status(data, remote_refs);
- 	return 0;
- }
--- 
-1.8.2
+> If we do it after the revision traversal we can be sure that this is
+> indeed a commit that will be processed (i.e. not a merge) and it's the
+> top most one (thus removing the NEEDSWORK comment).
+
+There may not be a single top-most one anyway (which is what that
+"randomly pick" comment refers to and punts), so taking the tip
+after traversal is just as good as doing it before.  So this is a
+good change, but it still is punting.
+
+The "head" is used only to produce the fake "From xxxxx <datestamp>"
+line to mark the output as format-patch output to /etc/magic, so it
+does not make sense to do anything fancier, like erroring out with
+"You specified two or more tips and we cannot pick one".
+
+So it is a good thing to punt.
+
+I like this simplification.  Good job.
+
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  builtin/log.c | 20 ++------------------
+>  1 file changed, 2 insertions(+), 18 deletions(-)
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 8f0b2e8..6c78d7f 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1319,24 +1319,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  	rev.show_root_diff = 1;
+>  
+>  	if (cover_letter) {
+>  		if (!branch_name)
+>  			branch_name = find_branch_name(&rev);
+>  	}
+> @@ -1372,6 +1354,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  		list = xrealloc(list, nr * sizeof(list[0]));
+>  		list[nr - 1] = commit;
+>  	}
+> +	if (nr > 0)
+> +		head = list[0];
+>  	total = nr;
+>  	if (!keep_subject && auto_number && total > 1)
+>  		numbered = 1;
