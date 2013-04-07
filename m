@@ -1,80 +1,116 @@
-From: Lukas Fleischer <git@cryptocrack.de>
-Subject: Re: [PATCH 1/2] bundle: Accept prerequisites without commit messages
-Date: Sun, 7 Apr 2013 17:24:37 +0200
-Message-ID: <20130407152437.GA334@blizzard>
-References: <1365335596-19917-1-git-send-email-git@cryptocrack.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH 1/2] fmt-merge-msg: respect core.commentchar in people credits
+Date: Sun,  7 Apr 2013 17:25:43 +0200
+Message-ID: <1365348344-1648-1-git-send-email-ralf.thielow@gmail.com>
+Cc: gitster@pobox.com, Ralf Thielow <ralf.thielow@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 07 17:24:47 2013
+X-From: git-owner@vger.kernel.org Sun Apr 07 17:26:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOrSX-00075n-LY
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 17:24:45 +0200
+	id 1UOrTh-0000HW-0z
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 17:25:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933904Ab3DGPYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 11:24:41 -0400
-Received: from elnino.cryptocrack.de ([46.165.227.75]:21313 "EHLO
-	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933900Ab3DGPYl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 11:24:41 -0400
-Received: from localhost (p57B429B9.dip.t-dialin.net [87.180.41.185])
-	by elnino.cryptocrack.de (OpenSMTPD) with ESMTP id 94aae97c
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128);
-	Sun, 7 Apr 2013 17:24:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1365335596-19917-1-git-send-email-git@cryptocrack.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933912Ab3DGPZx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 11:25:53 -0400
+Received: from mail-ea0-f172.google.com ([209.85.215.172]:50482 "EHLO
+	mail-ea0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933907Ab3DGPZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 11:25:52 -0400
+Received: by mail-ea0-f172.google.com with SMTP id z7so1900450eaf.17
+        for <git@vger.kernel.org>; Sun, 07 Apr 2013 08:25:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=VJBYKsLR5ttZskfdoMA8ud+4OBmhYAM9T/txEmTgsRw=;
+        b=AXpdPKa41yltq9UBUHvcOM1MkNv29GNnAhMnOfpPS7ZPp75I0moIsVChs1w6GY6ghJ
+         Y+K8/ZACzgazyCvK+ga72EB6nbyxMWMmRYsmt52ECQMIIPEomHktON3aP6id/5zoDHoJ
+         8CQ+Lfk4QuV5AwQN1udarWcdarJsuYXuj99z4doAgRHFS0Ggg6/84Q079pft2I9DaGkM
+         Wj4mgwRs6n7Uhm7CUzzumJ4YjFs6/PkBv2Ss83UckDwKtvzSi762MBfhh4ODXSpFlmDe
+         gIrlX4J5g6DlNg4Pgxm8RqafeO8p3MlFzZ1odtbdC5v5yJxtfpARZDB048aFowAufrMg
+         0GPw==
+X-Received: by 10.15.32.67 with SMTP id z43mr30206567eeu.24.1365348351168;
+        Sun, 07 Apr 2013 08:25:51 -0700 (PDT)
+Received: from localhost (dslb-178-005-125-192.pools.arcor-ip.net. [178.5.125.192])
+        by mx.google.com with ESMTPS id bc1sm26809791eeb.11.2013.04.07.08.25.49
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 07 Apr 2013 08:25:50 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.470.g21ccebe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220317>
 
-On Sun, Apr 07, 2013 at 01:53:15PM +0200, Lukas Fleischer wrote:
-> While explicitly stating that the commit message in a prerequisite line
-> is optional, we required all lines with 40 or more characters to contain
-> a space after the object name, bailing out if a line consisted of an
-> object name only. Fix this off-by-one error and only require lines with
-> more than 40 characters to contain the separating space.
-> 
-> Signed-off-by: Lukas Fleischer <git@cryptocrack.de>
-> ---
->  bundle.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/bundle.c b/bundle.c
-> index 505e07e..4b0e5cd 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -57,7 +57,7 @@ static int parse_bundle_header(int fd, struct bundle_header *header,
->  		 * followed by SP and subject line.
->  		 */
->  		if (get_sha1_hex(buf.buf, sha1) ||
-> -		    (40 <= buf.len && !isspace(buf.buf[40])) ||
-> +		    (buf.len > 40 && !isspace(buf.buf[40])) ||
+Commit eff80a9 (Allow custom "comment char") introduced a custom
+comment character for commit messages but forgot to use it in
+people credits which can be a part of a commit message.
 
-By the way, I changed this to "buf.len > 40" instead of "40 < buf.len"
-because I personally think that the former is much easier to read here.
-Is there any general guideline when to use which order? grep(1) says we
-use both forms:
+With this commit, the custom comment character is also used
+in people credits.
 
-    $ grep '0 <' *.c | wc -l
-    119
-    $ grep '> 0' *.c | wc -l
-    164
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ builtin/fmt-merge-msg.c  |  6 +++---
+ t/t6200-fmt-merge-msg.sh | 18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
->  		    (!is_prereq && buf.len <= 40)) {
->  			if (report_path)
->  				error(_("unrecognized header: %s%s (%d)"),
-> -- 
-> 1.8.2.675.gda3bb24.dirty
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 265a925..88df93a 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -287,10 +287,10 @@ static void credit_people(struct strbuf *out,
+ 	const char *me;
+ 
+ 	if (kind == 'a') {
+-		label = "\n# By ";
++		label = "By";
+ 		me = git_author_info(IDENT_NO_DATE);
+ 	} else {
+-		label = "\n# Via ";
++		label = "Via";
+ 		me = git_committer_info(IDENT_NO_DATE);
+ 	}
+ 
+@@ -300,7 +300,7 @@ static void credit_people(struct strbuf *out,
+ 	     (me = skip_prefix(me, them->items->string)) != NULL &&
+ 	     skip_prefix(me, " <")))
+ 		return;
+-	strbuf_addstr(out, label);
++	strbuf_addf(out, "\n%c %s ", comment_line_char, label);
+ 	add_people_count(out, them);
+ }
+ 
+diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
+index 992c2a0..84e10fd 100755
+--- a/t/t6200-fmt-merge-msg.sh
++++ b/t/t6200-fmt-merge-msg.sh
+@@ -180,6 +180,24 @@ test_expect_success 'merge.log=5 shows all 5 commits' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success '--log=5 with custom comment character' '
++	cat >expected <<-EOF &&
++	Merge branch ${apos}left${apos}
++
++	/ By Another Author (3) and A U Thor (2)
++	/ Via Another Committer
++	* left:
++	  Left #5
++	  Left #4
++	  Left #3
++	  Common #2
++	  Common #1
++	EOF
++
++	git -c core.commentchar="/" fmt-merge-msg --log=5 <.git/FETCH_HEAD >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'merge.log=0 disables shortlog' '
+ 	echo "Merge branch ${apos}left${apos}" >expected
+ 	git -c merge.log=0 fmt-merge-msg <.git/FETCH_HEAD >actual &&
+-- 
+1.8.2.470.g21ccebe
