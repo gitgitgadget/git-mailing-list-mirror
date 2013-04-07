@@ -1,69 +1,101 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Mon, 8 Apr 2013 00:47:27 +0530
-Message-ID: <CALkWK0kqE_s3QT7NPRFqTtmhWQDZj4YxsTw55eVTaVbT4H04tA@mail.gmail.com>
-References: <7vr4im7m1y.fsf@alter.siamese.dyndns.org> <CALkWK0=jrO9MQotB+anAn-5YtG1RBTLWEnGL5=K4wy=yi7E-CQ@mail.gmail.com>
- <20130407161209.GG2222@serenity.lan> <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com>
- <20130407170201.GH2222@serenity.lan> <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com>
- <20130407175210.GI2222@serenity.lan> <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
- <20130407182112.GJ2222@serenity.lan> <5161BC33.8060707@web.de>
- <20130407185905.GK2222@serenity.lan> <CALkWK0=v6SD_zEw=taauYWvYD5pHzdrED0vrhuFHKeS2zfgxSw@mail.gmail.com>
+From: David Foster <davidfstr@gmail.com>
+Subject: Re: Git/Mac refuses to install on OS X 10.8 (Mountain Lion)
+Date: Sun, 07 Apr 2013 12:20:15 -0700
+Message-ID: <5161C6EF.8010506@gmail.com>
+References: <5160D223.3090203@gmail.com> <5161890E.701@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Apr 07 21:18:17 2013
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sun Apr 07 21:20:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOv6W-0008SC-5Z
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 21:18:16 +0200
+	id 1UOv8b-0002lr-0r
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 21:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933039Ab3DGTSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 15:18:10 -0400
-Received: from mail-ia0-f173.google.com ([209.85.210.173]:47505 "EHLO
-	mail-ia0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932959Ab3DGTSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 15:18:09 -0400
-Received: by mail-ia0-f173.google.com with SMTP id h37so4577097iak.32
-        for <git@vger.kernel.org>; Sun, 07 Apr 2013 12:18:09 -0700 (PDT)
+	id S933009Ab3DGTUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 15:20:21 -0400
+Received: from mail-da0-f43.google.com ([209.85.210.43]:40789 "EHLO
+	mail-da0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761204Ab3DGTUU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 15:20:20 -0400
+Received: by mail-da0-f43.google.com with SMTP id u36so2306799dak.2
+        for <git@vger.kernel.org>; Sun, 07 Apr 2013 12:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=CTGnyHPuDNC34dKM/i+bZSAtGjOm/ipll9/7zXSZUIU=;
-        b=GAL3EgKKYx9EM1CRFEPiKoy5o3+UJvdbTeL5jQys/D0HLM5/NeS5eg/XfEH5lUE4u2
-         DLCN1XAHbEcbb1XDRTwkCOWyik6WgCbb3UwlPrBH5oFxF42u2OY/nC2GeGzB9ppoVKR3
-         X4cxpp8Km2FAVPXRLAZmKDM++r/KlipRvQG4I/b/vbEmrvLddhVrhaqFoSaao5+fQ3Ud
-         t1AXe6OiAsruVNsGnGG8nFFeDFzuAq+xJqhDYfJIjmtpkw2+bTNcBbX8vrM2Lfi0Y09Y
-         MEkuX3k8HJhH+sd0Z7hhtkbc+GEExrtm7k3oZN0B+24PT6dPz+TwYop1KmLpxxTRGtJL
-         2XqQ==
-X-Received: by 10.50.117.3 with SMTP id ka3mr4504397igb.107.1365362289120;
- Sun, 07 Apr 2013 12:18:09 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Sun, 7 Apr 2013 12:17:27 -0700 (PDT)
-In-Reply-To: <CALkWK0=v6SD_zEw=taauYWvYD5pHzdrED0vrhuFHKeS2zfgxSw@mail.gmail.com>
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=mUFL5yj30PrU2Q+FWi+rXfQey3w9ZgI2GTZNuLccPYY=;
+        b=V/IsdyBEp4fxqRRJWANvG3NSrAc4MXU8zktqh+wzXxV8IoKlOrCUGFZugS2DIoYwjw
+         GFP0Eyt0Tqlz/WxrO84hgmxmLuU64EKDPg47TFG2WOPp5c7C5GvY//9rtVKbeQDts4qq
+         PzC6bdMXs4BycwO/8mgmA6meRmffo7YAY6sZl9Xd7jaDky0cR+8pRSv5LnKvsm0MoYD6
+         QmhURtUwGb1nJZTRpxn6wL7BGKWNgurdJUu6jqRhn1tJ/Mo9Yf5suVv6tlP5PQnpU9R6
+         4DENB0B0TyHHrQ/KflnHje5tPOWV3z1JXxR1J+f2s/1TyYoV1jM26vPspC/vefT4JWwU
+         OIJw==
+X-Received: by 10.66.159.234 with SMTP id xf10mr26297329pab.203.1365362419669;
+        Sun, 07 Apr 2013 12:20:19 -0700 (PDT)
+Received: from Cathode-2.local (c-66-235-53-6.sea.wa.customer.broadstripe.net. [66.235.53.6])
+        by mx.google.com with ESMTPS id u9sm32297198paf.22.2013.04.07.12.20.17
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 07 Apr 2013 12:20:18 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <5161890E.701@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220364>
 
-Ramkumar Ramachandra wrote:
->> The only proposed change that seems to me to be impossible with the
->> current .gitmodules approach is the "submodule in a non-initialized
->> submodule" feature, but I've never seen anyone ask for that and it seems
->> likely to open a whole can of worms where the behaviour is likely to
->> vary with $PWD.  The current hierarchical approach provides sensible
->> encapsulation of repositories and is simple to understand: once you're
->> in a repository nothing above its root directory affects you.
+ > That aside; Does the package work if you reduce the security settings,
+ > install it and then reset the security settings to their default
+ > settings later? If so, I'd call that a reasonable workaround
+
+It does. An even better workaround is to right-click (or Control-click) 
+on the installer and select Open. This provides a slightly different 
+dialog with gives an override to open the application anyway. This 
+method avoids changing the OS security settings.
+
+ > and we probably won't even have to document it since google should 
+provide it
+
+If you intend to make the workaround official, then it would be a good 
+idea to at least mention it on the download page. It is poor user 
+experience to require users to use Google to workaround issues in a core 
+installation scenario.
+
+--
+David Foster
+http://dafoster.net/
+
+On 4/7/13 7:56 AM, Andreas Ericsson wrote:
+> On 04/07/2013 03:55 AM, David Foster wrote:
+>> The default security settings on OS X 10.8 (Mountain Lion) disallow the
+>> installation of unsigned packages, with no override.
+>>
+>> Git/Mac 1.8.2 is not signed and therefore will not install without
+>> changing
+>> the OS default security settings.
+>>
 >
-> That can be implemented in the current submodule system too, fwiw.
-
-And yes, it's going to be very ugly: I imagine special refs pointing
-to blobs, or something like that.  Then again, what do end-users care
-about?
+> Sounds like an OSX lockin bugture to me. If anyone can sign the package
+> with any random key, then it wouldn't provide much in the way of
+> security, so I guess that means one has to get a signing key form Apple,
+> which I doubt they just hand out to anyone (usually it means paying
+> $100 to get an "apple developer certificate). That's nonsense, ofcourse,
+> but it's how they've chosen to do business.
+>
+> That aside; Does the package work if you reduce the security settings,
+> install it and then reset the security settings to their default
+> settings later? If so, I'd call that a reasonable workaround, and we
+> probably won't even have to document it since google should provide it
+> for git and a plethora of other useful packages.
+>
+> Otoh, if enough osx folks want git on the latest pussycat, I'm sure
+> they'll provide a package themselves sooner or later, in which case
+> you just have to wait for that to happen.
+>
