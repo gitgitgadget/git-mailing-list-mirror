@@ -1,57 +1,71 @@
-From: Thomas Koch <thomas@koch.ro>
-Subject: Re: Advice and repo setup
-Date: Sun, 7 Apr 2013 08:12:15 +0200
-Message-ID: <201304070812.18797.thomas@koch.ro>
-References: <CAKtB=OAot3y8fMjAf+Vh-=wOeX5b=F_N6_BLjK0fhGxGCg3Txg@mail.gmail.com>
-Reply-To: thomas@koch.ro
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 1/2] send-email: make annotate configurable
+Date: Sun, 7 Apr 2013 00:54:30 -0600
+Message-ID: <CAMP44s1+XDQNctRe_N1u=cmF+e83bzu4LFK6GUaz-UKagvYLBg@mail.gmail.com>
+References: <1365239012-15079-1-git-send-email-felipe.contreras@gmail.com>
+	<1365239012-15079-2-git-send-email-felipe.contreras@gmail.com>
+	<7vr4in818e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael Campbell <michael.campbell@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 07 08:30:56 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 07 08:54:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOj7u-0002hX-P1
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 08:30:55 +0200
+	id 1UOjUx-00050m-4D
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 08:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752192Ab3DGGat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 02:30:49 -0400
-Received: from koch.ro ([88.198.2.104]:54864 "EHLO koch.ro"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752087Ab3DGGas (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 02:30:48 -0400
-X-Greylist: delayed 1104 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Apr 2013 02:30:48 EDT
-Received: from 44-25.106-92.cust.bluewin.ch ([92.106.25.44] helo=x121e.localnet)
-	by koch.ro with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
-	(Exim 4.80)
-	(envelope-from <thomas@koch.ro>)
-	id 1UOipw-000274-5e; Sun, 07 Apr 2013 08:12:20 +0200
-User-Agent: KMail/1.13.7 (Linux/3.8-trunk-amd64; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <CAKtB=OAot3y8fMjAf+Vh-=wOeX5b=F_N6_BLjK0fhGxGCg3Txg@mail.gmail.com>
+	id S1754336Ab3DGGyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 02:54:33 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:40770 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751388Ab3DGGyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 02:54:32 -0400
+Received: by mail-la0-f52.google.com with SMTP id ej20so272342lab.25
+        for <git@vger.kernel.org>; Sat, 06 Apr 2013 23:54:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=qJNLh8etzkLpBD8gDmt5VUcmO++7bjNP/6w9n/EAP6Y=;
+        b=uiEQi20bocuisJ1KJXhod8TNeZfZYGyqyEaz3GADgNZMI5sXC8v3xprLAdnLDtGhom
+         hO6duDvfEopk4QvMosSG/HyjJcQMBn+84FPmzjidbUCx1/6bT/M4XwaPb/3zx4vUNCsK
+         Pxr03axEz+//99ZPXGPeZUAEPtCbxh5h4lnlJCiDxP+kHO2dhQ6L7TBKEU5vQ8rDFxuP
+         ofwZzN68771Kv3fOy9LeGYmZK82mCQ/CSq1frxWgUn4vb+WZx3QXNzAwzw0iYz9xPI76
+         l9+XsW+1g9fmxf0cMVWG9E1rP9wLfJOg3YTZey+vU8uNTi/rfKcFiZr/8Q5IIIn7gGIR
+         2ieg==
+X-Received: by 10.112.132.166 with SMTP id ov6mr7673441lbb.71.1365317670735;
+ Sat, 06 Apr 2013 23:54:30 -0700 (PDT)
+Received: by 10.114.20.36 with HTTP; Sat, 6 Apr 2013 23:54:30 -0700 (PDT)
+In-Reply-To: <7vr4in818e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220281>
 
-Michael Campbell:
-> So one plan is to have multiple repos, and then a mirror of those for
-> the remote devs.  The other plan is to say "sod it" and have one local
-> and one remote and just suffer through possible non-requirements of
-> varying authorization profiles.
+On Sat, Apr 6, 2013 at 9:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> @@ -305,6 +306,7 @@ my $rc = GetOptions("h" => \$help,
+>>                   "smtp-domain:s" => \$smtp_domain,
+>>                   "identity=s" => \$identity,
+>>                   "annotate" => \$annotate,
+>> +                 "no-annotate" => \$no_annotate,
+>
+> Wouldn't it be much better to let GetOptions know that --no-annotate
+> is allowed by saying
+>
+>         "annotate!" => \$annotate
+>
+> which also let us lose an extra $no_annotate variable?
 
-You could also use Gerrit[1]. It's not only a code review server (and any team 
-should have code review). It also hosts git repositories and you can write 
-submit rules to reflect any possible write rule your company might have[2].
+Right. Will resend.
 
-[1] http://en.wikipedia.org/wiki/Gerrit_%28software%29
-[2] https://gerrit-review.googlesource.com/Documentation/prolog-cookbook.html
-
-Regards,
-
-Thomas Koch, http://www.koch.ro
+-- 
+Felipe Contreras
