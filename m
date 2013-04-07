@@ -1,85 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 4/4] format-patch: add format.cover-letter configuration
-Date: Sun, 07 Apr 2013 18:20:57 +0200
-Message-ID: <vpqbo9qfh1y.fsf@grenoble-inp.fr>
-References: <1365318630-11882-1-git-send-email-felipe.contreras@gmail.com>
-	<1365318630-11882-5-git-send-email-felipe.contreras@gmail.com>
-	<7v4nfi92q1.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0rsWCZE=MyW3zuBoVM5ZtEGQQb+deQJB5-i6tBzFdTfw@mail.gmail.com>
-	<7vmwta7lx3.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1pMLzkQrE1iKmYyj_FOZqkUp46HRQ6kjWfNvOYA5FkVQ@mail.gmail.com>
-	<vpqwqsefl9b.fsf@grenoble-inp.fr>
-	<CAMP44s2TvC9Ek51GyhPqtv7b-w8u8kr=tQsmdWEVGOycb6MEqA@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Sun, 7 Apr 2013 22:12:28 +0530
+Message-ID: <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com>
+References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+ <CALkWK0mM9HBUvHGHPEw4Vdosp_qfu_1L49TaZrzdC5n3soWkYg@mail.gmail.com>
+ <7v61zz9fu3.fsf@alter.siamese.dyndns.org> <CALkWK0n64BW8zQXweR38T6DjT+iYBbsZDPCLZ-4igqGJHoFwKw@mail.gmail.com>
+ <7vr4im7m1y.fsf@alter.siamese.dyndns.org> <CALkWK0=jrO9MQotB+anAn-5YtG1RBTLWEnGL5=K4wy=yi7E-CQ@mail.gmail.com>
+ <20130407161209.GG2222@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 07 18:21:39 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Apr 07 18:43:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOsLX-0003TA-Tj
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 18:21:36 +0200
+	id 1UOsgV-0001ok-ME
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 18:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934008Ab3DGQVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 12:21:21 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57242 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934004Ab3DGQVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 12:21:20 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r37GKtq0018820
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 7 Apr 2013 18:20:55 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UOsKv-0004RS-Iz; Sun, 07 Apr 2013 18:20:57 +0200
-In-Reply-To: <CAMP44s2TvC9Ek51GyhPqtv7b-w8u8kr=tQsmdWEVGOycb6MEqA@mail.gmail.com>
-	(Felipe Contreras's message of "Sun, 7 Apr 2013 11:03:15 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 07 Apr 2013 18:20:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r37GKtq0018820
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1365956458.12219@m5honCTfyCZQ8+T5mDZTfQ
+	id S934080Ab3DGQnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 12:43:11 -0400
+Received: from mail-ia0-f170.google.com ([209.85.210.170]:64993 "EHLO
+	mail-ia0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934075Ab3DGQnJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 12:43:09 -0400
+Received: by mail-ia0-f170.google.com with SMTP id j38so359794iad.29
+        for <git@vger.kernel.org>; Sun, 07 Apr 2013 09:43:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=MCzDCNmvM6KtHm1DFKETUOs1VEfPNlZOL+LtNDn2O14=;
+        b=EdMeEKPldQFobbxza9yJN+wXTb92qc1Xi//aWK55ciRbEkxAowbFCQ3GDwW1+6yyUc
+         59BVGqLQieviIOa/ylR/k8v6e+CdZ5J1qcrvfT+HDEh7XJGlv+uy43V+00skBlkHBo5R
+         0Nm9sekbZsPuRuX/2I0MbRWKp43Vwrs7xBHU9gysIR70KRgjCKb30xAt8sLnWWx+WqDJ
+         lvfGtLwon5b9G/J5Wy10eTOYDlr7VKEKZwHrRczMmL1VLo2XTDqga1q14/lmtk6ZRgek
+         94kkoEBeY+ByE4TOUnnUkK9mW2cAcQzITC/INx9ozGGT1JM1g3pfWibyfLJWcoTfO/PN
+         1LRA==
+X-Received: by 10.43.9.68 with SMTP id ov4mr10016908icb.22.1365352989197; Sun,
+ 07 Apr 2013 09:43:09 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Sun, 7 Apr 2013 09:42:28 -0700 (PDT)
+In-Reply-To: <20130407161209.GG2222@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220326>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+John Keeping wrote:
+> Meaning that every repository using submodules need to have a flag day
+> when all of the people using it switch to the new Git version at once?
 
-> On Sun, Apr 7, 2013 at 9:50 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> So, I'm a user that does 'git format-patch --cover-letter=auto origin'
->>> so I don't have the format.coverletter=auto configuration. Why? Why am
->>> I not setting that configuration, and why am I running
->>> --cover-letter=auto?
->>
->> The command may well be ran from a script or alias.
->
-> Wouldn't this work for both cases?
->
-> % git -c format.coverletter=auto format-patch
+No, I would be totally against a migration that involves a flag-day.
+What I meant is that having old-style submodule side-by-side with
+new-style submodules is confusing (think about people using an older
+version and getting confused), and that we should disallow it.  Users
+will still be able to use existing repositories with new versions of
+git with a few caveats:
+1. They won't be able to add new new submodules without migrating all
+existing submodules.
+2. git ls-tree will show the in-tree object incorrectly as a link (ie.
+not commit).
 
-Then, what's the point in having a --cover-letter option?
+That's about it, I think.  Obviously, everyone working on the
+repository has to upgrade to a new version of git before they can use
+new-style submodules.
 
-"git -c" is a good last-chance solution, but when we provide the same
-feature as a command-line option and as a configuration option, I can
-see no reason to add subtle difference between them.
+> I think you need a much better argument than "it makes the
+> implementation more beautiful" to convince users that a flag day is
+> necessary.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+There is no flag day necessary, and that is not my argument at all:
+new-style submodules brings lots of new functionality to the table.
