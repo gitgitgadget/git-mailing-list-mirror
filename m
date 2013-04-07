@@ -1,213 +1,129 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] run-command: add new check_command helper
-Date: Sun, 07 Apr 2013 10:47:56 -0700
-Message-ID: <7v1uam44hf.fsf@alter.siamese.dyndns.org>
-References: <1365320706-13539-1-git-send-email-felipe.contreras@gmail.com>
- <1365320706-13539-2-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Johannes Sixt <j6t@kdbg.org>, Aaron Schrab <aaron@schrab.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	David Michael Barr <b@rr-dav.id.au>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 07 19:48:05 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v4 3/6] format-patch: refactor branch name calculation
+Date: Sun,  7 Apr 2013 12:46:21 -0500
+Message-ID: <1365356784-24872-4-git-send-email-felipe.contreras@gmail.com>
+References: <1365356784-24872-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 07 19:48:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOthE-0003ap-HV
+	id 1UOthE-0003ap-2P
 	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 19:48:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934203Ab3DGRsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 13:48:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55639 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934151Ab3DGRr7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 13:47:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BEDEA13E0A;
-	Sun,  7 Apr 2013 17:47:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Hu9UZP04fXd4S+N6LZLGmK0npJg=; b=SsqQp/
-	cncRAfzB/7zWSyfaZ6ZRCOGA0vVyyyypavvvaSYBWjUk1bheeulWX0uCMOOUPoX5
-	jW+3M3wQdROyZ25U7J/xGyWo8kaIoQ7fEAuUEllcLFBAC1eA9p8u1WqrKnLWw+93
-	/I7mrFY9WSl4GW9fWjtrDmGYSw9XJw8h4VhZY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EdosMcjou86ooPmOPaoLrkylfRY0S1dD
-	s/vDgd5vRy7/k+06yRn12sVB7UFkFOifO+Camh/UAqe76hoOjbWxY4JTLtAeTg5K
-	G3hQn+/avQ33AK6z4+SGgq7hc4xHLhbuUhmKHAky5JNkhS6m+n5Z1yO8CHwYUtSi
-	4ihHmTRu6lg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B209513E08;
-	Sun,  7 Apr 2013 17:47:58 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 074AA13E03; Sun,  7 Apr
- 2013 17:47:58 +0000 (UTC)
-In-Reply-To: <1365320706-13539-2-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Sun, 7 Apr 2013 01:45:05 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 48A050C4-9FAB-11E2-AD95-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S934202Ab3DGRr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 13:47:56 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:43595 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934156Ab3DGRrz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 13:47:55 -0400
+Received: by mail-oa0-f43.google.com with SMTP id l10so5452231oag.2
+        for <git@vger.kernel.org>; Sun, 07 Apr 2013 10:47:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=X+7r8jph2hFQfv1r4RgzOSVciqcMpZuiLafkbXJBWmo=;
+        b=fl04q4ZzonjrFAbyFntAe4dlxXg7bpn24GTocw/Dbb4mVx3nlhC5IiAqjxx8gHDL4L
+         /az7z1zzT/JDzLqqOzQA6b9uQd35HYSnvssKZqYF2tmqCAwPi5nGIJrJTv9t4uYnVmGs
+         RlfzzSFn6vNDy6cRCqnq69jvJ1pe8SrA5I9N5V+oTwu+3T8oPIyrCcxAPsB942CI+v7B
+         +p1ejMURbYTyWp4qhc2y4HYg/T/W/OrlKfWFKh5WoSUycT8I6OdcpSzjWlguudznvZay
+         PI+I7FvGTqBR3KgrlPCT53ys2hfBuqhkw5v/IHI+wszyVUaiSU9hfzQDLT/tg3SSTWpn
+         X8XQ==
+X-Received: by 10.182.45.231 with SMTP id q7mr13291204obm.58.1365356874124;
+        Sun, 07 Apr 2013 10:47:54 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id 4sm20669362obj.7.2013.04.07.10.47.49
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 07 Apr 2013 10:47:53 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2
+In-Reply-To: <1365356784-24872-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220343>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+By moving the part that relies on rev->pending earlier, where we are
+already checking the special case where there's only one ref.
 
-> And to recover the information from the last run when running
-> wait_or_whine().
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ builtin/log.c | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
-The above says what the updated wait_or_whine() does (it returns the
-state an earlier call to check_command() has already polled to
-determine), but lacks what the added check_command() does and why it
-is needed.  I am guessing:
-
-	In a codeflow like _this_ calls _that_ calls _that-other_,
-	and finally the original caller culls the subprocesses by
-	wait-or-whine, there is no good way for an intermediate
-	level to detect dead child and abort the process early.
-	They can now poll the status with check_command() without
-	blocking in order to do so.
-
-	wait_or_while() is adjusted to correctly report the status
-	of the child that was already culled by an earlier call to
-	check_command().  check_command() itself uses the same
-	mechanism to indicate that the child was already culled, so
-	that it is safe to call it more than once on the same child
-	process.
-
-might be a more understandable description for this change, but
-these _this_, _that_ and _that-other_ blanks need to be filled.
-
->  run-command.c | 46 ++++++++++++++++++++++++++++++++++++++++------
->  run-command.h |  5 +++++
->  2 files changed, 45 insertions(+), 6 deletions(-)
->
-> diff --git a/run-command.c b/run-command.c
-> index 07e27ff..5cb5114 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -226,14 +226,20 @@ static inline void set_cloexec(int fd)
->  		fcntl(fd, F_SETFD, flags | FD_CLOEXEC);
->  }
->  
-> -static int wait_or_whine(pid_t pid, const char *argv0)
-> +static int wait_or_whine(struct child_process *cmd, pid_t pid, const char *argv0)
->  {
->  	int status, code = -1;
->  	pid_t waiting;
->  	int failed_errno = 0;
->  
-> -	while ((waiting = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
-> -		;	/* nothing */
-> +	/* First try the last status from check_command() */
-> +	if (cmd && cmd->last_status.valid) {
-> +		status = cmd->last_status.status;
-> +		waiting = pid;
-> +	} else {
-> +		while ((waiting = waitpid(pid, status, 0)) < 0 && errno == EINTR)
-> +			;	/* nothing */
-> +	}
->  
->  	if (waiting < 0) {
->  		failed_errno = errno;
-> @@ -276,6 +282,8 @@ int start_command(struct child_process *cmd)
->  	int failed_errno = failed_errno;
->  	char *str;
->  
-> +	cmd->last_status.valid = 0;
-> +
->  	/*
->  	 * In case of errors we must keep the promise to close FDs
->  	 * that have been passed in via ->in and ->out.
-> @@ -437,7 +445,7 @@ fail_pipe:
->  		 * At this point we know that fork() succeeded, but execvp()
->  		 * failed. Errors have been reported to our stderr.
->  		 */
-> -		wait_or_whine(cmd->pid, cmd->argv[0]);
-> +		wait_or_whine(cmd, cmd->pid, cmd->argv[0]);
->  		failed_errno = errno;
->  		cmd->pid = -1;
->  	}
-> @@ -542,7 +550,7 @@ fail_pipe:
->  
->  int finish_command(struct child_process *cmd)
->  {
-> -	return wait_or_whine(cmd->pid, cmd->argv[0]);
-> +	return wait_or_whine(cmd, cmd->pid, cmd->argv[0]);
->  }
->  
->  int run_command(struct child_process *cmd)
-> @@ -553,6 +561,32 @@ int run_command(struct child_process *cmd)
->  	return finish_command(cmd);
->  }
->  
-> +int check_command(struct child_process *cmd)
-> +{
-> +	int status;
-> +	pid_t waiting;
-> +
-> +	if (cmd->last_status.valid)
-> +		return 0;
-> +
-> +	while ((waiting = waitpid(cmd->pid, &status, WNOHANG)) < 0 && errno == EINTR)
-> +		; /* nothing */
-> +
-> +	if (!waiting)
-> +		return 1;
-> +
-> +	if (waiting == cmd->pid) {
-> +		cmd->last_status.valid = 1;
-> +		cmd->last_status.status = status;
-> +		return 0;
-> +	}
-> +
-> +	if (waiting > 0)
-> +		die("BUG: waitpid reported a random pid?");
-> +
-> +	return 0;
-> +}
-> +
->  static void prepare_run_command_v_opt(struct child_process *cmd,
->  				      const char **argv,
->  				      int opt)
-> @@ -729,7 +763,7 @@ error:
->  int finish_async(struct async *async)
->  {
->  #ifdef NO_PTHREADS
-> -	return wait_or_whine(async->pid, "child process");
-> +	return wait_or_whine(NULL, async->pid, "child process");
->  #else
->  	void *ret = (void *)(intptr_t)(-1);
->  
-> diff --git a/run-command.h b/run-command.h
-> index 221ce33..74a733d 100644
-> --- a/run-command.h
-> +++ b/run-command.h
-> @@ -39,11 +39,16 @@ struct child_process {
->  	unsigned stdout_to_stderr:1;
->  	unsigned use_shell:1;
->  	unsigned clean_on_exit:1;
-> +	struct last_status {
-> +		unsigned valid:1;
-> +		int status;
-> +	} last_status;
->  };
->  
->  int start_command(struct child_process *);
->  int finish_command(struct child_process *);
->  int run_command(struct child_process *);
-> +int check_command(struct child_process *);
->  
->  extern char *find_hook(const char *name);
->  extern int run_hook(const char *index_file, const char *name, ...);
+diff --git a/builtin/log.c b/builtin/log.c
+index e0c8b6f..cd942ee 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1049,15 +1049,6 @@ static char *find_branch_name(struct rev_info *rev)
+ 	if (0 <= positive) {
+ 		ref = rev->cmdline.rev[positive].name;
+ 		tip_sha1 = rev->cmdline.rev[positive].item->sha1;
+-	} else if (!rev->cmdline.nr && rev->pending.nr == 1 &&
+-		   !strcmp(rev->pending.objects[0].name, "HEAD")) {
+-		/*
+-		 * No actual ref from command line, but "HEAD" from
+-		 * rev->def was added in setup_revisions()
+-		 * e.g. format-patch --cover-letter -12
+-		 */
+-		ref = "HEAD";
+-		tip_sha1 = rev->pending.objects[0].item->sha1;
+ 	} else {
+ 		return NULL;
+ 	}
+@@ -1288,28 +1279,36 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (rev.pending.nr == 1) {
++		int check_head = 0;
++
+ 		if (rev.max_count < 0 && !rev.show_root_diff) {
+ 			/*
+ 			 * This is traditional behaviour of "git format-patch
+ 			 * origin" that prepares what the origin side still
+ 			 * does not have.
+ 			 */
+-			unsigned char sha1[20];
+-			const char *ref;
+-
+ 			rev.pending.objects[0].item->flags |= UNINTERESTING;
+ 			add_head_to_pending(&rev);
+-			ref = resolve_ref_unsafe("HEAD", sha1, 1, NULL);
+-			if (ref && !prefixcmp(ref, "refs/heads/"))
+-				branch_name = xstrdup(ref + strlen("refs/heads/"));
+-			else
+-				branch_name = xstrdup(""); /* no branch */
++			check_head = 1;
+ 		}
+ 		/*
+ 		 * Otherwise, it is "format-patch -22 HEAD", and/or
+ 		 * "format-patch --root HEAD".  The user wants
+ 		 * get_revision() to do the usual traversal.
+ 		 */
++
++		if (!strcmp(rev.pending.objects[0].name, "HEAD"))
++			check_head = 1;
++
++		if (check_head) {
++			unsigned char sha1[20];
++			const char *ref;
++			ref = resolve_ref_unsafe("HEAD", sha1, 1, NULL);
++			if (ref && !prefixcmp(ref, "refs/heads/"))
++				branch_name = xstrdup(ref + strlen("refs/heads/"));
++			else
++				branch_name = xstrdup(""); /* no branch */
++		}
+ 	}
+ 
+ 	/*
+-- 
+1.8.2
