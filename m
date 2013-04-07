@@ -1,92 +1,66 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Sun, 7 Apr 2013 01:40:32 +0530
-Message-ID: <CALkWK0mM9HBUvHGHPEw4Vdosp_qfu_1L49TaZrzdC5n3soWkYg@mail.gmail.com>
-References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] remote-hg: activate graplog extension for hg_log()
+Date: Sat, 6 Apr 2013 21:25:15 -0400
+Message-ID: <CAPig+cShUBxRWhb+DOQjACm1wfRT+MBR712shkKveo1Rx9beDg@mail.gmail.com>
+References: <CAMP44s1RhMR4vkUqbOOqQ+VAHVQgO8SCrBSSGNjCD-buGnb10g@mail.gmail.com>
+	<1365267052-2604-1-git-send-email-apelisse@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 06 22:11:37 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 07 03:25:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOZSU-0003Gf-ID
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Apr 2013 22:11:30 +0200
+	id 1UOeMG-0005sb-03
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 03:25:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161118Ab3DFULP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Apr 2013 16:11:15 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:37829 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161108Ab3DFULO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Apr 2013 16:11:14 -0400
-Received: by mail-ie0-f182.google.com with SMTP id at1so5538300iec.13
-        for <git@vger.kernel.org>; Sat, 06 Apr 2013 13:11:13 -0700 (PDT)
+	id S1161250Ab3DGBZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Apr 2013 21:25:18 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:47165 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759275Ab3DGBZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Apr 2013 21:25:17 -0400
+Received: by mail-lb0-f175.google.com with SMTP id o10so4777170lbi.34
+        for <git@vger.kernel.org>; Sat, 06 Apr 2013 18:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=WyEla+gOpNE8v3Vt8+6+5v/m5m16U+NvJfLEQZzBR4A=;
-        b=rBotjXJ7Xgw6KCEXtzng1ylLm3XO0Rn4RUveGz0WaL2TEcm7BLoTPxz/mSYRfAaDQk
-         6rgVKi1bPZHR3nm53lAOy/0qHk5s4E6N5aNFgRN76xYam3cs/w53VChWPPvun2BwKZK8
-         uqQzfp+53+Ptsof3ZBxWZ+ujKyeHX794jXu6TX74VRSc3OEBMuJRJCaz7saANVIOU+Mf
-         /5F3heh7hC3USGpoZPNqQZRPrkuYiVqJwfkX3qFZXLEp5DmB0bhE7GZUwnrmWp3B+srD
-         92YEu/tcnjZbptXRlUsoyt0FEVAG172hxOHTGdC1FFRVPG/ELb7fI2OKC2rgkXOdfiuj
-         iVWw==
-X-Received: by 10.42.50.202 with SMTP id b10mr8437090icg.7.1365279073700; Sat,
- 06 Apr 2013 13:11:13 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Sat, 6 Apr 2013 13:10:32 -0700 (PDT)
-In-Reply-To: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=A2DYI9JMpQMw03qOv1/6AJA23O03DfWeqixlr+i6SwA=;
+        b=nqO+4svocgaGfCGPRP9Rjt7QbnHZr0/woL5/3VHcrI43SHXHzbHdVCIneS/eHcEgMa
+         pEbYnW4o4m4bgs6oYoCJZzxkGL6PfSIxXDTGhd4lNSqm1UeZUGzIhtXn/O3KAv1opXc2
+         mjSWxp3y3e1T8L5gAvngG/zSqJfnOk0jmSWiQKqLOjqiVs4QXa4SaQC0v1oJRHUbRmFz
+         1bDP9JyeW+PIitv5yfn86pyNQqPbDQVlvlqfMjiEZExeyRzF8VEj7vQvg1H2pbVAlXLF
+         GNg1S/oeV7P7dr87aYtUcBZv3UQlEflWJ0qZxmJm8Usn3w+ch9XBDP9L7Hse+SLVHSdu
+         79nw==
+X-Received: by 10.152.47.242 with SMTP id g18mr9107472lan.42.1365297915609;
+ Sat, 06 Apr 2013 18:25:15 -0700 (PDT)
+Received: by 10.114.1.43 with HTTP; Sat, 6 Apr 2013 18:25:15 -0700 (PDT)
+In-Reply-To: <1365267052-2604-1-git-send-email-apelisse@gmail.com>
+X-Google-Sender-Auth: bRPz3TGSg1rWr7pjBoHn4XzegUM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220272>
 
-Hi again,
+On Sat, Apr 6, 2013 at 12:50 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> remote-hg: activate graplog extension for hg_log()
 
-So we've thought about it for some time, and I really need you to
-start reviewing the code now.
-I'll just summarize what we've discussed so far:
+s/graplog/graphlog/
 
-1. The malleability argument doesn't hold, because we're proposing a
-link object with optional fields.
-
-2. The local-fork argument doesn't hold, because users will be
-rebasing changes to the link object in exactly the same way as they
-currently do with the blob object .gitmodules.
-
-3. The worktree argument doesn't hold, because we're proposing to
-treat the link object as nothing more than a blob object that can be
-parsed by git-core.  It will stage and unstage just like a blob.
-Sure, it's not accessible directly by the filesystem: so what?  What
-is the difference does `emacsclient .gitmodules` versus `git edit-link
-clayoven` make to the end-user?
-
-4. The diff-confusion argument is just another by-the-way, but it
-doesn't really hold either.  Currently, we see:
-
-    - Subproject commit b83492
-    + Subproject commit 39ab2f
-
-(with diff.submodule set to log, we can actually see the log of the
-submodule between these two commits.  With links, we will see:
-
-    - checkout_rev = b83492
-    + checkout_rev = 39ab2f
-
-There's nothing that prevents us from respecting diff.submodule (some
-minor glue code will have to be written; that's all).
-
-*. There is actually one thing that .gitmodules does better than
-links.  foreach.  It's trivial to implement with .gitmodules and hard
-to implement with links: with .gitmodules, the paths of all the
-submodules are in one place.  But with links, we'll have to
-unpack_trees() every tree in the entire repository, and dig through it
-to find all the link objects to initialize.  Basically, inefficient
-and inelegant.  However, I don't think this is a big problem in
-practice, since this is not exactly a common operation: I'd probably
-want to recurse-submodules once at clone time.
+> The hg_log() test helper uses the "--graph" parameter that is
+> implemented by the GraphLog extension. If the extension is not activated
+> by the user, the parameter is not available. Activate the extension in
+> setup().
+>
+> Also changes the way we grep the output in hg_log(). The pipe operator
+> can hide the return code of hg command. As a matter of fact, if log
+> fails because it doesn't know about "--graph", it doesn't report any
+> failure and let's you think everything worked.
+>
+> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
