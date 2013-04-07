@@ -1,104 +1,125 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 4/4] format-patch: add format.cover-letter configuration
-Date: Sun, 7 Apr 2013 13:02:41 -0500
-Message-ID: <CAMP44s1Pd_O8FmWy=bgzEDrbGQuNStn9=LSYF146VCGLby3F7g@mail.gmail.com>
-References: <1365318630-11882-1-git-send-email-felipe.contreras@gmail.com>
-	<1365318630-11882-5-git-send-email-felipe.contreras@gmail.com>
-	<7v4nfi92q1.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0rsWCZE=MyW3zuBoVM5ZtEGQQb+deQJB5-i6tBzFdTfw@mail.gmail.com>
-	<7vmwta7lx3.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1pMLzkQrE1iKmYyj_FOZqkUp46HRQ6kjWfNvOYA5FkVQ@mail.gmail.com>
-	<vpqwqsefl9b.fsf@grenoble-inp.fr>
-	<CAMP44s2TvC9Ek51GyhPqtv7b-w8u8kr=tQsmdWEVGOycb6MEqA@mail.gmail.com>
-	<vpqbo9qfh1y.fsf@grenoble-inp.fr>
-	<7v38v25k8b.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Sun, 7 Apr 2013 23:37:02 +0530
+Message-ID: <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
+References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+ <CALkWK0mM9HBUvHGHPEw4Vdosp_qfu_1L49TaZrzdC5n3soWkYg@mail.gmail.com>
+ <7v61zz9fu3.fsf@alter.siamese.dyndns.org> <CALkWK0n64BW8zQXweR38T6DjT+iYBbsZDPCLZ-4igqGJHoFwKw@mail.gmail.com>
+ <7vr4im7m1y.fsf@alter.siamese.dyndns.org> <CALkWK0=jrO9MQotB+anAn-5YtG1RBTLWEnGL5=K4wy=yi7E-CQ@mail.gmail.com>
+ <20130407161209.GG2222@serenity.lan> <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com>
+ <20130407170201.GH2222@serenity.lan> <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com>
+ <20130407175210.GI2222@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 07 20:02:52 2013
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Apr 07 20:07:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOtvU-0008Sy-OC
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 20:02:49 +0200
+	id 1UOu0K-0006rb-2Z
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 20:07:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934158Ab3DGSCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 14:02:44 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:40862 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759906Ab3DGSCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 14:02:43 -0400
-Received: by mail-la0-f45.google.com with SMTP id fn20so1291344lab.32
-        for <git@vger.kernel.org>; Sun, 07 Apr 2013 11:02:42 -0700 (PDT)
+	id S934192Ab3DGSHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 14:07:43 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:34791 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934151Ab3DGSHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 14:07:43 -0400
+Received: by mail-ie0-f180.google.com with SMTP id a11so5951812iee.39
+        for <git@vger.kernel.org>; Sun, 07 Apr 2013 11:07:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=3NSrjKuM4GkukTtyRReEhoP2SUIRZelINRC+CsmutY4=;
-        b=CtiIG57gD+7aZ47jpTvjEylxTxdh5LJRoLEx4huYkJqzc5DkgX7Mo6SJHl8/MAfvcv
-         YmSbuqsoZngFJ8MmHf92US4ySRZR/0i6aQNx+jYP9qXSbkF52rdI/ef7DOXKesNzeaBB
-         MzLIStu4t5l53auWlV8F2/hzXg2HnT+wIrE75HD80A46+mkMHlYe50nKcpGl+z+6+uqh
-         +6WM96snecyM8oS8y/cA9rMSldnfXCbHk+UQJ9Qz1l4UmLD+4rjIvPAKKFHh+T9biRWM
-         jh5CU/EKFaedBpjSJhA60D1sA4fODhtZK1fWbmVb7cnglXJMqXv6yOXtUH03UUiMaSkM
-         tJ5w==
-X-Received: by 10.152.135.205 with SMTP id pu13mr10113142lab.48.1365357761990;
- Sun, 07 Apr 2013 11:02:41 -0700 (PDT)
-Received: by 10.114.20.36 with HTTP; Sun, 7 Apr 2013 11:02:41 -0700 (PDT)
-In-Reply-To: <7v38v25k8b.fsf@alter.siamese.dyndns.org>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=UEqn2yT5A7XddBk3BY/nZXS+Qx4tvz+ONepFF7gWCt4=;
+        b=E7n/B5c0H0D1EG9mEqQ97QP5tUELpEV+j54flV+UPKYuCIN2VLT/staiK8oX1iW45q
+         R/RobhnogMQj46w+mqeIypSpP8ESxiReq6+eqHQf1tvtPA9MIIeFG/BwqRw94sLEkX5I
+         0mK9MpZIwxdr+Lpg+YZo0t1mf2/GaRdByDLooJB96k79s0CTKCIpM4mkR23S1DzgYqVp
+         drKUzVyn+kXS+ugcWk61yi+IWwW2FD9erbX03V73/v9s7QhDzwL0NCYCGUM0HiJlGRY0
+         YkOG6z9s7WGiyKcOYascQHdUeIj08Y5oDAlb7pVjHKsLEftra12+VrAKmzDQwRCpI3W5
+         Vx0g==
+X-Received: by 10.50.17.166 with SMTP id p6mr4707203igd.12.1365358062588; Sun,
+ 07 Apr 2013 11:07:42 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Sun, 7 Apr 2013 11:07:02 -0700 (PDT)
+In-Reply-To: <20130407175210.GI2222@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220353>
 
-On Sun, Apr 7, 2013 at 12:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+John Keeping wrote:
+> On Sun, Apr 07, 2013 at 10:52:50PM +0530, Ramkumar Ramachandra wrote:
+>> Sure, I'll write it out for you from an end-user perspective:
 >
->>> Wouldn't this work for both cases?
->>>
->>> % git -c format.coverletter=auto format-patch
->>
->> Then, what's the point in having a --cover-letter option?
->>
->> "git -c" is a good last-chance solution, but when we provide the same
->> feature as a command-line option and as a configuration option, I can
->> see no reason to add subtle difference between them.
+> To play Devil's Advocate for a bit...
+
+Yes!
+
+>> 0. Great UI/UX.  No more cd-to-toplevel, and a beautiful set of native
+>> commands that are consistent with the overall design of git-core.
+>> Which means: clone (to put something in an unstaged place), add (to
+>> stage), and commit (to commit the change).  There's now exactly one
+>> place in your worktree (which is represented as one file in git; think
+>> of it a sort of symlink)  to look in for all the information.  git
+>> cat-link <link> to figure out its parameters, git edit-link to edit
+>> its parameters: no more "find the matching pwd in .gitmodules in
+>> toplevel".  To remove a submodule, just git rm.  And git mv works!
 >
-> I do not see a good reason to resist consistency by suggesting a
-> workaround.
+> Presumably now without .git/config support, so I can't override the
+> checked-in settings without my own custom branch.  Even carrying a dirty
+> working tree seems problematic here since a checked-out link object is a
+> directory, which can't have information like the remote URL in it.
 
-There's no need for a workaround, because there's no use-case.
+Sure you can have a dirty worktree.  It's just like .gitmodules:
+there's zero difference but for the fact that .gitmodules is
+accessible directly via your filesystem, while links are not.
 
-> We may do so ourselves when responding to an end user
-> bug report "I cannot countermand X from the command line" as a first
-> response "In the meantime you can work it around like so", but that
-> is as you said a last-resort workaround and does not justify why the
-> command line interface is lacking an obvious override.
-
-The command line interface is not missing anything.
-
-> But I think --cover-letter=auto I made was a bad suggestion.  An
-> optional parameter to a command line option is generally bad, as it
-> makes the parsing ambiguous [*1*], and turning what traditionally
-> was a boolean without any parameter into one that takes an optional
-> parameter is even worse.
+>> 1. True floating submodules.  You can have a submodule checked out at
+>> `master` or `v3.1`: no more detached HEADs in submodules unless you
+>> want fixed submodules.  No additional cruft required to do the
+>> floating: the information is native, in a link object.
 >
-> We should instead add this as a new feature, --auto-cover-letter, or
-> something, i.e. the synopsis will have these as the choices
->
->     [--[no-]cover-letter|--auto-cover-letter]
->
-> and the last one would win (e.g. "--cover-letter --auto-cover-letter"
-> would mean "auto").
+> Can't I do that now with "submodule.<name>.branch" and "git submodule
+> update --remote --rebase" and friends?
 
-Well, go ahead and implement it, because I'm not going to waste my
-time implementing something nobody will *ever* use.
+Yes, but that is not true floating: you shouldn't have to be sorry and
+rebase.  In new-style submodules, they're first class citizens (ie.
+true): you can just replace the SHA-1 with a ref in the link.
 
--- 
-Felipe Contreras
+>> 2. Initializing a nested submodule without having to initialize the
+>> outer one: no more repo XML nonsense.  And it's composable: you don't
+>> need to put the information about all submodules in one central place.
+>
+> How does this interact when there is the following structure:
+>
+>     super
+>     `-- sub
+>         `-- subsub   (specified by sub)
+>
+> and subsub is specified as a submodule in *both* super and sub but with
+> different settings.  Do I get different behaviour depending on $PWD?
+
+This is a very fringe case that I haven't thought about.  I don't know
+how it will behave: I haven't built it yet (and don't have the entire
+implementation in my head yet).
+
+>> 3. Ability to have very many large submodule repositories without the
+>> performance hit.  It makes sense to block stat() from going through
+>> when you have floating submodules.  This means that many levels of
+>> nesting are very easily possible.
+>
+> Can't I already control this to some degree?  Certainly the following
+> commands take different amounts of time to run:
+>
+>     git status
+>     git -c status.submodulesummary=true status
+
+You can't control the most fundamental thing, stat(): this is the
+primary killer of performance on a large worktree.  There is currently
+no way to block stat(): new-style submodules offers a way to configure
+which submodules to block the stat() on.
