@@ -1,87 +1,65 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Git/Mac refuses to install on OS X 10.8 (Mountain Lion)
-Date: Sun, 07 Apr 2013 16:56:14 +0200
-Message-ID: <5161890E.701@op5.se>
-References: <5160D223.3090203@gmail.com>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH v2 0/3] Some small fixes to glossary-content.txt
+Date: Sun, 7 Apr 2013 17:06:37 +0200 (CEST)
+Message-ID: <1613609657.1719438.1365347197409.JavaMail.ngmail@webmail09.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Foster <davidfstr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 07 16:56:24 2013
+Cc: th.acker@arcor.de, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 07 17:06:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOr15-00037a-Jp
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 16:56:23 +0200
+	id 1UOrB5-00087f-U5
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 17:06:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933873Ab3DGO4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 10:56:19 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:38562 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933866Ab3DGO4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 10:56:18 -0400
-Received: by mail-la0-f45.google.com with SMTP id fn20so1215607lab.18
-        for <git@vger.kernel.org>; Sun, 07 Apr 2013 07:56:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=5ID4jBaczl/CHfssktwDolROo41Hm+Prmbw/tzQWkdI=;
-        b=L83fZ0MvT0OLx3hMvYEGsERoWSUkSeJAQWZdYPbnxY4ZnNAeJ5QiF15LWL237DQRvo
-         58kEtWao0x0ZVepNl370zr7HIb5SJEy2r79FTZ6a6rXRenoSBkkAJXedmMyhyrBf5JdW
-         DZC0eGO4HABZoMEKxMr/k21ILOmEO7kqw91lbXAOiA45cyPlq7vLrYL5nQvC7qRmwsut
-         fcVMknk6JVUXafkU94Cpi1dZReVXajXiI9kAh9aaLoCftN9d0Pd3imEQicLHXF7Dr4T4
-         +8mIOGL3YiglDoLHZwsCBwM5O/3Xk/fZCm5JJb1sT0Mt3RRRw5PbgsCWb9zSNTModaP4
-         6qNg==
-X-Received: by 10.112.68.34 with SMTP id s2mr9707488lbt.111.1365346577222;
-        Sun, 07 Apr 2013 07:56:17 -0700 (PDT)
-Received: from [192.168.1.170] (sth-vpn1.op5.com. [193.201.96.49])
-        by mx.google.com with ESMTPS id pk1sm9446717lab.0.2013.04.07.07.56.15
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 07 Apr 2013 07:56:15 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
-In-Reply-To: <5160D223.3090203@gmail.com>
-X-Gm-Message-State: ALoCoQnVkVpL80GPUPGh4HkOmafU36W+iKD56Y79akfk3o1AezedMTsGiu9pyIPcf/g5z83eiF45
+	id S933891Ab3DGPGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 11:06:40 -0400
+Received: from mail-in-10.arcor-online.net ([151.189.21.50]:32986 "EHLO
+	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933885Ab3DGPGj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Apr 2013 11:06:39 -0400
+Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
+	by mx.arcor.de (Postfix) with ESMTP id 668E22D629E;
+	Sun,  7 Apr 2013 17:06:37 +0200 (CEST)
+Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
+	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 6277D6F2CDD;
+	Sun,  7 Apr 2013 17:06:37 +0200 (CEST)
+Received: from webmail09.arcor-online.net (webmail09.arcor-online.net [151.189.8.45])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 622B1107852;
+	Sun,  7 Apr 2013 17:06:37 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-07.arcor-online.net 622B1107852
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1365347197; bh=CAmq/QKGDwuZtneJXnrz+vXzrGCQyf2YZ8WoFCHmnbM=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=ERO+OvR8M8oAMqjYHQaLX/nW8yOl5kKBmAP2FupPvH15hlAO8DNrhmH2x6xLe7YDF
+	 c4s8yk0aSWx+ZvobWREarjl3xYFHIw6kBsrCLrGdTg3qIcT9YCYBn5P60hAmLtyItF
+	 QzF1q9eUzc248+Z3kRhwvKX7whAVevsAWoTm2UlY=
+Received: from [188.98.233.28] by webmail09.arcor-online.net (151.189.8.45) with HTTP (Arcor Webmail); Sun, 7 Apr 2013 17:06:37 +0200 (CEST)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 188.98.233.28
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220312>
 
-On 04/07/2013 03:55 AM, David Foster wrote:
-> The default security settings on OS X 10.8 (Mountain Lion) disallow the
-> installation of unsigned packages, with no override.
->
-> Git/Mac 1.8.2 is not signed and therefore will not install without changing
-> the OS default security settings.
->
+This is a reroll of my patches for glossary-content.txt
+with Junio's comments/suggestions included:
 
-Sounds like an OSX lockin bugture to me. If anyone can sign the package
-with any random key, then it wouldn't provide much in the way of
-security, so I guess that means one has to get a signing key form Apple,
-which I doubt they just hand out to anyone (usually it means paying
-$100 to get an "apple developer certificate). That's nonsense, ofcourse,
-but it's how they've chosen to do business.
+[PATCH 1/3] glossary: remove outdated/misleading/irrelevant entries
+- keep entries for "directory" and "evil merge"
+- keep comparison of "Git tag" to "Lisp tag"
+[PATCH 2/3] glossary: improve description of SHA-1 related topics
+- more suitable description for "object name"
+- use "SHA-1" instead of "SHA1"
+[PATCH 3/3] glossary: remove definition of refspec and pathspec
+- further small changes to description of refspec and pathspec
 
-That aside; Does the package work if you reduce the security settings,
-install it and then reset the security settings to their default
-settings later? If so, I'd call that a reasonable workaround, and we
-probably won't even have to document it since google should provide it
-for git and a plethora of other useful packages.
 
-Otoh, if enough osx folks want git on the latest pussycat, I'm sure
-they'll provide a package themselves sooner or later, in which case
-you just have to wait for that to happen.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+---
+Thomas
