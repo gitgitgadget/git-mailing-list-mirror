@@ -1,117 +1,90 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Sun, 7 Apr 2013 18:52:10 +0100
-Message-ID: <20130407175210.GI2222@serenity.lan>
-References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
- <CALkWK0mM9HBUvHGHPEw4Vdosp_qfu_1L49TaZrzdC5n3soWkYg@mail.gmail.com>
- <7v61zz9fu3.fsf@alter.siamese.dyndns.org>
- <CALkWK0n64BW8zQXweR38T6DjT+iYBbsZDPCLZ-4igqGJHoFwKw@mail.gmail.com>
- <7vr4im7m1y.fsf@alter.siamese.dyndns.org>
- <CALkWK0=jrO9MQotB+anAn-5YtG1RBTLWEnGL5=K4wy=yi7E-CQ@mail.gmail.com>
- <20130407161209.GG2222@serenity.lan>
- <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com>
- <20130407170201.GH2222@serenity.lan>
- <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 1/4] send-email: make annotate configurable
+Date: Sun, 7 Apr 2013 12:58:22 -0500
+Message-ID: <CAMP44s3bdFfZRGL1BHtODiad6ZXD_xy1MfUhNPrJQV=L4hGamw@mail.gmail.com>
+References: <1365318630-11882-1-git-send-email-felipe.contreras@gmail.com>
+	<1365318630-11882-2-git-send-email-felipe.contreras@gmail.com>
+	<7vfvz2948b.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0g5YfvprwukJ4rnqXrm+S9-KJkwyYB+sxAcQjZpDXufg@mail.gmail.com>
+	<7vvc7y45nf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 07 19:52:43 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 07 19:58:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UOtlh-0001xj-OF
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 19:52:42 +0200
+	id 1UOtrQ-0002a6-Hb
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Apr 2013 19:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934234Ab3DGRwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 13:52:22 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:41393 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934154Ab3DGRwU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 13:52:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id A8683CDA56C;
-	Sun,  7 Apr 2013 18:52:19 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YAV4ZTecQW6L; Sun,  7 Apr 2013 18:52:19 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id E61E6CDA580;
-	Sun,  7 Apr 2013 18:52:12 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S934213Ab3DGR6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 13:58:25 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:48252 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759727Ab3DGR6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 13:58:25 -0400
+Received: by mail-lb0-f181.google.com with SMTP id r11so4980222lbv.26
+        for <git@vger.kernel.org>; Sun, 07 Apr 2013 10:58:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=mjNqcIRK47Egt5Fmby/xaKvAG9GQTEbxK+2Hx7V/eYY=;
+        b=bzI3JlqG18f+xXfs3S3PFDVJryTudL8m+z9uJPxjytnAQgQ9DkzdbIIat+3IeqwiC2
+         H444cmOST6tXJG0N8UWE8ULZkZj/Jz86F+sr4okxMicmT2mGv+5UZwtzeLoA+Nrlg1fo
+         sGmg9L1cBgs05nhF8ESIHTSUdE3UCn0JuI6DUtZ5dohpwk8r5+yN34V26oK1P5Rrr/A5
+         F5k2ESeN0KeeBF7OKL8BQskw7OaShplS3rYepx3wTl9zxrr2vzcdHiVlVFdILX5675wP
+         30LGNxRFx89HWhKnbDjVLnruPnSbkIXWhXWxu3JJ8t6Z/O+f6pgzkiSDtm+A1aCZrkYS
+         47Vg==
+X-Received: by 10.152.105.109 with SMTP id gl13mr10133576lab.40.1365357502339;
+ Sun, 07 Apr 2013 10:58:22 -0700 (PDT)
+Received: by 10.114.20.36 with HTTP; Sun, 7 Apr 2013 10:58:22 -0700 (PDT)
+In-Reply-To: <7vvc7y45nf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220350>
 
-On Sun, Apr 07, 2013 at 10:52:50PM +0530, Ramkumar Ramachandra wrote:
-> Sure, I'll write it out for you from an end-user perspective:
+On Sun, Apr 7, 2013 at 12:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Sun, Apr 7, 2013 at 1:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>> Some people always do --annotate, lets not force them to always type
+>>>> that.
+>>>>
+>>>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>>>> ---
+>>>
+>>> Sounds sensible; any tests to protect this from later breakages?
+>>
+>> Given that annotate doesn't even have tests, I don't think it's needed
+>> at this point.
+>
+> That is a good way to spread earlier mistakes and add more instance
+> of the same kind of mistakes into the future.
+>
+> It is perfectly fine to say "I ran out my Git time for the change
+> itself; help by others to add test for it is appreciated."  It is
+> not reasonable to say "See there is the same mistake already in the
+> code, so I am free to make the same mistake, you cannot hold it
+> against me, and this feature should never be protected by tests".
 
-To play Devil's Advocate for a bit...
+I did not say that, I said I think this is not needed at this point,
+if you think otherwise, you can go ahead and implement it. I think the
+patch is perfectly fine as it is, and I'm not going to to add tests
+for something that is potentially time consuming for me, and this
+patch is not introducing, that is; the annotate feature. If we
+survived without tests for annotate, we can survive without tests for
+sendemail.annotate.
 
-> 0. Great UI/UX.  No more cd-to-toplevel, and a beautiful set of native
-> commands that are consistent with the overall design of git-core.
-> Which means: clone (to put something in an unstaged place), add (to
-> stage), and commit (to commit the change).  There's now exactly one
-> place in your worktree (which is represented as one file in git; think
-> of it a sort of symlink)  to look in for all the information.  git
-> cat-link <link> to figure out its parameters, git edit-link to edit
-> its parameters: no more "find the matching pwd in .gitmodules in
-> toplevel".  To remove a submodule, just git rm.  And git mv works!
-
-Presumably now without .git/config support, so I can't override the
-checked-in settings without my own custom branch.  Even carrying a dirty
-working tree seems problematic here since a checked-out link object is a
-directory, which can't have information like the remote URL in it.
-
-> 1. True floating submodules.  You can have a submodule checked out at
-> `master` or `v3.1`: no more detached HEADs in submodules unless you
-> want fixed submodules.  No additional cruft required to do the
-> floating: the information is native, in a link object.
-
-Can't I do that now with "submodule.<name>.branch" and "git submodule
-update --remote --rebase" and friends?
-
-> 2. Initializing a nested submodule without having to initialize the
-> outer one: no more repo XML nonsense.  And it's composable: you don't
-> need to put the information about all submodules in one central place.
-
-How does this interact when there is the following structure:
-
-    super
-    `-- sub
-        `-- subsub   (specified by sub)
-
-and subsub is specified as a submodule in *both* super and sub but with
-different settings.  Do I get different behaviour depending on $PWD?
-
-> 3. Ability to have very many large submodule repositories without the
-> performance hit.  It makes sense to block stat() from going through
-> when you have floating submodules.  This means that many levels of
-> nesting are very easily possible.
-
-Can't I already control this to some degree?  Certainly the following
-commands take different amounts of time to run:
-
-    git status
-    git -c status.submodulesummary=true status
-
-> 4. It's suddenly much easier to add new features to this
-> implementation.  You don't need to do the kind of gymnastics you'd
-> have to do if you were hacking on submodule.c/ git-submodule.sh.
-> 
-> This is basically how "great design" plays out.
+-- 
+Felipe Contreras
