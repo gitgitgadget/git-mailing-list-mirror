@@ -1,107 +1,80 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH 2/2] submodule: drop the top-level requirement
-Date: Sun,  7 Apr 2013 20:55:21 +0100
-Message-ID: <da121bcc33e63b7f33318ef920e85a77bb304d44.1365364193.git.john@keeping.me.uk>
-References: <cover.1365364193.git.john@keeping.me.uk>
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 08 08:45:12 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] merge-tree: fix "same file added in subdir"
+Date: Sun, 07 Apr 2013 13:12:26 -0700
+Message-ID: <7vk3oe2j85.fsf@alter.siamese.dyndns.org>
+References: <0a6a0c978569906b8c8d9209a85338554e503236.1364419952.git.john@keeping.me.uk>
+ <7vk3osjwgv.fsf@alter.siamese.dyndns.org>
+ <20130327225739.GT2286@serenity.lan> <20130328093458.GV2286@serenity.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Apr 08 08:45:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UP5p7-0000sy-Ug
+	id 1UP5p8-0000sy-Fx
 	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 08:45:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933864Ab3DGTzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 15:55:48 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:55121 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933821Ab3DGTzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 15:55:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id EE9F16064E0;
-	Sun,  7 Apr 2013 20:55:46 +0100 (BST)
-X-Quarantine-ID: <jQ+L9ybRnPiM>
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-X-Spam-Flag: NO
-X-Spam-Score: -0.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jQ+L9ybRnPiM; Sun,  7 Apr 2013 20:55:46 +0100 (BST)
-Received: from river.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id D9EAD6064AA;
-	Sun,  7 Apr 2013 20:55:39 +0100 (BST)
-X-Mailer: git-send-email 1.8.2.694.ga76e9c3.dirty
-In-Reply-To: <cover.1365364193.git.john@keeping.me.uk>
-In-Reply-To: <cover.1365364193.git.john@keeping.me.uk>
-References: <cover.1365364193.git.john@keeping.me.uk>
+	id S934043Ab3DGUMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 16:12:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54583 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933955Ab3DGUM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 16:12:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AE7314434;
+	Sun,  7 Apr 2013 20:12:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=N4PYiA0nyWO19n7V/T6eGDkbZi0=; b=breYPz
+	P/m9PR3mj9jpmhzoEkCSaVx0Mo91V/LUPo4gwuoYfXBLTlh8k3z3Ls5n5739A5DH
+	7sVSloH03R6+Qm34FO1G/pW7hAs32JoxUo5AbsZvAMe+qsp7r1fflOQTP5J+by2k
+	rzVbMEV4w7qaf3qaiOAZGHEHi4/3GonDWoJDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CpjBYVWzLfJEG/HF0+lS5k/i5J4DZqkg
+	ipSFArp0j3WS0P5Pua0wCK45rx2PHODpEIFYY9kXqIaseBPpQOTHi8J/+pdT1hjG
+	zoXMMbh1z0OsJk5h07yvkeAWOH8f56i5ksSceSnzUWxdZlDpheqBw33iKRDptKgJ
+	pA0epm+3lmI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1210714433;
+	Sun,  7 Apr 2013 20:12:29 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79D5014432; Sun,  7 Apr
+ 2013 20:12:28 +0000 (UTC)
+In-Reply-To: <20130328093458.GV2286@serenity.lan> (John Keeping's message of
+ "Thu, 28 Mar 2013 09:34:58 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 78945FD2-9FBF-11E2-A2F8-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220369>
 
-Use the new rev-parse --filename-prefix option to process all paths
-given to the submodule command, dropping the requirement that it be run
-from the top-level of the repository.
+John Keeping <john@keeping.me.uk> writes:
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- git-submodule.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+> Having re-read the manpage, I think you're right that we should just
+> resolve the "both added identically" case cleanly, but I wonder whether
+> some of the other cases should also be resolved cleanly.
+>
+> git-merge-tree(1) says:
+>
+>     the output from the command omits entries that match the <branch1>
+>     tree.
+>
+> so you could argue that "added in branch1", "changed in branch1,
+> unmodified in branch2" and "removed in branch1, unchanged in branch2"
+> should also print no output.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 79bfaac..10216aa 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -14,10 +14,13 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
- OPTIONS_SPEC=
-+SUBDIRECTORY_OK=Yes
- . git-sh-setup
- . git-sh-i18n
- . git-parse-remote
- require_work_tree
-+wt_prefix=$(git rev-parse --show-prefix)
-+cd_to_toplevel
- 
- command=
- branch=
-@@ -112,6 +115,7 @@ resolve_relative_url ()
- #
- module_list()
- {
-+	eval "set $(git rev-parse --sq --filename-prefix "$wt_prefix" -- "$@")"
- 	(
- 		git ls-files --error-unmatch --stage -- "$@" ||
- 		echo "unmatched pathspec exists"
-@@ -335,6 +339,8 @@ cmd_add()
- 		usage
- 	fi
- 
-+	sm_path="$wt_prefix$sm_path"
-+
- 	# assure repo is absolute or relative to parent
- 	case "$repo" in
- 	./*|../*)
-@@ -942,6 +948,7 @@ cmd_summary() {
- 	fi
- 
- 	cd_to_toplevel
-+	eval "set $(git rev-parse --sq --filename-prefix "$wt_prefix" -- "$@")"
- 	# Get modified modules cared by user
- 	modules=$(git $diff_cmd $cached --ignore-submodules=dirty --raw $head -- "$@" |
- 		sane_egrep '^:([0-7]* )?160000' |
--- 
-1.8.2.694.ga76e9c3.dirty
+Yes, that description explains what we wanted to achieve with
+merge-tree that is still an unfinished experiment and fixing these
+cases you identified above to match the stated goal is a good thing
+to do.  I've been meaning to find enough time to do a new merge
+strategy backend based on the logic of this program, and the few
+patches I sent out on it recently were fallout from preparatory
+steps for it.
