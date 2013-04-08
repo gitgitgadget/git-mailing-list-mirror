@@ -1,226 +1,351 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v1.8.1.6
-Date: Sun, 07 Apr 2013 16:55:53 -0700
-Message-ID: <7vehel3ng6.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 2/2] transport-helper: check if remote helper is alive
+Date: Sun, 7 Apr 2013 21:03:25 -0500
+Message-ID: <CAMP44s0PYARrCQxyBOiGzCAKTXqGp5yrKyfVwLjE1CyuxVSU2A@mail.gmail.com>
+References: <1365320706-13539-1-git-send-email-felipe.contreras@gmail.com>
+	<1365320706-13539-3-git-send-email-felipe.contreras@gmail.com>
+	<20130408005155.GA24030@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 08 08:48:50 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>, Aaron Schrab <aaron@schrab.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	David Michael Barr <b@rr-dav.id.au>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 08 08:48:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UP5rg-0000sy-EC
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 08:47:40 +0200
+	id 1UP5sB-0000sy-8m
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 08:48:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934628Ab3DGXz5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Apr 2013 19:55:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60856 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934511Ab3DGXz4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Apr 2013 19:55:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E991714848;
-	Sun,  7 Apr 2013 23:55:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=2XrC8GWVlxYkNMOTkbQUKAiRv
-	mI=; b=AAY8yhDn+D4k+7JpfxjJzKc+pH69nTwsAMsebhEAp5jr1fFuRYF4Vs7Oo
-	fNSf8YHJJbD8KtGDKes8KJdyfcPC3lg+tgzuuyozlMmz+O1mj4hJHt0dhUmRf33k
-	Dn7zD7kjYeZhBvrzY/Luv4UaJUzaD4s98D30M8c5qFH9d+fDcQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=SAoEcQrt/ZWO2tHuejO
-	U9tSYerfvf+jo1wnkUuLsu4RqeREqt5xn/oAywtkZPSr0ejDfZ/UH6/XSDVc0Etd
-	l8v2ui0EPnG/rEv6P4p0nkz9Q8OFVknteYhvs64g1tjMJnhNymNM/kbt9DzkbP9E
-	yDYX61b0flf4hV3F+9Hj98SM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDB0814846;
-	Sun,  7 Apr 2013 23:55:55 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EEA6214843; Sun,  7 Apr
- 2013 23:55:54 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AF7660A8-9FDE-11E2-8E28-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S934696Ab3DHCDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Apr 2013 22:03:30 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:55487 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934687Ab3DHCD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Apr 2013 22:03:29 -0400
+Received: by mail-la0-f46.google.com with SMTP id fq12so4843435lab.5
+        for <git@vger.kernel.org>; Sun, 07 Apr 2013 19:03:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=YNnHqdDt1RJ9qWmJLeqTK5N5ko0vK90d3f+h2VudPM4=;
+        b=vprxTrAldxxdfi6dA+tWjkxX5qA+8E8Bmr7gJCHZ/T7EOKRwGeUl72vdmyO88UysAR
+         C3B/HiWQQNWF3XtnWn02OzkMflrpo0dW4kI1kMOZ50NN+Ky97fYwTj4L4hOr+cIzR/jS
+         RK1NBTiW+mMMvt/KQttFaK6r8ym5hANzWshJQiwYmD7WtyyBXc+jCbb5zg+i6537ZGIR
+         cxIKKzCU8JaePY4+Y2Psv21+Nc7hNSznG25VAXGllbMYV6x0FqgqQP3ljDsvpi1rtfz7
+         1mbAKfkq9Uo3dahbA+KE0YYkywoaDjMoWDN4KPkh7oBAkKYCcahbXGjIK4iNUvXNFyBJ
+         8htA==
+X-Received: by 10.152.104.199 with SMTP id gg7mr10661366lab.14.1365386605977;
+ Sun, 07 Apr 2013 19:03:25 -0700 (PDT)
+Received: by 10.114.20.36 with HTTP; Sun, 7 Apr 2013 19:03:25 -0700 (PDT)
+In-Reply-To: <20130408005155.GA24030@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220391>
 
-A maintenance release Git v1.8.1.6 is now available at the
-usual places.
+On Sun, Apr 7, 2013 at 7:51 PM, Jeff King <peff@peff.net> wrote:
+> On Sun, Apr 07, 2013 at 01:45:06AM -0600, Felipe Contreras wrote:
+>
+>> diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+>> index f387027..efe67e2 100755
+>> --- a/t/t5801-remote-helpers.sh
+>> +++ b/t/t5801-remote-helpers.sh
+>> @@ -166,4 +166,23 @@ test_expect_success 'push ref with existing object' '
+>>       compare_refs local dup server dup
+>>  '
+>>
+>> +test_expect_success 'proper failure checks for fetching' '
+>> +     (GIT_REMOTE_TESTGIT_FAILURE=1 &&
+>> +     export GIT_REMOTE_TESTGIT_FAILURE &&
+>> +     cd local &&
+>> +     test_must_fail git fetch 2> error &&
+>> +     grep "Error while running helper" error
+>> +     )
+>> +'
+>
+> Hmm.  If you drop the final "grep" (which is looking for the error
+> message you add elsewhere in this patch), this test passes even without
+> the addition of the check_command calls added by your patch. Which made
+> me wonder if we should be checking something else (repo state, error
+> messages, etc), since we seem to otherwise be detecting the error. More
+> analysis below on exactly what is going on there.
 
-The release tarballs are found at:
+It fails all right, because the fetch process assumes the
+remote-helper succeeded and only later eventually fails with an error
+that is anything but user-friendly:
 
-    http://code.google.com/p/git-core/downloads/list
+fatal: bad object 0000000000000000000000000000000000000000
+error: testgit::/home/felipec/dev/git/t/trash
+directory.t5801-remote-helpers/server did not send all necessary
+objects
 
-and their SHA-1 checksums are:
+>> +# We sleep to give fast-export a chance to catch the SIGPIPE
+>
+> I'm not sure what this means; I don't see a sleep anywhere.
 
-135a4fd6c025ab16560694da110a1476a9b83de2  git-1.8.1.6.tar.gz
-a9b004bf1b1922f09cb45a7a388bd452399db30c  git-htmldocs-1.8.1.6.tar.gz
-41822cdd469fde30d419819e43ed57f3e73a404b  git-manpages-1.8.1.6.tar.gz
+That's right, I'll remove the comment. It was cruft from the next
+patch (see below).
 
-Also the following public repositories all have a copy of the v1.8.1.6
-tag and the maint-1.8.1 branch that the tag points at:
+>> +test_expect_failure 'proper failure checks for pushing' '
+>> +     (GIT_REMOTE_TESTGIT_FAILURE=1 &&
+>> +     export GIT_REMOTE_TESTGIT_FAILURE &&
+>> +     cd local &&
+>> +     test_must_fail git push --all 2> error &&
+>> +     grep "Error while running helper" error
+>> +     )
+>> +'
+>
+> I wondered why this one is marked for failure.
 
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+Because it fails to report the right error.
 
-Git 1.8.1.6 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
+> Even without check_command, the push produces:
+>
+>   error: fast-export died of signal 13
+>   fatal: Error while running fast-export
+>
+> which explains why the test fails: it does not even make it to the
+> check_command call at all. Why do we need check_command here, then? Is
+> it racy/non-deterministic for fast-export to die due to the pipe?
 
-=46ixes since v1.8.1.5
---------------------
+It does not make it to check_command because the wait is missing. I
+added that in a separate patch:
+http://article.gmane.org/gmane.comp.version-control.git/219715
 
- * An earlier change to the attribute system introduced at v1.8.1.2 by
-   mistake stopped a pattern "dir" (without trailing slash) from
-   matching a directory "dir" (it only wanted to allow pattern "dir/"
-   to also match).
+With that patch the check_command happens reliably, the error is
+reported correctly, and the test passes. However, the way to trigger
+it is ugly.
 
- * The code to keep track of what directory names are known to Git on
-   platforms with case insensitive filesystems can get confused upon a
-   hash collision between these pathnames and looped forever.
+In a real use-case the chances of check_command catching the issue are
+much higher..
 
- * When the "--prefix" option is used to "checkout-index", the code
-   did not pick the correct output filter based on the attribute
-   setting.
+>> diff --git a/transport-helper.c b/transport-helper.c
+>> index cb3ef7d..dfdfa7a 100644
+>> --- a/transport-helper.c
+>> +++ b/transport-helper.c
+>> @@ -460,6 +460,10 @@ static int fetch_with_import(struct transport *transport,
+>>
+>>       if (finish_command(&fastimport))
+>>               die("Error while running fast-import");
+>> +
+>> +     if (!check_command(data->helper))
+>> +             die("Error while running helper");
+>> +
+>>       argv_array_free_detached(fastimport.argv);
+>
+> I'm still not very excited about this approach, as it is racy to detect
+> errors. E.g., there is nothing to say that the helper does not close the
+> pipe to fast-import prematurely and then die afterwards, leaving the
+> refs unwritten, fast-import happy, but a failed exit code from the
+> helper.
 
- * Annotated tags outside refs/tags/ hierarchy were not advertised
-   correctly to the ls-remote and fetch with recent version of Git.
+That's right, and that would leave us in the situation we are right
+now, even with "done" check.
 
- * The logic used by "git diff -M --stat" to shorten the names of
-   files before and after a rename did not work correctly when the
-   common prefix and suffix between the two filenames overlapped.
+> The import test still passes even without the check_command part of your
+> patch because some of the refs in refs/testgit do not exist prior to the
+> failed fetch, and therefore also do not exist afterwards. When fetch
+> tries to feed their sha1s to check_everything_connected, you get the
+> funny:
+>
+>   fatal: bad object 0000000000000000000000000000000000000000
+>   error: testgit::/home/peff/compile/git/t/trash
+>    directory.t5801-remote-helpers/server did not send all necessary
+>    objects
 
- * "git update-index -h" did not do the usual "-h(elp)" thing.
+And you think that is desirable? User-friendly?
 
- * perl/Git.pm::cat_blob slurped everything in core only to write it
-   out to a file descriptor, which was not a very smart thing to do.
+> we can see that without your check_command, the failure in the second
+> fetch is not noticed. Adding in your patch does detect this. _But_ it is
+> only checking a specific failure mode of the remote-helper: process
+> death that results in closing the fast-import pipe, which is how your
+> GIT_REMOTE_TESTGIT_FAILURE is implemented (closing the pipe first and
+> then dying is racy).
+>
+> If we then add this on top of your series (fixing the "status" bug in
+> patch 1 that Junio mentioned), the test will start failing (both the
+> original, and the more robust one I showed above):
+>
+> diff --git a/git-remote-testgit b/git-remote-testgit
+> index ca0cf09..41b0780 100755
+> --- a/git-remote-testgit
+> +++ b/git-remote-testgit
+> @@ -64,6 +64,11 @@ do
+>
+>                 if test -n "$GIT_REMOTE_TESTGIT_FAILURE"
+>                 then
+> +                       # close stdout
+> +                       exec >/dev/null
+> +                       # now sleep to make sure fast-import
+> +                       # has time to die before we exit
+> +                       sleep 1
+>                         exit -1
+>                 fi
 
- * The SSL peer verification done by "git imap-send" did not ask for
-   Server Name Indication (RFC 4366), failing to connect SSL/TLS
-   sites that serve multiple hostnames on a single IP.
+Yeah, again:
+http://article.gmane.org/gmane.comp.version-control.git/219715
 
- * "git bundle verify" did not say "records a complete history" for a
-   bundle that does not have any prerequisites.
+> I agree that the failure mode from your patch is probably the most
+> common order for helpers to fail in (i.e., they just die and that's what
+> kills the pipe).  But I wonder if we can just cover all cases.
+> Something like:
+>
+> diff --git a/transport-helper.c b/transport-helper.c
+> index dfdfa7a..8562df0 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -461,7 +461,31 @@ static int fetch_with_import(struct transport *transport,
+>         if (finish_command(&fastimport))
+>                 die("Error while running fast-import");
+>
+> -       if (!check_command(data->helper))
+> +       /*
+> +        * We must disconnect from the helper at this point, because even
+> +        * though fast-import may have succeeded, it may only be because the
+> +        * helper was not able to feed fast-import all of the data, and what
+> +        * fast-import got looked OK (e.g., it may have got nothing if the
+> +        * helper died early). We still need to check the return code of the
+> +        * helper to make sure it is happy with what it sent.
+> +        *
+> +        * Since the import command does not require the helper to ever report
+> +        * success/failure of the import, we have no mechanism to check for
+> +        * problems except to check its exit status.
+> +        *
+> +        * Callers of the transport code are allowed to make more requests
+> +        * of our helper, so we may be disconnecting before they expect in that
+> +        * case. However:
+> +        *
+> +        *   1. Current callers don't do that; after fetching refs, there
+> +        *      is nothing left for the helper to do.
+> +        *
+> +        *   2. We transparently start the helper as necessary, so if we were
+> +        *      to get another request (e.g., to import more refs), we would
+> +        *      simply start a new instantiation of the helper.
+> +        *
+> +        */
 
-Also contains various documentation fixes.
+That's a comprehensive essay, unfortunately, it's not correct. The
+exit status of the remote-helper is not important, it's the one of
+fast-import that we really care about.
 
-----------------------------------------------------------------
+> +       if (disconnect_helper(transport) != 0)
+>                 die("Error while running helper");
 
-Changes since v1.8.1.5 are as follows:
+Yeah, that's good, *if* the remote-helper is implemented correctly,
+but try this:
 
-Antoine Pelisse (4):
-      update-index: allow "-h" to also display options
-      diff: Fix rename pretty-print when suffix and prefix overlap
-      tests: make sure rename pretty print works
-      perf: update documentation of GIT_PERF_REPEAT_COUNT
+               if test -n "$GIT_REMOTE_TESTGIT_FAILURE"
+               then
+                       exit 0
+               fi
 
-Christian Helmuth (1):
-      git-commit doc: describe use of multiple `-m` options
+>         argv_array_free_detached(fastimport.argv);
+>
+> which passes both your original test and the more strict one above. Of
+> course adding a done-import capability would be nice to fix the protocol
+> deficiency, but it is more code.
 
-Dan Bornstein (1):
-      Correct the docs about GIT_SSH.
+The done-import capability *is already there*. The remote helper fails
+to say "done", fast-import detects that there was a problem and exits
+with -1 (or whatever), but it doesn't matter, because we
+(transport-helper) are oblivious of that return status until it's too
+late.
 
-David Michael (1):
-      git-compat-util.h: Provide missing netdb.h definitions
+>> @@ -818,6 +822,10 @@ static int push_refs_with_export(struct transport *transport,
+>>
+>>       if (finish_command(&exporter))
+>>               die("Error while running fast-export");
+>> +
+>> +     if (!check_command(data->helper))
+>> +             die("Error while running helper");
+>> +
+>>       push_update_refs_status(data, remote_refs);
+>>       return 0;
+>>  }
+>
+> And this one is even more likely to race than the import case, I think,
+> as the exporter may send all of its data, exit, and then the helper
+> chugs on it for a bit (converting, sending across the network, etc). If
+> it is still chugging when we run check_command, we will not notice
+> anything here.
+>
+> E.g., if we instrument the failure like this:
+>
+> diff --git a/git-remote-testgit b/git-remote-testgit
+> index ca0cf09..a912bc1 100755
+> --- a/git-remote-testgit
+> +++ b/git-remote-testgit
+> @@ -75,6 +75,12 @@ do
+>         export)
+>                 if test -n "$GIT_REMOTE_TESTGIT_FAILURE"
+>                 then
+> +                       # imagine we read all of fast-export's data
+> +                       # first, and then die while trying to convert
+> +                       # it
+> +                       while read line; do
+> +                               test "$line" = "done" && break
+> +                       done
+>                         exit -1
+>                 fi
+>
+>
+> we do not get the sigpipe from fast-export, and depending on the timing,
+> your check_command may or may not do anything (in my tests, it did not).
+>
+> But unlike the import side, the export command _does_ give us a status
+> report back from the helper: it prints an ok/error line for each ref
+> that was exported, followed by a blank line. So we should be able to
+> confirm that we get the blank line at all, and then that each ref was
+> present, which would determine whether the export failed or not without
+> being subject to race conditions.
+>
+> And we seem to do those checks already; the only problem I see is that
+> recvline does not print a message before dying. Would the patch below be
+> sufficient?
+>
+> diff --git a/transport-helper.c b/transport-helper.c
+> index dfdfa7a..cce2062 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -54,7 +54,7 @@ static int recvline_fh(FILE *helper, struct strbuf *buffer)
+>         if (strbuf_getline(buffer, helper, '\n') == EOF) {
+>                 if (debug)
+>                         fprintf(stderr, "Debug: Remote helper quit.\n");
+> -               exit(128);
+> +               die("remote helper died unexpectedly");
+>         }
+>
+>         if (debug)
 
-=46redrik Gustafsson (1):
-      gitweb/README: remove reference to git.kernel.org
+Yeah, I already explored this option, and I said it was possible on
+pushing, but now the problem is fetching.
 
-Greg Price (1):
-      describe: Document --match pattern format
+http://article.gmane.org/gmane.comp.version-control.git/219760
 
-Jeff King (6):
-      avoid segfaults on parse_object failure
-      use parse_object_or_die instead of die("bad object")
-      pack-refs: write peeled entry for non-tags
-      dir.c::match_pathname(): adjust patternlen when shifting pattern
-      dir.c::match_pathname(): pay attention to the length of string pa=
-rameters
-      t: check that a pattern without trailing slash matches a director=
-y
+And to be frank, I'm tired of this. I keep repeating the same things
+over and over, when I ask for input on different ways to achieve this
+I get nothing, and when the patch is getting closer to be merged, then
+I receive criticism, only so I can repeat the same again.
 
-Johannes Sixt (1):
-      t2003: work around path mangling issue on Windows
+I don't like the option to die right in recvline(), but it would work.
+We would need something else for import though. It would be possible
+to tell fast-import to ping the remote-helper, but I ran into a
+SIGPIPE, and I don't have the patience to find out if perhaps there's
+a way to solve that. This option seems rather hacky and asymmetric to
+me.
 
-John Keeping (3):
-      t2003: modernize style
-      entry: fix filter lookup
-      merge-tree: fix typo in merge-tree.c::unresolved
+If this current patch series is not good enough, I think it's best to
+leave things as they are for me.
 
-Joshua Clayton (1):
-      Git.pm: fix cat_blob crashes on large files
+Cheers.
 
-Junio C Hamano (8):
-      imap-send: support Server Name Indication (RFC4366)
-      diff-options: unconfuse description of --color
-      Documentation: merging a tag is a special case
-      attr.c::path_matches(): the basename is part of the pathname
-      attr.c::path_matches(): special case paths that end with a slash
-      dir.c::match_basename(): pay attention to the length of string pa=
-rameters
-      Start preparing for 1.8.1.6
-      Git 1.8.1.6
-
-Kacper Kornet (3):
-      rev-parse: clarify documentation of $name@{upstream} syntax
-      t1507: Test that branchname@{upstream} is interpreted as branch
-      Fix revision walk for commits with the same dates
-
-Karsten Blees (1):
-      name-hash.c: fix endless loop with core.ignorecase=3Dtrue
-
-Kevin Bracey (2):
-      Translate git_more_info_string consistently
-      git.c: make usage match manual page
-
-Lukas Fleischer (2):
-      bundle: Fix "verify" output if history is complete
-      bundle: Add colons to list headings in "verify"
-
-Matthias Kr=C3=BCger (1):
-      git help config: s/insn/instruction/
-
-Michael Haggerty (2):
-      Provide a mechanism to turn off symlink resolution in ceiling pat=
-hs
-      pack-refs: add fully-peeled trait
-
-Mihai Capot=C4=83 (1):
-      git-pull doc: fix grammo ("conflicts" is plural)
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
-      index-format.txt: mention of v4 is missing in some places
-      read-cache.c: use INDEX_FORMAT_{LB,UB} in verify_hdr()
-      update-index: list supported idx versions and their features
-      index-pack: fix buffer overflow caused by translations
-
-Ren=C3=A9 Scharfe (2):
-      Makefile: keep LIB_H entries together and sorted
-      sha1_name: pass object name length to diagnose_invalid_sha1_path(=
-)
-
-Tadeusz Andrzej Kad=C5=82ubowski (2):
-      git-filter-branch.txt: clarify ident variables usage
-      Documentation: filter-branch env-filter example
-
-Thomas Rast (2):
-      diff: prevent pprint_rename from underrunning input
-      git-tag(1): we tag HEAD by default
-
-Torsten B=C3=B6gershausen (1):
-      remote-helpers/test-bzr.sh: do not use "grep '\s'"
-
-W. Trevor King (1):
-      Documentation/githooks: Explain pre-rebase parameters
+--
+Felipe Contreras
