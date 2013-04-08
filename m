@@ -1,128 +1,81 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 2/2] transport-helper: check if remote helper is alive
-Date: Mon, 8 Apr 2013 13:31:43 -0500
-Message-ID: <CAMP44s2PJGJQBM86CGsA5BOn1RLi4mqNsq+d0oyY0jA=XHQGDA@mail.gmail.com>
-References: <1365320706-13539-1-git-send-email-felipe.contreras@gmail.com>
-	<1365320706-13539-3-git-send-email-felipe.contreras@gmail.com>
-	<20130408005155.GA24030@sigill.intra.peff.net>
-	<CAMP44s0PYARrCQxyBOiGzCAKTXqGp5yrKyfVwLjE1CyuxVSU2A@mail.gmail.com>
-	<20130408023351.GA32558@sigill.intra.peff.net>
-	<CAMP44s1cphJ5wojt2OeZjWJVOi5AMQJR2jN_BCkQw0B0BxpUfA@mail.gmail.com>
-	<7vtxngyl30.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>, Aaron Schrab <aaron@schrab.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	David Michael Barr <b@rr-dav.id.au>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 08 20:31:54 2013
+From: BJ Hargrave <bj@bjhargrave.com>
+Subject: tar on Mac does not like empty tar from git archive
+Date: Mon, 8 Apr 2013 14:36:05 -0400
+Message-ID: <ABD0C67A-0B2B-4E32-AF49-93FBABC032A7@bjhargrave.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.3 \(1503\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 08 20:36:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPGr9-0007Bo-MU
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 20:31:52 +0200
+	id 1UPGvP-0004gU-B7
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 20:36:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935251Ab3DHSbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 14:31:46 -0400
-Received: from mail-la0-f47.google.com ([209.85.215.47]:33769 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934871Ab3DHSbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 14:31:45 -0400
-Received: by mail-la0-f47.google.com with SMTP id fj20so5643740lab.20
-        for <git@vger.kernel.org>; Mon, 08 Apr 2013 11:31:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=OvMEDDgHTIZq0LGGVhDhf7mM4ulQC83V2e0+ZUSyv2M=;
-        b=WHk9DA3gXhk8ANmBT3zNWAWMsdhjWlFCewZpoB0SYqX46uSUqfGiMjIe8ACBaUKh+R
-         WaJbL+t8KPK6nblTe4NfsUaGMLb0NpNnilA0kxOLX78RNYJuihObk00R4xT4+4lMfGKC
-         1ww/CQI2TNHux2e6EBfX9G5F/sdlbDlt0bdvhKkaEelAZji0zHpVn1rgRa3Hn4Nl73fE
-         gdXQWtFdanspChu5j2vlGm9zW+A3VhKdJ9BQTjTFq6YP3y0RESIlUSXPSFJzn5lcWFbP
-         RHzc0maHe7eiMGl/E82BrCEVSaglMQC759HTMknOMTCV8AP5okIIjMtc09TXpCVVdNzV
-         bnng==
-X-Received: by 10.112.156.42 with SMTP id wb10mr12172744lbb.32.1365445903313;
- Mon, 08 Apr 2013 11:31:43 -0700 (PDT)
-Received: by 10.114.20.36 with HTTP; Mon, 8 Apr 2013 11:31:43 -0700 (PDT)
-In-Reply-To: <7vtxngyl30.fsf@alter.siamese.dyndns.org>
+	id S935273Ab3DHSgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 14:36:10 -0400
+Received: from mail-yh0-f49.google.com ([209.85.213.49]:37526 "EHLO
+	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934738Ab3DHSgJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Apr 2013 14:36:09 -0400
+Received: by mail-yh0-f49.google.com with SMTP id q14so394803yhf.36
+        for <git@vger.kernel.org>; Mon, 08 Apr 2013 11:36:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:from:content-type:content-transfer-encoding:subject:date
+         :message-id:cc:to:mime-version:x-mailer:x-gm-message-state;
+        bh=z/LX90S7uWer9syklAF+BdfYwXMdIoM2q7ZZMpj+KhU=;
+        b=ppe2tf99A+Vcm97xAS9uV2UsSIywUKeC4DYAF/mB1pLSO+LkJ5XTB96T/xUKwZN9eO
+         bla5dL02Of1DvTIlD1iCkLqtD3TFQRjzN70iyEjZaDgEX5VysOq0Xh/Eqm7Rda4fSVyD
+         wplCgsFpJ7W6dWmWVWZAUdhPKWOy1CMEbzXmKkAdJ5KLsAg0HAKPbXAdxy2pyUz6prNs
+         cHhSTH4sC+Rsdg/1G3eO5C/JlJ80Myq9DjslIUo1nprKljTPVx/LpPtmf394yrfHYnUg
+         CNJi0KSWSyNL+X024SOinK9gCRBqBWI43qALDVs2/klvYBZsQZ9kof///+GzH8ldgAMU
+         auUg==
+X-Received: by 10.236.123.142 with SMTP id v14mr13383185yhh.83.1365446168336;
+        Mon, 08 Apr 2013 11:36:08 -0700 (PDT)
+Received: from macbookpro2.hargrave.local ([68.204.6.187])
+        by mx.google.com with ESMTPS id x33sm38859255yhn.18.2013.04.08.11.36.06
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 08 Apr 2013 11:36:07 -0700 (PDT)
+X-Mailer: Apple Mail (2.1503)
+X-Gm-Message-State: ALoCoQmfLqIh/eq77bn3qpmPViA9QtcXimBIl2XuZS18rArfR+WqhKrz4j1TUmzlyb7Uw/PpCgPU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220485>
 
-On Mon, Apr 8, 2013 at 12:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> On Sun, Apr 7, 2013 at 9:33 PM, Jeff King <peff@peff.net> wrote:
->>> On Sun, Apr 07, 2013 at 09:03:25PM -0500, Felipe Contreras wrote:
->>
->>>> And you think that is desirable? User-friendly?
->>>
->>> No, as you probably realized if you read the rest of my email. My point
->>> in bringing it up was to try to explain exactly what is going on in each
->>> case. Your commit message provided zero explanation of what the current
->>> problem is, nor why your fix is the right thing to do.
->>
->> I have explained this many times, I wonder why when the patch is close
->> to be merged does this become important, and not before.
->
-> There are at least a few reasons I can think of off the top of my
-> head.
->
-> Reviewers have limited time allocated for each individual topic.  To
-> an original patch with say 3 problems, the review may only point out
-> issues in 2 and suggest a concrete improvement for only 1 and that
-> is sufficient to suggest a reroll.  That is not being unhelpful by
-> deliberately withholding 1 and half reviews in the initial round.
+Git 1.8.2.1 includes commit bd54cf17 - archive: handle commits with an empty tree
 
-I'm not talking about the time it took to come up with the criticism
-below, I'm talking about the comment regarding the commit message. If
-the commit message did indeed provide *zero* explanation, that's
-certainly something that should be immediately visible, no? It could
-have been mentioned six months ago.
+Test 2 of t5004-archive-corner-cases, "tar archive of empty tree is empty", fails on Mac OS X 10.8.3 (with XCode 4.6.1) since the tar command exits with return code 1 on the generated  tar file.
 
->>>> That's a comprehensive essay, unfortunately, it's not correct. The
->>>> exit status of the remote-helper is not important, it's the one of
->>>> fast-import that we really care about.
->>>
->>> Nowhere does it say that we should not check fast-import's exit value,
->>> and indeed, the patch does not replace that check at all. It comes
->>> immediately after. It replaces the WNOHANG check of the helper's exit
->>> code (i.e., check_command) with a synchronous check.
->>
->> Yeah, and in the process it's changing the design of transport-helper,
->> where the pipes are closed only at the very end.
->
-> I agree that the disconnection here closes the pipes a lot earlier
-> than we used to.  But I am not sure what the practical consequences
-> of doing so are.  We know the fast-import process has successfully
-> read everything from the helper (we called finish_command() on it).
-> We expect at this point the helper is still running or successfully
-> exited (the other alternative, the helper died with non-zero status,
-> is an error check_command() patch wanted to detect).  But if we keep
-> helper running, who will be communicating with it via these open
-> pipes?  The process that is calling finish_command() on fast-import
-> and disconnecting from the helper won't be, as read/write to the
-> pipe, even if we do not disconnect from here, will result in errors
-> if the helper has already exited at this point.
+expecting success: 
+	git archive --format=tar HEAD >empty.tar &&
+	make_dir extract &&
+	"$TAR" xf empty.tar -C extract &&
+	check_dir extract
 
-Nobody will send any further input, but in theory we could redirect
-the pipe and send more commands. That's how it was designed.
+tar: Damaged tar archive
+tar: Error exit delayed from previous errors.
+not ok 2 - tar archive of empty tree is empty
 
-And in fact, I'm thinking doing exactly that, so we can send another
-command to fetch the foreign commit ids and append notes with them.
+tar tf "trash directory.t5004-archive-corner-cases/empty.tar"; echo $?
+tar: Damaged tar archive
+tar: Error exit delayed from previous errors.
+1
 
-> What I am trying to get at is if "changing the design", which I
-> agree is a change, is an improvement, or a backward incompatible
-> possible breakage.
+tar --version
+bsdtar 2.8.3 - libarchive 2.8.3
 
-It's an improvement I guess, but it's "changing the design" only in
-one part of the code, while the rest follows a different design.
+It appears that bsdtar does not like the empty tar files created by git archive. An empty tar file created by bsdtar is accepted.
 
---
-Felipe Contreras
+tar cT /dev/null | tar t; echo $?
+0
+
+-- 
+
+BJ Hargrave
