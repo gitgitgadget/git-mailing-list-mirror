@@ -1,48 +1,73 @@
 From: Aaron Schrab <aaron@schrab.com>
-Subject: [PATCH v2 0/2] Using gitfile repository with clone --reference
-Date: Mon,  8 Apr 2013 18:46:38 -0400
-Message-ID: <1365461200-13509-1-git-send-email-aaron@schrab.com>
+Subject: [PATCH 1/2] clone: Fix error message for reference repository
+Date: Mon,  8 Apr 2013 18:46:39 -0400
+Message-ID: <1365461200-13509-2-git-send-email-aaron@schrab.com>
 References: <20130408185957.GM27178@pug.qqx.org>
+ <1365461200-13509-1-git-send-email-aaron@schrab.com>
 Cc: gitster@pobox.com, jrnieder@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 09 00:47:04 2013
+X-From: git-owner@vger.kernel.org Tue Apr 09 00:47:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPKq6-0007Ct-NV
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 00:47:03 +0200
+	id 1UPKqF-0007QA-VU
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 00:47:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936301Ab3DHWq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 18:46:57 -0400
-Received: from pug.qqx.org ([50.116.43.67]:36534 "EHLO pug.qqx.org"
+	id S936413Ab3DHWrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 18:47:05 -0400
+Received: from pug.qqx.org ([50.116.43.67]:36535 "EHLO pug.qqx.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935227Ab3DHWq5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 18:46:57 -0400
+	id S935227Ab3DHWrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 18:47:04 -0400
 Received: from zim.qqx.org (cpe-107-015-024-243.nc.res.rr.com [107.15.24.243])
-	by pug.qqx.org (Postfix) with ESMTPSA id 9152757E07
-	for <git@vger.kernel.org>; Mon,  8 Apr 2013 18:46:54 -0400 (EDT)
+	by pug.qqx.org (Postfix) with ESMTPSA id 120BD57E06
+	for <git@vger.kernel.org>; Mon,  8 Apr 2013 18:47:03 -0400 (EDT)
 Received: from ats (uid 1000)
 	(envelope-from aaron@schrab.com)
-	id 40e5c
+	id 4032b
 	by zim.qqx.org (DragonFly Mail Agent);
-	Mon, 08 Apr 2013 18:46:53 -0400
+	Mon, 08 Apr 2013 18:47:02 -0400
 X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <20130408185957.GM27178@pug.qqx.org>
+In-Reply-To: <1365461200-13509-1-git-send-email-aaron@schrab.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220536>
 
-Here's the promised second version of this series.
+Do not report that an argument to clone's --reference option is not a
+local directory.  Nothing checks for the existence or type of the path
+as supplied by the user; checks are only done for particular contents of
+the supposed directory, so we have no way to know the status of the
+supplied path.  Telling the user that a directory doesn't exist when
+that isn't actually known may lead him or her on the wrong path to
+finding the problem.
 
-The diff in the first patch is unchanged, but I have made significant
-changes to the commit message to hopefully to a better job of describing
-why I think the old error message is bad.
+Instead just state that the entered path is not a local repository which
+is really all that is known about it.  It could be more helpful to state
+the actual paths which were checked, but I believe that giving a good
+description of that would be too verbose for a simple error message and
+would be too dependent on implementation details.
 
-For the second patch I've eliminated the need to do a cast.
+Signed-off-by: Aaron Schrab <aaron@schrab.com>
+---
+ builtin/clone.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Although I'm sending these as a series, the changes are independent both
-textually and semantically.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index f9c380e..0a1e0bf 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -241,7 +241,7 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
+ 		free(ref_git);
+ 		ref_git = ref_git_git;
+ 	} else if (!is_directory(mkpath("%s/objects", ref_git)))
+-		die(_("reference repository '%s' is not a local directory."),
++		die(_("reference repository '%s' is not a local repository."),
+ 		    item->string);
+ 
+ 	strbuf_addf(&alternate, "%s/objects", ref_git);
+-- 
+1.7.10.4
