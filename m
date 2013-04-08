@@ -1,107 +1,110 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Mon, 8 Apr 2013 01:37:12 -0700
-Message-ID: <20130408083712.GE20159@elie.Belkin>
-References: <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
- <20130407182112.GJ2222@serenity.lan>
- <5161BC33.8060707@web.de>
- <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com>
- <5161D3C5.9060804@web.de>
- <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com>
- <20130407212342.GA19857@elie.Belkin>
- <CALkWK0=Q-P-fGLmkoiV3_CJ43MNmFzpfkvFjNUwxB+zOsqTxmg@mail.gmail.com>
- <5162763D.5030708@web.de>
- <CALkWK0m5iN8h0J1EkbMTJoXy6QHHzyTjRfPnhL3XMgi=NAi2eg@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 1/2] rev-parse: add --filename-prefix option
+Date: Mon, 8 Apr 2013 09:31:23 +0100
+Message-ID: <20130408083123.GN2222@serenity.lan>
+References: <cover.1365364193.git.john@keeping.me.uk>
+ <ba2c7aa9eaa982306f1d5ad5ff2d26a6e2b8df85.1365364193.git.john@keeping.me.uk>
+ <20130407221458.GE19857@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	John Keeping <john@keeping.me.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 09 00:04:12 2013
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 09 00:04:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPKA9-0002Am-2U
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 00:03:41 +0200
+	id 1UPKA1-0002Am-NR
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 00:03:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934395Ab3DHIhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 04:37:21 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:61264 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934311Ab3DHIhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 04:37:17 -0400
-Received: by mail-pa0-f52.google.com with SMTP id fb10so3152876pad.39
-        for <git@vger.kernel.org>; Mon, 08 Apr 2013 01:37:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=dCzWZpVGuuZy6FC4yam94KOPV53ibjR5t8qLrA5dvnY=;
-        b=Fqb9PZgj4ncFQUxpKAf7ULPAIutki01hYBobQsmdKq87GOeX/KR9sOoW6uvqreqOTo
-         jb9nuaUGNkjO09z0GKz0xwIRfWnzGzZBVbWZjTQEY1a4ezqLjO13i8cvkjoOKTf/RJiY
-         hQdwFfVyA5uwOUnj6ECeaXlyG+5kPHmGTtsDhhB9Eja81P5w3G/0DpQu+Eu53S7Y6ARj
-         sJUGdVOmhwHTCfz8ZOhv0qkwGg9BwYTuZxbdWXto+1cdaR+y94z0MfvpPrNQeBbF5Rxb
-         UPBBRy3tdZUOAyIELos+cKa7cN+Vukpob5gt+7VIKdLsLerYp91Jsdwt6MMOWCpCRboe
-         8ESg==
-X-Received: by 10.66.147.103 with SMTP id tj7mr34588661pab.82.1365410237216;
-        Mon, 08 Apr 2013 01:37:17 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPS id xl10sm37664836pac.15.2013.04.08.01.37.14
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 08 Apr 2013 01:37:16 -0700 (PDT)
+	id S933639Ab3DHIbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 04:31:35 -0400
+Received: from pichi.aluminati.org ([72.9.246.58]:53233 "EHLO
+	pichi.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752895Ab3DHIbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 04:31:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 3A9A7161E3D3;
+	Mon,  8 Apr 2013 09:31:33 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qxO90p6RZ6BT; Mon,  8 Apr 2013 09:31:32 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id C9DED161E415;
+	Mon,  8 Apr 2013 09:31:25 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <CALkWK0m5iN8h0J1EkbMTJoXy6QHHzyTjRfPnhL3XMgi=NAi2eg@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+In-Reply-To: <20130407221458.GE19857@elie.Belkin>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220408>
 
-Ramkumar Ramachandra wrote:
-> Jens Lehmann wrote:
+On Sun, Apr 07, 2013 at 03:14:58PM -0700, Jonathan Nieder wrote:
+> John Keeping wrote:
+> 
+> > This adds a prefix string to any filename arguments encountered after it
+> > has been specified.
+> 
+> I assume this is a way of passing the prefix in?  In that case, I
+> think a good UI would be
+> 
+> 	git rev-parse --prefix=Documentation/ <usual rev-parse args>
+> 
+> That sounds like a useful thing and would make the meaning very clear.
 
->> Hmm, at least the unstaged .gitmodules file has to be parsed from
->> the file system.
->
-> You seem to be touting it as a distinct advantage.
+Yes (ish), the intended usage is something like this:
 
-To clarify what I said in a side thread: yes, as long as the submodule
-metadata includes the hostname I am downloading a library from, having
-it in an ordinary file is an advantage.
+    prefix=$(git rev-parse --show-prefix)
+    cd_to_toplevel
+    ... parse options here ...
+    # Convert remaining arguments (filenames) into top-level paths:
+    eval "set $(git rev-parse --prefix "$prefix" --sq -- "$@")"
 
-The problem with URLs (and especially hostnames) is that they change.
-When my project's previous domain name is lost because the hosting
-company lost interest, I want to be able to grep for all instances of
-that domain name in my project's documentation and metadata and change
-them all at once with a simple command like the following:
+The "ish" is that my current implementation introduced a new variable
+instead of simply resetting the existing "prefix" variable, which I
+assume is what you mean.  That is probably simpler than my
+implementation, but loses the ability to be at an intermediate level,
+for example:
 
-	git grep -l -F -e oldhost.example.com |
-	xargs sed -i -e s/oldhost.example.com/newhost.example.com/g
+    cd Documentation/
+    eval "set $(git rev-parse --prefix technical/ --sq -- api-strbuf.txt)"
 
-When I clone a project with --no-recurse-submodules, I want to be able
-to see what other servers will be contacted when I run "git checkout
---recurse-submodules".  The current .gitmodules file lets me find that
-out with a simple, intuitive command:
+> How does this interact with the following options?
+> 
+>  * --resolve-git-dir some/relative/path
 
-	cat .gitmodules
+It doesn't change this since --resolve-git-dir is handled separately
+from the other argument parsing at the moment and you cannot specify
+any other options with it.
 
-I might change some URLs locally, because I know that some project's
-upstream has moved.
+>  * master:./path
 
-	git submodule init
-	git config --edit
+I hadn't considered this case, but I think it should be inserting the
+prefix into the path.  I suspect the easiest thing to do is simply make
+the path part of that absolute, by combining both the prefix based on
+$PWD and the prefix specified on the command line, but I haven't looked
+at doing this yet.
 
-On the other hand, the single .gitmodules file will be a pain to merge
-if multiple branches modify it.  So I do look forward to a merge
-strategy that deals more intelligently with its content, and wouldn't
-have minded a design that split this information into multiple files
-if we were starting over.
+The other think that's missing at the moment is that the prefix passed
+to verify_filename should be modified by the one specified on the
+command line.
 
-Jonathan
+> As for the patch itself, I haven't looked at it closely.  My only
+> immediate reaction is that I wish it touched Documentation/ and t/. :)
+
+I'll make sure the next version does.  This version was doing the
+minimum required to make patch 2/2 possible, it certainly needs some
+polish before it's more than a proof-of-concept.
