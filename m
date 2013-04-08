@@ -1,77 +1,118 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Tue, 9 Apr 2013 03:29:09 +0530
-Message-ID: <CALkWK0njP+fpVVvzs4BH4nR=ddQg-9bvQd-nry4gZnpqt2wQrA@mail.gmail.com>
-References: <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
- <5161BC33.8060707@web.de> <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com>
- <5161D3C5.9060804@web.de> <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com>
- <20130407212342.GA19857@elie.Belkin> <CALkWK0=Q-P-fGLmkoiV3_CJ43MNmFzpfkvFjNUwxB+zOsqTxmg@mail.gmail.com>
- <5162763D.5030708@web.de> <CALkWK0m5iN8h0J1EkbMTJoXy6QHHzyTjRfPnhL3XMgi=NAi2eg@mail.gmail.com>
- <20130408081959.GD20159@elie.Belkin> <CALkWK0nz878Xh9BFSCrtBGT=g3fys3uBy7QQs9cdWaFtoS8Rsg@mail.gmail.com>
- <CACsJy8CAW1h4rAOK_2+EAFEL28CKeqf4vqROsLByjZaMU3D-ow@mail.gmail.com>
- <CALkWK0mLG78anjbcVRF7Zpj-hMmts1pshF=XhLh--MCYV66Gng@mail.gmail.com>
- <CACsJy8D-M3xMkO7CPmOzeMxRV0Bv6MtCjH5eCr_vguxPF2N0vg@mail.gmail.com>
- <CALkWK0m93ZzWVJVUxgVQGUTK8t2pTEaDAPs7vW-tcgiewjOLwA@mail.gmail.com>
- <7v1ual12pj.fsf@alter.siamese.dyndns.org> <CALkWK0=2T5BA8+dro8U7bcp3ODsuQAj78mEPnxs=ERqf9FhSBQ@mail.gmail.com>
- <7va9p8yjuf.fsf@alter.siamese.dyndns.org> <CALkWK0m4o=F=bh_mt9NGDfXKExgVtLhaZ7uxA_XFhpF5AN5-Fg@mail.gmail.com>
- <7vk3ocx0qq.fsf@alter.siamese.dyndns.org> <CALkWK0npHgsf_TyjrMRJdcT-twg_jRXOHtoNpmX+2XNeLq=ZAQ@mail.gmail.com>
- <7v8v4swysv.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t3700 (add): add failing test for add with submodules
+Date: Mon, 08 Apr 2013 15:03:41 -0700
+Message-ID: <7v8v4svfwi.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8BAQUms9sgNh5_VFOx0_9LkobytjDk33VB+U_J-S44o_A@mail.gmail.com>
+ <1365416809-4396-1-git-send-email-artagnon@gmail.com>
+ <20130408213006.GD9649@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	John Keeping <john@keeping.me.uk>,
 	Git List <git@vger.kernel.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 08 23:59:56 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 09 00:03:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPK6V-0005gx-8m
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 23:59:55 +0200
+	id 1UPKAG-0002WN-Po
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 00:03:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936420Ab3DHV7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 17:59:51 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:41516 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936374Ab3DHV7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 17:59:50 -0400
-Received: by mail-ie0-f177.google.com with SMTP id tp5so7665673ieb.22
-        for <git@vger.kernel.org>; Mon, 08 Apr 2013 14:59:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=thE0V0+oCFdI/sy09/+KdmmHMpFA7P+xux8KsSar65M=;
-        b=S3HLsBsYBwMEKOq+i7Oot3ROgZ4NMgIJF3Q1MpNoaLHdE+D0brTGSmpH1iPIygiQub
-         3bUlbn2QhfnJO5Ear8lishOYedjtCNPDRI+0nuZ3Ad0z55VxwFw7op+hv15ohb+qhpEB
-         FpPZs4CNanouwXMAamcNiHp6tL+NIKQH9NeB73WQdndHJZ0FC29LPZQmPz7gPQTzVFM0
-         BXZEqEGKaz/bEgfYqujG/LPGwyaoZLRtgpngp2uP8DVPOnf7fMDXfgNiGce1Bu/7AQ+R
-         r1cDV+xNwnwoMxLhLZwsJKpo2nAWtl+erd18srH3x7jYafkUc11uR30ZivcLHgsNJGhD
-         77Ug==
-X-Received: by 10.50.119.102 with SMTP id kt6mr8771504igb.12.1365458389946;
- Mon, 08 Apr 2013 14:59:49 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Mon, 8 Apr 2013 14:59:09 -0700 (PDT)
-In-Reply-To: <7v8v4swysv.fsf@alter.siamese.dyndns.org>
+	id S935218Ab3DHWDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 18:03:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48773 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934846Ab3DHWDn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 18:03:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 693571473B;
+	Mon,  8 Apr 2013 22:03:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NMI3xXcJsfFmuqK25xmZwLlYqTE=; b=rDBHFl
+	V5XJC88Qpes8HHIiIrkQyr1vL5ahj7UhLKE8pSDphnnX7J5IHpF09XppL4suv8/o
+	UdLKqy0bFr/XXeloAV4Y4gyVJpTCEI2ZDnhXdVdQdDF6s0EYx8CrXQMwAZM6Shbh
+	yCS0ZlOMe13gH2j0xzt8KRqbqNgWfXku6IlJk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XbwOgEe9d8CT0g/Bx+M4yYmmUmBo6A4m
+	BvgjyVyqLw//TpoO9/kVPvBSJ+mGhuaawEiYbVTny0crXcA8ju56EQ7qL8fCMHTX
+	46MXFkczyD6lCIkjrFX8TE76n4TdZL4y/CEJPasZO2vi+ZThTUM+P4lcQxsbers2
+	m79a1WGgGHM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6043914739;
+	Mon,  8 Apr 2013 22:03:43 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A0B014735; Mon,  8 Apr
+ 2013 22:03:42 +0000 (UTC)
+In-Reply-To: <20130408213006.GD9649@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 8 Apr 2013 17:30:06 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2D0D3C9E-A098-11E2-9AB3-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220531>
 
-Junio C Hamano wrote:
-> If all of your argument starts from "I think .gitmodules is ugly
-> because it is not an object of a separate type stored at the path of
-> the submodule, and here are the reasons why I think it is ugly", I
-> have nothing more to say to you.
+Jeff King <peff@peff.net> writes:
 
-_This_ is how you summarize the seven points and the follow-up emails
-I wrote out for you?  Seriously?
+> On Mon, Apr 08, 2013 at 03:56:49PM +0530, Ramkumar Ramachandra wrote:
+>
+>> git add currently goes past submodule boundaries.  Document this bug.
+>
+> It's not just submodules, but we should not recurse into any
+> sub-repository. If I have an unrelated Meta/ repository, I should not be
+> able to "git add Meta/foo", whether I have used "git submodule" or not.
+>
+> This topic came about 2 years ago, and I had a quick-and-dirty patch:
+>
+>   http://thread.gmane.org/gmane.comp.version-control.git/170937/focus=171040
+>
+> I do not recall anything about the patch at this point (i.e., whether it
+> was the right thing), but maybe it is a good starting point for somebody
+> to look into it.
+>
+>> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+>> index 874b3a6..a1ea050 100755
+>> --- a/t/t3700-add.sh
+>> +++ b/t/t3700-add.sh
+>> @@ -310,4 +310,18 @@ test_expect_success 'git add --dry-run --ignore-missing of non-existing file out
+>>  	test_i18ncmp expect.err actual.err
+>>  '
+>>  
+>> +test_expect_failure 'git add should not go past submodule boundaries' '
+>> +	mkdir submodule_dir &&
+>> +	(
+>> +		cd submodule_dir &&
+>> +		git init &&
+>> +		cat >foo <<-\EOF &&
+>> +		Some content
+>> +		EOF
+>> +		git add foo &&
+>> +		git commit -a -m "Add foo"
+>> +	) &&
+>> +	git add submodule_dir/foo
+>> +'
+>
+> That is not actually a submodule, but rather just a repo that happens to
+> be inside our working tree. 
 
-I enjoy good debate, and would've loved to be beaten in argument.  But
-that's not what happened here.  I was just too frustrated with your
-stupidity to continue.
+I think we should treat it as a submodule-to-be, waiting for the
+user to run "git add submodule_dir".
+
+If it is a file in the working tree of an unrelated and separate
+repository, it still is wrong to allow it to be added to our
+repository, no?
+
+If we had "git add submodule_dir" before the last "git add", as you
+pointed out, we should already error out.
+
+> I know the distinction is subtle, but according to the thread I
+> linked to above, we may actually treat paths with gitlinked index
+> entries separately already (I did not try it, though).
