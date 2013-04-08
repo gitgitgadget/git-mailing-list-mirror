@@ -1,106 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] decorate: document API
-Date: Sun, 07 Apr 2013 23:13:43 -0700
-Message-ID: <7v61zx35yg.fsf@alter.siamese.dyndns.org>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: Git.pm with recent File::Temp fail
+Date: Mon, 8 Apr 2013 08:43:10 +0200
+Message-ID: <20130408084310.2963648c@pc09.procura.nl>
+References: <20130322205758.09ca9107@pc09.procura.nl>
+	<CAP30j14=_U8iEZAodnfACnBHgF0+j0_OK7n7PvsUnwSDj_Y40A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 08 08:52:31 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Ben Walton <bdwalton@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 08 08:52:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UP5tB-0000sy-N0
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 08:49:14 +0200
+	id 1UP5tX-0000sy-Ph
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 08:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934869Ab3DHGNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 02:13:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45722 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934860Ab3DHGNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 02:13:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4E051066E;
-	Mon,  8 Apr 2013 06:13:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=w
-	AwDZqUmU3Lxf8qUSCfi5ObtSqE=; b=qjaZq/yX+nBRLJUVFAtbu1LSOVMP5uzZu
-	4PCs1Tta9Z7wZKpzuKsjUEbrpsq9+Sg92qF0qlm+7BS1OpkaFrtFw14rIDhneJJu
-	t05x7UA7QbCIxYKYD13L21eeDOSWlTN5BZlS0E4+K/ClTQXh84qZxRdWLnRrt5JN
-	2oiAAfusag=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=BeO
-	S5EqG+4oscCnjYJrrITZcEqHJwSGgSkLaO00nH40EwYEAtIW3MbZMiOUdIRB7Lot
-	E6nB773XCaTh9oP0E3cABcVM3gWgrsC+tkY5laKFwkGLcm3CoQvSedzZAeonOONW
-	ExjkV2qmBt6CMW58yApJwBP5pvaOEyUhhISQFB3Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC8251066D;
-	Mon,  8 Apr 2013 06:13:45 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F3611066C; Mon,  8 Apr
- 2013 06:13:45 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 78149708-A013-11E2-850A-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1762683Ab3DHGnQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Apr 2013 02:43:16 -0400
+Received: from smtp-vbr4.xs4all.nl ([194.109.24.24]:1895 "EHLO
+	smtp-vbr4.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762678Ab3DHGnP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Apr 2013 02:43:15 -0400
+Received: from pc09.procura.nl (adsl.procura.nl [82.95.216.30])
+	(authenticated bits=0)
+	by smtp-vbr4.xs4all.nl (8.13.8/8.13.8) with ESMTP id r386hBAH069161
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 8 Apr 2013 08:43:12 +0200 (CEST)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <CAP30j14=_U8iEZAodnfACnBHgF0+j0_OK7n7PvsUnwSDj_Y40A@mail.gmail.com>
+X-Mailer: Claws Mail 3.9.0-169-ga0305b-dirty (GTK+ 2.24.10; x86_64-suse-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220403>
 
-Ever since 530e741c726a (Start preparing the API documents.,
-2007-11-24) added a placeholder to describe the various APIs,
-the decorate API was never documented.
+On Sat, 23 Mar 2013 16:32:47 +0000, Ben Walton <bdwalton@gmail.com>
+wrote:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/technical/api-decorate.txt | 35 ++++++++++++++++++++++++++++++--
- 1 file changed, 33 insertions(+), 2 deletions(-)
+> Hello,
 
-diff --git a/Documentation/technical/api-decorate.txt b/Documentation/technical/api-decorate.txt
-index 1d52a6c..0cc2b64 100644
---- a/Documentation/technical/api-decorate.txt
-+++ b/Documentation/technical/api-decorate.txt
-@@ -1,6 +1,37 @@
- decorate API
- ============
- 
--Talk about <decorate.h>
-+The decoration API is a mechanism to create and use a simple
-+append-only hashtable to keep auxiliary information keyed by in-core
-+objects.
- 
--(Linus)
-+Initialization
-+--------------
-+
-+Prepare `struct decoration deco` somewhere in-core and
-+`memset(&deco, 0, sizeof(&deco))` it.  This holds your hashtable.
-+
-+
-+Adding
-+------
-+
-+`add_decoration(struct decoration *deco, const struct object *obj,
-+void *decoration)` remembers `decoration` for the given `obj`.
-+
-+The function overwrites the old `decoration` for the `obj`
-+registered in the hashtable with the given `decoration`, and returns
-+the old value.
-+
-+The `decoration` can be of any type that can be casted to `void *`
-+and it is a responsibility of the caller to typecast it to more
-+appropriate type.
-+
-+Looking up
-+----------
-+
-+`lookup_decoration(struct decoration *deco, const struct object *obj)`
-+returns the decoration the last call to `add_decoration()` added for
-+the `obj`.  You cannot tell if `obj` does not appear in the hashtable
-+at all, or if `obj` has decoration whose value is NULL, so if you want
-+to use the decoration API for "Did I see this object?" hashtable,
-+use decoration value that is _not_ NULL.
--- 
-1.8.2.1-450-gd047976
+Still failing in 1.8.2.1
+
+> On Fri, Mar 22, 2013 at 7:57 PM, H.Merijn Brand <h.m.brand@xs4all.nl>=
+ wrote:
+> > git-1.8.2, perl-5.16.3, File::Temp-0.23
+> >
+> > Without patch:
+> >
+> > $ git svn fetch
+> > 'tempfile' can't be called as a method at /pro/lib/perl5/site_perl/=
+5.16.3/Git.pm line 1117.
+> >
+> > After patch:
+> >
+> > $ git svn fetch
+> >         M       t/06virtual.t
+> > r15506 =3D 6c65be7ff36ffc6fd9b960a4b470ca297103004e (refs/remotes/g=
+it-svn)
+> > =E2=8B=AE
+> >
+> > patch attached
+>=20
+> This list prefers patches to be inline so that they can easily be
+> commented on, etc.  I took a quick look at your patch and while it
+> looks fine to me, fwiw.
+>=20
+> You may want to resubmit using git send-email though so that others
+> will look at it and possibly apply it.
+
+--=20
+H.Merijn Brand  http://tux.nl   Perl Monger  http://amsterdam.pm.org/
+using perl5.00307 .. 5.17   porting perl5 on HP-UX, AIX, and openSUSE
+http://mirrors.develooper.com/hpux/        http://www.test-smoke.org/
+http://qa.perl.org   http://www.goldmark.org/jeff/stupid-disclaimers/
