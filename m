@@ -1,69 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: --simplify-merges breakage
-Date: Mon, 08 Apr 2013 12:54:11 -0700
-Message-ID: <7vfvz0x0gs.fsf@alter.siamese.dyndns.org>
-References: <516313D3.2050309@bracey.fi>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Tue, 9 Apr 2013 01:24:18 +0530
+Message-ID: <CALkWK0npHgsf_TyjrMRJdcT-twg_jRXOHtoNpmX+2XNeLq=ZAQ@mail.gmail.com>
+References: <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
+ <20130407182112.GJ2222@serenity.lan> <5161BC33.8060707@web.de>
+ <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com>
+ <5161D3C5.9060804@web.de> <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com>
+ <20130407212342.GA19857@elie.Belkin> <CALkWK0=Q-P-fGLmkoiV3_CJ43MNmFzpfkvFjNUwxB+zOsqTxmg@mail.gmail.com>
+ <5162763D.5030708@web.de> <CALkWK0m5iN8h0J1EkbMTJoXy6QHHzyTjRfPnhL3XMgi=NAi2eg@mail.gmail.com>
+ <20130408081959.GD20159@elie.Belkin> <CALkWK0nz878Xh9BFSCrtBGT=g3fys3uBy7QQs9cdWaFtoS8Rsg@mail.gmail.com>
+ <CACsJy8CAW1h4rAOK_2+EAFEL28CKeqf4vqROsLByjZaMU3D-ow@mail.gmail.com>
+ <CALkWK0mLG78anjbcVRF7Zpj-hMmts1pshF=XhLh--MCYV66Gng@mail.gmail.com>
+ <CACsJy8D-M3xMkO7CPmOzeMxRV0Bv6MtCjH5eCr_vguxPF2N0vg@mail.gmail.com>
+ <CALkWK0m93ZzWVJVUxgVQGUTK8t2pTEaDAPs7vW-tcgiewjOLwA@mail.gmail.com>
+ <7v1ual12pj.fsf@alter.siamese.dyndns.org> <CALkWK0=2T5BA8+dro8U7bcp3ODsuQAj78mEPnxs=ERqf9FhSBQ@mail.gmail.com>
+ <7va9p8yjuf.fsf@alter.siamese.dyndns.org> <CALkWK0m4o=F=bh_mt9NGDfXKExgVtLhaZ7uxA_XFhpF5AN5-Fg@mail.gmail.com>
+ <7vk3ocx0qq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Mon Apr 08 21:54:27 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 08 21:55:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPI93-0007Qq-Et
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 21:54:25 +0200
+	id 1UPI9j-0008NX-7b
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 21:55:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935871Ab3DHTyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 15:54:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45061 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935858Ab3DHTyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 15:54:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EA281495D;
-	Mon,  8 Apr 2013 19:54:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ikuM9BlMUo2t5U2d66KaR9UJk0I=; b=Rz/EoA
-	HZHOriYlm4MYpr0CMpASkpRtVLaRQ+kNnTP1uMBn3XXwdrIE71h4/N2pHfnVuaFl
-	r4Nj2a/h8Zuf/AgBboxGKOBcEqobJ4Gck1YyeLl67ueUYHhtfhLvT1diXpohYRxn
-	gS25lnekTqwXny+tQcGB7xQo4gPST/62AWFxk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=slvw7U1l/lwFg88Mds2AJgRQnJvOkUMn
-	JlBrKwD32EUEt0z9pMZEtoiZpvXIFtJvvwbxhJVWckO365/WZ9NDvVPyyLtTJTGN
-	yy5Q5gf7vqBC7azv95+Q16Zci6QFpRRZ69arG6aIVJpr6cURb7mZQNlo+RezBdSN
-	OWNkv3hdDXU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71B151495C;
-	Mon,  8 Apr 2013 19:54:13 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D744E14952; Mon,  8 Apr
- 2013 19:54:12 +0000 (UTC)
-In-Reply-To: <516313D3.2050309@bracey.fi> (Kevin Bracey's message of "Mon, 08
- Apr 2013 22:00:35 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 15F3D3F4-A086-11E2-89E5-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S935848Ab3DHTzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 15:55:00 -0400
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:34535 "EHLO
+	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935802Ab3DHTy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 15:54:59 -0400
+Received: by mail-ia0-f174.google.com with SMTP id b35so5638517iac.33
+        for <git@vger.kernel.org>; Mon, 08 Apr 2013 12:54:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=L9s6mQIKw0bz9n6N9EvBwLt8uBo1qo6QDFJtaOe5QJ0=;
+        b=qMazqxd5zuCpYzWL6ZO48Pf2d/PyLy654tbB2YnfJDA0Saloxzgchxcu9dNUIUkIn6
+         Isx+P69i8ny3Y6qA6K3NhQGwxYlEC30hj9wFIE+iJ63EJ+2afsEpp7IVU0rnCMK5sNG9
+         kMXXbtowB1EI0JUZVrtD7wLxlPPPZT6mSYyh2GKYfxXY+57tK+SCcp+OcOVPK4yVuxpu
+         FJieCF+PLCb4mTu6ns+yl2uV3gaTw2222ACRXd4gBTuDINX0kIQvtBCxz0io8zgCWx6q
+         5Ywq9y/dn56fu32eTFcqlXa8i+2hhdpbNPtS/7IRqCeYGcA2zgi/Sl6oXr3VZ1XMlzlC
+         JvUQ==
+X-Received: by 10.50.17.166 with SMTP id p6mr8151956igd.12.1365450898331; Mon,
+ 08 Apr 2013 12:54:58 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Mon, 8 Apr 2013 12:54:18 -0700 (PDT)
+In-Reply-To: <7vk3ocx0qq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220505>
 
-Kevin Bracey <kevin@bracey.fi> writes:
-
-> Commit 4b7f53d ("simplify-merges: drop merge from irrelevant side
-> branch") appears to have broken simplify-merges.
+Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 >
-> ... now I see the "report problems
-> immediately" message on the recent merge of that change.
+>> Does git diff/ commit/ add/ rm or any other command you can think of
+>> rely on a special file in the worktree (aka .gitmodules) to be checked
+>> out?
+>
+> Try "git add foo~" with usual suspect in .gitignore ;-)
 
-I hope more people now see why we would like to see more people try
-'next' regularly.
-
-Will revert it for now, but that would mean side histories like gitk's
-will keep showing up in the simplified view.
+First, it's not a hard requirement: in the worst case, git add will
+add the file even without a -f.  Second, I've already argued about how
+I think this is the right design: What part of that do you disagree
+with?  What alternate design do you propose?
