@@ -1,68 +1,64 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http-backend: respect GIT_NAMESPACE with dumb clients
-Date: Mon, 8 Apr 2013 17:45:12 -0400
-Message-ID: <20130408214512.GA11227@sigill.intra.peff.net>
-References: <CAAvHm8PCQx18Gk2S7dicG+_GksjFqVLfPNCbism1sHnPUMDNzg@mail.gmail.com>
- <1365091293-23758-1-git-send-email-jkoleszar@google.com>
- <87wqscr9yk.fsf@linux-k42r.v.cablecom.net>
+Subject: Re: commit-message attack for extracting sensitive data from
+ rewritten Git history
+Date: Mon, 8 Apr 2013 17:54:57 -0400
+Message-ID: <20130408215457.GB11227@sigill.intra.peff.net>
+References: <CAFY1edbNPjs5JGOPRxzB+ie4w=SvR+rUeePhsEnpr0tWtZpeHg@mail.gmail.com>
+ <7vehelyqrv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: John Koleszar <jkoleszar@google.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>,
-	Josh Triplett <josh@joshtriplett.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Apr 08 23:45:23 2013
+Cc: Roberto Tyley <roberto.tyley@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 08 23:55:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPJsR-0002HS-4v
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 23:45:23 +0200
+	id 1UPK1u-0007OP-Mb
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 23:55:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965131Ab3DHVpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 17:45:18 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34351 "EHLO
+	id S936383Ab3DHVzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 17:55:03 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34371 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964857Ab3DHVpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 17:45:17 -0400
-Received: (qmail 16789 invoked by uid 107); 8 Apr 2013 21:47:08 -0000
+	id S936362Ab3DHVzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 17:55:03 -0400
+Received: (qmail 16941 invoked by uid 107); 8 Apr 2013 21:56:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 08 Apr 2013 17:47:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Apr 2013 17:45:12 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 08 Apr 2013 17:56:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Apr 2013 17:54:57 -0400
 Content-Disposition: inline
-In-Reply-To: <87wqscr9yk.fsf@linux-k42r.v.cablecom.net>
+In-Reply-To: <7vehelyqrv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220526>
 
-On Mon, Apr 08, 2013 at 11:25:39PM +0200, Thomas Rast wrote:
+On Mon, Apr 08, 2013 at 08:40:36AM -0700, Junio C Hamano wrote:
 
-> At the risk of repeating something that's been said already -- I only
-> skimmed the thread -- this test breaks in today's pu on my machine.  I
-> get:
-> [...]
-> --- expect	2013-04-08 21:24:36.571874540 +0000
-> +++ actual	2013-04-08 21:24:36.579874619 +0000
-> @@ -1,3 +1,2 @@
-> -453190505bf07f7513bed9839da875eb3610f807	HEAD
->  453190505bf07f7513bed9839da875eb3610f807	refs/heads/master
->  453190505bf07f7513bed9839da875eb3610f807	refs/namespaces/ns/refs/heads/master
-> not ok 14 - backend respects namespaces
+> With or without the security issue, leaving old object names that
+> will become irrelevant in the rewritten history will make the
+> resulting history less useful, simply because people cannot look at
+> the objects these messages refer to. The same argument is behind the
+> reason why "cherry-pick -x" was originally the default, found to be
+> a mistake and made optional.
+> 
+> filter-branch provides "map" helper function to help mapping old
+> object names to rewritten object names, but stops there; it leaves
+> it up to the message filter script to identify what string in the
+> message is an object name to be rewritten.
+> 
+> It can be taught to be more helpful to the message filter writers,
+> and you seem to have done so in BFG, which is very good.
 
-I think what is in pu is not yet reflecting the latest discussion. HEAD
-should not be included in the simulated info/refs, but should be
-generated, respecting namespaces, whenever a client retrieves the HEAD
-file directly.
-
-It looks like the thread was left here;
-
-  http://article.gmane.org/gmane.comp.version-control.git/220237
-
-and we are just waiting for John's re-roll.
+Yeah, it would make sense for filter-branch to have a "--map-commit-ids"
+option or similar that does the update. At first I thought it might take
+two passes, but I don't think it is necessary, as long as we traverse
+the commits topologically (i.e., you cannot have mentioned X in a commit
+that is an ancestor of X, so you do not have to worry about mapping it
+until after it has been processed).
 
 -Peff
