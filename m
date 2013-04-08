@@ -1,137 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] decorate: add "clear_decoration()"
-Date: Sun, 07 Apr 2013 23:14:17 -0700
-Message-ID: <7v1ual35xi.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Mon, 08 Apr 2013 09:48:13 +0200
+Message-ID: <5162763D.5030708@web.de>
+References: <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com> <20130407170201.GH2222@serenity.lan> <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com> <20130407175210.GI2222@serenity.lan> <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com> <20130407182112.GJ2222@serenity.lan> <5161BC33.8060707@web.de> <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com> <5161D3C5.9060804@web.de> <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com> <20130407212342.GA19857@elie.Belkin> <CALkWK0=Q-P-fGLmkoiV3_CJ43MNmFzpfkvFjNUwxB+zOsqTxmg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 08 08:53:19 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	John Keeping <john@keeping.me.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 09 00:02:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UP5tC-0000sy-5t
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 08:49:14 +0200
+	id 1UPK96-0002Am-BX
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 00:02:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934873Ab3DHGOV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 02:14:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62483 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934870Ab3DHGOU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 02:14:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C7CF10697;
-	Mon,  8 Apr 2013 06:14:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=A
-	k2uwOB9OYwLDkqZu1Q6RXImvns=; b=iLB0Q4eU6b9Vw3luCUCb23rCsCRCBDJxi
-	NC7CVsymk5XDgYpA//o8kMhinnZk8oEXHpQ9mtL3JBVSDkOScV7fH+lTEl8StiWR
-	F7ZTL8i830CkUllg0D9kNFSDDIkpXJV0Tidc67zrS09lpb3wn3Ds4SB5bNGfAXh3
-	i5btWwSIKY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=rkX
-	SL6RyqkinI1ujtCKmkJV6UCW+l2rJft2O3L8pk+q1O0hAmbYmPuFXA0J1sKuGqTs
-	OSlYDQawlMJ2oGBZJ7TPPeEHBO7yQBGY8dWfMsZEp79vT5I1+yit81X3M0jKDHCS
-	nXJL0HQZ1zXdQRBTcyqEMvdyA31lzdxqIXDijQEg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80EC410696;
-	Mon,  8 Apr 2013 06:14:19 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3E7110694; Mon,  8 Apr
- 2013 06:14:18 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8BFF3552-A013-11E2-B6D2-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S934340Ab3DHHsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 03:48:33 -0400
+Received: from mout.web.de ([212.227.17.11]:56872 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751736Ab3DHHsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 03:48:32 -0400
+Received: from [192.168.178.41] ([91.3.157.185]) by smtp.web.de (mrweb003)
+ with ESMTPA (Nemesis) id 0LmLac-1UxtOh1gn4-00ZFkI; Mon, 08 Apr 2013 09:48:16
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <CALkWK0=Q-P-fGLmkoiV3_CJ43MNmFzpfkvFjNUwxB+zOsqTxmg@mail.gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:MqxZ9m4ThjBuJZJnZzMZCN7kYWcFPZd7L0e//zjfbNa
+ GADo4OL7u1MAzFCZSx1V6Z2xow2Qh7bmNtMZ+kK8Nx5dR6EgTo
+ Tqr4pogIczJe2TfFiXENjbHvYGJjdQEGyM2cUf9ZFmntyO+UHE
+ YIiZb8WDrpT6UZ/TjHvb9b0hlWXpgDQ1Hi4QWsFdmV6H/wtNqL
+ cBUGNrgK5WJ0MrDxg4K+Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220405>
 
-So far, all the users of the decoration API used decoration that
-only grows and discarded at the end of the program execution.
+Am 07.04.2013 23:30, schrieb Ramkumar Ramachandra:
+> Jonathan Nieder wrote:
+>> What's stopping the core object code of git parsing .gitmodules?
 
-Introduce for_each_decoration() that lets the caller iterate over
-all defined decorations and use it to implement clear_decoration()
-function.
+Just to clarify that: git core already does that. A "git grep
+gitmodules_config" shows it is parsed by some git core commands:
+checkout, commit, the diff family and fetch. Others will follow
+in the recursive update series. And "git mv" support will teach
+that command to manipulate the .gitmodules file (and I hope that
+a patch teaching "git rm" to remove the section from .gitmodules
+will be accepted in the near future).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/technical/api-decorate.txt | 22 ++++++++++++++++++++++
- decorate.c                               | 19 +++++++++++++++++++
- decorate.h                               |  4 ++++
- 3 files changed, 45 insertions(+)
+> Nothing, except that it's perversely unnatural for object parsing code
+> to parse something outside the object store.
 
-diff --git a/Documentation/technical/api-decorate.txt b/Documentation/technical/api-decorate.txt
-index 0cc2b64..600366d 100644
---- a/Documentation/technical/api-decorate.txt
-+++ b/Documentation/technical/api-decorate.txt
-@@ -35,3 +35,25 @@ the `obj`.  You cannot tell if `obj` does not appear in the hashtable
- at all, or if `obj` has decoration whose value is NULL, so if you want
- to use the decoration API for "Did I see this object?" hashtable,
- use decoration value that is _not_ NULL.
-+
-+Iterating
-+---------
-+
-+`for_each_decoration(struct decoration *deco, for_each_decoration_fn fn)`
-+iterates over all the entries in the hashtable, and calls `fn` on each
-+entry.  The `fn` callback function takes a single `struct object_decoration`
-+as its parameter, that has `base` field that points at the `obj`
-+given to an earlier call to `add_decoration` and `decoration` field
-+that remembers the `decoration`.
-+
-+Clearing
-+--------
-+
-+`clear_decoration(struct decoration *deco, for_each_decoration_fn fn)`,
-+when `fn` is not NULL, iterates over all the entries and calls the
-+callback function `fn` using `for_each_decoration`, and then frees
-+the memory used for the hashtable but not the `struct decoration` itself.
-+
-+The callback function can be used to release the resource used by
-+the `decoration` the earlier `add_decoration` registered to the
-+hashtable.
-diff --git a/decorate.c b/decorate.c
-index 2f8a63e..3e15358 100644
---- a/decorate.c
-+++ b/decorate.c
-@@ -86,3 +86,22 @@ void *lookup_decoration(struct decoration *n, const struct object *obj)
- 			j = 0;
- 	}
- }
-+
-+void for_each_decoration(struct decoration *n, for_each_decoration_fn fn)
-+{
-+	int i;
-+
-+	for (i = 0; i < n->size; i++) {
-+		struct object_decoration *entry = &n->hash[i];
-+		if (!entry->base)
-+			continue;
-+		fn(entry);
-+	}
-+}
-+
-+void clear_decoration(struct decoration *n, for_each_decoration_fn fn)
-+{
-+	if (fn)
-+		for_each_decoration(n, fn);
-+	free(n->hash);
-+}
-diff --git a/decorate.h b/decorate.h
-index e732804..4a0d37e 100644
---- a/decorate.h
-+++ b/decorate.h
-@@ -15,4 +15,8 @@ struct decoration {
- extern void *add_decoration(struct decoration *n, const struct object *obj, void *decoration);
- extern void *lookup_decoration(struct decoration *n, const struct object *obj);
- 
-+typedef void (*for_each_decoration_fn)(struct object_decoration *);
-+extern void for_each_decoration(struct decoration *, for_each_decoration_fn);
-+extern void clear_decoration(struct decoration *, for_each_decoration_fn);
-+
- #endif
--- 
-1.8.2.1-450-gd047976
+Hmm, at least the unstaged .gitmodules file has to be parsed from
+the file system. And Heiko's current work on parsing .gitmodules
+directly from the object store will help here too, right?
+
+>> How does this compare to other metadata
+>> files like .gitattributes and .gitignore?
+> 
+> .gitignore and .gitattributes are parsed in dir.c, where git "treats"
+> worktree paths.  It's quite nicely integrated.
+
+And .gitmodules is parsed in submodule.c where Git treats
+.gitmodules entries. So I don't see a problem here, what am I
+missing?
