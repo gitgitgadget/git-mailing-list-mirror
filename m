@@ -1,87 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t3700 (add): add failing test for add with submodules
-Date: Mon, 8 Apr 2013 17:30:06 -0400
-Message-ID: <20130408213006.GD9649@sigill.intra.peff.net>
-References: <CACsJy8BAQUms9sgNh5_VFOx0_9LkobytjDk33VB+U_J-S44o_A@mail.gmail.com>
- <1365416809-4396-1-git-send-email-artagnon@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Mon, 8 Apr 2013 17:36:52 -0400
+Message-ID: <20130408213652.GE9649@sigill.intra.peff.net>
+References: <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com>
+ <20130407170201.GH2222@serenity.lan>
+ <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com>
+ <20130407175210.GI2222@serenity.lan>
+ <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
+ <20130407182112.GJ2222@serenity.lan>
+ <5161BC33.8060707@web.de>
+ <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com>
+ <5161D3C5.9060804@web.de>
+ <51632B95.3040103@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	John Keeping <john@keeping.me.uk>,
 	Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 08 23:30:23 2013
+	Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Apr 08 23:37:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPJdt-0008AO-89
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 23:30:21 +0200
+	id 1UPJkU-0000ZG-P9
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 23:37:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936324Ab3DHVaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 17:30:14 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34310 "EHLO
+	id S936345Ab3DHVhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 17:37:03 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34325 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936283Ab3DHVaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 17:30:10 -0400
-Received: (qmail 16333 invoked by uid 107); 8 Apr 2013 21:32:02 -0000
+	id S934661Ab3DHVg5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 17:36:57 -0400
+Received: (qmail 16408 invoked by uid 107); 8 Apr 2013 21:38:48 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 08 Apr 2013 17:32:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Apr 2013 17:30:06 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 08 Apr 2013 17:38:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Apr 2013 17:36:52 -0400
 Content-Disposition: inline
-In-Reply-To: <1365416809-4396-1-git-send-email-artagnon@gmail.com>
+In-Reply-To: <51632B95.3040103@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220523>
 
-On Mon, Apr 08, 2013 at 03:56:49PM +0530, Ramkumar Ramachandra wrote:
+On Mon, Apr 08, 2013 at 10:41:57PM +0200, Jens Lehmann wrote:
 
-> git add currently goes past submodule boundaries.  Document this bug.
+> (While it is easier to merge the link object, a .gitmodules
+> aware merge driver would work just as well)
 
-It's not just submodules, but we should not recurse into any
-sub-repository. If I have an unrelated Meta/ repository, I should not be
-able to "git add Meta/foo", whether I have used "git submodule" or not.
+I have not been following this thread that closely, so apologies if I
+missed it, but one thing I have not seen mention of is how the extra
+information inside the gitlink object will require extra merge effort.
 
-This topic came about 2 years ago, and I had a quick-and-dirty patch:
+Imagine I have two branches; one updates the submodule's commit pointer,
+and the other updates some meta-information about the submodule (e.g.,
+it points the URL to a new host). In the current system, one change goes
+into .gitmodules, and the other goes into the gitlink path. In a new
+combined object, there is a conflict and we must do content-level
+merging on it (which presumably would be done with a specialized merge
+driver).
 
-  http://thread.gmane.org/gmane.comp.version-control.git/170937/focus=171040
-
-I do not recall anything about the patch at this point (i.e., whether it
-was the right thing), but maybe it is a good starting point for somebody
-to look into it.
-
-> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-> index 874b3a6..a1ea050 100755
-> --- a/t/t3700-add.sh
-> +++ b/t/t3700-add.sh
-> @@ -310,4 +310,18 @@ test_expect_success 'git add --dry-run --ignore-missing of non-existing file out
->  	test_i18ncmp expect.err actual.err
->  '
->  
-> +test_expect_failure 'git add should not go past submodule boundaries' '
-> +	mkdir submodule_dir &&
-> +	(
-> +		cd submodule_dir &&
-> +		git init &&
-> +		cat >foo <<-\EOF &&
-> +		Some content
-> +		EOF
-> +		git add foo &&
-> +		git commit -a -m "Add foo"
-> +	) &&
-> +	git add submodule_dir/foo
-> +'
-
-That is not actually a submodule, but rather just a repo that happens to
-be inside our working tree. I know the distinction is subtle, but
-according to the thread I linked to above, we may actually treat paths
-with gitlinked index entries separately already (I did not try it,
-though).
+So I think that in some cases .gitmodules creates more conflicts
+(submodule A and submodule B are touched and have a textual conflict),
+and sometimes the combined object would create more objects (you touch
+two parts of the of the combined object). The solution in both cases is
+a smarter merge driver that understands which parts semantically
+conflict and which parts do not.
 
 -Peff
