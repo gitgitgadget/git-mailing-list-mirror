@@ -1,127 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
 Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
-Date: Mon, 08 Apr 2013 13:30:08 -0700
-Message-ID: <7v8v4swysv.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com>
- <5161BC33.8060707@web.de>
- <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com>
- <5161D3C5.9060804@web.de>
- <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com>
- <20130407212342.GA19857@elie.Belkin>
- <CALkWK0=Q-P-fGLmkoiV3_CJ43MNmFzpfkvFjNUwxB+zOsqTxmg@mail.gmail.com>
- <5162763D.5030708@web.de>
- <CALkWK0m5iN8h0J1EkbMTJoXy6QHHzyTjRfPnhL3XMgi=NAi2eg@mail.gmail.com>
- <20130408081959.GD20159@elie.Belkin>
- <CALkWK0nz878Xh9BFSCrtBGT=g3fys3uBy7QQs9cdWaFtoS8Rsg@mail.gmail.com>
- <CACsJy8CAW1h4rAOK_2+EAFEL28CKeqf4vqROsLByjZaMU3D-ow@mail.gmail.com>
- <CALkWK0mLG78anjbcVRF7Zpj-hMmts1pshF=XhLh--MCYV66Gng@mail.gmail.com>
- <CACsJy8D-M3xMkO7CPmOzeMxRV0Bv6MtCjH5eCr_vguxPF2N0vg@mail.gmail.com>
- <CALkWK0m93ZzWVJVUxgVQGUTK8t2pTEaDAPs7vW-tcgiewjOLwA@mail.gmail.com>
- <7v1ual12pj.fsf@alter.siamese.dyndns.org>
- <CALkWK0=2T5BA8+dro8U7bcp3ODsuQAj78mEPnxs=ERqf9FhSBQ@mail.gmail.com>
- <7va9p8yjuf.fsf@alter.siamese.dyndns.org>
- <CALkWK0m4o=F=bh_mt9NGDfXKExgVtLhaZ7uxA_XFhpF5AN5-Fg@mail.gmail.com>
- <7vk3ocx0qq.fsf@alter.siamese.dyndns.org>
- <CALkWK0npHgsf_TyjrMRJdcT-twg_jRXOHtoNpmX+2XNeLq=ZAQ@mail.gmail.com>
+Date: Mon, 08 Apr 2013 22:41:57 +0200
+Message-ID: <51632B95.3040103@web.de>
+References: <7v61zz9fu3.fsf@alter.siamese.dyndns.org> <CALkWK0n64BW8zQXweR38T6DjT+iYBbsZDPCLZ-4igqGJHoFwKw@mail.gmail.com> <7vr4im7m1y.fsf@alter.siamese.dyndns.org> <CALkWK0=jrO9MQotB+anAn-5YtG1RBTLWEnGL5=K4wy=yi7E-CQ@mail.gmail.com> <20130407161209.GG2222@serenity.lan> <CALkWK0kSF_q0o1V6BhO6X2jKAJQxNQ0c6MCi5o=jZdMwrba48g@mail.gmail.com> <20130407170201.GH2222@serenity.lan> <CALkWK0nSxfEzP7KHZxGjmBYD7pX5aa3CbMt1qAGrz4tonrtHhA@mail.gmail.com> <20130407175210.GI2222@serenity.lan> <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com> <20130407182112.GJ2222@serenity.lan> <5161BC33.8060707@web.de> <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com> <5161D3C5.9060804@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	John Keeping <john@keeping.me.uk>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: John Keeping <john@keeping.me.uk>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 08 22:30:20 2013
+X-From: git-owner@vger.kernel.org Mon Apr 08 22:42:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPIho-0004DY-3Z
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 22:30:20 +0200
+	id 1UPItC-0003CE-Kv
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 22:42:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935925Ab3DHUaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 16:30:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62675 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935832Ab3DHUaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 16:30:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 082E515D8B;
-	Mon,  8 Apr 2013 20:30:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a3qkmEI3nle+fF3upRVJc2EttIY=; b=p2atpE
-	xnxCDphvR8ll76nDRNVHiOnjQ3dZC82lG10FUXEtn2ANVDaJS5qH9Txpegu23253
-	NDc9NnE2sDS24cq2qqy08C0n+NiiONLuNZL3RHIKAijE2qcMNpyuwgp342A+P8cr
-	yGuwu0kMYtFh+e5yxoJZYufuM8rFjSVvL3cpg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sbfCU/xc6BWzx5YOoP0qdshVO9M6HDeU
-	A5fvOFjniH2f4UjEeyCEprUO7yh7KDkGGaNBExSntm1zFh7OLB+KJ2EhIDq787li
-	6Znc/zIjScsV6I67HfqwGGtavLBn5Pf1tODWqjuaW8byIbu5TVmxqeQXjLNyFzuV
-	dQI8fM5+mdw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFEC015D8A;
-	Mon,  8 Apr 2013 20:30:10 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D05D315D88; Mon,  8 Apr
- 2013 20:30:09 +0000 (UTC)
-In-Reply-To: <CALkWK0npHgsf_TyjrMRJdcT-twg_jRXOHtoNpmX+2XNeLq=ZAQ@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Tue, 9 Apr 2013 01:24:18 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1BA76C20-A08B-11E2-80CF-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S936101Ab3DHUmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 16:42:01 -0400
+Received: from mout.web.de ([212.227.15.4]:57515 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935919Ab3DHUmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 16:42:00 -0400
+Received: from [192.168.178.41] ([91.3.157.185]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0MOArg-1UUpBx1oxA-005sRU; Mon, 08 Apr 2013 22:41:58
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <5161D3C5.9060804@web.de>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:YSWQ1emxTJq5KFn+BxjJZFiJYDtw7DNemAqssLlIKxe
+ RNXP6h7jjMEG1UcEE6w5WcsYMmy91TppXJ/DCuY2QjyO47U6cY
+ ehD5E1N+ssrk6Xf5AdnztIfKe/ZBFZgVDD97Vti9LGLgTh1WzH
+ kpZ56gjnr7B82L/DHpG/dXyHDKt9P3d24QOR9psB7D8mnaKgo4
+ syZKKEDwQphpr4v0KiDNg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220512>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Ok, here comes an updated version of our comparison list which
+I updated with what I read in recent discussions. As I said
+earlier, please speak up if I missed anything (or forgot to add
+anyone to the CC).
 
-> Junio C Hamano wrote:
->> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->>
->>> Does git diff/ commit/ add/ rm or any other command you can think of
->>> rely on a special file in the worktree (aka .gitmodules) to be checked
->>> out?
->>
->> Try "git add foo~" with usual suspect in .gitignore ;-)
->
-> First, it's not a hard requirement: in the worst case, git add will
-> add the file even without a -f.
+I picked up one advantage ("no need to cd-to-toplevel to edit
+.gitmodules) two new disadvantages ("foreach" and "default
+submodule config") and retired one Ram showed a solution for
+(the "unstaged gitlink").
 
-In the same sense .gitmodules is not a hard requirement, either.  I
-use a submodule without .gitmodules in one of my repositories (the
-top-level houses the source to generete my dotfiles and is cloned to
-my environment at work, but the submodule houses my private files
-that live only at home).  The gitlink entry in the index and the
-tree and presence of the .git repository in the submodule checkout
-(where it exists) is sufficient to make the layout work.
 
-If your complaints were "I cannot make X work with the current
-system, even with changes to git-submodule and some core part of the
-system, and I think the reason is because the way module information
-is stored is in a separate file .gitmodules", with a concrete X,
-people who are more versed with the submodule subsystem may be able
-to help you come up with a cleaner solution without throwing the
-baby with the bathwater, but I do not think we saw any concrete X
-mentioned.
+Advantages:
 
-The same sentence followed by "... and with an object of a new type
-stored at the path of the submodule, I can make it work by doing A,
-B and C", with concrete A, B and C, some people may be interested in
-pursuing that avenue with you, but I do not think we saw such
-combinations of <X, A, B, C> either.
+* Information is stored in one place, no need to lookup stuff in
+  another file/blob.
 
-If all of your argument starts from "I think .gitmodules is ugly
-because it is not an object of a separate type stored at the path of
-the submodule, and here are the reasons why I think it is ugly", I
-have nothing more to say to you.  That "ugly" is at best skewed
-aesthetics, and each and every example that comes up in this
-discussion, like this "'git add' works with .gitignore", and the one
-I sent on ".gitattributes vs .gitmodules on the default" in the
-nearby subthread to Jonathan, makes me realize that .gitmodules is
-_more_ in line with the rest of the system, not less.
+* Easier coding, as we find all information in a single object.
+
+* No need to cd-to-toplevel to change configuration in the
+  .gitmodules file, the special tools to edit link information
+  will work in any subdirectory.
+
+(We currently need a checked out work tree to access the
+.gitmodules file, but there is ongoing work to read the
+configuration directly from the database)
+
+(While it is easier to merge the link object, a .gitmodules
+aware merge driver would work just as well)
+
+
+Disadvantages:
+
+* Changes in user visible behavior, possible compatibility
+  problems when Git versions are mixed.
+
+* Special tools are needed to edit submodule information where
+  currently a plain editor is sufficient and a standard format
+  is used.
+
+* merge conflicts are harder to resolve and require special git
+  commands, solving them in .gitmodules is way more intuitive
+  as users are already used to conflict markers.
+
+* "git submodule foreach" becomes harder to implement
+
+* With .gitmodules we lose a central spot where configuration
+  concerning many submodules can be stored
+
+(I think when we also put the submodule name in the object we
+could also retain the ability to repopulated moved submodules
+from their old repo, which is found by that name)
+
+(That a link object can have no unstaged counterpart that a file
+easily has can be fixed by special casing this, e.g. in using a
+file in .git/link-specs/)
+
+
+Hmm, while it is still too early to close the polls, it looks
+to me as most advantages are about easier coding while most
+disadvantages hit the user. That makes it more understandable
+for me why Ram is so convinced of his approach and why on the
+other hand submodule users like myself are rather sceptical. I
+think we need some more advantages that users will directly
+profit from, the cd-to-toplevel for .gitmodules is definitely
+not enough to support the change Ram is proposing. What other
+advantages are missing here?
