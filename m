@@ -1,82 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] decorate: add "clear_decoration()"
-Date: Mon, 08 Apr 2013 14:22:46 -0700
-Message-ID: <7vppy4vhsp.fsf@alter.siamese.dyndns.org>
-References: <7v1ual35xi.fsf@alter.siamese.dyndns.org>
- <20130408210903.GC9649@sigill.intra.peff.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] http-backend: respect GIT_NAMESPACE with dumb clients
+Date: Mon, 8 Apr 2013 23:25:39 +0200
+Message-ID: <87wqscr9yk.fsf@linux-k42r.v.cablecom.net>
+References: <CAAvHm8PCQx18Gk2S7dicG+_GksjFqVLfPNCbism1sHnPUMDNzg@mail.gmail.com>
+	<1365091293-23758-1-git-send-email-jkoleszar@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 08 23:22:55 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	<git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>,
+	Josh Triplett <josh@joshtriplett.org>
+To: John Koleszar <jkoleszar@google.com>
+X-From: git-owner@vger.kernel.org Mon Apr 08 23:25:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPJWg-0006gG-FX
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 23:22:54 +0200
+	id 1UPJZS-0001zN-Pz
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 23:25:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936120Ab3DHVWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 17:22:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58560 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762574Ab3DHVWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 17:22:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC15715C63;
-	Mon,  8 Apr 2013 21:22:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jbLFjiR1v+TLiZYmE52NcDhHVbs=; b=mAOWLw
-	jbEOwm5NP/7s4ZyhpwX1w1cgiYmCoVkNAf9iwVK43u6eSRsbO1wd4bBmr0KZpF6V
-	QTVf8X84nuaBVFj+y7v0ooc39YEIPs6+J1xnwYBinwNgVHibDHhOCT6ht5jdp2FU
-	n3hGQN5dP09UCbxv+zBHDAPDLWLWmgWlgxh3A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OEQnoGEa4QZ+0CC10q2DNrqhQqbgLo4P
-	FCVNaF4NCDj8msShMXIYerKX5d/rigcCFBpvMI0xJE7a0dsEPjm6jUybbpCyq9bC
-	43pb/B3zndQ/MwVFhByQQ8desok7WdIeUKHbrqt50RPX4MOcu8aB6ot1Ar3y7ju1
-	8P++y6R1TJw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B436115C61;
-	Mon,  8 Apr 2013 21:22:48 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0103B15C5D; Mon,  8 Apr
- 2013 21:22:47 +0000 (UTC)
-In-Reply-To: <20130408210903.GC9649@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 8 Apr 2013 17:09:03 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 760389D6-A092-11E2-8C25-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S936222Ab3DHVZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 17:25:42 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:47147 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S936202Ab3DHVZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 17:25:41 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 8 Apr
+ 2013 23:25:35 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (46.126.8.85) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 8 Apr 2013 23:25:38 +0200
+In-Reply-To: <1365091293-23758-1-git-send-email-jkoleszar@google.com> (John
+	Koleszar's message of "Thu, 4 Apr 2013 09:01:33 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220521>
 
-Jeff King <peff@peff.net> writes:
+John Koleszar <jkoleszar@google.com> writes:
 
-> On Sun, Apr 07, 2013 at 11:14:17PM -0700, Junio C Hamano wrote:
+> Filter the list of refs returned via the dumb HTTP protocol according
+> to the active namespace, consistent with other clients of the
+> upload-pack service.
 >
->> So far, all the users of the decoration API used decoration that
->> only grows and discarded at the end of the program execution.
->> 
->> Introduce for_each_decoration() that lets the caller iterate over
->> all defined decorations and use it to implement clear_decoration()
->> function.
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> Both this and the first patch look good to me. I had documented
-> api-decorate long ago as part of the cache-metadata-on-disk series (it
-> was built on generic maps, which I also refactored decorate on top of).
-> But I didn't see anything in my version that was missing from yours (in
-> fact, it was much sparser, because it just referred to the generic map
-> api, which we never merged).
->
-> Out of curiosity: where is the patch 3 that presumably led you to
-> wanting these?
+> Signed-off-by: John Koleszar <jkoleszar@google.com>
 
-It is nowhere near ready to be published, as I am not finding any
-time for coding today X-<.
+At the risk of repeating something that's been said already -- I only
+skimmed the thread -- this test breaks in today's pu on my machine.  I
+get:
+
+expecting success: (
+	log_div "namespace test"
+	config http.uploadpack true &&
+	config http.getanyfile true &&
+
+	NS=ns &&
+	(cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+		git update-ref refs/namespaces/$NS/refs/heads/master HEAD
+	) &&
+
+	SMART=smart
+	git ls-remote public >expect &&
+	grep /$NS/ expect &&
+	GET_BODY "info/refs" >actual &&
+	test_cmp expect actual &&
+	GET_BODY "info/refs?service=git-upload-pack" >actual &&
+	grep /$NS/ actual &&
+
+	SMART=smart_namespace &&
+	GIT_NAMESPACE=$NS && export GIT_NAMESPACE &&
+	git ls-remote public >expect &&
+	! grep /$NS/ expect &&
+	GET_BODY "info/refs" >actual &&
+	test_cmp expect actual &&
+	GET_BODY "info/refs?service=git-upload-pack" >actual &&
+	! grep /$NS/ actual
+)
+453190505bf07f7513bed9839da875eb3610f807	refs/namespaces/ns/refs/heads/master
+--- expect	2013-04-08 21:24:36.571874540 +0000
++++ actual	2013-04-08 21:24:36.579874619 +0000
+@@ -1,3 +1,2 @@
+-453190505bf07f7513bed9839da875eb3610f807	HEAD
+ 453190505bf07f7513bed9839da875eb3610f807	refs/heads/master
+ 453190505bf07f7513bed9839da875eb3610f807	refs/namespaces/ns/refs/heads/master
+not ok 14 - backend respects namespaces
+
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
