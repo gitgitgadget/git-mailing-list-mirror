@@ -1,107 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cherry-pick: better error message when the parameter is
- a non-commit
-Date: Mon, 08 Apr 2013 09:56:55 -0700
-Message-ID: <7v38v1yn8o.fsf@alter.siamese.dyndns.org>
-References: <20130403092704.GC21520@suse.cz>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Mon, 8 Apr 2013 22:34:26 +0530
+Message-ID: <CALkWK0kJ=r6Lg1Z9kUexMtVnori5zNj9d2M=u5EAcdHOHNOCOw@mail.gmail.com>
+References: <1365100243-13676-1-git-send-email-artagnon@gmail.com>
+ <CALkWK0mM9HBUvHGHPEw4Vdosp_qfu_1L49TaZrzdC5n3soWkYg@mail.gmail.com>
+ <7v61zz9fu3.fsf@alter.siamese.dyndns.org> <CALkWK0n64BW8zQXweR38T6DjT+iYBbsZDPCLZ-4igqGJHoFwKw@mail.gmail.com>
+ <7vr4im7m1y.fsf@alter.siamese.dyndns.org> <CALkWK0=jrO9MQotB+anAn-5YtG1RBTLWEnGL5=K4wy=yi7E-CQ@mail.gmail.com>
+ <CALkWK0kA86YgonuXv=h2hA_hV8RfWPsBjtrk6OnHXiP=qDBjwg@mail.gmail.com>
+ <CAP8UFD3i2vc3OSAHRERpiPY7cRjqhkqcBN9hVW0QmMksnCPccw@mail.gmail.com>
+ <CALkWK0=nGP2J_EQM83Pv--5orAMdAPmk-3t5uF2pkJYScpM2KQ@mail.gmail.com> <CAP8UFD16gwWjE7T75D7kUM-VOXhtZaSRGtEg8fW5kmuKDLTQHQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Apr 08 18:57:14 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 08 19:05:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPFNR-0002SB-QF
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 18:57:06 +0200
+	id 1UPFVP-0000ND-9H
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 19:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935421Ab3DHQ47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Apr 2013 12:56:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34223 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934462Ab3DHQ46 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Apr 2013 12:56:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B58B13838;
-	Mon,  8 Apr 2013 16:56:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3fix4K3Y8GidKg6m5CKyOCRMAFE=; b=TYF0ar
-	xAG66gTMRkw5uzT597dJqQ7awFiYSG8ilhq3wgveSm25ka/szWP2t1m6810s2Vm6
-	zFSLy3OG6NChDN1mmU+/eHDju6R+rdcLjW29i/WecHK74ihAS9UFn0KMoxMfOpsM
-	RB9QCXzkSU+nHKCrB5dvEiyL1g72XFIXvS5CA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F0ACWTPibWKb0ddQUqr906d0JDRdlfil
-	Kdc7HmifntRAw4xLFDmZBQaEODg3lLjI1/3ijtjrOGOl0tQ4BHVh8qllXwl8Shr8
-	zF/0rku73gpR07AZRIjRBUznEUVepet737o1cJbLyXQ5LM8Q3v0mI+bc0X4lJs7V
-	ImV/lItBSn0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F351F13836;
-	Mon,  8 Apr 2013 16:56:57 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4ECDE13833; Mon,  8 Apr
- 2013 16:56:57 +0000 (UTC)
-In-Reply-To: <20130403092704.GC21520@suse.cz> (Miklos Vajna's message of
- "Wed, 3 Apr 2013 11:27:04 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 52AA8BC6-A06D-11E2-BA9E-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S935177Ab3DHRFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 13:05:12 -0400
+Received: from mail-ia0-f170.google.com ([209.85.210.170]:55166 "EHLO
+	mail-ia0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762634Ab3DHRFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 13:05:11 -0400
+Received: by mail-ia0-f170.google.com with SMTP id j38so1310182iad.1
+        for <git@vger.kernel.org>; Mon, 08 Apr 2013 10:05:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=7jyQ59TsL3usAXaUnwo0spJJwO8E+O0CtF6MYHCxMBg=;
+        b=E8nYbMymIekx5Xgg8Fejw56PyzmtN6bCef6zw7e4F+ue44b6VZgRTymQDYzBj+442y
+         LtPyrZw+1QNWlLL9ApKfhHjNhoORQ1XEgQR2EjUMTYtErnVPTHNBINBnj8BMp1qgD7C9
+         sETOoRJ6d7XKZLIKqLyAuhFbPQlxjGLom4f0H9kOGa/n17yfh/Z3HOhjD6CPpnb+HnXw
+         AwFSZukfCB37/3ejGYNIlMJUSfKyFQTLt88dEzR4kFxr/tLWzS/b+LwgXDoshLY4HZHR
+         9X9govMZc5fxqOp0Mneeal5vShZ1NHQbNJeDYCSqv0jdmWtAOEyJyhW66E49poEXECR6
+         1/MA==
+X-Received: by 10.50.17.71 with SMTP id m7mr7770319igd.14.1365440706575; Mon,
+ 08 Apr 2013 10:05:06 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Mon, 8 Apr 2013 10:04:26 -0700 (PDT)
+In-Reply-To: <CAP8UFD16gwWjE7T75D7kUM-VOXhtZaSRGtEg8fW5kmuKDLTQHQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220441>
 
-Miklos Vajna <vmiklos@suse.cz> writes:
+Christian Couder wrote:
+> What if instead of a git submodule I want to have an hg, or, God/Linus/deity
+> forbid, an SVN submodule, inside my git worktree?
+> What if I just want a very big movie or .tgz downloaded from somewhere else?
 
-> When copy&paste goes wrong, and the user e.g. tries to cherry-pick a
-> blob, the error message used to be:
+Since the link object is rooted to the tree, it's impossible to have
+anything but a working copy in the link directory.  How can I have a
+non-git-worktree link directory without breaking checkout?  I think
+that making it too generic will make the entire submodule experience
+suffer, because the implementation must be coded according to the
+lowest-common-denominator.  This is the mistake that the tool mr
+makes: since it's so generic, it can't provide very powerful
+functionality specifically for git repositories.
 
-It is the other way around.  When the user tries to cherry-pick a
-non-commit we say a correct but nonspecific "expected one commit",
-and it does not matter how the user threw a non-commit at us.  One
-possibility could be copy&paste going wrong.
-
-> 	fatal: BUG: expected exactly one commit from walk
->
-> Instead, now it is:
->
-> 	fatal: Can't cherry-pick a blob
-
-I wonder what we would do when "git cherry-pick master: next"
-is given.  That is not "single commit input" case and not covered by
-this patch, but perhaps something we may want to diagnose?
-
-In other words, perhaps we would want to inspect pending objects
-before running prepare_revision_walk and make sure everybody is
-commit-ish or something?
-
->
-> Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
-> ---
->  sequencer.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index baa0310..0ac00d4 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1082,8 +1082,15 @@ int sequencer_pick_revisions(struct replay_opts *opts)
->  		if (prepare_revision_walk(opts->revs))
->  			die(_("revision walk setup failed"));
->  		cmit = get_revision(opts->revs);
-> -		if (!cmit || get_revision(opts->revs))
-> +		if (!cmit || get_revision(opts->revs)) {
-> +			unsigned char sha1[20];
-> +			if (!get_sha1(opts->revs->cmdline.rev->name, sha1)) {
-> +				enum object_type type = sha1_object_info(sha1, NULL);
-> +				if (type > 0 && type != OBJ_COMMIT)
-> +					die(_("Can't cherry-pick a %s"), typename(type));
-> +			}
->  			die("BUG: expected exactly one commit from walk");
-> +		}
->  		return single_pick(cmit, opts);
->  	}
+I'll try to think of something else.
