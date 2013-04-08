@@ -1,76 +1,168 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] bundle: Accept prerequisites without commit messages
-Date: Sun, 7 Apr 2013 21:06:10 -0400
-Message-ID: <20130408010610.GB24030@sigill.intra.peff.net>
-References: <1365335596-19917-1-git-send-email-git@cryptocrack.de>
- <7va9pa5k9u.fsf@alter.siamese.dyndns.org>
+From: Kirk Fraser <overcomer.man@gmail.com>
+Subject: Bug Report
+Date: Sun, 7 Apr 2013 22:20:06 -0700
+Message-ID: <CAC34_pSe8jH+mi1Ys5uqHbgJY+06pE9-sDHeqU6gZTrTQ4UQVA@mail.gmail.com>
+References: <CAC34_pT9zwZDnUjo1bTUZabD02M48=_+77-mNCA5adWTgxuYgg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lukas Fleischer <git@cryptocrack.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 08 08:50:16 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 08 08:51:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UP5rn-0000sy-Dh
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 08:47:47 +0200
+	id 1UP5sz-0000sy-7O
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Apr 2013 08:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934535Ab3DHBGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Apr 2013 21:06:14 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33168 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934503Ab3DHBGN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 21:06:13 -0400
-Received: (qmail 6496 invoked by uid 107); 8 Apr 2013 01:08:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 07 Apr 2013 21:08:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Apr 2013 21:06:10 -0400
-Content-Disposition: inline
-In-Reply-To: <7va9pa5k9u.fsf@alter.siamese.dyndns.org>
+	id S1752767Ab3DHFUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Apr 2013 01:20:09 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:43778 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751936Ab3DHFUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Apr 2013 01:20:08 -0400
+Received: by mail-lb0-f173.google.com with SMTP id w20so5363082lbh.32
+        for <git@vger.kernel.org>; Sun, 07 Apr 2013 22:20:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:content-type;
+        bh=9ANEjGgUlxV4c3AvgGHxiMce0h78LXwgej6AqefZXh4=;
+        b=yLLoz79qR4j2zx3m7sbWUheAtrp2WM+kAJ6p4fkeSChZI+LKK8wNLs2It9cKplK4ti
+         jrxPu/MbPRnyJ7LaIK8DhMQe7pGb039XoiZ8dfA/R0a+UrhssPw6Xlyfns0biVhykit2
+         v2HxhIiB2VB+hnfq/e8obpqfEVvNthmqlNQXB2ypt+Xf6fcxJ14uZBkflyj6d2Fy6nWt
+         Nmj7cnJnXdCwG1vCt0f5zZULHwqjnvp/1ObesXXzFsLAuH9sdHlFCzXj4NT0YL346tvR
+         lqpF0ME0oknYz2/laDYgyOVoAkalAG4PNQw76vpt9UUFVd0kuELlVh7OMzRtPD4BZyrx
+         t6rw==
+X-Received: by 10.112.173.70 with SMTP id bi6mr2355195lbc.116.1365398406773;
+ Sun, 07 Apr 2013 22:20:06 -0700 (PDT)
+Received: by 10.114.177.244 with HTTP; Sun, 7 Apr 2013 22:20:06 -0700 (PDT)
+In-Reply-To: <CAC34_pT9zwZDnUjo1bTUZabD02M48=_+77-mNCA5adWTgxuYgg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220400>
 
-On Sun, Apr 07, 2013 at 10:21:33AM -0700, Junio C Hamano wrote:
+It appears your Amazon download server is too slow.  Perhaps getting
+an old used XP system and setting it up as a server will solve this
+problem.
 
-> As to the order of comparison to match the order on the number line,
-> e.g. write "0 < something" or "negative < 0" to let readers more
-> easily visualize in what relation on the number line the quantity of
-> each side of the comparison stands, here is a reference to a long
-> and amusing thread:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/3903/focus=3912
+Here's the details:
 
-I do not necessarily agree with the "always use less-than" style, but as
-a reviewer of this series, it took me an extra minute to figure out what
-was going on because two things changed. If the diff instead looked
-like:
 
-diff --git a/bundle.c b/bundle.c
-index 505e07e..a9c1335 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -57,7 +57,7 @@ static int parse_bundle_header(int fd, struct bundle_header *header,
- 		 * followed by SP and subject line.
- 		 */
- 		if (get_sha1_hex(buf.buf, sha1) ||
--		    (40 <= buf.len && !isspace(buf.buf[40])) ||
-+		    (40 < buf.len && !isspace(buf.buf[40])) ||
- 		    (!is_prereq && buf.len <= 40)) {
- 			if (report_path)
- 				error(_("unrecognized header: %s%s (%d)"),
+PLATFORM VERSION INFO
+	Windows 			: 6.1.7601.65536 (Win32NT)
+	Common Language Runtime 	: 4.0.30319.296
+	System.Deployment.dll 		: 4.0.30319.1 (RTMRel.030319-0100)
+	clr.dll 			: 4.0.30319.296 (RTMGDR.030319-2900)
+	dfdll.dll 			: 4.0.30319.1 (RTMRel.030319-0100)
 
-then it is immediately obvious that we are only impacting the case where
-buf.len is exactly 40 (and it is even more obvious if you happen to use
-the diff-highlight script, which highlights the single changed
-character).
+SOURCES
+	Deployment url			: http://github-windows.s3.amazonaws.com/GitHub.application
+						Server		: AmazonS3
+	Application url			:
+http://github-windows.s3.amazonaws.com/Application%20Files/GitHub_1_0_41_2/GitHub.exe.manifest
+						Server		: AmazonS3
 
-Just my two cents as a reader of the patch. Other than that, it looks
-correct to me. :)
+IDENTITIES
+	Deployment Identity		: GitHub.application, Version=1.0.41.2,
+Culture=neutral, PublicKeyToken=317444273a93ac29,
+processorArchitecture=x86
+	Application Identity		: GitHub.exe, Version=1.0.41.2,
+Culture=neutral, PublicKeyToken=317444273a93ac29,
+processorArchitecture=x86, type=win32
 
--Peff
+APPLICATION SUMMARY
+	* Installable application.
+	* Trust url parameter is set.
+ERROR SUMMARY
+	Below is a summary of the errors, details of these errors are listed
+later in the log.
+	* Activation of
+http://github-windows.s3.amazonaws.com/GitHub.application resulted in
+exception. Following failure messages were detected:
+		+ Downloading http://github-windows.s3.amazonaws.com/Application
+Files/GitHub_1_0_41_2/7za.exe.deploy did not succeed.
+		+ Unable to read data from the transport connection: An existing
+connection was forcibly closed by the remote host.
+		+ An existing connection was forcibly closed by the remote host
+
+COMPONENT STORE TRANSACTION FAILURE SUMMARY
+	No transaction error was detected.
+
+WARNINGS
+	There were no warnings during this operation.
+
+OPERATION PROGRESS STATUS
+	* [4/7/2013 9:17:17 PM] : Activation of
+http://github-windows.s3.amazonaws.com/GitHub.application has started.
+	* [4/7/2013 9:17:30 PM] : Processing of deployment manifest has
+successfully completed.
+	* [4/7/2013 9:17:30 PM] : Installation of the application has started.
+	* [4/7/2013 9:17:34 PM] : Processing of application manifest has
+successfully completed.
+	* [4/7/2013 9:23:57 PM] : Found compatible runtime version 4.0.30319.
+	* [4/7/2013 9:23:57 PM] : Request of trust and detection of platform
+is complete.
+
+ERROR DETAILS
+	Following errors were detected during this operation.
+	* [4/7/2013 9:51:39 PM]
+System.Deployment.Application.DeploymentDownloadException (Unknown
+subtype)
+		- Downloading http://github-windows.s3.amazonaws.com/Application
+Files/GitHub_1_0_41_2/7za.exe.deploy did not succeed.
+		- Source: System.Deployment
+		- Stack trace:
+			at System.Deployment.Application.SystemNetDownloader.DownloadSingleFile(DownloadQueueItem
+next)
+			at System.Deployment.Application.SystemNetDownloader.DownloadAllFiles()
+			at System.Deployment.Application.FileDownloader.Download(SubscriptionState
+subState)
+			at System.Deployment.Application.DownloadManager.DownloadDependencies(SubscriptionState
+subState, AssemblyManifest deployManifest, AssemblyManifest
+appManifest, Uri sourceUriBase, String targetDirectory, String group,
+IDownloadNotification notification, DownloadOptions options)
+			at System.Deployment.Application.ApplicationActivator.DownloadApplication(SubscriptionState
+subState, ActivationDescription actDesc, Int64 transactionId,
+TempDirectory& downloadTemp)
+			at System.Deployment.Application.ApplicationActivator.InstallApplication(SubscriptionState&
+subState, ActivationDescription actDesc)
+			at System.Deployment.Application.ApplicationActivator.PerformDeploymentActivation(Uri
+activationUri, Boolean isShortcut, String textualSubId, String
+deploymentProviderUrlFromExtension, BrowserSettings browserSettings,
+String& errorPageUrl)
+			at System.Deployment.Application.ApplicationActivator.ActivateDeploymentWorker(Object
+state)
+		--- Inner Exception ---
+		System.IO.IOException
+		- Unable to read data from the transport connection: An existing
+connection was forcibly closed by the remote host.
+		- Source: System
+		- Stack trace:
+			at System.Net.ConnectStream.Read(Byte[] buffer, Int32 offset, Int32 size)
+			at System.Deployment.Application.SystemNetDownloader.DownloadSingleFile(DownloadQueueItem
+next)
+		--- Inner Exception ---
+		System.Net.Sockets.SocketException
+		- An existing connection was forcibly closed by the remote host
+		- Source: System
+		- Stack trace:
+			at System.Net.Sockets.Socket.Receive(Byte[] buffer, Int32 offset,
+Int32 size, SocketFlags socketFlags)
+			at System.Net.Sockets.NetworkStream.Read(Byte[] buffer, Int32
+offset, Int32 size)
+
+COMPONENT STORE TRANSACTION DETAILS
+	No transaction information is available.
+
+
+
+-- 
+Kirk W. Fraser
+http://freetom.info/TrueChurch - Replace the fraud churches with the
+true church.
+http://congressionalbiblestudy.org - Fix America by first fixing its
+Christian foundation.
+http://freetom.info - Example of False Justice common in America
