@@ -1,94 +1,85 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [ITCH] Specify refspec without remote
-Date: Tue, 9 Apr 2013 17:14:27 +0530
-Message-ID: <CALkWK0k2a6DSUodhKjRFKGvE1Rb_QmFgpy=Pvbu2Q=nGNYuByA@mail.gmail.com>
-References: <CALkWK0nYECHZaxit9jR-tS=7fXyOP5dy6mqUz0DKmbTRU-xRNw@mail.gmail.com>
- <20130318170804.GA15924@sigill.intra.peff.net>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH 0/7] Rework git core for native submodules
+Date: Tue, 09 Apr 2013 13:51:58 +0200
+Message-ID: <516400DE.4080809@gmail.com>
+References: <CALkWK0n=vtPT7aFn9+T+bRxUpfXG+mYvV29YKC=_OAampQXJSA@mail.gmail.com> <CALkWK0mBW63P0i6OhuujmAYO99pxLsS=ffFeqw8gBcBDgUpOPg@mail.gmail.com> <5161D3C5.9060804@web.de> <CALkWK0k_vmXZr-x8=ZctouWbuVgv-1sptC0WX2aJ+yYD-T8cxA@mail.gmail.com> <20130407212342.GA19857@elie.Belkin> <CALkWK0=Q-P-fGLmkoiV3_CJ43MNmFzpfkvFjNUwxB+zOsqTxmg@mail.gmail.com> <5162763D.5030708@web.de> <CALkWK0m5iN8h0J1EkbMTJoXy6QHHzyTjRfPnhL3XMgi=NAi2eg@mail.gmail.com> <20130408081959.GD20159@elie.Belkin> <CALkWK0nz878Xh9BFSCrtBGT=g3fys3uBy7QQs9cdWaFtoS8Rsg@mail.gmail.com> <CACsJy8CAW1h4rAOK_2+EAFEL28CKeqf4vqROsLByjZaMU3D-ow@mail.gmail.com> <CALkWK0mLG78anjbcVRF7Zpj-hMmts1pshF=XhLh--MCYV66Gng@mail.gmail.com> <CACsJy8D-M3xMkO7CPmOzeMxRV0Bv6MtCjH5eCr_vguxPF2N0vg@mail.gmail.com> <CALkWK0m93ZzWVJVUxgVQGUTK8t2pTEaDAPs7vW-
+ tcgiewjOLwA@mail.gmail.com> <7v1ual12pj.fsf@alter.siamese.dyndns.org> <CALkWK0=2T5BA8+dro8U7bcp3ODsuQAj78mEPnxs=ERqf9FhSBQ@mail.gmail.com> <7va9p8yjuf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 09 13:45:17 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 09 13:52:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPWzE-0001Vo-9I
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 13:45:16 +0200
+	id 1UPX5x-0001q0-CP
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 13:52:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936023Ab3DILpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Apr 2013 07:45:10 -0400
-Received: from mail-bk0-f43.google.com ([209.85.214.43]:41648 "EHLO
-	mail-bk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762364Ab3DILpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Apr 2013 07:45:08 -0400
-Received: by mail-bk0-f43.google.com with SMTP id jm2so3629322bkc.30
-        for <git@vger.kernel.org>; Tue, 09 Apr 2013 04:45:07 -0700 (PDT)
+	id S935613Ab3DILwI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Apr 2013 07:52:08 -0400
+Received: from mail-ee0-f43.google.com ([74.125.83.43]:40861 "EHLO
+	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755740Ab3DILwH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 07:52:07 -0400
+Received: by mail-ee0-f43.google.com with SMTP id e50so2899322eek.16
+        for <git@vger.kernel.org>; Tue, 09 Apr 2013 04:52:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=PSAictbSuC0XUnJ0xBwBIXL669ShgRUl06NQ4ng8xS8=;
-        b=InCpd1VuQn4t0QXv1T5gr1Y09WWWx4PIGwt7s0b/GtLtkvZyV4TkIuvj8m+irDi5kn
-         S2j5nPbkFWl8+Icn4NgI8B5L4dE7sfPy+Mb7L9Pg0h7TuKv+/P4UZ+iOKRAyX9tOmdH5
-         9UTK9YXgwFER/bSe+lBqwgL6xzGF/KzGSuTmiTcP9EVbmtsbSdLuxl8jEwdqojvqnZKY
-         FQMGz9uHrT+ODxUTmnRfWJuxo11XAgcqqt6cFB3z+MJg+hfdXITr5plQOlZ4jq8mhw0F
-         AYLKO7TZaufinGGwhzU6QAG6UByaUxTcQ0lHI5jilOVoCeytT50ZkDDwL0iPOr8FVo0+
-         RJIQ==
-X-Received: by 10.205.141.70 with SMTP id jd6mr12650780bkc.28.1365507907579;
- Tue, 09 Apr 2013 04:45:07 -0700 (PDT)
-Received: by 10.204.37.69 with HTTP; Tue, 9 Apr 2013 04:44:27 -0700 (PDT)
-In-Reply-To: <20130318170804.GA15924@sigill.intra.peff.net>
+        h=x-received:message-id:date:from:user-agent:mime-version:newsgroups
+         :to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=in4mtJuZKNXYFPis1v08OTyXZ5lCxi/qQtdE6H+Wxis=;
+        b=AAJHs+9lt8ctaOgxHqbzsU9GPL10ezyx8F/fgXA5lGF7Rn9VsDiAbGX6tM7dfuJIIH
+         MTzBn2FIeJ+UVVr91TreaHW1xg3h05iRwyGHoEwQZif3FfwJK+Uc6BBBpWU3mb/b8mWE
+         k1+KAEZ25mFPXyWCIRg1cHRGO9XbFHn3MLTW6L8wLlnpWjekGB9xDKiuaDnfz0EJdMTo
+         DzcB+GW1vNOC7j2pnp5z3zxWusKpDce0DVmcoifshqQy8Gp6N9NESpjeYNuCpYh7VCXm
+         49bxhyazw7JsG9VFhjnhqo9gsE30FTJyeg2VxCxeYVSoP+2o1/b9QhyyN4KLrnOTJtxc
+         8ECA==
+X-Received: by 10.14.215.193 with SMTP id e41mr59355207eep.32.1365508326282;
+        Tue, 09 Apr 2013 04:52:06 -0700 (PDT)
+Received: from [192.168.1.14] (eio154.neoplus.adsl.tpnet.pl. [83.21.130.154])
+        by mx.google.com with ESMTPS id bc1sm37532564eeb.11.2013.04.09.04.52.04
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 09 Apr 2013 04:52:05 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <7va9p8yjuf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220564>
 
-Jeff King wrote:
-> So you would need some heuristics based on whether something was a valid
-> refspec, or could be a valid remote name or URL.
+Junio C Hamano wrote:
+> Ramkumar Ramachandra wrote:
 
-All refspecs conform to a very simple format:
+>> 2. If we want to make git-submodule a part of git-core (which I thin=
+k
+>>    everyone agrees with), we will need to make the information in
+>>    .gitmodules available more easily to the rest of git-core.
 
-    quux
-    +quux
-    quux:baz
-    +quux:baz
+> Care to define "more easily" which is another subjective word?  The
+> .gitmodules file uses the bog-standard configuration format that can
+> be easily read with the config.c infrastructure.  It is a separate
+> matter that git_config() API is cumbersome to use, but improving it
+> would help not just .gitmodules but also the regular non-submodule
+> users of Git.  There is a topic in the works to read data in that
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> format from core Heiko is working on.
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-All of them fail at git_connect().  The third and fourth are
-equivalent and take a little longer to fail than the first two,
-because ssh tries to resolve the hostname "quux" or "+quux".
+BTW. this is something that I was missing to implement better
+submodule support in gitweb (and thus git-instaweb) than just
+marking it as submodule in 'tree' view.
 
-Okay, so I was hoping that we could first attempt to push as usual,
-and fallback to pushing with the refspec set to argv[0] (if argc is
-1); this approach is foolproof and doesn't involve any guessing.
-Unfortunately, it's going to be very hard, as the callstack to the
-final git_connect() failure looks like:
-
-    git_connect()
-    connect_setup()
-    get_refs_via_connect()
-    transport_push()
-    push_with_options()
-    do_push()
-
-Now, it's nearly impossible to propagate the error back from
-git_connect() to do_push() and switch the refspec.  It's not a simple
-callstack either: there are callbacks being setup and called.
-
-There's one small consolation in all this: all refspecs are match
-match the !is_url() condition in transport.c:939 get_transport(), and
-no preceding conditions.  This means that there is one place to check
-if it could possibly be a ref, that's not very deep in the callstack,
-and return something to the caller appropriately.  Currently,
-get_transport() always returns a valid struct transport with no extra
-information; maybe we can change this?
-
-Duy's approach of using a special "-" is trivial to implement, but
-doesn't make me happy.  There's no reason I can't have 'git push
-master +pu foo:bar'.
-
-Thoughts?
+--=20
+Jakub Nar=C4=99bski
