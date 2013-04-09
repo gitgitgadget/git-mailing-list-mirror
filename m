@@ -1,72 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: commit-message attack for extracting sensitive data from
- rewritten Git history
-Date: Tue, 9 Apr 2013 13:01:59 -0400
-Message-ID: <20130409170159.GC21972@sigill.intra.peff.net>
-References: <CAFY1edbNPjs5JGOPRxzB+ie4w=SvR+rUeePhsEnpr0tWtZpeHg@mail.gmail.com>
- <7vehelyqrv.fsf@alter.siamese.dyndns.org>
- <20130408215457.GB11227@sigill.intra.peff.net>
- <5163AF2C.2020107@viscovery.net>
+From: Oj W <ojwlists@gmail.com>
+Subject: gitweb commitdiff page - binary files with ampersands in filename?
+Date: Tue, 9 Apr 2013 18:03:33 +0100
+Message-ID: <CAKzCUUH4m8Hn_zcE_eHB9YBjDQWPAiX17HCOVZ80f+Tx5EVdOg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Roberto Tyley <roberto.tyley@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Apr 09 19:02:11 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 09 19:03:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPbvv-0001DQ-63
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 19:02:11 +0200
+	id 1UPbxK-0003LB-O2
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 19:03:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763192Ab3DIRCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Apr 2013 13:02:06 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:36416 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760264Ab3DIRCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Apr 2013 13:02:05 -0400
-Received: (qmail 23836 invoked by uid 107); 9 Apr 2013 17:03:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 09 Apr 2013 13:03:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Apr 2013 13:01:59 -0400
-Content-Disposition: inline
-In-Reply-To: <5163AF2C.2020107@viscovery.net>
+	id S1759154Ab3DIRDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Apr 2013 13:03:34 -0400
+Received: from mail-ia0-f176.google.com ([209.85.210.176]:56425 "EHLO
+	mail-ia0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753993Ab3DIRDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 13:03:33 -0400
+Received: by mail-ia0-f176.google.com with SMTP id i1so6371497iaa.7
+        for <git@vger.kernel.org>; Tue, 09 Apr 2013 10:03:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=eJOAhKUdeQu4H0i7ENkAGvDLu765C1NWWeIeuPZqFf4=;
+        b=HMtyRgBEmDwHBob66UhYR8vL/lmBUSOdeFEXwEnleiWk6szTR12lcrlW6iqnzV5yzM
+         JfYc3Z/ABxfk4BXq+hiWXsW8QwAwprnP1jmRlan2sCFWocqE9nGdLsYWhoAZHyEiWZce
+         oTtFqLD2RBJ8v/5ypjs+Gad+vslTjHBlNOyGl+IO11eTf5/YG2Pys9hmZOmsm3JnKdSX
+         aGrx8H4iQd1WqFMuaVZbMkQxoHTg01DhwLdyfynEQJNzuFzEIyihNN/hlBTb2/2jXnyX
+         fnOjW8FPha7yk/gO6+k4VI3D045fYon0lQ7hW9C0RkDIyP4LQz4xflc89EVmjiWAgk7Y
+         rOYA==
+X-Received: by 10.50.140.5 with SMTP id rc5mr10782897igb.78.1365527013254;
+ Tue, 09 Apr 2013 10:03:33 -0700 (PDT)
+Received: by 10.64.129.168 with HTTP; Tue, 9 Apr 2013 10:03:33 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220587>
 
-On Tue, Apr 09, 2013 at 08:03:24AM +0200, Johannes Sixt wrote:
+Change a binary file whose filename contains an ampersand, then view
+the commitdiff page in gitweb.
 
-> Am 4/8/2013 23:54, schrieb Jeff King:
-> > Yeah, it would make sense for filter-branch to have a "--map-commit-ids"
-> > option or similar that does the update. At first I thought it might take
-> > two passes, but I don't think it is necessary, as long as we traverse
-> > the commits topologically (i.e., you cannot have mentioned X in a commit
-> > that is an ancestor of X, so you do not have to worry about mapping it
-> > until after it has been processed).
-> 
-> Topological traversal is not sufficient. Consider this history:
-> 
->      o--A--o--
->     /     /
->  --o--B--o
-> 
-> If A mentions B (think of cherry-pick -x), then you must ensure that the
-> branch containing B was traversed first.
+Git outputs a message like "Binary files a/b&w.dll and b/b&w.dll differ"
 
-Yeah, you're right. Multiple passes are necessary to get it
-completely right. And because each pass may change more commit id's, you
-have to recurse to pick up those changes, and keep going until you have
-a pass with no changes.
+Gitweb format_diff_from_to_header() doesn't notice anything in that
+output which needs escaping, and writes it directly to the XHTML 1.0
+Strict output.
 
-But I haven't thought that hard about it. There might be a clever
-optimization where you can prune out parts of the history (e.g., if you
-know that all changes to consider are in descendants of a commit, you do
-not have to care about rewriting the commit or its ancestors).
+Then gitweb's output is invalid XML, meaning that browsers such as
+Firefox will refuse to display the page.
 
--Peff
+(tested with v 1.7.9.5, but I can't see anything in latest
+https://github.com/git/git/blob/master/gitweb/gitweb.perl#CL2158 which
+is looking for text like "Binary files ... differ")
