@@ -1,67 +1,75 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] add: refuse to add paths beyond repository boundaries
-Date: Tue, 09 Apr 2013 20:32:38 +0200
-Message-ID: <51645EC6.407@gmail.com>
-References: <CALkWK0m_82ThYKxcr=YHGBnOaHr9yBpYFHxx2KrnQkWD_zjp1A@mail.gmail.com> <1365499297-8667-1-git-send-email-artagnon@gmail.com> <1365499297-8667-3-git-send-email-artagnon@gmail.com> <7v4nfftyu3.fsf@alter.siamese.dyndns.org> <7vvc7vsj4p.fsf@alter.siamese.dyndns.org>
+From: "Constantine A. Murenin" <mureninc@gmail.com>
+Subject: Re: git-am doesn't apply the rest of the email after a partial patch fail?
+Date: Tue, 9 Apr 2013 11:34:06 -0700
+Message-ID: <CAPKkNb6tbGtcpiYGpj6mSPnp_-aXO=HTvAjOEKJ1f-cgPOHBDA@mail.gmail.com>
+References: <CAPKkNb43bWupbOaAntF8VJQ8ZJjt8SG-mZa3GohxZEAZQm-evQ@mail.gmail.com>
+	<7vppy4ykse.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 09 20:32:49 2013
+X-From: git-owner@vger.kernel.org Tue Apr 09 20:34:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPdLa-0002Ij-RX
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 20:32:47 +0200
+	id 1UPdN0-0004AC-4E
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 20:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935019Ab3DIScm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Apr 2013 14:32:42 -0400
-Received: from mail-ea0-f176.google.com ([209.85.215.176]:43064 "EHLO
-	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934538Ab3DIScm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Apr 2013 14:32:42 -0400
-Received: by mail-ea0-f176.google.com with SMTP id h10so3073782eaj.21
-        for <git@vger.kernel.org>; Tue, 09 Apr 2013 11:32:40 -0700 (PDT)
+	id S934736Ab3DISeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Apr 2013 14:34:09 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:50682 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761628Ab3DISeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 14:34:07 -0400
+Received: by mail-lb0-f169.google.com with SMTP id p11so7165287lbi.28
+        for <git@vger.kernel.org>; Tue, 09 Apr 2013 11:34:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=soVADUAFgVTfuStdiFfO+6zspGrUU03RG8Y+Up2hb88=;
-        b=LvPPHvjGcmnwskHUKwL0Fg4yEa+jITDFp1xeriXZik1rnWlEADeTqohLHWOKEZ7uk/
-         jJT197asUzJ/Ih1MEvnfK0yFcSN9Jr4nCrnze9NcGzqlykf/ZUhurylgoBGdAUlRuZ3T
-         m1twGMJjB882F41+pCp+tbAL/kavx0oifnfIsCycmQSZSxxURBpeT+8rwP3LFU3v/Est
-         1mcnOxCyFn7kStddRFOKYokvfxFJgfg9d7nts08EIEvhXoE5zqCZhrADJa7qHfO/XQHk
-         VA6eA5DTaRkF9q/IQbBApNAQYiUNJOcB6t+tAlQ2nHQQ10w2OOqYlq/sJIUfDmLuiE2c
-         iSTg==
-X-Received: by 10.14.107.69 with SMTP id n45mr40736227eeg.23.1365532360791;
-        Tue, 09 Apr 2013 11:32:40 -0700 (PDT)
-Received: from [192.168.1.14] (dce9.neoplus.adsl.tpnet.pl. [83.23.56.9])
-        by mx.google.com with ESMTPS id i53sm10225489eeu.5.2013.04.09.11.32.39
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 09 Apr 2013 11:32:40 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
-In-Reply-To: <7vvc7vsj4p.fsf@alter.siamese.dyndns.org>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=RIiLQWTENkaRC/TySzEeB8CbinS4i30U1yrPkcFuJK8=;
+        b=Wm9joTFA+D6kDD4vla9x/Dt002HHbhzc8ZZ5ADv/fHgS5mw+TSrDUgSpaew3XmtKFd
+         LQEPACi1cxo2rt60mGNAnwfpVkn3Pcqip97M6+LB/rZJ8aja/MU07nVYWQgLhHskehcX
+         L+0b6cDmPJCPUKUsV2GKnmFu3xvrsV+MjonhnEFgSSy5SJld1omT8tLbbtlmwMbVcG/f
+         5ejXp3HnTurPXklMxOhl6iJ0rWm1hP/+v7tu2lfu2q42FNxkVqBovmu/HwfP51/l0m5Z
+         cE/maI11qEQYPMrxIG4+w1LamyxI/onQGJcWlpF6tEFohnlPXKjkeKT8G2y2KgB448TQ
+         ghjg==
+X-Received: by 10.112.82.164 with SMTP id j4mr14451722lby.112.1365532446245;
+ Tue, 09 Apr 2013 11:34:06 -0700 (PDT)
+Received: by 10.114.92.105 with HTTP; Tue, 9 Apr 2013 11:34:06 -0700 (PDT)
+In-Reply-To: <7vppy4ykse.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220611>
 
-W dniu 09.04.2013 19:34, Junio C Hamano pisze:
+On 8 April 2013 10:49, Junio C Hamano <gitster@pobox.com> wrote:
+> "Constantine A. Murenin" <mureninc@gmail.com> writes:
+>
+>> However, what I've faced with, is that when a conflict happens, and I
+>> resolve, and do `git add`, and `git am --resolved`, then the rest of
+>> the `format-patch` email where the conflict has occurred is discarded,
+>
+> That is unusual.  Are you using any other options when running "git
+> am"?  You said `git add`, but what did you add?
+>
+> By default, its patch application is all-or-none, so when it stops,
+> saying "I cannot apply this patch---please help me with it", it
+> expects that all the changes the email wanted to give you has been
+> applied by you to your working tree, perhaps using GNU patch or "git
+> apply --reject", followed by manual editing, and to your index using
+> "git add", when you run "git am --resolved".  Not just the file (or
+> hunk) it detected issues with.
 
-> -	if (has_symlink_leading_path(path, len))
-> -		return error("'%s' is beyond a symbolic link", path);
-> +	if (path_outside_our_project(path, len))
-> +		return error("'%s' is outside our working tree", path);
-> =20
+Well, I now know this, but it wasn't clear from the documentation that
+that was the behaviour.
 
-Don't we lose important information here?  Or we shouldn't care?
+Also, I've now noticed that "--reject" doesn't automatically do `git
+add` of any new files that were added, so, once you resolve the
+conflicts, and add those files that used to result in a conflict,
+you're still missing out.
 
---=20
-Jakub Nar=C4=99bski
+C.
