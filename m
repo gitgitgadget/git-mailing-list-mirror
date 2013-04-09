@@ -1,82 +1,69 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: tar on Mac does not like empty tar from git archive
-Date: Tue, 09 Apr 2013 21:37:54 +0200
-Message-ID: <51646E12.2030506@lsrfire.ath.cx>
-References: <ABD0C67A-0B2B-4E32-AF49-93FBABC032A7@bjhargrave.com> <20130408210536.GB9649@sigill.intra.peff.net>
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: Locating merge that dropped a change
+Date: Tue, 09 Apr 2013 21:00:41 +0300
+Message-ID: <51645749.8090402@bracey.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: BJ Hargrave <bj@bjhargrave.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 09 21:38:12 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 09 21:55:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPeMs-0007oa-2j
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 21:38:10 +0200
+	id 1UPedO-0006rL-FW
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 21:55:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935628Ab3DITiE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Apr 2013 15:38:04 -0400
-Received: from india601.server4you.de ([85.25.151.105]:47435 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760469Ab3DITiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Apr 2013 15:38:03 -0400
-Received: from [192.168.2.105] (p4FFD9211.dip.t-dialin.net [79.253.146.17])
-	by india601.server4you.de (Postfix) with ESMTPSA id 72F981E4;
-	Tue,  9 Apr 2013 21:38:00 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <20130408210536.GB9649@sigill.intra.peff.net>
+	id S936136Ab3DITzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Apr 2013 15:55:08 -0400
+Received: from 14.mo3.mail-out.ovh.net ([188.165.43.98]:56975 "EHLO
+	mo3.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S936043Ab3DITzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 15:55:06 -0400
+X-Greylist: delayed 5399 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Apr 2013 15:55:06 EDT
+Received: from mail91.ha.ovh.net (b7.ovh.net [213.186.33.57])
+	by mo3.mail-out.ovh.net (Postfix) with SMTP id 5F356FF87C8
+	for <git@vger.kernel.org>; Tue,  9 Apr 2013 20:17:54 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 9 Apr 2013 20:00:43 +0200
+Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
+  by ns0.ovh.net with SMTP; 9 Apr 2013 20:00:42 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+X-Ovh-Mailout: 178.32.228.3 (mo3.mail-out.ovh.net)
+X-Ovh-Tracer-Id: 6289839831277605086
+X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: 0
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrtdefucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+X-Spam-Check: DONE|U 0.500799/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrtdefucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220624>
 
-Am 08.04.2013 23:05, schrieb Jeff King:
-> On Mon, Apr 08, 2013 at 02:36:05PM -0400, BJ Hargrave wrote:
->=20
->> Git 1.8.2.1 includes commit bd54cf17 - archive: handle commits with =
-an
->> empty tree
->>
->> Test 2 of t5004-archive-corner-cases, "tar archive of empty tree is
->> empty", fails on Mac OS X 10.8.3 (with XCode 4.6.1) since the tar
->> command exits with return code 1 on the generated  tar file.
->=20
-> Hmm. So I guess the question is: do we need to work around this in th=
-e
-> test for platforms that do not like empty tar files, or are the empty
-> tarfiles we are making wrong somehow?
->=20
->> tar --version
->> bsdtar 2.8.3 - libarchive 2.8.3
->>
->> It appears that bsdtar does not like the empty tar files created by
->> git archive. An empty tar file created by bsdtar is accepted.
->>
->> tar cT /dev/null | tar t; echo $?
->> 0
->=20
-> That makes me think the latter ("we are wrong"). I don't have my OS X
-> box handy; can you provide a sample empty tarfile that it creates?
+This morning, I was struggling (not for the first time) to produce a Git 
+command that would identify a merge commit that dropped a change. I 
+could see where it was added, but couldn't automate finding out why it 
+wasn't any longer in HEAD.
 
-libarchive (on which bsdtar is based) doesn't like extended pax headers
-at the end of archives.  Here's the relevant source file:
+All the permutations of "--full-history", "-m", "-S", "-G" on "git log" 
+I could think of did not get me anywhere. As long as I had 
+"--full-history", they could find the original commit that had added the 
+change, but not the merge commit that had dropped it by taking the other 
+parent.
 
-https://github.com/libarchive/libarchive/blob/master/libarchive/archive=
-_read_support_format_tar.c
+So, how to automatically find a merge that ignored a known change?
 
-tar_read_header() calls header_pax_global() to handle a global pax
-header, which in turn calls tar_read_header() again to fetch the next
-header.  If it reaches the end of the archive then err is set to
-ARCHIVE_EOF and "Damaged tar archive" is reported at the end of this
-function.
+And then for visualisation purposes, how do you persuade gitk's diff 
+display to actually show that that merge commit removed the change from 
+one of its parents? Again, "-m" didn't seem to work.
 
-I tried come up with a small patch that convinces it to ignore such a
-condition, but it's apparently not as easy as it looks -- I just made
-bsdtar report even more obscure errors.  Will look deeper into it
-later this week.
+Help appreciated!
 
-Ren=C3=A9
+Kevin
