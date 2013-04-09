@@ -1,69 +1,127 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Locating merge that dropped a change
-Date: Tue, 09 Apr 2013 21:00:41 +0300
-Message-ID: <51645749.8090402@bracey.fi>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH 2/4] gitweb: Make feed title valid utf8
+Date: Tue, 09 Apr 2013 21:58:41 +0200
+Message-ID: <516472F1.4060903@gmail.com>
+References: <m2y5csbx91.fsf@blackdown.de> <51642F67.5010501@gmail.com> <m2r4ija9gh.fsf@zahir.fritz.box> <51645D99.6000106@gmail.com> <m2ip3va4ro.fsf@zahir.fritz.box>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 09 21:55:15 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?SsO8cmdlbiBLcmVpbGVkZXI=?= <jk@blackdown.de>
+X-From: git-owner@vger.kernel.org Tue Apr 09 21:58:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPedO-0006rL-FW
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 21:55:14 +0200
+	id 1UPegt-0003dj-Fr
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 21:58:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936136Ab3DITzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Apr 2013 15:55:08 -0400
-Received: from 14.mo3.mail-out.ovh.net ([188.165.43.98]:56975 "EHLO
-	mo3.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S936043Ab3DITzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Apr 2013 15:55:06 -0400
-X-Greylist: delayed 5399 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Apr 2013 15:55:06 EDT
-Received: from mail91.ha.ovh.net (b7.ovh.net [213.186.33.57])
-	by mo3.mail-out.ovh.net (Postfix) with SMTP id 5F356FF87C8
-	for <git@vger.kernel.org>; Tue,  9 Apr 2013 20:17:54 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 9 Apr 2013 20:00:43 +0200
-Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 9 Apr 2013 20:00:42 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-X-Ovh-Mailout: 178.32.228.3 (mo3.mail-out.ovh.net)
-X-Ovh-Tracer-Id: 6289839831277605086
-X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 0
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrtdefucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
-X-Spam-Check: DONE|U 0.500799/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedrtdefucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+	id S936083Ab3DIT6q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Apr 2013 15:58:46 -0400
+Received: from mail-ee0-f53.google.com ([74.125.83.53]:53037 "EHLO
+	mail-ee0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936043Ab3DIT6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 15:58:46 -0400
+Received: by mail-ee0-f53.google.com with SMTP id c13so3003765eek.26
+        for <git@vger.kernel.org>; Tue, 09 Apr 2013 12:58:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=H7jrMlH5C+FE+AKljtmjnaH82Va3bONtD9P8evHrJXE=;
+        b=GnW8290aVmug7lQACPxvAGI1vZ4b7bB9+5mQMB3EIgk7bfHvDTxxO4PuzQ1WLvPBxY
+         DdO0c8SOQkZQyRmIyFRiG4lwzqB1PqmY+w8wq54rwZdiHe8/Q5WDZr/R9DFL2X3Vl0gU
+         g5F0UGhoT8WPPxxEpbhgaKBIIjgeMAYwB1mLEtFyUeWQvrmkx1hwehooZa/SxqMHFTaT
+         DdBvlRxYbgkhyr2an2vjBl0TXJX3RUZFs/WmN1Vw0B9qjQXuOt3YYMWH3X6aIBccrCuQ
+         LmFz7eKBR6/p7uZJ9/ffrgLUtVHTHu/zyxd7hxxjuL9fhgoE/NUTnUhCO1QA0kqOzmyK
+         6B4w==
+X-Received: by 10.15.32.67 with SMTP id z43mr53945927eeu.24.1365537524565;
+        Tue, 09 Apr 2013 12:58:44 -0700 (PDT)
+Received: from [192.168.1.14] (dce9.neoplus.adsl.tpnet.pl. [83.23.56.9])
+        by mx.google.com with ESMTPS id cb50sm18160801eeb.14.2013.04.09.12.58.42
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 09 Apr 2013 12:58:43 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <m2ip3va4ro.fsf@zahir.fritz.box>
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220625>
 
-This morning, I was struggling (not for the first time) to produce a Git 
-command that would identify a merge commit that dropped a change. I 
-could see where it was added, but couldn't automate finding out why it 
-wasn't any longer in HEAD.
+W dniu 09.04.2013 21:22, J=C3=BCrgen Kreileder napisa=C5=82:
+> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:=20
+>> W dniu 09.04.2013 19:40, J=C3=BCrgen Kreileder napisa=C5=82:
+>>> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+>>>> J=C3=BCrgen Kreileder wrote:
+>>>>
+>>>>> Properly encode site and project names for RSS and Atom feeds.
 
-All the permutations of "--full-history", "-m", "-S", "-G" on "git log" 
-I could think of did not get me anywhere. As long as I had 
-"--full-history", they could find the original commit that had added the 
-change, but not the merge commit that had dropped it by taking the other 
-parent.
+>>> Good point.  But it doesn't fix the string in question:
+>>> It looks like to_utf8("$a $b") !=3D (to_utf8($a) . " " . to_utf8($b=
+)).
+>>
+>> Strange.  I wonder if the bug is in our to_utf8() implementation,
+>> or in Encode, or in Perl... and whether this bug can be triggered
+>> anywhere else in gitweb.
+>=20
+> I don't think it's a bug, more like a consequence of concatenating ut=
+f8
+> and non-utf8 strings:
+>=20
+>     my $a =3D "=C3=BC";
+>     my $b =3D "=C3=BC";
+>     my $c =3D "$a - $b";
+>     print "$c -> ". to_utf8($c) . ": " . (utf8::is_utf8($c) ? "utf8" =
+: "not utf8") . "\n"; # GOOD
+>     $b =3D to_utf8($b);
+>     $c =3D "$a - $b";
+>     print "$c -> ". to_utf8($c) . ": " . (utf8::is_utf8($c) ? "utf8" =
+: "not utf8") . "\n"; # GOOD
+>=20
+> yields (hopefully the broken encoding shows up correctly here):
+>=20
+>     =C3=83=C2=BC - =C3=83=C2=BC -> =C3=BC - =C3=BC: not utf8
+>     =C3=83=C2=BC - =C3=BC -> =C3=83=C2=BC - =C3=BC: utf8
 
-So, how to automatically find a merge that ignored a known change?
+Ah, so it looks like it is misfeature of the way Perl handles Unicode;
+concatenating adds 'UTF8' flag if either of concatenates strings has
+it to the result.
 
-And then for visualisation purposes, how do you persuade gitk's diff 
-display to actually show that that merge commit removed the change from 
-one of its parents? Again, "-m" didn't seem to work.
+[Which I have checked using Devel::Peek with
+ perl -MDevel::Peek -E '
+  my $a =3D "=C5=BC"; my $b =3D "\x{17c}";
+  Dump $a; Dump $b; Dump "$b - $a"'
+]
 
-Help appreciated!
+> In gitweb we have the bad case:=20
+>=20
+>    my $title =3D "$site_name - $project/$action";
+>=20
+> $project and $action are apparently utf8 already but $site_name isn't=
+=2E
 
-Kevin
+$project and $action are taken from URL, and we have to run decode_utf8
+(at least for query params) for gitweb to work correctly.
+
+$site_name is usually taken from config file, and gitweb doesn't have
+"use utf8" pragma.
+
+> The resulting string is marked as utf8 - although the encoding of
+> $site_name was never fixed.  The to_utf8() in esc_html() returns the =
+string
+> without fixing anything because of that.
+
+O.K.
+
+_Maybe_ it would be worth adding explanation of this to commit message
+(and I see I should audit gitweb for similar problems elsewhere), but a=
+nyway
+
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+
+--=20
+Jakub Nar=C4=99bski
