@@ -1,39 +1,39 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=0.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-Received: (qmail 3449 invoked by uid 107); 7 Apr 2013 16:47:07 -0000
+Received: (qmail 23371 invoked by uid 107); 9 Apr 2013 15:47:37 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.84) with ESMTP; Sun, 07 Apr 2013 12:47:06 -0400
+    by peff.net (qpsmtpd/0.84) with ESMTP; Tue, 09 Apr 2013 11:47:35 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934082Ab3DGQpI (ORCPT <rfc822;peff@peff.net>);
-	Sun, 7 Apr 2013 12:45:08 -0400
-Received: from plane.gmane.org ([80.91.229.3]:34825 "EHLO plane.gmane.org"
+	id S1762371Ab3DIPpi (ORCPT <rfc822;peff@peff.net>);
+	Tue, 9 Apr 2013 11:45:38 -0400
+Received: from plane.gmane.org ([80.91.229.3]:38723 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934081Ab3DGQpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Apr 2013 12:45:06 -0400
+	id S1760614Ab3DIPph (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 11:45:37 -0400
 Received: from list by plane.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UOsiH-0004nl-1h
-	for git@vger.kernel.org; Sun, 07 Apr 2013 18:45:05 +0200
+	id 1UPajo-0005U2-KW
+	for git@vger.kernel.org; Tue, 09 Apr 2013 17:45:36 +0200
 Received: from ip68-227-87-145.sb.sd.cox.net ([68.227.87.145])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 07 Apr 2013 18:45:05 +0200
+        for <git@vger.kernel.org>; Tue, 09 Apr 2013 17:45:36 +0200
 Received: from richard_hubbe11 by ip68-227-87-145.sb.sd.cox.net with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 07 Apr 2013 18:45:05 +0200
+        for <git@vger.kernel.org>; Tue, 09 Apr 2013 17:45:36 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 Mail-Followup-To: git@vger.kernel.org
 To:	git@vger.kernel.org
 From:	rh <richard_hubbe11@lavabit.com>
 Subject: Re: segfault in git-remote-http
-Date:	Sun, 7 Apr 2013 09:42:34 -0700
+Date:	Tue, 9 Apr 2013 08:47:18 -0700
 Organization: " "
-Message-ID: <20130407094234.a5b85a2af838c8d7eabbad49@lavabit.com>
+Message-ID: <20130409084718.587e99aa7a935296867a84a1@lavabit.com>
 References: <20130407093812.cae0e19123f7b6d2061800aa@lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -57,9 +57,7 @@ Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
-
-
-git version 1.7.12.1
+X-Status: A
 
 On Sun, 7 Apr 2013 09:38:12 -0700
 rh <richard_hubbe11@lavabit.com> wrote:
@@ -84,4 +82,16 @@ rh <richard_hubbe11@lavabit.com> wrote:
 > Two things I thought might be coming into play here, network
 > pressure and memory pressure. Is this occurence reasonably
 > possible or is something else afoot?
+> 
+
+The symptoms that this patch addresses look similar:
+
+http://article.gmane.org/gmane.mail.postfix.user/217790
+
+Quote from that thread:
+"This behavior is actually documented (SSL_set_fd() destroys
+a BIO already on the SSL handle, and creates a new BIO)."
+
+Maybe someone used to looking at git-remote-http code can
+say anything about this.
 
