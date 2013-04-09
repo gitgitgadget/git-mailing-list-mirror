@@ -1,235 +1,201 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/2] add: refuse to add paths beyond repository boundaries
-Date: Tue,  9 Apr 2013 14:51:37 +0530
-Message-ID: <1365499297-8667-3-git-send-email-artagnon@gmail.com>
-References: <CALkWK0m_82ThYKxcr=YHGBnOaHr9yBpYFHxx2KrnQkWD_zjp1A@mail.gmail.com>
- <1365499297-8667-1-git-send-email-artagnon@gmail.com>
-Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 09 11:20:49 2013
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH 1/4] gitweb: Fix utf8 encoding for blob_plain, blobdiff_plain,
+ commitdiff_plain, and patch
+Date: Tue, 09 Apr 2013 13:31:57 +0200
+Message-ID: <5163FC2D.9050408@gmail.com>
+References: <m2zjx8bxaj.fsf@blackdown.de> <7vd2u4vg4o.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?SsO8cmdlbiBLcmVpbGVkZXI=?= <jk@blackdown.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 09 13:32:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPUjO-0003jf-PL
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 11:20:47 +0200
+	id 1UPWmW-0001aK-SY
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 13:32:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965194Ab3DIJU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Apr 2013 05:20:26 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:65159 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965174Ab3DIJUW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Apr 2013 05:20:22 -0400
-Received: by mail-pa0-f41.google.com with SMTP id kx1so3777999pab.28
-        for <git@vger.kernel.org>; Tue, 09 Apr 2013 02:20:21 -0700 (PDT)
+	id S935265Ab3DILcE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Apr 2013 07:32:04 -0400
+Received: from mail-ea0-f171.google.com ([209.85.215.171]:39662 "EHLO
+	mail-ea0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935125Ab3DILcC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 07:32:02 -0400
+Received: by mail-ea0-f171.google.com with SMTP id b15so2736405eae.30
+        for <git@vger.kernel.org>; Tue, 09 Apr 2013 04:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=RH8BazztnmBoNojjv+Nyd8Slz6QmoXyFylNW1DNCvf0=;
-        b=dHz++xvfu7QILcxSM+F127XCJ9srum7ppxRDgrptk2Gj02J5mgwU6GzRGeF0MWpHuK
-         pwvrN709whhXY+QO94jMfnb4+DW45wLqE4Vavg+l86LQD21tFSofBkYxnh9PT543cBhi
-         EQjBJZBRz7j4T0hhFFlizoe/TTrhh1lNBYlXFPzTxgRGsXva1bbrdg4rLjHAcKbrDeJM
-         mjzIEBIzZYMjkDmLPeKbhxbWwUBnztRhANgMCPpqFLSlaqIAsFFOqxZ+hPZOxffX+QyT
-         3sqaQI6eStz78rueFwezmuccRUrksSOErF2Dg5YUENVAi9H5zl4OvjoNclc+twOZ5uDH
-         f1uA==
-X-Received: by 10.66.25.206 with SMTP id e14mr9392381pag.13.1365499221569;
-        Tue, 09 Apr 2013 02:20:21 -0700 (PDT)
-Received: from luneth.maa.corp.collab.net ([182.71.239.158])
-        by mx.google.com with ESMTPS id mm9sm1484714pbc.43.2013.04.09.02.20.19
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 09 Apr 2013 02:20:20 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.347.gdd82260.dirty
-In-Reply-To: <1365499297-8667-1-git-send-email-artagnon@gmail.com>
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=xo2+U34H2NtDcpc1+xTxwpfnolQW+Ekq/MGD1iZSUd4=;
+        b=ReocENgCtEHlpIRTAfDy31zyP7PfdSyDIwX5Egs2CAGP6C1Y5OY+KGTkpIt3Ew0fb6
+         1Gq26+Jz4YObxAR+qI04BhyalDvSxYWCLEQ4dFgyvAJHaV+9gG0tzCZ/1PRWD8cZZptN
+         aJw9jkinT478uPUbB1+uSCiDgyZXCNe39msbB8M28UwvI6S54h0DCgyP/4HC4WPYpbGU
+         CbYWhznKcGwPoFuoR8yR2qNHymBbj1VB1BTTRgDmLENs275JEZbI0XoZ4NkrnAJtVHQ/
+         MHEelFT4yu94f64ty/EI87dm1lHXWK/eUCIvD2AjI5x2QD34SM04pz7ZldvLtbEAPbu1
+         crgw==
+X-Received: by 10.14.4.69 with SMTP id 45mr59567853eei.0.1365507120646;
+        Tue, 09 Apr 2013 04:32:00 -0700 (PDT)
+Received: from [192.168.1.14] (eio154.neoplus.adsl.tpnet.pl. [83.21.130.154])
+        by mx.google.com with ESMTPS id i53sm8164443eeu.5.2013.04.09.04.31.58
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 09 Apr 2013 04:31:59 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
+In-Reply-To: <7vd2u4vg4o.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220561>
 
-Currently, git add has the logic for refusing to add gitlinks using
-treat_path(), which in turn calls check_path_for_gitlink().  However,
-this only checks for an in-index submodule (or gitlink cache_entry).
-A path inside a git repository in the worktree still adds fine, and
-this is a bug.  The logic for denying it is very similar to denying
-adding paths beyond symbolic links: die_if_path_beyond_symlink().
-Follow its example and write a die_if_path_beyond_gitrepo() to fix
-this bug.
+On 08.04.2013, Junio C Hamano wrote:
+> jk@blackdown.de (J=C3=BCrgen Kreileder) writes:
+>=20
+>> Fixes the encoding for several _plain actions and for text/* and */*=
++xml blobs.=20
+>>
+>> Signed-off-by: J=C3=BCrgen Kreileder <jk@blackdown.de>
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/add.c  |  5 +++--
- cache.h        |  2 ++
- pathspec.c     | 12 ++++++++++++
- pathspec.h     |  1 +
- symlinks.c     | 43 +++++++++++++++++++++++++++++++++++++------
- t/t3700-add.sh |  2 +-
- 6 files changed, 56 insertions(+), 9 deletions(-)
+I see that this patch does (or tries to do) two _independent_ things,
+and should be split into at least two separate commits:
 
-diff --git a/builtin/add.c b/builtin/add.c
-index ab1c9e8..1538129 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -155,8 +155,8 @@ static void refresh(int verbose, const char **pathspec)
- 
- /*
-  * Normalizes argv relative to prefix, via get_pathspec(), and then
-- * runs die_if_path_beyond_symlink() on each path in the normalized
-- * list.
-+ * runs die_if_path_beyond_symlink() and die_if_path_beyond_repository()
-+ * on each path in the normalized list.
-  */
- static const char **validate_pathspec(const char **argv, const char *prefix)
- {
-@@ -166,6 +166,7 @@ static const char **validate_pathspec(const char **argv, const char *prefix)
- 		const char **p;
- 		for (p = pathspec; *p; p++) {
- 			die_if_path_beyond_symlink(*p, prefix);
-+			die_if_path_beyond_gitrepo(*p, prefix);
- 		}
- 	}
- 
-diff --git a/cache.h b/cache.h
-index e1e8ce8..987d7f3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -962,6 +962,8 @@ struct cache_def {
- 
- extern int has_symlink_leading_path(const char *name, int len);
- extern int threaded_has_symlink_leading_path(struct cache_def *, const char *, int);
-+extern int has_gitrepo_leading_path(const char *name, int len);
-+extern int threaded_has_gitrepo_leading_path(struct cache_def *, const char *, int);
- extern int check_leading_path(const char *name, int len);
- extern int has_dirs_only_path(const char *name, int len, int prefix_len);
- extern void schedule_dir_for_removal(const char *name, int len);
-diff --git a/pathspec.c b/pathspec.c
-index 284f397..142631d 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -99,3 +99,15 @@ void die_if_path_beyond_symlink(const char *path, const char *prefix)
- 		die(_("'%s' is beyond a symbolic link"), path + len);
- 	}
- }
-+
-+/*
-+ * Dies if the given path refers to a file inside a directory with a
-+ * git repository in it.
-+ */
-+void die_if_path_beyond_gitrepo(const char *path, const char *prefix)
-+{
-+	if (has_gitrepo_leading_path(path, strlen(path))) {
-+		int len = prefix ? strlen(prefix) : 0;
-+		die(_("'%s' is beyond a git repository"), path + len);
-+	}
-+}
-diff --git a/pathspec.h b/pathspec.h
-index db0184a..c201c7b 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -5,5 +5,6 @@ extern char *find_pathspecs_matching_against_index(const char **pathspec);
- extern void add_pathspec_matches_against_index(const char **pathspec, char *seen, int specs);
- extern const char *check_path_for_gitlink(const char *path);
- extern void die_if_path_beyond_symlink(const char *path, const char *prefix);
-+extern void die_if_path_beyond_gitrepo(const char *path, const char *prefix);
- 
- #endif /* PATHSPEC_H */
-diff --git a/symlinks.c b/symlinks.c
-index c2b41a8..e551dae 100644
---- a/symlinks.c
-+++ b/symlinks.c
-@@ -54,6 +54,7 @@ static inline void reset_lstat_cache(struct cache_def *cache)
- #define FL_LSTATERR (1 << 3)
- #define FL_ERR      (1 << 4)
- #define FL_FULLPATH (1 << 5)
-+#define FL_GITREPO  (1 << 6)
- 
- /*
-  * Check if name 'name' of length 'len' has a symlink leading
-@@ -142,8 +143,22 @@ static int lstat_cache_matchlen(struct cache_def *cache,
- 			if (errno == ENOENT)
- 				*ret_flags |= FL_NOENT;
- 		} else if (S_ISDIR(st.st_mode)) {
--			last_slash_dir = last_slash;
--			continue;
-+			/* Check to see if the directory contains a
-+			   git repository */
-+			struct stat st;
-+			struct strbuf dotgitentry = STRBUF_INIT;
-+			strbuf_addf(&dotgitentry, "%s/.git", cache->path);
-+			if (lstat(dotgitentry.buf, &st) < 0) {
-+				if (errno == ENOENT) {
-+					strbuf_release(&dotgitentry);
-+					last_slash_dir = last_slash;
-+					continue;
-+				}
-+				*ret_flags = FL_LSTATERR;
-+			}
-+			else
-+				*ret_flags = FL_GITREPO;
-+			strbuf_release(&dotgitentry);
- 		} else if (S_ISLNK(st.st_mode)) {
- 			*ret_flags = FL_SYMLINK;
- 		} else {
-@@ -153,11 +168,11 @@ static int lstat_cache_matchlen(struct cache_def *cache,
- 	}
- 
- 	/*
--	 * At the end update the cache.  Note that max 3 different
--	 * path types, FL_NOENT, FL_SYMLINK and FL_DIR, can be cached
--	 * for the moment!
-+	 * At the end update the cache.  Note that max 4 different
-+	 * path types: FL_NOENT, FL_SYMLINK, FL_GITREPO, and
-+	 * FL_DIR.
- 	 */
--	save_flags = *ret_flags & track_flags & (FL_NOENT|FL_SYMLINK);
-+	save_flags = *ret_flags & track_flags & (FL_NOENT|FL_SYMLINK|FL_GITREPO);
- 	if (save_flags && last_slash > 0 && last_slash <= PATH_MAX) {
- 		cache->path[last_slash] = '\0';
- 		cache->len = last_slash;
-@@ -204,6 +219,14 @@ int threaded_has_symlink_leading_path(struct cache_def *cache, const char *name,
- }
- 
- /*
-+ * Return non-zero if path 'name' has a leading gitrepo component
-+ */
-+int threaded_has_gitrepo_leading_path(struct cache_def *cache, const char *name, int len)
-+{
-+	return lstat_cache(cache, name, len, FL_GITREPO|FL_DIR, USE_ONLY_LSTAT) & FL_GITREPO;
-+}
-+
-+/*
-  * Return non-zero if path 'name' has a leading symlink component
-  */
- int has_symlink_leading_path(const char *name, int len)
-@@ -212,6 +235,14 @@ int has_symlink_leading_path(const char *name, int len)
- }
- 
- /*
-+ * Return non-zero if path 'name' has a leading gitrepo component
-+ */
-+int has_gitrepo_leading_path(const char *name, int len)
-+{
-+	return threaded_has_gitrepo_leading_path(&default_cache, name, len);
-+}
-+
-+/*
-  * Return zero if path 'name' has a leading symlink component or
-  * if some leading path component does not exists.
-  *
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 1ad2331..4714734 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -327,7 +327,7 @@ test_expect_success 'git add should not go past gitlink boundaries' '
- 	test_must_fail git add submodule_dir/foo
- '
- 
--test_expect_failure 'git add should not go past git repository boundaries' '
-+test_expect_success 'git add should not go past git repository boundaries' '
- 	rm -rf submodule_dir &&
- 	mkdir submodule_dir &&
- 	(
--- 
-1.8.2.1.347.gdd82260.dirty
+>> ---
+>=20
+> Thanks, will queue but not hold until I hear something from Jakub.
+>=20
+>>  gitweb/gitweb.perl |    8 +++++++-
+>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 1309196..9cfe5b5 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -3823,7 +3823,7 @@ sub blob_contenttype {
+>>  	my ($fd, $file_name, $type) =3D @_;
+>> =20
+>>  	$type ||=3D blob_mimetype($fd, $file_name);
+>> -	if ($type eq 'text/plain' && defined $default_text_plain_charset) =
+{
+>> +	if (($type =3D~ m!^text/\w[-\w]*$! || $type =3D~ m!^\w[-\w]*/\w[-\=
+w]*\+xml$!) && defined $default_text_plain_charset) {
+>>  		$type .=3D "; charset=3D$default_text_plain_charset";
+>>  	}
+
+=46irst, it extends adding "; charset=3D$default_text_plain_charset" to
+other mimetypes for 'blob_plain' view to all 'text/*' and '*/*+xml'
+mimetypes (without changing name of variable... though this is more
+complicated as it is configuration variable and we would want to
+preserve backward compatibility, but at least a comment would be,
+I think, needed).
+=20
+Originally it applied only to 'text/plain' files, which can be
+displayed inline by web browser, and which need charset in
+'Content-Type:' HTTP header to be displayed correctly, as they
+do not include such information inside the file.
+
+'text/html' and 'application/xhtml+xml' can include such information
+inside them (meta http-equiv for 'text/html' and <?xml ...> for
+'application/xhtml+xml').  I don't know what browser does when there
+is conflicting information about charset, i.e. which one wins, but
+it is certainly something to consider.
+
+It might be a good change; I don't know what web browser do when
+serving 'text/css', 'text/javascript', 'text/xml' to client to
+view without media type known.
+
+
+BTW I have noticed that we do $prevent_xss dance outside
+blob_contenttype(), in it's only caller i.e. git_blob_plain()...
+which for example means that 'text/html' converted to 'text/plain'
+don't get '; charset=3D...' added.  I guess that it *might* be
+what prompted this part of change... but if it is so, it needs
+to be fixed at source, e.g. by moving $prevent_xss to
+blob_contenttype() subroutine.
+
+
+About implementation:
+
+>> +	if (($type =3D~ m!^text/\w[-\w]*$! || $type =3D~ m!^\w[-\w]*/\w[-\=
+w]*\+xml$!) && defined $default_text_plain_charset) {
+>>  		$type .=3D "; charset=3D$default_text_plain_charset";
+
+would be better with line split
+
+>> +	if (($type =3D~ m!^text/\w[-\w]*$! || $type =3D~ m!^\w[-\w]*/\w[-\=
+w]*\+xml$!) &&
+>> +	    defined $default_text_plain_charset) {
+>>  		$type .=3D "; charset=3D$default_text_plain_charset";
+
+Also: do we need to be strict with '\w[-\w]*', or would '.*' suffice?
+
+>> @@ -7637,7 +7637,9 @@ sub git_blobdiff {
+>>  			last if $line =3D~ m!^\+\+\+!;
+>>  		}
+>>  		local $/ =3D undef;
+>> +		binmode STDOUT, ':raw';
+>>  		print <$fd>;
+>> +		binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+>>  		close $fd;
+>>  	}
+>>  }
+>> @@ -7884,12 +7886,16 @@ sub git_commitdiff {
+>> =20
+>>  	} elsif ($format eq 'plain') {
+>>  		local $/ =3D undef;
+>> +		binmode STDOUT, ':raw';
+>>  		print <$fd>;
+>> +		binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+>>  		close $fd
+>>  			or print "Reading git-diff-tree failed\n";
+>>  	} elsif ($format eq 'patch') {
+>>  		local $/ =3D undef;
+>> +		binmode STDOUT, ':raw';
+>>  		print <$fd>;
+>> +		binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+>>  		close $fd
+>>  			or print "Reading git-format-patch failed\n";
+>>  	}
+
+Second it changes 'blobdiff_plain', 'commitdiff_plain' (which I think
+that should be abandoned in favor of 'patch' view; but that is
+a separate issue) and 'patch' views so they use binary-safe output.
+
+Note that in all cases (I think) we use
+
+   $cgi->header(
+     -type =3D> 'text/plain',
+     -charset =3D> 'utf-8',
+     ...
+   );
+
+promising web browser that output is as whole in 'utf-8' encoding.
+
+It is not explained in the commit message what is the reason for this
+change.  Is it better handing of a situation where files being diff-ed
+being in other encoding (like for example in commit that changes
+encoding of files from legacy encoding such like e.g. iso-8859-2
+or cp1250 to utf-8)?  But what about  -charset =3D> 'utf-8'  then?
+
+
+About implementation: I think after this change common code crosses
+threshold for refactoring it into subroutine, for example:
+
+  sub dump_fh_raw {
+  	my $fh =3D shift;
+
+  	local $/ =3D undef;
+  	binmode STDOUT, ':raw';
+  	print <$fh>;
+  	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+
+  	return $fh;
+  }
+
+--=20
+Jakub Nar=C4=99bski
