@@ -1,127 +1,106 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH 2/4] gitweb: Make feed title valid utf8
-Date: Tue, 09 Apr 2013 21:58:41 +0200
-Message-ID: <516472F1.4060903@gmail.com>
-References: <m2y5csbx91.fsf@blackdown.de> <51642F67.5010501@gmail.com> <m2r4ija9gh.fsf@zahir.fritz.box> <51645D99.6000106@gmail.com> <m2ip3va4ro.fsf@zahir.fritz.box>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] Using a bit more decoration
+Date: Tue, 09 Apr 2013 13:06:21 -0700
+Message-ID: <7v8v4rqxj6.fsf@alter.siamese.dyndns.org>
+References: <20130408210903.GC9649@sigill.intra.peff.net>
+ <1365462114-8630-1-git-send-email-gitster@pobox.com>
+ <20130409035126.GA17319@sigill.intra.peff.net>
+ <7vsj30tk0p.fsf@alter.siamese.dyndns.org>
+ <20130409043938.GA31447@sigill.intra.peff.net>
+ <7vk3octiat.fsf@alter.siamese.dyndns.org>
+ <20130409065256.GA20115@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?SsO8cmdlbiBLcmVpbGVkZXI=?= <jk@blackdown.de>
-X-From: git-owner@vger.kernel.org Tue Apr 09 21:58:51 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 09 22:06:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPegt-0003dj-Fr
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 21:58:51 +0200
+	id 1UPeoI-0006Aw-Ey
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 22:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936083Ab3DIT6q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Apr 2013 15:58:46 -0400
-Received: from mail-ee0-f53.google.com ([74.125.83.53]:53037 "EHLO
-	mail-ee0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936043Ab3DIT6q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Apr 2013 15:58:46 -0400
-Received: by mail-ee0-f53.google.com with SMTP id c13so3003765eek.26
-        for <git@vger.kernel.org>; Tue, 09 Apr 2013 12:58:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=H7jrMlH5C+FE+AKljtmjnaH82Va3bONtD9P8evHrJXE=;
-        b=GnW8290aVmug7lQACPxvAGI1vZ4b7bB9+5mQMB3EIgk7bfHvDTxxO4PuzQ1WLvPBxY
-         DdO0c8SOQkZQyRmIyFRiG4lwzqB1PqmY+w8wq54rwZdiHe8/Q5WDZr/R9DFL2X3Vl0gU
-         g5F0UGhoT8WPPxxEpbhgaKBIIjgeMAYwB1mLEtFyUeWQvrmkx1hwehooZa/SxqMHFTaT
-         DdBvlRxYbgkhyr2an2vjBl0TXJX3RUZFs/WmN1Vw0B9qjQXuOt3YYMWH3X6aIBccrCuQ
-         LmFz7eKBR6/p7uZJ9/ffrgLUtVHTHu/zyxd7hxxjuL9fhgoE/NUTnUhCO1QA0kqOzmyK
-         6B4w==
-X-Received: by 10.15.32.67 with SMTP id z43mr53945927eeu.24.1365537524565;
-        Tue, 09 Apr 2013 12:58:44 -0700 (PDT)
-Received: from [192.168.1.14] (dce9.neoplus.adsl.tpnet.pl. [83.23.56.9])
-        by mx.google.com with ESMTPS id cb50sm18160801eeb.14.2013.04.09.12.58.42
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 09 Apr 2013 12:58:43 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <m2ip3va4ro.fsf@zahir.fritz.box>
-X-Enigmail-Version: 1.5.1
+	id S936122Ab3DIUGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Apr 2013 16:06:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59022 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934655Ab3DIUGY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 16:06:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C76615775;
+	Tue,  9 Apr 2013 20:06:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=v4tP3NmEyX8Xa/G3MKYUJnryA18=; b=kNEGgf
+	lffJB+wM8/S486x5Qt0hTe4B2uNCW61zX9w+JSRBD2Eh25hvAPoTX22i2v0BkBTb
+	EPwcZWkRyjBzehSf+aNIXUP7fzaiGvyx3IyUXgkNlNday46WMjYqwH5XDBxiPLDf
+	0LBHxcF79huY1sy5ameG05A4VrVOGq/IKOINw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BAdJ9sbCYtQQdjaGPhhPyQiEYkECRDy3
+	saPn3l2lXDsaXIl/rHONHsAVFq7AhGLCrF2uBbtd+Vs6/4Ru71yfhh7Xjl548cKM
+	PS/2WAhM0Zt734Hr6f2/uuXVqqYFrmMNusnYYTK7VaRniPEEPJF9bd1xBCZY/0cM
+	pQ4V+LwzKh4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 93E8D15774;
+	Tue,  9 Apr 2013 20:06:23 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9FF0015772; Tue,  9 Apr
+ 2013 20:06:22 +0000 (UTC)
+In-Reply-To: <20130409065256.GA20115@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 9 Apr 2013 02:52:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F358791E-A150-11E2-B1D6-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220626>
 
-W dniu 09.04.2013 21:22, J=C3=BCrgen Kreileder napisa=C5=82:
-> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:=20
->> W dniu 09.04.2013 19:40, J=C3=BCrgen Kreileder napisa=C5=82:
->>> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
->>>> J=C3=BCrgen Kreileder wrote:
->>>>
->>>>> Properly encode site and project names for RSS and Atom feeds.
+Jeff King <peff@peff.net> writes:
 
->>> Good point.  But it doesn't fix the string in question:
->>> It looks like to_utf8("$a $b") !=3D (to_utf8($a) . " " . to_utf8($b=
-)).
->>
->> Strange.  I wonder if the bug is in our to_utf8() implementation,
->> or in Encode, or in Perl... and whether this bug can be triggered
->> anywhere else in gitweb.
->=20
-> I don't think it's a bug, more like a consequence of concatenating ut=
-f8
-> and non-utf8 strings:
->=20
->     my $a =3D "=C3=BC";
->     my $b =3D "=C3=BC";
->     my $c =3D "$a - $b";
->     print "$c -> ". to_utf8($c) . ": " . (utf8::is_utf8($c) ? "utf8" =
-: "not utf8") . "\n"; # GOOD
->     $b =3D to_utf8($b);
->     $c =3D "$a - $b";
->     print "$c -> ". to_utf8($c) . ": " . (utf8::is_utf8($c) ? "utf8" =
-: "not utf8") . "\n"; # GOOD
->=20
-> yields (hopefully the broken encoding shows up correctly here):
->=20
->     =C3=83=C2=BC - =C3=83=C2=BC -> =C3=BC - =C3=BC: not utf8
->     =C3=83=C2=BC - =C3=BC -> =C3=83=C2=BC - =C3=BC: utf8
+> +static inline int *slab_at(struct commit_slab *s, const struct commit *c)
+> +{
+> +	if (s->alloc <= c->index) {
+> +		int new_alloc = alloc_nr(s->alloc);
+> +		if (new_alloc <= c->index)
+> +			new_alloc = c->index + 1;
+> +
+> +		s->buf = xrealloc(s->buf, new_alloc * sizeof(*s->buf));
+> +		memset(s->buf + s->alloc, 0, new_alloc - s->alloc);
+> +		s->alloc = new_alloc;
+> +	}
+> +	return s->buf + c->index;
+> +}
 
-Ah, so it looks like it is misfeature of the way Perl handles Unicode;
-concatenating adds 'UTF8' flag if either of concatenates strings has
-it to the result.
+This will hurt more as the number of objects we deal with grows (our
+ALLOC_GROW() shares the same).
 
-[Which I have checked using Devel::Peek with
- perl -MDevel::Peek -E '
-  my $a =3D "=C5=BC"; my $b =3D "\x{17c}";
-  Dump $a; Dump $b; Dump "$b - $a"'
-]
+I wonder if it might be a good idea to do
 
-> In gitweb we have the bad case:=20
->=20
->    my $title =3D "$site_name - $project/$action";
->=20
-> $project and $action are apparently utf8 already but $site_name isn't=
-=2E
+	struct commit_slab {
+        	int piece_size;
+		int piece_count;
+		struct commit_slab_piece {
+                	int *buf;
+		} *piece;
+	};
 
-$project and $action are taken from URL, and we have to run decode_utf8
-(at least for query params) for gitweb to work correctly.
+and then make the look-up logic like this:
 
-$site_name is usually taken from config file, and gitweb doesn't have
-"use utf8" pragma.
+	int nth_piece, nth_slot;
 
-> The resulting string is marked as utf8 - although the encoding of
-> $site_name was never fixed.  The to_utf8() in esc_html() returns the =
-string
-> without fixing anything because of that.
+	nth_piece = c->index / s->piece_size;
+        nth_slot = c->index % s->piece_size;
+        if (s->piece_count <= nth_piece) {
+		/* xrealloc s->piece to grow, update s->piece_count */
+        }
+        if (!s->piece[nth_piece]) {
+		/* xcalloc s->piece[nth_piece] to allocate */
+	}
+        return s->piece[nth_piece]->buf + nth_slot;
 
-O.K.
-
-_Maybe_ it would be worth adding explanation of this to commit message
-(and I see I should audit gitweb for similar problems elsewhere), but a=
-nyway
-
-Acked-by: Jakub Narebski <jnareb@gmail.com>
-
---=20
-Jakub Nar=C4=99bski
+Other than that, looks like a good technology demonstration.
