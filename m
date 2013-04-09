@@ -1,74 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-am doesn't apply the rest of the email after a partial patch
- fail?
-Date: Tue, 09 Apr 2013 11:57:28 -0700
-Message-ID: <7v1uajsfaf.fsf@alter.siamese.dyndns.org>
-References: <CAPKkNb43bWupbOaAntF8VJQ8ZJjt8SG-mZa3GohxZEAZQm-evQ@mail.gmail.com>
- <7vppy4ykse.fsf@alter.siamese.dyndns.org>
- <CAPKkNb6tbGtcpiYGpj6mSPnp_-aXO=HTvAjOEKJ1f-cgPOHBDA@mail.gmail.com>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] add: refuse to add paths beyond repository boundaries
+Date: Tue, 09 Apr 2013 20:58:44 +0200
+Message-ID: <516464E4.10503@gmail.com>
+References: <CALkWK0m_82ThYKxcr=YHGBnOaHr9yBpYFHxx2KrnQkWD_zjp1A@mail.gmail.com> <1365499297-8667-1-git-send-email-artagnon@gmail.com> <1365499297-8667-3-git-send-email-artagnon@gmail.com> <7v4nfftyu3.fsf@alter.siamese.dyndns.org> <7vvc7vsj4p.fsf@alter.siamese.dyndns.org> <51645EC6.407@gmail.com> <7v61zvsfkj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Constantine A. Murenin" <mureninc@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 09 20:57:55 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 09 20:58:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPdju-0001p1-ID
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 20:57:54 +0200
+	id 1UPdkr-0003I3-8E
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 20:58:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935873Ab3DIS5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Apr 2013 14:57:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51327 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935844Ab3DIS5j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Apr 2013 14:57:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D53015586;
-	Tue,  9 Apr 2013 18:57:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fcu402MFZFfnWPmSNN9bX3ulcJ4=; b=Aax2JO
-	a7nz7qUo4tjGe1Ue7+AlbKcT8dRLHTO1NQji9Z3G2sWT0XMPA8Itz2dUTmLqQM52
-	OPelXXRMyoj0TrPQdW28hmJHzeYvlgwru5pLgdDVLSwiwqfvH1epeqNglq6kbtvD
-	8RwubffPdonBFvSRXTHbqne2cDY+WkP1T/K80=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g5C+u8ynsj70o1sYDZyO2/zBZXNriX8p
-	6rEn3FVxaPIdzxu2jwLYS+FEgb0eyI/ZfscTNqIO8MnfVWoXzCBpSehVLmxOfbzx
-	ZZDPfVtI+AuIiDpTIFdlxO2qofF/8+ArIh3ijrc6rHUHrZgF/k4+1WO3xA/X5OCU
-	Q9oudHIGOAg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 347A215584;
-	Tue,  9 Apr 2013 18:57:39 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 30C9A1557A; Tue,  9 Apr
- 2013 18:57:38 +0000 (UTC)
-In-Reply-To: <CAPKkNb6tbGtcpiYGpj6mSPnp_-aXO=HTvAjOEKJ1f-cgPOHBDA@mail.gmail.com>
- (Constantine A. Murenin's message of "Tue, 9 Apr 2013 11:34:06 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 58FA0D8C-A147-11E2-91DF-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S935706Ab3DIS6t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Apr 2013 14:58:49 -0400
+Received: from mail-ea0-f172.google.com ([209.85.215.172]:56881 "EHLO
+	mail-ea0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759834Ab3DIS6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 14:58:48 -0400
+Received: by mail-ea0-f172.google.com with SMTP id z7so2970640eaf.17
+        for <git@vger.kernel.org>; Tue, 09 Apr 2013 11:58:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=aNDEn02aRMSMpLP2S29PkBpKS5a4/remLoo4mgCm+oQ=;
+        b=HrcQlRMWcs0q4Gey9KW1PxDqJJwtMvuCo66LNcGVcOoh5sNShqkVYu3apsHqDcqCJk
+         wL6x3SHU22Hi0pVcOO4he4g/7iiDim+CgNYT89aBn0tKqrhFI7nkMMgtXUKDph+KpF0f
+         tz7W+fcjYnJWai5jHHJ7QOK9tYeM98FXZrwHLXg5vUD5vfO7EP2fu+8XNVu/JDf3uWXc
+         X+3wlql2QEiN9+C+1yI5J7fX6CztS0jKG6vpEVRNDqPXPECFKfFuaCHXjvAFoSq4Vh5m
+         RHDOsZM2mYKHMb2v5wUlcwYseErG9iGcT85S3TAtUUK3OAugXuMmcimHfJl35aq2uK+r
+         mQyQ==
+X-Received: by 10.14.216.2 with SMTP id f2mr62889620eep.44.1365533927222;
+        Tue, 09 Apr 2013 11:58:47 -0700 (PDT)
+Received: from [192.168.1.14] (dce9.neoplus.adsl.tpnet.pl. [83.23.56.9])
+        by mx.google.com with ESMTPS id bj2sm14839044eeb.1.2013.04.09.11.58.45
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 09 Apr 2013 11:58:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
+In-Reply-To: <7v61zvsfkj.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220616>
 
-"Constantine A. Murenin" <mureninc@gmail.com> writes:
+Junio C Hamano wrote:
+> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+>=20
+>> W dniu 09.04.2013 19:34, Junio C Hamano pisze:
+>>
+>>> -	if (has_symlink_leading_path(path, len))
+>>> -		return error("'%s' is beyond a symbolic link", path);
+>>> +	if (path_outside_our_project(path, len))
+>>> +		return error("'%s' is outside our working tree", path);
+>>> =20
+>>
+>> Don't we lose important information here?  Or we shouldn't care?
+>=20
+> What important information is it?
 
-> Well, I now know this, but it wasn't clear from the documentation that
-> that was the behaviour.
+That the cause is symbolic link (or other git repository, in the future=
+).
 
-Yes, the message "after you _resolved_, please tell me you are now done"
-is too fuzzy.  What it wants to say is:
-
-	I punted, because the patch does not apply, and it is stored
-	here.  Update the index to hold contents that the sender of
-	the patch would have liked to see if the patch were to apply
-	cleanly.  Tell me when you are done, with "am --resolved".
-	Then I'll commit that content in the index for you with the
-	authorship and log message I learned from the e-mail and
-	continue.
+--=20
+Jakub Nar=C4=99bski
