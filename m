@@ -1,93 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ITCH] Specify refspec without remote
-Date: Tue, 09 Apr 2013 12:29:24 -0700
-Message-ID: <7vhajfqz8r.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0nYECHZaxit9jR-tS=7fXyOP5dy6mqUz0DKmbTRU-xRNw@mail.gmail.com>
- <20130318170804.GA15924@sigill.intra.peff.net>
- <CALkWK0k2a6DSUodhKjRFKGvE1Rb_QmFgpy=Pvbu2Q=nGNYuByA@mail.gmail.com>
- <7vzjx7sj9u.fsf@alter.siamese.dyndns.org>
- <CALkWK0=siuUW1ex0muy+efwQOAwHf3uorFHWPo5sjMss08ywiw@mail.gmail.com>
- <7vip3vsi19.fsf@alter.siamese.dyndns.org>
- <CALkWK0nqZ+GGvDhR=OPOz+NtYKXz7waQrxvCi-spAJ46pL=YKA@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: tar on Mac does not like empty tar from git archive
+Date: Tue, 09 Apr 2013 21:37:54 +0200
+Message-ID: <51646E12.2030506@lsrfire.ath.cx>
+References: <ABD0C67A-0B2B-4E32-AF49-93FBABC032A7@bjhargrave.com> <20130408210536.GB9649@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Duy =?utf-8?Q?Nguy=E1=BB=85n?= <pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 09 21:29:34 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: BJ Hargrave <bj@bjhargrave.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 09 21:38:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPeEX-0003sP-6d
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 21:29:33 +0200
+	id 1UPeMs-0007oa-2j
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 21:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935134Ab3DIT33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Apr 2013 15:29:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47449 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761262Ab3DIT32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Apr 2013 15:29:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B0C615513;
-	Tue,  9 Apr 2013 19:29:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=myTYXLEjnT06OzMKy6Nq81u9b3M=; b=hD9FaX
-	88rKPMYj1/GdcfvNgiaDedXv/h6Vb3jZ/nNbhdhzZQZd2uvMOe0r4FmTj+xkl+Ar
-	hVpIForSNck2RaSV/j1782PXBRDEeWUx01ZBLn7iigdF8lWt1CUZ+GwTccsxHMsH
-	Qc+OwpwY9niaz5MiQUnzQgqzofWdIR3TmC38I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wujf7fyD7uLXU7f1Ed6dy9EauebnJm9Y
-	M9ktUXkI+P0s/1R6J1uB84A/63TXvejPmXASgBdxlwi23qESDVl4yefMlnUqs6IP
-	L13U41jrSOLwwfF6QIzVtgr7290hw5M/jrSnHRGOlN9K/4sucS/r0wAg6Y4krSmZ
-	wg1ybY+ntqY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 428C315512;
-	Tue,  9 Apr 2013 19:29:27 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4543715511; Tue,  9 Apr
- 2013 19:29:26 +0000 (UTC)
-In-Reply-To: <CALkWK0nqZ+GGvDhR=OPOz+NtYKXz7waQrxvCi-spAJ46pL=YKA@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Tue, 9 Apr 2013 23:33:59 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CA48D5D2-A14B-11E2-A757-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S935628Ab3DITiE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Apr 2013 15:38:04 -0400
+Received: from india601.server4you.de ([85.25.151.105]:47435 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760469Ab3DITiD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 15:38:03 -0400
+Received: from [192.168.2.105] (p4FFD9211.dip.t-dialin.net [79.253.146.17])
+	by india601.server4you.de (Postfix) with ESMTPSA id 72F981E4;
+	Tue,  9 Apr 2013 21:38:00 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <20130408210536.GB9649@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220622>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Am 08.04.2013 23:05, schrieb Jeff King:
+> On Mon, Apr 08, 2013 at 02:36:05PM -0400, BJ Hargrave wrote:
+>=20
+>> Git 1.8.2.1 includes commit bd54cf17 - archive: handle commits with =
+an
+>> empty tree
+>>
+>> Test 2 of t5004-archive-corner-cases, "tar archive of empty tree is
+>> empty", fails on Mac OS X 10.8.3 (with XCode 4.6.1) since the tar
+>> command exits with return code 1 on the generated  tar file.
+>=20
+> Hmm. So I guess the question is: do we need to work around this in th=
+e
+> test for platforms that do not like empty tar files, or are the empty
+> tarfiles we are making wrong somehow?
+>=20
+>> tar --version
+>> bsdtar 2.8.3 - libarchive 2.8.3
+>>
+>> It appears that bsdtar does not like the empty tar files created by
+>> git archive. An empty tar file created by bsdtar is accepted.
+>>
+>> tar cT /dev/null | tar t; echo $?
+>> 0
+>=20
+> That makes me think the latter ("we are wrong"). I don't have my OS X
+> box handy; can you provide a sample empty tarfile that it creates?
 
-> Junio C Hamano wrote:
->> What is bad about saying "push origin ...the rest..."?
->
-> I don't know which remote to push to: all I know is that the remote to
-> push to is configured somewhere in the web of ...
+libarchive (on which bsdtar is based) doesn't like extended pax headers
+at the end of archives.  Here's the relevant source file:
 
-Ahh, and then the recent triangular stuff makes it even worse.
+https://github.com/libarchive/libarchive/blob/master/libarchive/archive=
+_read_support_format_tar.c
 
-I can see why we might want some token that says "I am pushing where
-I would push normally if this were a 'git push' that does not say
-'to where' and 'push what'" to help users.
+tar_read_header() calls header_pax_global() to handle a global pax
+header, which in turn calls tar_read_header() again to fetch the next
+header.  If it reaches the end of the archive then err is set to
+ARCHIVE_EOF and "Damaged tar archive" is reported at the end of this
+function.
 
-Some background to explain why I was hesitant to the change.
+I tried come up with a small patch that convinces it to ignore such a
+condition, but it's apparently not as easy as it looks -- I just made
+bsdtar report even more obscure errors.  Will look deeper into it
+later this week.
 
-There must be a reason why the user wants to use a custom set of
-refspecs, not the configured ones, for this particular push only.
-There must be something special for this particular push that makes
-it different from the configured 'git push' default.
-
-I was wondering if it is sensible to assume that the user is likely
-to still want to push to the same repository where she usually
-pushes to, when she has that special reason.  The underlying
-assumption for it to be sensible is that 'to where' (destination
-repository) is more sticky than 'push what' (the refspecs).
-
-And I think now I agree that indeed is a sensible assumption.  I am
-not sure '-' is a good token for that, but I do not offhand think of
-a reason why '-' would be a _bad_ token for that, either.
+Ren=C3=A9
