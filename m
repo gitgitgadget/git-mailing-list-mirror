@@ -1,108 +1,68 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH 4/4] gitweb: Fix broken blob action parameters on blob/commitdiff
- pages
-Date: Tue, 09 Apr 2013 17:25:59 +0200
-Message-ID: <51643307.9090603@gmail.com>
-References: <m2vc7wbx76.fsf@blackdown.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Teaching rerere about existing merges
+Date: Tue, 09 Apr 2013 09:01:23 -0700
+Message-ID: <7vd2u3u20c.fsf@alter.siamese.dyndns.org>
+References: <504282025.1400346.1365517106800.JavaMail.root@openwide.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?SsO8cmdlbiBLcmVpbGVkZXI=?= <jk@blackdown.de>
-X-From: git-owner@vger.kernel.org Tue Apr 09 17:26:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Jeremy Rosen <jeremy.rosen@openwide.fr>
+X-From: git-owner@vger.kernel.org Tue Apr 09 18:01:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPaR2-0000UX-Br
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 17:26:12 +0200
+	id 1UPazE-0005cN-V6
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Apr 2013 18:01:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764683Ab3DIP0H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Apr 2013 11:26:07 -0400
-Received: from mail-ee0-f43.google.com ([74.125.83.43]:42607 "EHLO
-	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761532Ab3DIP0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Apr 2013 11:26:06 -0400
-Received: by mail-ee0-f43.google.com with SMTP id e50so3009247eek.2
-        for <git@vger.kernel.org>; Tue, 09 Apr 2013 08:26:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=nip8BK4ms2SLe2B+oWlvS8FPUXJ6U07SCq9f/14a3QM=;
-        b=Dvy2QcBJqz5Q9q/z6e1Y7sYSdePDLdIzEZVMzUEiCkIK0W4lOtwEwDVdLokhB1rbOO
-         CmrYRAwPrI/TyK8yNJp0K1x8AcvSq24N597NOuA4oPrk98Q6aeL/sNI4ICyHNQv7LcQ9
-         B7/SvoJ0CgVNxonk0p/7hWQEhDra3ynXBL0tgw205K9vfUUcJOjlHOmhvKyzVqIX95PY
-         v/z3fcA2CETj+6hpJcKIxun5FugmvMTxa2HsOlnXV4QSZB/tiCPUIXgnDMxjBRisORSI
-         uVDO4QFzv4rEFivFhMVhnUVNnSfghJIGe+s26tAOid/IPWWG00rFjETvskbc/kYGQAtP
-         zkEA==
-X-Received: by 10.14.179.5 with SMTP id g5mr61057132eem.41.1365521164874;
-        Tue, 09 Apr 2013 08:26:04 -0700 (PDT)
-Received: from [192.168.1.14] (dce9.neoplus.adsl.tpnet.pl. [83.23.56.9])
-        by mx.google.com with ESMTPS id bj2sm13827651eeb.1.2013.04.09.08.26.02
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 09 Apr 2013 08:26:03 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130308 Thunderbird/17.0.4
-In-Reply-To: <m2vc7wbx76.fsf@blackdown.de>
+	id S937022Ab3DIQB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Apr 2013 12:01:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45437 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S936360Ab3DIQB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Apr 2013 12:01:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 579EE14FAE;
+	Tue,  9 Apr 2013 16:01:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ScGLPO42bEJk9yrfLVCAgBOLyzo=; b=CKdWao
+	RD9SnCoYbZA5//+IZpb2A8EF85Y1LLeHdeHi66klzRv7zHsODkHa6uQtR5YHn9v1
+	EfiMbbHfTx/PFgk2nghblqx1tq/fTfNQr5SVz6Ck5YPy/Bepl+go5JC0tfcwIZWP
+	jzXRTh022aUOrTtRkIrt3kR1TfH109IOrTDFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=q0vxR1y4sMoZ5TJx9P9/AUfL0e5PIi7g
+	R6Fhq75rvAPNLtehOSNDWNiNlwhVu6BO3bMSfBzWIq3sQQsH55LdWNx0tOwA7w6y
+	FSjCSYxjsfOW9l83kz3thW073OZpbWWWMwy8dQEgrmFgEI8C2JTR+7Z+FoJiUSmp
+	ToQvwgei4B4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F37A14FAC;
+	Tue,  9 Apr 2013 16:01:26 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8916914FA9; Tue,  9 Apr
+ 2013 16:01:25 +0000 (UTC)
+In-Reply-To: <504282025.1400346.1365517106800.JavaMail.root@openwide.fr>
+ (Jeremy Rosen's message of "Tue, 9 Apr 2013 16:18:26 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BB3183F4-A12E-11E2-90EE-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220580>
 
-W dniu 08.04.2013 22:10, J=C3=BCrgen Kreileder pisze:
+Jeremy Rosen <jeremy.rosen@openwide.fr> writes:
 
-> Fix broken blob action parameters on blobdiff and commitdiff pages by
-> explicitly passing variables instead of relying on global ones.
+> is there a way to "teach" rerere about existing merge commits, or do I 
+> have to re-solve all the existing merge manually once ?
 
-Do I understand it correctly that those variables (e.g. $hash variable
-in git_patchset_body in second chunk below, after this change passed
-as parameter to format_diff_cc_simplified()) can be filled in then,
-or at least adjusted correctly?
+There is a tool that does the "re-solve manually" for you.
 
-> (The broken parameters on blob links lead to blob pages which show th=
-e
-> blob but with a hash instead of a commit message and have broken
-> blob_plain (404 - Cannot find file) and tree links (404 - Reading tre=
-e
-> failed))
->=20
-> Signed-off-by: J=C3=BCrgen Kreileder <jk@blackdown.de>
+$ git ls-files | grep rerere-train
+contrib/rerere-train.sh
 
-I wonder how we missed this.  Does this happen always, or in some
-specific conditions?
-
-Anyway, this change is a good change.  Internal subroutines should not
-use global variables.
-
-I hope that in the future we would get rid of most global variables...
-
-Acked-by: Jakub Narebski <jnareb@gmail.com>
-
-[not tested]
-
->  # create note for patch simplified by combined diff
->  sub format_diff_cc_simplified {
-> -	my ($diffinfo, @parents) =3D @_;
-> +	my ($diffinfo, $hash, @parents) =3D @_;
->  	my $result =3D '';
-> =20
->  	$result .=3D "<div class=3D\"diff header\">" .
-[...]
-> @@ -5404,7 +5405,7 @@ sub git_patchset_body {
-> =20
->  		# generate anchor for "patch" links in difftree / whatchanged part
->  		print "<div class=3D\"patch\" id=3D\"patch". ($patch_idx+1) ."\">\=
-n" .
-> -		      format_diff_cc_simplified($diffinfo, @hash_parents) .
-> +		      format_diff_cc_simplified($diffinfo, $hash, @hash_parents) .
->  		      "</div>\n";  # class=3D"patch"
-> =20
->  		$patch_number++;
->=20
-
-
---=20
-Jakub Nar=C4=99bski
+It uses your working tree to do its work, so you should first commit
+or stash whatever you are in the middle of doing before using it.
