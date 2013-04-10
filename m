@@ -1,186 +1,142 @@
-From: Magnus Therning <magnus@therning.org>
-Subject: Re: git-http-backend: anonymous read, authenticated write
-Date: Thu, 11 Apr 2013 01:19:19 +0200
-Message-ID: <20130410231919.GA1315@mteis.lan>
-References: <20130409054553.GA1537@mteis.lan>
- <20130409171247.GD21972@sigill.intra.peff.net>
- <5165DA13.8010100@gmail.com>
- <20130410214722.GA6215@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH] rm: delete .gitmodules entry of submodules removed
+ from the work tree
+Date: Wed, 10 Apr 2013 16:30:58 -0700
+Message-ID: <20130410233058.GI27070@google.com>
+References: <5165E1CC.7090004@web.de>
+ <CALkWK0mzbgFP7JnCP7=NCA1guGg8ayF-mn7WdJEZyYX5hgePFw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
-Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 11 01:20:04 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>,
+	Peter Collingbourne <peter@pcc.me.uk>,
+	John Keeping <john@keeping.me.uk>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 11 01:31:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ4J9-0007xD-Iw
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 01:20:04 +0200
+	id 1UQ4Tu-0004zR-0T
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 01:31:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965078Ab3DJXT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 19:19:58 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:55633 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S937220Ab3DJXTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 19:19:45 -0400
-Received: by mail-la0-f48.google.com with SMTP id fq12so948968lab.35
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 16:19:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+	id S934790Ab3DJXbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 19:31:05 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:48189 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761256Ab3DJXbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 19:31:03 -0400
+Received: by mail-pa0-f52.google.com with SMTP id fb10so571944pad.11
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 16:31:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
         h=x-received:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent:x-gm-message-state;
-        bh=wdYMMur/oZgBI9iYRckadGstsLMMu/9ZX4TZkJ5gdB4=;
-        b=lAxjjoGdnKa7h54gjFHJ7L++sDgHOQ3FRyWZZWrcBmmUkarGhLIFXdp3qAM+/7eHsG
-         YtqcndzJGRJ+8LAC9AujKTnW1eEEqLW7hBum5PKUi6OFgM5t4hYNFtq4Yak91FDt+pKX
-         E0AGlY6YATwykp+qiQrfefnfeGUtLm9o+pEo1286Axc2oQX9HtCePC0SYsVQgZnzEaVh
-         Fm+D8hdvRcUSpu2oDeEdJYknw3iYKSryR6zcSn83GNBOOEbR6Vg4sH+rZKQzSCYqXbFn
-         JX2tcOogQYph2aOIoKc0OdmRaerrm5PRiM+3lWX2DZ6wSEe6NjJPQUNc4N+zK3n18Pnu
-         UK0Q==
-X-Received: by 10.112.155.233 with SMTP id vz9mr2178245lbb.63.1365635984038;
-        Wed, 10 Apr 2013 16:19:44 -0700 (PDT)
-Received: from mteis.lan (92-32-222-34.tn.glocalnet.net. [92.32.222.34])
-        by mx.google.com with ESMTPS id f7sm809638lbj.13.2013.04.10.16.19.41
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 10 Apr 2013 16:19:42 -0700 (PDT)
+         :user-agent;
+        bh=xr1BBLvjoFx1FBAGDDOLd2TmJd0h/jEqQ9BcnG6Qzm8=;
+        b=rr1dDaGmXBryAfOr1ZQdh8r7OkUPwYFS41AUZvjUPuOuZMC5PNraV9aI7k3x0qTCd6
+         Vv5jKUrATv+FFEIHatlE6oVN1F9Uh2TwxTbsvz9wXA4rprDeHqYpIrUjlBXXHgY+Fz18
+         zIHL3Z98xHjRTyPB5A1Gldf5/DF1/799bR6+I3CWNmvcBC23HC+ip1xje0WfGU1wUYRq
+         5hTSQoCj4DCfhixHir0OUVZCQxsHyHeTipWCvWAxswcWwU3sYievaH6nl79Hyvl/6Iql
+         EUKI0KTOrmKfCZJNIoQMnaLETxXoLXtCUwlUWN6Z7yWhowkYHQ7iVsLsno5TCPcTsddX
+         02iA==
+X-Received: by 10.68.102.2 with SMTP id fk2mr5621501pbb.168.1365636663110;
+        Wed, 10 Apr 2013 16:31:03 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id u9sm2200293paf.22.2013.04.10.16.31.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 10 Apr 2013 16:31:01 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20130410214722.GA6215@sigill.intra.peff.net>
+In-Reply-To: <CALkWK0mzbgFP7JnCP7=NCA1guGg8ayF-mn7WdJEZyYX5hgePFw@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Gm-Message-State: ALoCoQnjqxZ4CusXYiz6dGQa2CAeLy69uQrnUyR2LeQGDOMAQ4fXXbRbsgcpbylSfT1XBNHyoXFE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220795>
 
+Hi,
 
---YZ5djTAD1cGYuMQK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for looking it over.
 
-On Wed, Apr 10, 2013 at 05:47:22PM -0400, Jeff King wrote:
-> On Wed, Apr 10, 2013 at 11:30:59PM +0200, Jakub Nar=C4=99bski wrote:
->=20
->>>   1. GET $repo/info/refs?service=3Dgit-receive-pack
->>>=20
->>>      This makes initial contact and gets the ref information which
->>>      push uses to decide what it is going to push. So it is
->>>      read-only, and in an anonymous-read setup, does not need to
->>>      be protected.
->>=20
->> Yes, it doesn't need to be protected, but *git-receive-pack*
->> requires (or required) valid user even for above GET request for
->> getting refs.
->=20
-> Right. But that is not anything receive-pack is doing; it is up to
-> his webserver config, which is why I asked to see it.
+Ramkumar Ramachandra wrote:
 
-Nope.  I'm pretty sure this had *nothing* to do with my config.  This
-is the original config, which doesn't work:
+> - Why are you hard-coding ".gitmodules" instead of using a simple #define?
 
-$HTTP["url"] =3D~ "^/git" {
-    cgi.assign =3D ( "" =3D> "" )
-    setenv.add-environment =3D (
-        "GIT_PROJECT_ROOT" =3D> "/srv/git",
-        "GIT_HTTP_EXPORT_ALL" =3D> ""
-    )
-    $HTTP["url"] =3D~ "^/git/.*/git-receive-pack$" {
-        include "trac-git-auth.conf"
-    }
-}
+Advantage of ".gitmodules": it's obvious what it means.
+Advantage of DOT_GITMODULES: protection against spelling errors.
 
-This will turn on authentication *only* for URLs matching
-^/git/.*/git-receive-pack$, which AFAIU is *exactly* what the manpage state=
-s is
-all that is needed.
+Git has a lot of use of both styles of string constant, for better or
+worse.  Consistency means following what the surrounding code does,
+and making changes if appropriate in a separate patch.
 
-This is the configuration that actually works:
+> - Why are you returning -1, instead of an error() with a message?
 
-$HTTP["querystring"] =3D~ "service=3Dgit-receive-pack" {
-    $HTTP["url"] =3D~ "^/git" {
-        cgi.assign =3D ( "" =3D> "" )
-        setenv.add-environment =3D (
-            "GIT_PROJECT_ROOT" =3D> "/srv/git",
-            "GIT_HTTP_EXPORT_ALL" =3D> ""
-        )
-        include "trac-git-auth.conf"
-    }
-} else $HTTP["url"] =3D~ "^/git" {
-    cgi.assign =3D ( "" =3D> "" )
-    setenv.add-environment =3D (
-        "GIT_PROJECT_ROOT" =3D> "/srv/git",
-        "GIT_HTTP_EXPORT_ALL" =3D> ""
-    )
-    $HTTP["url"] =3D~ "^/git/.*/git-receive-pack$" {
-        include "trac-git-auth.conf"
-    }
-}
+I think the idea is that remove_path_from_gitmodules() is idempotent:
+if that path isn't listed in gitmodules, that's considered fine and
+.gitmodules is left alone, instead of making a user that tries to
+first remove a .gitmodules file and then all submodules suffer.
 
-The top bit adds matching against the query string and ^/git which
-forces authentication on the initial GET as well.
+Perhaps a return value of '0 if gitmodules unmodified, 1 if modified'
+would make it clearer that this isn't an error condition.
 
->>>   2. POST $repo/git-receive-pack
->>>=20
->>>      This actually pushes up the objects and updates the refs, and
->>>      must be protected.
->>>=20
->>> The setup listed above does work with apache; it is tested as part
->>> of our test suite (you can see the actual config in
->>> t/lib-httpd/apache.conf).  So what in lighttpd is giving us the
->>> 403? Can you share your whole config?
->>=20
->> I think I have seen a patch on git mailing list to correct this,
->> but I am not sure.
->>=20
->> Are you sure that we test this correctly?
->=20
-> Perhaps you are thinking of the jk/maint-http-half-auth-push topic
-> from last August/September. It explicitly tests the setup from the
-> manpage.  The relevant commits are 4c71009 (t: test http access to
-> "half-auth" repositories, 2012-08-27) which demonstrates the
-> problem, and b81401c (http: prompt for credentials on failed POST,
-> 2012-08-27).
->=20
-> However, even before the fix, it never got a 403 on the GET of
-> info/refs. It got a 401 on the later POST, but didn't prompt for
-> credentials.
+[...]
+>> +       path_option = unsorted_string_list_lookup(&config_name_for_path, path);
+>> +       if (!path_option) {
+>> +               warning(_("Could not find section in .gitmodules where path=%s"), path);
+>> +               return -1;
+>> +       }
+>
+> Repetition from your mv series.  Why copy-paste, when you can factor
+> it out into a function?
 
-I know nothing about CGI, but surely the script signals the need for a
-valid user to the server somehow, couldn't the web server then decide
-to return 403 rather than 401 *if there's no configuration for
-authentication*?
+Do you mean that update_path_in_gitmodules should treat newpath ==
+NULL as a cue to remove that entry, or something similar?
 
-In any case it seems there is no fix in the version of git in Arch
-Linux[1].
+> Why are you calling warning() and then returning -1?
 
-/M
+Sure, "return warning(...)" is a good shortcut.
 
-[1]: The package I've been using is built from these unpatched
-sources: http://git-core.googlecode.com/files/git-1.8.2.tar.gz
+> warning() not work?)  How is it a warning if you just stop all
+> processing and return?
 
---=20
-Magnus Therning                      OpenPGP: 0xAB4DFBA4=20
-email: magnus@therning.org   jabber: magnus@therning.org
-twitter: magthe               http://therning.org/magnus
+Probably it shouldn't warn in this case.
 
-I invented the term Object-Oriented, and I can tell you I did not have
-C++ in mind.
-     -- Alan Kay
+>> +       strbuf_addstr(&sect, "submodule.");
+>> +       strbuf_addstr(&sect, path_option->util);
+>
+> What do you have against strbuf_addf()?
 
---YZ5djTAD1cGYuMQK
-Content-Type: application/pgp-signature
+I think both addf and addstr are pretty clear.  The implementation of
+addf is more complicated, which can be relevant in performance-critical
+code (not here).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
+> Why is your variable named "sect"?  Did you mean "section"?
 
-iF4EAREIAAYFAlFl83cACgkQxZ8oagHN9cGX9gD9G10u6wxvfG1yMEQGKBsxOGAG
-SsAhmcfKJy0CHQl8k7gA/1ratB6NN9uUKBo5xgQFOVva+dkfn8HNw8imMNXxkGfg
-=gD+c
------END PGP SIGNATURE-----
+I think both "sect" and "section" are pretty clear.
 
---YZ5djTAD1cGYuMQK--
+[...]
+>> +               /* Maybe the user already did that, don't error out here */
+>> +               warning(_("Could not remove .gitmodules entry for %s"), path);
+>> +               return -1;
+>
+> Maybe the user already did what?  What happens if she didn't do "it"
+> and failure is due to some other cause?
+
+git_config_rename_section_in_file() can fail for the following reasons:
+
+ * invalid new section name (NULL is valid, so doesn't apply here)
+ * could not lock config file
+ * write error
+ * could not commit config file
+
+If the old section is missing, it doesn't even fail (it just
+returns 0).  So I agree: this should be an error instead of a warning.
+
+Hope that helps,
+Jonathan
