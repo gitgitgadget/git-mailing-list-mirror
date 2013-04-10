@@ -1,85 +1,76 @@
-From: Jeff King <peff@peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [ITCH] Specify refspec without remote
-Date: Wed, 10 Apr 2013 15:52:57 -0400
-Message-ID: <20130410195256.GA24177@sigill.intra.peff.net>
-References: <CALkWK0nqZ+GGvDhR=OPOz+NtYKXz7waQrxvCi-spAJ46pL=YKA@mail.gmail.com>
- <7vhajfqz8r.fsf@alter.siamese.dyndns.org>
- <20130409231332.GZ30308@google.com>
- <7vobdnnpx6.fsf@alter.siamese.dyndns.org>
- <20130410041343.GB795@sigill.intra.peff.net>
- <7v4nfenxzm.fsf@alter.siamese.dyndns.org>
- <20130410172748.GA16908@sigill.intra.peff.net>
- <7vhajemd1x.fsf@alter.siamese.dyndns.org>
- <20130410185958.GA22394@sigill.intra.peff.net>
+Date: Thu, 11 Apr 2013 01:23:57 +0530
+Message-ID: <CALkWK0k44+VnrGTXESdap2nRomdYH8xwz_T2JdhYtSrPR+89sw@mail.gmail.com>
+References: <CALkWK0=siuUW1ex0muy+efwQOAwHf3uorFHWPo5sjMss08ywiw@mail.gmail.com>
+ <7vip3vsi19.fsf@alter.siamese.dyndns.org> <CALkWK0nqZ+GGvDhR=OPOz+NtYKXz7waQrxvCi-spAJ46pL=YKA@mail.gmail.com>
+ <7vhajfqz8r.fsf@alter.siamese.dyndns.org> <20130409231332.GZ30308@google.com>
+ <7vobdnnpx6.fsf@alter.siamese.dyndns.org> <20130410041343.GB795@sigill.intra.peff.net>
+ <7v4nfenxzm.fsf@alter.siamese.dyndns.org> <20130410172748.GA16908@sigill.intra.peff.net>
+ <7vhajemd1x.fsf@alter.siamese.dyndns.org> <20130410185958.GA22394@sigill.intra.peff.net>
  <CALkWK0nKvTiGsjO4zF81nsSuUM=MmmbpdzHWB=4hFR2PiB+LWg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Git List <git@vger.kernel.org>,
-	Duy =?utf-8?B?Tmd1eeG7hW4=?= <pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 10 21:53:12 2013
+	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 10 21:54:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ14w-0001Ci-Mg
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 21:53:11 +0200
+	id 1UQ16R-00038P-Ta
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 21:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752556Ab3DJTxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 15:53:05 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39064 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751985Ab3DJTxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 15:53:04 -0400
-Received: (qmail 6044 invoked by uid 107); 10 Apr 2013 19:54:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Apr 2013 15:54:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Apr 2013 15:52:57 -0400
-Content-Disposition: inline
+	id S1763884Ab3DJTyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 15:54:38 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:59760 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752731Ab3DJTyi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 15:54:38 -0400
+Received: by mail-ie0-f182.google.com with SMTP id at1so1089729iec.27
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 12:54:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=ShHY5lAKI2J16Ycau54Z4LhBYFggE2qGLKe0Q592VLY=;
+        b=vTIvhn9Qq0bNAm2Wk1eMG24rBXU06eTwiuROfNkSUuAweJx4C4KiCo0yNTb1IW7EHT
+         7jugM+qLVRsE4rCuWBYYmUNvyGyCIVV8QeULavtrlixaPSNl1L45KgjAGJcYRxZRkSXa
+         WpDgh48GdsAEX0WxqzKdasrkaF9SdN0gOTakX70G4AfDIby6ekM963UdP5Db+q50MRCp
+         E0JeDjcO+dAGeOH46Dr617bW87gG2xawbNusEI0IOxfJ+Zxl+DLQHDZOdibLGghAsi8V
+         nzX3+32k0aKmdu+8ks/wjERWtUPAp1t1ZDUju7eKwgGxVjkFBRZLEUGjZvXiR6jbMIj8
+         XmmA==
+X-Received: by 10.50.17.166 with SMTP id p6mr14200417igd.12.1365623677653;
+ Wed, 10 Apr 2013 12:54:37 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Wed, 10 Apr 2013 12:53:57 -0700 (PDT)
 In-Reply-To: <CALkWK0nKvTiGsjO4zF81nsSuUM=MmmbpdzHWB=4hFR2PiB+LWg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220739>
 
-On Thu, Apr 11, 2013 at 01:01:33AM +0530, Ramkumar Ramachandra wrote:
-
-> Jeff King wrote:
-> > On Wed, Apr 10, 2013 at 11:54:34AM -0700, Junio C Hamano wrote:
-> >> > If branch.$name.remote is "when I am on this branch, I want to talk to
-> >> > this remote", that rule is not be impacted by the presence of refspecs
-> >> > at all.
-> >>
-> >> So running the above while on 'maint' will send master and next to
-> >> the remote your "git push" would send to when run without any
-> >> refspecs?
-> >
-> > Exactly. The remote selection is orthogonal to the refspecs provided,
-> > and only cares about which branch you are on.
-> >
-> > Which is still kind of weird, because why should the branch you are on
-> > affect the default push location? But that is how default "matching" has
-> > always behaved, and we would remain consistent with that.
-> 
+Ramkumar Ramachandra wrote:
 > git push -- master next; pushes to my current branch's
 > branch.<name>.pushremote?  Isn't that a disaster?
 
-Maybe. But no more so than the current:
+Actually, branch.<name>.pushremote already breaks the current design
+in a way, as Junio pointed out in a different email: a push.default
+set to anything except "current" is already nonsensical.  Why should
+"matching" branches be pushed to the remote that my current branch
+specifies?  That might well have their own branch.<name>.pushremote
+configured, which should be respected.
 
-  git push
+We should fix this now.  I think the fault lies in the rather old
+design of push.default.  Do you have any suggestions as what would
+make sense here?  Ultimately, I think a git push; needs to pick
+remotes for each refspec separately.  The orthogonal design is
+definitely not right in my opinion.
 
-which may also push master and next to the same remote. As I said in an
-earlier message, I would be OK with allowing both or neither, but
-allowing one but not the other is even more confusing.
-
-If we changed push.default=matching to ignore branch.*.remote, then that
-would be consistent, and would probably be safer over all. It is a
-regression, but I doubt that anybody was using branch.*.remote for this;
-it really only makes sense with the "upstream" mode.
-
--Peff
+As the author of branch.<name>.pushremote, I apologize for not having
+caught this earlier.  I've been using push.default = current for a
+long time, and don't often think about the other settings.
