@@ -1,73 +1,55 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: Git crash in Ubuntu 12.04
-Date: Wed, 10 Apr 2013 09:44:29 +0200
-Message-ID: <87mwt6ltia.fsf@linux-k42r.v.cablecom.net>
-References: <CAJiNi_FfU9Gsr2D9CcC0wWwgO1oKBXwxp87-wBUJBU2kyGaQNQ@mail.gmail.com>
+From: Jeremy Rosen <jeremy.rosen@openwide.fr>
+Subject: git rebase : knowing where I am...
+Date: Wed, 10 Apr 2013 10:40:33 +0200 (CEST)
+Message-ID: <1124759476.1420642.1365583233806.JavaMail.root@openwide.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Sivaram Kannan <siva.devel@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 10 09:44:40 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 10 10:40:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPpht-0006jR-A6
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 09:44:37 +0200
+	id 1UPqaD-0007LU-52
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 10:40:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935623Ab3DJHod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 03:44:33 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:17102 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934966Ab3DJHoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 03:44:32 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 10 Apr
- 2013 09:44:27 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Wed, 10 Apr 2013 09:44:29 +0200
-In-Reply-To: <CAJiNi_FfU9Gsr2D9CcC0wWwgO1oKBXwxp87-wBUJBU2kyGaQNQ@mail.gmail.com>
-	(Sivaram Kannan's message of "Wed, 10 Apr 2013 12:11:46 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1755685Ab3DJIkj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Apr 2013 04:40:39 -0400
+Received: from zimbra3.corp.accelance.fr ([213.162.49.233]:43402 "EHLO
+	zimbra3.corp.accelance.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752678Ab3DJIkh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Apr 2013 04:40:37 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id 60A6728065
+	for <git@vger.kernel.org>; Wed, 10 Apr 2013 10:40:34 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at zimbra3.corp.accelance.fr
+Received: from zimbra3.corp.accelance.fr ([127.0.0.1])
+	by localhost (zimbra3.corp.accelance.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id g-cQosUSb4hS for <git@vger.kernel.org>;
+	Wed, 10 Apr 2013 10:40:34 +0200 (CEST)
+Received: from zimbra2.corp.accelance.fr (zimbra2.corp.accelance.fr [213.162.49.232])
+	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id F412B28047
+	for <git@vger.kernel.org>; Wed, 10 Apr 2013 10:40:33 +0200 (CEST)
+X-Originating-IP: [213.162.49.238]
+X-Mailer: Zimbra 7.2.2_GA_2852 (ZimbraWebClient - GC26 (Linux)/7.2.2_GA_2852)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220673>
 
-Sivaram Kannan <siva.devel@gmail.com> writes:
+Hello
 
-> Hi,
->
-> I am using git with Gitlab/Gitolite configuration. Git version is
-> 1.7.9.5 in Ubuntu 12.04. There has been a consistent git crash
-> recently and have attached the /var/crash/_usr_lib_git-core_
-> git.1001.crash file.
->
-> The crash output is pasted in the following link
->
-> http://pastebin.com/uAQS81BX
->
-> I removed some long binary information at the end of the file as
-> pastebin does not allow more than 500k pasting. The crash is
-> consistently happening and I am planning on for a debian deployment of
-> gitlab.
+is there some way to know how far you are within a rebase when the reba=
+se is interupted by a conflict other than the message given by git reba=
+se when it was interrupted ?
 
-Can you tell us what command you ran, and also try to get a readable
-backtrace from your installation?
+I would have expected a git rebase --status or something similar...
 
-It seems that the paste would have contained a core dump (you snipped
-it9, but it would be pretty useless without the corresponding binary
-anyway.  Once you have the coredump in hand (as a file) you can use
+    Regards
 
-  gdb $(which git) the_coredump_file
+    J=C3=A9r=C3=A9my Rosen
 
-and then in the GDB prompt, enter 'backtrace' and paste its output, to
-give us an idea what is going on.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+fight key loggers : write some perl using vim
