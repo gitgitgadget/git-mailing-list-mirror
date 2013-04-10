@@ -1,62 +1,85 @@
-From: Tom <mail@tgries.de>
-Subject: Re: [BUG] shallow clones over http
-Date: Wed, 10 Apr 2013 12:48:51 +0000 (UTC)
-Message-ID: <loom.20130410T144700-304@post.gmane.org>
-References: <20130403040352.GA8284@sigill.intra.peff.net> <loom.20130410T135840-387@post.gmane.org>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH] glossary: extend "detached HEAD" description
+Date: Wed, 10 Apr 2013 14:59:40 +0200
+Message-ID: <5165623C.703@gmail.com>
+References: <7vwqshc8ec.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 10 14:49:14 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 10 14:59:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPuSc-0000lE-R5
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 14:49:11 +0200
+	id 1UPucv-0008CF-E8
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 14:59:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753032Ab3DJMtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 08:49:05 -0400
-Received: from plane.gmane.org ([80.91.229.3]:38679 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751347Ab3DJMtE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 08:49:04 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UPuSU-0000UT-Fs
-	for git@vger.kernel.org; Wed, 10 Apr 2013 14:49:02 +0200
-Received: from dslb-178-008-230-161.pools.arcor-ip.net ([178.8.230.161])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 14:49:02 +0200
-Received: from mail by dslb-178-008-230-161.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 14:49:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 178.8.230.161 (Mozilla/5.0 (Windows NT 5.1; rv:20.0) Gecko/20100101 Firefox/20.0)
+	id S1762735Ab3DJM7p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Apr 2013 08:59:45 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:37273 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752629Ab3DJM7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 08:59:44 -0400
+Received: by mail-wi0-f182.google.com with SMTP id hi18so431768wib.3
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 05:59:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ktUesWUPhUlevmmqnAeHvsEYHIPqwF+QQsSwO4AlLeI=;
+        b=qzNZjGDDS2nLpF+SdXozGRP/tRHSBgwQVplm68P7VmBTEtqBo2Tct3Xei+pzTTVwnW
+         /wxCN+WJ4IeJ+VbI7mjFC508OJffOhdzOos+L+rdeYv0/qS5RtPz01hNTEvTjYzjyiLr
+         Rg6VevEc04Tce68jRf3IMRl5Bkl+YW0SkcBBnxZkaLV2L9fzIv2/pzzEIGUPn+5Yz2iS
+         FWBHSYcdmmq5jQZ1xAjpByL89c3XCSNf1Teond6CLKjbeqwqC4LeWhuiLGhVKHKeT4f4
+         l9Xzzt7jMRX2ch4+0e+XRK5SO+ebCVXb4IQuNSDl48goV6jmgtdIb/fUy5fyxj1OpWOK
+         OhgA==
+X-Received: by 10.180.39.207 with SMTP id r15mr3314207wik.16.1365598783313;
+        Wed, 10 Apr 2013 05:59:43 -0700 (PDT)
+Received: from [10.10.249.223] ([158.75.64.98])
+        by mx.google.com with ESMTPS id dm9sm31684530wib.3.2013.04.10.05.59.41
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 10 Apr 2013 05:59:42 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <7vwqshc8ec.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220685>
 
-The problem occurs to me also when I want to "deepen" a shallow clone of
-MediaWiki via https://
+Junio C Hamano wrote:
 
- git clone --depth 1 https://gerrit.wikimedia.org/r/p/mediawiki/core.git
- git pull --depth=99999
+> diff --git a/Documentation/glossary-content.txt b/Documentation/gloss=
+ary-content.txt
+> index f928b57..69c90d1 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -100,9 +100,22 @@ to point at the new commit.
+> =20
+>  [[def_detached_HEAD]]detached HEAD::
+>  	Normally the <<def_HEAD,HEAD>> stores the name of a
+> -	<<def_branch,branch>>.  However, git also allows you to <<def_check=
+out,check out>>
+> -	an arbitrary <<def_commit,commit>> that isn't necessarily the tip o=
+f any
+> -	particular branch.  In this case HEAD is said to be "detached".
+> +	<<def_branch,branch>>, and commands that operate on the
+> +	history HEAD represents operate on the history leading to the
+> +	tip of the branch the HEAD points at.  However, Git also
+> +	allows you to <<def_checkout,check out>> an arbitrary
+> +	<<def_commit,commit>> that isn't necessarily the tip of any
+> +	particular branch.  The HEAD in such a state is called
+> +	"detached".
 
-fatal: git fetch-pack: expected shallow list.
+Should we also add that "git branch" output shows this situation
+as "(no branch)"?
 
-Perhaps it helps someone to find the reason.
+Nb. this is not documented in git-branch(1) manpage either...
 
-UPDATE:
-
-This however works
-
- git clone --depth=2 https://gerrit.wikimedia.org/r/p/mediawiki/core.git
- git fetch --depth=5
+--=20
+Jakub Nar=C4=99bski
