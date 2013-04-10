@@ -1,115 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [rfh] do I need to use something more complex to do this?
-Date: Wed, 10 Apr 2013 11:19:57 -0700
-Message-ID: <7vr4iimenm.fsf@alter.siamese.dyndns.org>
-References: <7vk3oao3e5.fsf@alter.siamese.dyndns.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 6/7] completion: get rid of __gitcomp_1
+Date: Wed, 10 Apr 2013 14:23:37 -0400
+Message-ID: <CAPig+cQyyokpKP8My=1j=eaa3cc50h1_rwqDmOdOkCGFesrW-A@mail.gmail.com>
+References: <1365577077-12648-1-git-send-email-felipe.contreras@gmail.com>
+	<1365577077-12648-7-git-send-email-felipe.contreras@gmail.com>
+	<CAPig+cR4_ZB=s8JVT2LRJGcNhM9ZaESWZQ5v6Wa20=bWGoMydg@mail.gmail.com>
+	<20130410113531.GJ2222@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 10 20:21:29 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Apr 10 20:23:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPzeB-0000i8-VA
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 20:21:28 +0200
+	id 1UPzgO-0003dp-10
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 20:23:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937051Ab3DJSUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 14:20:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65274 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936053Ab3DJST7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 14:19:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66DE015BFF;
-	Wed, 10 Apr 2013 18:19:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TraVxuo4LyJH9nW4icvDz0gzwt8=; b=sLXU0A
-	1Eup6Tox4e66KD+ufwTob8Z5OAZdou+ZJKFb5LGCPIakgbXhVtTb3w1FxlhD3JxJ
-	bnyJZANvn+4sCcEZdNlwpp4ct8rBQPmH/AC86cMmR/unKfryVePk+dOgxTzt3TXH
-	Tqu0yEmCx5Nqh81z7KZv6oBprMb+Fivh7918o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZXuiSjDRus227pQqpL4ZyGQrMeJtywYN
-	3E2kmSf9X5SB7j+mpPE+AEDUc8S3pLQh4e+LzU2wh8PjOQHtzPZbFTwqukCgyXDK
-	LtV/TVkNt7LqXw8H/eYHbcBwlOQOWtk/bjkM4qsB2j3hHSxXDi1Jipg+WNC8lOQS
-	Jhs3U/uzklY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E8C915BFE;
-	Wed, 10 Apr 2013 18:19:59 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A20F415BFC; Wed, 10 Apr
- 2013 18:19:58 +0000 (UTC)
-In-Reply-To: <7vk3oao3e5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 10 Apr 2013 07:40:18 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 409A4846-A20B-11E2-8A49-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S936178Ab3DJSXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 14:23:40 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:45117 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934446Ab3DJSXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 14:23:39 -0400
+Received: by mail-lb0-f179.google.com with SMTP id t1so845996lbd.10
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 11:23:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=gshsbso0p807THGeIDXGemm0W9O9c3pAsmQQ6B1osFA=;
+        b=CmYlDYMTBmM9pWYa5S2SCLScXaTKMdExvS3TlpMkB414DC0gw7aqk2YAg6/n19QmlG
+         /bgDd5ASLna1tmINykpMq8VlrI26Lp0Vjwsy6+Tcbyj/K6qs3O9HyNxbLVW1BJJGpiuv
+         +W5sJtZHQBnw9smB19N57uE/oOK1G5YKhiXFFzyzV0GeeWzdw4QAfxctd6K6glINQPx2
+         J98TOU5pyhdMZOZ6ACwhdLUyrZxdiJUE0U6mZr5AOKKLgIioavr9TgT6oyk+hlb6b0t3
+         sp74PawKhzxL42NTUhYTAIkQvUKEaEV5Qcr2PKXI/ZtyBLs9V72B+0s+0Z6yzeXMI6ak
+         54+Q==
+X-Received: by 10.112.75.197 with SMTP id e5mr1785461lbw.6.1365618217657; Wed,
+ 10 Apr 2013 11:23:37 -0700 (PDT)
+Received: by 10.114.174.104 with HTTP; Wed, 10 Apr 2013 11:23:37 -0700 (PDT)
+In-Reply-To: <20130410113531.GJ2222@serenity.lan>
+X-Google-Sender-Auth: cjua-dZUaXLKAnGeNrYTKvF_PIc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220714>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Apr 10, 2013 at 7:35 AM, John Keeping <john@keeping.me.uk> wrote:
+> On Wed, Apr 10, 2013 at 06:13:06AM -0400, Eric Sunshine wrote:
+>> On Wed, Apr 10, 2013 at 2:57 AM, Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>> > we traverse the words ourselves both in __gitcompadd, and __gitcomp_1.
+>>
+>> s/ourselves/ourself/
+>
+> Huh?  "we traverse ... ourselves" is correct since "ourselves" is
+> associated with the "we".  I don't think "ourself" is ever correct in
+> normal usage - the dictionary notes that it applies only to the "royal
+> we".
 
-> I have set of items with two attributes, <X,Y>, and would like to
-> keep them in some data structure in such a way that it is efficient
-> to (1) add a new item to the data structure, and (2) pick an item in
-> a specific order. There can be multiple items that share the same
-> value for X, or Y, or both X and Y, and it does not matter in what
-> order items comes out among those that share the same <X,Y>.
->
-> The type of X is totally ordered. The type of Y also usually is, but
-> Y can take a special value U(nspecified).
->
-> Now on to the "specific" order I want to pick an item.  I'd like to
-> take the item with the largest value of Y in general, and tiebreaking
-> on the value of X which also I prefer to take from larger to smaller.
->
-> But with a twist.
->
-> When I am picking an item <X=n,Y=m>, there should be no item
-> remaining in the data store with a value of Y that is smaller than m
-> (duplicates are allowed, so there can still be items with Y=m), and
-> also when I am picking <X=n,Y=m>, there should be no item with
-> Y=Unspecified that has a value of X that is equal or smaller than n.
->
-> E.g. if I have these 6 items (ignore the lines between the items for
-> now):
->
->             <104,U>--<105,U>--<106,4>
->            /
->     <101,U>--<100,U>--<102,3>--<104,4>
->
-> I would want to pick them up in this order:
->
->     <106,4> <105,U> <104,U> <104,4> <102,3> <101,U> <100,U>
-
-Note that with the above specification, a possible solution is to
-show all the items with Y=Unspecified before showing others, but
-that would not be ideal for the intended use case; pretending Y=U as
-if Y=max_range is not a usable workaround.
-
-This is "I create a stream of items with specified Y in descending
-order.  There are some items with Y=Unspecified and I want to find
-appropriate places to mix the latter into that stream".
-
-Because the desired ordering is not a total order, I need to go
-to the "pair of priority list" route, I think.
->
-> I see how this can easily be done by using a two priority lists,
-> i.e. one for items with Y=Unspecified that is sorted by X, and the
-> other for all other items that is sorted by <Y,X>. Peek the top of
-> both, and pick the top of the former until its X is smaller than the
-> value of X of the top of the latter, otherwise pick the top of the
-> latter.  I am wondering if I can use less complex data structure,
-> like a single ordered sorted array, with a clever comparison
-> function.
->
-> For the curious, the items in the above picture represents commits,
-> and lines are ancestry chains between them. I am thinking how we can
-> extend the still_interesting() function with an optional generation
-> number.
+Late-night lapse. Thanks for the correction.
