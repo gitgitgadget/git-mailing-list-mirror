@@ -1,70 +1,68 @@
-From: Orgad Shaneh <orgads@gmail.com>
-Subject: [PATCH] rebase: use -f for checkout
-Date: Wed, 10 Apr 2013 21:11:24 +0300
-Message-ID: <1365617484-5181-1-git-send-email-orgads@gmail.com>
-Cc: Orgad Shaneh <orgads@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 10 20:11:46 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git rebase : knowing where I am...
+Date: Wed, 10 Apr 2013 11:13:43 -0700
+Message-ID: <7vvc7umey0.fsf@alter.siamese.dyndns.org>
+References: <1124759476.1420642.1365583233806.JavaMail.root@openwide.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Jeremy Rosen <jeremy.rosen@openwide.fr>
+X-From: git-owner@vger.kernel.org Wed Apr 10 20:13:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPzUj-0004ub-TO
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 20:11:42 +0200
+	id 1UPzWp-0007lQ-98
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 20:13:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935623Ab3DJSLh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 14:11:37 -0400
-Received: from mail-ee0-f49.google.com ([74.125.83.49]:65017 "EHLO
-	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761894Ab3DJSLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 14:11:37 -0400
-Received: by mail-ee0-f49.google.com with SMTP id l10so366311eei.36
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 11:11:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=YuZLlbFYt0VfwAtsFcNeOKD2u6uGGaPl2s6wEp9y4go=;
-        b=uvBdgof2czBnFFkhOZ6ufkXfsb1hUviHYiq3C+9exkfe5UQBddcJTSOQZ9d4C4FE0F
-         9pn1Fj8DvPq7OPfpGSFgI4tCzLrOLOu6VzXm2cwIpSvEZ0OR1pUucpf+oGXx8SXD7buR
-         nI8Mm2nRFWTdw7YP4EB75DbjRWsEhG2j+OJvvpQ3cyUHto/D11l/rDW7jQmygFcRHmNu
-         twiepOcaWMt+dhHwiLsjWRPMkUJmNteE22SXMa8T31eyvc/SRDMyQXzhIrU+gBtRS97Q
-         xDAoWk3oXlfcPy4ogg9Jxn8E5F5dCSKGSGMVZ4P70e7luEM+STUauS7gsN6bKIJGAo2O
-         Bdzg==
-X-Received: by 10.15.35.193 with SMTP id g41mr7761709eev.45.1365617495812;
-        Wed, 10 Apr 2013 11:11:35 -0700 (PDT)
-Received: from localhost.localdomain ([77.127.168.32])
-        by mx.google.com with ESMTPS id s47sm1217393eeg.8.2013.04.10.11.11.33
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 10 Apr 2013 11:11:34 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
+	id S936047Ab3DJSNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 14:13:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38114 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1765595Ab3DJSNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 14:13:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5CEE1598F;
+	Wed, 10 Apr 2013 18:13:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9nqr9Tt6VRgxXsiZr6/I7wneJbM=; b=QEwnL2
+	8FJOzUZ1lKi/nmHRNDj9s1XOiTLj4gnezY4wsidIZaaT+twndMKO51TnBVQRgXuw
+	HFfzkcCsNxrhj1aDHXXYJnvbYWoLLhMc99fQgKEEqsNoflv5OlEXGRayUpouRNAD
+	fLGVMDIKSpkjyWCqt/ax1MYTfmxbtnt0QqYTk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=owL1MPVwmdHA58P+cnm5PU4svfwwQAn+
+	IAzyVsHbZvpZ+keQEAq8eBlsSAyEtt/NKZkiu3i7zBMknevc9Kj1XWo0bP8TQ3Ib
+	na6o+9lHRxRRZmog5bkjoiDCrFp3yQcs6YwFd0/NM3ijjG+vLW+Hb/ce77TBA8hr
+	RKiAMus/0nI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDE7F1598E;
+	Wed, 10 Apr 2013 18:13:45 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3742D1598A; Wed, 10 Apr
+ 2013 18:13:45 +0000 (UTC)
+In-Reply-To: <1124759476.1420642.1365583233806.JavaMail.root@openwide.fr>
+ (Jeremy Rosen's message of "Wed, 10 Apr 2013 10:40:33 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6203F0A0-A20A-11E2-9BC3-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220712>
 
-If a file's case is changed on rename (Foo -> foo), rebase
-fails on Windows because the file already exists.
+Jeremy Rosen <jeremy.rosen@openwide.fr> writes:
 
-The change is safe, because if working directory is not clean
-rebase fails before checking out.
----
- git-rebase.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> is there some way to know how far you are within a rebase when the
+> rebase is interupted by a conflict other than the message given by
+> git rebase when it was interrupted ?
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index b2f1c76..28fdc32 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -522,7 +522,7 @@ test "$type" = interactive && run_specific_rebase
- 
- # Detach HEAD and reset the tree
- say "$(gettext "First, rewinding head to replay your work on top of it...")"
--git checkout -q "$onto^0" || die "could not detach HEAD"
-+git checkout -fq "$onto^0" || die "could not detach HEAD"
- git update-ref ORIG_HEAD $orig_head
- 
- # If the $onto is a proper descendant of the tip of the branch, then
--- 
-1.7.10.4
+I do not think there is a "git $anything" command to do that, but in
+the meantime you could "cat .git/rebase-*/git-rebase-todo" or
+something.
+
+Recent trend is to teach "git status" more about these internal states,
+so with time the command may learn to include this in its output.
