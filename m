@@ -1,90 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [ITCH] Specify refspec without remote
-Date: Wed, 10 Apr 2013 14:29:11 -0700
-Message-ID: <20130410212911.GE27070@google.com>
-References: <CALkWK0nKvTiGsjO4zF81nsSuUM=MmmbpdzHWB=4hFR2PiB+LWg@mail.gmail.com>
- <CALkWK0k44+VnrGTXESdap2nRomdYH8xwz_T2JdhYtSrPR+89sw@mail.gmail.com>
- <20130410200548.GC24177@sigill.intra.peff.net>
- <CALkWK0mEe+p3RX2tamW8dmdY_eP74Rdh_pZDRDPNfzX0TOKQCQ@mail.gmail.com>
- <20130410202456.GF24177@sigill.intra.peff.net>
- <CALkWK0k_gYWg9=zjRKGrq-evsWG+hCrLjrpLfYp=_uoHVKBzHw@mail.gmail.com>
- <20130410210455.GA2999@sigill.intra.peff.net>
- <CALkWK0k-YJwT__8Tc4B4WXq30ij3i8_d6qwyOCP5RLsKF9eazQ@mail.gmail.com>
- <20130410211824.GC27070@google.com>
- <CALkWK0nxpoLL4zoinE4j8y8NLHo0-b=PcimNLykCjMjOpWYEfQ@mail.gmail.com>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: git-http-backend: anonymous read, authenticated write
+Date: Wed, 10 Apr 2013 23:30:59 +0200
+Message-ID: <5165DA13.8010100@gmail.com>
+References: <20130409054553.GA1537@mteis.lan> <20130409171247.GD21972@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	Duy =?utf-8?B?Tmd1eeG7hW4=?= <pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 10 23:29:23 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Magnus Therning <magnus@therning.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 10 23:31:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ2a0-0005Ya-VR
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 23:29:21 +0200
+	id 1UQ2c5-0008Ju-TL
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 23:31:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935885Ab3DJV3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 17:29:17 -0400
-Received: from mail-pb0-f48.google.com ([209.85.160.48]:43236 "EHLO
-	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752757Ab3DJV3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 17:29:16 -0400
-Received: by mail-pb0-f48.google.com with SMTP id xb4so479249pbc.7
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 14:29:16 -0700 (PDT)
+	id S936828Ab3DJVbG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Apr 2013 17:31:06 -0400
+Received: from mail-ee0-f50.google.com ([74.125.83.50]:33594 "EHLO
+	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759732Ab3DJVbE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 17:31:04 -0400
+Received: by mail-ee0-f50.google.com with SMTP id e53so462693eek.37
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 14:31:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=giV5NOBSDVCE6voDMpvmtUs2eRZnpT3IAMNnr8ggDDI=;
-        b=cUgziGMUWGZSX2u4CTaWJYR9pj9+NuSQV7mSm5pvX3AANhCrxX7WamrDFIHN2r7iZT
-         84/r1BIJ7ZNgCHjqVXbIUU7czTE7lyEDsJQ8rL4yAT+EGOfKHiW20RFvuln09AHCjXDG
-         sCb0RprE2xZudz39TfxN4TWP6pQoVtaep3GDMs49WVMkhV72BM2wzTyBG/Q/7eH4HWLe
-         xKKhFfNe927e7G/OjRr5owKUBGDZua0yPwhhxQldKIzyJfPMhupk8VIDyp6l2oUrzPaq
-         US7qFCh9rdp2kQJw82nAxj30w/5K9w9KIsLPhwmJXu64WJz71VtkT60vZ7ftpUdzh42u
-         FIXg==
-X-Received: by 10.68.27.229 with SMTP id w5mr5079588pbg.220.1365629356201;
-        Wed, 10 Apr 2013 14:29:16 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id be7sm353360pad.20.2013.04.10.14.29.13
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 10 Apr 2013 14:29:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0nxpoLL4zoinE4j8y8NLHo0-b=PcimNLykCjMjOpWYEfQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=cBcm6rVtsNhQQICbbkH11SgdeUczWagvsLukiblfIrU=;
+        b=l7XSH6Enmi7XpUYOuAcSIMOUYVKVVIKRECtaoSUhEVUXpLgpvzcDWPe1dydWS36awu
+         QfifEPDgHEo1sTFeG67UcjtQYQiAsNKhjH9Pva3KBgsmuItrlIzDMRDqMHsixcJxYydt
+         832kelAR8fvKVwTTvJ7FEND4UMSdmpwI/NyPpK+ndBL9yEg1Byw5hXec0RrvHRmPUjNX
+         LHpT1U/B0ELkS3+ZWAjc0HC21nuSlPwSC3kkcnKpgE0i1C1r/BV5kFP1lDOF/cUP8C/j
+         mIKukP+ODks9zp9rxP2AcXoMbS3oPZrRU2ggcNByY1ED/HdQz1aIfCWholm6WuiFrIUW
+         tChw==
+X-Received: by 10.14.87.199 with SMTP id y47mr9695508eee.17.1365629462844;
+        Wed, 10 Apr 2013 14:31:02 -0700 (PDT)
+Received: from [192.168.1.14] (edx151.neoplus.adsl.tpnet.pl. [83.21.9.151])
+        by mx.google.com with ESMTPS id bj2sm2184243eeb.1.2013.04.10.14.31.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 10 Apr 2013 14:31:01 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <20130409171247.GD21972@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220776>
 
-Ramkumar Ramachandra wrote:
-> Jonathan Nieder wrote:
+Jeff King wrote:
+> On Tue, Apr 09, 2013 at 07:45:53AM +0200, Magnus Therning wrote:
 
->>        git push master
->> ...
->>  a) Error: you didn't tell me which remote to push to.
->>  b) Just behave like "git push my-personal-remote master".
->>  c) Behave like "git push origin master".
->
-> Here, I'd argue for (d): push to branch.master.pushremote/
-> branch.master.remote/ remote.pushdefault/ origin.
+>>     % git push=20
+>>     error: The requested URL returned error: 403 Forbidden while acc=
+essing
+>>
+http://magnus@tracsrv.local/git/foo.git/info/refs?service=3Dgit-receive=
+-pack
+>=20
+> Something in your config is blocking access to info/refs there. It
+> should not be the block shown above, which handles only the actual PO=
+ST
+> of the data. The sequence of http requests made is:
+>=20
+>   1. GET $repo/info/refs?service=3Dgit-receive-pack
+>=20
+>      This makes initial contact and gets the ref information which pu=
+sh
+>      uses to decide what it is going to push. So it is read-only, and=
+ in
+>      an anonymous-read setup, does not need to be protected.
 
-My first hunch is not to like this, since it means
+Yes, it doesn't need to be protected, but *git-receive-pack* requires
+(or required) valid user even for above GET request for getting refs.
 
-	git push -- master next
+>   2. POST $repo/git-receive-pack
+>=20
+>      This actually pushes up the objects and updates the refs, and
+>      must be protected.
+>=20
+> The setup listed above does work with apache; it is tested as part of
+> our test suite (you can see the actual config in t/lib-httpd/apache.c=
+onf).
+> So what in lighttpd is giving us the 403? Can you share your whole
+> config?
 
-might push to two different remotes and because it's not obvious
-to me when it would be useful.
+I think I have seen a patch on git mailing list to correct this, but
+I am not sure.
 
-So I am still leaning toward the behavior Jeff suggested.  That said,
-we're probably at the point where enough scenarios have been described
-for someone to write a patch with a clear explanation about how their
-proposed behavior takes care of them all.
+Are you sure that we test this correctly?
 
-Thanks,
-Jonathan
+--=20
+Jakub Nar=C4=99bski
