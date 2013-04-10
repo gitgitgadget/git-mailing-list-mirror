@@ -1,85 +1,164 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [ITCH] Specify refspec without remote
-Date: Thu, 11 Apr 2013 01:35:34 +0530
-Message-ID: <CALkWK0nAMVKuDg4wmwujkpNxAF9zxQEdsZXyUzr+w4zVpWDCzA@mail.gmail.com>
-References: <CALkWK0nqZ+GGvDhR=OPOz+NtYKXz7waQrxvCi-spAJ46pL=YKA@mail.gmail.com>
- <7vhajfqz8r.fsf@alter.siamese.dyndns.org> <20130409231332.GZ30308@google.com>
- <7vobdnnpx6.fsf@alter.siamese.dyndns.org> <20130410041343.GB795@sigill.intra.peff.net>
- <7v4nfenxzm.fsf@alter.siamese.dyndns.org> <20130410172748.GA16908@sigill.intra.peff.net>
- <7vhajemd1x.fsf@alter.siamese.dyndns.org> <20130410185958.GA22394@sigill.intra.peff.net>
- <CALkWK0nKvTiGsjO4zF81nsSuUM=MmmbpdzHWB=4hFR2PiB+LWg@mail.gmail.com> <20130410195256.GA24177@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 10 22:06:23 2013
+From: Orgad Shaneh <orgads@gmail.com>
+Subject: [PATCH] submodule: add verbose mode for add/update
+Date: Wed, 10 Apr 2013 23:10:10 +0300
+Message-ID: <1365624610-11163-1-git-send-email-orgads@gmail.com>
+Cc: Orgad Shaneh <orgads@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 10 22:10:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ1Hh-0001Qz-TR
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 22:06:22 +0200
+	id 1UQ1Lk-0006hg-CM
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 22:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936319Ab3DJUGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 16:06:17 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:52005 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936034Ab3DJUGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 16:06:15 -0400
-Received: by mail-ie0-f171.google.com with SMTP id e14so1108282iej.30
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 13:06:14 -0700 (PDT)
+	id S936156Ab3DJUK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 16:10:27 -0400
+Received: from mail-ee0-f47.google.com ([74.125.83.47]:64352 "EHLO
+	mail-ee0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935970Ab3DJUK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 16:10:26 -0400
+Received: by mail-ee0-f47.google.com with SMTP id t10so419060eei.34
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 13:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=M8KfLm76BRYm7rxHd2yHq8OCc5aLogFZh+Ab2N5fzGI=;
-        b=XihRRrgdrVkXM4mrw3CQNKyMqeaNIdIaKCG1ECEC3EccVNDxuJqM/0gAabHYzyhCl8
-         MQrRBYr1roTxxngBapHn2I6ihjoDlHdVrSHvqcXyfH+QRTJ7P5xfh0EMmhA26eWhYDhD
-         DLjoT9bLxK5mugp/KgylWywr2Ded3fkFA6Jjuglylv4V0voV33Nv2mzlLAOuywV9oF09
-         16CUOxKHSfvvm77s3HX4rnnhghAjCYC/dZSPFfExHxC3xxxvCbu6q3VEhNycNzPDsXwc
-         Gd5uVgECsFnIVW9aFQnTGdAwK1qc09+MfFvzPmFScowb05VVGnJ3pfObQU8CS5/y9NjM
-         cDpQ==
-X-Received: by 10.50.17.166 with SMTP id p6mr14228448igd.12.1365624374643;
- Wed, 10 Apr 2013 13:06:14 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Wed, 10 Apr 2013 13:05:34 -0700 (PDT)
-In-Reply-To: <20130410195256.GA24177@sigill.intra.peff.net>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=6toiABpxBXI2EGMSq4i6Y5jDPilD+RQUuqG36Ow0c9E=;
+        b=MOox4lHLNccFpUSeLjUpDu8t/bOyuu9oNTOsEVTvLI0C/oIqiVZloW5gt6jWD19OH4
+         RBy66gCHrRu/yKCR47GgDC/tLxC9CH9Yr3QdpRGEqDlFIBEmD9L3gVmAqsoZJzVQLb8p
+         DGNifRra00tGyFIyeiIwjXquin+BBlBbVlY2DEPo+rQQbzo4ckxM6MJZZloMiENJ1XkC
+         d+jW5TUquQZS+88crwXC0xGHDK86FEL0LxIpWcArqTWWP/SoVfNAuIP/X5/RXM06v/Gz
+         MPWwEs720+Ew0xqupMX5sHn6AmkH2Vm+7vLkkjz2413pesvOWjqOLEZq/pFdQ6dqdfvh
+         WrOg==
+X-Received: by 10.14.181.196 with SMTP id l44mr1532031eem.44.1365624625433;
+        Wed, 10 Apr 2013 13:10:25 -0700 (PDT)
+Received: from localhost.localdomain ([77.127.168.32])
+        by mx.google.com with ESMTPS id d47sm1761551eem.9.2013.04.10.13.10.23
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 10 Apr 2013 13:10:24 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220747>
 
-Jeff King wrote:
-> Maybe. But no more so than the current:
->
->   git push
->
-> which may also push master and next to the same remote.
+When 'git submodule add/update' is run there is no output during
+checkout. This can take a significant amount of time and it would
+be nice if user could enable some feedback to see what's going on.
 
-I would argue that this was not really a problem in practice, until I
-introduced branch.<name>.pushremote.
+Add the -v/--verbose option to both add and update which suppresses
+the -q normally given to checkout so the user sees progress output
+from the checkout command.
 
-Let us imagine that I was working on artagnon/git.git (remote: ram), a
-fork of git/git.git (remote: origin) earlier.  My fork contains the
-link and implicit-push branches in addition to the master, next and pu
-branches, which are present on both.  When I push from my
-implicit-push branch with push.default = matching, I'm updating all
-the matching refs on the remote ram (since branch.implicit-push.remote
-is set to ram), which is fine.  Now, I git push while on branch
-master.  My push is simply rejected, as I don't have write access to
-the remote origin.
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+---
+ Documentation/git-submodule.txt |   10 ++++++++--
+ git-submodule.sh                |   24 +++++++++++++++++++-----
+ 2 files changed, 27 insertions(+), 7 deletions(-)
 
-This is designed exactly for the read-only upstream, read-write fork
-scenario.  If I had write access to upstream (where we're essentially
-regression to a centralized model), we'd have some major confusion.
-
-> As I said in an
-> earlier message, I would be OK with allowing both or neither, but
-> allowing one but not the other is even more confusing.
-
-What is the point of allowing something internally consistent, but
-nonsensical?  You should complain.
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 74d5bdc..6abfd5d 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -10,13 +10,13 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git submodule' [--quiet] add [-b <branch>] [-f|--force] [--name <name>]
+-	      [--reference <repository>] [--] <repository> [<path>]
++	      [--reference <repository>] [-v|--verbose] [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+ 'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
+ 'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
+ 	      [-f|--force] [--rebase] [--reference <repository>]
+-	      [--merge] [--recursive] [--] [<path>...]
++	      [--merge] [--recursive] [-v|--verbose] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+ 	      [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach [--recursive] <command>
+@@ -324,6 +324,12 @@ for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
+ 	only in the submodules of the current repo, but also
+ 	in any nested submodules inside those submodules (and so on).
+ 
++-v::
++--verbose::
++	This option makes the checkout operation more verbose.
++	By default, a quiet checkout is performed. Specifying --verbose
++	provides progress information to the user.
++
+ <path>...::
+ 	Paths to submodule(s). When specified this will restrict the command
+ 	to only operate on the submodules found at the specified paths.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 79bfaac..f7964ad 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -5,11 +5,11 @@
+ # Copyright (c) 2007 Lars Hjemli
+ 
+ dashless=$(basename "$0" | sed -e 's/-/ /')
+-USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
++USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [-v|--verbose] [--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
+-   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
++   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [-v|--verbose] [--] [<path>...]
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
+@@ -309,6 +309,9 @@ cmd_add()
+ 			custom_name=$2
+ 			shift
+ 			;;
++		-v|--verbose)
++			VERBOSE=1
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -408,11 +411,15 @@ Use -f if you really want to add it." >&2
+ 		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" || exit
+ 		(
+ 			clear_local_git_env
++			if test -z "$VERBOSE"
++			then
++				subquiet=-q
++			fi
+ 			cd "$sm_path" &&
+ 			# ash fails to wordsplit ${branch:+-b "$branch"...}
+ 			case "$branch" in
+-			'') git checkout -f -q ;;
+-			?*) git checkout -f -q -B "$branch" "origin/$branch" ;;
++			'') git checkout -f $subquiet ;;
++			?*) git checkout -f $subquiet -B "$branch" "origin/$branch" ;;
+ 			esac
+ 		) || die "$(eval_gettext "Unable to checkout submodule '\$sm_path'")"
+ 	fi
+@@ -676,6 +683,9 @@ cmd_update()
+ 		--checkout)
+ 			update="checkout"
+ 			;;
++		-v|--verbose)
++			VERBOSE=1
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -799,7 +809,11 @@ Maybe you want to use 'update --init'?")"
+ 				must_die_on_failure=yes
+ 				;;
+ 			*)
+-				command="git checkout $subforce -q"
++				if test -z "$VERBOSE"
++				then
++					subquiet=-q
++				fi
++				command="git checkout $subforce $subquiet"
+ 				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$prefix\$sm_path'")"
+ 				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': checked out '\$sha1'")"
+ 				;;
+-- 
+1.7.10.4
