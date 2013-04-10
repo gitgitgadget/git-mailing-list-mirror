@@ -1,98 +1,125 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: git instaweb - share all project files
-Date: Wed, 10 Apr 2013 19:03:23 +0200
-Message-ID: <51659B5B.6000707@gmail.com>
-References: <CAMg8Y2pFXrbh8cz6m5z=LsksRijLVcV4fTk-TBx+9yaQTtAzpA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [ITCH] Specify refspec without remote
+Date: Wed, 10 Apr 2013 13:27:48 -0400
+Message-ID: <20130410172748.GA16908@sigill.intra.peff.net>
+References: <CALkWK0k2a6DSUodhKjRFKGvE1Rb_QmFgpy=Pvbu2Q=nGNYuByA@mail.gmail.com>
+ <7vzjx7sj9u.fsf@alter.siamese.dyndns.org>
+ <CALkWK0=siuUW1ex0muy+efwQOAwHf3uorFHWPo5sjMss08ywiw@mail.gmail.com>
+ <7vip3vsi19.fsf@alter.siamese.dyndns.org>
+ <CALkWK0nqZ+GGvDhR=OPOz+NtYKXz7waQrxvCi-spAJ46pL=YKA@mail.gmail.com>
+ <7vhajfqz8r.fsf@alter.siamese.dyndns.org>
+ <20130409231332.GZ30308@google.com>
+ <7vobdnnpx6.fsf@alter.siamese.dyndns.org>
+ <20130410041343.GB795@sigill.intra.peff.net>
+ <7v4nfenxzm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Trenton D. Adams" <trenton.d.adams@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 10 19:03:34 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Duy =?utf-8?B?Tmd1eeG7hW4=?= <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 10 19:28:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPyQm-0003ou-LV
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 19:03:32 +0200
+	id 1UPyoT-0001TZ-Gy
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 19:28:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934896Ab3DJRD2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Apr 2013 13:03:28 -0400
-Received: from mail-ee0-f54.google.com ([74.125.83.54]:63652 "EHLO
-	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755371Ab3DJRD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 13:03:27 -0400
-Received: by mail-ee0-f54.google.com with SMTP id e51so352806eek.41
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 10:03:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=XNXu5Ph0CcZNtWS3KoRiLDE54VzR12bcSTugpAk8/0U=;
-        b=AvQYG6I511tuzYYJzjySkd0xnIfM4rGV4i8X84iVy+oUQY0XTiblR40LDlc/8xu4gE
-         EY8e7BsBxeFUWefB3I+lss6l6v5EnlqZlZ9RIzb3Gm/u+zRRBsTZgLzFa4iYqcP9eCuZ
-         oxF3b4pFCtUzWni4MypgyXoA2M1cracaoPFi0QkLqKNbwJxnZq/9hzasnH9OpIU2+HWn
-         TJXe14xBq6NA/CU9/0s7JRRrYKSyaf0r/Y84PMqe54nKjK5Iaob3mUH8fZrGCDtTedU4
-         HyDmyIh8gXrg8ahJzNErsYh2Pw453n5lJOklqGIAj5GOkgRzu9JUf8SGNHatCcyYrDsB
-         rJmw==
-X-Received: by 10.14.182.137 with SMTP id o9mr7376100eem.13.1365613406137;
-        Wed, 10 Apr 2013 10:03:26 -0700 (PDT)
-Received: from [192.168.1.14] (edx151.neoplus.adsl.tpnet.pl. [83.21.9.151])
-        by mx.google.com with ESMTPS id d47sm888486eem.9.2013.04.10.10.03.24
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 10 Apr 2013 10:03:25 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <CAMg8Y2pFXrbh8cz6m5z=LsksRijLVcV4fTk-TBx+9yaQTtAzpA@mail.gmail.com>
+	id S965216Ab3DJR14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 13:27:56 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:38902 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964866Ab3DJR1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 13:27:55 -0400
+Received: (qmail 4274 invoked by uid 107); 10 Apr 2013 17:29:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Apr 2013 13:29:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Apr 2013 13:27:48 -0400
+Content-Disposition: inline
+In-Reply-To: <7v4nfenxzm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220707>
 
-W dniu 07.04.2013 05:02, Trenton D. Adams pisze:
+On Wed, Apr 10, 2013 at 09:37:01AM -0700, Junio C Hamano wrote:
 
-> On that first page that shows up, it shows the .git folder.  It would
-> be kind of nice if it shared out both the git repo and the actual
-> current project files.  I frequently have stuff I'd like to see in a
-> web browser, and even requires one (i.e. Navigating to
-> file:///home/blah/blah doesn't work; ajax requests for example)
+> > The missing case 4 is obviously:
+> >
+> >   dst=missing, refs=present
+> > ...
+> > Do you want to explain your thinking? I'm guessing it has to do with the
+> > fact that choosing branch.*.remote is about trying to push to the
+> > configured upstream (even though we traditionally do _not_ take into
+> > account branch.*.merge when doing so).
+> 
+> With the branch.$name.remote, the user tells us "When I am on this
+> branch, I want to talk to this remote".  When you did
+> 
+> 	git push -- master next ;# case #4
+> 
+> on branch maint, branch.maint.remote should not come into play.
 
-There are a few possible solutions, from simplest to most complicated:
+I understand that's your position, but I don't understand _why_.
 
-1. Configure gitweb ran by git-instaweb to have 'worktree' link in
-   the action bar pointing to 'file:///path/to/repo' (or rather
-   'file:///path/to/workdir') via 'actions' feature, adding e.g.
+If branch.$name.remote is "when I am on this branch, I want to talk to
+this remote", that rule is not be impacted by the presence of refspecs
+at all.
 
-     $feature{'actions'}{'default'} =3D
-     	[('worktree', 'file:///path/to/repo', 'summary')];
+If it meant "when I am on this branch, and I do not specify any
+refspecs, then I would by default want to push this branch to that
+remote", then your proposed behavior would make more sense. And if you
+are using push.default=upstream, that is what happens.
 
-   to gitweb_config.perl / gitweb.conf used by git-instaweb's gitweb.
+But historically the default push has been "matching". So in your other
+examples:
 
-   This of course works only for local use, so either git-instaweb
-   or gitweb (in config) should check that we use it locally
-   (e.g. if hostname is 'localhost' or equivalent).
+> Would we want to push our 'master' to branch.master.remote in a way 
+> 
+> 	git checkout master && git push
+> 
+> would do, while at the same time because we were told to do the same
+> for 'next', we do the same as
+> 
+> 	git checkout next && git push
 
-2. In the web server configuration generated by git-instaweb, perhaps
-   as an option, add serving of worktree (with mod_autoindex aka.
-   'Options +Indexes' for Apache2, and equivalent solutions for *all*
-   other supported web servers: lighttpd, mongoose, plack, webrick).
+These do not have anything to do with pushing the checked-out branch in
+particular. The first one may very well be pushing "next" to the remote
+specified by branch.master.remote.
 
-   This may require some fiddling with URI rewriting, or change of
-   gitweb URI, to be able to have both worktree index and gitweb
-   script (gitweb is now under '/'), so it should probably be protected
-   by an option to git-instaweb.
+So I would argue that one of these two makes sense:
 
-3. Add proper support to gitweb: add 'worktree' action (similar to
-   'tree' action / view).  Probably needs to be made somewhat
-   configurable (and of course enabled in git-instaweb).
+  1. branch.*.remote means "use this as the default remote on this
+     branch, no matte which refs we are pushing"
 
+  2. branch.*.remote is not respected at all for remote selection with
+     "matching". It is used only when combined with branch.*.merge,
+     which means that only the "upstream" mode would use it.
 
-Unfortunately solution 1.) which is simplest is not enough for your
-situation...
+I advocated (1) in my previous message, but I would also be OK with (2),
+even though it is a change from the current behavior. But what you are
+suggesting seems like an inconsistent mix of the two.
 
-I can add 3.) to my gitweb TODO, but I don't know when I would be able
-to get to implementing it.
---=20
-Jakub Nar=C4=99bski
+> would do?  That would work if you give just branch names, but that
+> is not a general enough definition to cover your case #4, e.g.
+> 
+> 	git push -- v1.2.3 master:refs/remotes/mothership/master
+> 
+> If we define case #4 to push to the remote.pushdefault (falling back
+> to remote.default), this case would do what can simply be expected;
+> if the earlier cases also push to that same place, ignoring
+> branch.$name.remote for master and next, that would be consistent.
+
+So I think what you are getting at is that branch.*.remote is about
+saying "when we push X, it goes to remote Y". And with v1.2.3, we
+obviously cannot have such a hint, because it is not a branch. But my
+point is that is _not_ how it works today.  So if you want consistency,
+we would also need to adjust how branch.*.remote interacts with
+"matching".
+
+-Peff
