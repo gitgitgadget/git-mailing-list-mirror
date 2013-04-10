@@ -1,74 +1,65 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git-http-backend: anonymous read, authenticated write
-Date: Wed, 10 Apr 2013 17:53:46 -0400
-Message-ID: <20130410215346.GB6215@sigill.intra.peff.net>
-References: <20130409054553.GA1537@mteis.lan>
- <20130409171247.GD21972@sigill.intra.peff.net>
- <20130410204544.GA2472@mteis.lan>
+Subject: Re: [ITCH] Specify refspec without remote
+Date: Wed, 10 Apr 2013 17:56:58 -0400
+Message-ID: <20130410215658.GC6215@sigill.intra.peff.net>
+References: <20130410200548.GC24177@sigill.intra.peff.net>
+ <CALkWK0mEe+p3RX2tamW8dmdY_eP74Rdh_pZDRDPNfzX0TOKQCQ@mail.gmail.com>
+ <20130410202456.GF24177@sigill.intra.peff.net>
+ <CALkWK0k_gYWg9=zjRKGrq-evsWG+hCrLjrpLfYp=_uoHVKBzHw@mail.gmail.com>
+ <20130410210455.GA2999@sigill.intra.peff.net>
+ <CALkWK0k-YJwT__8Tc4B4WXq30ij3i8_d6qwyOCP5RLsKF9eazQ@mail.gmail.com>
+ <20130410211824.GC27070@google.com>
+ <CALkWK0nxpoLL4zoinE4j8y8NLHo0-b=PcimNLykCjMjOpWYEfQ@mail.gmail.com>
+ <20130410212911.GE27070@google.com>
+ <CALkWK0m=iDw+N0zcfEEt1jzFD4wOOzLgyBWNyc=HZ+xLe5SBLw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Magnus Therning <magnus@therning.org>
-X-From: git-owner@vger.kernel.org Wed Apr 10 23:53:58 2013
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Duy =?utf-8?B?Tmd1eeG7hW4=?= <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 10 23:57:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ2xp-0002zE-DB
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 23:53:57 +0200
+	id 1UQ30y-0006z3-Bi
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 23:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936993Ab3DJVxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 17:53:53 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39316 "EHLO
+	id S934913Ab3DJV5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 17:57:07 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39323 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752735Ab3DJVxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 17:53:53 -0400
-Received: (qmail 8412 invoked by uid 107); 10 Apr 2013 21:55:45 -0000
+	id S1755680Ab3DJV5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 17:57:06 -0400
+Received: (qmail 8431 invoked by uid 107); 10 Apr 2013 21:58:58 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Apr 2013 17:55:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Apr 2013 17:53:46 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Apr 2013 17:58:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Apr 2013 17:56:58 -0400
 Content-Disposition: inline
-In-Reply-To: <20130410204544.GA2472@mteis.lan>
+In-Reply-To: <CALkWK0m=iDw+N0zcfEEt1jzFD4wOOzLgyBWNyc=HZ+xLe5SBLw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220783>
 
-On Wed, Apr 10, 2013 at 10:45:44PM +0200, Magnus Therning wrote:
+On Thu, Apr 11, 2013 at 03:12:20AM +0530, Ramkumar Ramachandra wrote:
 
-> I was putting together a *long* response, with my different
-> configurations when it suddenly hit me how to make it work.
+> Jonathan Nieder wrote:
+> > My first hunch is not to like this, since it means
+> >
+> >         git push -- master next
+> >
+> > might push to two different remotes and because it's not obvious
+> > to me when it would be useful.
 > 
-> So, this is the accesslog for a successful `git push`:
-> 
-> 192.168.1.84 tracsrv.local - [10/Apr/2013:22:24:59 +0200] "GET /git/foo.git/info/refs?service=git-receive-pack HTTP/1.1" 401 351 "-" "git/1.8.2.1"
-> 192.168.1.84 tracsrv.local - [10/Apr/2013:22:24:59 +0200] "GET /git/foo.git/info/refs?service=git-receive-pack HTTP/1.1" 401 351 "-" "git/1.8.2.1"
-> 192.168.1.84 tracsrv.local magnus [10/Apr/2013:22:25:04 +0200] "GET /git/foo.git/info/refs?service=git-receive-pack HTTP/1.1" 200 202 "-" "git/1.8.2.1"
-> 192.168.1.84 tracsrv.local magnus [10/Apr/2013:22:25:09 +0200] "POST /git/foo.git/git-receive-pack HTTP/1.1" 200 73 "-" "git/1.8.2.1"
-> 
-> That is, *both* the GET and POST queries require a valid username
-> (trying to push without a valid user will fail with a 403 already on
-> the GET query).  Maybe Apache 2.x simply behaves *very* differently
-> from lighttpd, but I still can't see how a rule to require a valid
-> user only on the POST can ever work.
+> Yes, it will push to two different remotes.  And why is it not useful?
 
-Right. But that is not configured at all by the apache config shown in
-the manpage:
-
-               <LocationMatch "^/git/.*/git-receive-pack$">
-                       AuthType Basic
-                       AuthName "Git Access"
-                       Require group committers
-                       ...
-               </LocationMatch>
-
-which should not match on the info/refs request at all. That is why I
-suspect there is something else wrong in your lighttpd config, or
-something wrong in the conversion of the apache config to lighttpd.
-
-Anyway, it sounds like you found a working config.
+It's not that it's not potentially useful. It's that it may be
+surprising and annoying to users who did not want that.
 
 -Peff
