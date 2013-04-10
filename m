@@ -1,102 +1,119 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 1/2] transport-helper: improve push messages
-Date: Wed, 10 Apr 2013 19:07:11 -0500
-Message-ID: <1365638832-9000-2-git-send-email-felipe.contreras@gmail.com>
-References: <1365638832-9000-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 11 02:08:40 2013
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: regression:
+ "96b9e0e3 config: treat user and xdg config permission problems as errors"
+ busted git-daemon
+Date: Wed, 10 Apr 2013 09:56:05 -0400
+Message-ID: <20130410135605.GB4694@odin.tremily.us>
+References: <1365572015.4658.51.camel@marge.simpson.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=GID0FwUMdk1T2AWN
+Cc: git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+To: Mike Galbraith <bitbucket@online.de>
+X-From: git-owner@vger.kernel.org Thu Apr 11 02:46:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ54A-0001Ae-63
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 02:08:38 +0200
+	id 1UQ5fA-0006h6-J4
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 02:46:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937721Ab3DKAIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 20:08:22 -0400
-Received: from mail-qa0-f44.google.com ([209.85.216.44]:34430 "EHLO
-	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S937299Ab3DKAIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 20:08:19 -0400
-Received: by mail-qa0-f44.google.com with SMTP id o13so4238qaj.3
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 17:08:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=X85H5gg+KPkcfQjdY0fqhmSkY9PvYLfYywp8XaHlPrA=;
-        b=dcOaBce9c9lpa138677FsCZQYIUUGg2PRny5lHNZyHjag2ocsMVZgl/qNajLeChhrh
-         xZCrAXS7L9cYJQwlcd1o+GCFlr/HQ5xFKF6UFptQp5DUToJPxy18UCp770P2RjUBSJ48
-         ypE8s2k1IsireCAhLv1sfS0XbfL0O+dqKref0WGOQKI+B3xbqI9Ww4quYiAbMzImVSB1
-         hf4ZXDDTVKo7kbZpWhoLFEa5JkXWDktDWYsWLRWQlsfw2WrvuW+B1rWeGNvUcyPz9/ha
-         SLIx78nXFCWxTqrTI+jbnNEaG0OtUCeYdPampmbpWIV2sTTObhNiknKnIHca7S4zg0aL
-         MZVQ==
-X-Received: by 10.224.78.147 with SMTP id l19mr4983996qak.28.1365638898906;
-        Wed, 10 Apr 2013 17:08:18 -0700 (PDT)
-Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
-        by mx.google.com with ESMTPS id g6sm4027212qav.6.2013.04.10.17.08.16
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 10 Apr 2013 17:08:18 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1
-In-Reply-To: <1365638832-9000-1-git-send-email-felipe.contreras@gmail.com>
+	id S935269Ab3DKAqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 20:46:48 -0400
+Received: from vms173007pub.verizon.net ([206.46.173.7]:47425 "EHLO
+	vms173007pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934600Ab3DKAqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 20:46:47 -0400
+X-Greylist: delayed 3605 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Apr 2013 20:46:47 EDT
+Received: from odin.tremily.us ([unknown] [72.68.100.81])
+ by vms173007.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0ML200LP0CPTZU30@vms173007.mailsrvcs.net> for
+ git@vger.kernel.org; Wed, 10 Apr 2013 18:46:42 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 8699794D16C; Wed,
+ 10 Apr 2013 09:56:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1365602165; bh=yaXjuMADI6iLC5wULFKWA9EEW211yII9K8SqfLv+fns=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=a7X+6T5sQ1J6fN77isU3HYQ9xhphHaBsUOcBrS/m3iolO0T31i7rtOFiRq2phES0n
+ xwtxAU/DR7mDbbie54Y6yPQxsOswhL/jXptYk752JvJGXBLAnhle6Ub7So1FECcuqL
+ T17SGOFULRYsWm4Wqbg8fS0dEzL8LCTBDzkOm6Gc=
+Content-disposition: inline
+In-reply-to: <1365572015.4658.51.camel@marge.simpson.net>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220799>
 
-If there's already a remote-helper tracking ref, we can fetch the SHA-1
-to report proper push messages (as opposed to always reporting
-[new branch]).
 
-The remote-helper currently can specify the old SHA-1 to avoid this
-problem, but there's no point in forcing all remote-helpers to be aware
-of git commit ids; they should be able to be agnostic of them.
+--GID0FwUMdk1T2AWN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- t/t5801-remote-helpers.sh | 14 ++++++++++++++
- transport-helper.c        |  1 +
- 2 files changed, 15 insertions(+)
+On Wed, Apr 10, 2013 at 07:33:35AM +0200, Mike Galbraith wrote:
+> /usr/lib/git/git-daemon --syslog --detach --reuseaddr --user=3Dgit --grou=
+p=3Ddaemon --pid-file=3D/var/run/git-daemon.pid --export-all --user-path --=
+enable=3Dreceive-pack
+>=20
+> Try to pull as root or normal user results in:
+>=20
+> [pid 26786] access("/root/.config/git/config", R_OK) =3D -1 EACCES (Permi=
+ssion denied)
+> [pid 26786] write(2, "fatal: unable to access '/root/."..., 70) =3D 70
+> [pid 26785] <... read resumed> "fatal: unable to access '/root/."..., 409=
+6) =3D 70
+> [pid 26786] exit_group(128)
+>=20
+> Bisection fingered this commit, though it looks like it's really due to
+> not forgetting who it was at birth.  It's not root, so has no business
+> rummaging around in /root.  It used to not care, but this commit made
+> "go away" while looking for non-existent config file terminal.
 
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index f387027..214aa40 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -166,4 +166,18 @@ test_expect_success 'push ref with existing object' '
- 	compare_refs local dup server dup
- '
- 
-+test_expect_success 'push messages' '
-+	(cd local &&
-+	git checkout -b new_branch master &&
-+	echo new >>file &&
-+	git commit -a -m new &&
-+	git push origin new_branch &&
-+	git fetch origin &&
-+	echo new >>file &&
-+	git commit -a -m new &&
-+	git push origin new_branch 2> msg &&
-+	! grep "\[new branch\]" msg
-+	)
-+'
-+
- test_done
-diff --git a/transport-helper.c b/transport-helper.c
-index cb3ef7d..2257025 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -801,6 +801,7 @@ static int push_refs_with_export(struct transport *transport,
- 		if (private && !get_sha1(private, sha1)) {
- 			strbuf_addf(&buf, "^%s", private);
- 			string_list_append(&revlist_args, strbuf_detach(&buf, NULL));
-+			hashcpy(ref->old_sha1, sha1);
- 		}
- 		free(private);
- 
--- 
-1.8.2.1
+I ran into this too, although I'm running git-daemon via spawn-fcgi.
+In order to convince newer Gits that you know what you're doing, you
+just need to set HOME to somewhere Git can look.  For example:
+
+  HOME=3D/ /usr/lib/git/git-daemon =E2=80=A6
+
+should work.  On Gentoo, I added the following to
+/etc/conf.d/spawn-fcgi.fcgiwrap:
+
+  ALLOWED_ENV=3D"PATH HOME"
+  HOME=3D/
+
+Cheers,
+Trevor
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--GID0FwUMdk1T2AWN
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRZW90AAoJEEUbTsx0l5OMxrcQAJatAwwwVmDrsAWcgP/X0aJR
+2X0b+SakfpyShYYN9jO6PpJX5tTBFcZfh4hnOdp7l55LfoDTsorHgYpEfWydZiIk
+MJGE72h5LByUeaeIE5i912/+OzXD5qokpCDxLmAJkSvWxLvWJBNpN7gktrmnhp3n
+qQ8JNdIAo95sO8kgQbEe7kMXcaBRA9YDL64QtHPQbSP6cWSHITDmj/gi+UBnA8nW
+xbo1kCZIJQmDM7XyskLvSBgHUNCwKLxgaq65WL1ROgjKOlQVPjPcesR+MXytid1/
+SeBbeuQ1bwqf48g7lhKhMeXwcvYMH9puDqn5HrYJYRM0zO7iYgW+OnAm4pf6Y+X0
+icYCxd7uwtqruxPpJICM2vf5sAAs78e+FdOwDGWFT08WYMDo1Taf6SWXnoemE5yd
+Gn+d+RpRmNmE3yeo2MzzgADJhRgGRH+xd7uBrS/TEhnzt9mLFu8xh39FLdLalzMB
+Z3sGzOz8/gVn2IZ2Z9jC95BloOW+tnIGLwyGQu5kzsNNoqjzvzlb0r6R5iQki3XY
+hN9xmtnMfFJXBZQ7rLD+uUbB4IjL3YL4jwOsCwVZsN+pdqy3jMJwC7nSXYvY8USL
+y9Jm0qqcW+Vky1hS05BH+dkqEn8GmHpe98SH3wYDLjLz5eI6TOEQprlrDFSeYg++
+VigByUH1o548rs108myT
+=Y0KM
+-----END PGP SIGNATURE-----
+
+--GID0FwUMdk1T2AWN--
