@@ -1,76 +1,105 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [ITCH] Specify refspec without remote
-Date: Thu, 11 Apr 2013 04:01:23 +0530
-Message-ID: <CALkWK0mB9BChMJpMfU8xETGG1mMJc7GjqKy1N5RWgBeyKu+HwA@mail.gmail.com>
-References: <20130410202456.GF24177@sigill.intra.peff.net> <CALkWK0k_gYWg9=zjRKGrq-evsWG+hCrLjrpLfYp=_uoHVKBzHw@mail.gmail.com>
- <20130410210455.GA2999@sigill.intra.peff.net> <CALkWK0k-YJwT__8Tc4B4WXq30ij3i8_d6qwyOCP5RLsKF9eazQ@mail.gmail.com>
- <20130410211824.GC27070@google.com> <CALkWK0nxpoLL4zoinE4j8y8NLHo0-b=PcimNLykCjMjOpWYEfQ@mail.gmail.com>
- <20130410212911.GE27070@google.com> <CALkWK0m=iDw+N0zcfEEt1jzFD4wOOzLgyBWNyc=HZ+xLe5SBLw@mail.gmail.com>
- <20130410215658.GC6215@sigill.intra.peff.net> <CALkWK0=Y-pO3+g21PLCWOxx+M-7fSmp2FedMBtZ68PWU_TOHDw@mail.gmail.com>
- <20130410222334.GC6930@sigill.intra.peff.net>
+From: "Trenton D. Adams" <trenton.d.adams@gmail.com>
+Subject: Re: git instaweb - share all project files
+Date: Wed, 10 Apr 2013 16:42:20 -0600
+Message-ID: <CAMg8Y2qm9FuuMZh7jsAEyr=joUbsp=5V_zU5U86sW0Y=f2OVBA@mail.gmail.com>
+References: <CAMg8Y2pFXrbh8cz6m5z=LsksRijLVcV4fTk-TBx+9yaQTtAzpA@mail.gmail.com>
+	<51659B5B.6000707@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 11 00:32:11 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 11 00:42:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ3Yo-0007uj-MA
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 00:32:11 +0200
+	id 1UQ3io-0003kN-QV
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 00:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933050Ab3DJWcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 18:32:06 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:50682 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756630Ab3DJWcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 18:32:05 -0400
-Received: by mail-ie0-f181.google.com with SMTP id 17so1249225iea.26
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 15:32:03 -0700 (PDT)
+	id S1765174Ab3DJWmW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Apr 2013 18:42:22 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:39901 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761304Ab3DJWmV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Apr 2013 18:42:21 -0400
+Received: by mail-ob0-f173.google.com with SMTP id wn14so907871obc.18
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 15:42:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=jGPyzxRA+AYqT/w/32fCO3MY2sbjT5ZNfht7IoXn6fM=;
-        b=xnaPzHFon+idrLgBr96cV/0CERGRWUTVOTDpRFccXtv7Q8bgfSziMXo5+cWpYKJPzk
-         /ChDhPa1MSYKCxVHKXQ0cHQXS/g0A4+m5It7WRXABdXvKdD3zIy6DgvnycsgCOBKmUhT
-         WuxlHFr/7lxwz/3OaFX0xtgvk65oFO0Hb/wqQiwQ3rnBDjGZhMY9stwJZO+U5/63eb2h
-         19yCpWhGVaJ6EgIh8paA9OuInx1DOj/QS6wisXuQTknwQmGISTkXPpOc7KQyn3FQD29j
-         ZoGI1LIMPEvwjrXih1ruxMm5QTC56l8AhAmjm2xEbqG4Qjg+/wja56FS0Rrp3usbkOh5
-         dB5w==
-X-Received: by 10.50.108.235 with SMTP id hn11mr2671196igb.107.1365633123886;
- Wed, 10 Apr 2013 15:32:03 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Wed, 10 Apr 2013 15:31:23 -0700 (PDT)
-In-Reply-To: <20130410222334.GC6930@sigill.intra.peff.net>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=HPyfCCC1HWQYo4nGD7lve3e3ngmc4Kp4H1h9SuSdlLw=;
+        b=Foh5j8X9ya1cZ4qaVkCpZVDTt/Dp1PIZ5bAYWUT/+sabkjjqG8zq0J71VQIlYauLmr
+         G9w74Kyoekumq9pTlRIUZdMYIyg00XbtswVIfmerRDLaQCSZ3IYuxNOpMSR2SFJFOz4C
+         aYy/nhLNun32DiovUXBFtQxhyg+Cu7182iiQuOsBo14HJMK7fc88h4FJXRvQr03xU88S
+         q3EtszzYVXts7hemA0UP1ecgybNzh7aVy85+0WNLFPHzhH4PxXy0AoKghgU5HIWhd1bg
+         TznBWMFPS9Sy0uNtI4/te7k+HCzKcAzjwQ2ENsGxtC4ewFe8qUNKuPuBP6ekHa1qlPRf
+         yrQQ==
+X-Received: by 10.60.47.111 with SMTP id c15mr1438409oen.86.1365633740984;
+ Wed, 10 Apr 2013 15:42:20 -0700 (PDT)
+Received: by 10.182.250.164 with HTTP; Wed, 10 Apr 2013 15:42:20 -0700 (PDT)
+In-Reply-To: <51659B5B.6000707@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220791>
 
-Jeff King wrote:
-> To flesh out my earlier example:
->
->   $ git clone https://github.com/upstream/project.git
->   $ cd project
->   $ hack hack hack; commit commit commit
->   $ git tag -m 'something of note' my-tag
->   $ git remote add me https://github.com/me/project.git
->   $ git config branch.master.remote me
->   $ git tag -m 'something of note'
->   $ git push master my-tag
->
-> My intent there is publish both master and mytag, but my-tag goes to
-> origin. It's obvious if you think carefully about (and know) the rules,
-> and it's user error. But what fault do we take for designing a feature
-> that causes confusion?
+#1 would actually work.  Though long term it would be cool to view it
+with all the most recent commit information, kind of like github does.
+ You know, showing "updated 4 days ago".
 
-Good example.  Sorry, I misunderstood your one-liner.  I agree that
-this is confusing.  Tags are a bit of an outlier, and we have to think
-of some way to behave sensibly with them.  I'll let you know if I
-think of something in the next few hours.
+On Wed, Apr 10, 2013 at 11:03 AM, Jakub Nar=C4=99bski <jnareb@gmail.com=
+> wrote:
+> W dniu 07.04.2013 05:02, Trenton D. Adams pisze:
+>
+>> On that first page that shows up, it shows the .git folder.  It woul=
+d
+>> be kind of nice if it shared out both the git repo and the actual
+>> current project files.  I frequently have stuff I'd like to see in a
+>> web browser, and even requires one (i.e. Navigating to
+>> file:///home/blah/blah doesn't work; ajax requests for example)
+>
+> There are a few possible solutions, from simplest to most complicated=
+:
+>
+> 1. Configure gitweb ran by git-instaweb to have 'worktree' link in
+>    the action bar pointing to 'file:///path/to/repo' (or rather
+>    'file:///path/to/workdir') via 'actions' feature, adding e.g.
+>
+>      $feature{'actions'}{'default'} =3D
+>         [('worktree', 'file:///path/to/repo', 'summary')];
+>
+>    to gitweb_config.perl / gitweb.conf used by git-instaweb's gitweb.
+>
+>    This of course works only for local use, so either git-instaweb
+>    or gitweb (in config) should check that we use it locally
+>    (e.g. if hostname is 'localhost' or equivalent).
+>
+> 2. In the web server configuration generated by git-instaweb, perhaps
+>    as an option, add serving of worktree (with mod_autoindex aka.
+>    'Options +Indexes' for Apache2, and equivalent solutions for *all*
+>    other supported web servers: lighttpd, mongoose, plack, webrick).
+>
+>    This may require some fiddling with URI rewriting, or change of
+>    gitweb URI, to be able to have both worktree index and gitweb
+>    script (gitweb is now under '/'), so it should probably be protect=
+ed
+>    by an option to git-instaweb.
+>
+> 3. Add proper support to gitweb: add 'worktree' action (similar to
+>    'tree' action / view).  Probably needs to be made somewhat
+>    configurable (and of course enabled in git-instaweb).
+>
+>
+> Unfortunately solution 1.) which is simplest is not enough for your
+> situation...
+>
+> I can add 3.) to my gitweb TODO, but I don't know when I would be abl=
+e
+> to get to implementing it.
+> --
+> Jakub Nar=C4=99bski
+>
