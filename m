@@ -1,69 +1,70 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v3 6/7] completion: get rid of __gitcomp_1
-Date: Wed, 10 Apr 2013 12:35:31 +0100
-Message-ID: <20130410113531.GJ2222@serenity.lan>
-References: <1365577077-12648-1-git-send-email-felipe.contreras@gmail.com>
- <1365577077-12648-7-git-send-email-felipe.contreras@gmail.com>
- <CAPig+cR4_ZB=s8JVT2LRJGcNhM9ZaESWZQ5v6Wa20=bWGoMydg@mail.gmail.com>
+From: Tom <mail@tgries.de>
+Subject: Re: [BUG] shallow clones over http
+Date: Wed, 10 Apr 2013 12:01:27 +0000 (UTC)
+Message-ID: <loom.20130410T135840-387@post.gmane.org>
+References: <20130403040352.GA8284@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Apr 10 13:35:58 2013
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 10 14:05:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPtJf-0001kg-Ac
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 13:35:51 +0200
+	id 1UPtm3-0001x1-6N
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 14:05:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936547Ab3DJLfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 07:35:47 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:58237 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933890Ab3DJLfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 07:35:46 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id C82BDCDA5C6;
-	Wed, 10 Apr 2013 12:35:45 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6vD3CrnGRTtr; Wed, 10 Apr 2013 12:35:45 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 3313ACDA5A9;
-	Wed, 10 Apr 2013 12:35:33 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CAPig+cR4_ZB=s8JVT2LRJGcNhM9ZaESWZQ5v6Wa20=bWGoMydg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755821Ab3DJMFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 08:05:05 -0400
+Received: from plane.gmane.org ([80.91.229.3]:43469 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752546Ab3DJMFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 08:05:04 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UPtlu-0001oz-Ur
+	for git@vger.kernel.org; Wed, 10 Apr 2013 14:05:03 +0200
+Received: from dslb-178-008-230-161.pools.arcor-ip.net ([178.8.230.161])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 14:05:02 +0200
+Received: from mail by dslb-178-008-230-161.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 14:05:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 178.8.230.161 (Mozilla/5.0 (Windows NT 5.1; rv:20.0) Gecko/20100101 Firefox/20.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220682>
 
-On Wed, Apr 10, 2013 at 06:13:06AM -0400, Eric Sunshine wrote:
-> On Wed, Apr 10, 2013 at 2:57 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > we traverse the words ourselves both in __gitcompadd, and __gitcomp_1.
+Jeff King <peff <at> peff.net> writes:
+
 > 
-> s/ourselves/ourself/
+> I'm trying to track down a protocol bug that happens with shallow clones
+> over smart-http. As far as I can tell, the bug has existed in all
+> versions.
+> 
+> You can reproduce it using the attached repository, which is a shallow
+> clone of https://github.com/mileszs/ack.vim.git, like:
+> 
+>   $ tar xzf repo.tar.gz
+>   $ cd repo.git
+>   $ git fetch --depth=10
+>   fatal: git fetch-pack: expected shallow list
 
-Huh?  "we traverse ... ourselves" is correct since "ourselves" is
-associated with the "we".  I don't think "ourself" is ever correct in
-normal usage - the dictionary notes that it applies only to the "royal
-we".
+The problem occurs to me also when I want to "deepen" a shallow clone of
+MediaWiki via https://
+
+ git clone --depth 1 https://gerrit.wikimedia.org/r/p/mediawiki/core.git
+ git pull --depth=99999
+
+fatal: git fetch-pack: expected shallow list.
+
+Perhaps it helps someone to find the reason.
