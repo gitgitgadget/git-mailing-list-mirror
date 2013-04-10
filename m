@@ -1,74 +1,96 @@
-From: Barbu Paul - Gheorghe <barbu.paul.gheorghe@gmail.com>
-Subject: [PATCH] git-imap-send.txt: remove the use of sslverify=false in GMail
- example
-Date: Wed, 10 Apr 2013 17:59:37 +0300
-Message-ID: <51657E59.7030001@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [rfh] do I need to use something more complex to do this?
+Date: Wed, 10 Apr 2013 17:23:21 +0200
+Message-ID: <516583E9.9030200@op5.se>
+References: <7vk3oao3e5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 10 16:59:49 2013
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 10 17:23:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPwUy-0001C4-Q3
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 16:59:45 +0200
+	id 1UPws2-0006j1-0r
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 17:23:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936636Ab3DJO7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 10:59:40 -0400
-Received: from mail-ee0-f47.google.com ([74.125.83.47]:54964 "EHLO
-	mail-ee0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934984Ab3DJO7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 10:59:40 -0400
-Received: by mail-ee0-f47.google.com with SMTP id t10so278088eei.6
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 07:59:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=BmH/jFtK/O6QNowDebFddO11N7Liqv2IROOJLG2qUBg=;
-        b=Zzg+o6ysUYnCgwUO/4Uw0fwtbEWulbDuiFpKC4OYd3F1aO4ee91E3MS7MXzs5jFJh8
-         FVB3SJKaF3ONvH13Ik0yqyqVVyZNDe6wtqR2Z2cg73iF5WVeOw9s+S5myuUU+HLq7RDx
-         jMHvIbberN84utmMBLnWCAQdmC5HXH7A5jfB7OWFibfFxKOtqvmCuhZCu7CQ0vtoxVWh
-         uz7pShDpZi6e9g6vokTb7C/MNeOgikYwE7dgo0lvtT7O0oBWKMgcvp5GjD2UugRPTi3f
-         0UdIEnNl1u+TGQeipWaou2YkLzx6T02hzzERTXWO2vde7CNsScnyYLwEIOUf0PajidA4
-         H3wg==
-X-Received: by 10.15.61.8 with SMTP id h8mr6268899eex.33.1365605978848;
-        Wed, 10 Apr 2013 07:59:38 -0700 (PDT)
-Received: from [192.168.16.100] (5-15-249-103.residential.rdsnet.ro. [5.15.249.103])
-        by mx.google.com with ESMTPS id f47sm286058eep.13.2013.04.10.07.59.37
+	id S936776Ab3DJPX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 11:23:27 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:51707 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935896Ab3DJPX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 11:23:26 -0400
+Received: by mail-lb0-f169.google.com with SMTP id p11so661241lbi.0
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 08:23:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=Fy6IgoCWnN38KPKpOHK9/dbKGcOoCtPb6IfkRYpdh5g=;
+        b=be/z7wvQvSkVI9fUsbYBbr75sPvnEs0E10AM2cfZnxkf4wjrYpAMTdv+FnxkjO7cPF
+         3WvyAhcqlYx+9y34V7gn6pPs4os/c/VTV7RH8EsSBKwKp8ql9nqAz4hVP72V4xWqu+gs
+         AaUxmkgLOjyjl3k1geFhEBasg/bqUjWxwiN41jnuUf8BQgjD350o0tJGhnWFvjSrr6Hi
+         XrENRgMtOUd9XaAMopY2dzUQBcoqnIKJPVsPTWAkPmySKA3lSBiKn0Usn3JC1p5PqQhx
+         7U/xwVK9x0SXEnyIfL87ENij1YloeEysiH7pbVjlh8EGaQpobAuoHuBnGDSWIXjPDe0e
+         F+JQ==
+X-Received: by 10.152.133.67 with SMTP id pa3mr1244193lab.44.1365607404588;
+        Wed, 10 Apr 2013 08:23:24 -0700 (PDT)
+Received: from [192.168.1.170] (sth-vpn1.op5.com. [193.201.96.49])
+        by mx.google.com with ESMTPS id w6sm135469lad.5.2013.04.10.08.23.22
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 10 Apr 2013 07:59:38 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130403 Thunderbird/17.0.5
+        Wed, 10 Apr 2013 08:23:23 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <7vk3oao3e5.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQkWSLuxsfIAR847ypJFahc0Q25XJHWgXP4+gjp1KRuDsQj+vriiATdMaYeDPbPUdLFvTqJP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220695>
 
-Since GMail is SSL capable there is no need to set sslverify to false, the
-example using it may confuse readers that it's needed since it's also used in
-the previous example configurations, too
+On 04/10/2013 04:40 PM, Junio C Hamano wrote:
+> I have set of items with two attributes, <X,Y>, and would like to
+> keep them in some data structure in such a way that it is efficient
+> to (1) add a new item to the data structure, and (2) pick an item in
+> a specific order. There can be multiple items that share the same
+> value for X, or Y, or both X and Y, and it does not matter in what
+> order items comes out among those that share the same <X,Y>.
+>
+> The type of X is totally ordered. The type of Y also usually is, but
+> Y can take a special value U(nspecified).
+>
+> Now on to the "specific" order I want to pick an item.  I'd like to
+> take the item with the largest value of Y in general, and tiebreaking
+> on the value of X which also I prefer to take from larger to smaller.
+>
+> But with a twist.
+>
+> When I am picking an item <X=n,Y=m>, there should be no item
+> remaining in the data store with a value of Y that is smaller than m
+> (duplicates are allowed, so there can still be items with Y=m), and
+> also when I am picking <X=n,Y=m>, there should be no item with
+> Y=Unspecified that has a value of X that is equal or smaller than n.
+>
 
-Signed-off-by: Barbu Paul - Gheorghe <barbu.paul.gheorghe@gmail.com>
----
- Documentation/git-imap-send.txt | 1 -
- 1 file changed, 1 deletion(-)
+So X is primary sort and Y is secondary, except Y=Undefined trumps all
+other values for Y, but never trumps X as primary sort.
 
-diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-index 875d283..b15dffe 100644
---- a/Documentation/git-imap-send.txt
-+++ b/Documentation/git-imap-send.txt
-@@ -123,7 +123,6 @@ to specify your account settings:
- 	host = imaps://imap.gmail.com
- 	user = user@gmail.com
- 	port = 993
--	sslverify = false
- ---------
-  You might need to instead use: folder = "[Google Mail]/Drafts" if you get an error
+Can't you just have U be the largest unsigned integer value of the
+type you choose? For this particular application, I doubt there's any
+risk of the defined numbers catching up with it.
+
+I might have missed something though. This seems a bit too trivial for
+you to ask for help.
+
 -- 
-Barbu Paul - Gheorghe
-Common sense is not so common - Voltaire
-Visit My GitHub profile to see my open-source projects - https://github.com/paullik
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
