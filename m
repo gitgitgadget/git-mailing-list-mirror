@@ -1,105 +1,98 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: tar on Mac does not like empty tar from git archive
-Date: Wed, 10 Apr 2013 19:00:20 +0200
-Message-ID: <51659AA4.80203@lsrfire.ath.cx>
-References: <ABD0C67A-0B2B-4E32-AF49-93FBABC032A7@bjhargrave.com>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: git instaweb - share all project files
+Date: Wed, 10 Apr 2013 19:03:23 +0200
+Message-ID: <51659B5B.6000707@gmail.com>
+References: <CAMg8Y2pFXrbh8cz6m5z=LsksRijLVcV4fTk-TBx+9yaQTtAzpA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: BJ Hargrave <bj@bjhargrave.com>
-X-From: git-owner@vger.kernel.org Wed Apr 10 19:00:41 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Trenton D. Adams" <trenton.d.adams@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 10 19:03:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UPyO0-0006sk-78
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 19:00:40 +0200
+	id 1UPyQm-0003ou-LV
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 19:03:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932987Ab3DJRA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 13:00:28 -0400
-Received: from india601.server4you.de ([85.25.151.105]:47523 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752153Ab3DJRA0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 13:00:26 -0400
-Received: from [192.168.2.105] (p4FFD9211.dip.t-dialin.net [79.253.146.17])
-	by india601.server4you.de (Postfix) with ESMTPSA id C064C1E5;
-	Wed, 10 Apr 2013 19:00:24 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <ABD0C67A-0B2B-4E32-AF49-93FBABC032A7@bjhargrave.com>
+	id S934896Ab3DJRD2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Apr 2013 13:03:28 -0400
+Received: from mail-ee0-f54.google.com ([74.125.83.54]:63652 "EHLO
+	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755371Ab3DJRD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 13:03:27 -0400
+Received: by mail-ee0-f54.google.com with SMTP id e51so352806eek.41
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 10:03:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=XNXu5Ph0CcZNtWS3KoRiLDE54VzR12bcSTugpAk8/0U=;
+        b=AvQYG6I511tuzYYJzjySkd0xnIfM4rGV4i8X84iVy+oUQY0XTiblR40LDlc/8xu4gE
+         EY8e7BsBxeFUWefB3I+lss6l6v5EnlqZlZ9RIzb3Gm/u+zRRBsTZgLzFa4iYqcP9eCuZ
+         oxF3b4pFCtUzWni4MypgyXoA2M1cracaoPFi0QkLqKNbwJxnZq/9hzasnH9OpIU2+HWn
+         TJXe14xBq6NA/CU9/0s7JRRrYKSyaf0r/Y84PMqe54nKjK5Iaob3mUH8fZrGCDtTedU4
+         HyDmyIh8gXrg8ahJzNErsYh2Pw453n5lJOklqGIAj5GOkgRzu9JUf8SGNHatCcyYrDsB
+         rJmw==
+X-Received: by 10.14.182.137 with SMTP id o9mr7376100eem.13.1365613406137;
+        Wed, 10 Apr 2013 10:03:26 -0700 (PDT)
+Received: from [192.168.1.14] (edx151.neoplus.adsl.tpnet.pl. [83.21.9.151])
+        by mx.google.com with ESMTPS id d47sm888486eem.9.2013.04.10.10.03.24
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 10 Apr 2013 10:03:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <CAMg8Y2pFXrbh8cz6m5z=LsksRijLVcV4fTk-TBx+9yaQTtAzpA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220706>
 
-Am 08.04.2013 20:36, schrieb BJ Hargrave:
-> Git 1.8.2.1 includes commit bd54cf17 - archive: handle commits with
-> an empty tree
-> 
-> Test 2 of t5004-archive-corner-cases, "tar archive of empty tree is
-> empty", fails on Mac OS X 10.8.3 (with XCode 4.6.1) since the tar
-> command exits with return code 1 on the generated tar file.
-> 
-> expecting success:
-> 	git archive --format=tar HEAD >empty.tar &&
-> 	make_dir extract &&
-> 	"$TAR" xf empty.tar -C extract &&
-> 	check_dir extract
-> 
-> tar: Damaged tar archive
-> tar: Error exit delayed from previous errors.
-> not ok 2 - tar archive of empty tree is empty
-> 
-> tar tf "trash directory.t5004-archive-corner-cases/empty.tar"; echo $?
-> tar: Damaged tar archive
-> tar: Error exit delayed from previous errors.
-> 1
-> 
-> tar --version
-> bsdtar 2.8.3 - libarchive 2.8.3
-> 
-> It appears that bsdtar does not like the empty tar files created by
-> git archive. An empty tar file created by bsdtar is accepted.
-> 
-> tar cT /dev/null | tar t; echo $?
-> 0
+W dniu 07.04.2013 05:02, Trenton D. Adams pisze:
 
-I've opened an issue for libarchive for that behaviour:
-http://code.google.com/p/libarchive/issues/detail?id=314
+> On that first page that shows up, it shows the .git folder.  It would
+> be kind of nice if it shared out both the git repo and the actual
+> current project files.  I frequently have stuff I'd like to see in a
+> web browser, and even requires one (i.e. Navigating to
+> file:///home/blah/blah doesn't work; ajax requests for example)
 
-We can work around bsdtar's dislike of not-quite-empty tar archives by
-leaving out the comment that contains the commit hash.
+There are a few possible solutions, from simplest to most complicated:
 
--- >8 --
-Subject: t5004: fix issue with empty archive test and bsdtar
+1. Configure gitweb ran by git-instaweb to have 'worktree' link in
+   the action bar pointing to 'file:///path/to/repo' (or rather
+   'file:///path/to/workdir') via 'actions' feature, adding e.g.
 
-bsdtar, which is the default tar on Mac OS X, handles empty archives
-just fine but reports archives containing only a pax extended header
-comment as damaged.  Work around the issue by explicitly generating
-the archive for the tree and not the commit, which causes git archive
-to omit the commit hash comment record from the tar file.
+     $feature{'actions'}{'default'} =3D
+     	[('worktree', 'file:///path/to/repo', 'summary')];
 
-Reported-by: BJ Hargrave <bj@bjhargrave.com>
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- t/t5004-archive-corner-cases.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+   to gitweb_config.perl / gitweb.conf used by git-instaweb's gitweb.
 
-diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
-index cdb7d7a..bfdb56a 100755
---- a/t/t5004-archive-corner-cases.sh
-+++ b/t/t5004-archive-corner-cases.sh
-@@ -28,7 +28,7 @@ check_dir() {
- }
- 
- test_expect_success 'tar archive of empty tree is empty' '
--	git archive --format=tar HEAD >empty.tar &&
-+	git archive --format=tar HEAD: >empty.tar &&
- 	make_dir extract &&
- 	"$TAR" xf empty.tar -C extract &&
- 	check_dir extract
--- 
-1.8.2.1
+   This of course works only for local use, so either git-instaweb
+   or gitweb (in config) should check that we use it locally
+   (e.g. if hostname is 'localhost' or equivalent).
+
+2. In the web server configuration generated by git-instaweb, perhaps
+   as an option, add serving of worktree (with mod_autoindex aka.
+   'Options +Indexes' for Apache2, and equivalent solutions for *all*
+   other supported web servers: lighttpd, mongoose, plack, webrick).
+
+   This may require some fiddling with URI rewriting, or change of
+   gitweb URI, to be able to have both worktree index and gitweb
+   script (gitweb is now under '/'), so it should probably be protected
+   by an option to git-instaweb.
+
+3. Add proper support to gitweb: add 'worktree' action (similar to
+   'tree' action / view).  Probably needs to be made somewhat
+   configurable (and of course enabled in git-instaweb).
+
+
+Unfortunately solution 1.) which is simplest is not enough for your
+situation...
+
+I can add 3.) to my gitweb TODO, but I don't know when I would be able
+to get to implementing it.
+--=20
+Jakub Nar=C4=99bski
