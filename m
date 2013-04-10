@@ -1,84 +1,99 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH 1/2] strbuf: create strbuf_humanize() to show byte sizes
-Date: Wed, 10 Apr 2013 22:12:00 +0200
-Message-ID: <CALWbr2w=q=BkMOeqmSAbi50vNbup+e9GF0gdxNH9-vpyyND5Vw@mail.gmail.com>
-References: <7vli8svgyo.fsf@alter.siamese.dyndns.org>
-	<1365620604-17851-1-git-send-email-apelisse@gmail.com>
-	<7vr4iikvkd.fsf@alter.siamese.dyndns.org>
+From: Orgad Shaneh <orgads@gmail.com>
+Subject: Fwd: [PATCH] submodule: add verbose mode for add/update
+Date: Wed, 10 Apr 2013 23:13:38 +0300
+Message-ID: <CAGHpTBKn-2dgDwTFtw9eLuJAgFidzEa2itjE+Jc=VrQ0z+-oNA@mail.gmail.com>
+References: <1365618262-8024-1-git-send-email-orgads@gmail.com>
+	<5165C4EA.60308@web.de>
+	<CAGHpTBK6qGUcj=ioWCN2Y5bkhNg8t0ik0BNfXNLww0zjm+1xGQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 10 22:12:13 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 10 22:13:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ1NJ-0000X2-Dq
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 22:12:09 +0200
+	id 1UQ1Oq-0002Zm-CR
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 22:13:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936476Ab3DJUME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 16:12:04 -0400
-Received: from mail-qe0-f50.google.com ([209.85.128.50]:55697 "EHLO
-	mail-qe0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935970Ab3DJUMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 16:12:01 -0400
-Received: by mail-qe0-f50.google.com with SMTP id a11so504318qen.9
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 13:12:01 -0700 (PDT)
+	id S936367Ab3DJUNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 16:13:40 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:63934 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935623Ab3DJUNj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 16:13:39 -0400
+Received: by mail-oa0-f49.google.com with SMTP id j6so871836oag.36
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 13:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=gnStRVbFqcMiIPOrZhhSEeAC5psVjuFl0XJV0Kq6Yoo=;
-        b=QSYFppeTOgiX49mTOtuvH5HjJE0JO5hLkvdV9bqiCdD6ogWxTzfSORWJ+a3sBqLNWr
-         jLKxUz6nvYQlzJ6cwL/jCAI8QxQA0c5i62mDi1YE8X5erNsWW1KGjlXz7lSKNhQgIri+
-         Jg+iaKDyxRyFEn5cYxJOev5giuH4ORTjzieE5ZAjd5lHgkiNyh1fLK5A0SPXNhRoMD1i
-         QUwmHr5fz3y6sY9v1Vac3F6Vpdq4PpwhEEuRQG/CRNGitRMzi1tRU/qSVBBIl3VfS6FT
-         in/nliULCk9hO55wWEzMmlXgYSVzBh5Px0SGPl/bdeRVsCR1u4A7SDxIK7sDDpGgIpI2
-         2Lqw==
-X-Received: by 10.229.119.10 with SMTP id x10mr1334289qcq.133.1365624720983;
- Wed, 10 Apr 2013 13:12:00 -0700 (PDT)
-Received: by 10.49.118.42 with HTTP; Wed, 10 Apr 2013 13:12:00 -0700 (PDT)
-In-Reply-To: <7vr4iikvkd.fsf@alter.siamese.dyndns.org>
+         :subject:from:to:content-type;
+        bh=l1u2amht6H0txM0ysezmRLqMb+xqOZV8cSbZQLQWaCM=;
+        b=HEFNcm3O+WuLskFEm9MR83dDwT0uVVF2EiZjSEF+78nPGWMBXYC+iTeukmBAauMIKo
+         rH3GpxsxVNiQpzWt9amFdz0e0Kw56Gj0gm8b4/ha8wCnLS67FcA47kT+ZkeQkzGbp21f
+         Y9dUZp1WPoB+7C9hqYd7w0m+2SqbZVwuqKoMAfPZvlioPwIzSmh59TksxZPHUAmdO3ln
+         7Eb5m4zUklgOpascgBnNfAJwh2A4D2NQEjNteg0ASgQV7a6rNJXx9q+VGbj5vu3pBIAU
+         c+75ruu4rDdYfQOqaAc7Rv2bZL06+8+RlMXPn72OPef/QP9qGQOknMOPDks+X0bMsYOd
+         bGxA==
+X-Received: by 10.182.61.6 with SMTP id l6mr1256941obr.69.1365624818917; Wed,
+ 10 Apr 2013 13:13:38 -0700 (PDT)
+Received: by 10.182.78.35 with HTTP; Wed, 10 Apr 2013 13:13:38 -0700 (PDT)
+In-Reply-To: <CAGHpTBK6qGUcj=ioWCN2Y5bkhNg8t0ik0BNfXNLww0zjm+1xGQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220750>
 
-On Wed, Apr 10, 2013 at 9:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Antoine Pelisse <apelisse@gmail.com> writes:
+On Wed, Apr 10, 2013 at 11:00 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
 >
->> Currently, humanization of downloaded size is done in the same
->> function as text formatting in 'process.c'. This is an issue if anyone
->> else wants to use this.
->>
->> Separate text formatting from size simplification and make the function
->> public in strbuf so that it can easily be used by other clients.
->>
->> We now can use strbuf_humanize() for both downloaded size and download
->> speed calculation. One of the drawbacks is that speed will now look like
->> this when download is stalled: "0 bytes/s" instead of "0 KiB/s".
+> Am 10.04.2013 20:24, schrieb Orgad Shaneh:
+> > Executes checkout without -q
 >
-> Personally, I do not think the "drawback" is so big an issue.  If
-> the caller really cares, we could always add another parameter to
-> this formatter to tell it the minimum unit we care about (e.g. pass
-> 1024 to say "Don't bother showing scale lower than kibi").
+> Nice, looks like you picked the proposal I made last September:
+>   http://permalink.gmane.org/gmane.comp.version-control.git/204747
 
-I thought about that, but decided it was not worth it (at least for the moment)
+Took me a while, but I finally got to it :)
 
-> This is a bit late response, but if we ever want to count something
-> in a dimention other than "bytes", like time (e.g. "kiloseconds") or
-> number of commits (e.g. "centicommits"), etc., we cannot reuse this
-> formatter very easily.  We may want to have "byte" somewhere in its
-> name for now to make sure the callers understand its limitation.
+> The change is looking good, but you still need to document the
+> new option in Documentation/git-submodule.txt too please.
+>
+> And the commit message is still too short, as I said in that
+> other thread:
+>
+> On Tue, Sep 4, 2012 at 6:28 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> > Before the "Signed-off-by" is the place where you should have
+> > explained why this would be a worthwhile change ;-)
+>
+> And you answered to that with something that would really make
+> sense as first part of the commit message, because you explain
+> *why* you do that change:
+>
+> Am 05.09.2012 13:42, schrieb Orgad and Raizel Shaneh:
+> > When I run 'git submodule update' I don't expect to be in the dark
+> > until the submodule/s finishes checkout, this sometimes can take a
+> > significant amount of time and feedback is expected.
+>
+> Another paragraph after that should explain *how* you do it.
+>
+> So what about the following as commit message:
+> --------------------------------------------------------------
+> When 'git submodule add/update' is run there is no output during
+> checkout. This can take a significant amount of time and it would
+> be nice if user could enable some feedback to see what's going on.
+>
+> Add the -v/--verbose option to both add and update which suppresses
+> the -q normally given to checkout so the user sees progress output
+> from the checkout command.
+>
+> <Your Signed-off-by goes here>
+> --------------------------------------------------------------
+>
+> I'm looking forward to your next iteration.
 
-I'm not in a hurry.
-But it look tough to make it generic: one is binary, another is
-sexagesimal, and the last is decimal
+Done quicker this time ;-)
 
-> I'll tentatively rename it to "strbuf_humanize_bytes()" while queuing.
+Thanks a lot for your review (previous and current). It was very helpful!
 
-I like the idea,
-Thanks,
+- Orgad
