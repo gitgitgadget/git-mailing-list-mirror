@@ -1,76 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [ITCH] Specify refspec without remote
-Date: Wed, 10 Apr 2013 13:21:12 -0700
-Message-ID: <7vli8qkuh3.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0nqZ+GGvDhR=OPOz+NtYKXz7waQrxvCi-spAJ46pL=YKA@mail.gmail.com>
- <7vhajfqz8r.fsf@alter.siamese.dyndns.org> <20130409231332.GZ30308@google.com>
- <7vobdnnpx6.fsf@alter.siamese.dyndns.org>
+Date: Wed, 10 Apr 2013 16:24:56 -0400
+Message-ID: <20130410202456.GF24177@sigill.intra.peff.net>
+References: <7vobdnnpx6.fsf@alter.siamese.dyndns.org>
  <20130410041343.GB795@sigill.intra.peff.net>
  <7v4nfenxzm.fsf@alter.siamese.dyndns.org>
  <20130410172748.GA16908@sigill.intra.peff.net>
  <7vhajemd1x.fsf@alter.siamese.dyndns.org>
  <20130410185958.GA22394@sigill.intra.peff.net>
  <CALkWK0nKvTiGsjO4zF81nsSuUM=MmmbpdzHWB=4hFR2PiB+LWg@mail.gmail.com>
- <20130410195256.GA24177@sigill.intra.peff.net>
+ <CALkWK0k44+VnrGTXESdap2nRomdYH8xwz_T2JdhYtSrPR+89sw@mail.gmail.com>
+ <20130410200548.GC24177@sigill.intra.peff.net>
+ <CALkWK0mEe+p3RX2tamW8dmdY_eP74Rdh_pZDRDPNfzX0TOKQCQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Git List <git@vger.kernel.org>,
-	Duy =?utf-8?Q?Ngu?= =?utf-8?Q?y=E1=BB=85n?= <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 10 22:21:24 2013
+	Duy =?utf-8?B?Tmd1eeG7hW4=?= <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 10 22:25:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ1WE-0003wc-4b
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 22:21:22 +0200
+	id 1UQ1Zu-0000M9-C7
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 22:25:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936386Ab3DJUVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 16:21:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38861 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936370Ab3DJUVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 16:21:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A66411536F;
-	Wed, 10 Apr 2013 20:21:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=X39gIzSdPX6bukywCQWxoTG9aLw=; b=sR+TDg
-	kgnPgMRjBSD200aEosnu4bbrZ8ukkA85rPNdTO/8F50WCq2snNV2SRXblOVjg3Bg
-	URITMI5HJqLEJ5zWHIykOa4s1kxRSCIaNTLhGzfkEKVnKXVQnEU+8AMKCMr2tX3U
-	Ni+7hlqwPQTTnkgd/VtDJcfY3ZZnJ5sCfRu2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yee2OygzcbBiD4VNs70xhVS6nxPdFUQ9
-	nR2QJkBTDhP4xDp83jdg11TfU9ex8m7KGtPKUSGjDAzoVGfrld58n3j6z3MD2zsj
-	ag9kG+C/3F2K0WdJj16t6X3eXy65UmRBfkG6OXR2+Uz3Lf8iC/smU51KvQyCa8hX
-	/rSUtIHjY4Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 944241536E;
-	Wed, 10 Apr 2013 20:21:14 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E11071536D; Wed, 10 Apr
- 2013 20:21:13 +0000 (UTC)
-In-Reply-To: <20130410195256.GA24177@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 10 Apr 2013 15:52:57 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 310A93AC-A21C-11E2-AB2C-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S936514Ab3DJUZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 16:25:04 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39143 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932803Ab3DJUZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 16:25:03 -0400
+Received: (qmail 6675 invoked by uid 107); 10 Apr 2013 20:26:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Apr 2013 16:26:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Apr 2013 16:24:56 -0400
+Content-Disposition: inline
+In-Reply-To: <CALkWK0mEe+p3RX2tamW8dmdY_eP74Rdh_pZDRDPNfzX0TOKQCQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220754>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Apr 11, 2013 at 01:49:54AM +0530, Ramkumar Ramachandra wrote:
 
-> If we changed push.default=matching to ignore branch.*.remote, then that
-> would be consistent, and would probably be safer over all. It is a
-> regression, but I doubt that anybody was using branch.*.remote for this;
-> it really only makes sense with the "upstream" mode.
+> > Right, the example above might include multiple remotes if pushremote is
+> > respected. Or it might not come up with an answer at all for a tag.
+> > If you do:
+> >
+> >   git push -- v1.2.3 master
+> >
+> > where does v1.2.3 go? To remote.pushdefault? That seems simple and
+> > consistent, as there is no ref-specific pushremote defined.
+> 
+> remote.pushdefault indeed.
+> 
+> > But I'd
+> > guess that the user probably _wanted_ it to go to
+> > branch.master.pushremote.
+> 
+> Huh, why?  Simply because he specified master alongside it?  How can
+> we infer what you said in a consistent system?
 
-True.
+That's kind of my point. Why would they put two refs together in a
+single push command? Did they mean "I am pushing up master, and since I
+just tagged it, send the tag along, too"? Or did they really mean to
+push them to two different places? If so, why not just run two separate
+push commands?
+
+I am not saying git should guess that the user wanted the tag to along
+with master. I am saying that the set of rules to come to that
+conclusion is going to be too baroque for the user to understand, and
+too often wrong in other cases, and that we should not go there.
+
+-Peff
