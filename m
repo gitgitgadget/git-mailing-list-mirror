@@ -1,84 +1,84 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] transport-helper: report errors properly
-Date: Wed, 10 Apr 2013 17:46:25 -0400
-Message-ID: <CAPig+cR_zL5AW+h7ovGjo-Xc=wVcKPbHoRtG0wBG_b9oVXc05Q@mail.gmail.com>
-References: <20130410211311.GA24277@sigill.intra.peff.net>
-	<20130410211552.GA3256@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-http-backend: anonymous read, authenticated write
+Date: Wed, 10 Apr 2013 17:47:22 -0400
+Message-ID: <20130410214722.GA6215@sigill.intra.peff.net>
+References: <20130409054553.GA1537@mteis.lan>
+ <20130409171247.GD21972@sigill.intra.peff.net>
+ <5165DA13.8010100@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 10 23:46:34 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Magnus Therning <magnus@therning.org>, git@vger.kernel.org
+To: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 10 23:47:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ2qf-0002GO-5i
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 23:46:33 +0200
+	id 1UQ2re-0003W2-8e
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 23:47:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932522Ab3DJVq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 17:46:27 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:59545 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759732Ab3DJVq1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 17:46:27 -0400
-Received: by mail-lb0-f178.google.com with SMTP id q13so1012752lbi.37
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 14:46:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=Vt6Tl63fRyMiVRNCzSVSOaG7AO4Sri7r0ttIa894Nyo=;
-        b=iD4rGzovLlXFvtRu3Jf9QzCAZjBdROOe4ZWHkCWlFE95OZ5hjOXf+fWcTYQJ1lMoPl
-         RtBA6H0gvrLE5k7isF0GfD14oB2WIqF1W3/C5DVhBW8bsYd8q+xW4K3arBRpPY2YMlp0
-         R7YmKIB5cygXS5sMhd4x1zQ2LjBjLb8jSzJh0s19O7ticj6uysWknbKRLCNi9dTKgb36
-         e7YdmSzlaz5NkBccFWhjPJgllvflIULG9xaIPWIXBQyfhnX9s7UPpApKHuzNRSlDwS7C
-         neguHLvfhmMsOzydjIINHCBGqa9Dkz6qrPvipKuxs0a4Drps4JotbUhuK2yZR46tc2XN
-         h5yw==
-X-Received: by 10.112.75.197 with SMTP id e5mr2090707lbw.6.1365630385655; Wed,
- 10 Apr 2013 14:46:25 -0700 (PDT)
-Received: by 10.114.174.104 with HTTP; Wed, 10 Apr 2013 14:46:25 -0700 (PDT)
-In-Reply-To: <20130410211552.GA3256@sigill.intra.peff.net>
-X-Google-Sender-Auth: 69240Um0_8SEJZ9s5ZaVOwMDNxk
+	id S1763171Ab3DJVr3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Apr 2013 17:47:29 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39309 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750975Ab3DJVr3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 17:47:29 -0400
+Received: (qmail 8366 invoked by uid 107); 10 Apr 2013 21:49:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Apr 2013 17:49:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Apr 2013 17:47:22 -0400
+Content-Disposition: inline
+In-Reply-To: <5165DA13.8010100@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220781>
 
-On Wed, Apr 10, 2013 at 5:15 PM, Jeff King <peff@peff.net> wrote:
-> From: Felipe Contreras <felipe.contreras@gmail.com>
->
-> If a push fails because the remote-helper died (with
-> fast-export), the user does not see any error message. We do
-> correctly die with a failed exit code, as we notice that the
-> helper has died while reading back the ref status from the
-> helper. However, we don't print any message.  This is OK if
-> the helper itself printed a useful error message, but we
-> cannot count on that; let's let the user know that the
-> helper failed.
->
-> In the long run, it may make more sense to propagate the
-> error back up to push, so that it can present the usual
-> status table and give a nicer message. But this is a much
-> simpler fix that can help immediately.
->
-> While we're adding tests, let's also confirm that the
-> remote-helper dying is also detect when importing refs. We
+On Wed, Apr 10, 2013 at 11:30:59PM +0200, Jakub Nar=C4=99bski wrote:
 
-s/detect/detected/
+> >   1. GET $repo/info/refs?service=3Dgit-receive-pack
+> >=20
+> >      This makes initial contact and gets the ref information which =
+push
+> >      uses to decide what it is going to push. So it is read-only, a=
+nd in
+> >      an anonymous-read setup, does not need to be protected.
+>=20
+> Yes, it doesn't need to be protected, but *git-receive-pack* requires
+> (or required) valid user even for above GET request for getting refs.
 
-> currently do so robustly when the helper uses the "done"
-> feature (and that is what we test).  We cannot do so
-> reliably when the helper does not use the "done" feature,
-> but it is not even worth testing; the right solution is for
-> the helper to start using "done".
->
-> Suggested-by: Jeff King <peff@peff.net>
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
+Right. But that is not anything receive-pack is doing; it is up to his
+webserver config, which is why I asked to see it.
+
+> >   2. POST $repo/git-receive-pack
+> >=20
+> >      This actually pushes up the objects and updates the refs, and
+> >      must be protected.
+> >=20
+> > The setup listed above does work with apache; it is tested as part =
+of
+> > our test suite (you can see the actual config in t/lib-httpd/apache=
+=2Econf).
+> > So what in lighttpd is giving us the 403? Can you share your whole
+> > config?
+>=20
+> I think I have seen a patch on git mailing list to correct this, but
+> I am not sure.
+>=20
+> Are you sure that we test this correctly?
+
+Perhaps you are thinking of the jk/maint-http-half-auth-push topic from
+last August/September. It explicitly tests the setup from the manpage.
+The relevant commits are 4c71009 (t: test http access to "half-auth"
+repositories, 2012-08-27) which demonstrates the problem, and b81401c
+(http: prompt for credentials on failed POST, 2012-08-27).
+
+However, even before the fix, it never got a 403 on the GET of
+info/refs. It got a 401 on the later POST, but didn't prompt for
+credentials.
+
+-Peff
