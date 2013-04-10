@@ -1,87 +1,158 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH 1/2] strbuf: create strbuf_humanize() to show byte sizes
-Date: Wed, 10 Apr 2013 22:00:25 +0200
-Message-ID: <CALWbr2zciCO2Gzr_Hkg3oftYLtDkrPFrazP4HgRyPv=vYH5sXg@mail.gmail.com>
-References: <7vli8svgyo.fsf@alter.siamese.dyndns.org>
-	<1365620604-17851-1-git-send-email-apelisse@gmail.com>
-	<20130410194307.GA27070@google.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] submodule: add verbose mode for add/update
+Date: Wed, 10 Apr 2013 22:00:42 +0200
+Message-ID: <5165C4EA.60308@web.de>
+References: <1365618262-8024-1-git-send-email-orgads@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 10 22:00:31 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Orgad Shaneh <orgads@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 10 22:00:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ1C2-0002BQ-9m
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 22:00:30 +0200
+	id 1UQ1CO-0002g2-Jr
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 22:00:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936003Ab3DJUA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 16:00:26 -0400
-Received: from mail-qe0-f49.google.com ([209.85.128.49]:50292 "EHLO
-	mail-qe0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934822Ab3DJUAZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 16:00:25 -0400
-Received: by mail-qe0-f49.google.com with SMTP id 6so487013qeb.8
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 13:00:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=fAWUlTsaaXsLXFKfxWO+x3oRfrRf+Fr6JY/rVsCaRQI=;
-        b=ajp8mufz8MjTT0SCJq505l7pEO1+xkIsrsdW2qNTz0q7SMztx1mcsmkm8hnzTn5Zt2
-         RxCWrhtuDqXvk6aDuFsQX5qNgnYqq0i5mrNKQTXUCawg1bnojZO1ZED+tmhN28KgBhHW
-         RijyZqQZudEK2Gf0qTKIGpXuYbnjIkYO6+c+pDwRrFeuu+VHQlqn2DFjnYilgRMH3bCT
-         7tVNLEins+sBlaqTTkdSPTne8DTsfT2g7hzUemgmzjtboxyKQEz9WuE7kaHo6Vk1XLmE
-         HSHb3knzjIp+4hh1VC1ntLHE69T8shjH6SJzTLkyHj3sOGbfepF9aOML2XH3pXsCZpiY
-         YpVA==
-X-Received: by 10.49.95.163 with SMTP id dl3mr4363155qeb.38.1365624025110;
- Wed, 10 Apr 2013 13:00:25 -0700 (PDT)
-Received: by 10.49.118.42 with HTTP; Wed, 10 Apr 2013 13:00:25 -0700 (PDT)
-In-Reply-To: <20130410194307.GA27070@google.com>
+	id S936029Ab3DJUAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 16:00:48 -0400
+Received: from mout.web.de ([212.227.15.4]:62768 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934822Ab3DJUAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 16:00:47 -0400
+Received: from [192.168.178.41] ([79.193.81.26]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0MIvXZ-1URx8Z0Nyb-002Kj5; Wed, 10 Apr 2013 22:00:46
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
+In-Reply-To: <1365618262-8024-1-git-send-email-orgads@gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V02:K0:vqixkwT5CWyGqxHSzUBWNScEnqZW8GUuaEWKoVi+ytC
+ U5hpsUup8IXl9JkHLeokr9buavFNaIF4GB7OqMmY+PBw0xPfz6
+ E6kbNulYhAQb7a4HdjDAWOJxqiRuTXmnzH3lCZsAp8838gDxvA
+ 816q2h9oDFsyY/98/F6fWkoubdQWJ6ySFMdK02nHE4cnHmFcIy
+ IEjpTn8skzdVN2dlOQhpA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220743>
 
-On Wed, Apr 10, 2013 at 9:43 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Antoine Pelisse wrote:
->>                    One of the drawbacks is that speed will now look like
->> this when download is stalled: "0 bytes/s" instead of "0 KiB/s".
->
-> At first glance that is neither obviously a benefit nor obviously a
-> drawback.  Can you spell this out more?
+Am 10.04.2013 20:24, schrieb Orgad Shaneh:
+> Executes checkout without -q
 
-The drawback to me is that it changes the user experience with no reason.
-But that's really a minor change, I agree. (maybe I should have put it
-as a comment/question after ---)
+Nice, looks like you picked the proposal I made last September:
+  http://permalink.gmane.org/gmane.comp.version-control.git/204747
 
->> --- a/Documentation/technical/api-strbuf.txt
->> +++ b/Documentation/technical/api-strbuf.txt
->> @@ -230,6 +230,11 @@ which can be used by the programmer of the callback as she sees fit.
->>       destination. This is useful for literal data to be fed to either
->>       strbuf_expand or to the *printf family of functions.
->>
->> +`strbuf_humanize`::
->> +
->> +     Append the given byte size as a human-readable string (i.e. 12.23 KiB,
->> +     3.50 MiB).
->
-> Based on the function name alone, it is not easy to guess what it will
-> do (e.g., maybe it will paraphrase 3 to "three" and 10000000 to
-> "enormous").  How about something like strbuf_filesize?
+The change is looking good, but you still need to document the
+new option in Documentation/git-submodule.txt too please.
 
-I think the suggestion from Junio makes more sense, as it can be used
-for download speed.
+And the commit message is still too short, as I said in that
+other thread:
 
-> If I understand the code correctly, this jumps units each time it
-> exceeds 1.0 of the next unit (bytes, KiB, MiB, GiB), which sounds like
-> a fine behavior.
+On Tue, Sep 4, 2012 at 6:28 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Before the "Signed-off-by" is the place where you should have
+> explained why this would be a worthwhile change ;-)
 
-The code has simply been extracted from the former function and kept unmodified.
+And you answered to that with something that would really make
+sense as first part of the commit message, because you explain
+*why* you do that change:
 
-Thanks for the help !
-Antoine,
+Am 05.09.2012 13:42, schrieb Orgad and Raizel Shaneh:
+> When I run 'git submodule update' I don't expect to be in the dark
+> until the submodule/s finishes checkout, this sometimes can take a
+> significant amount of time and feedback is expected.
+
+Another paragraph after that should explain *how* you do it.
+
+So what about the following as commit message:
+--------------------------------------------------------------
+When 'git submodule add/update' is run there is no output during
+checkout. This can take a significant amount of time and it would
+be nice if user could enable some feedback to see what's going on.
+
+Add the -v/--verbose option to both add and update which suppresses
+the -q normally given to checkout so the user sees progress output
+from the checkout command.
+
+<Your Signed-off-by goes here>
+--------------------------------------------------------------
+
+I'm looking forward to your next iteration.
+
+> ---
+>  git-submodule.sh |   24 +++++++++++++++++++-----
+>  1 file changed, 19 insertions(+), 5 deletions(-)
+> 
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 79bfaac..f7964ad 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -5,11 +5,11 @@
+>  # Copyright (c) 2007 Lars Hjemli
+>  
+>  dashless=$(basename "$0" | sed -e 's/-/ /')
+> -USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
+> +USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [-v|--verbose] [--] <repository> [<path>]
+>     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+>     or: $dashless [--quiet] init [--] [<path>...]
+>     or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
+> -   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+> +   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [-v|--verbose] [--] [<path>...]
+>     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+>     or: $dashless [--quiet] foreach [--recursive] <command>
+>     or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
+> @@ -309,6 +309,9 @@ cmd_add()
+>  			custom_name=$2
+>  			shift
+>  			;;
+> +		-v|--verbose)
+> +			VERBOSE=1
+> +			;;
+>  		--)
+>  			shift
+>  			break
+> @@ -408,11 +411,15 @@ Use -f if you really want to add it." >&2
+>  		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" || exit
+>  		(
+>  			clear_local_git_env
+> +			if test -z "$VERBOSE"
+> +			then
+> +				subquiet=-q
+> +			fi
+>  			cd "$sm_path" &&
+>  			# ash fails to wordsplit ${branch:+-b "$branch"...}
+>  			case "$branch" in
+> -			'') git checkout -f -q ;;
+> -			?*) git checkout -f -q -B "$branch" "origin/$branch" ;;
+> +			'') git checkout -f $subquiet ;;
+> +			?*) git checkout -f $subquiet -B "$branch" "origin/$branch" ;;
+>  			esac
+>  		) || die "$(eval_gettext "Unable to checkout submodule '\$sm_path'")"
+>  	fi
+> @@ -676,6 +683,9 @@ cmd_update()
+>  		--checkout)
+>  			update="checkout"
+>  			;;
+> +		-v|--verbose)
+> +			VERBOSE=1
+> +			;;
+>  		--)
+>  			shift
+>  			break
+> @@ -799,7 +809,11 @@ Maybe you want to use 'update --init'?")"
+>  				must_die_on_failure=yes
+>  				;;
+>  			*)
+> -				command="git checkout $subforce -q"
+> +				if test -z "$VERBOSE"
+> +				then
+> +					subquiet=-q
+> +				fi
+> +				command="git checkout $subforce $subquiet"
+>  				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$prefix\$sm_path'")"
+>  				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': checked out '\$sha1'")"
+>  				;;
+> 
