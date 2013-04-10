@@ -1,76 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git rebase : knowing where I am...
-Date: Wed, 10 Apr 2013 12:28:02 -0700
-Message-ID: <7v4nfembi5.fsf@alter.siamese.dyndns.org>
-References: <1124759476.1420642.1365583233806.JavaMail.root@openwide.fr>
- <7vvc7umey0.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [ITCH] Specify refspec without remote
+Date: Thu, 11 Apr 2013 01:01:33 +0530
+Message-ID: <CALkWK0nKvTiGsjO4zF81nsSuUM=MmmbpdzHWB=4hFR2PiB+LWg@mail.gmail.com>
+References: <CALkWK0=siuUW1ex0muy+efwQOAwHf3uorFHWPo5sjMss08ywiw@mail.gmail.com>
+ <7vip3vsi19.fsf@alter.siamese.dyndns.org> <CALkWK0nqZ+GGvDhR=OPOz+NtYKXz7waQrxvCi-spAJ46pL=YKA@mail.gmail.com>
+ <7vhajfqz8r.fsf@alter.siamese.dyndns.org> <20130409231332.GZ30308@google.com>
+ <7vobdnnpx6.fsf@alter.siamese.dyndns.org> <20130410041343.GB795@sigill.intra.peff.net>
+ <7v4nfenxzm.fsf@alter.siamese.dyndns.org> <20130410172748.GA16908@sigill.intra.peff.net>
+ <7vhajemd1x.fsf@alter.siamese.dyndns.org> <20130410185958.GA22394@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Jeremy Rosen <jeremy.rosen@openwide.fr>
-X-From: git-owner@vger.kernel.org Wed Apr 10 21:28:31 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 10 21:32:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ0h1-0002cx-QJ
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 21:28:28 +0200
+	id 1UQ0kl-0007bR-Fk
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 21:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934746Ab3DJT2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 15:28:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38075 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932924Ab3DJT2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 15:28:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 678E215ACB;
-	Wed, 10 Apr 2013 19:28:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BN7Z4Hls9MCfIX1A6FmZ+dddYEs=; b=iBtem4
-	5EQE4mL1RMdoVkgK3lhwCxe3tXwl6WaGK83M1h84c95+Q1D2W7crt4Ar7ObeATb8
-	EymI3ehsJomQzINJ/s+aPyQoI9wVDP0edszW/TxLD47k2OjXgV9PAK5wBKXTbr4v
-	1BAhsgp54Jgv5A6p1IcNbs5gVgm+TGjACdOMQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=k8trFEkgiTQ6qIY2GlTpd1cYzIVG6I1X
-	O3RJ7o00ZDMgDzpZqQhvuPsknHNI+D4/GE6DCIOLQKfRPnm8ozo+PyTZ5MROYVhS
-	PR5tmAgLZk279/UBZzvDV0PTwypRLQVtbldy9LsNqXl/nsurIrWEXtNgAgD9KGST
-	cLKQv1mqOLA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F22A15AC9;
-	Wed, 10 Apr 2013 19:28:13 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A0BA615ABC; Wed, 10 Apr
- 2013 19:28:03 +0000 (UTC)
-In-Reply-To: <7vvc7umey0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 10 Apr 2013 11:13:43 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C37302B8-A214-11E2-983D-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1761894Ab3DJTcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 15:32:15 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:62145 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752182Ab3DJTcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 15:32:14 -0400
+Received: by mail-ie0-f175.google.com with SMTP id c12so1063709ieb.34
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 12:32:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=O1DfvWoeUADtMRYlWOKpwj9xl+jibBHw0tJ5a9/djuc=;
+        b=RfMa9+naZN2hNcMTZwX4cSWIK6xBuNx+KuXBGlsy/7HC8Cv048W0qMiNvIiWOaCGs1
+         xBKn9kPtrJ7tR4F1SUF0vwr1pyEZQ9Y9eXFNewGVsDV8LoGyeJCK6QyliDx9qvkfpwj+
+         Q0CowqX3T5znDuGMEViXHf7pgDE+5QrR9w7JVOVQpa80g4z+ZIjZdlTpZEYXEXJ/ya4g
+         2wOE6ZZdf1bLYDRrzR/sTwV5RO9hPbQyEQA09Cil8q96KuajdAo8b87n6+aSDsEuJR0Z
+         eyslf2/KGhNH6FitlaRIBB+YF3IByC+NzGm90oRnMKBbfo90TsHm+XcLEXio3dxi85YY
+         nUjg==
+X-Received: by 10.50.17.166 with SMTP id p6mr14147526igd.12.1365622333783;
+ Wed, 10 Apr 2013 12:32:13 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Wed, 10 Apr 2013 12:31:33 -0700 (PDT)
+In-Reply-To: <20130410185958.GA22394@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220733>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Jeremy Rosen <jeremy.rosen@openwide.fr> writes:
+Jeff King wrote:
+> On Wed, Apr 10, 2013 at 11:54:34AM -0700, Junio C Hamano wrote:
+>> > If branch.$name.remote is "when I am on this branch, I want to talk to
+>> > this remote", that rule is not be impacted by the presence of refspecs
+>> > at all.
+>>
+>> So running the above while on 'maint' will send master and next to
+>> the remote your "git push" would send to when run without any
+>> refspecs?
 >
->> is there some way to know how far you are within a rebase when the
->> rebase is interupted by a conflict other than the message given by
->> git rebase when it was interrupted ?
+> Exactly. The remote selection is orthogonal to the refspecs provided,
+> and only cares about which branch you are on.
 >
-> I do not think there is a "git $anything" command to do that, but in
-> the meantime you could "cat .git/rebase-*/git-rebase-todo" or
-> something.
+> Which is still kind of weird, because why should the branch you are on
+> affect the default push location? But that is how default "matching" has
+> always behaved, and we would remain consistent with that.
+
+git push -- master next; pushes to my current branch's
+branch.<name>.pushremote?  Isn't that a disaster?
+
+>> That is internally consistent and understandable, and I have no
+>> objection to it.  Certainly much better than basing the decision on
+>> branch.{master,next}.remote as I thought you were suggesting to do.
 >
-> Recent trend is to teach "git status" more about these internal states,
-> so with time the command may learn to include this in its output.
+> No, I am not suggesting that. I can see how such a command might be
+> useful (i.e. "push master to where it goes, next to where it goes",
+> where "goes" is defined by the upstream config). But that is not
+> remotely close to how "git push" works now, and would be inconsistent
+> with the other modes (e.g., matching, explicit refspecs, pushing
+> non-branches, etc).
 
-I actually often do this myself, not "cat anything" as I mentioned
-above:
-
-	git show-branch $branch_I_am_rebasing HEAD
+Otherwise, I think we're consistent.  git push master; pushes the
+refspec master (with no explicit :<dst> counterpart) to the "default
+place to push to" (either depending on which branch I am, or global).
+I think Junio was mixing up refspecs with refs (branches, and hence
+branch configuration) earlier.  git push origin; pushes to "default
+refspecs" on the remote origin.  By extension, git push; should push
+"default respecs" to the "default place to push to".  The "default
+refspecs" in this context is determined by push.default, which is the
+problem.
