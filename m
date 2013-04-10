@@ -1,86 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 08/20] remote-hg: split bookmark handling
-Date: Wed, 10 Apr 2013 12:36:43 -0700
-Message-ID: <7vvc7ukwj8.fsf@alter.siamese.dyndns.org>
-References: <1365441214-21096-1-git-send-email-felipe.contreras@gmail.com>
- <1365441214-21096-9-git-send-email-felipe.contreras@gmail.com>
- <CAMP44s3VcUyQUNBw+19O-_nf9HPWt=2uc35Keh6Z0jcgFF=Y7A@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] strbuf: create strbuf_humanize() to show byte sizes
+Date: Wed, 10 Apr 2013 12:43:07 -0700
+Message-ID: <20130410194307.GA27070@google.com>
+References: <7vli8svgyo.fsf@alter.siamese.dyndns.org>
+ <1365620604-17851-1-git-send-email-apelisse@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Max Horn <max@quendi.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 10 21:36:51 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 10 21:43:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ0p8-00058s-B9
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 21:36:50 +0200
+	id 1UQ0vR-0005Si-QV
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 21:43:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760269Ab3DJTgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 15:36:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43201 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752182Ab3DJTgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 15:36:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42CEF15EB7;
-	Wed, 10 Apr 2013 19:36:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Kd4X2/MFVNIOEmhITxjDt7NbRFw=; b=MdjH7U
-	BFMLTwiXuc5MapZ7T/eMh6Z19GtNyaMNCb2Nn1GooQAIgfRl4XIPLNEQHlYIBJSB
-	76crLAdGpl51pDmHLjBZ8MWdrYxLgnYxn+t8gAT5vPqVOh7nhzbd4I5JMmQfnQpD
-	P4vh9hFZNHHixuZQDsvkXZZOgNYJkCriSlcmk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nC2YuouFQaV8dneo8LLMEAsfSdWRLYt7
-	vGUGKbsMDaaOhzdV98qnomINk/sGfIrWF+s8Yc/cKpRjGP6rTXw09HvLD7uJ4H7P
-	ex14GvBqMITVLSlChpERjmfWddwpiH4ufn3tDlZ0Dhw6gNDKs+Yq6NhX0B9SYreD
-	tHl43N8I8oc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 394A915EB6;
-	Wed, 10 Apr 2013 19:36:45 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 80E3615EB3; Wed, 10 Apr
- 2013 19:36:44 +0000 (UTC)
-In-Reply-To: <CAMP44s3VcUyQUNBw+19O-_nf9HPWt=2uc35Keh6Z0jcgFF=Y7A@mail.gmail.com> (Felipe
- Contreras's message of "Wed, 10 Apr 2013 14:14:32 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F9E9A03A-A215-11E2-9BFD-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S935371Ab3DJTnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 15:43:17 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:64901 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935310Ab3DJTnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 15:43:16 -0400
+Received: by mail-pa0-f52.google.com with SMTP id fb10so490696pad.39
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 12:43:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Lh7MzzyyTe5E1EKIN3SrK2zo6VgNmu8bTajUm/H0aR0=;
+        b=pvEwuhR4ufEYKOJYaJ9e9KZkeKrbNt/YGTcdK3GTrX+7FjBbNugPWNDx1ZOOS/8146
+         3Iq9YNeQSZ0q4pBwyCXcJKCye94DWa6lVvuboAfjrIqgPh55WF1hQNdwMXMsk86gmN7G
+         jes50ljgiXBolqnG+y9OLH2D31Q6g9+ASDZhGp8K/ikc+bpqyR6mAnmIH8ygjjyNXPlc
+         2Om8nragkw2J6msSDlzadEAE9poKJqDHPBMCOoSC+khK7bwBrni+973NKkxuBejHwgCO
+         uFI4oGbTfUd5oqAgGVif6nda5O+ygu3V8e8wOCRnFXpOkoSeFtzVDHSVw6NBPmAV08sa
+         3WBw==
+X-Received: by 10.68.71.163 with SMTP id w3mr4665103pbu.139.1365622995598;
+        Wed, 10 Apr 2013 12:43:15 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id ak1sm1068500pbc.10.2013.04.10.12.43.13
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 10 Apr 2013 12:43:14 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1365620604-17851-1-git-send-email-apelisse@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220737>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Antoine Pelisse wrote:
 
-> On Mon, Apr 8, 2013 at 12:13 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
+> Separate text formatting from size simplification and make the function
+> public in strbuf so that it can easily be used by other clients.
 >
->> --- a/contrib/remote-helpers/git-remote-hg
->> +++ b/contrib/remote-helpers/git-remote-hg
->
->> @@ -731,6 +722,26 @@ def do_export(parser):
->>      if peer:
->>          parser.repo.push(peer, force=False)
->>
->> +    # handle bookmarks
->> +    for bmark, node in p_bmarks:
->> +        ref = 'refs/heads' + bmark
->
-> This should be:
->
-> ref = 'refs/heads/' + bmark
->
-> Should I reroll?
+> We now can use strbuf_humanize() for both downloaded size and download
+> speed calculation.
 
-I'd appreciate it if you can reroll the entire thing.  That way, I
-do not have to keep careful track of which one can be reused and
-which need to be replaced.
+Sounds like a good thing to do.
 
-Thanks.
+>                    One of the drawbacks is that speed will now look like
+> this when download is stalled: "0 bytes/s" instead of "0 KiB/s".
+
+At first glance that is neither obviously a benefit nor obviously a
+drawback.  Can you spell this out more?
+
+> --- a/Documentation/technical/api-strbuf.txt
+> +++ b/Documentation/technical/api-strbuf.txt
+> @@ -230,6 +230,11 @@ which can be used by the programmer of the callback as she sees fit.
+>  	destination. This is useful for literal data to be fed to either
+>  	strbuf_expand or to the *printf family of functions.
+>  
+> +`strbuf_humanize`::
+> +
+> +	Append the given byte size as a human-readable string (i.e. 12.23 KiB,
+> +	3.50 MiB).
+
+Based on the function name alone, it is not easy to guess what it will
+do (e.g., maybe it will paraphrase 3 to "three" and 10000000 to
+"enormous").  How about something like strbuf_filesize?
+
+If I understand the code correctly, this jumps units each time it
+exceeds 1.0 of the next unit (bytes, KiB, MiB, GiB), which sounds like
+a fine behavior.
+
+Hope that helps,
+Jonathan
