@@ -1,158 +1,105 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule: add verbose mode for add/update
-Date: Wed, 10 Apr 2013 22:00:42 +0200
-Message-ID: <5165C4EA.60308@web.de>
-References: <1365618262-8024-1-git-send-email-orgads@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [ITCH] Specify refspec without remote
+Date: Wed, 10 Apr 2013 13:05:12 -0700
+Message-ID: <20130410200512.GB27070@google.com>
+References: <7vhajfqz8r.fsf@alter.siamese.dyndns.org>
+ <20130409231332.GZ30308@google.com>
+ <7vobdnnpx6.fsf@alter.siamese.dyndns.org>
+ <20130410041343.GB795@sigill.intra.peff.net>
+ <7v4nfenxzm.fsf@alter.siamese.dyndns.org>
+ <20130410172748.GA16908@sigill.intra.peff.net>
+ <7vhajemd1x.fsf@alter.siamese.dyndns.org>
+ <20130410185958.GA22394@sigill.intra.peff.net>
+ <CALkWK0nKvTiGsjO4zF81nsSuUM=MmmbpdzHWB=4hFR2PiB+LWg@mail.gmail.com>
+ <CALkWK0k44+VnrGTXESdap2nRomdYH8xwz_T2JdhYtSrPR+89sw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Orgad Shaneh <orgads@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 10 22:00:53 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Duy =?utf-8?B?Tmd1eeG7hW4=?= <pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 10 22:05:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ1CO-0002g2-Jr
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 22:00:52 +0200
+	id 1UQ1Gn-0000AB-4W
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Apr 2013 22:05:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936029Ab3DJUAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 16:00:48 -0400
-Received: from mout.web.de ([212.227.15.4]:62768 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934822Ab3DJUAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 16:00:47 -0400
-Received: from [192.168.178.41] ([79.193.81.26]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0MIvXZ-1URx8Z0Nyb-002Kj5; Wed, 10 Apr 2013 22:00:46
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130328 Thunderbird/17.0.5
-In-Reply-To: <1365618262-8024-1-git-send-email-orgads@gmail.com>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V02:K0:vqixkwT5CWyGqxHSzUBWNScEnqZW8GUuaEWKoVi+ytC
- U5hpsUup8IXl9JkHLeokr9buavFNaIF4GB7OqMmY+PBw0xPfz6
- E6kbNulYhAQb7a4HdjDAWOJxqiRuTXmnzH3lCZsAp8838gDxvA
- 816q2h9oDFsyY/98/F6fWkoubdQWJ6ySFMdK02nHE4cnHmFcIy
- IEjpTn8skzdVN2dlOQhpA==
+	id S964801Ab3DJUFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 16:05:18 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:44309 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752313Ab3DJUFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 16:05:17 -0400
+Received: by mail-pa0-f45.google.com with SMTP id kl13so498022pab.32
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 13:05:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=MXtL2IwZ4ONLhAszhliodx0O8ES2osdMgDhf0OHMfKc=;
+        b=SWIsbX0aK6ZZcUYfAFnLd0gpf/WcFDOc9Rw8EIvIi3wJA0KFIxpBDrtw/EOa+M6phg
+         reoqx6wpbvNl+X5vgLXE421uOV7Qb9iR1RiV+9wayeVFyDPCyPRm0HRDB2FNR6WqXUVH
+         yUIl4MoA+KABVOYF85NSnHpO0xen6s7AeXUCnKqPaKPzsNgIhJzvMDW8EAb+Fo4GI6mC
+         nj/OF61NE1aIaAl4AY4p9NHDEJh5kJL/o5sGjpm6YAfqRucGtfGQPHLbJvKo1Vfaz61d
+         iU1uoW7qS4r59QJTNvzCY+MrAuhKckMaCfFI6pSOXqDFiUea6FYipCbLGfobGm1SKmWa
+         PeFg==
+X-Received: by 10.66.122.39 with SMTP id lp7mr5537462pab.116.1365624316754;
+        Wed, 10 Apr 2013 13:05:16 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id z8sm1100852pbt.23.2013.04.10.13.05.14
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 10 Apr 2013 13:05:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0k44+VnrGTXESdap2nRomdYH8xwz_T2JdhYtSrPR+89sw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220744>
 
-Am 10.04.2013 20:24, schrieb Orgad Shaneh:
-> Executes checkout without -q
+Ramkumar Ramachandra wrote:
+> Ramkumar Ramachandra wrote:
 
-Nice, looks like you picked the proposal I made last September:
-  http://permalink.gmane.org/gmane.comp.version-control.git/204747
+>> git push -- master next; pushes to my current branch's
+>> branch.<name>.pushremote?  Isn't that a disaster?
+>
+> Actually, branch.<name>.pushremote already breaks the current design
+> in a way
 
-The change is looking good, but you still need to document the
-new option in Documentation/git-submodule.txt too please.
+I don't see a big problem here, actually.  What's so wrong with
+branch.<name>.remote affecting what "git push" does?  If
+branch.crazy-feature.remote is my-personal-remote and I run
 
-And the commit message is still too short, as I said in that
-other thread:
+	git push
 
-On Tue, Sep 4, 2012 at 6:28 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Before the "Signed-off-by" is the place where you should have
-> explained why this would be a worthwhile change ;-)
+and "[push] default = upstream", then it is obvious what the user
+wanted to happen.  But what about when "[push] default = matching"?
+Which of the following behaviors is correct?
 
-And you answered to that with something that would really make
-sense as first part of the commit message, because you explain
-*why* you do that change:
+ a) Error: you didn't tell me which remote to push to.
+ b) Just behave like "git push my-personal-remote :".
+ c) Ignore which branch is the current branch and behave like
+    "git push origin :".
 
-Am 05.09.2012 13:42, schrieb Orgad and Raizel Shaneh:
-> When I run 'git submodule update' I don't expect to be in the dark
-> until the submodule/s finishes checkout, this sometimes can take a
-> significant amount of time and feedback is expected.
+How about when "[push] default = current"?
 
-Another paragraph after that should explain *how* you do it.
+Except that people might have scripts or habits tied to the current
+behavior, any of (a), (b), and (c) sounds fine to me.  (b) is the
+obvious choice for historical reasons.
 
-So what about the following as commit message:
---------------------------------------------------------------
-When 'git submodule add/update' is run there is no output during
-checkout. This can take a significant amount of time and it would
-be nice if user could enable some feedback to see what's going on.
+Now if I rely on the proposed DWIM and run
 
-Add the -v/--verbose option to both add and update which suppresses
-the -q normally given to checkout so the user sees progress output
-from the checkout command.
+	git push master
 
-<Your Signed-off-by goes here>
---------------------------------------------------------------
+then the corresponding choices are:
 
-I'm looking forward to your next iteration.
-
-> ---
->  git-submodule.sh |   24 +++++++++++++++++++-----
->  1 file changed, 19 insertions(+), 5 deletions(-)
-> 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 79bfaac..f7964ad 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -5,11 +5,11 @@
->  # Copyright (c) 2007 Lars Hjemli
->  
->  dashless=$(basename "$0" | sed -e 's/-/ /')
-> -USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
-> +USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [-v|--verbose] [--] <repository> [<path>]
->     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
->     or: $dashless [--quiet] init [--] [<path>...]
->     or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
-> -   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
-> +   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [-v|--verbose] [--] [<path>...]
->     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
->     or: $dashless [--quiet] foreach [--recursive] <command>
->     or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
-> @@ -309,6 +309,9 @@ cmd_add()
->  			custom_name=$2
->  			shift
->  			;;
-> +		-v|--verbose)
-> +			VERBOSE=1
-> +			;;
->  		--)
->  			shift
->  			break
-> @@ -408,11 +411,15 @@ Use -f if you really want to add it." >&2
->  		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" || exit
->  		(
->  			clear_local_git_env
-> +			if test -z "$VERBOSE"
-> +			then
-> +				subquiet=-q
-> +			fi
->  			cd "$sm_path" &&
->  			# ash fails to wordsplit ${branch:+-b "$branch"...}
->  			case "$branch" in
-> -			'') git checkout -f -q ;;
-> -			?*) git checkout -f -q -B "$branch" "origin/$branch" ;;
-> +			'') git checkout -f $subquiet ;;
-> +			?*) git checkout -f $subquiet -B "$branch" "origin/$branch" ;;
->  			esac
->  		) || die "$(eval_gettext "Unable to checkout submodule '\$sm_path'")"
->  	fi
-> @@ -676,6 +683,9 @@ cmd_update()
->  		--checkout)
->  			update="checkout"
->  			;;
-> +		-v|--verbose)
-> +			VERBOSE=1
-> +			;;
->  		--)
->  			shift
->  			break
-> @@ -799,7 +809,11 @@ Maybe you want to use 'update --init'?")"
->  				must_die_on_failure=yes
->  				;;
->  			*)
-> -				command="git checkout $subforce -q"
-> +				if test -z "$VERBOSE"
-> +				then
-> +					subquiet=-q
-> +				fi
-> +				command="git checkout $subforce $subquiet"
->  				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$prefix\$sm_path'")"
->  				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': checked out '\$sha1'")"
->  				;;
-> 
+ a) Error: you didn't tell me which remote to push to.
+ b) Just behave like "git push my-personal-remote master".
+ c) Behave like "git push origin master".
+ 
+(b) is not a good choice there, but (a) and (c) look equally fine.
