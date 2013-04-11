@@ -1,136 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 00/21] remote-hg: general updates
-Date: Thu, 11 Apr 2013 10:50:37 -0700
-Message-ID: <7vwqs9hs7m.fsf@alter.siamese.dyndns.org>
-References: <1365682997-11329-1-git-send-email-felipe.contreras@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/2] transport-helper: report errors properly
+Date: Thu, 11 Apr 2013 12:57:34 -0500
+Message-ID: <CAMP44s1KgpT5YGwAr2KAToaoB6rUmtM3ocA-OtFSGfOzudx5RA@mail.gmail.com>
+References: <20130410211311.GA24277@sigill.intra.peff.net>
+	<20130410211552.GA3256@sigill.intra.peff.net>
+	<CAMP44s02K5ydKLNi0umMkuAicoVTWyCdVfjs0yssCa2oyFShGQ@mail.gmail.com>
+	<20130411161845.GA665@sigill.intra.peff.net>
+	<CAMP44s2-4i_tSzz8Y88_YnK5d1AjNoTqOa7eXZ0W5Vzk9Uosng@mail.gmail.com>
+	<20130411165937.GA1255@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 11 19:50:51 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 11 19:57:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQLe1-0001jo-KK
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 19:50:45 +0200
+	id 1UQLkk-00030s-TQ
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 19:57:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964926Ab3DKRul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 13:50:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62577 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753620Ab3DKRuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 13:50:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD8101496B;
-	Thu, 11 Apr 2013 17:50:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bncI62fP5ce8h7j4bfortWt6BG8=; b=D6pXpe
-	0EB58fllCFjv9XZs5Uc87AQfA2VS2AYLRk38rvd0xcXI+1UZKtoVd3BYpUThO5V7
-	sq8hDorB9sv/eUSWszDzGgtDiixZuNsVs678N5HfvbUEqW1wbR0xazILv0AvgrB4
-	tR9PnDLkjQoTEsSYX3udXTYY2IE0nmCIsTQfk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Iu66QmAlHyu0a0ZaczVObPLUT/58oz8u
-	2rSMHzowcQ7tZIZ7P98m1Tpm0ODLodYCHIeLt6AM3W28t50hMHrbHhsZgfhujk8V
-	58s852w4aOVfj/20v5pB1wwHwVvdTd3Te2poLRopI/4URB4z0mcQBtKM8XM6otYU
-	zKVRWFoat0I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D221D1496A;
-	Thu, 11 Apr 2013 17:50:39 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 43FEE14969; Thu, 11 Apr
- 2013 17:50:39 +0000 (UTC)
-In-Reply-To: <1365682997-11329-1-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Thu, 11 Apr 2013 07:22:56 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5256D156-A2D0-11E2-8CCF-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1161312Ab3DKR5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 13:57:37 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:37862 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161205Ab3DKR5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 13:57:35 -0400
+Received: by mail-lb0-f179.google.com with SMTP id t1so1831765lbd.24
+        for <git@vger.kernel.org>; Thu, 11 Apr 2013 10:57:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=9kmzKqLsIJa1iSFhPR6RN5g+j8DD/0Js/4jl8X5Swhg=;
+        b=0OL8pUIaAxYK/U/VglTMIAjFVhdOYP13QQS9kWScoA9suwxz+vf4fVrvzF8TrR01v6
+         IC2SHtB6DQ/BGNy7KEwnZRAbXxyiqT+oQwgKwTCzmFEfJIQ2sbMMfsgLNYKmFyef+I8n
+         LMsWI90uWW2Id6Sklu7BbLtHXivs8V0gWhdUsKiDY8OXvVpOtdXg9nOBuxFh96ACnYgV
+         EXGDTVXuebzCxCZvlBvP/WBmx4ebKafl137zbqhQDjZ4v2cNFf2tFw1O4xTRmKRWjhPI
+         zC7ntqHJnMX4ZislgSSp4t9Od6+C50r68hQSe9YxpB4ZCtCyPsaT9gTHxAgkmdM6gIf2
+         PLBA==
+X-Received: by 10.112.163.6 with SMTP id ye6mr3778611lbb.59.1365703054155;
+ Thu, 11 Apr 2013 10:57:34 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Thu, 11 Apr 2013 10:57:34 -0700 (PDT)
+In-Reply-To: <20130411165937.GA1255@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220901>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Thu, Apr 11, 2013 at 11:59 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Apr 11, 2013 at 11:49:11AM -0500, Felipe Contreras wrote:
+>
+>> > I am OK with adding the test for import as a separate patch. What I am
+>> > not OK with (and this goes for the rest of the commit message, too) is
+>> > failing to explain any back-story at all for why the change is done in
+>> > the way it is.
+>> >
+>> > _You_ may understand it _right now_, but that is not the primary
+>> > audience of the message. The primary audience is somebody else a year
+>> > from now who is wondering why this patch was done the way it was.
+>>
+>> Who would be this person? Somebody who wonders why this test is using
+>> "feature done"? I doubt such a person would exist, as using this
+>> feature is standard, as can be seen below this chunk. *If* the test
+>> was *not* using this "feature done", *then* sure, an explanation would
+>> be needed.
+>
+> If it was so obvious, why did your initial patch not use "feature done"?
 
-> This is a reroll of the previous series due to a few minor issues. As the
-> previous version, forced pushes remain a configuration option. Also, I picked
-> up a fix for test regarding hg_log() that was sent to the mailing list.
+Because I didn't want to test the obvious, I wanted to test something else.
 
-Will replace the previous round with this one.
+> If it was so obvious, why did our email discussion go back and forth so
+> many times before arriving at this patch?
 
-The changes since the previous round looks like this on my end,
-which all look sensible.
+This patch has absolutely nothing to do with that, in fact, forget
+about it, such a minor check is not worth this time and effort:
+http://article.gmane.org/gmane.comp.version-control.git/220899
 
-Thanks.
+> It was certainly not obvious to me when this email thread started. So in
+> response to your question: *I* am that person. I was him two weeks ago,
+> and there is a good chance that I will be him a year from now.
 
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index d45f16d..a5f0013 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -655,7 +655,7 @@ def parse_commit(parser):
- 
-     # Check if the ref is supposed to be a named branch
-     if ref.startswith('refs/heads/branches/'):
--        extra['branch'] = ref.replace('refs/heads/branches/', '')
-+        extra['branch'] = ref[len('refs/heads/branches/'):]
- 
-     if mode == 'hg':
-         i = data.find('\n--HG--\n')
-@@ -762,7 +762,7 @@ def do_export(parser):
- 
-     # handle bookmarks
-     for bmark, node in p_bmarks:
--        ref = 'refs/heads' + bmark
-+        ref = 'refs/heads/' + bmark
-         new = hghex(node)
- 
-         if bmark in bmarks:
-diff --git a/contrib/remote-helpers/test-hg-bidi.sh b/contrib/remote-helpers/test-hg-bidi.sh
-index a3c88f6..f368953 100755
---- a/contrib/remote-helpers/test-hg-bidi.sh
-+++ b/contrib/remote-helpers/test-hg-bidi.sh
-@@ -50,7 +50,8 @@ hg_push () {
- }
- 
- hg_log () {
--	hg -R $1 log --graph --debug | grep -v 'tag: *default/'
-+	hg -R $1 log --graph --debug >log &&
-+	grep -v 'tag: *default/' log
- }
- 
- setup () {
-@@ -62,6 +63,8 @@ setup () {
- 	echo "commit = -d \"0 0\""
- 	echo "debugrawcommit = -d \"0 0\""
- 	echo "tag = -d \"0 0\""
-+	echo "[extensions]"
-+	echo "graphlog ="
- 	) >> "$HOME"/.hgrc &&
- 	git config --global remote-hg.hg-git-compat true
- 
-diff --git a/contrib/remote-helpers/test-hg-hg-git.sh b/contrib/remote-helpers/test-hg-hg-git.sh
-index 8c59d8e..5daad6b 100755
---- a/contrib/remote-helpers/test-hg-hg-git.sh
-+++ b/contrib/remote-helpers/test-hg-hg-git.sh
-@@ -78,7 +78,8 @@ hg_push_hg () {
- }
- 
- hg_log () {
--	hg -R $1 log --graph --debug | grep -v 'tag: *default/'
-+	hg -R $1 log --graph --debug >log &&
-+	grep -v 'tag: *default/' log
- }
- 
- git_log () {
-@@ -97,6 +98,7 @@ setup () {
- 	echo "[extensions]"
- 	echo "hgext.bookmarks ="
- 	echo "hggit ="
-+	echo "graphlog ="
- 	) >> "$HOME"/.hgrc &&
- 	git config --global receive.denycurrentbranch warn
- 	git config --global remote-hg.hg-git-compat true
+No, you are not. I didn't send a patch with "feature done" originally,
+the only reason you wondered about the patch with "feature done" is
+that you saw one without it. It will _never_ happen again.
+
+> Much of
+> my work on git is spent tracking down bugs in older code, and those
+> commit messages are extremely valuable to me in understanding what
+> happened at the time.
+
+Lets make a bet. Let's push the simpler version, and when you hit this
+commit message retrospectively and find that you don't understand what
+is happening, I loose, and I will forever accept verbose commit
+messages. It will never happen.
+
+> But I give up on you. I find most of your commit messages lacking in
+> details and motivation, making assumptions that the reader is as
+> familiar with the code when reading the commit as you are when you wrote
+> it. I tried to help by suggesting in review that you elaborate. That
+> didn't work. So I tried to help by writing the text myself. But clearly
+> I am not going to convince you that it is valuable, even if it requires
+> no work at all from you, so I have nothing else to say on the matter.
+
+Me neither. I picked your solution, but that's not enough, you
+*always* want me to do EXACTLY what you want, and never argue back.
+
+It's not going to happen. There's nothing wrong with disagreeing.
+
+Cheers.
+
+--
+Felipe Contreras
