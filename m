@@ -1,89 +1,239 @@
-From: Mike Galbraith <bitbucket@online.de>
-Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
- permission problems as errors" busted git-daemon
-Date: Thu, 11 Apr 2013 09:59:19 +0200
-Message-ID: <1365667159.19620.116.camel@marge.simpson.net>
-References: <1365572015.4658.51.camel@marge.simpson.net>
-	 <20130410135605.GB4694@odin.tremily.us>
-	 <1365651583.19620.8.camel@marge.simpson.net>
-	 <20130411054207.GE27795@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2 2/3] Teach mv to move submodules using a gitfile
+Date: Thu, 11 Apr 2013 14:07:11 +0530
+Message-ID: <CALkWK0kUdKfAp36HSdoTOK_Wt-Rs_4f3HKHLbLi8e3pzx0iEGw@mail.gmail.com>
+References: <515C88FE.9020203@web.de> <515C8987.2060804@web.de>
+ <7vwqsbnvxz.fsf@alter.siamese.dyndns.org> <51659A8A.80605@web.de> <5165D469.2020603@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: "W. Trevor King" <wking@tremily.us>, git <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 11 09:59:40 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Phil Hord <phil.hord@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	"W. Trevor King" <wking@tremily.us>,
+	Peter Collingbourne <peter@pcc.me.uk>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Apr 11 10:38:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQCPz-0004tF-EW
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 09:59:39 +0200
+	id 1UQD16-0006LC-Ti
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 10:38:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753961Ab3DKH7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 03:59:35 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:63445 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751765Ab3DKH7e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 03:59:34 -0400
-Received: from [192.168.178.27] (p4FE190B6.dip0.t-ipconnect.de [79.225.144.182])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0LbQ1i-1UsLR428ZW-00kqrz; Thu, 11 Apr 2013 09:59:21 +0200
-In-Reply-To: <20130411054207.GE27795@sigill.intra.peff.net>
-X-Mailer: Evolution 3.2.3 
-X-Provags-ID: V02:K0:AxI/spoCVQfrPKLCKcET3/qRM9/AdMl80nD3iupp1Qu
- eZb0sKwSyWgv/9uWfkn/cb2HK00rYhUFFT19bvugNj9T2iUXXK
- pXsgNHQHfgsAmbh96rumE/pVnl4oTPy8BXZv0qtE5RPwYnxsgu
- xg/uL7910z2b2GDPLiV+l3PLoM0JgZcU+1foxsiqZPopzE6WAg
- g/bPiGiSzTVryYuhCyA3J4DZ4rvsMFcU0Vos8p3M/XOVhjQUaY
- ohdp5sEFgrwvpwXSE8fKcZ4Da2YOBFdR5n5RqrR8ykZ7mWrh4U
- RqLgJ4//ZYyrB7Ku4YmVK1mGR/m7f5osMWnQOOfQYRHmSTqJsz
- frak3eEiLX3XIG5lYpyVuUyiag1Xj00nZq9285GBNhtp9urOAj
- pV8bQe4Jg3mIg==
+	id S1161538Ab3DKIhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 04:37:55 -0400
+Received: from mail-ia0-f178.google.com ([209.85.210.178]:34052 "EHLO
+	mail-ia0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753267Ab3DKIhv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 04:37:51 -0400
+Received: by mail-ia0-f178.google.com with SMTP id f27so1184447iae.23
+        for <git@vger.kernel.org>; Thu, 11 Apr 2013 01:37:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=ZdTDr8JeHHCsUvEpo8GJ3g/uG0aDkLO5Gw/0/ddjyd8=;
+        b=pB3raPgM4KMudXVsadaxJ36+pHUw4aH6TcToVslk6vjg27bv7Vod8j8C2FIins2hWC
+         YaOYq5b4yZsS0EnfR7NNUaIFq2dHkC7oT9Kh9GTMGt2j2Jgn7R39XVK/QQk4XOZAkuBN
+         +LNVSIEJyCgeGX6ouh3lTWSngt0LomC/Jt398aqKdPSugtbq9Z6u/v951E67/M6Fn5H2
+         kGk+GYXv1xK8VRqfP5v8M6X5KA38YD00pnek64zXr5e+qdj7+LktwV7lYm64+uFajzHi
+         JuWFNX/RPG7hneqJ6vbctp6SegIWr5UC7AQ1oYM24DKOF3yc7n0yvp7/FAd5XRFRdsCg
+         Diog==
+X-Received: by 10.50.17.166 with SMTP id p6mr15619512igd.12.1365669471445;
+ Thu, 11 Apr 2013 01:37:51 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Thu, 11 Apr 2013 01:37:11 -0700 (PDT)
+In-Reply-To: <5165D469.2020603@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220834>
 
-On Thu, 2013-04-11 at 01:42 -0400, Jeff King wrote: 
-> On Thu, Apr 11, 2013 at 05:39:43AM +0200, Mike Galbraith wrote:
-> 
-> > >   ALLOWED_ENV="PATH HOME"
-> > >   HOME=/
-> > 
-> > I can work around it by changing the init script to use su - git -c "bla
-> > bla" to launch the thing, instead of using --user=git --group=daemon,
-> > but that's just a bandaid for the busted environment setup those
-> > switches were supposed to make happen, no?
-> 
-> Yeah, I think the bug here is that git-daemon should be setting $HOME
-> when it switches privileges with --user. Does this patch fix it for you?
-> 
-> diff --git a/daemon.c b/daemon.c
-> index 6aeddcb..a4451fd 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -1091,6 +1091,7 @@ static void drop_privileges(struct credentials *cred)
->  	if (cred && (initgroups(cred->pass->pw_name, cred->gid) ||
->  	    setgid (cred->gid) || setuid(cred->pass->pw_uid)))
->  		die("cannot drop privileges");
-> +	setenv("HOME", cred->pass->pw_dir, 1);
+Jens Lehmann wrote:
+> When moving a submodule which uses a gitfile to point to the git directory
+> stored in .git/modules/<name> of the superproject two changes must be made
+> to make the submodule work: the .git file and the core.worktree setting
+> must be adjusted to point from work tree to git directory and back.
+
+Isn't it untrue that the git directory is stored in
+.git/modules/<name>: it is stored in .git/modules/path/to/module.  I
+thought the whole point of this complex scheme was to avoid name
+conflicts with submodules with the same name in other directories.
+Then why aren't you moving the object store as well?  What happens if
+I try to create a submodule in the old path of this moved submodule in
+the future?  How will you fail, and how will the user recover from
+this?
+
+A nit on the wording.  Perhaps: "the .git file in the worktree must be
+adjusted to point to $GITDIR, and core.worktree must be set to point
+to the worktree."
+
+> Achieve that by remembering which submodule uses a gitfile by storing the
+> result of read_gitfile() of each submodule. If that is not NULL the new
+> function connect_work_tree_and_git_dir() is called after renaming the
+> submodule's work tree which updates the two settings to the new values.
+
+Oh God.  Can't you figure out at mv-time if the submodule uses a
+gitfile?  Why are you storing it?  Where are you storing it exactly?
+
+> diff --git a/builtin/mv.c b/builtin/mv.c
+> index 361028d..609bbb8 100644
+> --- a/builtin/mv.c
+> +++ b/builtin/mv.c
+> @@ -9,6 +9,7 @@
+>  #include "cache-tree.h"
+>  #include "string-list.h"
+>  #include "parse-options.h"
+> +#include "submodule.h"
+>
+>  static const char * const builtin_mv_usage[] = {
+>         N_("git mv [options] <source>... <destination>"),
+> @@ -65,7 +66,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>                 OPT_BOOLEAN('k', NULL, &ignore_errors, N_("skip move/rename errors")),
+>                 OPT_END(),
+>         };
+> -       const char **source, **destination, **dest_path;
+> +       const char **source, **destination, **dest_path, **submodule_gitfile;
+>         enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
+>         struct stat st;
+>         struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
+> @@ -84,6 +85,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>         source = copy_pathspec(prefix, argv, argc, 0);
+>         modes = xcalloc(argc, sizeof(enum update_mode));
+>         dest_path = copy_pathspec(prefix, argv + argc, 1, 0);
+> +       submodule_gitfile = xcalloc(argc, sizeof(char *));
+
+This is cmd_mv, and you're allocating argc number of char * pointers
+to submodule_gitfile.  Why?  Are you guaranteed that there are argc
+number of submodule_gitfiles?
+
+>         if (dest_path[0][0] == '\0')
+>                 /* special case: "." was normalized to "" */
+> @@ -119,8 +121,14 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>                 else if (src_is_dir) {
+>                         int first = cache_name_pos(src, length);
+>                         if (first >= 0) {
+> +                               struct strbuf submodule_dotgit = STRBUF_INIT;
+>                                 if (!S_ISGITLINK(active_cache[first]->ce_mode))
+>                                         die (_("Huh? Directory %s is in index and no submodule?"), src);
+> +                               strbuf_addf(&submodule_dotgit, "%s/.git", src);
+> +                               submodule_gitfile[i] = read_gitfile(submodule_dotgit.buf);
+
+What?!  read_gitfile() returns the path to the git directory, if it is
+found.  How are you assigning the path to a $GITDIR to a variable
+named submodule_gitfile?
+
+> +                               if (submodule_gitfile[i])
+> +                                       submodule_gitfile[i] = xstrdup(submodule_gitfile[i]);
+
+Doesn't read as smoothly, but saves you an extra char *.  Okay.
+
+> +                               strbuf_release(&submodule_dotgit);
+>                         } else {
+>                                 const char *src_w_slash = add_slash(src);
+>                                 int last, len_w_slash = length + 1;
+> @@ -215,9 +223,12 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>                 int pos;
+>                 if (show_only || verbose)
+>                         printf(_("Renaming %s to %s\n"), src, dst);
+> -               if (!show_only && mode != INDEX &&
+> -                               rename(src, dst) < 0 && !ignore_errors)
+> -                       die_errno (_("renaming '%s' failed"), src);
+> +               if (!show_only && mode != INDEX) {
+> +                       if (rename(src, dst) < 0 && !ignore_errors)
+> +                               die_errno (_("renaming '%s' failed"), src);
+> +                       if (submodule_gitfile[i])
+> +                               connect_work_tree_and_git_dir(dst, submodule_gitfile[i]);
+> +               }
+
+Okay, scratch my previous comment about allocating argc char *
+pointers for submodule_gitfile().  Since your logic is in a loop that
+loops argc times, you really have no choice.
+
+> diff --git a/submodule.c b/submodule.c
+> index 975bc87..9a3eb85 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1001,3 +1001,67 @@ int merge_submodule(unsigned char result[20], const char *path,
+>         free(merges.objects);
+>         return 0;
 >  }
->  
->  static struct credentials *prepare_credentials(const char *user_name,
-> 
-> I guess that would technically break anybody who was trying to do
-> something clever with HOME (i.e., point it somewhere besides --user's
-> HOME where they had put some config files). But the obvious clever
-> thing would be to also set the user's passwd homedir to the same place.
+> +
+> +/* Update gitfile and core.worktree setting to connect work tree and git dir */
+> +void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
+> +{
+> +       struct strbuf core_worktree_setting = STRBUF_INIT;
+> +       struct strbuf configfile_name = STRBUF_INIT;
+> +       struct strbuf gitfile_content = STRBUF_INIT;
+> +       struct strbuf gitfile_name = STRBUF_INIT;
+> +       const char *real_work_tree = real_path(work_tree);
+> +       const char *pathspec[] = { real_work_tree, git_dir, NULL };
+> +       const char *max_prefix = common_prefix(pathspec);
+> +       FILE *fp;
+> +
+> +       if (max_prefix) {       /* skip common prefix */
+> +               size_t max_prefix_len = strlen(max_prefix);
+> +               real_work_tree += max_prefix_len;
+> +               git_dir += max_prefix_len;
+> +       }
+> +
+> +       /*
+> +        * Update gitfile
+> +        */
+> +       strbuf_addstr(&gitfile_content, "gitdir: ");
+> +       if (real_work_tree[0]) {
+> +               const char *s = real_work_tree;
+> +               do {
+> +                       strbuf_addstr(&gitfile_content, "../");
+> +                       s++;
+> +               } while ((s = strchr(s, '/')));
+> +       }
+> +       strbuf_addstr(&gitfile_content, git_dir);
+> +       strbuf_addch(&gitfile_content, '\n');
 
-I did exactly that yesterday, and it didn't work, which rather surprised
-me.  Let me double check that I didn't screw trivial all up...
+Yuck.  Just yuck.  Why don't you just fopen the gitfile and write one
+line to it directly (ie. the absolute path of the worktree)?  Why do
+you need a strbuf for this at all?  Ah, absolute paths would break if
+you moved the entire superproject to a different location.  This is
+reason #347 I don't like keeping GITDIRs in the superproject's
+.git/modules/.  In any case, why don't you use relative_path() in
+path.c instead of reinventing the wheel?
 
-Heh, if ya don't plunk new binary into the old oddly placed bucket :)
-Yeah, that works just fine.
+> +       strbuf_addf(&gitfile_name, "%s/.git", work_tree);
 
--Mike 
+Why work_tree, not real_work_tree?
+strbuf is an overkill for this: why not mkpath()?
+
+> +       fp = fopen(gitfile_name.buf, "w");
+> +       if (!fp)
+> +               die(_("Could not create git link %s"), gitfile_name.buf);
+> +       fprintf(fp, "%s", gitfile_content.buf);
+
+Not checking the return value of fprintf() for possible failure?
+
+> +       fclose(fp);
+> +
+> +       strbuf_release(&gitfile_content);
+> +       strbuf_release(&gitfile_name);
+> +
+> +       /*
+> +        * Update core.worktree setting
+> +        */
+> +       if (git_dir[0]) {
+> +               const char *s = git_dir;
+> +               do {
+> +                       strbuf_addstr(&core_worktree_setting, "../");
+> +                       s++;
+> +               } while ((s = strchr(s, '/')));
+> +       }
+
+Can't use relative_path()?
+
+> +       strbuf_addstr(&core_worktree_setting, real_work_tree);
+> +
+> +       strbuf_addf(&configfile_name, "%s/config", git_dir);
+
+mkpath() to avoid the strbuf.  If you have to use strbufs, why aren't
+you re-using a "pathbuf" strbuf?
