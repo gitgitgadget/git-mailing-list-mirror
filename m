@@ -1,167 +1,192 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v3 5/5] Documentation: add caveats about I/O buffering for
- check-{attr,ignore}
-Date: Thu, 11 Apr 2013 21:12:20 +0100
-Message-ID: <20130411201219.GA21091@pacific.linksys.moosehall>
-References: <20130411110511.GB24296@pacific.linksys.moosehall>
- <1365681913-7059-1-git-send-email-git@adamspiers.org>
- <1365681913-7059-5-git-send-email-git@adamspiers.org>
- <7vsj2xhrc7.fsf@alter.siamese.dyndns.org>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: git p4 submit failing
+Date: Thu, 11 Apr 2013 21:19:42 +0100
+Message-ID: <CAE5ih78rw1_oE2SFQFnfUSfRfDGRW0pVC7TL1qgxwdcOFbBdCw@mail.gmail.com>
+References: <CAG4Fb8ejKCpUqZ+YVQT=S2-p6YcNo5+s81j2Jrx8q1ijtu8yqw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 11 22:12:28 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Christopher Yee Mon <christopher.yeemon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 11 22:19:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQNr9-00020t-Ou
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 22:12:28 +0200
+	id 1UQNyG-0003bX-9K
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 22:19:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752695Ab3DKUMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 16:12:23 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:59783 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751889Ab3DKUMW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 16:12:22 -0400
-Received: from localhost (2.d.c.d.2.5.f.b.c.0.4.8.0.1.4.d.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:d410:840c:bf52:dcd2])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 8DE3458EB3
-	for <git@vger.kernel.org>; Thu, 11 Apr 2013 21:12:21 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7vsj2xhrc7.fsf@alter.siamese.dyndns.org>
-X-OS: GNU/Linux
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752153Ab3DKUTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 16:19:43 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:52728 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750731Ab3DKUTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 16:19:42 -0400
+Received: by mail-ob0-f178.google.com with SMTP id ni5so1728086obc.23
+        for <git@vger.kernel.org>; Thu, 11 Apr 2013 13:19:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=7ETre98skvS34osbb9UixgaoKpI7QQK8pXo0CQaHM7w=;
+        b=E+To+eELigoD3kIT7s5mphi76ldWH+qdlCR7E+1GfdNX6CU/tNohd7ojZ73YauSF7s
+         mQnH0yNs5hjKBZTYRNu+YlAEBBKWv/3lDTvMN8vDfiGq3leMGa7pFdO9O4eEqcsqblwh
+         mzp1xKw7sqK+EEd1/xXVlNuiMN4Ju+q/543AI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:x-gm-message-state;
+        bh=7ETre98skvS34osbb9UixgaoKpI7QQK8pXo0CQaHM7w=;
+        b=L0Dl7NpMW/JDin4tL2koXU5W9D0fnkZc+5cJYrgNjtVLSDsXASnvZNxKOc4RMSDTW5
+         tSXWDa1+r1O4uH26aUqFVG5uveTOiF7iCDFBqbhIyLtI8qMoAwkeLR/nCk1LsFGGRjLS
+         QCfjVlVWyoVMGhOZ6fNy+T5HJWPVBKP9Nfipx2YmYdNzrIohppd/QYgKueHB+CnQpYSx
+         umvhpvcxUMITr4kNWmaNmut4g43k8/VXkRWfmET4z3ueCcKL+W7JkyxB2CNrS6O97enC
+         2qNHkJXMc2tZGNsNI9n7Fv45tl5e1LHKqEAR4SIV0B779nsWbr3MjQ5od5YPJh4UmPPN
+         JlMQ==
+X-Received: by 10.60.101.163 with SMTP id fh3mr2904478oeb.95.1365711582303;
+ Thu, 11 Apr 2013 13:19:42 -0700 (PDT)
+Received: by 10.60.141.161 with HTTP; Thu, 11 Apr 2013 13:19:42 -0700 (PDT)
+In-Reply-To: <CAG4Fb8ejKCpUqZ+YVQT=S2-p6YcNo5+s81j2Jrx8q1ijtu8yqw@mail.gmail.com>
+X-Gm-Message-State: ALoCoQkRL/91aHtj56V9IChuXCEXXXcvCFUeEsxIsbloeiRBAX6iwT+PBT6gtqMwcmXGpkHR3dkE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220924>
 
-On Thu, Apr 11, 2013 at 11:09:28AM -0700, Junio C Hamano wrote:
-> Reflowing of the text is very much unappreciated X-<.  
+Just a thought, but check the files that are failing to see if they've
+got RCS keywords in them ($Id$, $File$, $Date$, etc). These cause all
+sorts of nasty problems.
 
-I very much appreciate the excellent job you do as maintainer; your
-attention to detail results in an incredibly high quality project.
-However I do occasionally find your communication style unnecessarily
-abrasive.  Maybe that's just me.
+That's assuming it's definitely not a CRLF line ending problem on Windows.
 
-> It took me five minutes to spot that you only added check-attr and
-> check-ignore and forgot to adjust that "commit-oriented record" to
-> an updated reality, where you now have commands that produce
-> non-commit-oriented record to the output.
-
-I am sorry for wasting five minutes of your time.  A non-reflowed
-version is included inline below, and also at:
-
-    https://github.com/aspiers/git/compare/master...git-annex-streaming
-
-> It would have been far simpler to review if it were like this, don't
-> you think?
-
-It would have been slightly simpler, yes.  It did occur to me not to
-re-flow it, but then one of the lines ended up noticeably shorter, and
-as it was a short paragraph, I estimated that you would prefer it
-re-flowed.  Clearly I was wrong - not the first time, and it won't be
-the last either, since I'm just a flawed human being trying to do my
-best in the time available.  The question then arises: how uneven does
-a paragraph's right margin have to be in order to justify re-flowing?
-I could not find any guidelines in SubmittingPatches or
-CodingGuidelines regarding re-flowing of documentation.  With
-hindsight, I can now see that it would have been better to skip it on
-this occasion, or at least keep the re-flow as a separate commit.
-
-So I apologise again for the mistake, but don't you think it would
-have been far more pleasant if instead you'd worded your email
-something like this?
-
-    Thanks for the patches.  I notice that you unnecessarily re-flowed
-    the latter half of the GIT_FLUSH paragraph; unfortunately this
-    meant I had to spend a few extra minutes on the review and almost
-    missed that "commit-oriented" is no longer applicable.  In future,
-    please avoid re-flowing text where possible.
-
-Fortunately I'm not the sensitive sort, but I imagine that there are
-others in this community who might be discouraged from contributing
-for fear of being on the receiving end of sentences which end with
-phrases such as "[...] is very much unappreciated X-<."  Please don't
-underestimate the human factor; common courtesy can make a big
-difference.
-
-Thanks,
-Adam
-
--- >8 --
-Subject: [PATCH v3 5/5] Documentation: add caveats about I/O buffering for
- check-{attr,ignore}
-
-check-attr and check-ignore have the potential to deadlock callers
-which do not read back the output in real-time.  For example, if a
-caller writes N paths out and then reads N lines back in, it risks
-becoming blocked on write() to check-*, and check-* is blocked on
-write back to the caller.  Somebody has to buffer; the pipe buffers
-provide some leeway, but they are limited.
-
-Thanks to Peff for pointing this out:
-
-    http://article.gmane.org/gmane.comp.version-control.git/220534
-
-Signed-off-by: Adam Spiers <git@adamspiers.org>
----
- Documentation/git-check-attr.txt   | 5 +++++
- Documentation/git-check-ignore.txt | 5 +++++
- Documentation/git.txt              | 7 ++++---
- 3 files changed, 14 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index 5abdbaa..a7be80d 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -56,6 +56,11 @@ being queried and <info> can be either:
- 'set';;		when the attribute is defined as true.
- <value>;;	when a value has been assigned to the attribute.
- 
-+Buffering happens as documented under the `GIT_FLUSH` option in
-+linkgit:git[1].  The caller is responsible for avoiding deadlocks
-+caused by overfilling an input buffer or reading from an empty output
-+buffer.
-+
- EXAMPLES
- --------
- 
-diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-index 7e3cabc..8e1f7ab 100644
---- a/Documentation/git-check-ignore.txt
-+++ b/Documentation/git-check-ignore.txt
-@@ -81,6 +81,11 @@ not.  (Without this option, it would be impossible to tell whether the
- absence of output for a given file meant that it didn't match any
- pattern, or that the output hadn't been generated yet.)
- 
-+Buffering happens as documented under the `GIT_FLUSH` option in
-+linkgit:git[1].  The caller is responsible for avoiding deadlocks
-+caused by overfilling an input buffer or reading from an empty output
-+buffer.
-+
- EXIT STATUS
- -----------
- 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 6a875f2..3258f2c 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -808,9 +808,10 @@ for further details.
- 
- 'GIT_FLUSH'::
- 	If this environment variable is set to "1", then commands such
--	as 'git blame' (in incremental mode), 'git rev-list', 'git log',
--	and 'git whatchanged' will force a flush of the output stream
--	after each commit-oriented record have been flushed.   If this
-+	as 'git blame' (in incremental mode), 'git rev-list', 'git
-+	log', 'git check-attr', 'git check-ignore', and 'git
-+	whatchanged' will force a flush of the output stream
-+	after each record has been flushed.  If this
- 	variable is set to "0", the output of these commands will be done
- 	using completely buffered I/O.   If this environment variable is
- 	not set, Git will choose buffered or record-oriented flushing
--- 
-1.8.2.1.347.gbef22ca
+On Thu, Apr 11, 2013 at 8:01 PM, Christopher Yee Mon
+<christopher.yeemon@gmail.com> wrote:
+> I tried running git p4 submit on a repo that I've been running as an
+> interim bridge between git and perforce. Multiple people are using the
+> repo as a remote and its being periodically submitted back to
+> perforce.
+>
+> It's been working mostly fine. Then one day out of the blue I get this
+> error. I can no longer push any git commits to perforce. (This is from
+> the remote repo which I am pushing back to perforce)
+>
+> user@hostname:~/Source/code$ git p4 submit -M --export-labels
+> Perforce checkout for depot path //depot/perforce/workspace/ located
+> at /home/user/Source/git-p4-area/perforce/workspace/
+> Synchronizing p4 checkout...
+> ... - file(s) up-to-date.
+> Applying ffa390f comments in config xml files
+> //depot/perforce/workspace/sub/folder/structure/first.xml#3 - opened for edit
+> //depot/perforce/workspace/sub/folder/structure/second.xml#3 - opened for edit
+> //depot/perforce/workspace/sub/folder/structure/third.xml#3 - opened for edit
+> //depot/perforce/workspace/sub/folder/structure/forth.xml#3 - opened for edit
+> //depot/perforce/workspace/sub/folder/structure/fifth.xml#1 - opened for edit
+> error: patch failed: sub/folder/structure/first.xml:1
+> error: sub/folder/structure/first.xml: patch does not apply
+> error: patch failed: sub/folder/structure/second.xml:1
+> error: sub/folder/structure/second.xml: patch does not apply
+> error: patch failed: sub/folder/structure/third.xml:1
+> error: sub/folder/structure/third.xml: patch does not apply
+> error: patch failed: sub/folder/structure/forth.xml:1
+> error: sub/folder/structure/forth.xml: patch does not apply
+> error: patch failed: sub/folder/structure/fifth.xml:1
+> error: sub/folder/structure/fifth.xml: patch does not apply
+> Unfortunately applying the change failed!
+> //depot/perforce/workspace/sub/folder/structure/first.xml#1 - was edit, reverted
+> //depot/perforce/workspace/sub/folder/structure/second.xml#3 - was
+> edit, reverted
+> //depot/perforce/workspace/sub/folder/structure/third.xml#3 - was edit, reverted
+> //depot/perforce/workspace/sub/folder/structure/forth.xml#3 - was edit, reverted
+> //depot/perforce/workspace/sub/folder/structure/fifth.xml#3 - was edit, reverted
+> No commits applied.
+>
+> I thought it could be the .gitattributes setting that I had which was
+> this at the time was this:
+>
+> * text eol=lf
+>
+> My global core.autocrlf setting was also false.
+>
+> So I remade a new remote repo, and changed core.autocrlf to input and
+> changed .gitattributes to this
+>
+> * text=auto
+>
+> *.php text eol=lf
+> *.pl text eol=lf
+> *.pm text eol=lf
+> *.sh text eol=lf
+>
+> *.vbs text eol=crlf
+> *.bat text eol=crlf
+> *.ps1 text eol=crlf
+>
+> *.bdb binary
+> *.mtr binary
+>
+> Then I started to realize that it could just be the files in the
+> initial commit that are suspect, because when i made edits to other
+> files in the repo then tried to push them back with git p4 submit,
+> those files submitted successfully  But the files in the commit where
+> I initially got the failure still give me this problem.
+>
+> Here's what it looks like when I retested with a fresh git repo cloned
+> from perforce with git p4 clone and tried to do the git p4 submit with
+> verbose turned on on only one of the suspecting files
+>
+> user@hostname:/code$ git p4 submit -M --export-labels --verbose
+> Reading pipe: git name-rev HEAD
+> Reading pipe: ['git', 'config', 'git-p4.allowSubmit']
+> Reading pipe: git rev-parse --symbolic --remotes
+> Reading pipe: git rev-parse p4/master
+> Reading pipe: git cat-file commit 0457c7589ea679dcc0c9114b34f8f30bc2ee08cf
+> Reading pipe: git cat-file commit HEAD~0
+> Reading pipe: git cat-file commit HEAD~1
+> Reading pipe: ['git', 'config', 'git-p4.conflict']
+> Origin branch is remotes/p4/master
+> Reading pipe: ['git', 'config', '--bool', 'git-p4.useclientspec']
+> Opening pipe: ['p4', '-G', 'where', '//depot/perforce/workspace/...']
+> Perforce checkout for depot path //depot/perforce/workspace/ located
+> at /home/user/Source/git-p4-area/perforce/workspace/
+> Synchronizing p4 checkout...
+> ... - file(s) up-to-date.
+> Opening pipe: p4 -G opened ...
+> Reading pipe: ['git', 'rev-list', '--no-merges', 'remotes/p4/master..master']
+> Reading pipe: ['git', 'config', '--bool', 'git-p4.skipUserNameCheck']
+> Reading pipe: ['git', 'config', 'git-p4.detectCopies']
+> Reading pipe: ['git', 'config', '--bool', 'git-p4.detectCopiesHarder']
+> Reading pipe: ['git', 'show', '-s', '--format=format:%h %s',
+> 'ef3b95f5fec193fe2612b28e2e3b5e7f8ba9419e']
+> Applying ef3b95f making test change
+> Opening pipe: p4 -G users
+> Reading pipe: ['git', 'log', '--max-count=1', '--format=%ae',
+> 'ef3b95f5fec193fe2612b28e2e3b5e7f8ba9419e']
+> Reading pipe: git diff-tree -r -M
+> "ef3b95f5fec193fe2612b28e2e3b5e7f8ba9419e^"
+> "ef3b95f5fec193fe2612b28e2e3b5e7f8ba9419e"
+> //depot/perforce/workspace/sub/folder/structure/first.xml#3 - opened for edit
+> <stdin>:17: trailing whitespace.
+> <!-- comment line 1 -->
+> <stdin>:18: trailing whitespace.
+> <!-- comment line 2 -->
+> <stdin>:19: trailing whitespace.
+> <!-- comment line 3 -->
+> error: patch failed: sub/folder/structure/first.xml:1
+> error: sub/folder/structure/first.xml: patch does not apply
+> Unfortunately applying the change failed!
+> Reading pipe: ['git', 'config', '--bool', 'git-p4.attemptRCSCleanup']
+> //depot/perforce/workspace/sub/folder/structure/first.xml#3 - was edit, reverted
+> No commits applied.
+> Reading pipe: ['git', 'config', '--bool', 'git-p4.exportLabels']
+> Opening pipe: ['p4', '-G', 'labels', '//depot/ipstor.maple/automation/...']
+> Reading pipe: ['git', 'tag']
+> Reading pipe: ['git', 'config', 'git-p4.labelExportRegexp']
+>
+> In any case, I'm starting to think it could be a legitimate bug, which
+> is why I am submitting it here. Does anyone have any ideas for
+> suggestions on diagnosing what could be wrong?
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
