@@ -1,118 +1,123 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/2] transport-helper: report errors properly
-Date: Thu, 11 Apr 2013 12:57:34 -0500
-Message-ID: <CAMP44s1KgpT5YGwAr2KAToaoB6rUmtM3ocA-OtFSGfOzudx5RA@mail.gmail.com>
-References: <20130410211311.GA24277@sigill.intra.peff.net>
-	<20130410211552.GA3256@sigill.intra.peff.net>
-	<CAMP44s02K5ydKLNi0umMkuAicoVTWyCdVfjs0yssCa2oyFShGQ@mail.gmail.com>
-	<20130411161845.GA665@sigill.intra.peff.net>
-	<CAMP44s2-4i_tSzz8Y88_YnK5d1AjNoTqOa7eXZ0W5Vzk9Uosng@mail.gmail.com>
-	<20130411165937.GA1255@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 5/5] Documentation: add caveats about I/O buffering
+ for check-{attr,ignore}
+Date: Thu, 11 Apr 2013 11:09:28 -0700
+Message-ID: <7vsj2xhrc7.fsf@alter.siamese.dyndns.org>
+References: <20130411110511.GB24296@pacific.linksys.moosehall>
+ <1365681913-7059-1-git-send-email-git@adamspiers.org>
+ <1365681913-7059-5-git-send-email-git@adamspiers.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 11 19:57:43 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Thu Apr 11 20:09:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQLkk-00030s-TQ
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 19:57:43 +0200
+	id 1UQLwH-0002Ie-HQ
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 20:09:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161312Ab3DKR5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 13:57:37 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:37862 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161205Ab3DKR5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 13:57:35 -0400
-Received: by mail-lb0-f179.google.com with SMTP id t1so1831765lbd.24
-        for <git@vger.kernel.org>; Thu, 11 Apr 2013 10:57:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=9kmzKqLsIJa1iSFhPR6RN5g+j8DD/0Js/4jl8X5Swhg=;
-        b=0OL8pUIaAxYK/U/VglTMIAjFVhdOYP13QQS9kWScoA9suwxz+vf4fVrvzF8TrR01v6
-         IC2SHtB6DQ/BGNy7KEwnZRAbXxyiqT+oQwgKwTCzmFEfJIQ2sbMMfsgLNYKmFyef+I8n
-         LMsWI90uWW2Id6Sklu7BbLtHXivs8V0gWhdUsKiDY8OXvVpOtdXg9nOBuxFh96ACnYgV
-         EXGDTVXuebzCxCZvlBvP/WBmx4ebKafl137zbqhQDjZ4v2cNFf2tFw1O4xTRmKRWjhPI
-         zC7ntqHJnMX4ZislgSSp4t9Od6+C50r68hQSe9YxpB4ZCtCyPsaT9gTHxAgkmdM6gIf2
-         PLBA==
-X-Received: by 10.112.163.6 with SMTP id ye6mr3778611lbb.59.1365703054155;
- Thu, 11 Apr 2013 10:57:34 -0700 (PDT)
-Received: by 10.114.59.210 with HTTP; Thu, 11 Apr 2013 10:57:34 -0700 (PDT)
-In-Reply-To: <20130411165937.GA1255@sigill.intra.peff.net>
+	id S1030188Ab3DKSJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 14:09:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43165 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752598Ab3DKSJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 14:09:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F06915183;
+	Thu, 11 Apr 2013 18:09:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SXTpE230QL7Uxh/SvHLZe7PqYF0=; b=fzF5xs
+	7IY4oQd3c4HjAQwuBaVx1kt/Ti8B805Xg60Fmvj4w9Qa4CX/TZZOhHICaf16UbJo
+	Zh2cRZXT1WgGRr2SWvYGH88lPMy8bpOzhLkaSGd2x2RB5qsqOml5kIRkVLAIImWB
+	8xgVDyaEwa8hAk6NlPpsHytvNPJ9qk552QxB8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=peah7PNz9PJyfLZ523ZYw74PnUebQnMK
+	lzfLnTMgpczWjWnMw22TDoX59y2IX4e1cElKpQPIndyKBZtPQdofRttLA/4TrZCk
+	Tru/4L3zNyv+8BWkQG4GViwmpvS5a1oy7tLfW/HHKTOjdNJUfW5a/hdco/hXTyRn
+	z2yxO2PSyUM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 150ED15182;
+	Thu, 11 Apr 2013 18:09:31 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71CD51517F; Thu, 11 Apr
+ 2013 18:09:30 +0000 (UTC)
+In-Reply-To: <1365681913-7059-5-git-send-email-git@adamspiers.org> (Adam
+ Spiers's message of "Thu, 11 Apr 2013 13:05:13 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F49461B6-A2D2-11E2-8D4C-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220902>
 
-On Thu, Apr 11, 2013 at 11:59 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Apr 11, 2013 at 11:49:11AM -0500, Felipe Contreras wrote:
->
->> > I am OK with adding the test for import as a separate patch. What I am
->> > not OK with (and this goes for the rest of the commit message, too) is
->> > failing to explain any back-story at all for why the change is done in
->> > the way it is.
->> >
->> > _You_ may understand it _right now_, but that is not the primary
->> > audience of the message. The primary audience is somebody else a year
->> > from now who is wondering why this patch was done the way it was.
->>
->> Who would be this person? Somebody who wonders why this test is using
->> "feature done"? I doubt such a person would exist, as using this
->> feature is standard, as can be seen below this chunk. *If* the test
->> was *not* using this "feature done", *then* sure, an explanation would
->> be needed.
->
-> If it was so obvious, why did your initial patch not use "feature done"?
+Adam Spiers <git@adamspiers.org> writes:
 
-Because I didn't want to test the obvious, I wanted to test something else.
+> diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
+> index 7e3cabc..8e1f7ab 100644
+> --- a/Documentation/git-check-ignore.txt
+> +++ b/Documentation/git-check-ignore.txt
+> @@ -81,6 +81,11 @@ not.  (Without this option, it would be impossible to tell whether the
+>  absence of output for a given file meant that it didn't match any
+>  pattern, or that the output hadn't been generated yet.)
+>  
+> +Buffering happens as documented under the `GIT_FLUSH` option in
+> +linkgit:git[1].  The caller is responsible for avoiding deadlocks
+> +caused by overfilling an input buffer or reading from an empty output
+> +buffer.
+> +
+>  EXIT STATUS
+>  -----------
+>  
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 6a875f2..eecdb15 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -808,13 +808,15 @@ for further details.
+>  
+>  'GIT_FLUSH'::
+>  	If this environment variable is set to "1", then commands such
+> -	as 'git blame' (in incremental mode), 'git rev-list', 'git log',
+> -	and 'git whatchanged' will force a flush of the output stream
+> -	after each commit-oriented record have been flushed.   If this
+> -	variable is set to "0", the output of these commands will be done
+> -	using completely buffered I/O.   If this environment variable is
+> -	not set, Git will choose buffered or record-oriented flushing
+> -	based on whether stdout appears to be redirected to a file or not.
+> +	as 'git blame' (in incremental mode), 'git rev-list', 'git
+> +	log', 'git check-attr', 'git check-ignore', and 'git
+> +	whatchanged' will force a flush of the output stream after
+> +	each commit-oriented record have been flushed.  If this
+> +	variable is set to "0", the output of these commands will be
+> +	done using completely buffered I/O.  If this environment
+> +	variable is not set, Git will choose buffered or
+> +	record-oriented flushing based on whether stdout appears to be
+> +	redirected to a file or not.
 
-> If it was so obvious, why did our email discussion go back and forth so
-> many times before arriving at this patch?
+Reflowing of the text is very much unappreciated X-<.  
 
-This patch has absolutely nothing to do with that, in fact, forget
-about it, such a minor check is not worth this time and effort:
-http://article.gmane.org/gmane.comp.version-control.git/220899
+It took me five minutes to spot that you only added check-attr and
+check-ignore and forgot to adjust that "commit-oriented record" to
+an updated reality, where you now have commands that produce
+non-commit-oriented record to the output.
 
-> It was certainly not obvious to me when this email thread started. So in
-> response to your question: *I* am that person. I was him two weeks ago,
-> and there is a good chance that I will be him a year from now.
+It would have been far simpler to review if it were like this, don't
+you think?
 
-No, you are not. I didn't send a patch with "feature done" originally,
-the only reason you wondered about the patch with "feature done" is
-that you saw one without it. It will _never_ happen again.
-
-> Much of
-> my work on git is spent tracking down bugs in older code, and those
-> commit messages are extremely valuable to me in understanding what
-> happened at the time.
-
-Lets make a bet. Let's push the simpler version, and when you hit this
-commit message retrospectively and find that you don't understand what
-is happening, I loose, and I will forever accept verbose commit
-messages. It will never happen.
-
-> But I give up on you. I find most of your commit messages lacking in
-> details and motivation, making assumptions that the reader is as
-> familiar with the code when reading the commit as you are when you wrote
-> it. I tried to help by suggesting in review that you elaborate. That
-> didn't work. So I tried to help by writing the text myself. But clearly
-> I am not going to convince you that it is valuable, even if it requires
-> no work at all from you, so I have nothing else to say on the matter.
-
-Me neither. I picked your solution, but that's not enough, you
-*always* want me to do EXACTLY what you want, and never argue back.
-
-It's not going to happen. There's nothing wrong with disagreeing.
-
-Cheers.
-
---
-Felipe Contreras
+>  	If this environment variable is set to "1", then commands such
+> 	as 'git blame' (in incremental mode), 'git rev-list', 'git log',
+> -	and 'git whatchanged' will force a flush of the output stream
+> -	after each commit-oriented record have been flushed.   If this
+> +	'git check-attr', 'git check-ignore', and 'git whatchanged' will
+> +	force a flush of the output stream
+> +     after each record have been flushed.   If this
+> 	variable is set to "0", the output of these commands will be done
+> 	using completely buffered I/O.   If this environment variable is
+>  	not set, Git will choose buffered or record-oriented flushing
+>  	based on whether stdout appears to be redirected to a file or not.
