@@ -1,75 +1,104 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH 2/5] check-ignore: allow incremental streaming of queries
- via --stdin
-Date: Thu, 11 Apr 2013 11:55:14 +0100
-Message-ID: <20130411105514.GA24296@pacific.linksys.moosehall>
-References: <20130408181311.GA14903@pacific.linksys.moosehall>
- <1365645575-11428-1-git-send-email-git@adamspiers.org>
- <1365645575-11428-2-git-send-email-git@adamspiers.org>
- <20130411053145.GB28915@sigill.intra.peff.net>
+From: Miklos Vajna <vmiklos@suse.cz>
+Subject: Re: [PATCH v2] cherry-pick: make sure all input objects are commits
+Date: Thu, 11 Apr 2013 13:03:25 +0200
+Message-ID: <20130411110324.GD12770@suse.cz>
+References: <20130403092704.GC21520@suse.cz>
+ <7v38v1yn8o.fsf@alter.siamese.dyndns.org>
+ <20130411092638.GA12770@suse.cz>
+ <CALkWK0n6FjGbXTqiOT_O6NbB5h0DLaNWKCCTQAFSO_BL-pPdBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 11 12:55:24 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EuxKj2iCbKjpUGkD"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 11 13:03:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQFA3-0002Kr-J1
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 12:55:23 +0200
+	id 1UQFI7-00073o-W8
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 13:03:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753494Ab3DKKzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 06:55:17 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:58954 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752694Ab3DKKzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 06:55:16 -0400
-Received: from localhost (2.d.c.d.2.5.f.b.c.0.4.8.0.1.4.d.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:d410:840c:bf52:dcd2])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 1A56058EB3;
-	Thu, 11 Apr 2013 11:55:15 +0100 (BST)
+	id S1763192Ab3DKLDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 07:03:35 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:42292 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761383Ab3DKLD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 07:03:28 -0400
+Received: from relay2.suse.de (unknown [195.135.220.254])
+	by mx2.suse.de (Postfix) with ESMTP id 8B25DA3A78;
+	Thu, 11 Apr 2013 13:03:27 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20130411053145.GB28915@sigill.intra.peff.net>
-X-OS: GNU/Linux
+In-Reply-To: <CALkWK0n6FjGbXTqiOT_O6NbB5h0DLaNWKCCTQAFSO_BL-pPdBA@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220844>
 
-On Thu, Apr 11, 2013 at 01:31:45AM -0400, Jeff King wrote:
-> On Thu, Apr 11, 2013 at 02:59:32AM +0100, Adam Spiers wrote:
-> 
-> > @@ -111,14 +110,11 @@ static int check_ignore_stdin_paths(struct path_exclude_check check, const char
-> >  				die("line is badly quoted");
-> >  			strbuf_swap(&buf, &nbuf);
-> >  		}
-> > -		ALLOC_GROW(pathspec, nr + 1, alloc);
-> > -		pathspec[nr] = xcalloc(strlen(buf.buf) + 1, sizeof(*buf.buf));
-> > -		strcpy(pathspec[nr++], buf.buf);
-> > +		pathspec[0] = xcalloc(strlen(buf.buf) + 1, sizeof(*buf.buf));
-> > +		strcpy(pathspec[0], buf.buf);
-> > +		num_ignored += check_ignore(check, prefix, (const char **)pathspec);
-> > +		maybe_flush_or_die(stdout, "check-ignore to stdout");
-> 
-> Now that you are not storing the whole pathspec at once, the pathspec
-> buffer only needs to be valid for the length of check_ignore, right?
-> That means you can drop this extra copy and just pass in buf.buf:
-> 
->   pathspec[0] = buf.buf;
->   num_ignored += check_ignore(check, prefix, pathspec);
 
-Oops, good point - thanks.  I've made that change.
+--EuxKj2iCbKjpUGkD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > +test_expect_success 'setup: have stdbuf?' '
-> > +	if which stdbuf >/dev/null 2>&1
-> > +	then
-> > +		test_set_prereq STDBUF
-> > +	fi
+On Thu, Apr 11, 2013 at 03:52:44PM +0530, Ramkumar Ramachandra <artagnon@gm=
+ail.com> wrote:
+> > +       for (i =3D 0; i < opts->revs->pending.nr; i++) {
+> > +               unsigned char sha1[20];
+> > +               const char *name =3D opts->revs->pending.objects[i].nam=
+e;
+> > +
+> > +               if (!get_sha1(name, sha1)) {
+> > +                       enum object_type type =3D sha1_object_info(sha1=
+, NULL);
+> > +
+> > +                       if (type > 0 && type !=3D OBJ_COMMIT)
+> > +                               die(_("%s: can't cherry-pick a %s"), na=
+me, typename(type));
+> > +               }
+>=20
+> else?  What happens if get_sha1() fails?
+
+I guess that is a should-not-happen category. parse_args() calls
+setup_revisions(), and that will already die() if the argument is not a
+valid object at all.
+
+> > diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-=
+many-commits.sh
+> > index 4e7136b..19c99d7 100755
+> > --- a/t/t3508-cherry-pick-many-commits.sh
+> > +++ b/t/t3508-cherry-pick-many-commits.sh
+> > @@ -55,6 +55,12 @@ one
+> >  two"
+> >  '
+> >
+> > +test_expect_success 'cherry-pick three one two: fails' '
+> > +       git checkout -f master &&
+> > +       git reset --hard first &&
+> > +       test_must_fail git cherry-pick three one two:
 > > +'
-> 
-> Hmm. Today I learned about stdbuf. :)
+>=20
+> So you're testing just the third case (where commit objects are mixed
+> with non-commit objects), which is arguably a bug.  Okay.
 
-Yeah, it's a relatively recent addition to coreutils.
+Yes. If you would want, I could of course add test cases for two other
+cases when we already errored out and now the error message is just
+changed, but I don't think duplicating the error message strings from
+the code to the testsuite is really wanted. :-)
+
+--EuxKj2iCbKjpUGkD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iEYEARECAAYFAlFmmHwACgkQe81tAgORUJaTJACeKPui8+fZH+Nz3GIBFoCP5wjN
+liMAoKdN00xdTFYRiMGlh2MsA/5GhZ7U
+=JZsn
+-----END PGP SIGNATURE-----
+
+--EuxKj2iCbKjpUGkD--
