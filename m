@@ -1,65 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2] cherry-pick: make sure all input objects are commits
-Date: Thu, 11 Apr 2013 17:12:06 +0530
-Message-ID: <CALkWK0kb+2KZLvRJDJb_VrNNs1k4grsfyFv0HfYv0Kr9v4sChQ@mail.gmail.com>
-References: <20130403092704.GC21520@suse.cz> <7v38v1yn8o.fsf@alter.siamese.dyndns.org>
- <20130411092638.GA12770@suse.cz> <CALkWK0n6FjGbXTqiOT_O6NbB5h0DLaNWKCCTQAFSO_BL-pPdBA@mail.gmail.com>
- <20130411110324.GD12770@suse.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Apr 11 13:43:04 2013
+From: Adam Spiers <git@adamspiers.org>
+Subject: [PATCH v2 1/5] t0008: remove duplicated test fixture data
+Date: Thu, 11 Apr 2013 13:05:09 +0100
+Message-ID: <1365681913-7059-1-git-send-email-git@adamspiers.org>
+References: <20130411110511.GB24296@pacific.linksys.moosehall>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 11 14:05:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQFuA-00021W-1G
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 13:43:02 +0200
+	id 1UQGFn-0002Se-8E
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 14:05:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754731Ab3DKLms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 07:42:48 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:35988 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752705Ab3DKLmr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 07:42:47 -0400
-Received: by mail-ie0-f170.google.com with SMTP id c11so1900404ieb.29
-        for <git@vger.kernel.org>; Thu, 11 Apr 2013 04:42:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=/gE98mn6xfqBepusk7UcCIcdZzLuUtMD2xs0cGZdjX0=;
-        b=Dahgg6ArCj4R88vzptKYuvSsAJfDbOnjp6tE70XkpWDQDsbZbXGuC3wzvjO5jYd9rk
-         eUCLZjgYc3iUH0sqPSX0YeNIUG4545Pnxz5P6d7E/InZ7KCpTuYY0/n1II19/RxJMtMI
-         p7wxTCEHyEgRj8CEV7kJNW2T+HlShKiz5RVSitjaBB/Zjzz3NRglrp2T4mGopW1g3xVQ
-         MCGBkaf/ItzdnWhp40r1X6mvZ0v0SCjLlilSNt7GAiRGdu20AY6lw03wSl0luS3bvHGC
-         yw0hC7tefylDB0lsd38kmO7qGu6eBqzq9JzNiLMuNZrzjWxlNZnZ0edagf/40onjJihs
-         +O5Q==
-X-Received: by 10.42.50.202 with SMTP id b10mr3727150icg.7.1365680567024; Thu,
- 11 Apr 2013 04:42:47 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Thu, 11 Apr 2013 04:42:06 -0700 (PDT)
-In-Reply-To: <20130411110324.GD12770@suse.cz>
+	id S934133Ab3DKMFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 08:05:16 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:59031 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761977Ab3DKMFP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 08:05:15 -0400
+Received: from localhost (2.d.c.d.2.5.f.b.c.0.4.8.0.1.4.d.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:d410:840c:bf52:dcd2])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 9DBC458EB3
+	for <git@vger.kernel.org>; Thu, 11 Apr 2013 13:05:14 +0100 (BST)
+X-Mailer: git-send-email 1.8.2.1.342.gfa7285d
+In-Reply-To: <20130411110511.GB24296@pacific.linksys.moosehall>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220848>
 
-Miklos Vajna wrote:
-> I guess that is a should-not-happen category. parse_args() calls
-> setup_revisions(), and that will already die() if the argument is not a
-> valid object at all.
+The expected contents of STDOUT for the final --stdin tests can be
+derived from the expected contents of STDOUT for the same tests when
+--verbose is given, in the same way that test_expect_success_multi
+derives this for earlier tests.
 
-Then why do you have an if() guarding the code?  In my opinion, you
-should have an else-clause that die()s with an appropriate message.
+Signed-off-by: Adam Spiers <git@adamspiers.org>
+---
+ t/t0008-ignores.sh | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
-> Yes. If you would want, I could of course add test cases for two other
-> cases when we already errored out and now the error message is just
-> changed, but I don't think duplicating the error message strings from
-> the code to the testsuite is really wanted. :-)
-
-Nope, I'd never suggest that: this is fine.  What I meant is: you
-should clarify that you're fixing a bug and adding a test to guard it,
-in the commit message.
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index 9c1bde1..314a86d 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -575,21 +575,6 @@ cat <<-\EOF >stdin
+ 	b/globaltwo
+ 	../b/globaltwo
+ EOF
+-cat <<-\EOF >expected-default
+-	../one
+-	one
+-	b/on
+-	b/one
+-	b/one one
+-	b/one two
+-	"b/one\"three"
+-	b/two
+-	b/twooo
+-	../globaltwo
+-	globaltwo
+-	b/globaltwo
+-	../b/globaltwo
+-EOF
+ cat <<-EOF >expected-verbose
+ 	.gitignore:1:one	../one
+ 	.gitignore:1:one	one
+@@ -605,6 +590,7 @@ cat <<-EOF >expected-verbose
+ 	$global_excludes:2:!globaltwo	b/globaltwo
+ 	$global_excludes:2:!globaltwo	../b/globaltwo
+ EOF
++sed -e 's/.*	//' expected-verbose >expected-default
+ 
+ sed -e 's/^"//' -e 's/\\//' -e 's/"$//' stdin | \
+ 	tr "\n" "\0" >stdin0
+-- 
+1.8.2.1.342.gfa7285d
