@@ -1,62 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/5] check-ignore: move setup into cmd_check_ignore()
-Date: Thu, 11 Apr 2013 14:35:18 -0400
-Message-ID: <20130411183518.GB3177@sigill.intra.peff.net>
-References: <20130408181311.GA14903@pacific.linksys.moosehall>
- <1365645575-11428-1-git-send-email-git@adamspiers.org>
- <20130411052553.GA28915@sigill.intra.peff.net>
- <20130411110511.GB24296@pacific.linksys.moosehall>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git send-pack: protocol error: bad band #50
+Date: Thu, 11 Apr 2013 11:37:58 -0700
+Message-ID: <20130411183758.GL27070@google.com>
+References: <51665D08.3030307@netcabo.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Thu Apr 11 20:35:31 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Konstantin Khomoutov <flatworm@users.sourceforge.net>
+To: =?iso-8859-1?Q?Jo=E3o?= Joyce <joao.joyce@netcabo.pt>
+X-From: git-owner@vger.kernel.org Thu Apr 11 20:38:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQMLK-00044g-Qw
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 20:35:31 +0200
+	id 1UQMNt-0007sa-S8
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 20:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018Ab3DKSf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 14:35:26 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40795 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750990Ab3DKSf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 14:35:26 -0400
-Received: (qmail 17958 invoked by uid 107); 11 Apr 2013 18:37:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 11 Apr 2013 14:37:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Apr 2013 14:35:18 -0400
+	id S1752989Ab3DKSiE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Apr 2013 14:38:04 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:41974 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752725Ab3DKSiD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 14:38:03 -0400
+Received: by mail-pa0-f49.google.com with SMTP id kp14so1049906pab.36
+        for <git@vger.kernel.org>; Thu, 11 Apr 2013 11:38:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=3SCplVD6tNBGSQCIIeOAe+SLsX8NCJBVaCcZJrcXkLE=;
+        b=terH8zC5yZVICpKBGa4KZH2vmBcDNkSIUC0rRbaOZy9R/jYXRcqb47M90SHq8koKbA
+         Of9hZYKVRKhPJ2MDQYMxlG8xAuT0SkLpTcYsTc7skoAMA8r+Sb/EFFF9QLYwa7Qe1vdh
+         U6JHauDlu/XUA2By3muexVzg9ZxPtNI+rOtoifQIOlgfTgr8SSab4DxawwJviP4yrX+V
+         /oD8H6Lem6GcvgsmmirhkjwPTWZv57vzIqII0D4//wFsQiG6c0HGUbFr7kwBlxptcotR
+         TNa88/mtYmniwmaLJT9Fdfzh+8eNJMv+GFdlCKRznaOzKRLjlq4qThkfqk+pp2CPe0x3
+         7pEw==
+X-Received: by 10.68.229.163 with SMTP id sr3mr10511587pbc.54.1365705482363;
+        Thu, 11 Apr 2013 11:38:02 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id ef4sm5131183pbd.38.2013.04.11.11.38.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 11 Apr 2013 11:38:01 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20130411110511.GB24296@pacific.linksys.moosehall>
+In-Reply-To: <51665D08.3030307@netcabo.pt>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220909>
 
-On Thu, Apr 11, 2013 at 12:05:11PM +0100, Adam Spiers wrote:
+Hello,
 
-> On Thu, Apr 11, 2013 at 01:25:53AM -0400, Jeff King wrote:
-> > On Thu, Apr 11, 2013 at 02:59:31AM +0100, Adam Spiers wrote:
-> > > -static int check_ignore(const char *prefix, const char **pathspec)
-> > > +static int check_ignore(struct path_exclude_check check,
-> > > +			const char *prefix, const char **pathspec)
-> > 
-> > Did you mean to pass the struct by value here? If it is truly a per-path
-> > [...]
+Jo=E3o Joyce wrote:
+
+> I am not sure this is the right place to ask this.
+
+You're in the right place.
+
+[...]
+> I am trying to push some files to a server with git push. I have
+> configured the server to push the files:
+>     git remote set-url test ssh://user@location.com:2200/fullpath/
 >
-> It's not a per-path value; it's supposed to be reused across checks
-> for multiple paths, as explained in the comments above
-> last_exclude_matching_path():
+> but I am getting the following error:
+>     git send-pack: protocol error: bad band #50
+>     fatal: The remote end hung up unexpectedly
 
-Makes sense (I didn't look into it very far, and was just guessing based
-on the pass-by-value). Passing a pointer is definitely the right fix,
-then.
+That means that where git expected to read a binary sideband number,
+it instead received the byte \x32 (ASCII '2').
 
-Thanks.
+Without more details, it's hard to debug this further.  Can you get
+a trace of the communication by setting the envvar
+GIT_TRACE_PACKET=3D/tmp/log on the client?
 
--Peff
+Thanks and hope that helps,
+Jonathan
