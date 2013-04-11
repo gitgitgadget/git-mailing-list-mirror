@@ -1,65 +1,63 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: git rebase : knowing where I am...
-Date: Thu, 11 Apr 2013 15:45:38 +0800
-Message-ID: <CALUzUxrkt-7svY83FFnn23Xk0bTp=vW3OiFB8xq_Aw_0AcV_Mw@mail.gmail.com>
-References: <1124759476.1420642.1365583233806.JavaMail.root@openwide.fr>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [ITCH] Specify refspec without remote
+Date: Thu, 11 Apr 2013 13:15:28 +0530
+Message-ID: <CALkWK0k+rsh-Ft3=+Fz2DkV5btdLg-bCJzJCKxgxMyNcmpj++w@mail.gmail.com>
+References: <20130410202456.GF24177@sigill.intra.peff.net> <CALkWK0k_gYWg9=zjRKGrq-evsWG+hCrLjrpLfYp=_uoHVKBzHw@mail.gmail.com>
+ <20130410210455.GA2999@sigill.intra.peff.net> <CALkWK0k-YJwT__8Tc4B4WXq30ij3i8_d6qwyOCP5RLsKF9eazQ@mail.gmail.com>
+ <20130410211824.GC27070@google.com> <CALkWK0nxpoLL4zoinE4j8y8NLHo0-b=PcimNLykCjMjOpWYEfQ@mail.gmail.com>
+ <20130410212911.GE27070@google.com> <CALkWK0m=iDw+N0zcfEEt1jzFD4wOOzLgyBWNyc=HZ+xLe5SBLw@mail.gmail.com>
+ <20130410215658.GC6215@sigill.intra.peff.net> <CALkWK0=Y-pO3+g21PLCWOxx+M-7fSmp2FedMBtZ68PWU_TOHDw@mail.gmail.com>
+ <20130410222334.GC6930@sigill.intra.peff.net> <CALkWK0nvTisYCFjxwuGaBbWawwBahzeBHZ84rFkUYL8sjJuxvw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Jeremy Rosen <jeremy.rosen@openwide.fr>
-X-From: git-owner@vger.kernel.org Thu Apr 11 09:46:05 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 11 09:46:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQCCp-0000KY-DK
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 09:46:03 +0200
+	id 1UQCD2-0000fS-JN
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 09:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753710Ab3DKHp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 03:45:59 -0400
-Received: from mail-ia0-f178.google.com ([209.85.210.178]:47666 "EHLO
-	mail-ia0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753419Ab3DKHp6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 03:45:58 -0400
-Received: by mail-ia0-f178.google.com with SMTP id f27so1156287iae.37
-        for <git@vger.kernel.org>; Thu, 11 Apr 2013 00:45:58 -0700 (PDT)
+	id S1759647Ab3DKHqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 03:46:10 -0400
+Received: from mail-ia0-f170.google.com ([209.85.210.170]:32945 "EHLO
+	mail-ia0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753802Ab3DKHqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 03:46:09 -0400
+Received: by mail-ia0-f170.google.com with SMTP id j38so1199705iad.29
+        for <git@vger.kernel.org>; Thu, 11 Apr 2013 00:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=hf/FiqndtdJk7oUl/PuyMLNMKLQ7wYXRKtO3HBxe6pE=;
-        b=VmW+8YSDuoamDPcbNDSU9H8o6MS0sUxae5KDm+Vpw+XYd0MwDObkQ63DmGMz5CqeDA
-         hhXfW7q6qjS3lkki1fjhyQyY1GYSQthhGSZPysU9x5OWTPo27clKHMiHxeoTb7+X003g
-         /NSoSl0zjkiK9ZhV24BMt907GAEbnTQAi2un63vUAU5vsxTi3XtVqLkZzycTkeik7uxV
-         60gIt+X2kAWKaNLvr65mR31tb+jSbXkfaSqqsXcevTiAAZaBe3n95fR/knsEXGCK4RMF
-         2bjaAU58rWv5KYHLD2ch7mwgIcjeBPLe1R9ppTHexaHIHl5uuINx116eCD4FfJirqYQv
-         TJ6Q==
-X-Received: by 10.43.65.195 with SMTP id xn3mr3316914icb.5.1365666358375; Thu,
- 11 Apr 2013 00:45:58 -0700 (PDT)
-Received: by 10.64.61.70 with HTTP; Thu, 11 Apr 2013 00:45:38 -0700 (PDT)
-In-Reply-To: <1124759476.1420642.1365583233806.JavaMail.root@openwide.fr>
+        bh=5vbolhSljIzKr2l1YPuHUitJHVCLFotzU8Rss//fYS8=;
+        b=oqdgPL3hwIZsgwVW25cDXRwSEywZq1fzQ38uAvOlJKag//dWON1UAhWg/0MsF1d8xp
+         MQb5bH/4OylR+usK8r4CypX6ksjz6tSOyXuCDZjZaPjDwB3g7b+sZKm5d0t5LDxOmY13
+         QiG53CCuPNGvR9FrDN5GGy+vF7yPDUf1gWEp0aDw/qXhTNcNUAEADcFLOEN7RfUrE7nH
+         uIDX6ylvAEmqOElbw+Cflwn1JZ27nnUpFvF0Vp+VwYyn4r2TFQeRE+V5pMCzPkEpOV1u
+         /S2LdzripmUv9/06H2PYLNlFrmON1hvYkIbviLT9YXqCWWD0j0FAHp4Rax4hfdY/rjZU
+         7R8A==
+X-Received: by 10.42.50.202 with SMTP id b10mr3304203icg.7.1365666368648; Thu,
+ 11 Apr 2013 00:46:08 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Thu, 11 Apr 2013 00:45:28 -0700 (PDT)
+In-Reply-To: <CALkWK0nvTisYCFjxwuGaBbWawwBahzeBHZ84rFkUYL8sjJuxvw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220832>
 
-On Wed, Apr 10, 2013 at 4:40 PM, Jeremy Rosen <jeremy.rosen@openwide.fr> wrote:
-> is there some way to know how far you are within a rebase when the rebase is interupted by a conflict other than the message given by git rebase when it was interrupted ?
+Ramkumar Ramachandra wrote:
+> - branch.implicit-push-next.pushremote set to null**, because I will
+> never want to push this branch.
 
-How about
-
-  $ cat .git/rebase-merge/done
-
-sample output:
-
-  p 3b465bd foo2 1
-  e 03f8bea foo2 2
-  e 0871817 foo2 1
-
-last line is the current commit being edited/under conflict/etc.
-
---
-Cheers,
-Ray Chuan
+Currently, I have a hacky workaround: I set
+branch.implicit-push-next.pushremote to a remote that I don't have
+write access to (ie. origin), effectively failing all my attempts to
+push this branch.
