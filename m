@@ -1,110 +1,102 @@
-From: Robert Luberda <robert@debian.org>
-Subject: BUG: git filter-branch does not make tree replacements permanent
-Date: Thu, 11 Apr 2013 23:08:16 +0200
-Message-ID: <20130411210816.GA15810@vox.robbo.home>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/2] transport-helper: report errors properly
+Date: Thu, 11 Apr 2013 16:35:00 -0500
+Message-ID: <CAMP44s1EJO3gMyb-SCGL3mWQOgsgYDb87e2mx3spO=V71hs+=g@mail.gmail.com>
+References: <20130410211311.GA24277@sigill.intra.peff.net>
+	<20130410211552.GA3256@sigill.intra.peff.net>
+	<CAMP44s02K5ydKLNi0umMkuAicoVTWyCdVfjs0yssCa2oyFShGQ@mail.gmail.com>
+	<20130411161845.GA665@sigill.intra.peff.net>
+	<CAMP44s2-4i_tSzz8Y88_YnK5d1AjNoTqOa7eXZ0W5Vzk9Uosng@mail.gmail.com>
+	<20130411165937.GA1255@sigill.intra.peff.net>
+	<CAMP44s1KgpT5YGwAr2KAToaoB6rUmtM3ocA-OtFSGfOzudx5RA@mail.gmail.com>
+	<7vbo9kj41y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 11 23:27:17 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 11 23:35:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQP1X-0003N9-RC
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 23:27:16 +0200
+	id 1UQP9K-0005XX-2K
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 23:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422747Ab3DKV1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 17:27:07 -0400
-Received: from master.debian.org ([82.195.75.110]:52951 "EHLO
-	master.debian.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935355Ab3DKV1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 17:27:05 -0400
-X-Greylist: delayed 1118 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Apr 2013 17:27:05 EDT
-Received: from localhost ([::1] helo=vox.robbo.home)
-	by master.debian.org with esmtp (Exim 4.80)
-	(envelope-from <robert@debian.org>)
-	id 1UQOjJ-0001Pi-RO
-	for git@vger.kernel.org; Thu, 11 Apr 2013 21:08:25 +0000
-Received: by vox.robbo.home (Postfix, from userid 1000)
-	id 19BB5E429D; Thu, 11 Apr 2013 23:08:16 +0200 (CEST)
-Content-Disposition: inline
-X-Operating-System: Linux
-X-Best-Team: Mutt & Vim
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752866Ab3DKVfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 17:35:11 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:44714 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752296Ab3DKVfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 17:35:10 -0400
+Received: by mail-la0-f48.google.com with SMTP id fq12so1906035lab.21
+        for <git@vger.kernel.org>; Thu, 11 Apr 2013 14:35:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=1TkURHy3PugEKBp2ZxpE9ri9OypLV7wugNsJy70YUuQ=;
+        b=fAJG1JSp7m89f3IswQkj29lOhxbPnMq5UVJFcOLPZ1zAbphMXuNx2CllXzLM/xyVcZ
+         rrlBBmI3fY4wFQyi1ECPmYWuWGe1rbLax+k6ibQiuD0EKEkmjTC1gokgudtGlNC4TsDR
+         RJizEVkPNkEUlpaYwyh5mZjCzr1bjUB5TkvOu1K6tTqleAfIqqfGE6Ld9WbrL/kQ32jf
+         QJZA2A+PyDKe+m1RLKyVgmDukjzmRVQ8hF3+mV1jzTp6wwsiju4yWg5nxpWODw6pHAp7
+         uaRclmhExuo9Z5vZj9pChB+czWlkTNEtb4fsTtLWDaSU+ik6UH7+msYxU/BK+dbIZzqF
+         L+EA==
+X-Received: by 10.152.105.17 with SMTP id gi17mr4031995lab.46.1365716100365;
+ Thu, 11 Apr 2013 14:35:00 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Thu, 11 Apr 2013 14:35:00 -0700 (PDT)
+In-Reply-To: <7vbo9kj41y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220932>
 
+On Thu, Apr 11, 2013 at 1:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Thu, Apr 11, 2013 at 11:59 AM, Jeff King <peff@peff.net> wrote:
+>>
+>>> But I give up on you. I find most of your commit messages lacking in
+>>> details and motivation, making assumptions that the reader is as
+>>> familiar with the code when reading the commit as you are when you wrote
+>>> it. I tried to help by suggesting in review that you elaborate. That
+>>> didn't work. So I tried to help by writing the text myself. But clearly
+>>> I am not going to convince you that it is valuable, even if it requires
+>>> no work at all from you, so I have nothing else to say on the matter.
+>>
+>> Me neither. I picked your solution, but that's not enough, you
+>> *always* want me to do EXACTLY what you want, and never argue back.
+>>
+>> It's not going to happen. There's nothing wrong with disagreeing.
+>
+> Heh, it seems that I was late for the party.
+>
+> Writing only minimally sufficient in the log messages is fine for
+> your own project. We won't decide nor dictate the policy for your
+> project for you.
+>
+> But _this_ project wants its log messages to be understandable by
+> people who you may disagree with and who may have shorter memory
+> span than you do.
 
-Hi,
+Having a shorter memory span is irrelevant when you are _never_ going
+to go back and ask the question the commit message is answering. And
+if it indeed is an important question, the answer belongs in the code
+comments.
 
-The git filter-branch man page states:
+> Disagreeing with that policy is fine.  You need
+> to learn to disagree but accept to be part of the project.
 
-  NOTE: This command honors .git/info/grafts and .git/refs/replace/. 
-        If you have any grafts or replacement refs defined, running 
-        this command will make them permanent.
+Yeah, I accept that you will commit whatever you want, but I still
+don't think this verbosity serves the purpose you think it serves.
+Some one-liners deserve pages of commit messages, but this one is not
+one of them. People are easily deceived, and because you saw one
+commit message that needed more information, you think all of them do,
+but no, some don't don't, and this is one of them. It's not serving
+any real purpose.
 
-However the command  does not seem to honor tree (or blob) objects
-replacements. The bug can be reproduced (with both git 1.7.10 and 
-1.8.2.1.342.gfa7285d) in the following simple steps:
-
-
-1. Setup:
-	git init
-	for i in a b c d; do echo $i >> f; git add f; git commit -m "$i"; done
-	git diff HEAD~2..HEAD~1  # the output is non-empty
-2. Add replacement for some tree object
-	git replace `git log --format=raw | sed -ne 's/^tree //p' | sed -n 2,3p | tac`
-	git diff HEAD~2..HEAD~1  # the output is now empty
-3. Run filter-branch:
-	git filter-branch
-4. Verify that unfortunatelly it did nothing:
-	git replace | xargs git replace -d
-	git diff HEAD~2..HEAD~1  # the output is still not empty
-
-
-
-The following work-around works for me for tree objects replacements,
-but I don't think it is suitable for inclusion in git sources. Most
-probably git write-tree should be changed instead to take both the blob
-and tree replacements into account.
-
- 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index ac2a005..68064f2 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -276,6 +276,16 @@ test $commits -eq 0 && die "Found nothing to rewrite"
- 
- # Rewrite the commits
- 
-+write_tree_func()
-+{
-+ m="$(git write-tree "$@")"
-+ if [ -e "$ORIG_GIT_DIR/refs/replace/$m" ] ; then
-+   n="$(cat "$ORIG_GIT_DIR/refs/replace/$m")"
-+   echo "Replaced tree $m with $n" >&2
-+   m="$n"
-+ fi
-+ echo "$m"
-+}
- git_filter_branch__commit_count=0
- while read commit parents; do
- 	git_filter_branch__commit_count=$(($git_filter_branch__commit_count+1))
-@@ -342,8 +352,8 @@ while read commit parents; do
- 	sed -e '1,/^$/d' <../commit | \
- 		eval "$filter_msg" > ../message ||
- 			die "msg filter failed: $filter_msg"
--	workdir=$workdir @SHELL_PATH@ -c "$filter_commit" "git commit-tree" \
--		$(git write-tree) $parentstr < ../message > ../map/$commit ||
-+	workdir=$workdir /bin/sh -c "$filter_commit" "git commit-tree" \
-+		$(write_tree_func) $parentstr < ../message > ../map/$commit ||
- 			die "could not write rewritten commit"
- done <../revs
-
-Regards,
-robert
- 
+--
+Felipe Contreras
