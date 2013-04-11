@@ -1,106 +1,183 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Re: Locating merge that dropped a change
-Date: Thu, 11 Apr 2013 20:28:37 +0300
-Message-ID: <5166F2C5.4020803@bracey.fi>
-References: <51645749.8090402@bracey.fi>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pull: fail early if we know we can't merge from upstream
+Date: Thu, 11 Apr 2013 10:37:39 -0700
+Message-ID: <7v1uahj7do.fsf@alter.siamese.dyndns.org>
+References: <1365686801-17206-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 11 19:28:49 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Apr 11 19:37:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQLIm-0005Sp-EW
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 19:28:48 +0200
+	id 1UQLRV-0001AH-Va
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 19:37:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935206Ab3DKR2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 13:28:43 -0400
-Received: from 4.mo2.mail-out.ovh.net ([87.98.172.75]:44219 "EHLO
-	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934769Ab3DKR2m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 13:28:42 -0400
-X-Greylist: delayed 167616 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Apr 2013 13:28:42 EDT
-Received: from mail170.ha.ovh.net (gw6.ovh.net [213.251.189.206])
-	by mo2.mail-out.ovh.net (Postfix) with SMTP id 9DD99DC24EE
-	for <git@vger.kernel.org>; Thu, 11 Apr 2013 19:28:40 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 11 Apr 2013 19:28:40 +0200
-Received: from 85-23-153-122.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@85.23.153.122)
-  by ns0.ovh.net with SMTP; 11 Apr 2013 19:28:38 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-X-Ovh-Mailout: 178.32.228.2 (mo2.mail-out.ovh.net)
-In-Reply-To: <51645749.8090402@bracey.fi>
-X-Ovh-Tracer-Id: 17493669804426432734
-X-Ovh-Remote: 85.23.153.122 (85-23-153-122.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 0
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedruddtucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
-X-Spam-Check: DONE|U 0.500039/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeifedruddtucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+	id S935431Ab3DKRhp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Apr 2013 13:37:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63270 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752303Ab3DKRho convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Apr 2013 13:37:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 085B5143F3;
+	Thu, 11 Apr 2013 17:37:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=rThbU/iylKsU
+	k/O3RdcMz3Fzo+E=; b=JvTWZKVR1+bjk6xxdU78zuYn/vmGqUaXp3cPNCYjNXGU
+	4xRn8rxu2N+1ip4gk+N8IN6iOU8gPIf2YDAvBoe0vPHWuJIAnz+4Eo/GLtBBN5Wn
+	ByCYRAwpFW1WaodFxOikDvzOLXqmhYvntoS3lUyudOeOOktlVEtIAB5KiwxrqHY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aJbahL
+	OBFA7F5ggYKGuzJvsmK+TImAh7eWCkvTDF6bvJ85gdMoyvMVkxnaEGpAPstp37EG
+	cdw7PfDB4Ps7SGaYfbsV+nG5lyZxhqNtESFYmmDSdo95MmM2aJwg5i9QuB2YiOXy
+	BUIaZMvygCqjeQyAou1a33lFjDNqJayiefFRY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00476143F2;
+	Thu, 11 Apr 2013 17:37:42 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3D703143EE; Thu, 11 Apr
+ 2013 17:37:41 +0000 (UTC)
+In-Reply-To: <1365686801-17206-1-git-send-email-cmn@elego.de> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Thu, 11 Apr 2013 15:26:41
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 82997AD2-A2CE-11E2-A7B2-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220898>
 
-On 09/04/2013 21:00, Kevin Bracey wrote:
->
-> So, how to automatically find a merge that ignored a known change?
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-I think I've found the problem. It only doesn't work _if you specify the 
-file_.
+> I can't quite decide whether the behaviour of 'git pull' with no
+> upstream configured but a default remote with no fetch refspecs
+> merging the remote's HEAD is a feature, a bug or something in between=
+,
+> but it's used by t7409 so maybe someone else is using it and we
+> shouldn't break it.
 
-Specifically, if I was missing an addition, my first attempt to find it 
-would be
+Isn't it the simplest "works without any configuration" from the
+original days?=20
 
-   git log -p -m -S<addition> <file>
+> There's another check that could be made earlier ('git pull
+> someremote' when that's not the branch's upstream remote), but then
+> you have to start figuring out what the flags to fetch are.
 
-If the addition was lost in a merge, that doesn't even show the 
-addition, which is surprising, but intentional. The addition isn't part 
-of the HEAD version of <file>, so no point going down that path of the 
-merge. Fine. However, I expected this to work:
+When the user gave us explicitly the name of the remote, it does not
+sound too bad to fetch from there.  "git pull someremote thatbranch"
+can be given after seeing a failure and succeed without retransfer,
+no?
 
-   git log --full-history -p -m -S<addition> <file>
+I am not sure if it is worth the added complexity and potential to
+introduce new bugs in general by trying to outsmart the for-merge
+logic that kicks in only after we learn what the other side offers
+and fetch from it, but anyway, let's see what we got here...
 
-But it doesn't. It finds the addition, but _not_ the loss in the merge 
-commit.
+> diff --git a/git-pull.sh b/git-pull.sh
+> index 266e682..b62f5d3 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -43,6 +43,8 @@ log_arg=3D verbosity=3D progress=3D recurse_submodu=
+les=3D
+>  merge_args=3D edit=3D
+>  curr_branch=3D$(git symbolic-ref -q HEAD)
+>  curr_branch_short=3D"${curr_branch#refs/heads/}"
+> +upstream=3D$(git config "branch.$curr_branch_short.merge")
+> +remote=3D$(git config "branch.$curr_branch_short.remote")
+>  rebase=3D$(git config --bool branch.$curr_branch_short.rebase)
 
-But this does work:
+Learning these upfront sounds sensible.
 
-   git log -p -m -S<addition>
+>  if test -z "$rebase"
+>  then
+> @@ -138,6 +140,47 @@ do
+>  	esac
+>  	shift
+>  done
+> +if test true =3D "$rebase"
+> +then
+> +    op_type=3Drebase
+> +    op_prep=3Dagainst
+> +else
+> +    op_type=3Dmerge
+> +    op_prep=3Dwith
+> +fi
+> +
+> +check_args_against_config () {
+> +	# If fetch gets user-provided arguments, the user is
+> +	# overriding the upstream configuration, so we have to wait
+> +	# for fetch to do its work to know if we can merge.
+> +	if [ $# -gt 0 ]; then
+> +		return
+> +	fi
 
-That really feels like a bug to me. By specifying a file, I've made it 
-miss the change, and I can see no way to get the change without making 
-it a full-tree operation.
+> +	# Figure out what remote we're going to be fetching from
+> +	use_remote=3Dorigin
+> +	if [ -n "$remote" ]; then
+> +		use_remote=3D"$remote"
+> +	fi
+> +
+> +	# If the remote doesn't have a fetch refspec, then we'll merge
+> +	# whatever fetch marks for-merge, same as above.
 
-Looking at try_to_simplify_commit() it appears the merge that removed 
-the addition is excluded because it's TREESAME to its _other_ parent. 
-But with --full-history, we should only be eliminating a merge if its 
-TREESAME to all parents, surely? Otherwise we have this case that we 
-show a commit but not its reversion.
+The "above" in this sentence refers to...?
 
-And the code doing this looks broken, or at least illogical - the parent 
-loop sets "tree_same" for a same parent in --full-history, rather than 
-immediately setting the TREESAME flag, so maybe previous authors were 
-thinking about this. But setting tree_same guarantees that TREESAME is 
-always set on exit anyway, so it's pointless (unless I'm missing something).
+I guess "we have to wait", but it wasn't very clear.
 
-It does appear this is documented behaviour in the manual: "full-history 
-without parent rewriting" .. "P and M were excluded because they are 
-TREESAME to _a_ parent." I would say that they should have been excluded 
-due to being TREESAME to _all_ parents. I really don't want a merge 
-where one version of my file was chosen over another excluded from its 
-so-called "full history".
+> +	fetch=3D$(git config --get-all "remote.$use_remote.fetch")
+> +	if [ -z "$fetch" ]; then
+> +		return
+> +	fi
 
-Now, obviously in a sane environment, most merges won't be that 
-interesting, as they'll just be propagating wanted patches from the real 
-commits already in the log. But I'd like some way to find merges that 
-drop code in a specified file, and surely "--full-history" is it?
+Hmm, it is probably correct to punt on this case, but it defeats
+large part of the effect of your effort, doesn't it? We fetch what
+is covered by remote.$name.fetch _and_ what need to complete the
+merge operation (otherwise branch.$name.merge that is not covered by
+remote.$there.fetch will not work).  So
 
-Kevin
+    [remote "origin"]
+            url =3D $over_there
+    [branch "master"]
+            remote =3D origin
+            merge =3D refs/heads/master
+
+would still fetch refs/heads/master from there and merge it.
+
+> +	# The typical 'git pull' case where it should merge from the
+> +	# current branch's upstream. We can already check whether we
+> +	# we can do it. If HEAD is detached or there is no upstream
+> +	# branch, complain now.
+
+Drop "typical", and rephrase "merge from" to also cover "rebase" (I
+often say "integrate with").
+
+To return to your original description:
+
+    A 'git pull' without specifying a remote is asked to take the
+    current branch's upstream as the branch to merge from. This
+    cannot work without an upstream configuration nor with HEAD
+    detached, but we only check for this after fetching.
+
+Wouldn't it be sufficient to add something like this before fetch
+happens:
+
+	if test $# !=3D 0 || # args explicitly specified
+           test -n "$curr_branch" || # not detached
+	   test -n "$upstream" # what to integrate with is known
+	then
+		return ;# then no problem
+	fi
+	die "underspecified 'git pull'"
+
+without changing anything else?  For that matter, $upstream is
+likely to be empty when detached, so the second test may not even be
+necessary.
