@@ -1,112 +1,92 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v2 5/5] Documentation: add caveats about I/O buffering for check-{attr,ignore}
-Date: Thu, 11 Apr 2013 13:05:13 +0100
-Message-ID: <1365681913-7059-5-git-send-email-git@adamspiers.org>
-References: <20130411110511.GB24296@pacific.linksys.moosehall>
- <1365681913-7059-1-git-send-email-git@adamspiers.org>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 11 14:05:36 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v4 00/21] remote-hg: general updates
+Date: Thu, 11 Apr 2013 07:22:56 -0500
+Message-ID: <1365682997-11329-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 11 14:24:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQGFz-0002ks-Rw
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 14:05:36 +0200
+	id 1UQGYF-0006ee-6o
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 14:24:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935328Ab3DKMFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 08:05:32 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:59033 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935118Ab3DKMFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 08:05:18 -0400
-Received: from localhost (2.d.c.d.2.5.f.b.c.0.4.8.0.1.4.d.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:d410:840c:bf52:dcd2])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 13F8958EB3
-	for <git@vger.kernel.org>; Thu, 11 Apr 2013 13:05:18 +0100 (BST)
-X-Mailer: git-send-email 1.8.2.1.342.gfa7285d
-In-Reply-To: <1365681913-7059-1-git-send-email-git@adamspiers.org>
+	id S934936Ab3DKMYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 08:24:22 -0400
+Received: from mail-qc0-f182.google.com ([209.85.216.182]:57724 "EHLO
+	mail-qc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933891Ab3DKMYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 08:24:21 -0400
+Received: by mail-qc0-f182.google.com with SMTP id k19so653002qcs.41
+        for <git@vger.kernel.org>; Thu, 11 Apr 2013 05:24:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=VPjN1FWAgDtPJtW7CI4j3G9WL/9IhOJJiRyWXEr7OmU=;
+        b=Kr1mMonCLkiwQJeruU7S7exhnIU8eXGjSibHG92pu4l9IcysOHM+geudVuvKuPlP70
+         zzrikLeQ437KZwJ1dP/VrAwjFI2wGmJGKpWUSAUoE19u6gKWus08fbTFlqoh+ETD/Gir
+         JlcCIyHBJVgYa6gyQmHJvHYVxODn8JSQQU3LDrTk9OZFJlwjHyuupW0OCfzUnHTKPURT
+         f5Nkd8qThGHDJT1Ba7A1EoTVUiHkp2wITD+Ao9x3q47LQrNJIHhrGeE16eRvjqc0QdIz
+         /SzMk9KEiy7RbIp9SC2YgUVMtbyCdMh42dzenAmVBnH3v3gVa/cQneLY4fck3Ar6Wv67
+         FnXg==
+X-Received: by 10.224.106.73 with SMTP id w9mr6448743qao.20.1365683061237;
+        Thu, 11 Apr 2013 05:24:21 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id bt19sm7020552qab.0.2013.04.11.05.24.19
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 11 Apr 2013 05:24:20 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220853>
 
-check-attr and check-ignore have the potential to deadlock callers
-which do not read back the output in real-time.  For example, if a
-caller writes N paths out and then reads N lines back in, it risks
-becoming blocked on write() to check-*, and check-* is blocked on
-write back to the caller.  Somebody has to buffer; the pipe buffers
-provide some leeway, but they are limited.
+Hi,
 
-Thanks to Peff for pointing this out:
+This is a reroll of the previous series due to a few minor issues. As the
+previous version, forced pushes remain a configuration option. Also, I picked
+up a fix for test regarding hg_log() that was sent to the mailing list.
 
-    http://article.gmane.org/gmane.comp.version-control.git/220534
+Antoine Pelisse (1):
+  remote-hg: activate graphlog extension for hg_log()
 
-Signed-off-by: Adam Spiers <git@adamspiers.org>
----
- Documentation/git-check-attr.txt   |  5 +++++
- Documentation/git-check-ignore.txt |  5 +++++
- Documentation/git.txt              | 16 +++++++++-------
- 3 files changed, 19 insertions(+), 7 deletions(-)
+Dusty Phillips (2):
+  remote-hg: add missing config variable in doc
+  remote-hg: push to the appropriate branch
 
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index 5abdbaa..a7be80d 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -56,6 +56,11 @@ being queried and <info> can be either:
- 'set';;		when the attribute is defined as true.
- <value>;;	when a value has been assigned to the attribute.
- 
-+Buffering happens as documented under the `GIT_FLUSH` option in
-+linkgit:git[1].  The caller is responsible for avoiding deadlocks
-+caused by overfilling an input buffer or reading from an empty output
-+buffer.
-+
- EXAMPLES
- --------
- 
-diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-index 7e3cabc..8e1f7ab 100644
---- a/Documentation/git-check-ignore.txt
-+++ b/Documentation/git-check-ignore.txt
-@@ -81,6 +81,11 @@ not.  (Without this option, it would be impossible to tell whether the
- absence of output for a given file meant that it didn't match any
- pattern, or that the output hadn't been generated yet.)
- 
-+Buffering happens as documented under the `GIT_FLUSH` option in
-+linkgit:git[1].  The caller is responsible for avoiding deadlocks
-+caused by overfilling an input buffer or reading from an empty output
-+buffer.
-+
- EXIT STATUS
- -----------
- 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 6a875f2..eecdb15 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -808,13 +808,15 @@ for further details.
- 
- 'GIT_FLUSH'::
- 	If this environment variable is set to "1", then commands such
--	as 'git blame' (in incremental mode), 'git rev-list', 'git log',
--	and 'git whatchanged' will force a flush of the output stream
--	after each commit-oriented record have been flushed.   If this
--	variable is set to "0", the output of these commands will be done
--	using completely buffered I/O.   If this environment variable is
--	not set, Git will choose buffered or record-oriented flushing
--	based on whether stdout appears to be redirected to a file or not.
-+	as 'git blame' (in incremental mode), 'git rev-list', 'git
-+	log', 'git check-attr', 'git check-ignore', and 'git
-+	whatchanged' will force a flush of the output stream after
-+	each commit-oriented record have been flushed.  If this
-+	variable is set to "0", the output of these commands will be
-+	done using completely buffered I/O.  If this environment
-+	variable is not set, Git will choose buffered or
-+	record-oriented flushing based on whether stdout appears to be
-+	redirected to a file or not.
- 
- 'GIT_TRACE'::
- 	If this variable is set to "1", "2" or "true" (comparison
+Felipe Contreras (15):
+  remote-hg: trivial cleanups
+  remote-hg: properly report errors on bookmark pushes
+  remote-hg: make sure fake bookmarks are updated
+  remote-hg: trivial test cleanups
+  remote-hg: redirect buggy mercurial output
+  remote-hg: split bookmark handling
+  remote-hg: refactor export
+  remote-hg: update remote bookmarks
+  remote-hg: update tags globally
+  remote-hg: force remote push
+  remote-hg: show more proper errors
+  remote-hg: add basic author tests
+  remote-hg: add simple mail test
+  remote-hg: fix bad state issue
+  remote-hg: fix bad file paths
+
+Peter van Zetten (1):
+  remote-hg: fix for files with spaces
+
+Simon Ruderich (2):
+  remote-hg: add 'insecure' option
+  remote-hg: document location of stored hg repository
+
+ contrib/remote-helpers/git-remote-hg     | 122 +++++++++++++++++++++++++------
+ contrib/remote-helpers/test-hg-bidi.sh   |  11 ++-
+ contrib/remote-helpers/test-hg-hg-git.sh |   8 +-
+ contrib/remote-helpers/test-hg.sh        |  36 +++++++++
+ 4 files changed, 148 insertions(+), 29 deletions(-)
+
 -- 
-1.8.2.1.342.gfa7285d
+1.8.2.1
