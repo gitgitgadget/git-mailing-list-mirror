@@ -1,115 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 1/3] Teach mv to move submodules together with their
- work trees
-Date: Thu, 11 Apr 2013 09:46:58 -0700
-Message-ID: <7vd2u1j9q5.fsf@alter.siamese.dyndns.org>
-References: <515C88FE.9020203@web.de> <515C8958.4080704@web.de>
- <CALkWK0mWHwTV8dc9F3tyq9HYOnC2S56x_efr1+eRsqJqTFutXA@mail.gmail.com>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] doc/http-backend: give some lighttpd config examples
+Date: Thu, 11 Apr 2013 18:47:49 +0200
+Message-ID: <5166E935.2080206@gmail.com>
+References: <20130411033022.GA14462@sigill.intra.peff.net> <20130411033613.GB14551@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Phil Hord <phil.hord@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	"W. Trevor King" <wking@tremily.us>,
-	Peter Collingbourne <peter@pcc.me.uk>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 11 18:47:09 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Magnus Therning <magnus@therning.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 11 18:48:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQKeS-0002Hk-TB
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 18:47:09 +0200
+	id 1UQKfW-0003yx-9Q
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 18:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934682Ab3DKQrD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 12:47:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35764 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934395Ab3DKQrB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 12:47:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1831214EC1;
-	Thu, 11 Apr 2013 16:47:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WbDn9AkQzLwthcih8uhRHpTsRMo=; b=Z6ObOl
-	+fsgxDAB2SxFiF2gQHnCRWFKLH4X5z+pXDnITFfTPw3oa7XhdX9z+TMY4pz1Gh5p
-	F9qWT3r+Piv/xL9e/kP6d2/fB/SfpqcwSxt00mNm/Qq3DqoxKqxmGpMmpCvByyFA
-	6wnnt4lFc653zhaOa5J/ltVHkKftdFL+yGe8A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J+6yp9YP9IVKn2+b0VfEcj18Igb3Vx0o
-	Dy6dvGThMxJOHSOPANLeMRLCb+rpXrswqHx7DchqPTghnUWX3U1rK8+Tp9clRxLG
-	i7p7sFr5H7ULMdJxiUO9abIXIBRs/L0ceNNWK0/4BYu6yS3W2ZluVFmI9Pv5U9Rx
-	kM4Gi/7cRMo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BBAB14EC0;
-	Thu, 11 Apr 2013 16:47:01 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B31014EBF; Thu, 11 Apr
- 2013 16:47:00 +0000 (UTC)
-In-Reply-To: <CALkWK0mWHwTV8dc9F3tyq9HYOnC2S56x_efr1+eRsqJqTFutXA@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Thu, 11 Apr 2013 14:42:51 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6E2EFE8E-A2C7-11E2-9981-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S935352Ab3DKQrz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Apr 2013 12:47:55 -0400
+Received: from mail-ea0-f178.google.com ([209.85.215.178]:33167 "EHLO
+	mail-ea0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934395Ab3DKQry (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 12:47:54 -0400
+Received: by mail-ea0-f178.google.com with SMTP id o10so863132eaj.37
+        for <git@vger.kernel.org>; Thu, 11 Apr 2013 09:47:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=mcFQBzbsBZApQRJgal4j+1gYXYwV0ETX69ovj0kcSTk=;
+        b=a+AhG9p1SB/GgGmtPtQ7+wa3un/OjVgqqeFsNgzJbUjM1Se7kUnp/hM3gN2u0C+CkD
+         K/oOy1VrvANg9FYkKtT/vu0BZ0/suephTAFdLgewilhIs5qzaT0BIOouOGbAva51FQCL
+         2qzFhID0wIrkG4Hbj+OywJ/hjqhsh4Zq3UdqmNedfKIH1VRBj2kafkkNkfiIoL+izk9Z
+         p5n47ycH7TFwHLonuQKr9mN9c/ssOVbRPfV9NKoBoHs38edHiG/CKJSGWTNl/pucCV5s
+         l+nreDHmyMkxQq4ZALjTdqRHGbZ6c1F9PNlR4RO+CDUWka3DL7p0Hj3JHl1PahUCMZ/8
+         Ss4g==
+X-Received: by 10.15.32.142 with SMTP id a14mr18732910eev.22.1365698872873;
+        Thu, 11 Apr 2013 09:47:52 -0700 (PDT)
+Received: from [192.168.1.14] (ewi48.neoplus.adsl.tpnet.pl. [83.20.232.48])
+        by mx.google.com with ESMTPS id s47sm6543207eeg.8.2013.04.11.09.47.51
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 11 Apr 2013 09:47:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <20130411033613.GB14551@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220889>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+W dniu 11.04.2013 05:36, Jeff King napisa=C5=82:
 
-> Why does it search for a submodule with a trailing slash in the index?
->  You make it sound like it's doing something unnatural; in reality, it
-> does this because it executes lstat() on the filesystem path
-> specified, and the stat mode matches S_ISDIR (because it _is_ a
-> directory on the filesystem).  It is stored in the index as an entry
-> (without a trailing slash) with the mode 160000, gitlink.
->
-> What happens if I attempt to git mv oldpath/ newpath/ (with the
-> literal slashes, probably because I'm using a stupid shell
-> completion)?
+> +Note that unlike the similar setup with Apache, we can easily match =
+the
+> +query string for receive-pack, catching the initial request from the
+> +client. This means that the server administrator does not have to wo=
+rry
+> +about configuring `http.receivepack` for the repositories (the defau=
+lt
+> +value, which enables it only in the case of authentication, is
+> +sufficient).
 
-I think it should work.
+Perhaps it would be worth including for Apache2 beside basic setup that
+requires http.receivepack set to true, also one like for LigHTTPd, i.e.
 
-	mkdir a && >a/f && git add a/f && git mv a/ b/
+  RewriteCond %{QUERY_STRING} =3Dservice=3Dgit-receive-pack [OR]
+  RewriteCond %{REQUEST_URI} /git-receive-pack$
+  RewriteRule (.*) $1 [E=3DAUTHREQUIRED:yes]
 
->> Fix that by searching for the name without a trailing slash and continue
->> if it is a submodule.
->
-> So, the correct solution is not to "search for a name without a
-> trailing slash", but rather to handle the gitlink entry in the index
-> appropriately.
+  <Location /gitweb/>
+      Order Deny,Allow
+      Deny from env=3DAUTHREQUIRED
 
-For moving an entire directory's contents, because the index is
-flat, you would look for "name/", because you know all of the paths
-contained in it will share that prefix.
+      AuthType Basic
+      AuthName "Git Access"
+      Require group committers
 
-But when dealing with a submodule, you need to see if the path that
-found to be a directory in the working tree is a gitlink in the
-index.  And the way to do so is to look for it without trailing
-slash, because there is nothing hanging under it in the index.
+      Satisfy Any
+  <Location>
 
-So the right implementation of "handle appropriately" is to "search
-without slash".  They are saying the same thing, and the latter is a
-more specific way to point out in what way the existing code that
-wanted to delegate moving to "submodule mv" and not having to worry
-about gitlinks was unprepared for it, and what change is needed to
-make it "handle appropriately".
-
-So I think there is no need to rephrase here, but your comment makes
-me wonder if the patch covers the case where you have a submodule at
-"a/x" and the user does "git mv a/ b/".  The src_is_dir thing will
-notice "a/" is a directory, finds all the paths inside a/ including
-"a/x" (and we won't see any paths inside the submodule's working
-tree) to "b/", and update the cache entries and the working tree.
-Does the adjusting of the path for that moved submodule, which is a
-theme for [PATCH 3/3], cover that case, too?
-
-Another thing to wonder is if we correctly reject "git mv a/x/f here"
-in the same example where a/x is a directory.  The path is beyond
-the lower boundary of our working tree and should not be touched.
+And perhaps also adding it as test...
+--=20
+Jakub Nar=C4=99bski
