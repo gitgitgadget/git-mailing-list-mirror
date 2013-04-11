@@ -1,104 +1,73 @@
-From: Miklos Vajna <vmiklos@suse.cz>
-Subject: Re: [PATCH v2] cherry-pick: make sure all input objects are commits
-Date: Thu, 11 Apr 2013 13:03:25 +0200
-Message-ID: <20130411110324.GD12770@suse.cz>
-References: <20130403092704.GC21520@suse.cz>
- <7v38v1yn8o.fsf@alter.siamese.dyndns.org>
- <20130411092638.GA12770@suse.cz>
- <CALkWK0n6FjGbXTqiOT_O6NbB5h0DLaNWKCCTQAFSO_BL-pPdBA@mail.gmail.com>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH 1/5] check-ignore: move setup into cmd_check_ignore()
+Date: Thu, 11 Apr 2013 12:05:11 +0100
+Message-ID: <20130411110511.GB24296@pacific.linksys.moosehall>
+References: <20130408181311.GA14903@pacific.linksys.moosehall>
+ <1365645575-11428-1-git-send-email-git@adamspiers.org>
+ <20130411052553.GA28915@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="EuxKj2iCbKjpUGkD"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 11 13:03:45 2013
+Content-Type: text/plain; charset=us-ascii
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 11 13:05:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQFI7-00073o-W8
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 13:03:44 +0200
+	id 1UQFJh-0001DK-9B
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 13:05:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763192Ab3DKLDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 07:03:35 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:42292 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761383Ab3DKLD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 07:03:28 -0400
-Received: from relay2.suse.de (unknown [195.135.220.254])
-	by mx2.suse.de (Postfix) with ESMTP id 8B25DA3A78;
-	Thu, 11 Apr 2013 13:03:27 +0200 (CEST)
+	id S1752705Ab3DKLFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 07:05:14 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:58973 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752244Ab3DKLFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 07:05:13 -0400
+Received: from localhost (2.d.c.d.2.5.f.b.c.0.4.8.0.1.4.d.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:d410:840c:bf52:dcd2])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id CAD9E58EB3
+	for <git@vger.kernel.org>; Thu, 11 Apr 2013 12:05:11 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <CALkWK0n6FjGbXTqiOT_O6NbB5h0DLaNWKCCTQAFSO_BL-pPdBA@mail.gmail.com>
+In-Reply-To: <20130411052553.GA28915@sigill.intra.peff.net>
+X-OS: GNU/Linux
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220845>
 
+On Thu, Apr 11, 2013 at 01:25:53AM -0400, Jeff King wrote:
+> On Thu, Apr 11, 2013 at 02:59:31AM +0100, Adam Spiers wrote:
+> > -static int check_ignore(const char *prefix, const char **pathspec)
+> > +static int check_ignore(struct path_exclude_check check,
+> > +			const char *prefix, const char **pathspec)
+> 
+> Did you mean to pass the struct by value here? If it is truly a per-path
+> value, shouldn't it be declared and initialized inside here? Otherwise
+> you risk one invocation munging things that the struct points to, but
+> the caller's copy does not know about the change.
+> 
+> In particular, I see that the struct includes a strbuf. What happens
+> when one invocation of check_ignore grows the strbuf, then returns? The
+> copy of the struct in the caller will not know that the buffer it is
+> pointing to is now bogus.
+> 
+> > -static int check_ignore_stdin_paths(const char *prefix)
+> > +static int check_ignore_stdin_paths(struct path_exclude_check check, const char *prefix)
+> 
+> Ditto here.
 
---EuxKj2iCbKjpUGkD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It's not a per-path value; it's supposed to be reused across checks
+for multiple paths, as explained in the comments above
+last_exclude_matching_path():
 
-On Thu, Apr 11, 2013 at 03:52:44PM +0530, Ramkumar Ramachandra <artagnon@gm=
-ail.com> wrote:
-> > +       for (i =3D 0; i < opts->revs->pending.nr; i++) {
-> > +               unsigned char sha1[20];
-> > +               const char *name =3D opts->revs->pending.objects[i].nam=
-e;
-> > +
-> > +               if (!get_sha1(name, sha1)) {
-> > +                       enum object_type type =3D sha1_object_info(sha1=
-, NULL);
-> > +
-> > +                       if (type > 0 && type !=3D OBJ_COMMIT)
-> > +                               die(_("%s: can't cherry-pick a %s"), na=
-me, typename(type));
-> > +               }
->=20
-> else?  What happens if get_sha1() fails?
+    ...
+     * A path to a directory known to be excluded is left in check->path to
+     * optimize for repeated checks for files in the same excluded directory.
+     */
+    struct exclude *last_exclude_matching_path(struct path_exclude_check *check,
+    ...
 
-I guess that is a should-not-happen category. parse_args() calls
-setup_revisions(), and that will already die() if the argument is not a
-valid object at all.
-
-> > diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-=
-many-commits.sh
-> > index 4e7136b..19c99d7 100755
-> > --- a/t/t3508-cherry-pick-many-commits.sh
-> > +++ b/t/t3508-cherry-pick-many-commits.sh
-> > @@ -55,6 +55,12 @@ one
-> >  two"
-> >  '
-> >
-> > +test_expect_success 'cherry-pick three one two: fails' '
-> > +       git checkout -f master &&
-> > +       git reset --hard first &&
-> > +       test_must_fail git cherry-pick three one two:
-> > +'
->=20
-> So you're testing just the third case (where commit objects are mixed
-> with non-commit objects), which is arguably a bug.  Okay.
-
-Yes. If you would want, I could of course add test cases for two other
-cases when we already errored out and now the error message is just
-changed, but I don't think duplicating the error message strings from
-the code to the testsuite is really wanted. :-)
-
---EuxKj2iCbKjpUGkD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iEYEARECAAYFAlFmmHwACgkQe81tAgORUJaTJACeKPui8+fZH+Nz3GIBFoCP5wjN
-liMAoKdN00xdTFYRiMGlh2MsA/5GhZ7U
-=JZsn
------END PGP SIGNATURE-----
-
---EuxKj2iCbKjpUGkD--
+So I think you're probably right that there is potential for
+check->path to become effectively corrupted due to the caller not
+seeing the reallocation.  I'll change this too.
