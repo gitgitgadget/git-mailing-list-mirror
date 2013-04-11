@@ -1,123 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 5/5] Documentation: add caveats about I/O buffering
- for check-{attr,ignore}
-Date: Thu, 11 Apr 2013 11:09:28 -0700
-Message-ID: <7vsj2xhrc7.fsf@alter.siamese.dyndns.org>
-References: <20130411110511.GB24296@pacific.linksys.moosehall>
- <1365681913-7059-1-git-send-email-git@adamspiers.org>
- <1365681913-7059-5-git-send-email-git@adamspiers.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
+ permission problems as errors" busted git-daemon
+Date: Thu, 11 Apr 2013 11:11:03 -0700
+Message-ID: <20130411181103.GJ27070@google.com>
+References: <1365572015.4658.51.camel@marge.simpson.net>
+ <20130410135605.GB4694@odin.tremily.us>
+ <1365651583.19620.8.camel@marge.simpson.net>
+ <20130411054207.GE27795@sigill.intra.peff.net>
+ <7vwqs9jd0t.fsf@alter.siamese.dyndns.org>
+ <20130411172424.GC1255@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Thu Apr 11 20:09:40 2013
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mike Galbraith <bitbucket@online.de>,
+	"W. Trevor King" <wking@tremily.us>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 11 20:11:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQLwH-0002Ie-HQ
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 20:09:37 +0200
+	id 1UQLxr-0004aK-Op
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 20:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030188Ab3DKSJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 14:09:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43165 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752598Ab3DKSJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 14:09:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F06915183;
-	Thu, 11 Apr 2013 18:09:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SXTpE230QL7Uxh/SvHLZe7PqYF0=; b=fzF5xs
-	7IY4oQd3c4HjAQwuBaVx1kt/Ti8B805Xg60Fmvj4w9Qa4CX/TZZOhHICaf16UbJo
-	Zh2cRZXT1WgGRr2SWvYGH88lPMy8bpOzhLkaSGd2x2RB5qsqOml5kIRkVLAIImWB
-	8xgVDyaEwa8hAk6NlPpsHytvNPJ9qk552QxB8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=peah7PNz9PJyfLZ523ZYw74PnUebQnMK
-	lzfLnTMgpczWjWnMw22TDoX59y2IX4e1cElKpQPIndyKBZtPQdofRttLA/4TrZCk
-	Tru/4L3zNyv+8BWkQG4GViwmpvS5a1oy7tLfW/HHKTOjdNJUfW5a/hdco/hXTyRn
-	z2yxO2PSyUM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 150ED15182;
-	Thu, 11 Apr 2013 18:09:31 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71CD51517F; Thu, 11 Apr
- 2013 18:09:30 +0000 (UTC)
-In-Reply-To: <1365681913-7059-5-git-send-email-git@adamspiers.org> (Adam
- Spiers's message of "Thu, 11 Apr 2013 13:05:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F49461B6-A2D2-11E2-8D4C-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S965053Ab3DKSLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 14:11:10 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:56570 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964882Ab3DKSLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 14:11:08 -0400
+Received: by mail-pd0-f174.google.com with SMTP id p12so979756pdj.5
+        for <git@vger.kernel.org>; Thu, 11 Apr 2013 11:11:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=jN7yIy1U+kMviAdoLKXJ0FguebYoHtvyzd9sm0NJ9D0=;
+        b=PHbpjj15j2WYba9Xh+Ryd8vm/a6v1ODFqYU4Lpk8wjvqIJkrrpZhTqQFixX/WwP+jz
+         4Tfppw8grNAgFPF4wEVH4KLDosxBiB1wW2o27C5VHhCTAM7x49X/Uip9mZJfZGiKRbAe
+         SSAuxtaWoHI3mvWaFsupuWgQEM0psUItSz5Nu5aGk0BrKkoEE3B2kpw9iTApCZP8f1S/
+         BUwHUdKzLV1M4sM7Qeyn4bAyfH+lRHj0DNHRo6BEG59k6CT+HBojw83n7luGzpl4Ws69
+         mKBcIHTFqMvte9sGd9JPaSgJY3R9pRxd1nwfhykmdlNRXkuadvaCOsVRwxjKwTFVyRH2
+         MCyQ==
+X-Received: by 10.66.145.166 with SMTP id sv6mr11303348pab.1.1365703868323;
+        Thu, 11 Apr 2013 11:11:08 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPS id ky10sm5843978pab.23.2013.04.11.11.11.05
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 11 Apr 2013 11:11:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130411172424.GC1255@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220903>
 
-Adam Spiers <git@adamspiers.org> writes:
+Jeff King wrote:
 
-> diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-> index 7e3cabc..8e1f7ab 100644
-> --- a/Documentation/git-check-ignore.txt
-> +++ b/Documentation/git-check-ignore.txt
-> @@ -81,6 +81,11 @@ not.  (Without this option, it would be impossible to tell whether the
->  absence of output for a given file meant that it didn't match any
->  pattern, or that the output hadn't been generated yet.)
->  
-> +Buffering happens as documented under the `GIT_FLUSH` option in
-> +linkgit:git[1].  The caller is responsible for avoiding deadlocks
-> +caused by overfilling an input buffer or reading from an empty output
-> +buffer.
-> +
->  EXIT STATUS
->  -----------
->  
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index 6a875f2..eecdb15 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -808,13 +808,15 @@ for further details.
->  
->  'GIT_FLUSH'::
->  	If this environment variable is set to "1", then commands such
-> -	as 'git blame' (in incremental mode), 'git rev-list', 'git log',
-> -	and 'git whatchanged' will force a flush of the output stream
-> -	after each commit-oriented record have been flushed.   If this
-> -	variable is set to "0", the output of these commands will be done
-> -	using completely buffered I/O.   If this environment variable is
-> -	not set, Git will choose buffered or record-oriented flushing
-> -	based on whether stdout appears to be redirected to a file or not.
-> +	as 'git blame' (in incremental mode), 'git rev-list', 'git
-> +	log', 'git check-attr', 'git check-ignore', and 'git
-> +	whatchanged' will force a flush of the output stream after
-> +	each commit-oriented record have been flushed.  If this
-> +	variable is set to "0", the output of these commands will be
-> +	done using completely buffered I/O.  If this environment
-> +	variable is not set, Git will choose buffered or
-> +	record-oriented flushing based on whether stdout appears to be
-> +	redirected to a file or not.
+> Here it is with a commit message.
+>
+> -- >8 --
+> Subject: [PATCH] daemon: set HOME when we switch to --user
 
-Reflowing of the text is very much unappreciated X-<.  
+Thanks for taking care of it.  For what it's worth,
 
-It took me five minutes to spot that you only added check-attr and
-check-ignore and forgot to adjust that "commit-oriented record" to
-an updated reality, where you now have commands that produce
-non-commit-oriented record to the output.
+Acked-by: Jonathan Nieder <jrnieder@gmail.com>
 
-It would have been far simpler to review if it were like this, don't
-you think?
+I'm not sure whether to keep 96b9e0e (config: treat user and xdg
+config permission problem as errors) in the long run, BTW.  There have
+been multiple reports about dropping privileges and not being able to
+access the old HOME, and I'm not convinced any more that the
+predictability is worth the breakage for such people.  Though checking
+if $HOME is inaccessible and treating that case specially would be
+even worse...
 
->  	If this environment variable is set to "1", then commands such
-> 	as 'git blame' (in incremental mode), 'git rev-list', 'git log',
-> -	and 'git whatchanged' will force a flush of the output stream
-> -	after each commit-oriented record have been flushed.   If this
-> +	'git check-attr', 'git check-ignore', and 'git whatchanged' will
-> +	force a flush of the output stream
-> +     after each record have been flushed.   If this
-> 	variable is set to "0", the output of these commands will be done
-> 	using completely buffered I/O.   If this environment variable is
->  	not set, Git will choose buffered or record-oriented flushing
->  	based on whether stdout appears to be redirected to a file or not.
+Insights welcome.
+
+Jonathan
