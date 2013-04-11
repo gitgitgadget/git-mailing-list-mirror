@@ -1,142 +1,62 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] rm: delete .gitmodules entry of submodules removed
- from the work tree
-Date: Wed, 10 Apr 2013 16:30:58 -0700
-Message-ID: <20130410233058.GI27070@google.com>
-References: <5165E1CC.7090004@web.de>
- <CALkWK0mzbgFP7JnCP7=NCA1guGg8ayF-mn7WdJEZyYX5hgePFw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	"W. Trevor King" <wking@tremily.us>,
-	Peter Collingbourne <peter@pcc.me.uk>,
-	John Keeping <john@keeping.me.uk>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 11 01:31:10 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/2] transport-helper: general fixes
+Date: Wed, 10 Apr 2013 19:07:10 -0500
+Message-ID: <1365638832-9000-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 11 02:08:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQ4Tu-0004zR-0T
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 01:31:10 +0200
+	id 1UQ53w-0000sA-Ms
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 02:08:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934790Ab3DJXbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Apr 2013 19:31:05 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:48189 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761256Ab3DJXbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 19:31:03 -0400
-Received: by mail-pa0-f52.google.com with SMTP id fb10so571944pad.11
-        for <git@vger.kernel.org>; Wed, 10 Apr 2013 16:31:03 -0700 (PDT)
+	id S937730Ab3DKAIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Apr 2013 20:08:18 -0400
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:53585 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S937299Ab3DKAIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Apr 2013 20:08:16 -0400
+Received: by mail-qa0-f47.google.com with SMTP id hu16so3934qab.6
+        for <git@vger.kernel.org>; Wed, 10 Apr 2013 17:08:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=xr1BBLvjoFx1FBAGDDOLd2TmJd0h/jEqQ9BcnG6Qzm8=;
-        b=rr1dDaGmXBryAfOr1ZQdh8r7OkUPwYFS41AUZvjUPuOuZMC5PNraV9aI7k3x0qTCd6
-         Vv5jKUrATv+FFEIHatlE6oVN1F9Uh2TwxTbsvz9wXA4rprDeHqYpIrUjlBXXHgY+Fz18
-         zIHL3Z98xHjRTyPB5A1Gldf5/DF1/799bR6+I3CWNmvcBC23HC+ip1xje0WfGU1wUYRq
-         5hTSQoCj4DCfhixHir0OUVZCQxsHyHeTipWCvWAxswcWwU3sYievaH6nl79Hyvl/6Iql
-         EUKI0KTOrmKfCZJNIoQMnaLETxXoLXtCUwlUWN6Z7yWhowkYHQ7iVsLsno5TCPcTsddX
-         02iA==
-X-Received: by 10.68.102.2 with SMTP id fk2mr5621501pbb.168.1365636663110;
-        Wed, 10 Apr 2013 16:31:03 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id u9sm2200293paf.22.2013.04.10.16.31.00
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=2dz0e6F6eKE0Od4XBDdBe4F9J5XSSi2KGoRghbOvmBE=;
+        b=f1+wWcL6VtFvBs4hbKDAFwtBjIrUAW8CwqBvf+q89JztglPuf3yYrQKfoGn5XjijNw
+         giHZtRN2buwaK55D2loGUT3jzIm2HxeK9N2pPeX4jYe6X19Ex8lCUyjsnfa0+UfKSSa1
+         g/2AB5Ybu1sfxCn9TkxIJmhWIgQu+ucbIOp/PudSv/2U/xI4memjgMLkURzH8f2yw2t7
+         gjkRh/CXfUyh4rY4AcYn4H41f98741c3HO/4QGzr2YtuRznvCShmkcFOEfyZqkXxWwo0
+         nC9TKM3AZjg9mpzEVqi308hDQ5wJBHaoB95AAdnVY/vz0A3bouok3ecGQZfJE/2qHUu8
+         5pxA==
+X-Received: by 10.49.64.72 with SMTP id m8mr5368481qes.51.1365638895247;
+        Wed, 10 Apr 2013 17:08:15 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id hm4sm4051278qab.2.2013.04.10.17.08.13
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 10 Apr 2013 16:31:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0mzbgFP7JnCP7=NCA1guGg8ayF-mn7WdJEZyYX5hgePFw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Wed, 10 Apr 2013 17:08:14 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220796>
 
 Hi,
 
-Thanks for looking it over.
+Here are a couple of patches that fix a few problems with remote-helpers.
 
-Ramkumar Ramachandra wrote:
+Felipe Contreras (2):
+  transport-helper: improve push messages
+  transport-helper: update remote helper namespace
 
-> - Why are you hard-coding ".gitmodules" instead of using a simple #define?
+ t/t5801-remote-helpers.sh | 26 ++++++++++++++++++++++++++
+ transport-helper.c        | 24 ++++++++++++++++++++----
+ 2 files changed, 46 insertions(+), 4 deletions(-)
 
-Advantage of ".gitmodules": it's obvious what it means.
-Advantage of DOT_GITMODULES: protection against spelling errors.
-
-Git has a lot of use of both styles of string constant, for better or
-worse.  Consistency means following what the surrounding code does,
-and making changes if appropriate in a separate patch.
-
-> - Why are you returning -1, instead of an error() with a message?
-
-I think the idea is that remove_path_from_gitmodules() is idempotent:
-if that path isn't listed in gitmodules, that's considered fine and
-.gitmodules is left alone, instead of making a user that tries to
-first remove a .gitmodules file and then all submodules suffer.
-
-Perhaps a return value of '0 if gitmodules unmodified, 1 if modified'
-would make it clearer that this isn't an error condition.
-
-[...]
->> +       path_option = unsorted_string_list_lookup(&config_name_for_path, path);
->> +       if (!path_option) {
->> +               warning(_("Could not find section in .gitmodules where path=%s"), path);
->> +               return -1;
->> +       }
->
-> Repetition from your mv series.  Why copy-paste, when you can factor
-> it out into a function?
-
-Do you mean that update_path_in_gitmodules should treat newpath ==
-NULL as a cue to remove that entry, or something similar?
-
-> Why are you calling warning() and then returning -1?
-
-Sure, "return warning(...)" is a good shortcut.
-
-> warning() not work?)  How is it a warning if you just stop all
-> processing and return?
-
-Probably it shouldn't warn in this case.
-
->> +       strbuf_addstr(&sect, "submodule.");
->> +       strbuf_addstr(&sect, path_option->util);
->
-> What do you have against strbuf_addf()?
-
-I think both addf and addstr are pretty clear.  The implementation of
-addf is more complicated, which can be relevant in performance-critical
-code (not here).
-
-> Why is your variable named "sect"?  Did you mean "section"?
-
-I think both "sect" and "section" are pretty clear.
-
-[...]
->> +               /* Maybe the user already did that, don't error out here */
->> +               warning(_("Could not remove .gitmodules entry for %s"), path);
->> +               return -1;
->
-> Maybe the user already did what?  What happens if she didn't do "it"
-> and failure is due to some other cause?
-
-git_config_rename_section_in_file() can fail for the following reasons:
-
- * invalid new section name (NULL is valid, so doesn't apply here)
- * could not lock config file
- * write error
- * could not commit config file
-
-If the old section is missing, it doesn't even fail (it just
-returns 0).  So I agree: this should be an error instead of a warning.
-
-Hope that helps,
-Jonathan
+-- 
+1.8.2.1
