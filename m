@@ -1,73 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
- permission problems as errors" busted git-daemon
-Date: Thu, 11 Apr 2013 01:42:07 -0400
-Message-ID: <20130411054207.GE27795@sigill.intra.peff.net>
-References: <1365572015.4658.51.camel@marge.simpson.net>
- <20130410135605.GB4694@odin.tremily.us>
- <1365651583.19620.8.camel@marge.simpson.net>
+From: Joel Thompson <joel.thompson@macquarietextiles.com.au>
+Subject: error: Trying to write ref refs/heads/master with nonexistant object
+Date: Thu, 11 Apr 2013 06:02:46 +0000
+Message-ID: <6EC627602B7D9F4691EED554E055463602C96B5A@Aquarion.MTGLAU.mtgl.com.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "W. Trevor King" <wking@tremily.us>, git <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Mike Galbraith <bitbucket@online.de>
-X-From: git-owner@vger.kernel.org Thu Apr 11 07:42:29 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: "'git@vger.kernel.org'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 11 08:26:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQAHF-0004p2-2R
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 07:42:29 +0200
+	id 1UQAy4-0002DT-PE
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 08:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753049Ab3DKFmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 01:42:15 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39751 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752756Ab3DKFmO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 01:42:14 -0400
-Received: (qmail 12068 invoked by uid 107); 11 Apr 2013 05:44:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 11 Apr 2013 01:44:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Apr 2013 01:42:07 -0400
-Content-Disposition: inline
-In-Reply-To: <1365651583.19620.8.camel@marge.simpson.net>
+	id S1753793Ab3DKG0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 02:26:41 -0400
+Received: from mail.macquarietextiles.com.au ([203.36.230.69]:41437 "EHLO
+	mail.macquarietextiles.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753785Ab3DKG0k convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 02:26:40 -0400
+Received: from exchange.mtgl.com.au (aquarion.mtglau.mtgl.com.au [203.4.205.200])
+	by mail.macquarietextiles.com.au (Postfix) with ESMTP id AD11A17B73
+	for <git@vger.kernel.org>; Thu, 11 Apr 2013 16:02:47 +1000 (EST)
+Received: from AQUARION.MTGLAU.mtgl.com.au ([fe80::8531:aac2:25f5:4cdd]) by
+ Aquarion.MTGLAU.mtgl.com.au ([fe80::8531:aac2:25f5:4cdd%10]) with mapi id
+ 14.02.0328.009; Thu, 11 Apr 2013 16:02:47 +1000
+Thread-Topic: error: Trying to write ref refs/heads/master with nonexistant
+ object
+Thread-Index: Ac42eiNmo6YYEhlrRUqdnNZslSP3fg==
+Accept-Language: en-US, en-AU
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [203.4.205.227]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220826>
 
-On Thu, Apr 11, 2013 at 05:39:43AM +0200, Mike Galbraith wrote:
+Hi,
 
-> >   ALLOWED_ENV="PATH HOME"
-> >   HOME=/
-> 
-> I can work around it by changing the init script to use su - git -c "bla
-> bla" to launch the thing, instead of using --user=git --group=daemon,
-> but that's just a bandaid for the busted environment setup those
-> switches were supposed to make happen, no?
+I can no longer clone my git repository from v1.7 client, i get error: Trying to write ref refs/heads/master with nonexistant object.
 
-Yeah, I think the bug here is that git-daemon should be setting $HOME
-when it switches privileges with --user. Does this patch fix it for you?
+It is a remote repo that im using ssh to connect to, and i have done everything i can find on google from creating a new master branch, cleaning up the repo, removing dangling bits etc. etc.
 
-diff --git a/daemon.c b/daemon.c
-index 6aeddcb..a4451fd 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1091,6 +1091,7 @@ static void drop_privileges(struct credentials *cred)
- 	if (cred && (initgroups(cred->pass->pw_name, cred->gid) ||
- 	    setgid (cred->gid) || setuid(cred->pass->pw_uid)))
- 		die("cannot drop privileges");
-+	setenv("HOME", cred->pass->pw_dir, 1);
- }
- 
- static struct credentials *prepare_credentials(const char *user_name,
+So far I have come to the conclusion that while creating a tag on my v1.8 client in windows, something has happened which has stopped the repo from being compatible with v1.7 (as i am still able to clone it with 1.8).
 
-I guess that would technically break anybody who was trying to do
-something clever with HOME (i.e., point it somewhere besides --user's
-HOME where they had put some config files). But the obvious clever
-thing would be to also set the user's passwd homedir to the same place.
+The full message when trying to clone is:
 
--Peff
+Initialized empty Git repository in /home/jthompso/Downloads/mtsd/.git/
+remote: Counting objects: 2464, done.
+remote: Compressing objects: 100% (905/905), done.
+remote: Total 2464 (delta 1201), reused 2446 (delta 1186)
+Receiving objects: 100% (2464/2464), 652.66 KiB, done.
+Resolving deltas: 100% (1201/1201), done.
+error: refs/remotes/origin/master does not point to a valid object!
+error: Trying to write ref refs/heads/master with nonexistant object fdf19005911f07e3246649f906e0d45fa9ff884f
+fatal: Cannot update the ref 'HEAD'.
+
+Regards,
+
+Joel Thompson
+I.T. Support Officer
+
+Macquarie Textile Solutions
+211 East St, Albury NSW 2640
+www.macquarietextiles.com.au
+T: +61 2 6043 0302 F: +61 2 6041 1321
