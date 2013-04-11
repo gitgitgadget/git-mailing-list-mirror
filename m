@@ -1,159 +1,409 @@
 From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v2 3/5] check-ignore: move setup into cmd_check_ignore()
-Date: Thu, 11 Apr 2013 13:05:11 +0100
-Message-ID: <1365681913-7059-3-git-send-email-git@adamspiers.org>
+Subject: [PATCH v2 2/5] check-ignore: add -n / --non-matching option
+Date: Thu, 11 Apr 2013 13:05:10 +0100
+Message-ID: <1365681913-7059-2-git-send-email-git@adamspiers.org>
 References: <20130411110511.GB24296@pacific.linksys.moosehall>
  <1365681913-7059-1-git-send-email-git@adamspiers.org>
 To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 11 14:05:35 2013
+X-From: git-owner@vger.kernel.org Thu Apr 11 14:05:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQGFy-0002ks-7w
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 14:05:34 +0200
+	id 1UQGFy-0002ks-Na
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 14:05:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935153Ab3DKMFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 08:05:19 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:59033 "EHLO
+	id S935224Ab3DKMFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 08:05:20 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:59032 "EHLO
 	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761977Ab3DKMFR (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S934997Ab3DKMFR (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 11 Apr 2013 08:05:17 -0400
 Received: from localhost (2.d.c.d.2.5.f.b.c.0.4.8.0.1.4.d.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:d410:840c:bf52:dcd2])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 78AF258EB3
-	for <git@vger.kernel.org>; Thu, 11 Apr 2013 13:05:16 +0100 (BST)
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 7D53158EB4
+	for <git@vger.kernel.org>; Thu, 11 Apr 2013 13:05:15 +0100 (BST)
 X-Mailer: git-send-email 1.8.2.1.342.gfa7285d
 In-Reply-To: <1365681913-7059-1-git-send-email-git@adamspiers.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220850>
 
-Initialisation of the dir_struct and path_exclude_check structs was
-previously done within check_ignore().  This was acceptable since
-check_ignore() was only called once per check-ignore invocation;
-however the next commit will convert it into an inner loop which is
-called once per line of STDIN when --stdin is given.  Therefore moving
-the initialisation code out into cmd_check_ignore() ensures that
-initialisation is still only performed once per check-ignore
-invocation, and consequently that the output is identical whether
-pathspecs are provided as CLI arguments or via STDIN.
+If `-n` or `--non-matching` are specified, non-matching pathnames will
+also be output, in which case all fields in each output record except
+for <pathname> will be empty.  This can be useful when running
+check-ignore as a background process, so that files can be
+incrementally streamed to STDIN, and for each of these files, STDOUT
+will indicate whether that file matched a pattern or not.  (Without
+this option, it would be impossible to tell whether the absence of
+output for a given file meant that it didn't match any pattern, or
+that the result simply hadn't been flushed to STDOUT yet.)
 
 Signed-off-by: Adam Spiers <git@adamspiers.org>
 ---
- builtin/check-ignore.c | 41 +++++++++++++++++++++--------------------
- 1 file changed, 21 insertions(+), 20 deletions(-)
+ Documentation/git-check-ignore.txt |  15 +++++
+ builtin/check-ignore.c             |  46 ++++++++------
+ t/t0008-ignores.sh                 | 122 +++++++++++++++++++++++++++----------
+ 3 files changed, 134 insertions(+), 49 deletions(-)
 
+diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
+index 854e4d0..7e3cabc 100644
+--- a/Documentation/git-check-ignore.txt
++++ b/Documentation/git-check-ignore.txt
+@@ -39,6 +39,12 @@ OPTIONS
+ 	below).  If `--stdin` is also given, input paths are separated
+ 	with a NUL character instead of a linefeed character.
+ 
++-n, --non-matching::
++	Show given paths which don't match any pattern.	 This only
++	makes sense when `--verbose` is enabled, otherwise it would
++	not be possible to distinguish between paths which match a
++	pattern and those which don't.
++
+ OUTPUT
+ ------
+ 
+@@ -65,6 +71,15 @@ are also used instead of colons and hard tabs:
+ 
+ <source> <NULL> <linenum> <NULL> <pattern> <NULL> <pathname> <NULL>
+ 
++If `-n` or `--non-matching` are specified, non-matching pathnames will
++also be output, in which case all fields in each output record except
++for <pathname> will be empty.  This can be useful when running
++non-interactively, so that files can be incrementally streamed to
++STDIN of a long-running check-ignore process, and for each of these
++files, STDOUT will indicate whether that file matched a pattern or
++not.  (Without this option, it would be impossible to tell whether the
++absence of output for a given file meant that it didn't match any
++pattern, or that the output hadn't been generated yet.)
+ 
+ EXIT STATUS
+ -----------
 diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index 59acf74..e2d3006 100644
+index 0240f99..59acf74 100644
 --- a/builtin/check-ignore.c
 +++ b/builtin/check-ignore.c
-@@ -63,30 +63,20 @@ static void output_exclude(const char *path, struct exclude *exclude)
+@@ -5,7 +5,7 @@
+ #include "pathspec.h"
+ #include "parse-options.h"
+ 
+-static int quiet, verbose, stdin_paths;
++static int quiet, verbose, stdin_paths, show_non_matching;
+ static const char * const check_ignore_usage[] = {
+ "git check-ignore [options] pathname...",
+ "git check-ignore [options] --stdin < <list-of-paths>",
+@@ -22,21 +22,28 @@ static const struct option check_ignore_options[] = {
+ 		    N_("read file names from stdin")),
+ 	OPT_BOOLEAN('z', NULL, &null_term_line,
+ 		    N_("input paths are terminated by a null character")),
++	OPT_BOOLEAN('n', "non-matching", &show_non_matching,
++		    N_("show non-matching input paths")),
+ 	OPT_END()
+ };
+ 
+ static void output_exclude(const char *path, struct exclude *exclude)
+ {
+-	char *bang  = exclude->flags & EXC_FLAG_NEGATIVE  ? "!" : "";
+-	char *slash = exclude->flags & EXC_FLAG_MUSTBEDIR ? "/" : "";
++	char *bang  = (exclude && exclude->flags & EXC_FLAG_NEGATIVE)  ? "!" : "";
++	char *slash = (exclude && exclude->flags & EXC_FLAG_MUSTBEDIR) ? "/" : "";
+ 	if (!null_term_line) {
+ 		if (!verbose) {
+ 			write_name_quoted(path, stdout, '\n');
+ 		} else {
+-			quote_c_style(exclude->el->src, NULL, stdout, 0);
+-			printf(":%d:%s%s%s\t",
+-			       exclude->srcpos,
+-			       bang, exclude->pattern, slash);
++			if (exclude) {
++				quote_c_style(exclude->el->src, NULL, stdout, 0);
++				printf(":%d:%s%s%s\t",
++				       exclude->srcpos,
++				       bang, exclude->pattern, slash);
++			}
++			else {
++				printf("::\t");
++			}
+ 			quote_c_style(path, NULL, stdout, 0);
+ 			fputc('\n', stdout);
+ 		}
+@@ -44,11 +51,14 @@ static void output_exclude(const char *path, struct exclude *exclude)
+ 		if (!verbose) {
+ 			printf("%s%c", path, '\0');
+ 		} else {
+-			printf("%s%c%d%c%s%s%s%c%s%c",
+-			       exclude->el->src, '\0',
+-			       exclude->srcpos, '\0',
+-			       bang, exclude->pattern, slash, '\0',
+-			       path, '\0');
++			if (exclude)
++				printf("%s%c%d%c%s%s%s%c%s%c",
++				       exclude->el->src, '\0',
++				       exclude->srcpos, '\0',
++				       bang, exclude->pattern, slash, '\0',
++				       path, '\0');
++			else
++				printf("%c%c%c%s%c", '\0', '\0', '\0', path, '\0');
+ 		}
  	}
  }
- 
--static int check_ignore(const char *prefix, const char **pathspec)
-+static int check_ignore(struct path_exclude_check *check,
-+			const char *prefix, const char **pathspec)
- {
--	struct dir_struct dir;
- 	const char *path, *full_path;
- 	char *seen;
- 	int num_ignored = 0, dtype = DT_UNKNOWN, i;
--	struct path_exclude_check check;
- 	struct exclude *exclude;
- 
--	/* read_cache() is only necessary so we can watch out for submodules. */
--	if (read_cache() < 0)
--		die(_("index file corrupt"));
--
--	memset(&dir, 0, sizeof(dir));
--	dir.flags |= DIR_COLLECT_IGNORED;
--	setup_standard_excludes(&dir);
--
- 	if (!pathspec || !*pathspec) {
- 		if (!quiet)
- 			fprintf(stderr, "no pathspec given.\n");
- 		return 0;
- 	}
- 
--	path_exclude_check_init(&check, &dir);
- 	/*
- 	 * look for pathspecs matching entries in the index, since these
- 	 * should not be ignored, in order to be consistent with
-@@ -101,7 +91,7 @@ static int check_ignore(const char *prefix, const char **pathspec)
+@@ -89,15 +99,15 @@ static int check_ignore(const char *prefix, const char **pathspec)
+ 					? strlen(prefix) : 0, path);
+ 		full_path = check_path_for_gitlink(full_path);
  		die_if_path_beyond_symlink(full_path, prefix);
- 		exclude = NULL;
++		exclude = NULL;
  		if (!seen[i]) {
--			exclude = last_exclude_matching_path(&check, full_path,
-+			exclude = last_exclude_matching_path(check, full_path,
+ 			exclude = last_exclude_matching_path(&check, full_path,
  							     -1, &dtype);
+-			if (exclude) {
+-				if (!quiet)
+-					output_exclude(path, exclude);
+-				num_ignored++;
+-			}
  		}
- 		if (!quiet && (exclude || show_non_matching))
-@@ -110,13 +100,11 @@ static int check_ignore(const char *prefix, const char **pathspec)
- 			num_ignored++;
++		if (!quiet && (exclude || show_non_matching))
++			output_exclude(path, exclude);
++		if (exclude)
++			num_ignored++;
  	}
  	free(seen);
--	clear_directory(&dir);
--	path_exclude_check_clear(&check);
- 
- 	return num_ignored;
- }
- 
--static int check_ignore_stdin_paths(const char *prefix)
-+static int check_ignore_stdin_paths(struct path_exclude_check *check, const char *prefix)
- {
- 	struct strbuf buf, nbuf;
- 	char **pathspec = NULL;
-@@ -139,17 +127,18 @@ static int check_ignore_stdin_paths(const char *prefix)
+ 	clear_directory(&dir);
+@@ -161,6 +171,8 @@ int cmd_check_ignore(int argc, const char **argv, const char *prefix)
+ 		if (verbose)
+ 			die(_("cannot have both --quiet and --verbose"));
  	}
- 	ALLOC_GROW(pathspec, nr + 1, alloc);
- 	pathspec[nr] = NULL;
--	num_ignored = check_ignore(prefix, (const char **)pathspec);
-+	num_ignored = check_ignore(check, prefix, (const char **)pathspec);
- 	maybe_flush_or_die(stdout, "attribute to stdout");
- 	strbuf_release(&buf);
- 	strbuf_release(&nbuf);
--	free(pathspec);
- 	return num_ignored;
- }
++	if (show_non_matching && !verbose)
++		die(_("--non-matching is only valid with --verbose"));
  
- int cmd_check_ignore(int argc, const char **argv, const char *prefix)
- {
- 	int num_ignored;
-+	struct dir_struct dir;
-+	struct path_exclude_check check;
- 
- 	git_config(git_default_config, NULL);
- 
-@@ -174,12 +163,24 @@ int cmd_check_ignore(int argc, const char **argv, const char *prefix)
- 	if (show_non_matching && !verbose)
- 		die(_("--non-matching is only valid with --verbose"));
- 
-+	/* read_cache() is only necessary so we can watch out for submodules. */
-+	if (read_cache() < 0)
-+		die(_("index file corrupt"));
-+
-+	memset(&dir, 0, sizeof(dir));
-+	dir.flags |= DIR_COLLECT_IGNORED;
-+	setup_standard_excludes(&dir);
-+
-+	path_exclude_check_init(&check, &dir);
  	if (stdin_paths) {
--		num_ignored = check_ignore_stdin_paths(prefix);
-+		num_ignored = check_ignore_stdin_paths(&check, prefix);
- 	} else {
--		num_ignored = check_ignore(prefix, argv);
-+		num_ignored = check_ignore(&check, prefix, argv);
- 		maybe_flush_or_die(stdout, "ignore to stdout");
- 	}
+ 		num_ignored = check_ignore_stdin_paths(prefix);
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index 314a86d..7af93ba 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -66,16 +66,23 @@ test_check_ignore () {
  
-+	clear_directory(&dir);
-+	path_exclude_check_clear(&check);
-+
- 	return !num_ignored;
+ 	init_vars &&
+ 	rm -f "$HOME/stdout" "$HOME/stderr" "$HOME/cmd" &&
+-	echo git $global_args check-ignore $quiet_opt $verbose_opt $args \
++	echo git $global_args check-ignore $quiet_opt $verbose_opt $non_matching_opt $args \
+ 		>"$HOME/cmd" &&
++	echo "$expect_code" >"$HOME/expected-exit-code" &&
+ 	test_expect_code "$expect_code" \
+-		git $global_args check-ignore $quiet_opt $verbose_opt $args \
++		git $global_args check-ignore $quiet_opt $verbose_opt $non_matching_opt $args \
+ 		>"$HOME/stdout" 2>"$HOME/stderr" &&
+ 	test_cmp "$HOME/expected-stdout" "$HOME/stdout" &&
+ 	stderr_empty_on_success "$expect_code"
  }
+ 
+-# Runs the same code with 3 different levels of output verbosity,
++# Runs the same code with 4 different levels of output verbosity:
++#
++#   1. with -q / --quiet
++#   2. with default verbosity
++#   3. with -v / --verbose
++#   4. with -v / --verbose, *and* -n / --non-matching
++#
+ # expecting success each time.  Takes advantage of the fact that
+ # check-ignore --verbose output is the same as normal output except
+ # for the extra first column.
+@@ -83,7 +90,9 @@ test_check_ignore () {
+ # Arguments:
+ #   - (optional) prereqs for this test, e.g. 'SYMLINKS'
+ #   - test name
+-#   - output to expect from -v / --verbose mode
++#   - output to expect from the fourth verbosity mode (the output
++#     from the other verbosity modes is automatically inferred
++#     from this value)
+ #   - code to run (should invoke test_check_ignore)
+ test_expect_success_multi () {
+ 	prereq=
+@@ -92,8 +101,9 @@ test_expect_success_multi () {
+ 		prereq=$1
+ 		shift
+ 	fi
+-	testname="$1" expect_verbose="$2" code="$3"
++	testname="$1" expect_all="$2" code="$3"
+ 
++	expect_verbose=$( echo "$expect_all" | grep -v '^::	' )
+ 	expect=$( echo "$expect_verbose" | sed -e 's/.*	//' )
+ 
+ 	test_expect_success $prereq "$testname" '
+@@ -101,23 +111,40 @@ test_expect_success_multi () {
+ 		eval "$code"
+ 	'
+ 
+-	for quiet_opt in '-q' '--quiet'
+-	do
+-		test_expect_success $prereq "$testname${quiet_opt:+ with $quiet_opt}" "
++	# --quiet is only valid when a single pattern is passed
++	if test $( echo "$expect_all" | wc -l ) = 1
++	then
++		for quiet_opt in '-q' '--quiet'
++		do
++			test_expect_success $prereq "$testname${quiet_opt:+ with $quiet_opt}" "
+ 			expect '' &&
+ 			$code
+ 		"
+-	done
+-	quiet_opt=
++		done
++		quiet_opt=
++	fi
+ 
+ 	for verbose_opt in '-v' '--verbose'
+ 	do
+-		test_expect_success $prereq "$testname${verbose_opt:+ with $verbose_opt}" "
+-			expect '$expect_verbose' &&
+-			$code
+-		"
++		for non_matching_opt in '' ' -n' ' --non-matching'
++		do
++			if test -n "$non_matching_opt"
++			then
++				my_expect="$expect_all"
++			else
++				my_expect="$expect_verbose"
++			fi
++
++			test_code="
++				expect '$my_expect' &&
++				$code
++			"
++			opts="$verbose_opt$non_matching_opt"
++			test_expect_success $prereq "$testname${opts:+ with $opts}" "$test_code"
++		done
+ 	done
+ 	verbose_opt=
++	non_matching_opt=
+ }
+ 
+ test_expect_success 'setup' '
+@@ -178,7 +205,7 @@ test_expect_success 'setup' '
+ #
+ # test invalid inputs
+ 
+-test_expect_success_multi '. corner-case' '' '
++test_expect_success_multi '. corner-case' '::	.' '
+ 	test_check_ignore . 1
+ '
+ 
+@@ -276,27 +303,39 @@ do
+ 		where="in subdir $subdir"
+ 	fi
+ 
+-	test_expect_success_multi "non-existent file $where not ignored" '' "
+-		test_check_ignore '${subdir}non-existent' 1
+-	"
++	test_expect_success_multi "non-existent file $where not ignored" \
++		"::	${subdir}non-existent" \
++		"test_check_ignore '${subdir}non-existent' 1"
+ 
+ 	test_expect_success_multi "non-existent file $where ignored" \
+-		".gitignore:1:one	${subdir}one" "
+-		test_check_ignore '${subdir}one'
+-	"
++		".gitignore:1:one	${subdir}one" \
++		"test_check_ignore '${subdir}one'"
+ 
+-	test_expect_success_multi "existing untracked file $where not ignored" '' "
+-		test_check_ignore '${subdir}not-ignored' 1
+-	"
++	test_expect_success_multi "existing untracked file $where not ignored" \
++		"::	${subdir}not-ignored" \
++		"test_check_ignore '${subdir}not-ignored' 1"
+ 
+-	test_expect_success_multi "existing tracked file $where not ignored" '' "
+-		test_check_ignore '${subdir}ignored-but-in-index' 1
+-	"
++	test_expect_success_multi "existing tracked file $where not ignored" \
++		"::	${subdir}ignored-but-in-index" \
++		"test_check_ignore '${subdir}ignored-but-in-index' 1"
+ 
+ 	test_expect_success_multi "existing untracked file $where ignored" \
+-		".gitignore:2:ignored-*	${subdir}ignored-and-untracked" "
+-		test_check_ignore '${subdir}ignored-and-untracked'
+-	"
++		".gitignore:2:ignored-*	${subdir}ignored-and-untracked" \
++		"test_check_ignore '${subdir}ignored-and-untracked'"
++
++	test_expect_success_multi "mix of file types $where" \
++"::	${subdir}non-existent
++.gitignore:1:one	${subdir}one
++::	${subdir}not-ignored
++::	${subdir}ignored-but-in-index
++.gitignore:2:ignored-*	${subdir}ignored-and-untracked" \
++		"test_check_ignore '
++			${subdir}non-existent
++			${subdir}one
++			${subdir}not-ignored
++			${subdir}ignored-but-in-index
++			${subdir}ignored-and-untracked'
++		"
+ done
+ 
+ # Having established the above, from now on we mostly test against
+@@ -391,7 +430,7 @@ test_expect_success 'cd to ignored sub-directory with -v' '
+ #
+ # test handling of symlinks
+ 
+-test_expect_success_multi SYMLINKS 'symlink' '' '
++test_expect_success_multi SYMLINKS 'symlink' '::	a/symlink' '
+ 	test_check_ignore "a/symlink" 1
+ '
+ 
+@@ -574,22 +613,33 @@ cat <<-\EOF >stdin
+ 	globaltwo
+ 	b/globaltwo
+ 	../b/globaltwo
++	c/not-ignored
+ EOF
+-cat <<-EOF >expected-verbose
++# N.B. we deliberately end STDIN with a non-matching pattern in order
++# to test that the exit code indicates that one or more of the
++# provided paths is ignored - in other words, that it represents an
++# aggregation of all the results, not just the final result.
++
++cat <<-EOF >expected-all
+ 	.gitignore:1:one	../one
++	::	../not-ignored
+ 	.gitignore:1:one	one
++	::	not-ignored
+ 	a/b/.gitignore:8:!on*	b/on
+ 	a/b/.gitignore:8:!on*	b/one
+ 	a/b/.gitignore:8:!on*	b/one one
+ 	a/b/.gitignore:8:!on*	b/one two
+ 	a/b/.gitignore:8:!on*	"b/one\"three"
+ 	a/b/.gitignore:9:!two	b/two
++	::	b/not-ignored
+ 	a/.gitignore:1:two*	b/twooo
+ 	$global_excludes:2:!globaltwo	../globaltwo
+ 	$global_excludes:2:!globaltwo	globaltwo
+ 	$global_excludes:2:!globaltwo	b/globaltwo
+ 	$global_excludes:2:!globaltwo	../b/globaltwo
++	::	c/not-ignored
+ EOF
++grep -v '^::	' expected-all >expected-verbose
+ sed -e 's/.*	//' expected-verbose >expected-default
+ 
+ sed -e 's/^"//' -e 's/\\//' -e 's/"$//' stdin | \
+@@ -615,6 +665,14 @@ test_expect_success '--stdin from subdirectory with -v' '
+ 	)
+ '
+ 
++test_expect_success '--stdin from subdirectory with -v -n' '
++	expect_from_stdin <expected-all &&
++	(
++		cd a &&
++		test_check_ignore "--stdin -v -n" <../stdin
++	)
++'
++
+ for opts in '--stdin -z' '-z --stdin'
+ do
+ 	test_expect_success "$opts from subdirectory" '
 -- 
 1.8.2.1.342.gfa7285d
