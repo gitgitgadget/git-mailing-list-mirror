@@ -1,130 +1,66 @@
-From: Miklos Vajna <vmiklos@suse.cz>
-Subject: [PATCH v3] cherry-pick: make sure all input objects are commits
-Date: Thu, 11 Apr 2013 15:06:52 +0200
-Message-ID: <20130411130652.GG12770@suse.cz>
-References: <20130403092704.GC21520@suse.cz>
- <7v38v1yn8o.fsf@alter.siamese.dyndns.org>
- <20130411092638.GA12770@suse.cz>
- <CALkWK0n6FjGbXTqiOT_O6NbB5h0DLaNWKCCTQAFSO_BL-pPdBA@mail.gmail.com>
- <20130411110324.GD12770@suse.cz>
- <CALkWK0kb+2KZLvRJDJb_VrNNs1k4grsfyFv0HfYv0Kr9v4sChQ@mail.gmail.com>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: Git crash in Ubuntu 12.04
+Date: Thu, 11 Apr 2013 17:06:59 +0400
+Message-ID: <20130411170659.a35d2c581cf34ade13448bfa@domain007.com>
+References: <CAJiNi_FfU9Gsr2D9CcC0wWwgO1oKBXwxp87-wBUJBU2kyGaQNQ@mail.gmail.com>
+	<87mwt6ltia.fsf@linux-k42r.v.cablecom.net>
+	<CAJiNi_EgjgKs7oNJyGcamUFz=ARDAuBTb+bJ0uVsPFBMbZF3YA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 11 15:07:04 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
+To: Sivaram Kannan <siva.devel@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 11 15:07:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQHDU-0004Zu-2Z
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 15:07:04 +0200
+	id 1UQHDh-0004vb-9p
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 15:07:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934320Ab3DKNG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 09:06:58 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:48090 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752986Ab3DKNG6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 09:06:58 -0400
-Received: from relay1.suse.de (unknown [195.135.220.254])
-	by mx2.suse.de (Postfix) with ESMTP id A8826A4FFA;
-	Thu, 11 Apr 2013 15:06:54 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0kb+2KZLvRJDJb_VrNNs1k4grsfyFv0HfYv0Kr9v4sChQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752000Ab3DKNHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 09:07:09 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:33309 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751545Ab3DKNHI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 09:07:08 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r3BD6xBb002921;
+	Thu, 11 Apr 2013 17:07:00 +0400
+In-Reply-To: <CAJiNi_EgjgKs7oNJyGcamUFz=ARDAuBTb+bJ0uVsPFBMbZF3YA@mail.gmail.com>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220876>
 
-When a single argument was a non-commit, the error message used to be:
+On Thu, 11 Apr 2013 15:50:31 +0530
+Sivaram Kannan <siva.devel@gmail.com> wrote:
 
-	fatal: BUG: expected exactly one commit from walk
+[...]
+> Output of coredump gdb:
+> 
+> gitadmin@gitserver:/var/crash/dump$ gdb git CoreDump
+> GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+> Copyright (C) 2012 Free Software Foundation, Inc.
+> License GPLv3+: GNU GPL version 3 or later
+> <http://gnu.org/licenses/gpl.html> This is free software: you are
+> free to change and redistribute it. There is NO WARRANTY, to the
+> extent permitted by law.  Type "show copying" and "show warranty" for
+> details. This GDB was configured as "x86_64-linux-gnu".
+> For bug reporting instructions, please see:
+> <http://bugs.launchpad.net/gdb-linaro/>...
+> Reading symbols from /usr/bin/git...(no debugging symbols
+> found)...done. BFD: Warning: /var/crash/dump/CoreDump is truncated:
+> expected core file size >= 600195072, found: 1114112.
 
-For multiple arguments, when none of the arguments was a commit, the error was:
+^^^ Try to issue the
 
-	fatal: empty commit set passed
+$ ulimit -c unlimited
 
-Finally, when some of the arguments were non-commits, we ignored those
-arguments.  Fix this bug and make sure all arguments are commits, and
-for the first non-commit, error out with:
-
-	fatal: <name>: Can't cherry-pick a <type>
-
-Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
----
-
-On Thu, Apr 11, 2013 at 05:12:06PM +0530, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> Then why do you have an if() guarding the code?  In my opinion, you
-> should have an else-clause that die()s with an appropriate message.
-
-And you were right -- I actually forgot about --stdin, where the 
-else-clause is hit. Added that for now, excluding --stdin.
-
-> Nope, I'd never suggest that: this is fine.  What I meant is: you
-> should clarify that you're fixing a bug and adding a test to guard it,
-> in the commit message.
-
-Done.
-
- sequencer.c                         | 18 ++++++++++++++++++
- t/t3508-cherry-pick-many-commits.sh |  6 ++++++
- 2 files changed, 24 insertions(+)
-
-diff --git a/sequencer.c b/sequencer.c
-index baa0310..61fdb68 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1047,6 +1047,7 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- {
- 	struct commit_list *todo_list = NULL;
- 	unsigned char sha1[20];
-+	int i;
- 
- 	if (opts->subcommand == REPLAY_NONE)
- 		assert(opts->revs);
-@@ -1067,6 +1068,23 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 	if (opts->subcommand == REPLAY_CONTINUE)
- 		return sequencer_continue(opts);
- 
-+	for (i = 0; i < opts->revs->pending.nr; i++) {
-+		unsigned char sha1[20];
-+		const char *name = opts->revs->pending.objects[i].name;
-+
-+		/* This happens when using --stdin. */
-+		if (!strlen(name))
-+			continue;
-+
-+		if (!get_sha1(name, sha1)) {
-+			enum object_type type = sha1_object_info(sha1, NULL);
-+
-+			if (type > 0 && type != OBJ_COMMIT)
-+				die(_("%s: can't cherry-pick a %s"), name, typename(type));
-+		} else
-+			die(_("%s: bad revision"), name);
-+	}
-+
- 	/*
- 	 * If we were called as "git cherry-pick <commit>", just
- 	 * cherry-pick/revert it, set CHERRY_PICK_HEAD /
-diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
-index 4e7136b..19c99d7 100755
---- a/t/t3508-cherry-pick-many-commits.sh
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -55,6 +55,12 @@ one
- two"
- '
- 
-+test_expect_success 'cherry-pick three one two: fails' '
-+	git checkout -f master &&
-+	git reset --hard first &&
-+	test_must_fail git cherry-pick three one two:
-+'
-+
- test_expect_success 'output to keep user entertained during multi-pick' '
- 	cat <<-\EOF >expected &&
- 	[master OBJID] second
--- 
-1.8.1.4
+command in your shell before attempting the cloning -- this should
+remove the upper limit on the core file size.  And try look for the core
+file in the current directory after the crash occurs.  I'm not sure
+Ubuntu's "crash interceptor" won't kick in, but just in case...
