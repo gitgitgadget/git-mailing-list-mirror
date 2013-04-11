@@ -1,80 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] transport-helper: report errors properly
-Date: Thu, 11 Apr 2013 12:59:37 -0400
-Message-ID: <20130411165937.GA1255@sigill.intra.peff.net>
-References: <20130410211311.GA24277@sigill.intra.peff.net>
- <20130410211552.GA3256@sigill.intra.peff.net>
- <CAMP44s02K5ydKLNi0umMkuAicoVTWyCdVfjs0yssCa2oyFShGQ@mail.gmail.com>
- <20130411161845.GA665@sigill.intra.peff.net>
- <CAMP44s2-4i_tSzz8Y88_YnK5d1AjNoTqOa7eXZ0W5Vzk9Uosng@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 3/3] Teach mv to update the path entry in .gitmodules
+ for moved submodules
+Date: Thu, 11 Apr 2013 09:59:45 -0700
+Message-ID: <7v61ztj94u.fsf@alter.siamese.dyndns.org>
+References: <515C88FE.9020203@web.de> <515C89BA.9020806@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 11 18:59:51 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Phil Hord <phil.hord@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	"W. Trevor King" <wking@tremily.us>,
+	Peter Collingbourne <peter@pcc.me.uk>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Apr 11 18:59:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQKqk-0004gZ-Ht
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 18:59:50 +0200
+	id 1UQKqr-0004vB-WC
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 18:59:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964880Ab3DKQ7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 12:59:46 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40681 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964852Ab3DKQ7p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 12:59:45 -0400
-Received: (qmail 16709 invoked by uid 107); 11 Apr 2013 17:01:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 11 Apr 2013 13:01:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Apr 2013 12:59:37 -0400
-Content-Disposition: inline
-In-Reply-To: <CAMP44s2-4i_tSzz8Y88_YnK5d1AjNoTqOa7eXZ0W5Vzk9Uosng@mail.gmail.com>
+	id S964871Ab3DKQ7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 12:59:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36528 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964885Ab3DKQ7t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 12:59:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CFE615441;
+	Thu, 11 Apr 2013 16:59:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1BS1Qhy2zsZ1ACNX4Y/IZ1LBkoc=; b=Khg9vr
+	EJznIaOnnFyy8au/MHZaGs5RHYQ+micrU46Xi1P752I5BKaUr/ejk6awFeeVEvID
+	Z7HSKxY2DN7b9nteO/fRukkeRd/09lLUjkgNObiVmA4Uze5vY69ItWIGDnpIQGmO
+	JLimnk26gQDY8e43k3U+AYbz6u+bDKYekYzz0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cjefY5zdJgBlG8UaEzd1x9Jsdfs2rVfa
+	0Z97eEJ5h01ziPsNtbv4ynPV9z2Dc6SWe/s3CUDqiEHQLYUR5+Juz1kisvmqbbH0
+	xJw07jukgJey0z/rhMKzGsPfLlqHUFkw9A74wDLO3txnygDlUKzHYh9ZXSXu87xx
+	M/909yWRQrY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4407615440;
+	Thu, 11 Apr 2013 16:59:48 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1A4D1543E; Thu, 11 Apr
+ 2013 16:59:47 +0000 (UTC)
+In-Reply-To: <515C89BA.9020806@web.de> (Jens Lehmann's message of "Wed, 03
+ Apr 2013 21:57:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 376F7F20-A2C9-11E2-B7E7-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220892>
 
-On Thu, Apr 11, 2013 at 11:49:11AM -0500, Felipe Contreras wrote:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> > I am OK with adding the test for import as a separate patch. What I am
-> > not OK with (and this goes for the rest of the commit message, too) is
-> > failing to explain any back-story at all for why the change is done in
-> > the way it is.
-> >
-> > _You_ may understand it _right now_, but that is not the primary
-> > audience of the message. The primary audience is somebody else a year
-> > from now who is wondering why this patch was done the way it was.
-> 
-> Who would be this person? Somebody who wonders why this test is using
-> "feature done"? I doubt such a person would exist, as using this
-> feature is standard, as can be seen below this chunk. *If* the test
-> was *not* using this "feature done", *then* sure, an explanation would
-> be needed.
+> Currently using "git mv" on a submodule moves the submodule's work tree in
+> that of the superproject. But the submodule's path setting in .gitmodules
+> is left untouched, which is now inconsistent with the work tree and makes
+> git commands that rely on the proper path -> name mapping (like status and
+> diff) behave strangely.
+>
+> Let "git mv" help here by not only moving the submodule's work tree but
+> also updating the "submodule.<submodule name>.path" setting from the
+> .gitmodules file and stage both. This doesn't happen when no .gitmodules
+> file is found and only issues a warning when it doesn't have a section for
+> this submodule.
 
-If it was so obvious, why did your initial patch not use "feature done"?
-If it was so obvious, why did our email discussion go back and forth so
-many times before arriving at this patch?
+Should it happen when the user has other changes to .gitmodules that
+hasn't been updated to the index?
 
-It was certainly not obvious to me when this email thread started. So in
-response to your question: *I* am that person. I was him two weeks ago,
-and there is a good chance that I will be him a year from now. Much of
-my work on git is spent tracking down bugs in older code, and those
-commit messages are extremely valuable to me in understanding what
-happened at the time.
-
-But I give up on you. I find most of your commit messages lacking in
-details and motivation, making assumptions that the reader is as
-familiar with the code when reading the commit as you are when you wrote
-it. I tried to help by suggesting in review that you elaborate. That
-didn't work. So I tried to help by writing the text myself. But clearly
-I am not going to convince you that it is valuable, even if it requires
-no work at all from you, so I have nothing else to say on the matter.
-
--Peff
+As this is done in the same final "per-path" loop as adjusting the
+gitfile links, the worry I expressed in an earlier message about
+"git mv a/ b/" when "a/x" is a submodule turns out to be unfounded,
+which is good ;-)
