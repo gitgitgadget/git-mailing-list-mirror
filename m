@@ -1,115 +1,63 @@
-From: Miklos Vajna <vmiklos@suse.cz>
-Subject: [PATCH v2] cherry-pick: make sure all input objects are commits
-Date: Thu, 11 Apr 2013 11:26:38 +0200
-Message-ID: <20130411092638.GA12770@suse.cz>
-References: <20130403092704.GC21520@suse.cz>
- <7v38v1yn8o.fsf@alter.siamese.dyndns.org>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: git send-pack: protocol error: bad band #50
+Date: Thu, 11 Apr 2013 13:26:36 +0400
+Message-ID: <20130411132636.d8d59a8eadef3c23b99c84fc@domain007.com>
+References: <51665D08.3030307@netcabo.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Sm/Do28=?= Joyce <joao.joyce@netcabo.pt>
 X-From: git-owner@vger.kernel.org Thu Apr 11 11:26:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQDmP-0007JS-A4
+	id 1UQDmO-0007JS-Qh
 	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 11:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935515Ab3DKJ0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 05:26:47 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:38941 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935483Ab3DKJ0m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 05:26:42 -0400
-Received: from relay2.suse.de (unknown [195.135.220.254])
-	by mx2.suse.de (Postfix) with ESMTP id 12915A3A49;
-	Thu, 11 Apr 2013 11:26:40 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7v38v1yn8o.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S935494Ab3DKJ0n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Apr 2013 05:26:43 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:58212 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765335Ab3DKJ0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 05:26:41 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r3B9QZfX023395;
+	Thu, 11 Apr 2013 13:26:37 +0400
+In-Reply-To: <51665D08.3030307@netcabo.pt>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220837>
 
-When a single argument was a non-commit, the error message used to be:
+On Thu, 11 Apr 2013 07:49:44 +0100
+Jo=C3=A3o Joyce <joao.joyce@netcabo.pt> wrote:
 
-	fatal: BUG: expected exactly one commit from walk
+[...]
 
-For multiple arguments, when none of the arguments was a commit, the error was:
+> but I am getting the following error:
+>      git send-pack: protocol error: bad band #50
+>      fatal: The remote end hung up unexpectedly
+>=20
+> It seems that something is failing on the remote side but I can't
+> find any reference to this protocol error.
 
-	fatal: empty commit set passed
+I should add that the OP first asked this question on SO [1] and I
+advised him to simply run `git --version` on the remote via SSH to
+verify Git is working there, and it worked OK.
 
-Finally, when some of the arguments were non-commits, we ignored those
-arguments.  Instead, now make sure all arguments are commits, and for
-the first non-commit, error out with:
+Another thing the OP failed to provide is the info on his setup.
+To cite his message posted to git-users [2]:
 
-	fatal: <name>: Can't cherry-pick a <type>
+> I am using ubuntu 12.10 in my local machine and 12.04 in the remote
+> (which is a VPS hosting). The git version is 1.7.9.5 on both.
 
-Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
----
+Hope this might help tracking down the issue.
 
-On Mon, Apr 08, 2013 at 09:56:55AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> In other words, perhaps we would want to inspect pending objects
-> before running prepare_revision_walk and make sure everybody is
-> commit-ish or something?
-
-Sure, that makes sense to me.
-
- sequencer.c                         | 13 +++++++++++++
- t/t3508-cherry-pick-many-commits.sh |  6 ++++++
- 2 files changed, 19 insertions(+)
-
-diff --git a/sequencer.c b/sequencer.c
-index baa0310..eb25101 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1047,6 +1047,7 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- {
- 	struct commit_list *todo_list = NULL;
- 	unsigned char sha1[20];
-+	int i;
- 
- 	if (opts->subcommand == REPLAY_NONE)
- 		assert(opts->revs);
-@@ -1067,6 +1068,18 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 	if (opts->subcommand == REPLAY_CONTINUE)
- 		return sequencer_continue(opts);
- 
-+	for (i = 0; i < opts->revs->pending.nr; i++) {
-+		unsigned char sha1[20];
-+		const char *name = opts->revs->pending.objects[i].name;
-+
-+		if (!get_sha1(name, sha1)) {
-+			enum object_type type = sha1_object_info(sha1, NULL);
-+
-+			if (type > 0 && type != OBJ_COMMIT)
-+				die(_("%s: can't cherry-pick a %s"), name, typename(type));
-+		}
-+	}
-+
- 	/*
- 	 * If we were called as "git cherry-pick <commit>", just
- 	 * cherry-pick/revert it, set CHERRY_PICK_HEAD /
-diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
-index 4e7136b..19c99d7 100755
---- a/t/t3508-cherry-pick-many-commits.sh
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -55,6 +55,12 @@ one
- two"
- '
- 
-+test_expect_success 'cherry-pick three one two: fails' '
-+	git checkout -f master &&
-+	git reset --hard first &&
-+	test_must_fail git cherry-pick three one two:
-+'
-+
- test_expect_success 'output to keep user entertained during multi-pick' '
- 	cat <<-\EOF >expected &&
- 	[master OBJID] second
--- 
-1.8.1.4
+1. http://stackoverflow.com/q/15921202/720999
+2. https://groups.google.com/forum/?fromgroups=3D#!topic/git-users/eJXA=
+SG1GlDA
