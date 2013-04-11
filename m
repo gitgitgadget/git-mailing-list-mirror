@@ -1,72 +1,75 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: git log -p unexpected behaviour - security risk?
-Date: Thu, 11 Apr 2013 23:19:32 +0800
-Message-ID: <CALUzUxrp4+S-Nm-Scb9sT9sBw1mLEb3-CBc_P0KqL20qNmFO3w@mail.gmail.com>
-References: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
+From: Simon Ruderich <simon@ruderich.org>
+Subject: Re: [PATCH] git-imap-send.txt: remove the use of sslverify=false in
+ GMail example
+Date: Thu, 11 Apr 2013 17:26:17 +0200
+Message-ID: <20130411152617.GA14264@ruderich.org>
+References: <51657E59.7030001@gmail.com>
+ <7vmwt6mdjg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 11 17:20:12 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Barbu Paul - Gheorghe <barbu.paul.gheorghe@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 11 17:26:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQJIC-0003FT-Cy
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 17:20:04 +0200
+	id 1UQJOL-0004ug-FL
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 17:26:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936303Ab3DKPT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 11:19:57 -0400
-Received: from mail-ia0-f172.google.com ([209.85.210.172]:43074 "EHLO
-	mail-ia0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936269Ab3DKPT4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 11:19:56 -0400
-Received: by mail-ia0-f172.google.com with SMTP id k38so1510435iah.17
-        for <git@vger.kernel.org>; Thu, 11 Apr 2013 08:19:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=4nfK6OUw9XqSXNw+VA75BHCF6flIMzXvM6cb8tX7HP4=;
-        b=JRNuPy8pp09aEVqQSlXj62EU38kTXnn/tBHgX6vrEEihwEWMAAg/KGn5uWNHRq3yw+
-         7AblSWPC/6gBPC3VQBEpFDSnCu+MPLnJL6AShJp6kQHon3XCUoiqo7b3MW/32LG4H8JM
-         Yee9bzJqXQavD0V5Sx/+BUVu+z3fJJx36qh3XcyHgP+tptSC3xYkx+mi2cp3Bw8Fw5Tp
-         4a46rsoh7KQcNEiJCew297vS5TJr0DATSDt+PzzcbHGKLmxmAemBLwzU2OZauSYuqMac
-         MTHCq+waOOPegavBJ/FYiOQX4HQ46SYhn6rQQW2Xp7sHLCi6nKtXHNO1/SiSbiRguC49
-         keGg==
-X-Received: by 10.50.22.3 with SMTP id z3mr4785914ige.80.1365693593999; Thu,
- 11 Apr 2013 08:19:53 -0700 (PDT)
-Received: by 10.64.61.70 with HTTP; Thu, 11 Apr 2013 08:19:32 -0700 (PDT)
-In-Reply-To: <CAHQ6N+qdA5Lck1_ByOYPOG4ngsztz3HQSw8c_U_K8OnDapj4bQ@mail.gmail.com>
+	id S936295Ab3DKP0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 11:26:21 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:46338 "EHLO
+	zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936173Ab3DKP0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 11:26:20 -0400
+Received: from localhost (pD9F541D7.dip.t-dialin.net [::ffff:217.245.65.215])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by zucker.schokokeks.org with ESMTPSA; Thu, 11 Apr 2013 17:26:18 +0200
+  id 0000000000000035.000000005166D61A.00003F42
+Content-Disposition: inline
+In-Reply-To: <7vmwt6mdjg.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2013-03-19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220882>
 
-On Thu, Apr 11, 2013 at 6:36 PM, John Tapsell <johnflux@gmail.com> wrote:
->   I noticed that code that you put in merge will not be visible by
-> default.  This seems like a pretty horrible security problem, no?
->
-> I made the following test tree, with just 3 commits:
->
-> https://github.com/johnflux/ExampleEvilness.git
->
-> Doing "git log -p"  shows all very innocent commits.  Completely
-> hidden is the change to add "EVIL CODE MUWHAHAHA".
->
-> This seems really dangerous!
->
-> The evil code only shows up with the non-default  --cc or -m  option.
+On Wed, Apr 10, 2013 at 11:44:03AM -0700, Junio C Hamano wrote:
+> The reason why we can run with sslverify=true against gmail is
+> because we know imap.gmail.com gives a validly signed certificate
+> that leads all the way to a root CA the user's OpenSSL installation
+> is likely to trust (if your hand-rolled imap-over-ssl server uses a
+> snakeoil certificate, even though the server may be "SSL capable",
+> you may not be able to successfully connect to it without sslverify
+> turned off).
 
-For email-based patch workflows (eg. git, linux kernel), then this is
-not a problem - the diff doesn't even show up, so nothing is applied
-when git-am is run.
+Maybe imap-send should learn imap.sslCAInfo and imap.sslCAPath
+like http.* to handle custom certificates.
 
-For github with pull-requests, a diff is shown between trees, so this
-will show up.
+>> diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
+>> index 875d283..b15dffe 100644
+>> --- a/Documentation/git-imap-send.txt
+>> +++ b/Documentation/git-imap-send.txt
+>> @@ -123,7 +123,6 @@ to specify your account settings:
+>>  	host = imaps://imap.gmail.com
+>>  	user = user@gmail.com
+>>  	port = 993
+>> -	sslverify = false
+>>  ---------
+>>   You might need to instead use: folder = "[Google Mail]/Drafts" if you get an error
 
---
-Cheers,
-Ray Chuan
+I think we should remove sslverify = false from the other example
+as well. "Recommending" sslverify = false is IMHO a bad idea as
+SSL provides no protection without verification.
+
+Regards
+Simon
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
