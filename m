@@ -1,91 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
- permission problems as errors" busted git-daemon
-Date: Thu, 11 Apr 2013 08:35:46 -0700
-Message-ID: <7vwqs9jd0t.fsf@alter.siamese.dyndns.org>
-References: <1365572015.4658.51.camel@marge.simpson.net>
- <20130410135605.GB4694@odin.tremily.us>
- <1365651583.19620.8.camel@marge.simpson.net>
- <20130411054207.GE27795@sigill.intra.peff.net>
+From: Barbu Paul - Gheorghe <barbu.paul.gheorghe@gmail.com>
+Subject: Re: [PATCH] git-imap-send.txt: remove the use of sslverify=false
+ in GMail example
+Date: Thu, 11 Apr 2013 18:55:03 +0300
+Message-ID: <5166DCD7.2030105@gmail.com>
+References: <51657E59.7030001@gmail.com> <7vmwt6mdjg.fsf@alter.siamese.dyndns.org> <20130411152617.GA14264@ruderich.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mike Galbraith <bitbucket@online.de>,
-	"W. Trevor King" <wking@tremily.us>, git <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 11 17:36:03 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Simon Ruderich <simon@ruderich.org>
+X-From: git-owner@vger.kernel.org Thu Apr 11 17:55:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQJXX-00034c-Vs
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 17:35:56 +0200
+	id 1UQJqb-0007zc-5W
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 17:55:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936515Ab3DKPfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 11:35:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63010 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936478Ab3DKPfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 11:35:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75E4D131E5;
-	Thu, 11 Apr 2013 15:35:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Nn/uuGC4WE31pLA5pKHZartkVm8=; b=TmSD5t
-	pkkxszrRYUfvtip/QH6itKfN/xYpOXDc78OdfglI0GvvMxfrdQTEtyIqmt+n1Fkr
-	GdCtBz8HMo4G/ouCJWSAQqaiD+1XYIhdI37+w0GwfQiac6ShYCq3eqT5Uu1m2SmY
-	99vL8COr/KisU6xUlRA4rswxeQD1nmknH7vvE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L52Z8uNNy1rw19cTpio0PGjlIxYmQPqS
-	Ug9UmAqFjI3BppMYqCvpN2ZjQCvplJn9+TDDyu7Nid4qxSJ/i5j69pS9Z5fSLAfd
-	Xv/MuDcbqBLMSThVV8s/9H51O2rDdgqjy4bmupskczTiK6e5yAXQUQrcxCw1j351
-	y1OIKL48vO8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D2E4131E4;
-	Thu, 11 Apr 2013 15:35:49 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7800131E2; Thu, 11 Apr
- 2013 15:35:48 +0000 (UTC)
-In-Reply-To: <20130411054207.GE27795@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 11 Apr 2013 01:42:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7C0D2FDA-A2BD-11E2-B9BF-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751796Ab3DKPza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 11:55:30 -0400
+Received: from mail-ee0-f52.google.com ([74.125.83.52]:35682 "EHLO
+	mail-ee0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751946Ab3DKPzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 11:55:06 -0400
+Received: by mail-ee0-f52.google.com with SMTP id d17so828619eek.39
+        for <git@vger.kernel.org>; Thu, 11 Apr 2013 08:55:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=2Htin+tP0uVE80p2fZvnNAox6tsLq23H/J7VjJTwaAQ=;
+        b=b9Kw6YNEvUectsYWW0z4sukgIfKz+t313GqhCEI4LxmZT/AI/Qs/zNGvxsLDrT5Egs
+         GIemwb1QFe6hPW0cBn9X6S53ARYxiLbi8kVFyGI5cHYY1a+/yasEQ4feucX/qs1bhNRz
+         eQuKIcjgyywqt/QC6cSocEyM3+y/AOW3Yk8PGGboZjp6MQt2DA2Wt/XyG+66RHv4oLVp
+         KOTSZsV1T6KjsdUUulxbYF6bq0b4zDcax30EeHl014Jrmb01hJiIPfvMPIjIPu5NZ+3E
+         Xo2CaSF3o81DMEy7R6khEgwGMnltwwxquauyO/TyiqIId1IeSOE5G6rjFhResHunwbe2
+         J01w==
+X-Received: by 10.14.214.65 with SMTP id b41mr18203506eep.37.1365695704986;
+        Thu, 11 Apr 2013 08:55:04 -0700 (PDT)
+Received: from [192.168.16.100] (5-15-249-103.residential.rdsnet.ro. [5.15.249.103])
+        by mx.google.com with ESMTPS id cd3sm6329816eeb.6.2013.04.11.08.55.03
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 11 Apr 2013 08:55:04 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130403 Thunderbird/17.0.5
+In-Reply-To: <20130411152617.GA14264@ruderich.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220884>
 
-Jeff King <peff@peff.net> writes:
+On 04/11/2013 06:26 PM, Simon Ruderich wrote:
 
-> On Thu, Apr 11, 2013 at 05:39:43AM +0200, Mike Galbraith wrote:
->
->> >   ALLOWED_ENV="PATH HOME"
->> >   HOME=/
->> 
->> I can work around it by changing the init script to use su - git -c "bla
->> bla" to launch the thing, instead of using --user=git --group=daemon,
->> but that's just a bandaid for the busted environment setup those
->> switches were supposed to make happen, no?
->
-> Yeah, I think the bug here is that git-daemon should be setting $HOME
-> when it switches privileges with --user. Does this patch fix it for you?
->
-> diff --git a/daemon.c b/daemon.c
-> index 6aeddcb..a4451fd 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -1091,6 +1091,7 @@ static void drop_privileges(struct credentials *cred)
->  	if (cred && (initgroups(cred->pass->pw_name, cred->gid) ||
->  	    setgid (cred->gid) || setuid(cred->pass->pw_uid)))
->  		die("cannot drop privileges");
-> +	setenv("HOME", cred->pass->pw_dir, 1);
->  }
->  
->  static struct credentials *prepare_credentials(const char *user_name,
+> I think we should remove sslverify = false from the other example
+> as well. "Recommending" sslverify = false is IMHO a bad idea as
+> SSL provides no protection without verification.
 
-Yeah, that sounds like the obvious fix to me.
+Yep, that was why I thought there should be at least an example without it.
+
+Should I create a new patch removing them all?
+
+-- 
+Barbu Paul - Gheorghe
+Common sense is not so common - Voltaire
+Visit My GitHub profile to see my open-source projects - https://github.com/paullik
