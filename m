@@ -1,63 +1,89 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [ITCH] Specify refspec without remote
-Date: Thu, 11 Apr 2013 13:15:28 +0530
-Message-ID: <CALkWK0k+rsh-Ft3=+Fz2DkV5btdLg-bCJzJCKxgxMyNcmpj++w@mail.gmail.com>
-References: <20130410202456.GF24177@sigill.intra.peff.net> <CALkWK0k_gYWg9=zjRKGrq-evsWG+hCrLjrpLfYp=_uoHVKBzHw@mail.gmail.com>
- <20130410210455.GA2999@sigill.intra.peff.net> <CALkWK0k-YJwT__8Tc4B4WXq30ij3i8_d6qwyOCP5RLsKF9eazQ@mail.gmail.com>
- <20130410211824.GC27070@google.com> <CALkWK0nxpoLL4zoinE4j8y8NLHo0-b=PcimNLykCjMjOpWYEfQ@mail.gmail.com>
- <20130410212911.GE27070@google.com> <CALkWK0m=iDw+N0zcfEEt1jzFD4wOOzLgyBWNyc=HZ+xLe5SBLw@mail.gmail.com>
- <20130410215658.GC6215@sigill.intra.peff.net> <CALkWK0=Y-pO3+g21PLCWOxx+M-7fSmp2FedMBtZ68PWU_TOHDw@mail.gmail.com>
- <20130410222334.GC6930@sigill.intra.peff.net> <CALkWK0nvTisYCFjxwuGaBbWawwBahzeBHZ84rFkUYL8sjJuxvw@mail.gmail.com>
+From: Mike Galbraith <bitbucket@online.de>
+Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
+ permission problems as errors" busted git-daemon
+Date: Thu, 11 Apr 2013 09:59:19 +0200
+Message-ID: <1365667159.19620.116.camel@marge.simpson.net>
+References: <1365572015.4658.51.camel@marge.simpson.net>
+	 <20130410135605.GB4694@odin.tremily.us>
+	 <1365651583.19620.8.camel@marge.simpson.net>
+	 <20130411054207.GE27795@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: "W. Trevor King" <wking@tremily.us>, git <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 11 09:46:19 2013
+X-From: git-owner@vger.kernel.org Thu Apr 11 09:59:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQCD2-0000fS-JN
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 09:46:16 +0200
+	id 1UQCPz-0004tF-EW
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Apr 2013 09:59:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759647Ab3DKHqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 03:46:10 -0400
-Received: from mail-ia0-f170.google.com ([209.85.210.170]:32945 "EHLO
-	mail-ia0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753802Ab3DKHqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 03:46:09 -0400
-Received: by mail-ia0-f170.google.com with SMTP id j38so1199705iad.29
-        for <git@vger.kernel.org>; Thu, 11 Apr 2013 00:46:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=5vbolhSljIzKr2l1YPuHUitJHVCLFotzU8Rss//fYS8=;
-        b=oqdgPL3hwIZsgwVW25cDXRwSEywZq1fzQ38uAvOlJKag//dWON1UAhWg/0MsF1d8xp
-         MQb5bH/4OylR+usK8r4CypX6ksjz6tSOyXuCDZjZaPjDwB3g7b+sZKm5d0t5LDxOmY13
-         QiG53CCuPNGvR9FrDN5GGy+vF7yPDUf1gWEp0aDw/qXhTNcNUAEADcFLOEN7RfUrE7nH
-         uIDX6ylvAEmqOElbw+Cflwn1JZ27nnUpFvF0Vp+VwYyn4r2TFQeRE+V5pMCzPkEpOV1u
-         /S2LdzripmUv9/06H2PYLNlFrmON1hvYkIbviLT9YXqCWWD0j0FAHp4Rax4hfdY/rjZU
-         7R8A==
-X-Received: by 10.42.50.202 with SMTP id b10mr3304203icg.7.1365666368648; Thu,
- 11 Apr 2013 00:46:08 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Thu, 11 Apr 2013 00:45:28 -0700 (PDT)
-In-Reply-To: <CALkWK0nvTisYCFjxwuGaBbWawwBahzeBHZ84rFkUYL8sjJuxvw@mail.gmail.com>
+	id S1753961Ab3DKH7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 03:59:35 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:63445 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751765Ab3DKH7e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 03:59:34 -0400
+Received: from [192.168.178.27] (p4FE190B6.dip0.t-ipconnect.de [79.225.144.182])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0LbQ1i-1UsLR428ZW-00kqrz; Thu, 11 Apr 2013 09:59:21 +0200
+In-Reply-To: <20130411054207.GE27795@sigill.intra.peff.net>
+X-Mailer: Evolution 3.2.3 
+X-Provags-ID: V02:K0:AxI/spoCVQfrPKLCKcET3/qRM9/AdMl80nD3iupp1Qu
+ eZb0sKwSyWgv/9uWfkn/cb2HK00rYhUFFT19bvugNj9T2iUXXK
+ pXsgNHQHfgsAmbh96rumE/pVnl4oTPy8BXZv0qtE5RPwYnxsgu
+ xg/uL7910z2b2GDPLiV+l3PLoM0JgZcU+1foxsiqZPopzE6WAg
+ g/bPiGiSzTVryYuhCyA3J4DZ4rvsMFcU0Vos8p3M/XOVhjQUaY
+ ohdp5sEFgrwvpwXSE8fKcZ4Da2YOBFdR5n5RqrR8ykZ7mWrh4U
+ RqLgJ4//ZYyrB7Ku4YmVK1mGR/m7f5osMWnQOOfQYRHmSTqJsz
+ frak3eEiLX3XIG5lYpyVuUyiag1Xj00nZq9285GBNhtp9urOAj
+ pV8bQe4Jg3mIg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220833>
 
-Ramkumar Ramachandra wrote:
-> - branch.implicit-push-next.pushremote set to null**, because I will
-> never want to push this branch.
+On Thu, 2013-04-11 at 01:42 -0400, Jeff King wrote: 
+> On Thu, Apr 11, 2013 at 05:39:43AM +0200, Mike Galbraith wrote:
+> 
+> > >   ALLOWED_ENV="PATH HOME"
+> > >   HOME=/
+> > 
+> > I can work around it by changing the init script to use su - git -c "bla
+> > bla" to launch the thing, instead of using --user=git --group=daemon,
+> > but that's just a bandaid for the busted environment setup those
+> > switches were supposed to make happen, no?
+> 
+> Yeah, I think the bug here is that git-daemon should be setting $HOME
+> when it switches privileges with --user. Does this patch fix it for you?
+> 
+> diff --git a/daemon.c b/daemon.c
+> index 6aeddcb..a4451fd 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -1091,6 +1091,7 @@ static void drop_privileges(struct credentials *cred)
+>  	if (cred && (initgroups(cred->pass->pw_name, cred->gid) ||
+>  	    setgid (cred->gid) || setuid(cred->pass->pw_uid)))
+>  		die("cannot drop privileges");
+> +	setenv("HOME", cred->pass->pw_dir, 1);
+>  }
+>  
+>  static struct credentials *prepare_credentials(const char *user_name,
+> 
+> I guess that would technically break anybody who was trying to do
+> something clever with HOME (i.e., point it somewhere besides --user's
+> HOME where they had put some config files). But the obvious clever
+> thing would be to also set the user's passwd homedir to the same place.
 
-Currently, I have a hacky workaround: I set
-branch.implicit-push-next.pushremote to a remote that I don't have
-write access to (ie. origin), effectively failing all my attempts to
-push this branch.
+I did exactly that yesterday, and it didn't work, which rather surprised
+me.  Let me double check that I didn't screw trivial all up...
+
+Heh, if ya don't plunk new binary into the old oddly placed bucket :)
+Yeah, that works just fine.
+
+-Mike 
