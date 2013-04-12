@@ -1,198 +1,153 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v3] checkout: add --ignore-skip-worktree-bits in sparse checkout mode
-Date: Sat, 13 Apr 2013 09:12:08 +1000
-Message-ID: <1365808328-4191-1-git-send-email-pclouds@gmail.com>
-References: <1364637753-18785-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 02/12] pretty: share code between format_decoration and show_decorations
+Date: Sat, 13 Apr 2013 09:34:01 +1000
+Message-ID: <CACsJy8BnWg2JPmGUtLdA+XG9=UX65deYv9moefOHL-O7Kd3kww@mail.gmail.com>
+References: <1363400683-14813-1-git-send-email-pclouds@gmail.com>
+ <1364636112-15065-1-git-send-email-pclouds@gmail.com> <1364636112-15065-3-git-send-email-pclouds@gmail.com>
+ <7vd2uejfxr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	kirill.mueller@ivt.baug.ethz.ch,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 13 01:12:38 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 13 01:34:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQn91-0003WV-JV
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 01:12:36 +0200
+	id 1UQnUP-0005yc-1f
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 01:34:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753720Ab3DLXM3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Apr 2013 19:12:29 -0400
-Received: from mail-da0-f47.google.com ([209.85.210.47]:52469 "EHLO
-	mail-da0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753584Ab3DLXM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 19:12:27 -0400
-Received: by mail-da0-f47.google.com with SMTP id s35so1322924dak.34
-        for <git@vger.kernel.org>; Fri, 12 Apr 2013 16:12:27 -0700 (PDT)
+	id S1754746Ab3DLXed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 19:34:33 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:42732 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754654Ab3DLXeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 19:34:31 -0400
+Received: by mail-ob0-f179.google.com with SMTP id tb18so2828875obb.10
+        for <git@vger.kernel.org>; Fri, 12 Apr 2013 16:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=cBTHAnpJfZDVnBNbQlioaGViJ5agtz4yUs/J3DHG8PU=;
-        b=E42xxqgRF7jEfjZTz9LZ8Hjsk08GhE1Jo1W/vXdcR5OtSWuHt7v3LEeXstBGCj5Ur1
-         mAI+yKXoBNzOj+7WLpQYZeQOcwh5F4GlaKhCrM+gs73BVMjxdEetlzohPMYJP9Ut33rP
-         8mhVy5hjg+/2xoyPln6HEIyPJABhtaTNvOWpZgjSSariDgQeZ31Ti5kOAjWCLnJyBhx6
-         C4XN4RTlmcFxeW1a0E0pKZFmpYVXmZHWiQ1jTUrDLc2XYNV8NBi4DO85R6hExn7AR0OR
-         FVsHVf6S8RvTHihXvQY8yvsAK5Ou1LPdpGfjb9uYFAI2xW2M/ZAH13bZeU+goCfP0s/A
-         EmKQ==
-X-Received: by 10.68.254.38 with SMTP id af6mr17059895pbd.157.1365808347002;
-        Fri, 12 Apr 2013 16:12:27 -0700 (PDT)
-Received: from pclouds@gmail.com (xinyep.lnk.telstra.net. [110.143.18.114])
-        by mx.google.com with ESMTPS id cq1sm10206114pbc.13.2013.04.12.16.12.20
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 12 Apr 2013 16:12:26 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 13 Apr 2013 09:12:09 +1000
-X-Mailer: git-send-email 1.8.2.82.gc24b958
-In-Reply-To: <1364637753-18785-1-git-send-email-pclouds@gmail.com>
+        h=x-received:mime-version:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=2Fl+q2aI2DXxHyHw0N4KvtMl7JWXmoukvH5HQXf5cjk=;
+        b=T46+E8vNVpc4OVsCa4ymetO6fZ+YBdf7zBKn5DOWDBsACF1XL2OYZA83aS4yKZZS+t
+         WyyvhPR9bqxAuYm/docaDTbQN8Qe2nfphrFyM4RfLmdOUVhFMWBU59xzviuWlc5TXblW
+         II2eQfDC8TD3ZyXWHCqHWnw1oKWV+S8gl6Tn6Hz3aGL5u+Nbb/+kE6U5SPL8phn2Cr7a
+         ASqjUDLJwsyMNmATFa0ZzWa2B01j+Ere4ONRtyxF11+2KAGmc/NGV/OPXnuPGFacduHR
+         yLBEZdice0m9SrDocmNJ9a5H1VZmaUrKqB38EcC/AQz2gfQdaB8sVJJB8KbJWvCm72iI
+         npeg==
+X-Received: by 10.182.108.104 with SMTP id hj8mr601223obb.44.1365809671114;
+ Fri, 12 Apr 2013 16:34:31 -0700 (PDT)
+Received: by 10.76.27.137 with HTTP; Fri, 12 Apr 2013 16:34:01 -0700 (PDT)
+In-Reply-To: <7vd2uejfxr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221039>
 
-"git checkout -- <paths>" is usually used to restore all modified
-files in <paths>. In sparse checkout mode, this command is overloaded
-with another meaning: to add back all files in <paths> that are
-excluded by sparse patterns.
+Sorry for this late reply. I've been quite busy lately..
 
-As the former makes more sense for day-to-day use. Switch it to the
-default and the latter enabled with --ignore-skip-worktree-bits.
+On Tue, Apr 2, 2013 at 4:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> -void show_decorations(struct rev_info *opt, struct commit *commit)
+>> +void format_decoration(struct strbuf *sb,
+>> +                    const struct commit *commit,
+>> +                    int use_color)
+>>  {
+>> -     const char *prefix;
+>> -     struct name_decoration *decoration;
+>> +     const char *prefix = " (";
+>> +     struct name_decoration *d;
+>
+> This renaming of variable from decoration to d seems to make the
+> patched result unnecessarily different from the original in
+> show_decorations, making it harder to compare.  Intentional?
 
-While at there, add info/sparse-checkout to gitrepository-layout.txt
+I think I just happened to reuse the style of the old
+format_decoration(). Will reuse the name "decoration" instead.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git-checkout.txt         |  6 ++++++
- Documentation/gitrepository-layout.txt |  4 ++++
- builtin/checkout.c                     |  5 +++++
- t/t1011-read-tree-sparse-checkout.sh   | 24 ++++++++++++++++++++++++
- t/t3001-ls-files-others-exclude.sh     |  2 +-
- 5 files changed, 40 insertions(+), 1 deletion(-)
+>>       const char *color_commit =
+>> -             diff_get_color_opt(&opt->diffopt, DIFF_COMMIT);
+>> +             diff_get_color(use_color, DIFF_COMMIT);
+>>       const char *color_reset =
+>> -             decorate_get_color_opt(&opt->diffopt, DECORATION_NONE);
+>> +             decorate_get_color(use_color, DECORATION_NONE);
+>> +
+>> +     load_ref_decorations(DECORATE_SHORT_REFS);
+>
+> In cmd_log_init_finish(), we have loaded decorations with specified
+> decoration_style already.  Why is this needed (and with a hardcoded
+> style that may be different from what the user specified)?
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
-t.txt
-index 8edcdca..23a9413 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -180,6 +180,12 @@ branch by running "git rm -rf ." from the top leve=
-l of the working tree.
- Afterwards you will be ready to prepare your new files, repopulating t=
-he
- working tree, by copying them from elsewhere, extracting a tarball, et=
-c.
-=20
-+--ignore-skip-worktree-bits::
-+	In sparse checkout mode, `git checkout -- <paths>` would
-+	update only entries matched by <paths> and sparse patterns
-+	in $GIT_DIR/info/sparse-checkout. This option ignores
-+	the sparse patterns and adds back any files in <paths>.
-+
- -m::
- --merge::
- 	When switching branches,
-diff --git a/Documentation/gitrepository-layout.txt b/Documentation/git=
-repository-layout.txt
-index f0eef76..817337f 100644
---- a/Documentation/gitrepository-layout.txt
-+++ b/Documentation/gitrepository-layout.txt
-@@ -184,6 +184,10 @@ info/exclude::
- 	'git clean' look at it but the core Git commands do not look
- 	at it.  See also: linkgit:gitignore[5].
-=20
-+info/sparse-checkout::
-+	This file stores sparse checkout patterns.
-+	See also: linkgit:git-read-tree[1].
-+
- remotes::
- 	Stores shorthands for URL and default refnames for use
- 	when interacting with remote repositories via 'git fetch',
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f8033f4..4ed1ee7 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -35,6 +35,7 @@ struct checkout_opts {
- 	int force_detach;
- 	int writeout_stage;
- 	int overwrite_ignore;
-+	int ignore_skipworktree;
-=20
- 	const char *new_branch;
- 	const char *new_branch_force;
-@@ -278,6 +279,8 @@ static int checkout_paths(const struct checkout_opt=
-s *opts,
- 	for (pos =3D 0; pos < active_nr; pos++) {
- 		struct cache_entry *ce =3D active_cache[pos];
- 		ce->ce_flags &=3D ~CE_MATCHED;
-+		if (!opts->ignore_skipworktree && ce_skip_worktree(ce))
-+			continue;
- 		if (opts->source_tree && !(ce->ce_flags & CE_UPDATE))
- 			/*
- 			 * "git checkout tree-ish -- path", but this entry
-@@ -1058,6 +1061,8 @@ int cmd_checkout(int argc, const char **argv, con=
-st char *prefix)
- 		OPT_STRING(0, "conflict", &conflict_style, N_("style"),
- 			   N_("conflict style (merge or diff3)")),
- 		OPT_BOOLEAN('p', "patch", &opts.patch_mode, N_("select hunks interac=
-tively")),
-+		OPT_BOOL(0, "ignore-skip-worktree-bits", &opts.ignore_skipworktree,
-+			 N_("do not limit pathspecs to sparse entries only")),
- 		{ OPTION_BOOLEAN, 0, "guess", &dwim_new_local_branch, NULL,
- 		  N_("second guess 'git checkout no-such-branch'"),
- 		  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
-diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-s=
-parse-checkout.sh
-index 5c0053a..0c74bee 100755
---- a/t/t1011-read-tree-sparse-checkout.sh
-+++ b/t/t1011-read-tree-sparse-checkout.sh
-@@ -250,4 +250,28 @@ EOF
- 	test_cmp expected actual
- '
-=20
-+test_expect_success 'checkout without --ignore-skip-worktree-bits' '
-+	echo "*" >.git/info/sparse-checkout &&
-+	git checkout -f top &&
-+	test_path_is_file init.t &&
-+	echo sub >.git/info/sparse-checkout &&
-+	git checkout &&
-+	echo modified >> sub/added &&
-+	git checkout . &&
-+	test_path_is_missing init.t &&
-+	git diff --exit-code HEAD
-+'
-+
-+test_expect_success 'checkout with --ignore-skip-worktree-bits' '
-+	echo "*" >.git/info/sparse-checkout &&
-+	git checkout -f top &&
-+	test_path_is_file init.t &&
-+	echo sub >.git/info/sparse-checkout &&
-+	git checkout &&
-+	echo modified >> sub/added &&
-+	git checkout --ignore-skip-worktree-bits . &&
-+	test_path_is_file init.t &&
-+	git diff --exit-code HEAD
-+'
-+
- test_done
-diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-othe=
-rs-exclude.sh
-index efb7ebc..2d274bf 100755
---- a/t/t3001-ls-files-others-exclude.sh
-+++ b/t/t3001-ls-files-others-exclude.sh
-@@ -103,7 +103,7 @@ test_expect_success \
-      test_cmp expect output'
-=20
- test_expect_success 'restore gitignore' '
--	git checkout $allignores &&
-+	git checkout --ignore-skip-worktree-bits $allignores &&
- 	rm .git/index
- '
-=20
---=20
-1.8.2.82.gc24b958
+legacy from pretty.c:format_decoration(). Will move it to the caller
+format_commit_one.
+
+>
+>> +     d = lookup_decoration(&name_decoration, &commit->object);
+>> +     if (!d)
+>> +             return;
+>> +     while (d) {
+>> +             strbuf_addstr(sb, color_commit);
+>> +             strbuf_addstr(sb, prefix);
+>> +             strbuf_addstr(sb, decorate_get_color(use_color, d->type));
+>> +             if (d->type == DECORATION_REF_TAG)
+>> +                     strbuf_addstr(sb, "tag: ");
+>> +             strbuf_addstr(sb, d->name);
+>> +             strbuf_addstr(sb, color_reset);
+>> +             prefix = ", ";
+>> +             d = d->next;
+>> +     }
+>> +     if (prefix[0] == ',') {
+>> +             strbuf_addstr(sb, color_commit);
+>> +             strbuf_addch(sb, ')');
+>> +             strbuf_addstr(sb, color_reset);
+>> +     }
+>
+> Was this change to conditionally close ' (' mentioned in the log
+> message?  It is in line with the version taken from pretty.c, and I
+> think it may be an improvement, but I do not think the check is
+> necessary in the context of this function.  You will never see
+> prefix[0] != ',' after the loop, because "while (d)" above runs at
+> least once; otherwise the "if (!d) return" would have returned from
+> the function early, no?
+
+Yes, your eyeballs have really good quality ;)
+
+>> @@ -625,8 +639,8 @@ void show_log(struct rev_info *opt)
+>>                       printf(" (from %s)",
+>>                              find_unique_abbrev(parent->object.sha1,
+>>                                                 abbrev_commit));
+>> +             fputs(diff_get_color_opt(&opt->diffopt, DIFF_RESET), stdout);
+>>               show_decorations(opt, commit);
+>> -             printf("%s", diff_get_color_opt(&opt->diffopt, DIFF_RESET));
+>
+> We used to show and then reset.  I can see the updated
+> show_decorations() to format_decoration() callchain always reset at
+> the end, so the loss of the final reset here is very sane, but is
+> there a need to reset beforehand?  What is the calling convention
+> for the updated show_decorations()?  The caller should make sure
+> there is no funny colors in effect before calling, and the caller
+> can rest assured that there is no funny colors when the function
+> returns?
+
+I think it's a sane convention, unless we want a some background color
+going through show_decorations.
+
+>> +void format_decoration(struct strbuf *sb,
+>> +                    const struct commit *commit,
+>> +                    int use_color);
+>
+> I think you can fit these on a single line, especially if you drop
+> the unused variable names (they help when there are more than one
+> parameter of the same type to document the order of the arguments,
+> but that does not apply here).  That would help people who run
+> "grep" on the header files without using CTAGS/ETAGS.
+
+No problem.
+
+> Wouldn't it be "format_decorations()", or does it handle only one?
+
+All in one, apparently. Will rename.
+--
+Duy
