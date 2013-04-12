@@ -1,115 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Fix various typos and grammaros
-Date: Thu, 11 Apr 2013 17:45:08 -0700
-Message-ID: <7v4nfch90r.fsf@alter.siamese.dyndns.org>
-References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com>
- <85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: regression:
+ "96b9e0e3 config: treat user and xdg config permission problems as errors"
+ busted git-daemon
+Date: Thu, 11 Apr 2013 20:57:48 -0400
+Message-ID: <20130412005748.GA17116@odin.tremily.us>
+References: <1365651583.19620.8.camel@marge.simpson.net>
+ <20130411054207.GE27795@sigill.intra.peff.net>
+ <7vwqs9jd0t.fsf@alter.siamese.dyndns.org>
+ <20130411172424.GC1255@sigill.intra.peff.net>
+ <20130411181103.GJ27070@google.com>
+ <20130411181439.GA2820@sigill.intra.peff.net>
+ <7vwqs8hmh1.fsf@alter.siamese.dyndns.org>
+ <20130411200330.GA15667@odin.tremily.us>
+ <7vip3shfpd.fsf@alter.siamese.dyndns.org>
+ <20130411222301.GA11283@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: sunshine@sunshineco.com, git@vger.kernel.org
-To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 12 02:45:31 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=wRRV7LY7NUeQGEoC
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Mike Galbraith <bitbucket@online.de>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 12 03:58:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQS7N-0005cf-MY
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 02:45:30 +0200
+	id 1UQTG0-00067c-Jp
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 03:58:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752270Ab3DLApM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 20:45:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48539 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752065Ab3DLApL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 20:45:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C29DEE277;
-	Fri, 12 Apr 2013 00:45:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fvtV2Q2ZFCcInAlkglHMihfbUxQ=; b=l+78mB
-	1g3HQa6kfMd7TfzWDIJoSlnccqLznifbZCGUOxMjmGfRAIhsPhFBpNP1OUIk9Fzo
-	rxxV09ZaKd4sSy+mgKD0LXcgt097hM5oahG+HoNNoLd84y5OyU5uliUulu8bzlDb
-	ZVYNp2Q+RW82jXRQvP/I3RikNBkfuqggI4LKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JQ18qQK9G9DZHAKNvkZMRbCgZxpsevmU
-	uLzvWxxuIBdwnJ37EOLnqgnoM7FWci96QtrHrSIphD7M5NDBph/NgmpZ4r8vbCbC
-	ZDp3YssbekEL920bS7Uaquaw0t9AGr8Xbjicr7l/89MOLlESGN1ulESwjvx+V9zQ
-	pONk8Nl+6C4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B70BDE273;
-	Fri, 12 Apr 2013 00:45:10 +0000 (UTC)
-Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0197EE271; Fri, 12 Apr 2013
- 00:45:09 +0000 (UTC)
-In-Reply-To: <85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com> (Stefano Lattarini's message of "Fri, 12 Apr 2013 00:36:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3A731CAE-A30A-11E2-BD4B-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752376Ab3DLB6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Apr 2013 21:58:24 -0400
+Received: from vms173003pub.verizon.net ([206.46.173.3]:62191 "EHLO
+	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752153Ab3DLB6X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Apr 2013 21:58:23 -0400
+X-Greylist: delayed 3604 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Apr 2013 21:58:23 EDT
+Received: from odin.tremily.us ([unknown] [72.68.100.81])
+ by vms173003.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0ML4007YAAOC1K40@vms173003.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 11 Apr 2013 19:57:55 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id B738595D9B4; Thu,
+ 11 Apr 2013 20:57:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1365728268; bh=ULdECg+OerelWeScv8kUouCz1mdnDllD3ogw9fzCN4g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ZvUFKJe8lCZBpEn0TCbj2Y4U64fuLgzHmXIPCiaovsLjUkKE9Z7H59V/cvtep0h0+
+ Y5T+rJ3Y8a8QLdpAMBCps9EY9eB77vKl86EEmot16mhFlFszTYT8Of6o/OU9pWArqB
+ KUooD645KqPLUxekPuDGGqhAdPEB9D/nEK+XJlr8=
+Content-disposition: inline
+In-reply-to: <20130411222301.GA11283@sigill.intra.peff.net>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220942>
-
-Stefano Lattarini <stefano.lattarini@gmail.com> writes:
-
->  Documentation/git-credential.txt                   |  2 +-
->  Documentation/git-remote-ext.txt                   |  2 +-
->  Documentation/git-svn.txt                          |  4 ++--
->  Documentation/git-tools.txt                        |  2 +-
->  Documentation/revisions.txt                        |  2 +-
->  Documentation/technical/api-argv-array.txt         |  2 +-
->  Documentation/technical/api-credentials.txt        |  2 +-
->  Documentation/technical/api-ref-iteration.txt      |  2 +-
->  builtin/apply.c                                    |  6 +++---
->  commit.c                                           |  2 +-
->  commit.h                                           |  2 +-
->  compat/nedmalloc/Readme.txt                        |  2 +-
->  compat/nedmalloc/malloc.c.h                        |  6 +++---
->  compat/obstack.h                                   |  2 +-
->  compat/precompose_utf8.c                           |  2 +-
->  compat/regex/regcomp.c                             |  4 ++--
->  compat/regex/regex.c                               |  2 +-
->  compat/regex/regex_internal.c                      |  6 +++---
->  contrib/mw-to-git/git-remote-mediawiki.perl        |  6 +++---
->  contrib/mw-to-git/t/README                         |  6 +++---
->  contrib/mw-to-git/t/install-wiki/LocalSettings.php |  2 +-
->  contrib/mw-to-git/t/t9360-mw-to-git-clone.sh       |  2 +-
->  contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh        | 14 +++++++-------
->  contrib/subtree/t/t7900-subtree.sh                 |  2 +-
->  diff.c                                             |  2 +-
->  git-add--interactive.perl                          |  2 +-
->  git-cvsserver.perl                                 |  4 ++--
->  git-gui/lib/blame.tcl                              |  2 +-
->  git-gui/lib/index.tcl                              |  2 +-
->  git-gui/lib/spellcheck.tcl                         |  4 ++--
->  git-quiltimport.sh                                 |  2 +-
->  gitweb/INSTALL                                     |  2 +-
->  gitweb/gitweb.perl                                 |  6 +++---
->  kwset.c                                            |  4 ++--
->  perl/Git.pm                                        |  2 +-
->  perl/Git/I18N.pm                                   |  2 +-
->  perl/private-Error.pm                              |  2 +-
->  po/README                                          |  6 +++---
->  sequencer.c                                        |  2 +-
->  t/t1006-cat-file.sh                                |  2 +-
->  t/t3511-cherry-pick-x.sh                           |  4 ++--
->  t/t3701-add-interactive.sh                         |  2 +-
->  t/t4014-format-patch.sh                            |  6 +++---
->  t/t4124-apply-ws-rule.sh                           |  2 +-
->  t/t6030-bisect-porcelain.sh                        |  2 +-
->  t/t7601-merge-pull-config.sh                       |  2 +-
->  t/t7610-mergetool.sh                               |  2 +-
->  t/t9001-send-email.sh                              |  4 ++--
->  transport-helper.c                                 |  2 +-
->  transport.h                                        |  2 +-
->  xdiff/xdiffi.c                                     |  2 +-
->  xdiff/xhistogram.c                                 |  2 +-
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220943>
 
 
-How much of this stuff have interact with real changes that are in
-flight, with various doneness cooking in different integration
-branches?
+--wRRV7LY7NUeQGEoC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Apr 11, 2013 at 06:23:01PM -0400, Jeff King wrote:
+> On Thu, Apr 11, 2013 at 03:20:46PM -0700, Junio C Hamano wrote:
+> > "W. Trevor King" <wking@tremily.us> writes:
+> > > The difficulty was figuring out why the daemon was dying in
+> > > the first place (which involved bisection for me as well).  Maybe
+> > > there could be an additional note about HOME to flesh out:
+> > >
+> > >   fatal: unable to access '/root/.config/git/config': Permission deni=
+ed
+> > >
+> > > when there's an EACCES error for the per-user config?
+> >=20
+> > Doesn't access_or_die() say
+> >=20
+> >     die_errno(_("unable to access '%s'"), path);
+> >=20
+> > already?  I am puzzled...
+>=20
+> I think the point is that it could add
+>=20
+>   ...and I was looking in /root, because that is where your HOME points.
+>   Shouldn't you be able to read your own HOME directory?
+>=20
+> which should make it painfully obvious to the user what is going on.
+
+That's more or less what I had in mind.  The 1.8.1.1 release notes
+just say:
+
+ * When attempting to read the XDG-style $HOME/.config/git/config and
+   finding that $HOME/.config/git is a file, we gave a wrong error
+   message, instead of treating the case as "a custom config file does
+   not exist there" and moving on.
+
+without saying anything about permission problems becoming errors, or
+noting that oddball HOME configurations might cause problems.  Since
+the release notes are already out, a notice like this should probably
+go somewhere else.  However, this is a lot of hand holding to be
+printed along side the error message=E2=80=A6 Since git-daemon (or gitweb) =
+is
+the most likely place for this problem to crop up, maybe a note in its
+(their) man pages would be a good idea?  This thread may also be
+sufficient documentation, assuming good enough search engines ;).
+
+Cheers,
+Trevor
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--wRRV7LY7NUeQGEoC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRZ1wLAAoJEEUbTsx0l5OMTW0QAJKdqYx9P43e0MQIpnm8gClJ
+jn6KpjQtAnDas9fAfY644GOQ7WM1jEg4cAa/1fzJoqNjk5BD/ytNW57rgVSsEKc4
+Y/iVWrEX4NyqrIoCxiZH1Pw0Fk9OCB2WITZffxS1fTn0LVu1KICF0mCCykaLUF8c
+p2/GfxepdNNfbCQ5XQuOKo9ArwhJQTZ0eG/MeIgWQRJg9Y27f+yefbjh+fJWj4fG
++Uv37J57y/f0BCh0bqvwhditU05MYZ3+7xv14EgidSbbNJJfRz/Ka6KvLgNnnd2v
+FHk/Tw5m6gjJy0XAHy1DCYh5q9Vk6qiijhUSSX+b5+RGtpaB+Z8XuVP4PvUoeWWu
+1aBvuWE/D9zaW1K8siYtd4oTLijBvFKUh7RVEoM0zyTxgppfJQQhsWFM7kTTnLFt
+wh8AjsL86E7GXFWdlDjLtbWYxnneckyef1oWSB6enPtWUTpj98GfofUWSZa4AtO1
+Hc8oQrQJE+x5NEol4TXiH6/AoT51tylRgsqKtJNeNzhFoSDXPCs3bltDHtHOzQqu
+WSWFz4XLbNFv1OCvg2Wo1L7geh9QFOFd78S3cJxMfhEuDkM9kUhxbvwIimsGOP9l
+EITbAJzXZrvNoLJ3mY8Nut5G8YDVULVT71GZn8Nti8vxZClh6UkY0klHKY/cOnSI
+M+YiynpW2A8GPdD5FBc7
+=9Zmp
+-----END PGP SIGNATURE-----
+
+--wRRV7LY7NUeQGEoC--
