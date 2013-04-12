@@ -1,82 +1,90 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Bug: git push crashing
-Date: Fri, 12 Apr 2013 20:06:31 +0100
-Message-ID: <20130412190630.GM2222@serenity.lan>
-References: <201304122050.26471@pali>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/10] doc: various spelling fixes
+Date: Fri, 12 Apr 2013 12:12:35 -0700
+Message-ID: <7vy5cnd0m4.fsf@alter.siamese.dyndns.org>
+References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com>
+ <85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com> <7v4nfch90r.fsf@alter.siamese.dyndns.org> <20130412064837.GA5710@elie.Belkin> <20130412064953.GB5710@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Pali =?iso-8859-1?Q?Roh=E1r?= <pali.rohar@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 12 21:06:44 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: sunshine@sunshineco.com, git@vger.kernel.org,
+	Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>
+To: Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 12 21:12:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQjJ5-0005bB-ML
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 21:06:44 +0200
+	id 1UQjOu-0005Jk-Ia
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 21:12:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754598Ab3DLTGj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Apr 2013 15:06:39 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:37539 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752875Ab3DLTGi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 15:06:38 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 137116064EA;
-	Fri, 12 Apr 2013 20:06:38 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0df23qBh52pz; Fri, 12 Apr 2013 20:06:37 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 7098A6064D3;
-	Fri, 12 Apr 2013 20:06:37 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 6885D161E07A;
-	Fri, 12 Apr 2013 20:06:37 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fQIl-CLiAt6C; Fri, 12 Apr 2013 20:06:36 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 5C2CA161E3CC;
-	Fri, 12 Apr 2013 20:06:32 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <201304122050.26471@pali>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753419Ab3DLTMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 15:12:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42364 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751504Ab3DLTMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 15:12:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85F0116759;
+	Fri, 12 Apr 2013 19:12:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=v0OAKXRtJeUV/wuOPYYeU5FktUg=; b=BVgodm
+	XTiiq4/aVSXkMkHanL58BX3jDx6a9CujZvxje8pfgKSTy7n1t9H2GhbT7rhkI8qg
+	J+sYx1xxjki7QQyNDPKJO0XtVqFdKK2VHxpJwwIxLftgtCH6HDdNcn+gZRu1XT+I
+	hF2kcqLSTY4Ju5BHz/ondeSWQe50Y0TPHQbnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vbfyKRD7PJbktUdY1rIKDD3SJUn5pFYt
+	RBbeFlAizrqew7EXU7j+xwC+rRttkbqXZFato7WrodFrwMeuNdPFuQCV8TLBXM+7
+	D1u4+hCcUNbWJ447+l1/6JbdFiz0v1ESYXVBr8et/ygzntANT0snDqTjpGw25A4e
+	d76bq2HXRVQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78EBA16756;
+	Fri, 12 Apr 2013 19:12:37 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1B8716753; Fri, 12 Apr
+ 2013 19:12:36 +0000 (UTC)
+In-Reply-To: <20130412064953.GB5710@elie.Belkin> (Jonathan Nieder's message
+ of "Thu, 11 Apr 2013 23:49:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EFDC4274-A3A4-11E2-9476-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221016>
 
-On Fri, Apr 12, 2013 at 08:50:25PM +0200, Pali Roh=E1r wrote:
-> when I'm trying to push one specific branch from my git repository
-> to server, git push crashing. Pushing branch is rejected by server
-> (because non fast forward), but local git app should not crash.
->=20
-> I'm using git from ubuntu apt repository (compiled myself for debug
-> symbols), version git_1.7.10.4-1ubuntu1 on amd64 ubuntu system:
-> http://packages.ubuntu.com/source/quantal/git
->=20
-> Here are gdb backtrace and valgrind outputs. I changed server, repo
-> and branch strings from output. It looks like that git crashing in
-> strcmp function because one of arguments is NULL.
->=20
-> If you need more info, I can send it. This crash occur always. I can
-> reproduce it again and again...
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-This looks like the same issue that was fixed by commit 1d2c14d (push:
-fix segfault when HEAD points nowhere - 2013-01-31).
+>    Note that if per-instance configuration file exists, then system-wide
+> -  configuration is _not used at all_.  This is quite untypical and suprising
+> +  configuration is _not used at all_.  This is quite untypical and surprising
+>    behavior.  On the other hand changing current behavior would break backwards
+>    compatibility and can lead to unexpected changes in gitweb behavior.
+>    Therefore gitweb also looks for common system-wide configuration file,
 
-Can you try again with Git 1.8.2 and see if the crash still happens?
+Hmm, "atypical", isn't it?
+
+The flow of the text is awkward.  "This is bad. Oh the other hand,
+better is broken. Therefore ..." forces readers to make multiple
+guesses while reading: "ok, bad, so you plan to change it and warn
+us about upcoming change?  oh, not that, changing it is bad, so we
+have to live with it?  oh, not that, there is another one that is
+common and that is what we can use".
+
+It may be a good idea to rewrite this paragraph to avoid such a
+mental roller-coaster in the first place.
+
+    The GITWEB_CONFIG_SYSTEM system-wide configuration file is only
+    used for instances that lack per-instance configuration file.
+    You can use GITWEB_CONFIG_COMMON file to keep common default
+    settings that apply to all instances.
+
+or something.
+
+Not asking for a re-roll, but it may be a potential follow-up candidate.
+
+Thanks.
