@@ -1,111 +1,150 @@
-From: Pali =?utf-8?q?Roh=C3=A1r?= <pali.rohar@gmail.com>
-Subject: Re: Bug: git push crashing
-Date: Fri, 12 Apr 2013 21:32:59 +0200
-Message-ID: <201304122132.59464@pali>
-References: <201304122050.26471@pali> <20130412190630.GM2222@serenity.lan>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] config: allow inaccessible configuration under $HOME
+Date: Fri, 12 Apr 2013 15:37:55 -0400
+Message-ID: <20130412193755.GA5329@sigill.intra.peff.net>
+References: <7vvc7sfkwn.fsf@alter.siamese.dyndns.org>
+ <20130412043501.GA12942@sigill.intra.peff.net>
+ <7vr4igfj9w.fsf@alter.siamese.dyndns.org>
+ <20130412050550.GA15724@sigill.intra.peff.net>
+ <20130412112636.GC20178@odin.tremily.us>
+ <20130412144855.GA17968@sigill.intra.peff.net>
+ <7vk3o7g29s.fsf@alter.siamese.dyndns.org>
+ <20130412161600.GA20492@sigill.intra.peff.net>
+ <20130412170505.GA2383@sigill.intra.peff.net>
+ <20130412191433.GR27070@google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart6618889.Y5tEnS0VAS";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Apr 12 21:33:10 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"W. Trevor King" <wking@tremily.us>,
+	Mike Galbraith <bitbucket@online.de>, git <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 12 21:38:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQjig-0000qG-Dm
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 21:33:10 +0200
+	id 1UQjnO-0008DR-QK
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 21:38:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753296Ab3DLTdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 15:33:04 -0400
-Received: from mail-ee0-f48.google.com ([74.125.83.48]:41421 "EHLO
-	mail-ee0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753037Ab3DLTdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 15:33:03 -0400
-Received: by mail-ee0-f48.google.com with SMTP id b15so1448204eek.35
-        for <git@vger.kernel.org>; Fri, 12 Apr 2013 12:33:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :message-id;
-        bh=YIiHJJyV59MIKs+Je9jHB7y3LB/6GYkV7NcMLBGYGfc=;
-        b=03C/Mpdv4l/wrYDVRDrraNa+ffT+xeMUvGuUc71Tm1w56n+RHvxZfobT6s0WfpMrI+
-         Su76YaEQsQKR6GWdGiyitU2/ZI2ILfngRzUjb+4XmgU9rfuvobvFOgrmZy4tLPaAEj0i
-         nIfscyH3HptbnARNbzb2I2IDje6JIPDZ7kLTfO/fgWz7tBFPtmhh5hVLFx9Mkg48wAho
-         dbHIY1n+9Sfo0oaIBHzKPNmOEJd9iMiMHVqDKId4r7c1hJ6wf1O1YPmboTSL5k63noO4
-         VUiJbA6dA0jnpbENjCKj10eS0Wdb0oLgaiuwF7RszAKlhmOwNALHLKcdbWzj2Kf1OcrT
-         ZDhQ==
-X-Received: by 10.14.89.69 with SMTP id b45mr31186138eef.10.1365795181869;
-        Fri, 12 Apr 2013 12:33:01 -0700 (PDT)
-Received: from pali-elitebook.localnet (pali.kolej.mff.cuni.cz. [78.128.193.202])
-        by mx.google.com with ESMTPS id f47sm12699402eep.13.2013.04.12.12.33.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 12 Apr 2013 12:33:00 -0700 (PDT)
-User-Agent: KMail/1.13.7 (Linux/3.5.0-27-generic; KDE/4.10.2; x86_64; ; )
-In-Reply-To: <20130412190630.GM2222@serenity.lan>
+	id S1754878Ab3DLTh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 15:37:59 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43110 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754493Ab3DLTh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 15:37:58 -0400
+Received: (qmail 29555 invoked by uid 107); 12 Apr 2013 19:39:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Apr 2013 15:39:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Apr 2013 15:37:55 -0400
+Content-Disposition: inline
+In-Reply-To: <20130412191433.GR27070@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221019>
 
---nextPart6618889.Y5tEnS0VAS
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+On Fri, Apr 12, 2013 at 12:14:33PM -0700, Jonathan Nieder wrote:
 
-On Friday 12 April 2013 21:06:31 John Keeping wrote:
-> On Fri, Apr 12, 2013 at 08:50:25PM +0200, Pali Roh=C3=A1r wrote:
-> > when I'm trying to push one specific branch from my git
-> > repository to server, git push crashing. Pushing branch is
-> > rejected by server (because non fast forward), but local
-> > git app should not crash.
-> >=20
-> > I'm using git from ubuntu apt repository (compiled myself
-> > for debug symbols), version git_1.7.10.4-1ubuntu1 on amd64
-> > ubuntu system:
-> > http://packages.ubuntu.com/source/quantal/git
-> >=20
-> > Here are gdb backtrace and valgrind outputs. I changed
-> > server, repo and branch strings from output. It looks like
-> > that git crashing in strcmp function because one of
-> > arguments is NULL.
-> >=20
-> > If you need more info, I can send it. This crash occur
-> > always. I can reproduce it again and again...
->=20
-> This looks like the same issue that was fixed by commit
-> 1d2c14d (push: fix segfault when HEAD points nowhere -
-> 2013-01-31).
->=20
-> Can you try again with Git 1.8.2 and see if the crash still
-> happens?
+> One unexpected downside to the changes v1.7.12.1~2^2~4 (config: warn
+> on inaccessible files, 2012-08-21) and v1.8.1.1~22^2~2 (config: treat
+> user and xdg config permission problems as errors, 2012-10-13) is that
+> they often trip when git is being run as a server.  The appropriate
+> daemon (sshd, inetd, git-daemon, etc) starts as "root", creates a
+> listening socket, and then drops privileges, meaning that when git
+> commands are invoked they cannot access $HOME and die with
+> 
+>  fatal: unable to access '/root/.config/git/config': Permission denied
+> 
+> The intent was always to prevent important configuration (think
+> "[transfer] fsckobjects") from being ignored when the configuration is
+> unintentionally unreadable (for example with ENOMEM due to a DoS
+> attack).  But that is not worth breaking these cases of
+> drop-privileges-without-resetting-HOME that were working fine before.
+> 
+> Treat user and xdg configuration that is inaccessible due to
+> permissions (EACCES) as though no user configuration was provided at
+> all.
 
-Hello, now I tried version 1.8.2.1 and git push not crashing :-)=20
-I also tried version 1.8.1 and as expected it crashed.
+I kind of wonder if we are doing anything with the check at this point.
+I suppose ENOMEM and EIO are the only interesting things left at this
+point. The resulting code would be much nicer if the patch were just:
 
-So thanks for quick reply, seems that this problem is already=20
-fixed in 1.8.2.
+  -access_or_die(...);
+  +access(...);
 
-=2D-=20
-Pali Roh=C3=A1r
-pali.rohar@gmail.com
+but I guess those conditions are still worth checking for, especially if
+we think an attacker could trigger ENOMEM intentionally. To be honest, I
+am not sure how possible that is, but it is not that hard to do so.
 
---nextPart6618889.Y5tEnS0VAS
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+> An alternative approach would be to check if $HOME is readable, but
+> that would not solve the problem in cases where the user who dropped
+> privileges had a globally readable HOME with only .config or
+> .gitconfig being private.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Yeah, although I wonder if those are signs of a misconfiguration that
+should be brought to the user's attention (~/.gitconfig I feel more
+confident about; less so about $HOME/.config, which might be locked down
+for reasons unrelated to git).
 
-iEYEABECAAYFAlFoYWsACgkQi/DJPQPkQ1INJgCcCdgE958KK4JmNrn7iwwnhPaX
-UycAn2T8Q0GbhVgSpmFOryRad/PUsNpX
-=f4eo
------END PGP SIGNATURE-----
+> > Given how tight the exception is, I almost wonder if we should drop the
+> > environment variable completely, and just never complain about this case
+> > (in other words, just make it a loosening of 96b9e0e3).
+> 
+> Yeah, I think that would be better.
+> 
+> How about this?  (Still needs tests.)
 
---nextPart6618889.Y5tEnS0VAS--
+I think it's probably OK. Like all of the proposed solutions, it is a
+bit of compromise about what is worth mentioning to the user and what is
+not. But we cannot have our cake and eat it, too, so I'd be fine with
+this.
+
+I agree a test would be nice for whatever solution we choose (both to
+check that we fail when we should, and do not when we should not).
+
+> -	if (xdg_config && !access_or_die(xdg_config, R_OK)) {
+> +	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK)) {
+
+I know you are trying to be flexible with the flag, but I wonder if the
+resulting code would read better if we just added a new
+"access_or_die_lenient" helper, which would embody the wisdom of
+ignoring EACCES, or anything else that comes up later. It seems like all
+callers would want either the vanilla form or the lenient form.
+
+I do not feel too strongly about it, though.
+
+> -int access_or_warn(const char *path, int mode)
+> +int access_or_warn(const char *path, int mode, unsigned flag)
+>  {
+>  	int ret = access(path, mode);
+> -	if (ret && errno != ENOENT && errno != ENOTDIR)
+> +	if (ret && errno != ENOENT && errno != ENOTDIR &&
+> +	    (!(flag & ACCESS_EACCES_OK) || errno != EACCES))
+>  		warn_on_inaccessible(path);
+>  	return ret;
+>  }
+>  
+> -int access_or_die(const char *path, int mode)
+> +int access_or_die(const char *path, int mode, unsigned flag)
+>  {
+>  	int ret = access(path, mode);
+> -	if (ret && errno != ENOENT && errno != ENOTDIR)
+> +	if (ret && errno != ENOENT && errno != ENOTDIR &&
+> +	    (!(flag & ACCESS_EACCES_OK) || errno != EACCES))
+>  		die_errno(_("unable to access '%s'"), path);
+>  	return ret;
+>  }
+
+Now that these conditions are getting more complex, we should perhaps
+combine them, like:
+
+  static int access_error_is_ok(int err, int flag)
+  {
+          return err == ENOENT || errno == ENOTDIR ||
+                  (flag & ACCESS_EACCES_OK && err == EACCES);
+  }
+
+-Peff
