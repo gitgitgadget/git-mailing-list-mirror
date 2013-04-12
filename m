@@ -1,92 +1,113 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v2] i18n: make the translation of -u advice in one go
-Date: Fri, 12 Apr 2013 11:53:01 +0800
-Message-ID: <7df2833fe51c614bf9a2a6208df2e09d913a046e.1365738420.git.worldhello.net@gmail.com>
-References: <20130412025501.GB3266@elie.Belkin>
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.co>, Eric Sunshine <sunshine@sunshineco.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 12 05:53:28 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
+ permission problems as errors" busted git-daemon
+Date: Thu, 11 Apr 2013 21:11:20 -0700
+Message-ID: <7vvc7sfkwn.fsf@alter.siamese.dyndns.org>
+References: <1365651583.19620.8.camel@marge.simpson.net>
+ <20130411054207.GE27795@sigill.intra.peff.net>
+ <7vwqs9jd0t.fsf@alter.siamese.dyndns.org>
+ <20130411172424.GC1255@sigill.intra.peff.net>
+ <20130411181103.GJ27070@google.com>
+ <20130411181439.GA2820@sigill.intra.peff.net>
+ <7vwqs8hmh1.fsf@alter.siamese.dyndns.org>
+ <20130411200330.GA15667@odin.tremily.us>
+ <7vip3shfpd.fsf@alter.siamese.dyndns.org>
+ <20130411222301.GA11283@sigill.intra.peff.net>
+ <20130412005748.GA17116@odin.tremily.us>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Mike Galbraith <bitbucket@online.de>, git <git@vger.kernel.org>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Fri Apr 12 06:11:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQV3H-0001uK-ID
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 05:53:27 +0200
+	id 1UQVKs-0008HR-1A
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 06:11:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998Ab3DLDxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Apr 2013 23:53:21 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:54122 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751675Ab3DLDxU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Apr 2013 23:53:20 -0400
-Received: by mail-pa0-f45.google.com with SMTP id kl13so1239781pab.18
-        for <git@vger.kernel.org>; Thu, 11 Apr 2013 20:53:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=f/LGfSTP07ROxIizbGvpzcv31o5wsKBnzydW1uhz5iU=;
-        b=l/OfT7DSGFkgU1JmQ+uwlPj7x+2z73t+X12Gz72TTlZm5RTZ+FAawgNLeJNiBYFYDJ
-         rEtxic3gWMyCJfnA5/1lqJW/7p8fidhAZZsDbjaP0G3a90A5ZiOJl5cet/qRqBtXjNZg
-         qtysQelV8zjdE96HwOMxMI2kCcq+m8Zt3NeHYH4J1ZBCdjmba6mKTz452AEEkj1unPDR
-         IC9WTxUU8eof1ul6/CwXv/C8sC8TGCUAYTC+GKBxrEeBkChMUivYjUr6oNS9b5QrOXnJ
-         I2cZTQdalCN23YtObb1tVVhNsRTsYydLbiH9PauXIdGHtbuLieogNP5iAmXq8vA0qlFO
-         fUjg==
-X-Received: by 10.66.41.11 with SMTP id b11mr13201817pal.183.1365738800024;
-        Thu, 11 Apr 2013 20:53:20 -0700 (PDT)
-Received: from localhost.localdomain ([114.248.153.32])
-        by mx.google.com with ESMTPS id ak5sm7614785pac.4.2013.04.11.20.53.16
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 11 Apr 2013 20:53:19 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.348.g7df2833
-In-Reply-To: <20130412025501.GB3266@elie.Belkin>
+	id S1750854Ab3DLELY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 00:11:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63086 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750800Ab3DLELX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 00:11:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCD9810F8D;
+	Fri, 12 Apr 2013 04:11:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MH2kTMIyvsFlcT5EFubDiTzkMds=; b=hwHeg4
+	DDb9DuLfqIzrNt4OZrvcp5hECVwUG+uTT2jTCbq9sLjqOHYTgNCX3OlRo4GSrWrv
+	NZXAkc2NobmCZQffqII//BTzFE4Zdh+WAJaqQNqVEEghEPQybyvw5jdPDfZQdinH
+	1T9LYD4DZoYj3BcuCm8k/WYZXdw/FsFwYiqPY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u1uhZKOcQkRgYwt6GmLsfJJKbOK0qz+/
+	Gg/yMM8Qs4+7ZhTkF+vXC7Br7qTfRyJmwbpzXYNjf17OwN5cLI6vIne9belESH3Y
+	Eo3Vr/GTV5yCZaM1nBt9xTPaygNYdCRa7IEMPMiLGW2yhOgIC6Iu7rH2Iuc0v76u
+	AUESjHGUbcQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C23FB10F8C;
+	Fri, 12 Apr 2013 04:11:22 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 24C7010F8B; Fri, 12 Apr
+ 2013 04:11:22 +0000 (UTC)
+In-Reply-To: <20130412005748.GA17116@odin.tremily.us> (W. Trevor King's
+ message of "Thu, 11 Apr 2013 20:57:48 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 08D2EE50-A327-11E2-849A-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220949>
 
-The advice (consider use of -u when read_directory takes too long) is
-separated into 3 different status_printf_ln() calls, and which brings
-trouble for translators.
+"W. Trevor King" <wking@tremily.us> writes:
 
-Since status_vprintf() called by status_printf_ln() can handle eol in
-buffer, we could simply join these lines into one paragraph.
+> On Thu, Apr 11, 2013 at 06:23:01PM -0400, Jeff King wrote:
+> ...
+>> I think the point is that it could add
+>> 
+>>   ...and I was looking in /root, because that is where your HOME points.
+>>   Shouldn't you be able to read your own HOME directory?
+>> 
+>> which should make it painfully obvious to the user what is going on.
+>
+> That's more or less what I had in mind.
+> ... However, this is a lot of hand holding to be
+> printed along side the error message… Since git-daemon (or gitweb) is
+> the most likely place for this problem to crop up, maybe a note in its
+> (their) man pages would be a good idea?
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
----
- wt-status.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+The --user option to git-daemon would be a good place to do that, I
+think.  Depending on what other "setuid to less privileged before
+running" programs do (I do not know offhand), we can say something
+like this perhaps?
 
-diff --git a/wt-status.c b/wt-status.c
-index 09416..ec5f2 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1225,14 +1225,10 @@ void wt_status_print(struct wt_status *s)
- 		if (advice_status_u_option && 2000 < s->untracked_in_ms) {
- 			status_printf_ln(s, GIT_COLOR_NORMAL, "");
- 			status_printf_ln(s, GIT_COLOR_NORMAL,
--				 _("It took %.2f seconds to enumerate untracked files."
--				   "  'status -uno'"),
--				 s->untracked_in_ms / 1000.0);
--			status_printf_ln(s, GIT_COLOR_NORMAL,
--				 _("may speed it up, but you have to be careful not"
--				   " to forget to add"));
--			status_printf_ln(s, GIT_COLOR_NORMAL,
--				 _("new files yourself (see 'git help status')."));
-+					 _("It took %.2f seconds to enumerate untracked files. 'status -uno'\n"
-+					   "may speed it up, but you have to be careful not to forget to add\n"
-+					   "new files yourself (see 'git help status')."),
-+					 s->untracked_in_ms / 1000.0);
- 		}
- 	} else if (s->commitable)
- 		status_printf_ln(s, GIT_COLOR_NORMAL, _("Untracked files not listed%s"),
--- 
-1.8.2.1.347.g1003b3a.dirty
+    --user::
+	... current description ...
+    +
+    (Like|Unlike) many programs that let you run programs as
+    specified user, the daemon does not reset environment variables
+    such as $HOME when it runs git programs like upload-pack and
+    receive-pack. Set and export HOME to point at the home directory
+    of the user you specify with this option before you start the
+    daemon, and make sure the Git configuration files in that
+    directory is readable by that user.
+
+If we have to say "Unlike" above, then we probably should bite the
+bullet and use Peff's patch, perhaps with an addition to the manual
+page, perhaps like this.
+
+    --user::
+	... current description ...
+    +
+    Like many programs that let you run programs as specified user,
+    the daemon resets $HOME environment variable to that of the user
+    you specify with this option when it runs git programs like
+    upload-pack and receive-pack.  Make sure that the Git
+    configuration files in that directory is readable by that user.
