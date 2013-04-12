@@ -1,74 +1,106 @@
-From: Sivaram Kannan <siva.devel@gmail.com>
-Subject: Re: Git crash in Ubuntu 12.04
-Date: Fri, 12 Apr 2013 18:58:24 +0530
-Message-ID: <CAJiNi_Gju2aJkVJJmoxnEAubfPvjaVhVF6DisaLn5kUJ3YRD=w@mail.gmail.com>
-References: <CAJiNi_FfU9Gsr2D9CcC0wWwgO1oKBXwxp87-wBUJBU2kyGaQNQ@mail.gmail.com>
-	<87mwt6ltia.fsf@linux-k42r.v.cablecom.net>
-	<CAJiNi_EgjgKs7oNJyGcamUFz=ARDAuBTb+bJ0uVsPFBMbZF3YA@mail.gmail.com>
-	<20130411170659.a35d2c581cf34ade13448bfa@domain007.com>
+From: Simon Ruderich <simon@ruderich.org>
+Subject: [PATCH] help: mark common_guides[] as translatable
+Date: Fri, 12 Apr 2013 15:51:42 +0200
+Message-ID: <20130412135142.GA29454@ruderich.org>
+References: <1364942392-576-1-git-send-email-philipoakley@iee.org>
+ <1364942392-576-5-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Apr 12 15:28:31 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	"W. Trevor King" <wking@tremily.us>,
+	David Aguilar <davvid@gmail.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Apr 12 15:51:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQe1m-0003wV-5w
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 15:28:30 +0200
+	id 1UQeOO-0004GP-4M
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 15:51:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754678Ab3DLN20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 09:28:26 -0400
-Received: from mail-vb0-f54.google.com ([209.85.212.54]:56260 "EHLO
-	mail-vb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753798Ab3DLN2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 09:28:25 -0400
-Received: by mail-vb0-f54.google.com with SMTP id w16so2131856vbf.13
-        for <git@vger.kernel.org>; Fri, 12 Apr 2013 06:28:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=sOpk/JyMlY+2dahDLNvOJYd7oIrgpeGw4BsTBP160NY=;
-        b=kX0IEQrCZQsdrmui3Nd7TOtBHoYQeME7jp+yoiP8uXE6v5szl7Jf6goleFU0fkymjZ
-         BOVPbJov/gE3w0XORuyiLZtnkjBTegSCUwxOEb9VnaEdT/Sxo/Ntnj8nWM+K1m8Bw4/t
-         7nxtnITqMCT49GJylhvlAsXx9ebszHEbMi4iz3IdVhfcp+uCIMU6RL4WQxmkGSnqY0FM
-         NltxbsLhciQ5aPIjoLV5ZNh4B7HrzbnsowJ3PAjlXV6A0X/4m2RDhYEKfVO2YjUYJnmy
-         n/qq6DaWWxeJ84y0qGmoKytj3yBp3qgJnyfSbYd1SAXeJ32kCPWf5VGL89NOrh4skV+k
-         mjug==
-X-Received: by 10.58.12.225 with SMTP id b1mr1826887vec.20.1365773304702; Fri,
- 12 Apr 2013 06:28:24 -0700 (PDT)
-Received: by 10.221.3.131 with HTTP; Fri, 12 Apr 2013 06:28:24 -0700 (PDT)
-In-Reply-To: <20130411170659.a35d2c581cf34ade13448bfa@domain007.com>
+	id S1754798Ab3DLNvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 09:51:47 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:41694 "EHLO
+	zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753307Ab3DLNvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 09:51:46 -0400
+Received: from localhost (p54B5EE3B.dip.t-dialin.net [::ffff:84.181.238.59])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by zucker.schokokeks.org with ESMTPSA; Fri, 12 Apr 2013 15:51:45 +0200
+  id 000000000000004C.0000000051681171.0000409D
+Content-Disposition: inline
+In-Reply-To: <1364942392-576-5-git-send-email-philipoakley@iee.org>
+User-Agent: Mutt/1.5.21 (2013-03-19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220979>
 
-Hi,
-
+Signed-off-by: Simon Ruderich <simon@ruderich.org>
+---
+On Tue, Apr 02, 2013 at 11:39:51PM +0100, Philip Oakley wrote:
+> --- a/help.c
+> +++ b/help.c
+> @@ -240,6 +241,23 @@ void list_common_cmds_help(void)
+>  	}
+>  }
 >
-> ^^^ Try to issue the
->
-> $ ulimit -c unlimited
+> +void list_common_guides_help(void)
+> +{
+> +	int i, longest = 0;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
+> +		if (longest < strlen(common_guides[i].name))
+> +			longest = strlen(common_guides[i].name);
+> +	}
+> +
+> +	puts(_("The common Git guides are:\n"));
+> +	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
+> +		printf("   %s   ", common_guides[i].name);
+> +		mput_char(' ', longest - strlen(common_guides[i].name));
+> +		puts(_(common_guides[i].help));
 
-Have set the git user's crash limit to 1GB in
-/etc/security/limits.conf and still getting the same error when
-issuing gdb to the crash file.
+common_guides[] is used here, but without N_() not picked up by
+xgettext when creating the pot file.
 
->
-> command in your shell before attempting the cloning -- this should
-> remove the upper limit on the core file size.  And try look for the core
-> file in the current directory after the crash occurs.  I'm not sure
-> Ubuntu's "crash interceptor" won't kick in, but just in case...
+Regards
+Simon
 
-You mean, /usr/bin/git? crash file for git is getting created each
-time it crashes in /var/crash.
+ builtin/help.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-Can you please tell me what else I could try? Would upgrading to the
-1.8.2.1 - latest in Ubuntu PPA would help?
+diff --git a/builtin/help.c b/builtin/help.c
+index 034c36c..062957f 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -419,13 +419,13 @@ static struct {
+ 	const char *name;
+ 	const char *help;
+ } common_guides[] = {
+-	{ "attributes", "Defining attributes per path" },
+-	{ "glossary", "A Git glossary" },
+-	{ "ignore", "Specifies intentionally untracked files to ignore" },
+-	{ "modules", "Defining submodule properties" },
+-	{ "revisions", "Specifying revisions and ranges for Git" },
+-	{ "tutorial", "A tutorial introduction to Git (for version 1.5.1 or newer)" },
+-	{ "workflows", "An overview of recommended workflows with Git"},
++	{ "attributes", N_("Defining attributes per path") },
++	{ "glossary", N_("A Git glossary") },
++	{ "ignore", N_("Specifies intentionally untracked files to ignore") },
++	{ "modules", N_("Defining submodule properties") },
++	{ "revisions", N_("Specifying revisions and ranges for Git") },
++	{ "tutorial", N_("A tutorial introduction to Git (for version 1.5.1 or newer)") },
++	{ "workflows", N_("An overview of recommended workflows with Git") },
+ };
+ 
+ static void list_common_guides_help(void)
+-- 
+1.8.2.481.g0d034d4
 
-./Siva.
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
