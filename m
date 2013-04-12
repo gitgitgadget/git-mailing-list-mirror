@@ -1,108 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
- permission problems as errors" busted git-daemon
-Date: Fri, 12 Apr 2013 09:08:31 -0700
-Message-ID: <7vk3o7g29s.fsf@alter.siamese.dyndns.org>
-References: <7vwqs8hmh1.fsf@alter.siamese.dyndns.org>
- <20130411200330.GA15667@odin.tremily.us>
- <7vip3shfpd.fsf@alter.siamese.dyndns.org>
- <20130411222301.GA11283@sigill.intra.peff.net>
- <20130412005748.GA17116@odin.tremily.us>
- <7vvc7sfkwn.fsf@alter.siamese.dyndns.org>
- <20130412043501.GA12942@sigill.intra.peff.net>
- <7vr4igfj9w.fsf@alter.siamese.dyndns.org>
- <20130412050550.GA15724@sigill.intra.peff.net>
- <20130412112636.GC20178@odin.tremily.us>
- <20130412144855.GA17968@sigill.intra.peff.net>
+Subject: Re: [RFC/PATCH maint 0/10] Re: [PATCH v2] Fix various typos and
+ grammaros
+Date: Fri, 12 Apr 2013 09:09:19 -0700
+Message-ID: <7vfvyvg28g.fsf@alter.siamese.dyndns.org>
+References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com>
+ <85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com> <7v4nfch90r.fsf@alter.siamese.dyndns.org> <20130412064837.GA5710@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "W. Trevor King" <wking@tremily.us>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Mike Galbraith <bitbucket@online.de>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 12 18:08:43 2013
+Cc: Stefano Lattarini <stefano.lattarini@gmail.com>,
+	sunshine@sunshineco.com, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 12 18:09:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQgWn-0005WF-L7
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 18:08:41 +0200
+	id 1UQgXh-0006tn-Cg
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 18:09:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752910Ab3DLQIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 12:08:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46790 "EHLO
+	id S1752934Ab3DLQJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 12:09:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60867 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752591Ab3DLQIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 12:08:36 -0400
+	id S1751864Ab3DLQJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 12:09:32 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7882137C2;
-	Fri, 12 Apr 2013 16:08:35 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D038D1381D;
+	Fri, 12 Apr 2013 16:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B6qRfHHNn1S+rrxpQNhJXkG9MLc=; b=W2vgOs
-	yyrpfbbhON1GthJ6k8yAACj28EZW2+vTJ1gr6daW17gWEmsegch/pxb/QBo1fyy2
-	VvpCscR2iL/ly3aRTq4LRmsPK0NYj/evH1Wr7NoHx0RKjwKVReOz/91RZN+rAmVe
-	AR+DLRWC2P/JOZkSDsoGBthBRr1aUc1obj1XQ=
+	:content-type; s=sasl; bh=A5MuzZI5466foS5oYcQx20X0Ck8=; b=lvv2Z0
+	toKqJw4Wf9UZyFMhBZRWMxdzWNDA8LguBTtI+TFRvNRUFDIjCPERcLC6c8p3Y79u
+	kw9GCwgteGMdP22LgCsuNz/NsjflsGAvd624BXcJaUuoCjRFjbKk/uBlXtSxBmGb
+	7RpT0E33kfb8JI5DV00eGspNHR8HuyDp5SF/E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=E1FInviC+iTVD2AP5q9YFUgxRqrS0wzJ
-	hTXzkwvroIO9peqZ86KfIGXGETmKzUp3L1XavZAL/9sgEkGQydXH5JBut69JnWmD
-	/jLJg+qAXi0vuPhBzATwo3ewLenWwdBN3eVUe+yASKo0zpRMad6+XHRh1Icawc+o
-	ygGsTTNreJE=
+	:content-type; q=dns; s=sasl; b=cOmvzL8iex+/4xfKAaj4B6gWC1PYEf+t
+	ITlxH66awkoLd1PRbEwIM9bLaozBke0/gsO9ldLzHSFm3ZqTpNO528+vF4uPPima
+	PL7vlY2NjDKMF7skaJWg3fKC+p8Wex5lX+0b8RWY1mYxixtXKUYyqO6HRC/kDVrt
+	r0LA5U7ppy8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF20A137BF;
-	Fri, 12 Apr 2013 16:08:35 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C76501381C;
+	Fri, 12 Apr 2013 16:09:31 +0000 (UTC)
 Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3319A137B4; Fri, 12 Apr
- 2013 16:08:35 +0000 (UTC)
-In-Reply-To: <20130412144855.GA17968@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 12 Apr 2013 10:48:55 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 56E2E13812; Fri, 12 Apr
+ 2013 16:09:21 +0000 (UTC)
+In-Reply-To: <20130412064837.GA5710@elie.Belkin> (Jonathan Nieder's message
+ of "Thu, 11 Apr 2013 23:48:38 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3A926C0E-A38B-11E2-9B9D-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 56075288-A38B-11E2-B907-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220993>
 
-Jeff King <peff@peff.net> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> How about "and make sure any Git configuration files", since there
->> might not be any Git configuration files.
+> Hi,
 >
-> Yeah, that is better. Thanks.
+> Junio C Hamano wrote:
+>
+>> How much of this stuff have interact with real changes that are in
+>> flight, with various doneness cooking in different integration
+>> branches?
+>
+> All except the t3511-cherry-pick-x.sh change apply cleanly to
+> "maint" and merge without trouble with master and pu.
+>
+> Here is a split-up version.
 
-OK, then...
+Thanks.
 
--- >8 --
-Subject: [PATCH] doc: clarify that "git daemon --user=<user>" option does not export HOME=~user
+> I haven't looked closely at the patch,
+> even to sanity check it --- one of the main points of splitting it
+> this way is to make it easier to review with reference to code
+> borrowed from other projects.
 
-Signed-off-by: Jeff King <peff@peff.net>
-Helped-by: W. Trevor King <wking@tremily.us>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-daemon.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+Sure.
 
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index 7e5098a..2ac07ba 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -147,6 +147,13 @@ OPTIONS
- Giving these options is an error when used with `--inetd`; use
- the facility of inet daemon to achieve the same before spawning
- 'git daemon' if needed.
-++
-+Like many programs that switch user id, the daemon does not reset
-+environment variables such as `$HOME` when it runs git programs,
-+e.g. `upload-pack` and `receive-pack`. When using this option, you
-+may also want to set and export `HOME` to point at the home
-+directory of `<user>` before starting the daemon, and make sure any
-+Git configuration files in that directory are readable by `<user>`.
- 
- --enable=<service>::
- --disable=<service>::
--- 
-1.8.2.1-472-g6c5785c
+> Some of these patches need more work if they are to be applied.  For
+> example, git-gui is maintained separately and should not be patched
+> from the toplevel.
+
+True.
+
+Thanks.
