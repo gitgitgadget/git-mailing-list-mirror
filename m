@@ -1,54 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] Make read_index_data() public
-Date: Fri, 12 Apr 2013 15:40:12 -0400
-Message-ID: <20130412194012.GA5154@sigill.intra.peff.net>
-References: <1365787573-597-1-git-send-email-git@cryptocrack.de>
- <1365787573-597-2-git-send-email-git@cryptocrack.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
+ permission problems as errors" busted git-daemon
+Date: Fri, 12 Apr 2013 12:51:19 -0700
+Message-ID: <7vr4ifcytk.fsf@alter.siamese.dyndns.org>
+References: <7vvc7sfkwn.fsf@alter.siamese.dyndns.org>
+ <20130412043501.GA12942@sigill.intra.peff.net>
+ <7vr4igfj9w.fsf@alter.siamese.dyndns.org>
+ <20130412050550.GA15724@sigill.intra.peff.net>
+ <20130412112636.GC20178@odin.tremily.us>
+ <20130412144855.GA17968@sigill.intra.peff.net>
+ <7vk3o7g29s.fsf@alter.siamese.dyndns.org>
+ <20130412161600.GA20492@sigill.intra.peff.net>
+ <20130412170505.GA2383@sigill.intra.peff.net>
+ <7vbo9jehfx.fsf@alter.siamese.dyndns.org>
+ <20130412190152.GB4108@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Lukas Fleischer <git@cryptocrack.de>
-X-From: git-owner@vger.kernel.org Fri Apr 12 21:40:36 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "W. Trevor King" <wking@tremily.us>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Mike Galbraith <bitbucket@online.de>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 12 21:51:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQjpr-0003hT-Sc
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 21:40:36 +0200
+	id 1UQk0N-00035x-Vn
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 21:51:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755398Ab3DLTkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 15:40:18 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43117 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753538Ab3DLTkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 15:40:15 -0400
-Received: (qmail 29583 invoked by uid 107); 12 Apr 2013 19:42:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Apr 2013 15:42:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Apr 2013 15:40:12 -0400
-Content-Disposition: inline
-In-Reply-To: <1365787573-597-2-git-send-email-git@cryptocrack.de>
+	id S1753538Ab3DLTvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 15:51:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62555 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752523Ab3DLTvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 15:51:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07677153F3;
+	Fri, 12 Apr 2013 19:51:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mZTlFyeaP+f2e5qjipJRwon1C0U=; b=K86jM0
+	sXnKGm3u04LAL1h+7MYc/EniFjEwvLR+oebB8DToy151uX1NTbRncm/E3f33Qz86
+	QZT8zjQ00A/nmuB2kxVfjge3QzzAcp516fxsfZNLCkZxQA6LcfMNFHFKPm1v4LBn
+	LcmZPDHsJ/+JeHvESFeRnrZ670bOobJsnpieM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ocMF+Kytu2E+TKqxwSI1xeE1fBfPlUw+
+	ou+9wu/vhIWG5SpXjfMTK3oQI8knxPbMlOJu561gfxlt2Av+F7h3emFroINuaHFN
+	qfV7R+KOL8t37POx8Lf5ZtR2BKD9dsQ29UKILQg+iGlGeYQC/yQJNmBV3BqI932L
+	VHdoo6rN+m8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE638153F2;
+	Fri, 12 Apr 2013 19:51:21 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59FA8153F1; Fri, 12 Apr
+ 2013 19:51:21 +0000 (UTC)
+In-Reply-To: <20130412190152.GB4108@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 12 Apr 2013 15:01:52 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 59607C42-A3AA-11E2-A46D-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221021>
 
-On Fri, Apr 12, 2013 at 07:26:11PM +0200, Lukas Fleischer wrote:
+Jeff King <peff@peff.net> writes:
 
-> This allows for reusing the function in convert.c later.
-> 
-> Also, move it from attr.c to read-cache.c and add a use_index parameter
-> to specify a custom index_state since we are no longer enable to access
-> the static use_index variable from attr.c.
+>> If the access() failed due to ENOENT, the caller will get a negative
+>> return from this function and will treat it as "ok, it does not
+>> exist", with the original or the updated code.  This new case is
+>> treated the same way by the existing callers, i.e. pretending as if
+>> there is _no_ file in that unreadable $HOME directory.
+>
+> Exactly.
 
-I'm all for removing duplicated code, but, but I think the name
-"read_index_data" is a bit misleading for a global function. I would
-expect it to read data from the index (and the argument "path" does not
-help clarify that at all).
+The explanation you are replying to was meant to illustrate how this
+is not "inaccessible is OK", but is "treat inaccessible as missing",
+by the way.
 
-Can we rename it read_blob_data_from_index_path() or something?
+>> That semantics sounds sane and safe to me.
+>
+> Thanks. I'll re-roll with a proper commit message and the fixups I
+> mentioned above. I think we should still do the documentation for
+> git-daemon. But it is no longer about "oops, we broke git-daemon", but
+> "you may want know that we do not set HOME in case you are doing
+> something tricky with config". I'll submit that with the re-roll, too.
 
--Peff
+Well, at least to me, the documentation update was never about
+"oops, we broke it", but was about "be careful where the HOME you
+are using actually is" from the beginning of the suggestion.  I was
+actually planning to apply it to maint-1.8.1 that predates the xdg
+stuff, and that is why the text only suggests to set HOME for the
+config.
+
+> Do you have an opinion on just dropping the environment variable
+> completely and behaving this way all the time? It would "just fix" the
+> cases people running into using su/sudo, too.
+
+With the tightening, people who used --user=daemon, expecting that
+they can later tweak the behaviour by touching ~daemon/.gitconfig,
+got an early warning that they need to set HOME themselves, but with
+any variant of the patch under discussion, as long as loosening is
+on by default, will no longer get that benefit.
+
+I am not yet convinced if that is a real "fix/cure".
+
+So, no, I have not even reached the point where I can form an
+opinion if this behaviour should be the default.
