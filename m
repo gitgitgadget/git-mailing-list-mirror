@@ -1,100 +1,72 @@
-From: Magnus Therning <magnus@therning.org>
-Subject: Re: git-http-backend: anonymous read, authenticated write
-Date: Fri, 12 Apr 2013 09:22:36 +0200
-Message-ID: <CAAExw5upfDU=U9Vntph4DECtDp_EVGps+Fgpxabaeq_c4WHqAA@mail.gmail.com>
-References: <20130409054553.GA1537@mteis.lan>
-	<20130409171247.GD21972@sigill.intra.peff.net>
-	<5165DA13.8010100@gmail.com>
-	<20130410214722.GA6215@sigill.intra.peff.net>
-	<20130410231919.GA1315@mteis.lan>
-	<20130411015613.GA8455@sigill.intra.peff.net>
-	<CAAExw5t3rk_R1GB9OMVKjPYEMRQg1gNSUGQtEK71m1Ux01N27w@mail.gmail.com>
-	<20130411193434.GE3177@sigill.intra.peff.net>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [PATCH v2] Fix various typos and grammaros
+Date: Fri, 12 Apr 2013 10:16:43 +0200
+Message-ID: <5167C2EB.7010709@gmail.com>
+References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com> <85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com> <7v4nfch90r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 12 09:22:52 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: sunshine@sunshineco.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 12 10:17:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQYJu-0001TT-00
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 09:22:50 +0200
+	id 1UQZAO-00029T-5u
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 10:17:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753203Ab3DLHWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 03:22:38 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:62943 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752601Ab3DLHWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 03:22:37 -0400
-Received: by mail-ie0-f182.google.com with SMTP id at1so3017328iec.13
-        for <git@vger.kernel.org>; Fri, 12 Apr 2013 00:22:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:x-gm-message-state;
-        bh=AxyH1beobn/oUeNPJkWKQZyLGZyQ6rctIhsTUteZSWs=;
-        b=BOkNvOhV3/dblCKBSZrC8Z8fE44GMIr3/oorIHuEgjAooo/91nPhhn5xyENnnuMuaJ
-         pOYQIxeOaFZt5iSoh4r0Bh6Gn6WaN7p0+q49EXcwplP32UMCKIzWauVbheWnInPaq/7s
-         N/ds3Bn6u711qH74N0C1+j7Q/RZ3UZt5EzSN8Rg0xs2UKDmf4nlk6x2u0gaBrTQ6BW4i
-         yP5F+0lpzRLa09toOKcbxycwj8mIHe6MK/MjfLa5L1DEGAwesXdEH+t9lstehzgd+kxE
-         by+gQkcYr/b7DnzEb3vtp/QH/KaxdnMqzvEsfT1Kt5T44t2n/pldKyFKnqqdaZEuTeSK
-         YF+w==
-X-Received: by 10.42.64.135 with SMTP id g7mr5696666ici.37.1365751356912; Fri,
- 12 Apr 2013 00:22:36 -0700 (PDT)
-Received: by 10.64.163.35 with HTTP; Fri, 12 Apr 2013 00:22:36 -0700 (PDT)
-In-Reply-To: <20130411193434.GE3177@sigill.intra.peff.net>
-X-Gm-Message-State: ALoCoQll1afYca8l7msbh79/oDT9cI9HULIzPz3rhqhUjEnMRsZZa+2HzZ3qZXAAYG9v/+R5vCAk
+	id S1754728Ab3DLIQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 04:16:49 -0400
+Received: from mail-ee0-f48.google.com ([74.125.83.48]:60992 "EHLO
+	mail-ee0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753974Ab3DLIQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 04:16:47 -0400
+Received: by mail-ee0-f48.google.com with SMTP id b15so1110506eek.7
+        for <git@vger.kernel.org>; Fri, 12 Apr 2013 01:16:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=M+4wM2ZLB3ay9xh92as5oiGbjfwnGuSomAVRtPvBDWI=;
+        b=yWQ6jR8O6wvC2B9IbTTNJdld8nXt9fFD1yC7TNdj6lmdh+Br10MRudq7PnpYrPNes3
+         2/p4ZtxQgDVmXwV/NeMdcfDrnNNLDBwBGcULhnOkiPCb1TzdRrG22yGDa1TNWQDEjxnb
+         JHtr2XdgGe/3VceZAMkE9UkssF2+Is3lnpMoSn3DEqv4RzQyQ/wH9j8B07IGGcTBhBac
+         LKZQiDCa2xfIcq1aGsUMSpgDIXdZoArmbiC7GTvDQmlrDg3pWCG9dwvoWKn+zifBN6Qh
+         zDKC5Ubyfhv/567zt62tNU/n/tUG1RiKlisVP+7mzodto/jP90yWXILIIWnVptWaccxL
+         cBtg==
+X-Received: by 10.15.48.4 with SMTP id g4mr25638270eew.28.1365754606130;
+        Fri, 12 Apr 2013 01:16:46 -0700 (PDT)
+Received: from [192.168.178.20] (host93-95-dynamic.6-79-r.retail.telecomitalia.it. [79.6.95.93])
+        by mx.google.com with ESMTPS id u44sm9824184eel.7.2013.04.12.01.16.44
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 12 Apr 2013 01:16:45 -0700 (PDT)
+In-Reply-To: <7v4nfch90r.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220971>
 
-On Thu, Apr 11, 2013 at 9:34 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Apr 11, 2013 at 08:52:56AM +0200, Magnus Therning wrote:
->
->> > The documentation should probably make the use of http.receivepack more
->> > clear in this situation.
->>
->> I think that'd be good.  The fact that it wasn't until several mails
->> into the thread that anyone thought of the http.receivepack setting
->> also suggests that its use is a bit un-intuitive (even though it
->> probably makes perfect sense and is a good solution).
->
-> Yeah, I did not even think of http.receivepack because I have never had
-> to set it before (it was turned on in the original tests that I built
-> top of). I have the impression that the anonymous-read/authenticated-write
-> setup you are using has not been all that commonly used. The example in
-> the manpage dates back to 2009, but it was only in 2012 that we got a
-> bug report that the client-side authentication handler has problems with
-> it.
+Hi Junio.
 
-Really?  I certainly think it deserves a bit more attention than that.
- It may be that gitosis and other SSH-based solutions have been around
-longer than git-http-backend, but from what I've understood from
-reading, it fits very nicely in between git-daemon and the rather
-heavy SSH-based stuff.
+On 04/12/2013 02:45 AM, Junio C Hamano wrote:
+> Stefano Lattarini <stefano.lattarini@gmail.com> writes:
+> 
+> How much of this stuff have interact with real changes that are in
+> flight, with various doneness cooking in different integration
+> branches?
+> 
+I don't know, since I only follow the master branch of Git.  And
+honestly, I don't have time right now to go checking for possible
+conflicts, or to resubmit ...   But I see Jonathan has taken up
+the ball on this (thanks Jonathan!), so I'll leave the matter to
+him.
 
->> > But your fix under lighttpd is much better, as it asks for the
->> > credentials up front (which means the client does not go to any work
->> > creating a packfile just to find out that it does not have access).
->>
->> Yes, I think it also helps with my particular scenario where new repos
->> will be added from time to time.  This way there is no second step,
->> after `git init`, that must be remembered.
->
-> Yeah, avoiding setting http.receivepack at all is helpful. Though note
-> that you can also set it in /etc/gitconfig for the whole system at once.
+Next time I'll try to prepare a patch broken up in more digestible
+pieces, so that it will be easier for you to deal with conflicts,
+and/or to selectively decide which fixes are worth applying.
 
-Good point.
-
-/M
-
--- 
-Magnus Therning                      OpenPGP: 0xAB4DFBA4
-email: magnus@therning.org   jabber: magnus@therning.org
-twitter: magthe               http://therning.org/magnus
+Thanks, and sorry for the confusion,
+  Stefano
