@@ -1,130 +1,100 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] help: mark common_guides[] as translatable
-Date: Fri, 12 Apr 2013 17:16:30 +0100
-Organization: OPDS
-Message-ID: <76E75C159EF54DD4A26051735FA370C8@PhilipOakley>
-References: <1364942392-576-1-git-send-email-philipoakley@iee.org> <1364942392-576-5-git-send-email-philipoakley@iee.org> <20130412135142.GA29454@ruderich.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Mike Galbraith <bitbucket@online.de>
+Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
+ permission problems as errors" busted git-daemon
+Date: Fri, 12 Apr 2013 18:21:06 +0200
+Message-ID: <1365783666.5814.21.camel@marge.simpson.net>
+References: <7vwqs8hmh1.fsf@alter.siamese.dyndns.org>
+	 <20130411200330.GA15667@odin.tremily.us>
+	 <7vip3shfpd.fsf@alter.siamese.dyndns.org>
+	 <20130411222301.GA11283@sigill.intra.peff.net>
+	 <20130412005748.GA17116@odin.tremily.us>
+	 <7vvc7sfkwn.fsf@alter.siamese.dyndns.org>
+	 <20130412043501.GA12942@sigill.intra.peff.net>
+	 <7vr4igfj9w.fsf@alter.siamese.dyndns.org>
+	 <20130412050550.GA15724@sigill.intra.peff.net>
+	 <20130412112636.GC20178@odin.tremily.us>
+	 <20130412144855.GA17968@sigill.intra.peff.net>
+	 <7vk3o7g29s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"W. Trevor King" <wking@tremily.us>,
-	"David Aguilar" <davvid@gmail.com>
-To: "Simon Ruderich" <simon@ruderich.org>
-X-From: git-owner@vger.kernel.org Fri Apr 12 18:16:39 2013
+Cc: Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
+	Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 12 18:22:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQgeS-0000SF-0L
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 18:16:36 +0200
+	id 1UQgkP-0001HK-MI
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 18:22:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754484Ab3DLQQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 12:16:32 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:39983 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754027Ab3DLQQb (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Apr 2013 12:16:31 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AtYNAM8yaFFZ8Yth/2dsb2JhbABQgwY2iG24agQBAwGBCxd0ghoFAQEEAQgBAS4eAQEhCwIDBQIBAxUBAgklFAEEGgYHFwYTCAIBAgMBA4d6Cr0Aji1fC4JnYQOIS4V0iWSIV4cZgww7
-X-IronPort-AV: E=Sophos;i="4.87,462,1363132800"; 
-   d="scan'208";a="424858867"
-Received: from host-89-241-139-97.as13285.net (HELO PhilipOakley) ([89.241.139.97])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 12 Apr 2013 17:16:29 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1754763Ab3DLQWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 12:22:43 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:65477 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754678Ab3DLQWk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 12:22:40 -0400
+Received: from [192.168.178.27] (p4FE19057.dip0.t-ipconnect.de [79.225.144.87])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0LcVQE-1Uspzp396c-00jlRz; Fri, 12 Apr 2013 18:21:08 +0200
+In-Reply-To: <7vk3o7g29s.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 3.2.3 
+X-Provags-ID: V02:K0:C1njbpn0bDDzJ6zippC3elNC0AA9U53hUFvRxny4pq6
+ YZoEfj9MfrMydgCAJvjB0x2vn7Da7F8dHM/U7gYefTWGBrhp3I
+ kNSNAILrfrLCAogsQ7QFusygVmS7hmEuwkHgv7Qa0TRwXJsJhJ
+ F5qLq7nIZo6tIhQTqSwS/jgiWwNjwy0OZ6+JT+txQoxCMAHmpG
+ xFtB3gqadpLJroVsyR3rn1C+MtgI9vYxzkSAquEWGCixh5vB8t
+ NB9LPsaZxUsO4qZhaoYwtHiN/8WdNvJ3OaE1mrbGBdw3eKACLR
+ KedjW1yURh3FiEdi9aHD8aV9mqokqLOKqKpb/FCFtbvAjz0FqB
+ TKh+19O0DOrUKpSDLfeRq7XiJIE1hKG8j+SBlI1TwVWv8Dfve/
+ Jq/P42QqOQC5w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220998>
 
-From: "Simon Ruderich" <simon@ruderich.org>
-Sent: Friday, April 12, 2013 2:51 PM
-> Signed-off-by: Simon Ruderich <simon@ruderich.org>
+On Fri, 2013-04-12 at 09:08 -0700, Junio C Hamano wrote: 
+> Jeff King <peff@peff.net> writes:
+> 
+> >> How about "and make sure any Git configuration files", since there
+> >> might not be any Git configuration files.
+> >
+> > Yeah, that is better. Thanks.
+> 
+> OK, then...
+> 
+> -- >8 --
+> Subject: [PATCH] doc: clarify that "git daemon --user=<user>" option does not export HOME=~user
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> Helped-by: W. Trevor King <wking@tremily.us>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
-> On Tue, Apr 02, 2013 at 11:39:51PM +0100, Philip Oakley wrote:
->> --- a/help.c
->> +++ b/help.c
->> @@ -240,6 +241,23 @@ void list_common_cmds_help(void)
->>  }
->>  }
->>
->> +void list_common_guides_help(void)
->> +{
->> + int i, longest = 0;
->> +
->> + for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
->> + if (longest < strlen(common_guides[i].name))
->> + longest = strlen(common_guides[i].name);
->> + }
->> +
->> + puts(_("The common Git guides are:\n"));
->> + for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
->> + printf("   %s   ", common_guides[i].name);
->> + mput_char(' ', longest - strlen(common_guides[i].name));
->> + puts(_(common_guides[i].help));
->
-> common_guides[] is used here, but without N_() not picked up by
-> xgettext when creating the pot file.
+>  Documentation/git-daemon.txt | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+> index 7e5098a..2ac07ba 100644
+> --- a/Documentation/git-daemon.txt
+> +++ b/Documentation/git-daemon.txt
+> @@ -147,6 +147,13 @@ OPTIONS
+>  Giving these options is an error when used with `--inetd`; use
+>  the facility of inet daemon to achieve the same before spawning
+>  'git daemon' if needed.
+> ++
+> +Like many programs that switch user id, the daemon does not reset
+> +environment variables such as `$HOME` when it runs git programs,
+> +e.g. `upload-pack` and `receive-pack`. When using this option, you
+> +may also want to set and export `HOME` to point at the home
+> +directory of `<user>` before starting the daemon, and make sure any
+> +Git configuration files in that directory are readable by `<user>`.
 
-Yes. I mucked that up when I hacked the generate-cmdlist.sh to create 
-this list.
+The "you may want to.." is perhaps a little understated given it will
+fail -EGOAWAY if git-daemon is started via init scripts if you don't.
+(but otoh, that's enough of a hint to anyone setting the thing up, no
+need to write paragraphs of legal-beagle boiler-plate for dinky bug;)
 
-Acked-by: Philip Oakley <philipoakley@iee.org>
-
-At some point it is on my TODO list to extend the guide list mechanism 
-to all the community generated guides (option -gg) by extending the 
-command-list.txt file and the shell script.
-
->
-> Regards
-> Simon
->
-> builtin/help.c | 14 +++++++-------
-> 1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/builtin/help.c b/builtin/help.c
-> index 034c36c..062957f 100644
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
-> @@ -419,13 +419,13 @@ static struct {
->  const char *name;
->  const char *help;
-> } common_guides[] = {
-> - { "attributes", "Defining attributes per path" },
-> - { "glossary", "A Git glossary" },
-> - { "ignore", "Specifies intentionally untracked files to ignore" },
-> - { "modules", "Defining submodule properties" },
-> - { "revisions", "Specifying revisions and ranges for Git" },
-> - { "tutorial", "A tutorial introduction to Git (for version 1.5.1 or 
-> newer)" },
-> - { "workflows", "An overview of recommended workflows with Git"},
-> + { "attributes", N_("Defining attributes per path") },
-> + { "glossary", N_("A Git glossary") },
-> + { "ignore", N_("Specifies intentionally untracked files to 
-> ignore") },
-> + { "modules", N_("Defining submodule properties") },
-> + { "revisions", N_("Specifying revisions and ranges for Git") },
-> + { "tutorial", N_("A tutorial introduction to Git (for version 1.5.1 
-> or newer)") },
-> + { "workflows", N_("An overview of recommended workflows with 
-> Git") },
-> };
->
-> static void list_common_guides_help(void)
-> -- 
-> 1.8.2.481.g0d034d4
->
-> -- 
-> + privacy is necessary
-> + using gnupg http://gnupg.org
-> + public key id: 0x92FEFDB7E44C32F9
+-Mike 
