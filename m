@@ -1,140 +1,109 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: [PATCH] gitweb/INSTALL: Simplify description of GITWEB_CONFIG_SYSTEM
-Date: Sat, 13 Apr 2013 00:20:48 +0200
-Message-ID: <516888C0.90501@gmail.com>
-References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com> <85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com> <7v4nfch90r.fsf@alter.siamese.dyndns.org> <20130412064837.GA5710@elie.Belkin> <20130412064953.GB5710@elie.Belkin> <7vy5cnd0m4.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] push: introduce implicit push
+Date: Fri, 12 Apr 2013 15:28:30 -0700
+Message-ID: <7v38uvcrjl.fsf@alter.siamese.dyndns.org>
+References: <1365780835-2853-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-	Stefano Lattarini <stefano.lattarini@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 13 00:20:58 2013
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 13 00:28:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQmL4-0004j3-20
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 00:20:58 +0200
+	id 1UQmSY-00068r-5S
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 00:28:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752491Ab3DLWUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 18:20:54 -0400
-Received: from mail-ea0-f171.google.com ([209.85.215.171]:57814 "EHLO
-	mail-ea0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751998Ab3DLWUx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 18:20:53 -0400
-Received: by mail-ea0-f171.google.com with SMTP id b15so1417325eae.30
-        for <git@vger.kernel.org>; Fri, 12 Apr 2013 15:20:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=62AAUhfLh6beuinTvbQcfoMpVkqu0o7IAs162fzzD5o=;
-        b=EpZoPvyJBcNrZJHFAerbPvIEVn9itvS4T6BDepvjiM9maVOleSgQf46o6s9Pyek9rK
-         BeSzS5tk+DHymnHjFBWRtbsFNhkmp2qPVev2dqlmAVcxLzIuno7XSDrJ0w1aokXZtU/l
-         BmoCgSbvT9u+haI09Ymn4z/87hpVW7v2vJ5w0Ts86IkOXm4OZdIp1I/Fge6AGCMu69Fi
-         CWlA6/mNLupGGjB5GJxuWnRkwxufJAO712jSFlOLrvrrILiPpRgOpVXAsytqMkps7DZK
-         OAfnp3oqSWtUUAzeTtJU1DFiNAMvVr/mC9Hn7YI89KctYDlJo3MvhnhqL1FY2jQpn9R1
-         sknQ==
-X-Received: by 10.15.31.197 with SMTP id y45mr32410751eeu.18.1365805251985;
-        Fri, 12 Apr 2013 15:20:51 -0700 (PDT)
-Received: from [192.168.1.14] (aeed59.neoplus.adsl.tpnet.pl. [79.186.107.59])
-        by mx.google.com with ESMTPS id f47sm13368264eep.13.2013.04.12.15.20.49
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 12 Apr 2013 15:20:51 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <7vy5cnd0m4.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5.1
+	id S1752796Ab3DLW2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 18:28:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65391 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752577Ab3DLW2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 18:28:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B301716709;
+	Fri, 12 Apr 2013 22:28:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kNUvfbIsoDx+9m+XOTXZ2NKcDmo=; b=JoTL3h
+	THBZ33hu/mtONSc/+XSD0xSG41nw4cjK6QjmxhFFm+klsHSRkeQE8yYMPHqjzVF9
+	0tT1+f2SvIAtBxrwWaQINv3TSI6TVwAUrH57GtePpWnmDMGOgCstxY/bIxtvbZVx
+	nteCPk38VmzI4qwS/9IGq2GKYuK8Gdb7cFTQg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=S0JqB+Fvlq2+y8aQ16OhNPTOkwYCMVgO
+	GPbciBs9s2ktUYAJhcHgSpwZ+GJWR621gEskl57HKXXiM8wz83+X+R1sas7OvVyj
+	YWTpYuSDaxgpJREc3hqrMPthbM7aJg5dN7nwyPROVR4/ntsbbUX/1pyNR7GqGUhn
+	sviJJjC2htE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8A6316708;
+	Fri, 12 Apr 2013 22:28:33 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1325A16705; Fri, 12 Apr
+ 2013 22:28:31 +0000 (UTC)
+In-Reply-To: <1365780835-2853-1-git-send-email-artagnon@gmail.com> (Ramkumar
+ Ramachandra's message of "Fri, 12 Apr 2013 21:03:55 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4E84E338-A3C0-11E2-9A1D-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221033>
 
-On Fri, 12 April 2013, Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> Currently, there is no way to invoke 'git push' without explicitly
+> specifying the destination to push to as the first argument.  When
+> pushing several branches, this information is often available in
+> branch.<name>.pushremote, falling back to branch.<name>.remote.  So,
+> we can use this information to create a more pleasant push experience.
+> You can now do:
 >
->>    Note that if per-instance configuration file exists, then system-wide
->> -  configuration is _not used at all_.  This is quite untypical and suprising
->> +  configuration is _not used at all_.  This is quite untypical and surprising
->>    behavior.  On the other hand changing current behavior would break backwards
->>    compatibility and can lead to unexpected changes in gitweb behavior.
->>    Therefore gitweb also looks for common system-wide configuration file,
+>     $ git push master next pu
 >
-> Hmm, "atypical", isn't it?
->
-> The flow of the text is awkward.  "This is bad. Oh the other hand,
-> better is broken. Therefore ..." forces readers to make multiple
-> guesses while reading: "ok, bad, so you plan to change it and warn
-> us about upcoming change?  oh, not that, changing it is bad, so we
-> have to live with it?  oh, not that, there is another one that is
-> common and that is what we can use".
->
-> It may be a good idea to rewrite this paragraph to avoid such a
-> mental roller-coaster in the first place.
->
->     The GITWEB_CONFIG_SYSTEM system-wide configuration file is only
->     used for instances that lack per-instance configuration file.
->     You can use GITWEB_CONFIG_COMMON file to keep common default
->     settings that apply to all instances.
->
-> or something.
->
-> Not asking for a re-roll, but it may be a potential follow-up candidate.
+> If the branches master, next, and pu have different remotes, do_push()
+> will be executed three times on the three different remotes.
 
-Perhaps something like this?
+I am lukewarm on this one, slightly more close to negative than
+positive, for a couple of reasons.
 
-Note that this change avoids repetition of build / environmental
-configuration variable (I think the paragraph above, not touched
-in this patch, also might need rewrite).
+The primary reason is the confusion factor Jeff mentioned in the
+thread that inspired this patch.  People would realize it is very
+natural to decide where to push to based on what branch is being
+pushed, but only after they think it long and hard enough [*1*].  I
+suspect that it is an equally natural expectation for casual users
+that the destination is chosen based on the current branch, if only
+because that is what they are used to seeing when they say "git
+push" without any argument.
 
--- >8 --
-Subject: [PATCH] gitweb/INSTALL: Simplify description of GITWEB_CONFIG_SYSTEM
+Even though I personally am in favor of this "destination is tied to
+what is pushed out", not "destination is chosen based on the current
+branch", I can understand why some people would prefer the latter,
+and why they find it simpler and easier to explain.
 
-The flow of the text describing GITWEB_CONFIG_SYSTEM and
-GITWEB_CONFIG_COMMON in gitweb/INSTALL is awkward.  "This is
-bad. Oh the other hand, better is broken. Therefore ..." forces
-readers to make multiple guesses while reading: "ok, bad, so you plan
-to change it and warn us about upcoming change?  oh, not that,
-changing it is bad, so we have to live with it?  oh, not that, there
-is another one that is common and that is what we can use".
+The second reason is purely on the differences between what the
+above clean-nice explanation says and what the patch actually does.
 
-Better rewrite said paragraph to avoid such a mental roller-coaster in
-the first place.
+I think "is-possible-refspec" and "pushremote-get-for-refspec" are
+both way over-engineered, even for people who agree with me and the
+above introduction for this change to favor "destination depends on
+what branch is pushed out".  If is-possible-refspec is replaced with
+a much simpler to understand logic, "Is this a local branch name?",
+possibly combined with "There is no such path on the filesystem" and
+"It's not a defined remote" (iow, reject "git push master:next" and
+anything more complex) [*2*], I suspect it would be a bit more
+sellable.
 
-Signed-off-by: Junio Hamano <gitster@pobox.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/INSTALL |   14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 6d45406..7ad1050 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -243,14 +243,12 @@ for gitweb (in gitweb/README), and gitweb.conf(5) manpage.
-   GITWEB_CONFIG_SYSTEM build configuration variable, and override it
-   through the GITWEB_CONFIG_SYSTEM environment variable.
- 
--  Note that if per-instance configuration file exists, then system-wide
--  configuration is _not used at all_.  This is quite untypical and suprising
--  behavior.  On the other hand changing current behavior would break backwards
--  compatibility and can lead to unexpected changes in gitweb behavior.
--  Therefore gitweb also looks for common system-wide configuration file,
--  normally /etc/gitweb-common.conf (set during build time using build time
--  configuration variable GITWEB_CONFIG_COMMON, set it at runtime using
--  environment variable with the same name).  Settings from per-instance or
-+
-+  Note that the GITWEB_CONFIG_SYSTEM system-wide configuration file is
-+  only used for instances that lack per-instance configuration file.
-+  You can use GITWEB_CONFIG_COMMON common system-wide configuration
-+  file (normally /etc/gitweb-common.conf) to keep common default
-+  settings that apply to all instances.  Settings from per-instance or
-   system-wide configuration file override those from common system-wide
-   configuration file.
- 
--- 
-1.7.10.4
+[Footnote]
+
+*1* I've explained in a separate message why basing the destination
+on what is being pushed is logical and internally consistent.
+
+*2* This is in the same spirit (not implementation or design) as
+revname vs pathspec disambiguation.
