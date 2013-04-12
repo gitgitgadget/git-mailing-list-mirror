@@ -1,106 +1,90 @@
-From: Simon Ruderich <simon@ruderich.org>
-Subject: [PATCH] help: mark common_guides[] as translatable
-Date: Fri, 12 Apr 2013 15:51:42 +0200
-Message-ID: <20130412135142.GA29454@ruderich.org>
-References: <1364942392-576-1-git-send-email-philipoakley@iee.org>
- <1364942392-576-5-git-send-email-philipoakley@iee.org>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: Git crash in Ubuntu 12.04
+Date: Fri, 12 Apr 2013 18:05:25 +0400
+Message-ID: <20130412180525.aa5b8eacd691a427244d6ab5@domain007.com>
+References: <CAJiNi_FfU9Gsr2D9CcC0wWwgO1oKBXwxp87-wBUJBU2kyGaQNQ@mail.gmail.com>
+	<87mwt6ltia.fsf@linux-k42r.v.cablecom.net>
+	<CAJiNi_EgjgKs7oNJyGcamUFz=ARDAuBTb+bJ0uVsPFBMbZF3YA@mail.gmail.com>
+	<20130411170659.a35d2c581cf34ade13448bfa@domain007.com>
+	<CAJiNi_Gju2aJkVJJmoxnEAubfPvjaVhVF6DisaLn5kUJ3YRD=w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	"W. Trevor King" <wking@tremily.us>,
-	David Aguilar <davvid@gmail.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Apr 12 15:51:53 2013
+Cc: Konstantin Khomoutov <flatworm@users.sourceforge.net>,
+	Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
+To: Sivaram Kannan <siva.devel@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 12 16:05:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQeOO-0004GP-4M
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 15:51:52 +0200
+	id 1UQebv-0007sA-N7
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 16:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754798Ab3DLNvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 09:51:47 -0400
-Received: from zucker.schokokeks.org ([178.63.68.96]:41694 "EHLO
-	zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753307Ab3DLNvq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 09:51:46 -0400
-Received: from localhost (p54B5EE3B.dip.t-dialin.net [::ffff:84.181.238.59])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by zucker.schokokeks.org with ESMTPSA; Fri, 12 Apr 2013 15:51:45 +0200
-  id 000000000000004C.0000000051681171.0000409D
-Content-Disposition: inline
-In-Reply-To: <1364942392-576-5-git-send-email-philipoakley@iee.org>
-User-Agent: Mutt/1.5.21 (2013-03-19)
+	id S1751290Ab3DLOFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 10:05:47 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:46844 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750810Ab3DLOFq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 10:05:46 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r3CE5PBD003873;
+	Fri, 12 Apr 2013 18:05:26 +0400
+In-Reply-To: <CAJiNi_Gju2aJkVJJmoxnEAubfPvjaVhVF6DisaLn5kUJ3YRD=w@mail.gmail.com>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220980>
 
-Signed-off-by: Simon Ruderich <simon@ruderich.org>
----
-On Tue, Apr 02, 2013 at 11:39:51PM +0100, Philip Oakley wrote:
-> --- a/help.c
-> +++ b/help.c
-> @@ -240,6 +241,23 @@ void list_common_cmds_help(void)
->  	}
->  }
->
-> +void list_common_guides_help(void)
-> +{
-> +	int i, longest = 0;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
-> +		if (longest < strlen(common_guides[i].name))
-> +			longest = strlen(common_guides[i].name);
-> +	}
-> +
-> +	puts(_("The common Git guides are:\n"));
-> +	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
-> +		printf("   %s   ", common_guides[i].name);
-> +		mput_char(' ', longest - strlen(common_guides[i].name));
-> +		puts(_(common_guides[i].help));
+On Fri, 12 Apr 2013 18:58:24 +0530
+Sivaram Kannan <siva.devel@gmail.com> wrote:
 
-common_guides[] is used here, but without N_() not picked up by
-xgettext when creating the pot file.
+> > ^^^ Try to issue the
+> >
+> > $ ulimit -c unlimited
+> 
+> Have set the git user's crash limit to 1GB in
+> /etc/security/limits.conf and still getting the same error when
+> issuing gdb to the crash file.
 
-Regards
-Simon
+Yep, suppsedly in Ubuntu it's not that easy to just get a plain old
+coredump file -- see below.
 
- builtin/help.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+> > command in your shell before attempting the cloning -- this should
+> > remove the upper limit on the core file size.  And try look for the
+> > core file in the current directory after the crash occurs.  I'm not
+> > sure Ubuntu's "crash interceptor" won't kick in, but just in case...
+> 
+> You mean, /usr/bin/git? crash file for git is getting created each
+> time it crashes in /var/crash.
+> 
+> Can you please tell me what else I could try?
 
-diff --git a/builtin/help.c b/builtin/help.c
-index 034c36c..062957f 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -419,13 +419,13 @@ static struct {
- 	const char *name;
- 	const char *help;
- } common_guides[] = {
--	{ "attributes", "Defining attributes per path" },
--	{ "glossary", "A Git glossary" },
--	{ "ignore", "Specifies intentionally untracked files to ignore" },
--	{ "modules", "Defining submodule properties" },
--	{ "revisions", "Specifying revisions and ranges for Git" },
--	{ "tutorial", "A tutorial introduction to Git (for version 1.5.1 or newer)" },
--	{ "workflows", "An overview of recommended workflows with Git"},
-+	{ "attributes", N_("Defining attributes per path") },
-+	{ "glossary", N_("A Git glossary") },
-+	{ "ignore", N_("Specifies intentionally untracked files to ignore") },
-+	{ "modules", N_("Defining submodule properties") },
-+	{ "revisions", N_("Specifying revisions and ranges for Git") },
-+	{ "tutorial", N_("A tutorial introduction to Git (for version 1.5.1 or newer)") },
-+	{ "workflows", N_("An overview of recommended workflows with Git") },
- };
- 
- static void list_common_guides_help(void)
--- 
-1.8.2.481.g0d034d4
+Googling for "ubuntu+disable+crash" turns up that your Git crashes are
+handled by a system-wide tool called "apport" [1].
 
--- 
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
+Considering this, I would try to explore two routes:
+
+* [1] Tells that apport has a special tool, apport-retrace, which is
+  said to be able to download available matching debug packages, if
+  any, and generate the stack traces.  Basically this would do what
+  Thomas advised you to attempt to do using GDB.
+
+* Try to disable apprort permanently and then crash Git normally,
+  so that apport does not interfere with the crash and the kernel is
+  able to generate a regular core file in your current directory.
+  Be sure to verify the core-file-size limit has a sensibly large
+  value in your shell before attempting to do that.
+
+> Would upgrading to the 1.8.2.1 - latest in Ubuntu PPA would help?
+
+Yes, this is a viable way to try solving the problem.
+*But* there's a downside: the crash you're experiencing might affect
+later Git versions as well as yours.  And if you just throw your hands
+there, the bug will continue to be unfixed.  Hence I urge you to be a
+good F/OSS user and help the Git devs investigate the case.
+
+1. https://wiki.ubuntu.com/Apport
