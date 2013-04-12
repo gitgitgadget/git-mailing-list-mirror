@@ -1,289 +1,108 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH 3/4] log -L: store the path instead of a diff_filespec
-Date: Fri, 12 Apr 2013 18:05:11 +0200
-Message-ID: <c4624ce5d381c62e76939455458ae0033e6d1399.1365781999.git.trast@inf.ethz.ch>
-References: <cover.1365781999.git.trast@inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
+ permission problems as errors" busted git-daemon
+Date: Fri, 12 Apr 2013 09:08:31 -0700
+Message-ID: <7vk3o7g29s.fsf@alter.siamese.dyndns.org>
+References: <7vwqs8hmh1.fsf@alter.siamese.dyndns.org>
+ <20130411200330.GA15667@odin.tremily.us>
+ <7vip3shfpd.fsf@alter.siamese.dyndns.org>
+ <20130411222301.GA11283@sigill.intra.peff.net>
+ <20130412005748.GA17116@odin.tremily.us>
+ <7vvc7sfkwn.fsf@alter.siamese.dyndns.org>
+ <20130412043501.GA12942@sigill.intra.peff.net>
+ <7vr4igfj9w.fsf@alter.siamese.dyndns.org>
+ <20130412050550.GA15724@sigill.intra.peff.net>
+ <20130412112636.GC20178@odin.tremily.us>
+ <20130412144855.GA17968@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 12 18:05:43 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "W. Trevor King" <wking@tremily.us>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Mike Galbraith <bitbucket@online.de>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 12 18:08:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQgTq-0000ti-97
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 18:05:38 +0200
+	id 1UQgWn-0005WF-L7
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 18:08:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754849Ab3DLQF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 12:05:28 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:4869 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753500Ab3DLQFV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 12:05:21 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 12 Apr
- 2013 18:05:20 +0200
-Received: from linux-k42r.v.cablecom.net (213.55.184.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 12 Apr
- 2013 18:05:19 +0200
-X-Mailer: git-send-email 1.8.2.1.567.g8ad0f43
-In-Reply-To: <cover.1365781999.git.trast@inf.ethz.ch>
-X-Originating-IP: [213.55.184.233]
+	id S1752910Ab3DLQIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 12:08:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46790 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752591Ab3DLQIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 12:08:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7882137C2;
+	Fri, 12 Apr 2013 16:08:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=B6qRfHHNn1S+rrxpQNhJXkG9MLc=; b=W2vgOs
+	yyrpfbbhON1GthJ6k8yAACj28EZW2+vTJ1gr6daW17gWEmsegch/pxb/QBo1fyy2
+	VvpCscR2iL/ly3aRTq4LRmsPK0NYj/evH1Wr7NoHx0RKjwKVReOz/91RZN+rAmVe
+	AR+DLRWC2P/JOZkSDsoGBthBRr1aUc1obj1XQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E1FInviC+iTVD2AP5q9YFUgxRqrS0wzJ
+	hTXzkwvroIO9peqZ86KfIGXGETmKzUp3L1XavZAL/9sgEkGQydXH5JBut69JnWmD
+	/jLJg+qAXi0vuPhBzATwo3ewLenWwdBN3eVUe+yASKo0zpRMad6+XHRh1Icawc+o
+	ygGsTTNreJE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF20A137BF;
+	Fri, 12 Apr 2013 16:08:35 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3319A137B4; Fri, 12 Apr
+ 2013 16:08:35 +0000 (UTC)
+In-Reply-To: <20130412144855.GA17968@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 12 Apr 2013 10:48:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3A926C0E-A38B-11E2-9B9D-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220992>
 
-line_log_data has held a diff_filespec* since the very early versions
-of the code.  However, the only place in the code where we actually
-need the full filespec is parse_range_arg(); in all other cases, we
-are only interested in the path, so there is hardly a reason to store
-a filespec.  Even worse, it causes a lot of redundant ->spec->path
-pointer dereferencing.
+Jeff King <peff@peff.net> writes:
 
-And *even* worse, it caused the following bug.  If you merge a rename
-with a modification to the old filename, like so:
+>> How about "and make sure any Git configuration files", since there
+>> might not be any Git configuration files.
+>
+> Yeah, that is better. Thanks.
 
-  * Merge
-  | \
-  |  * Modify foo
-  |  |
-  *  | Rename foo->bar
-  | /
-  * Create foo
+OK, then...
 
-we internally -- in process_ranges_merge_commit() -- scan all parents.
-We are mainly looking for one that doesn't have any modifications, so
-that we can assign all the blame to it and simplify away the merge.
-In doing so, we run the normal machinery on all parents in a loop.
-For each parent, we prepare a "working set" line_log_data by making a
-copy with line_log_data_copy(), which does *not* make a copy of the
-spec.
+-- >8 --
+Subject: [PATCH] doc: clarify that "git daemon --user=<user>" option does not export HOME=~user
 
-Now suppose the rename is the first parent.  The diff machinery tells
-us that the filepair is ('foo', 'bar').  We duly update the path we
-are interested in:
-
-  rg->spec->path = xstrdup(pair->one->path);
-
-But that 'struct spec' is shared between the output line_log_data and
-the original input line_log_data.  So we just wrecked the state of
-process_ranges_merge_commit().  When we get around to the second
-parent, the ranges tell us we are interested in a file 'foo' while the
-commits touch 'bar'.
-
-So most of this patch is just s/->spec->path/->path/ and associated
-management changes.  This implicitly fixes the bug because we removed
-the shared parts between input and output of line_log_data_copy(); it
-is now safe to overwrite the path in the copy.
-
-There's one only somewhat related change: the comment in
-process_all_files() explains the reasoning behind using 'range' there.
-That bit of half-correct code had me sidetracked for a while.
-
-Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+Signed-off-by: Jeff King <peff@peff.net>
+Helped-by: W. Trevor King <wking@tremily.us>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- line-log.c          | 45 ++++++++++++++++++++++++---------------------
- line-log.h          |  8 ++++++--
- t/t4211-line-log.sh |  2 +-
- 3 files changed, 31 insertions(+), 24 deletions(-)
+ Documentation/git-daemon.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/line-log.c b/line-log.c
-index 85c7c24..44d1cd5 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -265,7 +265,7 @@ static void free_line_log_data(struct line_log_data *r)
- 	if (insertion_point)
- 		*insertion_point = NULL;
- 	while (p) {
--		int cmp = strcmp(p->spec->path, path);
-+		int cmp = strcmp(p->path, path);
- 		if (!cmp)
- 			return p;
- 		if (insertion_point && cmp < 0)
-@@ -275,22 +275,26 @@ static void free_line_log_data(struct line_log_data *r)
- 	return NULL;
- }
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index 7e5098a..2ac07ba 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -147,6 +147,13 @@ OPTIONS
+ Giving these options is an error when used with `--inetd`; use
+ the facility of inet daemon to achieve the same before spawning
+ 'git daemon' if needed.
+++
++Like many programs that switch user id, the daemon does not reset
++environment variables such as `$HOME` when it runs git programs,
++e.g. `upload-pack` and `receive-pack`. When using this option, you
++may also want to set and export `HOME` to point at the home
++directory of `<user>` before starting the daemon, and make sure any
++Git configuration files in that directory are readable by `<user>`.
  
-+/*
-+ * Note: takes ownership of 'path', which happens to be what the only
-+ * caller needs.
-+ */
- static void line_log_data_insert(struct line_log_data **list,
--				 struct diff_filespec *spec,
-+				 char *path,
- 				 long begin, long end)
- {
- 	struct line_log_data *ip;
--	struct line_log_data *p = search_line_log_data(*list, spec->path, &ip);
-+	struct line_log_data *p = search_line_log_data(*list, path, &ip);
- 
- 	if (p) {
- 		range_set_append_unsafe(&p->ranges, begin, end);
- 		sort_and_merge_range_set(&p->ranges);
--		free_filespec(spec);
-+		free(path);
- 		return;
- 	}
- 
- 	p = xcalloc(1, sizeof(struct line_log_data));
--	p->spec = spec;
-+	p->path = path;
- 	range_set_append(&p->ranges, begin, end);
- 	if (ip) {
- 		p->next = ip->next;
-@@ -354,7 +358,7 @@ static void dump_line_log_data(struct line_log_data *r)
- {
- 	char buf[4096];
- 	while (r) {
--		snprintf(buf, 4096, "file %s\n", r->spec->path);
-+		snprintf(buf, 4096, "file %s\n", r->path);
- 		dump_range_set(&r->ranges, buf);
- 		r = r->next;
- 	}
-@@ -561,7 +565,7 @@ static const char *nth_line(void *data, long line)
- 
- 	for_each_string_list_item(item, args) {
- 		const char *name_part, *range_part;
--		const char *full_name;
-+		char *full_name;
- 		struct diff_filespec *spec;
- 		long begin = 0, end = 0;
- 
-@@ -584,7 +588,7 @@ static const char *nth_line(void *data, long line)
- 
- 		if (parse_range_arg(range_part, nth_line, &cb_data,
- 				    lines, &begin, &end,
--				    spec->path))
-+				    full_name))
- 			die("malformed -L argument '%s'", range_part);
- 		if (begin < 1)
- 			begin = 1;
-@@ -593,8 +597,9 @@ static const char *nth_line(void *data, long line)
- 		begin--;
- 		if (lines < end || lines < begin)
- 			die("file %s has only %ld lines", name_part, lines);
--		line_log_data_insert(&ranges, spec, begin, end);
-+		line_log_data_insert(&ranges, full_name, begin, end);
- 
-+		free_filespec(spec);
- 		free(ends);
- 		ends = NULL;
- 	}
-@@ -610,9 +615,7 @@ static struct line_log_data *line_log_data_copy_one(struct line_log_data *r)
- 	line_log_data_init(ret);
- 	range_set_copy(&ret->ranges, &r->ranges);
- 
--	ret->spec = r->spec;
--	assert(ret->spec);
--	ret->spec->count++;
-+	ret->path = xstrdup(r->path);
- 
- 	return ret;
- }
-@@ -652,7 +655,7 @@ static struct line_log_data *line_log_data_merge(struct line_log_data *a,
- 		else if (!b)
- 			cmp = -1;
- 		else
--			cmp = strcmp(a->spec->path, b->spec->path);
-+			cmp = strcmp(a->path, b->path);
- 		if (cmp < 0) {
- 			src = a;
- 			a = a->next;
-@@ -667,8 +670,7 @@ static struct line_log_data *line_log_data_merge(struct line_log_data *a,
- 		}
- 		d = xmalloc(sizeof(struct line_log_data));
- 		line_log_data_init(d);
--		d->spec = src->spec;
--		d->spec->count++;
-+		d->path = xstrdup(src->path);
- 		*pp = d;
- 		pp = &d->next;
- 		if (src2)
-@@ -741,7 +743,7 @@ void line_log_init(struct rev_info *rev, const char *prefix, struct string_list
- 		paths = xmalloc((count+1)*sizeof(char *));
- 		r = range;
- 		for (i = 0; i < count; i++) {
--			paths[i] = xstrdup(r->spec->path);
-+			paths[i] = xstrdup(r->path);
- 			r = r->next;
- 		}
- 		paths[count] = NULL;
-@@ -797,7 +799,7 @@ static void filter_diffs_for_paths(struct line_log_data *range, int keep_deletio
- 			continue;
- 		}
- 		for (rg = range; rg; rg = rg->next) {
--			if (!strcmp(rg->spec->path, p->two->path))
-+			if (!strcmp(rg->path, p->two->path))
- 				break;
- 		}
- 		if (rg)
-@@ -1021,8 +1023,8 @@ static int process_diff_filepair(struct rev_info *rev,
- 
- 	assert(pair->two->path);
- 	while (rg) {
--		assert(rg->spec->path);
--		if (!strcmp(rg->spec->path, pair->two->path))
-+		assert(rg->path);
-+		if (!strcmp(rg->path, pair->two->path))
- 			break;
- 		rg = rg->next;
- 	}
-@@ -1050,7 +1052,8 @@ static int process_diff_filepair(struct rev_info *rev,
- 	collect_diff(&file_parent, &file_target, &diff);
- 
- 	/* NEEDSWORK should apply some heuristics to prevent mismatches */
--	rg->spec->path = xstrdup(pair->one->path);
-+	free(rg->path);
-+	rg->path = xstrdup(pair->one->path);
- 
- 	range_set_init(&tmp, 0);
- 	range_set_map_across_diff(&tmp, &rg->ranges, &diff, diff_out);
-@@ -1096,7 +1099,7 @@ static int process_all_files(struct line_log_data **range_out,
- 			struct line_log_data *rg = range;
- 			changed++;
- 			/* NEEDSWORK tramples over data structures not owned here */
--			while (rg && strcmp(rg->spec->path, queue->queue[i]->two->path))
-+			while (rg && strcmp(rg->path, queue->queue[i]->two->path))
- 				rg = rg->next;
- 			assert(rg);
- 			rg->pair = diff_filepair_dup(queue->queue[i]);
-diff --git a/line-log.h b/line-log.h
-index 9acd123..8bea45f 100644
---- a/line-log.h
-+++ b/line-log.h
-@@ -26,10 +26,14 @@ struct diff_ranges {
- };
- 
- /* Linked list of interesting files and their associated ranges.  The
-- * list must be kept sorted by spec->path */
-+ * list must be kept sorted by path.
-+ *
-+ * For simplicity, even though this is highly redundant, each
-+ * line_log_data owns its 'path'.
-+ */
- struct line_log_data {
- 	struct line_log_data *next;
--	struct diff_filespec *spec;
-+	char *path;
- 	char status;
- 	struct range_set ranges;
- 	int arg_alloc, arg_nr;
-diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
-index bba0b09..7776f93 100755
---- a/t/t4211-line-log.sh
-+++ b/t/t4211-line-log.sh
-@@ -45,7 +45,7 @@ canned_test "-L '/long f/',/^}/:a.c -L /main/,/^}/:a.c simple" two-ranges
- canned_test "-L 24,+1:a.c simple" vanishes-early
- 
- canned_test "-M -L '/long f/,/^}/:b.c' move-support" move-support-f
--canned_test_failure "-M -L ':f:b.c' parallel-change" parallel-change-f-to-main
-+canned_test "-M -L ':f:b.c' parallel-change" parallel-change-f-to-main
- 
- canned_test "-L 4,12:a.c -L :main:a.c simple" multiple
- canned_test "-L 4,18:a.c -L :main:a.c simple" multiple-overlapping
+ --enable=<service>::
+ --disable=<service>::
 -- 
-1.8.2.1.567.g8ad0f43
+1.8.2.1-472-g6c5785c
