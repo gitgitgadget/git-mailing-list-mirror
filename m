@@ -1,236 +1,111 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] config: allow inaccessible configuration under $HOME
-Date: Fri, 12 Apr 2013 12:14:33 -0700
-Message-ID: <20130412191433.GR27070@google.com>
-References: <20130412005748.GA17116@odin.tremily.us>
- <7vvc7sfkwn.fsf@alter.siamese.dyndns.org>
- <20130412043501.GA12942@sigill.intra.peff.net>
- <7vr4igfj9w.fsf@alter.siamese.dyndns.org>
- <20130412050550.GA15724@sigill.intra.peff.net>
- <20130412112636.GC20178@odin.tremily.us>
- <20130412144855.GA17968@sigill.intra.peff.net>
- <7vk3o7g29s.fsf@alter.siamese.dyndns.org>
- <20130412161600.GA20492@sigill.intra.peff.net>
- <20130412170505.GA2383@sigill.intra.peff.net>
+From: Pali =?utf-8?q?Roh=C3=A1r?= <pali.rohar@gmail.com>
+Subject: Re: Bug: git push crashing
+Date: Fri, 12 Apr 2013 21:32:59 +0200
+Message-ID: <201304122132.59464@pali>
+References: <201304122050.26471@pali> <20130412190630.GM2222@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"W. Trevor King" <wking@tremily.us>,
-	Mike Galbraith <bitbucket@online.de>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 12 21:14:44 2013
+Content-Type: multipart/signed;
+  boundary="nextPart6618889.Y5tEnS0VAS";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri Apr 12 21:33:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQjQp-00088n-9k
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 21:14:43 +0200
+	id 1UQjig-0000qG-Dm
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 21:33:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703Ab3DLTOj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 15:14:39 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:51970 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751504Ab3DLTOi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 15:14:38 -0400
-Received: by mail-pb0-f53.google.com with SMTP id un15so1560562pbc.40
-        for <git@vger.kernel.org>; Fri, 12 Apr 2013 12:14:37 -0700 (PDT)
+	id S1753296Ab3DLTdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 15:33:04 -0400
+Received: from mail-ee0-f48.google.com ([74.125.83.48]:41421 "EHLO
+	mail-ee0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753037Ab3DLTdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 15:33:03 -0400
+Received: by mail-ee0-f48.google.com with SMTP id b15so1448204eek.35
+        for <git@vger.kernel.org>; Fri, 12 Apr 2013 12:33:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=gIoUmMJ+jSKsnxH03hitYEZzexSqK0k7V3DS9wvojeY=;
-        b=iZ6QjWEeHr18/teufxr4ebM7MuRbdwLF+D+4Ji221qFwBWbtNwn2iF681aEvXVx/fR
-         SoxT/lb9UNkPrWme1/0PCgvgdSUCheFpP+S0M+h4zG4pi4wsx2D8aShLsji3dI7RHJ07
-         mpm7973e31FIo35Hng7qyqjd+V2Kb6MdBbR8QYzJicTftkBBWnwcl5R2sdVZFrJTdM+W
-         U2O62RfHkWz9lK+HfMtqpkOVuYbvjVRsGLmdPVwz+wH2npoEJR5PfU0RiVekoQ5sD7VQ
-         q/csTpJB82kUP5zcUMrZUEGDezTDUTx1l7qJ6dqE+/dp++pXTp0y+G3+rSiJqz3yBJV4
-         vUDg==
-X-Received: by 10.66.172.77 with SMTP id ba13mr17097865pac.63.1365794077849;
-        Fri, 12 Apr 2013 12:14:37 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPS id ao5sm7509945pbc.25.2013.04.12.12.14.35
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 12 Apr 2013 12:14:36 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130412170505.GA2383@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-received:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :message-id;
+        bh=YIiHJJyV59MIKs+Je9jHB7y3LB/6GYkV7NcMLBGYGfc=;
+        b=03C/Mpdv4l/wrYDVRDrraNa+ffT+xeMUvGuUc71Tm1w56n+RHvxZfobT6s0WfpMrI+
+         Su76YaEQsQKR6GWdGiyitU2/ZI2ILfngRzUjb+4XmgU9rfuvobvFOgrmZy4tLPaAEj0i
+         nIfscyH3HptbnARNbzb2I2IDje6JIPDZ7kLTfO/fgWz7tBFPtmhh5hVLFx9Mkg48wAho
+         dbHIY1n+9Sfo0oaIBHzKPNmOEJd9iMiMHVqDKId4r7c1hJ6wf1O1YPmboTSL5k63noO4
+         VUiJbA6dA0jnpbENjCKj10eS0Wdb0oLgaiuwF7RszAKlhmOwNALHLKcdbWzj2Kf1OcrT
+         ZDhQ==
+X-Received: by 10.14.89.69 with SMTP id b45mr31186138eef.10.1365795181869;
+        Fri, 12 Apr 2013 12:33:01 -0700 (PDT)
+Received: from pali-elitebook.localnet (pali.kolej.mff.cuni.cz. [78.128.193.202])
+        by mx.google.com with ESMTPS id f47sm12699402eep.13.2013.04.12.12.33.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 12 Apr 2013 12:33:00 -0700 (PDT)
+User-Agent: KMail/1.13.7 (Linux/3.5.0-27-generic; KDE/4.10.2; x86_64; ; )
+In-Reply-To: <20130412190630.GM2222@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221018>
 
-One unexpected downside to the changes v1.7.12.1~2^2~4 (config: warn
-on inaccessible files, 2012-08-21) and v1.8.1.1~22^2~2 (config: treat
-user and xdg config permission problems as errors, 2012-10-13) is that
-they often trip when git is being run as a server.  The appropriate
-daemon (sshd, inetd, git-daemon, etc) starts as "root", creates a
-listening socket, and then drops privileges, meaning that when git
-commands are invoked they cannot access $HOME and die with
+--nextPart6618889.Y5tEnS0VAS
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
- fatal: unable to access '/root/.config/git/config': Permission denied
+On Friday 12 April 2013 21:06:31 John Keeping wrote:
+> On Fri, Apr 12, 2013 at 08:50:25PM +0200, Pali Roh=C3=A1r wrote:
+> > when I'm trying to push one specific branch from my git
+> > repository to server, git push crashing. Pushing branch is
+> > rejected by server (because non fast forward), but local
+> > git app should not crash.
+> >=20
+> > I'm using git from ubuntu apt repository (compiled myself
+> > for debug symbols), version git_1.7.10.4-1ubuntu1 on amd64
+> > ubuntu system:
+> > http://packages.ubuntu.com/source/quantal/git
+> >=20
+> > Here are gdb backtrace and valgrind outputs. I changed
+> > server, repo and branch strings from output. It looks like
+> > that git crashing in strcmp function because one of
+> > arguments is NULL.
+> >=20
+> > If you need more info, I can send it. This crash occur
+> > always. I can reproduce it again and again...
+>=20
+> This looks like the same issue that was fixed by commit
+> 1d2c14d (push: fix segfault when HEAD points nowhere -
+> 2013-01-31).
+>=20
+> Can you try again with Git 1.8.2 and see if the crash still
+> happens?
 
-The intent was always to prevent important configuration (think
-"[transfer] fsckobjects") from being ignored when the configuration is
-unintentionally unreadable (for example with ENOMEM due to a DoS
-attack).  But that is not worth breaking these cases of
-drop-privileges-without-resetting-HOME that were working fine before.
+Hello, now I tried version 1.8.2.1 and git push not crashing :-)=20
+I also tried version 1.8.1 and as expected it crashed.
 
-Treat user and xdg configuration that is inaccessible due to
-permissions (EACCES) as though no user configuration was provided at
-all.
+So thanks for quick reply, seems that this problem is already=20
+fixed in 1.8.2.
 
-An alternative approach would be to check if $HOME is readable, but
-that would not solve the problem in cases where the user who dropped
-privileges had a globally readable HOME with only .config or
-.gitconfig being private.
+=2D-=20
+Pali Roh=C3=A1r
+pali.rohar@gmail.com
 
-This does not change the behavior when "git config" is being used to
-write to a user's config file, when /etc/gitconfig or .git/config is
-unreadable (since those are more serious configuration errors), or
-when ~/.gitconfig or ~/.config/git is unreadable due to problems other
-than permissions.
+--nextPart6618889.Y5tEnS0VAS
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-Thanks to Mike Galbraith, W. Trevor King, and Jeff King for their
-patient explanations.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Jeff King wrote:
+iEYEABECAAYFAlFoYWsACgkQi/DJPQPkQ1INJgCcCdgE958KK4JmNrn7iwwnhPaX
+UycAn2T8Q0GbhVgSpmFOryRad/PUsNpX
+=f4eo
+-----END PGP SIGNATURE-----
 
-> Given how tight the exception is, I almost wonder if we should drop the
-> environment variable completely, and just never complain about this case
-> (in other words, just make it a loosening of 96b9e0e3).
-
-Yeah, I think that would be better.
-
-How about this?  (Still needs tests.)
-
- builtin/config.c  |  4 ++--
- config.c          | 10 +++++-----
- dir.c             |  4 ++--
- git-compat-util.h |  5 +++--
- wrapper.c         | 10 ++++++----
- 5 files changed, 18 insertions(+), 15 deletions(-)
-
-diff --git a/builtin/config.c b/builtin/config.c
-index 33c9bf9..19ffcaf 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -379,8 +379,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			 */
- 			die("$HOME not set");
- 
--		if (access_or_warn(user_config, R_OK) &&
--		    xdg_config && !access_or_warn(xdg_config, R_OK))
-+		if (access_or_warn(user_config, R_OK, 0) &&
-+		    xdg_config && !access_or_warn(xdg_config, R_OK, 0))
- 			given_config_file = xdg_config;
- 		else
- 			given_config_file = user_config;
-diff --git a/config.c b/config.c
-index aefd80b..830ee14 100644
---- a/config.c
-+++ b/config.c
-@@ -58,7 +58,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 		path = buf.buf;
- 	}
- 
--	if (!access_or_die(path, R_OK)) {
-+	if (!access_or_die(path, R_OK, 0)) {
- 		if (++inc->depth > MAX_INCLUDE_DEPTH)
- 			die(include_depth_advice, MAX_INCLUDE_DEPTH, path,
- 			    cf && cf->name ? cf->name : "the command line");
-@@ -954,23 +954,23 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- 
- 	home_config_paths(&user_config, &xdg_config, "config");
- 
--	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK)) {
-+	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0)) {
- 		ret += git_config_from_file(fn, git_etc_gitconfig(),
- 					    data);
- 		found += 1;
- 	}
- 
--	if (xdg_config && !access_or_die(xdg_config, R_OK)) {
-+	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK)) {
- 		ret += git_config_from_file(fn, xdg_config, data);
- 		found += 1;
- 	}
- 
--	if (user_config && !access_or_die(user_config, R_OK)) {
-+	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK)) {
- 		ret += git_config_from_file(fn, user_config, data);
- 		found += 1;
- 	}
- 
--	if (repo_config && !access_or_die(repo_config, R_OK)) {
-+	if (repo_config && !access_or_die(repo_config, R_OK, 0)) {
- 		ret += git_config_from_file(fn, repo_config, data);
- 		found += 1;
- 	}
-diff --git a/dir.c b/dir.c
-index 91cfd99..9cb2f3d 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1637,9 +1637,9 @@ void setup_standard_excludes(struct dir_struct *dir)
- 		home_config_paths(NULL, &xdg_path, "ignore");
- 		excludes_file = xdg_path;
- 	}
--	if (!access_or_warn(path, R_OK))
-+	if (!access_or_warn(path, R_OK, 0))
- 		add_excludes_from_file(dir, path);
--	if (excludes_file && !access_or_warn(excludes_file, R_OK))
-+	if (excludes_file && !access_or_warn(excludes_file, R_OK, 0))
- 		add_excludes_from_file(dir, excludes_file);
- }
- 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index cde442f..51a29b8 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -691,8 +691,9 @@ int remove_or_warn(unsigned int mode, const char *path);
-  * Call access(2), but warn for any error except "missing file"
-  * (ENOENT or ENOTDIR).
-  */
--int access_or_warn(const char *path, int mode);
--int access_or_die(const char *path, int mode);
-+#define ACCESS_EACCES_OK (1U << 0)
-+int access_or_warn(const char *path, int mode, unsigned flag);
-+int access_or_die(const char *path, int mode, unsigned flag);
- 
- /* Warn on an inaccessible file that ought to be accessible */
- void warn_on_inaccessible(const char *path);
-diff --git a/wrapper.c b/wrapper.c
-index bac59d2..e860ad1 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -408,18 +408,20 @@ void warn_on_inaccessible(const char *path)
- 	warning(_("unable to access '%s': %s"), path, strerror(errno));
- }
- 
--int access_or_warn(const char *path, int mode)
-+int access_or_warn(const char *path, int mode, unsigned flag)
- {
- 	int ret = access(path, mode);
--	if (ret && errno != ENOENT && errno != ENOTDIR)
-+	if (ret && errno != ENOENT && errno != ENOTDIR &&
-+	    (!(flag & ACCESS_EACCES_OK) || errno != EACCES))
- 		warn_on_inaccessible(path);
- 	return ret;
- }
- 
--int access_or_die(const char *path, int mode)
-+int access_or_die(const char *path, int mode, unsigned flag)
- {
- 	int ret = access(path, mode);
--	if (ret && errno != ENOENT && errno != ENOTDIR)
-+	if (ret && errno != ENOENT && errno != ENOTDIR &&
-+	    (!(flag & ACCESS_EACCES_OK) || errno != EACCES))
- 		die_errno(_("unable to access '%s'"), path);
- 	return ret;
- }
--- 
-1.8.2.1
+--nextPart6618889.Y5tEnS0VAS--
