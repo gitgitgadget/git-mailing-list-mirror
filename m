@@ -1,72 +1,70 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH v2] Fix various typos and grammaros
-Date: Fri, 12 Apr 2013 10:16:43 +0200
-Message-ID: <5167C2EB.7010709@gmail.com>
-References: <CAPig+cSXC6cA8gc1T=byqeQF_gUYKpHTjpTt54Xog=jtfdgMwA@mail.gmail.com> <85f4e2b8e40efb234a7fc0d0ce0d40562690d001.1365719690.git.stefano.lattarini@gmail.com> <7v4nfch90r.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: What's cooking in git.git (Apr 2013, #02; Fri, 5)
+Date: Fri, 12 Apr 2013 11:56:11 +0200
+Message-ID: <87ppy0gjic.fsf@linux-k42r.v.cablecom.net>
+References: <7vip40bolc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: sunshine@sunshineco.com, git@vger.kernel.org
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 12 10:17:06 2013
+X-From: git-owner@vger.kernel.org Fri Apr 12 11:56:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQZAO-00029T-5u
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 10:17:04 +0200
+	id 1UQaiX-0006At-Cj
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 11:56:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754728Ab3DLIQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 04:16:49 -0400
-Received: from mail-ee0-f48.google.com ([74.125.83.48]:60992 "EHLO
-	mail-ee0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753974Ab3DLIQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 04:16:47 -0400
-Received: by mail-ee0-f48.google.com with SMTP id b15so1110506eek.7
-        for <git@vger.kernel.org>; Fri, 12 Apr 2013 01:16:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=M+4wM2ZLB3ay9xh92as5oiGbjfwnGuSomAVRtPvBDWI=;
-        b=yWQ6jR8O6wvC2B9IbTTNJdld8nXt9fFD1yC7TNdj6lmdh+Br10MRudq7PnpYrPNes3
-         2/p4ZtxQgDVmXwV/NeMdcfDrnNNLDBwBGcULhnOkiPCb1TzdRrG22yGDa1TNWQDEjxnb
-         JHtr2XdgGe/3VceZAMkE9UkssF2+Is3lnpMoSn3DEqv4RzQyQ/wH9j8B07IGGcTBhBac
-         LKZQiDCa2xfIcq1aGsUMSpgDIXdZoArmbiC7GTvDQmlrDg3pWCG9dwvoWKn+zifBN6Qh
-         zDKC5Ubyfhv/567zt62tNU/n/tUG1RiKlisVP+7mzodto/jP90yWXILIIWnVptWaccxL
-         cBtg==
-X-Received: by 10.15.48.4 with SMTP id g4mr25638270eew.28.1365754606130;
-        Fri, 12 Apr 2013 01:16:46 -0700 (PDT)
-Received: from [192.168.178.20] (host93-95-dynamic.6-79-r.retail.telecomitalia.it. [79.6.95.93])
-        by mx.google.com with ESMTPS id u44sm9824184eel.7.2013.04.12.01.16.44
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 12 Apr 2013 01:16:45 -0700 (PDT)
-In-Reply-To: <7v4nfch90r.fsf@alter.siamese.dyndns.org>
+	id S1752910Ab3DLJ4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 05:56:14 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:39108 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751215Ab3DLJ4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 05:56:13 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 12 Apr
+ 2013 11:56:09 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Fri, 12 Apr 2013 11:56:11 +0200
+In-Reply-To: <7vip40bolc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 05 Apr 2013 15:27:11 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220973>
 
-Hi Junio.
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 04/12/2013 02:45 AM, Junio C Hamano wrote:
-> Stefano Lattarini <stefano.lattarini@gmail.com> writes:
-> 
-> How much of this stuff have interact with real changes that are in
-> flight, with various doneness cooking in different integration
-> branches?
-> 
-I don't know, since I only follow the master branch of Git.  And
-honestly, I don't have time right now to go checking for possible
-conflicts, or to resubmit ...   But I see Jonathan has taken up
-the ball on this (thanks Jonathan!), so I'll leave the matter to
-him.
+> * tr/line-log (2013-04-05) 7 commits
+>   (merged to 'next' on 2013-04-05 at 5afb00c)
+>  + log -L: fix overlapping input ranges
+>  + log -L: check range set invariants when we look it up
+>   (merged to 'next' on 2013-04-01 at 5be920c)
+>  + Speed up log -L... -M
+>  + log -L: :pattern:file syntax to find by funcname
+>  + Implement line-history search (git log -L)
+>  + Export rewrite_parents() for 'log -L'
+>  + Refactor parse_loc
+>
+>  Will merge down to 'master'
 
-Next time I'll try to prepare a patch broken up in more digestible
-pieces, so that it will be easier for you to deal with conflicts,
-and/or to selectively decide which fixes are worth applying.
+I did some fuzz-testing, choosing random commits and ranges from files
+and running log -L on them.
 
-Thanks, and sorry for the confusion,
-  Stefano
+While the good news is that I couldn't break ordinary log -L, there's a
+rather embarassing pair of bugs: -M is completely broken (at least when
+it would do any good) and the tests that claim to look at move support
+actually don't pass -M.
+
+So please hold off merging, I'll try to get this fixed this weekend.
+
+Sorry for the trouble!
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
