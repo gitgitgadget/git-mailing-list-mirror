@@ -1,100 +1,91 @@
-From: Mike Galbraith <bitbucket@online.de>
-Subject: Re: regression: "96b9e0e3 config: treat user and xdg config
- permission problems as errors" busted git-daemon
-Date: Fri, 12 Apr 2013 18:21:06 +0200
-Message-ID: <1365783666.5814.21.camel@marge.simpson.net>
-References: <7vwqs8hmh1.fsf@alter.siamese.dyndns.org>
-	 <20130411200330.GA15667@odin.tremily.us>
-	 <7vip3shfpd.fsf@alter.siamese.dyndns.org>
-	 <20130411222301.GA11283@sigill.intra.peff.net>
-	 <20130412005748.GA17116@odin.tremily.us>
-	 <7vvc7sfkwn.fsf@alter.siamese.dyndns.org>
-	 <20130412043501.GA12942@sigill.intra.peff.net>
-	 <7vr4igfj9w.fsf@alter.siamese.dyndns.org>
-	 <20130412050550.GA15724@sigill.intra.peff.net>
-	 <20130412112636.GC20178@odin.tremily.us>
-	 <20130412144855.GA17968@sigill.intra.peff.net>
-	 <7vk3o7g29s.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pull: fail early if we know we can't merge from upstream
+Date: Fri, 12 Apr 2013 09:35:10 -0700
+Message-ID: <7v38uvg11d.fsf@alter.siamese.dyndns.org>
+References: <1365686801-17206-1-git-send-email-cmn@elego.de>
+ <7v1uahj7do.fsf@alter.siamese.dyndns.org>
+ <1365761838.2468.21.camel@flaca.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
-	Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 12 18:22:51 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Fri Apr 12 18:35:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQgkP-0001HK-MI
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 18:22:46 +0200
+	id 1UQgwa-00031c-Kj
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Apr 2013 18:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754763Ab3DLQWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 12:22:43 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:65477 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754678Ab3DLQWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 12:22:40 -0400
-Received: from [192.168.178.27] (p4FE19057.dip0.t-ipconnect.de [79.225.144.87])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0LcVQE-1Uspzp396c-00jlRz; Fri, 12 Apr 2013 18:21:08 +0200
-In-Reply-To: <7vk3o7g29s.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 3.2.3 
-X-Provags-ID: V02:K0:C1njbpn0bDDzJ6zippC3elNC0AA9U53hUFvRxny4pq6
- YZoEfj9MfrMydgCAJvjB0x2vn7Da7F8dHM/U7gYefTWGBrhp3I
- kNSNAILrfrLCAogsQ7QFusygVmS7hmEuwkHgv7Qa0TRwXJsJhJ
- F5qLq7nIZo6tIhQTqSwS/jgiWwNjwy0OZ6+JT+txQoxCMAHmpG
- xFtB3gqadpLJroVsyR3rn1C+MtgI9vYxzkSAquEWGCixh5vB8t
- NB9LPsaZxUsO4qZhaoYwtHiN/8WdNvJ3OaE1mrbGBdw3eKACLR
- KedjW1yURh3FiEdi9aHD8aV9mqokqLOKqKpb/FCFtbvAjz0FqB
- TKh+19O0DOrUKpSDLfeRq7XiJIE1hKG8j+SBlI1TwVWv8Dfve/
- Jq/P42QqOQC5w==
+	id S1753081Ab3DLQfO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Apr 2013 12:35:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59423 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752441Ab3DLQfM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Apr 2013 12:35:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64A681508F;
+	Fri, 12 Apr 2013 16:35:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=t87hyGP2k6Y5
+	0/MYOBDS6BMrcwg=; b=TU7nwA6jNlFSAsS3bGtn/aCxSWr6FWjHty9+5hblq7FK
+	Kx5ZE8gIROEA6FtejKwbPs/mlSt/fKp4LtB7gWUL6+gQRSCWQuq4erO5YOss+wud
+	tUQ/rMpi469XLZkU+sveuDHNiXnBtS7VAPOVXAEa2S04R0cZo4jY6mDFWsAlXA8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Efcnpo
+	wKCR03Xd/cbhTuWTCEAW0BpqGaIMm+NDD3OQ4I+DcalhI0gpDO4KMFW4+Khxc5Iy
+	OnCF05yL4AX/bZGapNPmQIAbmAf4n0YW76FjDTefDd16RC6iCHkd9wemaJKKp3U4
+	kONk/J+h0Enr3VxgzKtCN6BTlRBD/i33LYaUs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C2A11508E;
+	Fri, 12 Apr 2013 16:35:12 +0000 (UTC)
+Received: from pobox.com (unknown [24.4.35.13]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD2411508C; Fri, 12 Apr
+ 2013 16:35:11 +0000 (UTC)
+In-Reply-To: <1365761838.2468.21.camel@flaca.cmartin.tk> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Fri, 12 Apr 2013 12:17:18
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F22662A0-A38E-11E2-840F-8341C8FBB9E7-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/220999>
 
-On Fri, 2013-04-12 at 09:08 -0700, Junio C Hamano wrote: 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> How about "and make sure any Git configuration files", since there
-> >> might not be any Git configuration files.
-> >
-> > Yeah, that is better. Thanks.
-> 
-> OK, then...
-> 
-> -- >8 --
-> Subject: [PATCH] doc: clarify that "git daemon --user=<user>" option does not export HOME=~user
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> Helped-by: W. Trevor King <wking@tremily.us>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/git-daemon.txt | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-> index 7e5098a..2ac07ba 100644
-> --- a/Documentation/git-daemon.txt
-> +++ b/Documentation/git-daemon.txt
-> @@ -147,6 +147,13 @@ OPTIONS
->  Giving these options is an error when used with `--inetd`; use
->  the facility of inet daemon to achieve the same before spawning
->  'git daemon' if needed.
-> ++
-> +Like many programs that switch user id, the daemon does not reset
-> +environment variables such as `$HOME` when it runs git programs,
-> +e.g. `upload-pack` and `receive-pack`. When using this option, you
-> +may also want to set and export `HOME` to point at the home
-> +directory of `<user>` before starting the daemon, and make sure any
-> +Git configuration files in that directory are readable by `<user>`.
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-The "you may want to.." is perhaps a little understated given it will
-fail -EGOAWAY if git-daemon is started via init scripts if you don't.
-(but otoh, that's enough of a hint to anyone setting the thing up, no
-need to write paragraphs of legal-beagle boiler-plate for dinky bug;)
+> On Thu, 2013-04-11 at 10:37 -0700, Junio C Hamano wrote:
+>
+>> > +	fetch=3D$(git config --get-all "remote.$use_remote.fetch")
+>> > +	if [ -z "$fetch" ]; then
+>> > +		return
+>> > +	fi
+>>=20
+>> Hmm, it is probably correct to punt on this case, but it defeats
+>> large part of the effect of your effort, doesn't it? We fetch what
+>> is covered by remote.$name.fetch _and_ what need to complete the
+>> merge operation (otherwise branch.$name.merge that is not covered by
+>> remote.$there.fetch will not work).  So
+>>=20
+>>     [remote "origin"]
+>>             url =3D $over_there
+>>     [branch "master"]
+>>             remote =3D origin
+>>             merge =3D refs/heads/master
+>>=20
+>> would still fetch refs/heads/master from there and merge it.
+>
+> If you run 'git pull' in this situation, then everything's fine and t=
+he
+> right thing gets merged.
 
--Mike 
+My mistake.  You are trying to reject an obviously bad case early,
+and because this is an obviously good case, you just let it be
+handled in the original codeflow (which should not find any issues
+in this set-up).
