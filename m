@@ -1,65 +1,65 @@
-From: Lukas Fleischer <git@cryptocrack.de>
-Subject: Re: [PATCH 1/3] Make read_index_data() public
-Date: Sat, 13 Apr 2013 10:23:17 +0200
-Message-ID: <20130413082317.GA31894@blizzard>
-References: <1365787573-597-1-git-send-email-git@cryptocrack.de>
- <1365787573-597-2-git-send-email-git@cryptocrack.de>
- <20130412194012.GA5154@sigill.intra.peff.net>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH 3/2] doc/http-backend: match query-string in apache half-auth
+ example
+Date: Sat, 13 Apr 2013 10:52:17 +0200
+Message-ID: <51691CC1.9070802@gmail.com>
+References: <20130411033022.GA14462@sigill.intra.peff.net> <20130411033613.GB14551@sigill.intra.peff.net> <5166E935.2080206@gmail.com> <20130411170233.GB1255@sigill.intra.peff.net> <20130413033336.GA20333@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Magnus Therning <magnus@therning.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 13 10:23:44 2013
+X-From: git-owner@vger.kernel.org Sat Apr 13 10:52:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQvkM-0000HR-5H
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 10:23:42 +0200
+	id 1UQwCN-0005pe-4i
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 10:52:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862Ab3DMIXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Apr 2013 04:23:22 -0400
-Received: from elnino.cryptocrack.de ([46.165.227.75]:29093 "EHLO
-	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751748Ab3DMIXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Apr 2013 04:23:20 -0400
-Received: from localhost (p57B40B0C.dip.t-dialin.net [87.180.11.12])
-	by elnino.cryptocrack.de (OpenSMTPD) with ESMTP id 853f89a2
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128);
-	Sat, 13 Apr 2013 10:23:18 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20130412194012.GA5154@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752176Ab3DMIwY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Apr 2013 04:52:24 -0400
+Received: from mail-ee0-f47.google.com ([74.125.83.47]:36598 "EHLO
+	mail-ee0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751871Ab3DMIwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Apr 2013 04:52:22 -0400
+Received: by mail-ee0-f47.google.com with SMTP id t10so1534843eei.6
+        for <git@vger.kernel.org>; Sat, 13 Apr 2013 01:52:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=6r7gGLuiU/fhderol1WMA501R5ULnQKG+DJPttP5CCs=;
+        b=mCc74jJDOWT5oE2Wp2GXY/K1ZXg1jTRjlIUPgAeC+tDtPMvCCY6MdD2wRUMb4WySPg
+         zVeuFlzGqG7Zky0tAwCaY9XWZ4x571jXa3wqi3wVFvFOd3rQIyrzrJlc3qR+lSAMUQYu
+         a7BYxYD49l7HjpVqbmVrZ4eqPVlTVNZ2LoSaw9iJ+oHehlpGRTLyaVte6Tdxc5bJ4r03
+         +04VbZNvpVhWEgpuekqPBDrqvq4p5sTnIyUhSXJFvVib8wF+tDOGDRHMd0hnPbZpPfGT
+         UmwXbCAcsPgGmhG6Cis/AimuHN612EVVlUbgKYUaVDKq7GpkzcCHxd4dPi/MoInjCBrn
+         6x8A==
+X-Received: by 10.14.182.137 with SMTP id o9mr37056383eem.13.1365843141380;
+        Sat, 13 Apr 2013 01:52:21 -0700 (PDT)
+Received: from [192.168.1.14] (eva238.neoplus.adsl.tpnet.pl. [83.20.198.238])
+        by mx.google.com with ESMTPS id ca4sm15229676eeb.15.2013.04.13.01.52.19
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 13 Apr 2013 01:52:20 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <20130413033336.GA20333@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221056>
 
-On Fri, Apr 12, 2013 at 03:40:12PM -0400, Jeff King wrote:
-> On Fri, Apr 12, 2013 at 07:26:11PM +0200, Lukas Fleischer wrote:
-> 
-> > This allows for reusing the function in convert.c later.
-> > 
-> > Also, move it from attr.c to read-cache.c and add a use_index parameter
-> > to specify a custom index_state since we are no longer enable to access
-> > the static use_index variable from attr.c.
-> 
-> I'm all for removing duplicated code, but, but I think the name
-> "read_index_data" is a bit misleading for a global function. I would
-> expect it to read data from the index (and the argument "path" does not
-> help clarify that at all).
-> 
-> Can we rename it read_blob_data_from_index_path() or something?
+W dniu 13.04.2013 05:33, Jeff King pisze:
 
-Pretty long function name... I agree that it is better to have a verbose
-function name instead of something short that gives a wrong impression
-of what the function does and I can't think of a shorter, yet
-descriptive way to name the function.
+> When setting up a "half-auth" repository in which reads can
+> be done anonymously but writes require authentication, it is
+> best if the server can require authentication for both the
+> ref advertisement and the actual receive-pack POSTs. [...]
 
-If nobody comes up with an alternative suggestion, I will change it to
-read_blob_data_from_index_path() and resubmit.
-
-> 
-> -Peff
+Thanks for writing(and testing) this patch.
+--=20
+Jakub Nar=C4=99bski
