@@ -2,38 +2,38 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-0.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=unavailable autolearn_force=no version=3.4.0
-Received: (qmail 9418 invoked by uid 107); 10 Apr 2013 23:31:43 -0000
+Received: (qmail 32648 invoked by uid 107); 13 Apr 2013 01:02:05 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.84) with ESMTP; Wed, 10 Apr 2013 19:31:41 -0400
+    by peff.net (qpsmtpd/0.84) with ESMTP; Fri, 12 Apr 2013 21:02:03 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935098Ab3DJX3o (ORCPT <rfc822;peff@peff.net>);
-	Wed, 10 Apr 2013 19:29:44 -0400
-Received: from plane.gmane.org ([80.91.229.3]:33359 "EHLO plane.gmane.org"
+	id S1755863Ab3DMA7w (ORCPT <rfc822;peff@peff.net>);
+	Fri, 12 Apr 2013 20:59:52 -0400
+Received: from plane.gmane.org ([80.91.229.3]:52361 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763325Ab3DJX3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Apr 2013 19:29:42 -0400
+	id S1754973Ab3DMA7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 20:59:52 -0400
 Received: from list by plane.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UQ4SS-0003AS-Cs
-	for git@vger.kernel.org; Thu, 11 Apr 2013 01:29:40 +0200
+	id 1UQoop-0003Pd-00
+	for git@vger.kernel.org; Sat, 13 Apr 2013 02:59:51 +0200
 Received: from ip68-227-87-145.sb.sd.cox.net ([68.227.87.145])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 11 Apr 2013 01:29:40 +0200
+        for <git@vger.kernel.org>; Sat, 13 Apr 2013 02:59:50 +0200
 Received: from richard_hubbe11 by ip68-227-87-145.sb.sd.cox.net with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 11 Apr 2013 01:29:40 +0200
+        for <git@vger.kernel.org>; Sat, 13 Apr 2013 02:59:50 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 Mail-Followup-To: git@vger.kernel.org
 To:	git@vger.kernel.org
 From:	rh <richard_hubbe11@lavabit.com>
 Subject: Re: segfault in git-remote-http
-Date:	Wed, 10 Apr 2013 16:31:24 -0700
+Date:	Fri, 12 Apr 2013 18:01:35 -0700
 Organization: " "
-Message-ID: <20130410163124.ae6f9f48eefaf1e4b398adcd@lavabit.com>
+Message-ID: <20130412180135.ab642b784f754ff627bd6602@lavabit.com>
 References: <20130407093812.cae0e19123f7b6d2061800aa@lavabit.com>
 	<20130409084718.587e99aa7a935296867a84a1@lavabit.com>
 	<20130409171623.GE21972@sigill.intra.peff.net>
@@ -80,9 +80,6 @@ Jeff King <peff@peff.net> wrote:
 > > for the segfault in the first place.
 > 
 > Ah, I see. The hard links are a red herring. The kernel's message uses
-
-My guess was sort of close.
-
 > task->comm, which is presumably set by truncating the basename of the
 > program to 15 characters (16 bytes with a trailing NUL).
 > 
@@ -111,12 +108,13 @@ My guess was sort of close.
 > the limit is such that truncating the name makes it look like another
 > program.
 
-I cannot weigh in much on this other then to say it's interesting. I would
-think that changing git would be the right thing to do so that proper
-reports are made when users encounter errors that the kernel traps.
-Maybe making the important part first?  https-remote-git?
-But I'm certain there's more to it than that!
+I realize this is not real critical but these three would all suffer the same fate
+on segfault. i.e. the kernel would report git-credential- as the app that suffered
+the seg fault.
 
-But then again maybe the kernel should grab the entire command
-from /proc/<pid>/cmdline because it's really not providing distinct data.
+git-credential-cache  
+git-credential-cache--daemon  
+git-credential-store
+
+For sake of completeness on this thread if nothing else.
 
