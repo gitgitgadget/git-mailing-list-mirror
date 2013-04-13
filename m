@@ -1,110 +1,115 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH] push: introduce implicit push
-Date: Sat, 13 Apr 2013 10:19:20 +0530
-Message-ID: <CALkWK0=-GcOF17Q-y-Aqj0ThX5pPQFrriDqoJ2qsr=CS+wUNGA@mail.gmail.com>
-References: <1365780835-2853-1-git-send-email-artagnon@gmail.com> <7v38uvcrjl.fsf@alter.siamese.dyndns.org>
+Subject: Re: [ITCH] Specify refspec without remote
+Date: Sat, 13 Apr 2013 10:37:56 +0530
+Message-ID: <CALkWK0=qigG40C7Htv0Yt6ZrgP+vgsauRe=2rWuAuq7UJ47rfw@mail.gmail.com>
+References: <20130410202456.GF24177@sigill.intra.peff.net> <CALkWK0k_gYWg9=zjRKGrq-evsWG+hCrLjrpLfYp=_uoHVKBzHw@mail.gmail.com>
+ <20130410210455.GA2999@sigill.intra.peff.net> <CALkWK0k-YJwT__8Tc4B4WXq30ij3i8_d6qwyOCP5RLsKF9eazQ@mail.gmail.com>
+ <20130410211824.GC27070@google.com> <CALkWK0nxpoLL4zoinE4j8y8NLHo0-b=PcimNLykCjMjOpWYEfQ@mail.gmail.com>
+ <20130410212911.GE27070@google.com> <CALkWK0m=iDw+N0zcfEEt1jzFD4wOOzLgyBWNyc=HZ+xLe5SBLw@mail.gmail.com>
+ <20130410215658.GC6215@sigill.intra.peff.net> <CALkWK0=Y-pO3+g21PLCWOxx+M-7fSmp2FedMBtZ68PWU_TOHDw@mail.gmail.com>
+ <20130410222334.GC6930@sigill.intra.peff.net> <CALkWK0nvTisYCFjxwuGaBbWawwBahzeBHZ84rFkUYL8sjJuxvw@mail.gmail.com>
+ <7vppy0hhk7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 13 06:50:12 2013
+X-From: git-owner@vger.kernel.org Sat Apr 13 07:08:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQsPh-0002CP-FL
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 06:50:09 +0200
+	id 1UQshi-0006rd-EP
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 07:08:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007Ab3DMEuC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Apr 2013 00:50:02 -0400
-Received: from mail-ia0-f181.google.com ([209.85.210.181]:46395 "EHLO
-	mail-ia0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751393Ab3DMEuB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Apr 2013 00:50:01 -0400
-Received: by mail-ia0-f181.google.com with SMTP id y25so1979463iay.40
-        for <git@vger.kernel.org>; Fri, 12 Apr 2013 21:50:00 -0700 (PDT)
+	id S1752099Ab3DMFIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Apr 2013 01:08:38 -0400
+Received: from mail-ia0-f179.google.com ([209.85.210.179]:49722 "EHLO
+	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751378Ab3DMFIh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Apr 2013 01:08:37 -0400
+Received: by mail-ia0-f179.google.com with SMTP id l25so2982356iad.10
+        for <git@vger.kernel.org>; Fri, 12 Apr 2013 22:08:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=x-received:mime-version:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=j9WPEOkES9bNI+Q3oL4pwUu1Y6w25tT/LoDmFcUe1Js=;
-        b=XOCuxiujjo2yuK5QS5m6BGGkv8ZRI3HvRPGCLeEt5X+eT5XzelftKh1vp6ofNBRpnu
-         32r7ZlojMPvxs9LNqOqBWL8AiwruIFXS/NTKs4PpTe4aLuIPeo18V3T4SZQK7t47W/ZQ
-         mhxcB5TjIUZxXLWOepGDQatu8pMA+eb21MLw6g5M75Z5oH4V2AyzZWj3nlWW0T02AyyZ
-         GoasVGQpIyaZZ7aYGrWGsXUuuZt5z+x5L9c6DsTAIKhp/SaZ3Ey1jl28KcMeDILr/Fb/
-         WCyGYnY2GQjWHLE7vNiQX9L99UGg980t5x5vBDVnFlFMkuAbzy4UehS5uBWVy2T2wvV0
-         FwXg==
-X-Received: by 10.50.108.235 with SMTP id hn11mr727286igb.107.1365828600555;
- Fri, 12 Apr 2013 21:50:00 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Fri, 12 Apr 2013 21:49:20 -0700 (PDT)
-In-Reply-To: <7v38uvcrjl.fsf@alter.siamese.dyndns.org>
+        bh=XnWxB0BYClAg5PZgvhA08w9nzrwNjZ1dhPPHH/1Sd0A=;
+        b=GoX2ij8Bi2/jLHAkNXCVcqmfXtdHGhF8urfnzQSjBjts/Jtd4OePDcoEGDKv82FZ61
+         ZUL1iqAtgGNS/PIdTaVFm9XFdPVyfjE/V4DJhttRyniLPhGho/R8ruV8eg/iK7Fthknf
+         TAwy5MV781FEBD5FE80jiQOd2MoNNqs2Q3QNJ76A8k/uO+j0UsFbqkkKY1WV3bj8fFvk
+         a1HUnGH0j+m82AH7UpREn5KmV3Dmv45/Cf2R4N9snT7JBqEKjDi8XDuHECplxeEvnDSQ
+         w+ougvXr/TTbEgHY6mzEAzIR/Sm0n83UGVU85d9Grf5pigdF1VqkTmCuDSAe6MgGqSRE
+         r1UQ==
+X-Received: by 10.50.17.71 with SMTP id m7mr878219igd.14.1365829717072; Fri,
+ 12 Apr 2013 22:08:37 -0700 (PDT)
+Received: by 10.64.34.80 with HTTP; Fri, 12 Apr 2013 22:07:56 -0700 (PDT)
+In-Reply-To: <7vppy0hhk7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221049>
 
 Junio C Hamano wrote:
-> The primary reason is the confusion factor Jeff mentioned in the
-> thread that inspired this patch.  People would realize it is very
-> natural to decide where to push to based on what branch is being
-> pushed, but only after they think it long and hard enough [*1*].  I
-> suspect that it is an equally natural expectation for casual users
-> that the destination is chosen based on the current branch, if only
-> because that is what they are used to seeing when they say "git
-> push" without any argument.
+> When pushing into other kinds of repositories (e.g. you can update
+> some but not all of the branches, or you want to touch only some of
+> them and not others even if you have enough privilege to update any
+> of them) or when you do not "batch" and push out one branch as work
+> on it is done, while other branches that you would eventually
+> publish are still not ready, "matching" is not for you.
 
-I agree with you largely, but I would still argue that choosing a
-destination based on the current branch is a historical mistake made
-by "matching".  We don't have to be stuck with this historical
-mistake, because this is a new syntax: when users read about it in the
-documentation/ What's New in git.git type email, they will also learn
-that it chooses the destination based on the refspec.
+I agree that we need to get a "batching" push.default corresponding to
+"matching" for multiple-remote setups.  However, I think we should
+hold it off until my implicit-push patch is finished.  After using it
+for a few days, I'll get a good idea about what this new push.default
+setting should look like.
 
-> Even though I personally am in favor of this "destination is tied to
-> what is pushed out", not "destination is chosen based on the current
-> branch", I can understand why some people would prefer the latter,
-> and why they find it simpler and easier to explain.
-
-Agreed.  This is a consequence of not introducing triangular workflows
-earlier, and getting our users used to distributed workflows.  With
-this patch, users must mandatorily know about remote.pushdefault and
-branch.<name>.pushremote, if they want to work in multiple-remote
-scenarios.  My argument for that is that multiple-remote workflows
-have always been a hack until now, and users of that setup will thank
-us for fixing this.
-
-> The second reason is purely on the differences between what the
-> above clean-nice explanation says and what the patch actually does.
+> If "implicit-push" branch at "ram" is updated by other people and
+> you may have to pull back from, you would need this for "git pull"
+> (without arguments) while on that branch, I guess.  But I got the
+> impression from your scenario that "ram" won't be updated by anybody
+> but you.
 >
-> I think "is-possible-refspec" and "pushremote-get-for-refspec" are
-> both way over-engineered, even for people who agree with me and the
-> above introduction for this change to favor "destination depends on
-> what branch is pushed out".  If is-possible-refspec is replaced with
-> a much simpler to understand logic, "Is this a local branch name?",
-> possibly combined with "There is no such path on the filesystem" and
-> "It's not a defined remote" (iow, reject "git push master:next" and
-> anything more complex) [*2*], I suspect it would be a bit more
-> sellable.
+> So I am guessing that this may not be needed.
 
-I don't feel strongly either way, as I just want a simple 'git push
-master next +pu' to DTRT.  I rarely, if ever, specify the :<dst> part
-of the refpsec.  Just so we're clear, we want:
+In my opinion, it is a fundamental mistake to have more than one
+person working on a branch.  There is one exception to this rule: it
+is alright when there are only two people working on it, and one of
+them is a "reliable fast-forward-only read-only upstream".  Let me
+illustrate this with an example: I sometimes find myself working on
+the master branch of git.git (fetch from origin: git/git.git, publish
+to ram: artagnon/git.git).  This is because origin/master is an
+"reliable fast-forward-only read-only upstream" (read-only in the
+sense that it can only be updated with a git fetch).  My interaction
+with it is limited to 'git rebase origin/master' on the master branch.
+ I will never find myself manipulating it, and the rebase will never
+fail unless my patches conflict with the new upstream.
 
-- In git push master, master is verified not to be a path on the
-filesystem, not a remote, and finally a local branch.
+As to why the setting is needed: I often work on more than one device*,
+and I suspect a lot of people do this today.  I always fetch all
+changes on my private branches before beginning work, unless I want to
+end up in a confusing mess (I often rewrite history).
 
-- In git push master:next, master:next is interpreted as a destination.
+> This becomes necessary only if you use push.default set to "current"
+> (or "upstream").  If you mistakenly say "git push" (no other
+> arguments), without this configuration you will end up pushing the
+> branch out.
 
-- In git push master next:pu, master is verified as usual, and next:pu
-is pushed to the remote specified by next.  My patch currently does
-this (checks that <src> and <dst> are branches).
+Right.  The objective is to get 'git push' to _always_ DTRT.
 
-- In git push master next:refs/tags/v3.1 and git push master
-v3.1:refs/heads/next, master is verified as usual and the refspec is
-pushed to the remote specified by remote.pushdefault, falling back to
-origin (since the <dst> is not a branch).  My patch currently pushes
-it to the current branch's configuration, and I've already marked it
-as a TODO.
+> It may be that adding push.default=current-but-do-not-create-anew
+> could help.  It is a cross between 'matching' and 'current', to say
+> "consider pushing out the current one, but only when the other side
+> already has one", and may help people who do not "batch".
+
+Hm.  I would argue that exploding push.default options is unhealthy,
+and that we should move towards thinking of more fine-grained control
+with different orthogonal options.  I'll first do it for pull
+(autostash has been in progress for some time); then we can port the
+relevant options to push.
+
+* I still haven't made much progress on a design for config-sharing.  I
+think I'm missing something big.
