@@ -1,776 +1,871 @@
-From: "ARA 2013 (Advanced Research and Applications)" <ara@snd.edu.gr>
-Subject: ARA 2013 >-----  ECS 2013 (part of ARA 2013)    -----   New Deadline for  ECS 2013.  Indexing in ISI, EI Compendex, SCOPUS, INSPEC (IET) etc... Publication of accepted papers in Journals or Chapters in Springer Verlag, World Scientific, Imperial College Press, IOS Press, IGI Global
-Date: Fri, 12 Apr 2013 16:41:54 +0300
-Message-ID: <auto-000058412482@snd.edu.gr>
-Reply-To: "ARA 2013 (Advanced Research and Applications)" 
-	  <info@europment.org>
+From: =?ISO-8859-1?Q?Jo=E3o_Joyce?= <joao.joyce@netcabo.pt>
+Subject: Fwd: Re: git send-pack: protocol error: bad band #50
+Date: Sat, 13 Apr 2013 12:03:15 +0100
+Message-ID: <51693B73.3030007@netcabo.pt>
+References: <51674966.8010403@netcabo.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sat Apr 13 10:57:40 2013
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Konstantin Khomoutov <flatworm@users.sourceforge.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 13 13:04:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQwHB-0002r7-BQ
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 10:57:38 +0200
+	id 1UQyFs-0003JY-QL
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 13:04:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182Ab3DMI5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Apr 2013 04:57:33 -0400
-Received: from [195.251.98.30] ([195.251.98.30]:55419 "EHLO snd.edu.gr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751789Ab3DMI5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Apr 2013 04:57:25 -0400
-Received: from 192.168.9.221 ([192.168.9.221] verified)
-  by snd.edu.gr (CommuniGate Pro SMTP 5.3.13)
-  with SMTP id 58412482; Fri, 12 Apr 2013 16:38:38 +0300
-X-Priority: 1 (Highest)
+	id S1752712Ab3DMLEI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Apr 2013 07:04:08 -0400
+Received: from mx.netcabo.pt ([212.113.174.24]:59960 "EHLO mx.netcabo.pt"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752504Ab3DMLEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Apr 2013 07:04:07 -0400
+X-Cloudmark-SP-Filtered: true
+X-Cloudmark-SP-Result: v=1.1 cv=1LO/iPE5NBXhyVdUxN98Xz52Jo9BJjb+qr8ZetvN7rk= c=1 sm=2
+ a=-TtDL2fbfKMA:10 a=QtxXEV6abmYA:10 a=8nJEP1OIZ-IA:10 a=uytceFsMAAAA:8
+ a=tDiRamDHiw3h_RHv3IcA:9 a=wPNLvfGTeEIA:10 a=H777XK5ZPtYA:10
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApMBAI04aVFSmhjH/2dsb2JhbAANQ4M8wU6BG4MTAQEBBBoBFwEFQAEQGQoJFg8JAwIBAgE7CgYNAQUCAQGHfQGpGohcFIogjxcHg0EDqx8
+Received: from bl5-24-199.dsl.telepac.pt (HELO [192.168.1.67]) ([82.154.24.199])
+  by neti05smtpa.hdi.tvcabo with ESMTP/TLS/DHE-RSA-CAMELLIA256-SHA; 13 Apr 2013 12:04:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <51674966.8010403@netcabo.pt>
+X-Forwarded-Message-Id: <51674966.8010403@netcabo.pt>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221058>
 
-           *****    ECS 2013    *****
+Hello,
 
-The 2013 International Conference on Electronics and Communication Systems
-July 16-19, 2013, Rhodes (Rodos) Island, Greece
-http://www.europment.org/conf2013/ecs.htm
+I have tried to remove and recreate my git folder and remove some files=
+=20
+to get more logs. Here they are:
 
-
- 
-PUBLICATIONS:
-Extended Versions of Selected papers (about 40%) will be published in Journals of NOVA Publishers 
-or as Chapters in Books of Springer Verlag, World Scientific, 
-Imperial College Press, IOS Press, IGI Global and others.
-
-These Books (hard copies) of  Springer Verlag, World Scientific, Imperial College Press, 
-IOS Press, IGI Global, etc will be sent to all authors after the conference. 
-These publishers will take care of Indexing of these Books in all major indexes (including ISI).
-
-
-Samples from our previous work with SPRINGER:
-http://www.springer.com/?SGWID=0-102-24-0-0&searchType=EASY_CDA&queryText=Mastorakis
-
-Samples from our previous work with WORLDSCIENTIFIC
-http://www.worldscientific.com/action/doSearch?searchType=normal&searchText=Mastorakis&publicationFilterSearch=all
-
-Samples from our previous work with NOVA Publishers
-https://www.novapublishers.com/catalog/advanced_search_result.php?keywords=Mastorakis&osCsid=85c084d2f14555a3366fac07495f9b98&x=0&y=0
-
-
-
-The Proceedings of the Conferences (all the accepted and registered papers; 
-not only the selected ones to be sent to the previous publishers) with all 
-the accepted and registered papers of the conferences will be sent for 
-indexing to: ISI (Thomson Reuters), ELSEVIER, SCOPUS, ACM - Association for 
-Computing Machinery, Zentralblatt MATH, British Library, EBSCO, SWETS, EMBASE, 
-CAS - American Chemical Society, EI Compendex, Engineering Village, DoPP, 
-GEOBASE, Biobase, TIB|UB - German National Library of Science and Technology,
- American Mathematical Society (AMS), Inspec - The IET, Ulrich's International Periodicals Directory.
-
-The conferences will feature tutorials, technical paper presentations, workshops and distinguished keynote speeches
-
-
-
-Organizing Committee
---------------------
-
-General Chairs
------------------
-Professor Charles A. Long
-Professor Emeritus
-University of Wisconsin
-Stevens Point, Wisconsin, USA
-
-Professor Nikos E. Mastorakis
-Military Institutes of University Education (ASEI)
-Hellenic Naval Academy Sector of Electrical Engineering
-and Computer Science Piraeus, Greece
--also with- Technical University of Sofia
-1000 Sofia, Bulgaria
-
-Professor Valeri Mladenov
-Technical University of Sofia
-1000 Sofia, Bulgaria
-Senior Program Chair
-
-Professor Philippe Dondon
-ENSEIRB
-Rue A Schweitzer 33400 Talence
-France
-
-Program Chairs
--------------
-Professor Filippo Neri
-Dipartimento di Informatica e Sistemistica University of Naples "Federico II"
-Naples, Italy
-
-Professor Hamid Reza Karimi
-Department of Engineering
-Faculty of Engineering and Science
-University of Agder, N-4898 Grimstad
-Norway
-
-Professor Sandra Sendra
-Instituto de Inv. para la Gestion Integrada de 
-Zonas Costeras (IGIC) Universidad Politecnica de Valencia, Spain
-
-Tutorials Chair
---------------
-Professor Pradip Majumdar
-Department of Mechanical Engineering
-Northern Illinois University
-Dekalb, Illinois, USA
-Special Session Chair
-
-Professor Pavel Varacha
-Tomas Bata University in Zlin
-Faculty of Applied Informatics
-Department of Informatics and Artificial Intelligence Zlin, Czech Republic
-
-Workshops Chair
---------------
-Professor Ryszard S. Choras
-Institute of Telecommunications
-University of Technology & Life Sciences Bydgoszcz, Poland
-
-Local Organizing Chair
----------------------
-Assistant Professor Klimis Ntalianis,
-Technological Educat. Inst. of
-Athens (TEI), Athens, Greece
-
-Publication Chair
-----------------
-Professor Gen Qi Xu
-Department of Mathematics
-Tianjin University
-Tianjin, China
-
-Publicity Committee
-------------------
-Professor Reinhard Neck
-Department of Economics
-Klagenfurt University
-Klagenfurt, Austria
-
-Professor Myriam Lazard
-Institut Superieur d' Ingenierie de la Conception Saint Die, 
-France International Liaisons, France
-
-Professor Ka-Lok Ng
-Department of Bioinformatics
-Asia University
-Taichung, Taiwan
-
-Professor Olga Martin
-Applied Sciences Faculty
-Politehnica University of Bucharest
-Romania
-
-Professor Vincenzo Niola
-Departement of Mechanical Engineering for Energetics University of Naples "Federico II"
-Naples, Italy
-
-Professor Eduardo Mario Dias
-Electrical Energy and Automation
-Engineering Department
-Escola Politecnica da Universidade de Sao Paulo Brazil
-
-
-Steering Committee
----------------
-Professor Aida Bulucea, University of Craiova,
-Romania Professor Dana Simian, Univ. of Sibiu, Sibiu, Romania
-Professor Zoran Bojkovic, Univ. of Belgrade, Serbia
-Professor Metin Demiralp, Istanbul Technical University, Turkey
-Professor F. V. Topalis, Nat. Tech. Univ. of Athens, Greece
-Professor Imre Rudas, Obuda University, Budapest, Hungary
-
-Program Committee
-----------------
-Prof. Lotfi Zadeh (IEEE Fellow,University of Berkeley, USA)
-Prof. Leon Chua (IEEE Fellow,University of Berkeley, USA)
-Prof. Michio Sugeno (RIKEN Brain Science Institute (RIKEN BSI), Japan)
-Prof. Dimitri Bertsekas (IEEE Fellow, MIT, USA)
-Prof. Demetri Terzopoulos (IEEE Fellow, ACM Fellow, UCLA, USA)
-Prof. Georgios B. Giannakis (IEEE Fellow, University of Minnesota, USA)
-Prof. George Vachtsevanos (Georgia Institute of Technology, USA)
-Prof. Abraham Bers (IEEE Fellow, MIT, USA)
-Prof. David Staelin (IEEE Fellow, MIT, USA)
-Prof. Brian Barsky (IEEE Fellow, University of Berkeley, USA)
-Prof. Aggelos Katsaggelos (IEEE Fellow, Northwestern University, USA)
-Prof. Josef Sifakis (Turing Award 2007, CNRS/Verimag, France)
-Prof. Hisashi Kobayashi (Princeton University, USA)
-Prof. Kinshuk (Fellow IEEE, Massey Univ. New Zeland),
-Prof. Leonid Kazovsky (Stanford University, USA)
-Prof. Narsingh Deo (IEEE Fellow, ACM Fellow, University of Central Florida, USA)
-Prof. Kamisetty Rao (Fellow IEEE, Univ. of Texas at Arlington,USA)
-Prof. Anastassios Venetsanopoulos (Fellow IEEE, University of Toronto, Canada)
-Prof. Steven Collicott (Purdue University, West Lafayette, IN, USA)
-Prof. Nikolaos Paragios (Ecole Centrale Paris, France)
-Prof. Nikolaos G. Bourbakis (IEEE Fellow, Wright State University, USA)
-Prof. Stamatios Kartalopoulos (IEEE Fellow, University of Oklahoma, USA)
-Prof. Irwin Sandberg (IEEE Fellow, University of Texas at Austin, USA),
-Prof. Michael Sebek (IEEE Fellow, Czech Technical University in Prague, Czech Republic)
-Prof. Hashem Akbari (University of California, Berkeley, USA)
-Prof. Yuriy S. Shmaliy, (IEEE Fellow, The University of Guanajuato, Mexico)
-Prof. Lei Xu (IEEE Fellow, Chinese University of Hong Kong, Hong Kong)
-Prof. Paul E. Dimotakis (California Institute of Technology Pasadena, USA)
-Prof. M. Pelikan (UMSL, USA)
-Prof. Patrick Wang (MIT, USA)
-Prof. Wasfy B Mikhael (IEEE Fellow, University of Central Florida Orlando,USA)
-Prof. Sunil Das (IEEE Fellow, University of Ottawa, Canada)
-Prof. Panos Pardalos (University of Florida, USA)
-Prof. Nikolaos D. Katopodes (University of Michigan, USA)
-Prof. Bimal K. Bose (Life Fellow of IEEE, University of Tennessee, Knoxville, USA)
-Prof. Janusz Kacprzyk (IEEE Fellow, Polish Academy of Sciences, Poland)
-Prof. Sidney Burrus (IEEE Fellow, Rice University, USA)
-Prof. Biswa N. Datta (IEEE Fellow, Northern Illinois University, USA)
-Prof. Mihai Putinar (University of California at Santa Barbara, USA)
-Prof. Wlodzislaw Duch (Nicolaus Copernicus University, Poland)
-Prof. Tadeusz Kaczorek (IEEE Fellow, Warsaw University of Tehcnology, Poland)
-Prof. Michael N. Katehakis (Rutgers, The State University of New Jersey, USA)
-Prof. Pan Agathoklis (Univ. of Victoria, Canada)
-Prof. P. Demokritou (Harvard University, USA)
-Prof. P. Razelos (Columbia University, USA)
-Dr. Subhas C. Misra (Harvard University, USA)
-Prof. Martin van den Toorn (Delft University of Technology, The Netherlands)
-Prof. Malcolm J. Crocker (Distinguished University Prof., Auburn University,USA)
-Prof. S. Dafermos (Brown University, USA)
-Prof. Urszula Ledzewicz, Southern Illinois University , USA.
-Prof. Dimitri Kazakos, Dean, (Texas Southern University, USA)
-Prof. Ronald Yager (Iona College, USA)
-Prof. Athanassios Manikas (Imperial College, London, UK)
-Prof. Keith L. Clark (Imperial College, London, UK)
-Prof. Argyris Varonides (Univ. of Scranton, USA)
-Prof. S. Furfari (Direction Generale Energie et Transports, Brussels, EU)
-Prof. Constantin Udriste, University Politehnica of Bucharest , ROMANIA
-Dr. Michelle Luke (Univ. Berkeley, USA)
-Prof. Patrice Brault (Univ. Paris-sud, France)
-Dr. Christos E. Vasios (MIT, USA)
-Prof. Jim Cunningham (Imperial College London, UK)
-Prof. Philippe Ben-Abdallah (Ecole Polytechnique de l'Universite de Nantes, France)
-Prof. Photios Anninos (Medical School of Thrace, Greece)
-Prof. Ichiro Hagiwara, (Tokyo Institute of Technology, Japan)
-Prof. Metin Demiralp ( Istanbul Technical University / Turkish Academy of Sciences, Istanbul, Turkey)
-Prof. Andris Buikis (Latvian Academy of Science. Latvia)
-Prof. Akshai Aggarwal (University of Windsor, Canada)
-Prof. George Vachtsevanos (Georgia Institute of Technology, USA)
-Prof. Ulrich Albrecht (Auburn University, USA)
-Prof. Imre J. Rudas (Obuda University, Hungary)
-Prof. Alexey L Sadovski (IEEE Fellow, Texas A&M University, USA)
-Prof. Amedeo Andreotti (University of Naples, Italy)
-Prof. Ryszard S. Choras (University of Technology and Life Sciences Bydgoszcz, Poland)
-Prof. Remi Leandre (Universite de Bourgogne, Dijon, France)
-Prof. Moustapha Diaby (University of Connecticut, USA)
-Prof. Brian McCartin (New York University, USA)
-Prof. Elias C. Aifantis (Aristotle Univ. of Thessaloniki, Greece)
-Prof. Anastasios Lyrintzis (Purdue University, USA)
-Prof. Charles Long (Prof. Emeritus University of Wisconsin, USA)
-Prof. Marvin Goldstein (NASA Glenn Research Center, USA)
-Prof. Costin Cepisca (University POLITEHNICA of Bucharest, Romania)
-Prof. Kleanthis Psarris (University of Texas at San Antonio, USA)
-Prof. Ron Goldman (Rice University, USA)
-Prof. Ioannis A. Kakadiaris (University of Houston, USA)
-Prof. Richard Tapia (Rice University, USA)
-Prof. F.-K. Benra (University of Duisburg-Essen, Germany)
-Prof. Milivoje M. Kostic (Northern Illinois University, USA)
-Prof. Helmut Jaberg (University of Technology Graz, Austria)
-Prof. Ardeshir Anjomani (The University of Texas at Arlington, USA)
-Prof. Heinz Ulbrich (Technical University Munich, Germany)
-Prof. Reinhard Leithner (Technical University Braunschweig, Germany)
-Prof. Elbrous M. Jafarov (Istanbul Technical University, Turkey)
-Prof. M. Ehsani (Texas A&M University, USA)
-Prof. Sesh Commuri (University of Oklahoma, USA)
-Prof. Nicolas Galanis (Universite de Sherbrooke, Canada)
-Prof. S. H. Sohrab (Northwestern University, USA)
-Prof. Rui J. P. de Figueiredo (University of California, USA)
-Prof. Valeri Mladenov (Technical University of Sofia, Bulgaria)
-Prof. Hiroshi Sakaki (Meisei University, Tokyo, Japan)
-Prof. Zoran S. Bojkovic (Technical University of Belgrade, Serbia)
-Prof. K. D. Klaes, (Head of the EPS Support Science Team in the MET Division at EUMETSAT, France)
-Prof. Emira Maljevic (Technical University of Belgrade, Serbia)
-Prof. Kazuhiko Tsuda (University of Tsukuba, Tokyo, Japan)
-Prof. Milan Stork (University of West Bohemia , Czech Republic)
-Prof. C. G. Helmis (University of Athens, Greece)
-Prof. Lajos Barna (Budapest University of Technology and Economics, Hungary)
-Prof. Nobuoki Mano (Meisei University, Tokyo, Japan)
-Prof. Nobuo Nakajima (The University of Electro-Communications, Tokyo, Japan)
-Prof. Victor-Emil Neagoe (Polytechnic University of Bucharest, Romania)
-Prof. E. Protonotarios (National Technical University of Athens, Greece)
-Prof. P. Vanderstraeten (Brussels Institute for Environmental Management, Belgium)
-Prof. Annaliese Bischoff (University of Massachusetts, Amherst, USA)
-Prof. Virgil Tiponut (Politehnica University of Timisoara, Romania)
-Prof. Andrei Kolyshkin (Riga Technical University, Latvia)
-Prof. Fumiaki Imado (Shinshu University, Japan)
-Prof. Sotirios G. Ziavras (New Jersey Institute of Technology, USA)
-Prof. Constantin Volosencu (Politehnica University of Timisoara, Romania)
-Prof. Marc A. Rosen (University of Ontario Institute of Technology, Canada)
-Prof. Alexander Zemliak (Puebla Autonomous University, Mexico)
-Prof. Thomas M. Gatton (National University, San Diego, USA)
-Prof. Leonardo Pagnotta (University of Calabria, Italy)
-Prof. Yan Wu (Georgia Southern University, USA)
-Prof. Daniel N. Riahi (University of Texas-Pan American, USA)
-Prof. Alexander Grebennikov (Autonomous University of Puebla, Mexico)
-Prof. Bennie F. L. Ward (Baylor University, TX, USA)
-Prof. Guennadi A. Kouzaev (Norwegian University of Science and Technology, Norway)
-Prof. Eugene Kindler (University of Ostrava, Czech Republic)
-Prof. Geoff Skinner (The University of Newcastle, Australia)
-Prof. Hamido Fujita (Iwate Prefectural University(IPU), Japan)
-Prof. Francesco Muzi (University of L'Aquila, Italy)
-Prof. Les M. Sztandera (Philadelphia University, USA)
-Prof. Claudio Rossi (University of Siena, Italy)
-Prof. Christopher J. Koroneos (Aristotle University of Thessaloniki, Greece)
-Prof. Sergey B. Leonov (Joint Institute for High Temperature Russian Academy of Science, Russia)
-Prof. Arpad A. Fay (University of Miskolc, Hungary)
-Prof. Lili He (San Jose State University, USA)
-Prof. M. Nasseh Tabrizi (East Carolina University, USA)
-Prof. Alaa Eldin Fahmy (University Of Calgary, Canada)
-Prof. Ion Carstea (University of Craiova, Romania)
-Prof. Paul Dan Cristea (University "Politehnica" of Bucharest, Romania)
-Prof. Gh. Pascovici (University of Koeln, Germany)
-Prof. Pier Paolo Delsanto (Politecnico of Torino, Italy)
-Prof. Radu Munteanu (Rector of the Technical University of Cluj-Napoca, Romania)
-Prof. Ioan Dumitrache (Politehnica University of Bucharest, Romania)
-Prof. Corneliu Lazar (Technical University Gh.Asachi Iasi, Romania)
-Prof. Nicola Pitrone (Universita degli Studi Catania, Italia)
-Prof. Miquel Salgot (University of Barcelona, Spain)
-Prof. Amaury A. Caballero (Florida International University, USA)
-Prof. Maria I. Garcia-Planas (Universitat Politecnica de Catalunya, Spain)
-Prof. Petar Popivanov (Bulgarian Academy of Sciences, Bulgaria)
-Prof. Alexander Gegov (University of Portsmouth, UK)
-Prof. Lin Feng (Nanyang Technological University, Singapore)
-Prof. Colin Fyfe (University of the West of Scotland, UK)
-Prof. Zhaohui Luo (Univ of London, UK)
-Prof. Mikhail Itskov (RWTH Aachen University, Germany)
-Prof. George G. Tsypkin (Russian Academy of Sciences, Russia)
-Prof. Wolfgang Wenzel (Institute for Nanotechnology, Germany)
-Prof. Weilian Su (Naval Postgraduate School, USA)
-Prof. Phillip G. Bradford (The University of Alabama, USA)
-Prof. Ray Hefferlin (Southern Adventist University, TN, USA)
-Prof. Gabriella Bognar (University of Miskolc, Hungary)
-Prof. Hamid Abachi (Monash University, Australia)
-Prof. Karlheinz Spindler (Fachhochschule Wiesbaden, Germany)
-Prof. Josef Boercsoek (Universitat Kassel, Germany)
-Prof. Eyad H. Abed (University of Maryland, Maryland, USA)
-Prof. F. Castanie (TeSA, Toulouse, France)
-Prof. Robert K. L. Gay (Nanyang Technological University, Singapore)
-Prof. Andrzej Ordys (Kingston University, UK)
-Prof. Harris Catrakis (Univ of California Irvine, USA)
-Prof. T Bott (The University of Birmingham, UK)
-Prof. Petr Filip (Institute of Hydrodynamics, Prague, Czech Republic)
-Prof. T.-W. Lee (Arizona State University, AZ, USA)
-Prof. Le Yi Wang (Wayne State University, Detroit, USA)
-Prof. George Stavrakakis (Technical University of Crete, Greece)
-Prof. John K. Galiotos (Houston Community College, USA)
-Prof. M. Petrakis (National Observatory of Athens, Greece)
-Prof. Philippe Dondon (ENSEIRB, Talence, France)
-Prof. Dalibor Biolek (Brno University of Technology, Czech Republic)
-Prof. Oleksander Markovskyy (National Technical University of Ukraine, Ukraine)
-Prof. Suresh P. Sethi (University of Texas at Dallas, USA)
-Prof. Hartmut Hillmer(University of Kassel, Germany)
-Prof. Bram Van Putten (Wageningen University, The Netherlands)
-Prof. Alexander Iomin (Technion - Israel Institute of Technology, Israel)
-Prof. Roberto San Jose (Technical University of Madrid, Spain)
-Prof. Minvydas Ragulskis (Kaunas University of Technology, Lithuania)
-Prof. Arun Kulkarni (The University of Texas at Tyler, USA)
-Prof. Joydeep Mitra (New Mexico State University, USA)
-Prof. Vincenzo Niola (University of Naples Federico II, Italy)
-Prof. Ion Chryssoverghi (National Technical University of Athens, Greece)
-Prof. Dr. Aydin Akan (Istanbul University, Turkey)
-Prof. Sarka Necasova (Academy of Sciences, Prague, Czech Republic)
-Prof. C. D. Memos (National Technical University of Athens, Greece)
-Prof. S. Y. Chen, (Zhejiang University of Technology, China and University of Hamburg, Germany)
-Prof. Duc Nguyen (Old Dominion University, Norfolk, USA)
-Prof. Tuan Pham (James Cook University, Townsville, Australia)
-Prof. Habil M. Patzold (Agder University College,Norway )
-Prof. Jiri Klima (Technical Faculty of CZU in Prague, Czech Republic)
-Prof. Rossella Cancelliere (University of Torino, Italy)
-Prof. L.Kohout (Florida State University, Tallahassee, Florida, USA)
-Prof. D' Attelis (Univ. Buenos Ayres, Argentina)
-Prof. Dr-Eng. Christian Bouquegneau (Faculty Polytechnique de Mons, Belgium)
-Prof. Wladyslaw Mielczarski (Technical University of Lodz, Poland)
-Prof. Ibrahim Hassan (Concordia University, Montreal, Quebec, Canada)
-Prof. Stavros J.Baloyannis (Medical School, Aristotle University of Thessaloniki, Greece)
-Prof. James F. Frenzel (University of Idaho, USA)
-Prof. Mirko Novak (Czech Technical University in Prague,Czech Republic)
-Prof. Zdenek Votruba (Czech Technical University in Prague,Czech Republic)
-Prof. Vilem Srovnal,(Technical University of Ostrava, Czech Republic)
-Prof. J. M. Giron-Sierra (Universidad Complutense de Madrid, Spain)
-Prof. Zeljko Panian (University of Zagreb, Croatia)
-Prof. Walter Dosch (University of Luebeck, Germany)
-Prof. Rudolf Freund (Vienna University of Technology, Austria)
-Prof. Erich Schmidt (Vienna University of Technology, Austria)
-Prof. Alessandro Genco (University of Palermo, Italy)
-Prof. Martin Lopez Morales (Technical University of Monterey, Mexico)
-Prof. Ralph W. Oberste-Vorth (Marshall University, USA)
-Prof. Vladimir Damgov (Bulgarian Academy of Sciences, Bulgaria)
-Prof. Menelaos Karanasos (Brunel University, UK)
-Prof. P.Borne (Ecole Central de Lille, France)
-
-
-Topics of Interest
-==================
-Network Theory and Applications
-Filter Theory
-Nanostructures and nanotechnologies
-Molecular Electronics
-Molecular Computing
-DNA Computing
-Circuits and Networks inspired from Biology
-Metabolic Networks
-Microelectronics
-Microcircuits
-Analog, Digital, Mixed-Mode Circuits
-Electronics: Components, Devices, Systems
-Silicon Devices: Technology, Modeling, Reliability
-Optoelectronic Devices
-Laser and Optical Systems
-Thin Film Technologies
-Very Large Scale Integration Systems (VLSI)
-Hardware/Software CodesignVery Large Scale Integration Systems (VLSI)
-Digital Filters
-Highe Level Synthesis
-Amplifiers
-Nonlinear Circuits
-Sensors
-Physical Design
-Time-Frequency and Wavelet Applications
-Modelling and Simulation
-CAD Tools
-Circuits and Electronics for Data Conversion and S-D Modulation
-Capacitor/Current Technoques
-Prototype Devices and Measurement
-Circuits and Systems for Control and Robotics
-Electron Devices for Power Technology
-High Voltages and Electric Machines
-Device Physics
-Physical Design
-High-Level Synthesis and Testing
-Non-Linear Circuits
-Formal Verification
-Semiconductors
-Superconductivity Circuits
-Computer-Aided Design
-Instrumentation
-Instrument-Computer Interface
-Military Electronics
-Electronics for Space exploration
-Consumer Electronics
-Circuits in Power Technology
-Electron Devices for Video Technology
-Circuits for Antennas Technology
-Electron Devices and Systems for Radar and Sonar Systems
-Circuit Models, Electrical and Electronic Measurement
-Circuits for Industrial Applications
-Circuit models for Electromagnetic Fields
-Electronics for Signal Processing and other Applications
-Neural Networks
-Numerical Analysis and Circuits
-Logic Synthesis
-Fuzzy Logic and Circuits Design
-Circuit Implementation for Fuzzy Systems
-Multidimensional Circuits and Systems
-Dynamical systems
-Differential Equations:
-Ordinary Differential Equations
-Functional Differential Equations
-Partial Differential Equations
-Nonlinear analysis
-Stability
-Nonlinear oscillations
-Bifurcations
-Singular perturbations
-Fractals
-Ergodic theory
-Image compression
-Scientific visualization
-Stability of matter
-Schroedinger operators
-Dynamics of numerics
-Numerical analysis and lattice dynamical systems
-Non-linear Structures
-Dynamics
-Function Soft condensed matter
-Fluid Dynamics
-Granular Materials
-Colloids
-Theory and Simulation of Turbulent Flows
-Nonlinear phenomena
-Nonlinear excitations in materials
-Reaction-Diffusion Systems
-Nonlinear Optics and Spectroscopy
-Hamiltonian and Lagrangian dynamics
-Hyperbolic dynamics
-Topological and smooth dynamics
-Topological Methods in Surface Dynamics
-Random dynamical systems
-Visualization of Complex Dynamical Systems
-Applications in Biology
-Applications in Physics
-Applications in Chemistry
-Applications in Astronomy
-Applications in Engineering
-Mathematical Theory of Control
-Stability, Observability, Controlability, Factorizability, Reachability
-Linear Control
-Non-Linear Control
-Optimal Control
-Robust Control
-Computational Intelligence
-Neural Control
-Fuzzy Control
-Genetic Control
-Hybrid (Neural-Fuzzy-Evolutionary) Methodologies
-Intelligent Control
-Stochastic Control
-Discrete Control
-Hierarchical Control
-Large Scale Systems
-Adaptive Control
-Predictive Control
-Process Control
-H-infinity Control
-Multivariable Control
-Multivariable Systems
-Multidimensional Systems
-Discrete Event Systems
-Re-configurable Systems
-Real-Time Control
-Industrial Control
-Control for Electric Machines
-Control for Power Systems
-Fault Detection
-Simulation
-Optimization
-Identification
-Estimation
-Kalman Filtering
-Robotics
-Robotic Networks
-Mechatronics
-Artificial Intelligence
-Circuits, Devices and Systems for Automation and Control
-Electronics for Control
-Electrical and Electronic Measurement
-Signal Processing for Control
-Human-Machine Systems and Cybernetics
-Modeling and Simulation
-Computer Networks for Control
-Internet Control
-Microprocessors, Computer Architecture for Control
-Software tools for Control
-CAD/CAM systems
-Applications in Biology
-Applications in Physics,
-Applications in Chemistry,
-Applications in Astronomy,
-Applications in Civil Engineering
-Applications in Chemical Engineering
-Applications in Naval and Marine Engineering
-Applications in Aerospace Engineering
-Applications in Agricultural Engineering
-Applications in Structures
-Applications in Transportation Engineering
-Other Applications and Special Topics
-Filter design and structures
-Fast algorithms
-Adaptive filters
-Nonlinear Signals and Systems
-Multirate filtering and filter banks
-Signal reconstruction
-Time-frequency analysis
-Spectral estimation
-Higher order spectrum analysis
-Parameter estimation
-Detection
-Array signal processing
-Statistical signal analysis
-Signal and system modeling
-Cyclostationary signal analysis
-Speech production and perception
-Speech analysis
-Speech synthesis
-Speech coding
-Speech recognition
-Speech enhancement and noise reduction
-Active noise control
-Active noise reduction
-Echo cancellation
-Psychoacoustics
-Broadband audio coding
-Signal processing for music
-Binaural systems
-Room acoustics
-Digital transforms
-HDTV
-Multidimensional systems
-Machine vision
-Image coding
-Image motion / sequence / video
-Computed imaging
-Geophysical and seismic processing
-Image analysis and segmentation
-Image filtering, restoration and enhancement
-Image representation and modeling
-Pattern recognition
-Neural networks
-Fuzzy Systems
-Evolutionary computation
-Expert systems
-Multisensor Data Fusion
-Architectures and VLSI hardware
-Programmable signal processors
-Algorithms and applications mappings
-Design methology and CAD tools
-Languages and real time software
-Real time system estimation
-Optimization problems in signal processing
-Radar
-Sonar
-Biomedical processing
-Geophysical signal processing
-Underwater signal processing
-Remote sensing
-Robotics
-Astronomy
-Satellite signals processing
-Measure and Instrumentation
-Algorithms and Theory of Computation
-Artificial Intelligence
-Automata and Formal Language Theory
-Bioinformatics and Computational Biology
-Graphics
-Computer Networking
-Computer Vision
-Computer Science Education
-Databases, Information Retrieval and Data Mining
-Distributed and Parallel Computing
-Hardware and Architecture
-Human Computer Interaction
-Machine Learning and Pattern Recognition
-Multimedia
-Operating, Networked and Storage Systems
-Programming languages
-Quantum Computing
-Real Time and Embedded Systems
-Security and Privacy
-Scientific Computing
-Software engineering
-Wireless Sensor Networks
-Network Reliability
-Military Communications
-Internet
-Programming Languages
-High Performance Languages
-Operating Systems
-Hardware Engineering
-Supercomputing
-Parallel Computing Systems Architectures
-Supercomputing
-Reusability
-Protocols, Routing, Scheduling
-Fault Tolerance
-Software Evaluation Standards
-Distributed Multimedia
-Performance Evaluation
-Intelligent Systems
-Digital Speech Processing
-Statistical Methods for Signal Processing
-Tele-automatic control
-E-commerce
-Tele-medicine and medical informatics, Tele-healthcare
-Tele-manufacturing systems
-Tele-artificial intelligence
-Tele-robotics
-Artificial intelligence
-Computational linguistics
-Computer networks
-Interconnection Networks
-Optical Interconnection Networks
-Broadband Networks, Mobile Networks, Network Applications
-Computational Biophysics
-Computers and Biomedical Engineering
-Computers and Automation
-Digital Signal Processing and Pattern Recognition
-Digital Systems and Computer Architecture
-Computational Geometry
-Algorithms and Multiplexity
-Multimedia
-Microprocessors, Microcomputers
-Microelectronics
-Mobile Computing
-NETwork Management and Optimal Design
-Software Engineering
-Computation and Reasoning Laboratory
-Knowledge and Data-Base Systems
-Software Engineering
-Educational Software
-Knowledge Engineering
-Security
-Software Methodologies
-Software Requirements
-Software Design and Development
-Software Maintenance, Software Metrics
-Software Testing
-Fault Tolerance
-Project Management
-Intelligent Agents
-JAVA, COBRA, XML
-Cyber-Science and Cyber-Space
-Object-Oriented Analysis and Design
-Software for Parallel and Distributed Systems
-Databases, Data Mining
-Data Warehousing
-Mathematical Logic and Computers
-Image, Video and Internet Technologies
-Web-Based Education
-Distributed Real Time Systems
-Distributed Data Base
-Distributed Knowledge-base Systems
-Data Mining
-Data Warehousing
-Computer Applications in Science
-Computer Applications in Engineering
-Computer Applications in Business, Commerce and Economics
-Computer Applications in Earth Sciences, Aerospace and Transportation Science
-Computer Applications in Biology, Chemistry, Medicine, Healthcare and Bioengineering
-Computer Applications in Acoustics, Music, Speech Processing
-Computer Applications in Signal and Image Processing
-Computer Applications in Communication
-Computer Applications in Arts, Archaeology, Education and Animation
-Modelling and Simulation
-Law Aspects related to informatics
-Others...
-
-Location and Venue
-============================
-Rhodes (Rodos) Island:  http://en.wikipedia.org/wiki/Rhodes
-
-http://www.rhodesguide.com
-
-http://www.rodosisland.gr
+packet:         push< 0000000000000000000000000000000000000000=20
+capabilities^{}\0 report-status delete-refs side-band-64k quiet ofs-del=
+ta
+packet:         push< 0000
+packet:         push> 0000000000000000000000000000000000000000=20
+17c420b8bd99856aee6da9c1743f6df0ec18a9ca refs/heads/master\0=20
+report-status side-band-64k
+packet:         push> 0000
+packet:         push<=20
+20b8bd99856aee6da9c1743f6df0ec18a9cac28267338c198573ad59e89d0acc445a62b=
+3d127=20
+acf853d0a30287d9455dbe1707edeb16cc3e9b22=20
+conf.php845ecef1e4aaece71ef357285c2df71056ae0314=20
+db98699a6c68b653be1fa8dceb64204397d9814cd1=20
+db/db.sqlfed89aa6a337c6ab5a89dba13702a65ab70372bd=20
+httpff2a325bfd33f1fb7098b5688ffe99fe67bf5874=20
+http/apifbf53a7bcd223485e56d30715a794a7e067df8d2=20
+http/api/.htaccess84d1f0580e88c6351df884200ebcd526d8b145ea=20
+http/api/index.php9b8a7a21fa6e4c3a9672469b9b4a7e51a336d015=20
+http/www9a464b3db152808bc74512304054ac25a63cb9b7=20
+http/www/files8cab2dab60f85385de1ef984a976a038176c2015=20
+http/www/files/foundationa5cb50f4203d7176a505857ac80ffbbcf562c91f=20
+http/www/files/foundation/cssc2a844c8a00ef41d912f53c40026580f2b10fd00=20
+http/www/files/foundation/css/accessibility_foundicons.css699d805b9f585=
+8111d4bc95705df22f6137ec14a=20
+http/www/files/foundation/css/accessibility_foundicons_ie7.css8e0ddf1ac=
+316d9231277a77bcd550895f291b5c7=20
+http/www/files/foundation/css/foundation.css1d592b3fc77c4b44af67b82edbe=
+e4cc51b8a97d9=20
+http/www/files/foundation/css/foundation.min.css3c308c85cf36052810d35c0=
+8d4f5bbc233cf61ea=20
+http/www/files/foundation/css/general_foundicons.cssd5b3776730a16e4ec61=
+bad31526cc0a5a24096bc=20
+http/www/files/foundation/css/general_foundicons_ie7.cssa9c6f52f05e50c6=
+fd8dab6c30e22c8d4ea2f15ea=20
+http/www/files/foundation/css/normalize.css914f6472ffce7135f191048a923e=
+07e7886f192b=20
+http/www/files/foundation/css/social_foundicons.css6a3c9c07729fc466c38e=
+6a40d36b298de881706b=20
+http/www/files/foundation/css/social_foundicons_ie7.cssd44839248d958fdc=
+96fa044dae0ea71dffd35bde=20
+http/www/files/foundation/fonts5008ddfcf53c02e82d7eee2e57c38e5672ef89f6=
+=20
+http/www/files/foundation/fonts/.DS_Store237a0ca97e568531dc58bf7c812020=
+28af1e881c=20
+http/www/files/foundation/fonts/accessibility_foundicons.eot49c0d07bea6=
+f18cdbc35ee938b1b3f48cacce64c=20
+http/www/files/foundation/fonts/accessibility_foundicons.svg46a67f8d022=
+3b881ca74ccafb44b64664552b937=20
+http/www/files/foundation/fonts/accessibility_foundicons.ttf4eae85189fe=
+e6930191b69e31a09b34e6a9a9c19=20
+http/www/files/foundation/fonts/accessibility_foundicons.woff20733a0388=
+ef77572cbc55cbf76cc46babf0a15d=20
+http/www/files/foundation/fonts/general_foundicons.eota9347515264ac712b=
+5d083eaa231929243ea7142=20
+http/www/files/foundation/fonts/general_foundicons.svg90a5ccead2d84d036=
+bd8ed66926af93b21621df5=20
+http/www/files/foundation/fonts/general_foundicons.ttfdaab63141b07e0a1f=
+a8efd931a98945b837bd4aa=20
+http/www/files/foundation/fonts/general_foundicons.woffa9341f49f12c10aa=
+a5db2bc74ed3889245ce9a3a=20
+http/www/files/foundation/fonts/social_foundicons.eoteb4189cd70c623deaa=
+25e5bb55ab210d27fe2d14=20
+http/www/files/foundation/fonts/social_foundicons.svg01158c66b13b6f90e7=
+b7d1cdb5c4e7369c6434ae=20
+http/www/files/foundation/fonts/social_foundicons.ttfbd1f1e58a692b73205=
+fce579faee81801d3157aa=20
+http/www/files/foundation/fonts/social_foundicons.woffcd2531e2044a9c187=
+5159ff1278aafac1aaa8944=20
+http/www/files/foundation/img8b137891791fe96927ad78e64b0aad7bded08bdc=20
+http/www/files/foundation/img/.gitkeep36b90e58095363e46845d98d979700d16=
+019830e=20
+http/www/files/foundation/js596287860dbdcd04dd8a78d2ee1999862286515a=20
+http/www/files/foundation/js/foundation.min.jsec14148b2d83476fffebf3cba=
+39d6516844b7200=20
+http/www/files/foundation/js/foundationb78a35a14d000346914644cc0e9783a4=
+0f64760d=20
+http/www/files/foundation/js/foundation/foundation.alerts.jsc8ff3249917=
+62b763dd936da49415fff1ec2de93=20
+http/www/files/foundation/js/foundation/foundation.clearing.js862027c86=
+31db60070e8c3ebd7b8953c0283c561=20
+http/www/files/foundation/js/foundation/foundation.cookie.js24b35e12e78=
+60a80edb9f16a0209715f249f96b0=20
+http/www/files/foundation/js/foundation/foundation.dropdown.js6a27af4ad=
+0e0865235cd3a84cd251b8f928510ba=20
+http/www/files/foundation/js/foundation/foundation.forms.js323e6e1e633a=
+ce0dcc873553b8df03a28bcd78bc=20
+http/www/files/foundation/js/foundation/foundation.joyride.js87c3b65bd9=
+231264c110749b7ad75214cee50c93=20
+http/www/files/foundation/js/foundation/foundation.js3cdef5b617b054a355=
+f80a5bce164cc1ed8a419e=20
+http/www/files/foundation/js/foundation/foundation.magellan.js54c467efd=
+46e3c199ae4dd0860ee5196403b1027=20
+http/www/files/foundation/js/foundation/foundation.orbit.js65c18fc2b438=
+3b5111953114c13ebdb2ba3c5cda=20
+http/www/files/foundation/js/foundation/foundation.placeholder.js31a450=
+ad44b7ec6593bdefc4a88c781a45c418e1=20
+http/www/files/foundation/js/foundation/foundation.reveal.js1069794478f=
+6c4032e1caf4ecc24bce961482835=20
+http/www/files/foundation/js/foundation/foundation.section.js1696e2ad5b=
+bf72ba052f9aa4105e58edee08b16f=20
+http/www/files/foundation/js/foundation/foundation.tooltips.js8cc27f1c1=
+8db7281602cc4f7d0a193c199ab2d40=20
+http/www/files/foundation/js/foundation/foundation.topbar.js14566fdbdbd=
+e4c4369ba4b8d0ce646c4621efeb1=20
+http/www/files/foundation/js/vendore5afa6ca3c2624ca9e253f5626ae46355ada=
+74e3=20
+http/www/files/foundation/js/vendor/custom.modernizr.js6362d0f3394e4a90=
+561ab33c0650d32572ae4d93=20
+http/www/files/foundation/js/vendor/jquery.jsb74544c5cf84ac78d2030c28cd=
+9f521e80136b5f=20
+http/www/files/foundation/js/vendor/zepto.js006488437dda8a1ec87a3e912a7=
+9a5918f170dde=20
+http/www/files/scripts4e6c262c7d9a2fcc37206422a434e92cda10cd6a=20
+http/www/files/scripts/ajax.jse2c203fe978b83f4ca8d1ba97633f5a5d50bd53b=20
+http/www/files/scripts/jquery-1.9.1.js6896a531cd562cc4a2eb31e2be0e81319=
+05a90e0=20
+http/www/files/scripts/sha512.js272f790b91010bed997f0ed7d4a616f03e627a6=
+a=20
+http/www/index.phpb1fd6c496624710b8748877d7512766018178342=20
+server_filesc4769e6f5ade18f1dea9eb1e44743378cb7e2c5a=20
+server_files/api_classesc31151cdf2d4a6136fe95089b39eb3d3cecdf3c3=20
+server_files/api_classes/user.phpe61c5338616a6b0e32e953c603944fc088a82b=
+d1 server_files/libraries51d26aa3fb9789f86adf6e4b051fa98ce2b085a4=20
+server_files/libraries/debugmode.php8f3a40b616c83a77235d1a16a230ee6996c=
+fca2b=20
+server_files/libraries/restlerc282fca7ac71e27ac69fa3ac4cb19367f7ceee00=20
+server_files/libraries/restler/.gitignore7e60fed960715e64352fdd71f37ccf=
+e21089a698=20
+server_files/libraries/restler/Makefileffa7a78d0ba68d1bba59e04532aa856b=
+14afc817=20
+server_files/libraries/restler/README.md249b48318375db88df5e2dec82c3744=
+a227bac26=20
+s
+packet:         push< 0000000000000000000000000000000000000000=20
+capabilities^{}\0 report-status delete-refs side-band-64k quiet ofs-del=
+ta
+packet:         push< 0000
+packet:         push> 0000000000000000000000000000000000000000=20
+17c420b8bd99856aee6da9c1743f6df0ec18a9ca refs/heads/master\0=20
+report-status side-band-64k
+packet:         push> 0000
+packet:         push<=20
+20b8bd99856aee6da9c1743f6df0ec18a9cac28267338c198573ad59e89d0acc445a62b=
+3d127=20
+acf853d0a30287d9455dbe1707edeb16cc3e9b22=20
+conf.php845ecef1e4aaece71ef357285c2df71056ae0314=20
+db98699a6c68b653be1fa8dceb64204397d9814cd1=20
+db/db.sqlfed89aa6a337c6ab5a89dba13702a65ab70372bd=20
+httpff2a325bfd33f1fb7098b5688ffe99fe67bf5874=20
+http/apifbf53a7bcd223485e56d30715a794a7e067df8d2=20
+http/api/.htaccess84d1f0580e88c6351df884200ebcd526d8b145ea=20
+http/api/index.php9b8a7a21fa6e4c3a9672469b9b4a7e51a336d015=20
+http/www9a464b3db152808bc74512304054ac25a63cb9b7=20
+http/www/files8cab2dab60f85385de1ef984a976a038176c2015=20
+http/www/files/foundationa5cb50f4203d7176a505857ac80ffbbcf562c91f=20
+http/www/files/foundation/cssc2a844c8a00ef41d912f53c40026580f2b10fd00=20
+http/www/files/foundation/css/accessibility_foundicons.css699d805b9f585=
+8111d4bc95705df22f6137ec14a=20
+http/www/files/foundation/css/accessibility_foundicons_ie7.css8e0ddf1ac=
+316d9231277a77bcd550895f291b5c7=20
+http/www/files/foundation/css/foundation.css1d592b3fc77c4b44af67b82edbe=
+e4cc51b8a97d9=20
+http/www/files/foundation/css/foundation.min.css3c308c85cf36052810d35c0=
+8d4f5bbc233cf61ea=20
+http/www/files/foundation/css/general_foundicons.cssd5b3776730a16e4ec61=
+bad31526cc0a5a24096bc=20
+http/www/files/foundation/css/general_foundicons_ie7.cssa9c6f52f05e50c6=
+fd8dab6c30e22c8d4ea2f15ea=20
+http/www/files/foundation/css/normalize.css914f6472ffce7135f191048a923e=
+07e7886f192b=20
+http/www/files/foundation/css/social_foundicons.css6a3c9c07729fc466c38e=
+6a40d36b298de881706b=20
+http/www/files/foundation/css/social_foundicons_ie7.cssd44839248d958fdc=
+96fa044dae0ea71dffd35bde=20
+http/www/files/foundation/fonts5008ddfcf53c02e82d7eee2e57c38e5672ef89f6=
+=20
+http/www/files/foundation/fonts/.DS_Store237a0ca97e568531dc58bf7c812020=
+28af1e881c=20
+http/www/files/foundation/fonts/accessibility_foundicons.eot49c0d07bea6=
+f18cdbc35ee938b1b3f48cacce64c=20
+http/www/files/foundation/fonts/accessibility_foundicons.svg46a67f8d022=
+3b881ca74ccafb44b64664552b937=20
+http/www/files/foundation/fonts/accessibility_foundicons.ttf4eae85189fe=
+e6930191b69e31a09b34e6a9a9c19=20
+http/www/files/foundation/fonts/accessibility_foundicons.woff20733a0388=
+ef77572cbc55cbf76cc46babf0a15d=20
+http/www/files/foundation/fonts/general_foundicons.eota9347515264ac712b=
+5d083eaa231929243ea7142=20
+http/www/files/foundation/fonts/general_foundicons.svg90a5ccead2d84d036=
+bd8ed66926af93b21621df5=20
+http/www/files/foundation/fonts/general_foundicons.ttfdaab63141b07e0a1f=
+a8efd931a98945b837bd4aa=20
+http/www/files/foundation/fonts/general_foundicons.woffa9341f49f12c10aa=
+a5db2bc74ed3889245ce9a3a=20
+http/www/files/foundation/fonts/social_foundicons.eoteb4189cd70c623deaa=
+25e5bb55ab210d27fe2d14=20
+http/www/files/foundation/fonts/social_foundicons.svg01158c66b13b6f90e7=
+b7d1cdb5c4e7369c6434ae=20
+http/www/files/foundation/fonts/social_foundicons.ttfbd1f1e58a692b73205=
+fce579faee81801d3157aa=20
+http/www/files/foundation/fonts/social_foundicons.woffcd2531e2044a9c187=
+5159ff1278aafac1aaa8944=20
+http/www/files/foundation/img8b137891791fe96927ad78e64b0aad7bded08bdc=20
+http/www/files/foundation/img/.gitkeep36b90e58095363e46845d98d979700d16=
+019830e=20
+http/www/files/foundation/js596287860dbdcd04dd8a78d2ee1999862286515a=20
+http/www/files/foundation/js/foundation.min.jsec14148b2d83476fffebf3cba=
+39d6516844b7200=20
+http/www/files/foundation/js/foundationb78a35a14d000346914644cc0e9783a4=
+0f64760d=20
+http/www/files/foundation/js/foundation/foundation.alerts.jsc8ff3249917=
+62b763dd936da49415fff1ec2de93=20
+http/www/files/foundation/js/foundation/foundation.clearing.js862027c86=
+31db60070e8c3ebd7b8953c0283c561=20
+http/www/files/foundation/js/foundation/foundation.cookie.js24b35e12e78=
+60a80edb9f16a0209715f249f96b0=20
+http/www/files/foundation/js/foundation/foundation.dropdown.js6a27af4ad=
+0e0865235cd3a84cd251b8f928510ba=20
+http/www/files/foundation/js/foundation/foundation.forms.js323e6e1e633a=
+ce0dcc873553b8df03a28bcd78bc=20
+http/www/files/foundation/js/foundation/foundation.joyride.js87c3b65bd9=
+231264c110749b7ad75214cee50c93=20
+http/www/files/foundation/js/foundation/foundation.js3cdef5b617b054a355=
+f80a5bce164cc1ed8a419e=20
+http/www/files/foundation/js/foundation/foundation.magellan.js54c467efd=
+46e3c199ae4dd0860ee5196403b1027=20
+http/www/files/foundation/js/foundation/foundation.orbit.js65c18fc2b438=
+3b5111953114c13ebdb2ba3c5cda=20
+http/www/files/foundation/js/foundation/foundation.placeholder.js31a450=
+ad44b7ec6593bdefc4a88c781a45c418e1=20
+http/www/files/foundation/js/foundation/foundation.reveal.js1069794478f=
+6c4032e1caf4ecc24bce961482835=20
+http/www/files/foundation/js/foundation/foundation.section.js1696e2ad5b=
+bf72ba052f9aa4105e58edee08b16f=20
+http/www/files/foundation/js/foundation/foundation.tooltips.js8cc27f1c1=
+8db7281602cc4f7d0a193c199ab2d40=20
+http/www/files/foundation/js/foundation/foundation.topbar.js14566fdbdbd=
+e4c4369ba4b8d0ce646c4621efeb1=20
+http/www/files/foundation/js/vendore5afa6ca3c2624ca9e253f5626ae46355ada=
+74e3=20
+http/www/files/foundation/js/vendor/custom.modernizr.js6362d0f3394e4a90=
+561ab33c0650d32572ae4d93=20
+http/www/files/foundation/js/vendor/jquery.jsb74544c5cf84ac78d2030c28cd=
+9f521e80136b5f=20
+http/www/files/foundation/js/vendor/zepto.js006488437dda8a1ec87a3e912a7=
+9a5918f170dde=20
+http/www/files/scripts4e6c262c7d9a2fcc37206422a434e92cda10cd6a=20
+http/www/files/scripts/ajax.jse2c203fe978b83f4ca8d1ba97633f5a5d50bd53b=20
+http/www/files/scripts/jquery-1.9.1.js6896a531cd562cc4a2eb31e2be0e81319=
+05a90e0=20
+http/www/files/scripts/sha512.js272f790b91010bed997f0ed7d4a616f03e627a6=
+a=20
+http/www/index.phpb1fd6c496624710b8748877d7512766018178342=20
+server_filesc4769e6f5ade18f1dea9eb1e44743378cb7e2c5a=20
+server_files/api_classesc31151cdf2d4a6136fe95089b39eb3d3cecdf3c3=20
+server_files/api_classes/user.phpe61c5338616a6b0e32e953c603944fc088a82b=
+d1 server_files/libraries51d26aa3fb9789f86adf6e4b051fa98ce2b085a4=20
+server_files/libraries/debugmode.php8f3a40b616c83a77235d1a16a230ee6996c=
+fca2b=20
+server_files/libraries/restlerc282fca7ac71e27ac69fa3ac4cb19367f7ceee00=20
+server_files/libraries/restler/.gitignore7e60fed960715e64352fdd71f37ccf=
+e21089a698=20
+server_files/libraries/restler/Makefileffa7a78d0ba68d1bba59e04532aa856b=
+14afc817=20
+server_files/libraries/restler/README.md249b48318375db88df5e2dec82c3744=
+a227bac26=20
+s
+packet:         push< 0000000000000000000000000000000000000000=20
+capabilities^{}\0 report-status delete-refs side-band-64k quiet ofs-del=
+ta
+packet:         push< 0000
+packet:         push> 0000000000000000000000000000000000000000=20
+17c420b8bd99856aee6da9c1743f6df0ec18a9ca refs/heads/master\0=20
+report-status side-band-64k
+packet:         push> 0000
+packet:         push<=20
+20b8bd99856aee6da9c1743f6df0ec18a9cac28267338c198573ad59e89d0acc445a62b=
+3d127=20
+acf853d0a30287d9455dbe1707edeb16cc3e9b22=20
+conf.php845ecef1e4aaece71ef357285c2df71056ae0314=20
+db98699a6c68b653be1fa8dceb64204397d9814cd1=20
+db/db.sqlfed89aa6a337c6ab5a89dba13702a65ab70372bd=20
+httpff2a325bfd33f1fb7098b5688ffe99fe67bf5874=20
+http/apifbf53a7bcd223485e56d30715a794a7e067df8d2=20
+http/api/.htaccess84d1f0580e88c6351df884200ebcd526d8b145ea=20
+http/api/index.php9b8a7a21fa6e4c3a9672469b9b4a7e51a336d015=20
+http/www9a464b3db152808bc74512304054ac25a63cb9b7=20
+http/www/files8cab2dab60f85385de1ef984a976a038176c2015=20
+http/www/files/foundationa5cb50f4203d7176a505857ac80ffbbcf562c91f=20
+http/www/files/foundation/cssc2a844c8a00ef41d912f53c40026580f2b10fd00=20
+http/www/files/foundation/css/accessibility_foundicons.css699d805b9f585=
+8111d4bc95705df22f6137ec14a=20
+http/www/files/foundation/css/accessibility_foundicons_ie7.css8e0ddf1ac=
+316d9231277a77bcd550895f291b5c7=20
+http/www/files/foundation/css/foundation.css1d592b3fc77c4b44af67b82edbe=
+e4cc51b8a97d9=20
+http/www/files/foundation/css/foundation.min.css3c308c85cf36052810d35c0=
+8d4f5bbc233cf61ea=20
+http/www/files/foundation/css/general_foundicons.cssd5b3776730a16e4ec61=
+bad31526cc0a5a24096bc=20
+http/www/files/foundation/css/general_foundicons_ie7.cssa9c6f52f05e50c6=
+fd8dab6c30e22c8d4ea2f15ea=20
+http/www/files/foundation/css/normalize.css914f6472ffce7135f191048a923e=
+07e7886f192b=20
+http/www/files/foundation/css/social_foundicons.css6a3c9c07729fc466c38e=
+6a40d36b298de881706b=20
+http/www/files/foundation/css/social_foundicons_ie7.cssd44839248d958fdc=
+96fa044dae0ea71dffd35bde=20
+http/www/files/foundation/fonts5008ddfcf53c02e82d7eee2e57c38e5672ef89f6=
+=20
+http/www/files/foundation/fonts/.DS_Store237a0ca97e568531dc58bf7c812020=
+28af1e881c=20
+http/www/files/foundation/fonts/accessibility_foundicons.eot49c0d07bea6=
+f18cdbc35ee938b1b3f48cacce64c=20
+http/www/files/foundation/fonts/accessibility_foundicons.svg46a67f8d022=
+3b881ca74ccafb44b64664552b937=20
+http/www/files/foundation/fonts/accessibility_foundicons.ttf4eae85189fe=
+e6930191b69e31a09b34e6a9a9c19=20
+http/www/files/foundation/fonts/accessibility_foundicons.woff20733a0388=
+ef77572cbc55cbf76cc46babf0a15d=20
+http/www/files/foundation/fonts/general_foundicons.eota9347515264ac712b=
+5d083eaa231929243ea7142=20
+http/www/files/foundation/fonts/general_foundicons.svg90a5ccead2d84d036=
+bd8ed66926af93b21621df5=20
+http/www/files/foundation/fonts/general_foundicons.ttfdaab63141b07e0a1f=
+a8efd931a98945b837bd4aa=20
+http/www/files/foundation/fonts/general_foundicons.woffa9341f49f12c10aa=
+a5db2bc74ed3889245ce9a3a=20
+http/www/files/foundation/fonts/social_foundicons.eoteb4189cd70c623deaa=
+25e5bb55ab210d27fe2d14=20
+http/www/files/foundation/fonts/social_foundicons.svg01158c66b13b6f90e7=
+b7d1cdb5c4e7369c6434ae=20
+http/www/files/foundation/fonts/social_foundicons.ttfbd1f1e58a692b73205=
+fce579faee81801d3157aa=20
+http/www/files/foundation/fonts/social_foundicons.woffcd2531e2044a9c187=
+5159ff1278aafac1aaa8944=20
+http/www/files/foundation/img8b137891791fe96927ad78e64b0aad7bded08bdc=20
+http/www/files/foundation/img/.gitkeep36b90e58095363e46845d98d979700d16=
+019830e=20
+http/www/files/foundation/js596287860dbdcd04dd8a78d2ee1999862286515a=20
+http/www/files/foundation/js/foundation.min.jsec14148b2d83476fffebf3cba=
+39d6516844b7200=20
+http/www/files/foundation/js/foundationb78a35a14d000346914644cc0e9783a4=
+0f64760d=20
+http/www/files/foundation/js/foundation/foundation.alerts.jsc8ff3249917=
+62b763dd936da49415fff1ec2de93=20
+http/www/files/foundation/js/foundation/foundation.clearing.js862027c86=
+31db60070e8c3ebd7b8953c0283c561=20
+http/www/files/foundation/js/foundation/foundation.cookie.js24b35e12e78=
+60a80edb9f16a0209715f249f96b0=20
+http/www/files/foundation/js/foundation/foundation.dropdown.js6a27af4ad=
+0e0865235cd3a84cd251b8f928510ba=20
+http/www/files/foundation/js/foundation/foundation.forms.js323e6e1e633a=
+ce0dcc873553b8df03a28bcd78bc=20
+http/www/files/foundation/js/foundation/foundation.joyride.js87c3b65bd9=
+231264c110749b7ad75214cee50c93=20
+http/www/files/foundation/js/foundation/foundation.js3cdef5b617b054a355=
+f80a5bce164cc1ed8a419e=20
+http/www/files/foundation/js/foundation/foundation.magellan.js54c467efd=
+46e3c199ae4dd0860ee5196403b1027=20
+http/www/files/foundation/js/foundation/foundation.orbit.js65c18fc2b438=
+3b5111953114c13ebdb2ba3c5cda=20
+http/www/files/foundation/js/foundation/foundation.placeholder.js31a450=
+ad44b7ec6593bdefc4a88c781a45c418e1=20
+http/www/files/foundation/js/foundation/foundation.reveal.js1069794478f=
+6c4032e1caf4ecc24bce961482835=20
+http/www/files/foundation/js/foundation/foundation.section.js1696e2ad5b=
+bf72ba052f9aa4105e58edee08b16f=20
+http/www/files/foundation/js/foundation/foundation.tooltips.js8cc27f1c1=
+8db7281602cc4f7d0a193c199ab2d40=20
+http/www/files/foundation/js/foundation/foundation.topbar.js14566fdbdbd=
+e4c4369ba4b8d0ce646c4621efeb1=20
+http/www/files/foundation/js/vendore5afa6ca3c2624ca9e253f5626ae46355ada=
+74e3=20
+http/www/files/foundation/js/vendor/custom.modernizr.js6362d0f3394e4a90=
+561ab33c0650d32572ae4d93=20
+http/www/files/foundation/js/vendor/jquery.jsb74544c5cf84ac78d2030c28cd=
+9f521e80136b5f=20
+http/www/files/foundation/js/vendor/zepto.js006488437dda8a1ec87a3e912a7=
+9a5918f170dde=20
+http/www/files/scripts4e6c262c7d9a2fcc37206422a434e92cda10cd6a=20
+http/www/files/scripts/ajax.jse2c203fe978b83f4ca8d1ba97633f5a5d50bd53b=20
+http/www/files/scripts/jquery-1.9.1.js6896a531cd562cc4a2eb31e2be0e81319=
+05a90e0=20
+http/www/files/scripts/sha512.js272f790b91010bed997f0ed7d4a616f03e627a6=
+a=20
+http/www/index.phpb1fd6c496624710b8748877d7512766018178342=20
+server_filesc4769e6f5ade18f1dea9eb1e44743378cb7e2c5a=20
+server_files/api_classesc31151cdf2d4a6136fe95089b39eb3d3cecdf3c3=20
+server_files/api_classes/user.phpe61c5338616a6b0e32e953c603944fc088a82b=
+d1 server_files/libraries51d26aa3fb9789f86adf6e4b051fa98ce2b085a4=20
+server_files/libraries/debugmode.php8f3a40b616c83a77235d1a16a230ee6996c=
+fca2b=20
+server_files/libraries/restlerc282fca7ac71e27ac69fa3ac4cb19367f7ceee00=20
+server_files/libraries/restler/.gitignore7e60fed960715e64352fdd71f37ccf=
+e21089a698=20
+server_files/libraries/restler/Makefileffa7a78d0ba68d1bba59e04532aa856b=
+14afc817=20
+server_files/libraries/restler/README.md249b48318375db88df5e2dec82c3744=
+a227bac26=20
+s
+packet:         push< 0000000000000000000000000000000000000000=20
+capabilities^{}\0 report-status delete-refs side-band-64k quiet ofs-del=
+ta
+packet:         push< 0000
+packet:         push> 0000000000000000000000000000000000000000=20
+eef0f0c480e538215cfab821ec53f4997bf35630 refs/heads/master\0=20
+report-status side-band-64k
+packet:         push> 0000
+packet:         push< 0000000000000000000000000000000000000000=20
+capabilities^{}\0 report-status delete-refs side-band-64k quiet ofs-del=
+ta
+packet:         push< 0000
+packet:         push> 0000000000000000000000000000000000000000=20
+eef0f0c480e538215cfab821ec53f4997bf35630 refs/heads/master\0=20
+report-status side-band-64k
+packet:         push> 0000
+packet:         push< 0000000000000000000000000000000000000000=20
+capabilities^{}\0 report-status delete-refs side-band-64k quiet ofs-del=
+ta
+packet:         push< 0000
+packet:         push> 0000000000000000000000000000000000000000=20
+2ba8f16b7cecb56f8bc706b57028942d4867689f refs/heads/master\0=20
+report-status side-band-64k
+packet:         push> 0000
+packet:         push<=20
+f16b7cecb56f8bc706b57028942d4867689f53af53d73c2815c311aab47561c8d820598=
+92ccc=20
+acf853d0a30287d9455dbe1707edeb16cc3e9b22=20
+conf.php845ecef1e4aaece71ef357285c2df71056ae0314=20
+db98699a6c68b653be1fa8dceb64204397d9814cd1=20
+db/db.sqlfed89aa6a337c6ab5a89dba13702a65ab70372bd=20
+httpff2a325bfd33f1fb7098b5688ffe99fe67bf5874=20
+http/apifbf53a7bcd223485e56d30715a794a7e067df8d2=20
+http/api/.htaccess84d1f0580e88c6351df884200ebcd526d8b145ea=20
+http/api/index.php9b8a7a21fa6e4c3a9672469b9b4a7e51a336d015=20
+http/www9a464b3db152808bc74512304054ac25a63cb9b7=20
+http/www/files8cab2dab60f85385de1ef984a976a038176c2015=20
+http/www/files/foundationa5cb50f4203d7176a505857ac80ffbbcf562c91f=20
+http/www/files/foundation/cssc2a844c8a00ef41d912f53c40026580f2b10fd00=20
+http/www/files/foundation/css/accessibility_foundicons.css699d805b9f585=
+8111d4bc95705df22f6137ec14a=20
+http/www/files/foundation/css/accessibility_foundicons_ie7.css8e0ddf1ac=
+316d9231277a77bcd550895f291b5c7=20
+http/www/files/foundation/css/foundation.css1d592b3fc77c4b44af67b82edbe=
+e4cc51b8a97d9=20
+http/www/files/foundation/css/foundation.min.css3c308c85cf36052810d35c0=
+8d4f5bbc233cf61ea=20
+http/www/files/foundation/css/general_foundicons.cssd5b3776730a16e4ec61=
+bad31526cc0a5a24096bc=20
+http/www/files/foundation/css/general_foundicons_ie7.cssa9c6f52f05e50c6=
+fd8dab6c30e22c8d4ea2f15ea=20
+http/www/files/foundation/css/normalize.css914f6472ffce7135f191048a923e=
+07e7886f192b=20
+http/www/files/foundation/css/social_foundicons.css6a3c9c07729fc466c38e=
+6a40d36b298de881706b=20
+http/www/files/foundation/css/social_foundicons_ie7.cssd44839248d958fdc=
+96fa044dae0ea71dffd35bde=20
+http/www/files/foundation/fonts5008ddfcf53c02e82d7eee2e57c38e5672ef89f6=
+=20
+http/www/files/foundation/fonts/.DS_Store237a0ca97e568531dc58bf7c812020=
+28af1e881c=20
+http/www/files/foundation/fonts/accessibility_foundicons.eot49c0d07bea6=
+f18cdbc35ee938b1b3f48cacce64c=20
+http/www/files/foundation/fonts/accessibility_foundicons.svg46a67f8d022=
+3b881ca74ccafb44b64664552b937=20
+http/www/files/foundation/fonts/accessibility_foundicons.ttf4eae85189fe=
+e6930191b69e31a09b34e6a9a9c19=20
+http/www/files/foundation/fonts/accessibility_foundicons.woff20733a0388=
+ef77572cbc55cbf76cc46babf0a15d=20
+http/www/files/foundation/fonts/general_foundicons.eota9347515264ac712b=
+5d083eaa231929243ea7142=20
+http/www/files/foundation/fonts/general_foundicons.svg90a5ccead2d84d036=
+bd8ed66926af93b21621df5=20
+http/www/files/foundation/fonts/general_foundicons.ttfdaab63141b07e0a1f=
+a8efd931a98945b837bd4aa=20
+http/www/files/foundation/fonts/general_foundicons.woffa9341f49f12c10aa=
+a5db2bc74ed3889245ce9a3a=20
+http/www/files/foundation/fonts/social_foundicons.eoteb4189cd70c623deaa=
+25e5bb55ab210d27fe2d14=20
+http/www/files/foundation/fonts/social_foundicons.svg01158c66b13b6f90e7=
+b7d1cdb5c4e7369c6434ae=20
+http/www/files/foundation/fonts/social_foundicons.ttfbd1f1e58a692b73205=
+fce579faee81801d3157aa=20
+http/www/files/foundation/fonts/social_foundicons.woffcd2531e2044a9c187=
+5159ff1278aafac1aaa8944=20
+http/www/files/foundation/img8b137891791fe96927ad78e64b0aad7bded08bdc=20
+http/www/files/foundation/img/.gitkeep36b90e58095363e46845d98d979700d16=
+019830e=20
+http/www/files/foundation/js596287860dbdcd04dd8a78d2ee1999862286515a=20
+http/www/files/foundation/js/foundation.min.jsec14148b2d83476fffebf3cba=
+39d6516844b7200=20
+http/www/files/foundation/js/foundationb78a35a14d000346914644cc0e9783a4=
+0f64760d=20
+http/www/files/foundation/js/foundation/foundation.alerts.jsc8ff3249917=
+62b763dd936da49415fff1ec2de93=20
+http/www/files/foundation/js/foundation/foundation.clearing.js862027c86=
+31db60070e8c3ebd7b8953c0283c561=20
+http/www/files/foundation/js/foundation/foundation.cookie.js24b35e12e78=
+60a80edb9f16a0209715f249f96b0=20
+http/www/files/foundation/js/foundation/foundation.dropdown.js6a27af4ad=
+0e0865235cd3a84cd251b8f928510ba=20
+http/www/files/foundation/js/foundation/foundation.forms.js323e6e1e633a=
+ce0dcc873553b8df03a28bcd78bc=20
+http/www/files/foundation/js/foundation/foundation.joyride.js87c3b65bd9=
+231264c110749b7ad75214cee50c93=20
+http/www/files/foundation/js/foundation/foundation.js3cdef5b617b054a355=
+f80a5bce164cc1ed8a419e=20
+http/www/files/foundation/js/foundation/foundation.magellan.js54c467efd=
+46e3c199ae4dd0860ee5196403b1027=20
+http/www/files/foundation/js/foundation/foundation.orbit.js65c18fc2b438=
+3b5111953114c13ebdb2ba3c5cda=20
+http/www/files/foundation/js/foundation/foundation.placeholder.js31a450=
+ad44b7ec6593bdefc4a88c781a45c418e1=20
+http/www/files/foundation/js/foundation/foundation.reveal.js1069794478f=
+6c4032e1caf4ecc24bce961482835=20
+http/www/files/foundation/js/foundation/foundation.section.js1696e2ad5b=
+bf72ba052f9aa4105e58edee08b16f=20
+http/www/files/foundation/js/foundation/foundation.tooltips.js8cc27f1c1=
+8db7281602cc4f7d0a193c199ab2d40=20
+http/www/files/foundation/js/foundation/foundation.topbar.js14566fdbdbd=
+e4c4369ba4b8d0ce646c4621efeb1=20
+http/www/files/foundation/js/vendore5afa6ca3c2624ca9e253f5626ae46355ada=
+74e3=20
+http/www/files/foundation/js/vendor/custom.modernizr.js6362d0f3394e4a90=
+561ab33c0650d32572ae4d93=20
+http/www/files/foundation/js/vendor/jquery.jsb74544c5cf84ac78d2030c28cd=
+9f521e80136b5f=20
+http/www/files/foundation/js/vendor/zepto.js006488437dda8a1ec87a3e912a7=
+9a5918f170dde=20
+http/www/files/scripts4e6c262c7d9a2fcc37206422a434e92cda10cd6a=20
+http/www/files/scripts/ajax.jse2c203fe978b83f4ca8d1ba97633f5a5d50bd53b=20
+http/www/files/scripts/jquery-1.9.1.js6896a531cd562cc4a2eb31e2be0e81319=
+05a90e0=20
+http/www/files/scripts/sha512.js272f790b91010bed997f0ed7d4a616f03e627a6=
+a=20
+http/www/index.phpc3ed262f3c30a40ed5cb19a85ade3d891999962c=20
+server_filesc4769e6f5ade18f1dea9eb1e44743378cb7e2c5a=20
+server_files/api_classesc31151cdf2d4a6136fe95089b39eb3d3cecdf3c3=20
+server_files/api_classes/user.php07a7fb0ccef6095c719eaed8d5f30dd933e2a4=
+81 server_files/libraries51d26aa3fb9789f86adf6e4b051fa98ce2b085a4=20
+server_files/libraries/debugmode.phpd1f719cbf6df5c0b5d4e2269aa4f049d8c1=
+c110e=20
+server_files/libraries/restlerc282fca7ac71e27ac69fa3ac4cb19367f7ceee00=20
+server_files/libraries/restler/.gitignore7e60fed960715e64352fdd71f37ccf=
+e21089a698=20
+server_files/libraries/restler/Makefile249b48318375db88df5e2dec82c3744a=
+227bac26=20
+server_files/libraries/restler/behat.ymld146d2faf7cd849dea5a92e51d68210=
+950afa0db=20
+server_files/libraries/restler/composer.json2647195ac4d70915a9c37550e3c=
+bab1be0743f60=20
+server_files/libraries/restler/features2d54de98adbf5a1e14442224fa8171b9=
+2b390282=20
+server_files/libraries/restler/features/bootstrap6410644b72c83bb9828256=
+5ed4c36a153da971b2=20
+server_files/libraries/restler/features/bootstrap/FeatureContext.php735=
+335f569291358a5c686c563a63d42f65f937b=20
+server_files/libraries/restler/features/bootstrap/RestContext.phpdb7a95=
+490db63d21bd31d8696e36c0c7b5448e2b=20
+server_files/libraries/restler/features/examples52e4ee9ecc56fc6f413ad74=
+f167065767762cf8d=20
+server_files/libraries/restler/features/examples/README.md047040c098b29=
+9ae613ea9130fbdfd692fe47fc7=20
+server_files/libraries/restler/features/examples/_001_helloworld.featur=
+e980e1b995f6a54a457b23d76521cce01de627f61=20
+server_files/libraries/restler/features/examples/_002_minimal.feature84=
+94a30df1e517c583ac3b75d8944ee54d20d2f5=20
+server_files/libraries/restler/features/examples/_003_multiformat.featu=
+ref904c711a9fab32bac7ea154f08b74c2afb0f453=20
+server_files/libraries/restler/features/examples/_007_crud.featurec3b7f=
+3cbfc922c5b30e709b8905248df55b1e98d=20
+server_files/libraries/restler/features/restler7662d15589e21b722ca9b1cb=
+f93c0d980cf537e0=20
+server_files/libraries/restler/features/restler/README.md1ea9b86ff3664b=
+1c4b4677a06fa21e501a321e19=20
+server_files/libraries/restler/features/restler/annotations.feature8b28=
+7855d03b65b799bcd8ab1bfd32c3b7c3e7af=20
+server_files/libraries/restler/features/restler/negotiation-charset.fea=
+ture6133bd92aa4418f7b7ae87ce2cbf3b31b1b3abf2=20
+server_files/libraries/restler/features/restler/negotiation-format.feat=
+ure62c0e60e61666ac5d9e7ad29f91f50e83b95b887=20
+server_files/libraries/restler/features/restler/negotiation-language.fe=
+atureaf5398fb75edd6af13a704aec2cf286cda22cdfe=20
+server_files/libraries/restler/features/restler/status_codes.feature7be=
+48e8c9ed0731652f93bfb597f08f97119057a=20
+server_files/libraries/restler/package.ini190fe81d5dec8a7396a11e058af36=
+f997932571e=20
+server_files/libraries/restler/public1e233c708ae24f014dc6f4d7e64c2035e2=
+c5c7b9=20
+server_files/libraries/restler/public/examples9acb45400ebf68a221904d386=
+3624de97c2e6316=20
+server_files/libraries/restler/public/examples/_001_helloworld06d1b6d6e=
+ebe8c51e03acb677ae6328a3a6785bf=20
+server_files/libraries/restler/public/examples/_001_helloworld/.htacces=
+sc2d3c9e0c24eefa7bb5d8f02bafebc4ce8edbe4c=20
+server_files/libraries/restler/public/examples/_001_helloworld/Say.php9=
+919a3eb14f0907c108ee989e6ce0e2a7213c0eb=20
+server_files/libraries/restler/public/examples/_001_helloworld/index.ph=
+pcc07de806e5991e33d27b22cc64050fcaa730cbe=20
+server_files/libraries/restler/public/examples/_001_helloworld/readme.h=
+tml038c2f9705721cad78862806d23c6843dec33069=20
+server_files/libraries/restler/public/examples/_001_helloworld/readme.m=
+d9068749a625fc43b3a0264c49140cfb147439aa5=20
+server_files/libraries/restler/public/examples/_002_minimal0704f694155b=
+8b7d68c887ba4aa95bcdfd250fef=20
+server_files/libraries/restler/public/examples/_002_minimal/.htaccess29=
+644e7401b629eb6d1a097872a998495ce19edf=20
+server_files/libraries/restler/public/examples/_002_minimal/Math.phpe3f=
+0f23c932c6cee991ea63c084fec44d9dfaafa=20
+server_files/libraries/restler/public/examples/_002_minimal/index.php1f=
+8fd0b99415c1b315407064737a792e0b744d88=20
+server_files/libraries/restler/public/examples/_002_minimal/readme.html=
+c93eeddcc30079a1bd62edb88f229ee951bb4271=20
+server_files/libraries/restler/public/examples/_002_minimal/readme.md7c=
+187a1f2a58391032833d64230848c380b7aab8=20
+server_files/libraries/restler/public/examples/_003_multiformatc49bc802=
+bf0ae84473727b94a7386cd914c85423=20
+server_files/libraries/restler/public/examples/_003_multiformat/BMI.php=
+9da7ae6f117734c6117a6c8b54393e91af6e742f=20
+server_files/libraries/restler/public/examples/_003_multiformat/index.p=
+hp10f91065493c3e09c07a94afa8e5ddeef96f3ea3=20
+server_files/libraries/restler/public/examples/_003_multiformat/readme.=
+html427d73c1e3e7b3fe17b012884b99d657f7f3f578=20
+server_files/libraries/restler/public/examples/_003_multiformat/readme.=
+mdd82721c7b2ca5ab27bf5481553f7d6ab611d4405=20
+server_files/libraries/restler/public/examples/_004_error_response4cd66=
+b540f1808b740ac111a4025baa4a0ab03ec=20
+server_files/libraries/restler/public/examples/_004_error_response/Curr=
+ency.php8100292b2350e778532a4f8c069381454a55e1bd=20
+server_files/libraries/restler/public/examples/_004_error_response/inde=
+x.phpc1e22f76f20d7e7a40b8b6746824ecb21c3b0edf=20
+server_files/libraries/restler/public/examples/_004_error_response/read=
+me.html37c7c3d1f106ae143099d1899efe111454a44dd7=20
+server_files/libraries/restler/public/examples/_004_error_response/read=
+me.md9d0b58ccb1b725a7356b8cd1fb8f57a55ad18b17=20
+server_files/libraries/restler/public/examples/_005_protected_api472b59=
+421e5154a4a9d9bae69b2bc89cb8c96e7b=20
+server_files/libraries/restler/public/examples/_005_protected_api/Secur=
+ed.php13869b74f5020934c2575d43639d33ddada1cd9c=20
+server_files/libraries/restler/public/examples/_005_protected_api/Simpl=
+e.phpfa9b07eb5b0a3b71e0f91c106d6df440adafe1c9=20
+server_files/libraries/restler/public/examples/_005_protected_api/Simpl=
+eAuth.phpe7412bea250fa574e1beadd428dfcd2c0770e34e=20
+server_files/libraries/r
+packet:         push< 0000000000000000000000000000000000000000=20
+capabilities^{}\0 report-status delete-refs side-band-64k quiet ofs-del=
+ta
+packet:         push< 0000
+packet:         push> 0000000000000000000000000000000000000000=20
+bbadedcc30b580f950f9023b060769c620c963c7 refs/heads/master\0=20
+report-status side-band-64k
+packet:         push> 0000
 
 
-========================================================================
-           *****    ECS 2013    *****
+On 04/11/2013 07:37 PM, Jonathan Nieder wrote:
+ > Hello,
+ >
+ > Jo=E3o Joyce wrote:
+ >
+ >> I am not sure this is the right place to ask this.
+ > You're in the right place.
+ >
+ > [...]
+ >> I am trying to push some files to a server with git push. I have
+ >> configured the server to push the files:
+ >>      git remote set-url test ssh://user@location.com:2200/fullpath/
+ >>
+ >> but I am getting the following error:
+ >>      git send-pack: protocol error: bad band #50
+ >>      fatal: The remote end hung up unexpectedly
+ > That means that where git expected to read a binary sideband number,
+ > it instead received the byte \x32 (ASCII '2').
+ >
+ > Without more details, it's hard to debug this further.  Can you get
+ > a trace of the communication by setting the envvar
+ > GIT_TRACE_PACKET=3D/tmp/log on the client?
+ >
+ > Thanks and hope that helps,
+ > Jonathan
+ >
 
-The 2013 International Conference on Electronics and Communication Systems
-July 16-19, 2013, Rhodes (Rodos) Island, Greece
-http://www.europment.org/conf2013/ecs.htm
+Hi,
 
+Thank you for the help. Here is the trace:
 
-======================================================================================== 
-This message satisfies the requirements of the European legislation on advertising (Directiva 2002/58/CE of the European Parliament). If you do not
-wish to receive e-mails from us.  
-If you want to un~subscribe, send an email to rena.n.politi@gmail.com with the following
-command as Subject:  
-un~subscribe email1, email2, email3, ....
-where email1, email2, email3 are all the possible emails that you have
-For  example
-un~subscribe johnsmith@gmail.com, jsmith@server.mbu.uk etc..
-Please accept our apologies for any inconvenience caused.
+packet:         push< 0000000000000000000000000000000000000000=20
+capabilities^{}\0 report-status delete-refs side-band-64k quiet ofs-del=
+ta
+packet:         push< 0000
+packet:         push> 0000000000000000000000000000000000000000=20
+17c420b8bd99856aee6da9c1743f6df0ec18a9ca refs/heads/master\0=20
+report-status side-band-64k
+packet:         push> 0000
+packet:         push<=20
+20b8bd99856aee6da9c1743f6df0ec18a9cac28267338c198573ad59e89d0acc445a62b=
+3d127=20
+acf853d0a30287d9455dbe1707edeb16cc3e9b22=20
+conf.php845ecef1e4aaece71ef357285c2df71056ae0314=20
+db98699a6c68b653be1fa8dceb64204397d9814cd1=20
+db/db.sqlfed89aa6a337c6ab5a89dba13702a65ab70372bd=20
+httpff2a325bfd33f1fb7098b5688ffe99fe67bf5874=20
+http/apifbf53a7bcd223485e56d30715a794a7e067df8d2=20
+http/api/.htaccess84d1f0580e88c6351df884200ebcd526d8b145ea=20
+http/api/index.php9b8a7a21fa6e4c3a9672469b9b4a7e51a336d015=20
+http/www9a464b3db152808bc74512304054ac25a63cb9b7=20
+http/www/files8cab2dab60f85385de1ef984a976a038176c2015=20
+http/www/files/foundationa5cb50f4203d7176a505857ac80ffbbcf562c91f=20
+http/www/files/foundation/cssc2a844c8a00ef41d912f53c40026580f2b10fd00=20
+http/www/files/foundation/css/accessibility_foundicons.css699d805b9f585=
+8111d4bc95705df22f6137ec14a=20
+http/www/files/foundation/css/accessibility_foundicons_ie7.css8e0ddf1ac=
+316d9231277a77bcd550895f291b5c7=20
+http/www/files/foundation/css/foundation.css1d592b3fc77c4b44af67b82edbe=
+e4cc51b8a97d9=20
+http/www/files/foundation/css/foundation.min.css3c308c85cf36052810d35c0=
+8d4f5bbc233cf61ea=20
+http/www/files/foundation/css/general_foundicons.cssd5b3776730a16e4ec61=
+bad31526cc0a5a24096bc=20
+http/www/files/foundation/css/general_foundicons_ie7.cssa9c6f52f05e50c6=
+fd8dab6c30e22c8d4ea2f15ea=20
+http/www/files/foundation/css/normalize.css914f6472ffce7135f191048a923e=
+07e7886f192b=20
+http/www/files/foundation/css/social_foundicons.css6a3c9c07729fc466c38e=
+6a40d36b298de881706b=20
+http/www/files/foundation/css/social_foundicons_ie7.cssd44839248d958fdc=
+96fa044dae0ea71dffd35bde=20
+http/www/files/foundation/fonts5008ddfcf53c02e82d7eee2e57c38e5672ef89f6=
+=20
+http/www/files/foundation/fonts/.DS_Store237a0ca97e568531dc58bf7c812020=
+28af1e881c=20
+http/www/files/foundation/fonts/accessibility_foundicons.eot49c0d07bea6=
+f18cdbc35ee938b1b3f48cacce64c=20
+http/www/files/foundation/fonts/accessibility_foundicons.svg46a67f8d022=
+3b881ca74ccafb44b64664552b937=20
+http/www/files/foundation/fonts/accessibility_foundicons.ttf4eae85189fe=
+e6930191b69e31a09b34e6a9a9c19=20
+http/www/files/foundation/fonts/accessibility_foundicons.woff20733a0388=
+ef77572cbc55cbf76cc46babf0a15d=20
+http/www/files/foundation/fonts/general_foundicons.eota9347515264ac712b=
+5d083eaa231929243ea7142=20
+http/www/files/foundation/fonts/general_foundicons.svg90a5ccead2d84d036=
+bd8ed66926af93b21621df5=20
+http/www/files/foundation/fonts/general_foundicons.ttfdaab63141b07e0a1f=
+a8efd931a98945b837bd4aa=20
+http/www/files/foundation/fonts/general_foundicons.woffa9341f49f12c10aa=
+a5db2bc74ed3889245ce9a3a=20
+http/www/files/foundation/fonts/social_foundicons.eoteb4189cd70c623deaa=
+25e5bb55ab210d27fe2d14=20
+http/www/files/foundation/fonts/social_foundicons.svg01158c66b13b6f90e7=
+b7d1cdb5c4e7369c6434ae=20
+http/www/files/foundation/fonts/social_foundicons.ttfbd1f1e58a692b73205=
+fce579faee81801d3157aa=20
+http/www/files/foundation/fonts/social_foundicons.woffcd2531e2044a9c187=
+5159ff1278aafac1aaa8944=20
+http/www/files/foundation/img8b137891791fe96927ad78e64b0aad7bded08bdc=20
+http/www/files/foundation/img/.gitkeep36b90e58095363e46845d98d979700d16=
+019830e=20
+http/www/files/foundation/js596287860dbdcd04dd8a78d2ee1999862286515a=20
+http/www/files/foundation/js/foundation.min.jsec14148b2d83476fffebf3cba=
+39d6516844b7200=20
+http/www/files/foundation/js/foundationb78a35a14d000346914644cc0e9783a4=
+0f64760d=20
+http/www/files/foundation/js/foundation/foundation.alerts.jsc8ff3249917=
+62b763dd936da49415fff1ec2de93=20
+http/www/files/foundation/js/foundation/foundation.clearing.js862027c86=
+31db60070e8c3ebd7b8953c0283c561=20
+http/www/files/foundation/js/foundation/foundation.cookie.js24b35e12e78=
+60a80edb9f16a0209715f249f96b0=20
+http/www/files/foundation/js/foundation/foundation.dropdown.js6a27af4ad=
+0e0865235cd3a84cd251b8f928510ba=20
+http/www/files/foundation/js/foundation/foundation.forms.js323e6e1e633a=
+ce0dcc873553b8df03a28bcd78bc=20
+http/www/files/foundation/js/foundation/foundation.joyride.js87c3b65bd9=
+231264c110749b7ad75214cee50c93=20
+http/www/files/foundation/js/foundation/foundation.js3cdef5b617b054a355=
+f80a5bce164cc1ed8a419e=20
+http/www/files/foundation/js/foundation/foundation.magellan.js54c467efd=
+46e3c199ae4dd0860ee5196403b1027=20
+http/www/files/foundation/js/foundation/foundation.orbit.js65c18fc2b438=
+3b5111953114c13ebdb2ba3c5cda=20
+http/www/files/foundation/js/foundation/foundation.placeholder.js31a450=
+ad44b7ec6593bdefc4a88c781a45c418e1=20
+http/www/files/foundation/js/foundation/foundation.reveal.js1069794478f=
+6c4032e1caf4ecc24bce961482835=20
+http/www/files/foundation/js/foundation/foundation.section.js1696e2ad5b=
+bf72ba052f9aa4105e58edee08b16f=20
+http/www/files/foundation/js/foundation/foundation.tooltips.js8cc27f1c1=
+8db7281602cc4f7d0a193c199ab2d40=20
+http/www/files/foundation/js/foundation/foundation.topbar.js14566fdbdbd=
+e4c4369ba4b8d0ce646c4621efeb1=20
+http/www/files/foundation/js/vendore5afa6ca3c2624ca9e253f5626ae46355ada=
+74e3=20
+http/www/files/foundation/js/vendor/custom.modernizr.js6362d0f3394e4a90=
+561ab33c0650d32572ae4d93=20
+http/www/files/foundation/js/vendor/jquery.jsb74544c5cf84ac78d2030c28cd=
+9f521e80136b5f=20
+http/www/files/foundation/js/vendor/zepto.js006488437dda8a1ec87a3e912a7=
+9a5918f170dde=20
+http/www/files/scripts4e6c262c7d9a2fcc37206422a434e92cda10cd6a=20
+http/www/files/scripts/ajax.jse2c203fe978b83f4ca8d1ba97633f5a5d50bd53b=20
+http/www/files/scripts/jquery-1.9.1.js6896a531cd562cc4a2eb31e2be0e81319=
+05a90e0=20
+http/www/files/scripts/sha512.js272f790b91010bed997f0ed7d4a616f03e627a6=
+a=20
+http/www/index.phpb1fd6c496624710b8748877d7512766018178342=20
+server_filesc4769e6f5ade18f1dea9eb1e44743378cb7e2c5a=20
+server_files/api_classesc31151cdf2d4a6136fe95089b39eb3d3cecdf3c3=20
+server_files/api_classes/user.phpe61c5338616a6b0e32e953c603944fc088a82b=
+d1 server_files/libraries51d26aa3fb9789f86adf6e4b051fa98ce2b085a4=20
+server_files/libraries/debugmode.php8f3a40b616c83a77235d1a16a230ee6996c=
+fca2b=20
+server_files/libraries/restlerc282fca7ac71e27ac69fa3ac4cb19367f7ceee00=20
+server_files/libraries/restler/.gitignore7e60fed960715e64352fdd71f37ccf=
+e21089a698=20
+server_files/libraries/restler/Makefileffa7a78d0ba68d1bba59e04532aa856b=
+14afc817=20
+server_files/libraries/restler/README.md249b48318375db88df5e2dec82c3744=
+a227bac26=20
+s
