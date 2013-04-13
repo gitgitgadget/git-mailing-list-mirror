@@ -1,187 +1,209 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH] i18n: branch: mark strings for translation
-Date: Sat, 13 Apr 2013 10:22:49 +0800
-Message-ID: <d11a226dac05ea7e8ee1d6166a1be1acee360a03.1365819645.git.worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.co>
-X-From: git-owner@vger.kernel.org Sat Apr 13 04:23:17 2013
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 3/2] doc/http-backend: match query-string in apache half-auth
+ example
+Date: Fri, 12 Apr 2013 23:33:36 -0400
+Message-ID: <20130413033336.GA20333@sigill.intra.peff.net>
+References: <20130411033022.GA14462@sigill.intra.peff.net>
+ <20130411033613.GB14551@sigill.intra.peff.net>
+ <5166E935.2080206@gmail.com>
+ <20130411170233.GB1255@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Magnus Therning <magnus@therning.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 13 05:33:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQq7Z-0005AE-D4
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 04:23:17 +0200
+	id 1UQrDm-0005ng-3R
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 05:33:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753491Ab3DMCXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Apr 2013 22:23:09 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:56199 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753054Ab3DMCXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Apr 2013 22:23:08 -0400
-Received: by mail-pd0-f178.google.com with SMTP id w11so1695143pde.37
-        for <git@vger.kernel.org>; Fri, 12 Apr 2013 19:23:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=xKOuV5HaHSLd4nCYc/n5Kkw+EcgSBKGB/1+4yvT9I0k=;
-        b=1HwLm7LtS9X8tmYeWjKMMzh20oFDcWjmbrUgCRdZOKfo2ZybUYxpfsgII9QD9se5su
-         M3bRG8i5ZT4PkDKLOQ3ZXxAeEHJfjZLIpMIeyz0QosIw343TZEG8SvrpB3v7TbiwlZ98
-         Db0PGRHN/xJFL/Yaiswyqnf6e4QYUjOxaMh7xFzzdookEKqQQKvVZKX/xIYbk+1WH2lW
-         5HlzXVKUdn54xOmA8pI4Mmz/ebN4e/yvF/WZTQX/6tL7Nll4jIAuAQaP+igUTLX9FrrV
-         GR7qPFV2tX/SAnoEMSlAP5fjwCFHjh1jyaGlboTKasneqHqhhB8eAwd2opJOIBbmh8uY
-         jKFQ==
-X-Received: by 10.68.197.195 with SMTP id iw3mr17565183pbc.177.1365819787686;
-        Fri, 12 Apr 2013 19:23:07 -0700 (PDT)
-Received: from localhost.localdomain ([114.248.153.32])
-        by mx.google.com with ESMTPS id z8sm10701883pbt.23.2013.04.12.19.23.03
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 12 Apr 2013 19:23:06 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.1.350.g76f6571.dirty
+	id S1754844Ab3DMDdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Apr 2013 23:33:40 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43566 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751670Ab3DMDdk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Apr 2013 23:33:40 -0400
+Received: (qmail 972 invoked by uid 107); 13 Apr 2013 03:35:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Apr 2013 23:35:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Apr 2013 23:33:36 -0400
+Content-Disposition: inline
+In-Reply-To: <20130411170233.GB1255@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221043>
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+When setting up a "half-auth" repository in which reads can
+be done anonymously but writes require authentication, it is
+best if the server can require authentication for both the
+ref advertisement and the actual receive-pack POSTs. This
+alleviates the need for the admin to set http.receivepack in
+the repositories, and means that the client is challenged
+for credentials immediately, instead of partway through the
+push process (and git clients older than v1.7.11.7 had
+trouble handling these challenges).
+
+Since detecting a push during the ref advertisement requires
+matching the query string, and this is non-trivial to do in
+Apache, we have traditionally punted and instructed users to
+just protect "/git-receive-pack$".  This patch provides the
+mod_rewrite recipe to actually match the ref advertisement,
+which is preferred.
+
+While we're at it, let's add the recipe to our test scripts
+so that we can be sure that it works, and doesn't get broken
+(either by our changes or by changes in Apache).
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- branch.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+This is on top of the jk/doc-http-backend topic.
 
-diff --git a/branch.c b/branch.c
-index 6ae6a..c8745 100644
---- a/branch.c
-+++ b/branch.c
-@@ -57,7 +57,7 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
- 	if (remote_is_branch
- 	    && !strcmp(local, shortname)
- 	    && !origin) {
--		warning("Not setting branch %s as its own upstream.",
-+		warning(_("Not setting branch %s as its own upstream."),
- 			local);
- 		return;
- 	}
-@@ -79,26 +79,26 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
- 	if (flag & BRANCH_CONFIG_VERBOSE) {
- 		if (remote_is_branch && origin)
- 			printf(rebasing ?
--			       "Branch %s set up to track remote branch %s from %s by rebasing.\n" :
--			       "Branch %s set up to track remote branch %s from %s.\n",
-+			       _("Branch %s set up to track remote branch %s from %s by rebasing.\n") :
-+			       _("Branch %s set up to track remote branch %s from %s.\n"),
- 			       local, shortname, origin);
- 		else if (remote_is_branch && !origin)
- 			printf(rebasing ?
--			       "Branch %s set up to track local branch %s by rebasing.\n" :
--			       "Branch %s set up to track local branch %s.\n",
-+			       _("Branch %s set up to track local branch %s by rebasing.\n") :
-+			       _("Branch %s set up to track local branch %s.\n"),
- 			       local, shortname);
- 		else if (!remote_is_branch && origin)
- 			printf(rebasing ?
--			       "Branch %s set up to track remote ref %s by rebasing.\n" :
--			       "Branch %s set up to track remote ref %s.\n",
-+			       _("Branch %s set up to track remote ref %s by rebasing.\n") :
-+			       _("Branch %s set up to track remote ref %s.\n"),
- 			       local, remote);
- 		else if (!remote_is_branch && !origin)
- 			printf(rebasing ?
--			       "Branch %s set up to track local ref %s by rebasing.\n" :
--			       "Branch %s set up to track local ref %s.\n",
-+			       _("Branch %s set up to track local ref %s by rebasing.\n") :
-+			       _("Branch %s set up to track local ref %s.\n"),
- 			       local, remote);
- 		else
--			die("BUG: impossible combination of %d and %p",
-+			die(_("BUG: impossible combination of %d and %p"),
- 			    remote_is_branch, origin);
- 	}
- }
-@@ -115,7 +115,7 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
- 	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
+Note that I have never used this in production, but it was pieced
+together from various advice I found on the web, and I did confirm that
+it works.
+
+I kind of assume mod-rewrite is everywhere these days, so we could
+potentially drop the fallback config completely, as it is likely to
+confuse people.
+
+ Documentation/git-http-backend.txt | 32 ++++++++++++++++++++++++--------
+ t/lib-httpd/apache.conf            | 18 ++++++++++++++++++
+ t/t5541-http-push.sh               | 30 ++++++++++++++++++++++++++++++
+ 3 files changed, 72 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
+index cad18ce..e3bcdb5 100644
+--- a/Documentation/git-http-backend.txt
++++ b/Documentation/git-http-backend.txt
+@@ -80,7 +80,30 @@ To enable anonymous read access but authenticated write access,
+ ----------------------------------------------------------------
+ +
+ To enable anonymous read access but authenticated write access,
+-require authorization with a LocationMatch directive:
++require authorization for both the initial ref advertisement (which we
++detect as a push via the service parameter in the query string), and the
++receive-pack invocation itself:
+++
++----------------------------------------------------------------
++RewriteCond %{QUERY_STRING} service=git-receive-pack [OR]
++RewriteCond %{REQUEST_URI} /git-receive-pack$
++RewriteRule ^/git/ - [E=AUTHREQUIRED:yes]
++
++<LocationMatch "^/git/">
++	Order Deny,Allow
++	Deny from env=AUTHREQUIRED
++
++	AuthType Basic
++	AuthName "Git Access"
++	Require group committers
++	Satisfy Any
++	...
++</LocationMatch>
++----------------------------------------------------------------
+++
++If you do not have `mod_rewrite` available to match against the query
++string, it is sufficient to just protect `git-receive-pack` itself,
++like:
+ +
+ ----------------------------------------------------------------
+ <LocationMatch "^/git/.*/git-receive-pack$">
+@@ -207,13 +230,6 @@ auth.require = (
+ # ...and set up auth.backend here
+ ----------------------------------------------------------------
+ +
+-Note that unlike the similar setup with Apache, we can easily match the
+-query string for receive-pack, catching the initial request from the
+-client. This means that the server administrator does not have to worry
+-about configuring `http.receivepack` for the repositories (the default
+-value, which enables it only in the case of authentication, is
+-sufficient).
+-+
+ To require authentication for both reads and writes:
+ +
+ ----------------------------------------------------------------
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 938b4cf..542241b 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -40,6 +40,9 @@ ErrorLog error.log
+ <IfModule !mod_authz_user.c>
+ 	LoadModule authz_user_module modules/mod_authz_user.so
+ </IfModule>
++<IfModule !mod_authz_host.c>
++	LoadModule authz_host_module modules/mod_authz_host.so
++</IfModule>
+ </IfVersion>
  
- 	if (strlen(new_ref) > 1024 - 7 - 7 - 1)
--		return error("Tracking not set up: name too long: %s",
-+		return error(_("Tracking not set up: name too long: %s"),
- 				new_ref);
+ PassEnv GIT_VALGRIND
+@@ -110,6 +113,21 @@ SSLEngine On
+ 	Require valid-user
+ </LocationMatch>
  
- 	memset(&tracking, 0, sizeof(tracking));
-@@ -134,7 +134,7 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
- 		}
++RewriteCond %{QUERY_STRING} service=git-receive-pack [OR]
++RewriteCond %{REQUEST_URI} /git-receive-pack$
++RewriteRule ^/half-auth-complete/ - [E=AUTHREQUIRED:yes]
++
++<Location /half-auth-complete/>
++  Order Deny,Allow
++  Deny from env=AUTHREQUIRED
++
++  AuthType Basic
++  AuthName "Git Access"
++  AuthUserFile passwd
++  Require valid-user
++  Satisfy Any
++</Location>
++
+ <IfDefine DAV>
+ 	LoadModule dav_module modules/mod_dav.so
+ 	LoadModule dav_fs_module modules/mod_dav_fs.so
+diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
+index 4086f02..beb00be 100755
+--- a/t/t5541-http-push.sh
++++ b/t/t5541-http-push.sh
+@@ -294,5 +294,35 @@ test_expect_success 'push to auth-only-for-push repo' '
+ 	test_cmp expect actual
+ '
  
- 	if (tracking.matches > 1)
--		return error("Not tracking: ambiguous information for ref %s",
-+		return error(_("Not tracking: ambiguous information for ref %s"),
- 				orig_ref);
- 
- 	install_branch_config(config_flags, new_ref, tracking.remote,
-@@ -179,12 +179,12 @@ int validate_new_branchname(const char *name, struct strbuf *ref,
- 			    int force, int attr_only)
- {
- 	if (strbuf_check_branch_ref(ref, name))
--		die("'%s' is not a valid branch name.", name);
-+		die(_("'%s' is not a valid branch name."), name);
- 
- 	if (!ref_exists(ref->buf))
- 		return 0;
- 	else if (!force && !attr_only)
--		die("A branch named '%s' already exists.", ref->buf + strlen("refs/heads/"));
-+		die(_("A branch named '%s' already exists."), ref->buf + strlen("refs/heads/"));
- 
- 	if (!attr_only) {
- 		const char *head;
-@@ -192,7 +192,7 @@ int validate_new_branchname(const char *name, struct strbuf *ref,
- 
- 		head = resolve_ref_unsafe("HEAD", sha1, 0, NULL);
- 		if (!is_bare_repository() && head && !strcmp(head, ref->buf))
--			die("Cannot force update the current branch.");
-+			die(_("Cannot force update the current branch."));
- 	}
- 	return 1;
- }
-@@ -247,7 +247,7 @@ void create_branch(const char *head,
- 			}
- 			die(_(upstream_missing), start_name);
- 		}
--		die("Not a valid object name: '%s'.", start_name);
-+		die(_("Not a valid object name: '%s'."), start_name);
- 	}
- 
- 	switch (dwim_ref(start_name, strlen(start_name), sha1, &real_ref)) {
-@@ -267,18 +267,18 @@ void create_branch(const char *head,
- 		}
- 		break;
- 	default:
--		die("Ambiguous object name: '%s'.", start_name);
-+		die(_("Ambiguous object name: '%s'."), start_name);
- 		break;
- 	}
- 
- 	if ((commit = lookup_commit_reference(sha1)) == NULL)
--		die("Not a valid branch point: '%s'.", start_name);
-+		die(_("Not a valid branch point: '%s'."), start_name);
- 	hashcpy(sha1, commit->object.sha1);
- 
- 	if (!dont_change_ref) {
- 		lock = lock_any_ref_for_update(ref.buf, NULL, 0);
- 		if (!lock)
--			die_errno("Failed to lock ref for update");
-+			die_errno(_("Failed to lock ref for update"));
- 	}
- 
- 	if (reflog)
-@@ -296,7 +296,7 @@ void create_branch(const char *head,
- 
- 	if (!dont_change_ref)
- 		if (write_ref_sha1(lock, sha1, msg) < 0)
--			die_errno("Failed to write ref");
-+			die_errno(_("Failed to write ref"));
- 
- 	strbuf_release(&ref);
- 	free(real_ref);
++test_expect_success 'create repo without http.receivepack set' '
++	cd "$ROOT_PATH" &&
++	git init half-auth &&
++	(
++		cd half-auth &&
++		test_commit one
++	) &&
++	git clone --bare half-auth "$HTTPD_DOCUMENT_ROOT_PATH/half-auth.git"
++'
++
++test_expect_success 'clone via half-auth-complete does not need password' '
++	cd "$ROOT_PATH" &&
++	set_askpass wrong &&
++	git clone "$HTTPD_URL"/half-auth-complete/smart/half-auth.git \
++		half-auth-clone &&
++	expect_askpass none
++'
++
++test_expect_success 'push into half-auth-complete requires password' '
++	cd "$ROOT_PATH/half-auth-clone" &&
++	echo two >expect &&
++	test_commit two &&
++	set_askpass user@host &&
++	git push "$HTTPD_URL/half-auth-complete/smart/half-auth.git" &&
++	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH/half-auth.git" \
++		log -1 --format=%s >actual &&
++	expect_askpass both user@host &&
++	test_cmp expect actual
++'
++
+ stop_httpd
+ test_done
 -- 
-1.8.2.1.350.g76f6571.dirty
+1.8.2.rc0.33.gd915649
