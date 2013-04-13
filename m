@@ -1,115 +1,162 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [ITCH] Specify refspec without remote
-Date: Sat, 13 Apr 2013 10:37:56 +0530
-Message-ID: <CALkWK0=qigG40C7Htv0Yt6ZrgP+vgsauRe=2rWuAuq7UJ47rfw@mail.gmail.com>
-References: <20130410202456.GF24177@sigill.intra.peff.net> <CALkWK0k_gYWg9=zjRKGrq-evsWG+hCrLjrpLfYp=_uoHVKBzHw@mail.gmail.com>
- <20130410210455.GA2999@sigill.intra.peff.net> <CALkWK0k-YJwT__8Tc4B4WXq30ij3i8_d6qwyOCP5RLsKF9eazQ@mail.gmail.com>
- <20130410211824.GC27070@google.com> <CALkWK0nxpoLL4zoinE4j8y8NLHo0-b=PcimNLykCjMjOpWYEfQ@mail.gmail.com>
- <20130410212911.GE27070@google.com> <CALkWK0m=iDw+N0zcfEEt1jzFD4wOOzLgyBWNyc=HZ+xLe5SBLw@mail.gmail.com>
- <20130410215658.GC6215@sigill.intra.peff.net> <CALkWK0=Y-pO3+g21PLCWOxx+M-7fSmp2FedMBtZ68PWU_TOHDw@mail.gmail.com>
- <20130410222334.GC6930@sigill.intra.peff.net> <CALkWK0nvTisYCFjxwuGaBbWawwBahzeBHZ84rFkUYL8sjJuxvw@mail.gmail.com>
- <7vppy0hhk7.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/2] transport-helper: report errors properly
+Date: Sat, 13 Apr 2013 00:42:29 -0500
+Message-ID: <CAMP44s1pZW6OJ2nkegKFQq6=npPSiD4dX_z37t63B9baaFW16w@mail.gmail.com>
+References: <20130410211311.GA24277@sigill.intra.peff.net>
+	<20130410211552.GA3256@sigill.intra.peff.net>
+	<CAMP44s02K5ydKLNi0umMkuAicoVTWyCdVfjs0yssCa2oyFShGQ@mail.gmail.com>
+	<7vfvywj4au.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2QJJnSRVVJscLsTnXk5zdGbA2utefF5SO7=90+ttENew@mail.gmail.com>
+	<7vd2u0hdmj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 13 07:08:46 2013
+X-From: git-owner@vger.kernel.org Sat Apr 13 07:42:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQshi-0006rd-EP
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 07:08:46 +0200
+	id 1UQtES-0001tV-Qu
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 07:42:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752099Ab3DMFIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Apr 2013 01:08:38 -0400
-Received: from mail-ia0-f179.google.com ([209.85.210.179]:49722 "EHLO
-	mail-ia0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751378Ab3DMFIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Apr 2013 01:08:37 -0400
-Received: by mail-ia0-f179.google.com with SMTP id l25so2982356iad.10
-        for <git@vger.kernel.org>; Fri, 12 Apr 2013 22:08:37 -0700 (PDT)
+	id S1752330Ab3DMFmc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Apr 2013 01:42:32 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:52244 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752253Ab3DMFmb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Apr 2013 01:42:31 -0400
+Received: by mail-la0-f45.google.com with SMTP id gw10so3091406lab.18
+        for <git@vger.kernel.org>; Fri, 12 Apr 2013 22:42:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:mime-version:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=XnWxB0BYClAg5PZgvhA08w9nzrwNjZ1dhPPHH/1Sd0A=;
-        b=GoX2ij8Bi2/jLHAkNXCVcqmfXtdHGhF8urfnzQSjBjts/Jtd4OePDcoEGDKv82FZ61
-         ZUL1iqAtgGNS/PIdTaVFm9XFdPVyfjE/V4DJhttRyniLPhGho/R8ruV8eg/iK7Fthknf
-         TAwy5MV781FEBD5FE80jiQOd2MoNNqs2Q3QNJ76A8k/uO+j0UsFbqkkKY1WV3bj8fFvk
-         a1HUnGH0j+m82AH7UpREn5KmV3Dmv45/Cf2R4N9snT7JBqEKjDi8XDuHECplxeEvnDSQ
-         w+ougvXr/TTbEgHY6mzEAzIR/Sm0n83UGVU85d9Grf5pigdF1VqkTmCuDSAe6MgGqSRE
-         r1UQ==
-X-Received: by 10.50.17.71 with SMTP id m7mr878219igd.14.1365829717072; Fri,
- 12 Apr 2013 22:08:37 -0700 (PDT)
-Received: by 10.64.34.80 with HTTP; Fri, 12 Apr 2013 22:07:56 -0700 (PDT)
-In-Reply-To: <7vppy0hhk7.fsf@alter.siamese.dyndns.org>
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=quE2lZa83vwomQfIx9/sKNcUCy3jKCtguDPGwp11KRE=;
+        b=bo1/tZ1sBTEQMPbl577mv0YtcdKxWX2heKiNFRHqoORjfTnhyb6V2ZuH0wk3V3obIJ
+         e4CGf32r4+JjZ1X3FemHbFNB6LPhaG2G37WpP3Z/5XF8nhMiSN4JB1tJWLRwyRKt9SgC
+         dAejKdmDc/QQ+5qz8nidiSSx0uyV6KupGFU2k6pCf+S3W1yjj7GT2tUuZyhCSiYcwFRf
+         etjsMr6KoKjgCpfaa4SgN+bQNvIfAuSbQIFqFxT6UBwolcJV6CLK78Is/C3MCMXsp19x
+         kx+zl3pQhyK6vqBuiwDexEo8Ucy/MHCa98YUZRw/0fQ/VzPfh8t8vy/w98XRkVn4d9i3
+         kNLw==
+X-Received: by 10.112.139.226 with SMTP id rb2mr6759768lbb.12.1365831749951;
+ Fri, 12 Apr 2013 22:42:29 -0700 (PDT)
+Received: by 10.114.59.210 with HTTP; Fri, 12 Apr 2013 22:42:29 -0700 (PDT)
+In-Reply-To: <7vd2u0hdmj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221050>
 
-Junio C Hamano wrote:
-> When pushing into other kinds of repositories (e.g. you can update
-> some but not all of the branches, or you want to touch only some of
-> them and not others even if you have enough privilege to update any
-> of them) or when you do not "batch" and push out one branch as work
-> on it is done, while other branches that you would eventually
-> publish are still not ready, "matching" is not for you.
-
-I agree that we need to get a "batching" push.default corresponding to
-"matching" for multiple-remote setups.  However, I think we should
-hold it off until my implicit-push patch is finished.  After using it
-for a few days, I'll get a good idea about what this new push.default
-setting should look like.
-
-> If "implicit-push" branch at "ram" is updated by other people and
-> you may have to pull back from, you would need this for "git pull"
-> (without arguments) while on that branch, I guess.  But I got the
-> impression from your scenario that "ram" won't be updated by anybody
-> but you.
+On Thu, Apr 11, 2013 at 6:05 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> So I am guessing that this may not be needed.
+>> And if you must, you might was well label them with "REMINDER", no,
+>> wait, that's what "TODO" comments are for, where people can see them=
+,
+>> and not *forget* them.
+>
+> Yeah, good point.
 
-In my opinion, it is a fundamental mistake to have more than one
-person working on a branch.  There is one exception to this rule: it
-is alright when there are only two people working on it, and one of
-them is a "reliable fast-forward-only read-only upstream".  Let me
-illustrate this with an example: I sometimes find myself working on
-the master branch of git.git (fetch from origin: git/git.git, publish
-to ram: artagnon/git.git).  This is because origin/master is an
-"reliable fast-forward-only read-only upstream" (read-only in the
-sense that it can only be updated with a git fetch).  My interaction
-with it is limited to 'git rebase origin/master' on the master branch.
- I will never find myself manipulating it, and the rebase will never
-fail unless my patches conflict with the new upstream.
+Moreover, I think there's a clear double standard. Consider this commit=
+:
 
-As to why the setting is needed: I often work on more than one device*,
-and I suspect a lot of people do this today.  I always fetch all
-changes on my private branches before beginning work, unless I want to
-end up in a confusing mess (I often rewrite history).
+commit 99d3206010ba1fcc9311cbe8376c0b5e78f4a136
+Author: Antoine Pelisse <apelisse@gmail.com>
+Date:   Sat Mar 23 18:23:28 2013 +0100
 
-> This becomes necessary only if you use push.default set to "current"
-> (or "upstream").  If you mistakenly say "git push" (no other
-> arguments), without this configuration you will end up pushing the
-> branch out.
+    combine-diff: coalesce lost lines optimally
 
-Right.  The objective is to get 'git push' to _always_ DTRT.
+    This replaces the greedy implementation to coalesce lost lines by u=
+sing
+    dynamic programming to find the Longest Common Subsequence.
 
-> It may be that adding push.default=current-but-do-not-create-anew
-> could help.  It is a cross between 'matching' and 'current', to say
-> "consider pushing out the current one, but only when the other side
-> already has one", and may help people who do not "batch".
+    The O(n=C2=B2) time complexity is obviously bigger than previous
+    implementation but it can produce shorter diff results (and most li=
+kely
+    easier to read).
 
-Hm.  I would argue that exploding push.default options is unhealthy,
-and that we should move towards thinking of more fine-grained control
-with different orthogonal options.  I'll first do it for pull
-(autostash has been in progress for some time); then we can port the
-relevant options to push.
+    List of lost lines is now doubly-linked because we reverse-read it =
+when
+    reading the direction matrix.
 
-* I still haven't made much progress on a design for config-sharing.  I
-think I'm missing something big.
+The commit message is 9 lines, and the diffstat 320 insertions(+), 64
+deletions(-). Moreover, there are some important bits of information
+on the mailing list that never made it to the commit message:
+
+---
+Best-case analysis:
+All p parents have the same n lines.
+We will find LCS and provide a n lines (the same lines) new list in
+O(n=C2=B2), and then run it again in O(n=C2=B2) with the next parent, e=
+tc.
+It will end-up being O(pn=C2=B2).
+
+Worst-case analysis:
+All p parents have no lines in common.
+We will find LCS and provide a 2n new list in O(n=C2=B2).
+Then we run it again in O(2n x n), and again O(3n x n), etc, until
+O(pn x n).
+When we sum these all, we end-up with O(p=C2=B2 x n=C2=B2)
+---
+
+---
+Unfortunately on a commit that would remove A LOT of lines (10000)
+from 7 parents, the times goes from 0.01s to 1.5s... I'm pretty sure
+that scenario is quite uncommon though.
+---
+
+This is not mentioned in the commit message; on which situations this
+implementation would be worst and why it's OK either way.
+
+---
+As you can see the last test is broken because the solution is not
+optimal for more than two parents. It would probably require to extend
+the dynamic programming to a k-dimension matrix (for k parents) but the
+result would end-up being O(n^k) (when removing n consecutives lines
+from p parents). I'm not sure there is any better solution known yet to
+the k-LCS problem.
+Implementing the dynamic solution with the k-dimension matrix would
+probably require to re-hash the strings (I guess it's already done by
+xdiff), as the number of string comparisons would increase.
+---
+
+The fact that the last test is broken is not mentioned at all.
+
+Now let's compare to the final version of my patch which is 19 lines
+40 insertions(+), 1 deletion(-). The ration of commit message lines
+vs. code changed lines is 19/41(0.46) whereas Antoine's patch is
+3/128(0.02), a difference of over 19 times. Granted, some single-line
+changes do require a good chunk of explanation, but this is not one of
+them; this single line patch doesn't even change the behavior of the
+code, simply changes a silent error exit to a verbose error exit,
+that's all. Antoine's patch has a lot more potential to trigger
+something unexpected.
+
+And the chances that somebody would have to look at Antoine's patch is
+quite high, especially since a failing test-case is introduced. The
+chances that anybody would look at mine are very very low.
+
+So either Antoine's commit message was fine, and so was mine, or it
+was sorely lacking explanation.
+
+To me, the reality is obvious: my patch didn't require such a big
+commit message, the short version was fine, the only reason Jeff King
+insisted on a longer version is because the patch came from me.
+Antoine's patch might have benefited from a little more explanation,
+but not every issue that was discussed in the mailing list was
+necessary (in my patch virtually every issue discussed was added to
+the commit message).
+
+This is the definition of double standard.
+
+Cheers.
+
+--=20
+=46elipe Contreras
