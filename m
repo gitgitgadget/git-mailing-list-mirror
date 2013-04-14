@@ -1,93 +1,100 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] t/test-lib.sh: fix TRASH_DIRECTORY handling
-Date: Sun, 14 Apr 2013 17:34:56 +0100
-Message-ID: <11cf45ad9779240b588da4b25c8ae5b6cc61b427.1365957201.git.john@keeping.me.uk>
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
-	John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 14 18:35:27 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] commit-slab: introduce a macro to define a slab for
+ new type
+Date: Sun, 14 Apr 2013 14:41:21 -0400
+Message-ID: <20130414184121.GA1621@sigill.intra.peff.net>
+References: <1365919489-17553-1-git-send-email-gitster@pobox.com>
+ <1365919489-17553-4-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 14 20:41:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URPtm-0001y7-I8
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 18:35:26 +0200
+	id 1URRro-0007l7-VI
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 20:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752117Ab3DNQfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 12:35:10 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:48548 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751580Ab3DNQfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 12:35:09 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id A6210CDA5B7;
-	Sun, 14 Apr 2013 17:35:08 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Fk9z5Yk6t81n; Sun, 14 Apr 2013 17:35:08 +0100 (BST)
-Received: from river.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id F3062CDA5A6;
-	Sun, 14 Apr 2013 17:35:01 +0100 (BST)
-X-Mailer: git-send-email 1.8.2.694.ga76e9c3.dirty
+	id S1753468Ab3DNSl1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 14:41:27 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45486 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752208Ab3DNSl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 14:41:27 -0400
+Received: (qmail 15567 invoked by uid 107); 14 Apr 2013 18:43:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 14 Apr 2013 14:43:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 14 Apr 2013 14:41:21 -0400
+Content-Disposition: inline
+In-Reply-To: <1365919489-17553-4-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221146>
 
-After the location of $TRASH_DIRECTORY is adjusted by
-$TEST_OUTPUT_DIRECTORY, we go on to use the $test variable to make the
-trash directory and cd into it.  This means that when
-$TEST_OUTPUT_DIRECTORY is not "." and an absolute --root has not been
-specified, we do not remove the trash directory once the tests are
-complete (remove_trash is set to $TRASH_DIRECTORY).
+On Sat, Apr 13, 2013 at 11:04:49PM -0700, Junio C Hamano wrote:
 
-Fix this by always referring to the trash directory as $TRASH_DIRECTORY.
+> Suppose you want to give one bit per existing ref and paint commits
+> down to find which refs are descendants of each commit. You find
+> that you have 320 refs only at runtime.
+> 
+> The code can declare a commit slab "struct flagbits"
+> 
+> 	define_commit_slab(flagbits, unsigned char);
+> 	struct flagbits flags;
+> 
+> and initialize it by:
+> 
+> 	nrefs = ... count number of refs that returns say 320 ...
+> 	init_flagbits_with_stride(&flags, (nrefs + 7) / 8);
+> 
+> so that
+> 
+> 	unsigned char *fp = flagbits_at(&flags, commit);
+> 
+> will return a pointer pointing at an array of 40 "unsigned char"s
+> associated with the commit.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- t/test-lib.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Thanks, I was thinking originally that we would want to break it down
+into "unsigned long" or something, but there is probably no real
+performance advantage to doing that over bytes.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index debd8b4..f79745c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -607,7 +607,7 @@ case "$test" in
-  *) TRASH_DIRECTORY="$TEST_OUTPUT_DIRECTORY/$test" ;;
- esac
- test ! -z "$debug" || remove_trash=$TRASH_DIRECTORY
--rm -fr "$test" || {
-+rm -fr "$TRASH_DIRECTORY" || {
- 	GIT_EXIT_OK=t
- 	echo >&5 "FATAL: Cannot prepare test area"
- 	exit 1
-@@ -618,13 +618,13 @@ export HOME
- 
- if test -z "$TEST_NO_CREATE_REPO"
- then
--	test_create_repo "$test"
-+	test_create_repo "$TRASH_DIRECTORY"
- else
--	mkdir -p "$test"
-+	mkdir -p "$TRASH_DIRECTORY"
- fi
- # Use -P to resolve symlinks in our working directory so that the cwd
- # in subprocesses like git equals our $PWD (for pathname comparisons).
--cd -P "$test" || exit 1
-+cd -P "$TRASH_DIRECTORY" || exit 1
- 
- this_test=${0##*/}
- this_test=${this_test%%-*}
--- 
-1.8.2.694.ga76e9c3.dirty
+I'd probably further wrap it with a flagbit_set and flagbit_tst to wrap
+the "figure out which byte, then which bit of that byte" logic, but that
+would be a wrapper around flagbits_at, anyway. It can come later.
+
+> +static elemtype *slabname## _at(struct slabname *s,			\
+> +				const struct commit *c)			\
+> +{									\
+> +	int nth_slab, nth_slot, ix;					\
+> +									\
+> +	ix = c->index * s->stride;					\
+> +	nth_slab = ix / s->slab_size;					\
+> +	nth_slot = ix % s->slab_size;					\
+> +									\
+> +	if (s->slab_count <= nth_slab) {				\
+> +		int i;							\
+> +		s->slab = xrealloc(s->slab,				\
+> +				   (nth_slab + 1) * sizeof(s->slab));	\
+> +		stat_ ##slabname## realloc++;				\
+> +		for (i = s->slab_count; i <= nth_slab; i++)		\
+> +			s->slab[i] = NULL;				\
+> +		s->slab_count = nth_slab + 1;				\
+> +	}								\
+> +	if (!s->slab[nth_slab])						\
+> +		s->slab[nth_slab] = xcalloc(s->slab_size,		\
+> +					    sizeof(**s->slab));		\
+> +	return &s->slab[nth_slab][nth_slot];				\
+> +}									\
+
+We'd probably want the hot path of this (returning the actual pointer)
+to be inline, but not necessarily the parts about growing, which should
+trigger a lot less. It may make sense to split the conditional bodies
+out into a sub-function. And do we want to mark it with "inline"?
+
+-Peff
