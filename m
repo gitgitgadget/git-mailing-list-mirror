@@ -1,87 +1,64 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] push: introduce implicit push
-Date: Sun, 14 Apr 2013 10:33:39 +0200
-Message-ID: <516A69E3.2090805@gmail.com>
-References: <1365780835-2853-1-git-send-email-artagnon@gmail.com> <7v38uvcrjl.fsf@alter.siamese.dyndns.org> <CALkWK0=-GcOF17Q-y-Aqj0ThX5pPQFrriDqoJ2qsr=CS+wUNGA@mail.gmail.com> <7vehed7ilu.fsf@alter.siamese.dyndns.org>
+From: Ilya Basin <basinilya@gmail.com>
+Subject: Re: cvsps: bad usage: invalid argument --norc
+Date: Sun, 14 Apr 2013 12:48:00 +0400
+Message-ID: <673219382.20130414124800@gmail.com>
+References: <323381594.20130414121834@gmail.com>
+Reply-To: Ilya Basin <basinilya@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 14 10:34:05 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Sun Apr 14 10:49:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URINw-0003Ea-GK
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 10:34:04 +0200
+	id 1URId7-0003VE-7o
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 10:49:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751811Ab3DNIds convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Apr 2013 04:33:48 -0400
-Received: from mail-ea0-f172.google.com ([209.85.215.172]:58357 "EHLO
-	mail-ea0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751521Ab3DNIdn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 04:33:43 -0400
-Received: by mail-ea0-f172.google.com with SMTP id z7so1817765eaf.31
-        for <git@vger.kernel.org>; Sun, 14 Apr 2013 01:33:42 -0700 (PDT)
+	id S1751036Ab3DNItc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 04:49:32 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:51534 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750766Ab3DNItb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 04:49:31 -0400
+Received: by mail-la0-f48.google.com with SMTP id fq12so3582865lab.35
+        for <git@vger.kernel.org>; Sun, 14 Apr 2013 01:49:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
+        h=x-received:date:from:x-mailer:reply-to:x-priority:message-id:to:cc
+         :subject:in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=ripiNnllwDqkh85NuAcIsqPAOTfZXEovg3UDrOwCM4g=;
-        b=dBvTRQGeUh2xsAmXMUynPgy/N6B7QFJICgtlLWqGRr8Z3xN0Wyb9S4ulrk/jaFaTyf
-         X9fnVXKN0K7Uj7NVqLo48d3jjEgrVgjQHyv1XYI2XgCvaTyPqMG4Bz1X/ptq50tMKW1t
-         4eD6vZDDbNK5F2+5vXRZxUbm5p499Dpqsl0Nqjl4Z3MlJZu+IMPpcaiJzYN0ku7uZU4J
-         W+6tBGy/Y4hmKkfjSZLx/XjhxrbdcpovT6F/QcILB2zVAOnFbD0595DCHuPiXNyzQ54h
-         EO+3MZSVBeOUT8dlMfMBcNvmK/an7FS7eq+zvZRNBXoXrc0eTs25ekIYPTkhn/K4XivU
-         MUIg==
-X-Received: by 10.15.24.71 with SMTP id i47mr36932567eeu.0.1365928422086;
-        Sun, 14 Apr 2013 01:33:42 -0700 (PDT)
-Received: from [192.168.1.14] (dji243.neoplus.adsl.tpnet.pl. [83.23.242.243])
-        by mx.google.com with ESMTPS id b5sm20313524eew.16.2013.04.14.01.33.40
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 14 Apr 2013 01:33:41 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <7vehed7ilu.fsf@alter.siamese.dyndns.org>
+        bh=pj1IQm9288WjzM4EINK389EpbmCf4zOYR5FUuUMTu2M=;
+        b=VRzyNw5Hvf2BFpox4ebZYVzaB5ZWIN4AKmcERfhaLDpPJsyi6KSWwzTdaaWlapvlhp
+         TqdT4VBS+7GFtbLp3LQxhhNe9k6Tl/ErHt/b3ccbPV115wjzSOkkLdL/30mDenaeEiVQ
+         sWSbGRszoQXiBAH2TAHdIiZzPOC/uWmWST3GES05hPkkkzUKk4F3qUY+0BLD0/e1ker/
+         gLiQnG/+csdtwjWJsCuGSmT7B42YnmvggtHJVrMR3lTkaLuT/ugNUhF/TuL5zLkOByU4
+         uRv/PKBdoD0b9i6EcUpYcb5lUJHjP45HPTENF3e0S4B0cGJuHvU+Ho+4/filppNm6Js7
+         eDUA==
+X-Received: by 10.152.112.231 with SMTP id it7mr8315169lab.10.1365929370176;
+        Sun, 14 Apr 2013 01:49:30 -0700 (PDT)
+Received: from [192.168.0.78] (92-100-235-194.dynamic.avangarddsl.ru. [92.100.235.194])
+        by mx.google.com with ESMTPS id mq7sm6069022lab.1.2013.04.14.01.49.28
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 14 Apr 2013 01:49:29 -0700 (PDT)
+X-Mailer: Voyager (v3.99.4) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <323381594.20130414121834@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221088>
 
-W dniu 14.04.2013 06:42, Junio C Hamano pisze:
+IB> Hi esr.
+IB> In cvsps 3.10 the flag --norc was removed. It broke 'git cvsimport'.
+IB> Please give the option back and write something in the man page like:
+IB>     This option has no effect; it is present for compatibility
 
-> I personally think it is much more sellable to use an even simpler
-> rule than what Jeff suggested, to make
->=20
-> 	git push -- <refspec>
->=20
-> go to the remote.pushdefault (falling back to remote.default that is
-> "origin"), without even paying attention to what branch you are on,
-> and ignoring branch.*.remote/pushremote configuration.
->=20
-> That is sufficient to support the triangular, the publish-to-mine,
-> and the centralized workflows, no?  In any of these cases, the
-> repository you push out to is _one_, even though it may be a
-> different one from where you pull from.  If you have a very special
-> branch that goes to a different place than all the other branches,
-> you can always push out while on that branch without any refspec,
-> anyway.
+Looks like the tool is completely different. I think I'll have to
+downgrade.
 
-I think it also supports users of 'matching' that have push default
-correctly configured.  Currently they can use "git push" in all cases
-but first push of a branch, where they had to use "git push origin
-branch", or "git push pushremote branch", and with those changes can
-now simply use "git push -- branch".
-
-Nice.
-
-Here I think simpler is better, especially that diferent users
-have different expectations: push to remote based on current branch or
-push to remote or remotes based on branch or branches being pushed.
---=20
-Jakub Nar=C4=99bski
+-- 
