@@ -1,109 +1,477 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 10/33] refs: extract a function ref_resolves_to_object()
-Date: Sun, 14 Apr 2013 14:54:25 +0200
-Message-ID: <1365944088-10588-11-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 24/33] pack-refs: merge code from pack-refs.{c,h} into refs.{c,h}
+Date: Sun, 14 Apr 2013 14:54:39 +0200
+Message-ID: <1365944088-10588-25-git-send-email-mhagger@alum.mit.edu>
 References: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sun Apr 14 15:02:59 2013
+X-From: git-owner@vger.kernel.org Sun Apr 14 15:03:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URMa9-0004GQ-9o
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 15:02:57 +0200
+	id 1URMaE-0004Nf-4c
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 15:03:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564Ab3DNNCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 09:02:53 -0400
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:59221 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751457Ab3DNNCw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Apr 2013 09:02:52 -0400
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Apr 2013 09:02:52 EDT
-X-AuditID: 1207440d-b7fd06d000000905-45-516aa743f801
+	id S1751753Ab3DNNC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 09:02:57 -0400
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:48979 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751613Ab3DNNC4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Apr 2013 09:02:56 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Apr 2013 09:02:56 EDT
+X-AuditID: 12074412-b7f216d0000008d4-27-516aa75a20e5
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id A4.1F.02309.347AA615; Sun, 14 Apr 2013 08:55:31 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id B1.CD.02260.A57AA615; Sun, 14 Apr 2013 08:55:54 -0400 (EDT)
 Received: from michael.fritz.box (p57A24996.dip.t-dialin.net [87.162.73.150])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3ECtAk7007029
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r3ECtAkL007029
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 14 Apr 2013 08:55:30 -0400
+	Sun, 14 Apr 2013 08:55:52 -0400
 X-Mailer: git-send-email 1.8.2.1
 In-Reply-To: <1365944088-10588-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqOu8PCvQoP2TikXXlW4mi4beK8wW
-	Kx/fZba4vWI+s8WPlh5mB1aPv+8/MHm0v3/H7PGsdw+jx8VLyh6fN8kFsEZx2yQllpQFZ6bn
-	6dslcGf83TmRueANb8XVq1tYGxg7ubsYOTkkBEwklq07ww5hi0lcuLeerYuRi0NI4DKjxLkP
-	x9ghnLNMEv1zpzOBVLEJ6Eos6mkGsjk4RASyJXavlQcJMws4SGz+3MgIYgsLeEi83ToLzGYR
-	UJW4dWwpK4jNK+Aqcbd1MSPEMgWJ49u3gdmcQPHpz4+BHSEk4CIxa/Ns1gmMvAsYGVYxyiXm
-	lObq5iZm5hSnJusWJyfm5aUW6Rrp5WaW6KWmlG5ihIQU7w7G/+tkDjEKcDAq8fC+YMwKFGJN
-	LCuuzD3EKMnBpCTK27MMKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE17EVKMebklhZlVqUD5OS
-	5mBREudVW6LuJySQnliSmp2aWpBaBJOV4eBQkuB9vRSoUbAoNT21Ii0zpwQhzcTBCSK4QDbw
-	AG14C1LIW1yQmFucmQ5RdIpRUUqcNwXkLAGQREZpHtwAWPS/YhQH+keY9ylIOw8wccB1vwIa
-	zAQ02GdvOsjgkkSElFQDo2qN9p2pR7/0Vs9oXmf+SLlebP06n8kLY657qpeveCKv4p6v3LLA
-	XOWktleaGC+XxaSzWRsu/l/su+7KIs3Z09jsvvw4+T1+U9h55baX+5pLg5Zldz2fVyx7Qsl6
-	6zTdrbNrNv089ohffuoFeUmZDnvG+1b5bRXHL2y6eWzyhnWXl6goJDFu/q3EUpyR 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqBu1PCvQ4P1BdouuK91MFg29V5gt
+	Vj6+y2xxe8V8ZosfLT3MDqwef99/YPJof/+O2eNZ7x5Gj4uXlD0+b5ILYI3itklKLCkLzkzP
+	07dL4M6Y+e88e8HZ8Iq1a38wNzAed+1i5OSQEDCR2Pt1BzOELSZx4d56ti5GLg4hgcuMEruO
+	LWOGcM4yScw8Np8JpIpNQFdiUU8zkM3BISKQLbF7rTxImFnAQWLz50ZGEFtYIFBi64y3YENZ
+	BFQljiz5B9bKK+AqsW3uJhaIZQoSx7dvA6vnBIpPf36MHcQWEnCRmLV5NusERt4FjAyrGOUS
+	c0pzdXMTM3OKU5N1i5MT8/JSi3TN9HIzS/RSU0o3MUJCSmgH4/qTcocYBTgYlXh4XzBmBQqx
+	JpYVV+YeYpTkYFIS5VVcBhTiS8pPqcxILM6ILyrNSS0+xCjBwawkwuvYCpTjTUmsrEotyodJ
+	SXOwKInz/lys7ickkJ5YkpqdmlqQWgSTleHgUJLgfb0UqFGwKDU9tSItM6cEIc3EwQkiuEA2
+	8ABteAtSyFtckJhbnJkOUXSKUVFKnPcjSEIAJJFRmgc3ABb9rxjFgf4R5n0KUsUDTBxw3a+A
+	BjMBDfbZmw4yuCQRISXVwOi0MtJhXelvW8ndfj9/Pv2eXbjnoVlyfd2s0F37tFcZM++UeXgs
+	9/WtSWJaS/uMRMXOFcWsPsT+b25LOdP0Bc9PPbyprxV17kxlv3vwI3dLSV/zZB3FTOPI8xeb
+	NA9MevU3/3zB99j931xvJ8Tt2HNYyeniE8PvChpyhx+FTA+Z++6r2JK27gQlluKM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221131>
 
-It is a nice unit of work and soon will be needed from multiple
-locations.
+pack-refs.c doesn't contain much code, and the code it does contain is
+closely related to reference handling.  Moreover, there is some
+duplication between pack_refs() and repack_without_ref().  Therefore,
+merge pack-refs.c into refs.c and pack-refs.h into refs.h.
+
+The code duplication will be addressed in future commits.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ Makefile            |   2 -
+ builtin/clone.c     |   1 -
+ builtin/pack-refs.c |   2 +-
+ pack-refs.c         | 148 ----------------------------------------------------
+ pack-refs.h         |  18 -------
+ refs.c              | 144 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs.h              |  14 +++++
+ 7 files changed, 159 insertions(+), 170 deletions(-)
+ delete mode 100644 pack-refs.c
+ delete mode 100644 pack-refs.h
 
+diff --git a/Makefile b/Makefile
+index 0f931a2..de38539 100644
+--- a/Makefile
++++ b/Makefile
+@@ -684,7 +684,6 @@ LIB_H += notes-cache.h
+ LIB_H += notes-merge.h
+ LIB_H += notes.h
+ LIB_H += object.h
+-LIB_H += pack-refs.h
+ LIB_H += pack-revindex.h
+ LIB_H += pack.h
+ LIB_H += parse-options.h
+@@ -817,7 +816,6 @@ LIB_OBJS += notes-cache.o
+ LIB_OBJS += notes-merge.o
+ LIB_OBJS += object.o
+ LIB_OBJS += pack-check.o
+-LIB_OBJS += pack-refs.o
+ LIB_OBJS += pack-revindex.o
+ LIB_OBJS += pack-write.o
+ LIB_OBJS += pager.o
+diff --git a/builtin/clone.c b/builtin/clone.c
+index f9c380e..883cf2a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -18,7 +18,6 @@
+ #include "transport.h"
+ #include "strbuf.h"
+ #include "dir.h"
+-#include "pack-refs.h"
+ #include "sigchain.h"
+ #include "branch.h"
+ #include "remote.h"
+diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
+index b5a0f88..b20b1ec 100644
+--- a/builtin/pack-refs.c
++++ b/builtin/pack-refs.c
+@@ -1,6 +1,6 @@
+ #include "builtin.h"
+ #include "parse-options.h"
+-#include "pack-refs.h"
++#include "refs.h"
+ 
+ static char const * const pack_refs_usage[] = {
+ 	N_("git pack-refs [options]"),
+diff --git a/pack-refs.c b/pack-refs.c
+deleted file mode 100644
+index d840055..0000000
+--- a/pack-refs.c
++++ /dev/null
+@@ -1,148 +0,0 @@
+-#include "cache.h"
+-#include "refs.h"
+-#include "tag.h"
+-#include "pack-refs.h"
+-
+-struct ref_to_prune {
+-	struct ref_to_prune *next;
+-	unsigned char sha1[20];
+-	char name[FLEX_ARRAY];
+-};
+-
+-struct pack_refs_cb_data {
+-	unsigned int flags;
+-	struct ref_to_prune *ref_to_prune;
+-	FILE *refs_file;
+-};
+-
+-static int do_not_prune(int flags)
+-{
+-	/* If it is already packed or if it is a symref,
+-	 * do not prune it.
+-	 */
+-	return (flags & (REF_ISSYMREF|REF_ISPACKED));
+-}
+-
+-static int pack_one_ref(const char *path, const unsigned char *sha1,
+-			  int flags, void *cb_data)
+-{
+-	struct pack_refs_cb_data *cb = cb_data;
+-	struct object *o;
+-	int is_tag_ref;
+-
+-	/* Do not pack the symbolic refs */
+-	if ((flags & REF_ISSYMREF))
+-		return 0;
+-	is_tag_ref = !prefixcmp(path, "refs/tags/");
+-
+-	/* ALWAYS pack refs that were already packed or are tags */
+-	if (!(cb->flags & PACK_REFS_ALL) && !is_tag_ref && !(flags & REF_ISPACKED))
+-		return 0;
+-
+-	fprintf(cb->refs_file, "%s %s\n", sha1_to_hex(sha1), path);
+-
+-	o = parse_object_or_die(sha1, path);
+-	if (o->type == OBJ_TAG) {
+-		o = deref_tag(o, path, 0);
+-		if (o)
+-			fprintf(cb->refs_file, "^%s\n",
+-				sha1_to_hex(o->sha1));
+-	}
+-
+-	if ((cb->flags & PACK_REFS_PRUNE) && !do_not_prune(flags)) {
+-		int namelen = strlen(path) + 1;
+-		struct ref_to_prune *n = xcalloc(1, sizeof(*n) + namelen);
+-		hashcpy(n->sha1, sha1);
+-		strcpy(n->name, path);
+-		n->next = cb->ref_to_prune;
+-		cb->ref_to_prune = n;
+-	}
+-	return 0;
+-}
+-
+-/*
+- * Remove empty parents, but spare refs/ and immediate subdirs.
+- * Note: munges *name.
+- */
+-static void try_remove_empty_parents(char *name)
+-{
+-	char *p, *q;
+-	int i;
+-	p = name;
+-	for (i = 0; i < 2; i++) { /* refs/{heads,tags,...}/ */
+-		while (*p && *p != '/')
+-			p++;
+-		/* tolerate duplicate slashes; see check_refname_format() */
+-		while (*p == '/')
+-			p++;
+-	}
+-	for (q = p; *q; q++)
+-		;
+-	while (1) {
+-		while (q > p && *q != '/')
+-			q--;
+-		while (q > p && *(q-1) == '/')
+-			q--;
+-		if (q == p)
+-			break;
+-		*q = '\0';
+-		if (rmdir(git_path("%s", name)))
+-			break;
+-	}
+-}
+-
+-/* make sure nobody touched the ref, and unlink */
+-static void prune_ref(struct ref_to_prune *r)
+-{
+-	struct ref_lock *lock = lock_ref_sha1(r->name + 5, r->sha1);
+-
+-	if (lock) {
+-		unlink_or_warn(git_path("%s", r->name));
+-		unlock_ref(lock);
+-		try_remove_empty_parents(r->name);
+-	}
+-}
+-
+-static void prune_refs(struct ref_to_prune *r)
+-{
+-	while (r) {
+-		prune_ref(r);
+-		r = r->next;
+-	}
+-}
+-
+-static struct lock_file packed;
+-
+-int pack_refs(unsigned int flags)
+-{
+-	int fd;
+-	struct pack_refs_cb_data cbdata;
+-
+-	memset(&cbdata, 0, sizeof(cbdata));
+-	cbdata.flags = flags;
+-
+-	fd = hold_lock_file_for_update(&packed, git_path("packed-refs"),
+-				       LOCK_DIE_ON_ERROR);
+-	cbdata.refs_file = fdopen(fd, "w");
+-	if (!cbdata.refs_file)
+-		die_errno("unable to create ref-pack file structure");
+-
+-	/* perhaps other traits later as well */
+-	fprintf(cbdata.refs_file, "# pack-refs with: peeled fully-peeled \n");
+-
+-	for_each_ref(pack_one_ref, &cbdata);
+-	if (ferror(cbdata.refs_file))
+-		die("failed to write ref-pack file");
+-	if (fflush(cbdata.refs_file) || fsync(fd) || fclose(cbdata.refs_file))
+-		die_errno("failed to write ref-pack file");
+-	/*
+-	 * Since the lock file was fdopen()'ed and then fclose()'ed above,
+-	 * assign -1 to the lock file descriptor so that commit_lock_file()
+-	 * won't try to close() it.
+-	 */
+-	packed.fd = -1;
+-	if (commit_lock_file(&packed) < 0)
+-		die_errno("unable to overwrite old ref-pack file");
+-	prune_refs(cbdata.ref_to_prune);
+-	return 0;
+-}
+diff --git a/pack-refs.h b/pack-refs.h
+deleted file mode 100644
+index 518acfb..0000000
+--- a/pack-refs.h
++++ /dev/null
+@@ -1,18 +0,0 @@
+-#ifndef PACK_REFS_H
+-#define PACK_REFS_H
+-
+-/*
+- * Flags for controlling behaviour of pack_refs()
+- * PACK_REFS_PRUNE: Prune loose refs after packing
+- * PACK_REFS_ALL:   Pack _all_ refs, not just tags and already packed refs
+- */
+-#define PACK_REFS_PRUNE 0x0001
+-#define PACK_REFS_ALL   0x0002
+-
+-/*
+- * Write a packed-refs file for the current repository.
+- * flags: Combination of the above PACK_REFS_* flags.
+- */
+-int pack_refs(unsigned int flags);
+-
+-#endif /* PACK_REFS_H */
 diff --git a/refs.c b/refs.c
-index c523978..dfc8600 100644
+index 9e3eff2..6c7f92c 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -529,6 +529,22 @@ static void sort_ref_dir(struct ref_dir *dir)
- #define DO_FOR_EACH_INCLUDE_BROKEN 0x01
+@@ -1981,6 +1981,150 @@ static void write_packed_entry(int fd, char *refname, unsigned char *sha1,
+ 	}
+ }
  
- /*
-+ * Return true iff the reference described by entry can be resolved to
-+ * an object in the database.  Emit a warning if the referred-to
-+ * object does not exist.
-+ */
-+static int ref_resolves_to_object(struct ref_entry *entry)
++struct ref_to_prune {
++	struct ref_to_prune *next;
++	unsigned char sha1[20];
++	char name[FLEX_ARRAY];
++};
++
++struct pack_refs_cb_data {
++	unsigned int flags;
++	struct ref_to_prune *ref_to_prune;
++	FILE *refs_file;
++};
++
++static int do_not_prune(int flags)
 +{
-+	if (entry->flag & REF_ISBROKEN)
++	/* If it is already packed or if it is a symref,
++	 * do not prune it.
++	 */
++	return (flags & (REF_ISSYMREF|REF_ISPACKED));
++}
++
++static int pack_one_ref(const char *path, const unsigned char *sha1,
++			  int flags, void *cb_data)
++{
++	struct pack_refs_cb_data *cb = cb_data;
++	struct object *o;
++	int is_tag_ref;
++
++	/* Do not pack the symbolic refs */
++	if ((flags & REF_ISSYMREF))
 +		return 0;
-+	if (!has_sha1_file(entry->u.value.sha1)) {
-+		error("%s does not point to a valid object!", entry->name);
++	is_tag_ref = !prefixcmp(path, "refs/tags/");
++
++	/* ALWAYS pack refs that were already packed or are tags */
++	if (!(cb->flags & PACK_REFS_ALL) && !is_tag_ref && !(flags & REF_ISPACKED))
 +		return 0;
++
++	fprintf(cb->refs_file, "%s %s\n", sha1_to_hex(sha1), path);
++
++	o = parse_object_or_die(sha1, path);
++	if (o->type == OBJ_TAG) {
++		o = deref_tag(o, path, 0);
++		if (o)
++			fprintf(cb->refs_file, "^%s\n",
++				sha1_to_hex(o->sha1));
 +	}
-+	return 1;
++
++	if ((cb->flags & PACK_REFS_PRUNE) && !do_not_prune(flags)) {
++		int namelen = strlen(path) + 1;
++		struct ref_to_prune *n = xcalloc(1, sizeof(*n) + namelen);
++		hashcpy(n->sha1, sha1);
++		strcpy(n->name, path);
++		n->next = cb->ref_to_prune;
++		cb->ref_to_prune = n;
++	}
++	return 0;
 +}
 +
 +/*
-  * current_ref is a performance hack: when iterating over references
-  * using the for_each_ref*() functions, current_ref is set to the
-  * current reference's entry before calling the callback function.  If
-@@ -549,14 +565,10 @@ static int do_one_ref(const char *base, each_ref_fn fn, int trim,
- 	if (prefixcmp(entry->name, base))
- 		return 0;
- 
--	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN)) {
--		if (entry->flag & REF_ISBROKEN)
--			return 0; /* ignore broken refs e.g. dangling symref */
--		if (!has_sha1_file(entry->u.value.sha1)) {
--			error("%s does not point to a valid object!", entry->name);
--			return 0;
--		}
--	}
-+	if (!((flags & DO_FOR_EACH_INCLUDE_BROKEN) ||
-+	      ref_resolves_to_object(entry)))
-+		return 0;
++ * Remove empty parents, but spare refs/ and immediate subdirs.
++ * Note: munges *name.
++ */
++static void try_remove_empty_parents(char *name)
++{
++	char *p, *q;
++	int i;
++	p = name;
++	for (i = 0; i < 2; i++) { /* refs/{heads,tags,...}/ */
++		while (*p && *p != '/')
++			p++;
++		/* tolerate duplicate slashes; see check_refname_format() */
++		while (*p == '/')
++			p++;
++	}
++	for (q = p; *q; q++)
++		;
++	while (1) {
++		while (q > p && *q != '/')
++			q--;
++		while (q > p && *(q-1) == '/')
++			q--;
++		if (q == p)
++			break;
++		*q = '\0';
++		if (rmdir(git_path("%s", name)))
++			break;
++	}
++}
 +
- 	current_ref = entry;
- 	retval = fn(entry->name + trim, entry->u.value.sha1, entry->flag, cb_data);
- 	current_ref = NULL;
++/* make sure nobody touched the ref, and unlink */
++static void prune_ref(struct ref_to_prune *r)
++{
++	struct ref_lock *lock = lock_ref_sha1(r->name + 5, r->sha1);
++
++	if (lock) {
++		unlink_or_warn(git_path("%s", r->name));
++		unlock_ref(lock);
++		try_remove_empty_parents(r->name);
++	}
++}
++
++static void prune_refs(struct ref_to_prune *r)
++{
++	while (r) {
++		prune_ref(r);
++		r = r->next;
++	}
++}
++
++static struct lock_file packed;
++
++int pack_refs(unsigned int flags)
++{
++	int fd;
++	struct pack_refs_cb_data cbdata;
++
++	memset(&cbdata, 0, sizeof(cbdata));
++	cbdata.flags = flags;
++
++	fd = hold_lock_file_for_update(&packed, git_path("packed-refs"),
++				       LOCK_DIE_ON_ERROR);
++	cbdata.refs_file = fdopen(fd, "w");
++	if (!cbdata.refs_file)
++		die_errno("unable to create ref-pack file structure");
++
++	/* perhaps other traits later as well */
++	fprintf(cbdata.refs_file, "# pack-refs with: peeled fully-peeled \n");
++
++	for_each_ref(pack_one_ref, &cbdata);
++	if (ferror(cbdata.refs_file))
++		die("failed to write ref-pack file");
++	if (fflush(cbdata.refs_file) || fsync(fd) || fclose(cbdata.refs_file))
++		die_errno("failed to write ref-pack file");
++	/*
++	 * Since the lock file was fdopen()'ed and then fclose()'ed above,
++	 * assign -1 to the lock file descriptor so that commit_lock_file()
++	 * won't try to close() it.
++	 */
++	packed.fd = -1;
++	if (commit_lock_file(&packed) < 0)
++		die_errno("unable to overwrite old ref-pack file");
++	prune_refs(cbdata.ref_to_prune);
++	return 0;
++}
++
+ static int repack_ref_fn(struct ref_entry *entry, void *cb_data)
+ {
+ 	int *fd = cb_data;
+diff --git a/refs.h b/refs.h
+index ac0ff92..8060ed8 100644
+--- a/refs.h
++++ b/refs.h
+@@ -72,6 +72,20 @@ extern void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refn
+  */
+ extern void add_packed_ref(const char *refname, const unsigned char *sha1);
+ 
++/*
++ * Flags for controlling behaviour of pack_refs()
++ * PACK_REFS_PRUNE: Prune loose refs after packing
++ * PACK_REFS_ALL:   Pack _all_ refs, not just tags and already packed refs
++ */
++#define PACK_REFS_PRUNE 0x0001
++#define PACK_REFS_ALL   0x0002
++
++/*
++ * Write a packed-refs file for the current repository.
++ * flags: Combination of the above PACK_REFS_* flags.
++ */
++int pack_refs(unsigned int flags);
++
+ extern int ref_exists(const char *);
+ 
+ /*
 -- 
 1.8.2.1
