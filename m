@@ -1,78 +1,142 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: Why does "git config" output nothing instead of the default value
- for unset variables?
-Date: Sun, 14 Apr 2013 16:30:00 +0200
-Message-ID: <516ABD68.5090501@gmail.com>
-References: <kke7o1$oo$1@ger.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] commit: allow associating auxiliary info on-demand
+Date: Sun, 14 Apr 2013 11:12:29 -0400
+Message-ID: <20130414151229.GA1544@sigill.intra.peff.net>
+References: <1365919489-17553-1-git-send-email-gitster@pobox.com>
+ <1365919489-17553-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 14 16:30:14 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 14 17:12:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URNwc-00065Z-3p
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 16:30:14 +0200
+	id 1URObo-0004xL-SX
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 17:12:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859Ab3DNOaI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Apr 2013 10:30:08 -0400
-Received: from mail-ea0-f177.google.com ([209.85.215.177]:40176 "EHLO
-	mail-ea0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751791Ab3DNOaH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Apr 2013 10:30:07 -0400
-Received: by mail-ea0-f177.google.com with SMTP id q14so1788661eaj.36
-        for <git@vger.kernel.org>; Sun, 14 Apr 2013 07:30:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:message-id:date:from:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=dycaPgxjMB3CMgHlbzaR1CSfwsc6GLdkwhcx14neGCA=;
-        b=cNhGzxUFAmgmcL4rMDw7SjGq7wtlZGd4QchxYXTObYGLq46K5lmZBqu2wBhh0MKO0Q
-         WScRQbO8A97J9m8JkBdwRmnp5J+vDLGj3jwQtE77aPLSuLPGMyJ8MwmyhQ5XPipZh2Ys
-         PFl0egPzTkxBBxsUijSn6wc7by2NeEwVMWSSO+N9iB94lAlL65UZ0KUXrhUbdBKbyRhZ
-         MR9xqg/YKvWzJysIbpm1Vm8ErUICQTD96riKIftrYGMKbiHRqf/iiQXwY8hMEPdowAAA
-         5CqyWinBHk47Vy71pZ9Yta3T2cdkZTnGCZOcCA9TT/JGafJMu7y6SOfBd8mWkfjiBgPi
-         /tew==
-X-Received: by 10.14.107.69 with SMTP id n45mr51312103eeg.23.1365949805366;
-        Sun, 14 Apr 2013 07:30:05 -0700 (PDT)
-Received: from [192.168.1.14] (dji243.neoplus.adsl.tpnet.pl. [83.23.242.243])
-        by mx.google.com with ESMTPS id a41sm21833742eei.4.2013.04.14.07.30.02
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 14 Apr 2013 07:30:04 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <kke7o1$oo$1@ger.gmane.org>
+	id S1751877Ab3DNPMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 11:12:35 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:45323 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751879Ab3DNPMe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 11:12:34 -0400
+Received: (qmail 13979 invoked by uid 107); 14 Apr 2013 15:14:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 14 Apr 2013 11:14:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 14 Apr 2013 11:12:29 -0400
+Content-Disposition: inline
+In-Reply-To: <1365919489-17553-2-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221141>
 
-Sebastian Schuberth wrote:
-> Hi,
->=20
-> I'm just wondering why it was decided to work like this. IMHO it's qu=
-ite
-> inconvenient that git config outputs nothing for any unset (but known=
-)
-> variable. Usually when I query a variable I'm not so much interested =
-in
-> whether it is at all (explicitly) set to some value or not, but what
-> value is currently in use. With that in mind, it would make much more
-> sense for git config to print the implicit default value instead of
-> nothing if a known variable is unset. For unknown / custom variables =
-it
-> still could display nothing, which also gives a nice way to check
-> whether a given variable name is known to Git or not.
+On Sat, Apr 13, 2013 at 11:04:47PM -0700, Junio C Hamano wrote:
 
-I think git-config was meant to be git agnostic (and therefore usable
-outside git, and for files other that git config files).
+> From: Jeff King <peff@peff.net>
+> 
+> The "indegree" field in the commit object is only used while sorting
+> a list of commits in topological order, and wasting memory otherwise.
+> 
+> We would prefer to shrink the size of individual commit objects,
+> which we may have to hold thousands of in-core. We could eject
+> "indegree" field out from the commit object and represent it as a
+> dynamic table based on the decoration infrastructure, but the
+> decoration is meant for sparse annotation and is not a good match.
+> 
+> Instead, let's try a different approach.
+> 
+>  - Assign an integer (commit->index) to each commit we keep in-core
+>    (reuse the space of "indegree" field for it);
+> 
+>  - When running the topological sort, allocate an array of integers
+>    in bulk (called "slab"), use the commit->index as an index into
+>    this array, and store the "indegree" information there.
+> 
+> This does _not_ reduce the memory footprint of a commit object, but
+> the commit->index can be used as the index to dynamically associate
+> commits with other kinds of information as needed.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-It would be better to add required functionality to git-var, IMHO.
+Thanks, this writeup makes sense to me. Obviously,
 
---=20
-Jakub Nar=C4=99bski
+  Signed-off-by: Jeff King <peff@peff.net>
+
+I had planned to clean it up into a more general form, as you did in
+patch 3, before submitting it, but doing it like this with the cleanup
+on top is fine with me (and it makes the attribution of the work much
+clearer).
+
+The rest of this email ended up long and rambly, and is kind of a dump
+of the pending thoughts I had on the slab approach. Don't take it as "do
+not do this patch", but rather "here are some areas to explore on top".
+
+One thing you did gloss over a bit is "the decoration is meant for
+sparse annotation". I do wonder what the performance would look like for
+implementing --topo-order fully via "struct decoration". Given that our
+hash function is a direct memory access of object->sha1, and that with a
+reasonable load factor in the table, most lookups should not hit any
+collision, it is not too expensive to do a lookup. I think the biggest
+cost would be that we have to do a full hashcmp() for each access to
+actually _check_ the collision. So it probably is noticeably slower due
+to that, but I didn't actually measure it.
+
+Assuming the slab technique is faster, I suspect there are some "struct
+decoration" cases that should be switched. Unfortunately the most
+obvious one to me would be the mark storage in fast-export, but that is
+used for object types other than commit. And I don't think we want to
+move the slab index into "struct object", for two reasons:
+
+  1. It bloats the size of blob and tree objects, which we have more of
+     than commits (especially in something like "rev-list --objects
+     --all").
+
+  2. Your commit indices become less dense, so you have to use a bigger
+     slab, which is wasteful and will have worse memory cache performance.
+     We could maybe mitigate that by keeping a per-type index counter,
+     but that complicates the slab lookup (it would have to dereference
+     based on type).
+
+I also note that we still have commit->util, which serves a similar
+purpose to the slab index, and is often used when we are attaching data
+to a lot of commits (and in fact, --topo-sort could probably just be
+implemented via commit->util).
+
+Comparing a slab index versus a util pointer, I think the differences
+should be:
+
+  1. with slab, you have an extra level of indirection ("x + c->index"
+     rather than "c->util"), which might be measurably slower.
+
+  2. with slab, you do not have to worry about conflicting with other
+     users of "struct commit" in the same program
+
+  3. with util, you can squeeze values smaller than a pointer into
+     "struct commit"; technically you can do this with the slab index,
+     too, but that would negate (2) above. However, I don't think we
+     even use "util" that way anywhere currently.
+
+  4. util pointers can point multiple commits to the same chunk of
+     memory. A slab index can do that, too, but you have an extra level
+     of indirection (you store a slab of pointers to items, some of
+     which are shared).
+
+  5. with a util pointer, we typically point to an malloc'd chunk of
+     memory. With a slab, you avoid per-commit allocation in favor of
+     allocating a big chunk of slab at once. However, you should be able
+     to do the same thing with a util pointer (i.e., allocate from a
+     pool and just point into it).
+
+So I think the util pointer is strictly better, except for point (2). And
+the main cost is point (1), the extra indirection. So if we can measure
+(1) and decide it isn't a big cost, the maintainability improvement for
+(2) is probably worth it, and we can rip out the util pointer entirely,
+saving us some extra space in "struct commit".
+
+-Peff
