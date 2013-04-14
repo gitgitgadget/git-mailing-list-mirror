@@ -1,83 +1,76 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC/PATCH 0/2] Test the Git version string
-Date: Sun, 14 Apr 2013 22:26:30 +0100
-Organization: OPDS
-Message-ID: <79879228B71A45A48A961F5B1880B61F@PhilipOakley>
-References: <1365949646-1988-1-git-send-email-philipoakley@iee.org> <7v8v4k6hp2.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 14 23:26:22 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] rebase-am: fix regression with new cover-letter config
+Date: Sun, 14 Apr 2013 17:27:04 -0500
+Message-ID: <1365978424-11841-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 15 00:28:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1URURE-0006el-DT
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Apr 2013 23:26:16 +0200
+	id 1URVPT-0000i2-NG
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Apr 2013 00:28:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932081Ab3DNV0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Apr 2013 17:26:11 -0400
-Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:25461 "EHLO
-	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754248Ab3DNV0J (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Apr 2013 17:26:09 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhcOAJkda1FZ8Yth/2dsb2JhbAAuIoMGNohvuEgEAQMBgQYXdIIaBQEBBAEIAQEuHgEBIQsCAwUCAQMVAQslFAEEGgYHFwYTCAIBAgMBh30KuW6NXwFNaoJnYQOITYV0mVWDDDuBLgEf
-X-IronPort-AV: E=Sophos;i="4.87,471,1363132800"; 
-   d="scan'208";a="69003429"
-Received: from host-89-241-139-97.as13285.net (HELO PhilipOakley) ([89.241.139.97])
-  by out1.ip07ir2.opaltelecom.net with SMTP; 14 Apr 2013 22:26:07 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752130Ab3DNW2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Apr 2013 18:28:17 -0400
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:33508 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752022Ab3DNW2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Apr 2013 18:28:16 -0400
+Received: by mail-qc0-f180.google.com with SMTP id b40so36604qcq.39
+        for <git@vger.kernel.org>; Sun, 14 Apr 2013 15:28:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=sGLLyrONXk5MswYuXwfSYLltAlMRBuixMgM/GqKHnU8=;
+        b=ZX6JWAg2vDmEtcik99/WEFbnfmBewMX8Zd0g/t5WGFMFROoej/xDKIkjkhWoZ4KHcA
+         +n1VCSbF02r6z6Y8egPi5T6qlElJGZyU/znsI0qNv7nwni0sm3yeBu+9OjUkN8FDL4g0
+         0X7TMn0/Gl1aR0Bx0qjHVpxCCXqn1CICf6I6tnnCmvf1CwJ5kw1hMlaA4j3tFL6DKFt7
+         LU5o+TIlyxkP+Qv7HLzB2+rEMZ/4IPWqUD7hKwc+3vOJNZTWXYl4wHQE6XmlUU4VtcEd
+         viPq6m7wKq0QxBMPyxuUNuFiT1eTO2QS2gPLX7Hx5WjsZGxn01czJG4cp3Hh3qYpdc2X
+         QKqQ==
+X-Received: by 10.224.72.83 with SMTP id l19mr20394615qaj.63.1365978492444;
+        Sun, 14 Apr 2013 15:28:12 -0700 (PDT)
+Received: from localhost (187-163-100-70.static.axtel.net. [187.163.100.70])
+        by mx.google.com with ESMTPS id 10sm28747942qax.13.2013.04.14.15.28.10
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 14 Apr 2013 15:28:11 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.1.643.ge3cc75d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221162>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Sunday, April 14, 2013 8:22 PM
-> Philip Oakley <philipoakley@iee.org> writes:
->
->> This patch series seeks to add tests for the version string format
->> and document it.
->>
->> The key questions to be answered are:
->> * should the test be inside t0000, or somewhere else?
->> * should the version string be limited to one line, <80 characters?
->
-> One line, perhaps, but I do not think any byte-limit is reasonable.
+If you have a cover-letter configuration set to anything other than
+'false', 'git format-patch' might generate a cover letter, and 'git am'
+doesn't seem to like that.
 
-OK
+Ideally 'git am' should skip the cover-letter, but for now lets just fix
+the regression.
 
->
-> It is unreasonable to limit the form to X.Y.Z; after we hit Git 2.0,
-> it is likely that we would go to two-decimals.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ git-rebase--am.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Ah. And then maintenance releases could be the .Z maybe. I suppose it 
-will depend on circumstances.
-
->
-> If the "parsing" is done for white/blacklist purposes, is there a
-> need to straight-jacket the verison string format like this series?
-
-The purpose is to document what we felt we could guarantee, and that 
-which was open to variation, so that those, like the Git-Gui, can code 
-in a sensible check for the version. Two digits (X.Y) should pass the 
-existing Git Gui check.
-
-I'll drop the length limit, and keep to an X.Y check
-
-Is the end of t0000-basic.sh a sensible place for the check?
-
-> --
-Philip 
+diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+index 97f31dc..f84854f 100644
+--- a/git-rebase--am.sh
++++ b/git-rebase--am.sh
+@@ -31,8 +31,8 @@ else
+ 	rm -f "$GIT_DIR/rebased-patches"
+ 
+ 	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
+-		--src-prefix=a/ --dst-prefix=b/ \
+-		--no-renames $root_flag "$revisions" >"$GIT_DIR/rebased-patches"
++		--src-prefix=a/ --dst-prefix=b/ --no-renames --no-cover-letter \
++		$root_flag "$revisions" >"$GIT_DIR/rebased-patches"
+ 	ret=$?
+ 
+ 	if test 0 != $ret
+-- 
+1.8.2.1.643.ge3cc75d
